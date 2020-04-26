@@ -33,9 +33,12 @@ export type PatternPartNode = WildcardNode | WordNode;
 
 export type PatternParts = Array<PatternPartNode>;
 
-export type PatternWordSegmentNode = ComplexNode<'Segment', {
-  parts: PatternParts;
-}>;
+export type PatternWordSegmentNode = ComplexNode<
+  'Segment',
+  {
+    parts: PatternParts;
+  }
+>;
 
 export type PatternWildcardSegmentNode = SimpleNode<'WildcardSegment'>;
 
@@ -45,9 +48,12 @@ export type PatternSegmentNode =
 
 export type PatternSegments = Array<PatternSegmentNode>;
 
-export type PathPatternNode = ComplexNode<'PathPattern', {
-  comment: string;
-  negate: boolean;
-  root: boolean;
-  segments: PatternSegments;
-}>;
+export type PathPatternNode = ComplexNode<
+  'PathPattern',
+  {
+    comment: string;
+    negate: boolean;
+    root: boolean;
+    segments: PatternSegments;
+  }
+>;

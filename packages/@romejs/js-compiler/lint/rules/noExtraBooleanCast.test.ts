@@ -8,20 +8,22 @@
 import {test} from 'rome';
 import {testLint} from '../testHelpers';
 
-test('disallow unnecessary boolean casts', async (t) => {
-  await testLint(t, `
+test(
+  'disallow unnecessary boolean casts',
+  async (t) => {
+    await testLint(t, `
     if (Boolean(foo)) {
       return foo;
     }
     `, {category: 'lint/noExtraBooleanCast'});
 
-  await testLint(t, `
+    await testLint(t, `
     while (!!foo) {
       return foo;
     }
     `, {category: 'lint/noExtraBooleanCast'});
 
-  await testLint(t, `
+    await testLint(t, `
     let x = 1;
 
     do {
@@ -29,9 +31,10 @@ test('disallow unnecessary boolean casts', async (t) => {
     } while (Boolean(x));
     `, {category: 'lint/noExtraBooleanCast'});
 
-  await testLint(t, `
+    await testLint(t, `
     for (; !!foo; ) {
       return 1+1;
     }
     `, {category: 'lint/noExtraBooleanCast'});
-});
+  },
+);

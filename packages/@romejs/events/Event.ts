@@ -120,13 +120,16 @@ export default class Event<Param, Ret = void> {
       let timedOut = false;
 
       if (timeout !== undefined) {
-        timeoutId = setTimeout(() => {
-          timedOut = true;
-          listener.unsubscribe();
-          reject(new Error(
-            `Timed out after waiting ${timeout}ms for ${this.name}`,
-          ));
-        }, timeout);
+        timeoutId = setTimeout(
+          () => {
+            timedOut = true;
+            listener.unsubscribe();
+            reject(
+              new Error(`Timed out after waiting ${timeout}ms for ${this.name}`),
+            );
+          },
+          timeout,
+        );
       }
 
       const listener = this.subscribe((param) => {

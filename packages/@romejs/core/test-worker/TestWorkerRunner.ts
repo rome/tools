@@ -47,19 +47,23 @@ export default class TestWorkerRunner {
     this.bridge = bridge;
     this.projectFolder = createAbsoluteFilePath(opts.projectFolder);
 
-    this.snapshotManager = new SnapshotManager(this, createAbsoluteFilePath(
-      opts.file.real,
-    ));
+    this.snapshotManager = new SnapshotManager(
+      this,
+      createAbsoluteFilePath(opts.file.real),
+    );
 
     this.hasFocusedTest = false;
     this.foundTests = new Map();
   }
 
-  foundTests: Map<string, {
-    callsiteError: Error;
-    options: TestOptions;
-    callback: undefined | TestCallback;
-  }>;
+  foundTests: Map<
+    string,
+    {
+      callsiteError: Error;
+      options: TestOptions;
+      callback: undefined | TestCallback;
+    }
+  >;
   hasFocusedTest: boolean;
 
   bridge: TestWorkerBridge;
@@ -145,22 +149,28 @@ export default class TestWorkerRunner {
       throw new Error(`Test ${testName} has already been defined`);
     }
 
-    this.foundTests.set(testName, {
-      callback,
-      options,
-      callsiteError,
-    });
+    this.foundTests.set(
+      testName,
+      {
+        callback,
+        options,
+        callsiteError,
+      },
+    );
 
     if (options.only === true) {
       this.hasFocusedTest = true;
     }
   }
 
-  onError(testName: undefined | string, opts: {
-    error: Error;
-    firstAdvice: DiagnosticAdvice;
-    lastAdvice: DiagnosticAdvice;
-  }) {
+  onError(
+    testName: undefined | string,
+    opts: {
+      error: Error;
+      firstAdvice: DiagnosticAdvice;
+      lastAdvice: DiagnosticAdvice;
+    },
+  ) {
     const filename = this.file.real.join();
 
     let ref = undefined;
@@ -182,15 +192,19 @@ export default class TestWorkerRunner {
         // TODO we should actually get the frames before module init and do it that way
         // Remove everything before the original module factory
         let latestTestWorkerFrame = frames.find((frame, i) => {
-          if (frame.typeName === 'global' && frame.methodName === undefined &&
-                frame.functionName ===
-                undefined) {
+          if (
+            frame.typeName === 'global' &&
+            frame.methodName === undefined &&
+            frame.functionName === undefined
+          ) {
             // We are the global.<anonymous> frame
             // Now check for Script.runInContext
             const nextFrame = frames[i + 1];
-            if (nextFrame !== undefined && nextFrame.typeName === 'Script' &&
-                  nextFrame.methodName ===
-                  'runInContext') {
+            if (
+              nextFrame !== undefined &&
+              nextFrame.typeName === 'Script' &&
+              nextFrame.methodName === 'runInContext'
+            ) {
               // Yes!
               // TODO also check for ___$romejs$core$common$utils$executeMain_ts$default (packages/romejs/core/common/utils/executeMain.ts:69:17)
               return true;
@@ -203,8 +217,9 @@ export default class TestWorkerRunner {
         // And if there was no module factory frame, then we must be inside of a test
         if (latestTestWorkerFrame === undefined) {
           latestTestWorkerFrame = frames.find((frame) => {
-            return frame.typeName !== undefined && frame.typeName.includes(
-              '$TestWorkerRunner',
+            return (
+              frame.typeName !== undefined &&
+              frame.typeName.includes('$TestWorkerRunner')
             );
           });
         }
@@ -292,11 +307,14 @@ export default class TestWorkerRunner {
         },
       });
     } catch (err) {
-      this.onError(testName, {
-        error: err,
-        firstAdvice: [],
-        lastAdvice: api.advice,
-      });
+      this.onError(
+        testName,
+        {
+          error: err,
+          firstAdvice: [],
+          lastAdvice: api.advice,
+        },
+      );
     } finally {
       await this.teardownTest(testName, api);
     }

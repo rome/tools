@@ -43,35 +43,45 @@ export default createMasterCommand({
   description: 'run lint and tests',
   usage: '',
   examples: [],
-
   defineFlags(consumer: Consumer): Flags {
     return {
       fix: consumer.get('fix').asBoolean(false),
     };
   },
-
   async callback(req: MasterRequest, flags: Flags): Promise<void> {
     const {reporter} = req;
 
     reporter.heading('Running lint');
-    await runChildCommand(req, async () => {
-      await lint.callback(req, {
-        formatOnly: false,
-        decisions: [],
-        save: flags.fix,
-        changed: undefined,
-      });
-    });
+    await runChildCommand(
+      req,
+      async () => {
+        await lint.callback(
+          req,
+          {
+            formatOnly: false,
+            decisions: [],
+            save: flags.fix,
+            changed: undefined,
+          },
+        );
+      },
+    );
 
     reporter.heading('Running tests');
-    await runChildCommand(req, async () => {
-      await test.callback(req, {
-        coverage: false,
-        freezeSnapshots: !flags.fix,
-        updateSnapshots: flags.fix,
-        showAllCoverage: false,
-        syncTests: false,
-      });
-    });
+    await runChildCommand(
+      req,
+      async () => {
+        await test.callback(
+          req,
+          {
+            coverage: false,
+            freezeSnapshots: !flags.fix,
+            updateSnapshots: flags.fix,
+            showAllCoverage: false,
+            syncTests: false,
+          },
+        );
+      },
+    );
   },
 });

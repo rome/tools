@@ -8,6 +8,9 @@
 import {test} from 'rome';
 import {testLint} from '../testHelpers';
 
-test('disallow var', async (t) => {
-  await testLint(t, 'var foobar;\nfoobar', {category: 'lint/noVar'});
-});
+test(
+  'disallow var',
+  async (t) => {
+    await testLint(t, 'var foobar;\nfoobar', {category: 'lint/noVar'});
+  },
+);

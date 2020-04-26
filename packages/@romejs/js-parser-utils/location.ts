@@ -11,4 +11,6 @@ export function createIndexTracker(): IndexTracker {
   return {index: ob1Number0};
 }
 
-export type IndexTracker = {index: Number0};
+export type IndexTracker = {
+  index: Number0;
+};

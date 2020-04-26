@@ -23,10 +23,12 @@ export default {
     const options = getOptions(context);
 
     // Update relative requires with their module id
-    if (node.type === 'CallExpression' && node.callee.type ===
-          'ReferenceIdentifier' && node.callee.name === 'require' &&
-          scope.getBinding('require') ===
-          undefined) {
+    if (
+      node.type === 'CallExpression' &&
+      node.callee.type === 'ReferenceIdentifier' &&
+      node.callee.name === 'require' &&
+      scope.getBinding('require') === undefined
+    ) {
       const args = node.arguments;
       const arg = args[0];
 
@@ -37,10 +39,12 @@ export default {
 
       const source = arg.value;
 
-      if (Object.prototype.hasOwnProperty.call(
+      if (
+        Object.prototype.hasOwnProperty.call(
           options.relativeSourcesToModuleId,
           source,
-        )) {
+        )
+      ) {
         const resolved = options.relativeSourcesToModuleId[source];
         const sourceNode = stringLiteral.create({
           value: resolved,
@@ -49,15 +53,16 @@ export default {
       }
     }
 
-    if (node.type === 'ReferenceIdentifier' && node.name === 'require' &&
-          scope.getBinding('require') ===
-          undefined) {
+    if (
+      node.type === 'ReferenceIdentifier' &&
+      node.name === 'require' &&
+      scope.getBinding('require') === undefined
+    ) {
       return template.expression`Rome.requireNamespace`;
     }
 
     return node;
   },
-
   exit(path: Path): AnyNode {
     const {node, context} = path;
     const options = getOptions(context);
@@ -82,9 +87,10 @@ export default {
       };
 
       // Build call
-      const declare = options.analyze.moduleType === 'es'
-        ? template.expression`Rome.declareES`
-        : template.expression`Rome.declareCJS`;
+      const declare =
+        options.analyze.moduleType === 'es'
+          ? template.expression`Rome.declareES`
+          : template.expression`Rome.declareCJS`;
       const wrapper = template.statement`${declare}(${source}, ${factory})`;
 
       return {

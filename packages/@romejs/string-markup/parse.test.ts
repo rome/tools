@@ -11,9 +11,9 @@ import {parseMarkup} from './parse';
 test(
   'should not parse string escapes',
   async (t) => {
-    await t.snapshot(parseMarkup(
-      '<filelink target="C:\\Users\\sebmck\\file.ts" />',
-    ));
+    await t.snapshot(
+      parseMarkup('<filelink target="C:\\Users\\sebmck\\file.ts" />'),
+    );
     await t.snapshot(
       parseMarkup(
         '<info>[MemoryFileSystem] Adding new project folder C:\\Users\\sebmck\\rome</info>',

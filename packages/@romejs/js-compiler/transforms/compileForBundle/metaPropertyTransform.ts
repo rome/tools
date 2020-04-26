@@ -15,9 +15,11 @@ import {template} from '@romejs/js-ast-utils';
 import {CompilerContext, Path} from '@romejs/js-compiler';
 
 function isImportMeta(node: AnyNode): node is MetaProperty {
-  return node.type === 'MetaProperty' && node.meta.name === 'import' &&
-      node.property.name ===
-      'meta';
+  return (
+    node.type === 'MetaProperty' &&
+    node.meta.name === 'import' &&
+    node.property.name === 'meta'
+  );
 }
 
 function createURLString(context: CompilerContext): AnyExpression {
@@ -61,10 +63,13 @@ export default {
     }*/
 
     // Direct reference to import.meta.url
-    if (node.type === 'MemberExpression' && node.property.type ===
-          'StaticMemberProperty' && isImportMeta(node.object) &&
-          node.property.value.type ===
-          'Identifier' && node.property.value.name === 'url') {
+    if (
+      node.type === 'MemberExpression' &&
+      node.property.type === 'StaticMemberProperty' &&
+      isImportMeta(node.object) &&
+      node.property.value.type === 'Identifier' &&
+      node.property.value.name === 'url'
+    ) {
       return createURLString(context);
     }
 

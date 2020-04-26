@@ -8,12 +8,18 @@
 import {test} from 'rome';
 import {testLint} from '../testHelpers';
 
-test('restricted globals', async (t) => {
-  await testLint(t, 'console.log(event);', {
-    category: 'lint/restrictedGlobals',
-  });
+test(
+  'restricted globals',
+  async (t) => {
+    await testLint(
+      t,
+      'console.log(event);',
+      {
+        category: 'lint/restrictedGlobals',
+      },
+    );
 
-  await testLint(t, `
+    await testLint(t, `
     // valid use of event into the function scope.
     function foo(event) {
       console.info(event);
@@ -22,4 +28,5 @@ test('restricted globals', async (t) => {
     // invalid, event is used as a global.
     foo(event)
     `, {category: 'lint/restrictedGlobals'});
-});
+  },
+);

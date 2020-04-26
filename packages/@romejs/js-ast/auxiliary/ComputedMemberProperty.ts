@@ -17,9 +17,13 @@ export type ComputedMemberProperty = JSNodeBase & {
 export const computedMemberProperty = createQuickBuilder<
   ComputedMemberProperty,
   'value'
->('ComputedMemberProperty', 'value', {
-  bindingKeys: {},
-  visitorKeys: {
-    value: true,
+>(
+  'ComputedMemberProperty',
+  'value',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      value: true,
+    },
   },
-});
+);

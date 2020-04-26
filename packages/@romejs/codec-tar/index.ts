@@ -214,9 +214,8 @@ export class TarWriter {
       throw new Error('Already finalized file');
     }
 
-    const buffer: Buffer = rawBuffer instanceof Buffer
-      ? rawBuffer
-      : Buffer.from(rawBuffer);
+    const buffer: Buffer =
+      rawBuffer instanceof Buffer ? rawBuffer : Buffer.from(rawBuffer);
     const header = TarWriter.normalizeHeader(rawHeader, buffer.length);
 
     this.stream.write(encodeHeader(header));
@@ -230,13 +229,19 @@ export class TarWriter {
     return new Promise((resolve, reject) => {
       const {stream} = this;
 
-      stream.on('close', () => {
-        resolve();
-      });
+      stream.on(
+        'close',
+        () => {
+          resolve();
+        },
+      );
 
-      stream.on('error', (err) => {
-        reject(err);
-      });
+      stream.on(
+        'error',
+        (err) => {
+          reject(err);
+        },
+      );
 
       stream.write(END_OF_TAR);
       stream.end();

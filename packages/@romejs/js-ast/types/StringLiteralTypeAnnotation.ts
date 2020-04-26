@@ -13,9 +13,10 @@ export type StringLiteralTypeAnnotation = JSNodeBase & {
   value: string;
 };
 
-export const stringLiteralTypeAnnotation = createBuilder<
-  StringLiteralTypeAnnotation
->('StringLiteralTypeAnnotation', {
-  bindingKeys: {},
-  visitorKeys: {},
-});
+export const stringLiteralTypeAnnotation = createBuilder<StringLiteralTypeAnnotation>(
+  'StringLiteralTypeAnnotation',
+  {
+    bindingKeys: {},
+    visitorKeys: {},
+  },
+);

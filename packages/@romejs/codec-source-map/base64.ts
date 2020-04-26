@@ -114,7 +114,6 @@ export function encodeVLQ(value: number): string {
     vlq >>>= VLQ_BASE_SHIFT;
     if (vlq > 0) {
       // There are still more digits in this value, so we must make sure the
-
       // continuation bit is marked.
       digit |= VLQ_CONTINUATION_BIT;
     }

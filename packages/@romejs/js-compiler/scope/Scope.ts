@@ -32,17 +32,19 @@ export type ScopeKind =
   | 'class';
 
 export default class Scope {
-  constructor({
-    kind,
-    node,
-    parentScope,
-    rootScope,
-  }: {
-    kind: ScopeKind;
-    node: undefined | AnyNode;
-    parentScope: undefined | Scope;
-    rootScope: undefined | RootScope;
-  }) {
+  constructor(
+    {
+      kind,
+      node,
+      parentScope,
+      rootScope,
+    }: {
+      kind: ScopeKind;
+      node: undefined | AnyNode;
+      parentScope: undefined | Scope;
+      rootScope: undefined | RootScope;
+    },
+  ) {
     this.parentScope = parentScope;
     this.rootScope = rootScope;
     this.node = node;

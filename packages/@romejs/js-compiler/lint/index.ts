@@ -47,13 +47,15 @@ export default async function lint(req: LintRequest): Promise<LintResult> {
     formatAst = formatContext.reduceRoot(ast, lintTransforms);
     formatAst = addSuppressions(formatContext, formatAst);
   }
-  const generator = formatJS(formatAst, {
-    typeAnnotations: true,
-    sourceMaps: true,
-    format: 'pretty',
-    sourceText,
-  });
-  const formattedCode = generator.getCode();
+  const formattedCode = formatJS(
+    formatAst,
+    {
+      typeAnnotations: true,
+      sourceMaps: true,
+      format: 'pretty',
+      sourceText,
+    },
+  ).code;
 
   // Run lints (could be with the autofixed AST)
   const context = new CompilerContext({

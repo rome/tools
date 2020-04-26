@@ -47,12 +47,15 @@ export const MOCK_PROGRAM: Program = {
   hasHoistedVars: false,
 };
 
-export const program = createBuilder<Program>('Program', {
-  bindingKeys: {},
-  visitorKeys: {
-    interpreter: true,
-    directives: true,
-    body: true,
-    comments: true,
+export const program = createBuilder<Program>(
+  'Program',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      interpreter: true,
+      directives: true,
+      body: true,
+      comments: true,
+    },
   },
-});
+);

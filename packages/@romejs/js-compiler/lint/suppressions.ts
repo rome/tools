@@ -52,19 +52,25 @@ export function addSuppressions(context: CompilerContext, ast: Program): Program
 
     // Find existing suppression comment
     let updateComment: undefined | AnyComment;
-    const lastComment = context.comments.getCommentsFromIds(node.leadingComments).pop();
-    if (lastComment !== undefined && lastComment.value.includes(
-        SUPPRESSION_NEXT_LINE_START,
-      )) {
+    const lastComment = context.comments.getCommentsFromIds(
+      node.leadingComments,
+    ).pop();
+    if (
+      lastComment !== undefined &&
+      lastComment.value.includes(SUPPRESSION_NEXT_LINE_START)
+    ) {
       updateComment = lastComment;
     }
 
     // Insert new comment if there's none to update
     if (updateComment === undefined) {
-      const id = path.callHook(commentInjector, {
-        type: 'CommentLine',
-        value: ` ${buildSuppressionCommentValue(suppressionCategories)}`,
-      });
+      const id = path.callHook(
+        commentInjector,
+        {
+          type: 'CommentLine',
+          value: ` ${buildSuppressionCommentValue(suppressionCategories)}`,
+        },
+      );
 
       return {
         ...node,
@@ -81,43 +87,51 @@ export function addSuppressions(context: CompilerContext, ast: Program): Program
 
     // We may have eliminated them all
     if (suppressionCategories.size > 0) {
-      path.callHook(commentInjector, {
-        ...updateComment,
-        value: updateComment.value.replace(
-          SUPPRESSION_NEXT_LINE_START,
-          buildSuppressionCommentValue(suppressionCategories),
-        ),
-      });
+      path.callHook(
+        commentInjector,
+        {
+          ...updateComment,
+          value: updateComment.value.replace(
+            SUPPRESSION_NEXT_LINE_START,
+            buildSuppressionCommentValue(suppressionCategories),
+          ),
+        },
+      );
     }
 
     return node;
   }
 
   // Find the best node to attach comments to. This is generally the node with the largest range per line.
-  return context.reduceRoot(ast, {
-    name: 'suppressionVisitor',
-    enter(path: Path) {
-      const {node} = path;
+  return context.reduceRoot(
+    ast,
+    {
+      name: 'suppressionVisitor',
+      enter(path: Path) {
+        const {node} = path;
 
-      // Don't allow attaching suppression comments to a comment or program...
-      if (node.type === 'CommentBlock' || node.type === 'CommentLine' ||
-            node.type ===
-            'Program') {
-        return node;
-      }
+        // Don't allow attaching suppression comments to a comment or program...
+        if (
+          node.type === 'CommentBlock' ||
+          node.type === 'CommentLine' ||
+          node.type === 'Program'
+        ) {
+          return node;
+        }
 
-      const line = getStartLine(node);
-      if (line === undefined || visitedLines.has(line)) {
-        return node;
-      }
+        const line = getStartLine(node);
+        if (line === undefined || visitedLines.has(line)) {
+          return node;
+        }
 
-      const decisions = decisionsByPosition[ob1Get1(line)];
-      if (decisions === undefined) {
-        return node;
-      }
+        const decisions = decisionsByPosition[ob1Get1(line)];
+        if (decisions === undefined) {
+          return node;
+        }
 
-      visitedLines.add(line);
-      return addComment(path, node, decisions);
+        visitedLines.add(line);
+        return addComment(path, node, decisions);
+      },
     },
-  });
+  );
 }

@@ -13,9 +13,12 @@ export type JSXFragment = JSNodeBase & {
   children: JSXElement['children'];
 };
 
-export const jsxFragment = createBuilder<JSXFragment>('JSXFragment', {
-  bindingKeys: {},
-  visitorKeys: {
-    children: true,
+export const jsxFragment = createBuilder<JSXFragment>(
+  'JSXFragment',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      children: true,
+    },
   },
-});
+);

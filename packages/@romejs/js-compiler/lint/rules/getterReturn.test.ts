@@ -8,8 +8,10 @@
 import {test} from 'rome';
 import {testLint} from '../testHelpers';
 
-test('getter return', async (t) => {
-  await testLint(t, `
+test(
+  'getter return',
+  async (t) => {
+    await testLint(t, `
   class p {
     get name() {
       console.log('hello')
@@ -18,7 +20,7 @@ test('getter return', async (t) => {
   console.log(new p())
   `, {category: 'lint/getterReturn'});
 
-  await testLint(t, `
+    await testLint(t, `
   let p;
   p = {
     get name() {
@@ -28,7 +30,7 @@ test('getter return', async (t) => {
   console.log(p)
   `, {category: 'lint/getterReturn'});
 
-  await testLint(t, `
+    await testLint(t, `
   let p = {};
   Object.defineProperty(p, {
     get: function (){
@@ -37,4 +39,5 @@ test('getter return', async (t) => {
   });
   console.log(p)
   `, {category: 'lint/getterReturn'});
-});
+  },
+);

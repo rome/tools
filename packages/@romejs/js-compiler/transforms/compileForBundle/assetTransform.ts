@@ -11,14 +11,16 @@ import {ASSET_EXPORT_TEMPORARY_VALUE} from '@romejs/core/common/fileHandlers';
 
 export default {
   name: 'asset',
-
   enter(path: Path) {
     const {node} = path;
     const options = getOptions(path.context);
 
-    if (node.type === 'ExportDefaultDeclaration' && node.declaration.type ===
-        'StringLiteral' && node.declaration.value ===
-        ASSET_EXPORT_TEMPORARY_VALUE && options.assetPath !== undefined) {
+    if (
+      node.type === 'ExportDefaultDeclaration' &&
+      node.declaration.type === 'StringLiteral' &&
+      node.declaration.value === ASSET_EXPORT_TEMPORARY_VALUE &&
+      options.assetPath !== undefined
+    ) {
       return {
         ...node,
         declaration: {

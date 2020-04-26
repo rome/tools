@@ -24,13 +24,13 @@ const initialState: State = {
 
 const provider = createHook<State, undefined, AnyNode>({
   name: 'unusedVariablesProvider',
-
   initialState,
-
   call(path: Path, state: State) {
     const {node} = path;
-    if (node.type !== 'ReferenceIdentifier' && node.type !==
-        'JSXReferenceIdentifier') {
+    if (
+      node.type !== 'ReferenceIdentifier' &&
+      node.type !== 'JSXReferenceIdentifier'
+    ) {
       throw new Error('Expected only Identifier to be dispatched');
     }
 
@@ -57,7 +57,6 @@ const provider = createHook<State, undefined, AnyNode>({
       },
     };
   },
-
   exit(path, state) {
     for (const name in state.usedBindings) {
       const used = state.usedBindings[name];
@@ -103,27 +102,38 @@ export default {
       }
 
       // For functions, consider all parameters except the last to be used
-      if (node.type === 'FunctionDeclaration' || node.type ===
-          'FunctionExpression' || node.type === 'ObjectMethod' || node.type ===
-          'ClassMethod' || node.type === 'ArrowFunctionExpression') {
-        for (const {name} of getBindingIdentifiers(node.head.params.slice(0, -1))) {
+      if (
+        node.type === 'FunctionDeclaration' ||
+        node.type === 'FunctionExpression' ||
+        node.type === 'ObjectMethod' ||
+        node.type === 'ClassMethod' ||
+        node.type === 'ArrowFunctionExpression'
+      ) {
+        for (const {name} of getBindingIdentifiers(
+          node.head.params.slice(0, -1),
+        )) {
           usedBindings[name] = true;
         }
 
         // For functions that have a single throw statement in the body, consider all their arguments
         // to be used as this is typically an interface definition
         const {body: block} = node;
-        if (block.type === 'BlockStatement' && block.body.length === 1 &&
-              block.body[0].type ===
-              'ThrowStatement') {
+        if (
+          block.type === 'BlockStatement' &&
+          block.body.length === 1 &&
+          block.body[0].type === 'ThrowStatement'
+        ) {
           for (const {name} of getBindingIdentifiers(node.head.params)) {
             usedBindings[name] = true;
           }
         }
       }
 
-      if (node.type === 'CatchClause' && node.param && node.param.type ===
-          'BindingIdentifier') {
+      if (
+        node.type === 'CatchClause' &&
+        node.param &&
+        node.param.type === 'BindingIdentifier'
+      ) {
         // Mark error param as used as they are required
         usedBindings[node.param.name] = true;
       }
@@ -133,14 +143,19 @@ export default {
         usedBindings[node.id.name] = true;
       }
 
-      return path.provideHook(provider, {
-        usedBindings,
-        scope,
-      });
+      return path.provideHook(
+        provider,
+        {
+          usedBindings,
+          scope,
+        },
+      );
     }
 
-    if (node.type === 'JSXReferenceIdentifier' || node.type ===
-        'ReferenceIdentifier') {
+    if (
+      node.type === 'JSXReferenceIdentifier' ||
+      node.type === 'ReferenceIdentifier'
+    ) {
       return path.callHook(provider, undefined, node);
     }
 

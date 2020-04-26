@@ -41,9 +41,8 @@ export default function resolverSuggest(
   errMsg += ` "${query.source.join()}" from "${query.origin.join()}"`;
 
   // Use the querySource returned by the resolution which will be the one that actually triggered this error, otherwise use the query source provided to us
-  const querySource = resolved.source === undefined
-    ? origQuerySource
-    : resolved.source;
+  const querySource =
+    resolved.source === undefined ? origQuerySource : resolved.source;
   if (querySource === undefined || querySource.location === undefined) {
     // TODO do something about the `advice` on some `resolved` that may contain metadata?
     throw new Error(errMsg);
@@ -68,21 +67,17 @@ export default function resolverSuggest(
 
       if (nonStrictResolved.type === 'FOUND') {
         if (nonStrictResolved.types.includes('implicitIndex')) {
-          advice.push(
-            {
-              type: 'log',
-              category: 'info',
-              message: `This successfully resolves as an implicit index file. Trying adding <emphasis>/index${nonStrictResolved.path.getExtensions()}</emphasis> to the end of the import source`,
-            },
-          );
+          advice.push({
+            type: 'log',
+            category: 'info',
+            message: `This successfully resolves as an implicit index file. Trying adding <emphasis>/index${nonStrictResolved.path.getExtensions()}</emphasis> to the end of the import source`,
+          });
         } else if (nonStrictResolved.types.includes('implicitExtension')) {
-          advice.push(
-            {
-              type: 'log',
-              category: 'info',
-              message: `This successfully resolves as an implicit extension. Try adding the extension <emphasis>${nonStrictResolved.path.getExtensions()}</emphasis>`,
-            },
-          );
+          advice.push({
+            type: 'log',
+            category: 'info',
+            message: `This successfully resolves as an implicit extension. Try adding the extension <emphasis>${nonStrictResolved.path.getExtensions()}</emphasis>`,
+          });
         }
       }
     }
@@ -110,21 +105,17 @@ export default function resolverSuggest(
     }
     if (validPlatforms.length > 0) {
       if (query.platform === undefined) {
-        advice.push(
-          {
-            type: 'log',
-            category: 'info',
-            message: 'No platform was specified but we found modules for the following platforms',
-          },
-        );
+        advice.push({
+          type: 'log',
+          category: 'info',
+          message: 'No platform was specified but we found modules for the following platforms',
+        });
       } else {
-        advice.push(
-          {
-            type: 'log',
-            category: 'info',
-            message: markup`No module found for the platform <emphasis>${query.platform}</emphasis> but we found these others`,
-          },
-        );
+        advice.push({
+          type: 'log',
+          category: 'info',
+          message: markup`No module found for the platform <emphasis>${query.platform}</emphasis> but we found these others`,
+        });
       }
 
       skipSimilaritySuggestions = true;
@@ -136,15 +127,16 @@ export default function resolverSuggest(
     }
 
     // Hint on any indirection
-    if (origQuerySource !== undefined && origQuerySource.location !== undefined &&
-        resolved.source !== undefined) {
-      advice.push(
-        {
-          type: 'log',
-          category: 'info',
-          message: `Found while resolving <emphasis>${query.source}</emphasis> from <filelink emphasis target="${query.origin}" />`,
-        },
-      );
+    if (
+      origQuerySource !== undefined &&
+      origQuerySource.location !== undefined &&
+      resolved.source !== undefined
+    ) {
+      advice.push({
+        type: 'log',
+        category: 'info',
+        message: `Found while resolving <emphasis>${query.source}</emphasis> from <filelink emphasis target="${query.origin}" />`,
+      });
 
       const origPointer = origQuerySource.location;
 
@@ -187,31 +179,32 @@ export default function resolverSuggest(
           },
         );
 
-          advice =
-          [
-            ...advice,
-            ...buildSuggestionAdvice(
-              query.source.join(),
-              relativeSuggestions,
-              {
-                formatItem: (relative) => {
-                  const absolute = relativeToAbsolute.get(relative);
-                  if (absolute === undefined) {
-                    throw new Error('Should be valid');
-                  }
+        advice = [
+          ...advice,
+          ...buildSuggestionAdvice(
+            query.source.join(),
+            relativeSuggestions,
+            {
+              formatItem: (relative) => {
+                const absolute = relativeToAbsolute.get(relative);
+                if (absolute === undefined) {
+                  throw new Error('Should be valid');
+                }
 
-                  return markup`<filelink target="${absolute}">${relative}</filelink>`;
-                },
+                return markup`<filelink target="${absolute}">${relative}</filelink>`;
               },
-            ),
-          ];
+            },
+          ),
+        ];
       }
     }
 
     // Hint if this was an entry resolve and the cwd wasn't a project
-    if (query.entry === true &&
-          resolver.master.projectManager.findProjectExisting(localQuery.origin) ===
-          undefined) {
+    if (
+      query.entry === true &&
+      resolver.master.projectManager.findProjectExisting(localQuery.origin) ===
+      undefined
+    ) {
       advice.push({
         type: 'log',
         category: 'warn',
@@ -221,9 +214,8 @@ export default function resolverSuggest(
   }
 
   // TODO check if this would have been successful if not for exports access control
-  const source = querySource.source === undefined
-    ? query.source.join()
-    : querySource.source;
+  const source =
+    querySource.source === undefined ? query.source.join() : querySource.source;
 
   if (resolved.advice !== undefined) {
     advice = advice.concat(resolved.advice);
@@ -258,6 +250,7 @@ function getPathSuggestions(
   }
 
   // Try parent directories of the origin
+
   for (const path of originFolder.getChain()) {
     tryPathSuggestions(resolver, suggestions, path.append(sourceParts));
   }
@@ -316,9 +309,11 @@ function tryPathSuggestions(
       );
 
       for (const rating of ratings) {
-        tryPathSuggestions(resolver, suggestions, createUnknownFilePath(
-          rating.target,
-        ).append(segments.slice(1)).assertAbsolute());
+        tryPathSuggestions(
+          resolver,
+          suggestions,
+          createUnknownFilePath(rating.target).append(segments.slice(1)).assertAbsolute(),
+        );
       }
     }
   }

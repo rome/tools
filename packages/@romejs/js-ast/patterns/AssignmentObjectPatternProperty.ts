@@ -14,12 +14,13 @@ export type AssignmentObjectPatternProperty = JSNodeBase & {
   value: AnyAssignmentPattern;
 };
 
-export const assignmentObjectPatternProperty = createBuilder<
-  AssignmentObjectPatternProperty
->('AssignmentObjectPatternProperty', {
-  bindingKeys: {},
-  visitorKeys: {
-    key: true,
-    value: true,
+export const assignmentObjectPatternProperty = createBuilder<AssignmentObjectPatternProperty>(
+  'AssignmentObjectPatternProperty',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      key: true,
+      value: true,
+    },
   },
-});
+);

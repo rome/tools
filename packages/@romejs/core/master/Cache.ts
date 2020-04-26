@@ -22,8 +22,12 @@ type CacheEntry = {
   configHash: string;
   projectDir: string;
   mtime: number;
-  compile: {[key: string]: WorkerCompileResult};
-  lint: {[key: string]: WorkerLintResult};
+  compile: {
+    [key: string]: WorkerCompileResult;
+  };
+  lint: {
+    [key: string]: WorkerLintResult;
+  };
   analyzeDependencies: undefined | WorkerAnalyzeDependencyResult;
   moduleSignature: undefined | ModuleSignature;
 };
@@ -159,13 +163,15 @@ export default class Cache {
 
   async update(
     path: AbsoluteFilePath,
-    partialEntryCallback: Partial<CacheEntry> | ((
-      entry: CacheEntry,
-    ) => Partial<CacheEntry>),
+    partialEntryCallback:
+      | Partial<CacheEntry>
+      | ((entry: CacheEntry) => Partial<CacheEntry>),
   ) {
     const currEntry = await this.get(path);
-    const partialEntry: Partial<CacheEntry> = typeof partialEntryCallback ===
-      'function' ? partialEntryCallback(currEntry) : partialEntryCallback;
+    const partialEntry: Partial<CacheEntry> =
+      typeof partialEntryCallback === 'function'
+        ? partialEntryCallback(currEntry)
+        : partialEntryCallback;
 
     const entry: CacheEntry = {
       ...currEntry,
@@ -180,9 +186,12 @@ export default class Cache {
       return;
     }
 
-    await createDirectory(cacheFilename.getParent(), {
-      recursive: true,
-    });
+    await createDirectory(
+      cacheFilename.getParent(),
+      {
+        recursive: true,
+      },
+    );
     await writeFile(cacheFilename, JSON.stringify(entry, null, '  '));
   }
 }

@@ -26,11 +26,14 @@ export type NewExpression = JSNodeBase & {
   optional?: boolean;
 };
 
-export const newExpression = createBuilder<NewExpression>('NewExpression', {
-  bindingKeys: {},
-  visitorKeys: {
-    callee: true,
-    arguments: true,
-    typeArguments: true,
+export const newExpression = createBuilder<NewExpression>(
+  'NewExpression',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      callee: true,
+      arguments: true,
+      typeArguments: true,
+    },
   },
-});
+);

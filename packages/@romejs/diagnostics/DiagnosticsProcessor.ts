@@ -152,32 +152,41 @@ export default class DiagnosticsProcessor {
     }
 
     for (const filter of this.filters) {
-      if (filter.message !== undefined && filter.message !==
-          diag.description.message.value) {
+      if (
+        filter.message !== undefined &&
+        filter.message !== diag.description.message.value
+      ) {
         continue;
       }
 
-      if (filter.filename !== undefined && filter.filename !==
-          diag.location.filename) {
+      if (
+        filter.filename !== undefined &&
+        filter.filename !== diag.location.filename
+      ) {
         continue;
       }
 
-      if (filter.category !== undefined && filter.category !==
-          diag.description.category) {
+      if (
+        filter.category !== undefined &&
+        filter.category !== diag.description.category
+      ) {
         continue;
       }
 
       if (filter.start !== undefined && diag.location.start !== undefined) {
-        if (filter.start.line !== diag.location.start.line ||
-              filter.start.column !==
-              diag.location.start.column) {
+        if (
+          filter.start.line !== diag.location.start.line ||
+          filter.start.column !== diag.location.start.column
+        ) {
           continue;
         }
       }
 
-      if (filter.line !== undefined && diag.location.start !== undefined &&
-            diag.location.start.line !==
-            filter.line) {
+      if (
+        filter.line !== undefined &&
+        diag.location.start !== undefined &&
+        diag.location.start.line !== filter.line
+      ) {
         continue;
       }
 

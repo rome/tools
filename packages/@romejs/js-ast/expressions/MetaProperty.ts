@@ -14,10 +14,13 @@ export type MetaProperty = JSNodeBase & {
   property: Identifier;
 };
 
-export const metaProperty = createBuilder<MetaProperty>('MetaProperty', {
-  bindingKeys: {},
-  visitorKeys: {
-    meta: true,
-    property: true,
+export const metaProperty = createBuilder<MetaProperty>(
+  'MetaProperty',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      meta: true,
+      property: true,
+    },
   },
-});
+);

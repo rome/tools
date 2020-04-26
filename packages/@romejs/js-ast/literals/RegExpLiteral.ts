@@ -19,9 +19,12 @@ export type RegExpLiteral = JSNodeBase & {
   unicode?: boolean;
 };
 
-export const regExpLiteral = createBuilder<RegExpLiteral>('RegExpLiteral', {
-  bindingKeys: {},
-  visitorKeys: {
-    expression: true,
+export const regExpLiteral = createBuilder<RegExpLiteral>(
+  'RegExpLiteral',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      expression: true,
+    },
   },
-});
+);

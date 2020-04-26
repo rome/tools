@@ -36,9 +36,12 @@ export default class ObjIndexPropT extends T {
     data: HydrateData,
     getType: HydrateTypeFactory,
   ): T {
-    return new ObjIndexPropT(scope, originNode, getType(data.key), getType(
-      data.value,
-    ));
+    return new ObjIndexPropT(
+      scope,
+      originNode,
+      getType(data.key),
+      getType(data.value),
+    );
   }
 
   humanize(builder: HumanBuilder): string {

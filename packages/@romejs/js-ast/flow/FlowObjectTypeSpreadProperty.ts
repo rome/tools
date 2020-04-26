@@ -13,11 +13,12 @@ export type FlowObjectTypeSpreadProperty = JSNodeBase & {
   argument: AnyFlowPrimary;
 };
 
-export const flowObjectTypeSpreadProperty = createBuilder<
-  FlowObjectTypeSpreadProperty
->('FlowObjectTypeSpreadProperty', {
-  bindingKeys: {},
-  visitorKeys: {
-    argument: true,
+export const flowObjectTypeSpreadProperty = createBuilder<FlowObjectTypeSpreadProperty>(
+  'FlowObjectTypeSpreadProperty',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      argument: true,
+    },
   },
-});
+);

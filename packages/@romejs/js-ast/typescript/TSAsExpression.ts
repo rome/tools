@@ -14,7 +14,10 @@ export type TSAsExpression = JSNodeBase & {
   expression: AnyExpression;
 };
 
-export const tsAsExpression = createBuilder<TSAsExpression>('TSAsExpression', {
-  bindingKeys: {},
-  visitorKeys: {expression: true, typeAnnotation: true},
-});
+export const tsAsExpression = createBuilder<TSAsExpression>(
+  'TSAsExpression',
+  {
+    bindingKeys: {},
+    visitorKeys: {expression: true, typeAnnotation: true},
+  },
+);

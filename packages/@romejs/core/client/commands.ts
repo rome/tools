@@ -27,9 +27,9 @@ export type LocalCommand<Flags extends Dict<unknown>> = SharedCommand<Flags> & {
   ) => Promise<boolean | MasterQueryResponse>;
 };
 
-export function createLocalCommand<
-  Flags extends Dict<unknown>
->(cmd: LocalCommand<Flags>): LocalCommand<Flags> {
+export function createLocalCommand<Flags extends Dict<unknown>>(
+  cmd: LocalCommand<Flags>,
+): LocalCommand<Flags> {
   return cmd;
 }
 

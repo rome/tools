@@ -8,7 +8,9 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type JSXEmptyExpression = JSNodeBase & {type: 'JSXEmptyExpression'};
+export type JSXEmptyExpression = JSNodeBase & {
+  type: 'JSXEmptyExpression';
+};
 
 export const jsxEmptyExpression = createBuilder<JSXEmptyExpression>(
   'JSXEmptyExpression',

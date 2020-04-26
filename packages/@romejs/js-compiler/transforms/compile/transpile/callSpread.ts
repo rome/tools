@@ -21,7 +21,6 @@ import {
 
 export default {
   name: 'callSpread',
-
   enter(path: Path) {
     const {node} = path;
 

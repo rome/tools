@@ -23,40 +23,45 @@ export default {
     if (parent.type === 'FunctionExpression') {
       const {id} = parent;
       if (id !== undefined) {
-        scope.addBinding(new LetBinding({
-          node: id,
-          name: id.name,
-          scope,
-        }));
+        scope.addBinding(
+          new LetBinding({
+            node: id,
+            name: id.name,
+            scope,
+          }),
+        );
       }
     }
 
     // Add type parameters
     scope.evaluate(node.typeParameters, node);
 
-    const params = node.rest === undefined
-      ? node.params
-      : [...node.params, node.rest];
+    const params =
+      node.rest === undefined ? node.params : [...node.params, node.rest];
 
     // Add parameters
     for (const param of params) {
       for (const id of getBindingIdentifiers(param)) {
-        scope.addBinding(new LetBinding({
-          node: id,
-          name: id.name,
-          scope,
-          kind: 'parameter',
-        }));
+        scope.addBinding(
+          new LetBinding({
+            node: id,
+            name: id.name,
+            scope,
+            kind: 'parameter',
+          }),
+        );
       }
     }
 
     // Add `arguments` binding
     if (parent.type !== 'ArrowFunctionExpression') {
-      scope.addBinding(new ArgumentsBinding({
-        name: 'arguments',
-        node,
-        scope,
-      }));
+      scope.addBinding(
+        new ArgumentsBinding({
+          name: 'arguments',
+          node,
+          scope,
+        }),
+      );
     }
 
     return scope;

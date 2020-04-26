@@ -13,6 +13,7 @@ export type TSNamespaceExportDeclaration = JSNodeBase & {
   id: Identifier;
 };
 
-export const tsNamespaceExportDeclaration = createBuilder<
-  TSNamespaceExportDeclaration
->('TSNamespaceExportDeclaration', {bindingKeys: {}, visitorKeys: {id: true}});
+export const tsNamespaceExportDeclaration = createBuilder<TSNamespaceExportDeclaration>(
+  'TSNamespaceExportDeclaration',
+  {bindingKeys: {}, visitorKeys: {id: true}},
+);

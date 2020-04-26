@@ -14,10 +14,13 @@ export type WhileStatement = JSNodeBase & {
   body: AnyStatement;
 };
 
-export const whileStatement = createBuilder<WhileStatement>('WhileStatement', {
-  bindingKeys: {},
-  visitorKeys: {
-    test: true,
-    body: true,
+export const whileStatement = createBuilder<WhileStatement>(
+  'WhileStatement',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      test: true,
+      body: true,
+    },
   },
-});
+);

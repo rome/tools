@@ -233,7 +233,6 @@ export default class Parser<T> {
     return consume({
       filePath: createUnknownFilePath('argv'),
       value: flags,
-
       onDefinition: (def, valueConsumer) => {
         const key = def.objectPath.join('.');
 
@@ -258,9 +257,12 @@ export default class Parser<T> {
 
         // We've parsed arguments like `--foo bar` as `{foo: 'bar}`
         // However, --foo may be a boolean flag, so `bar` needs to be correctly added to args
-        if (def.type === 'boolean' && value !== true && value !== false &&
-              value !==
-              undefined) {
+        if (
+          def.type === 'boolean' &&
+          value !== true &&
+          value !== false &&
+          value !== undefined
+        ) {
           const argIndex = this.flagToArgIndex.get(key);
           if (argIndex === undefined) {
             throw new Error('No arg index. Should always exist.');
@@ -276,37 +278,36 @@ export default class Parser<T> {
           valueConsumer.setValue(true);
         }
       },
-
       context: {
         category: 'flags/invalid',
-
         normalizeKey: (key) => {
           return this.incorrectCaseFlags.has(key) ? key : toKebabCase(key);
         },
-
         getOriginalValue: (keys: ConsumePath) => {
           return flags[keys[0]];
         },
-
         getDiagnosticPointer: (
           keys: ConsumePath,
           target: ConsumeSourceLocationRequestTarget,
         ) => {
           const {programName} = this.opts;
 
-          return serializeCLIFlags({
-            programName,
-            commandName: this.currentCommand,
-            args: this.args,
-            defaultFlags,
-            flags,
-            incorrectCaseFlags: this.incorrectCaseFlags,
-            shorthandFlags: this.shorthandFlags,
-          }, {
-            type: 'flag',
-            key: String(keys[0]),
-            target,
-          });
+          return serializeCLIFlags(
+            {
+              programName,
+              commandName: this.currentCommand,
+              args: this.args,
+              defaultFlags,
+              flags,
+              incorrectCaseFlags: this.incorrectCaseFlags,
+              shorthandFlags: this.shorthandFlags,
+            },
+            {
+              type: 'flag',
+              key: String(keys[0]),
+              target,
+            },
+          );
         },
       },
     });
@@ -318,9 +319,8 @@ export default class Parser<T> {
 
   declareArgument(decl: ArgDeclaration) {
     // Commands may have colliding flags, this is only a problem in help mode, so make it unique
-    const key = decl.command === undefined
-      ? decl.name
-      : `${decl.command}.${decl.name}`;
+    const key =
+      decl.command === undefined ? decl.name : `${decl.command}.${decl.name}`;
 
     // Ensure it hasn't been declared more than once
     if (this.declaredFlags.has(key)) {
@@ -360,8 +360,7 @@ export default class Parser<T> {
 
     // Ignore flags from command and root parser options
     const ignoreFlags: Array<string> = [
-      ...(definedCommand !== undefined && definedCommand.command.ignoreFlags ||
-        []),
+      ...((definedCommand !== undefined && definedCommand.command.ignoreFlags) || []),
       ...(this.opts.ignoreFlags || []),
     ];
     for (const key of ignoreFlags) {
@@ -416,9 +415,9 @@ export default class Parser<T> {
 
     // Show help for --help
     if (this.helpMode) {
-      await this.showHelp(definedCommand === undefined
-        ? undefined
-        : definedCommand.command.name);
+      await this.showHelp(
+        definedCommand === undefined ? undefined : definedCommand.command.name,
+      );
       process.exit(1);
     }
 
@@ -463,7 +462,6 @@ export default class Parser<T> {
       // Add input specifier unless a boolean
       if (def.type !== 'boolean') {
         // TODO some way to customize this
-
         // Property metadata in the consumer is a fine place but we want this to be non-CLI specific
         let inputName = undefined;
 
@@ -483,8 +481,10 @@ export default class Parser<T> {
         argColumnLength = argCol.length;
       }
 
-      const descCol: string = metadata === undefined || metadata.description ===
-        undefined ? 'no description found' : metadata.description;
+      const descCol: string =
+        metadata === undefined || metadata.description === undefined
+          ? 'no description found'
+          : metadata.description;
 
       optionOutput.push({
         argName,
@@ -514,21 +514,24 @@ export default class Parser<T> {
     const {reporter} = this;
     const {programName} = this.opts;
 
-    reporter.section(`Usage`, () => {
-      if (description !== undefined) {
-        reporter.logAll(description);
-        reporter.forceSpacer();
-      }
+    reporter.section(
+      `Usage`,
+      () => {
+        if (description !== undefined) {
+          reporter.logAll(description);
+          reporter.forceSpacer();
+        }
 
-      const commandParts = [programName];
-      if (prefix !== undefined) {
-        commandParts.push(prefix);
-      }
-      commandParts.push(usage);
+        const commandParts = [programName];
+        if (prefix !== undefined) {
+          commandParts.push(prefix);
+        }
+        commandParts.push(usage);
 
-      const command = commandParts.join(' ');
-      reporter.command(command);
-    });
+        const command = commandParts.join(' ');
+        reporter.command(command);
+      },
+    );
   }
 
   showFocusedCommandHelp(commandName: string) {
@@ -554,34 +557,43 @@ export default class Parser<T> {
 
     const optLines = this.buildOptionsHelp(argKeys);
     if (optLines.length > 0) {
-      reporter.section('Command Flags', () => {
-        for (const line of optLines) {
-          reporter.logAll(line);
-        }
-      });
+      reporter.section(
+        'Command Flags',
+        () => {
+          for (const line of optLines) {
+            reporter.logAll(line);
+          }
+        },
+      );
     }
 
-    reporter.section('Global Flags', () => {
-      reporter.info('To view global flags run');
-      reporter.command('rome --help');
-    });
+    reporter.section(
+      'Global Flags',
+      () => {
+        reporter.info('To view global flags run');
+        reporter.command('rome --help');
+      },
+    );
   }
 
   showGlobalFlags() {
     const {reporter} = this;
-    reporter.section('Global Flags', () => {
-      // Show options not attached to any commands
-      const lonerArgKeys = [];
-      for (const [key, decl] of this.declaredFlags) {
-        if (decl.command === undefined) {
-          lonerArgKeys.push(key);
+    reporter.section(
+      'Global Flags',
+      () => {
+        // Show options not attached to any commands
+        const lonerArgKeys = [];
+        for (const [key, decl] of this.declaredFlags) {
+          if (decl.command === undefined) {
+            lonerArgKeys.push(key);
+          }
         }
-      }
 
-      for (const line of this.buildOptionsHelp(lonerArgKeys)) {
-        reporter.logAll(line);
-      }
-    });
+        for (const line of this.buildOptionsHelp(lonerArgKeys)) {
+          reporter.logAll(line);
+        }
+      },
+    );
   }
 
   async showHelp(commandName: undefined | string = this.ranCommand) {
@@ -614,40 +626,47 @@ export default class Parser<T> {
       categoryNames.add(category);
     }
 
-    reporter.section('Commands', () => {
-      const sortedCategoryNames: Array<string | undefined> = Array.from(
-        categoryNames,
-      ).sort();
+    reporter.section(
+      'Commands',
+      () => {
+        const sortedCategoryNames: Array<string | undefined> = Array.from(
+          categoryNames,
+        ).sort();
 
-      // Always make sure categoryless commands are displayed first
-      if (sortedCategoryNames.includes(undefined)) {
-        sortedCategoryNames.splice(sortedCategoryNames.indexOf(undefined), 1);
-        sortedCategoryNames.unshift(undefined);
-      }
-
-      for (const category of sortedCategoryNames) {
-        const commands = commandsByCategory.get(category);
-        if (commands === undefined) {
-          throw new Error('Impossible. Should always be populated.');
+        // Always make sure categoryless commands are displayed first
+        if (sortedCategoryNames.includes(undefined)) {
+          sortedCategoryNames.splice(sortedCategoryNames.indexOf(undefined), 1);
+          sortedCategoryNames.unshift(undefined);
         }
 
-        if (category !== undefined) {
-          reporter.logAll(`<emphasis>${category} Commands</emphasis>`);
+        for (const category of sortedCategoryNames) {
+          const commands = commandsByCategory.get(category);
+          if (commands === undefined) {
+            throw new Error('Impossible. Should always be populated.');
+          }
+
+          if (category !== undefined) {
+            reporter.logAll(`<emphasis>${category} Commands</emphasis>`);
+          }
+
+          // Sort by name
+          commands.sort((a, b) => a.name.localeCompare(b.name));
+
+          reporter.list(
+            commands.map((cmd) => {
+              return `<emphasis>${cmd.name}</emphasis> ${cmd.description ===
+              undefined
+                ? ''
+                : cmd.description}`;
+            }),
+          );
+          reporter.spacer();
         }
 
-        // Sort by name
-        commands.sort((a, b) => a.name.localeCompare(b.name));
-
-        reporter.list(commands.map((cmd) => {
-          return `<emphasis>${cmd.name}</emphasis> ${cmd.description ===
-            undefined ? '' : cmd.description}`;
-        }));
-        reporter.spacer();
-      }
-
-      reporter.info('To view help for a specific command run');
-      reporter.command(`${programName} command_name --help`);
-    });
+        reporter.info('To view help for a specific command run');
+        reporter.command(`${programName} command_name --help`);
+      },
+    );
 
     this.showHelpExamples(examples);
   }
@@ -660,26 +679,29 @@ export default class Parser<T> {
       return;
     }
 
-    reporter.section('Examples', () => {
-      for (const {description, command} of examples) {
-        const commandParts = [];
-        if (programName !== undefined) {
-          commandParts.push(programName);
-        }
-        if (prefix !== undefined) {
-          commandParts.push(prefix);
-        }
-        commandParts.push(command);
+    reporter.section(
+      'Examples',
+      () => {
+        for (const {description, command} of examples) {
+          const commandParts = [];
+          if (programName !== undefined) {
+            commandParts.push(programName);
+          }
+          if (prefix !== undefined) {
+            commandParts.push(prefix);
+          }
+          commandParts.push(command);
 
-        const builtCommand = commandParts.join(' ');
+          const builtCommand = commandParts.join(' ');
 
-        reporter.spacer();
-        if (description !== undefined) {
-          reporter.logAll(description);
+          reporter.spacer();
+          if (description !== undefined) {
+            reporter.logAll(description);
+          }
+          reporter.command(builtCommand);
         }
-        reporter.command(builtCommand);
-      }
-    });
+      },
+    );
   }
 
   commandRequired() {

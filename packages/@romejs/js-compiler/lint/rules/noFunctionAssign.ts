@@ -15,9 +15,10 @@ export default {
   enter(path: Path): AnyNode {
     const {node, scope} = path;
 
-    if (node.type === 'AssignmentIdentifier' &&
-          scope.getBinding(node.name) instanceof
-          FunctionBinding) {
+    if (
+      node.type === 'AssignmentIdentifier' &&
+      scope.getBinding(node.name) instanceof FunctionBinding
+    ) {
       path.context.addNodeDiagnostic(node, descriptions.LINT.NO_FUNCTION_ASSIGN);
     }
 

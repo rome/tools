@@ -22,19 +22,22 @@ export function markupToAnsi(
   input: string,
   opts: MarkupFormatOptions = {},
 ): string {
-  return formatReduceFromInput(input, {
-    ancestry: [],
-    formatTag: ansiFormatTag,
-    formatText: (value, tags) => {
-      // Format tags in reverse
-      for (let i = tags.length - 1; i >= 0; i--) {
-        const tag = tags[i];
-        value = ansiFormatText(tag, value, opts);
-      }
+  return formatReduceFromInput(
+    input,
+    {
+      ancestry: [],
+      formatTag: ansiFormatTag,
+      formatText: (value, tags) => {
+        // Format tags in reverse
+        for (let i = tags.length - 1; i >= 0; i--) {
+          const tag = tags[i];
+          value = ansiFormatText(tag, value, opts);
+        }
 
-      return formatAnsi.reset(value);
+        return formatAnsi.reset(value);
+      },
     },
-  });
+  );
 }
 
 function ansiFormatTag(
@@ -140,10 +143,10 @@ function ansiFormatText(
     }
 
     case 'color':
-      return formatAnsiBackground(attributes.get('bg'), formatAnsiForeground(
-        attributes.get('fg'),
-        value,
-      ));
+      return formatAnsiBackground(
+        attributes.get('bg'),
+        formatAnsiForeground(attributes.get('fg'), value),
+      );
   }
 }
 

@@ -27,10 +27,13 @@ export type JSXAttribute = JSNodeBase & {
     | JSXExpressionContainer;
 };
 
-export const jsxAttribute = createBuilder<JSXAttribute>('JSXAttribute', {
-  bindingKeys: {},
-  visitorKeys: {
-    name: true,
-    value: true,
+export const jsxAttribute = createBuilder<JSXAttribute>(
+  'JSXAttribute',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      name: true,
+      value: true,
+    },
   },
-});
+);

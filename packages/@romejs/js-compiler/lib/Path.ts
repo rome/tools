@@ -42,9 +42,13 @@ export default class Path {
     if (node === MOCK_PARENT) {
       this.parentPath = this;
     } else if (ancestryPaths.length === 0) {
-      this.parentPath = new Path(MOCK_PARENT, context, {
-        isMock: true,
-      });
+      this.parentPath = new Path(
+        MOCK_PARENT,
+        context,
+        {
+          isMock: true,
+        },
+      );
     } else {
       this.parentPath = ancestryPaths[0];
     }
@@ -53,9 +57,8 @@ export default class Path {
     this.parent = this.parentPath.node;
     this.context = context;
 
-    const parentScope = opts.parentScope === undefined
-      ? context.getRootScope()
-      : opts.parentScope;
+    const parentScope =
+      opts.parentScope === undefined ? context.getRootScope() : opts.parentScope;
 
     let scope = opts.scope;
     if (scope === undefined) {
@@ -120,8 +123,11 @@ export default class Path {
     }
   }
 
-  provideHook<State>( // rome-suppress-next-line lint/noExplicitAny
-  descriptor: HookDescriptor<State, any, any>, state?: State): AnyNode {
+  provideHook<State>(
+    // rome-suppress-next-line lint/noExplicitAny
+    descriptor: HookDescriptor<State, any, any>,
+    state?: State,
+  ): AnyNode {
     this.hooks.push({
       state: {
         ...descriptor.initialState,
@@ -136,10 +142,12 @@ export default class Path {
   findHook(
     descriptor: AnyHookDescriptor,
     requiredDepth: number = 0,
-  ): undefined | {
-    ref: HookInstance;
-    depth: number;
-  } {
+  ):
+    | undefined
+    | {
+        ref: HookInstance;
+        depth: number;
+      } {
     let depth = 0;
     for (const {hooks} of this.ancestryPaths) {
       for (const hook of hooks) {
@@ -173,11 +181,15 @@ export default class Path {
       );
     }
 
-    return new Path(node, this.context, {
-      parentScope: this.scope,
-      ancestryPaths: this.ancestryPaths.concat([this]),
-      nodeKey: key,
-    });
+    return new Path(
+      node,
+      this.context,
+      {
+        parentScope: this.scope,
+        ancestryPaths: this.ancestryPaths.concat([this]),
+        nodeKey: key,
+      },
+    );
   }
 
   getChildPaths(key: string): Array<Path> {
@@ -197,12 +209,16 @@ export default class Path {
     const ancestryPaths = this.ancestryPaths.concat([this]);
 
     return nodes.map((node: AnyNode, i: number) => {
-      return new Path(node, this.context, {
-        parentScope: this.scope,
-        ancestryPaths,
-        listKey: i,
-        nodeKey: key,
-      });
+      return new Path(
+        node,
+        this.context,
+        {
+          parentScope: this.scope,
+          ancestryPaths,
+          listKey: i,
+          nodeKey: key,
+        },
+      );
     });
   }
 
@@ -229,12 +245,10 @@ export default class Path {
 
   getPathOptions(): PathOptions {
     return {
-        ...this.opts,
-        hooks: this.hooks,
-        parentScope: this.scope === undefined
-          ? undefined
-          : this.scope.parentScope,
-      };
+      ...this.opts,
+      hooks: this.hooks,
+      parentScope: this.scope === undefined ? undefined : this.scope.parentScope,
+    };
   }
 
   traverse(name: string, callback: (path: Path) => void) {

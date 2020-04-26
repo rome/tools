@@ -40,9 +40,10 @@ export default function IfStatement(node: AnyNode, scope: Scope) {
         alternateScope.addBinding(name, opposite);
       }
     }*/
-    return new UnionT(scope, undefined, [
-      consequent,
-      alternateScope.evaluate(node.alternate),
-    ]);
+    return new UnionT(
+      scope,
+      undefined,
+      [consequent, alternateScope.evaluate(node.alternate)],
+    );
   }
 }

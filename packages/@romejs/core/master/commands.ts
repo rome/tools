@@ -34,20 +34,18 @@ import {ClientFlags, ClientRequestFlags} from '../common/types/client';
 import {JSONPropertyValue} from '@romejs/codec-json';
 import {SharedCommand} from '../common/commands';
 
-export type MasterCommand<Flags extends Dict<unknown>> =
-  & SharedCommand<Flags>
-  & {
-    overrideClientFlags?: Partial<ClientFlags>;
-    overrideRequestFlags?: Partial<ClientRequestFlags>;
-    callback: (
-      req: MasterRequest,
-      commandFlags: Flags,
-    ) => undefined | Promise<JSONPropertyValue>;
-  };
+export type MasterCommand<Flags extends Dict<unknown>> = SharedCommand<Flags> & {
+  overrideClientFlags?: Partial<ClientFlags>;
+  overrideRequestFlags?: Partial<ClientRequestFlags>;
+  callback: (
+    req: MasterRequest,
+    commandFlags: Flags,
+  ) => undefined | Promise<JSONPropertyValue>;
+};
 
-export function createMasterCommand<
-  Flags extends Dict<unknown>
->(cmd: MasterCommand<Flags>): MasterCommand<Flags> {
+export function createMasterCommand<Flags extends Dict<unknown>>(
+  cmd: MasterCommand<Flags>,
+): MasterCommand<Flags> {
   return cmd;
 }
 

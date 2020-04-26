@@ -14,11 +14,15 @@ import ObjT from './ObjT';
 
 export default class NumericLiteralT extends ObjT {
   constructor(scope: Scope, originNode: undefined | AnyNode, value: number) {
-    super(scope, originNode, {
-      props: [],
-      proto: scope.intrinsics.NumberPrototype,
-      calls: [],
-    });
+    super(
+      scope,
+      originNode,
+      {
+        props: [],
+        proto: scope.intrinsics.NumberPrototype,
+        calls: [],
+      },
+    );
     this.value = value;
   }
 
@@ -43,8 +47,9 @@ export default class NumericLiteralT extends ObjT {
   }
 
   compatibleWith(type: T): boolean {
-    return type instanceof NumericT || type instanceof NumericLiteralT &&
-        type.value ===
-        this.value;
+    return (
+      type instanceof NumericT ||
+      (type instanceof NumericLiteralT && type.value === this.value)
+    );
   }
 }

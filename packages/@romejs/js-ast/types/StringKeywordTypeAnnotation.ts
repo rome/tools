@@ -12,9 +12,10 @@ export type StringKeywordTypeAnnotation = JSNodeBase & {
   type: 'StringKeywordTypeAnnotation';
 };
 
-export const stringKeywordTypeAnnotation = createBuilder<
-  StringKeywordTypeAnnotation
->('StringKeywordTypeAnnotation', {
-  bindingKeys: {},
-  visitorKeys: {},
-});
+export const stringKeywordTypeAnnotation = createBuilder<StringKeywordTypeAnnotation>(
+  'StringKeywordTypeAnnotation',
+  {
+    bindingKeys: {},
+    visitorKeys: {},
+  },
+);

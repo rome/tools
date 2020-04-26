@@ -18,10 +18,13 @@ export type TSMappedType = JSNodeBase & {
   readonly?: TSMappedTypeBoolean;
 };
 
-export const tsMappedType = createBuilder<TSMappedType>('TSMappedType', {
-  bindingKeys: {},
-  visitorKeys: {
-    typeParameter: true,
-    typeAnnotation: true,
+export const tsMappedType = createBuilder<TSMappedType>(
+  'TSMappedType',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      typeParameter: true,
+      typeAnnotation: true,
+    },
   },
-});
+);

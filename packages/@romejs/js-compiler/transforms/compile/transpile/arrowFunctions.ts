@@ -38,16 +38,20 @@ function isInsideArrow(path: Path): boolean {
   return false;
 }
 
-type State = {id: undefined | string};
+type State = {
+  id: undefined | string;
+};
 
 const arrowProvider = createHook<State, ThisExpression, Identifier>({
   name: 'arrowProvider',
-
   initialState: {
     id: undefined,
   },
-
-  call(path: Path, state: State, node: ThisExpression): {
+  call(
+    path: Path,
+    state: State,
+    node: ThisExpression,
+  ): {
     value: Identifier;
     state: State;
   } {
@@ -62,12 +66,13 @@ const arrowProvider = createHook<State, ThisExpression, Identifier>({
       },
     };
   },
-
   exit(path: Path, state: State): AnyNode {
     const {node} = path;
 
-    if (node.type !== 'FunctionDeclaration' && node.type !==
-        'FunctionExpression') {
+    if (
+      node.type !== 'FunctionDeclaration' &&
+      node.type !== 'FunctionExpression'
+    ) {
       throw new Error('Only ever expected function nodes');
     }
 
@@ -76,21 +81,23 @@ const arrowProvider = createHook<State, ThisExpression, Identifier>({
       // No `ThisExpression`s were rewritten
       return node;
     } else {
-      // Inject the binding into the function block
       return {
+        // Inject the binding into the function block
         ...node,
         body: {
           ...node.body,
           body: [
-            variableDeclarationStatement.quick(variableDeclaration.create({
-              kind: 'const',
-              declarations: [
-                variableDeclarator.create({
-                  id: bindingIdentifier.quick(state.id),
-                  init: thisExpression.create({}),
-                }),
-              ],
-            })),
+            variableDeclarationStatement.quick(
+              variableDeclaration.create({
+                kind: 'const',
+                declarations: [
+                  variableDeclarator.create({
+                    id: bindingIdentifier.quick(state.id),
+                    init: thisExpression.create({}),
+                  }),
+                ],
+              }),
+            ),
             ...node.body.body,
           ],
         },
@@ -101,12 +108,13 @@ const arrowProvider = createHook<State, ThisExpression, Identifier>({
 
 export default {
   name: 'arrowFunctions',
-
   enter(path: Path) {
     const {node} = path;
 
-    if (node.type === 'FunctionDeclaration' || node.type ===
-        'FunctionExpression') {
+    if (
+      node.type === 'FunctionDeclaration' ||
+      node.type === 'FunctionExpression'
+    ) {
       // Add a provider to consume `this` inside of arrow functions
       return path.provideHook(arrowProvider);
     }
@@ -118,15 +126,13 @@ export default {
 
     return node;
   },
-
   exit(path: Path) {
     const {node} = path;
 
     if (node.type === 'ArrowFunctionExpression') {
-      // Convert all arrow functions into normal functions, we do this in the `exit` method because we
-
-      // still need the arrow to be in the tree for the `isInsideArrow` call in `enter to work
       return {
+        // Convert all arrow functions into normal functions, we do this in the `exit` method because we
+        // still need the arrow to be in the tree for the `isInsideArrow` call in `enter to work
         ...node,
         type: 'FunctionExpression',
       };

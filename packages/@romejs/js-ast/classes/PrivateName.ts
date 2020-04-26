@@ -13,9 +13,12 @@ export type PrivateName = JSNodeBase & {
   id: Identifier;
 };
 
-export const privateName = createBuilder<PrivateName>('PrivateName', {
-  bindingKeys: {},
-  visitorKeys: {
-    id: true,
+export const privateName = createBuilder<PrivateName>(
+  'PrivateName',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      id: true,
+    },
   },
-});
+);

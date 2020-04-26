@@ -8,7 +8,9 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type RegExpStartCharacter = JSNodeBase & {type: 'RegExpStartCharacter'};
+export type RegExpStartCharacter = JSNodeBase & {
+  type: 'RegExpStartCharacter';
+};
 
 export const regExpStartCharacter = createBuilder<RegExpStartCharacter>(
   'RegExpStartCharacter',

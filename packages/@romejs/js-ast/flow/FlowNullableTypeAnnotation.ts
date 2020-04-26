@@ -13,11 +13,12 @@ export type FlowNullableTypeAnnotation = JSNodeBase & {
   typeAnnotation: AnyFlowPrimary;
 };
 
-export const flowNullableTypeAnnotation = createBuilder<
-  FlowNullableTypeAnnotation
->('FlowNullableTypeAnnotation', {
-  bindingKeys: {},
-  visitorKeys: {
-    typeAnnotation: true,
+export const flowNullableTypeAnnotation = createBuilder<FlowNullableTypeAnnotation>(
+  'FlowNullableTypeAnnotation',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      typeAnnotation: true,
+    },
   },
-});
+);

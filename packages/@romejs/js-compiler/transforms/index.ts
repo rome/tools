@@ -80,9 +80,9 @@ export const stageTransforms: TransformStageFactories = {
 
     if (opts.mode === 'modern') {
       transforms.push(requireRewriteTransform);
-      transforms.push(opts.analyze.moduleType === 'cjs'
-        ? cjsRootTransform
-        : esToRefTransform);
+      transforms.push(
+        opts.analyze.moduleType === 'cjs' ? cjsRootTransform : esToRefTransform,
+      );
     } else {
       transforms.push(inlineRequiresTransform);
       transforms.push(esToCJSTransform);

@@ -13,9 +13,12 @@ export type BreakStatement = JSNodeBase & {
   label?: Identifier;
 };
 
-export const breakStatement = createBuilder<BreakStatement>('BreakStatement', {
-  bindingKeys: {},
-  visitorKeys: {
-    label: true,
+export const breakStatement = createBuilder<BreakStatement>(
+  'BreakStatement',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      label: true,
+    },
   },
-});
+);

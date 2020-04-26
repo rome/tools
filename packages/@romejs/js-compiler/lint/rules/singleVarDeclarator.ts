@@ -18,19 +18,22 @@ export default {
   enter(path: Path): TransformExitResult {
     const {node} = path;
 
-    if (node.type === 'VariableDeclarationStatement' &&
-          node.declaration.declarations.length >
-          1) {
+    if (
+      node.type === 'VariableDeclarationStatement' &&
+      node.declaration.declarations.length > 1
+    ) {
       const fixed: Array<VariableDeclarationStatement> = [];
       const {kind} = node.declaration;
 
       for (const declarator of node.declaration.declarations) {
-        fixed.push(variableDeclarationStatement.quick(
-          variableDeclaration.create({
-            kind,
-            declarations: [declarator],
-          }),
-        ));
+        fixed.push(
+          variableDeclarationStatement.quick(
+            variableDeclaration.create({
+              kind,
+              declarations: [declarator],
+            }),
+          ),
+        );
       }
 
       return path.context.addFixableDiagnostic(

@@ -51,10 +51,13 @@ export type ManifestBugs = {
 
 export type ManifestExports = RelativeFilePathMap<ManifestExportConditions>;
 
-export type ManifestExportConditions = Map<string, {
-  consumer: Consumer;
-  relative: RelativeFilePath;
-}>;
+export type ManifestExportConditions = Map<
+  string,
+  {
+    consumer: Consumer;
+    relative: RelativeFilePath;
+  }
+>;
 
 export type ManifestName = {
   org?: string;

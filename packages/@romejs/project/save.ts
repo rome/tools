@@ -62,13 +62,15 @@ export async function modifyProjectConfig(
   if (diagnostics !== undefined) {
     // Set the `code` property on relevant diagnostics since our changes don't exist on disk
     diagnostics = diagnostics.map((diag) => {
-      return diag.location.filename === configPath.join() ? {
-        ...diag,
-        location: {
-          ...diag.location,
-          sourceText: stringified,
-        },
-      } : diag;
+      return diag.location.filename === configPath.join()
+        ? {
+            ...diag,
+            location: {
+              ...diag.location,
+              sourceText: stringified,
+            },
+          }
+        : diag;
     });
 
     throw new DiagnosticsError(

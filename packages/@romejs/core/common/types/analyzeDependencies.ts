@@ -32,25 +32,29 @@ export type AnalyzeExportLocal = {
   name: string;
 };
 
-export type AnyAnalyzeExport = AnalyzeExportLocal | {
-  type: 'externalNamespace';
-  kind: ConstImportModuleKind;
-  loc?: SourceLocation;
-  exported: string;
-  source: string;
-} | {
-  type: 'external';
-  kind: ConstImportModuleKind;
-  loc?: SourceLocation;
-  imported: string;
-  exported: string;
-  source: string;
-} | {
-  type: 'externalAll';
-  loc?: SourceLocation;
-  kind: ConstImportModuleKind;
-  source: string;
-};
+export type AnyAnalyzeExport =
+  | AnalyzeExportLocal
+  | {
+      type: 'externalNamespace';
+      kind: ConstImportModuleKind;
+      loc?: SourceLocation;
+      exported: string;
+      source: string;
+    }
+  | {
+      type: 'external';
+      kind: ConstImportModuleKind;
+      loc?: SourceLocation;
+      imported: string;
+      exported: string;
+      source: string;
+    }
+  | {
+      type: 'externalAll';
+      loc?: SourceLocation;
+      kind: ConstImportModuleKind;
+      source: string;
+    };
 
 export type AnalyzeDependency = {
   names: Array<AnalyzeDependencyName>;
@@ -71,13 +75,11 @@ export type AnalyzeDependencyImportUsageItem = {
   kind: ConstImportModuleKind;
 };
 
-export type AnalyzeDependencyImportFirstUsage = Array<
-  AnalyzeDependencyImportUsageItem
->;
+export type AnalyzeDependencyImportFirstUsage = Array<AnalyzeDependencyImportUsageItem>;
 
 export type AnalyzeDependencyTopLevelLocalBindings = Dict<
-  | undefined
-  | SourceLocation>;
+  undefined | SourceLocation
+>;
 
 export type AnalyzeDependencyResult = {
   topLevelLocalBindings: AnalyzeDependencyTopLevelLocalBindings;

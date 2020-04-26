@@ -21,14 +21,17 @@ export type FlowOpaqueType = JSNodeBase & {
   impltype?: AnyFlowPrimary;
 };
 
-export const flowOpaqueType = createBuilder<FlowOpaqueType>('FlowOpaqueType', {
-  bindingKeys: {
-    id: true,
+export const flowOpaqueType = createBuilder<FlowOpaqueType>(
+  'FlowOpaqueType',
+  {
+    bindingKeys: {
+      id: true,
+    },
+    visitorKeys: {
+      id: true,
+      typeParameters: true,
+      impltype: true,
+      supertype: true,
+    },
   },
-  visitorKeys: {
-    id: true,
-    typeParameters: true,
-    impltype: true,
-    supertype: true,
-  },
-});
+);

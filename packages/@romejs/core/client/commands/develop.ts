@@ -14,11 +14,9 @@ export default createLocalCommand({
   description: 'TODO',
   usage: '',
   examples: [],
-
   defineFlags() {
     return {};
   },
-
   async callback(req: ClientRequest) {
     const existingServer = await req.client.tryConnectToExistingDaemon();
     const hasExistingServer = existingServer !== undefined;
@@ -27,10 +25,13 @@ export default createLocalCommand({
       await req.client.forceStartDaemon();
     }
 
-    await req.client.query({
-      ...req.query,
-      terminateWhenIdle: true,
-    }, 'master');
+    await req.client.query(
+      {
+        ...req.query,
+        terminateWhenIdle: true,
+      },
+      'master',
+    );
 
     return true;
   },

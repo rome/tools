@@ -13,9 +13,12 @@ export type DoExpression = JSNodeBase & {
   body: BlockStatement;
 };
 
-export const doExpression = createBuilder<DoExpression>('DoExpression', {
-  bindingKeys: {},
-  visitorKeys: {
-    body: true,
+export const doExpression = createBuilder<DoExpression>(
+  'DoExpression',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      body: true,
+    },
   },
-});
+);

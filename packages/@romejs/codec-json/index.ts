@@ -56,9 +56,11 @@ export function tokenizeJSON(
   return createParser(opts).tokenizeAll();
 }
 
-export function stringifyJSON(opts: {
-  consumer: Consumer;
-  comments: PathToComments;
-}): string {
+export function stringifyJSON(
+  opts: {
+    consumer: Consumer;
+    comments: PathToComments;
+  },
+): string {
   return stringifyRootConsumer(opts.consumer, opts.comments);
 }

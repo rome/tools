@@ -36,11 +36,14 @@ export function formatJS(
     ast.type === 'Program' ? ast.comments : opts.comments,
   );
   const token = builder.tokenize(ast, MOCK_PARENT);
-  const formatted = printTokenToString(token, {
-    indentWidth: 2,
-    printWidth: opts.format === 'pretty' ? 80 : Infinity,
-    rootIndent: opts.indent ?? 0,
-  });
+  const formatted = printTokenToString(
+    token,
+    {
+      indentWidth: 2,
+      printWidth: opts.format === 'pretty' ? 80 : Infinity,
+      rootIndent: opts.indent ?? 0,
+    },
+  );
 
   return formatted;
 }

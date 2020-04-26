@@ -49,7 +49,8 @@ async function tryChain(
     try {
       await fs.promises.access(possible);
       return possible;
-    } catch (err) {}
+    } catch (err) {
+    }
   }
   return undefined;
 }
@@ -101,7 +102,8 @@ async function getRomeLocation(): Promise<undefined | string> {
     const possible = path.join(os.tmpdir(), 'rome-dev', 'index.js');
     await fs.promises.access(possible);
     return possible;
-  } catch (err) {}
+  } catch (err) {
+  }
 
   return undefined;
 }

@@ -18,12 +18,13 @@ export type TSExpressionWithTypeArguments = JSNodeBase & {
   typeParameters?: TSTypeParameterInstantiation;
 };
 
-export const tsExpressionWithTypeArguments = createBuilder<
-  TSExpressionWithTypeArguments
->('TSExpressionWithTypeArguments', {
-  bindingKeys: {},
-  visitorKeys: {
-    expression: true,
-    typeParameters: true,
+export const tsExpressionWithTypeArguments = createBuilder<TSExpressionWithTypeArguments>(
+  'TSExpressionWithTypeArguments',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      expression: true,
+      typeParameters: true,
+    },
   },
-});
+);

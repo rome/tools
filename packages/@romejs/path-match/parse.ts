@@ -21,8 +21,8 @@ type ParseMode = 'path' | 'pattern';
 
 export type PathMatchParserOptions = ParserOptions;
 
-const createPathMatchParser = createParser(
-  (ParserCore) => class PathMatchParser extends ParserCore<Tokens, void> {
+const createPathMatchParser = createParser((ParserCore) =>
+  class PathMatchParser extends ParserCore<Tokens, void> {
     constructor(opts: PathMatchParserOptions, mode: ParseMode) {
       super(opts, 'parse/patchMatch');
       this.mode = mode;
@@ -88,9 +88,10 @@ const createPathMatchParser = createParser(
         return this.finishToken('Separator', ob1Add(index, 2));
       }
 
-      const [value, end] = this.readInputFrom(index, this.isWordCharacter.bind(
-        this,
-      ));
+      const [value, end] = this.readInputFrom(
+        index,
+        this.isWordCharacter.bind(this),
+      );
       return this.finishValueToken('Word', value, end);
     }
 
@@ -148,8 +149,11 @@ const createPathMatchParser = createParser(
       }
 
       // Keep consuming tokens until we hit a separator or a comment
-      while (!this.matchToken('Hash') && !this.matchToken('EOF') &&
-        !this.eatSeparators()) {
+      while (
+        !this.matchToken('Hash') &&
+        !this.matchToken('EOF') &&
+        !this.eatSeparators()
+      ) {
         parts.push(this.parsePatternSegmentPart());
       }
 
@@ -226,11 +230,13 @@ const createPathMatchParser = createParser(
       }
 
       // Get a trailing comment
+
       let comment = '';
       if (this.eatToken('Hash')) {
-        comment = this.getRawInput(this.getToken().start, ob1Coerce0(
-          this.input.length,
-        ));
+        comment = this.getRawInput(
+          this.getToken().start,
+          ob1Coerce0(this.input.length),
+        );
       }
 
       let root = false;
@@ -284,7 +290,7 @@ const createPathMatchParser = createParser(
         });
       }
     }
-  },
+  }
 );
 
 export function parsePattern(opts: PathMatchParserOptions): PathPatternNode {

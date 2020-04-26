@@ -30,12 +30,8 @@ export * from './scope/bindings';
 // utils
 export * from './constants';
 
-export {
-  areAnalyzeDependencyResultsEqual,
-} from './api/analyzeDependencies/utils';
-export {
-  getPrefixedNamespace as getPrefixedBundleNamespace,
-} from './transforms/compileForBundle/_utils';
+export {areAnalyzeDependencyResultsEqual} from './api/analyzeDependencies/utils';
+export {getPrefixedNamespace as getPrefixedBundleNamespace} from './transforms/compileForBundle/_utils';
 export {default as createHook} from './api/createHook';
 export {
   extractSuppressionsFromProgram,

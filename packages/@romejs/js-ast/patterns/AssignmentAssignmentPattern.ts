@@ -20,13 +20,14 @@ export type AssignmentAssignmentPattern = JSNodeBase & {
   meta?: PatternMeta;
 };
 
-export const assignmentAssignmentPattern = createBuilder<
-  AssignmentAssignmentPattern
->('AssignmentAssignmentPattern', {
-  bindingKeys: {},
-  visitorKeys: {
-    left: true,
-    right: true,
-    meta: true,
+export const assignmentAssignmentPattern = createBuilder<AssignmentAssignmentPattern>(
+  'AssignmentAssignmentPattern',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      left: true,
+      right: true,
+      meta: true,
+    },
   },
-});
+);

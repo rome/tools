@@ -32,19 +32,19 @@ export type JSXElement = JSNodeBase & {
   attributes: Array<JSXSpreadAttribute | JSXAttribute>;
   selfClosing: boolean;
   children: Array<
-    | JSXText
-    | JSXExpressionContainer
-    | JSXSpreadChild
-    | JSXElement
-    | JSXFragment>;
+    JSXText | JSXExpressionContainer | JSXSpreadChild | JSXElement | JSXFragment
+  >;
 };
 
-export const jsxElement = createBuilder<JSXElement>('JSXElement', {
-  bindingKeys: {},
-  visitorKeys: {
-    name: true,
-    typeArguments: true,
-    attributes: true,
-    children: true,
+export const jsxElement = createBuilder<JSXElement>(
+  'JSXElement',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      name: true,
+      typeArguments: true,
+      attributes: true,
+      children: true,
+    },
   },
-});
+);

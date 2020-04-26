@@ -158,37 +158,51 @@ export default class DependencyGraph {
     return mod;
   }
 
-  async seed({
-    paths,
-    diagnosticsProcessor,
-    analyzeProgress,
-    validate = false,
-  }: {
-    paths: Array<AbsoluteFilePath>;
-    diagnosticsProcessor: DiagnosticsProcessor;
-    analyzeProgress?: ReporterProgress;
-    validate?: boolean;
-  }): Promise<void> {
+  async seed(
+    {
+      paths,
+      diagnosticsProcessor,
+      analyzeProgress,
+      validate = false,
+    }: {
+      paths: Array<AbsoluteFilePath>;
+      diagnosticsProcessor: DiagnosticsProcessor;
+      analyzeProgress?: ReporterProgress;
+      validate?: boolean;
+    },
+  ): Promise<void> {
     const workerQueue: DependencyGraphWorkerQueue = new WorkerQueue(this.master);
 
     workerQueue.addCallback(async (path, item) => {
-      await this.resolve(path, {
-        workerQueue,
-        all: item.all,
-        async: item.async,
-        ancestry: item.ancestry,
-      }, diagnosticsProcessor, analyzeProgress);
+      await this.resolve(
+        path,
+        {
+          workerQueue,
+          all: item.all,
+          async: item.async,
+          ancestry: item.ancestry,
+        },
+        diagnosticsProcessor,
+        analyzeProgress,
+      );
     });
 
     // Add initial queue items
-    const roots: Array<DependencyNode> = await Promise.all(paths.map(
-      (path) => this.resolve(path, {
-        workerQueue,
-        all: true,
-        async: false,
-        ancestry: [],
-      }, diagnosticsProcessor, analyzeProgress),
-    ));
+    const roots: Array<DependencyNode> = await Promise.all(
+      paths.map((path) =>
+        this.resolve(
+          path,
+          {
+            workerQueue,
+            all: true,
+            async: false,
+            ancestry: [],
+          },
+          diagnosticsProcessor,
+          analyzeProgress,
+        )
+      ),
+    );
 
     await workerQueue.spin();
 
@@ -208,8 +222,10 @@ export default class DependencyGraph {
     diagnosticsProcessor: DiagnosticsProcessor,
   ): boolean {
     const resolvedImports = node.resolveImports();
-    return diagnosticsProcessor.addDiagnostics(resolvedImports.diagnostics).length >
-        0;
+    return (
+      diagnosticsProcessor.addDiagnostics(resolvedImports.diagnostics).length >
+      0
+    );
   }
 
   validateTransitive(
@@ -232,7 +248,6 @@ export default class DependencyGraph {
       ancestry: Array<string>;
       workerQueue: DependencyGraphWorkerQueue;
     },
-
     diagnosticsProcessor: DiagnosticsProcessor,
     analyzeProgress?: ReporterProgress,
   ): Promise<DependencyNode> {
@@ -286,48 +301,61 @@ export default class DependencyGraph {
     const origin = remote === undefined ? path : remote.getParent();
 
     // Resolve full locations
-    await Promise.all(dependencies.map(async (dep) => {
-      const {source, optional} = dep;
-      if (this.isExternal(source)) {
-        return;
-      }
+    await Promise.all(
+      dependencies.map(async (dep) => {
+        const {source, optional} = dep;
+        if (this.isExternal(source)) {
+          return;
+        }
 
-      const {diagnostics} = await catchDiagnostics(async () => {
-        const resolved = await master.resolver.resolveAssert({
-          ...this.resolverOpts,
-          origin,
-          source: createUnknownFilePath(source),
-        }, dep.loc === undefined ? undefined : {
-          location: {
-            sourceText: undefined,
-            ...dep.loc,
-            language: 'js',
-            mtime: undefined,
+        const {diagnostics} = await catchDiagnostics(
+          async () => {
+            const resolved = await master.resolver.resolveAssert(
+              {
+                ...this.resolverOpts,
+                origin,
+                source: createUnknownFilePath(source),
+              },
+              dep.loc === undefined
+                ? undefined
+                : {
+                    location: {
+                      sourceText: undefined,
+                      ...dep.loc,
+                      language: 'js',
+                      mtime: undefined,
+                    },
+                  },
+            );
+
+            node.addDependency(source, resolved.path, dep);
           },
-        });
+          {
+            category: 'DependencyGraph',
+            message: 'Caught by resolve',
+          },
+        );
 
-        node.addDependency(source, resolved.path, dep);
-      }, {
-        category: 'DependencyGraph',
-        message: 'Caught by resolve',
-      });
-
-      if (diagnostics !== undefined && !optional) {
-        diagnosticsProcessor.addDiagnostics(diagnostics);
-      }
-    }));
+        if (diagnostics !== undefined && !optional) {
+          diagnosticsProcessor.addDiagnostics(diagnostics);
+        }
+      }),
+    );
 
     // Queue our dependencies...
     const subAncestry = [...ancestry, filename];
     for (const path of node.getAbsoluteDependencies()) {
       const dep = node.getDependencyInfoFromAbsolute(path).analyze;
-      await opts.workerQueue.pushQueue(path, {
-        all: dep.all,
-        async: dep.async,
-        type: dep.type,
-        loc: dep.loc,
-        ancestry: subAncestry,
-      });
+      await opts.workerQueue.pushQueue(
+        path,
+        {
+          all: dep.all,
+          async: dep.async,
+          type: dep.type,
+          loc: dep.loc,
+          ancestry: subAncestry,
+        },
+      );
     }
 
     if (analyzeProgress !== undefined) {

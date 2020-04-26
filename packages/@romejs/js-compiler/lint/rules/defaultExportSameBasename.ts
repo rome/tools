@@ -49,32 +49,35 @@ export default {
         }
       }
 
-      if (defaultExport !== undefined && isValidDeclaration(
-          defaultExport.declaration,
-        )) {
+      if (
+        defaultExport !== undefined &&
+        isValidDeclaration(defaultExport.declaration)
+      ) {
         const {declaration} = defaultExport;
 
         // Get the export default id
         const id = declaration.id;
         if (id !== undefined && context.path !== undefined) {
-          const type = declaration.type === 'FunctionDeclaration'
-            ? 'function'
-            : 'class';
+          const type =
+            declaration.type === 'FunctionDeclaration' ? 'function' : 'class';
           const basename = filenameToId(context.path, type === 'class');
 
           if (basename !== id.name) {
             const correctFilename = id.name + context.path.getExtensions();
 
-            return context.addFixableDiagnostic({
-              target: id,
-              old: node,
-              fixed: renameBindings(path, new Map([[id.name, basename]])),
-            }, descriptions.LINT.DEFAULT_EXPORT_SAME_BASENAME({
-              defaultName: id.name,
-              defaultType: type,
-              actualFilename: basename,
-              correctFilename,
-            }));
+            return context.addFixableDiagnostic(
+              {
+                target: id,
+                old: node,
+                fixed: renameBindings(path, new Map([[id.name, basename]])),
+              },
+              descriptions.LINT.DEFAULT_EXPORT_SAME_BASENAME({
+                defaultName: id.name,
+                defaultType: type,
+                actualFilename: basename,
+                correctFilename,
+              }),
+            );
           }
         }
       }

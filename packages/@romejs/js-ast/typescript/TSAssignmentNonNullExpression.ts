@@ -13,9 +13,10 @@ export type TSAssignmentNonNullExpression = JSNodeBase & {
   expression: AnyTargetAssignmentPattern;
 };
 
-export const tsAssignmentNonNullExpression = createBuilder<
-  TSAssignmentNonNullExpression
->('TSAssignmentNonNullExpression', {
-  bindingKeys: {},
-  visitorKeys: {expression: true},
-});
+export const tsAssignmentNonNullExpression = createBuilder<TSAssignmentNonNullExpression>(
+  'TSAssignmentNonNullExpression',
+  {
+    bindingKeys: {},
+    visitorKeys: {expression: true},
+  },
+);

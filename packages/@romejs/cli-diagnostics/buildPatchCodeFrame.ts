@@ -55,8 +55,11 @@ export default function buildPatchCodeFrame(
     }
 
     if (hasChange) {
-      for (let start = i - CODE_FRAME_CONTEXT_LINES; start < i +
-        CODE_FRAME_CONTEXT_LINES; start++) {
+      for (
+        let start = i - CODE_FRAME_CONTEXT_LINES;
+        start < i + CODE_FRAME_CONTEXT_LINES;
+        start++
+      ) {
         shownLines.add(start);
 
         if (start > lastVisibleLine) {
@@ -130,8 +133,7 @@ export default function buildPatchCodeFrame(
       gutterWithLine = `<emphasis>${CODE_FRAME_INDENT}<pad count="${String(
         lineLength,
       )}">${String(lineNo)}</pad>${GUTTER}</emphasis>`;
-        gutterNoLine =
-        `<emphasis>${CODE_FRAME_INDENT}${' '.repeat(lineLength)}${GUTTER}</emphasis>`;
+      gutterNoLine = `<emphasis>${CODE_FRAME_INDENT}${' '.repeat(lineLength)}${GUTTER}</emphasis>`;
     }
 
     if (hasDeletions) {

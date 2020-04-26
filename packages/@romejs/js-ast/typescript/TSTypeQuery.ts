@@ -13,9 +13,12 @@ export type TSTypeQuery = JSNodeBase & {
   exprName: TSImportType | AnyTSEntityName;
 };
 
-export const tsTypeQuery = createBuilder<TSTypeQuery>('TSTypeQuery', {
-  bindingKeys: {},
-  visitorKeys: {
-    exprName: true,
+export const tsTypeQuery = createBuilder<TSTypeQuery>(
+  'TSTypeQuery',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      exprName: true,
+    },
   },
-});
+);

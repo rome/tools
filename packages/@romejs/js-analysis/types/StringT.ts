@@ -14,11 +14,15 @@ import T from './T';
 
 export default class StringT extends ObjT {
   constructor(scope: Scope, originNode: undefined | AnyNode) {
-    super(scope, originNode, {
-      props: [],
-      proto: scope.intrinsics.StringPrototype,
-      calls: [],
-    });
+    super(
+      scope,
+      originNode,
+      {
+        props: [],
+        proto: scope.intrinsics.StringPrototype,
+        calls: [],
+      },
+    );
   }
 
   static type = 'StringT';

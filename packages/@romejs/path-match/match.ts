@@ -51,6 +51,7 @@ function matchSegment(path: string, patternSeg: PatternSegmentNode): boolean {
       }
 
       // We consumed the whole buffer and nothing matched
+
       return false;
     }
 

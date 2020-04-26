@@ -14,9 +14,12 @@ export type TSTypeOperator = JSNodeBase & {
   typeAnnotation: AnyTSPrimary;
 };
 
-export const tsTypeOperator = createBuilder<TSTypeOperator>('TSTypeOperator', {
-  bindingKeys: {},
-  visitorKeys: {
-    typeAnnotation: true,
+export const tsTypeOperator = createBuilder<TSTypeOperator>(
+  'TSTypeOperator',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      typeAnnotation: true,
+    },
   },
-});
+);

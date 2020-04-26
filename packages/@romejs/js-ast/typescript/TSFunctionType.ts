@@ -14,10 +14,13 @@ export type TSFunctionType = JSNodeBase & {
   typeAnnotation: AnyPrimaryType;
 };
 
-export const tsFunctionType = createBuilder<TSFunctionType>('TSFunctionType', {
-  bindingKeys: {},
-  visitorKeys: {
-    meta: true,
-    typeAnnotation: true,
+export const tsFunctionType = createBuilder<TSFunctionType>(
+  'TSFunctionType',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      meta: true,
+      typeAnnotation: true,
+    },
   },
-});
+);

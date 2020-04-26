@@ -13,9 +13,10 @@ export type BooleanLiteralTypeAnnotation = JSNodeBase & {
   value: boolean;
 };
 
-export const booleanLiteralTypeAnnotation = createBuilder<
-  BooleanLiteralTypeAnnotation
->('BooleanLiteralTypeAnnotation', {
-  bindingKeys: {},
-  visitorKeys: {},
-});
+export const booleanLiteralTypeAnnotation = createBuilder<BooleanLiteralTypeAnnotation>(
+  'BooleanLiteralTypeAnnotation',
+  {
+    bindingKeys: {},
+    visitorKeys: {},
+  },
+);

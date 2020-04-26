@@ -15,13 +15,16 @@ export default {
     const {node, context} = path;
 
     if (node.type === 'SwitchCase' && node.consequent.length > 1) {
-      return context.addFixableDiagnostic({
-        old: node,
-        fixed: {
-          ...node,
-          consequent: [blockStatement.quick(node.consequent)],
+      return context.addFixableDiagnostic(
+        {
+          old: node,
+          fixed: {
+            ...node,
+            consequent: [blockStatement.quick(node.consequent)],
+          },
         },
-      }, descriptions.LINT.CASE_SINGLE_STATEMENT);
+        descriptions.LINT.CASE_SINGLE_STATEMENT,
+      );
     }
 
     return node;

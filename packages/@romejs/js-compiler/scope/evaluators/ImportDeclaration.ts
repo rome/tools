@@ -20,8 +20,8 @@ export default {
     const source = node.source.value;
 
     for (const specifier of getImportSpecifiers(node)) {
-      let kind: ConstImportModuleKind = specifier.local.importKind ||
-        node.importKind || 'value';
+      let kind: ConstImportModuleKind =
+        specifier.local.importKind || node.importKind || 'value';
       let meta: undefined | ImportBindingMeta;
 
       if (specifier.type === 'ImportNamespaceSpecifier') {
@@ -50,11 +50,16 @@ export default {
         return;
       }
 
-      scope.addBinding(new ImportBinding({
-        node: specifier.local.name,
-        name: specifier.local.name.name,
-        scope,
-      }, meta));
+      scope.addBinding(
+        new ImportBinding(
+          {
+            node: specifier.local.name,
+            name: specifier.local.name.name,
+            scope,
+          },
+          meta,
+        ),
+      );
     }
   },
 };

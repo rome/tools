@@ -23,12 +23,15 @@ export type ClassProperty = JSNodeBase & {
   definite?: boolean;
 };
 
-export const classProperty = createBuilder<ClassProperty>('ClassProperty', {
-  bindingKeys: {},
-  visitorKeys: {
-    key: true,
-    meta: true,
-    value: true,
-    typeAnnotation: true,
+export const classProperty = createBuilder<ClassProperty>(
+  'ClassProperty',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      key: true,
+      meta: true,
+      value: true,
+      typeAnnotation: true,
+    },
   },
-});
+);

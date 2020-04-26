@@ -19,26 +19,30 @@ export default createLocalCommand({
   description: 'TODO',
   usage: '',
   examples: [],
-
   defineFlags() {
     return {};
   },
-
   async callback(req: ClientRequest) {
     const bridge = await req.client.findOrStartMaster();
     if (bridge === undefined) {
       return false;
     }
 
-    process.on('unhandledRejection', (error) => {
-      error;
-      //console.log('unhandledRejection', error.stack);
-    });
+    process.on(
+      'unhandledRejection',
+      (error) => {
+        error;
+        //console.log('unhandledRejection', error.stack);
+      },
+    );
 
-    const res = await req.client.query({
-      command: 'run',
-      args: req.query.args,
-    }, 'master');
+    const res = await req.client.query(
+      {
+        command: 'run',
+        args: req.query.args,
+      },
+      'master',
+    );
 
     if (res.type !== 'SUCCESS') {
       return false;

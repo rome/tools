@@ -34,7 +34,13 @@ type State = {
   lineSuffixes: Array<[Token, State]>;
 };
 
-const BREAK_GROUP = Symbol('BREAK_GROUP');
+class BreakError extends Error {
+  constructor() {
+    super(
+      "This error represents a point in the formatter where we should line break. If you're seeing this something went wrong.",
+    );
+  }
+}
 
 function createIndent(depth: number, options: PrinterOptions): Indent {
   return {
@@ -77,7 +83,7 @@ function print(token: Token, state: State, options: PrinterOptions): void {
 
         // If the line is too long, break the group if it is possible
         if (state.flat && ob1Get0(state.buffer.column) > options.printWidth) {
-          throw BREAK_GROUP;
+          throw new BreakError();
         }
       }
     } else {
@@ -109,7 +115,7 @@ function print(token: Token, state: State, options: PrinterOptions): void {
                 },
               );
             } catch (err) {
-              if (err === BREAK_GROUP) {
+              if (err instanceof BreakError) {
                 stack.push([token.contents, state]);
               } else {
                 // This should not happen!
@@ -155,7 +161,7 @@ function print(token: Token, state: State, options: PrinterOptions): void {
               case 'hard':
                 // Hard lines are always printed.
                 // In flat mode, the current group be broken.
-                throw BREAK_GROUP;
+                throw new BreakError();
             }
           } else {
             if (state.lineSuffixes.length > 0) {

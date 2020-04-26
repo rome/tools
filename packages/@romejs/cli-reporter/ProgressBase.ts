@@ -28,9 +28,8 @@ export default class ProgressBase implements ReporterProgress {
 
     this.textStack = [];
     this.text = undefined;
-    this.title = opts.title === undefined
-      ? undefined
-      : reporter.stripMarkup(opts.title);
+    this.title =
+      opts.title === undefined ? undefined : reporter.stripMarkup(opts.title);
 
     this.paused = false;
     this.pausedStart = undefined;
@@ -64,8 +63,11 @@ export default class ProgressBase implements ReporterProgress {
     this.queueRender();
 
     // Progress complete
-    if (this.total !== undefined && this.current >= this.total &&
-        !this.opts.persistent) {
+    if (
+      this.total !== undefined &&
+      this.current >= this.total &&
+      !this.opts.persistent
+    ) {
       this.end();
     }
   }

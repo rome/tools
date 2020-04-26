@@ -44,18 +44,24 @@ export default class CoverageCollector {
     this.sourceMaps = new Map();
   }
 
-  sourceMaps: Map<string, {
-    code: string;
-    ranges: Array<CoverageRangeWithMetadata>;
-    map: SourceMapConsumer;
-  }>;
+  sourceMaps: Map<
+    string,
+    {
+      code: string;
+      ranges: Array<CoverageRangeWithMetadata>;
+      map: SourceMapConsumer;
+    }
+  >;
 
   addSourceMap(filename: string, code: string, map: SourceMapConsumer) {
-    this.sourceMaps.set(filename, {
-      ranges: [],
-      map,
-      code,
-    });
+    this.sourceMaps.set(
+      filename,
+      {
+        ranges: [],
+        map,
+        code,
+      },
+    );
   }
 
   addCoverage(entries: Array<inspector.Profiler.ScriptCoverage>) {
@@ -68,19 +74,21 @@ export default class CoverageCollector {
       }
 
       for (const {ranges, functionName, isBlockCoverage} of entry.functions) {
-        data.ranges = data.ranges.concat(ranges.map((range) => {
-          let kind: LocationRangeKind = 'expression';
-          if (functionName !== '') {
-            kind = 'function';
-          } else if (isBlockCoverage) {
-            kind = 'branch';
-          }
+        data.ranges = data.ranges.concat(
+          ranges.map((range) => {
+            let kind: LocationRangeKind = 'expression';
+            if (functionName !== '') {
+              kind = 'function';
+            } else if (isBlockCoverage) {
+              kind = 'branch';
+            }
 
-          return {
-            kind,
-            ...range,
-          };
-        }));
+            return {
+              kind,
+              ...range,
+            };
+          }),
+        );
       }
     }
   }
@@ -167,8 +175,8 @@ export default class CoverageCollector {
 
         if (sourceStart.source !== sourceEnd.source) {
           throw new Error(
-              `Expected the same source for start and end: ${sourceStart.source} !== ${sourceEnd.source}`,
-            );
+            `Expected the same source for start and end: ${sourceStart.source} !== ${sourceEnd.source}`,
+          );
         }
 
         const key = `${sourceStart.source}:${String(startOffset)}-${String(
@@ -262,9 +270,11 @@ export default class CoverageCollector {
       }
 
       // No point showing fully covered files
-      if (uncoveredLines.size === 0 && uncoveredBranches.size === 0 &&
-            uncoveredFunctions.size ===
-            0) {
+      if (
+        uncoveredLines.size === 0 &&
+        uncoveredBranches.size === 0 &&
+        uncoveredFunctions.size === 0
+      ) {
         continue;
       }
 

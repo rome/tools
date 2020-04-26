@@ -27,9 +27,7 @@ import buildMessageCodeFrame from './buildMessageCodeFrame';
 import {escapeMarkup, markupTag} from '@romejs/string-markup';
 import {DiagnosticsPrinterFlags} from './types';
 import {ob1Number0Neg1} from '@romejs/ob1';
-import DiagnosticsPrinter, {
-  DiagnosticsPrinterFileSources,
-} from './DiagnosticsPrinter';
+import DiagnosticsPrinter, {DiagnosticsPrinterFileSources} from './DiagnosticsPrinter';
 import {AbsoluteFilePathSet} from '@romejs/path';
 import {RAW_CODE_MAX_LENGTH} from './constants';
 import {Diffs, diffConstants} from '@romejs/string-diff';
@@ -104,16 +102,19 @@ function printAction(
 
   opts.reporter.info(item.instruction);
 
-  const command = serializeCLIFlags({
-    prefix: '',
-    programName: 'rome',
-    commandName: item.command,
-    args: item.args,
-    flags: {
-      ...item.commandFlags,
-      ...item.requestFlags,
+  const command = serializeCLIFlags(
+    {
+      prefix: '',
+      programName: 'rome',
+      commandName: item.command,
+      args: item.args,
+      flags: {
+        ...item.commandFlags,
+        ...item.requestFlags,
+      },
     },
-  }, {type: 'none'}).sourceText;
+    {type: 'none'},
+  ).sourceText;
   opts.reporter.command(command);
   return DID_PRINT;
 }
@@ -172,19 +173,19 @@ function generateDiffHint(diffs: Diffs): undefined | DiagnosticAdviceItem {
   const receivedNoCRLF = removeCarriageReturn(received);
   if (expected === receivedNoCRLF) {
     return {
-        type: 'log',
-        category: 'info',
-        message: 'Identical except the received uses CRLF newlines, while the expected does not',
-      };
+      type: 'log',
+      category: 'info',
+      message: 'Identical except the received uses CRLF newlines, while the expected does not',
+    };
   }
 
   const expectedNoCRLF = removeCarriageReturn(expected);
   if (received === expectedNoCRLF) {
     return {
-        type: 'log',
-        category: 'info',
-        message: 'Identical except the expected uses CRLF newlines, while the received does not',
-      };
+      type: 'log',
+      category: 'info',
+      message: 'Identical except the expected uses CRLF newlines, while the received does not',
+    };
   }
 
   return undefined;
@@ -232,11 +233,14 @@ function printList(
   if (item.list.length === 0) {
     return DID_NOT_PRINT;
   } else {
-    opts.reporter.list(item.list, {
-      truncate: opts.flags.verboseDiagnostics ? undefined : 20,
-      reverse: item.reverse,
-      ordered: item.ordered,
-    });
+    opts.reporter.list(
+      item.list,
+      {
+        truncate: opts.flags.verboseDiagnostics ? undefined : 20,
+        reverse: item.reverse,
+        ordered: item.ordered,
+      },
+    );
     return DID_PRINT;
   }
 }
@@ -247,28 +251,26 @@ function printCode(
 ): PrintAdviceResult {
   const {reporter} = opts;
 
-  const truncated = !opts.flags.verboseDiagnostics && item.code.length >
-    RAW_CODE_MAX_LENGTH;
+  const truncated =
+    !opts.flags.verboseDiagnostics && item.code.length > RAW_CODE_MAX_LENGTH;
   const code = truncated ? item.code.slice(0, RAW_CODE_MAX_LENGTH) : item.code;
 
-  reporter.indent(
-    () => {
-      if (code === '') {
-        reporter.logAll('<dim>empty input</dim>');
-      } else if (code.trim() === '') {
-        // If it's a string with only whitespace then make it obvious
-        reporter.logAll(showInvisibles(code));
-      } else {
-        reporter.logAll(escapeMarkup(code));
-      }
+  reporter.indent(() => {
+    if (code === '') {
+      reporter.logAll('<dim>empty input</dim>');
+    } else if (code.trim() === '') {
+      // If it's a string with only whitespace then make it obvious
+      reporter.logAll(showInvisibles(code));
+    } else {
+      reporter.logAll(escapeMarkup(code));
+    }
 
-      if (truncated) {
-        reporter.logAll(
-          `<dim><number>${item.code.length - RAW_CODE_MAX_LENGTH}</number> more characters truncated</dim>`,
-        );
-      }
-    },
-  );
+    if (truncated) {
+      reporter.logAll(
+        `<dim><number>${item.code.length - RAW_CODE_MAX_LENGTH}</number> more characters truncated</dim>`,
+      );
+    }
+  });
 
   return {
     printed: true,
@@ -304,9 +306,10 @@ function printFrame(
       lines = source.lines;
       sourceText = source.sourceText;
     }
-  } else if (path.isAbsolute() && opts.missingFileSources.has(
-      path.assertAbsolute(),
-    )) {
+  } else if (
+    path.isAbsolute() &&
+    opts.missingFileSources.has(path.assertAbsolute())
+  ) {
     lines = ['<dim>File does not exist</dim>'];
   }
 
@@ -314,7 +317,13 @@ function printFrame(
     sourceText = '';
   }
 
-  const frame = buildMessageCodeFrame(sourceText, lines, start, end, cleanMarker);
+  const frame = buildMessageCodeFrame(
+    sourceText,
+    lines,
+    start,
+    end,
+    cleanMarker,
+  );
   if (frame.trim() === '') {
     return DID_NOT_PRINT;
   }
@@ -328,111 +337,119 @@ function printStacktrace(
   opts: AdvicePrintOptions,
 ): PrintAdviceResult {
   // Here we duplicate some of the list logic that is in Reporter
-
   // This is different as we also want to push frames after some of the items
-
   const {diagnostic} = opts;
   const {frames} = item;
 
   let shownCodeFrames = 0;
 
-  const isFirstPart = diagnostic.description.advice !== undefined &&
-      diagnostic.description.advice[0] ===
-      item;
+  const isFirstPart =
+    diagnostic.description.advice !== undefined &&
+    diagnostic.description.advice[0] === item;
   if (!isFirstPart) {
-    opts.reporter.info(item.title === undefined
-      ? 'Stack trace'
-      : escapeMarkup(item.title));
+    opts.reporter.info(
+      item.title === undefined ? 'Stack trace' : escapeMarkup(item.title),
+    );
     opts.reporter.forceSpacer();
   }
 
-  opts.reporter.processedList(frames, (frame, display) => {
-    const {
-      filename,
-      object,
-      suffix,
-      property,
-      prefix,
-      line,
-      column,
-      language,
-      sourceText: code,
-    } = frame;
-
-    const logParts = [];
-
-    // Add prefix
-    if (prefix !== undefined) {
-      logParts.push(markupTag('dim', escapeMarkup(prefix)));
-    }
-
-    // Build path
-    const objParts = [];
-    if (object !== undefined) {
-      objParts.push(markupTag('highlight', escapeMarkup(object), {i: 0}));
-    }
-    if (property !== undefined) {
-      objParts.push(markupTag('highlight', escapeMarkup(property), {i: 1}));
-    }
-    if (objParts.length > 0) {
-      logParts.push(objParts.join('.'));
-    }
-
-    // Add suffix
-    if (suffix !== undefined) {
-      logParts.push(markupTag('success', escapeMarkup(suffix)));
-    }
-
-    // Add source
-    if (filename !== undefined && line !== undefined && column !== undefined) {
-      const header = getDiagnosticHeader({
+  opts.reporter.processedList(
+    frames,
+    (frame, display) => {
+      const {
         filename,
-        start: {
+        object,
+        suffix,
+        property,
+        prefix,
+        line,
+        column,
+        language,
+        sourceText: code,
+      } = frame;
+
+      const logParts = [];
+
+      // Add prefix
+      if (prefix !== undefined) {
+        logParts.push(markupTag('dim', escapeMarkup(prefix)));
+      }
+
+      // Build path
+      const objParts = [];
+      if (object !== undefined) {
+        objParts.push(markupTag('highlight', escapeMarkup(object), {i: 0}));
+      }
+      if (property !== undefined) {
+        objParts.push(markupTag('highlight', escapeMarkup(property), {i: 1}));
+      }
+      if (objParts.length > 0) {
+        logParts.push(objParts.join('.'));
+      }
+
+      // Add suffix
+      if (suffix !== undefined) {
+        logParts.push(markupTag('success', escapeMarkup(suffix)));
+      }
+
+      // Add source
+      if (filename !== undefined && line !== undefined && column !== undefined) {
+        const header = getDiagnosticHeader({
+          filename,
+          start: {
+            index: ob1Number0Neg1,
+            line,
+            column,
+          },
+        });
+
+        if (logParts.length === 0) {
+          logParts.push(header);
+        } else {
+          logParts.push(`(<dim>${header}</dim>)`);
+        }
+      }
+
+      display(logParts.join(' '));
+
+      // Push on frame
+      if (
+        shownCodeFrames < 2 &&
+        filename !== undefined &&
+        line !== undefined &&
+        column !== undefined
+      ) {
+        const pos: Position = {
           index: ob1Number0Neg1,
           line,
           column,
-        },
-      });
+        };
 
-      if (logParts.length === 0) {
-        logParts.push(header);
-      } else {
-        logParts.push(`(<dim>${header}</dim>)`);
+        const skipped = printFrame(
+          {
+            type: 'frame',
+            location: {
+              language,
+              filename,
+              sourceType: 'module',
+              start: pos,
+              end: pos,
+              sourceText: code,
+            },
+          },
+          opts,
+        );
+        if (!skipped) {
+          opts.reporter.forceSpacer();
+          shownCodeFrames++;
+        }
       }
-    }
-
-    display(logParts.join(' '));
-
-    // Push on frame
-    if (shownCodeFrames < 2 && filename !== undefined && line !== undefined &&
-          column !==
-          undefined) {
-      const pos: Position = {
-        index: ob1Number0Neg1,
-        line,
-        column,
-      };
-
-      const skipped = printFrame({
-        type: 'frame',
-        location: {
-          language,
-          filename,
-          sourceType: 'module',
-          start: pos,
-          end: pos,
-          sourceText: code,
-        },
-      }, opts);
-      if (!skipped) {
-        opts.reporter.forceSpacer();
-        shownCodeFrames++;
-      }
-    }
-  }, {
-    ordered: true,
-    truncate: opts.flags.verboseDiagnostics ? undefined : 20,
-  });
+    },
+    {
+      ordered: true,
+      truncate: opts.flags.verboseDiagnostics ? undefined : 20,
+    },
+  );
 
   return DID_PRINT;
 }

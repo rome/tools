@@ -12,10 +12,16 @@ import {AnyNode, FlowDeclareClass} from '@romejs/js-ast';
 export default {
   creator: false,
   build(node: FlowDeclareClass, parent: AnyNode, scope: Scope) {
-    scope.addBinding(new TypeBinding({
-      node: node.id,
-      name: node.id.name,
-      scope,
-    }, node, 'class'));
+    scope.addBinding(
+      new TypeBinding(
+        {
+          node: node.id,
+          name: node.id.name,
+          scope,
+        },
+        node,
+        'class',
+      ),
+    );
   },
 };

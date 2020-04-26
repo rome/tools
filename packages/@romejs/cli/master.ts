@@ -23,9 +23,13 @@ export default async function master() {
   await master.init();
 
   const socketServer = net.createServer(function(socket) {
-    const client = createBridgeFromSocket(MasterBridge, socket, {
-      type: 'client',
-    });
+    const client = createBridgeFromSocket(
+      MasterBridge,
+      socket,
+      {
+        type: 'client',
+      },
+    );
     master.attachToBridge(client);
   });
 
@@ -33,16 +37,25 @@ export default async function master() {
     await unlink(SOCKET_PATH);
   }
 
-  socketServer.listen(SOCKET_PATH.join(), () => {
-    const socket = net.createConnection(CLI_SOCKET_PATH.join(), () => {
-      socket.end();
-    });
+  socketServer.listen(
+    SOCKET_PATH.join(),
+    () => {
+      const socket = net.createConnection(
+        CLI_SOCKET_PATH.join(),
+        () => {
+          socket.end();
+        },
+      );
 
-    socket.on('error', (err) => {
-      // Socket error occured, cli could have died before it caught us
-      err;
-      console.log(err);
-      process.exit();
-    });
-  });
+      socket.on(
+        'error',
+        (err) => {
+          // Socket error occured, cli could have died before it caught us
+          err;
+          console.log(err);
+          process.exit();
+        },
+      );
+    },
+  );
 }

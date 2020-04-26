@@ -33,7 +33,6 @@ const relativeTests: Array<[string, string, string]> = [
   ['\\\\foo\\baz', '\\\\foo\\baz-quux', '../baz-quux'],
   ['C:\\baz', '\\\\foo\\bar\\baz', '\\\\foo\\bar\\baz'],
   ['\\\\foo\\bar\\baz', 'C:\\baz', 'C:\\baz'],
-
   // Posix paths
   ['/var/lib', '/var', '..'],
   ['/var/lib', '/bin', '../../bin'],
@@ -53,32 +52,35 @@ const relativeTests: Array<[string, string, string]> = [
 for (let i = 0; i < relativeTests.length; i++) {
   const [absolute, arg, expected] = relativeTests[i];
 
-  test(`relative ${i}: ${absolute}`, (t) => {
-    t.addToAdvice({
-      type: 'log',
-      category: 'info',
-      message: 'Metadata',
-    });
+  test(
+    `relative ${i}: ${absolute}`,
+    (t) => {
+      t.addToAdvice({
+        type: 'log',
+        category: 'info',
+        message: 'Metadata',
+      });
 
-    const relative = createAbsoluteFilePath(absolute).relative(arg);
+      const relative = createAbsoluteFilePath(absolute).relative(arg);
 
-    t.addToAdvice({
-      type: 'inspect',
-      data: {
-        in: {
-          absolute,
-          arg,
-          expected,
+      t.addToAdvice({
+        type: 'inspect',
+        data: {
+          in: {
+            absolute,
+            arg,
+            expected,
+          },
+          out: {
+            filename: relative.join(),
+            segments: relative.getRawSegments(),
+          },
         },
-        out: {
-          filename: relative.join(),
-          segments: relative.getRawSegments(),
-        },
-      },
-    });
+      });
 
-    t.is(relative.join(), expected);
-  });
+      t.is(relative.join(), expected);
+    },
+  );
 }
 
 const segmentTests: Array<[string, Array<string>]> = [
@@ -89,7 +91,10 @@ const segmentTests: Array<[string, Array<string>]> = [
 for (let i = 0; i < segmentTests.length; i++) {
   const [loc, expectedSegments] = segmentTests[i];
 
-  test(`segments: ${i}: ${loc}`, (t) => {
-    t.looksLike(createUnknownFilePath(loc).getRawSegments(), expectedSegments);
-  });
+  test(
+    `segments: ${i}: ${loc}`,
+    (t) => {
+      t.looksLike(createUnknownFilePath(loc).getRawSegments(), expectedSegments);
+    },
+  );
 }

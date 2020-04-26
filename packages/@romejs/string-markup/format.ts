@@ -79,14 +79,13 @@ function formatReduceFromChildren(
       // Clone it since we'll be deleting attributes
       const attributes = new Map(child.attributes.entries());
 
-      let emphasis = attributes.get('emphasis') === 'true' && !shouldIgnoreTag(
-        'emphasis',
-        opts,
-      );
+      let emphasis =
+        attributes.get('emphasis') === 'true' &&
+        !shouldIgnoreTag('emphasis', opts);
       attributes.delete('emphasis');
 
-      let dim = attributes.get('dim') === 'true' &&
-        !shouldIgnoreTag('dim', opts);
+      let dim =
+        attributes.get('dim') === 'true' && !shouldIgnoreTag('dim', opts);
       attributes.delete('dim');
 
       const applyTags: Array<TagNode> = [];
@@ -106,17 +105,20 @@ function formatReduceFromChildren(
           children: [],
         });
       }
-      if (attributes.size > 0 || attributes.size === 0 && !shouldIgnoreTag(
-          child.name,
-          opts,
-        )) {
+      if (
+        attributes.size > 0 ||
+        (attributes.size === 0 && !shouldIgnoreTag(child.name, opts))
+      ) {
         applyTags.push(child);
       }
 
-      let res = formatReduceFromChildren(child.children, {
-        ...opts,
-        ancestry: [...opts.ancestry, ...applyTags],
-      });
+      let res = formatReduceFromChildren(
+        child.children,
+        {
+          ...opts,
+          ancestry: [...opts.ancestry, ...applyTags],
+        },
+      );
 
       if (formatTag !== undefined) {
         for (const tag of applyTags) {
@@ -215,90 +217,99 @@ export function markupToPlainText(
   input: string,
   opts: MarkupFormatOptions = {},
 ): string {
-  return formatReduceFromInput(input, {
-    ancestry: [],
-    formatText: (text) => {
-      return text;
+  return formatReduceFromInput(
+    input,
+    {
+      ancestry: [],
+      formatText: (text) => {
+        return text;
+      },
+      formatTag: (tag, attributes, value) => {
+        switch (tag) {
+          case 'filelink':
+            return formatFileLink(attributes, value, opts).text;
+
+          case 'number':
+            return formatNumber(attributes, value);
+
+          case 'grammarNumber':
+            return formatGrammarNumber(attributes, value);
+
+          case 'duration':
+            return formatApprox(attributes, humanizeTime(Number(value), true));
+
+          case 'filesize':
+            return humanizeFileSize(Number(value));
+
+          case 'pad':
+            return formatPad(attributes, value);
+
+          case 'command':
+            return `\`${value}\``;
+
+          case 'italic':
+            return `_${value}_`;
+
+          default:
+            return value;
+        }
+      },
     },
-    formatTag: (tag, attributes, value) => {
-      switch (tag) {
-        case 'filelink':
-          return formatFileLink(attributes, value, opts).text;
-
-        case 'number':
-          return formatNumber(attributes, value);
-
-        case 'grammarNumber':
-          return formatGrammarNumber(attributes, value);
-
-        case 'duration':
-          return formatApprox(attributes, humanizeTime(Number(value), true));
-
-        case 'filesize':
-          return humanizeFileSize(Number(value));
-
-        case 'pad':
-          return formatPad(attributes, value);
-
-        case 'command':
-          return `\`${value}\``;
-
-        case 'italic':
-          return `_${value}_`;
-
-        default:
-          return value;
-      }
-    },
-  });
+  );
 }
 
 export function normalizeMarkup(
   input: string,
   opts: MarkupFormatOptions = {},
 ): string {
-  return formatReduceFromInput(input, {
-    ancestry: [],
-    formatText: (text) => {
-      return escapeMarkup(text);
-    },
-    formatTag: (tag, attributes, value) => {
-      switch (tag) {
-        case // Normalize filename of <filelink target>
-        'filelink': {
-          const {text, filename} = formatFileLink(attributes, value, opts);
-          attributes.set('target', filename);
-          value = text;
-          break;
+  return formatReduceFromInput(
+    input,
+    {
+      ancestry: [],
+      formatText: (text) => {
+        return escapeMarkup(text);
+      },
+      formatTag: (tag, attributes, value) => {
+        switch (tag) {
+          case // Normalize filename of <filelink target>
+          'filelink': {
+            const {text, filename} = formatFileLink(attributes, value, opts);
+            attributes.set('target', filename);
+            value = text;
+            break;
+          }
+
+          // We don't technically need to normalize this but it's one less tag to have to support
+          // if other tools need to consume it
+          case 'grammarNumber':
+            return formatGrammarNumber(attributes, value);
         }
 
-        // We don't technically need to normalize this but it's one less tag to have to support
-        // if other tools need to consume it
-        case 'grammarNumber':
-          return formatGrammarNumber(attributes, value);
-      }
+        let attrStr = Array.from(
+          attributes,
+          ([key, value]) => {
+            if (value === 'true') {
+              return key;
+            } else {
+              const escapedValue = escapeMarkup(value);
+              return `${key}="${escapedValue}"`;
+            }
+          },
+        ).join(' ');
 
-      let attrStr = Array.from(attributes, ([key, value]) => {
-        if (value === 'true') {
-          return key;
+        let open = `<${tag}`;
+        if (attrStr !== '') {
+          open += ` ${attrStr}`;
+        }
+
+        if (value === '') {
+          return `${open} />`;
         } else {
-          const escapedValue = escapeMarkup(value);
-          return `${key}="${escapedValue}"`;
+          return `${open}>${value}</${tag}>`;
         }
-      }).join(' ');
-
-      let open = `<${tag}`;
-      if (attrStr !== '') {
-        open += ` ${attrStr}`;
-      }
-
-      if (value === '') {
-        return `${open} />`;
-      } else {
-        return `${open}>${value}</${tag}>`;
-      }
+      },
     },
-  });
+  );
 }
 
 export function humanizeMarkupFilename(

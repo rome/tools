@@ -53,9 +53,13 @@ export default class BinaryOpT extends T {
     data: HydrateData,
     getType: HydrateTypeFactory,
   ): T {
-    return new BinaryOpT(scope, originNode, getType(data.left), String(
-      data.operator,
-    ), getType(data.right));
+    return new BinaryOpT(
+      scope,
+      originNode,
+      getType(data.left),
+      String(data.operator),
+      getType(data.right),
+    );
   }
 
   reduce(): T {
@@ -79,23 +83,29 @@ export default class BinaryOpT extends T {
         // TODO return BooleanLiteralT in the cases whe we have all the info
         return new BooleanT(scope, originNode);
 
-
       // Returns a string or a number
       case '+':
         if (left instanceof AnyT || right instanceof AnyT) {
           return new AnyT(scope, originNode);
-        } else if (left instanceof NumericLiteralT && right instanceof
-            NumericLiteralT) {
-          return new NumericLiteralT(scope, originNode, left.value + right.value);
+        } else if (
+          left instanceof NumericLiteralT &&
+          right instanceof NumericLiteralT
+        ) {
+          return new NumericLiteralT(
+            scope,
+            originNode,
+            left.value + right.value,
+          );
         } else if (isNumber(left) && isNumber(right)) {
           return new NumericT(scope, originNode);
-        } else if (left instanceof StringLiteralT && right instanceof
-            StringLiteralT) {
+        } else if (
+          left instanceof StringLiteralT &&
+          right instanceof StringLiteralT
+        ) {
           return new StringLiteralT(scope, originNode, left.value + right.value);
         } else {
           return new StringT(scope, originNode);
         }
-
 
       // returns a number
       case '<<':

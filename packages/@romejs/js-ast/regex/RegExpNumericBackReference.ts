@@ -13,9 +13,10 @@ export type RegExpNumericBackReference = JSNodeBase & {
   value: number;
 };
 
-export const regExpNumericBackReference = createBuilder<
-  RegExpNumericBackReference
->('RegExpNumericBackReference', {
-  bindingKeys: {},
-  visitorKeys: {},
-});
+export const regExpNumericBackReference = createBuilder<RegExpNumericBackReference>(
+  'RegExpNumericBackReference',
+  {
+    bindingKeys: {},
+    visitorKeys: {},
+  },
+);

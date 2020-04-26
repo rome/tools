@@ -67,12 +67,14 @@ export function isTagStartChar(index: Number0, input: string): boolean {
   return input[i] === '<' && !isEscaped(index, input);
 }
 
-type State = {inTagHead: boolean};
+type State = {
+  inTagHead: boolean;
+};
 
 type StringMarkupParserOptions = ParserOptions;
 
-const createStringMarkupParser = createParser(
-  (ParserCore) => class StringMarkupParser extends ParserCore<Tokens, State> {
+const createStringMarkupParser = createParser((ParserCore) =>
+  class StringMarkupParser extends ParserCore<Tokens, State> {
     constructor(opts: StringMarkupParserOptions) {
       super(opts, 'parse/stringMarkup', {inTagHead: false});
     }
@@ -81,10 +83,12 @@ const createStringMarkupParser = createParser(
       index: Number0,
       input: string,
       state: State,
-    ): undefined | {
-      token: TokenValues<Tokens>;
-      state: State;
-    } {
+    ):
+      | undefined
+      | {
+          token: TokenValues<Tokens>;
+          state: State;
+        } {
       const escaped = isEscaped(index, input);
       const char = input[ob1Get0(index)];
 
@@ -116,9 +120,10 @@ const createStringMarkupParser = createParser(
         }
 
         if (char === '"') {
-          const [value, stringValueEnd, unclosed] = this.readInputFrom(ob1Inc(
-            index,
-          ), isStringValueChar);
+          const [value, stringValueEnd, unclosed] = this.readInputFrom(
+            ob1Inc(index),
+            isStringValueChar,
+          );
 
           if (unclosed) {
             throw this.unexpected({
@@ -129,13 +134,13 @@ const createStringMarkupParser = createParser(
 
           const end = ob1Add(stringValueEnd, 1);
           return {
-              state,
-              token: this.finishValueToken(
-                'String',
-                unescapeTextValue(value),
-                end,
-              ),
-            };
+            state,
+            token: this.finishValueToken(
+              'String',
+              unescapeTextValue(value),
+              end,
+            ),
+          };
         }
 
         if (char === '>') {
@@ -198,23 +203,26 @@ const createStringMarkupParser = createParser(
         if (keyToken.type === 'Word') {
           key = keyToken.value;
 
-          if (!allowedAttributes.includes(key) &&
-              !globalAttributes.includes(key)) {
-            throw this.unexpected(
-                {
-                  description: descriptions.STRING_MARKUP.INVALID_ATTRIBUTE_NAME_FOR_TAG(
-                    tagName,
-                    key,
-                  ),
-                },
-              );
+          if (
+            !allowedAttributes.includes(key) &&
+            !globalAttributes.includes(key)
+          ) {
+            throw this.unexpected({
+              description: descriptions.STRING_MARKUP.INVALID_ATTRIBUTE_NAME_FOR_TAG(
+                tagName,
+                key,
+              ),
+            });
           }
 
           this.nextToken();
 
           // Shorthand properties
-          if (this.matchToken('Word') || this.matchToken('Slash') ||
-              this.matchToken('Greater')) {
+          if (
+            this.matchToken('Word') ||
+            this.matchToken('Slash') ||
+            this.matchToken('Greater')
+          ) {
             attributes.set(key, 'true');
             continue;
           }
@@ -244,8 +252,11 @@ const createStringMarkupParser = createParser(
 
       // Verify closing tag
       if (!selfClosing) {
-        while ( // Build children
-        !this.matchToken('EOF') && !this.atTagEnd()) {
+        while (
+          // Build children
+          !this.matchToken('EOF') &&
+          !this.atTagEnd()
+        ) {
           children.push(this.parseChild());
         }
 
@@ -263,14 +274,12 @@ const createStringMarkupParser = createParser(
           const name = this.getToken();
           if (name.type === 'Word') {
             if (name.value !== tagName) {
-              throw this.unexpected(
-                  {
-                    description: descriptions.STRING_MARKUP.INCORRECT_CLOSING_TAG_NAME(
-                      tagName,
-                      name.value,
-                    ),
-                  },
-                );
+              throw this.unexpected({
+                description: descriptions.STRING_MARKUP.INCORRECT_CLOSING_TAG_NAME(
+                  tagName,
+                  name.value,
+                ),
+              });
             }
 
             this.nextToken();
@@ -318,7 +327,7 @@ const createStringMarkupParser = createParser(
       }
       return children;
     }
-  },
+  }
 );
 
 export function parseMarkup(input: string) {

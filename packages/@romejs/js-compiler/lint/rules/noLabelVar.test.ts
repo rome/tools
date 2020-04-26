@@ -8,14 +8,17 @@
 import {test} from 'rome';
 import {testLint} from '../testHelpers';
 
-test('no label var', async (t) => {
-  await testLint(t, `
+test(
+  'no label var',
+  async (t) => {
+    await testLint(t, `
       const x = "test";
       x: const y = "test";
       `, {category: 'lint/noLabelVar'});
 
-  await testLint(t, `
+    await testLint(t, `
       const x = "test";
       z: const y = "test";
       `, {category: 'lint/noLabelVar'});
-});
+  },
+);

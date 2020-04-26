@@ -14,12 +14,15 @@ export type CatchClause = JSNodeBase & {
   body: BlockStatement;
 };
 
-export const catchClause = createBuilder<CatchClause>('CatchClause', {
-  bindingKeys: {
-    param: true,
+export const catchClause = createBuilder<CatchClause>(
+  'CatchClause',
+  {
+    bindingKeys: {
+      param: true,
+    },
+    visitorKeys: {
+      param: true,
+      body: true,
+    },
   },
-  visitorKeys: {
-    param: true,
-    body: true,
-  },
-});
+);

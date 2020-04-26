@@ -24,9 +24,9 @@ function compareImportSpecifiers(a: ImportSpecifier, b: ImportSpecifier): number
   }
 }
 
-function compareExportSpecifiers<
-  T extends ExportExternalSpecifier | ExportLocalSpecifier
->(a: T, b: T): number {
+function compareExportSpecifiers<T extends
+  | ExportExternalSpecifier
+  | ExportLocalSpecifier>(a: T, b: T): number {
   const order = naturalCompare(a.local.name, b.local.name, false);
   if (order === 0) {
     return naturalCompare(a.exported.name, b.exported.name, false);
@@ -53,34 +53,49 @@ export default {
     if (node.type === 'ImportDeclaration') {
       if (node.namedSpecifiers.length > 1) {
         const specifiers = node.namedSpecifiers;
-        const sortedSpecifiers = specifiers.slice().sort(compareImportSpecifiers);
+        const sortedSpecifiers = specifiers.slice().sort(
+          compareImportSpecifiers,
+        );
         if (shouldReorder(specifiers, sortedSpecifiers)) {
-          return context.addFixableDiagnostic({
-            old: node,
-            fixed: removeLoc({...node, namedSpecifiers: sortedSpecifiers}),
-          }, descriptions.LINT.SORT_IMPORT_SPECIFIERS);
+          return context.addFixableDiagnostic(
+            {
+              old: node,
+              fixed: removeLoc({...node, namedSpecifiers: sortedSpecifiers}),
+            },
+            descriptions.LINT.SORT_IMPORT_SPECIFIERS,
+          );
         }
       }
     } else if (node.type === 'ExportExternalDeclaration') {
       if (node.namedSpecifiers.length > 1) {
         const specifiers = node.namedSpecifiers;
-        const sortedSpecifiers = specifiers.slice().sort(compareExportSpecifiers);
+        const sortedSpecifiers = specifiers.slice().sort(
+          compareExportSpecifiers,
+        );
         if (shouldReorder(specifiers, sortedSpecifiers)) {
-          return context.addFixableDiagnostic({
-            old: node,
-            fixed: removeLoc({...node, namedSpecifiers: sortedSpecifiers}),
-          }, descriptions.LINT.SORT_EXPORT_SPECIFIERS);
+          return context.addFixableDiagnostic(
+            {
+              old: node,
+              fixed: removeLoc({...node, namedSpecifiers: sortedSpecifiers}),
+            },
+            descriptions.LINT.SORT_EXPORT_SPECIFIERS,
+          );
         }
       }
     } else if (node.type === 'ExportLocalDeclaration') {
       if (node.specifiers !== undefined && node.specifiers.length > 1) {
         const specifiers = node.specifiers;
-        const sortedSpecifiers = specifiers.slice().sort(compareExportSpecifiers);
+        const sortedSpecifiers = specifiers.slice().sort(
+          compareExportSpecifiers,
+        );
         if (shouldReorder(specifiers, sortedSpecifiers)) {
-          return context.addFixableDiagnostic({
-            old: node,
-            fixed: removeLoc({...node, specifiers: sortedSpecifiers}),
-          }, descriptions.LINT.SORT_EXPORT_SPECIFIERS);
+          return context.addFixableDiagnostic(
+            {
+              old: node,
+              fixed: removeLoc({...node, specifiers: sortedSpecifiers}),
+            },
+            descriptions.LINT.SORT_EXPORT_SPECIFIERS,
+          );
         }
       }
     }

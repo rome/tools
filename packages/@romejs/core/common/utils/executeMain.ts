@@ -31,7 +31,9 @@ type ExecuteMainOptions = {
 
 export default async function executeMain(
   opts: ExecuteMainOptions,
-): Promise<{syntaxError: undefined | Diagnostic}> {
+): Promise<{
+  syntaxError: undefined | Diagnostic;
+}> {
   const {path, code, sourceMap, globals} = opts;
 
   const filename = path.join();
@@ -39,12 +41,10 @@ export default async function executeMain(
   // Create global context
   const sandbox: UnknownObject = {
     ...globals,
-
     process: {
       argv: [process.argv[0], filename],
       __proto__: process,
     },
-
     Buffer,
     clearImmediate,
     clearInterval,
@@ -65,10 +65,13 @@ export default async function executeMain(
   // Here we do some gymnastics to catch a syntax error to correctly identify it as being our fault
   let script;
   try {
-    script = new vm.Script(code, {
-      filename,
-      displayErrors: true,
-    });
+    script = new vm.Script(
+      code,
+      {
+        filename,
+        displayErrors: true,
+      },
+    );
   } catch (err) {
     if (err instanceof SyntaxError && err.stack !== undefined) {
       const lineMatch = err.stack.match(/^(.*?):(\d+)/);

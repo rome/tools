@@ -42,9 +42,8 @@ export function compareByGeneratedPositionsInflated(
   mappingA: Mapping,
   mappingB: Mapping,
 ): number {
-  let cmp: number = ob1Get1(mappingA.generated.line) - ob1Get1(
-    mappingB.generated.line,
-  );
+  let cmp: number =
+    ob1Get1(mappingA.generated.line) - ob1Get1(mappingB.generated.line);
   if (cmp !== 0) {
     return cmp;
   }
@@ -118,5 +117,6 @@ export function toRelativeUrl(root: string, path: string): string {
   }
 
   // Make sure we add a '../' for each component we removed from the root.
+
   return '../'.repeat(level) + path.substr(root.length + 1);
 }

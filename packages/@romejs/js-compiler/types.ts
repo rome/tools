@@ -31,9 +31,9 @@ export type TransformStageFactory = (
 export type TransformStageFactories = { [key in TransformStageName]: TransformStageFactory };
 
 //
-export type Transform = TransformVisitor | ((
-  context: CompilerContext,
-) => TransformVisitor);
+export type Transform =
+  | TransformVisitor
+  | ((context: CompilerContext) => TransformVisitor);
 
 export type Transforms = Array<Transform>;
 
@@ -54,7 +54,9 @@ export type TransformVisitor = {
 
 export type TransformVisitors = Array<TransformVisitor>;
 
-export type CompileRequest = TransformRequest & {inputSourceMap?: SourceMap};
+export type CompileRequest = TransformRequest & {
+  inputSourceMap?: SourceMap;
+};
 
 export type LintRequest = TransformRequest & {
   applyFixes: boolean;

@@ -8,8 +8,10 @@
 import {test} from 'rome';
 import {testLint} from '../testHelpers';
 
-test('duplicate import source', async (t) => {
-  await testLint(t, `
+test(
+  'duplicate import source',
+  async (t) => {
+    await testLint(t, `
     import foo from './testdummy.ts';
     import {bar} from './testdummy.ts';
     import type {fooType} from './testdummy.ts';
@@ -19,4 +21,5 @@ test('duplicate import source', async (t) => {
     }
     console.log(typedFoo, foo, bar);
     `, {category: 'lint/duplicateImportSource'});
-});
+  },
+);

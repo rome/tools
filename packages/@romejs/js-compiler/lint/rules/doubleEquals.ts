@@ -16,38 +16,47 @@ export default {
   enter(path: Path): AnyNode {
     const {node, context} = path;
 
-    if (node.type === 'BinaryExpression' && node.right.type !== 'NullLiteral' &&
-        node.left.type !== 'NullLiteral') {
+    if (
+      node.type === 'BinaryExpression' &&
+      node.right.type !== 'NullLiteral' &&
+      node.left.type !== 'NullLiteral'
+    ) {
       if (node.operator === '!=') {
-        context.addFixableDiagnostic({
-          old: node,
-          suggestions: [
-            {
-              title: 'Use !==',
-              description: SUGGESTION_DESCRIPTION,
-              fixed: {
-                ...node,
-                operator: '!==',
+        context.addFixableDiagnostic(
+          {
+            old: node,
+            suggestions: [
+              {
+                title: 'Use !==',
+                description: SUGGESTION_DESCRIPTION,
+                fixed: {
+                  ...node,
+                  operator: '!==',
+                },
               },
-            },
-          ],
-        }, descriptions.LINT.NEGATE_DOUBLE_EQUALS);
+            ],
+          },
+          descriptions.LINT.NEGATE_DOUBLE_EQUALS,
+        );
       }
 
       if (node.operator === '==') {
-        context.addFixableDiagnostic({
-          old: node,
-          suggestions: [
-            {
-              title: 'Use ===',
-              description: SUGGESTION_DESCRIPTION,
-              fixed: {
-                ...node,
-                operator: '===',
+        context.addFixableDiagnostic(
+          {
+            old: node,
+            suggestions: [
+              {
+                title: 'Use ===',
+                description: SUGGESTION_DESCRIPTION,
+                fixed: {
+                  ...node,
+                  operator: '===',
+                },
               },
-            },
-          ],
-        }, descriptions.LINT.DOUBLE_EQUALS);
+            ],
+          },
+          descriptions.LINT.DOUBLE_EQUALS,
+        );
       }
     }
 

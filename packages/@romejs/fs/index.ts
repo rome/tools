@@ -15,20 +15,21 @@ import fs = require('fs');
 // Helpers
 type DataCallback<Data> = (err: null | Error, data: Data) => void;
 
-function promisifyData<
-  Data
->(
+function promisifyData<Data>(
   path: AbsoluteFilePath,
   factory: (path: string, callback: DataCallback<Data>) => void,
 ): Promise<Data> {
   return new Promise((resolve, reject) => {
-    factory(path.join(), (err, data) => {
-      if (err === null) {
-        resolve(data);
-      } else {
-        reject(err);
-      }
-    });
+    factory(
+      path.join(),
+      (err, data) => {
+        if (err === null) {
+          resolve(data);
+        } else {
+          reject(err);
+        }
+      },
+    );
   });
 }
 
@@ -39,32 +40,40 @@ function promisifyVoid(
   factory: (path: string, callback: VoidCallback) => void,
 ): Promise<void> {
   return new Promise((resolve, reject) => {
-    factory(path.join(), (err) => {
-      if (err === null) {
-        resolve();
-      } else {
-        reject(err);
-      }
-    });
+    factory(
+      path.join(),
+      (err) => {
+        if (err === null) {
+          resolve();
+        } else {
+          reject(err);
+        }
+      },
+    );
   });
 }
 
 // watch
-export function watch(path: AbsoluteFilePath, options: {
-  encoding?: BufferEncoding | null;
-  persistent?: boolean;
-  recursive?: boolean;
-} | undefined,
-listener?: (event: string, filename: null | string) => void) {
+export function watch(
+  path: AbsoluteFilePath,
+  options:
+    | {
+        encoding?: BufferEncoding | null;
+        persistent?: boolean;
+        recursive?: boolean;
+      }
+    | undefined,
+  listener?: (event: string, filename: null | string) => void,
+) {
   return fs.watch(path.join(), options, listener);
 }
 
 // readFile
 export function readFile(path: AbsoluteFilePath): Promise<Buffer> {
-  return promisifyData(path, (filename, callback) => fs.readFile(
-    filename,
-    callback,
-  ));
+  return promisifyData(
+    path,
+    (filename, callback) => fs.readFile(filename, callback),
+  );
 }
 
 export function readFileSync(path: AbsoluteFilePath): Buffer {
@@ -85,11 +94,10 @@ export function writeFile(
   path: AbsoluteFilePath,
   content: string | Buffer,
 ): Promise<void> {
-  return promisifyVoid(path, (filename, callback) => fs.writeFile(
-    filename,
-    content,
-    callback,
-  ));
+  return promisifyVoid(
+    path,
+    (filename, callback) => fs.writeFile(filename, content, callback),
+  );
 }
 
 export function writeFileSync(
@@ -104,20 +112,25 @@ function createReaddirReturn(
   folder: AbsoluteFilePath,
   files: Array<string>,
 ): AbsoluteFilePathSet {
-  return new AbsoluteFilePathSet(files.map((basename) => {
-    return folder.append(basename);
-  }));
+  return new AbsoluteFilePathSet(
+    files.map((basename) => {
+      return folder.append(basename);
+    }),
+  );
 }
 
 export function readdir(path: AbsoluteFilePath): Promise<AbsoluteFilePathSet> {
   return new Promise((resolve, reject) => {
-    fs.readdir(path.join(), (err, files) => {
-      if (err === null) {
-        resolve(createReaddirReturn(path, files));
-      } else {
-        reject(err);
-      }
-    });
+    fs.readdir(
+      path.join(),
+      (err, files) => {
+        if (err === null) {
+          resolve(createReaddirReturn(path, files));
+        } else {
+          reject(err);
+        }
+      },
+    );
   });
 }
 
@@ -140,9 +153,12 @@ export function lstatSync(path: AbsoluteFilePath): fs.Stats {
 // exists
 export function exists(path: AbsoluteFilePath): Promise<boolean> {
   return new Promise((resolve) => {
-    fs.exists(path.join(), (exists) => {
-      resolve(exists);
-    });
+    fs.exists(
+      path.join(),
+      (exists) => {
+        resolve(exists);
+      },
+    );
   });
 }
 
@@ -152,16 +168,21 @@ export function existsSync(path: AbsoluteFilePath): boolean {
 
 // unlink
 export function unlink(path: AbsoluteFilePath): Promise<void> {
-  return promisifyVoid(path, (filename, callback) => fs.unlink(
-    filename,
-    (err) => {
-      if (err != null && err.code !== 'ENOENT') {
-        callback(err);
-      } else {
-        callback(null);
-      }
-    },
-  ));
+  return promisifyVoid(
+    path,
+    (filename, callback) =>
+      fs.unlink(
+        filename,
+        (err) => {
+          if (err != null && err.code !== 'ENOENT') {
+            callback(err);
+          } else {
+            callback(null);
+          }
+        },
+      )
+    ,
+  );
 }
 
 export function unlinkSync(path: AbsoluteFilePath): void {
@@ -179,9 +200,18 @@ export function createDirectory(
   path: AbsoluteFilePath,
   opts: CreateDirectoryOptions = {},
 ): Promise<void> {
-  return promisifyVoid(path, (filename, callback) => fs.mkdir(filename, {
-    recursive: opts.recursive,
-  }, callback));
+  return promisifyVoid(
+    path,
+    (filename, callback) =>
+      fs.mkdir(
+        filename,
+        {
+          recursive: opts.recursive,
+        },
+        callback,
+      )
+    ,
+  );
 }
 
 export function createDirectorySync(
@@ -191,4 +221,6 @@ export function createDirectorySync(
   fs.mkdirSync(path.join(), {recursive: opts.recursive});
 }
 
-type CreateDirectoryOptions = {recursive?: boolean};
+type CreateDirectoryOptions = {
+  recursive?: boolean;
+};

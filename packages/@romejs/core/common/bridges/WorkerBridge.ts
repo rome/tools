@@ -32,7 +32,9 @@ export type WorkerProjects = Array<{
   config: undefined | ProjectConfigJSON;
 }>;
 
-export type WorkerCompileResult = CompileResult & {cached: boolean};
+export type WorkerCompileResult = CompileResult & {
+  cached: boolean;
+};
 
 export type WorkerPartialManifest = {
   path: string;
@@ -83,19 +85,23 @@ export type WorkerStatus = {
 };
 
 export type PrefetchedModuleSignatures = {
-  [key: string]: {
-    type: 'USE_CACHED';
-    filename: string;
-  } | {
-    type: 'RESOLVED';
-    graph: ModuleSignature;
-  } | {
-    type: 'OWNED';
-    file: JSONFileReference;
-  } | {
-    type: 'POINTER';
-    key: string;
-  };
+  [key: string]:
+    | {
+        type: 'USE_CACHED';
+        filename: string;
+      }
+    | {
+        type: 'RESOLVED';
+        graph: ModuleSignature;
+      }
+    | {
+        type: 'OWNED';
+        file: JSONFileReference;
+      }
+    | {
+        type: 'POINTER';
+        key: string;
+      };
 };
 
 export type WorkerFormatResult = {
@@ -116,17 +122,25 @@ export default class WorkerBridge extends Bridge {
     direction: 'server->client',
   });
 
-  updateProjects = this.createEvent<{projects: WorkerProjects}, void>({
+  updateProjects = this.createEvent<
+    {
+      projects: WorkerProjects;
+    },
+    void
+  >({
     name: 'updateProjects',
     direction: 'server->client',
   });
 
-  updateManifests = this.createEvent<{manifests: WorkerPartialManifests}, void>(
+  updateManifests = this.createEvent<
     {
-      name: 'updateManifests',
-      direction: 'server->client',
+      manifests: WorkerPartialManifests;
     },
-  );
+    void
+  >({
+    name: 'updateManifests',
+    direction: 'server->client',
+  });
 
   profilingStart = this.createEvent<ProfilingStartData, void>({
     name: 'profiling.start',
@@ -143,77 +157,108 @@ export default class WorkerBridge extends Bridge {
     direction: 'server->client',
   });
 
-  evict = this.createEvent<{filename: string}, void>({
+  evict = this.createEvent<
+    {
+      filename: string;
+    },
+    void
+  >({
     name: 'evict',
     direction: 'server->client',
   });
 
-  format = this.createEvent<{
-    file: JSONFileReference;
-    parseOptions: WorkerParseOptions;
-  }, undefined | WorkerFormatResult>({
+  format = this.createEvent<
+    {
+      file: JSONFileReference;
+      parseOptions: WorkerParseOptions;
+    },
+    undefined | WorkerFormatResult
+  >({
     name: 'format',
     direction: 'server->client',
   });
 
-  moduleSignatureJS = this.createEvent<{
-    file: JSONFileReference;
-    parseOptions: WorkerParseOptions;
-  }, ModuleSignature>({
+  moduleSignatureJS = this.createEvent<
+    {
+      file: JSONFileReference;
+      parseOptions: WorkerParseOptions;
+    },
+    ModuleSignature
+  >({
     name: 'moduleSignatureJS',
     direction: 'server->client',
   });
 
-  analyzeDependencies = this.createEvent<{
-    file: JSONFileReference;
-    parseOptions: WorkerParseOptions;
-  }, AnalyzeDependencyResult>({
+  analyzeDependencies = this.createEvent<
+    {
+      file: JSONFileReference;
+      parseOptions: WorkerParseOptions;
+    },
+    AnalyzeDependencyResult
+  >({
     name: 'analyzeDependencies',
     direction: 'server->client',
   });
 
-  lint = this.createEvent<{
-    file: JSONFileReference;
-    options: WorkerLintOptions;
-    parseOptions: WorkerParseOptions;
-  }, WorkerLintResult>({name: 'lint', direction: 'server->client'});
+  lint = this.createEvent<
+    {
+      file: JSONFileReference;
+      options: WorkerLintOptions;
+      parseOptions: WorkerParseOptions;
+    },
+    WorkerLintResult
+  >({name: 'lint', direction: 'server->client'});
 
-  compileJS = this.createEvent<{
-    file: JSONFileReference;
-    stage: TransformStageName;
-    options: WorkerCompilerOptions;
-    parseOptions: WorkerParseOptions;
-  }, CompileResult>({name: 'compileJS', direction: 'server->client'});
+  compileJS = this.createEvent<
+    {
+      file: JSONFileReference;
+      stage: TransformStageName;
+      options: WorkerCompilerOptions;
+      parseOptions: WorkerParseOptions;
+    },
+    CompileResult
+  >({name: 'compileJS', direction: 'server->client'});
 
-  parseJS = this.createEvent<{
-    file: JSONFileReference;
-    options: WorkerParseOptions;
-  }, Program>({name: 'parseJS', direction: 'server->client'});
+  parseJS = this.createEvent<
+    {
+      file: JSONFileReference;
+      options: WorkerParseOptions;
+    },
+    Program
+  >({name: 'parseJS', direction: 'server->client'});
 
-  updateBuffer = this.createEvent<{
-    file: JSONFileReference;
-    content: string;
-  }, void>({
+  updateBuffer = this.createEvent<
+    {
+      file: JSONFileReference;
+      content: string;
+    },
+    void
+  >({
     name: 'updateBuffer',
     direction: 'server->client',
   });
 
   init() {
-    this.addErrorTransport('DiagnosticsError', {
-      serialize(err: Error) {
-        if (!(err instanceof DiagnosticsError)) {
-          throw new Error('Expected DiagnosticsError');
-        }
+    this.addErrorTransport(
+      'DiagnosticsError',
+      {
+        serialize(err: Error) {
+          if (!(err instanceof DiagnosticsError)) {
+            throw new Error('Expected DiagnosticsError');
+          }
 
-        return {
-          diagnostic: err.diagnostics,
-        };
+          return {
+            diagnostic: err.diagnostics,
+          };
+        },
+        hydrate(err, data) {
+          return new DiagnosticsError(
+            String(err.message),
+            // rome-suppress-next-line lint/noExplicitAny
+            (data.diagnostics as any),
+          );
+        },
       },
-
-      hydrate(err, data) {
-        return new DiagnosticsError(String(err.message), ( // rome-suppress-next-line lint/noExplicitAny
-        data.diagnostics as any));
-      },
-    });
+    );
   }
 }

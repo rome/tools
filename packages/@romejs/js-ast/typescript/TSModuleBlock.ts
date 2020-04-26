@@ -13,9 +13,12 @@ export type TSModuleBlock = JSNodeBase & {
   body: Array<AnyStatement>;
 };
 
-export const tsModuleBlock = createBuilder<TSModuleBlock>('TSModuleBlock', {
-  bindingKeys: {},
-  visitorKeys: {
-    body: true,
+export const tsModuleBlock = createBuilder<TSModuleBlock>(
+  'TSModuleBlock',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      body: true,
+    },
   },
-});
+);

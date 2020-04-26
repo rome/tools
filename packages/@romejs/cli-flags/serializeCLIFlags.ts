@@ -23,18 +23,30 @@ type SerializeCLIData = {
   prefix?: string;
 };
 
-export type SerializeCLITarget = {
-  type: 'flag';
-  key: string;
-  target?: ConsumeSourceLocationRequestTarget;
-} | {
-  type: 'arg';
-  key: number;
-} | {
-  type: 'arg-range';
-  from: number;
-  to?: number;
-} | {type: 'none'} | {type: 'command'} | {type: 'program'};
+export type SerializeCLITarget =
+  | {
+      type: 'flag';
+      key: string;
+      target?: ConsumeSourceLocationRequestTarget;
+    }
+  | {
+      type: 'arg';
+      key: number;
+    }
+  | {
+      type: 'arg-range';
+      from: number;
+      to?: number;
+    }
+  | {
+      type: 'none';
+    }
+  | {
+      type: 'command';
+    }
+  | {
+      type: 'program';
+    };
 
 export function serializeCLIFlags(
   {
@@ -111,8 +123,11 @@ export function serializeCLIFlags(
     let isEndTarget = isTarget;
 
     // We are the end target if we're within the from-to range or we're greater than from with no to
-    if (target.type === 'arg-range' && i > target.from && (target.to ===
-        undefined || target.to <= i)) {
+    if (
+      target.type === 'arg-range' &&
+      i > target.from &&
+      (target.to === undefined || target.to <= i)
+    ) {
       isEndTarget = true;
     }
 
@@ -150,9 +165,11 @@ export function serializeCLIFlags(
       // Booleans are always indicated with just their flag
       if (typeof val !== 'boolean') {
         // Only point to the value for flags that specify it
-        if (isTarget && target.type === 'flag' && (target.target === 'value' ||
-              target.target ===
-              'inner-value')) {
+        if (
+          isTarget &&
+          target.type === 'flag' &&
+          (target.target === 'value' || target.target === 'inner-value')
+        ) {
           startColumn = ob1Coerce0(code.length);
         }
 

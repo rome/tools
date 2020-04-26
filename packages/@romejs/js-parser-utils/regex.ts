@@ -16,9 +16,7 @@ export function validateRegexFlags(
     metadata: Omit<DiagnosticDescription, 'category'>,
     index: number,
   ) => void,
-): Set<
-  string
-> {
+): Set<string> {
   const foundFlags: Set<string> = new Set();
   for (let i = 0; i < flags.length; i++) {
     const flag = flags[i];

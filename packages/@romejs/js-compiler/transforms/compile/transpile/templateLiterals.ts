@@ -22,17 +22,21 @@ export default {
       // TODO
     }
 
-    if (node.type === 'TemplateLiteral' && parent.type !==
-        'TaggedTemplateExpression') {
+    if (
+      node.type === 'TemplateLiteral' &&
+      parent.type !== 'TaggedTemplateExpression'
+    ) {
       const nodes: Array<AnyExpression> = [];
       const {expressions, quasis} = node;
 
       let index = 0;
       for (const elem of quasis) {
         if (elem.cooked) {
-          nodes.push(stringLiteral.create({
-            value: elem.cooked,
-          }));
+          nodes.push(
+            stringLiteral.create({
+              value: elem.cooked,
+            }),
+          );
         }
 
         if (index < expressions.length) {

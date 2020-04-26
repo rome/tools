@@ -10,7 +10,6 @@ import {AnyNode, bindingIdentifier} from '@romejs/js-ast';
 
 export default {
   name: 'paramlessCatch',
-
   enter(path: Path): AnyNode {
     const {node} = path;
 

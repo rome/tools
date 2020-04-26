@@ -118,7 +118,6 @@ export default class Consumer {
 
         definitions.push(def);
       },
-
       handleUnexpectedDiagnostic(diag) {
         diagnostics.push(diag);
       },
@@ -155,11 +154,14 @@ export default class Consumer {
     def: Omit<ConsumePropertyDefinition, 'objectPath' | 'metadata'>,
   ) {
     if (this.onDefinition !== undefined) {
-      this.onDefinition(({
-        ...def,
-        objectPath: this.keyPath,
-        metadata: this.propertyMetadata,
-      } as ConsumePropertyDefinition), this);
+      this.onDefinition(
+        ({
+          ...def,
+          objectPath: this.keyPath,
+          metadata: this.propertyMetadata,
+        } as ConsumePropertyDefinition),
+        this,
+      );
     }
   }
 
@@ -180,9 +182,11 @@ export default class Consumer {
 
   getLocation(target?: ConsumeSourceLocationRequestTarget): SourceLocation {
     const location = this.getDiagnosticLocation(target);
-    if (location === undefined || location.start === undefined ||
-          location.end ===
-          undefined) {
+    if (
+      location === undefined ||
+      location.start === undefined ||
+      location.end === undefined
+    ) {
       return {
         filename: this.filename,
         start: UNKNOWN_POSITION,
@@ -269,11 +273,15 @@ export default class Consumer {
       // If we are a computed property then wrap in brackets, the previous part would not have inserted a dot
       // We allow a computed part at the beginning of a path
       if (isComputedPart(part) && i > 0) {
-        const inner = typeof part === 'number'
-          ? String(part)
-          : escapeString(part, {
-            quote: "'",
-          });
+        const inner =
+          typeof part === 'number'
+            ? String(part)
+            : escapeString(
+                part,
+                {
+                  quote: "'",
+                },
+              );
 
         str += `[${inner}]`;
       } else {
@@ -340,13 +348,11 @@ export default class Consumer {
     // Make the errors more descriptive
     if (fromSource) {
       if (this.hasChangedFromSource()) {
-        advice.push(
-          {
-            type: 'log',
-            category: 'warn',
-            message: 'Our internal value has been modified since we read the original source',
-          },
-        );
+        advice.push({
+          type: 'log',
+          category: 'warn',
+          message: 'Our internal value has been modified since we read the original source',
+        });
       }
     } else {
       // Go up the consumer tree and take the position from the first consumer found in the source
@@ -368,13 +374,11 @@ export default class Consumer {
 
       // Warn that we didn't find this value in the source if it's parent wasn't either
       if (this.parent === undefined || !this.parent.wasInSource()) {
-        advice.push(
-          {
-            type: 'log',
-            category: 'warn',
-            message: `This value was expected to be found at <emphasis>${this.getKeyPathString()}</emphasis> but was not in the original source`,
-          },
-        );
+        advice.push({
+          type: 'log',
+          category: 'warn',
+          message: `This value was expected to be found at <emphasis>${this.getKeyPathString()}</emphasis> but was not in the original source`,
+        });
       }
     }
 
@@ -450,10 +454,12 @@ export default class Consumer {
   ) {
     // We require this cache as we sometimes want to store state about a forked property such as used items
     const cached = this.forkCache.get(String(key));
-    if (cached !== undefined && cached.value === value &&
-        (cached.propertyMetadata ===
-            undefined ||
-          cached.propertyMetadata === propertyMetadata)) {
+    if (
+      cached !== undefined &&
+      cached.value === value &&
+      (cached.propertyMetadata === undefined ||
+      cached.propertyMetadata === propertyMetadata)
+    ) {
       return cached;
     }
 
@@ -503,9 +509,11 @@ export default class Consumer {
 
     // Validate the parent is an object
     const parentValue = parent.asUnknown();
-    if (parentValue === undefined || parentValue === null ||
-          typeof parentValue !==
-          'object') {
+    if (
+      parentValue === undefined ||
+      parentValue === null ||
+      typeof parentValue !== 'object'
+    ) {
       throw parent.unexpected(descriptions.CONSUME.SET_PROPERTY_NON_OBJECT);
     }
 
@@ -545,15 +553,18 @@ export default class Consumer {
 
     for (const [key, value] of this.asMap(false, false)) {
       if (!this.usedNames.has(key)) {
-        value.unexpected(descriptions.CONSUME.UNUSED_PROPERTY(
-          this.getKeyPathString([key]),
-          type,
-          knownProperties,
-        ), {
-          target: 'key',
-          at: 'suffix',
-          atParent: true,
-        });
+        value.unexpected(
+          descriptions.CONSUME.UNUSED_PROPERTY(
+            this.getKeyPathString([key]),
+            type,
+            knownProperties,
+          ),
+          {
+            target: 'key',
+            at: 'suffix',
+            atParent: true,
+          },
+        );
       }
 
       if (recursive) {
@@ -630,8 +641,11 @@ export default class Consumer {
 
   isObject(): boolean {
     const {value} = this;
-    return typeof value === 'object' && value !== null && value.constructor ===
-      Object;
+    return (
+      typeof value === 'object' &&
+      value !== null &&
+      value.constructor === Object
+    );
   }
 
   // OBJECTS
@@ -839,10 +853,16 @@ export default class Consumer {
       // @ts-ignore
       return value;
     } else {
-      this.unexpected(descriptions.CONSUME.INVALID_STRING_SET_VALUE(value, ( // rome-suppress-next-line lint/noExplicitAny
-      (validValues as any) as Array<string>)), {
-        target: 'value',
-      });
+      this.unexpected(
+        descriptions.CONSUME.INVALID_STRING_SET_VALUE(
+          value,
+          // rome-suppress-next-line lint/noExplicitAny
+          ((validValues as any) as Array<string>),
+        ),
+        {
+          target: 'value',
+        },
+      );
       return validValues[0];
     }
   }
@@ -1011,25 +1031,37 @@ export default class Consumer {
     return this._asNumber(def);
   }
 
-  asNumberInRange(opts: {min?: number; max?: number; default?: number}): number
+  asNumberInRange(
+    opts: {
+      min?: number;
+      max?: number;
+      default?: number;
+    },
+  ): number
 
-  asNumberInRange(opts: {
-    min: Number0;
-    max?: Number0;
-    default?: Number0;
-  }): Number0
+  asNumberInRange(
+    opts: {
+      min: Number0;
+      max?: Number0;
+      default?: Number0;
+    },
+  ): Number0
 
-  asNumberInRange(opts: {
-    min: Number1;
-    max?: Number1;
-    default?: Number1;
-  }): Number1
+  asNumberInRange(
+    opts: {
+      min: Number1;
+      max?: Number1;
+      default?: Number1;
+    },
+  ): Number1
 
-  asNumberInRange(opts: {
-    min?: UnknownNumber;
-    max?: UnknownNumber;
-    default?: UnknownNumber;
-  }): UnknownNumber {
+  asNumberInRange(
+    opts: {
+      min?: UnknownNumber;
+      max?: UnknownNumber;
+      default?: UnknownNumber;
+    },
+  ): UnknownNumber {
     const num = this._asNumber(opts.default);
     const {min, max} = opts;
 

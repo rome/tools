@@ -11,9 +11,7 @@ import {Reporter} from '@romejs/cli-reporter';
 export {FlagValue} from './Parser';
 export {ParserInterface as FlagParser};
 
-export function parseCLIFlags<
-  T
->(
+export function parseCLIFlags<T>(
   reporter: Reporter,
   args: Array<string>,
   opts: ParserOptions<T>,
@@ -22,15 +20,19 @@ export function parseCLIFlags<
   return parser.getInterface();
 }
 
-export function parseCLIFlagsFromProcess<
-  T
->(opts: ParserOptions<T>): ParserInterface<T> {
-  return parseCLIFlags(Reporter.fromProcess(), process.argv.slice(2), {
-    ...opts,
-    programName: opts.programName === undefined
-      ? process.argv[1]
-      : opts.programName,
-  });
+export function parseCLIFlagsFromProcess<T>(
+  opts: ParserOptions<T>,
+): ParserInterface<T> {
+  return parseCLIFlags(
+    Reporter.fromProcess(),
+    process.argv.slice(2),
+    {
+      ...opts,
+      programName: opts.programName === undefined
+        ? process.argv[1]
+        : opts.programName,
+    },
+  );
 }
 
 export * from './serializeCLIFlags';

@@ -17,7 +17,11 @@ export type AssignmentIdentifier = JSNodeBase & {
 export const assignmentIdentifier = createQuickBuilder<
   AssignmentIdentifier,
   'name'
->('AssignmentIdentifier', 'name', {
-  bindingKeys: {},
-  visitorKeys: {},
-});
+>(
+  'AssignmentIdentifier',
+  'name',
+  {
+    bindingKeys: {},
+    visitorKeys: {},
+  },
+);

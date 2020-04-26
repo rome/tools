@@ -15,11 +15,14 @@ export type IfStatement = JSNodeBase & {
   alternate?: AnyStatement;
 };
 
-export const ifStatement = createBuilder<IfStatement>('IfStatement', {
-  bindingKeys: {},
-  visitorKeys: {
-    test: true,
-    consequent: true,
-    alternate: true,
+export const ifStatement = createBuilder<IfStatement>(
+  'IfStatement',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      test: true,
+      consequent: true,
+      alternate: true,
+    },
   },
-});
+);

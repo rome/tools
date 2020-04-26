@@ -31,7 +31,9 @@ export class DiagnosticsDuplicateHelper {
   addLocation(
     key: string,
     location: undefined | DiagnosticLocation,
-  ): {duplicate: boolean} {
+  ): {
+    duplicate: boolean;
+  } {
     const isSuppressed = this.context.hasLocSuppression(location, this.category);
     if (isSuppressed) {
       // If this location has had it's diagnostic suppressed then we don't want to return
@@ -58,13 +60,16 @@ export class DiagnosticsDuplicateHelper {
       const firstLocation = locations[0];
       const restLocations = locations.slice(1);
 
-      this.context.addLocDiagnostic(firstLocation, {
-        ...description,
-        advice: [
-          ...(description.advice || []),
-          ...buildDuplicateLocationAdvice(restLocations),
-        ],
-      });
+      this.context.addLocDiagnostic(
+        firstLocation,
+        {
+          ...description,
+          advice: [
+            ...(description.advice || []),
+            ...buildDuplicateLocationAdvice(restLocations),
+          ],
+        },
+      );
     }
   }
 }

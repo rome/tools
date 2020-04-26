@@ -13,11 +13,15 @@ import {HumanBuilder} from '../Utils';
 import ObjPropT from './ObjPropT';
 
 export default class ObjT extends T {
-  constructor(scope: Scope, originNode: undefined | AnyNode, opts: {
-    props?: Array<T>;
-    proto: undefined | T;
-    calls?: Array<T>;
-  }) {
+  constructor(
+    scope: Scope,
+    originNode: undefined | AnyNode,
+    opts: {
+      props?: Array<T>;
+      proto: undefined | T;
+      calls?: Array<T>;
+    },
+  ) {
     super(scope, originNode);
     this.calls = opts.calls === undefined ? [] : opts.calls;
     this.props = opts.props === undefined ? [] : opts.props;
@@ -32,8 +36,8 @@ export default class ObjT extends T {
   serialize(addType: SerialTypeFactory): HydrateData {
     if (this.constructor !== ObjT) {
       throw new Error(
-          'Expected ObjT to be constructor, youve likely forgot to define this method in the type subclass',
-        );
+        'Expected ObjT to be constructor, youve likely forgot to define this method in the type subclass',
+      );
     }
 
     return {
@@ -49,11 +53,15 @@ export default class ObjT extends T {
     data: HydrateData,
     getType: HydrateTypeFactory,
   ): T {
-    return new ObjT(scope, originNode, {
-      props: Array(data.props).map((id) => getType(id)),
-      proto: data.proto === undefined ? undefined : getType(data.proto),
-      calls: Array(data.calls).map((id) => getType(id)),
-    });
+    return new ObjT(
+      scope,
+      originNode,
+      {
+        props: Array(data.props).map((id) => getType(id)),
+        proto: data.proto === undefined ? undefined : getType(data.proto),
+        calls: Array(data.calls).map((id) => getType(id)),
+      },
+    );
   }
 
   compatibleWith(otherType: T): boolean | TypeCompatibilityReturn {

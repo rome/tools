@@ -24,7 +24,6 @@ export function consumeUrl(rawUrl: string): ConsumableUrl {
     value: parts.pathname,
     context: {
       category: 'parse/url',
-
       getDiagnosticPointer() {
         return {
           language: 'url',

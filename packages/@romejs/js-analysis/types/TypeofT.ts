@@ -67,11 +67,9 @@ export default class TypeofT extends T {
 
       // TODO bigint
       if (typeStr !== undefined) {
-        possibleTypes.push(new StringLiteralT(
-          this.scope,
-          this.originNode,
-          typeStr,
-        ));
+        possibleTypes.push(
+          new StringLiteralT(this.scope, this.originNode, typeStr),
+        );
       }
     }
 

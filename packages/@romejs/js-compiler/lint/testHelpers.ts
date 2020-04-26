@@ -91,10 +91,12 @@ export async function testLint(
     };
   });
 
-  const snapshotName = await t.snapshot(printDiagnosticsToString({
-    diagnostics,
-    suppressions: res.suppressions,
-  }));
+  const snapshotName = await t.snapshot(
+    printDiagnosticsToString({
+      diagnostics,
+      suppressions: res.suppressions,
+    }),
+  );
 
   await t.snapshotNamed(`${snapshotName}: formatted`, res.src);
 

@@ -15,20 +15,21 @@ export default createMasterCommand({
   description: 'get the module type signature of a file',
   usage: '',
   examples: [],
-
   defineFlags() {
     return {};
   },
-
   async callback(req: MasterRequest): Promise<void> {
     const {master, reporter} = req;
     const {args} = req.query;
     req.expectArgumentLength(1);
 
-    const filename = await master.resolver.resolveEntryAssertPath({
-      ...req.getResolverOptionsFromFlags(),
-      source: createUnknownFilePath(args[0]),
-    }, {location: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})});
+    const filename = await master.resolver.resolveEntryAssertPath(
+      {
+        ...req.getResolverOptionsFromFlags(),
+        source: createUnknownFilePath(args[0]),
+      },
+      {location: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})},
+    );
     reporter.inspect(await req.requestWorkerModuleSignature(filename, {}));
   },
 });

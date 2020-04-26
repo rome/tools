@@ -12,12 +12,14 @@ import {
 } from '@romejs/diagnostics';
 import {ManifestName} from './types';
 
-type NormalizeNameUnexpected = (opts: {
-  description: DiagnosticDescriptionOptionalCategory;
-  start?: Number0;
-  end?: Number0;
-  at?: 'prefix';
-}) => void;
+type NormalizeNameUnexpected = (
+  opts: {
+    description: DiagnosticDescriptionOptionalCategory;
+    start?: Number0;
+    end?: Number0;
+    at?: 'prefix';
+  },
+) => void;
 
 type ValidateNamePartOptions = {
   name: string;
@@ -123,12 +125,15 @@ export function normalizeName(opts: NormalizeNameOptions): ManifestName {
     let offset: Number0 = ob1Coerce0(1);
 
     // Org
-    const sanitizedOrg = validateNamePart(opts, {
-      isOrg: true,
-      isOrgPart: true,
-      name: rawOrg,
-      offset,
-    });
+    const sanitizedOrg = validateNamePart(
+      opts,
+      {
+        isOrg: true,
+        isOrgPart: true,
+        name: rawOrg,
+        offset,
+      },
+    );
     offset = ob1Add(offset, rawOrg.length);
     org = sanitizedOrg;
 
@@ -143,12 +148,15 @@ export function normalizeName(opts: NormalizeNameOptions): ManifestName {
       offset = ob1Inc(offset);
 
       // Package name
-      const sanitizedPackageName = validateNamePart(opts, {
-        isOrg: false,
-        isOrgPart: true,
-        name: rawPackageName,
-        offset,
-      });
+      const sanitizedPackageName = validateNamePart(
+        opts,
+        {
+          isOrg: false,
+          isOrgPart: true,
+          name: rawPackageName,
+          offset,
+        },
+      );
       offset = ob1Add(offset, rawPackageName.length);
 
       // Complain on excess separators
@@ -163,12 +171,15 @@ export function normalizeName(opts: NormalizeNameOptions): ManifestName {
       packageName = sanitizedPackageName;
     }
   } else {
-    packageName = validateNamePart(opts, {
-      name,
-      offset: ob1Number0,
-      isOrg: false,
-      isOrgPart: false,
-    });
+    packageName = validateNamePart(
+      opts,
+      {
+        name,
+        offset: ob1Number0,
+        isOrg: false,
+        isOrgPart: false,
+      },
+    );
   }
 
   return {org, packageName};

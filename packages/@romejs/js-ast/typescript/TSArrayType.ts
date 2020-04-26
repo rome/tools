@@ -13,7 +13,10 @@ export type TSArrayType = JSNodeBase & {
   elementType: AnyTSPrimary;
 };
 
-export const tsArrayType = createBuilder<TSArrayType>('TSArrayType', {
-  bindingKeys: {},
-  visitorKeys: {elementType: true},
-});
+export const tsArrayType = createBuilder<TSArrayType>(
+  'TSArrayType',
+  {
+    bindingKeys: {},
+    visitorKeys: {elementType: true},
+  },
+);

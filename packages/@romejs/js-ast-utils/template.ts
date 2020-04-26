@@ -89,9 +89,10 @@ function getTemplate(strs: TemplateStringsArray): BuiltTemplate {
   const context = new CompilerContext({
     ast,
   });
-  context.reduce(ast, [
-    {name: 'collectPlaceholderPaths', enter: collectPlaceholderPaths},
-  ]);
+  context.reduce(
+    ast,
+    [{name: 'collectPlaceholderPaths', enter: collectPlaceholderPaths}],
+  );
 
   const placeholderPaths: BuiltTemplate['placeholderPaths'] = [];
   for (const id in placeholders) {
@@ -124,7 +125,8 @@ function createIdentifier(
 }
 
 export default function template(
-  strs: TemplateStringsArray,...substitutions: TemplateSubstitions
+  strs: TemplateStringsArray,
+  ...substitutions: TemplateSubstitions
 ): AnyNode {
   const {ast, placeholderPaths} = getTemplate(strs);
 
@@ -170,7 +172,8 @@ export default function template(
 }
 
 template.expression = (
-  strs: TemplateStringsArray,...substitutions: TemplateSubstitions
+  strs: TemplateStringsArray,
+  ...substitutions: TemplateSubstitions
 ): AnyExpression => {
   const first = template.statement(strs, ...substitutions);
 
@@ -183,7 +186,8 @@ template.expression = (
 };
 
 template.statement = (
-  strs: TemplateStringsArray,...substitutions: TemplateSubstitions
+  strs: TemplateStringsArray,
+  ...substitutions: TemplateSubstitions
 ): AnyStatement => {
   // Parse the template, with caching
   const ast = program.assert(template(strs, ...substitutions));

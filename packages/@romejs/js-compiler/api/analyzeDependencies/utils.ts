@@ -144,9 +144,11 @@ export function getDeclarationLoc(
   return node.loc;
 }
 
-function arraySame<
-  T
->(a: Array<T>, b: Array<T>, callback: (a: T, b: T) => boolean): boolean {
+function arraySame<T>(
+  a: Array<T>,
+  b: Array<T>,
+  callback: (a: T, b: T) => boolean,
+): boolean {
   if (a.length !== b.length) {
     return false;
   }
@@ -178,17 +180,22 @@ function exportsSame(a: AnyAnalyzeExport, b: AnyAnalyzeExport): boolean {
       return b.type === 'local' && a.name === b.name;
 
     case 'external':
-      return b.type === 'external' && a.imported === b.imported &&
-          a.exported ===
-          b.exported && a.source === b.source;
+      return (
+        b.type === 'external' &&
+        a.imported === b.imported &&
+        a.exported === b.exported &&
+        a.source === b.source
+      );
 
     case 'externalAll':
       return b.type === 'externalAll' && a.source === b.source;
 
     case 'externalNamespace':
-      return b.type === 'externalNamespace' && a.source === b.source &&
-          a.exported ===
-          b.exported;
+      return (
+        b.type === 'externalNamespace' &&
+        a.source === b.source &&
+        a.exported === b.exported
+      );
   }
 }
 
@@ -200,12 +207,13 @@ function dependencyNameSame(
 }
 
 function dependenciesSame(a: AnalyzeDependency, b: AnalyzeDependency): boolean {
-  return a.all === b.all && a.async === b.async && a.optional === b.optional &&
-      a.source ===
-      b.source && a.type === b.type && arraySame(
-    a.names,
-    b.names,
-    dependencyNameSame,
+  return (
+    a.all === b.all &&
+    a.async === b.async &&
+    a.optional === b.optional &&
+    a.source === b.source &&
+    a.type === b.type &&
+    arraySame(a.names, b.names, dependencyNameSame)
   );
 }
 
@@ -214,10 +222,12 @@ export function areAnalyzeDependencyResultsEqual(
   a: AnalyzeDependencyResult,
   b: AnalyzeDependencyResult,
 ): boolean {
-  if (a.firstTopAwaitLocation === undefined && b.firstTopAwaitLocation !==
-      undefined || b.firstTopAwaitLocation === undefined &&
-        a.firstTopAwaitLocation !==
-        undefined) {
+  if (
+    (a.firstTopAwaitLocation === undefined &&
+    b.firstTopAwaitLocation !== undefined) ||
+    (b.firstTopAwaitLocation === undefined &&
+    a.firstTopAwaitLocation !== undefined)
+  ) {
     return false;
   }
 

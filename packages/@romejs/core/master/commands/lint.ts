@@ -26,18 +26,16 @@ export default createMasterCommand<Flags>({
   allowRequestFlags: ['watch', 'review'],
   usage: '',
   examples: [],
-
   defineFlags(consumer: Consumer): Flags {
     return {
-      decisions: consumer.get('decisions').asImplicitArray().map(
-        (item) => item.asString(),
+      decisions: consumer.get('decisions').asImplicitArray().map((item) =>
+        item.asString()
       ),
       save: consumer.get('save').asBoolean(false),
       formatOnly: consumer.get('formatOnly').asBoolean(false),
       changed: consumer.get('changed').asStringOrVoid(),
     };
   },
-
   async callback(req: MasterRequest, flags: Flags): Promise<void> {
     const {reporter} = req;
 

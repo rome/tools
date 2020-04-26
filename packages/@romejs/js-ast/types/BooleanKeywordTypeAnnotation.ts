@@ -12,9 +12,10 @@ export type BooleanKeywordTypeAnnotation = JSNodeBase & {
   type: 'BooleanKeywordTypeAnnotation';
 };
 
-export const booleanKeywordTypeAnnotation = createBuilder<
-  BooleanKeywordTypeAnnotation
->('BooleanKeywordTypeAnnotation', {
-  bindingKeys: {},
-  visitorKeys: {},
-});
+export const booleanKeywordTypeAnnotation = createBuilder<BooleanKeywordTypeAnnotation>(
+  'BooleanKeywordTypeAnnotation',
+  {
+    bindingKeys: {},
+    visitorKeys: {},
+  },
+);

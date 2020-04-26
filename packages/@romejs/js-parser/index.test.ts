@@ -10,70 +10,69 @@ import {createFixtureTests} from '@romejs/test-helpers';
 import {ConstProgramSyntax} from '@romejs/js-ast';
 import {removeCarriageReturn} from '@romejs/string-utils';
 
-const promise = createFixtureTests(
-  async (fixture, t) => {
-    const {options, files} = fixture;
+const promise = createFixtureTests(async (fixture, t) => {
+  const {options, files} = fixture;
 
-    // Get the input JS
-    const inputFile = files.get('input.js') || files.get('input.mjs') ||
-      files.get('input.ts') || files.get('input.tsx');
-    if (inputFile === undefined) {
-      throw new Error(
-        `The fixture ${fixture.dir} did not have an input.(mjs|js|ts|tsx)`,
-      );
-    }
-
-    const sourceTypeProp = options.get('sourceType');
-    const sourceType = sourceTypeProp.asString('script');
-    if (sourceType !== 'module' && sourceType !== 'script') {
-      throw sourceTypeProp.unexpected();
-    }
-
-    const allowReturnOutsideFunction = options.get('allowReturnOutsideFunction').asBoolean(
-      false,
+  // Get the input JS
+  const inputFile =
+    files.get('input.js') ||
+    files.get('input.mjs') ||
+    files.get('input.ts') ||
+    files.get('input.tsx');
+  if (inputFile === undefined) {
+    throw new Error(
+      `The fixture ${fixture.dir} did not have an input.(mjs|js|ts|tsx)`,
     );
-    const filename = inputFile.relative;
+  }
 
-    const syntax: Array<ConstProgramSyntax> = options.get('syntax').asArray(true).map(
-      (
-        item,
-      ) => {
-        return item.asStringSet(['jsx', 'ts', 'flow']);
-      },
-    );
+  const sourceTypeProp = options.get('sourceType');
+  const sourceType = sourceTypeProp.asString('script');
+  if (sourceType !== 'module' && sourceType !== 'script') {
+    throw sourceTypeProp.unexpected();
+  }
 
-    t.addToAdvice({
-      type: 'log',
-      category: 'info',
-      message: 'Parser options',
-    });
+  const allowReturnOutsideFunction = options.get('allowReturnOutsideFunction').asBoolean(
+    false,
+  );
+  const filename = inputFile.relative;
 
-    t.addToAdvice({
-      type: 'inspect',
-      data: {
-        filename: filename.join(),
-        allowReturnOutsideFunction,
-        sourceType,
-        syntax,
-      },
-    });
+  const syntax: Array<ConstProgramSyntax> = options.get('syntax').asArray(true).map((
+    item,
+  ) => {
+    return item.asStringSet(['jsx', 'ts', 'flow']);
+  });
 
-    const inputContent = removeCarriageReturn(inputFile.content.toString());
+  t.addToAdvice({
+    type: 'log',
+    category: 'info',
+    message: 'Parser options',
+  });
 
-    const ast = parseJS({
-      input: inputContent,
-      path: filename,
+  t.addToAdvice({
+    type: 'inspect',
+    data: {
+      filename: filename.join(),
       allowReturnOutsideFunction,
       sourceType,
       syntax,
-    });
+    },
+  });
 
-    const outputFile = inputFile.absolute.getParent().append(
-      `${inputFile.absolute.getExtensionlessBasename()}.test.md`,
-    ).join();
-    await t.snapshot(ast, undefined, outputFile);
-  },
-);
+  const inputContent = removeCarriageReturn(inputFile.content.toString());
+
+  const ast = parseJS({
+    input: inputContent,
+    path: filename,
+    allowReturnOutsideFunction,
+    sourceType,
+    syntax,
+  });
+
+  const outputFile = inputFile.absolute.getParent().append(
+    `${inputFile.absolute.getExtensionlessBasename()}.test.md`,
+  ).join();
+  await t.snapshot(ast, undefined, outputFile);
+});
 
 // @ts-ignore Doesn't support top-level await lol
 await promise;

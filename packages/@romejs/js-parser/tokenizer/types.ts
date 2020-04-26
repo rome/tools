@@ -103,7 +103,6 @@ export const types = {
   eof: new TokenType('eof'),
   invalid: new TokenType('invalid'),
   comment: new TokenType('comment'),
-
   // Punctuation token types.
   bracketL: new TokenType('[', {beforeExpr, startsExpr}),
   bracketR: new TokenType(']'),
@@ -127,33 +126,19 @@ export const types = {
   dollarBraceL: new TokenType('${', {beforeExpr, startsExpr}),
   at: new TokenType('@'),
   hash: new TokenType('#'),
-
   // Operators. These carry several kinds of properties to help the
-
   // parser use them properly (the presence of these properties is
-
   // what categorizes them as operators).
-
   //
-
   // `binop`, when present, specifies that this operator is a binary
-
   // operator, and will refer to its precedence.
-
   //
-
   // `prefix` and `postfix` mark the operator as a prefix or postfix
-
   // unary operator.
-
   //
-
   // `isAssign` marks all of `=`, `+=`, `-=` etcetera, which act as
-
   // binary operators with a very low precedence, that should result
-
   // in AssignmentExpression nodes.
-
   eq: new TokenType('=', {beforeExpr, isAssign}),
   assign: new TokenType('_=', {beforeExpr, isAssign}),
   incDec: new TokenType('++/--', {prefix, postfix, startsExpr}),
@@ -172,17 +157,18 @@ export const types = {
   modulo: new BinopTokenType('%', 10),
   star: new BinopTokenType('*', 10),
   slash: new BinopTokenType('/', 10),
-  exponent: new TokenType('**', {
-    beforeExpr,
-    binop: 11,
-    rightAssociative: true,
-  }),
-
+  exponent: new TokenType(
+    '**',
+    {
+      beforeExpr,
+      binop: 11,
+      rightAssociative: true,
+    },
+  ),
   jsxName: new TokenType('jsxName'),
   jsxText: new TokenType('jsxText', {beforeExpr: true}),
   jsxTagStart: new TokenType('jsxTagStart', {startsExpr: true}),
   jsxTagEnd: new TokenType('jsxTagEnd'),
-
   _break: new KeywordTokenType('break'),
   _case: new KeywordTokenType('case', {beforeExpr}),
   _catch: new KeywordTokenType('catch'),

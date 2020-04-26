@@ -9,21 +9,29 @@ import {test} from 'rome';
 import {parseDependencyPattern} from './dependencies';
 import {consumeUnknown} from '@romejs/consume';
 
-test('can parse npm dependency patterns', async (t) => {
-  await t.snapshot(parseDependencyPattern(
-    consumeUnknown('npm:foo', 'parse/json'),
-    false,
-  ));
-  await t.snapshot(parseDependencyPattern(consumeUnknown(
-    'npm:@foo/bar',
-    'parse/json',
-  ), false));
-  await t.snapshot(parseDependencyPattern(consumeUnknown(
-    'npm:foo@1.0.0',
-    'parse/json',
-  ), false));
-  await t.snapshot(parseDependencyPattern(consumeUnknown(
-    'npm:@foo/bar@1.0.0',
-    'parse/json',
-  ), false));
-});
+test(
+  'can parse npm dependency patterns',
+  async (t) => {
+    await t.snapshot(
+      parseDependencyPattern(consumeUnknown('npm:foo', 'parse/json'), false),
+    );
+    await t.snapshot(
+      parseDependencyPattern(
+        consumeUnknown('npm:@foo/bar', 'parse/json'),
+        false,
+      ),
+    );
+    await t.snapshot(
+      parseDependencyPattern(
+        consumeUnknown('npm:foo@1.0.0', 'parse/json'),
+        false,
+      ),
+    );
+    await t.snapshot(
+      parseDependencyPattern(
+        consumeUnknown('npm:@foo/bar@1.0.0', 'parse/json'),
+        false,
+      ),
+    );
+  },
+);

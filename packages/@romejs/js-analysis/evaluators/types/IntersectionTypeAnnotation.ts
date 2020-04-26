@@ -16,7 +16,11 @@ import IntersectionT from '../../types/IntersectionT';
 export default function IntersectionTypeAnnotation(node: AnyNode, scope: Scope) {
   node = intersectionTypeAnnotation.assert(node);
 
-  return new IntersectionT(scope, node, node.types.map((type) => {
-    return scope.evaluate(type);
-  }));
+  return new IntersectionT(
+    scope,
+    node,
+    node.types.map((type) => {
+      return scope.evaluate(type);
+    }),
+  );
 }

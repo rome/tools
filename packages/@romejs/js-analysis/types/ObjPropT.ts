@@ -40,7 +40,12 @@ export default class ObjPropT extends T {
     data: HydrateData,
     getType: HydrateTypeFactory,
   ): T {
-    return new ObjPropT(scope, originNode, String(data.key), getType(data.value));
+    return new ObjPropT(
+      scope,
+      originNode,
+      String(data.key),
+      getType(data.value),
+    );
   }
 
   compatibleWith(otherType: T): boolean | TypeCompatibilityReturn {

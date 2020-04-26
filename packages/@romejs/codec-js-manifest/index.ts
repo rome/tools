@@ -68,9 +68,11 @@ function normalizeString(consumer: Consumer, key: string): MString {
 }
 
 function normalizePathPatterns(consumer: Consumer, loose: boolean): PathPatterns {
-  return normalizeStringArray(consumer, loose).map((str) => parsePathPattern({
-    input: str,
-  }));
+  return normalizeStringArray(consumer, loose).map((str) =>
+    parsePathPattern({
+      input: str,
+    })
+  );
 }
 
 function normalizeStringArray(consumer: Consumer, loose: boolean): Array<string> {
@@ -185,8 +187,8 @@ function normalizeLicense(
   // Support some legacy ways of specifying licenses: https://docs.npmjs.com/files/package.json#license
   const raw = licenseProp.asUnknown();
   if (loose && Array.isArray(raw)) {
-    const licenseIds = licenseProp.asArray().map(
-      (consumer) => extractLicenseFromObjectConsumer(consumer)[0],
+    const licenseIds = licenseProp.asArray().map((consumer) =>
+      extractLicenseFromObjectConsumer(consumer)[0]
     );
     licenseId = `(${licenseIds.join(' OR ')})`;
   } else if (loose && typeof raw === 'object') {
@@ -206,14 +208,17 @@ function normalizeLicense(
   }
 
   // Parse as a SPDX expression
-  return tryParseWithOptionalOffsetPosition({
-    loose,
-    path: consumer.path,
-    input: licenseId,
-  }, {
-    getOffsetPosition: () => licenseProp.getLocation('inner-value').start,
-    parse: (opts) => parseSPDXLicense(opts),
-  });
+  return tryParseWithOptionalOffsetPosition(
+    {
+      loose,
+      path: consumer.path,
+      input: licenseId,
+    },
+    {
+      getOffsetPosition: () => licenseProp.getLocation('inner-value').start,
+      parse: (opts) => parseSPDXLicense(opts),
+    },
+  );
 }
 
 function normalizeVersion(
@@ -232,16 +237,19 @@ function normalizeVersion(
     return undefined;
   }
 
-  const ast = tryParseWithOptionalOffsetPosition({
-    path: consumer.path,
-    input: rawVersion,
-    // Some node_modules have bogus versions, like being prefixed with a v like:
-    // https://github.com/itinance/react-native-fs/commit/6232d4e392d5b52cca0792fdfe5903b7fb6b1c5c#diff-b9cfc7f2cdf78a7f4b91a753d10865a2R3
-    loose,
-  }, {
-    getOffsetPosition: () => prop.getLocation('inner-value').start,
-    parse: (opts) => parseSemverVersion(opts),
-  });
+  const ast = tryParseWithOptionalOffsetPosition(
+    {
+      path: consumer.path,
+      input: rawVersion,
+      // Some node_modules have bogus versions, like being prefixed with a v like:
+      // https://github.com/itinance/react-native-fs/commit/6232d4e392d5b52cca0792fdfe5903b7fb6b1c5c#diff-b9cfc7f2cdf78a7f4b91a753d10865a2R3
+      loose,
+    },
+    {
+      getOffsetPosition: () => prop.getLocation('inner-value').start,
+      parse: (opts) => parseSemverVersion(opts),
+    },
+  );
   return ast;
 }
 
@@ -294,9 +302,9 @@ function normalizePerson(consumer: Consumer, loose: boolean): ManifestPerson {
 
     if (loose && github === undefined) {
       // Some rando packages use this
-      github = consumer.get('githubUsername').asStringOrVoid() || consumer.get(
-        'github-username',
-      ).asStringOrVoid();
+      github =
+        consumer.get('githubUsername').asStringOrVoid() ||
+        consumer.get('github-username').asStringOrVoid();
     }
 
     const person: ManifestPerson = {
@@ -421,15 +429,18 @@ function normalizeExports(consumer: Consumer): boolean | ManifestExports {
 
   // "exports": "./index.js"
   if (typeof unknown === 'string') {
-    exports.set(createRelativeFilePath('.'), new Map([
-      [
-        'default',
-        {
-          consumer,
-          relative: consumer.asExplicitRelativeFilePath(),
-        },
-      ],
-    ]));
+    exports.set(
+      createRelativeFilePath('.'),
+      new Map([
+        [
+          'default',
+          {
+            consumer,
+            relative: consumer.asExplicitRelativeFilePath(),
+          },
+        ],
+      ]),
+    );
     return exports;
   }
 
@@ -446,10 +457,13 @@ function normalizeExports(consumer: Consumer): boolean | ManifestExports {
         exports.set(createRelativeFilePath('.'), dotConditions);
       }
 
-      dotConditions.set(relative, {
-        consumer: value,
-        relative: value.asExplicitRelativeFilePath(),
-      });
+      dotConditions.set(
+        relative,
+        {
+          consumer: value,
+          relative: value.asExplicitRelativeFilePath(),
+        },
+      );
       continue;
     }
 
@@ -469,10 +483,13 @@ function normalizeExportsConditions(value: Consumer): ManifestExportConditions {
   const unknown = value.asUnknown();
 
   if (typeof unknown === 'string') {
-    conditions.set('default', {
-      consumer: value,
-      relative: value.asExplicitRelativeFilePath(),
-    });
+    conditions.set(
+      'default',
+      {
+        consumer: value,
+        relative: value.asExplicitRelativeFilePath(),
+      },
+    );
   } else if (Array.isArray(unknown)) {
     // Find the first item that passes validation
     for (const elem of value.asArray()) {
@@ -484,10 +501,13 @@ function normalizeExportsConditions(value: Consumer): ManifestExportConditions {
     }
   } else {
     for (const [type, relativeAlias] of value.asMap()) {
-      conditions.set(type, {
-        consumer: relativeAlias,
-        relative: relativeAlias.asExplicitRelativeFilePath(),
-      });
+      conditions.set(
+        type,
+        {
+          consumer: relativeAlias,
+          relative: relativeAlias.asExplicitRelativeFilePath(),
+        },
+      );
     }
   }
 
@@ -543,12 +563,15 @@ function normalizeRootName(consumer: Consumer, loose: boolean): ManifestName {
     name: prop.asString(),
     loose,
     unexpected: ({description, at, start, end}) => {
-      prop.unexpected(description, {
-        at,
-        loc: start === undefined
-          ? undefined
-          : prop.getLocationRange(start, end, 'inner-value'),
-      });
+      prop.unexpected(
+        description,
+        {
+          at,
+          loc: start === undefined
+            ? undefined
+            : prop.getLocationRange(start, end, 'inner-value'),
+        },
+      );
     },
   });
 }
@@ -564,9 +587,8 @@ const INCORRECT_DEPENDENCIES_SUFFIXES = [
 function checkDependencyKeyTypo(key: string, prop: Consumer) {
   for (const depPrefixKey of DEPENDENCIES_KEYS) {
     // Ignore if the key is a valid dependency key
-    const depKey = depPrefixKey === ''
-      ? 'dependencies'
-      : `${depPrefixKey}Dependencies`;
+    const depKey =
+      depPrefixKey === '' ? 'dependencies' : `${depPrefixKey}Dependencies`;
     if (key === depKey) {
       return;
     }
@@ -630,22 +652,18 @@ export async function normalizeManifest(
     description: normalizeString(consumer, 'description'),
     license: normalizeLicense(consumer, loose),
     type: consumer.get('type').asStringSetOrVoid(['module', 'commonjs']),
-
     bin: normalizeBin(consumer, name.packageName, loose),
     scripts: normalizeStringMap(consumer, 'scripts', loose),
     homepage: normalizeString(consumer, 'homepage'),
     repository: normalizeRepo(consumer.get('repository'), loose),
     bugs: normalizeBugs(consumer.get('bugs'), loose),
     engines: normalizeStringMap(consumer, 'engines', loose),
-
     files: normalizePathPatterns(consumer.get('files'), loose),
     keywords: normalizeStringArray(consumer.get('keywords'), loose),
     cpu: normalizeStringArray(consumer.get('cpu'), loose),
     os: normalizeStringArray(consumer.get('os'), loose),
-
     main: normalizeString(consumer, 'main'),
     exports: normalizeExports(consumer.get('exports')),
-
     // Dependency fields
     dependencies: normalizeDependencies(consumer, 'dependencies', loose),
     devDependencies: normalizeDependencies(consumer, 'devDependencies', loose),
@@ -657,18 +675,15 @@ export async function normalizeManifest(
     peerDependencies: normalizeDependencies(consumer, 'peerDependencies', loose),
     bundledDependencies: [
       ...normalizeStringArray(consumer.get('bundledDependencies'), loose),
-
       // Common misspelling. We error on the existence of this for strict manifests already.
       ...normalizeStringArray(consumer.get('bundleDependencies'), loose),
     ],
-
     // People fields
     author: consumer.has('author')
       ? normalizePerson(consumer.get('author'), loose)
       : undefined,
     contributors: normalizePeople(consumer.get('contributors'), loose),
     maintainers: normalizePeople(consumer.get('maintainers'), loose),
-
     raw: consumer.asJSONObject(),
   };
 

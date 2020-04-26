@@ -13,11 +13,12 @@ export type TSTypeParameterInstantiation = JSNodeBase & {
   params: Array<AnyTSPrimary>;
 };
 
-export const tsTypeParameterInstantiation = createBuilder<
-  TSTypeParameterInstantiation
->('TSTypeParameterInstantiation', {
-  bindingKeys: {},
-  visitorKeys: {
-    params: true,
+export const tsTypeParameterInstantiation = createBuilder<TSTypeParameterInstantiation>(
+  'TSTypeParameterInstantiation',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      params: true,
+    },
   },
-});
+);

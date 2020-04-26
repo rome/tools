@@ -57,9 +57,12 @@ function convertJSXIdentifier(
     if (node.name === 'this') {
       return thisExpression.create({});
     } else {
-      return referenceIdentifier.create({
-        name: node.name,
-      }, node);
+      return referenceIdentifier.create(
+        {
+          name: node.name,
+        },
+        node,
+      );
     }
   } else if (node.type === 'JSXIdentifier') {
     return stringLiteral.quick(node.name);
@@ -79,8 +82,8 @@ function convertJSXIdentifier(
     }
   } else {
     throw new Error(
-        `Received a node of type ${node.type}, the only node types that should be in this position are JSXIdentifier and JSXMemberExpression`,
-      );
+      `Received a node of type ${node.type}, the only node types that should be in this position are JSXIdentifier and JSXMemberExpression`,
+    );
   }
 }
 
@@ -103,11 +106,16 @@ function extractName(node: JSXIdentifier | JSXNamespacedName): string {
 }
 
 function convertAttribute(node: JSXAttribute): ObjectProperty {
-  let valueNode = convertAttributeValue(node.value || booleanLiteral.create({
-    value: true,
-  }));
-  if (valueNode.type === 'StringLiteral' && (!node.value || node.value.type !==
-      'JSXExpressionContainer')) {
+  let valueNode = convertAttributeValue(
+    node.value ||
+    booleanLiteral.create({
+      value: true,
+    }),
+  );
+  if (
+    valueNode.type === 'StringLiteral' &&
+    (!node.value || node.value.type !== 'JSXExpressionContainer')
+  ) {
     valueNode = stringLiteral.create({
       value: valueNode.value.replace(/\n\s+/g, ' '),
     });
