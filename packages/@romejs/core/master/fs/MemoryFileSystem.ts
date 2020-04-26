@@ -846,7 +846,9 @@ export default class MemoryFileSystem {
       }
 
       const manifest = this.getManifest(packagePath);
-      if (manifest !== undefined && manifest.raw.hasteCommonjs === true) {
+
+      // rome-suppress-next-line lint/camelCase
+      if ((manifest?.raw)?.haste_commonjs === true) {
         return false;
       }
     }

@@ -862,7 +862,7 @@ export default class Resolver {
     }
 
     // Check the haste map
-    if (project !== undefined && project.hasteMap.size > 0) {
+    if ((project?.hasteMap).size > 0) {
       const hasteResolved = this.resolveHaste(
         query,
         project,

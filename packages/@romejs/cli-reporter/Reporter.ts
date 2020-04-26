@@ -185,7 +185,7 @@ export default class Reporter {
     // Watch for resizing
     if (outStream.format === 'ansi' && stdout !== undefined) {
       const onStdoutResize = () => {
-        if (stdout !== undefined && stdout.columns !== undefined) {
+        if (stdout?.columns !== undefined) {
           const {columns} = stdout;
           columnsUpdated.send(columns);
           this.setStreamColumns([outStream, errStream], columns);

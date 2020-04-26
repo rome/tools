@@ -145,7 +145,7 @@ export default class Parser<T> {
   helpMode: boolean;
 
   looksLikeFlag(flag: undefined | string): boolean {
-    return flag !== undefined && flag[0] === '-';
+    return flag?.[0] === '-';
   }
 
   toCamelCase(name: string): string {

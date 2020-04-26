@@ -516,7 +516,7 @@ export default class DiagnosticsPrinter extends Error {
       if (this.flags.verboseDiagnostics) {
         const {origins} = diag;
 
-        if (origins !== undefined && origins.length > 0) {
+        if (origins?.length > 0) {
           reporter.spacer();
           reporter.info('Why are you seeing this diagnostic?');
           reporter.forceSpacer();

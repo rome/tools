@@ -361,7 +361,7 @@ function normalizeRepo(
 
     // If this is a hosted git shorthand then explode it
     const parsed = parseGitDependencyPattern(consumer);
-    if (parsed !== undefined && parsed.type === 'hosted-git') {
+    if (parsed?.type === 'hosted-git') {
       url = parsed.url;
     }
 
