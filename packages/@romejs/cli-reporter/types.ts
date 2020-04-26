@@ -10,8 +10,6 @@ import {Event} from '@romejs/events';
 export type SelectOption = {
   label: string;
   shortcut?: string;
-  disabled?: boolean;
-  disabledReason?: string;
 };
 
 export type SelectOptions = {
