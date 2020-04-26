@@ -110,10 +110,7 @@ export default class SnapshotManager {
     this.snapshots.set(path, snapshot);
 
     while (nodes.length > 0) {
-      const node = nodes.shift();
-      if (node === undefined) {
-        throw new Error('Impossible');
-      }
+      const node = nodes.shift()!;
 
       if (node.type === 'Heading' && node.level === 1) {
         // Title
@@ -208,10 +205,7 @@ export default class SnapshotManager {
     const testNames = Array.from(testNameToEntries.keys()).sort();
 
     for (const testName of testNames) {
-      const entries = testNameToEntries.get(testName);
-      if (entries === undefined) {
-        throw new Error('Impossible');
-      }
+      const entries = testNameToEntries.get(testName)!;
 
       lines.push(`## \`${testName}\``);
       pushNewline();
@@ -219,10 +213,7 @@ export default class SnapshotManager {
       const entryNames = Array.from(entries.keys()).sort();
 
       for (const snapshotName of entryNames) {
-        const entry = entries.get(snapshotName);
-        if (entry === undefined) {
-          throw new Error('Impossible');
-        }
+        const entry = entries.get(snapshotName)!;
 
         const {value} = entry;
         const language = entry.language === undefined ? '' : entry.language;

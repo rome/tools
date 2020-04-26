@@ -640,10 +640,7 @@ export default class Parser<T> {
         }
 
         for (const category of sortedCategoryNames) {
-          const commands = commandsByCategory.get(category);
-          if (commands === undefined) {
-            throw new Error('Impossible. Should always be populated.');
-          }
+          const commands = commandsByCategory.get(category)!;
 
           if (category !== undefined) {
             reporter.logAll(`<emphasis>${category} Commands</emphasis>`);
