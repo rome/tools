@@ -36,7 +36,7 @@ type SnapshotEntry = {
 };
 
 type Snapshot = {
-  exists: boolean;
+  existsOnDisk: boolean;
   used: boolean;
   raw: string;
   entries: Map<string, SnapshotEntry>;
@@ -64,9 +64,7 @@ export default class SnapshotManager {
   loadingSnapshotCount: number;
   testPath: AbsoluteFilePath;
   defaultSnapshotPath: AbsoluteFilePath;
-
   snapshots: AbsoluteFilePathMap<Snapshot>;
-
   runner: TestWorkerRunner;
   options: TestRunnerOptions;
 
@@ -122,7 +120,7 @@ export default class SnapshotManager {
     const nodes = parser.parse();
 
     const snapshot: Snapshot = {
-      exists: true,
+      existsOnDisk: true,
       used: false,
       raw: parser.input,
       entries: new Map(),
@@ -261,14 +259,16 @@ export default class SnapshotManager {
       return;
     }
 
-    for (const [path, {used, exists, raw, entries}] of this.snapshots) {
+    for (const [path, {used, existsOnDisk, raw, entries}] of this.snapshots) {
       const lines = this.buildSnapshot(entries.values());
       const formatted = lines.join('\n');
+
+      let event: undefined | 'delete' | 'update' | 'create';
 
       if (this.options.freezeSnapshots) {
         if (!used) {
           await this.emitDiagnostic(descriptions.SNAPSHOTS.REDUNDANT);
-        } else if (!exists) {
+        } else if (!existsOnDisk) {
           await this.emitDiagnostic(descriptions.SNAPSHOTS.MISSING);
         } else if (formatted !== raw) {
           await this.emitDiagnostic(
@@ -276,13 +276,22 @@ export default class SnapshotManager {
           );
         }
       } else {
-        if (exists && !used) {
+        if (existsOnDisk && !used) {
           // If a snapshot wasn't used or is empty then delete it!
           await unlink(path);
+          event = 'delete';
         } else if (used && formatted !== raw) {
           // Fresh snapshot!
           await writeFile(path, formatted);
+          event = existsOnDisk ? 'update' : 'create';
         }
+      }
+
+      if (event !== undefined) {
+        await this.runner.bridge.snapshotUpdated.call({
+          filename: path.join(),
+          event,
+        });
       }
     }
   }
@@ -333,7 +342,7 @@ export default class SnapshotManager {
     if (snapshot === undefined) {
       snapshot = {
         raw: '',
-        exists: false,
+        existsOnDisk: false,
         used: true,
         entries: new Map(),
       };
