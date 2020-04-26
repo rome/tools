@@ -37,8 +37,8 @@ import {
 } from '../common/types/files';
 import {AbsoluteFilePath, createAbsoluteFilePath} from '@romejs/path';
 import {escapeMarkup, markup} from '@romejs/string-markup';
-import util = require('util');
 import {ErrorFrames, getErrorStructure} from '@romejs/v8';
+import prettyFormat from '@romejs/pretty-format';
 
 const MAX_RUNNING_TESTS = 20;
 
@@ -129,7 +129,13 @@ export default class TestWorkerRunner {
       category: DiagnosticLogCategory,
       args: Array<unknown>,
     ) => {
-      const text = escapeMarkup(util.format(args[0], ...args.slice(1)));
+      let textParts: Array<string> = [];
+      if (args.length === 1 && typeof args[0] === 'string') {
+        textParts.push(escapeMarkup(args[0]));
+      } else {
+        textParts = args.map((arg) => prettyFormat(arg, {markup: true}));
+      }
+      const text = textParts.join(' ');
 
       const err = new Error();
 
