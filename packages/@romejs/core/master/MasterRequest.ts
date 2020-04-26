@@ -327,7 +327,6 @@ export default class MasterRequest {
     return {
       grep: requestFlags.grep,
       inverseGrep: requestFlags.inverseGrep,
-      focus: requestFlags.focus,
       showAllDiagnostics: requestFlags.showAllDiagnostics,
       verboseDiagnostics: requestFlags.verboseDiagnostics,
       maxDiagnostics: requestFlags.maxDiagnostics,
