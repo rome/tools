@@ -35,8 +35,11 @@ export function parseDecisionStrings(
 
     const [rawAction, rawCategory, rawFilename, pos, id] = parts;
 
-    if (rawAction !== 'fix' && rawAction !== 'suppress' && rawAction !==
-        'ignore') {
+    if (
+      rawAction !== 'fix' &&
+      rawAction !== 'suppress' &&
+      rawAction !== 'ignore'
+    ) {
       unexpected(descriptions.LINT_COMMAND.INVALID_DECISION_ACTION(rawAction));
       break;
     }
@@ -69,30 +72,33 @@ export function parseDecisionStrings(
   return compilerOptionsPerFile;
 }
 
-export function buildLintDecisionAdviceAction({
-  noun,
-  instruction,
-  filename,
-  action,
-  category,
-  start,
-  shortcut,
-  id,
-}: {
-  shortcut?: string;
-  noun: string;
-  instruction: string;
-  filename: string;
-  action: LintCompilerOptionsDecision['action'];
-  category: DiagnosticCategory;
-  start: Position;
-  id?: number;
-}): DiagnosticAdviceAction {
+export function buildLintDecisionAdviceAction(
+  {
+    noun,
+    instruction,
+    filename,
+    action,
+    category,
+    start,
+    shortcut,
+    id,
+  }: {
+    shortcut?: string;
+    noun: string;
+    instruction: string;
+    filename: string;
+    action: LintCompilerOptionsDecision['action'];
+    category: DiagnosticCategory;
+    start: Position;
+    id?: number;
+  },
+): DiagnosticAdviceAction {
   const escapedFilename = filename.replace(/-/, '\\-');
 
-  const pos = action === 'suppress'
-    ? `${ob1Get1(start.line)}`
-    : `${ob1Get1(start.line)}:${ob1Get0(start.column)}`;
+  const pos =
+    action === 'suppress'
+      ? `${ob1Get1(start.line)}`
+      : `${ob1Get1(start.line)}:${ob1Get0(start.column)}`;
 
   const parts = [action, category, escapedFilename, pos];
 

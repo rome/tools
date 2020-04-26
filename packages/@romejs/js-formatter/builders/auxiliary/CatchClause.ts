@@ -6,20 +6,20 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, concat} from '../../tokens';
-import {AnyNode, catchClause} from '@romejs/js-ast';
-import {operator, space, word} from '@romejs/js-formatter/tokens';
+import {Token, concat, space} from '../../tokens';
+import {CatchClause} from '@romejs/js-ast';
 
-export default function CatchClause(builder: Builder, node: AnyNode): Tokens {
-  node = catchClause.assert(node);
-
-  return [
-    word('catch'),
-    space,
-    operator('('),
-    concat(builder.tokenize(node.param, node)),
-    operator(')'),
-    space,
-    concat(builder.tokenize(node.body, node)),
-  ];
+export default function CatchClause(builder: Builder, node: CatchClause): Token {
+  if (node.param) {
+    return concat([
+      'catch',
+      space,
+      '(',
+      builder.tokenize(node.param, node),
+      ') ',
+      builder.tokenize(node.body, node),
+    ]);
+  } else {
+    return concat(['catch', space, builder.tokenize(node.body, node)]);
+  }
 }

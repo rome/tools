@@ -6,18 +6,13 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens} from '../../tokens';
-import {
-  AnyNode,
-  FlowTypeParameterDeclaration,
-  flowTypeParameterDeclaration,
-} from '@romejs/js-ast';
+import {Token} from '../../tokens';
+import {FlowTypeParameterDeclaration} from '@romejs/js-ast';
 import FlowTypeParameterInstantiation from './FlowTypeParameterInstantiation';
 
 export default function FlowTypeParameterDeclaration(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = flowTypeParameterDeclaration.assert(node);
+  node: FlowTypeParameterDeclaration,
+): Token {
   return FlowTypeParameterInstantiation(builder, node);
 }

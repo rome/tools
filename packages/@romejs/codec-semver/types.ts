@@ -17,22 +17,28 @@ import {
 export type VersionPrereleaseParts = Array<number | string>;
 
 // 1.2, 1, 1.*.2
-export type WildcardVersionNode = ComplexNode<'WildcardVersion', {
-  major: undefined | number;
-  minor: undefined | number;
-  patch: undefined | number;
-  prerelease: VersionPrereleaseParts;
-  build: VersionPrereleaseParts;
-}>;
+export type WildcardVersionNode = ComplexNode<
+  'WildcardVersion',
+  {
+    major: undefined | number;
+    minor: undefined | number;
+    patch: undefined | number;
+    prerelease: VersionPrereleaseParts;
+    build: VersionPrereleaseParts;
+  }
+>;
 
 // 1.2.3
-export type AbsoluteVersionNode = ComplexNode<'AbsoluteVersion', {
-  major: number;
-  minor: number;
-  patch: number;
-  prerelease: VersionPrereleaseParts;
-  build: VersionPrereleaseParts;
-}>;
+export type AbsoluteVersionNode = ComplexNode<
+  'AbsoluteVersion',
+  {
+    major: number;
+    minor: number;
+    patch: number;
+    prerelease: VersionPrereleaseParts;
+    build: VersionPrereleaseParts;
+  }
+>;
 
 // union to treat these as the same
 export type VersionNode = WildcardVersionNode | AbsoluteVersionNode;
@@ -51,28 +57,40 @@ export type ComparatorOperator =
   | '~'
   | '=';
 
-export type ComparatorNode = ComplexNode<'Comparator', {
-  operator: ComparatorOperator;
-  version: WildcardNode | VersionNode;
-}>;
+export type ComparatorNode = ComplexNode<
+  'Comparator',
+  {
+    operator: ComparatorOperator;
+    version: WildcardNode | VersionNode;
+  }
+>;
 
 // 1.2.3 || 4.5.6
-export type LogicalOrNode = ComplexNode<'LogicalOr', {
-  left: RangeNode;
-  right: RangeNode;
-}>;
+export type LogicalOrNode = ComplexNode<
+  'LogicalOr',
+  {
+    left: RangeNode;
+    right: RangeNode;
+  }
+>;
 
 // 1.2.3 4.5.6
-export type LogicalAndNode = ComplexNode<'LogicalAnd', {
-  left: RangeNode;
-  right: RangeNode;
-}>;
+export type LogicalAndNode = ComplexNode<
+  'LogicalAnd',
+  {
+    left: RangeNode;
+    right: RangeNode;
+  }
+>;
 
 // 1.2.3 - 2.3.4
-export type VersionRangeNode = ComplexNode<'VersionRange', {
-  left: WildcardNode | VersionNode;
-  right: WildcardNode | VersionNode;
-}>;
+export type VersionRangeNode = ComplexNode<
+  'VersionRange',
+  {
+    left: WildcardNode | VersionNode;
+    right: WildcardNode | VersionNode;
+  }
+>;
 
 export type RangeNode =
   | LogicalAndNode

@@ -14,11 +14,9 @@ export default createMasterCommand({
   description: 'stop daemon',
   usage: '',
   examples: [],
-
   defineFlags() {
     return {};
   },
-
   async callback({master}: MasterRequest) {
     master.end();
   },

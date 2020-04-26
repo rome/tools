@@ -18,9 +18,12 @@ export type RegExpCharSet = JSNodeBase & {
   body: Array<RegExpCharSetRange | AnyRegExpEscapedCharacter>;
 };
 
-export const regExpCharSet = createBuilder<RegExpCharSet>('RegExpCharSet', {
-  bindingKeys: {},
-  visitorKeys: {
-    body: true,
+export const regExpCharSet = createBuilder<RegExpCharSet>(
+  'RegExpCharSet',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      body: true,
+    },
   },
-});
+);

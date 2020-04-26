@@ -107,14 +107,18 @@ export default class WorkerQueue<M> {
   }
 
   async spin() {
-    while ( // Keep consuming all the promises until we're exhausted
-    this.runningWorkers.length > 0) {
+    while (
+      // Keep consuming all the promises until we're exhausted
+      this.runningWorkers.length >
+      0
+    ) {
       const {runningWorkers} = this;
       this.runningWorkers = [];
       await Promise.all(runningWorkers);
     }
 
     // Ensure we never receive anymore queue items
+
     this.open = false;
   }
 }

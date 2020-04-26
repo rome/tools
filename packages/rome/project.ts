@@ -59,9 +59,12 @@ function watchEvict(project: FoundProject, deps: AbsoluteFilePathSet) {
       continue;
     }
 
-    const watcher = fs.watch(cachePath.join(), () => {
-      evictProject(project);
-    });
+    const watcher = fs.watch(
+      cachePath.join(),
+      () => {
+        evictProject(project);
+      },
+    );
     project.watchers.set(cachePath, watcher);
   }
 }

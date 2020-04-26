@@ -53,9 +53,9 @@ export function loadUserConfig(): UserConfig {
     }
 
     if (consumer.has('runtimeModulesPath')) {
-      userConfig.runtimeModulesPath = createAbsoluteFilePath(consumer.get(
-        'runtimeModulesPath',
-      ).asString());
+      userConfig.runtimeModulesPath = createAbsoluteFilePath(
+        consumer.get('runtimeModulesPath').asString(),
+      );
     }
 
     consumer.enforceUsedProperties('config property');

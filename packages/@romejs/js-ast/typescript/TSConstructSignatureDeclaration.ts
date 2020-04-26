@@ -14,12 +14,13 @@ export type TSConstructSignatureDeclaration = JSNodeBase & {
   typeAnnotation?: AnyTSPrimary;
 };
 
-export const tsConstructSignatureDeclaration = createBuilder<
-  TSConstructSignatureDeclaration
->('TSConstructSignatureDeclaration', {
-  bindingKeys: {},
-  visitorKeys: {
-    meta: true,
-    typeAnnotation: true,
+export const tsConstructSignatureDeclaration = createBuilder<TSConstructSignatureDeclaration>(
+  'TSConstructSignatureDeclaration',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      meta: true,
+      typeAnnotation: true,
+    },
   },
-});
+);

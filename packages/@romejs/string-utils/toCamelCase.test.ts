@@ -8,15 +8,18 @@
 import {toCamelCase} from './toCamelCase';
 import {test} from 'rome';
 
-test('toCamelCase', (t) => {
-  const testCases = [
-    {input: 'rometest', expected: 'rometest'},
-    {input: 'rome test', expected: 'romeTest'},
-    {input: 'RoMe TeSt', expected: 'RoMeTeSt'},
-    {input: 'ROME TEST', expected: 'ROMETEST'},
-  ];
+test(
+  'toCamelCase',
+  (t) => {
+    const testCases = [
+      {input: 'rometest', expected: 'rometest'},
+      {input: 'rome test', expected: 'romeTest'},
+      {input: 'RoMe TeSt', expected: 'RoMeTeSt'},
+      {input: 'ROME TEST', expected: 'ROMETEST'},
+    ];
 
-  testCases.forEach((td) => {
-    t.is(toCamelCase(td.input), td.expected);
-  });
-});
+    testCases.forEach((td) => {
+      t.is(toCamelCase(td.input), td.expected);
+    });
+  },
+);

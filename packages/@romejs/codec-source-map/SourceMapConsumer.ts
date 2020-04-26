@@ -152,10 +152,10 @@ export default class SourceMapConsumer {
           }
         }
 
-        map.set(getParsedMappingKey(
-          mapping.generated.line,
-          mapping.generated.column,
-        ), mapping);
+        map.set(
+          getParsedMappingKey(mapping.generated.line, mapping.generated.column),
+          mapping,
+        );
       }
     }
 

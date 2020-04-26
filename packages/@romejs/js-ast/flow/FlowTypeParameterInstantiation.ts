@@ -13,11 +13,12 @@ export type FlowTypeParameterInstantiation = JSNodeBase & {
   params: Array<AnyFlowPrimary>;
 };
 
-export const flowTypeParameterInstantiation = createBuilder<
-  FlowTypeParameterInstantiation
->('FlowTypeParameterInstantiation', {
-  bindingKeys: {},
-  visitorKeys: {
-    params: true,
+export const flowTypeParameterInstantiation = createBuilder<FlowTypeParameterInstantiation>(
+  'FlowTypeParameterInstantiation',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      params: true,
+    },
   },
-});
+);

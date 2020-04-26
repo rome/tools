@@ -13,9 +13,12 @@ export type TSTypeLiteral = JSNodeBase & {
   members: Array<AnyTSTypeElement>;
 };
 
-export const tsTypeLiteral = createBuilder<TSTypeLiteral>('TSTypeLiteral', {
-  bindingKeys: {},
-  visitorKeys: {
-    members: true,
+export const tsTypeLiteral = createBuilder<TSTypeLiteral>(
+  'TSTypeLiteral',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      members: true,
+    },
   },
-});
+);

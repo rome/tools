@@ -78,7 +78,6 @@ function isStringValueChar(char: string, index: Number0, input: string): boolean
 // Turn a path into a string key we can use
 export function toPathKey(parts: Array<string>) {
   // Right now this could conflict weirdly with properties with dots in them if they cause collisions
-
   // We have this method abstracted so we can make changes later if it's necessary (probably not worth it)
   return parts.join('.');
 }
@@ -109,28 +108,30 @@ type PathInfo = {
   valueEnd: Position;
 };
 
-export default createParser(
-  (ParserCore) => class JSONParser extends ParserCore<
-    Tokens,
-    void
-  > {
+export default createParser((ParserCore) =>
+  class JSONParser extends ParserCore<Tokens, void> {
     constructor(opts: JSONParserOptions) {
-      super({
-        ...opts,
-        retainCarriageReturn: true,
-      }, 'parse/json');
+      super(
+        {
+          ...opts,
+          retainCarriageReturn: true,
+        },
+        'parse/json',
+      );
 
       this.options = opts;
       this.ignoreWhitespaceTokens = true;
 
-      this.hasExtensions = this.path !== undefined &&
-        this.path.getBasename().endsWith('.rjson');
+      this.hasExtensions =
+        this.path !== undefined && this.path.getBasename().endsWith('.rjson');
 
       this.pathKeys = [];
       this.paths = new Map();
       this.pathToComments = new Map();
-      this.consumeDiagnosticCategory = opts.consumeDiagnosticCategory ===
-        undefined ? 'parse/json' : opts.consumeDiagnosticCategory;
+      this.consumeDiagnosticCategory =
+        opts.consumeDiagnosticCategory === undefined
+          ? 'parse/json'
+          : opts.consumeDiagnosticCategory;
     }
 
     pathToComments: PathToComments;
@@ -151,10 +152,13 @@ export default createParser(
       if (existing === undefined) {
         this.pathToComments.set(key, pathComments);
       } else {
-        this.pathToComments.set(key, {
-          inner: [...existing.inner, ...pathComments.inner],
-          outer: [...existing.outer, ...pathComments.outer],
-        });
+        this.pathToComments.set(
+          key,
+          {
+            inner: [...existing.inner, ...pathComments.inner],
+            outer: [...existing.outer, ...pathComments.outer],
+          },
+        );
       }
     }
 
@@ -172,10 +176,11 @@ export default createParser(
         const commentValueIndex = ob1Add(index, 2);
         const [value] = this.readInputFrom(commentValueIndex, isntNewline);
         // (comment content start + comment content length)
-        return this.finishValueToken('LineComment', value, ob1Add(
-          commentValueIndex,
-          value.length,
-        ));
+        return this.finishValueToken(
+          'LineComment',
+          value,
+          ob1Add(commentValueIndex, value.length),
+        );
       }
 
       // BlockComment
@@ -190,9 +195,10 @@ export default createParser(
         const endIndex = ob1Add(ob1Add(commentValueIndex, value.length), 2);
 
         // Ensure the comment is closed
-        if (this.input[ob1Get0(endIndex) - 2] !== '*' || this.input[ob1Get0(
-            endIndex,
-          ) - 1] !== '/') {
+        if (
+          this.input[ob1Get0(endIndex) - 2] !== '*' ||
+          this.input[ob1Get0(endIndex) - 1] !== '/'
+        ) {
           throw this.unexpected({
             description: descriptions.JSON.UNCLOSED_BLOCK_COMMENT,
             start: this.getPositionFromIndex(endIndex),
@@ -229,12 +235,15 @@ export default createParser(
           }
 
           // Unescape the string
-          const unescaped = unescapeString(value, (metadata, strIndex) => {
-            throw this.unexpected({
-              description: metadata,
-              start: this.getPositionFromIndex(ob1Add(index, strIndex)),
-            });
-          });
+          const unescaped = unescapeString(
+            value,
+            (metadata, strIndex) => {
+              throw this.unexpected({
+                description: metadata,
+                start: this.getPositionFromIndex(ob1Add(index, strIndex)),
+              });
+            },
+          );
 
           return this.finishValueToken('String', unescaped, end);
         }
@@ -281,10 +290,10 @@ export default createParser(
 
       // Numbers
       if (isDigit(char)) {
-        const value = this.removeUnderscores(index, this.readInputFrom(
+        const value = this.removeUnderscores(
           index,
-          isNumberChar,
-        )[0]);
+          this.readInputFrom(index, isNumberChar)[0],
+        );
         const num = Number(value);
         return this.finishValueToken('Number', num, ob1Add(index, value.length));
       }
@@ -338,9 +347,10 @@ export default createParser(
           break;
         }
 
-        const keyStart = isFirstProp && firstKeyStart !== undefined
-          ? firstKeyStart
-          : this.getPosition();
+        const keyStart =
+          isFirstProp && firstKeyStart !== undefined
+            ? firstKeyStart
+            : this.getPosition();
 
         // Parse the property key
         let key;
@@ -400,12 +410,16 @@ export default createParser(
         // Set the object correctly, accounting for JS weirdness
         if (key === '__proto__') {
           // Need to use defineProperty to avoid triggering the Object.prototype.__proto__ setter
-          Object.defineProperty(obj, '__proto__', {
-            value,
-            configurable: true,
-            writable: true,
-            enumerable: true,
-          });
+          Object.defineProperty(
+            obj,
+            '__proto__',
+            {
+              value,
+              configurable: true,
+              writable: true,
+              enumerable: true,
+            },
+          );
         } else {
           obj[key] = value;
         }
@@ -644,9 +658,10 @@ export default createParser(
 
       // Scientific notation
       const nextToken = this.getToken();
-      if (nextToken.type === 'Word' && (nextToken.value === 'e' ||
-            nextToken.value ===
-            'E')) {
+      if (
+        nextToken.type === 'Word' &&
+        (nextToken.value === 'e' || nextToken.value === 'E')
+      ) {
         value += 'e';
 
         // Operator
@@ -787,15 +802,12 @@ export default createParser(
           return {
             context: {
               category: this.consumeDiagnosticCategory,
-
               normalizeKey(path) {
                 return getContext().normalizeKey(path);
               },
-
               getOriginalValue(path) {
                 return getContext().getOriginalValue(path);
               },
-
               getDiagnosticPointer(keys, target) {
                 return getContext().getDiagnosticPointer(keys, target);
               },
@@ -816,8 +828,8 @@ export default createParser(
 
       if (expectSyntaxError) {
         throw new Error(
-            "JSON.parse failed but our custom JSON parser was successful... That doesn't smell right",
-          );
+          "JSON.parse failed but our custom JSON parser was successful... That doesn't smell right",
+        );
       }
 
       return res;
@@ -838,9 +850,7 @@ export default createParser(
 
       const context: Required<ConsumeContext> = {
         category: this.consumeDiagnosticCategory,
-
         normalizeKey: (key) => key,
-
         getDiagnosticPointer: (
           keys: ConsumePath,
           target: ConsumeSourceLocationRequestTarget,
@@ -895,7 +905,6 @@ export default createParser(
             sourceText: undefined,
           };
         },
-
         getOriginalValue: (keys: ConsumePath) => {
           const info = this.getPathInfo(keys);
           if (info !== undefined) {
@@ -909,5 +918,5 @@ export default createParser(
         context,
       };
     }
-  },
+  }
 );

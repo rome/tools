@@ -30,7 +30,12 @@ import SourceMapConsumer, {getParsedMappingKey} from './SourceMapConsumer';
 type MaterializeCallback = () => void;
 
 export default class SourceMapGenerator {
-  constructor(args: {file: string; sourceRoot?: string}) {
+  constructor(
+    args: {
+      file: string;
+      sourceRoot?: string;
+    },
+  ) {
     this.file = args.file;
     this.sourceRoot = args.sourceRoot;
 
@@ -54,8 +59,8 @@ export default class SourceMapGenerator {
   assertUnlocked() {
     if (this.map !== undefined) {
       throw new Error(
-          'Source map has already been materialized, serialize() should be your final call',
-        );
+        'Source map has already been materialized, serialize() should be your final call',
+      );
     }
   }
 
@@ -163,9 +168,9 @@ export default class SourceMapGenerator {
         next += ',';
       }
 
-      next += base64.encodeVLQ(ob1Get0(mapping.generated.column) - ob1Get0(
-        previousGeneratedColumn,
-      ));
+      next += base64.encodeVLQ(
+        ob1Get0(mapping.generated.column) - ob1Get0(previousGeneratedColumn),
+      );
       previousGeneratedColumn = mapping.generated.column;
 
       if (mapping.source !== undefined) {
@@ -174,14 +179,14 @@ export default class SourceMapGenerator {
         previousSource = sourceIdx;
 
         if (mapping.original) {
-          next += base64.encodeVLQ(ob1Get1(mapping.original.line) - ob1Get1(
-            previousOriginalLine,
-          ));
+          next += base64.encodeVLQ(
+            ob1Get1(mapping.original.line) - ob1Get1(previousOriginalLine),
+          );
           previousOriginalLine = mapping.original.line;
 
-          next += base64.encodeVLQ(ob1Get0(mapping.original.column) - ob1Get0(
-            previousOriginalColumn,
-          ));
+          next += base64.encodeVLQ(
+            ob1Get0(mapping.original.column) - ob1Get0(previousOriginalColumn),
+          );
           previousOriginalColumn = mapping.original.column;
 
           if (mapping.name !== undefined) {
@@ -255,18 +260,24 @@ export default class SourceMapGenerator {
   }
 
   toConsumer(): SourceMapConsumer {
-    return new SourceMapConsumer(this.file, () => {
-      const parsedMappings: ParsedMappings = new Map();
+    return new SourceMapConsumer(
+      this.file,
+      () => {
+        const parsedMappings: ParsedMappings = new Map();
 
-      for (const mapping of this.getMappings()) {
-        parsedMappings.set(getParsedMappingKey(
-          mapping.generated.line,
-          mapping.generated.column,
-        ), mapping);
-      }
+        for (const mapping of this.getMappings()) {
+          parsedMappings.set(
+            getParsedMappingKey(
+              mapping.generated.line,
+              mapping.generated.column,
+            ),
+            mapping,
+          );
+        }
 
-      return parsedMappings;
-    });
+        return parsedMappings;
+      },
+    );
   }
 
   getMappings(): Mappings {

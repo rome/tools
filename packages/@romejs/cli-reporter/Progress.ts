@@ -190,9 +190,12 @@ export default class Progress extends ProgressBase {
       return;
     }
 
-    this.renderTimer = setTimeout(this.reporter.wrapCallback(() => {
-      this.render();
-    }), delay);
+    this.renderTimer = setTimeout(
+      this.reporter.wrapCallback(() => {
+        this.render();
+      }),
+      delay,
+    );
   }
 
   endBouncer() {
@@ -224,11 +227,10 @@ export default class Progress extends ProgressBase {
 
   // This allows us to use the progress bar for sync work where the event loop is always blocked
   isRenderDue(): boolean {
-    const isDue: boolean = this.current > this.lastRenderCurrent +
-      this.renderEvery;
+    const isDue: boolean =
+      this.current > this.lastRenderCurrent + this.renderEvery;
     if (isDue) {
       // We also make sure that we never force update more often than once a second
-
       // This is to ensure that the progress bar isn't negatively effecting performance
       const timeSinceLastRender: number = Date.now() - this.lastRenderTime;
       return timeSinceLastRender > 1_000;

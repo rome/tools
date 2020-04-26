@@ -49,11 +49,14 @@ function parse(input: string) {
 }
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
-test('The JSON lexical grammar treats whitespace as a token seperator', (t) => {
-  t.throws(function() {
-    parse('12\t\r\n 34'); // should produce a syntax error as whitespace results in two tokens
-  });
-});
+test(
+  'The JSON lexical grammar treats whitespace as a token seperator',
+  (t) => {
+    t.throws(function() {
+      parse('12\t\r\n 34'); // should produce a syntax error as whitespace results in two tokens
+    });
+  },
+);
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
@@ -120,88 +123,110 @@ test(
   'Whitespace characters can appear before/after any JSONtoken',
   () => {
     parse(
-        `\t\r \n{\t\r \n"property"\t\r \n:\t\r \n{\t\r \n}\t\r \n,\t\r \n"prop2"\t\r \n:\t\r \n` +
-        `[\t\r \ntrue\t\r \n,\t\r \nnull\t\r \n,123.456\t\r \n]\t\r \n}\t\r \n`,
+      `\t\r \n{\t\r \n"property"\t\r \n:\t\r \n{\t\r \n}\t\r \n,\t\r \n"prop2"\t\r \n:\t\r \n` +
+      `[\t\r \ntrue\t\r \n,\t\r \nnull\t\r \n,123.456\t\r \n]\t\r \n}\t\r \n`,
     ); // should JOSN parse without error
   },
 );
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
-test('The JSON lexical grammar treats <TAB> as a whitespace character', (t) => {
-  t.is(parse('\t1234'), 1_234, '<TAB> should be ignored');
+test(
+  'The JSON lexical grammar treats <TAB> as a whitespace character',
+  (t) => {
+    t.is(parse('\t1234'), 1_234, '<TAB> should be ignored');
 
-  t.throws(
-    function() {
-      parse('12\t34');
-    },
-    DiagnosticsError,
-    '<TAB> should produce a syntax error as whitespace results in two tokens',
-  );
-});
-
-// Copyright (c) 2012 Ecma International.  All rights reserved.
-test('The JSON lexical grammar treats <CR> as a whitespace character', (t) => {
-  t.is(parse('\r1234'), 1_234, '<cr> should be ignored');
-
-  t.throws(
-    function() {
-      parse('12\r34');
-    },
-    DiagnosticsError,
-    '<CR> should produce a syntax error as whitespace results in two tokens',
-  );
-});
+    t.throws(
+      function() {
+        parse('12\t34');
+      },
+      DiagnosticsError,
+      '<TAB> should produce a syntax error as whitespace results in two tokens',
+    );
+  },
+);
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
-test('The JSON lexical grammar treats <LF> as a whitespace character', (t) => {
-  t.is(parse('\n1234'), 1_234, '<LF> should be ignored');
+test(
+  'The JSON lexical grammar treats <CR> as a whitespace character',
+  (t) => {
+    t.is(parse('\r1234'), 1_234, '<cr> should be ignored');
 
-  t.throws(
-    function() {
-      parse('12\n34');
-    },
-    DiagnosticsError,
-    '<LF> should produce a syntax error as whitespace results in two tokens',
-  );
-});
-
-// Copyright (c) 2012 Ecma International.  All rights reserved.
-test('The JSON lexical grammar treats <SP> as a whitespace character', (t) => {
-  t.is(parse(' 1234'), 1_234, '<SP> should be ignored');
-  t.throws(
-    function() {
-      parse('12 34');
-    },
-    DiagnosticsError,
-    '<SP> should produce a syntax error as whitespace results in two tokens',
-  );
-});
+    t.throws(
+      function() {
+        parse('12\r34');
+      },
+      DiagnosticsError,
+      '<CR> should produce a syntax error as whitespace results in two tokens',
+    );
+  },
+);
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
-test('JSONStrings can be written using double quotes', (t) => {
-  t.is(parse('"abc"'), 'abc', "parse('\"abc\"'})");
-});
+test(
+  'The JSON lexical grammar treats <LF> as a whitespace character',
+  (t) => {
+    t.is(parse('\n1234'), 1_234, '<LF> should be ignored');
+
+    t.throws(
+      function() {
+        parse('12\n34');
+      },
+      DiagnosticsError,
+      '<LF> should produce a syntax error as whitespace results in two tokens',
+    );
+  },
+);
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
-test('A JSONString may not be delimited by single quotes', (t) => {
-  t.throws(function() {
-    parse("'abc'");
-  });
-});
+test(
+  'The JSON lexical grammar treats <SP> as a whitespace character',
+  (t) => {
+    t.is(parse(' 1234'), 1_234, '<SP> should be ignored');
+    t.throws(
+      function() {
+        parse('12 34');
+      },
+      DiagnosticsError,
+      '<SP> should produce a syntax error as whitespace results in two tokens',
+    );
+  },
+);
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
-test('A JSONString may not be delimited by Uncode escaped quotes', (t) => {
-  t.throws(function() {
-    parse('\\u0022abc\\u0022');
-  });
-});
+test(
+  'JSONStrings can be written using double quotes',
+  (t) => {
+    t.is(parse('"abc"'), 'abc', "parse('\"abc\"'})");
+  },
+);
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
-test('A JSONStrings can contain no JSONStringCharacters (Empty JSONStrings)', (
-  t,
-) => {
-  t.is(parse('""'), '', "parse('\"\"'})");
-});
+test(
+  'A JSONString may not be delimited by single quotes',
+  (t) => {
+    t.throws(function() {
+      parse("'abc'");
+    });
+  },
+);
+
+// Copyright (c) 2012 Ecma International.  All rights reserved.
+test(
+  'A JSONString may not be delimited by Uncode escaped quotes',
+  (t) => {
+    t.throws(function() {
+      parse('\\u0022abc\\u0022');
+    });
+  },
+);
+
+// Copyright (c) 2012 Ecma International.  All rights reserved.
+test(
+  'A JSONStrings can contain no JSONStringCharacters (Empty JSONStrings)',
+  (t) => {
+    t.is(parse('""'), '', "parse('\"\"'})");
+  },
+);
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
@@ -366,9 +391,12 @@ test(
     nullChars[31] = '"\x1f"';
 
     for (const char of nullChars) {
-      t.throws(function() {
-        parse(`{ "name" : Jo'${char}hn } `);
-      }, DiagnosticsError);
+      t.throws(
+        function() {
+          parse(`{ "name" : Jo'${char}hn } `);
+        },
+        DiagnosticsError,
+      );
     }
   },
 );
@@ -412,9 +440,12 @@ test(
     nullChars[31] = '"\x1f"';
 
     for (let char of nullChars) {
-      t.throws(function() {
-        parse(`{ ${char} : "John" }`);
-      }, DiagnosticsError);
+      t.throws(
+        function() {
+          parse(`{ ${char} : "John" }`);
+        },
+        DiagnosticsError,
+      );
     }
   },
 );
@@ -457,9 +488,12 @@ test(
     nullChars[30] = '"\x1e"';
     nullChars[31] = '"\x1f"';
     for (let char of nullChars) {
-      t.throws(function() {
-        parse(`{ ${char}name : "John" }`);
-      }, DiagnosticsError);
+      t.throws(
+        function() {
+          parse(`{ ${char}name : "John" }`);
+        },
+        DiagnosticsError,
+      );
     }
   },
 );
@@ -503,9 +537,12 @@ test(
     nullChars[31] = '"\x1f"';
 
     for (let char of nullChars) {
-      t.throws(function() {
-        parse(`{name${char} : "John" }`);
-      }, DiagnosticsError);
+      t.throws(
+        function() {
+          parse(`{name${char} : "John" }`);
+        },
+        DiagnosticsError,
+      );
     }
   },
 );
@@ -548,9 +585,12 @@ test(
     nullChars[30] = '"\x1e"';
     nullChars[31] = '"\x1f"';
     for (let char of nullChars) {
-      t.throws(function() {
-        parse(`{${char}name${char} : "John" }`);
-      }, DiagnosticsError);
+      t.throws(
+        function() {
+          parse(`{${char}name${char} : "John" }`);
+        },
+        DiagnosticsError,
+      );
     }
   },
 );
@@ -593,9 +633,12 @@ test(
     nullChars[30] = '"\x1e"';
     nullChars[31] = '"\x1f"';
     for (let char of nullChars) {
-      t.throws(function() {
-        parse(`{ na${char}me : "John" }`);
-      }, DiagnosticsError);
+      t.throws(
+        function() {
+          parse(`{ na${char}me : "John" }`);
+        },
+        DiagnosticsError,
+      );
     }
   },
 );
@@ -638,9 +681,12 @@ test(
     nullChars[30] = '"\x1e"';
     nullChars[31] = '"\x1f"';
     for (let char of nullChars) {
-      t.throws(function() {
-        parse(`{ "name" : ${char} }`);
-      }, DiagnosticsError);
+      t.throws(
+        function() {
+          parse(`{ "name" : ${char} }`);
+        },
+        DiagnosticsError,
+      );
     }
   },
 );
@@ -683,9 +729,12 @@ test(
     nullChars[30] = '"\x1e"';
     nullChars[31] = '"\x1f"';
     for (let char of nullChars) {
-      t.throws(function() {
-        parse(`{ "name" : ${char}John }`);
-      }, DiagnosticsError);
+      t.throws(
+        function() {
+          parse(`{ "name" : ${char}John }`);
+        },
+        DiagnosticsError,
+      );
     }
   },
 );
@@ -728,9 +777,12 @@ test(
     nullChars[30] = '"\x1e"';
     nullChars[31] = '"\x1f"';
     for (let char of nullChars) {
-      t.throws(function() {
-        parse(`{ "name" : John${char} }`);
-      }, DiagnosticsError);
+      t.throws(
+        function() {
+          parse(`{ "name" : John${char} }`);
+        },
+        DiagnosticsError,
+      );
     }
   },
 );
@@ -773,9 +825,12 @@ test(
     nullChars[30] = '"\x1e"';
     nullChars[31] = '"\x1f"';
     for (let char of nullChars) {
-      t.throws(function() {
-        parse(`{ "name" : ${char}John${char} }`);
-      }, DiagnosticsError);
+      t.throws(
+        function() {
+          parse(`{ "name" : ${char}John${char} }`);
+        },
+        DiagnosticsError,
+      );
     }
   },
 );
@@ -784,82 +839,149 @@ test(
 test(
   'Other category z spaces are not valid JSON whitespace as specified by the production JSONWhitespace.',
   (t) => {
-    t.throws(function() {
-      parse('\u16801');
-    }, DiagnosticsError, '\\u1680');
+    t.throws(
+      function() {
+        parse('\u16801');
+      },
+      DiagnosticsError,
+      '\\u1680',
+    );
 
-    t.throws(function() {
-      parse('\u180e1');
-    }, DiagnosticsError, '\\u180e');
+    t.throws(
+      function() {
+        parse('\u180e1');
+      },
+      DiagnosticsError,
+      '\\u180e',
+    );
 
-    t.throws(function() {
-      parse('\u20001');
-    }, DiagnosticsError, '\\u2000');
+    t.throws(
+      function() {
+        parse('\u20001');
+      },
+      DiagnosticsError,
+      '\\u2000',
+    );
 
-    t.throws(function() {
-      parse('\u20011');
-    }, DiagnosticsError, '\\u2001');
+    t.throws(
+      function() {
+        parse('\u20011');
+      },
+      DiagnosticsError,
+      '\\u2001',
+    );
 
-    t.throws(function() {
-      parse('\u20021');
-    }, DiagnosticsError, '\\u2002');
+    t.throws(
+      function() {
+        parse('\u20021');
+      },
+      DiagnosticsError,
+      '\\u2002',
+    );
 
-    t.throws(function() {
-      parse('\u20031');
-    }, DiagnosticsError, '\\u2003');
+    t.throws(
+      function() {
+        parse('\u20031');
+      },
+      DiagnosticsError,
+      '\\u2003',
+    );
 
-    t.throws(function() {
-      parse('\u20041');
-    }, DiagnosticsError, '\\u2004');
+    t.throws(
+      function() {
+        parse('\u20041');
+      },
+      DiagnosticsError,
+      '\\u2004',
+    );
 
-    t.throws(function() {
-      parse('\u20051');
-    }, DiagnosticsError, '\\u2005');
+    t.throws(
+      function() {
+        parse('\u20051');
+      },
+      DiagnosticsError,
+      '\\u2005',
+    );
 
-    t.throws(function() {
-      parse('\u20061');
-    }, DiagnosticsError, '\\u2006');
+    t.throws(
+      function() {
+        parse('\u20061');
+      },
+      DiagnosticsError,
+      '\\u2006',
+    );
 
-    t.throws(function() {
-      parse('\u20071');
-    }, DiagnosticsError, '\\u2007');
+    t.throws(
+      function() {
+        parse('\u20071');
+      },
+      DiagnosticsError,
+      '\\u2007',
+    );
 
-    t.throws(function() {
-      parse('\u20081');
-    }, DiagnosticsError, '\\u2008');
+    t.throws(
+      function() {
+        parse('\u20081');
+      },
+      DiagnosticsError,
+      '\\u2008',
+    );
 
-    t.throws(function() {
-      parse('\u20091');
-    }, DiagnosticsError, '\\u2009');
+    t.throws(
+      function() {
+        parse('\u20091');
+      },
+      DiagnosticsError,
+      '\\u2009',
+    );
 
-    t.throws(function() {
-      parse('\u200a1');
-    }, DiagnosticsError, '\\u200a');
+    t.throws(
+      function() {
+        parse('\u200a1');
+      },
+      DiagnosticsError,
+      '\\u200a',
+    );
 
-    t.throws(function() {
-      parse('\u202f1');
-    }, DiagnosticsError, '\\u202f');
+    t.throws(
+      function() {
+        parse('\u202f1');
+      },
+      DiagnosticsError,
+      '\\u202f',
+    );
 
-    t.throws(function() {
-      parse('\u205f1');
-    }, DiagnosticsError, '\\u205f');
+    t.throws(
+      function() {
+        parse('\u205f1');
+      },
+      DiagnosticsError,
+      '\\u205f',
+    );
 
-    t.throws(function() {
-      parse('\u30001');
-    }, DiagnosticsError, '\\u3000');
+    t.throws(
+      function() {
+        parse('\u30001');
+      },
+      DiagnosticsError,
+      '\\u3000',
+    );
   },
 );
 
 // Copyright 2011 the Sputnik authors.  All rights reserved.
-test('Tests that parse treats "__proto__" as a regular property name', () => {
-  let x = parse('{"__proto__":[]}');
+test(
+  'Tests that parse treats "__proto__" as a regular property name',
+  () => {
+    let x = parse('{"__proto__":[]}');
 
-  if (Object.getPrototypeOf(x) !== Object.prototype) {
-    throw new Error('#1: parse confused by "__proto__"');
-  }
+    if (Object.getPrototypeOf(x) !== Object.prototype) {
+      throw new Error('#1: parse confused by "__proto__"');
+    }
 
-  // @ts-ignore
-  if (!Array.isArray(x.__proto__)) {
-    throw new Error('#2: parse did not set "__proto__" as a regular property');
-  }
-});
+    // @ts-ignore
+    if (!Array.isArray(x.__proto__)) {
+      throw new Error('#2: parse did not set "__proto__" as a regular property');
+    }
+  },
+);

@@ -13,9 +13,12 @@ export type ImportCall = JSNodeBase & {
   argument: AnyExpression;
 };
 
-export const importCall = createBuilder<ImportCall>('ImportCall', {
-  bindingKeys: {},
-  visitorKeys: {
-    argument: true,
+export const importCall = createBuilder<ImportCall>(
+  'ImportCall',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      argument: true,
+    },
   },
-});
+);

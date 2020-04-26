@@ -6,17 +6,15 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, verbatim} from '../../tokens';
-import {AnyNode, RegExpCharacter, regExpCharacter} from '@romejs/js-ast';
+import {Token} from '../../tokens';
+import {AnyNode, RegExpCharacter} from '@romejs/js-ast';
 import {escapeString} from '@romejs/string-escape';
 
 export default function RegExpCharacter(
   builder: Builder,
-  node: AnyNode,
+  node: RegExpCharacter,
   parent: AnyNode,
-): Tokens {
-  node = regExpCharacter.assert(node);
-
+): Token {
   const isInCharSet = parent.type === 'RegExpCharSet';
   if (isInCharSet) {
     switch (node.value) {
@@ -33,31 +31,31 @@ export default function RegExpCharacter(
       case '(':
       case ')':
       case '|':
-        return [verbatim(node.value)];
+        return node.value;
 
       case '-':
-        return [verbatim('\\-')];
+        return '\\-';
     }
   }
 
   switch (node.value) {
     case '\t':
-      return [verbatim('\\t')];
+      return '\\t';
 
     case '\n':
-      return [verbatim('\\n')];
+      return '\\n';
 
     case '\r':
-      return [verbatim('\\r')];
+      return '\\r';
 
     case '\x0b':
-      return [verbatim('\\v')];
+      return '\\v';
 
     case '\f':
-      return [verbatim('\\f')];
+      return '\\f';
 
     case '\b':
-      return [verbatim('\\b')];
+      return '\\b';
 
     case '/':
     case '\\':
@@ -74,14 +72,9 @@ export default function RegExpCharacter(
     case '(':
     case ')':
     case '|':
-      return [verbatim(`\\${node.value}`)];
+      return `\\${node.value}`;
 
     default:
-      return [
-        verbatim(escapeString(node.value, {
-          json: true,
-          unicodeOnly: true,
-        })),
-      ];
+      return escapeString(node.value, {json: true, unicodeOnly: true});
   }
 }

@@ -27,9 +27,13 @@ exports.unlink = function(loc) {
 };
 
 exports.exec = function(cmd, args) {
-  const res = child.spawnSync(cmd, args, {
-    stdio: 'inherit',
-  });
+  const res = child.spawnSync(
+    cmd,
+    args,
+    {
+      stdio: 'inherit',
+    },
+  );
   if (res.status !== 0) {
     process.exit(1);
   }

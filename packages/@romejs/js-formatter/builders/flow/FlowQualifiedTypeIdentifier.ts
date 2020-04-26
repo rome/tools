@@ -6,22 +6,16 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator} from '../../tokens';
-import {
-  AnyNode,
-  FlowQualifiedTypeIdentifier,
-  flowQualifiedTypeIdentifier,
-} from '@romejs/js-ast';
+import {Token, concat} from '../../tokens';
+import {FlowQualifiedTypeIdentifier} from '@romejs/js-ast';
 
 export default function FlowQualifiedTypeIdentifier(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = flowQualifiedTypeIdentifier.assert(node);
-
-  return [
-    ...builder.tokenize(node.qualification, node),
-    operator('.'),
-    ...builder.tokenize(node.id, node),
-  ];
+  node: FlowQualifiedTypeIdentifier,
+): Token {
+  return concat([
+    builder.tokenize(node.qualification, node),
+    '.',
+    builder.tokenize(node.id, node),
+  ]);
 }

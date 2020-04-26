@@ -14,14 +14,11 @@ export default createLocalCommand({
   category: commandCategories.PROJECT_MANAGEMENT,
   usage: '',
   examples: [],
-
   // vscode-languageclient adds these on
   ignoreFlags: ['stdio', 'clientProcessId'],
-
   defineFlags() {
     return {};
   },
-
   async callback(req: ClientRequest) {
     req.client.setFlags({
       clientName: 'lsp',
@@ -40,13 +37,19 @@ export default createLocalCommand({
       req.client.derivedReporterStreams.stdout.write(chunk);
     });
 
-    stdin.on('data', (chunk) => {
-      bridge.lspFromClientBuffer.call(chunk.toString());
-    });
+    stdin.on(
+      'data',
+      (chunk) => {
+        bridge.lspFromClientBuffer.call(chunk.toString());
+      },
+    );
 
-    await req.client.query({
-      command: 'lsp',
-    }, 'master');
+    await req.client.query(
+      {
+        command: 'lsp',
+      },
+      'master',
+    );
 
     return true;
   },

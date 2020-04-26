@@ -20,11 +20,14 @@ export type TSImportType = JSNodeBase & {
   qualifier?: AnyTSEntityName;
 };
 
-export const tsImportType = createBuilder<TSImportType>('TSImportType', {
-  bindingKeys: {},
-  visitorKeys: {
-    argument: true,
-    typeParameters: true,
-    qualifier: true,
+export const tsImportType = createBuilder<TSImportType>(
+  'TSImportType',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      argument: true,
+      typeParameters: true,
+      qualifier: true,
+    },
   },
-});
+);

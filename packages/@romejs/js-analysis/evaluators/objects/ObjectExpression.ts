@@ -45,9 +45,13 @@ export default function ObjectExpression(node: AnyNode, scope: Scope) {
     }
   }
 
-  return new ObjT(scope, node, {
-    calls: [],
-    props,
-    proto: scope.intrinsics.ObjectPrototype,
-  });
+  return new ObjT(
+    scope,
+    node,
+    {
+      calls: [],
+      props,
+      proto: scope.intrinsics.ObjectPrototype,
+    },
+  );
 }

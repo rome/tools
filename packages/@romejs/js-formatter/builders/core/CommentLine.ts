@@ -5,12 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Tokens} from '../../tokens';
-import {AnyNode, CommentLine, commentLine} from '@romejs/js-ast';
+import {Token} from '../../tokens';
 
-export default function CommentLine(builder: Builder, node: AnyNode): Tokens {
-  node = commentLine.assert(node);
-  commentLine.assert(node);
+export default function CommentLine(): Token {
   throw new Error('unimplemented');
 }

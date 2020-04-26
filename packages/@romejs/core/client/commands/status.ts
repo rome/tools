@@ -14,18 +14,19 @@ export default createLocalCommand({
   category: commandCategories.PROCESS_MANAGEMENT,
   usage: '',
   examples: [],
-
   defineFlags() {
     return {};
   },
-
   async callback(req: ClientRequest) {
     const {reporter} = req.client;
     const bridge = await req.client.tryConnectToExistingDaemon();
     if (bridge) {
-      const status = await req.client.query({
-        command: 'status',
-      }, 'master');
+      const status = await req.client.query(
+        {
+          command: 'status',
+        },
+        'master',
+      );
       if (status.type === 'SUCCESS') {
         reporter.inspect(status.data);
         return true;

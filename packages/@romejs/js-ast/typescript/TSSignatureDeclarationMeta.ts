@@ -18,20 +18,20 @@ import {createBuilder} from '../utils';
 export type TSSignatureDeclarationMeta = JSNodeBase & {
   type: 'TSSignatureDeclarationMeta';
   parameters: Array<
-    | BindingIdentifier
-    | BindingObjectPattern
-    | BindingArrayPattern>;
+    BindingIdentifier | BindingObjectPattern | BindingArrayPattern
+  >;
   rest: undefined | AnyTargetBindingPattern;
   typeParameters: undefined | TSTypeParameterDeclaration;
 };
 
-export const tsSignatureDeclarationMeta = createBuilder<
-  TSSignatureDeclarationMeta
->('TSSignatureDeclarationMeta', {
-  bindingKeys: {},
-  visitorKeys: {
-    parameters: true,
-    rest: true,
-    typeParameters: true,
+export const tsSignatureDeclarationMeta = createBuilder<TSSignatureDeclarationMeta>(
+  'TSSignatureDeclarationMeta',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      parameters: true,
+      rest: true,
+      typeParameters: true,
+    },
   },
-});
+);

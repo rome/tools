@@ -78,18 +78,18 @@ export default {
       const camelName = toVariableCamelCase(name);
       if (camelName !== name) {
         return context.addFixableDiagnostic(
-            {
-              old: node,
-              suggestions: [
-                {
-                  title: 'Convert to camelCase',
-                  description: 'This may not be safe. Are you passing this into a third party module?',
-                  fixed: {...node, name: camelName},
-                },
-              ],
-            },
-            descriptions.LINT.IDENTIFIER_CAMEL_CASE(name, camelName),
-          );
+          {
+            old: node,
+            suggestions: [
+              {
+                title: 'Convert to camelCase',
+                description: 'This may not be safe. Are you passing this into a third party module?',
+                fixed: {...node, name: camelName},
+              },
+            ],
+          },
+          descriptions.LINT.IDENTIFIER_CAMEL_CASE(name, camelName),
+        );
       }
     }
 

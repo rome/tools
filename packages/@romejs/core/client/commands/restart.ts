@@ -14,11 +14,9 @@ export default createLocalCommand({
   description: 'restart daemon',
   usage: '',
   examples: [],
-
   defineFlags() {
     return {};
   },
-
   async callback(req: ClientRequest) {
     const stopped = await req.client.query({
       command: 'stop',

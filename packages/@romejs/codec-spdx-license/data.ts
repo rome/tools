@@ -186,9 +186,7 @@ export default {
       referenceNumber: '128',
       name: "AMD's plpa_map.c License",
       licenseId: 'AMDPLPA',
-      seeAlso: [
-        'https://fedoraproject.org/wiki/Licensing/AMD_plpa_map_License',
-      ],
+      seeAlso: ['https://fedoraproject.org/wiki/Licensing/AMD_plpa_map_License'],
       isOsiApproved: false,
     },
     {
@@ -272,9 +270,7 @@ export default {
       referenceNumber: '194',
       name: 'Apple Public Source License 1.2',
       licenseId: 'APSL-1.2',
-      seeAlso: [
-        'http://www.samurajdata.se/opensource/mirror/licenses/apsl.php',
-      ],
+      seeAlso: ['http://www.samurajdata.se/opensource/mirror/licenses/apsl.php'],
       isOsiApproved: true,
     },
     {
@@ -492,9 +488,7 @@ export default {
       referenceNumber: '39',
       name: 'BSD with attribution',
       licenseId: 'BSD-3-Clause-Attribution',
-      seeAlso: [
-        'https://fedoraproject.org/wiki/Licensing/BSD_with_Attribution',
-      ],
+      seeAlso: ['https://fedoraproject.org/wiki/Licensing/BSD_with_Attribution'],
       isOsiApproved: false,
     },
     {
@@ -2044,9 +2038,7 @@ export default {
       referenceNumber: '236',
       name: 'Independent JPEG Group License',
       licenseId: 'IJG',
-      seeAlso: [
-        'http://dev.w3.org/cvsweb/Amaya/libjpeg/Attic/README?rev=1.2',
-      ],
+      seeAlso: ['http://dev.w3.org/cvsweb/Amaya/libjpeg/Attic/README?rev=1.2'],
       isOsiApproved: false,
     },
     {
@@ -2581,9 +2573,7 @@ export default {
       referenceNumber: '192',
       name: 'Enlightenment License (e16)',
       licenseId: 'MIT-advertising',
-      seeAlso: [
-        'https://fedoraproject.org/wiki/Licensing/MIT_With_Advertising',
-      ],
+      seeAlso: ['https://fedoraproject.org/wiki/Licensing/MIT_With_Advertising'],
       isOsiApproved: false,
     },
     {
@@ -3041,9 +3031,7 @@ export default {
       referenceNumber: '80',
       name: 'SIL Open Font License 1.0',
       licenseId: 'OFL-1.0',
-      seeAlso: [
-        'http://scripts.sil.org/cms/scripts/page.php?item_id=OFL10_web',
-      ],
+      seeAlso: ['http://scripts.sil.org/cms/scripts/page.php?item_id=OFL10_web'],
       isOsiApproved: false,
     },
     {
@@ -3053,9 +3041,7 @@ export default {
       referenceNumber: '298',
       name: 'SIL Open Font License 1.0 with Reserved Font Name',
       licenseId: 'OFL-1.0-RFN',
-      seeAlso: [
-        'http://scripts.sil.org/cms/scripts/page.php?item_id=OFL10_web',
-      ],
+      seeAlso: ['http://scripts.sil.org/cms/scripts/page.php?item_id=OFL10_web'],
       isOsiApproved: false,
     },
     {
@@ -3065,9 +3051,7 @@ export default {
       referenceNumber: '71',
       name: 'SIL Open Font License 1.0 with no Reserved Font Name',
       licenseId: 'OFL-1.0-no-RFN',
-      seeAlso: [
-        'http://scripts.sil.org/cms/scripts/page.php?item_id=OFL10_web',
-      ],
+      seeAlso: ['http://scripts.sil.org/cms/scripts/page.php?item_id=OFL10_web'],
       isOsiApproved: false,
     },
     {

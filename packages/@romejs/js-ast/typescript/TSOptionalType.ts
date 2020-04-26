@@ -13,9 +13,12 @@ export type TSOptionalType = JSNodeBase & {
   typeAnnotation: AnyTSPrimary;
 };
 
-export const tsOptionalType = createBuilder<TSOptionalType>('TSOptionalType', {
-  bindingKeys: {},
-  visitorKeys: {
-    typeAnnotation: true,
+export const tsOptionalType = createBuilder<TSOptionalType>(
+  'TSOptionalType',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      typeAnnotation: true,
+    },
   },
-});
+);

@@ -22,7 +22,6 @@ test(
         'function greet(): Array<Array<string>> {};greet();',
         'function greet(param: Array<string>): string { return param; };greet();',
         'function greet(param: Array<string>): Array<string> { return param; };greet();',
-
         // INVALID
         "const age: any = 'seventeen';age;",
         "const ages: any[] = ['seventeen'];ages;",

@@ -14,7 +14,10 @@ export type NumericLiteral = JSNodeBase & {
   format?: 'octal' | 'binary' | 'hex';
 };
 
-export const numericLiteral = createBuilder<NumericLiteral>('NumericLiteral', {
-  bindingKeys: {},
-  visitorKeys: {},
-});
+export const numericLiteral = createBuilder<NumericLiteral>(
+  'NumericLiteral',
+  {
+    bindingKeys: {},
+    visitorKeys: {},
+  },
+);

@@ -32,9 +32,8 @@ export type AnyTypeArguments =
   | n.TSTypeParameterInstantiation;
 
 export type ObjectProperties = Array<
-  | n.ObjectProperty
-  | n.ObjectMethod
-  | n.SpreadProperty>;
+  n.ObjectProperty | n.ObjectMethod | n.SpreadProperty
+>;
 
 export type AnyFunction =
   | n.ArrowFunctionExpression
@@ -196,7 +195,11 @@ export type AnyExpression =
 
 export type AnyWhileStatement = n.WhileStatement | n.DoWhileStatement;
 
-type AnyStatementWithBodyReducer<T> = T extends {body: AnyStatement} ? T : never;
+type AnyStatementWithBodyReducer<T> = T extends {
+  body: AnyStatement;
+}
+  ? T
+  : never;
 
 export type AnyStatementWithBody = AnyStatementWithBodyReducer<AnyStatement>;
 
@@ -250,6 +253,8 @@ export type AnyTargetAssignmentPattern =
   | n.TSAssignmentAsExpression
   | n.TSAssignmentNonNullExpression
   | n.TSAssignmentTypeAssertion;
+
+export type AnyArrayPattern = n.AssignmentArrayPattern | n.BindingArrayPattern;
 
 export type AnyDeclaration =
   | n.VariableDeclarationStatement

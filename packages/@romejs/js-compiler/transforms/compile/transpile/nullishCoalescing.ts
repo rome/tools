@@ -10,7 +10,6 @@ import {template} from '@romejs/js-ast-utils';
 
 export default {
   name: 'nullishCoalescing',
-
   enter(path: Path) {
     const {node} = path;
 

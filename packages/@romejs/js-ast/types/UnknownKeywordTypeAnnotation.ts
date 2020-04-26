@@ -12,9 +12,10 @@ export type UnknownKeywordTypeAnnotation = JSNodeBase & {
   type: 'UnknownKeywordTypeAnnotation';
 };
 
-export const unknownKeywordTypeAnnotation = createBuilder<
-  UnknownKeywordTypeAnnotation
->('UnknownKeywordTypeAnnotation', {
-  bindingKeys: {},
-  visitorKeys: {},
-});
+export const unknownKeywordTypeAnnotation = createBuilder<UnknownKeywordTypeAnnotation>(
+  'UnknownKeywordTypeAnnotation',
+  {
+    bindingKeys: {},
+    visitorKeys: {},
+  },
+);

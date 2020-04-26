@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Tokens, verbatim} from '../../tokens';
+import {Token} from '../../tokens';
 
-export default function RegExpWordCharacter(): Tokens {
-  return [verbatim('\\w')];
+export default function RegExpWordCharacter(): Token {
+  return '\\w';
 }

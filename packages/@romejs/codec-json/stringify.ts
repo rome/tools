@@ -42,11 +42,14 @@ function stringifyKey(key: string): string {
     // A property key doesn't need quotes if it's a valid word
     return key;
   } else {
-    return escapeString(key, {
-      quote: '"',
-      ignoreWhitespaceEscapes: true,
-      json: true,
-    });
+    return escapeString(
+      key,
+      {
+        quote: '"',
+        ignoreWhitespaceEscapes: true,
+        json: true,
+      },
+    );
   }
 }
 
@@ -70,8 +73,11 @@ function stringifyPrimitives(value: unknown): undefined | string {
   }
 
   // Coerce primitive objects to their primitive form, as specified in ECMA262 24.5.2.1
-  if (value instanceof Number || value instanceof String || value instanceof
-      Boolean) {
+  if (
+    value instanceof Number ||
+    value instanceof String ||
+    value instanceof Boolean
+  ) {
     value = value.valueOf();
   }
 
@@ -86,11 +92,14 @@ function stringifyPrimitives(value: unknown): undefined | string {
       return value ? 'true' : 'false';
 
     case 'string':
-      return escapeString(value, {
-        quote: '"',
-        json: true,
-        ignoreWhitespaceEscapes: true,
-      });
+      return escapeString(
+        value,
+        {
+          quote: '"',
+          json: true,
+          ignoreWhitespaceEscapes: true,
+        },
+      );
 
     case 'bigint':
       // This is the actual V8 message lol
@@ -174,12 +183,15 @@ function stringifyArray(consumer: Consumer, info: StringifyObjectOptions) {
     buff = buff.concat(stringifyComments(nextIndent, comments));
 
     // Add the actual element line
-    const element = stringifyConsumer(consumer, {
-      comments: info.comments,
-      isTopLevel: false,
-      level: level + 1,
-      stack,
-    });
+    const element = stringifyConsumer(
+      consumer,
+      {
+        comments: info.comments,
+        isTopLevel: false,
+        level: level + 1,
+        stack,
+      },
+    );
     buff.push(`${nextIndent}${element}`);
   }
 
@@ -205,9 +217,11 @@ function stringifyPlainObject(
   for (const [key, consumer] of map) {
     const value = consumer.asUnknown();
 
-    if (typeof value === 'function' || typeof value === 'undefined' ||
-          typeof value ===
-          'symbol') {
+    if (
+      typeof value === 'function' ||
+      typeof value === 'undefined' ||
+      typeof value === 'symbol'
+    ) {
       map.delete(key);
     }
   }
@@ -228,12 +242,15 @@ function stringifyPlainObject(
 
     // Add the actual property line
     const propKey = stringifyKey(key);
-    const propValue = stringifyConsumer(consumer, {
-      comments: info.comments,
-      isTopLevel: false,
-      level: propLevel,
-      stack,
-    });
+    const propValue = stringifyConsumer(
+      consumer,
+      {
+        comments: info.comments,
+        isTopLevel: false,
+        level: propLevel,
+        stack,
+      },
+    );
     buff.push(`${nextIndent}${propKey}: ${propValue}`);
   }
 
@@ -251,7 +268,6 @@ function stringifyPlainObject(
       return buff.join('\n');
     } else if (buff.length > 0) {
       // Otherwise we just have a bunch of comments
-
       // Indent them correctly and just output it as a normal object
       buff = buff.map((str) => {
         return `  ${str}`;

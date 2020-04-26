@@ -77,18 +77,21 @@ export class Scope {
   query(paths: Array<string>): T {
     let initial = this.getBinding(paths[0]);
     if (initial === undefined) {
-      throw new Error(`Expected "${paths[0]}" binding, found ${JSON.stringify(
-        this.getBindingNames(),
-      )} ${this.evaluator.filename}`);
+      throw new Error(
+        `Expected "${paths[0]}" binding, found ${JSON.stringify(
+          this.getBindingNames(),
+        )} ${this.evaluator.filename}`,
+      );
     }
 
     //invariant(initial !== undefined, `Expected "${paths[0]}" binding`);
     for (let i = 1; i < paths.length; i++) {
-      initial = new GetPropT(this, undefined, initial, new StringLiteralT(
+      initial = new GetPropT(
         this,
         undefined,
-        paths[i],
-      ));
+        initial,
+        new StringLiteralT(this, undefined, paths[i]),
+      );
     }
 
     return initial;
@@ -98,10 +101,13 @@ export class Scope {
     if (name === undefined) {
       throw new Error('Expected name');
     }
-    this.bindings.set(name, {
-      type: new OpenT(this, originNode),
-      status: 'declared',
-    });
+    this.bindings.set(
+      name,
+      {
+        type: new OpenT(this, originNode),
+        status: 'declared',
+      },
+    );
   }
 
   addBinding(name: string, type: T) {
@@ -118,16 +124,19 @@ export class Scope {
       existingBinding.type.shouldMatch(type);
     }
 
-    this.bindings.set(name, {
-      type,
-      status: 'initialized',
-    });
+    this.bindings.set(
+      name,
+      {
+        type,
+        status: 'initialized',
+      },
+    );
   }
 
   getBindingNames(): Array<string> {
-    const names: Set<string> = new Set(this.parentScope
-      ? this.parentScope.getBindingNames()
-      : []);
+    const names: Set<string> = new Set(
+      this.parentScope ? this.parentScope.getBindingNames() : [],
+    );
 
     for (const [name] of this.bindings) {
       names.add(name);

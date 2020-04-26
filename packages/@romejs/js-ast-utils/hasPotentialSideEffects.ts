@@ -32,17 +32,16 @@ export default function hasPotentialSideEffects(
       return false;
 
     case 'ClassDeclaration':
-      return node.meta.superClass !== undefined || !hasPotentialSideEffects(
-        node.meta.superClass,
-        scope,
+      return (
+        node.meta.superClass !== undefined ||
+        !hasPotentialSideEffects(node.meta.superClass, scope)
       );
 
     case 'ReferenceIdentifier':
       // Variables that aren't in scope and aren't registered globals could trigger a getter
-
       // Unlikely but let's aim for 100% correctness
-      return scope.getRootScope().isGlobal(node.name) || scope.hasBinding(
-        node.name,
+      return (
+        scope.getRootScope().isGlobal(node.name) || scope.hasBinding(node.name)
       );
 
     case 'VariableDeclaration': {
@@ -55,9 +54,9 @@ export default function hasPotentialSideEffects(
     }
 
     case 'VariableDeclarator':
-      return hasPotentialSideEffects(node.id, scope) || hasPotentialSideEffects(
-        node.init,
-        scope,
+      return (
+        hasPotentialSideEffects(node.id, scope) ||
+        hasPotentialSideEffects(node.init, scope)
       );
 
     case 'SpreadProperty':
@@ -85,8 +84,10 @@ export default function hasPotentialSideEffects(
 
     case 'BindingObjectPatternProperty':
     case 'ObjectProperty':
-      return hasPotentialSideEffects(node.key, scope) ||
-        hasPotentialSideEffects(node.value, scope);
+      return (
+        hasPotentialSideEffects(node.key, scope) ||
+        hasPotentialSideEffects(node.value, scope)
+      );
 
     case 'BindingArrayPattern':
     case 'ArrayExpression': {

@@ -13,9 +13,12 @@ export type ThrowStatement = JSNodeBase & {
   argument: AnyExpression;
 };
 
-export const throwStatement = createBuilder<ThrowStatement>('ThrowStatement', {
-  bindingKeys: {},
-  visitorKeys: {
-    argument: true,
+export const throwStatement = createBuilder<ThrowStatement>(
+  'ThrowStatement',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      argument: true,
+    },
   },
-});
+);

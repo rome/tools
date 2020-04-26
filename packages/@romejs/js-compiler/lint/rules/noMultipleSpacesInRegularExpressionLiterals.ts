@@ -18,8 +18,9 @@ import {descriptions} from '@romejs/diagnostics';
 function isSpaceChar(
   node: undefined | AnyRegExpBodyItem,
 ): node is RegExpCharacter {
-  return node !== undefined && node.type === 'RegExpCharacter' && node.value ===
-    ' ';
+  return (
+    node !== undefined && node.type === 'RegExpCharacter' && node.value === ' '
+  );
 }
 
 function checkRegex(
@@ -65,11 +66,14 @@ function checkRegex(
       ],
     };
 
-    return context.addFixableDiagnostic({
-      target: spaceNodes,
-      old: node,
-      fixed: checkRegex(newRegex, context),
-    }, descriptions.LINT.NO_MULTIPLE_SPACES_IN_REGEX_LITERAL(spaceNodes.length));
+    return context.addFixableDiagnostic(
+      {
+        target: spaceNodes,
+        old: node,
+        fixed: checkRegex(newRegex, context),
+      },
+      descriptions.LINT.NO_MULTIPLE_SPACES_IN_REGEX_LITERAL(spaceNodes.length),
+    );
   }
 
   return node;

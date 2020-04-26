@@ -15,7 +15,10 @@ export type FlowVariance = JSNodeBase & {
   kind: FlowVarianceKind;
 };
 
-export const flowVariance = createBuilder<FlowVariance>('FlowVariance', {
-  bindingKeys: {},
-  visitorKeys: {},
-});
+export const flowVariance = createBuilder<FlowVariance>(
+  'FlowVariance',
+  {
+    bindingKeys: {},
+    visitorKeys: {},
+  },
+);

@@ -6,19 +6,13 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, space, word} from '../../tokens';
-import {
-  AnyNode,
-  FlowDeclareInterface,
-  flowDeclareInterface,
-} from '@romejs/js-ast';
+import {Token, concat, space} from '../../tokens';
+import {FlowDeclareInterface} from '@romejs/js-ast';
 import FlowInterfaceDeclaration from './FlowInterfaceDeclaration';
 
 export default function FlowDeclareInterface(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = flowDeclareInterface.assert(node);
-
-  return [word('declare'), space, ...FlowInterfaceDeclaration(builder, node)];
+  node: FlowDeclareInterface,
+): Token {
+  return concat(['declare', space, FlowInterfaceDeclaration(builder, node)]);
 }

@@ -80,8 +80,10 @@ export default class Bundler {
       requestedType: 'package',
       source: createUnknownFilePath(unresolvedEntry),
     });
-    const manifestRoot: undefined | AbsoluteFilePath = manifestRootResolved.type ===
-      'FOUND' ? manifestRootResolved.path : undefined;
+    const manifestRoot: undefined | AbsoluteFilePath =
+      manifestRootResolved.type === 'FOUND'
+        ? manifestRootResolved.path
+        : undefined;
     let manifestDef;
     if (manifestRoot !== undefined) {
       const def = master.memoryFs.getManifestDefinition(manifestRoot);
@@ -137,9 +139,9 @@ export default class Bundler {
         },
       ],
     });
-    const entryUids = entries.map((entry) => this.master.projectManager.getUid(
-      entry,
-    ));
+    const entryUids = entries.map((entry) =>
+      this.master.projectManager.getUid(entry)
+    );
     const analyzeProgress = this.reporter.progress({
       name: `bundler:analyze:${entryUids.join(',')}`,
       title: 'Analyzing',
@@ -217,10 +219,13 @@ export default class Bundler {
 
     //
     const bundleBuddyStats = this.graph.getBundleBuddyStats(this.entries);
-    files.set('bundlebuddy.json', {
-      kind: 'stats',
-      content: () => JSON.stringify(bundleBuddyStats, null, '  '),
-    });
+    files.set(
+      'bundlebuddy.json',
+      {
+        kind: 'stats',
+        content: () => JSON.stringify(bundleBuddyStats, null, '  '),
+      },
+    );
 
     // TODO ensure that __dirname is relative to the project root
     if (manifestDef !== undefined) {
@@ -230,19 +235,25 @@ export default class Bundler {
         createBundle,
         (relative, buffer) => {
           if (!files.has(relative)) {
-            files.set(relative, {
-              kind: 'file',
-              content: () => buffer,
-            });
+            files.set(
+              relative,
+              {
+                kind: 'file',
+                content: () => buffer,
+              },
+            );
           }
         },
       );
 
       // Add a package.json with updated values
-      files.set('package.json', {
-        kind: 'manifest',
-        content: () => JSON.stringify(newManifest, undefined, '  '),
-      });
+      files.set(
+        'package.json',
+        {
+          kind: 'manifest',
+          content: () => JSON.stringify(newManifest, undefined, '  '),
+        },
+      );
     }
 
     return {
@@ -259,11 +270,8 @@ export default class Bundler {
       resolvedSegment: AbsoluteFilePath,
       options: BundleOptions,
     ) => Promise<BundleResultBundle>,
-
     addFile: (relative: string, buffer: Buffer | string) => void,
-  ): Promise<
-    JSONManifest
-  > {
+  ): Promise<JSONManifest> {
     // TODO figure out some way to use bundleMultiple here
     const manifest = manifestDef.manifest;
 
@@ -288,9 +296,12 @@ export default class Bundler {
 
     // Copy manifest.files
     if (manifest.files !== undefined) {
-      const paths = await this.master.memoryFs.glob(manifestDef.folder, {
-        overrideIgnore: flipPathPatterns(manifest.files),
-      });
+      const paths = await this.master.memoryFs.glob(
+        manifestDef.folder,
+        {
+          overrideIgnore: flipPathPatterns(manifest.files),
+        },
+      );
 
       for (const path of paths) {
         const relative = manifestDef.folder.relative(path).join();
@@ -313,18 +324,24 @@ export default class Bundler {
           ? binConsumer
           : binConsumer.get(binName)).getDiagnosticLocation('inner-value');
 
-        const absolute = await this.master.resolver.resolveAssert({
-          ...this.config.resolver,
-          origin: manifestDef.folder,
-          source: createUnknownFilePath(relative).toExplicitRelative(),
-        }, {
-          location,
-        });
+        const absolute = await this.master.resolver.resolveAssert(
+          {
+            ...this.config.resolver,
+            origin: manifestDef.folder,
+            source: createUnknownFilePath(relative).toExplicitRelative(),
+          },
+          {
+            location,
+          },
+        );
 
-        const res = await createBundle(absolute.path, {
-          prefix: `bin/${binName}`,
-          interpreter: '/usr/bin/env node',
-        });
+        const res = await createBundle(
+          absolute.path,
+          {
+            prefix: `bin/${binName}`,
+            interpreter: '/usr/bin/env node',
+          },
+        );
         newBin[binName] = res.js.path;
       }
     }
@@ -360,21 +377,30 @@ export default class Bundler {
     const mapPath = `${jsPath}.map`;
 
     const files: BundlerFiles = new Map();
-    files.set(jsPath, {
-      kind: 'entry',
-      content: () => res.content,
-    });
+    files.set(
+      jsPath,
+      {
+        kind: 'entry',
+        content: () => res.content,
+      },
+    );
 
-    files.set(mapPath, {
-      kind: 'sourcemap',
-      content: () => res.sourceMap.toJSON(),
-    });
+    files.set(
+      mapPath,
+      {
+        kind: 'sourcemap',
+        content: () => res.sourceMap.toJSON(),
+      },
+    );
 
     for (const [relative, buffer] of res.assets) {
-      files.set(relative, {
-        kind: 'asset',
-        content: () => buffer,
-      });
+      files.set(
+        relative,
+        {
+          kind: 'asset',
+          content: () => buffer,
+        },
+      );
     }
 
     const bundle: BundleResultBundle = {

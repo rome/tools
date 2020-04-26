@@ -17,11 +17,15 @@ export type ImportSpecifierLocal = JSNodeBase & {
 export const importSpecifierLocal = createQuickBuilder<
   ImportSpecifierLocal,
   'name'
->('ImportSpecifierLocal', 'name', {
-  bindingKeys: {
-    name: true,
+>(
+  'ImportSpecifierLocal',
+  'name',
+  {
+    bindingKeys: {
+      name: true,
+    },
+    visitorKeys: {
+      name: true,
+    },
   },
-  visitorKeys: {
-    name: true,
-  },
-});
+);

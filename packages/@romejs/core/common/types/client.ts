@@ -55,4 +55,6 @@ export type ClientFlags = {
   verbose: boolean;
 };
 
-export type ClientFlagsJSON = Omit<ClientFlags, 'cwd'> & {cwd: string};
+export type ClientFlagsJSON = Omit<ClientFlags, 'cwd'> & {
+  cwd: string;
+};

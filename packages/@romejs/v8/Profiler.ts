@@ -24,16 +24,22 @@ export default class Profiler {
     this.session = new inspector.Session();
     this.session.connect();
 
-    this.memoryInterval = setInterval(() => {
-      const time = hrTime();
-      const size = process.memoryUsage().heapUsed;
-      this.memorySamples.push([time, size]);
-    }, 100);
+    this.memoryInterval = setInterval(
+      () => {
+        const time = hrTime();
+        const size = process.memoryUsage().heapUsed;
+        this.memorySamples.push([time, size]);
+      },
+      100,
+    );
 
     await Promise.all([
-      this.sendCommand('Profiler.setSamplingInterval', {
-        interval: samplingInterval,
-      }),
+      this.sendCommand(
+        'Profiler.setSamplingInterval',
+        {
+          interval: samplingInterval,
+        },
+      ),
       this.sendCommand('Profiler.enable'),
       this.sendCommand('Profiler.start'),
     ]);
@@ -45,13 +51,17 @@ export default class Profiler {
       return Promise.reject(new Error('No current profiler session'));
     } else {
       return new Promise((resolve, reject) => {
-        session.post(method, params, (err) => {
-          if (err === null) {
-            resolve();
-          } else {
-            reject(err);
-          }
-        });
+        session.post(
+          method,
+          params,
+          (err) => {
+            if (err === null) {
+              resolve();
+            } else {
+              reject(err);
+            }
+          },
+        );
       });
     }
   }
@@ -79,13 +89,16 @@ export default class Profiler {
       resolve,
       reject,
     ) => {
-      session.post('Profiler.stop', (err, params) => {
-        if (err === null) {
-          resolve(params);
-        } else {
-          reject(err);
-        }
-      });
+      session.post(
+        'Profiler.stop',
+        (err, params) => {
+          if (err === null) {
+            resolve(params);
+          } else {
+            reject(err);
+          }
+        },
+      );
     });
 
     this.destroy();

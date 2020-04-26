@@ -8,11 +8,14 @@
 import {test} from 'rome';
 import {testLint} from '../testHelpers';
 
-test('no debugger', async (t) => {
-  await testLint(t, `const test = { debugger: 1 };
+test(
+  'no debugger',
+  async (t) => {
+    await testLint(t, `const test = { debugger: 1 };
   test.debugger;
   console.log(test); // To not trigger the unused var rule.
   `, {category: 'lint/noDebugger'});
 
-  await testLint(t, 'debugger;', {category: 'lint/noDebugger'});
-});
+    await testLint(t, 'debugger;', {category: 'lint/noDebugger'});
+  },
+);

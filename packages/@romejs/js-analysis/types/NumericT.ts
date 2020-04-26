@@ -14,11 +14,15 @@ import T from './T';
 
 export default class NumericT extends ObjT {
   constructor(scope: Scope, originNode: undefined | AnyNode) {
-    super(scope, originNode, {
-      props: [],
-      proto: scope.intrinsics.NumberPrototype,
-      calls: [],
-    });
+    super(
+      scope,
+      originNode,
+      {
+        props: [],
+        proto: scope.intrinsics.NumberPrototype,
+        calls: [],
+      },
+    );
   }
 
   static type = 'NumericT';

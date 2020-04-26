@@ -12,9 +12,10 @@ export type MixedKeywordTypeAnnotation = JSNodeBase & {
   type: 'MixedKeywordTypeAnnotation';
 };
 
-export const mixedKeywordTypeAnnotation = createBuilder<
-  MixedKeywordTypeAnnotation
->('MixedKeywordTypeAnnotation', {
-  bindingKeys: {},
-  visitorKeys: {},
-});
+export const mixedKeywordTypeAnnotation = createBuilder<MixedKeywordTypeAnnotation>(
+  'MixedKeywordTypeAnnotation',
+  {
+    bindingKeys: {},
+    visitorKeys: {},
+  },
+);

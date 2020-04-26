@@ -5,58 +5,48 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, TSMappedType, tsMappedType} from '@romejs/js-ast';
+import {TSMappedType} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
-import {Tokens, operator, space, word} from '../../tokens';
+import {Token, concat, space} from '../../tokens';
 
-export default function TSMappedType(builder: Builder, node: AnyNode): Tokens {
-  node = tsMappedType.assert(node);
-
-  let tokens: Tokens = [operator('{'), space];
+export default function TSMappedType(
+  builder: Builder,
+  node: TSMappedType,
+): Token {
+  const tokens: Array<Token> = ['{', space];
 
   if (node.readonly) {
-    tokens = [
-      ...tokens,
-      ...tokenIfPlusMinus(builder, node.readonly),
-      word('readonly'),
-      space,
-    ];
+    tokens.push(tokenIfPlusMinus(builder, node.readonly), 'readonly', space);
   }
 
   const {typeParameter} = node;
-  tokens = [
-    ...tokens,
-    operator('['),
-    word(typeParameter.name),
+  tokens.push(
+    '[',
+    typeParameter.name,
     space,
-    word('in'),
+    'in',
     space,
-    ...builder.tokenize(typeParameter.constraint, typeParameter),
-    operator(']'),
-  ];
+    builder.tokenize(typeParameter.constraint, typeParameter),
+    ']',
+  );
 
   if (node.optional) {
-    tokens = [
-      ...tokens,
-      ...tokenIfPlusMinus(builder, node.optional),
-      operator('?'),
-    ];
+    tokens.push(tokenIfPlusMinus(builder, node.optional), '?');
   }
 
-  return [
-    ...tokens,
-    operator(':'),
-    space,
-    ...builder.tokenize(node.typeAnnotation, node),
-    space,
-    operator('}'),
-  ];
+  if (node.typeAnnotation) {
+    tokens.push(':', space, builder.tokenize(node.typeAnnotation, node));
+  }
+
+  tokens.push(space, '}');
+
+  return concat(tokens);
 }
 
-function tokenIfPlusMinus(builder: Builder, token: string | true): Tokens {
+function tokenIfPlusMinus(builder: Builder, token: string | true): Token {
   if (token !== true) {
-    return [operator(token)];
+    return token;
   } else {
-    return [];
+    return '';
   }
 }

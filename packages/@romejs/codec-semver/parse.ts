@@ -31,10 +31,12 @@ import {descriptions} from '@romejs/diagnostics';
 
 type ParseMode = 'version' | 'range';
 
-export type SemverParserOptions = ParserOptions & {loose?: boolean};
+export type SemverParserOptions = ParserOptions & {
+  loose?: boolean;
+};
 
-const createSemverParser = createParser(
-  (ParserCore) => class SemverParser extends ParserCore<Tokens, void> {
+const createSemverParser = createParser((ParserCore) =>
+  class SemverParser extends ParserCore<Tokens, void> {
     constructor({loose, ...opts}: SemverParserOptions, mode: ParseMode) {
       super(opts, 'parse/semver');
       this.input = this.input.trimRight();
@@ -50,16 +52,23 @@ const createSemverParser = createParser(
       const char = input[ob1Get0(index)];
       const nextChar = input[ob1Get0(index) + 1];
 
-      if (char === '<' && nextChar === '=' || char === '>' && nextChar === '=' ||
-          char === '~' && nextChar === '>') {
+      if (
+        (char === '<' && nextChar === '=') ||
+        (char === '>' && nextChar === '=') ||
+        (char === '~' && nextChar === '>')
+      ) {
         // @ts-ignore: TS doesn't infer the possible combinations
         const value: ComparatorOperator = char + nextChar;
         return this.finishValueToken('Operator', value, ob1Add(index, 2));
       }
 
-      if (char === '^' || char === '<' || char === '>' || char === '~' ||
-            char ===
-            '=') {
+      if (
+        char === '^' ||
+        char === '<' ||
+        char === '>' ||
+        char === '~' ||
+        char === '='
+      ) {
         const op: ComparatorOperator = char;
         return this.finishValueToken('Operator', op);
       }
@@ -90,10 +99,11 @@ const createSemverParser = createParser(
 
       if (isDigit(char)) {
         const [value] = this.readInputFrom(index, isDigit);
-        return this.finishValueToken('Number', Number(value), ob1Add(
-          index,
-          value.length,
-        ));
+        return this.finishValueToken(
+          'Number',
+          Number(value),
+          ob1Add(index, value.length),
+        );
       }
 
       if (isAlpha(char)) {
@@ -111,7 +121,7 @@ const createSemverParser = createParser(
 
     // Remove all subsequent space tokens
     eatSpaceToken() {
-      while (this.eatToken('Space') !== undefined) ;
+      while (this.eatToken('Space') !== undefined);
     }
 
     parseVersionOrWildcard(): WildcardNode | VersionNode {
@@ -120,11 +130,13 @@ const createSemverParser = createParser(
       const version = this.parseVersion();
 
       // We should return a bare wildcard when parsed in a version position if there was nothing else attached
-      if (this.isWildcardToken(startToken) && version.minor === undefined &&
-              version.patch ===
-              undefined && version.prerelease.length === 0 &&
-            version.build.length ===
-            0) {
+      if (
+        this.isWildcardToken(startToken) &&
+        version.minor === undefined &&
+        version.patch === undefined &&
+        version.prerelease.length === 0 &&
+        version.build.length === 0
+      ) {
         return {
           type: 'Wildcard',
           loc: this.finishLoc(startPos),
@@ -170,7 +182,7 @@ const createSemverParser = createParser(
 
       // The dash is optional in loose mode. eg. 1.2.3pre
       let prerelease: VersionPrereleaseParts = [];
-      if (this.eatToken('Dash') || this.loose && this.matchToken('Word')) {
+      if (this.eatToken('Dash') || (this.loose && this.matchToken('Word'))) {
         prerelease = this.parseVersionQualifierParts();
       }
 
@@ -227,8 +239,11 @@ const createSemverParser = createParser(
             description: descriptions.SEMVER.INVALID_QUANTIFIER_PART,
           });
         }
-      } while (this.matchToken('Number') || this.matchToken('Word') ||
-        this.matchToken('Dash'));
+      } while (
+        this.matchToken('Number') ||
+        this.matchToken('Word') ||
+        this.matchToken('Dash')
+      );
 
       if (parts.length === 1 && typeof parts[0] === 'number') {
         return parts[0];
@@ -289,7 +304,6 @@ const createSemverParser = createParser(
 
     validateRangeSide(node: RangeNode): VersionNode | WildcardNode {
       // In loose mode, we allow ranges to be a bare wildcard instead of a version
-
       // eg. * - 1.2.3
       if (node.type === 'WildcardVersion' || node.type === 'AbsoluteVersion') {
         return node;
@@ -351,9 +365,7 @@ const createSemverParser = createParser(
     parseAtomStartPipe() {
       if (this.loose) {
         // A bare pipe in an atom start position is treated the same as a wildcard...
-
         // Why...? Because node-semver allows it lol
-
         // > satisfies('1.2.3', '||') === true
         return this.parseWildcard();
       } else {
@@ -463,7 +475,7 @@ const createSemverParser = createParser(
 
       return node;
     }
-  },
+  }
 );
 
 export function parseSemverRange(opts: SemverParserOptions): RangeNode {

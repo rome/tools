@@ -61,22 +61,28 @@ export function mapAnsiString(
       const match = sliceAnsi(input, realIndex);
       if (match !== undefined) {
         const strippedLength = stripAnsi(match).length;
-        buff += callback(match, {
-          isAnsi: true,
-          start: fakeIndex,
-          end: fakeIndex + strippedLength,
-        });
+        buff += callback(
+          match,
+          {
+            isAnsi: true,
+            start: fakeIndex,
+            end: fakeIndex + strippedLength,
+          },
+        );
         realIndex += match.length;
         fakeIndex += strippedLength;
         continue;
       }
     }
 
-    buff += callback(char, {
-      isAnsi: false,
-      start: fakeIndex,
-      end: fakeIndex + 1,
-    });
+    buff += callback(
+      char,
+      {
+        isAnsi: false,
+        start: fakeIndex,
+        end: fakeIndex + 1,
+      },
+    );
     realIndex++;
     fakeIndex++;
   }
@@ -147,6 +153,7 @@ export function splitAnsiLines(input: string, maxWidth?: number): Array<string> 
   }
 
   // Flush the current buffer
+
   if (buff !== '') {
     pushLine();
   }

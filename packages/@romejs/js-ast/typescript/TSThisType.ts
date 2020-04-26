@@ -8,9 +8,14 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type TSThisType = JSNodeBase & {type: 'TSThisType'};
+export type TSThisType = JSNodeBase & {
+  type: 'TSThisType';
+};
 
-export const tsThisType = createBuilder<TSThisType>('TSThisType', {
-  bindingKeys: {},
-  visitorKeys: {},
-});
+export const tsThisType = createBuilder<TSThisType>(
+  'TSThisType',
+  {
+    bindingKeys: {},
+    visitorKeys: {},
+  },
+);

@@ -16,11 +16,13 @@ const start = require(
   return ch > 127;
 });
 let last = -1;
-const cont = [8_204, 8_205].concat(require(
-  `unicode-${version}/Binary_Property/ID_Continue/code-points.js`,
-).filter(function(ch) {
-  return ch > 127 && search(start, ch, last + 1) === -1;
-}));
+const cont = [8_204, 8_205].concat(
+  require(`unicode-${version}/Binary_Property/ID_Continue/code-points.js`).filter(function(
+    ch,
+  ) {
+    return ch > 127 && search(start, ch, last + 1) === -1;
+  }),
+);
 
 function search(arr, ch, starting) {
   for (let i = starting; arr[i] <= ch && i < arr.length; last = i++) {
@@ -51,8 +53,7 @@ function generate(chars) {
     }
     if (to <= 65_535) {
       if (from === to) re += esc(from); else if (from + 1 === to) re +=
-          esc(from) +
-          esc(to); else re += `${esc(from)}-esc(to)`;
+        esc(from) + esc(to); else re += `${esc(from)}-esc(to)`;
     } else {
       astral.push(from - at, to - from);
       at = to;
@@ -66,7 +67,7 @@ const contData = generate(cont);
 
 console.log(`let nonASCIIidentifierStartChars = "${startData.nonASCII}";`);
 console.log(`let nonASCIIidentifierChars = "${contData.nonASCII}";`);
-console.log(`const astralIdentifierStartCodes = ${JSON.stringify(
-  startData.astral,
-)};`);
+console.log(
+  `const astralIdentifierStartCodes = ${JSON.stringify(startData.astral)};`,
+);
 console.log(`const astralIdentifierCodes = ${JSON.stringify(contData.astral)};`);

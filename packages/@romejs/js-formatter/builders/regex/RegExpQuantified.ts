@@ -6,41 +6,39 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, verbatim} from '../../tokens';
-import {AnyNode, RegExpQuantified, regExpQuantified} from '@romejs/js-ast';
+import {Token, concat} from '../../tokens';
+import {RegExpQuantified} from '@romejs/js-ast';
 
 export default function RegExpQuantified(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = regExpQuantified.assert(node);
-
-  const tokens: Tokens = builder.tokenize(node.target, node);
+  node: RegExpQuantified,
+): Token {
+  const tokens: Array<Token> = [builder.tokenize(node.target, node)];
 
   if (node.min === 0 && node.max === 1) {
-    tokens.push(verbatim('?'));
+    tokens.push('?');
   } else if (node.min === 0 && node.max === undefined) {
-    tokens.push(verbatim('*'));
+    tokens.push('*');
   } else if (node.min === 1 && node.max === undefined) {
-    tokens.push(verbatim('+'));
+    tokens.push('+');
   } else {
-    tokens.push(verbatim('{'));
+    tokens.push('{');
 
-    tokens.push(verbatim(String(node.min)));
+    tokens.push(String(node.min));
 
     if (node.min !== node.max) {
-      tokens.push(verbatim(','));
+      tokens.push(',');
       if (node.max !== undefined) {
-        tokens.push(verbatim(String(node.max)));
+        tokens.push(String(node.max));
       }
     }
 
-    tokens.push(verbatim('}'));
+    tokens.push('}');
   }
 
   if (node.lazy) {
-    tokens.push(verbatim('?'));
+    tokens.push('?');
   }
 
-  return tokens;
+  return concat(tokens);
 }

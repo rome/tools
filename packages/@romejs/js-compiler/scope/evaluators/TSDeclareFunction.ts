@@ -12,10 +12,12 @@ import {AnyNode, TSDeclareFunction} from '@romejs/js-ast';
 export default {
   creator: false,
   build(node: TSDeclareFunction, parent: AnyNode, scope: Scope) {
-    scope.addBinding(new FunctionBinding({
-      node: node.id,
-      name: node.id.name,
-      scope,
-    }));
+    scope.addBinding(
+      new FunctionBinding({
+        node: node.id,
+        name: node.id.name,
+        scope,
+      }),
+    );
   },
 };

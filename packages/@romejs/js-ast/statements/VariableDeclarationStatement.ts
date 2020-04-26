@@ -18,11 +18,15 @@ export type VariableDeclarationStatement = JSNodeBase & {
 export const variableDeclarationStatement = createQuickBuilder<
   VariableDeclarationStatement,
   'declaration'
->('VariableDeclarationStatement', 'declaration', {
-  bindingKeys: {
-    declaration: true,
+>(
+  'VariableDeclarationStatement',
+  'declaration',
+  {
+    bindingKeys: {
+      declaration: true,
+    },
+    visitorKeys: {
+      declaration: true,
+    },
   },
-  visitorKeys: {
-    declaration: true,
-  },
-});
+);

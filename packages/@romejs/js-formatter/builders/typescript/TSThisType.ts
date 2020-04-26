@@ -5,9 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSThisType} from '@romejs/js-ast';
-import {Tokens, word} from '../../tokens';
+import {Token} from '../../tokens';
 
-export default function TSThisType(): Tokens {
-  return [word('this')];
+export default function TSThisType(): Token {
+  return 'this';
 }

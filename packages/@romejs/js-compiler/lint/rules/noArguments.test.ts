@@ -8,21 +8,23 @@
 import {test} from 'rome';
 import {testLint} from '../testHelpers';
 
-test('no arguments', async (t) => {
-  await testLint(t, `
+test(
+  'no arguments',
+  async (t) => {
+    await testLint(t, `
     function f() {
       console.log(arguments);
     }
     f();
   `, {category: 'lint/noArguments'});
 
-  await testLint(t, `
+    await testLint(t, `
     (function () {
       console.log(arguments);
     })();
   `, {category: 'lint/noArguments'});
 
-  await testLint(t, `
+    await testLint(t, `
     class C {
       fn() {
         console.log(arguments);
@@ -31,7 +33,7 @@ test('no arguments', async (t) => {
     (new C()).fn();
   `, {category: 'lint/noArguments'});
 
-  await testLint(t, `
+    await testLint(t, `
     const o = {
       fn() {
         console.log(arguments);
@@ -39,4 +41,5 @@ test('no arguments', async (t) => {
     };
     o.fn();
   `, {category: 'lint/noArguments'});
-});
+  },
+);

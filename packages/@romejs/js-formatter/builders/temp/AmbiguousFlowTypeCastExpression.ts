@@ -5,18 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-  AmbiguousFlowTypeCastExpression,
-  AnyNode,
-  ambiguousFlowTypeCastExpression,
-} from '@romejs/js-ast';
-import {Builder} from '@romejs/js-formatter';
-import {Tokens} from '../../tokens';
+import {Token} from '../../tokens';
 
-export default function AmbiguousFlowTypeCastExpression(
-  builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = ambiguousFlowTypeCastExpression.assert(node);
+export default function AmbiguousFlowTypeCastExpression(): Token {
   throw new Error('unimplemented');
 }

@@ -71,10 +71,13 @@ export type TokenValues<Tokens extends TokensShape> =
 export function tryParseWithOptionalOffsetPosition<
   Opts extends ParserOptions,
   Ret
->(parserOpts: Opts, opts: {
-  getOffsetPosition: () => Position;
-  parse: (opts: Opts) => Ret;
-}): Ret {
+>(
+  parserOpts: Opts,
+  opts: {
+    getOffsetPosition: () => Position;
+    parse: (opts: Opts) => Ret;
+  },
+): Ret {
   const {value} = catchDiagnosticsSync(() => {
     return opts.parse(parserOpts);
   });
@@ -141,12 +144,10 @@ export class ParserCore<Tokens extends TokensShape, State> {
     this.offsetPosition = offsetPosition;
     this.diagnosticCategory = diagnosticCategory;
     this.tokenizing = false;
-    this.currLine = offsetPosition === undefined
-      ? ob1Number1
-      : offsetPosition.line;
-    this.currColumn = offsetPosition === undefined
-      ? ob1Number0
-      : offsetPosition.column;
+    this.currLine =
+      offsetPosition === undefined ? ob1Number1 : offsetPosition.line;
+    this.currColumn =
+      offsetPosition === undefined ? ob1Number0 : offsetPosition.column;
     this.nextTokenIndex = ob1Number0;
     this.currentToken = SOF_TOKEN;
     this.prevToken = SOF_TOKEN;
@@ -226,10 +227,16 @@ export class ParserCore<Tokens extends TokensShape, State> {
   }
 
   // Alternate tokenize method to allow that allows the use of state
-  tokenizeWithState(index: Number0, input: string, state: State): undefined | {
-    token: TokenValues<Tokens>;
-    state: State;
-  } {
+  tokenizeWithState(
+    index: Number0,
+    input: string,
+    state: State,
+  ):
+    | undefined
+    | {
+        token: TokenValues<Tokens>;
+        state: State;
+      } {
     const token = this.tokenize(index, input);
     if (token !== undefined) {
       return {token, state};
@@ -238,10 +245,16 @@ export class ParserCore<Tokens extends TokensShape, State> {
     }
   }
 
-  _tokenizeWithState(index: Number0, input: string, state: State): undefined | {
-    token: TokenValues<Tokens>;
-    state: State;
-  } {
+  _tokenizeWithState(
+    index: Number0,
+    input: string,
+    state: State,
+  ):
+    | undefined
+    | {
+        token: TokenValues<Tokens>;
+        state: State;
+      } {
     if (this.ignoreWhitespaceTokens) {
       switch (input[ob1Get0(index)]) {
         case ' ':
@@ -301,13 +314,13 @@ export class ParserCore<Tokens extends TokensShape, State> {
 
     if (nextToken.end === prevToken.end) {
       throw new Error(
-          `tokenize() returned a token with the same position as the last - Previous token: ${JSON.stringify(
-            prevToken,
-          )}; Next token: ${JSON.stringify(nextToken)}; Input: ${this.input.slice(
-            0,
-            100,
-          )}`,
-        );
+        `tokenize() returned a token with the same position as the last - Previous token: ${JSON.stringify(
+          prevToken,
+        )}; Next token: ${JSON.stringify(nextToken)}; Input: ${this.input.slice(
+          0,
+          100,
+        )}`,
+      );
     }
 
     const {line, column} = this.getPositionFromIndex(nextToken.start);
@@ -350,7 +363,9 @@ export class ParserCore<Tokens extends TokensShape, State> {
   }
 
   // Return the token and state that's after the current token without advancing to it
-  lookahead(index: Number0 = this.nextTokenIndex): {
+  lookahead(
+    index: Number0 = this.nextTokenIndex,
+  ): {
     token: TokenValues<Tokens>;
     state: State;
   } {
@@ -421,8 +436,11 @@ export class ParserCore<Tokens extends TokensShape, State> {
 
     // Normalize message, we need to be defensive here because it could have been called while tokenizing the first token
     if (metadata === undefined) {
-      if (currentToken !== undefined && start !== undefined && start.index ===
-          currentToken.start) {
+      if (
+        currentToken !== undefined &&
+        start !== undefined &&
+        start.index === currentToken.start
+      ) {
         metadata = descriptions.PARSER_CORE.UNEXPECTED(currentToken.type);
       } else {
         if (this.isEOF(start.index)) {
@@ -501,16 +519,14 @@ export class ParserCore<Tokens extends TokensShape, State> {
       // @ts-ignore
       return token;
     } else {
-      throw this.unexpected(
-        {
-          description: _metadata === undefined
-            ? descriptions.PARSER_CORE.EXPECTED_TOKEN(
+      throw this.unexpected({
+        description: _metadata === undefined
+          ? descriptions.PARSER_CORE.EXPECTED_TOKEN(
               token.type,
               (type as string),
             )
-            : _metadata,
-        },
-      );
+          : _metadata,
+      });
     }
   }
 
@@ -527,8 +543,10 @@ export class ParserCore<Tokens extends TokensShape, State> {
         return [value, index, true];
       }
 
-      if (callback === undefined ||
-          callback(input[ob1Get0(index)], index, input)) {
+      if (
+        callback === undefined ||
+        callback(input[ob1Get0(index)], index, input)
+      ) {
         value += input[ob1Get0(index)];
         index = ob1Inc(index);
       } else {
@@ -618,10 +636,8 @@ export class ParserCore<Tokens extends TokensShape, State> {
   }
 }
 
-export class ParserWithRequiredPath<Tokens extends TokensShape, State> extends ParserCore<
-  Tokens,
-  State
-> {
+export class ParserWithRequiredPath<Tokens extends TokensShape, State>
+  extends ParserCore<Tokens, State> {
   constructor(
     opts: ParserOptionsWithRequiredPath,
     diagnosticCategory: DiagnosticCategory,
@@ -639,11 +655,15 @@ export class ParserWithRequiredPath<Tokens extends TokensShape, State> extends P
 type GetPosition = () => Position;
 
 export class PositionTracker {
-  constructor(input: string, offsetPosition: Position = {
-    line: ob1Number1,
-    column: ob1Number0,
-    index: ob1Number0,
-  }, getPosition?: GetPosition) {
+  constructor(
+    input: string,
+    offsetPosition: Position = {
+      line: ob1Number1,
+      column: ob1Number0,
+      index: ob1Number0,
+    },
+    getPosition?: GetPosition,
+  ) {
     this.getPosition = getPosition;
     this.input = input;
     this.offsetPosition = offsetPosition;
@@ -679,19 +699,22 @@ export class PositionTracker {
 
     // Reuse existing line information if possible
     const {latestPosition} = this;
-    const currPosition = this.getPosition === undefined
-      ? undefined
-      : this.getPosition();
-    if (currPosition !== undefined && currPosition.index > latestPosition.index &&
-        currPosition.index < indexWithOffset) {
+    const currPosition =
+      this.getPosition === undefined ? undefined : this.getPosition();
+    if (
+      currPosition !== undefined &&
+      currPosition.index > latestPosition.index &&
+      currPosition.index < indexWithOffset
+    ) {
       line = currPosition.line;
       column = currPosition.column;
       indexSearchWithoutOffset = ob1Get0(this.removeOffset(currPosition.index));
     } else if (latestPosition.index < indexWithOffset) {
       line = latestPosition.line;
       column = latestPosition.column;
-        indexSearchWithoutOffset =
-        ob1Get0(this.removeOffset(latestPosition.index));
+      indexSearchWithoutOffset = ob1Get0(
+        this.removeOffset(latestPosition.index),
+      );
     }
 
     // Read the rest of the input until we hit the index
@@ -747,10 +770,7 @@ export function readUntilLineBreak(char: string): boolean {
 }
 
 // Lazy initialize a ParserCore subclass... Circular dependencies are wild and necessitate this as ParserCore may not be available
-export function createParser<
-  T,
-  Args extends Array<unknown>
->(
+export function createParser<T, Args extends Array<unknown>>(
   callback: (
     parser: typeof ParserCore,
     parserRequiredPath: typeof ParserWithRequiredPath,
@@ -769,7 +789,9 @@ export function createParser<
 
 // Utility methods for dealing with nodes
 export function extractSourceLocationRangeFromNodes(
-  nodes: Array<{loc?: SourceLocation}>,
+  nodes: Array<{
+    loc?: SourceLocation;
+  }>,
 ): undefined | SourceLocation {
   if (nodes.length === 0) {
     return undefined;

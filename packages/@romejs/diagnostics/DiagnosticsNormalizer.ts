@@ -119,8 +119,12 @@ export default class DiagnosticsNormalizer {
           ...item,
           frames: item.frames.map((frame) => {
             const {filename, line, column} = frame;
-            if (filename === undefined || line === undefined || column ===
-                undefined || !sourceMaps.has(filename)) {
+            if (
+              filename === undefined ||
+              line === undefined ||
+              column === undefined ||
+              !sourceMaps.has(filename)
+            ) {
               return {
                 ...frame,
                 filename: this.normalizeFilename(frame.filename),
@@ -172,9 +176,9 @@ export default class DiagnosticsNormalizer {
       location: this.normalizeLocation(diag.location),
       description: {
         ...description,
-        message: createBlessedDiagnosticMessage(this.normalizeMarkup(
-          description.message.value,
-        )),
+        message: createBlessedDiagnosticMessage(
+          this.normalizeMarkup(description.message.value),
+        ),
         advice,
       },
     };

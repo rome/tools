@@ -6,10 +6,12 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator} from '../../tokens';
-import {AnyNode, FlowVariance, flowVariance} from '@romejs/js-ast';
+import {Token} from '../../tokens';
+import {FlowVariance} from '@romejs/js-ast';
 
-export default function FlowVariance(builder: Builder, node: AnyNode): Tokens {
-  node = flowVariance.assert(node);
-  return [operator(node.kind === 'plus' ? '+' : '-')];
+export default function FlowVariance(
+  builder: Builder,
+  node: FlowVariance,
+): Token {
+  return node.kind === 'plus' ? '+' : '-';
 }

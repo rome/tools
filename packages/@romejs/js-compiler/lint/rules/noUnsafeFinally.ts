@@ -19,10 +19,12 @@ export default {
 
       if (finalizer && finalizer.type === 'BlockStatement') {
         for (const statement of finalizer.body) {
-          if (statement.type === 'ThrowStatement' || statement.type ===
-                'ContinueStatement' || statement.type === 'BreakStatement' ||
-                statement.type ===
-                'ReturnStatement') {
+          if (
+            statement.type === 'ThrowStatement' ||
+            statement.type === 'ContinueStatement' ||
+            statement.type === 'BreakStatement' ||
+            statement.type === 'ReturnStatement'
+          ) {
             context.addNodeDiagnostic(
               statement,
               descriptions.LINT.NO_UNSAFE_FINALLY(statement.type),

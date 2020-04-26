@@ -8,15 +8,21 @@
 import {test} from 'rome';
 import {testLintMultiple} from '../testHelpers';
 
-test('double equals', async (t) => {
-  await testLintMultiple(t, [
-    // VALID
-    'foo == null',
-    'foo != null',
-    'null == foo',
-    'null != foo',
-
-    // INVALID
-    'foo == bar',
-  ], {category: 'lint/doubleEquals'});
-});
+test(
+  'double equals',
+  async (t) => {
+    await testLintMultiple(
+      t,
+      [
+        // VALID
+        'foo == null',
+        'foo != null',
+        'null == foo',
+        'null != foo',
+        // INVALID
+        'foo == bar',
+      ],
+      {category: 'lint/doubleEquals'},
+    );
+  },
+);

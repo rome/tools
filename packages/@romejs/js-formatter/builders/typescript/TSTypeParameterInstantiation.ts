@@ -5,23 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-  AnyNode,
-  TSTypeParameterInstantiation,
-  tsTypeParameterInstantiation,
-} from '@romejs/js-ast';
+import {TSTypeParameterInstantiation} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
-import {Tokens, operator} from '../../tokens';
+import {Token} from '../../tokens';
+import TSTypeParameterDeclaration from './TSTypeParameterDeclaration';
 
 export default function TSTypeParameterInstantiation(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = tsTypeParameterInstantiation.assert(node);
-
-  return [
-    operator('<'),
-    builder.tokenizeCommaList(node.params, node),
-    operator('>'),
-  ];
+  node: TSTypeParameterInstantiation,
+): Token {
+  return TSTypeParameterDeclaration(builder, node);
 }

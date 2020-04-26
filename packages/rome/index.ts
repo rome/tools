@@ -50,10 +50,14 @@ async function getCacheKeyPart(
   cacheKeyPartsCache.set(path, part);
 
   // Watch for changes to invalidate our cached... cache key
-  const watcher = watch(path, {}, () => {
-    cacheKeyPartsCache.delete(path);
-    watcher.close();
-  });
+  const watcher = watch(
+    path,
+    {},
+    () => {
+      cacheKeyPartsCache.delete(path);
+      watcher.close();
+    },
+  );
 
   return `${path.relative(relative).join()}:${part}`;
 }
@@ -73,11 +77,13 @@ export async function getCacheKey(filename: string): Promise<string> {
 }
 
 //
-export const compile = wrapForErrors(async function(opts: {
-  filename: string;
-  input: string;
-  sourceType: ConstSourceType;
-}): Promise<{
+export const compile = wrapForErrors(async function(
+  opts: {
+    filename: string;
+    input: string;
+    sourceType: ConstSourceType;
+  },
+): Promise<{
   cacheKey: string;
   code: string;
   sourceMap: SourceMap;
@@ -89,9 +95,8 @@ export const compile = wrapForErrors(async function(opts: {
 
   const {handler} = getFileHandlerAssert(path, project.config);
 
-  const sourceType = opts.sourceType === undefined
-    ? handler.sourceType
-    : opts.sourceType;
+  const sourceType =
+    opts.sourceType === undefined ? handler.sourceType : opts.sourceType;
 
   const ast = parseJS({
     input: opts.input,

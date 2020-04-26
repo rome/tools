@@ -14,9 +14,10 @@ export type NumericLiteralTypeAnnotation = JSNodeBase & {
   format?: NumericLiteral['format'];
 };
 
-export const numericLiteralTypeAnnotation = createBuilder<
-  NumericLiteralTypeAnnotation
->('NumericLiteralTypeAnnotation', {
-  bindingKeys: {},
-  visitorKeys: {},
-});
+export const numericLiteralTypeAnnotation = createBuilder<NumericLiteralTypeAnnotation>(
+  'NumericLiteralTypeAnnotation',
+  {
+    bindingKeys: {},
+    visitorKeys: {},
+  },
+);

@@ -6,15 +6,14 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens} from '../../tokens';
-import {AnyNode, logicalExpression} from '@romejs/js-ast';
-import AssignmentExpression from './AssignmentExpression';
+import {Token} from '../../tokens';
+import {AnyNode, LogicalExpression} from '@romejs/js-ast';
+import BinaryExpression from './BinaryExpression';
 
 export default function LogicalExpression(
   builder: Builder,
-  node: AnyNode,
+  node: LogicalExpression,
   parent: AnyNode,
-): Tokens {
-  node = logicalExpression.assert(node);
-  return AssignmentExpression(builder, node, parent);
+): Token {
+  return BinaryExpression(builder, node, parent);
 }

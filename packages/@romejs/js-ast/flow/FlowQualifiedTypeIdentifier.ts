@@ -14,12 +14,13 @@ export type FlowQualifiedTypeIdentifier = JSNodeBase & {
   qualification: ReferenceIdentifier | FlowQualifiedTypeIdentifier;
 };
 
-export const flowQualifiedTypeIdentifier = createBuilder<
-  FlowQualifiedTypeIdentifier
->('FlowQualifiedTypeIdentifier', {
-  bindingKeys: {},
-  visitorKeys: {
-    id: true,
-    qualification: true,
+export const flowQualifiedTypeIdentifier = createBuilder<FlowQualifiedTypeIdentifier>(
+  'FlowQualifiedTypeIdentifier',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      id: true,
+      qualification: true,
+    },
   },
-});
+);

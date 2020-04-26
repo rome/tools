@@ -36,9 +36,10 @@ class ENotExhaustive extends E {
 
   getError(): ErrorDefinition {
     return {
-      description: descriptions.TYPE_CHECK.NOT_EXHAUSTIVE(this.utils.humanize(
-        this.only,
-      ), this.utils.humanize(this.target)),
+      description: descriptions.TYPE_CHECK.NOT_EXHAUSTIVE(
+        this.utils.humanize(this.only),
+        this.utils.humanize(this.target),
+      ),
       lowerTarget: this.target,
     };
   }
@@ -69,9 +70,12 @@ export default class ExhaustiveT extends T {
     data: HydrateData,
     getType: HydrateTypeFactory,
   ): T {
-    return new ExhaustiveT(scope, originNode, getType(data.target), getType(
-      data.only,
-    ));
+    return new ExhaustiveT(
+      scope,
+      originNode,
+      getType(data.target),
+      getType(data.only),
+    );
   }
 
   reduce(): T {
@@ -114,7 +118,7 @@ export default class ExhaustiveT extends T {
 
   humanize(builder: HumanBuilder): string {
     return `exhaustive ${builder.humanize(this.target)} should only match ${builder.humanize(
-        this.target,
-      )}`;
+      this.target,
+    )}`;
   }
 }

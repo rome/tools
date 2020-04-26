@@ -6,11 +6,12 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, concat, space, word} from '../../tokens';
-import {AnyNode, doExpression} from '@romejs/js-ast';
+import {Token, concat, space} from '../../tokens';
+import {DoExpression} from '@romejs/js-ast';
 
-export default function DoExpression(builder: Builder, node: AnyNode): Tokens {
-  node = doExpression.assert(node);
-
-  return [word('do'), space, concat(builder.tokenize(node.body, node))];
+export default function DoExpression(
+  builder: Builder,
+  node: DoExpression,
+): Token {
+  return concat(['do', space, builder.tokenize(node.body, node)]);
 }

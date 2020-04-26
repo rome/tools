@@ -8,12 +8,15 @@
 import {test} from 'rome';
 import {testLint} from '../testHelpers';
 
-test('no template curly in string', async (t) => {
-  await testLint(t, `
+test(
+  'no template curly in string',
+  async (t) => {
+    await testLint(t, `
         const user = "Faustina";
         const helloUser = "Hello, \${user}!";
 
         // mark consts as used
         console.log(user, helloUser)
       `, {category: 'lint/noTemplateCurlyInString'});
-});
+  },
+);

@@ -21,12 +21,15 @@ export type ForStatement = JSNodeBase & {
   body: AnyStatement;
 };
 
-export const forStatement = createBuilder<ForStatement>('ForStatement', {
-  bindingKeys: {},
-  visitorKeys: {
-    init: true,
-    test: true,
-    update: true,
-    body: true,
+export const forStatement = createBuilder<ForStatement>(
+  'ForStatement',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      init: true,
+      test: true,
+      update: true,
+      body: true,
+    },
   },
-});
+);

@@ -9,17 +9,20 @@ import {DiagnosticOrigin, Diagnostics} from './types';
 import {addOriginsToDiagnostics} from './derive';
 import {getDiagnosticsFromError} from './errors';
 
-type WrapResult<T> = {
-  readonly value: T;
-  readonly diagnostics: undefined;
-} | {
-  readonly value: undefined;
-  readonly diagnostics: Diagnostics;
-};
+type WrapResult<T> =
+  | {
+      readonly value: T;
+      readonly diagnostics: undefined;
+    }
+  | {
+      readonly value: undefined;
+      readonly diagnostics: Diagnostics;
+    };
 
-export async function catchDiagnostics<
-  T
->(promise: () => Promise<T>, origin?: DiagnosticOrigin): Promise<WrapResult<T>> {
+export async function catchDiagnostics<T>(
+  promise: () => Promise<T>,
+  origin?: DiagnosticOrigin,
+): Promise<WrapResult<T>> {
   try {
     const value = await promise();
 
@@ -40,9 +43,10 @@ export async function catchDiagnostics<
   }
 }
 
-export function catchDiagnosticsSync<
-  T
->(callback: () => T, origin?: DiagnosticOrigin): WrapResult<T> {
+export function catchDiagnosticsSync<T>(
+  callback: () => T,
+  origin?: DiagnosticOrigin,
+): WrapResult<T> {
   try {
     const value = callback();
 

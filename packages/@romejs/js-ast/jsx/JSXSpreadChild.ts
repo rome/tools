@@ -13,9 +13,12 @@ export type JSXSpreadChild = JSNodeBase & {
   expression: AnyExpression;
 };
 
-export const jsxSpreadChild = createBuilder<JSXSpreadChild>('JSXSpreadChild', {
-  bindingKeys: {},
-  visitorKeys: {
-    expression: true,
+export const jsxSpreadChild = createBuilder<JSXSpreadChild>(
+  'JSXSpreadChild',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      expression: true,
+    },
   },
-});
+);

@@ -5,27 +5,22 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Tokens, concat, operator, space} from '../../tokens';
 import {
-  AnyNode,
+  AssignmentAssignmentPattern,
   BindingAssignmentPattern,
-  bindingAssignmentPattern,
 } from '@romejs/js-ast';
+import Builder from '../../Builder';
+import {Token, concat, space} from '../../tokens';
 
 export default function BindingAssignmentPattern(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = node.type === 'AssignmentAssignmentPattern'
-    ? node
-    : bindingAssignmentPattern.assert(node);
-
-  return [
-    concat(builder.tokenize(node.left, node)),
+  node: AssignmentAssignmentPattern | BindingAssignmentPattern,
+): Token {
+  return concat([
+    builder.tokenize(node.left, node),
     space,
-    operator('='),
+    '=',
     space,
-    concat(builder.tokenize(node.right, node)),
-  ];
+    builder.tokenize(node.right, node),
+  ]);
 }

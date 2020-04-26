@@ -14,11 +14,9 @@ export default createMasterCommand({
   description: 'TODO',
   usage: '',
   examples: [],
-
   defineFlags() {
     return {};
   },
-
   async callback(req: MasterRequest): Promise<void> {
     req;
   },

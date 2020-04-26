@@ -14,10 +14,13 @@ export type TSEnumMember = JSNodeBase & {
   initializer?: AnyExpression;
 };
 
-export const tsEnumMember = createBuilder<TSEnumMember>('TSEnumMember', {
-  bindingKeys: {},
-  visitorKeys: {
-    id: true,
-    initializer: true,
+export const tsEnumMember = createBuilder<TSEnumMember>(
+  'TSEnumMember',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      id: true,
+      initializer: true,
+    },
   },
-});
+);

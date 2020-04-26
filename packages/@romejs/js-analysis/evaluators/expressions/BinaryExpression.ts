@@ -26,9 +26,11 @@ function maybeRefine(
     return true;
   }
 
-  if (left.type === 'UnaryExpression' && left.operator === 'typeof' &&
-        left.argument.type ===
-        'ReferenceIdentifier') {
+  if (
+    left.type === 'UnaryExpression' &&
+    left.operator === 'typeof' &&
+    left.argument.type === 'ReferenceIdentifier'
+  ) {
     const name = left.argument.name;
     const binding = scope.getBinding(name);
     if (binding !== undefined) {
@@ -80,12 +82,8 @@ export default function BinaryExpression(node: AnyNode, scope: Scope) {
   let refinedScope = scope;
   if (node.operator === '===') {
     refinedScope = scope.refine();
-    maybeRefine(node, node.left, node.right, refinedScope) || maybeRefine(
-      node,
-      node.right,
-      node.left,
-      refinedScope,
-    );
+    maybeRefine(node, node.left, node.right, refinedScope) ||
+    maybeRefine(node, node.right, node.left, refinedScope);
   }
 
   return new BinaryOpT(refinedScope, node, left, node.operator, right);

@@ -5,18 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Tokens} from '../../tokens';
-import {
-  AnyNode,
-  RegExpControlCharacter,
-  regExpControlCharacter,
-} from '@romejs/js-ast';
+import {Token} from '../../tokens';
 
-export default function RegExpControlCharacter(
-  builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = regExpControlCharacter.assert(node);
+export default function RegExpControlCharacter(): Token {
   throw new Error('unimplemented');
 }

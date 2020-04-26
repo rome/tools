@@ -14,10 +14,13 @@ export default {
     const {node} = path;
 
     if (node.type === 'DebuggerStatement') {
-      return path.context.addFixableDiagnostic({
-        old: node,
-        fixed: REDUCE_REMOVE,
-      }, descriptions.LINT.NO_DEBUGGER);
+      return path.context.addFixableDiagnostic(
+        {
+          old: node,
+          fixed: REDUCE_REMOVE,
+        },
+        descriptions.LINT.NO_DEBUGGER,
+      );
     }
 
     return node;

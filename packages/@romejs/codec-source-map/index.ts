@@ -7,7 +7,5 @@
 
 export {default as SourceMapGenerator} from './SourceMapGenerator';
 export {default as SourceMapConsumer} from './SourceMapConsumer';
-export {
-  default as SourceMapConsumerCollection,
-} from './SourceMapConsumerCollection';
+export {default as SourceMapConsumerCollection} from './SourceMapConsumerCollection';
 export {Mapping, Mappings, SourceMap} from './types';

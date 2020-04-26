@@ -113,8 +113,11 @@ function convertDiagnosticsToLSP(
       for (let i = 0; i < advice.length; i++) {
         const item = advice[i];
         const nextItem = advice[i + 1];
-        if (item.type === 'log' && nextItem !== undefined && nextItem.type ===
-            'frame') {
+        if (
+          item.type === 'log' &&
+          nextItem !== undefined &&
+          nextItem.type === 'frame'
+        ) {
           const abs = master.projectManager.getFilePathFromUidOrAbsolute(
             nextItem.location.filename,
           );
@@ -364,11 +367,14 @@ export default class LSPServer {
     const req = this.createFakeMasterRequest('lsp_project', [path.join()]);
     await req.init();
 
-    const linter = new Linter(req, {
-      save: false,
-      hasDecisions: false,
-      formatOnly: false,
-    });
+    const linter = new Linter(
+      req,
+      {
+        save: false,
+        hasDecisions: false,
+        formatOnly: false,
+      },
+    );
 
     const subscription = await linter.watch({
       onRunStart: () => {},
@@ -421,10 +427,13 @@ export default class LSPServer {
   async sendClientRequest(
     req: PartialMasterQueryRequest,
   ): Promise<MasterQueryResponse> {
-    return this.master.handleRequest(this.client, {
-      silent: true,
-      ...req,
-    });
+    return this.master.handleRequest(
+      this.client,
+      {
+        silent: true,
+        ...req,
+      },
+    );
   }
 
   async handleRequest(

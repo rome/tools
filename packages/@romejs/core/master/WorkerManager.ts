@@ -108,8 +108,10 @@ export default class WorkerManager {
     let smallestWorker;
     let byteCount;
     for (const worker of this.workers.values()) {
-      if (!worker.ghost && (byteCount === undefined || byteCount >
-          worker.byteCount)) {
+      if (
+        !worker.ghost &&
+        (byteCount === undefined || byteCount > worker.byteCount)
+      ) {
         smallestWorker = worker;
         byteCount = worker.byteCount;
       }
@@ -175,15 +177,18 @@ export default class WorkerManager {
       // Swap the workers
 
       // We perform this as a single atomic operation rather than doing it in spawnWorker so we have predictable worker retrieval
-      this.workers.set(0, {
-        id: 0,
-        fileCount: masterWorker.fileCount,
-        byteCount: masterWorker.byteCount,
-        bridge: newWorker.bridge,
-        process: newWorker.process,
-        ghost: false,
-        ready: true,
-      });
+      this.workers.set(
+        0,
+        {
+          id: 0,
+          fileCount: masterWorker.fileCount,
+          byteCount: masterWorker.byteCount,
+          bridge: newWorker.bridge,
+          process: newWorker.process,
+          ghost: false,
+          ready: true,
+        },
+      );
       this.workers.delete(newWorker.id);
     } finally {
       lock.release();
@@ -191,9 +196,10 @@ export default class WorkerManager {
   }
 
   onNewProject(newProject: ProjectDefinition) {
-    this.master.projectManager.notifyWorkersOfProjects(this.getWorkers(), [
-      newProject,
-    ]);
+    this.master.projectManager.notifyWorkersOfProjects(
+      this.getWorkers(),
+      [newProject],
+    );
   }
 
   async workerHandshake(worker: WorkerContainer) {
@@ -223,16 +229,20 @@ export default class WorkerManager {
 
     const process = fork('worker');
 
-    const bridge = createBridgeFromChildProcess(WorkerBridge, process, {
-      type: 'client',
-      onSendMessage: (data) => {
-        this.master.logger.info(
-          `[WorkerManager] Sending worker request to %s:`,
-          workerId,
-          data,
-        );
+    const bridge = createBridgeFromChildProcess(
+      WorkerBridge,
+      process,
+      {
+        type: 'client',
+        onSendMessage: (data) => {
+          this.master.logger.info(
+            `[WorkerManager] Sending worker request to %s:`,
+            workerId,
+            data,
+          );
+        },
       },
-    });
+    );
 
     const worker: WorkerContainer = {
       id: workerId,
@@ -245,20 +255,24 @@ export default class WorkerManager {
     };
     this.workers.set(workerId, worker);
 
-    process.once('error', (err) => {
-      // The process could not be spawned, or
+    process.once(
+      'error',
+      (err) => {
+        // The process could not be spawned, or
+        // The process could not be killed, or
+        // Sending a message to the child process failed.
+        this.master.onFatalError(err);
+        process.kill();
+      },
+    );
 
-      // The process could not be killed, or
-
-      // Sending a message to the child process failed.
-      this.master.onFatalError(err);
-      process.kill();
-    });
-
-    process.once('exit', () => {
-      //bridge.end(`Worker ${String(workerId)} died`);
-      this.master.onFatalError(new Error(`Worker ${String(workerId)} died`));
-    });
+    process.once(
+      'exit',
+      () => {
+        //bridge.end(`Worker ${String(workerId)} died`);
+        this.master.onFatalError(new Error(`Worker ${String(workerId)} died`));
+      },
+    );
 
     await this.workerHandshake(worker);
 
@@ -329,9 +343,10 @@ export default class WorkerManager {
     // When the smallest worker exceeds the max worker byte limit and we're still under
 
     // our max worker limit, then let's start a new one
-    if (smallestWorker.byteCount > MAX_WORKER_BYTES_BEFORE_ADD &&
-          this.getWorkerCount() <
-          MAX_WORKER_COUNT) {
+    if (
+      smallestWorker.byteCount > MAX_WORKER_BYTES_BEFORE_ADD &&
+      this.getWorkerCount() < MAX_WORKER_COUNT
+    ) {
       logger.info(
         `[WorkerManager] Spawning a new worker as we've exceeded ${MAX_WORKER_BYTES_BEFORE_ADD} bytes across each worker`,
       );

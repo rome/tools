@@ -133,20 +133,21 @@ export default class SnapshotManager {
 
             const codeBlock = nodes.shift();
             if (codeBlock === undefined || codeBlock.type !== 'CodeBlock') {
-              throw parser.unexpected(
-                  {
-                    description: descriptions.SNAPSHOTS.EXPECTED_CODE_BLOCK_AFTER_HEADING,
-                    loc: node.loc,
-                  },
-                );
+              throw parser.unexpected({
+                description: descriptions.SNAPSHOTS.EXPECTED_CODE_BLOCK_AFTER_HEADING,
+                loc: node.loc,
+              });
             }
 
-            snapshot.entries.set(buildEntriesKey(testName, entryName), {
-              testName,
-              entryName,
-              language: codeBlock.language,
-              value: codeBlock.text,
-            });
+            snapshot.entries.set(
+              buildEntriesKey(testName, entryName),
+              {
+                testName,
+                entryName,
+                language: codeBlock.language,
+                value: codeBlock.text,
+              },
+            );
 
             continue;
           }
@@ -154,12 +155,15 @@ export default class SnapshotManager {
           if (node.type === 'CodeBlock') {
             nodes.shift();
 
-            snapshot.entries.set(buildEntriesKey(testName, '0'), {
-              testName,
-              entryName: '0',
-              language: node.language,
-              value: node.text,
-            });
+            snapshot.entries.set(
+              buildEntriesKey(testName, '0'),
+              {
+                testName,
+                entryName: '0',
+                language: node.language,
+                value: node.text,
+              },
+            );
           }
 
           break;
@@ -256,10 +260,9 @@ export default class SnapshotManager {
         } else if (!exists) {
           await this.emitDiagnostic(descriptions.SNAPSHOTS.MISSING);
         } else if (formatted !== raw) {
-          await this.emitDiagnostic(descriptions.SNAPSHOTS.INCORRECT(
-            raw,
-            formatted,
-          ));
+          await this.emitDiagnostic(
+            descriptions.SNAPSHOTS.INCORRECT(raw, formatted),
+          );
         }
       } else {
         if (exists && !used) {
@@ -298,19 +301,21 @@ export default class SnapshotManager {
     }
   }
 
-  set({
-    testName,
-    entryName,
-    value,
-    language,
-    snapshotPath = this.defaultSnapshotPath,
-  }: {
-    testName: string;
-    entryName: string;
-    value: string;
-    language: undefined | string;
-    snapshotPath: undefined | AbsoluteFilePath;
-  }) {
+  set(
+    {
+      testName,
+      entryName,
+      value,
+      language,
+      snapshotPath = this.defaultSnapshotPath,
+    }: {
+      testName: string;
+      entryName: string;
+      value: string;
+      language: undefined | string;
+      snapshotPath: undefined | AbsoluteFilePath;
+    },
+  ) {
     let snapshot = this.snapshots.get(snapshotPath);
     if (snapshot === undefined) {
       snapshot = {
@@ -322,11 +327,14 @@ export default class SnapshotManager {
       this.snapshots.set(snapshotPath, snapshot);
     }
 
-    snapshot.entries.set(buildEntriesKey(testName, entryName), {
-      testName,
-      entryName,
-      language,
-      value,
-    });
+    snapshot.entries.set(
+      buildEntriesKey(testName, entryName),
+      {
+        testName,
+        entryName,
+        language,
+        value,
+      },
+    );
   }
 }

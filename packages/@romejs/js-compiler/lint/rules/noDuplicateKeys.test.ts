@@ -8,8 +8,10 @@
 import {test} from 'rome';
 import {testLint} from '../testHelpers';
 
-test('no duplicate keys', async (t) => {
-  await testLint(t, `
+test(
+  'no duplicate keys',
+  async (t) => {
+    await testLint(t, `
   const foo = {
     test: true,
     test2: true,
@@ -19,4 +21,5 @@ test('no duplicate keys', async (t) => {
   // mark const as used
   console.log(foo);
   `, {category: 'lint/noDuplicateKeys'});
-});
+  },
+);

@@ -48,15 +48,22 @@ export default class GetPropT extends T {
     data: HydrateData,
     getType: HydrateTypeFactory,
   ): T {
-    return new GetPropT(scope, originNode, getType(data.object), getType(
-      data.property,
-    ));
+    return new GetPropT(
+      scope,
+      originNode,
+      getType(data.object),
+      getType(data.property),
+    );
   }
 
-  lookup(object: T, property: T, opts: {
-    topObject?: T;
-    protoKeys?: Array<string>;
-  } = {}): T {
+  lookup(
+    object: T,
+    property: T,
+    opts: {
+      topObject?: T;
+      protoKeys?: Array<string>;
+    } = {},
+  ): T {
     object = this.utils.reduce(object);
     property = this.utils.reduce(property);
 
@@ -99,10 +106,14 @@ export default class GetPropT extends T {
 
       //
       if (object.proto) {
-        return this.lookup(object.proto, property, {
-          topObject,
-          protoKeys: [...protoKeys, ...thisKeys],
-        });
+        return this.lookup(
+          object.proto,
+          property,
+          {
+            topObject,
+            protoKeys: [...protoKeys, ...thisKeys],
+          },
+        );
       }
     }
 
@@ -113,13 +124,17 @@ export default class GetPropT extends T {
 
     //
     if (typeof key === 'string') {
-      return new UnknownPropE(this.scope, this.originNode, {
-        object: topObject,
-        property,
-        key,
-        thisKeys: Array.from(thisKeys),
-        protoKeys,
-      });
+      return new UnknownPropE(
+        this.scope,
+        this.originNode,
+        {
+          object: topObject,
+          property,
+          key,
+          thisKeys: Array.from(thisKeys),
+          protoKeys,
+        },
+      );
     } else {
       return new UnknownT(this.scope, this.originNode);
     }

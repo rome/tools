@@ -8,7 +8,10 @@
 import {test} from 'rome';
 import {escapeMarkup, unescapeTextValue} from './escape';
 
-test('should properly escape and then unescape backslashes', (t) => {
-  t.is(unescapeTextValue(escapeMarkup('\\')), '\\');
-  t.is(escapeMarkup('C:\\Users\\sebmck\\'), 'C:\\\\Users\\\\sebmck\\\\');
-});
+test(
+  'should properly escape and then unescape backslashes',
+  (t) => {
+    t.is(unescapeTextValue(escapeMarkup('\\')), '\\');
+    t.is(escapeMarkup('C:\\Users\\sebmck\\'), 'C:\\\\Users\\\\sebmck\\\\');
+  },
+);

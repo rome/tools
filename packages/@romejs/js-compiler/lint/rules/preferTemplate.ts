@@ -20,11 +20,12 @@ export default {
   enter(path: Path): TransformExitResult {
     const {node} = path;
 
-    if (node.type === 'BinaryExpression' && node.operator === '+' &&
-        (node.left.type ===
-              'StringLiteral' &&
-            !node.left.value.includes('`') ||
-          node.right.type === 'StringLiteral' && !node.right.value.includes('`'))) {
+    if (
+      node.type === 'BinaryExpression' &&
+      node.operator === '+' &&
+      ((node.left.type === 'StringLiteral' && !node.left.value.includes('`')) ||
+      (node.right.type === 'StringLiteral' && !node.right.value.includes('`')))
+    ) {
       let autofix: undefined | TemplateLiteral;
 
       if (node.right.type === 'StringLiteral') {
@@ -71,10 +72,13 @@ export default {
       if (autofix === undefined) {
         path.context.addNodeDiagnostic(node, descriptions.LINT.PREFER_TEMPLATE);
       } else {
-        return path.context.addFixableDiagnostic({
-          old: node,
-          fixed: autofix,
-        }, descriptions.LINT.PREFER_TEMPLATE);
+        return path.context.addFixableDiagnostic(
+          {
+            old: node,
+            fixed: autofix,
+          },
+          descriptions.LINT.PREFER_TEMPLATE,
+        );
       }
     }
 

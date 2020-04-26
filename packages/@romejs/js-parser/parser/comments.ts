@@ -189,9 +189,12 @@ export function attachComments(parser: JSParser, node: AnyNode) {
     }
   } else if (commentStack.length > 0) {
     const lastInStack = last(commentStack);
-    if (hasComments(lastInStack.trailingComments) && start(
+    if (
+      hasComments(lastInStack.trailingComments) &&
+      start(
         parser.comments.assertGetCommentFromId(lastInStack.trailingComments[0]),
-      ) >= end(node)) {
+      ) >= end(node)
+    ) {
       trailingComments = parser.comments.getCommentsFromIds(
         lastInStack.trailingComments,
       );
@@ -246,34 +249,51 @@ export function attachComments(parser: JSParser, node: AnyNode) {
         break;
       }
     }
-  } else if (commentPreviousNode !== undefined && (commentPreviousNode.type ===
-        'ImportSpecifier' && node.type !== 'ImportSpecifier' ||
-          commentPreviousNode.type ===
-          'ExportLocalSpecifier' &&
-        node.type !== 'ExportExternalSpecifier' || commentPreviousNode.type ===
-      'ExportExternalSpecifier' && node.type !== 'ExportExternalSpecifier')) {
-    adjustCommentsAfterTrailingComma(parser, node, [
-      parser.state.commentPreviousNode,
-    ]);
+  } else if (
+    commentPreviousNode !== undefined &&
+    ((commentPreviousNode.type === 'ImportSpecifier' &&
+    node.type !== 'ImportSpecifier') ||
+    (commentPreviousNode.type === 'ExportLocalSpecifier' &&
+    node.type !== 'ExportExternalSpecifier') ||
+    (commentPreviousNode.type === 'ExportExternalSpecifier' &&
+    node.type !== 'ExportExternalSpecifier'))
+  ) {
+    adjustCommentsAfterTrailingComma(
+      parser,
+      node,
+      [parser.state.commentPreviousNode],
+    );
   }
 
   if (lastChild !== undefined) {
     if (hasComments(lastChild.leadingComments)) {
-      if (lastChild !== node && end(parser.comments.assertGetCommentFromId(last(
-          lastChild.leadingComments,
-        ))) <= start(node)) {
-        setComments(node, 'leadingComments', parser.comments.getCommentsFromIds(
-          lastChild.leadingComments,
-        ));
+      if (
+        lastChild !== node &&
+        end(
+          parser.comments.assertGetCommentFromId(
+            last(lastChild.leadingComments),
+          ),
+        ) <= start(node)
+      ) {
+        setComments(
+          node,
+          'leadingComments',
+          parser.comments.getCommentsFromIds(lastChild.leadingComments),
+        );
         lastChild.leadingComments = undefined;
       } else {
         // A leading comment for an anonymous class had been stolen by its first ClassMethod,
         // so this takes back the leading comment.
         // See also: https://github.com/eslint/espree/issues/158
         for (let i = lastChild.leadingComments.length - 2; i >= 0; --i) {
-          if (end(parser.comments.assertGetCommentFromId(
-              lastChild.leadingComments[i],
-            )) <= start(node)) {
+          if (
+            end(
+              parser.comments.assertGetCommentFromId(
+                lastChild.leadingComments[i],
+              ),
+            ) <=
+            start(node)
+          ) {
             setComments(
               node,
               'leadingComments',
@@ -290,9 +310,10 @@ export function attachComments(parser: JSParser, node: AnyNode) {
     if (end(last(parser.state.leadingComments)) <= start(node)) {
       if (parser.state.commentPreviousNode) {
         for (let j = 0; j < parser.state.leadingComments.length; j++) {
-          if (end(parser.state.leadingComments[j]) < end(
-              parser.state.commentPreviousNode,
-            )) {
+          if (
+            end(parser.state.leadingComments[j]) <
+            end(parser.state.commentPreviousNode)
+          ) {
             parser.state.leadingComments.splice(j, 1);
             j--;
           }
@@ -328,6 +349,7 @@ export function attachComments(parser: JSParser, node: AnyNode) {
       // that comes after the node. Keep in mind that this could
       // result in an empty array, and if so, the array must be
       // deleted.
+
       const leadingComments = parser.state.leadingComments.slice(0, i);
 
       if (leadingComments.length > 0) {

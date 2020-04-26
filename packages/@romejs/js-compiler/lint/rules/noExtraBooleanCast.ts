@@ -17,8 +17,11 @@ import {
 import {descriptions} from '@romejs/diagnostics';
 
 function isBooleanConstructorCall(node: AnyNode) {
-  return node.type === 'NewExpression' && node.callee.type ===
-    'ReferenceIdentifier' && node.callee.name === 'Boolean';
+  return (
+    node.type === 'NewExpression' &&
+    node.callee.type === 'ReferenceIdentifier' &&
+    node.callee.name === 'Boolean'
+  );
 }
 
 function isConditionalStatement(node: AnyNode): node is ConditionalExpression {
@@ -28,9 +31,12 @@ function isConditionalStatement(node: AnyNode): node is ConditionalExpression {
 function isInBooleanContext(
   node: AnyNode,
 ): node is IfStatement | DoWhileStatement | WhileStatement | ForStatement {
-  return node.type === 'IfStatement' || node.type === 'DoWhileStatement' ||
-      node.type ===
-      'WhileStatement' || node.type === 'ForStatement';
+  return (
+    node.type === 'IfStatement' ||
+    node.type === 'DoWhileStatement' ||
+    node.type === 'WhileStatement' ||
+    node.type === 'ForStatement'
+  );
 }
 
 function getNode(path: Path): undefined | AnyNode {
@@ -57,12 +63,15 @@ export default {
     let node = getNode(path);
 
     if (node !== undefined) {
-      if (node.type === 'UnaryExpression' && node.operator === '!' &&
-            node.argument.type ===
-            'UnaryExpression' && node.argument.operator === '!' || node.type ===
-            'CallExpression' && node.callee.type === 'ReferenceIdentifier' &&
-            node.callee.name ===
-            'Boolean') {
+      if (
+        (node.type === 'UnaryExpression' &&
+        node.operator === '!' &&
+        node.argument.type === 'UnaryExpression' &&
+        node.argument.operator === '!') ||
+        (node.type === 'CallExpression' &&
+        node.callee.type === 'ReferenceIdentifier' &&
+        node.callee.name === 'Boolean')
+      ) {
         context.addNodeDiagnostic(node, descriptions.LINT.NO_EXTRA_BOOLEAN_CAST);
       }
     }

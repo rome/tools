@@ -32,9 +32,11 @@ export default class UnionT extends T {
     data: HydrateData,
     getType: HydrateTypeFactory,
   ): T {
-    return new UnionT(scope, originNode, Array(data.types).map((id) => getType(
-      id,
-    )));
+    return new UnionT(
+      scope,
+      originNode,
+      Array(data.types).map((id) => getType(id)),
+    );
   }
 
   reduce(): T {
@@ -111,7 +113,6 @@ export default class UnionT extends T {
       return true;
     } else {
       // create custom error with the types that weren't in the opposing one
-
       //return new MissingUnionE(this.scope, otherType.originNode, otherType, this, missing);
       return false;
     }

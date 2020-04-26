@@ -56,24 +56,32 @@ export default {
     }
 
     // Check if we have any wildcard imports
-    const wildcardImports: Map<string, {
-      binding: Binding;
-      names: Set<string>;
-      mappings: Map<string, string>;
-      references: Set<AnyNode>;
-    }> = new Map();
+    const wildcardImports: Map<
+      string,
+      {
+        binding: Binding;
+        names: Set<string>;
+        mappings: Map<string, string>;
+        references: Set<AnyNode>;
+      }
+    > = new Map();
     const wildcardImportNodeToLocal: Map<ImportDeclaration, string> = new Map();
     for (const child of node.body) {
-      if (child.type === 'ImportDeclaration' && !IGNORED_NAMES.includes(
-          child.source.value,
-        ) && child.namespaceSpecifier !== undefined) {
+      if (
+        child.type === 'ImportDeclaration' &&
+        !IGNORED_NAMES.includes(child.source.value) &&
+        child.namespaceSpecifier !== undefined
+      ) {
         const specifier = child.namespaceSpecifier;
-        wildcardImports.set(specifier.local.name.name, {
-          binding: path.scope.getBindingAssert(specifier.local.name.name),
-          names: new Set(),
-          mappings: new Map(),
-          references: new Set(),
-        });
+        wildcardImports.set(
+          specifier.local.name.name,
+          {
+            binding: path.scope.getBindingAssert(specifier.local.name.name),
+            names: new Set(),
+            mappings: new Map(),
+            references: new Set(),
+          },
+        );
         wildcardImportNodeToLocal.set(child, specifier.local.name.name);
       }
     }
@@ -84,40 +92,46 @@ export default {
     // - Find all imported names from this namespace
 
     // - Remove the namespaces that have computed property access
-    path.traverse('optimizeImportsWildcardCollector', (path) => {
-      const {node, parent} = path;
-      if (node.type !== 'ReferenceIdentifier') {
-        return;
-      }
-
-      // Ensure we're referencing a wildcard import
-      const wildcardInfo = wildcardImports.get(node.name);
-      if (wildcardInfo === undefined) {
-        return;
-      }
-
-      // Ensure that the binding hasn't been shadowed
-      if (path.scope.getBinding(node.name) !== wildcardInfo.binding) {
-        return;
-      }
-
-      const isComputed = parent.type === 'MemberExpression' && parent.object ===
-        node && getName(parent) === undefined;
-      const isUnboxed = parent.type !== 'MemberExpression' && parent.type !==
-        'JSXMemberExpression';
-
-      if (isComputed || isUnboxed) {
-        // Deopt as we can't follow this
-        wildcardImports.delete(node.name);
-      } else {
-        const name = getName(parent);
-        if (name === undefined) {
-          throw new Error('Expected name');
+    path.traverse(
+      'optimizeImportsWildcardCollector',
+      (path) => {
+        const {node, parent} = path;
+        if (node.type !== 'ReferenceIdentifier') {
+          return;
         }
-        wildcardInfo.names.add(name);
-        wildcardInfo.references.add(parent);
-      }
-    });
+
+        // Ensure we're referencing a wildcard import
+        const wildcardInfo = wildcardImports.get(node.name);
+        if (wildcardInfo === undefined) {
+          return;
+        }
+
+        // Ensure that the binding hasn't been shadowed
+        if (path.scope.getBinding(node.name) !== wildcardInfo.binding) {
+          return;
+        }
+
+        const isComputed =
+          parent.type === 'MemberExpression' &&
+          parent.object === node &&
+          getName(parent) === undefined;
+        const isUnboxed =
+          parent.type !== 'MemberExpression' &&
+          parent.type !== 'JSXMemberExpression';
+
+        if (isComputed || isUnboxed) {
+          // Deopt as we can't follow this
+          wildcardImports.delete(node.name);
+        } else {
+          const name = getName(parent);
+          if (name === undefined) {
+            throw new Error('Expected name');
+          }
+          wildcardInfo.names.add(name);
+          wildcardInfo.references.add(parent);
+        }
+      },
+    );
     if (wildcardImports.size === 0) {
       return node;
     }
@@ -135,8 +149,11 @@ export default {
         const {node} = path;
 
         // Replace all member expressions with their uids
-        if ((node.type === 'MemberExpression' || node.type ===
-            'JSXMemberExpression') && isIdentifierish(node.object)) {
+        if (
+          (node.type === 'MemberExpression' ||
+          node.type === 'JSXMemberExpression') &&
+          isIdentifierish(node.object)
+        ) {
           const wildcardInfo = wildcardImports.get(node.object.name);
           if (wildcardInfo !== undefined && wildcardInfo.references.has(node)) {
             const name = getName(node);
@@ -158,9 +175,10 @@ export default {
         }
 
         // Add new specifiers to wildcard import declarations
-        if (node.type === 'ImportDeclaration' && wildcardImportNodeToLocal.has(
-            node,
-          )) {
+        if (
+          node.type === 'ImportDeclaration' &&
+          wildcardImportNodeToLocal.has(node)
+        ) {
           const local = wildcardImportNodeToLocal.get(node);
           if (local === undefined) {
             throw new Error('Expected local');
@@ -179,10 +197,14 @@ export default {
 
           // Add on our new mappings
           for (const [imported, local] of wildcardInfo.mappings) {
-            namedSpecifiers.push(importSpecifier.create({
-              imported: identifier.quick(imported),
-              local: importSpecifierLocal.quick(bindingIdentifier.quick(local)),
-            }));
+            namedSpecifiers.push(
+              importSpecifier.create({
+                imported: identifier.quick(imported),
+                local: importSpecifierLocal.quick(
+                  bindingIdentifier.quick(local),
+                ),
+              }),
+            );
           }
 
           return importDeclaration.create({

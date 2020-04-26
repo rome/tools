@@ -8,9 +8,12 @@
 import {test} from 'rome';
 import {testLint} from '../testHelpers';
 
-test('no delete vars', async (t) => {
-  await testLint(t, `
+test(
+  'no delete vars',
+  async (t) => {
+    await testLint(t, `
   const foo = "test";
   delete foo;
   `, {category: 'lint/noDeleteVars', sourceType: 'script'});
-});
+  },
+);

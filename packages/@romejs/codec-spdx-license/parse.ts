@@ -33,30 +33,41 @@ type Tokens = BaseTokens & {
 //# Nodes
 export type ExpressionNode = LicenseNode | AndNode | OrNode;
 
-type AndNode = ComplexNode<'And', {
-  left: ExpressionNode;
-  right: ExpressionNode;
-}>;
+type AndNode = ComplexNode<
+  'And',
+  {
+    left: ExpressionNode;
+    right: ExpressionNode;
+  }
+>;
 
-type OrNode = ComplexNode<'Or', {
-  left: ExpressionNode;
-  right: ExpressionNode;
-}>;
+type OrNode = ComplexNode<
+  'Or',
+  {
+    left: ExpressionNode;
+    right: ExpressionNode;
+  }
+>;
 
-type LicenseNode = ComplexNode<'License', {
-  plus: boolean;
-  id: string;
-  exception: undefined | string;
-}>;
+type LicenseNode = ComplexNode<
+  'License',
+  {
+    plus: boolean;
+    id: string;
+    exception: undefined | string;
+  }
+>;
 
 function isWordChar(char: string) {
   return isAlpha(char) || isDigit(char) || char === '-' || char === '.';
 }
 
-type SPDXLicenseParserOptions = ParserOptions & {loose?: boolean};
+type SPDXLicenseParserOptions = ParserOptions & {
+  loose?: boolean;
+};
 
-const createSPDXLicenseParser = createParser(
-  (ParserCore) => class SPDXLicenseParser extends ParserCore<Tokens, void> {
+const createSPDXLicenseParser = createParser((ParserCore) =>
+  class SPDXLicenseParser extends ParserCore<Tokens, void> {
     constructor(opts: SPDXLicenseParserOptions) {
       super(opts, 'parse/spdxLicense');
       this.loose = opts.loose === true;
@@ -241,7 +252,7 @@ const createSPDXLicenseParser = createParser(
       this.finalize();
       return expr;
     }
-  },
+  }
 );
 
 export default function parse(opts: SPDXLicenseParserOptions): ExpressionNode {

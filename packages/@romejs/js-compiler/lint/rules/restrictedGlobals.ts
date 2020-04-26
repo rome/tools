@@ -17,8 +17,11 @@ export default {
   enter(path: Path): AnyNode {
     const {node, scope} = path;
 
-    if ((node.type === 'ReferenceIdentifier' || node.type ===
-        'JSXReferenceIdentifier') && !isInTypeAnnotation(path)) {
+    if (
+      (node.type === 'ReferenceIdentifier' ||
+      node.type === 'JSXReferenceIdentifier') &&
+      !isInTypeAnnotation(path)
+    ) {
       const {name} = node;
       const binding = scope.getBinding(name);
 

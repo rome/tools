@@ -18,10 +18,13 @@ import {descriptions} from '@romejs/diagnostics';
 
 type Tokens = BaseTokens & {
   Hashes: ValueToken<'Hashes', number>;
-  CodeBlock: ValueToken<'CodeBlock', {
-    text: string;
-    language: undefined | string;
-  }>;
+  CodeBlock: ValueToken<
+    'CodeBlock',
+    {
+      text: string;
+      language: undefined | string;
+    }
+  >;
   TextLine: ValueToken<'TextLine', string>;
 };
 
@@ -49,9 +52,12 @@ function isHash(char: string): boolean {
 }
 
 function isCodeBlockEnd(index: Number0, input: string): boolean {
-  return input[ob1Get0(index)] === '`' && !isEscaped(index, input) &&
-      input[ob1Get0(ob1Add(index, 1))] ===
-      '`' && input[ob1Get0(ob1Add(index, 2))] === '`';
+  return (
+    input[ob1Get0(index)] === '`' &&
+    !isEscaped(index, input) &&
+    input[ob1Get0(ob1Add(index, 1))] === '`' &&
+    input[ob1Get0(ob1Add(index, 2))] === '`'
+  );
 }
 
 function isInCodeBlock(char: string, index: Number0, input: string): boolean {
@@ -66,8 +72,8 @@ function unescapeTicks(code: string): string {
   return code;
 }
 
-export default createParser(
-  (ParserCore) => class SnapshotParser extends ParserCore<Tokens, void> {
+export default createParser((ParserCore) =>
+  class SnapshotParser extends ParserCore<Tokens, void> {
     constructor(opts: ParserOptions) {
       super(opts, 'parse/snapshots');
       this.ignoreWhitespaceTokens = true;
@@ -103,12 +109,10 @@ export default createParser(
               // Skip leading newline
               codeOffset = ob1Add(codeOffset, 1);
             } else {
-              throw this.unexpected(
-                  {
-                    description: descriptions.SNAPSHOTS.MISSING_NEWLINE_AFTER_CODE_BLOCK,
-                    start: this.getPositionFromIndex(codeOffset),
-                  },
-                );
+              throw this.unexpected({
+                description: descriptions.SNAPSHOTS.MISSING_NEWLINE_AFTER_CODE_BLOCK,
+                start: this.getPositionFromIndex(codeOffset),
+              });
             }
 
             let [code] = this.readInputFrom(codeOffset, isInCodeBlock);
@@ -124,17 +128,19 @@ export default createParser(
                 // Skip closing ticks
                 end = ob1Add(end, 3);
 
-                return this.finishValueToken('CodeBlock', {
-                  language,
-                  text: unescapeTicks(code),
-                }, end);
+                return this.finishValueToken(
+                  'CodeBlock',
+                  {
+                    language,
+                    text: unescapeTicks(code),
+                  },
+                  end,
+                );
               } else {
-                throw this.unexpected(
-                    {
-                      description: descriptions.SNAPSHOTS.MISSING_NEWLINE_BEFORE_CODE_BLOCK,
-                      start: this.getPositionFromIndex(end),
-                    },
-                  );
+                throw this.unexpected({
+                  description: descriptions.SNAPSHOTS.MISSING_NEWLINE_BEFORE_CODE_BLOCK,
+                  start: this.getPositionFromIndex(end),
+                });
               }
             } else {
               throw this.unexpected({
@@ -198,5 +204,5 @@ export default createParser(
 
       return nodes;
     }
-  },
+  }
 );

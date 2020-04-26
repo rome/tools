@@ -32,11 +32,9 @@ export default class FileAllocator {
       return this.handleDeleted(path);
     });
 
-    this.master.memoryFs.changedFileEvent.subscribe(
-      ({path, oldStats, newStats}) => {
-        return this.handleChange(path, oldStats, newStats);
-      },
-    );
+    this.master.memoryFs.changedFileEvent.subscribe(({path, oldStats, newStats}) => {
+      return this.handleChange(path, oldStats, newStats);
+    });
   }
 
   getAllOwnedFilenames(): Array<string> {
@@ -57,8 +55,8 @@ export default class FileAllocator {
 
     if (stats.size > maxSize) {
       throw new Error(
-          `The file ${path.join()} exceeds the project config max size of ${maxSize} bytes`,
-        );
+        `The file ${path.join()} exceeds the project config max size of ${maxSize} bytes`,
+      );
     }
   }
 
@@ -149,8 +147,8 @@ export default class FileAllocator {
       // Add on the new size, and remove the old
       if (oldStats === undefined) {
         throw new Error(
-            'File already has an owner so expected to have old stats but had none',
-          );
+          'File already has an owner so expected to have old stats but had none',
+        );
       }
       workerManager.disown(workerId, oldStats);
       workerManager.own(workerId, newStats);

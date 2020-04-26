@@ -5,37 +5,68 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import {
+  AssignmentObjectPattern,
+  BindingObjectPattern,
+  ObjectExpression,
+} from '@romejs/js-ast';
 import Builder from '../../Builder';
-import {Tokens, concat, operator, space} from '../../tokens';
-import {AnyNode, objectExpression} from '@romejs/js-ast';
+import {
+  Token,
+  concat,
+  group,
+  hardline,
+  ifBreak,
+  indent,
+  lineOrSpace,
+  softline,
+} from '../../tokens';
+import {hasInnerComments} from '../comments';
+import {printCommaList} from '../utils';
 
 export default function ObjectExpression(
   builder: Builder,
-  _node: AnyNode,
-): Tokens {
-  const node = _node.type === 'BindingObjectPattern' || _node.type ===
-    'AssignmentObjectPattern' ? _node : objectExpression.assert(_node);
+  node: ObjectExpression | AssignmentObjectPattern | BindingObjectPattern,
+): Token {
+  if (hasInnerComments(node)) {
+    return concat([
+      '{',
+      builder.tokenizeInnerComments(node, true),
+      hardline,
+      '}',
+    ]);
+  }
 
   const props = node.properties;
 
-  const tokens: Tokens = [
-    operator('{'),
-    concat(builder.tokenizeInnerComments(node)),
-    builder.tokenizeCommaList(props, node, {
-      trailing: true,
-      breakOnNewline: true,
-    }),
-  ];
+  const tokens: Array<Token> = [printCommaList(builder, props, node)];
 
-  if ((node.type === 'BindingObjectPattern' || node.type ===
-      'AssignmentObjectPattern') && node.rest !== undefined) {
+  if (
+    (node.type === 'BindingObjectPattern' ||
+    node.type === 'AssignmentObjectPattern') &&
+    node.rest !== undefined
+  ) {
     if (props.length > 0) {
-      tokens.push(operator(','), space);
+      tokens.push(',', lineOrSpace);
     }
 
-    tokens.push(operator('...'), concat(builder.tokenize(node.rest, node)));
+    tokens.push('...', builder.tokenize(node.rest, node));
+  } else {
+    // Add trailing comma
+    tokens.push(ifBreak(','));
   }
 
-  tokens.push(operator('}'));
-  return tokens;
+  // If the first property is not one the same line as the opening brace,
+  // the object is printed on multiple lines.
+  const forceBreak =
+    node.loc !== undefined &&
+    props.length > 0 &&
+    props[0].loc !== undefined &&
+    props[0].loc.start.line !== node.loc.start.line;
+
+  // HACK: When a hardline is output on flat mode, the group is split
+  // TODO: Add a `break` property on group tokens to force this behavior
+  const line = forceBreak ? hardline : softline;
+
+  return group(concat(['{', indent(concat([line, concat(tokens)])), line, '}']));
 }

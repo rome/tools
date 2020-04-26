@@ -17,9 +17,13 @@ export type StaticMemberProperty = JSNodeBase & {
 export const staticMemberProperty = createQuickBuilder<
   StaticMemberProperty,
   'value'
->('StaticMemberProperty', 'value', {
-  bindingKeys: {},
-  visitorKeys: {
-    value: true,
+>(
+  'StaticMemberProperty',
+  'value',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      value: true,
+    },
   },
-});
+);

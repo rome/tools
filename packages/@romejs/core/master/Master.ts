@@ -63,9 +63,7 @@ import {Dict} from '@romejs/typescript-helpers';
 import LSPServer from './lsp/LSPServer';
 import MasterReporter from './MasterReporter';
 import VirtualModules from './fs/VirtualModules';
-import {
-  DiagnosticsProcessorOptions,
-} from '@romejs/diagnostics/DiagnosticsProcessor';
+import {DiagnosticsProcessorOptions} from '@romejs/diagnostics/DiagnosticsProcessor';
 import {toKebabCase} from '@romejs/string-utils';
 
 const STDOUT_MAX_CHUNK_LENGTH = 100_000;
@@ -130,7 +128,6 @@ async function validateRequestFlags(
 function validateAllowedRequestFlag(
   req: MasterRequest,
   flagKey: NonNullable<MasterCommand<Dict<unknown>>['allowRequestFlags']>[number],
-
   masterCommand: MasterCommand<Dict<unknown>>,
 ) {
   const allowRequestFlags = masterCommand.allowRequestFlags || [];
@@ -177,46 +174,50 @@ export default class Master {
       serial: true,
     });
 
-    this.logger = new Logger('master', () => {
-      return this.logEvent.hasSubscribers() ||
-          this.connectedClientsListeningForLogs.size >
-          0;
-    }, {
-      streams: [
-        {
-          type: 'all',
-          format: 'none',
-          columns: 0,
-          unicode: true,
-          write: (chunk) => {
-            this.emitMasterLog(chunk);
+    this.logger = new Logger(
+      'master',
+      () => {
+        return (
+          this.logEvent.hasSubscribers() ||
+          this.connectedClientsListeningForLogs.size > 0
+        );
+      },
+      {
+        streams: [
+          {
+            type: 'all',
+            format: 'none',
+            columns: 0,
+            unicode: true,
+            write: (chunk) => {
+              this.emitMasterLog(chunk);
+            },
+          },
+        ],
+        markupOptions: {
+          humanizeFilename: (filename) => {
+            const path = createUnknownFilePath(filename);
+            if (path.isAbsolute()) {
+              const remote = this.projectManager.getRemoteFromLocalPath(
+                path.assertAbsolute(),
+              );
+              if (remote !== undefined) {
+                return remote.join();
+              }
+            }
+            return undefined;
+          },
+          normalizeFilename: (filename: string): string => {
+            const path = this.projectManager.getFilePathFromUid(filename);
+            if (path === undefined) {
+              return filename;
+            } else {
+              return path.join();
+            }
           },
         },
-      ],
-      markupOptions: {
-        humanizeFilename: (filename) => {
-          const path = createUnknownFilePath(filename);
-          if (path.isAbsolute()) {
-            const remote = this.projectManager.getRemoteFromLocalPath(
-              path.assertAbsolute(),
-            );
-            if (remote !== undefined) {
-              return remote.join();
-            }
-          }
-          return undefined;
-        },
-
-        normalizeFilename: (filename: string): string => {
-          const path = this.projectManager.getFilePathFromUid(filename);
-          if (path === undefined) {
-            return filename;
-          } else {
-            return path.join();
-          }
-        },
       },
-    });
+    );
 
     this.connectedReporters = new MasterReporter(this);
 
@@ -291,8 +292,7 @@ export default class Master {
 
   onFatalError(err: Error) {
     const message = `<emphasis>Fatal error occurred</emphasis>: ${escapeMarkup(
-        err.stack ||
-        err.message,
+      err.stack || err.message,
     )}`;
     this.logger.error(message);
     this.connectedReporters.error(message);
@@ -301,8 +301,8 @@ export default class Master {
 
   // rome-suppress-next-line lint/noExplicitAny
   wrapFatal<T extends (...args: Array<any>) => any>(callback: T): T {
-    // rome-suppress-next-line lint/noExplicitAny
-    return (((...args: Array<any>): any => {
+    return ((// rome-suppress-next-line lint/noExplicitAny
+    (...args: Array<any>): any => {
       try {
         const res = callback(...args);
         if (res instanceof Promise) {
@@ -396,9 +396,7 @@ export default class Master {
 
   async end() {
     // We should remove everything that has an external dependency like a socket or process
-
     // TODO terminate all queries in flight
-
     await this.endEvent.callOptional();
     this.workerManager.end();
     this.memoryFs.unwatchAll();
@@ -514,7 +512,6 @@ export default class Master {
     const errStream: ReporterStream = {
       ...outStream,
       type: 'error',
-
       write(chunk: string) {
         bridge.stderr.send(chunk);
       },
@@ -726,9 +723,11 @@ export default class Master {
 
     // Warmup
     const warmupStart = Date.now();
-    const result = await this.dispatchRequest(req, bridgeEndPromise, [
-      'benchmark',
-    ]);
+    const result = await this.dispatchRequest(
+      req,
+      bridgeEndPromise,
+      ['benchmark'],
+    );
     const warmupTook = Date.now() - warmupStart;
 
     // Benchmark
@@ -751,14 +750,12 @@ export default class Master {
         reporter.heading('Query');
         reporter.inspect(req.query);
         reporter.heading('Stats');
-        reporter.list(
-          [
-            `Warmup took <duration emphasis>${warmupTook}</duration>`,
-            `<number emphasis>${benchmarkIterations}</number> runs`,
-            `<duration emphasis>${benchmarkTook}</duration> total`,
-            `<duration emphasis approx>${benchmarkTook / benchmarkIterations}</duration> per run`,
-          ],
-        );
+        reporter.list([
+          `Warmup took <duration emphasis>${warmupTook}</duration>`,
+          `<number emphasis>${benchmarkIterations}</number> runs`,
+          `<duration emphasis>${benchmarkTook}</duration> total`,
+          `<duration emphasis approx>${benchmarkTook / benchmarkIterations}</duration> per run`,
+        ]);
       },
     );
 
@@ -786,25 +783,19 @@ export default class Master {
         filePath: createUnknownFilePath('argv'),
         parent: undefined,
         value: query.commandFlags,
-
         onDefinition(def) {
           // objectPath should only have a depth of 1
           defaultCommandFlags[def.objectPath[0]] = def.default;
         },
-
         objectPath: [],
-
         context: {
           category: 'flags/invalid',
-
           getOriginalValue: () => {
             return undefined;
           },
-
           normalizeKey: (key) => {
             return toKebabCase(key);
           },
-
           getDiagnosticPointer: (keys: ConsumePath) => {
             return req.getDiagnosticPointerFromFlags({
               type: 'flag',
@@ -824,9 +815,10 @@ export default class Master {
       );
       if (masterCommand) {
         // Warn about disabled disk caching
-        if (process.env.ROME_CACHE === '0' && !this.warnedCacheClients.has(
-            bridge,
-          )) {
+        if (
+          process.env.ROME_CACHE === '0' &&
+          !this.warnedCacheClients.has(bridge)
+        ) {
           reporter.warn(
             'Disk caching has been disabled due to the <emphasis>ROME_CACHE=0</emphasis> environment variable',
           );
@@ -945,16 +937,16 @@ export default class Master {
       return undefined;
     }
 
-    const printer = req.createDiagnosticsPrinter(req.createDiagnosticsProcessor(
-      {
+    const printer = req.createDiagnosticsPrinter(
+      req.createDiagnosticsProcessor({
         origins: [
           {
             category: 'internal',
             message: 'Error captured and converted into a diagnostic',
           },
         ],
-      },
-    ));
+      }),
+    );
     const errorDiag = deriveDiagnosticFromError({
       category: 'internalError/request',
       error: err,

@@ -15,14 +15,15 @@ export type BindingObjectPatternProperty = JSNodeBase & {
   meta?: undefined;
 };
 
-export const bindingObjectPatternProperty = createBuilder<
-  BindingObjectPatternProperty
->('BindingObjectPatternProperty', {
-  bindingKeys: {
-    value: true,
+export const bindingObjectPatternProperty = createBuilder<BindingObjectPatternProperty>(
+  'BindingObjectPatternProperty',
+  {
+    bindingKeys: {
+      value: true,
+    },
+    visitorKeys: {
+      key: true,
+      value: true,
+    },
   },
-  visitorKeys: {
-    key: true,
-    value: true,
-  },
-});
+);

@@ -17,7 +17,9 @@ type Flags = {
   compact: boolean;
 };
 
-function removeLoc<T extends {loc?: SourceLocation}>(obj: T): Omit<T, 'loc'> {
+function removeLoc<T extends {
+  loc?: SourceLocation;
+}>(obj: T): Omit<T, 'loc'> {
   const {loc, ...locless} = obj;
   loc;
   return locless;
@@ -28,23 +30,24 @@ export default createMasterCommand({
   description: 'analyze and dump the dependencies of a file',
   usage: '',
   examples: [],
-
   defineFlags(c: Consumer): Flags {
     return {
       compact: c.get('compact').asBoolean(false),
       focusSource: c.get('focusSource').asStringOrVoid(),
     };
   },
-
   async callback(req: MasterRequest, commandFlags: Flags): Promise<void> {
     const {master, reporter} = req;
     const {args} = req.query;
     req.expectArgumentLength(1);
 
-    const filename = await master.resolver.resolveEntryAssertPath({
-      ...req.getResolverOptionsFromFlags(),
-      source: createUnknownFilePath(args[0]),
-    }, {location: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})});
+    const filename = await master.resolver.resolveEntryAssertPath(
+      {
+        ...req.getResolverOptionsFromFlags(),
+        source: createUnknownFilePath(args[0]),
+      },
+      {location: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})},
+    );
 
     let res = await req.requestWorkerAnalyzeDependencies(filename, {});
 

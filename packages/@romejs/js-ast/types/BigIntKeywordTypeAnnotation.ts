@@ -12,9 +12,10 @@ export type BigIntKeywordTypeAnnotation = JSNodeBase & {
   type: 'BigIntKeywordTypeAnnotation';
 };
 
-export const bigIntKeywordTypeAnnotation = createBuilder<
-  BigIntKeywordTypeAnnotation
->('BigIntKeywordTypeAnnotation', {
-  bindingKeys: {},
-  visitorKeys: {},
-});
+export const bigIntKeywordTypeAnnotation = createBuilder<BigIntKeywordTypeAnnotation>(
+  'BigIntKeywordTypeAnnotation',
+  {
+    bindingKeys: {},
+    visitorKeys: {},
+  },
+);

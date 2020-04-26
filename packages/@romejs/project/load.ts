@@ -8,7 +8,6 @@
 // In this file, all methods are synchronous. This is pretty gross since the rest of Rome is async everything.
 // This is required so we can integrate the project config code in third-party integrations with sync architectures.
 // Project configs are initialized very infrequently anyway so we can live with the extremely minor perf hit.
-
 import {Consumer} from '@romejs/consume';
 import {
   DEFAULT_PROJECT_CONFIG,
@@ -127,12 +126,8 @@ export function loadCompleteProjectConfig(
   // Set fs.watchman=true when the file .watchmanconfig is present and no fs.watchman config was set
   if (partial.files.watchman === undefined) {
     // Try the project and vcs.root folder for a .watchmanconfig
-
     // We do the Set magic to only visit the projectFolder once if it is also the vcs.root
-    for (const dir of new AbsoluteFilePathSet([
-      projectFolder,
-      config.vcs.root,
-    ])) {
+    for (const dir of new AbsoluteFilePathSet([projectFolder, config.vcs.root])) {
       const watchmanConfigPath = dir.append(WATCHMAN_CONFIG_FILENAME);
       meta.configDependencies.add(watchmanConfigPath);
       if (existsSync(watchmanConfigPath)) {
@@ -248,8 +243,7 @@ export function normalizeProjectConfig(
   const bundler = consumer.get('bundler');
   if (categoryExists(bundler)) {
     if (bundler.has('mode')) {
-        config.bundler.mode =
-        bundler.get('mode').asStringSet(['modern', 'legacy']);
+      config.bundler.mode = bundler.get('mode').asStringSet(['modern', 'legacy']);
     }
   }
 
@@ -271,9 +265,10 @@ export function normalizeProjectConfig(
     }
 
     if (typeChecking.has('libs')) {
-      const libs = normalizeTypeCheckingLibs(projectFolder, typeChecking.get(
-        'libs',
-      ));
+      const libs = normalizeTypeCheckingLibs(
+        projectFolder,
+        typeChecking.get('libs'),
+      );
       config.typeCheck.libs = libs.files;
       meta.configDependencies = new AbsoluteFilePathSet([
         ...meta.configDependencies,
@@ -332,11 +327,9 @@ export function normalizeProjectConfig(
     }
 
     if (files.has('assetExtensions')) {
-      config.files.assetExtensions = files.get('assetExtensions').asArray().map(
-        (
-          item,
-        ) => item.asString(),
-      );
+      config.files.assetExtensions = files.get('assetExtensions').asArray().map((
+        item,
+      ) => item.asString());
     }
   }
 
@@ -356,8 +349,8 @@ export function normalizeProjectConfig(
   if (categoryExists(targets)) {
     for (const [name, object] of targets.asMap()) {
       const target: ProjectConfigTarget = {
-        constraints: object.get('constraints').asImplicitArray().map(
-          (item) => item.asString(),
+        constraints: object.get('constraints').asImplicitArray().map((item) =>
+          item.asString()
         ),
       };
       object.enforceUsedProperties('config target property');
@@ -458,7 +451,10 @@ function extendProjectConfig(
     merged.haste.ignore = hasteIgnore;
   }
 
-  const testingIgnore = mergeArrays(extendsObj.tests.ignore, config.tests.ignore);
+  const testingIgnore = mergeArrays(
+    extendsObj.tests.ignore,
+    config.tests.ignore,
+  );
   if (testingIgnore !== undefined) {
     merged.tests.ignore = testingIgnore;
   }

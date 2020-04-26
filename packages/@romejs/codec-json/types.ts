@@ -70,6 +70,8 @@ export type JSONValue =
 
 export type JSONPropertyValue = undefined | void | JSONValue;
 
-export type JSONObject = {[x: string]: JSONPropertyValue};
+export type JSONObject = {
+  [x: string]: JSONPropertyValue;
+};
 
 export type JSONArray = Array<JSONValue>;

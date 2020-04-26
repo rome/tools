@@ -118,8 +118,8 @@ export default function escapeString(
         const isLowSurrogate = nextCharCode >= 56_320 && nextCharCode <= 57_343;
         if (isLowSurrogate) {
           // https://mathiasbynens.be/notes/javascript-encoding#surrogate-formulae
-          const codePoint = (charCode - 55_296) * 1_024 + nextCharCode - 56_320 +
-            65_536;
+          const codePoint =
+            (charCode - 55_296) * 1_024 + nextCharCode - 56_320 + 65_536;
           const hex = codePoint.toString(16);
           result += `\\u{${hex}}`;
           index++;
@@ -131,7 +131,6 @@ export default function escapeString(
     //
     if (PRINTABLE_ASCII.test(char)) {
       // It’s a printable ASCII character that is not `"`, `'` or `\`,
-
       // so don’t escape it.
       result += char;
       continue;

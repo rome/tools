@@ -84,23 +84,29 @@ class BaseFilePath<Super extends UnknownFilePath> {
     const newExt = clearExt ? ext : this.memoizedExtension + ext;
     const segments = this.getParentSegments(false).concat(newBasename + ext);
 
-    return this._fork({
-      ...this.getParsed(),
-      segments,
-    }, {
-      ext: newExt,
-      parent: this.memoizedParent,
-    });
+    return this._fork(
+      {
+        ...this.getParsed(),
+        segments,
+      },
+      {
+        ext: newExt,
+        parent: this.memoizedParent,
+      },
+    );
   }
 
   changeBasename(newBasename: string): Super {
     const segments = this.getParentSegments(false).concat(newBasename);
-    return this._fork({
-      ...this.getParsed(),
-      segments,
-    }, {
-      parent: this.memoizedParent,
-    });
+    return this._fork(
+      {
+        ...this.getParsed(),
+        segments,
+      },
+      {
+        parent: this.memoizedParent,
+      },
+    );
   }
 
   getBasename(): string {
@@ -125,10 +131,13 @@ class BaseFilePath<Super extends UnknownFilePath> {
       return this.memoizedParent;
     }
 
-    const parent = this._fork({
-      ...this.getParsed(),
-      segments: this.getParentSegments(),
-    }, {});
+    const parent = this._fork(
+      {
+        ...this.getParsed(),
+        segments: this.getParentSegments(),
+      },
+      {},
+    );
     this.memoizedParent = parent;
     return parent;
   }
@@ -160,19 +169,25 @@ class BaseFilePath<Super extends UnknownFilePath> {
     if (this.isAbsolute()) {
       throw new Error(`Expected relative file path but got: ${this.join()}`);
     } else {
-      return new RelativeFilePath(this.getParsed(), {
-        ext: this.memoizedExtension,
-        filename: this.memoizedFilename,
-      });
+      return new RelativeFilePath(
+        this.getParsed(),
+        {
+          ext: this.memoizedExtension,
+          filename: this.memoizedFilename,
+        },
+      );
     }
   }
 
   assertAbsolute(): AbsoluteFilePath {
     if (this.isAbsolute()) {
-      return new AbsoluteFilePath(this.getParsed(), {
-        ext: this.memoizedExtension,
-        filename: this.memoizedFilename,
-      });
+      return new AbsoluteFilePath(
+        this.getParsed(),
+        {
+          ext: this.memoizedExtension,
+          filename: this.memoizedFilename,
+        },
+      );
     } else {
       throw new Error(`Expected absolute file path but got: ${this.join()}`);
     }
@@ -180,10 +195,13 @@ class BaseFilePath<Super extends UnknownFilePath> {
 
   assertURL(): URLFilePath {
     if (this.isURL()) {
-      return new URLFilePath(this.getParsed(), {
-        ext: this.memoizedExtension,
-        filename: this.memoizedFilename,
-      });
+      return new URLFilePath(
+        this.getParsed(),
+        {
+          ext: this.memoizedExtension,
+          filename: this.memoizedFilename,
+        },
+      );
     } else {
       throw new Error(`Expected URL file path but got: ${this.join()}`);
     }
@@ -207,8 +225,10 @@ class BaseFilePath<Super extends UnknownFilePath> {
   }
 
   isWindows(): boolean {
-    return this.absoluteType === 'windows-drive' || this.absoluteType ===
-      'windows-unc';
+    return (
+      this.absoluteType === 'windows-drive' ||
+      this.absoluteType === 'windows-unc'
+    );
   }
 
   isPosix(): boolean {
@@ -266,8 +286,9 @@ class BaseFilePath<Super extends UnknownFilePath> {
   }
 
   hasExtension(ext: string): boolean {
-    return this.hasEndExtension(ext) ||
-      this.getExtensions().includes(`.${ext}.`);
+    return (
+      this.hasEndExtension(ext) || this.getExtensions().includes(`.${ext}.`)
+    );
   }
 
   getExtensions(): string {
@@ -359,8 +380,10 @@ class BaseFilePath<Super extends UnknownFilePath> {
   // Might not be relevant... TODO benchmark this or something lol
   equal(other: UnknownFilePath): boolean {
     // Quick check if we've materalized the filename on both instances
-    if (this.memoizedFilename !== undefined && other.memoizedFilename !==
-        undefined) {
+    if (
+      this.memoizedFilename !== undefined &&
+      other.memoizedFilename !== undefined
+    ) {
       return this.memoizedFilename === other.memoizedFilename;
     }
 
@@ -394,11 +417,16 @@ class BaseFilePath<Super extends UnknownFilePath> {
       // Add tilde and push it as a possible name
 
       // We construct this manually to get around the segment normalization which would explode ~
-      names.push(new RelativeFilePath({
-        segments: ['~', ...relativeToHome.getSegments()],
-        absoluteType: 'posix',
-        absoluteTarget: undefined,
-      }, {}).join());
+      names.push(
+        new RelativeFilePath(
+          {
+            segments: ['~', ...relativeToHome.getSegments()],
+            absoluteType: 'posix',
+            absoluteTarget: undefined,
+          },
+          {},
+        ).join(),
+      );
     }
 
     // Get a path relative to the cwd
@@ -450,7 +478,6 @@ class BaseFilePath<Super extends UnknownFilePath> {
 
 export class RelativeFilePath extends BaseFilePath<RelativeFilePath> {
   // TypeScript is structurally typed whereas here we would prefer nominal typing
-
   // We use this as a hack.
   type: 'relative' = 'relative';
 
@@ -527,10 +554,10 @@ export class AbsoluteFilePath extends BaseFilePath<AbsoluteFilePath> {
       return other.assertAbsolute();
     }
 
-    return new AbsoluteFilePath(parsePathSegments([
-      ...this.getSegments(),
-      ...other.getSegments(),
-    ]), {});
+    return new AbsoluteFilePath(
+      parsePathSegments([...this.getSegments(), ...other.getSegments()]),
+      {},
+    );
   }
 
   relative(otherRaw: FilePathOrString): UnknownFilePath {
@@ -644,17 +671,19 @@ function parsePathSegments(segments: PathSegments): ParsedPath {
   let firstSeg = segments[0];
 
   // Detect URL
-  if (!isWindowsDrive(firstSeg) && firstSeg[firstSeg.length - 1] === ':' &&
-        segments[1] ===
-        '') {
+  if (
+    !isWindowsDrive(firstSeg) &&
+    firstSeg[firstSeg.length - 1] === ':' &&
+    segments[1] === ''
+  ) {
     absoluteTarget = firstSeg.slice(0, -1);
 
     switch (absoluteTarget) {
       case 'file':
         // Automatically normalize a file scheme into an absolute path
-        return parsePathSegments(segments.slice(2).map(
-          (segment) => decodeURIComponent(segment),
-        ));
+        return parsePathSegments(
+          segments.slice(2).map((segment) => decodeURIComponent(segment)),
+        );
 
       default: {
         const absoluteSegments = segments.slice(0, 3);
@@ -726,9 +755,10 @@ function normalizeSegments(
     let seg = segments[i];
 
     // Only allow a dot part in the first position, otherwise it's a noop
-    if (seg === '.' && (segments[1] === '..' || i > 0 ||
-          absoluteSegments.length >
-          0)) {
+    if (
+      seg === '.' &&
+      (segments[1] === '..' || i > 0 || absoluteSegments.length > 0)
+    ) {
       continue;
     }
 
@@ -738,10 +768,11 @@ function normalizeSegments(
     }
 
     // Remove the previous segment, as long as it's not also ..
-    if (seg === '..' && relativeSegments.length > 0 &&
-          relativeSegments[relativeSegments.length -
-            1] !==
-          '..') {
+    if (
+      seg === '..' &&
+      relativeSegments.length > 0 &&
+      relativeSegments[relativeSegments.length - 1] !== '..'
+    ) {
       relativeSegments.pop();
       continue;
     }
@@ -752,10 +783,11 @@ function normalizeSegments(
   const finalSegments = [...absoluteSegments, ...relativeSegments];
 
   // Retain explicit folder
-  if (segments[segments.length - 1] === '' &&
-        finalSegments[finalSegments.length -
-          1] !==
-        '' && relativeSegments.length !== 0) {
+  if (
+    segments[segments.length - 1] === '' &&
+    finalSegments[finalSegments.length - 1] !== '' &&
+    relativeSegments.length !== 0
+  ) {
     finalSegments.push('');
   }
 

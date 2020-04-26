@@ -13,11 +13,12 @@ export type FlowTypeParameterDeclaration = JSNodeBase & {
   params: Array<FlowTypeParameter>;
 };
 
-export const flowTypeParameterDeclaration = createBuilder<
-  FlowTypeParameterDeclaration
->('FlowTypeParameterDeclaration', {
-  bindingKeys: {},
-  visitorKeys: {
-    params: true,
+export const flowTypeParameterDeclaration = createBuilder<FlowTypeParameterDeclaration>(
+  'FlowTypeParameterDeclaration',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      params: true,
+    },
   },
-});
+);

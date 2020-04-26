@@ -91,11 +91,9 @@ export default {
         // TODO defaultSpecifier and namespaceSpecifier
         for (const specifier of bodyNode.namedSpecifiers) {
           topBody.push(
-            template.statement`Object.defineProperty(exports, ${stringLiteral.create(
-              {
-                value: specifier.exported.name,
-              },
-            )}, {
+            template.statement`Object.defineProperty(exports, ${stringLiteral.create({
+              value: specifier.exported.name,
+            })}, {
                 get: function() {
                   return Rome.requireNamespace(${source}).${specifier.local};
                 },
@@ -122,20 +120,24 @@ export default {
           }
 
           // Handle type declarations (these have no runtime ordering implications)
-          if (declaration.type === 'TSModuleDeclaration' || declaration.type ===
-              'TSEnumDeclaration' || declaration.type ===
-              'FlowInterfaceDeclaration' || declaration.type ===
-              'TypeAliasTypeAnnotation' || declaration.type ===
-              'TSInterfaceDeclaration' || declaration.type ===
-              'TSDeclareFunction' || declaration.type === 'FlowOpaqueType') {
+          if (
+            declaration.type === 'TSModuleDeclaration' ||
+            declaration.type === 'TSEnumDeclaration' ||
+            declaration.type === 'FlowInterfaceDeclaration' ||
+            declaration.type === 'TypeAliasTypeAnnotation' ||
+            declaration.type === 'TSInterfaceDeclaration' ||
+            declaration.type === 'TSDeclareFunction' ||
+            declaration.type === 'FlowOpaqueType'
+          ) {
             bottomBody.push(declaration);
             continue;
           }
 
           // Handle variables and classes
-          if (declaration.type === 'VariableDeclarationStatement' ||
-                declaration.type ===
-                'ClassDeclaration') {
+          if (
+            declaration.type === 'VariableDeclarationStatement' ||
+            declaration.type === 'ClassDeclaration'
+          ) {
             bottomBody.push(declaration);
 
             for (const id of getBindingIdentifiers(declaration)) {
@@ -208,8 +210,11 @@ export default {
         }
 
         // Handle type declarations (these have no runtime ordering implications)
-        if (declaration.type === 'FlowDeclareOpaqueType' || declaration.type ===
-            'TSInterfaceDeclaration' || declaration.type === 'TSDeclareFunction') {
+        if (
+          declaration.type === 'FlowDeclareOpaqueType' ||
+          declaration.type === 'TSInterfaceDeclaration' ||
+          declaration.type === 'TSDeclareFunction'
+        ) {
           // Maybe we should keep them? Not sure what they would desugar to
           continue;
         }

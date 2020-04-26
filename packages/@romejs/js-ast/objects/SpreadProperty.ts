@@ -13,9 +13,12 @@ export type SpreadProperty = JSNodeBase & {
   argument: AnyExpression;
 };
 
-export const spreadProperty = createBuilder<SpreadProperty>('SpreadProperty', {
-  bindingKeys: {},
-  visitorKeys: {
-    argument: true,
+export const spreadProperty = createBuilder<SpreadProperty>(
+  'SpreadProperty',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      argument: true,
+    },
   },
-});
+);

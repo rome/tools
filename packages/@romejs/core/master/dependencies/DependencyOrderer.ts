@@ -48,16 +48,16 @@ export default class DependencyOrderer {
     const filename = path.join();
 
     // We flag a possible cycle when a dependency has yet to have it's own transitive dependencies resolve but it ends up going back to itself
-    const isPossibleCycle = this.orderedNodes.has(node) === false &&
-      ancestry.includes(filename);
+    const isPossibleCycle =
+      this.orderedNodes.has(node) === false && ancestry.includes(filename);
     if (isPossibleCycle) {
       const ourCyclePath = ancestry.concat([filename]);
       const existingCycle = this.possibleCyclePaths.get(node);
 
       // We want to get the shortest cycle path since it's likely the most easily resolved
-      const isShortestCycle = existingCycle === undefined ||
-          existingCycle.length >
-          ourCyclePath.length;
+      const isShortestCycle =
+        existingCycle === undefined ||
+        existingCycle.length > ourCyclePath.length;
       if (isShortestCycle) {
         this.possibleCyclePaths.set(node, ourCyclePath);
       }
@@ -137,8 +137,9 @@ export default class DependencyOrderer {
     }
 
     const target = path[path.length - 1];
-    const culprit = String(path.find((value, index) => path[index - 1] ===
-      target));
+    const culprit = String(
+      path.find((value, index) => path[index - 1] === target),
+    );
 
     this.diagnostics.push({
       description: descriptions.BUNDLER.DETECTED_CYCLE(

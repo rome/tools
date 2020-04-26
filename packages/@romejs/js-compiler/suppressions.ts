@@ -160,12 +160,17 @@ export function matchesSuppression(
   loc: DiagnosticLocation,
   suppression: DiagnosticSuppression,
 ): boolean {
-  const targetLine = suppression.type === 'current'
-    ? suppression.loc.end.line
-    : ob1Add(suppression.loc.end.line, 1);
+  const targetLine =
+    suppression.type === 'current'
+      ? suppression.loc.end.line
+      : ob1Add(suppression.loc.end.line, 1);
 
-  if (loc.filename !== undefined && loc.start !== undefined && loc.filename ===
-      suppression.loc.filename && loc.start.line === targetLine) {
+  if (
+    loc.filename !== undefined &&
+    loc.start !== undefined &&
+    loc.filename === suppression.loc.filename &&
+    loc.start.line === targetLine
+  ) {
     return true;
   }
 

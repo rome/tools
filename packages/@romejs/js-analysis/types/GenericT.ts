@@ -42,7 +42,12 @@ export default class GenericT extends T {
     data: HydrateData,
     getType: HydrateTypeFactory,
   ): T {
-    return new GenericT(scope, originNode, String(data.name), getType(data.type));
+    return new GenericT(
+      scope,
+      originNode,
+      String(data.name),
+      getType(data.type),
+    );
   }
 
   humanize(): string {

@@ -13,11 +13,12 @@ export type TSTypeParameterDeclaration = JSNodeBase & {
   params: Array<TSTypeParameter>;
 };
 
-export const tsTypeParameterDeclaration = createBuilder<
-  TSTypeParameterDeclaration
->('TSTypeParameterDeclaration', {
-  bindingKeys: {},
-  visitorKeys: {
-    params: true,
+export const tsTypeParameterDeclaration = createBuilder<TSTypeParameterDeclaration>(
+  'TSTypeParameterDeclaration',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      params: true,
+    },
   },
-});
+);

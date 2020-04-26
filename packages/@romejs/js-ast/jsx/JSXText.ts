@@ -13,7 +13,10 @@ export type JSXText = JSNodeBase & {
   value: string;
 };
 
-export const jsxText = createBuilder<JSXText>('JSXText', {
-  bindingKeys: {},
-  visitorKeys: {},
-});
+export const jsxText = createBuilder<JSXText>(
+  'JSXText',
+  {
+    bindingKeys: {},
+    visitorKeys: {},
+  },
+);

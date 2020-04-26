@@ -13,11 +13,12 @@ export type IntersectionTypeAnnotation = JSNodeBase & {
   types: Array<AnyFlowPrimary | AnyTSPrimary>;
 };
 
-export const intersectionTypeAnnotation = createBuilder<
-  IntersectionTypeAnnotation
->('IntersectionTypeAnnotation', {
-  bindingKeys: {},
-  visitorKeys: {
-    types: true,
+export const intersectionTypeAnnotation = createBuilder<IntersectionTypeAnnotation>(
+  'IntersectionTypeAnnotation',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      types: true,
+    },
   },
-});
+);

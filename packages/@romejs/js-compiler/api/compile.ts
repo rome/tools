@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Mappings} from '@romejs/codec-source-map';
+import {Mappings, SourceMapConsumer} from '@romejs/codec-source-map';
 import {DiagnosticSuppressions, Diagnostics} from '@romejs/diagnostics';
-import {CompileRequest} from '../types';
 import {Cache} from '@romejs/js-compiler';
 import {formatJS} from '@romejs/js-formatter';
+import {CompileRequest} from '../types';
 import transform from '../methods/transform';
 
 export type CompileResult = {
@@ -34,31 +34,63 @@ export default async function compile(
     return cached;
   }
 
-  const {filename} = ast;
   const {
     ast: transformedAst,
     diagnostics,
     suppressions,
     cacheDependencies,
   } = await transform(req);
-  const generator = formatJS(transformedAst, {
-    typeAnnotations: false,
-    indent: req.stage === 'compileForBundle' ? 1 : 0,
-    sourceMapTarget: filename,
-    sourceFileName: filename,
-    inputSourceMap: req.inputSourceMap,
-    sourceMaps: true,
-    sourceText,
-  });
+
+  const formatted = formatJS(
+    transformedAst,
+    {
+      typeAnnotations: false,
+      indent: req.stage === 'compileForBundle' ? 1 : 0,
+      sourceMaps: true,
+      sourceText,
+    },
+  );
+
+  if (req.inputSourceMap !== undefined) {
+    const inputSourceMap = SourceMapConsumer.fromJSON(req.inputSourceMap);
+    const mappings: Mappings = [];
+
+    for (const mapping of formatted.mappings) {
+      const actual = inputSourceMap.exactOriginalPositionFor(
+        mapping.original.line,
+        mapping.original.column,
+      );
+
+      if (actual !== undefined) {
+        if (
+          mapping.original.line !== actual.line ||
+          mapping.original.column !== actual.column
+        ) {
+          mappings.push({
+            ...mapping,
+            original: {
+              line: actual.line,
+              column: actual.column,
+            },
+          });
+        } else {
+          mappings.push(mapping);
+        }
+      }
+    }
+
+    formatted.mappings = mappings;
+  }
 
   const res: CompileResult = {
-    compiledCode: generator.getCode(),
-    mappings: generator.getMappings(),
+    compiledCode: formatted.code,
+    mappings: formatted.mappings,
     diagnostics: [...ast.diagnostics, ...diagnostics],
     cacheDependencies,
     suppressions,
     sourceText,
   };
+
   compileCache.set(query, res);
   return res;
 }

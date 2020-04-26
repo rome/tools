@@ -6,17 +6,12 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, concat} from '../../tokens';
-import {
-  AnyNode,
-  RegExpSubExpression,
-  regExpSubExpression,
-} from '@romejs/js-ast';
+import {Token, concat} from '../../tokens';
+import {RegExpSubExpression} from '@romejs/js-ast';
 
 export default function RegExpSubExpression(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = regExpSubExpression.assert(node);
-  return node.body.map((item) => concat(builder.tokenize(item, node)));
+  node: RegExpSubExpression,
+): Token {
+  return concat(node.body.map((item) => builder.tokenize(item, node)));
 }

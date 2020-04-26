@@ -19,10 +19,11 @@ if (fromType === undefined || toType === undefined) {
 
 function rename(src, dest) {
   fs.mkdirSync(path.dirname(dest), {recursive: true});
-  console.log(path.relative(process.cwd(), src), '->', path.relative(
-    process.cwd(),
-    dest,
-  ));
+  console.log(
+    path.relative(process.cwd(), src),
+    '->',
+    path.relative(process.cwd(), dest),
+  );
   fs.renameSync(src, dest);
 }
 
@@ -32,17 +33,17 @@ const {
   astFolder,
 } = require('../_constants.cjs');
 
-rename(path.join(formatterFolder, `${fromType}.ts`), path.join(
-  formatterFolder,
-  `${toType}ts`,
-));
-rename(path.join(analysisFolder, `${fromType}ts`), path.join(
-  analysisFolder,
-  `${toType}ts`,
-));
-rename(path.join(astFolder, `${fromType}.ts`), path.join(
-  astFolder,
-  `${toType}.ts`,
-));
+rename(
+  path.join(formatterFolder, `${fromType}.ts`),
+  path.join(formatterFolder, `${toType}ts`),
+);
+rename(
+  path.join(analysisFolder, `${fromType}ts`),
+  path.join(analysisFolder, `${toType}ts`),
+);
+rename(
+  path.join(astFolder, `${fromType}.ts`),
+  path.join(astFolder, `${toType}.ts`),
+);
 
 require('./update.cjs');

@@ -11,7 +11,9 @@ import {CompilerContext, Path, TransformVisitors} from '@romejs/js-compiler';
 import {SourceLocation} from '@romejs/parser-core';
 import {JSNodeBase} from '@romejs/js-ast/base';
 
-function removeProp<T extends {loc?: SourceLocation}>(obj: T): Omit<T, 'loc'> {
+function removeProp<T extends {
+  loc?: SourceLocation;
+}>(obj: T): Omit<T, 'loc'> {
   const {loc, ...locless} = obj;
   loc;
   return locless;

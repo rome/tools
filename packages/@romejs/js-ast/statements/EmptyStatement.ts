@@ -8,9 +8,14 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type EmptyStatement = JSNodeBase & {type: 'EmptyStatement'};
+export type EmptyStatement = JSNodeBase & {
+  type: 'EmptyStatement';
+};
 
-export const emptyStatement = createBuilder<EmptyStatement>('EmptyStatement', {
-  bindingKeys: {},
-  visitorKeys: {},
-});
+export const emptyStatement = createBuilder<EmptyStatement>(
+  'EmptyStatement',
+  {
+    bindingKeys: {},
+    visitorKeys: {},
+  },
+);

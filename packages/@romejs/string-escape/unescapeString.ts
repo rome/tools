@@ -60,7 +60,7 @@ export default function unescapeString(
     const isEscaped = prevChar === '\\' && prevPrevChar !== '\\';
 
     // It's verbatim if it's an escaped backslash or not a backslash
-    if (isEscaped && char === '\\' || char !== '\\') {
+    if ((isEscaped && char === '\\') || char !== '\\') {
       // Validate that this is a valid character
       const codePoint = char.codePointAt(0);
       if (codePoint === undefined) {
@@ -102,7 +102,6 @@ export default function unescapeString(
         const char = rawCode[i];
         if (!isHexDigit(char)) {
           // Get the current source index for this character
-
           // (code start index + digit index)
           const pos = codeStartIndex + i;
           throw unexpected(

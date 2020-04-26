@@ -14,10 +14,13 @@ export type SwitchCase = JSNodeBase & {
   consequent: Array<AnyStatement>;
 };
 
-export const switchCase = createBuilder<SwitchCase>('SwitchCase', {
-  bindingKeys: {},
-  visitorKeys: {
-    test: true,
-    consequent: true,
+export const switchCase = createBuilder<SwitchCase>(
+  'SwitchCase',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      test: true,
+      consequent: true,
+    },
   },
-});
+);

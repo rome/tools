@@ -16,9 +16,13 @@ export type ObjectExpression = JSNodeBase & {
 export const objectExpression = createQuickBuilder<
   ObjectExpression,
   'properties'
->('ObjectExpression', 'properties', {
-  bindingKeys: {},
-  visitorKeys: {
-    properties: true,
+>(
+  'ObjectExpression',
+  'properties',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      properties: true,
+    },
   },
-});
+);

@@ -124,9 +124,12 @@ function formatSymbol(val: Symbol): string {
 }
 
 function formatString(val: string): string {
-  return escapeString(val, {
-    quote: "'",
-  });
+  return escapeString(
+    val,
+    {
+      quote: "'",
+    },
+  );
 }
 
 // This function is used by rome-json so make sure it can parse whatever you return here
@@ -176,7 +179,10 @@ function formatFunction(val: Function, opts: FormatOptions): string {
   return formatObject(label, (val as any), opts, []);
 }
 
-function getExtraObjectProps(obj: Objectish, opts: FormatOptions): {
+function getExtraObjectProps(
+  obj: Objectish,
+  opts: FormatOptions,
+): {
   props: Array<string>;
   ignoreKeys: UnknownObject;
 } {
@@ -185,9 +191,8 @@ function getExtraObjectProps(obj: Objectish, opts: FormatOptions): {
 
   if (obj instanceof Map) {
     for (const [key, val] of obj) {
-      const formattedKey = typeof key === 'string'
-        ? formatKey(key, opts)
-        : prettyFormat(key, opts);
+      const formattedKey =
+        typeof key === 'string' ? formatKey(key, opts) : prettyFormat(key, opts);
       props.push(`${formattedKey} => ${prettyFormat(val, opts)}`);
     }
   } else if (isIterable(obj)) {

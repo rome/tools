@@ -6,44 +6,35 @@
  */
 
 import Builder from '../../Builder';
-import {
-  Tokens,
-  concat,
-  linkedGroups,
-  operator,
-  space,
-  word,
-} from '../../tokens';
-import {AnyNode, functionExpression} from '@romejs/js-ast';
+import {Token, concat, space} from '../../tokens';
+import {FunctionDeclaration, FunctionExpression} from '@romejs/js-ast';
 
 export default function FunctionExpression(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = node.type === 'FunctionDeclaration'
-    ? node
-    : functionExpression.assert(node);
-
-  const tokens: Tokens = [];
+  node: FunctionDeclaration | FunctionExpression,
+): Token {
+  const tokens: Array<Token> = [];
 
   if (node.head.async === true) {
-    tokens.push(word('async'));
+    tokens.push('async');
     tokens.push(space);
   }
 
-  tokens.push(word('function'));
+  tokens.push('function');
 
   if (node.head.generator === true) {
-    tokens.push(operator('*'));
+    tokens.push('*');
   }
 
   if (node.id) {
-    tokens.push(space, concat(builder.tokenize(node.id, node)));
+    tokens.push(space, builder.tokenize(node.id, node));
   }
 
-  return [
-    concat(tokens),
-    linkedGroups([concat(builder.tokenize(node.head, node)), space]),
-    concat(builder.tokenize(node.body, node)),
-  ];
+  tokens.push(
+    builder.tokenize(node.head, node),
+    space,
+    builder.tokenize(node.body, node),
+  );
+
+  return concat(tokens);
 }

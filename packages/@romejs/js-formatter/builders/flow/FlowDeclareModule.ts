@@ -6,22 +6,20 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, space, word} from '../../tokens';
-import {AnyNode, FlowDeclareModule, flowDeclareModule} from '@romejs/js-ast';
+import {Token, concat, space} from '../../tokens';
+import {FlowDeclareModule} from '@romejs/js-ast';
 
 export default function FlowDeclareModule(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = flowDeclareModule.assert(node);
-
-  return [
-    word('declare'),
+  node: FlowDeclareModule,
+): Token {
+  return concat([
+    'declare',
     space,
-    word('module'),
+    'module',
     space,
-    ...builder.tokenize(node.id, node),
+    builder.tokenize(node.id, node),
     space,
-    ...builder.tokenize(node.body, node),
-  ];
+    builder.tokenize(node.body, node),
+  ]);
 }

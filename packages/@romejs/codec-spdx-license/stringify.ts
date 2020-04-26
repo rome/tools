@@ -9,7 +9,6 @@ import {ExpressionNode} from './parse';
 
 export default function stringify(node: ExpressionNode): string {
   // TODO parens
-
   switch (node.type) {
     case 'Or':
       return `${stringify(node.left)} OR ${stringify(node.right)}`;

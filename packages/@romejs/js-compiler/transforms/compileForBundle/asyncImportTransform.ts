@@ -10,7 +10,6 @@ import {AnyNode, referenceIdentifier} from '@romejs/js-ast';
 
 export default {
   name: 'asyncImport',
-
   enter(path: Path): AnyNode {
     const {node} = path;
 

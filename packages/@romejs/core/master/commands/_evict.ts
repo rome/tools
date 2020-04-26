@@ -14,11 +14,9 @@ export default createMasterCommand({
   category: commandCategories.INTERNAL,
   usage: '',
   examples: [],
-
   defineFlags() {
     return {};
   },
-
   async callback(req: MasterRequest): Promise<void> {
     const {
       master,
@@ -27,9 +25,8 @@ export default createMasterCommand({
       query: {args},
     } = req;
 
-    const files = args.length === 0
-      ? master.fileAllocator.getAllOwnedFilenames()
-      : args;
+    const files =
+      args.length === 0 ? master.fileAllocator.getAllOwnedFilenames() : args;
 
     for (const file of files) {
       await master.fileAllocator.evict(client.flags.cwd.resolve(file));

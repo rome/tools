@@ -5,19 +5,21 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import {WithStatement} from '@romejs/js-ast';
 import Builder from '../../Builder';
-import {Tokens, concat, operator, space, word} from '../../tokens';
-import {AnyNode, withStatement} from '@romejs/js-ast';
+import {Token, concat, space} from '../../tokens';
+import {printClause} from '../utils';
 
-export default function WithStatement(builder: Builder, node: AnyNode): Tokens {
-  node = withStatement.assert(node);
-
-  return [
-    word('with'),
+export default function WithStatement(
+  builder: Builder,
+  node: WithStatement,
+): Token {
+  return concat([
+    'with',
     space,
-    operator('('),
-    concat(builder.tokenize(node.object, node)),
-    operator(')'),
-    concat(builder.tokenize(node.body, node)),
-  ];
+    '(',
+    builder.tokenize(node.object, node),
+    ')',
+    printClause(builder, node.body, node),
+  ]);
 }

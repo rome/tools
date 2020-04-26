@@ -5,45 +5,46 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Tokens, concat, operator, space, word} from '../../tokens';
-import {AnyNode, exportLocalDeclaration} from '@romejs/js-ast';
+import {ExportDefaultDeclaration, ExportLocalDeclaration} from '@romejs/js-ast';
 import {isDeclaration} from '@romejs/js-ast-utils';
+import Builder from '../../Builder';
+import {
+  Token,
+  concat,
+  group,
+  hardline,
+  ifBreak,
+  indent,
+  softline,
+  space,
+} from '../../tokens';
+import {hasInnerComments} from '../comments';
+import {printCommaList} from '../utils';
 
 export default function ExportLocalDeclaration(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = exportLocalDeclaration.assert(node);
-
+  node: ExportLocalDeclaration,
+): Token {
   if (node.exportKind === 'type' && !builder.options.typeAnnotations) {
-    return [];
+    return '';
   }
 
-  return [word('export'), space, concat(_ExportDeclaration(builder, node))];
+  return concat(['export', space, printExportDeclaration(builder, node)]);
 }
 
-export function _ExportDeclaration(builder: Builder, node: AnyNode): Tokens {
-  node = node.type === 'ExportDefaultDeclaration'
-    ? node
-    : exportLocalDeclaration.assert(node);
-
+export function printExportDeclaration(
+  builder: Builder,
+  node: ExportDefaultDeclaration | ExportLocalDeclaration,
+): Token {
   if (node.declaration) {
-    const declar = node.declaration;
-    const tokens = builder.tokenize(declar, node);
-    if (!isDeclaration(declar)) {
-      tokens.push(operator(';'));
+    const tokens = [builder.tokenize(node.declaration, node)];
+    if (!isDeclaration(node.declaration)) {
+      tokens.push(';');
     }
-    return tokens;
+    return concat(tokens);
   } else {
     if (node.type !== 'ExportLocalDeclaration') {
-      throw new Error('Expected  ExportLocalDeclaration');
-    }
-
-    const tokens: Tokens = [];
-
-    if (node.exportKind === 'type') {
-      tokens.push(word('type'), space);
+      throw new Error('Expected ExportLocalDeclaration');
     }
 
     const {specifiers} = node;
@@ -51,14 +52,38 @@ export function _ExportDeclaration(builder: Builder, node: AnyNode): Tokens {
       throw new Error('Expected specifiers since there was no declaration');
     }
 
-    return [
-      concat(tokens),
-      operator('{'),
-      builder.tokenizeCommaList(specifiers, node, {
-        trailing: true,
-      }),
-      operator('}'),
-      operator(';'),
-    ];
+    const tokens: Array<Token> = [];
+
+    if (node.exportKind === 'type') {
+      tokens.push('type', space);
+    }
+
+    if (specifiers.length === 0) {
+      if (hasInnerComments(node)) {
+        tokens.push(
+          concat(['{', builder.tokenizeInnerComments(node, true), hardline, '}']),
+        );
+      } else {
+        tokens.push('{}');
+      }
+    } else {
+      tokens.push(
+        group(
+          concat([
+            '{',
+            indent(
+              concat([softline, printCommaList(builder, specifiers, node)]),
+            ),
+            ifBreak(','),
+            softline,
+            '}',
+          ]),
+        ),
+      );
+    }
+
+    tokens.push(';');
+
+    return concat(tokens);
   }
 }

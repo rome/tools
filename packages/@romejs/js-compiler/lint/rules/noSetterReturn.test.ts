@@ -8,8 +8,10 @@
 import {test} from 'rome';
 import {testLint} from '../testHelpers';
 
-test('no setter return', async (t) => {
-  await testLint(t, `
+test(
+  'no setter return',
+  async (t) => {
+    await testLint(t, `
     class p {
       set name(value) {
         if (!value) {
@@ -20,7 +22,7 @@ test('no setter return', async (t) => {
     console.log(new p());
   `, {category: 'lint/noSetterReturn'});
 
-  await testLint(t, `
+    await testLint(t, `
     class p {
       static set name(value) {
         if (!value) {
@@ -31,7 +33,7 @@ test('no setter return', async (t) => {
     console.log(p);
   `, {category: 'lint/noSetterReturn'});
 
-  await testLint(t, `
+    await testLint(t, `
     let p = {
       set name(value) {
         if (!value) {
@@ -42,7 +44,7 @@ test('no setter return', async (t) => {
     console.log(p);
   `, {category: 'lint/noSetterReturn'});
 
-  await testLint(t, `
+    await testLint(t, `
     class p {
       set name(value) {
         if (!value) {
@@ -52,4 +54,5 @@ test('no setter return', async (t) => {
     };
     console.log(p);
   `, {category: 'lint/noSetterReturn'});
-});
+  },
+);

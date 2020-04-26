@@ -24,9 +24,13 @@ export default function FlowObjectTypeAnnotation(node: AnyNode, scope: Scope) {
     props.push(scope.evaluate(prop));
   }
 
-  return new ObjT(scope, node, {
-    props,
-    proto: scope.intrinsics.ObjectPrototype,
-    calls,
-  });
+  return new ObjT(
+    scope,
+    node,
+    {
+      props,
+      proto: scope.intrinsics.ObjectPrototype,
+      calls,
+    },
+  );
 }

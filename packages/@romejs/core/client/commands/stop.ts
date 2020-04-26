@@ -14,19 +14,20 @@ export default createLocalCommand({
   description: 'stop a running daemon if one exists',
   usage: '',
   examples: [],
-
   defineFlags() {
     return {};
   },
-
   async callback(req: ClientRequest) {
     // We might want to use `terminateWhenIdle` here combined with a timeout instead of forcing it to die straight away
     const {reporter} = req.client;
     const bridge = await req.client.tryConnectToExistingDaemon();
     if (bridge) {
-      const stop = await req.client.query({
-        command: 'stop',
-      }, 'master');
+      const stop = await req.client.query(
+        {
+          command: 'stop',
+        },
+        'master',
+      );
       if (stop.type === 'ERROR' && stop.fatal) {
         reporter.success('Stopped server.');
       } else {

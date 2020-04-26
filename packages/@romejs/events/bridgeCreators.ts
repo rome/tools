@@ -19,36 +19,34 @@ const SOCKET_LENGTH = /^(\d+):/;
 // Most likely slower... But safer and our data structures are usually fairly shallow
 function stringify(obj: unknown): string {
   return JSON.stringify(
-      obj,
-      (key, value) => {
-        const type = typeof value;
+    obj,
+    (key, value) => {
+      const type = typeof value;
 
-        if (value === undefined || value === null) {
-          return value;
-        }
+      if (value === undefined || value === null) {
+        return value;
+      }
 
-        // Primitives
-        if (type === 'string' || type === 'number' || type === 'boolean') {
-          return value;
-        }
+      // Primitives
+      if (type === 'string' || type === 'number' || type === 'boolean') {
+        return value;
+      }
 
-        // Arrays and plain objects
-        if (Array.isArray(value) || value.constructor === Object) {
-          return value;
-        }
+      // Arrays and plain objects
+      if (Array.isArray(value) || value.constructor === Object) {
+        return value;
+      }
 
-        throw new Error(
-            `Illegal data type not allowed in JSON: ${prettyFormat(value)} in ${prettyFormat(
-              obj,
-            )}`,
-          );
-      },
-    );
+      throw new Error(
+        `Illegal data type not allowed in JSON: ${prettyFormat(value)} in ${prettyFormat(
+          obj,
+        )}`,
+      );
+    },
+  );
 }
 
-export function createBridgeFromWebSocketInterface<
-  B extends Bridge
->(
+export function createBridgeFromWebSocketInterface<B extends Bridge>(
   CustomBridge: Class<B>,
   inf: WebSocketInterface,
   opts: BridgeCreatorOptions,
@@ -71,20 +69,28 @@ export function createBridgeFromWebSocketInterface<
     bridge.handleJSONMessage(json);
   });
 
-  socket.on('error', (err) => {
-    bridge.endWithError(err);
-  });
+  socket.on(
+    'error',
+    (err) => {
+      bridge.endWithError(err);
+    },
+  );
 
-  socket.on('end', () => {
-    bridge.end('RPC WebSocket died');
-  });
+  socket.on(
+    'end',
+    () => {
+      bridge.end('RPC WebSocket died');
+    },
+  );
 
   return bridge;
 }
 
-export function createBridgeFromBrowserWebSocket<
-  B extends Bridge
->(CustomBridge: Class<B>, socket: WebSocket, opts: BridgeCreatorOptions): B {
+export function createBridgeFromBrowserWebSocket<B extends Bridge>(
+  CustomBridge: Class<B>,
+  socket: WebSocket,
+  opts: BridgeCreatorOptions,
+): B {
   const bridge = new CustomBridge({
     ...opts,
     sendMessage: (data: BridgeMessage) => {
@@ -107,9 +113,11 @@ export function createBridgeFromBrowserWebSocket<
   return bridge;
 }
 
-export function createBridgeFromSocket<
-  B extends Bridge
->(CustomBridge: Class<B>, socket: Socket, opts: BridgeCreatorOptions): B {
+export function createBridgeFromSocket<B extends Bridge>(
+  CustomBridge: Class<B>,
+  socket: Socket,
+  opts: BridgeCreatorOptions,
+): B {
   const bridge = new CustomBridge({
     ...opts,
     sendMessage: (data: BridgeMessage) => {
@@ -157,25 +165,35 @@ export function createBridgeFromSocket<
     }
   }
 
-  socket.on('data', (chunk) => {
-    buff += chunk;
-    checkForPossibleMessage();
-  });
+  socket.on(
+    'data',
+    (chunk) => {
+      buff += chunk;
+      checkForPossibleMessage();
+    },
+  );
 
-  socket.on('error', (err) => {
-    bridge.endWithError(err);
-  });
+  socket.on(
+    'error',
+    (err) => {
+      bridge.endWithError(err);
+    },
+  );
 
-  socket.on('end', () => {
-    bridge.end('Socket disconnected');
-  });
+  socket.on(
+    'end',
+    () => {
+      bridge.end('Socket disconnected');
+    },
+  );
 
   return bridge;
 }
 
-export function createBridgeFromLocal<
-  B extends Bridge
->(CustomBridge: Class<B>, opts: Omit<BridgeCreatorOptions, 'type'>): B {
+export function createBridgeFromLocal<B extends Bridge>(
+  CustomBridge: Class<B>,
+  opts: Omit<BridgeCreatorOptions, 'type'>,
+): B {
   const bridge = new CustomBridge({
     ...opts,
     type: 'server&client',
@@ -187,9 +205,11 @@ export function createBridgeFromLocal<
   return bridge;
 }
 
-export function createBridgeFromChildProcess<
-  B extends Bridge
->(CustomBridge: Class<B>, proc: ChildProcess, opts: BridgeCreatorOptions): B {
+export function createBridgeFromChildProcess<B extends Bridge>(
+  CustomBridge: Class<B>,
+  proc: ChildProcess,
+  opts: BridgeCreatorOptions,
+): B {
   const bridge = new CustomBridge({
     ...opts,
     sendMessage: (data: BridgeMessage) => {
@@ -201,25 +221,35 @@ export function createBridgeFromChildProcess<
     proc.kill();
   });
 
-  proc.on('error', (err) => {
-    bridge.endWithError(err);
-  });
+  proc.on(
+    'error',
+    (err) => {
+      bridge.endWithError(err);
+    },
+  );
 
-  proc.on('message', (msg) => {
-    bridge.handleMessage((msg as BridgeMessage));
-  });
+  proc.on(
+    'message',
+    (msg) => {
+      bridge.handleMessage((msg as BridgeMessage));
+    },
+  );
 
   // Catch process dying and reject any requests in flight
-  proc.on('close', () => {
-    bridge.end('RPC child process died');
-  });
+  proc.on(
+    'close',
+    () => {
+      bridge.end('RPC child process died');
+    },
+  );
 
   return bridge;
 }
 
-export function createBridgeFromParentProcess<
-  B extends Bridge
->(CustomBridge: Class<B>, opts: BridgeCreatorOptions): B {
+export function createBridgeFromParentProcess<B extends Bridge>(
+  CustomBridge: Class<B>,
+  opts: BridgeCreatorOptions,
+): B {
   const bridge = new CustomBridge({
     ...opts,
     sendMessage: (data: BridgeMessage) => {
@@ -231,14 +261,20 @@ export function createBridgeFromParentProcess<
     },
   });
 
-  process.on('message', (data) => {
-    bridge.handleMessage(data);
-  });
+  process.on(
+    'message',
+    (data) => {
+      bridge.handleMessage(data);
+    },
+  );
 
   // I doubt any of these will have time to dispatch but for consistency sake...
-  process.on('exit', () => {
-    bridge.end('RPC self process died');
-  });
+  process.on(
+    'exit',
+    () => {
+      bridge.end('RPC self process died');
+    },
+  );
 
   return bridge;
 }

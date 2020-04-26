@@ -67,16 +67,22 @@ export default function ExportLocalDeclaration(
   const {specifiers} = node;
   if (specifiers !== undefined) {
     for (const specifier of specifiers) {
-      if (specifier.type === 'ExportLocalSpecifier' || specifier.type ===
-          'ExportExternalSpecifier') {
+      if (
+        specifier.type === 'ExportLocalSpecifier' ||
+        specifier.type === 'ExportExternalSpecifier'
+      ) {
         let type;
         if (source === undefined) {
           type = scope.evaluate(specifier.local);
         } else {
-          type = new ImportT(scope, node, {
-            importedName: specifier.local.name,
-            source,
-          });
+          type = new ImportT(
+            scope,
+            node,
+            {
+              importedName: specifier.local.name,
+              source,
+            },
+          );
         }
         evaluator.addExport(specifier.exported.name, type);
       }

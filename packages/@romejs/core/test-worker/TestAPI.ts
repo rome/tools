@@ -72,19 +72,21 @@ type SnapshotOptions = {
 };
 
 export default class TestAPI implements TestHelper {
-  constructor({
-    testName,
-    onTimeout,
-    file,
-    snapshotManager,
-    options,
-  }: {
-    file: FileReference;
-    testName: string;
-    onTimeout: OnTimeout;
-    snapshotManager: SnapshotManager;
-    options: TestRunnerOptions;
-  }) {
+  constructor(
+    {
+      testName,
+      onTimeout,
+      file,
+      snapshotManager,
+      options,
+    }: {
+      file: FileReference;
+      testName: string;
+      onTimeout: OnTimeout;
+      snapshotManager: SnapshotManager;
+      options: TestRunnerOptions;
+    },
+  ) {
     this.testName = testName;
     this.options = options;
     this.snapshotManager = snapshotManager;
@@ -93,15 +95,13 @@ export default class TestAPI implements TestHelper {
     this.file = file;
 
     this.teardownEvent = new Event({name: 'TestAPI.teardown'});
-    this.onTeardown(
-      async () => {
-        if (this.loadingSnapshots) {
-          throw new Error(
-              `Test finished while we were still loading snapshots. Did you forget an await before t.snapshot?`,
-            );
-        }
-      },
-    );
+    this.onTeardown(async () => {
+      if (this.loadingSnapshots) {
+        throw new Error(
+          `Test finished while we were still loading snapshots. Did you forget an await before t.snapshot?`,
+        );
+      }
+    });
 
     this.startTime = Date.now();
     this.onTimeout = onTimeout;
@@ -128,15 +128,19 @@ export default class TestAPI implements TestHelper {
   snapshotCounter: number;
   snapshotManager: SnapshotManager;
 
-  buildMatchAdvice(received: unknown, expected: unknown, {
-    visualMethod,
-    expectedAlias,
-    receivedAlias,
-  }: {
-    visualMethod?: string;
-    expectedAlias?: string;
-    receivedAlias?: string;
-  } = {}): DiagnosticAdvice {
+  buildMatchAdvice(
+    received: unknown,
+    expected: unknown,
+    {
+      visualMethod,
+      expectedAlias,
+      receivedAlias,
+    }: {
+      visualMethod?: string;
+      expectedAlias?: string;
+      receivedAlias?: string;
+    } = {},
+  ): DiagnosticAdvice {
     let expectedFormat;
     let receivedFormat;
     if (typeof received === 'string' && typeof expected === 'string') {
@@ -249,9 +253,12 @@ export default class TestAPI implements TestHelper {
     this.timeoutStart = Date.now();
     this.timeoutMax = time;
 
-    this.timeoutId = setTimeout(() => {
-      this.onTimeout(time);
-    }, time);
+    this.timeoutId = setTimeout(
+      () => {
+        this.onTimeout(time);
+      },
+      time,
+    );
   }
 
   checkTimeout(): void {
@@ -281,65 +288,81 @@ export default class TestAPI implements TestHelper {
 
   truthy(value: unknown, message: string = 'Expected value to be truthy'): void {
     if (Boolean(value) === false) {
-      this.fail(message, [
-        {
-          type: 'log',
-          category: 'info',
-          message: `Received`,
-        },
-        {
-          type: 'code',
-          code: prettyFormat(value),
-        },
-      ], 1);
+      this.fail(
+        message,
+        [
+          {
+            type: 'log',
+            category: 'info',
+            message: `Received`,
+          },
+          {
+            type: 'code',
+            code: prettyFormat(value),
+          },
+        ],
+        1,
+      );
     }
   }
 
   falsy(value: unknown, message: string = 'Expected value to be falsy'): void {
     if (Boolean(value) === true) {
-      this.fail(message, [
-        {
-          type: 'log',
-          category: 'info',
-          message: `Received`,
-        },
-        {
-          type: 'code',
-          code: prettyFormat(value),
-        },
-      ], 1);
+      this.fail(
+        message,
+        [
+          {
+            type: 'log',
+            category: 'info',
+            message: `Received`,
+          },
+          {
+            type: 'code',
+            code: prettyFormat(value),
+          },
+        ],
+        1,
+      );
     }
   }
 
   true(value: unknown, message: string = 'Expected value to be true'): void {
     if (value !== true) {
-      this.fail(message, [
-        {
-          type: 'log',
-          category: 'info',
-          message: `Received`,
-        },
-        {
-          type: 'code',
-          code: prettyFormat(value),
-        },
-      ], 1);
+      this.fail(
+        message,
+        [
+          {
+            type: 'log',
+            category: 'info',
+            message: `Received`,
+          },
+          {
+            type: 'code',
+            code: prettyFormat(value),
+          },
+        ],
+        1,
+      );
     }
   }
 
   false(value: unknown, message: string = 'Expected value to be false'): void {
     if (value !== false) {
-      this.fail(message, [
-        {
-          type: 'log',
-          category: 'info',
-          message: `Received`,
-        },
-        {
-          type: 'code',
-          code: prettyFormat(value),
-        },
-      ], 1);
+      this.fail(
+        message,
+        [
+          {
+            type: 'log',
+            category: 'info',
+            message: `Received`,
+          },
+          {
+            type: 'code',
+            code: prettyFormat(value),
+          },
+        ],
+        1,
+      );
     }
   }
 
@@ -349,9 +372,17 @@ export default class TestAPI implements TestHelper {
     message: string = 't.is() failed, using Object.is semantics',
   ): void {
     if (Object.is(received, expected) !== true) {
-      this.fail(message, this.buildMatchAdvice(received, expected, {
-        visualMethod: 'looksLike',
-      }), 1);
+      this.fail(
+        message,
+        this.buildMatchAdvice(
+          received,
+          expected,
+          {
+            visualMethod: 'looksLike',
+          },
+        ),
+        1,
+      );
     }
   }
 
@@ -361,9 +392,17 @@ export default class TestAPI implements TestHelper {
     message: string = 't.not() failed, using !Object.is() semantics',
   ): void {
     if (Object.is(received, expected) === true) {
-      this.fail(message, this.buildMatchAdvice(received, expected, {
-        visualMethod: 'notLooksLike',
-      }), 1);
+      this.fail(
+        message,
+        this.buildMatchAdvice(
+          received,
+          expected,
+          {
+            visualMethod: 'notLooksLike',
+          },
+        ),
+        1,
+      );
     }
   }
 
@@ -502,12 +541,14 @@ export default class TestAPI implements TestHelper {
     });
   }
 
-  async compareNamedSnapshot({
-    entryName,
-    message,
-    expected,
-    optionalFilename,
-  }: SnapshotOptions): Promise<string> {
+  async compareNamedSnapshot(
+    {
+      entryName,
+      message,
+      expected,
+      optionalFilename,
+    }: SnapshotOptions,
+  ): Promise<string> {
     let language: undefined | string;
 
     let formatted = '';
@@ -554,25 +595,20 @@ export default class TestAPI implements TestHelper {
       );
 
       if (message === undefined) {
-          message =
-          markup`Snapshot ${entryName} at <filelink emphasis target="${this.snapshotManager.defaultSnapshotPath.join()}" /> doesn't match`;
+        message = markup`Snapshot ${entryName} at <filelink emphasis target="${this.snapshotManager.defaultSnapshotPath.join()}" /> doesn't match`;
       } else {
-        advice.push(
-          {
-            type: 'log',
-            category: 'info',
-            message: markup`Snapshot can be found at <filelink emphasis target="${this.snapshotManager.defaultSnapshotPath.join()}" />`,
-          },
-        );
-      }
-
-      advice.push(
-        {
+        advice.push({
           type: 'log',
           category: 'info',
-          message: markup`Run <command>rome test <filelink target="${this.file.uid}" /> --update-snapshots</command> to update this snapshot`,
-        },
-      );
+          message: markup`Snapshot can be found at <filelink emphasis target="${this.snapshotManager.defaultSnapshotPath.join()}" />`,
+        });
+      }
+
+      advice.push({
+        type: 'log',
+        category: 'info',
+        message: markup`Run <command>rome test <filelink target="${this.file.uid}" /> --update-snapshots</command> to update this snapshot`,
+      });
 
       // Ignore the original t.snapshot call and caughtNamedSnapshot
       this.fail(message, advice, 2);

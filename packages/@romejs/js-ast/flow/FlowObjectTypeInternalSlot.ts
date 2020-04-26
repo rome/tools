@@ -17,12 +17,13 @@ export type FlowObjectTypeInternalSlot = JSNodeBase & {
   method?: boolean;
 };
 
-export const flowObjectTypeInternalSlot = createBuilder<
-  FlowObjectTypeInternalSlot
->('FlowObjectTypeInternalSlot', {
-  bindingKeys: {},
-  visitorKeys: {
-    id: true,
-    value: true,
+export const flowObjectTypeInternalSlot = createBuilder<FlowObjectTypeInternalSlot>(
+  'FlowObjectTypeInternalSlot',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      id: true,
+      value: true,
+    },
   },
-});
+);

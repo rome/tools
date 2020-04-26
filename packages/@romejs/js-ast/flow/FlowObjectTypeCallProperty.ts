@@ -14,11 +14,12 @@ export type FlowObjectTypeCallProperty = JSNodeBase & {
   static?: boolean;
 };
 
-export const flowObjectTypeCallProperty = createBuilder<
-  FlowObjectTypeCallProperty
->('FlowObjectTypeCallProperty', {
-  bindingKeys: {},
-  visitorKeys: {
-    value: true,
+export const flowObjectTypeCallProperty = createBuilder<FlowObjectTypeCallProperty>(
+  'FlowObjectTypeCallProperty',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      value: true,
+    },
   },
-});
+);

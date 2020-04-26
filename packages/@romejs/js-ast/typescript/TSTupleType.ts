@@ -14,10 +14,13 @@ export type TSTupleType = JSNodeBase & {
   rest?: AnyTSPrimary;
 };
 
-export const tsTupleType = createBuilder<TSTupleType>('TSTupleType', {
-  bindingKeys: {},
-  visitorKeys: {
-    elementTypes: true,
-    rest: true,
+export const tsTupleType = createBuilder<TSTupleType>(
+  'TSTupleType',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      elementTypes: true,
+      rest: true,
+    },
   },
-});
+);

@@ -86,9 +86,10 @@ async function check(
   let counter = 0;
   for (const action of actions) {
     const key = String(counter++);
-    let shortcut = action.shortcut !== undefined && !chosenShortcuts.has(
-      action.shortcut,
-    ) ? action.shortcut : undefined;
+    let shortcut =
+      action.shortcut !== undefined && !chosenShortcuts.has(action.shortcut)
+        ? action.shortcut
+        : undefined;
     optionToAction.set(key, action);
     actionOptions[key] = {
       label: action.noun,
@@ -121,9 +122,12 @@ async function check(
     },
   });
 
-  const answer = await reporter.radio('How do you want to resolve this?', {
-    options,
-  });
+  const answer = await reporter.radio(
+    'How do you want to resolve this?',
+    {
+      options,
+    },
+  );
 
   if (answer === 'ignore') {
     return await check(req, state);
@@ -143,12 +147,15 @@ async function check(
   };
 
   // Execute action
-  const actionRes = await client.query({
-    command: action.command,
-    args: action.args,
-    commandFlags: action.commandFlags,
-    requestFlags,
-  }, 'master');
+  const actionRes = await client.query(
+    {
+      command: action.command,
+      args: action.args,
+      commandFlags: action.commandFlags,
+      requestFlags,
+    },
+    'master',
+  );
   if (actionRes.type === 'ERROR' || actionRes.type === 'INVALID_REQUEST') {
     return actionRes;
   }

@@ -70,16 +70,17 @@ export default class ClientRequest {
     }
   }
 
-  async initFromLocal( // rome-suppress-next-line lint/noExplicitAny
-  localCommand: LocalCommand<any>): Promise<MasterQueryResponse> {
+  async initFromLocal(
+    // rome-suppress-next-line lint/noExplicitAny
+    localCommand: LocalCommand<any>,
+  ): Promise<MasterQueryResponse> {
     const {query} = this;
 
     let flags;
     if (localCommand.defineFlags !== undefined) {
-      flags = localCommand.defineFlags(consumeUnknown(
-        query.commandFlags,
-        'flags/invalid',
-      ));
+      flags = localCommand.defineFlags(
+        consumeUnknown(query.commandFlags, 'flags/invalid'),
+      );
     }
 
     const res = await localCommand.callback(this, flags);
@@ -114,13 +115,13 @@ export default class ClientRequest {
     } catch (err) {
       if (err instanceof BridgeError) {
         return {
-            type: 'ERROR',
-            fatal: true,
-            handled: false,
-            name: 'Error',
-            message: 'Server died while processing command. Results may be incomplete.',
-            stack: undefined,
-          };
+          type: 'ERROR',
+          fatal: true,
+          handled: false,
+          name: 'Error',
+          message: 'Server died while processing command. Results may be incomplete.',
+          stack: undefined,
+        };
       } else {
         throw err;
       }

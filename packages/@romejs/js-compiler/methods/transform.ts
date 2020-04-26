@@ -19,8 +19,8 @@ type TransformResult = {
   cacheDependencies: Array<string>;
 };
 
-const transformCaches: Array<Cache<TransformResult>> = stageOrder.map(
-  () => new Cache(),
+const transformCaches: Array<Cache<TransformResult>> = stageOrder.map(() =>
+  new Cache()
 );
 
 export default async function transform(
@@ -67,7 +67,9 @@ export default async function transform(
   const transformFactory = stageTransforms[stage];
   const transforms = transformFactory(project.config, options);
 
-  let visitors: TransformVisitors = await context.normalizeTransforms(transforms);
+  let visitors: TransformVisitors = await context.normalizeTransforms(
+    transforms,
+  );
 
   const compiledAst = context.reduceRoot(ast, visitors);
 

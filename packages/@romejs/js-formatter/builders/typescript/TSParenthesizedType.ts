@@ -5,23 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-  AnyNode,
-  TSParenthesizedType,
-  tsParenthesizedType,
-} from '@romejs/js-ast';
+import {TSParenthesizedType} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
-import {Tokens, operator} from '../../tokens';
+import {Token, concat} from '../../tokens';
 
 export default function TSParenthesizedType(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = tsParenthesizedType.assert(node);
-
-  return [
-    operator('('),
-    ...builder.tokenize(node.typeAnnotation, node),
-    operator(')'),
-  ];
+  node: TSParenthesizedType,
+): Token {
+  return concat(['(', builder.tokenize(node.typeAnnotation, node), ')']);
 }

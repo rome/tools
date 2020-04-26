@@ -125,24 +125,18 @@ class FilePathSet<FilePath extends UnknownFilePath> {
   }
 }
 
-export class AbsoluteFilePathMap<Value> extends FilePathMap<
-  AbsoluteFilePath,
-  Value
-> {
+export class AbsoluteFilePathMap<Value>
+  extends FilePathMap<AbsoluteFilePath, Value> {
   type: 'absolute' = 'absolute';
 }
 
-export class RelativeFilePathMap<Value> extends FilePathMap<
-  RelativeFilePath,
-  Value
-> {
+export class RelativeFilePathMap<Value>
+  extends FilePathMap<RelativeFilePath, Value> {
   type: 'relative' = 'relative';
 }
 
-export class UnknownFilePathMap<Value> extends FilePathMap<
-  UnknownFilePath,
-  Value
-> {
+export class UnknownFilePathMap<Value>
+  extends FilePathMap<UnknownFilePath, Value> {
   type: 'unknown' = 'unknown';
 }
 

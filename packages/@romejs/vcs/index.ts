@@ -12,45 +12,55 @@ import childProcess = require('child_process');
 const TIMEOUT = 10_000;
 
 async function exec(command: string, args: Array<string>): Promise<string> {
-  return new Promise(
-      (resolve, reject) => {
-        const proc = childProcess.spawn(command, args, {timeout: TIMEOUT});
-        let stderr = '';
-        let stdout = '';
+  return new Promise((resolve, reject) => {
+    const proc = childProcess.spawn(command, args, {timeout: TIMEOUT});
+    let stderr = '';
+    let stdout = '';
 
-        proc.stdout.on('data', (data) => {
-          stdout += data;
-        });
-
-        proc.stderr.on('data', (data) => {
-          stderr += data;
-        });
-
-        function error(message: string) {
-          reject(
-            new Error(
-              `Error while running ${command} ${args.join(' ')}: ${message}. stderr: ${stderr}`,
-            ),
-          );
-        }
-
-        proc.on('error', (err: NodeJS.ErrnoException) => {
-          if (err.code === 'ETIMEDOUT') {
-            error(`Timed out after ${TIMEOUT}ms`);
-          } else {
-            error(err.message);
-          }
-        });
-
-        proc.on('close', (code) => {
-          if (code === 0) {
-            resolve(stdout);
-          } else {
-            error(`Exited with code ${code}`);
-          }
-        });
+    proc.stdout.on(
+      'data',
+      (data) => {
+        stdout += data;
       },
     );
+
+    proc.stderr.on(
+      'data',
+      (data) => {
+        stderr += data;
+      },
+    );
+
+    function error(message: string) {
+      reject(
+        new Error(
+          `Error while running ${command} ${args.join(' ')}: ${message}. stderr: ${stderr}`,
+        ),
+      );
+    }
+
+    proc.on(
+      'error',
+      (err: NodeJS.ErrnoException) => {
+        if (err.code === 'ETIMEDOUT') {
+          error(`Timed out after ${TIMEOUT}ms`);
+        } else {
+          error(err.message);
+        }
+      },
+    );
+
+    proc.on(
+      'close',
+      (code) => {
+        if (code === 0) {
+          resolve(stdout);
+        } else {
+          error(`Exited with code ${code}`);
+        }
+      },
+    );
+  });
 }
 
 function extractFileList(out: string): Array<string> {

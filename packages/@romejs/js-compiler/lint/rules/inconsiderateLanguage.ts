@@ -26,7 +26,10 @@ type CheckResult = {
   endIndex: number;
 };
 
-function check(loc: SourceLocation, input: string): {
+function check(
+  loc: SourceLocation,
+  input: string,
+): {
   fixed: string;
   results: Array<CheckResult>;
 } {
@@ -57,7 +60,6 @@ function check(loc: SourceLocation, input: string): {
           suggestion: preserveCasing(wordWithSourceCasing, suggestion),
           startIndex: i,
           endIndex: i + word.length,
-
           // Calculate the actual location of this
           loc: {
             ...loc,
@@ -76,9 +78,10 @@ function check(loc: SourceLocation, input: string): {
   // Walking backwards means we don't need to maintain offsets
   for (let i = results.length - 1; i >= 0; i--) {
     const result = results[i];
-    fixed = fixed.slice(0, result.startIndex) + result.suggestion + fixed.slice(
-      result.endIndex,
-    );
+    fixed =
+      fixed.slice(0, result.startIndex) +
+      result.suggestion +
+      fixed.slice(result.endIndex);
   }
 
   return {

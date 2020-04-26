@@ -32,9 +32,9 @@ export default class MissingUnionE extends E {
 
   getError(): ErrorDefinition {
     return {
-      description: descriptions.TYPE_CHECK.MISSING_CONDITION(this.missing.map((
-        type,
-      ) => this.utils.humanize(type))),
+      description: descriptions.TYPE_CHECK.MISSING_CONDITION(
+        this.missing.map((type) => this.utils.humanize(type)),
+      ),
       lowerTarget: this.target,
     };
   }

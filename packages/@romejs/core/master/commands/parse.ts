@@ -24,7 +24,6 @@ export default createMasterCommand({
   description: 'parse a single file and dump its ast',
   usage: '',
   examples: [],
-
   defineFlags(c: Consumer): Flags {
     return {
       allowDiagnostics: c.get('allowDiagnostics').asBoolean(false),
@@ -32,21 +31,26 @@ export default createMasterCommand({
       sourceType: c.get('sourceType').asStringSetOrVoid(['module', 'script']),
     };
   },
-
   async callback(req: MasterRequest, flags: Flags): Promise<void> {
     const {master, reporter} = req;
     const {args} = req.query;
     req.expectArgumentLength(1);
 
-    const filename = await master.resolver.resolveEntryAssertPath({
-      ...req.getResolverOptionsFromFlags(),
-      source: createUnknownFilePath(args[0]),
-    }, {location: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})});
+    const filename = await master.resolver.resolveEntryAssertPath(
+      {
+        ...req.getResolverOptionsFromFlags(),
+        source: createUnknownFilePath(args[0]),
+      },
+      {location: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})},
+    );
 
-    let ast = await req.requestWorkerParse(filename, {
-      sourceType: flags.sourceType,
-      allowParserDiagnostics: flags.allowDiagnostics,
-    });
+    let ast = await req.requestWorkerParse(
+      filename,
+      {
+        sourceType: flags.sourceType,
+        allowParserDiagnostics: flags.allowDiagnostics,
+      },
+    );
 
     if (flags.compact) {
       ast = program.assert(removeLoc(ast));

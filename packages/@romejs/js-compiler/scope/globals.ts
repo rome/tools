@@ -6,7 +6,6 @@
  */
 
 // Taken from 'https://github.com/sindresorhus/globals/blob/master/globals.json
-
 export const builtin = [
   'Array',
   'ArrayBuffer',

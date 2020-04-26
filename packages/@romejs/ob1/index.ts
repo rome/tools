@@ -6,15 +6,17 @@
  */
 
 // Inspired by the original Metro ob1 library by Moti Zilberman @motiz88
-
 // These weird number intersections are to create fake opaque types
 // https://github.com/Microsoft/TypeScript/issues/15807
-
 // A type representing 0-based offsets.
-export type Number0 = {_tag: 'ZERO_OFFSET'};
+export type Number0 = {
+  _tag: 'ZERO_OFFSET';
+};
 
 // A type representing 1-based offsets.
-export type Number1 = {_tag: 'ONE_OFFSET'};
+export type Number1 = {
+  _tag: 'ONE_OFFSET';
+};
 
 type AnyNumber = Number0 | Number1;
 

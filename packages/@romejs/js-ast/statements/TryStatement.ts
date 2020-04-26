@@ -15,11 +15,14 @@ export type TryStatement = JSNodeBase & {
   finalizer: undefined | BlockStatement;
 };
 
-export const tryStatement = createBuilder<TryStatement>('TryStatement', {
-  bindingKeys: {},
-  visitorKeys: {
-    block: true,
-    handler: true,
-    finalizer: true,
+export const tryStatement = createBuilder<TryStatement>(
+  'TryStatement',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      block: true,
+      handler: true,
+      finalizer: true,
+    },
   },
-});
+);

@@ -14,10 +14,13 @@ export type WithStatement = JSNodeBase & {
   body: AnyStatement;
 };
 
-export const withStatement = createBuilder<WithStatement>('WithStatement', {
-  bindingKeys: {},
-  visitorKeys: {
-    object: true,
-    body: true,
+export const withStatement = createBuilder<WithStatement>(
+  'WithStatement',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      object: true,
+      body: true,
+    },
   },
-});
+);

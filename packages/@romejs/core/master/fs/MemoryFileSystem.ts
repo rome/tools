@@ -95,9 +95,10 @@ function isValidManifest(path: AbsoluteFilePath): boolean {
     }
 
     // Scoped module
-    if (segments[segments.length - 4] === 'node_modules' &&
-        segments[segments.length -
-          3].startsWith('@')) {
+    if (
+      segments[segments.length - 4] === 'node_modules' &&
+      segments[segments.length - 3].startsWith('@')
+    ) {
       return true;
     }
 
@@ -180,10 +181,7 @@ async function createRegularWatcher(
       const watcher = watch(
         folderPath,
         {recursive: true, persistent: false},
-        (
-          eventType,
-          filename,
-        ) => {
+        (eventType, filename) => {
           if (filename === null) {
             // TODO not sure how we want to handle this?
             return;
@@ -191,31 +189,35 @@ async function createRegularWatcher(
 
           const path = folderPath.resolve(filename);
 
-          memoryFs.stat(path).then(
-            (newStats) => {
-              const diagnostics = memoryFs.master.createDisconnectedDiagnosticsProcessor(
-                [
-                  {
-                    category: 'memory-fs',
-                    message: 'Processing fs.watch changes',
-                  },
-                ],
-              );
+          memoryFs.stat(path).then((newStats) => {
+            const diagnostics = memoryFs.master.createDisconnectedDiagnosticsProcessor([
+              {
+                category: 'memory-fs',
+                message: 'Processing fs.watch changes',
+              },
+            ]);
 
-              if (newStats.type === 'file') {
-                memoryFs.handleFileChange(path, newStats, {
+            if (newStats.type === 'file') {
+              memoryFs.handleFileChange(
+                path,
+                newStats,
+                {
                   diagnostics,
                   crawl: true,
-                });
-              } else if (newStats.type === 'directory') {
-                memoryFs.addDirectory(path, newStats, {
+                },
+              );
+            } else if (newStats.type === 'directory') {
+              memoryFs.addDirectory(
+                path,
+                newStats,
+                {
                   crawl: true,
                   diagnostics,
                   onFoundDirectory,
-                });
-              }
-            },
-          ).catch((err) => {
+                },
+              );
+            }
+          }).catch((err) => {
             if (err.code === 'ENOENT') {
               memoryFs.handleDeletion(path);
             } else {
@@ -231,11 +233,15 @@ async function createRegularWatcher(
 
     // Perform an initial crawl
     const stats = await memoryFs.stat(projectFolderPath);
-    await memoryFs.addDirectory(projectFolderPath, stats, {
-      crawl: true,
-      diagnostics,
-      onFoundDirectory,
-    });
+    await memoryFs.addDirectory(
+      projectFolderPath,
+      stats,
+      {
+        crawl: true,
+        diagnostics,
+        onFoundDirectory,
+      },
+    );
     logger.info(
       `[MemoryFileSystem] Finished initial crawl for ${projectFolder} - added ${humanizeNumber(
         memoryFs.countFiles(projectFolderPath),
@@ -268,20 +274,17 @@ async function createWatchmanWatcher(
   let timeout;
 
   function queueCallout() {
-      timeout =
-      setTimeout(
-        memoryFs.master.wrapFatal(
-          () => {
-            connectedReporters.warn(
-              'Watchman is taking a while to respond. Watchman may have just started and is still crawling the disk.',
-            );
+    timeout = setTimeout(
+      memoryFs.master.wrapFatal(() => {
+        connectedReporters.warn(
+          'Watchman is taking a while to respond. Watchman may have just started and is still crawling the disk.',
+        );
 
-            // Show an even more aggressive message when watchman takes longer
-            queueCallout();
-          },
-        ),
-        5_000,
-      );
+        // Show an even more aggressive message when watchman takes longer
+        queueCallout();
+      }),
+      5_000,
+    );
   }
 
   // Show a message when watchman takes too long
@@ -290,14 +293,17 @@ async function createWatchmanWatcher(
   try {
     const client = await createWatchmanClient(Reporter.fromProcess());
 
-    const event = await client.createSubscription(projectFolder, {
-      fields: ['mtime', 'name', 'size', 'type', 'exists'],
-      expression: [
-        'anyof',
-        ['type', 'd'],
-        ['suffix', getFileHandlerExtensions(projectConfig)],
-      ],
-    });
+    const event = await client.createSubscription(
+      projectFolder,
+      {
+        fields: ['mtime', 'name', 'size', 'type', 'exists'],
+        expression: [
+          'anyof',
+          ['type', 'd'],
+          ['suffix', getFileHandlerExtensions(projectConfig)],
+        ],
+      },
+    );
 
     const initial: WatchmanSubscriptionValue = await event.wait();
     if (initial.isFreshInstance !== true) {
@@ -339,33 +345,49 @@ async function createWatchmanWatcher(
         }
       }
 
-      await Promise.all(dirs.map(async ([path, info]) => {
-        await memoryFs.addDirectory(path, {
-          size: info.size,
-          mtime: info.mtime,
-          type: 'directory',
-        }, {diagnostics, crawl: false});
-      }));
+      await Promise.all(
+        dirs.map(async ([path, info]) => {
+          await memoryFs.addDirectory(
+            path,
+            {
+              size: info.size,
+              mtime: info.mtime,
+              type: 'directory',
+            },
+            {diagnostics, crawl: false},
+          );
+        }),
+      );
 
-      await Promise.all(files.map(async ([path, info]) => {
-        const stats: Stats = {
-          size: info.size,
-          mtime: info.mtime,
-          type: 'file',
-        };
+      await Promise.all(
+        files.map(async ([path, info]) => {
+          const stats: Stats = {
+            size: info.size,
+            mtime: info.mtime,
+            type: 'file',
+          };
 
-        if (memoryFs.files.has(path)) {
-          await memoryFs.handleFileChange(path, stats, {
-            diagnostics,
-            crawl: false,
-          });
-        } else {
-          await memoryFs.addFile(path, stats, {
-            diagnostics,
-            crawl: false,
-          });
-        }
-      }));
+          if (memoryFs.files.has(path)) {
+            await memoryFs.handleFileChange(
+              path,
+              stats,
+              {
+                diagnostics,
+                crawl: false,
+              },
+            );
+          } else {
+            await memoryFs.addFile(
+              path,
+              stats,
+              {
+                diagnostics,
+                crawl: false,
+              },
+            );
+          }
+        }),
+      );
     }
 
     activity.setText(`Processing results`);
@@ -434,21 +456,30 @@ export default class MemoryFileSystem {
   files: AbsoluteFilePathMap<Stats>;
   manifests: AbsoluteFilePathMap<ManifestDefinition>;
 
-  watchers: Map<string, {
-    path: AbsoluteFilePath;
-    close: WatcherClose;
-  }>;
+  watchers: Map<
+    string,
+    {
+      path: AbsoluteFilePath;
+      close: WatcherClose;
+    }
+  >;
 
-  watchPromises: Map<string, {
-    promise: Promise<WatcherClose>;
-    path: AbsoluteFilePath;
-  }>;
+  watchPromises: Map<
+    string,
+    {
+      promise: Promise<WatcherClose>;
+      path: AbsoluteFilePath;
+    }
+  >;
 
-  changedFileEvent: Event<{
-    path: AbsoluteFilePath;
-    oldStats: undefined | Stats;
-    newStats: Stats;
-  }, void>;
+  changedFileEvent: Event<
+    {
+      path: AbsoluteFilePath;
+      oldStats: undefined | Stats;
+      newStats: Stats;
+    },
+    void
+  >;
   deletedFileEvent: Event<AbsoluteFilePath, void>;
 
   init() {}
@@ -715,16 +746,22 @@ export default class MemoryFileSystem {
       logger.info(`[MemoryFileSystem] Watching ${folderLink} with fs.watch`);
       promise = createRegularWatcher(this, diagnostics, projectFolderPath);
     }
-    this.watchPromises.set(projectFolder, {
-      path: projectFolderPath,
-      promise,
-    });
+    this.watchPromises.set(
+      projectFolder,
+      {
+        path: projectFolderPath,
+        promise,
+      },
+    );
 
     const watcherClose = await promise;
-    this.watchers.set(projectFolder, {
-      path: projectFolderPath,
-      close: watcherClose,
-    });
+    this.watchers.set(
+      projectFolder,
+      {
+        path: projectFolderPath,
+        close: watcherClose,
+      },
+    );
     this.watchPromises.delete(projectFolder);
 
     diagnostics.maybeThrowDiagnosticsError();
@@ -828,8 +865,8 @@ export default class MemoryFileSystem {
       ext = `.${ext}`; // we also want to remove the dot suffix from the haste name
       if (!filename.endsWith(ext)) {
         throw new Error(
-            `Expected ${filename} to end with ${ext} as it was returned as the extension name`,
-          );
+          `Expected ${filename} to end with ${ext} as it was returned as the extension name`,
+        );
       }
 
       return basename.slice(0, -ext.length);
@@ -854,11 +891,13 @@ export default class MemoryFileSystem {
     }
   }
 
-  async _declareManifest({
-    path,
-    hasteName,
-    diagnostics,
-  }: DeclareManifestOpts): Promise<undefined | string> {
+  async _declareManifest(
+    {
+      path,
+      hasteName,
+      diagnostics,
+    }: DeclareManifestOpts,
+  ): Promise<undefined | string> {
     // Fetch the manifest
     const manifestRaw = await readFileText(path);
     const hash = crypto.createHash('sha256').update(manifestRaw).digest('hex');
@@ -903,7 +942,12 @@ export default class MemoryFileSystem {
     const {projectManager} = this.master;
     const project = projectManager.findProjectExisting(path);
     if (project !== undefined) {
-      projectManager.declareManifest(project, isProjectPackage, def, diagnostics);
+      projectManager.declareManifest(
+        project,
+        isProjectPackage,
+        def,
+        diagnostics,
+      );
     }
 
     // Tell all workers of our discovery

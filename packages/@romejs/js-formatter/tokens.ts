@@ -7,234 +7,165 @@
 
 import {SourceLocation} from '@romejs/parser-core';
 
-export type WordToken = {
-  type: 'Word';
-  value: string;
-};
-
-export type NumberToken = {
-  type: 'Number';
-  value: string;
-};
-
 export type SpaceToken = {
   type: 'Space';
-  optional: boolean;
 };
 
-export type NewlineToken = {
-  type: 'Newline';
+export type LineToken = {
+  type: 'Line';
+  mode: 'space' | 'soft' | 'hard';
 };
 
-export type DerivedNewlineToken = {
-  type: 'DerivedNewline';
-  id: number;
-};
-
-export type OperatorToken = {
-  type: 'Operator';
-  value: string;
-};
-
-export type VerbatimToken = {
-  type: 'Verbatim';
-  value: string;
+export type LineSuffixToken = {
+  type: 'LineSuffix';
+  contents: Token;
 };
 
 export type IndentToken = {
   type: 'Indent';
-  tokens: Tokens;
+  contents: Token;
 };
 
 export type GroupToken = {
   type: 'Group';
-  priority?: boolean;
-  breakOnNewline?: boolean;
-  unbroken: {
-    leading?: Tokens;
-    separator?: Tokens;
-    trailing?: Tokens;
-    trim?: string;
-  };
-  broken: {
-    indentNewline?: boolean;
-    indent?: boolean;
-    force?: boolean;
-    leading?: Tokens;
-    separator?: Tokens;
-    trailing?: Tokens;
-    before?: Tokens;
-    after?: Tokens;
-  };
-  groups: Array<Tokens | {
-    tokens: Tokens;
-    afterBroken?: Tokens;
-    afterUnbroken?: Tokens;
-  }>;
-};
-
-export type LinkedGroupsToken = {
-  type: 'LinkedGroups';
-  tokens: Tokens;
-};
-
-export type TerminatorlessToken = {
-  type: 'Terminatorless';
-  tokens: Tokens;
+  contents: Token;
 };
 
 export type CommentToken = {
   type: 'Comment';
-  value: string;
+  value: Token;
 };
 
 export type PositionMarkerToken = {
   type: 'PositionMarker';
-  tokens: Tokens;
-  location: SourceLocation;
+  loc: SourceLocation;
+  prop: 'start' | 'end';
 };
 
 export type ConcatToken = {
-  type: 'ConcatToken';
-  tokens: Tokens;
+  type: 'Concat';
+  parts: Array<Token>;
+};
+
+export type IfBreakToken = {
+  type: 'IfBreak';
+  breakContents: Token;
+  flatContents: Token | undefined;
 };
 
 export type Token =
-  | GroupToken
-  | IndentToken
-  | VerbatimToken
-  | OperatorToken
-  | LinkedGroupsToken
-  | NewlineToken
-  | SpaceToken
-  | NumberToken
-  | DerivedNewlineToken
-  | TerminatorlessToken
+  | string
   | CommentToken
-  | WordToken
+  | ConcatToken
+  | GroupToken
+  | IfBreakToken
+  | IndentToken
+  | LineSuffixToken
+  | LineToken
   | PositionMarkerToken
-  | ConcatToken;
+  | SpaceToken;
 
-export type Tokens = Array<Token>;
+export const lineOrSpace: LineToken = {
+  type: 'Line',
+  mode: 'space',
+};
 
-export const newline: NewlineToken = {
-  type: 'Newline',
+export const softline: LineToken = {
+  type: 'Line',
+  mode: 'soft',
+};
+
+export const hardline: LineToken = {
+  type: 'Line',
+  mode: 'hard',
 };
 
 export const space: SpaceToken = {
   type: 'Space',
-  optional: true,
 };
 
-export const requiredSpace: SpaceToken = {
-  type: 'Space',
-  optional: false,
-};
-
-export function terminatorless(tokens: Tokens): TerminatorlessToken {
-  return {
-    type: 'Terminatorless',
-    tokens,
-  };
-}
-
-export function breakGroup(
-  groups: Array<Tokens>,
-  priority: boolean = false,
-): GroupToken {
-  return group(groups, {
-    priority,
-    broken: {
-      indentNewline: false,
-      separator: [newline],
-    },
-    unbroken: {
-      separator: [space],
-    },
-  });
-}
-
-export function group(
-  groups: GroupToken['groups'],
-  extra: Omit<GroupToken, 'type' | 'groups'>,
-): GroupToken {
+export function group(contents: Token): GroupToken {
   return {
     type: 'Group',
-    groups,
-    ...extra,
+    contents,
   };
 }
 
-export function linkedGroups(tokens: Tokens): LinkedGroupsToken {
-  return {
-    type: 'LinkedGroups',
-    tokens,
-  };
-}
-
-export function derivedNewline(id: number): DerivedNewlineToken {
-  return {
-    type: 'DerivedNewline',
-    id,
-  };
-}
-
-export function comment(value: string): CommentToken {
+export function comment(value: Token): CommentToken {
   return {
     type: 'Comment',
     value,
   };
 }
 
-export function verbatim(value: string): VerbatimToken {
-  return {
-    type: 'Verbatim',
-    value,
-  };
-}
-
-export function operator(value: string): OperatorToken {
-  return {
-    type: 'Operator',
-    value,
-  };
-}
-
-export function word(value: string): WordToken {
-  return {
-    type: 'Word',
-    value,
-  };
-}
-
-export function number(value: string): NumberToken {
-  return {
-    type: 'Number',
-    value,
-  };
-}
-
-export function indent(tokens: Tokens): IndentToken {
+export function indent(contents: Token): IndentToken {
   return {
     type: 'Indent',
-    tokens,
+    contents,
   };
 }
 
-export function positionMarker(
-  tokens: Tokens,
-  location: SourceLocation,
+export function mark(
+  loc: SourceLocation,
+  prop: 'start' | 'end',
 ): PositionMarkerToken {
   return {
     type: 'PositionMarker',
-    tokens,
-    location,
+    loc,
+    prop,
   };
 }
 
-export function concat(tokens: Tokens): ConcatToken {
+export function concat(parts: Array<Token>): Token {
+  if (parts.length === 0) {
+    return '';
+  }
+
+  if (parts.length === 1) {
+    return parts[0];
+  }
+
   return {
-    type: 'ConcatToken',
-    tokens,
+    type: 'Concat',
+    parts,
+  };
+}
+
+export function ifBreak(
+  breakContents: Token,
+  flatContents?: Token,
+): IfBreakToken {
+  return {
+    type: 'IfBreak',
+    breakContents,
+    flatContents,
+  };
+}
+
+export function join(separator: Token, tokens: Array<Token>): Token {
+  if (tokens.length === 0) {
+    return '';
+  }
+
+  if (tokens.length === 1) {
+    return tokens[0];
+  }
+
+  const parts = [];
+
+  for (let i = 0; i < tokens.length; i++) {
+    if (i > 0) {
+      parts.push(separator);
+    }
+    parts.push(tokens[i]);
+  }
+
+  return concat(parts);
+}
+
+export function lineSuffix(contents: Token): LineSuffixToken {
+  return {
+    type: 'LineSuffix',
+    contents,
   };
 }

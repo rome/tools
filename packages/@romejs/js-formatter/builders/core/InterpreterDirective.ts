@@ -5,19 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Tokens} from '../../tokens';
-import {
-  AnyNode,
-  InterpreterDirective,
-  interpreterDirective,
-} from '@romejs/js-ast';
+import {Token} from '../../tokens';
 
-export default function InterpreterDirective(
-  builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = interpreterDirective.assert(node);
-
+export default function InterpreterDirective(): Token {
   throw new Error('unimplemented');
 }

@@ -77,9 +77,14 @@ type ContextDiagnostic = Omit<Diagnostic, 'location' | 'description'> & {
   marker?: string;
 };
 
-type DiagnosticTarget = undefined | {loc?: SourceLocation} | Array<{
-  loc?: SourceLocation;
-}>;
+type DiagnosticTarget =
+  | undefined
+  | {
+      loc?: SourceLocation;
+    }
+  | Array<{
+      loc?: SourceLocation;
+    }>;
 
 function getFormattedCodeFromExitResult(result: TransformExitResult): string {
   if (Array.isArray(result)) {
@@ -88,7 +93,7 @@ function getFormattedCodeFromExitResult(result: TransformExitResult): string {
   } else if (result === REDUCE_REMOVE) {
     return '';
   } else {
-    return formatJS(result).getCode();
+    return formatJS(result).code;
   }
 }
 
@@ -112,9 +117,8 @@ export default class CompilerContext {
     this.path = createUnknownFilePath(ast.filename);
     this.filename = ast.filename;
     this.sourceText = sourceText;
-    this.displayFilename = ref === undefined
-      ? ast.filename
-      : ref.relative.join();
+    this.displayFilename =
+      ref === undefined ? ast.filename : ref.relative.join();
     this.frozen = frozen;
     this.mtime = ast.mtime;
     this.project = project;
@@ -151,13 +155,15 @@ export default class CompilerContext {
   options: CompilerOptions;
 
   async normalizeTransforms(transforms: Transforms): Promise<TransformVisitors> {
-    return Promise.all(transforms.map(async (visitor) => {
-      if (typeof visitor === 'function') {
-        return await visitor(this);
-      } else {
-        return visitor;
-      }
-    }));
+    return Promise.all(
+      transforms.map(async (visitor) => {
+        if (typeof visitor === 'function') {
+          return await visitor(this);
+        } else {
+          return visitor;
+        }
+      }),
+    );
   }
 
   getComments(ids: undefined | Array<string>): Array<AnyComment> {
@@ -173,10 +179,10 @@ export default class CompilerContext {
     }
 
     for (const suppression of this.suppressions) {
-      if (suppression.category === category && matchesSuppression(
-          loc,
-          suppression,
-        )) {
+      if (
+        suppression.category === category &&
+        matchesSuppression(loc, suppression)
+      ) {
         return true;
       }
     }
@@ -205,10 +211,14 @@ export default class CompilerContext {
     visitors: TransformVisitor | TransformVisitors,
     pathOpts?: PathOptions,
   ): Program {
-    return program.assert(reduce(ast, [
-      ...hookVisitors,
-      ...(Array.isArray(visitors) ? visitors : [visitors]),
-    ], this, pathOpts));
+    return program.assert(
+      reduce(
+        ast,
+        [...hookVisitors, ...(Array.isArray(visitors) ? visitors : [visitors])],
+        this,
+        pathOpts,
+      ),
+    );
   }
 
   reduce(
@@ -274,7 +284,6 @@ export default class CompilerContext {
         fixed: New;
       }>;
     },
-
     description: DiagnosticDescription,
     diag: ContextDiagnostic = {},
   ): TransformExitResult {
@@ -284,9 +293,13 @@ export default class CompilerContext {
     const {category} = description;
     const advice = description.advice || [];
     const loc = this.getLoc(target);
-    const oldCode = loc === undefined
-      ? ''
-      : this.sourceText.slice(ob1Get0(loc.start.index), ob1Get0(loc.end.index));
+    const oldCode =
+      loc === undefined
+        ? ''
+        : this.sourceText.slice(
+            ob1Get0(loc.start.index),
+            ob1Get0(loc.end.index),
+          );
 
     let fixed: undefined | New = defaultFixed;
 
@@ -309,14 +322,16 @@ export default class CompilerContext {
           message: 'Unable to find target location',
         });
       } else {
-        advice.push(buildLintDecisionAdviceAction({
-          noun: 'Apply fix',
-          instruction: 'To apply this fix run',
-          filename: this.displayFilename,
-          action: 'fix',
-          category,
-          start: loc.start,
-        }));
+        advice.push(
+          buildLintDecisionAdviceAction({
+            noun: 'Apply fix',
+            instruction: 'To apply this fix run',
+            filename: this.displayFilename,
+            action: 'fix',
+            category,
+            start: loc.start,
+          }),
+        );
       }
     }
 
@@ -325,9 +340,11 @@ export default class CompilerContext {
       if (this.hasLintDecisions()) {
         const decisions = this.findLintDecisions(loc);
         for (const decision of decisions) {
-          if (decision.category === category && decision.action === 'fix' &&
-                decision.id !==
-                undefined) {
+          if (
+            decision.category === category &&
+            decision.action === 'fix' &&
+            decision.id !== undefined
+          ) {
             const suggestion = suggestions[decision.id];
             if (suggestion !== undefined) {
               fixed = suggestion.fixed;
@@ -341,19 +358,18 @@ export default class CompilerContext {
       for (const suggestion of suggestions) {
         const num = index + 1;
 
-        advice.push(
-          {
-            type: 'log',
-            category: 'none',
-            message: `<emphasis>Suggested fix #${num}:</emphasis> ${suggestion.title}`,
-          },
-        );
+        advice.push({
+          type: 'log',
+          category: 'none',
+          message: `<emphasis>Suggested fix #${num}:</emphasis> ${suggestion.title}`,
+        });
 
         advice.push({
           type: 'diff',
-          diff: stringDiff(oldCode, getFormattedCodeFromExitResult(
-            suggestion.fixed,
-          )),
+          diff: stringDiff(
+            oldCode,
+            getFormattedCodeFromExitResult(suggestion.fixed),
+          ),
         });
 
         advice.push({
@@ -369,29 +385,35 @@ export default class CompilerContext {
             message: 'Unable to find target location',
           });
         } else {
-          advice.push(buildLintDecisionAdviceAction({
-            noun: `Apply suggestion "${suggestion.title}"`,
-            shortcut: String(num),
-            instruction: 'To apply this fix run',
-            filename: this.displayFilename,
-            action: 'fix',
-            category,
-            start: loc.start,
-            id: index,
-          }));
+          advice.push(
+            buildLintDecisionAdviceAction({
+              noun: `Apply suggestion "${suggestion.title}"`,
+              shortcut: String(num),
+              instruction: 'To apply this fix run',
+              filename: this.displayFilename,
+              action: 'fix',
+              category,
+              start: loc.start,
+              id: index,
+            }),
+          );
         }
 
         index++;
       }
     }
 
-    const {suppressed} = this.addLocDiagnostic(loc, {
-      ...description,
-      advice,
-    }, {
-      ...diag,
-      fixable: true,
-    });
+    const {suppressed} = this.addLocDiagnostic(
+      loc,
+      {
+        ...description,
+        advice,
+      },
+      {
+        ...diag,
+        fixable: true,
+      },
+    );
 
     if (suppressed || fixed === undefined) {
       return old;
@@ -415,21 +437,23 @@ export default class CompilerContext {
 
     if (loc !== undefined && loc.filename !== this.filename) {
       throw new Error(
-          `Trying to add a location from ${loc.filename} on a Context from ${this.path}`,
-        );
+        `Trying to add a location from ${loc.filename} on a Context from ${this.path}`,
+      );
     }
 
     const {category, advice = []} = description;
     if (loc !== undefined && loc.start !== undefined) {
-      advice.push(buildLintDecisionAdviceAction({
-        noun: 'Add suppression comment',
-        shortcut: 's',
-        instruction: 'To suppress this error run',
-        filename: this.displayFilename,
-        action: 'suppress',
-        category,
-        start: loc.start,
-      }));
+      advice.push(
+        buildLintDecisionAdviceAction({
+          noun: 'Add suppression comment',
+          shortcut: 's',
+          instruction: 'To suppress this error run',
+          filename: this.displayFilename,
+          action: 'suppress',
+          category,
+          start: loc.start,
+        }),
+      );
     }
 
     const {marker, ...diag} = contextDiag;

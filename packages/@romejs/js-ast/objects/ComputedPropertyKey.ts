@@ -17,10 +17,14 @@ export type ComputedPropertyKey = JSNodeBase & {
 export const computedPropertyKey = createQuickBuilder<
   ComputedPropertyKey,
   'value'
->('ComputedPropertyKey', 'value', {
-  bindingKeys: {},
-  visitorKeys: {
-    variance: true,
-    value: true,
+>(
+  'ComputedPropertyKey',
+  'value',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      variance: true,
+      value: true,
+    },
   },
-});
+);

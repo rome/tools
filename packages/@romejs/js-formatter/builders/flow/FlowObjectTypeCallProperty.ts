@@ -6,21 +6,15 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, space, word} from '../../tokens';
-import {
-  AnyNode,
-  FlowObjectTypeCallProperty,
-  flowObjectTypeCallProperty,
-} from '@romejs/js-ast';
+import {Token, concat, space} from '../../tokens';
+import {FlowObjectTypeCallProperty} from '@romejs/js-ast';
 
 export default function FlowObjectTypeCallProperty(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = flowObjectTypeCallProperty.assert(node);
-
+  node: FlowObjectTypeCallProperty,
+): Token {
   if (node.static === true) {
-    return [word('static'), space, ...builder.tokenize(node.value, node)];
+    return concat(['static', space, builder.tokenize(node.value, node)]);
   } else {
     return builder.tokenize(node.value, node);
   }

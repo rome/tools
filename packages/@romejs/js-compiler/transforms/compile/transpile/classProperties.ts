@@ -77,9 +77,8 @@ function transformClass(
 } {
   const bodyReplacements: Array<AnyStatement> = [];
   const constructorAssignments: Array<AnyExpression> = [];
-  const className: string = node.id === undefined
-    ? scope.generateUid('class')
-    : node.id.name;
+  const className: string =
+    node.id === undefined ? scope.generateUid('class') : node.id.name;
 
   let _constructor: undefined | ClassMethod = undefined;
   const filteredClassBody = [];
@@ -126,48 +125,57 @@ function transformClass(
         const visited = new Set();
 
         // find super() and insert assignments
-        const reducedConstructor = context.reduce(_constructor, [
-          {
-            name: 'classPropertiesInjector',
-            enter(path) {
-              const {node} = path;
+        const reducedConstructor = context.reduce(
+          _constructor,
+          [
+            {
+              name: 'classPropertiesInjector',
+              enter(path) {
+                const {node} = path;
 
-              if (visited.has(node)) {
+                if (visited.has(node)) {
+                  return node;
+                }
+
+                if (
+                  isSuperCall(node) &&
+                  path.parent.type !== 'ExpressionStatement'
+                ) {
+                  visited.add(node);
+
+                  // TODO retain proper value of super()
+                  return sequenceExpression.create({
+                    expressions: [node, ...constructorAssignments],
+                  });
+                }
+
+                if (
+                  node.type === 'ExpressionStatement' &&
+                  isSuperCall(node.expression)
+                ) {
+                  visited.add(node);
+
+                  return ([
+                    node,
+                    ...toExpressionStatements(constructorAssignments),
+                  ] as Array<AnyNode>);
+                }
+
                 return node;
-              }
-
-              if (isSuperCall(node) && path.parent.type !==
-                  'ExpressionStatement') {
-                visited.add(node);
-
-                // TODO retain proper value of super()
-                return sequenceExpression.create({
-                  expressions: [node, ...constructorAssignments],
-                });
-              }
-
-              if (node.type === 'ExpressionStatement' && isSuperCall(
-                  node.expression,
-                )) {
-                visited.add(node);
-
-                return ([
-                  node,
-                  ...toExpressionStatements(constructorAssignments),
-                ] as Array<AnyNode>);
-              }
-
-              return node;
+              },
             },
-          },
-        ]);
+          ],
+        );
         _constructor = classMethod.assert(reducedConstructor);
       } else {
         // create new constructor with a super() call and assignments
-        _constructor = createConstructor(bindingIdentifier.quick('args'), [
-          template.statement`super(...args);`,
-          ...toExpressionStatements(constructorAssignments),
-        ]);
+        _constructor = createConstructor(
+          bindingIdentifier.quick('args'),
+          [
+            template.statement`super(...args);`,
+            ...toExpressionStatements(constructorAssignments),
+          ],
+        );
       }
     } else {
       if (_constructor) {
@@ -184,9 +192,10 @@ function transformClass(
         };
       } else {
         // create new constructor with just the assignments
-        _constructor = createConstructor(undefined, toExpressionStatements(
-          constructorAssignments,
-        ));
+        _constructor = createConstructor(
+          undefined,
+          toExpressionStatements(constructorAssignments),
+        );
       }
     }
   }
@@ -200,8 +209,8 @@ function transformClass(
     id: node.id !== undefined && node.id.name === className
       ? node.id
       : bindingIdentifier.create({
-        name: className,
-      }),
+          name: className,
+        }),
     meta: {
       ...node.meta,
       body: filteredClassBody,
@@ -221,10 +230,13 @@ export default {
     const {node, scope, context} = path;
 
     // correctly replace an export class with the class node then append the declarations
-    if ((node.type === 'ExportLocalDeclaration' || node.type ===
-          'ExportDefaultDeclaration') && node.declaration !== undefined &&
-          node.declaration.type ===
-          'ClassDeclaration' && hasClassProps(node.declaration)) {
+    if (
+      (node.type === 'ExportLocalDeclaration' ||
+      node.type === 'ExportDefaultDeclaration') &&
+      node.declaration !== undefined &&
+      node.declaration.type === 'ClassDeclaration' &&
+      hasClassProps(node.declaration)
+    ) {
       const {newClass, declarations} = transformClass(
         node.declaration,
         scope,
@@ -241,9 +253,8 @@ export default {
 
     // turn a class expression into an IIFE that returns a class declaration
     if (node.type === 'ClassExpression' && hasClassProps(node)) {
-      const className = node.id === undefined
-        ? scope.generateUid('class')
-        : node.id.name;
+      const className =
+        node.id === undefined ? scope.generateUid('class') : node.id.name;
 
       return callExpression.create({
         callee: arrowFunctionExpression.create({

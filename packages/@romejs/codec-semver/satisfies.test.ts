@@ -31,11 +31,7 @@ const testData: {
   fail: TestDataItems;
 } = {
   pass: [
-    ...(looseOnly.map(([range, version]) => [
-      range,
-      version,
-      true,
-    ]) as TestDataItems),
+    ...(looseOnly.map(([range, version]) => [range, version, true]) as TestDataItems),
     ['1.0.0 - 2.0.0', '1.2.3'],
     ['^1.2.3+build', '1.2.3'],
     ['^1.2.3+build', '1.3.0'],
@@ -78,15 +74,21 @@ const testData: {
     ['*', '1.2.3'],
     ['2', '2.1.2'],
     ['2.3', '2.3.1'],
-    ['~x', '0.0.9'], // >=2.4.0 <2.5.0
-    ['~2', '2.0.9'], // >=2.0.0 <2.1.0
-    ['~2.4', '2.4.0'], // >=2.4.0 <2.5.0
+    ['~x', '0.0.9'],
+    // >=2.4.0 <2.5.0
+    ['~2', '2.0.9'],
+    // >=2.0.0 <2.1.0
+    ['~2.4', '2.4.0'],
+    // >=2.4.0 <2.5.0
     ['~2.4', '2.4.5'],
-    ['~>3.2.1', '3.2.2'], // >=3.2.1 <3.3.0,
-    ['~1', '1.2.3'], // >=1.0.0 <2.0.0
+    ['~>3.2.1', '3.2.2'],
+    // >=3.2.1 <3.3.0,
+    ['~1', '1.2.3'],
+    // >=1.0.0 <2.0.0
     ['~>1', '1.2.3'],
     ['~> 1', '1.2.3'],
-    ['~1.0', '1.0.2'], // >=1.0.0 <1.1.0,
+    ['~1.0', '1.0.2'],
+    // >=1.0.0 <1.1.0,
     ['~ 1.0', '1.0.2'],
     ['~ 1.0.3', '1.0.12'],
     ['~0.2', '0.2.3'],
@@ -124,7 +126,6 @@ const testData: {
     ['^x', '1.2.3'],
     ['<=7.x', '7.9.9'],
   ],
-
   fail: [
     ...looseOnly,
     ['1.0.0 - 2.0.0', '2.2.3'],
@@ -177,13 +178,18 @@ const testData: {
     ['1.2.* || 2.*', '1.1.3'],
     ['2', '1.1.2'],
     ['2.3', '2.4.1'],
-    ['~2.4', '2.5.0'], // >=2.4.0 <2.5.0
+    ['~2.4', '2.5.0'],
+    // >=2.4.0 <2.5.0
     ['~2.4', '2.3.9'],
-    ['~>3.2.1', '3.3.2'], // >=3.2.1 <3.3.0
-    ['~>3.2.1', '3.2.0'], // >=3.2.1 <3.3.0
-    ['~1', '0.2.3'], // >=1.0.0 <2.0.0
+    ['~>3.2.1', '3.3.2'],
+    // >=3.2.1 <3.3.0
+    ['~>3.2.1', '3.2.0'],
+    // >=3.2.1 <3.3.0
+    ['~1', '0.2.3'],
+    // >=1.0.0 <2.0.0
     ['~>1', '2.2.3'],
-    ['~1.0', '1.1.0'], // >=1.0.0 <1.1.0
+    ['~1.0', '1.1.0'],
+    // >=1.0.0 <1.1.0
     ['~0.2', '0.3.3'],
     ['~0', '1.2.3'],
     ['>=1.2', '1.1.1'],
@@ -194,25 +200,30 @@ const testData: {
     ['^0.0.1', '0.0.2'],
     ['^1.2.3', '1.2.2'],
     ['^1.2', '1.1.9'],
-
     // invalid ranges never satisfied!
     ['blerg', '1.2.3'],
     ['git+https://user:password0123@github.com/foo', '123.0.0'],
   ],
 };
 
-test('satisfies pass', function(t) {
-  for (const [range, ver, loose] of testData.pass) {
-    t.true(
-      satisfiesSemver(ver, range, {loose: loose === true}),
-      `${range} should be satisfied by ${ver}`,
-    );
-  }
-});
+test(
+  'satisfies pass',
+  function(t) {
+    for (const [range, ver, loose] of testData.pass) {
+      t.true(
+        satisfiesSemver(ver, range, {loose: loose === true}),
+        `${range} should be satisfied by ${ver}`,
+      );
+    }
+  },
+);
 
-test('satisfies fail', function(t) {
-  for (const [range, ver, loose] of testData.fail) {
-    const found = satisfiesSemver(ver, range, {loose: loose === true});
-    t.false(found, `${ver} should not be satisfied by ${range}`);
-  }
-});
+test(
+  'satisfies fail',
+  function(t) {
+    for (const [range, ver, loose] of testData.fail) {
+      const found = satisfiesSemver(ver, range, {loose: loose === true});
+      t.false(found, `${ver} should not be satisfied by ${range}`);
+    }
+  },
+);

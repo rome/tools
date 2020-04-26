@@ -8,8 +8,10 @@
 import {test} from 'rome';
 import {testLint} from '../testHelpers';
 
-test('no duplicated switch cases allowed', async (t) => {
-  await testLint(t, `
+test(
+  'no duplicated switch cases allowed',
+  async (t) => {
+    await testLint(t, `
     const expr = 'a';
     switch (expr) {
       case 'a':
@@ -26,4 +28,5 @@ test('no duplicated switch cases allowed', async (t) => {
         break;
     }
   `, {category: 'lint/noDuplicateCase'});
-});
+  },
+);
