@@ -55,6 +55,7 @@ export type DiagnosticCategory =
   | 'lint/noUnsafeFinally'
   | 'lint/noVar'
   | 'lint/pendingFixes'
+  | 'lint/preferBlockStatements'
   | 'lint/preferFunctionDeclarations'
   | 'lint/preferTemplate'
   | 'lint/preferWhile'
