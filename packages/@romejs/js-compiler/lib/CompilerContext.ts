@@ -291,7 +291,7 @@ export default class CompilerContext {
     const target = nodes.target === undefined ? nodes.old : nodes.target;
 
     const {category} = description;
-    const advice = description.advice || [];
+    const advice = [...(description.advice || [])];
     const loc = this.getLoc(target);
     const oldCode =
       loc === undefined
@@ -358,10 +358,12 @@ export default class CompilerContext {
       for (const suggestion of suggestions) {
         const num = index + 1;
 
+        const titlePrefix =
+          suggestions.length === 1 ? 'Suggested fix' : `Suggested fix #${num}`;
         advice.push({
           type: 'log',
           category: 'none',
-          message: `<emphasis>Suggested fix #${num}:</emphasis> ${suggestion.title}`,
+          message: `<emphasis>${titlePrefix}:</emphasis> ${suggestion.title}`,
         });
 
         advice.push({
@@ -387,7 +389,9 @@ export default class CompilerContext {
         } else {
           advice.push(
             buildLintDecisionAdviceAction({
-              noun: `Apply suggestion "${suggestion.title}"`,
+              noun: suggestions.length === 1
+                ? 'Apply suggested fix'
+                : `Apply suggested fix "${suggestion.title}"`,
               shortcut: String(num),
               instruction: 'To apply this fix run',
               filename: this.displayFilename,
