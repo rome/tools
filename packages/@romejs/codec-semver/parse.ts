@@ -121,7 +121,9 @@ const createSemverParser = createParser((ParserCore) =>
 
     // Remove all subsequent space tokens
     eatSpaceToken() {
-      while (this.eatToken('Space') !== undefined);
+      while (this.eatToken('Space') !== undefined) {
+        // empty
+      }
     }
 
     parseVersionOrWildcard(): WildcardNode | VersionNode {

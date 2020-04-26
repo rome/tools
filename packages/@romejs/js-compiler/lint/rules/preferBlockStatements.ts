@@ -5,28 +5,24 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {CompilerContext, Path} from '@romejs/js-compiler';
-import {AnyNode, AnyStatement, blockStatement} from '@romejs/js-ast';
+import {Path, TransformExitResult} from '@romejs/js-compiler';
+import {blockStatement} from '@romejs/js-ast';
 import {descriptions} from '@romejs/diagnostics';
-
-function addDiagnostic(context: CompilerContext, statement: AnyStatement): void {
-  context.addFixableDiagnostic(
-    {
-      old: statement,
-      fixed: blockStatement.quick([statement]),
-    },
-    descriptions.LINT.PREFER_BLOCK_STATEMENT,
-  );
-}
+import {commentInjector} from '../../transforms/defaultHooks';
 
 export default {
   name: 'preferBlockStatements',
-  enter(path: Path): AnyNode {
+  enter(path: Path): TransformExitResult {
     const {context, node} = path;
 
     if (node.type === 'IfStatement') {
+      let shouldFix = false;
+      let consequent = node.consequent;
+      let alternate = node.alternate;
+
       if (node.consequent.type !== 'BlockStatement') {
-        addDiagnostic(context, node.consequent);
+        consequent = blockStatement.quick([node.consequent]);
+        shouldFix = true;
       }
 
       if (
@@ -34,7 +30,22 @@ export default {
         node.alternate.type !== 'BlockStatement' &&
         node.alternate.type !== 'IfStatement'
       ) {
-        addDiagnostic(context, node.alternate);
+        alternate = blockStatement.quick([node.alternate]);
+        shouldFix = true;
+      }
+
+      if (shouldFix) {
+        return context.addFixableDiagnostic(
+          {
+            old: node,
+            fixed: {
+              ...node,
+              consequent,
+              alternate,
+            },
+          },
+          descriptions.LINT.PREFER_BLOCK_STATEMENT,
+        );
       }
     } else if (
       node.type === 'ForStatement' ||
@@ -44,11 +55,41 @@ export default {
       node.type === 'WhileStatement' ||
       node.type === 'WithStatement'
     ) {
-      if (
-        node.body.type !== 'BlockStatement' &&
-        node.body.type !== 'EmptyStatement'
-      ) {
-        addDiagnostic(context, node.body);
+      if (node.body.type === 'EmptyStatement') {
+        const id = path.callHook(
+          commentInjector,
+          {
+            type: 'CommentLine',
+            value: ' empty',
+          },
+        );
+
+        return context.addFixableDiagnostic(
+          {
+            old: node,
+            fixed: {
+              ...node,
+              body: blockStatement.create({
+                innerComments: [id],
+                body: [],
+              }),
+            },
+          },
+          descriptions.LINT.PREFER_BLOCK_STATEMENT,
+        );
+      }
+
+      if (node.body.type !== 'BlockStatement') {
+        return context.addFixableDiagnostic(
+          {
+            old: node,
+            fixed: {
+              ...node,
+              body: blockStatement.quick([node.body]),
+            },
+          },
+          descriptions.LINT.PREFER_BLOCK_STATEMENT,
+        );
       }
     }
 
