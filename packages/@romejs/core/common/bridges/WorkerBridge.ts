@@ -248,7 +248,7 @@ export default class WorkerBridge extends Bridge {
           }
 
           return {
-            diagnostic: err.diagnostics,
+            diagnostics: err.diagnostics,
           };
         },
         hydrate(err, data) {

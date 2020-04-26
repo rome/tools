@@ -112,7 +112,7 @@ export default class WorkerAPI {
       return UNKNOWN_ANALYZE_DEPENDENCIES_RESULT;
     }
 
-    return analyzeDependencies({
+    return await analyzeDependencies({
       file: ref,
       project,
       worker: this.worker,
