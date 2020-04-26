@@ -100,9 +100,9 @@ type ProjectConfigJSONPropertyReducer<Type> = Type extends AbsoluteFilePath
   ? string
   : Type extends Array<AbsoluteFilePath>
       ? Array<string>
-      : Type extends AbsoluteFilePathSet // rome-suppress-next-line lint/noExplicitAny
+      : Type extends AbsoluteFilePathSet
           ? Array<string> // rome-suppress-next-line lint/noExplicitAny
-          : Type extends Map<string, any> // rome-suppress-next-line lint/noExplicitAny
+          : Type extends Map<string, any>
               ? Dict<MapValue<Type>> // rome-suppress-next-line lint/noExplicitAny
               : Type extends Dict<any>
                   ? ProjectConfigJSONObjectReducer<Type>
