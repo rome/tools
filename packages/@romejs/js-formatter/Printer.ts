@@ -101,6 +101,15 @@ function print(token: Token, state: State, options: PrinterOptions): void {
         }
 
         case 'Group': {
+          if (token.shouldBreak) {
+            if (state.flat) {
+              throw new BreakError();
+            } else {
+              stack.push([token.contents, state]);
+              break;
+            }
+          }
+
           if (state.flat) {
             stack.push([token.contents, state]);
           } else {
