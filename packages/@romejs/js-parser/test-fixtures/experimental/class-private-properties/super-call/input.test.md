@@ -37,7 +37,7 @@ Program {
         advice: Array [
           log {
             category: 'info'
-            message: 'Maybe a typo in the method name (\'constructor\') or not extending another class?'
+            text: 'Maybe a typo in the method name (\'constructor\') or not extending another class?'
           }
         ]
       }

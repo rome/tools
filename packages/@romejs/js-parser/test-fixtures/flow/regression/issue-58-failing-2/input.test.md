@@ -73,7 +73,7 @@ Program {
         advice: Array [
           log {
             category: 'info'
-            message: 'Originated from opening tag of <emphasis>T</emphasis>'
+            text: 'Originated from opening tag of <emphasis>T</emphasis>'
           }
           frame {
             location: Object {

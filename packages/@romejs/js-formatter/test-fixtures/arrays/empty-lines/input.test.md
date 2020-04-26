@@ -4,7 +4,7 @@
 
 ## `arrays > empty-lines`
 
-### `Javascript Input`
+### `Input`
 
 ```javascript
 let a = [
@@ -21,7 +21,7 @@ let a = [
   ];
 ```
 
-### `Javascript Output`
+### `Output`
 
 ```javascript
 let a = [1, 2, 3, 4];

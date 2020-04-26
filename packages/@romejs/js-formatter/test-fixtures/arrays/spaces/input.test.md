@@ -4,7 +4,7 @@
 
 ## `arrays > spaces`
 
-### `Javascript Input`
+### `Input`
 
 ```javascript
 let a = [,];
@@ -13,7 +13,7 @@ let c = [,,1,];
 let d = [,,1,1];
 ```
 
-### `Javascript Output`
+### `Output`
 
 ```javascript
 let a = [];

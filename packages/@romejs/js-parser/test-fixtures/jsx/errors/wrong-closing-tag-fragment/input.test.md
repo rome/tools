@@ -88,7 +88,7 @@ Program {
         advice: Array [
           log {
             category: 'info'
-            message: 'Originated from this opening tag'
+            text: 'Originated from this opening tag'
           }
           frame {
             location: Object {

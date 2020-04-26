@@ -58,11 +58,11 @@ Program {
         advice: Array [
           log {
             category: 'info'
-            message: 'Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module'
+            text: 'Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module'
           }
           log {
             category: 'info'
-            message: 'Add <emphasis>"type": "module"</emphasis> to your <filelink emphasis target="package.json" />'
+            text: 'Add <emphasis>"type": "module"</emphasis> to your <filelink emphasis target="package.json" />'
           }
         ]
       }

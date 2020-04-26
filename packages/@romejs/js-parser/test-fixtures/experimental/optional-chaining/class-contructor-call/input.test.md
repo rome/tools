@@ -52,7 +52,7 @@ Program {
         advice: Array [
           log {
             category: 'info'
-            message: 'Optional chain member responsible'
+            text: 'Optional chain member responsible'
           }
           frame {
             location: Object {

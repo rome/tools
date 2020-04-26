@@ -15,7 +15,7 @@ Object {
         advice: Array [
           log {
             category: 'info'
-            message: 'Did you mean <emphasis>rome-suppress-next-line</emphasis>?'
+            text: 'Did you mean <emphasis>rome-suppress-next-line</emphasis>?'
           }
         ]
       }
@@ -50,7 +50,7 @@ Object {
         advice: Array [
           log {
             category: 'info'
-            message: 'Did you mean <emphasis>rome-suppress-next-line</emphasis>?'
+            text: 'Did you mean <emphasis>rome-suppress-next-line</emphasis>?'
           }
         ]
       }
@@ -75,7 +75,7 @@ Object {
         advice: Array [
           log {
             category: 'info'
-            message: 'Did you mean <emphasis>rome-suppress-next-line</emphasis>?'
+            text: 'Did you mean <emphasis>rome-suppress-next-line</emphasis>?'
           }
         ]
       }
@@ -100,7 +100,7 @@ Object {
         advice: Array [
           log {
             category: 'info'
-            message: 'Did you mean <emphasis>rome-suppress-next-line</emphasis>?'
+            text: 'Did you mean <emphasis>rome-suppress-next-line</emphasis>?'
           }
         ]
       }
@@ -125,7 +125,7 @@ Object {
         advice: Array [
           log {
             category: 'info'
-            message: 'Did you mean <emphasis>rome-suppress-next-line</emphasis>?'
+            text: 'Did you mean <emphasis>rome-suppress-next-line</emphasis>?'
           }
         ]
       }
@@ -150,7 +150,7 @@ Object {
         advice: Array [
           log {
             category: 'info'
-            message: 'Did you mean <emphasis>rome-suppress-next-line</emphasis>?'
+            text: 'Did you mean <emphasis>rome-suppress-next-line</emphasis>?'
           }
         ]
       }
@@ -185,7 +185,7 @@ Object {
         advice: Array [
           log {
             category: 'info'
-            message: 'Did you mean <emphasis>rome-suppress-next-line</emphasis>?'
+            text: 'Did you mean <emphasis>rome-suppress-next-line</emphasis>?'
           }
         ]
       }
@@ -210,7 +210,7 @@ Object {
         advice: Array [
           log {
             category: 'info'
-            message: 'Did you mean <emphasis>rome-suppress-next-line</emphasis>?'
+            text: 'Did you mean <emphasis>rome-suppress-next-line</emphasis>?'
           }
         ]
       }
@@ -235,7 +235,7 @@ Object {
         advice: Array [
           log {
             category: 'info'
-            message: 'Did you mean <emphasis>rome-suppress-next-line</emphasis>?'
+            text: 'Did you mean <emphasis>rome-suppress-next-line</emphasis>?'
           }
         ]
       }
@@ -260,7 +260,7 @@ Object {
         advice: Array [
           log {
             category: 'info'
-            message: 'Did you mean <emphasis>rome-suppress-next-line</emphasis>?'
+            text: 'Did you mean <emphasis>rome-suppress-next-line</emphasis>?'
           }
         ]
       }
@@ -295,7 +295,7 @@ Object {
         advice: Array [
           log {
             category: 'info'
-            message: 'Did you mean <emphasis>rome-suppress-next-line</emphasis>?'
+            text: 'Did you mean <emphasis>rome-suppress-next-line</emphasis>?'
           }
         ]
       }

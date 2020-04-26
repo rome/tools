@@ -4,7 +4,7 @@
 
 ## `arrow > arrow-call`
 
-### `Javascript Input`
+### `Input`
 
 ```javascript
 const testResults = results.testResults.map(testResult =>
@@ -53,7 +53,7 @@ const testResults = results.testResults.map(testResult =>
   promise.then(result => result.veryLongVariable.veryLongPropertyName > someOtherVariable ? "ok" : "fail");
 ```
 
-### `Javascript Output`
+### `Output`
 
 ```javascript
 const testResults = results.testResults.map((testResult) => formatResult(testResult, formatter, reporter));
