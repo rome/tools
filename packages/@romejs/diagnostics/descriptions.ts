@@ -67,9 +67,13 @@ type OutputMessagesValue<Value> = Value extends string
           ? OutputMessagesFactory<Value>
           : never;
 
-type OutputMessagesCategory<Input extends InputMessagesCategory> = { [Key in keyof Input]: OutputMessagesValue<Input[Key]> };
+type OutputMessagesCategory<Input extends InputMessagesCategory> = {
+  [Key in keyof Input]: OutputMessagesValue<Input[Key]>
+};
 
-type OutputMessages<Input extends InputMessages> = { [Key in keyof Input]: OutputMessagesCategory<Input[Key]> };
+type OutputMessages<Input extends InputMessages> = {
+  [Key in keyof Input]: OutputMessagesCategory<Input[Key]>
+};
 
 // This is a lot of gross meta programming
 function createMessages<Input extends InputMessages>(

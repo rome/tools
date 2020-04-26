@@ -485,7 +485,7 @@ function extendProjectConfig(
 type MergedPartialConfig<
   A extends PartialProjectConfig,
   B extends PartialProjectConfig
-> = { [Key in keyof ProjectConfigObjects]: A[Key] & B[Key] };
+> = {[Key in keyof ProjectConfigObjects]: A[Key] & B[Key]};
 
 function mergePartialConfig<
   A extends PartialProjectConfig,

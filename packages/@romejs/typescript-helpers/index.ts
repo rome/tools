@@ -16,17 +16,19 @@ export type Dict<T> = {
   [key: string]: T;
 };
 
-export type RequiredProps<Obj, Keys extends keyof Obj> = Omit<Obj, Keys> &
-  { [Key in Keys]-?: NonNullable<Obj[Key]> };
+export type RequiredProps<Obj, Keys extends keyof Obj> = Omit<Obj, Keys> & {
+  [Key in Keys]-?: NonNullable<Obj[Key]>
+};
 
-export type OptionalProps<Obj, Keys extends keyof Obj> = Omit<Obj, Keys> &
-  { [Key in Keys]?: Obj[Key] };
+export type OptionalProps<Obj, Keys extends keyof Obj> = Omit<Obj, Keys> & {
+  [Key in Keys]?: Obj[Key]
+};
 
 // Turn a type that contains interfaces into regular objects
 export type InterfaceToObject<T> = T extends {
 
 }
-  ? { [K in keyof T]: InterfaceToObject<T[K]> }
+  ? {[K in keyof T]: InterfaceToObject<T[K]>}
   : T;
 
 export type UnknownObject = Dict<unknown>;

@@ -20,7 +20,9 @@ type MessagesShape = {
 
 type Factory = (...args: Array<unknown>) => string;
 
-type FactoryObject<Messages extends MessagesShape> = { [P in keyof Messages]: Factory };
+type FactoryObject<Messages extends MessagesShape> = {
+  [P in keyof Messages]: Factory
+};
 
 export function createMessageFactory<Messages extends MessagesShape>(
   messages: Messages,

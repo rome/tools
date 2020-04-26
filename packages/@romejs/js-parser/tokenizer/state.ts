@@ -20,7 +20,7 @@ import {
   ob1Number1,
 } from '@romejs/ob1';
 
-type Scopes = { [K in ScopeType]?: Array<unknown> };
+type Scopes = {[K in ScopeType]?: Array<unknown>};
 
 export type State = {
   diagnostics: Diagnostics;

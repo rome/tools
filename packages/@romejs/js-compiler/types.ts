@@ -28,7 +28,9 @@ export type TransformStageFactory = (
   options: Object,
 ) => Transforms;
 
-export type TransformStageFactories = { [key in TransformStageName]: TransformStageFactory };
+export type TransformStageFactories = {
+  [key in TransformStageName]: TransformStageFactory
+};
 
 //
 export type Transform =
