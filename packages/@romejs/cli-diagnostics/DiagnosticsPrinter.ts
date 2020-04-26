@@ -632,10 +632,7 @@ export default class DiagnosticsPrinter extends Error {
     }
 
     const displayableProblems = this.getDisplayedProblemsCount();
-    let str = `Found <number emphasis>${displayableProblems}</number> problem`;
-    if (displayableProblems > 1 || displayableProblems === 0) {
-      str += 's';
-    }
+    let str = `Found <number emphasis>${displayableProblems}</number> <grammarNumber plural="problems" singular="problem">${displayableProblems}</grammarNumber>`;
 
     if (filteredCount > 0) {
       str += `<dim> (${filteredCount} filtered)</dim>`;

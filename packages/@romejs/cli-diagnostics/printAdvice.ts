@@ -347,10 +347,11 @@ function printStacktrace(
     diagnostic.description.advice !== undefined &&
     diagnostic.description.advice[0] === item;
   if (!isFirstPart) {
-    opts.reporter.info(
-      item.title === undefined ? 'Stack trace' : escapeMarkup(item.title),
-    );
-    opts.reporter.forceSpacer();
+    const {title} = item;
+    if (title !== undefined) {
+      opts.reporter.info(escapeMarkup(title));
+      opts.reporter.forceSpacer();
+    }
   }
 
   opts.reporter.processedList(

@@ -696,6 +696,18 @@ export const descriptions = createMessages({
       message: 'No tests declared in this file',
       category: 'tests/noneDeclared',
     },
+    LOGS: (advice: DiagnosticAdvice) => ({
+      message: 'File produced console logs',
+      category: 'tests/logs',
+      advice: [
+        ...advice,
+        {
+          type: 'log',
+          category: 'info',
+          text: 'Only visible when this test file contains failures',
+        },
+      ],
+    }),
   },
   SUPPRESSIONS: {
     UNUSED: {

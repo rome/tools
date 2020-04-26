@@ -93,6 +93,7 @@ export type DiagnosticCategory =
   | 'tests/disabled'
   | 'tests/failure'
   | 'tests/fixtureOptions'
+  | 'tests/logs'
   | 'tests/noneDeclared'
   | 'tests/snapshots/incorrect'
   | 'tests/snapshots/missing'
