@@ -69,9 +69,9 @@ const promise = createFixtureTests(async (fixture, t) => {
   });
 
   const outputFile = inputFile.absolute.getParent().append(
-    `${inputFile.absolute.getExtensionlessBasename()}.test.md`,
+    inputFile.absolute.getExtensionlessBasename(),
   ).join();
-  await t.snapshot(ast, undefined, outputFile);
+  await t.snapshot(ast, undefined, {filename: outputFile});
 });
 
 // @ts-ignore Doesn't support top-level await lol

@@ -5,7 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AbsoluteFilePath, AbsoluteFilePathMap} from '@romejs/path';
+import {
+  AbsoluteFilePath,
+  AbsoluteFilePathMap,
+  createAbsoluteFilePath,
+} from '@romejs/path';
 import {exists, readFileText, unlink, writeFile} from '@romejs/fs';
 import {TestRunnerOptions} from '../master/testing/types';
 import TestWorkerRunner from './TestWorkerRunner';
@@ -38,6 +42,8 @@ type Snapshot = {
   entries: Map<string, SnapshotEntry>;
 };
 
+export const SNAPSHOT_EXT = '.test.md';
+
 function buildEntriesKey(testName: string, entryName: string): string {
   return `${testName}#${entryName}`;
 }
@@ -45,7 +51,7 @@ function buildEntriesKey(testName: string, entryName: string): string {
 export default class SnapshotManager {
   constructor(runner: TestWorkerRunner, testPath: AbsoluteFilePath) {
     this.defaultSnapshotPath = testPath.getParent().append(
-      `${testPath.getExtensionlessBasename()}.test.md`,
+      `${testPath.getExtensionlessBasename()}${SNAPSHOT_EXT}`,
     );
     this.testPath = testPath;
 
@@ -67,6 +73,20 @@ export default class SnapshotManager {
   teardown() {
     if (this.loadingSnapshotCount > 0) {
       throw new Error();
+    }
+  }
+
+  normalizeSnapshotPath(filename: undefined | string): AbsoluteFilePath {
+    if (filename === undefined) {
+      return this.defaultSnapshotPath;
+    }
+
+    const path = createAbsoluteFilePath(filename);
+    const ext = path.getExtensions();
+    if (ext.endsWith(SNAPSHOT_EXT)) {
+      return path;
+    } else {
+      return path.addExtension(SNAPSHOT_EXT);
     }
   }
 
@@ -270,8 +290,9 @@ export default class SnapshotManager {
   async get(
     testName: string,
     entryName: string,
-    snapshotPath: AbsoluteFilePath = this.defaultSnapshotPath,
+    optionalFilename: undefined | string,
   ): Promise<undefined | string> {
+    const snapshotPath = this.normalizeSnapshotPath(optionalFilename);
     let snapshot = this.snapshots.get(snapshotPath);
 
     if (snapshot === undefined) {
@@ -298,15 +319,16 @@ export default class SnapshotManager {
       entryName,
       value,
       language,
-      snapshotPath = this.defaultSnapshotPath,
+      optionalFilename,
     }: {
       testName: string;
       entryName: string;
       value: string;
       language: undefined | string;
-      snapshotPath: undefined | AbsoluteFilePath;
+      optionalFilename: undefined | string;
     },
   ) {
+    const snapshotPath = this.normalizeSnapshotPath(optionalFilename);
     let snapshot = this.snapshots.get(snapshotPath);
     if (snapshot === undefined) {
       snapshot = {

@@ -23,8 +23,8 @@ import {
   ExpectedError,
   SyncThrower,
   TestHelper,
+  TestSnapshotOptions,
 } from '@romejs-runtime/rome/test';
-import {createAbsoluteFilePath} from '@romejs/path';
 
 function formatExpectedError(expected: ExpectedError): string {
   if (typeof expected === 'string') {
@@ -68,7 +68,7 @@ type SnapshotOptions = {
   entryName: string;
   expected: unknown;
   message?: string;
-  optionalFilename?: string;
+  opts?: TestSnapshotOptions;
 };
 
 export default class TestAPI implements TestHelper {
@@ -489,14 +489,14 @@ export default class TestAPI implements TestHelper {
   snapshot(
     expected: unknown,
     message?: string,
-    optionalFilename?: string,
+    opts?: TestSnapshotOptions,
   ): Promise<string> {
     const id = this.snapshotCounter++;
     return this.catchNamedSnapshot({
       entryName: String(id),
       expected,
       message,
-      optionalFilename,
+      opts,
     });
   }
 
@@ -504,34 +504,14 @@ export default class TestAPI implements TestHelper {
     entryName: string,
     expected: unknown,
     message?: string,
-    optionalFilename?: string,
+    opts?: TestSnapshotOptions,
   ): Promise<string> {
     return this.catchNamedSnapshot({
       entryName,
       expected,
       message,
-      optionalFilename,
+      opts,
     });
-  }
-
-  async getSnapshot(entryName: string): Promise<unknown> {
-    // TODO add `filename`
-    return this.snapshotManager.get(this.testName, entryName);
-  }
-
-  _normalizeSnapshotFilename(filename: string): string {
-    if (!filename.endsWith('test.md')) {
-      const lastIndex = filename.lastIndexOf('.');
-      let baseName = undefined;
-      if (lastIndex === -1) {
-        // extensionless file
-        baseName = filename;
-      } else {
-        baseName = filename.substring(0, lastIndex);
-      }
-      return `${baseName}.test.md`;
-    }
-    return filename;
   }
 
   catchNamedSnapshot(opts: SnapshotOptions): Promise<string> {
@@ -546,10 +526,10 @@ export default class TestAPI implements TestHelper {
       entryName,
       message,
       expected,
-      optionalFilename,
+      opts = {},
     }: SnapshotOptions,
   ): Promise<string> {
-    let language: undefined | string;
+    let language: undefined | string = opts.language;
 
     let formatted = '';
     if (typeof expected === 'string') {
@@ -559,21 +539,11 @@ export default class TestAPI implements TestHelper {
       formatted = prettyFormat(expected);
     }
 
-    if (entryName.toLocaleLowerCase().includes('javascript')) {
-      language = 'javascript';
-    }
-
-    let snapshotPath = undefined;
-    if (optionalFilename !== undefined) {
-      optionalFilename = this._normalizeSnapshotFilename(optionalFilename);
-      snapshotPath = createAbsoluteFilePath(optionalFilename);
-    }
-
     // Get the current snapshot
     const existingSnapshot = await this.snapshotManager.get(
       this.testName,
       entryName,
-      snapshotPath,
+      opts.filename,
     );
     if (existingSnapshot === undefined) {
       // No snapshot exists, let's save this one!
@@ -582,7 +552,7 @@ export default class TestAPI implements TestHelper {
         entryName,
         value: formatted,
         language,
-        snapshotPath,
+        optionalFilename: opts.filename,
       });
       return entryName;
     }

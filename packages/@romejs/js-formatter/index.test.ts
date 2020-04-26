@@ -69,17 +69,28 @@ const promise = createFixtureTests(async (fixture, t) => {
 
   const printed = formatJS(ast, formatOptions);
 
-  const outputFile = inputFile.absolute.getParent().append(
-    `${inputFile.absolute.getExtensionlessBasename()}.test.md`,
+  const snapshotFile = inputFile.absolute.getParent().append(
+    inputFile.absolute.getExtensionlessBasename(),
   ).join();
 
-  await t.snapshotNamed('Javascript Input', inputContent, undefined, outputFile);
+  await t.snapshotNamed(
+    'Input',
+    inputContent,
+    undefined,
+    {
+      filename: snapshotFile,
+      language: 'javascript',
+    },
+  );
 
   await t.snapshotNamed(
-    'Javascript Output',
+    'Output',
     printed.code,
     undefined,
-    outputFile,
+    {
+      filename: snapshotFile,
+      language: 'javascript',
+    },
   );
 });
 

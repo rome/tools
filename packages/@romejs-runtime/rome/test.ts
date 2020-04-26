@@ -11,6 +11,11 @@ export type SyncThrower = () => void;
 
 export type ExpectedError = undefined | string | RegExp | Function;
 
+export type TestSnapshotOptions = {
+  filename?: string;
+  language?: string;
+};
+
 export interface TestHelper {
   // TODO this should be DiagnosticAdviceItem
   addToAdvice(item: unknown): void;
@@ -45,15 +50,14 @@ export interface TestHelper {
   snapshot(
     expected: unknown,
     message?: string,
-    fileName?: string,
+    opts?: TestSnapshotOptions,
   ): Promise<string>;
   snapshotNamed(
     name: string,
     expected: unknown,
     message?: string,
-    filename?: string,
+    opts?: TestSnapshotOptions,
   ): Promise<string>;
-  getSnapshot(snapshotName: string): Promise<unknown>;
 }
 
 export type TestName = string | Array<string>;
