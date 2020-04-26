@@ -113,7 +113,7 @@ export default class Reporter {
     this.enabled = opts.disabled === true ? 0 : 1;
     this.markupOptions =
       opts.markupOptions === undefined ? {} : opts.markupOptions;
-    this.hasSpacer = false;
+    this.streamHasSpacer = new Set();
     this.shouldRedirectOutToErr = false;
     this.stdin = opts.stdin;
 
@@ -254,7 +254,7 @@ export default class Reporter {
   isRemote: boolean;
   noProgress: boolean;
   isVerbose: boolean;
-  hasSpacer: boolean;
+  streamHasSpacer: Set<ReporterStream>;
   indentLevel: number;
   indentString: string;
   enabled: number;
@@ -351,14 +351,13 @@ export default class Reporter {
       msg = indentString + msg.replace(/\n([^\n])/g, `\n${indentString}$1`);
     }
 
-    // Track if there's going to be a completely empty line
-    this.hasSpacer = msg === '' || msg[msg.length - 1] === '\n';
-
     return msg;
   }
 
-  redirectOutToErr(should: boolean) {
+  redirectOutToErr(should: boolean): boolean {
+    const old = this.shouldRedirectOutToErr;
     this.shouldRedirectOutToErr = should;
+    return old;
   }
 
   setStreamColumns(streams: Array<ReporterStream>, columns: number) {
@@ -851,8 +850,10 @@ export default class Reporter {
   }
 
   spacer() {
-    if (!this.hasSpacer) {
-      this.forceSpacer();
+    for (const stream of this.getStreams(false)) {
+      if (!this.streamHasSpacer.has(stream)) {
+        this.logOne(stream, '');
+      }
     }
   }
 
@@ -928,6 +929,15 @@ export default class Reporter {
     if (opts.newline !== false) {
       msg += '\n';
     }
+
+    // Track if there's going to be a completely empty line
+    const hasSpacer = msg === '\n' || msg.endsWith('\n\n');
+    if (hasSpacer) {
+      this.streamHasSpacer.add(stream);
+    } else {
+      this.streamHasSpacer.delete(stream);
+    }
+
     this.writeSpecific(stream, msg, opts);
   }
 

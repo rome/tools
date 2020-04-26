@@ -10,7 +10,6 @@ import {
   Diagnostic,
   DiagnosticAdvice,
   DiagnosticLogCategory,
-  Diagnostics,
   INTERNAL_ERROR_LOG_ADVICE,
   catchDiagnostics,
   createBlessedDiagnosticMessage,
@@ -39,11 +38,8 @@ import {
 import {AbsoluteFilePath, createAbsoluteFilePath} from '@romejs/path';
 import {escapeMarkup, markup} from '@romejs/string-markup';
 import util = require('util');
-import {
-  ErrorFrames,
-  getErrorStructure,
-  getSourceLocationFromErrorFrame,
-} from '@romejs/v8';
+import {ErrorFrames, getErrorStructure} from '@romejs/v8';
+
 const MAX_RUNNING_TESTS = 20;
 
 function cleanFrames(frames: ErrorFrames): ErrorFrames {

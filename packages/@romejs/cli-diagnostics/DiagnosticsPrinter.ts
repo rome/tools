@@ -388,11 +388,11 @@ export default class DiagnosticsPrinter extends Error {
   }
 
   displayDiagnostics(diagnostics: Diagnostics) {
-    this.reporter.redirectOutToErr(true);
+    const restoreRedirect = this.reporter.redirectOutToErr(true);
     for (const diag of diagnostics) {
       this.displayDiagnostic(diag);
     }
-    this.reporter.redirectOutToErr(false);
+    this.reporter.redirectOutToErr(restoreRedirect);
   }
 
   displayDiagnostic(diag: Diagnostic) {
@@ -401,9 +401,7 @@ export default class DiagnosticsPrinter extends Error {
     const {advice} = diag.description;
 
     // Determine if we should skip showing the frame at the top of the diagnostic output
-
     // We check if there are any frame advice entries that match us exactly, this is
-
     // useful for stuff like reporting call stacks
     let skipFrame = false;
     if (start !== undefined && end !== undefined && advice !== undefined) {
@@ -519,7 +517,7 @@ export default class DiagnosticsPrinter extends Error {
         if (origins !== undefined && origins.length > 0) {
           reporter.spacer();
           reporter.info('Why are you seeing this diagnostic?');
-          reporter.forceSpacer();
+          reporter.spacer();
           reporter.list(
             origins.map((origin) => {
               let res = `<emphasis>${origin.category}</emphasis>`;
@@ -565,7 +563,9 @@ export default class DiagnosticsPrinter extends Error {
     const isError = problemCount > 0;
 
     if (isError) {
+      const restoreRedirect = reporter.redirectOutToErr(true);
       reporter.hr();
+      reporter.redirectOutToErr(restoreRedirect);
     }
 
     if (this.hasTruncatedDiagnostics) {

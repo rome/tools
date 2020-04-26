@@ -697,7 +697,7 @@ export const descriptions = createMessages({
       category: 'tests/noneDeclared',
     },
     LOGS: (advice: DiagnosticAdvice) => ({
-      message: 'File produced console logs',
+      message: 'Test file produced console logs',
       category: 'tests/logs',
       advice: [
         ...advice,
