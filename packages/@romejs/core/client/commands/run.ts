@@ -38,7 +38,7 @@ export default createLocalCommand({
 
     const res = await req.client.query(
       {
-        command: 'run',
+        commandName: 'run',
         args: req.query.args,
       },
       'master',

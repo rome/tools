@@ -61,7 +61,7 @@ export default class ClientRequest {
   }
 
   async initCommand(): Promise<MasterQueryResponse> {
-    const localCommand = localCommands.get(this.query.command);
+    const localCommand = localCommands.get(this.query.commandName);
 
     if (this.type === 'master' || localCommand === undefined) {
       return this.initFromMaster();

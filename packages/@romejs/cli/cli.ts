@@ -313,7 +313,7 @@ export default async function cli() {
   }
 
   const res = await client.query({
-    command,
+    commandName: command,
     commandFlags,
     args,
     requestFlags,
@@ -361,6 +361,11 @@ export default async function cli() {
 
     case 'DIAGNOSTICS': {
       process.exit(res.diagnostics.length === 0 ? 0 : 1);
+      break;
+    }
+
+    case 'CANCELLED': {
+      process.exit(0);
       break;
     }
 

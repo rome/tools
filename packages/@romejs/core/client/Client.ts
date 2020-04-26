@@ -77,6 +77,7 @@ export default class Client {
   constructor(opts: ClientOptions) {
     this.options = opts;
     this.userConfig = loadUserConfig();
+    this.queryCounter = 0;
 
     this.flags = {
       ...DEFAULT_CLIENT_FLAGS,
@@ -118,6 +119,7 @@ export default class Client {
     });
   }
 
+  queryCounter: number;
   userConfig: UserConfig;
   options: ClientOptions;
   flags: ClientFlags;
@@ -303,9 +305,7 @@ export default class Client {
     );
 
     // Collect CPU profile
-
     // Callback will be called later once it has been collected
-
     // Initial async work is just connecting to the processes and setting up handlers
     let profileEvents: Array<TraceEvent> = [];
     await this.profile(
@@ -375,7 +375,7 @@ export default class Client {
       if (bridgeStatus !== undefined) {
         const status = await this.query({
           silent: true,
-          command: 'status',
+          commandName: 'status',
         });
         if (status.type === 'SUCCESS') {
           writer.append(
@@ -403,6 +403,32 @@ export default class Client {
     const res = await request.init();
     this.requestResponseEvent.send({request: query, response: res});
     return res;
+  }
+
+  cancellableQuery(
+    query: PartialMasterQueryRequest,
+    type?: ClientRequestType,
+  ): {
+    promise: Promise<MasterQueryResponse>;
+    cancel: () => Promise<void>;
+  } {
+    const cancelToken = String(this.queryCounter++);
+
+    return {
+      promise: this.query(
+        {
+          ...query,
+          cancelToken,
+        },
+        type,
+      ),
+      cancel: async () => {
+        const status = this.getBridge();
+        if (status !== undefined) {
+          await status.bridge.cancelQuery.call(cancelToken);
+        }
+      },
+    };
   }
 
   getBridge(): undefined | BridgeStatus {

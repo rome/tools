@@ -46,7 +46,7 @@ export default createLocalCommand({
 
     await req.client.query(
       {
-        command: 'lsp',
+        commandName: 'lsp',
       },
       'master',
     );

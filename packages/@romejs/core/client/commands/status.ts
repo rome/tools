@@ -23,7 +23,7 @@ export default createLocalCommand({
     if (bridge) {
       const status = await req.client.query(
         {
-          command: 'status',
+          commandName: 'status',
         },
         'master',
       );

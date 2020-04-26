@@ -19,12 +19,12 @@ export default createLocalCommand({
   },
   async callback(req: ClientRequest) {
     const stopped = await req.client.query({
-      command: 'stop',
+      commandName: 'stop',
     });
 
     if (stopped.type === 'SUCCESS' && stopped.data === true) {
       const started = await req.client.query({
-        command: 'start',
+        commandName: 'start',
       });
       return started.type === 'SUCCESS' && started.data === true;
     } else {

@@ -26,14 +26,15 @@ export type MasterQueryRequest = {
   silent: boolean;
   noData: boolean;
   terminateWhenIdle: boolean;
+  cancelToken?: string;
 };
 
 export type PartialMasterQueryRequest = Partial<Omit<
   MasterQueryRequest,
-  'requestFlags'
+  'requestFlags' | 'commandName'
 >> & {
   requestFlags?: Partial<ClientRequestFlags>;
-  command: string;
+  commandName: string;
 };
 
 export type MasterQueryResponseSuccess = {
@@ -63,10 +64,15 @@ export type MasterQueryResponseInvalid = {
   showHelp: boolean;
 };
 
+export type MasterQueryResponseCancelled = {
+  type: 'CANCELLED';
+};
+
 export type MasterQueryResponse =
   | MasterQueryResponseInvalid
   | MasterQueryResponseSuccess
   | MasterQueryResponseError
+  | MasterQueryResponseCancelled
   | MasterQueryResponseDiagnostics;
 
 export type ProfilingStartData = {
@@ -138,6 +144,11 @@ export default class MasterBridge extends Bridge {
 
   query = this.createEvent<PartialMasterQueryRequest, MasterQueryResponse>({
     name: 'query',
+    direction: 'server<-client',
+  });
+
+  cancelQuery = this.createEvent<string, void>({
+    name: 'cancel',
     direction: 'server<-client',
   });
 

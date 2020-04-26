@@ -190,16 +190,14 @@ export default class Event<Param, Ret = void> {
     if (this.subscriptions.has(callback)) {
       this.subscriptions.delete(callback);
       this.onSubscriptionChange();
-      return undefined;
+      return;
     }
 
     // If this callback was the root subscription, then set it to the next one
     if (callback === this.rootSubscription) {
       this.rootSubscription = Array.from(this.subscriptions)[0];
       this.onSubscriptionChange();
-      return undefined;
+      return;
     }
-
-    throw new Error('Not a current subscription');
   }
 }

@@ -24,7 +24,7 @@ export default createLocalCommand({
     if (bridge) {
       const stop = await req.client.query(
         {
-          command: 'stop',
+          commandName: 'stop',
         },
         'master',
       );

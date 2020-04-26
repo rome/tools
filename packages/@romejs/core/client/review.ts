@@ -149,14 +149,14 @@ async function check(
   // Execute action
   const actionRes = await client.query(
     {
-      command: action.command,
+      commandName: action.command,
       args: action.args,
       commandFlags: action.commandFlags,
       requestFlags,
     },
     'master',
   );
-  if (actionRes.type === 'ERROR' || actionRes.type === 'INVALID_REQUEST') {
+  if (actionRes.type !== 'DIAGNOSTICS' && actionRes.type !== 'SUCCESS') {
     return actionRes;
   }
 
