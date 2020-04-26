@@ -57,7 +57,7 @@ const promise = createFixtureTests(async (fixture, t) => {
   t.addToAdvice({
     type: 'log',
     category: 'info',
-    message: 'Fomat options',
+    text: 'Fomat options',
   });
 
   t.addToAdvice({

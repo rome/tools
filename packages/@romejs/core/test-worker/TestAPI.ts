@@ -5,11 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-  DiagnosticAdvice,
-  DiagnosticAdviceItem,
-  getErrorStackAdvice,
-} from '@romejs/diagnostics';
+import {DiagnosticAdvice, getErrorStackAdvice} from '@romejs/diagnostics';
 import SnapshotManager from './SnapshotManager';
 import {TestRunnerOptions} from '../master/testing/types';
 import {Event} from '@romejs/events';
@@ -22,10 +18,10 @@ import {
   AsyncFunc,
   ExpectedError,
   SyncThrower,
+  TestDiagnosticAdviceItem,
   TestHelper,
   TestSnapshotOptions,
 } from '@romejs-runtime/rome/test';
-
 function formatExpectedError(expected: ExpectedError): string {
   if (typeof expected === 'string') {
     return JSON.stringify(expected);
@@ -215,7 +211,7 @@ export default class TestAPI implements TestHelper {
     return advice;
   }
 
-  addToAdvice(item: DiagnosticAdviceItem): void {
+  addToAdvice(item: TestDiagnosticAdviceItem): void {
     this.advice.push(item);
   }
 
