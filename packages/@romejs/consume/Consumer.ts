@@ -768,7 +768,7 @@ export default class Consumer {
     this.declareDefinition({
       type: 'date',
       default: def,
-      required: true,
+      required: def === undefined,
     });
     return this._asDate(def);
   }
@@ -800,7 +800,7 @@ export default class Consumer {
     this.declareDefinition({
       type: 'boolean',
       default: def,
-      required: true,
+      required: def === undefined,
     });
     return this._asBoolean(def);
   }
@@ -816,24 +816,27 @@ export default class Consumer {
 
   // STRINGS
   asStringOrVoid(def?: string): undefined | string {
+    if (this.exists()) {
+      return this.asString(def);
+    } else {
+      this._declareOptionalString(def);
+      return undefined;
+    }
+  }
+
+  _declareOptionalString(def?: string) {
     this.declareDefinition({
       type: 'string',
       default: def,
       required: false,
     });
-
-    if (this.exists()) {
-      return this._asString(def);
-    } else {
-      return undefined;
-    }
   }
 
   asString(def?: string): string {
     this.declareDefinition({
       type: 'string',
       default: def,
-      required: true,
+      required: def === undefined,
     });
     return this._asString(def);
   }
@@ -900,7 +903,7 @@ export default class Consumer {
     this.declareDefinition({
       type: 'bigint',
       default: def,
-      required: true,
+      required: def === undefined,
     });
     return this._asBigInt(def);
   }
@@ -921,8 +924,8 @@ export default class Consumer {
   }
 
   // PATHS
-  asURLFilePath(): URLFilePath {
-    const path = this.asUnknownFilePath();
+  asURLFilePath(def?: string): URLFilePath {
+    const path = this.asUnknownFilePath(def);
     if (path.isURL()) {
       return path.assertURL();
     } else {
@@ -931,22 +934,54 @@ export default class Consumer {
     }
   }
 
-  asUnknownFilePath(): UnknownFilePath {
-    return createUnknownFilePath(this.asString());
+  asURLFilePathOrVoid(def?: string): undefined | URLFilePath {
+    if (this.exists()) {
+      return this.asURLFilePath(def);
+    } else {
+      this._declareOptionalString(def);
+      return undefined;
+    }
   }
 
-  asAbsoluteFilePath(): AbsoluteFilePath {
-    const path = this.asUnknownFilePath();
+  asUnknownFilePath(def?: string): UnknownFilePath {
+    return createUnknownFilePath(this.asString(def));
+  }
+
+  asUnknownFilePathOrVoid(def?: string): undefined | UnknownFilePath {
+    if (this.exists()) {
+      return this.asUnknownFilePath(def);
+    } else {
+      this._declareOptionalString(def);
+      return undefined;
+    }
+  }
+
+  asAbsoluteFilePath(def?: string, cwd?: AbsoluteFilePath): AbsoluteFilePath {
+    const path = this.asUnknownFilePath(def);
     if (path.isAbsolute()) {
       return path.assertAbsolute();
+    } else if (cwd !== undefined && path.isRelative()) {
+      return cwd.resolve(path);
     } else {
       this.unexpected(descriptions.CONSUME.EXPECTED_ABSOLUTE_PATH);
       return createAbsoluteFilePath('/').append(path);
     }
   }
 
-  asRelativeFilePath(): RelativeFilePath {
-    const path = this.asUnknownFilePath();
+  asAbsoluteFilePathOrVoid(
+    def?: string,
+    cwd?: AbsoluteFilePath,
+  ): undefined | AbsoluteFilePath {
+    if (this.exists()) {
+      return this.asAbsoluteFilePath(def, cwd);
+    } else {
+      this._declareOptionalString(def);
+      return undefined;
+    }
+  }
+
+  asRelativeFilePath(def?: string): RelativeFilePath {
+    const path = this.asUnknownFilePath(def);
     if (path.isRelative()) {
       return path.assertRelative();
     } else {
@@ -955,14 +990,32 @@ export default class Consumer {
     }
   }
 
-  asExplicitRelativeFilePath(): RelativeFilePath {
-    const path = this.asRelativeFilePath();
+  asRelativeFilePathOrVoid(def?: string): undefined | RelativeFilePath {
+    if (this.exists()) {
+      return this.asRelativeFilePath(def);
+    } else {
+      this._declareOptionalString(def);
+      return undefined;
+    }
+  }
+
+  asExplicitRelativeFilePath(def?: string): RelativeFilePath {
+    const path = this.asRelativeFilePath(def);
 
     if (path.isExplicitRelative()) {
       return path;
     } else {
       this.unexpected(descriptions.CONSUME.EXPECTED_EXPLICIT_RELATIVE_PATH);
       return path.toExplicitRelative();
+    }
+  }
+
+  asExplicitRelativeFilePathOrVoid(def?: string): undefined | RelativeFilePath {
+    if (this.exists()) {
+      return this.asExplicitRelativeFilePath(def);
+    } else {
+      this._declareOptionalString(def);
+      return undefined;
     }
   }
 
@@ -993,7 +1046,7 @@ export default class Consumer {
     this.declareDefinition({
       type: 'number',
       default: def,
-      required: true,
+      required: def === undefined,
     });
     return this._asNumberFromString(def);
   }
@@ -1031,7 +1084,7 @@ export default class Consumer {
     this.declareDefinition({
       type: 'number',
       default: def,
-      required: true,
+      required: def === undefined,
     });
     return this._asNumber(def);
   }
@@ -1073,7 +1126,6 @@ export default class Consumer {
     this.declareDefinition({
       type: 'number-range',
       default: opts.default,
-      required: true,
       // @ts-ignore
       min,
       max,

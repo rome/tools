@@ -13,7 +13,6 @@ import {
   Diagnostics,
   DiagnosticsProcessor,
   deriveRootAdviceFromDiagnostic,
-  getDiagnosticHeader,
 } from '@romejs/diagnostics';
 import {Reporter} from '@romejs/cli-reporter';
 import {
@@ -23,11 +22,7 @@ import {
   DiagnosticsPrinterOptions,
 } from './types';
 
-import {
-  formatAnsi,
-  humanizeMarkupFilename,
-  markup,
-} from '@romejs/string-markup';
+import {formatAnsi, markup, markupToPlainText} from '@romejs/string-markup';
 import {toLines} from './utils';
 import printAdvice from './printAdvice';
 
@@ -89,7 +84,6 @@ type BeforeFooterPrintFn = (reporter: Reporter, error: boolean) => void;
 export const DEFAULT_PRINTER_FLAGS: DiagnosticsPrinterFlags = {
   grep: '',
   inverseGrep: false,
-  focus: '',
   showAllDiagnostics: true,
   fieri: false,
   verboseDiagnostics: false,
@@ -208,43 +202,8 @@ export default class DiagnosticsPrinter extends Error {
     return this.processor.getSortedDiagnostics();
   }
 
-  isFocused(diag: Diagnostic): boolean {
-    const focusFlag = this.flags.focus;
-    const focusEnabled = focusFlag !== undefined && focusFlag !== '';
-
-    const {filename, start, end} = diag.location;
-
-    // If focus is enabled, exclude locationless errors
-    if (focusEnabled && (filename === undefined || start === undefined)) {
-      return true;
-    }
-
-    // If focus is enabled, check if we should ignore this message
-    if (filename !== undefined && start !== undefined && end !== undefined) {
-      const niceFilename = humanizeMarkupFilename(
-        filename,
-        this.reporter.markupOptions,
-      );
-      const focusId = getDiagnosticHeader({
-        filename,
-        start,
-      });
-      if (focusEnabled && focusId !== focusFlag && focusId !== niceFilename) {
-        return true;
-      }
-    }
-
-    return false;
-  }
-
   shouldIgnore(diag: Diagnostic): boolean {
-    const {focus, grep, inverseGrep} = this.flags;
-    const focusEnabled = focus !== undefined && focus !== '';
-
-    // If focus is enabled, exclude locationless errors
-    if (focusEnabled && this.isFocused(diag) === false) {
-      return true;
-    }
+    const {grep, inverseGrep} = this.flags;
 
     // An empty grep pattern means show everything
     if (grep === undefined || grep === '') {
@@ -253,7 +212,9 @@ export default class DiagnosticsPrinter extends Error {
 
     // Match against the supplied grep pattern
     let ignored =
-      diag.description.message.value.toLowerCase().includes(grep) === false;
+      markupToPlainText(diag.description.message.value).toLowerCase().includes(
+        grep,
+      ) === false;
     if (inverseGrep) {
       ignored = !ignored;
     }

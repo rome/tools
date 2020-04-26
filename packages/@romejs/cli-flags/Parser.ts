@@ -473,7 +473,18 @@ export default class Parser<T> {
           }
         }
 
-        argCol += ` <${inputName}>`;
+        argCol += ` <${inputName}`;
+
+        const defaultValue = def.default;
+        if (
+          !def.required &&
+          defaultValue !== undefined &&
+          (typeof defaultValue === 'number' || typeof defaultValue === 'string')
+        ) {
+          argCol += `=${defaultValue}`;
+        }
+
+        argCol += '>';
       }
 
       // Set arg col length if we'll be longer
