@@ -503,7 +503,7 @@ export default class DiagnosticsPrinter extends Error {
           },
         );
         if (res.printed) {
-          reporter.spacer();
+          reporter.br();
         }
         if (res.truncated) {
           this.hasTruncatedDiagnostics = true;
@@ -515,9 +515,9 @@ export default class DiagnosticsPrinter extends Error {
         const {origins} = diag;
 
         if (origins !== undefined && origins.length > 0) {
-          reporter.spacer();
+          reporter.br();
           reporter.info('Why are you seeing this diagnostic?');
-          reporter.spacer();
+          reporter.br();
           reporter.list(
             origins.map((origin) => {
               let res = `<emphasis>${origin.category}</emphasis>`;

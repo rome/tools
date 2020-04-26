@@ -766,28 +766,28 @@ export default class Reporter {
 
   //# SECTIONS
   heading(text: string) {
-    this.spacer();
+    this.br();
     this.logAll(
       `<inverse><emphasis>${text}</emphasis></inverse>`,
       {
         nonTTY: `# ${text}`,
       },
     );
-    this.spacer();
+    this.br();
   }
 
   section(title: undefined | string, callback: () => void) {
     this.hr(title === undefined ? undefined : `<emphasis>${title}</emphasis>`);
     this.indent(() => {
       callback();
-      this.spacer();
+      this.br();
     });
   }
 
   hr(text?: string) {
     const {hasClearScreen} = this;
 
-    this.spacer();
+    this.br();
 
     if (hasClearScreen && text === undefined) {
       return;
@@ -804,7 +804,7 @@ export default class Reporter {
       this.logOneNoMarkup(stream, prefix + '\u2501'.repeat(barLength));
     }
 
-    this.spacer();
+    this.br();
   }
 
   async steps(
@@ -849,16 +849,12 @@ export default class Reporter {
     this.logAll(`<dim>[${current}/${total}]</dim> ${msg}`);
   }
 
-  spacer() {
+  br(force: boolean = false) {
     for (const stream of this.getStreams(false)) {
-      if (!this.streamHasSpacer.has(stream)) {
+      if (!this.streamHasSpacer.has(stream) || force) {
         this.logOne(stream, '');
       }
     }
-  }
-
-  forceSpacer() {
-    this.logAll('');
   }
 
   wrapCallback: WrapperFactory = (callback) => {

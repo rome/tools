@@ -519,7 +519,7 @@ export default class Parser<T> {
       () => {
         if (description !== undefined) {
           reporter.logAll(description);
-          reporter.forceSpacer();
+          reporter.br(true);
         }
 
         const commandParts = [programName];
@@ -543,7 +543,7 @@ export default class Parser<T> {
     const {reporter} = this;
     const {name, usage, description, examples} = command;
 
-    reporter.forceSpacer();
+    reporter.br(true);
     this.showUsageHelp(description, usage, name);
     this.showHelpExamples(examples, name);
 
@@ -657,7 +657,7 @@ export default class Parser<T> {
                 : cmd.description}`;
             }),
           );
-          reporter.spacer();
+          reporter.br();
         }
 
         reporter.info('To view help for a specific command run');
@@ -691,7 +691,7 @@ export default class Parser<T> {
 
           const builtCommand = commandParts.join(' ');
 
-          reporter.spacer();
+          reporter.br();
           if (description !== undefined) {
             reporter.logAll(description);
           }

@@ -206,7 +206,7 @@ export default async function select<Options extends SelectOptions>(
 
         case 'c': {
           if (key.ctrl) {
-            reporter.forceSpacer();
+            reporter.br(true);
             reporter.warn('Cancelled by user');
             process.exit(1);
           }
@@ -214,7 +214,7 @@ export default async function select<Options extends SelectOptions>(
         }
 
         case 'escape': {
-          reporter.forceSpacer();
+          reporter.br(true);
           reporter.warn('Cancelled by user');
           process.exit(1);
           return;

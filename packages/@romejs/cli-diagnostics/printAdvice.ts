@@ -207,17 +207,17 @@ function printDiff(
 
   const {legend} = item;
   if (legend !== undefined) {
-    opts.reporter.spacer();
+    opts.reporter.br();
     opts.reporter.logAll(`<error>- ${escapeMarkup(legend.delete)}</error>`);
     opts.reporter.logAll(`<success>+ ${escapeMarkup(legend.add)}</success>`);
-    opts.reporter.spacer();
+    opts.reporter.br();
   }
 
   const hint = generateDiffHint(item.diff);
   if (hint !== undefined) {
-    opts.reporter.spacer();
+    opts.reporter.br();
     printAdvice(hint, opts);
-    opts.reporter.spacer();
+    opts.reporter.br();
   }
 
   return {
@@ -350,7 +350,7 @@ function printStacktrace(
     const {title} = item;
     if (title !== undefined) {
       opts.reporter.info(escapeMarkup(title));
-      opts.reporter.forceSpacer();
+      opts.reporter.br(true);
     }
   }
 
@@ -441,7 +441,7 @@ function printStacktrace(
           opts,
         );
         if (!skipped) {
-          opts.reporter.forceSpacer();
+          opts.reporter.br(true);
           shownCodeFrames++;
         }
       }

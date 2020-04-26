@@ -803,7 +803,7 @@ export default class TestRunner {
     reporter.table(['File', '% Functions', '% Branches', '% Lines'], rows);
 
     if (!showAllCoverage) {
-      reporter.spacer();
+      reporter.br();
       reporter.info(
         'Additional coverage information available. Refine the executed tests or add the <emphasis>--show-all-coverage</emphasis> flag',
       );
