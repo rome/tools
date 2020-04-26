@@ -549,7 +549,12 @@ export default class Consumer {
       return;
     }
 
-    const knownProperties = Array.from(this.usedNames.keys());
+    let knownProperties = Array.from(this.usedNames.keys());
+
+    const {normalizeKey} = this.context;
+    if (normalizeKey !== undefined) {
+      knownProperties = knownProperties.map((key) => normalizeKey(key));
+    }
 
     for (const [key, value] of this.asMap(false, false)) {
       if (!this.usedNames.has(key)) {
