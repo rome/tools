@@ -110,7 +110,21 @@ Program {
                     }
                   }
                 }
-                undefined
+                ArrayHole {
+                  loc: Object {
+                    filename: 'input.js'
+                    end: Object {
+                      column: 7
+                      index: 7
+                      line: 1
+                    }
+                    start: Object {
+                      column: 7
+                      index: 7
+                      line: 1
+                    }
+                  }
+                }
               ]
             }
             loc: Object {
