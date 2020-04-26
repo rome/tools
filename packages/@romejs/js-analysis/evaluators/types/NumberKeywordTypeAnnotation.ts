@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   NumberKeywordTypeAnnotation,
   numberKeywordTypeAnnotation,
-  AnyNode,
 } from '@romejs/js-ast';
 import NumericT from '../../types/NumericT';
 

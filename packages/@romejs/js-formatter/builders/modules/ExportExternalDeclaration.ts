@@ -5,40 +5,33 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import {ExportExternalDeclaration} from '@romejs/js-ast';
 import Builder from '../../Builder';
-import {
-  Tokens,
-  linkedGroups,
-  operator,
-  space,
-  word,
-  concat,
-} from '../../tokens';
-import {AnyNode, exportExternalDeclaration} from '@romejs/js-ast';
+import {Token, concat, group, space} from '../../tokens';
 import {printModuleSpecifiers} from './ImportDeclaration';
 
 export default function ExportExternalDeclaration(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = exportExternalDeclaration.assert(node);
-
-  const tokens: Tokens = [word('export'), space];
+  node: ExportExternalDeclaration,
+): Token {
+  const tokens: Array<Token> = ['export', space];
 
   if (node.exportKind === 'type') {
-    tokens.push(word('type'));
-    tokens.push(space);
+    if (!builder.options.typeAnnotations) {
+      return '';
+    }
+
+    tokens.push('type', space);
   }
 
-  return [
-    linkedGroups([
-      concat(tokens),
-      concat(printModuleSpecifiers(builder, node)),
-      space,
-      word('from'),
-      space,
-      concat(builder.tokenize(node.source, node)),
-      operator(';'),
-    ]),
-  ];
+  tokens.push(
+    printModuleSpecifiers(builder, node),
+    space,
+    'from',
+    space,
+    builder.tokenize(node.source, node),
+    ';',
+  );
+
+  return group(concat(tokens));
 }

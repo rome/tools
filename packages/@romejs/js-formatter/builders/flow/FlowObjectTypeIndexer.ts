@@ -6,35 +6,32 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, word, operator, space} from '../../tokens';
-import {
-  FlowObjectTypeIndexer,
-  flowObjectTypeIndexer,
-  AnyNode,
-} from '@romejs/js-ast';
+import {Token, concat, space} from '../../tokens';
+import {FlowObjectTypeIndexer} from '@romejs/js-ast';
 
-export default function FlowObjectTypeIndexer(builder: Builder, node: AnyNode) {
-  node = flowObjectTypeIndexer.assert(node);
-
-  let tokens: Tokens = [];
+export default function FlowObjectTypeIndexer(
+  builder: Builder,
+  node: FlowObjectTypeIndexer,
+): Token {
+  let tokens: Array<Token> = [];
   if (node.static === true) {
-    tokens.push(word('static'));
+    tokens.push('static');
     tokens.push(space);
   }
 
-  tokens = [...tokens, ...builder.tokenize(node.variance, node), operator('[')];
+  tokens.push(builder.tokenize(node.variance, node), '[');
 
   if (node.id !== undefined) {
-    tokens = [...tokens, ...builder.tokenize(node.id, node), operator(':')];
+    tokens.push(builder.tokenize(node.id, node), ':');
   }
 
-  return [
-    ...tokens,
+  return concat([
+    concat(tokens),
     space,
-    ...builder.tokenize(node.key, node),
-    operator(']'),
-    operator(':'),
+    builder.tokenize(node.key, node),
+    ']',
+    ':',
     space,
-    ...builder.tokenize(node.value, node),
-  ];
+    builder.tokenize(node.value, node),
+  ]);
 }

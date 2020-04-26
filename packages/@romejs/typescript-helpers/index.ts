@@ -7,30 +7,33 @@
 
 // rome-suppress-next-line lint/noExplicitAny
 export type Class<T, Args extends Array<unknown> = Array<any>> = {
-  new (...args: Args): T;
+  new (
+    ...args: Args
+  ): T;
 };
 
-export type Dict<T> = {[key: string]: T};
+export type Dict<T> = {
+  [key: string]: T;
+};
 
-export type RequiredProps<Obj, Keys extends keyof Obj> =
-  & Omit<Obj, Keys>
-  & { [Key in Keys]-?: NonNullable<Obj[Key]> };
+export type RequiredProps<Obj, Keys extends keyof Obj> = Omit<Obj, Keys> &
+  { [Key in Keys]-?: NonNullable<Obj[Key]> };
 
-export type OptionalProps<Obj, Keys extends keyof Obj> =
-  & Omit<Obj, Keys>
-  & { [Key in Keys]?: Obj[Key] };
+export type OptionalProps<Obj, Keys extends keyof Obj> = Omit<Obj, Keys> &
+  { [Key in Keys]?: Obj[Key] };
 
 // Turn a type that contains interfaces into regular objects
-export type InterfaceToObject<T> = T extends {}
+export type InterfaceToObject<T> = T extends {
+
+}
   ? { [K in keyof T]: InterfaceToObject<T[K]> }
-  : T
-;
+  : T;
 
 export type UnknownObject = Dict<unknown>;
 
-export function isPlainObject<
-  T = UnknownObject
->(obj: unknown): obj is UnknownObject & T {
+export function isPlainObject<T = UnknownObject>(
+  obj: unknown,
+): obj is UnknownObject & T {
   return typeof obj === 'object' && obj !== null && !Array.isArray(obj);
 }
 

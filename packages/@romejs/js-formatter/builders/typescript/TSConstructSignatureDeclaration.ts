@@ -5,34 +5,21 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-  TSConstructSignatureDeclaration,
-  tsConstructSignatureDeclaration,
-  AnyNode,
-} from '@romejs/js-ast';
+import {TSConstructSignatureDeclaration} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
-import {Tokens, word, space, operator} from '../../tokens';
+import {Token, concat, space} from '../../tokens';
 
 export default function TSConstructSignatureDeclaration(
   builder: Builder,
-  node: AnyNode,
-) {
-  node = tsConstructSignatureDeclaration.assert(node);
+  node: TSConstructSignatureDeclaration,
+): Token {
+  const tokens: Array<Token> = ['new', space, builder.tokenize(node.meta, node)];
 
-  let tokens: Tokens = [
-    word('new'),
-    space,
-    ...builder.tokenize(node.meta, node),
-  ];
-
-  if (node.typeAnnotation !== undefined) {
-    tokens = [
-      ...tokens,
-      operator(':'),
-      space,
-      ...builder.tokenize(node.typeAnnotation, node),
-    ];
+  if (node.typeAnnotation) {
+    tokens.push(':', space, builder.tokenize(node.typeAnnotation, node));
   }
 
-  return [...tokens, operator(';')];
+  tokens.push(';');
+
+  return concat(tokens);
 }

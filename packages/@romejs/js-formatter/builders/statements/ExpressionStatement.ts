@@ -6,18 +6,12 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator, concat} from '../../tokens';
-import {
-  ExpressionStatement,
-  expressionStatement,
-  AnyNode,
-} from '@romejs/js-ast';
+import {Token, concat} from '../../tokens';
+import {ExpressionStatement} from '@romejs/js-ast';
 
 export default function ExpressionStatement(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = expressionStatement.assert(node);
-
-  return [concat(builder.tokenize(node.expression, node)), operator(';')];
+  node: ExpressionStatement,
+): Token {
+  return concat([builder.tokenize(node.expression, node), ';']);
 }

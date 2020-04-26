@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   TSParenthesizedType,
   tsParenthesizedType,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function TSParenthesizedType(node: AnyNode, scope: Scope) {

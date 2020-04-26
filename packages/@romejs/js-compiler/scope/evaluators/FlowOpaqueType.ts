@@ -7,7 +7,7 @@
 
 import Scope from '../Scope';
 import {TypeBinding} from '@romejs/js-compiler';
-import {FlowOpaqueType, AnyNode, FlowDeclareOpaqueType} from '@romejs/js-ast';
+import {AnyNode, FlowDeclareOpaqueType, FlowOpaqueType} from '@romejs/js-ast';
 
 export default {
   creator: false,
@@ -16,10 +16,16 @@ export default {
     parent: AnyNode,
     scope: Scope,
   ) {
-    scope.addBinding(new TypeBinding({
-      node: node.id,
-      name: node.id.name,
-      scope,
-    }, node, 'typealias'));
+    scope.addBinding(
+      new TypeBinding(
+        {
+          node: node.id,
+          name: node.id.name,
+          scope,
+        },
+        node,
+        'typealias',
+      ),
+    );
   },
 };

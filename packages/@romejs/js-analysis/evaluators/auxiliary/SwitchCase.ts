@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {SwitchCase, switchCase, AnyNode} from '@romejs/js-ast';
+import {AnyNode, SwitchCase, switchCase} from '@romejs/js-ast';
 
 export default function SwitchCase(node: AnyNode, scope: Scope) {
   node = switchCase.assert(node);

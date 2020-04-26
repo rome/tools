@@ -6,9 +6,9 @@
  */
 
 import {
-  DiagnosticLocation,
   Diagnostic,
   DiagnosticCategory,
+  DiagnosticLocation,
 } from '@romejs/diagnostics';
 import Consumer from './Consumer';
 import {UnknownFilePath} from '@romejs/path';
@@ -35,7 +35,9 @@ export type ConsumeContext = {
   getOriginalValue?: (path: ConsumePath) => unknown;
 };
 
-export type ConsumePropertyMetadata = {description?: string};
+export type ConsumePropertyMetadata = {
+  description?: string;
+};
 
 type ConsumePropertyDefinitionBase = {
   objectPath: ConsumePath;
@@ -44,18 +46,9 @@ type ConsumePropertyDefinitionBase = {
   metadata?: ConsumePropertyMetadata;
 };
 
-type ConsumePropertyPrimitiveDefinition =
-  & ConsumePropertyDefinitionBase
-  & {
-    type:
-      | 'string'
-      | 'number'
-      | 'boolean'
-      | 'bigint'
-      | 'date'
-      | 'array'
-      | 'object';
-  };
+type ConsumePropertyPrimitiveDefinition = ConsumePropertyDefinitionBase & {
+  type: 'string' | 'number' | 'boolean' | 'bigint' | 'date' | 'array' | 'object';
+};
 
 type ConsumePropertyNumberRangeDefinition = ConsumePropertyDefinitionBase & {
   type: 'number-range';

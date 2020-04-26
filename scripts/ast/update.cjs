@@ -71,38 +71,53 @@ function readIndexFile(loc, handlers) {
 }
 
 // Add to ast index
-readIndexFile(path.join(astFolder, 'index.ts'), [
-  {
-    iterator({category, nodeType}) {
-      return `export * from './${category}/${nodeType}';\n`;
+readIndexFile(
+  path.join(astFolder, 'index.ts'),
+  [
+    {
+      iterator({category, nodeType}) {
+        return `export * from './${category}/${nodeType}';\n`;
+      },
     },
-  },
-]);
+  ],
+);
 
 // Add to builders
-readIndexFile(path.join(formatterFolder, 'index.ts'), [
-  {
-    iterator({category, nodeType}) {
-      return `import ${nodeType} from './${category}/${nodeType}';\n` +
-        `builders.set('${nodeType}', ${nodeType});\n\n`;
+readIndexFile(
+  path.join(formatterFolder, 'index.ts'),
+  [
+    {
+      iterator({category, nodeType}) {
+        return (
+          `import ${nodeType} from './${category}/${nodeType}';\n` +
+          `builders.set('${nodeType}', ${nodeType});\n\n`
+        );
+      },
     },
-  },
-]);
+  ],
+);
 
 // Add to analysis
-readIndexFile(path.join(analysisFolder, 'index.ts'), [
-  {
-    iterator({category, nodeType}) {
-      return `import ${nodeType} from './${category}/${nodeType}';\n` +
-        `evaluators.set('${nodeType}', ${nodeType});\n\n`;
+readIndexFile(
+  path.join(analysisFolder, 'index.ts'),
+  [
+    {
+      iterator({category, nodeType}) {
+        return (
+          `import ${nodeType} from './${category}/${nodeType}';\n` +
+          `evaluators.set('${nodeType}', ${nodeType});\n\n`
+        );
+      },
     },
-  },
-]);
+  ],
+);
 
 // Update unions.ts
 const unionsLoc = path.join(astFolder, 'unions.ts');
-readIndexFile(unionsLoc, [
-  /*{
+readIndexFile(
+  unionsLoc,
+  [
+    /*{
     iterator(def) {
       if (def.category === 'typescript') {
         return `\n  | n.${def.nodeType}`;
@@ -122,13 +137,13 @@ readIndexFile(unionsLoc, [
       return `export type AnyFlow = ${buff};`;
     },
   },*/
-  {
-    iterator(def) {
-      return `\n  | n.${def.nodeType}`;
+    {
+      iterator(def) {
+        return `\n  | n.${def.nodeType}`;
+      },
+      wrapCallback(buff) {
+        return `export type AnyNode = ${buff};`;
+      },
     },
-
-    wrapCallback(buff) {
-      return `export type AnyNode = ${buff};`;
-    },
-  },
-]);
+  ],
+);

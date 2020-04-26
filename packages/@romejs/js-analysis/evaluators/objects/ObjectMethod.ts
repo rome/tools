@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {ObjectMethod, objectMethod, AnyNode} from '@romejs/js-ast';
+import {AnyNode, ObjectMethod, objectMethod} from '@romejs/js-ast';
 
 export default function ObjectMethod(node: AnyNode, scope: Scope) {
   node = objectMethod.assert(node);

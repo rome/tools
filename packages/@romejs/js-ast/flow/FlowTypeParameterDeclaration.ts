@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, FlowTypeParameter} from '../index';
+import {FlowTypeParameter, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type FlowTypeParameterDeclaration = JSNodeBase & {
@@ -13,11 +13,12 @@ export type FlowTypeParameterDeclaration = JSNodeBase & {
   params: Array<FlowTypeParameter>;
 };
 
-export const flowTypeParameterDeclaration = createBuilder<
-  FlowTypeParameterDeclaration
->('FlowTypeParameterDeclaration', {
-  bindingKeys: {},
-  visitorKeys: {
-    params: true,
+export const flowTypeParameterDeclaration = createBuilder<FlowTypeParameterDeclaration>(
+  'FlowTypeParameterDeclaration',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      params: true,
+    },
   },
-});
+);

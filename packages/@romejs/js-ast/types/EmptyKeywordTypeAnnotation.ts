@@ -12,9 +12,10 @@ export type EmptyKeywordTypeAnnotation = JSNodeBase & {
   type: 'EmptyKeywordTypeAnnotation';
 };
 
-export const emptyKeywordTypeAnnotation = createBuilder<
-  EmptyKeywordTypeAnnotation
->('EmptyKeywordTypeAnnotation', {
-  bindingKeys: {},
-  visitorKeys: {},
-});
+export const emptyKeywordTypeAnnotation = createBuilder<EmptyKeywordTypeAnnotation>(
+  'EmptyKeywordTypeAnnotation',
+  {
+    bindingKeys: {},
+    visitorKeys: {},
+  },
+);

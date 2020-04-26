@@ -15,11 +15,9 @@ export default createMasterCommand({
   description: 'resolve a file',
   usage: '',
   examples: [],
-
   defineFlags() {
     return {};
   },
-
   async callback(req: MasterRequest): Promise<string> {
     const {master, reporter} = req;
     const {args} = req.query;
@@ -46,9 +44,12 @@ export default createMasterCommand({
       source: createUnknownFilePath(relative),
     };
 
-    const resolved = await master.resolver.resolveEntryAssert(query, {
-      location: req.getDiagnosticPointerFromFlags({type: 'arg', key}),
-    });
+    const resolved = await master.resolver.resolveEntryAssert(
+      query,
+      {
+        location: req.getDiagnosticPointerFromFlags({type: 'arg', key}),
+      },
+    );
     const filename = resolved.ref.real.join();
     reporter.logAll(filename);
     return filename;

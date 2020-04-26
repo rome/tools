@@ -6,13 +6,13 @@
  */
 
 import {
-  JSNodeBase,
-  Directive,
-  AnyStatement,
-  InterpreterDirective,
-  ConstSourceType,
   AnyComment,
+  AnyStatement,
   ConstProgramSyntax,
+  ConstSourceType,
+  Directive,
+  InterpreterDirective,
+  JSNodeBase,
 } from '../index';
 import {Diagnostics} from '@romejs/diagnostics';
 import {createBuilder} from '../utils';
@@ -47,12 +47,15 @@ export const MOCK_PROGRAM: Program = {
   hasHoistedVars: false,
 };
 
-export const program = createBuilder<Program>('Program', {
-  bindingKeys: {},
-  visitorKeys: {
-    interpreter: true,
-    directives: true,
-    body: true,
-    comments: true,
+export const program = createBuilder<Program>(
+  'Program',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      interpreter: true,
+      directives: true,
+      body: true,
+      comments: true,
+    },
   },
-});
+);

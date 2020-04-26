@@ -12,7 +12,7 @@ export function isES2015ReservedWord(word: string): boolean {
 }
 
 export function isReservedWord(word: string, inModule: boolean): boolean {
-  return inModule && word === 'await' || word === 'enum';
+  return (inModule && word === 'await') || word === 'enum';
 }
 
 const reservedWordsStrict = new Set([
@@ -34,8 +34,11 @@ export function isStrictBindReservedWord(
   word: string,
   inModule: boolean,
 ): boolean {
-  return isStrictReservedWord(word, inModule) || word === 'eval' || word ===
-    'arguments';
+  return (
+    isStrictReservedWord(word, inModule) ||
+    word === 'eval' ||
+    word === 'arguments'
+  );
 }
 
 const keywords = new Set([
@@ -764,8 +767,9 @@ export function isIdentifierStart(code: undefined | number): boolean {
   }
 
   if (code <= 65_535) {
-    return code >= 170 &&
-      nonASCIIidentifierStart.test(String.fromCharCode(code));
+    return (
+      code >= 170 && nonASCIIidentifierStart.test(String.fromCharCode(code))
+    );
   }
 
   return isInAstralSet(code, astralIdentifierStartCodes);
@@ -801,8 +805,8 @@ export function isIdentifierChar(code: number): boolean {
     return code >= 170 && nonASCIIidentifier.test(String.fromCharCode(code));
   }
 
-  return isInAstralSet(code, astralIdentifierStartCodes) || isInAstralSet(
-    code,
-    astralIdentifierCodes,
+  return (
+    isInAstralSet(code, astralIdentifierStartCodes) ||
+    isInAstralSet(code, astralIdentifierCodes)
   );
 }

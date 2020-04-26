@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope, ClassScope} from '../../scopes';
-import {ClassExpression, classExpression, AnyNode} from '@romejs/js-ast';
+import {ClassScope, Scope} from '../../scopes';
+import {AnyNode, ClassExpression, classExpression} from '@romejs/js-ast';
 import InstanceT from '../../types/InstanceT';
 import ClassT from '../../types/ClassT';
 import T from '../../types/T';
@@ -23,10 +23,13 @@ export default function ClassExpression(node: AnyNode, scope: Scope) {
   const classId = new OpenT(scope, node);
 
   //
-  const bodyScope = new ClassScope({parentScope: scope}, {
-    instance: classInstance,
-    static: classId,
-  });
+  const bodyScope = new ClassScope(
+    {parentScope: scope},
+    {
+      instance: classInstance,
+      static: classId,
+    },
+  );
 
   if (node.id !== undefined) {
     bodyScope.addBinding(node.id.name, classId);
@@ -54,14 +57,18 @@ export default function ClassExpression(node: AnyNode, scope: Scope) {
 
   //
   const classOrigin = node.id ? node.id : node;
-  let type = new ClassT(scope, classOrigin, {
-    _constructor,
-    instances,
-    statics,
-    extends: node.meta.superClass
-      ? scope.evaluate(node.meta.superClass)
-      : undefined,
-  });
+  let type = new ClassT(
+    scope,
+    classOrigin,
+    {
+      _constructor,
+      instances,
+      statics,
+      extends: node.meta.superClass
+        ? scope.evaluate(node.meta.superClass)
+        : undefined,
+    },
+  );
   if (node.id) {
     type.setHuman(node.id.name);
   }

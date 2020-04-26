@@ -6,41 +6,29 @@
  */
 
 import Builder from '../../Builder';
-import {switchCase, AnyNode} from '@romejs/js-ast';
-import {
-  word,
-  space,
-  newline,
-  operator,
-  indent,
-  Tokens,
-  concat,
-} from '@romejs/js-formatter/tokens';
+import {SwitchCase} from '@romejs/js-ast';
+import {Token, concat, hardline, indent, space} from '../../tokens';
 
-export default function SwitchCase(builder: Builder, node: AnyNode): Tokens {
-  node = switchCase.assert(node);
-
-  let tokens: Tokens = [];
+export default function SwitchCase(builder: Builder, node: SwitchCase): Token {
+  const tokens: Array<Token> = [];
 
   if (node.test) {
-    tokens = [
-      word('case'),
-      space,
-      concat(builder.tokenize(node.test, node)),
-      operator(':'),
-    ];
+    tokens.push('case', space, builder.tokenize(node.test, node), ':');
   } else {
-    tokens = [word('default'), operator(':')];
+    tokens.push('default', ':');
   }
 
   const {consequent} = node;
   if (consequent.length === 1 && consequent[0].type === 'BlockStatement') {
     tokens.push(space);
-    tokens.push(concat(builder.tokenize(consequent[0], node)));
+    tokens.push(builder.tokenize(consequent[0], node));
   } else if (consequent.length > 0) {
-    tokens.push(newline);
-    tokens.push(indent(builder.tokenizeStatementList(consequent, node)));
+    tokens.push(
+      indent(
+        concat([hardline, builder.tokenizeStatementList(consequent, node)]),
+      ),
+    );
   }
 
-  return tokens;
+  return concat(tokens);
 }

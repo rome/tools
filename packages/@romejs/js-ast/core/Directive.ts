@@ -13,7 +13,10 @@ export type Directive = JSNodeBase & {
   value: string;
 };
 
-export const directive = createBuilder<Directive>('Directive', {
-  bindingKeys: {},
-  visitorKeys: {},
-});
+export const directive = createBuilder<Directive>(
+  'Directive',
+  {
+    bindingKeys: {},
+    visitorKeys: {},
+  },
+);

@@ -6,18 +6,18 @@
  */
 
 import {
-  ParserOptions,
-  ComplexNode,
   BaseTokens,
-  ValueToken,
+  ComplexNode,
+  ParserOptions,
   SimpleToken,
+  ValueToken,
   createParser,
   isAlpha,
   isDigit,
 } from '@romejs/parser-core';
 import {getSPDXLicense, licenseNames} from './index';
 import {descriptions} from '@romejs/diagnostics';
-import {inc, Number0, get0} from '@romejs/ob1';
+import {Number0, ob1Get0, ob1Inc} from '@romejs/ob1';
 
 //# Tokens
 type Tokens = BaseTokens & {
@@ -33,30 +33,41 @@ type Tokens = BaseTokens & {
 //# Nodes
 export type ExpressionNode = LicenseNode | AndNode | OrNode;
 
-type AndNode = ComplexNode<'And', {
-  left: ExpressionNode;
-  right: ExpressionNode;
-}>;
+type AndNode = ComplexNode<
+  'And',
+  {
+    left: ExpressionNode;
+    right: ExpressionNode;
+  }
+>;
 
-type OrNode = ComplexNode<'Or', {
-  left: ExpressionNode;
-  right: ExpressionNode;
-}>;
+type OrNode = ComplexNode<
+  'Or',
+  {
+    left: ExpressionNode;
+    right: ExpressionNode;
+  }
+>;
 
-type LicenseNode = ComplexNode<'License', {
-  plus: boolean;
-  id: string;
-  exception: undefined | string;
-}>;
+type LicenseNode = ComplexNode<
+  'License',
+  {
+    plus: boolean;
+    id: string;
+    exception: undefined | string;
+  }
+>;
 
 function isWordChar(char: string) {
   return isAlpha(char) || isDigit(char) || char === '-' || char === '.';
 }
 
-type SPDXLicenseParserOptions = ParserOptions & {loose?: boolean};
+type SPDXLicenseParserOptions = ParserOptions & {
+  loose?: boolean;
+};
 
-const createSPDXLicenseParser = createParser(
-  (ParserCore) => class SPDXLicenseParser extends ParserCore<Tokens, void> {
+const createSPDXLicenseParser = createParser((ParserCore) =>
+  class SPDXLicenseParser extends ParserCore<Tokens, void> {
     constructor(opts: SPDXLicenseParserOptions) {
       super(opts, 'parse/spdxLicense');
       this.loose = opts.loose === true;
@@ -66,7 +77,7 @@ const createSPDXLicenseParser = createParser(
 
     // For some reason Flow will throw an error without the type casts...
     tokenize(index: Number0, input: string) {
-      const char = input[get0(index)];
+      const char = input[ob1Get0(index)];
 
       if (char === '+') {
         return this.finishToken('Plus');
@@ -82,7 +93,7 @@ const createSPDXLicenseParser = createParser(
 
       // Skip spaces
       if (char === ' ') {
-        return this.lookaheadToken(inc(index));
+        return this.lookaheadToken(ob1Inc(index));
       }
 
       if (isWordChar(char)) {
@@ -241,7 +252,7 @@ const createSPDXLicenseParser = createParser(
       this.finalize();
       return expr;
     }
-  },
+  }
 );
 
 export default function parse(opts: SPDXLicenseParserOptions): ExpressionNode {

@@ -5,15 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSConstructorType, tsConstructorType, AnyNode} from '@romejs/js-ast';
-import {Builder} from '@romejs/js-formatter';
-import {Tokens} from '../../tokens';
+import {Token} from '../../tokens';
 
-export default function TSConstructorType(
-  builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = tsConstructorType.assert(node);
-
+export default function TSConstructorType(): Token {
   throw new Error('unimplemented');
 }

@@ -5,44 +5,46 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {functionHead, AnyNode} from '@romejs/js-ast';
+import {FunctionHead} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
 import {printBindingPatternParams} from '../utils';
-import {
-  space,
-  operator,
-  Tokens,
-  linkedGroups,
-  concat,
-} from '@romejs/js-formatter/tokens';
+import {Token, concat, group, space} from '../../tokens';
 
-export default function FunctionHead(builder: Builder, node: AnyNode): Tokens {
-  node = functionHead.assert(node);
+export default function FunctionHead(
+  builder: Builder,
+  node: FunctionHead,
+): Token {
+  const tokens: Array<Token> = [];
 
-  const {typeAnnotations} = builder.options;
+  if (builder.options.typeAnnotations && node.typeParameters) {
+    tokens.push(builder.tokenize(node.typeParameters, node));
+  }
 
-  const tokens: Tokens = [
-    operator('('),
-    concat(printBindingPatternParams(builder, node, node.params, node.rest)),
-    operator(')'),
-  ];
+  const printedParameters = printBindingPatternParams(
+    builder,
+    node,
+    node.params,
+    node.rest,
+  );
 
-  if (typeAnnotations) {
-    if (node.returnType) {
-      tokens.push(concat(builder.tokenizeTypeColon(node.returnType, node)));
-    }
+  let printedReturnType: Token = '';
+  if (builder.options.typeAnnotations) {
+    if (node.returnType || node.predicate) {
+      const tokens: Array<Token> = [':'];
 
-    if (node.predicate) {
-      if (!node.returnType) {
-        tokens.push(operator(':'));
+      if (node.returnType) {
+        tokens.push(space, builder.tokenize(node.returnType, node));
       }
-      tokens.push(space);
-      tokens.push(concat(builder.tokenize(node.predicate, node)));
+
+      if (node.predicate) {
+        tokens.push(space, builder.tokenize(node.predicate, node));
+      }
+
+      printedReturnType = concat(tokens);
     }
   }
 
-  return [
-    concat(builder.tokenize(node.typeParameters, node)),
-    linkedGroups(tokens),
-  ];
+  tokens.push(group(concat([printedParameters, printedReturnType])));
+
+  return concat(tokens);
 }

@@ -6,7 +6,7 @@
  */
 
 import {Event} from '@romejs/events';
-import {isPlainObject, Dict} from '@romejs/typescript-helpers';
+import {Dict, isPlainObject} from '@romejs/typescript-helpers';
 import os = require('os');
 
 // BSER uses the local endianness to reduce byte swapping overheads
@@ -66,8 +66,9 @@ export class Accumulator {
     }
 
     // Allocate a replacement and copy it in
-    const buf = Buffer.alloc(nextPow2(this.buffer.length + size -
-      this.writeAvail()));
+    const buf = Buffer.alloc(
+      nextPow2(this.buffer.length + size - this.writeAvail()),
+    );
     this.buffer.copy(buf);
     this.buffer = buf;
   }
@@ -96,7 +97,11 @@ export class Accumulator {
 
   peekString(size: number): string {
     this.assertReadableSize(size);
-    return this.buffer.toString('utf-8', this.readOffset, this.readOffset + size);
+    return this.buffer.toString(
+      'utf-8',
+      this.readOffset,
+      this.readOffset + size,
+    );
   }
 
   readString(size: number): string {
@@ -154,8 +159,8 @@ export class Accumulator {
       this.assertReadableSize(size);
     } else if (size < 0 && this.readOffset + size < 0) {
       throw new Error(
-          `advance with negative offset ${size} would seek off the start of the buffer`,
-        );
+        `advance with negative offset ${size} would seek off the start of the buffer`,
+      );
     }
 
     this.readOffset += size;
@@ -338,15 +343,13 @@ export class BunserBuf {
     const bufferLength = this.acc.buffer.length;
     const readableLength = this.acc.readAvail();
     const readOffset = this.acc.readOffset;
-    const buffer = JSON.stringify(this.acc.buffer.slice(
-      this.acc.readOffset,
-        this.acc.readOffset +
-        32,
-    ).toJSON());
+    const buffer = JSON.stringify(
+      this.acc.buffer.slice(this.acc.readOffset, this.acc.readOffset + 32).toJSON(),
+    );
 
     throw new Error(
-        `${reason} in Buffer of length ${bufferLength}, ${readableLength} readable at offset ${readOffset} buffer: ${buffer}`,
-      );
+      `${reason} in Buffer of length ${bufferLength}, ${readableLength} readable at offset ${readOffset} buffer: ${buffer}`,
+    );
   }
 
   expectCode(expected: number): void {

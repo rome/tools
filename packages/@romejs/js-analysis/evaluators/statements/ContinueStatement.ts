@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {ContinueStatement, continueStatement, AnyNode} from '@romejs/js-ast';
+import {AnyNode, ContinueStatement, continueStatement} from '@romejs/js-ast';
 
 export default function ContinueStatement(node: AnyNode, scope: Scope) {
   node = continueStatement.assert(node);

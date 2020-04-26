@@ -6,18 +6,13 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens} from '../../tokens';
-import {
-  FlowGenericTypeAnnotation,
-  flowGenericTypeAnnotation,
-  AnyNode,
-} from '@romejs/js-ast';
+import {Token} from '../../tokens';
+import {FlowGenericTypeAnnotation} from '@romejs/js-ast';
 import FlowInterfaceExtends from './FlowInterfaceExtends';
 
 export default function FlowGenericTypeAnnotation(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = flowGenericTypeAnnotation.assert(node);
+  node: FlowGenericTypeAnnotation,
+): Token {
   return FlowInterfaceExtends(builder, node);
 }

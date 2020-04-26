@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {EmptyStatement, emptyStatement, AnyNode} from '@romejs/js-ast';
+import {AnyNode, EmptyStatement, emptyStatement} from '@romejs/js-ast';
 
 export default function EmptyStatement(node: AnyNode, scope: Scope) {
   node = emptyStatement.assert(node);

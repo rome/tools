@@ -6,7 +6,7 @@
  */
 
 import {Position} from '@romejs/parser-core';
-import {Number1, Number0} from '@romejs/ob1';
+import {Number0, Number1} from '@romejs/ob1';
 import {JSONPropertyValue} from '@romejs/codec-json';
 import inspector = require('inspector');
 

@@ -13,11 +13,15 @@ import T from './T';
 
 export default class StringLiteralT extends ObjT {
   constructor(scope: Scope, originNode: undefined | AnyNode, value: string) {
-    super(scope, originNode, {
-      props: [],
-      proto: scope.intrinsics.StringPrototype,
-      calls: [],
-    });
+    super(
+      scope,
+      originNode,
+      {
+        props: [],
+        proto: scope.intrinsics.StringPrototype,
+        calls: [],
+      },
+    );
     this.value = value;
   }
 

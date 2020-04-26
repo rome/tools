@@ -5,14 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSTypeReference, tsTypeReference, AnyNode} from '@romejs/js-ast';
+import {TSTypeReference} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
-import {Tokens} from '../../tokens';
+import {Token, concat} from '../../tokens';
 
-export default function TSTypeReference(builder: Builder, node: AnyNode): Tokens {
-  node = tsTypeReference.assert(node);
-  return [
-    ...builder.tokenize(node.typeName, node),
-    ...builder.tokenize(node.typeParameters, node),
-  ];
+export default function TSTypeReference(
+  builder: Builder,
+  node: TSTypeReference,
+): Token {
+  return concat([
+    builder.tokenize(node.typeName, node),
+    builder.tokenize(node.typeParameters, node),
+  ]);
 }

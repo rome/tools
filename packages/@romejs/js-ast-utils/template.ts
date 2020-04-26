@@ -6,14 +6,13 @@
  */
 
 import {
-  AnyNode,
   AnyExpression,
-  AnyStatement,
   AnyIdentifier,
+  AnyNode,
+  AnyStatement,
   program,
 } from '@romejs/js-ast';
-import {Path, CompilerContext} from '@romejs/js-compiler';
-import {DEFAULT_PROJECT_CONFIG} from '@romejs/project';
+import {CompilerContext, Path} from '@romejs/js-compiler';
 import removeLoc from './removeLoc';
 import {parseJS} from '@romejs/js-parser';
 import {createUnknownFilePath} from '@romejs/path';
@@ -89,14 +88,11 @@ function getTemplate(strs: TemplateStringsArray): BuiltTemplate {
 
   const context = new CompilerContext({
     ast,
-    project: {
-      folder: undefined,
-      config: DEFAULT_PROJECT_CONFIG,
-    },
   });
-  context.reduce(ast, [
-    {name: 'collectPlaceholderPaths', enter: collectPlaceholderPaths},
-  ]);
+  context.reduce(
+    ast,
+    [{name: 'collectPlaceholderPaths', enter: collectPlaceholderPaths}],
+  );
 
   const placeholderPaths: BuiltTemplate['placeholderPaths'] = [];
   for (const id in placeholders) {
@@ -129,7 +125,8 @@ function createIdentifier(
 }
 
 export default function template(
-  strs: TemplateStringsArray,...substitutions: TemplateSubstitions
+  strs: TemplateStringsArray,
+  ...substitutions: TemplateSubstitions
 ): AnyNode {
   const {ast, placeholderPaths} = getTemplate(strs);
 
@@ -175,7 +172,8 @@ export default function template(
 }
 
 template.expression = (
-  strs: TemplateStringsArray,...substitutions: TemplateSubstitions
+  strs: TemplateStringsArray,
+  ...substitutions: TemplateSubstitions
 ): AnyExpression => {
   const first = template.statement(strs, ...substitutions);
 
@@ -188,7 +186,8 @@ template.expression = (
 };
 
 template.statement = (
-  strs: TemplateStringsArray,...substitutions: TemplateSubstitions
+  strs: TemplateStringsArray,
+  ...substitutions: TemplateSubstitions
 ): AnyStatement => {
   // Parse the template, with caching
   const ast = program.assert(template(strs, ...substitutions));

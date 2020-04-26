@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Number0, Number1, coerce1, number0Neg1} from '@romejs/ob1';
+import {Number0, Number1, ob1Coerce1, ob1Number0Neg1} from '@romejs/ob1';
 
 //# Node types
 export type NodeBase = {
@@ -13,11 +13,14 @@ export type NodeBase = {
   loc?: SourceLocation;
 };
 
-export type SimpleNode<Type extends string> = NodeBase & {type: Type};
-
-export type ComplexNode<Type extends string, Data> = NodeBase & Data & {
+export type SimpleNode<Type extends string> = NodeBase & {
   type: Type;
 };
+
+export type ComplexNode<Type extends string, Data> = NodeBase &
+  Data & {
+    type: Type;
+  };
 
 export type ValueNode<Type extends string, Value> = NodeBase & {
   type: Type;
@@ -38,11 +41,14 @@ export type TokensShape = {
   [type: string]: TokenBase;
 };
 
-export type SimpleToken<Type extends string> = TokenBase & {type: Type};
-
-export type ComplexToken<Type extends string, Data> = TokenBase & Data & {
+export type SimpleToken<Type extends string> = TokenBase & {
   type: Type;
 };
+
+export type ComplexToken<Type extends string, Data> = TokenBase &
+  Data & {
+    type: Type;
+  };
 
 export type ValueToken<Type extends string, Value> = TokenBase & {
   type: Type;
@@ -76,7 +82,7 @@ export type Position = {
 };
 
 export const UNKNOWN_POSITION: Position = {
-  index: number0Neg1,
-  line: coerce1(-1),
-  column: number0Neg1,
+  index: ob1Number0Neg1,
+  line: ob1Coerce1(-1),
+  column: ob1Number0Neg1,
 };

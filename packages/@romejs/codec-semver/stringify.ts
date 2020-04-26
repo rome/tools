@@ -28,8 +28,8 @@ export default function stringify(node: RangeNode): string {
     case 'WildcardVersion':
     case 'AbsoluteVersion': {
       // Build up x.x.x format
-      let str = compactRight([node.major, node.minor, node.patch]).map(
-        (part) => part === undefined ? WILDCARD : part,
+      let str = compactRight([node.major, node.minor, node.patch]).map((part) =>
+        part === undefined ? WILDCARD : part
       ).join('.');
 
       // add on qualifiers

@@ -17,8 +17,8 @@ const major = Number(versionParts[0]);
 const EXPECTED_MAJOR = 12;
 
 if (major < EXPECTED_MAJOR) {
-  console.error(red(
-    `Rome requires Node >=v${EXPECTED_MAJOR} but got ${process.version}`,
-  ));
+  console.error(
+    red(`Rome requires Node >=v${EXPECTED_MAJOR} but got ${process.version}`),
+  );
   process.exit(1);
 }

@@ -17,7 +17,8 @@ export type SharedCommand<Flags extends Dict<unknown>> = {
     description: string;
     command: string;
   }>;
-  allowRequestFlags?: Array<'review' | 'watch' | 'allowDirty'>;
+  ignoreFlags?: Array<string>;
+  allowRequestFlags?: Array<'review' | 'watch'>;
 };
 
 export const commandCategories = {

@@ -6,42 +6,31 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, word, operator, space} from '../../tokens';
-import {FlowOpaqueType, flowOpaqueType, AnyNode} from '@romejs/js-ast';
+import {Token, concat, space} from '../../tokens';
+import {FlowDeclareOpaqueType, FlowOpaqueType} from '@romejs/js-ast';
 
-export default function FlowOpaqueType(builder: Builder, node: AnyNode): Tokens {
-  node = node.type === 'FlowDeclareOpaqueType'
-    ? node
-    : flowOpaqueType.assert(node);
-
-  let tokens: Tokens = [
-    word('opaque'),
+export default function FlowOpaqueType(
+  builder: Builder,
+  node: FlowDeclareOpaqueType | FlowOpaqueType,
+): Token {
+  const tokens: Array<Token> = [
+    'opaque',
     space,
-    word('type'),
+    'type',
     space,
-    ...builder.tokenize(node.id, node),
-    ...builder.tokenize(node.typeParameters, node),
+    builder.tokenize(node.id, node),
+    builder.tokenize(node.typeParameters, node),
   ];
 
   if (node.supertype) {
-    tokens = [
-      ...tokens,
-      operator(':'),
-      space,
-      ...builder.tokenize(node.supertype, node),
-    ];
+    tokens.push(':', space, builder.tokenize(node.supertype, node));
   }
 
   if (node.impltype) {
-    tokens = [
-      ...tokens,
-      space,
-      operator('='),
-      space,
-      ...builder.tokenize(node.impltype, node),
-    ];
+    tokens.push(space, '=', space, builder.tokenize(node.impltype, node));
   }
 
-  tokens.push(operator(';'));
-  return tokens;
+  tokens.push(';');
+
+  return concat(tokens);
 }

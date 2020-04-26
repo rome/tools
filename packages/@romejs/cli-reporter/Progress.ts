@@ -9,11 +9,11 @@ import {humanizeNumber, humanizeTime} from '@romejs/string-utils';
 import {Reporter} from '@romejs/cli-reporter';
 import {
   RemoteReporterClientMessage,
-  ReporterStream,
   ReporterProgressOptions,
+  ReporterStream,
 } from './types';
 import ProgressBase from './ProgressBase';
-import {markupTag, ansiEscapes, escapeMarkup} from '@romejs/string-markup';
+import {ansiEscapes, formatAnsi} from '@romejs/string-markup';
 
 type BoldRanges = Array<[number, number]>;
 
@@ -190,9 +190,12 @@ export default class Progress extends ProgressBase {
       return;
     }
 
-    this.renderTimer = setTimeout(this.reporter.wrapCallback(() => {
-      this.render();
-    }), delay);
+    this.renderTimer = setTimeout(
+      this.reporter.wrapCallback(() => {
+        this.render();
+      }),
+      delay,
+    );
   }
 
   endBouncer() {
@@ -224,11 +227,10 @@ export default class Progress extends ProgressBase {
 
   // This allows us to use the progress bar for sync work where the event loop is always blocked
   isRenderDue(): boolean {
-    const isDue: boolean = this.current > this.lastRenderCurrent +
-      this.renderEvery;
+    const isDue: boolean =
+      this.current > this.lastRenderCurrent + this.renderEvery;
     if (isDue) {
       // We also make sure that we never force update more often than once a second
-
       // This is to ensure that the progress bar isn't negatively effecting performance
       const timeSinceLastRender: number = Date.now() - this.lastRenderTime;
       return timeSinceLastRender > 1_000;
@@ -250,7 +252,7 @@ export default class Progress extends ProgressBase {
   splitCharacters(str: string, boldRanges: BoldRanges): SplitBar {
     return str.split('').map((char, i) => {
       if (this.isBoldCharacter(i, boldRanges)) {
-        return [i, markupTag('emphasis', char)];
+        return [i, formatAnsi.bold(char)];
       } else {
         return [i, char];
       }
@@ -261,17 +263,16 @@ export default class Progress extends ProgressBase {
     let start = this.getBouncerPosition(stream);
     let fullBar = '';
     for (const [i, char] of bar) {
-      const escaped = escapeMarkup(char);
       const isBounce = i >= start && i < start + BOUNCER_WIDTH;
 
       if (isBounce) {
         if (this.paused) {
-          fullBar += markupTag('inverse', escaped);
+          fullBar += formatAnsi.inverse(char);
         } else {
-          fullBar += markupTag('white', markupTag('bgYellow', escaped));
+          fullBar += formatAnsi.white(formatAnsi.bgYellow(char));
         }
       } else {
-        fullBar += escaped;
+        fullBar += char;
       }
     }
     return fullBar;
@@ -285,9 +286,9 @@ export default class Progress extends ProgressBase {
     for (const [i, char] of bar) {
       if (i < completeLength) {
         if (this.paused) {
-          fullBar += markupTag('inverse', char);
+          fullBar += formatAnsi.inverse(char);
         } else {
-          fullBar += markupTag('white', markupTag('bgGreen', char));
+          fullBar += formatAnsi.white(formatAnsi.bgGreen(char));
         }
       } else {
         fullBar += char;
@@ -405,7 +406,7 @@ export default class Progress extends ProgressBase {
     for (const stream of this.reporter.getStreams(false)) {
       if (stream.format === 'ansi') {
         stream.write(ansiEscapes.cursorTo(0));
-        stream.write(this.reporter.markupify(stream, this.buildBar(stream)));
+        stream.write(this.buildBar(stream));
       }
     }
   }

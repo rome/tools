@@ -5,33 +5,32 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Worker, FileReference} from '@romejs/core';
+import {FileReference, Worker} from '@romejs/core';
 import {Program} from '@romejs/js-ast';
-import {Diagnostics, descriptions, catchDiagnostics} from '@romejs/diagnostics';
+import {Diagnostics, catchDiagnostics, descriptions} from '@romejs/diagnostics';
 import {
-  TransformStageName,
   CompileResult,
   CompilerOptions,
+  TransformStageName,
   compile,
 } from '@romejs/js-compiler';
 import {
-  WorkerParseOptions,
   WorkerCompilerOptions,
   WorkerFormatResult,
-  WorkerLintResult,
   WorkerLintOptions,
+  WorkerLintResult,
+  WorkerParseOptions,
 } from '../common/bridges/WorkerBridge';
 import Logger from '../common/utils/Logger';
 import * as jsAnalysis from '@romejs/js-analysis';
 import {
-  getFileHandlerAssert,
   ExtensionLintResult,
+  getFileHandlerAssert,
 } from '../common/fileHandlers';
 import {
   AnalyzeDependencyResult,
   UNKNOWN_ANALYZE_DEPENDENCIES_RESULT,
 } from '../common/types/analyzeDependencies';
-import {matchPathPatterns} from '@romejs/path-match';
 
 // Some Windows git repos will automatically convert Unix line endings to Windows
 // This retains the line endings for the formatted code if they were present in the source
@@ -55,32 +54,28 @@ export default class WorkerAPI {
   worker: Worker;
   logger: Logger;
 
-  interceptAndAddGeneratedToDiagnostics<T extends {diagnostics: Diagnostics}>(
-    val: T,
-    generated: boolean,
-  ): T {
+  interceptAndAddGeneratedToDiagnostics<T extends {
+    diagnostics: Diagnostics;
+  }>(val: T, generated: boolean): T {
     if (generated) {
-      const diagnostics = val.diagnostics.map(
-        (diag) => {
-          const diagAdvice = diag.description.advice === undefined
-            ? []
-            : diag.description.advice;
-          return {
-              ...diag,
-              metadata: {
-                ...diag.description,
-                advice: [
-                  ...diagAdvice,
-                  {
-                    type: 'log',
-                    category: 'warn',
-                    message: 'This diagnostic was generated on a file that has been converted to JavaScript. The source locations are most likely incorrect',
-                  },
-                ],
+      const diagnostics = val.diagnostics.map((diag) => {
+        const diagAdvice =
+          diag.description.advice === undefined ? [] : diag.description.advice;
+        return {
+          ...diag,
+          metadata: {
+            ...diag.description,
+            advice: [
+              ...diagAdvice,
+              {
+                type: 'log',
+                category: 'warn',
+                text: 'This diagnostic was generated on a file that has been converted to JavaScript. The source locations are most likely incorrect',
               },
-            };
-        },
-      );
+            ],
+          },
+        };
+      });
 
       return {...val, diagnostics};
     } else {
@@ -117,7 +112,7 @@ export default class WorkerAPI {
       return UNKNOWN_ANALYZE_DEPENDENCIES_RESULT;
     }
 
-    return analyzeDependencies({
+    return await analyzeDependencies({
       file: ref,
       project,
       worker: this.worker,
@@ -162,21 +157,28 @@ export default class WorkerAPI {
       options,
       parseOptions,
     );
-    return this.interceptAndAddGeneratedToDiagnostics(await compile({
-      ast,
-      sourceText,
-      options: compilerOptions,
-      project,
-      stage,
-    }), generated);
+    return this.interceptAndAddGeneratedToDiagnostics(
+      await compile({
+        ref,
+        ast,
+        sourceText,
+        options: compilerOptions,
+        project,
+        stage,
+      }),
+      generated,
+    );
   }
 
   async parseJS(ref: FileReference, opts: WorkerParseOptions): Promise<Program> {
-    let {ast, generated} = await this.worker.parseJS(ref, {
-      ...opts,
-      sourceType: opts.sourceType,
-      cache: false,
-    });
+    let {ast, generated} = await this.worker.parseJS(
+      ref,
+      {
+        ...opts,
+        sourceType: opts.sourceType,
+        cache: false,
+      },
+    );
 
     return this.interceptAndAddGeneratedToDiagnostics(ast, generated);
   }
@@ -197,27 +199,12 @@ export default class WorkerAPI {
     }
   }
 
-  shouldFormat(ref: FileReference): boolean {
-    const project = this.worker.getProject(ref.project);
-
-    return project.config.format.enabled && matchPathPatterns(
-        ref.real,
-        project.config.lint.ignore,
-      ) === 'NO_MATCH' &&
-        matchPathPatterns(ref.real, project.config.format.ignore) ===
-        'NO_MATCH';
-  }
-
   async _format(
     ref: FileReference,
     parseOptions: WorkerParseOptions,
   ): Promise<undefined | ExtensionLintResult> {
     const project = this.worker.getProject(ref.project);
     this.logger.info(`Formatting:`, ref.real);
-
-    if (!this.shouldFormat(ref)) {
-      return;
-    }
 
     const {handler} = getFileHandlerAssert(ref.real, project.config);
     const {format} = handler;
@@ -249,35 +236,37 @@ export default class WorkerAPI {
     const {lint} = handler;
     if (lint === undefined && handler.format === undefined) {
       return {
-        fixed: false,
+        saved: false,
         diagnostics: [],
         suppressions: [],
       };
     }
 
     // Catch any diagnostics, in the case of syntax errors etc
-    const res = await catchDiagnostics(() => {
-      if (lint === undefined) {
-        return this._format(ref, parseOptions);
-      } else {
-        return lint({
-          format: this.shouldFormat(ref),
-          file: ref,
-          project,
-          worker: this.worker,
-          options,
-          parseOptions,
-        });
-      }
-    }, {
-      category: 'lint',
-      message: 'Caught by WorkerAPI.lint',
-    });
+    const res = await catchDiagnostics(
+      () => {
+        if (lint === undefined) {
+          return this._format(ref, parseOptions);
+        } else {
+          return lint({
+            file: ref,
+            project,
+            worker: this.worker,
+            options,
+            parseOptions,
+          });
+        }
+      },
+      {
+        category: 'lint',
+        message: 'Caught by WorkerAPI.lint',
+      },
+    );
 
     // These are fatal diagnostics
     if (res.diagnostics !== undefined) {
       return {
-        fixed: false,
+        saved: false,
         suppressions: [],
         diagnostics: res.diagnostics,
       };
@@ -286,7 +275,7 @@ export default class WorkerAPI {
     // `format` could have return undefined
     if (res.value === undefined) {
       return {
-        fixed: false,
+        saved: false,
         diagnostics: [],
         suppressions: [],
       };
@@ -305,24 +294,24 @@ export default class WorkerAPI {
     );
 
     // If the file has pending fixes
-    const needsFix = formatted !== sourceText;
+    const needsSave = formatted !== sourceText;
 
     // Autofix if necessary
-    if (options.fix && needsFix) {
+    if (options.save && needsSave) {
       // Save the file and evict it from the cache
       await this.worker.writeFile(ref.real, formatted);
 
       // Relint this file without fixing it, we do this to prevent false positive error messages
       return {
-        ...(await this.lint(ref, {...options, fix: false}, parseOptions)),
-        fixed: true,
+        ...(await this.lint(ref, {...options, save: false}, parseOptions)),
+        saved: true,
       };
     }
 
     // If there's no pending fix then no need for diagnostics
-    if (!needsFix) {
+    if (!needsSave) {
       return {
-        fixed: false,
+        saved: false,
         diagnostics,
         suppressions,
       };
@@ -330,15 +319,20 @@ export default class WorkerAPI {
 
     // Add pending autofix diagnostic
     return {
-      fixed: false,
+      saved: false,
       suppressions,
       diagnostics: [
         ...diagnostics,
         {
+          fixable: true,
           location: {
             filename: ref.uid,
           },
-          description: descriptions.LINT.PENDING_FIXES(sourceText, formatted),
+          description: descriptions.LINT.PENDING_FIXES(
+            ref.relative.join(),
+            sourceText,
+            formatted,
+          ),
         },
       ],
     };

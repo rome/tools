@@ -6,17 +6,15 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, concat} from '../../tokens';
-import {memberExpression, AnyNode} from '@romejs/js-ast';
+import {Token, concat} from '../../tokens';
+import {MemberExpression} from '@romejs/js-ast';
 
 export default function MemberExpression(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = memberExpression.assert(node);
-
-  return [
-    concat(builder.tokenize(node.object, node)),
-    concat(builder.tokenize(node.property, node)),
-  ];
+  node: MemberExpression,
+): Token {
+  return concat([
+    builder.tokenize(node.object, node),
+    builder.tokenize(node.property, node),
+  ]);
 }

@@ -9,9 +9,9 @@ import {DiagnosticAdvice, DiagnosticLocation} from './types';
 import {orderBySimilarity} from '@romejs/string-utils';
 import diff from '@romejs/string-diff';
 import {Position} from '@romejs/parser-core';
-import {get1} from '@romejs/ob1';
+import {ob1Get1} from '@romejs/ob1';
 import {NEWLINE} from '@romejs/js-parser-utils';
-import {markup, escapeMarkup} from '@romejs/string-markup';
+import {escapeMarkup, markup} from '@romejs/string-markup';
 
 type BuildSuggestionAdviceOptions = {
   minRating?: number;
@@ -26,11 +26,15 @@ export function buildSuggestionAdvice(
 ): DiagnosticAdvice {
   const advice: DiagnosticAdvice = [];
 
-  const ratings = orderBySimilarity(value, items, {
-    minRating,
-    formatItem,
-    ignoreCase,
-  });
+  const ratings = orderBySimilarity(
+    value,
+    items,
+    {
+      minRating,
+      formatItem,
+      ignoreCase,
+    },
+  );
 
   const strings = ratings.map((item) => {
     const {target} = item;
@@ -55,18 +59,16 @@ export function buildSuggestionAdvice(
 
   // If there's only 2 suggestions then just say "Did you mean A or B?" rather than printing the list
   if (strings.length === 1) {
-    advice.push(
-      {
-        type: 'log',
-        category: 'info',
-        message: markup`Did you mean <emphasis>${topRatingFormatted}</emphasis> or <emphasis>${strings[0]}</emphasis>?`,
-      },
-    );
+    advice.push({
+      type: 'log',
+      category: 'info',
+      text: markup`Did you mean <emphasis>${topRatingFormatted}</emphasis> or <emphasis>${strings[0]}</emphasis>?`,
+    });
   } else {
     advice.push({
       type: 'log',
       category: 'info',
-      message: markup`Did you mean <emphasis>${topRatingFormatted}</emphasis>?`,
+      text: markup`Did you mean <emphasis>${topRatingFormatted}</emphasis>?`,
     });
 
     advice.push({
@@ -78,7 +80,7 @@ export function buildSuggestionAdvice(
       advice.push({
         type: 'log',
         category: 'info',
-        message: 'Or one of these?',
+        text: 'Or one of these?',
       });
 
       advice.push({
@@ -90,12 +92,14 @@ export function buildSuggestionAdvice(
   }
 
   // TODO check if ANY of the suggestions match
-  if (topRatingRaw !== value && topRatingRaw.toLowerCase() ===
-      value.toLowerCase()) {
+  if (
+    topRatingRaw !== value &&
+    topRatingRaw.toLowerCase() === value.toLowerCase()
+  ) {
     advice.push({
       type: 'log',
       category: 'warn',
-      message: 'This operation is case sensitive',
+      text: 'This operation is case sensitive',
     });
   }
 
@@ -111,8 +115,8 @@ export function truncateSourceText(
   const lines = code.split(NEWLINE);
 
   // Pad the starting and ending lines by 10
-  const fromLine = Math.max(get1(start.line) - 10, 0);
-  const toLine = Math.max(get1(end.line) + 10, lines.length);
+  const fromLine = Math.max(ob1Get1(start.line) - 10, 0);
+  const toLine = Math.max(ob1Get1(end.line) + 10, lines.length);
 
   const capturedLines = lines.slice(fromLine, toLine);
   return '\n'.repeat(fromLine) + capturedLines.join('\n');
@@ -126,7 +130,7 @@ export function buildDuplicateLocationAdvice(
       return {
         type: 'log',
         category: 'warn',
-        message: 'Unable to find location',
+        text: 'Unable to find location',
       };
     } else {
       return {
@@ -140,7 +144,7 @@ export function buildDuplicateLocationAdvice(
     {
       type: 'log',
       category: 'info',
-      message: 'Defined already here',
+      text: 'Defined already here',
     },
     ...locationAdvice,
   ];

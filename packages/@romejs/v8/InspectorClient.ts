@@ -6,7 +6,7 @@
  */
 
 import {WebSocketInterface} from '@romejs/codec-websocket';
-import {consumeJSON, JSONValue} from '@romejs/codec-json';
+import {JSONValue, consumeJSON} from '@romejs/codec-json';
 import {Consumer} from '@romejs/consume';
 
 type InspectorSubscription = {
@@ -35,10 +35,13 @@ export default class InspectorClient {
 
   alive: boolean;
   id: number;
-  callbacks: Map<number, {
-    resolve: (params: Consumer) => void;
-    reject: (err: Error) => void;
-  }>;
+  callbacks: Map<
+    number,
+    {
+      resolve: (params: Consumer) => void;
+      reject: (err: Error) => void;
+    }
+  >;
   subscriptions: Map<string, Set<InspectorSubscription>>;
   socket: WebSocketInterface;
 
@@ -123,10 +126,13 @@ export default class InspectorClient {
   async wait(method: string): Promise<Consumer> {
     return new Promise((resolve) => {
       this.assertAlive();
-      this.subscribe(method, {
-        once: true,
-        callback: resolve,
-      });
+      this.subscribe(
+        method,
+        {
+          once: true,
+          callback: resolve,
+        },
+      );
     });
   }
 

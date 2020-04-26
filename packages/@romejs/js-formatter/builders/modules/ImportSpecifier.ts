@@ -6,26 +6,24 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, word, space, concat} from '../../tokens';
-import {ImportSpecifier, importSpecifier, AnyNode} from '@romejs/js-ast';
+import {Token, concat, space} from '../../tokens';
+import {ImportSpecifier} from '@romejs/js-ast';
 
-export default function ImportSpecifier(builder: Builder, node: AnyNode): Tokens {
-  node = importSpecifier.assert(node);
-
-  const tokens: Tokens = [];
+export default function ImportSpecifier(
+  builder: Builder,
+  node: ImportSpecifier,
+): Token {
+  const tokens: Array<Token> = [];
 
   if (node.local.importKind === 'type' || node.local.importKind === 'typeof') {
-    tokens.push(word(node.local.importKind), space);
+    tokens.push(node.local.importKind, space);
   }
 
-  tokens.push(concat(builder.tokenize(node.imported, node)));
+  tokens.push(builder.tokenize(node.imported, node));
 
   if (node.local.name.name !== node.imported.name) {
-    tokens.push(space, word('as'), space, concat(builder.tokenize(
-      node.local.name,
-      node,
-    )));
+    tokens.push(space, 'as', space, builder.tokenize(node.local.name, node));
   }
 
-  return tokens;
+  return concat(tokens);
 }

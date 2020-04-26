@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, ImportBinding} from '@romejs/js-compiler';
+import {ImportBinding, Path} from '@romejs/js-compiler';
 import {
   AnyNode,
-  ExportLocalDeclaration,
   ExportExternalDeclaration,
-  exportLocalDeclaration,
+  ExportLocalDeclaration,
   exportExternalDeclaration,
   exportExternalSpecifier,
+  exportLocalDeclaration,
   identifier,
   stringLiteral,
 } from '@romejs/js-ast';
@@ -25,27 +25,35 @@ export default {
     const {node} = path;
 
     // turn `import {a} from 'b'; export {a}`; to `export {a} from 'b';`';
-    if (node.type === 'ExportLocalDeclaration' && node.exportKind === 'value' &&
-        node.declaration === undefined && node.specifiers !== undefined) {
+    if (
+      node.type === 'ExportLocalDeclaration' &&
+      node.exportKind === 'value' &&
+      node.declaration === undefined &&
+      node.specifiers !== undefined
+    ) {
       const nodes: Array<ExportExternalDeclaration | ExportLocalDeclaration> = [];
       const specifiers = [];
 
       for (const specifier of node.specifiers) {
         if (specifier.type === 'ExportLocalSpecifier') {
           const binding = path.scope.getBinding(specifier.local.name);
-          if (binding !== undefined && binding instanceof ImportBinding &&
-                binding.meta.type ===
-                'name') {
-            nodes.push(exportExternalDeclaration.create({
-              namedSpecifiers: [
-                exportExternalSpecifier.create({
-                  local: identifier.quick(binding.meta.imported),
-                  exported: specifier.exported,
-                  loc: specifier.loc,
-                }),
-              ],
-              source: stringLiteral.quick(binding.meta.source),
-            }));
+          if (
+            binding !== undefined &&
+            binding instanceof ImportBinding &&
+            binding.meta.type === 'name'
+          ) {
+            nodes.push(
+              exportExternalDeclaration.create({
+                namedSpecifiers: [
+                  exportExternalSpecifier.create({
+                    local: identifier.quick(binding.meta.imported),
+                    exported: specifier.exported,
+                    loc: specifier.loc,
+                  }),
+                ],
+                source: stringLiteral.quick(binding.meta.source),
+              }),
+            );
           } else {
             specifiers.push(specifier);
           }

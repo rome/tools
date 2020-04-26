@@ -8,13 +8,13 @@
 import {test} from 'rome';
 import {extractSuppressionsFromComments} from './suppressions';
 import {CommentBlock} from '@romejs/js-ast';
-import {number0, coerce1} from '@romejs/ob1';
+import {ob1Coerce1, ob1Number0} from '@romejs/ob1';
 
 function generateComment(value: string, line: number): CommentBlock {
   const pos = {
-    index: number0,
-    column: number0,
-    line: coerce1(line),
+    index: ob1Number0,
+    column: ob1Number0,
+    line: ob1Coerce1(line),
   };
 
   return {
@@ -29,35 +29,55 @@ function generateComment(value: string, line: number): CommentBlock {
   };
 }
 
-test('single category', (t) => {
-  t.snapshot(extractSuppressionsFromComments([
-    generateComment('rome-suppress foo', 1),
-    generateComment('* rome-suppress foo', 2),
-    generateComment(' * rome-suppress foo', 3),
-    generateComment('* wow\n * rome-suppress foo', 4),
-  ]));
-});
+test(
+  'single category',
+  async (t) => {
+    await t.snapshot(
+      extractSuppressionsFromComments([
+        generateComment('rome-suppress foo', 1),
+        generateComment('* rome-suppress foo', 2),
+        generateComment(' * rome-suppress foo', 3),
+        generateComment('* wow\n * rome-suppress foo', 4),
+      ]),
+    );
+  },
+);
 
-test('multiple categories', (t) => {
-  t.snapshot(extractSuppressionsFromComments([
-    generateComment('rome-suppress foo bar', 1),
-    generateComment('* rome-suppress foo bar', 2),
-    generateComment(' * rome-suppress foo bar', 3),
-    generateComment(
-      '* wow\n * rome-suppress foo bar\n* rome-suppress cat dog',
-      4,
-    ),
-  ]));
-});
+test(
+  'multiple categories',
+  async (t) => {
+    await t.snapshot(
+      extractSuppressionsFromComments([
+        generateComment('rome-suppress foo bar', 1),
+        generateComment('* rome-suppress foo bar', 2),
+        generateComment(' * rome-suppress foo bar', 3),
+        generateComment(
+          '* wow\n * rome-suppress foo bar\n* rome-suppress cat dog',
+          4,
+        ),
+      ]),
+    );
+  },
+);
 
-test('typos', (t) => {
-  t.snapshot(extractSuppressionsFromComments([
-    generateComment('rome-ignore foo bar', 1),
-  ]));
-});
+test(
+  'typos',
+  async (t) => {
+    await t.snapshot(
+      extractSuppressionsFromComments([
+        generateComment('rome-ignore foo bar', 1),
+      ]),
+    );
+  },
+);
 
-test('duplicates', (t) => {
-  t.snapshot(extractSuppressionsFromComments([
-    generateComment('rome-suppress foo foo', 1),
-  ]));
-});
+test(
+  'duplicates',
+  async (t) => {
+    await t.snapshot(
+      extractSuppressionsFromComments([
+        generateComment('rome-suppress foo foo', 1),
+      ]),
+    );
+  },
+);

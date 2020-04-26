@@ -7,7 +7,7 @@
 
 import {Profile} from '@romejs/v8';
 import {Diagnostics} from '@romejs/diagnostics';
-import {ClientRequestFlags, ClientFlagsJSON} from '../types/client';
+import {ClientFlagsJSON, ClientRequestFlags} from '../types/client';
 import {Bridge} from '@romejs/events';
 import {JSONPropertyValue} from '@romejs/codec-json';
 import {
@@ -26,14 +26,15 @@ export type MasterQueryRequest = {
   silent: boolean;
   noData: boolean;
   terminateWhenIdle: boolean;
+  cancelToken?: string;
 };
 
 export type PartialMasterQueryRequest = Partial<Omit<
   MasterQueryRequest,
-  'requestFlags'
+  'requestFlags' | 'commandName'
 >> & {
   requestFlags?: Partial<ClientRequestFlags>;
-  command: string;
+  commandName: string;
 };
 
 export type MasterQueryResponseSuccess = {
@@ -63,13 +64,20 @@ export type MasterQueryResponseInvalid = {
   showHelp: boolean;
 };
 
+export type MasterQueryResponseCancelled = {
+  type: 'CANCELLED';
+};
+
 export type MasterQueryResponse =
   | MasterQueryResponseInvalid
   | MasterQueryResponseSuccess
   | MasterQueryResponseError
+  | MasterQueryResponseCancelled
   | MasterQueryResponseDiagnostics;
 
-export type ProfilingStartData = {samplingInterval: number};
+export type ProfilingStartData = {
+  samplingInterval: number;
+};
 
 export type MasterBridgeInfo = {
   version: string;
@@ -102,10 +110,13 @@ export default class MasterBridge extends Bridge {
     direction: 'server<-client',
   });
 
-  log = this.createEvent<{
-    origin: 'master' | 'worker';
-    chunk: string;
-  }, void>({
+  log = this.createEvent<
+    {
+      origin: 'master' | 'worker';
+      chunk: string;
+    },
+    void
+  >({
     name: 'log',
     direction: 'server->client',
   });
@@ -133,6 +144,11 @@ export default class MasterBridge extends Bridge {
 
   query = this.createEvent<PartialMasterQueryRequest, MasterQueryResponse>({
     name: 'query',
+    direction: 'server<-client',
+  });
+
+  cancelQuery = this.createEvent<string, void>({
+    name: 'cancel',
     direction: 'server<-client',
   });
 

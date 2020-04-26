@@ -6,26 +6,30 @@
  */
 
 import Builder from '../../Builder';
-import {AnyNode, classPrivateProperty} from '@romejs/js-ast';
-import {Tokens, operator, space, concat} from '@romejs/js-formatter/tokens';
+import {ClassPrivateProperty} from '@romejs/js-ast';
+import {Token, concat, group, space} from '../../tokens';
 
-export default function ClassPrivateProperty(builder: Builder, node: AnyNode) {
-  node = classPrivateProperty.assert(node);
-
-  const tokens: Tokens = [
-    concat(builder.tokenize(node.meta, node)),
-    concat(builder.tokenize(node.key, node)),
-    concat(builder.tokenizeTypeColon(node.typeAnnotation, node)),
+export default function ClassPrivateProperty(
+  builder: Builder,
+  node: ClassPrivateProperty,
+): Token {
+  const tokens: Array<Token> = [
+    builder.tokenize(node.meta, node),
+    builder.tokenize(node.key, node),
   ];
+
+  if (builder.options.typeAnnotations && node.typeAnnotation) {
+    tokens.push(':', space, builder.tokenize(node.typeAnnotation, node));
+  }
 
   if (node.value) {
     tokens.push(space);
-    tokens.push(operator('='));
+    tokens.push('=');
     tokens.push(space);
-    tokens.push(concat(builder.tokenize(node.value, node)));
+    tokens.push(builder.tokenize(node.value, node));
   }
 
-  tokens.push(operator(';'));
+  tokens.push(';');
 
-  return tokens;
+  return group(concat(tokens));
 }

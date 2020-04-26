@@ -15,8 +15,8 @@ export * from './utils';
 export {default as Profiler} from './Profiler';
 export {default as Trace} from './Trace';
 export {
-  default as InspectorClient,
   InspectorClientCloseError,
+  default as InspectorClient,
 } from './InspectorClient';
 export {default as CoverageCollector} from './CoverageCollector';
 export * from './types';

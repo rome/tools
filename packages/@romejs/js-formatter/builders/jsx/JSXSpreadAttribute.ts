@@ -6,19 +6,12 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator, concat} from '../../tokens';
-import {jsxSpreadAttribute, AnyNode} from '@romejs/js-ast';
+import {Token, concat} from '../../tokens';
+import {JSXSpreadAttribute} from '@romejs/js-ast';
 
 export default function JSXSpreadAttribute(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = jsxSpreadAttribute.assert(node);
-
-  return [
-    operator('{'),
-    operator('...'),
-    concat(builder.tokenize(node.argument, node)),
-    operator('}'),
-  ];
+  node: JSXSpreadAttribute,
+): Token {
+  return concat(['{', '...', builder.tokenize(node.argument, node), '}']);
 }

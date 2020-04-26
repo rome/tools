@@ -6,11 +6,11 @@
  */
 
 import {
-  VersionNode,
-  RangeNode,
   AbsoluteVersionNode,
-  WildcardNode,
   ComparatorOperator,
+  RangeNode,
+  VersionNode,
+  WildcardNode,
 } from './types';
 import compare from './compare';
 
@@ -66,12 +66,10 @@ function compareOp(
       if (major === 0) {
         if (minor === 0) {
           // ^0.0.3 := >=0.0.3 <0.0.4
-
           // @ts-ignore
           return compareOp('<', version, buildVersion(0, 0, patch + 1));
         } else {
           // ^0.2.3 := >=0.2.3 <0.3.0
-
           // @ts-ignore
           return compareOp('<', version, buildVersion(0, minor + 1, 0));
         }
@@ -95,7 +93,6 @@ function compareOp(
 
       if (minor === undefined) {
         // ~1 := >=1.0.0 <(1+1).0.0 := >=1.0.0 <2.0.0 (Same as 1.x)
-
         // @ts-ignore
         return compareOp('<', version, buildVersion(major + 1, minor, 0));
       }
@@ -154,20 +151,19 @@ export default function satisfies(
 
   if (version.prerelease.length > 0) {
     // Find the set of versions that are allowed to have prereleases
-
     // For example, ^1.2.3-pr.1 desugars to >=1.2.3-pr.1 <2.0.0
-
     // That should allow `1.2.3-pr.2` to pass.
-
     // However, `1.2.4-alpha.notready` should NOT be allowed,
-
     // even though it's within the range set by the comparators.
     const versions = collectVersions(range);
 
     for (const comparator of versions) {
       if (comparator.prerelease.length > 0) {
-        if (comparator.major === version.major && comparator.minor ===
-            version.minor && comparator.patch === version.patch) {
+        if (
+          comparator.major === version.major &&
+          comparator.minor === version.minor &&
+          comparator.patch === version.patch
+        ) {
           return true;
         }
       }
@@ -193,22 +189,19 @@ function satisfiesSub(version: AbsoluteVersionNode, range: RangeNode): boolean {
       return compareOp(range.operator, version, range.version);
 
     case 'LogicalAnd':
-      return satisfiesSub(version, range.left) && satisfiesSub(
-        version,
-        range.right,
+      return (
+        satisfiesSub(version, range.left) && satisfiesSub(version, range.right)
       );
 
     case 'LogicalOr':
-      return satisfiesSub(version, range.left) || satisfiesSub(
-        version,
-        range.right,
+      return (
+        satisfiesSub(version, range.left) || satisfiesSub(version, range.right)
       );
 
     case 'VersionRange':
-      return inRange(version, range.left, range.right) || inRange(
-        version,
-        range.right,
-        range.left,
+      return (
+        inRange(version, range.left, range.right) ||
+        inRange(version, range.right, range.left)
       );
   }
 }

@@ -44,10 +44,11 @@ function compareMain(
   version: AbsoluteVersionNode,
   range: VersionNode,
 ): CompareRet {
-  return compareIdentifiers(version.major, range.major) || compareIdentifiers(
-    version.minor,
-    range.minor,
-  ) || compareIdentifiers(version.patch, range.patch);
+  return (
+    compareIdentifiers(version.major, range.major) ||
+    compareIdentifiers(version.minor, range.minor) ||
+    compareIdentifiers(version.patch, range.patch)
+  );
 }
 
 function comparePre(

@@ -5,12 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSInterfaceBody, tsInterfaceBody, AnyNode} from '@romejs/js-ast';
+import {TSInterfaceBody} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
-import {Tokens} from '../../tokens';
+import {Token} from '../../tokens';
 import {printTSBraced} from '../utils';
 
-export default function TSInterfaceBody(builder: Builder, node: AnyNode): Tokens {
-  node = tsInterfaceBody.assert(node);
+export default function TSInterfaceBody(
+  builder: Builder,
+  node: TSInterfaceBody,
+): Token {
   return printTSBraced(builder, node, node.body);
 }

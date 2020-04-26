@@ -7,21 +7,32 @@
 
 import {
   TSTypeParameterDeclaration,
-  tsTypeParameterDeclaration,
-  AnyNode,
+  TSTypeParameterInstantiation,
 } from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
-import {Tokens, operator} from '../../tokens';
+import {Token, concat, group, indent, softline} from '../../tokens';
+import {printCommaList} from '../utils';
 
 export default function TSTypeParameterDeclaration(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = tsTypeParameterDeclaration.assert(node);
+  node: TSTypeParameterDeclaration | TSTypeParameterInstantiation,
+): Token {
+  const params = node.params;
+  const shouldInline =
+    params.length === 1 &&
+    params[0].type !== 'IntersectionTypeAnnotation' &&
+    params[0].type !== 'UnionTypeAnnotation';
 
-  return [
-    operator('<'),
-    builder.tokenizeCommaList(node.params, node),
-    operator('>'),
-  ];
+  if (shouldInline) {
+    return concat(['<', builder.tokenize(params[0], node), '>']);
+  } else {
+    return group(
+      concat([
+        '<',
+        indent(concat([softline, printCommaList(builder, params, node)])),
+        softline,
+        '>',
+      ]),
+    );
+  }
 }

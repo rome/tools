@@ -5,26 +5,22 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import {TSAssignmentAsExpression} from '@romejs/js-ast';
 import Builder from '../../Builder';
-import {Tokens, word} from '../../tokens';
-import {
-  TSAssignmentAsExpression,
-  tsAssignmentAsExpression,
-  AnyNode,
-} from '@romejs/js-ast';
+import {Token, concat, space} from '../../tokens';
 
 export default function TSAssignmentAsExpression(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = tsAssignmentAsExpression.assert(node);
-
+  node: TSAssignmentAsExpression,
+): Token {
   if (builder.options.typeAnnotations) {
-    return [
-      ...builder.tokenize(node.expression, node),
-      word('as'),
-      ...builder.tokenize(node.typeAnnotation, node),
-    ];
+    return concat([
+      builder.tokenize(node.expression, node),
+      space,
+      'as',
+      space,
+      builder.tokenize(node.typeAnnotation, node),
+    ]);
   } else {
     return builder.tokenize(node.expression, node);
   }

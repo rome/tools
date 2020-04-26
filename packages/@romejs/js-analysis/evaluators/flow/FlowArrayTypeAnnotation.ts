@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   FlowArrayTypeAnnotation,
   flowArrayTypeAnnotation,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function FlowArrayTypeAnnotation(node: AnyNode, scope: Scope) {

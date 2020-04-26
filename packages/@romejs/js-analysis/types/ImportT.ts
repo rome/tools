@@ -12,24 +12,30 @@ import {Scope} from '../scopes';
 import T from './T';
 
 export default class ImportT extends T {
-  constructor(scope: Scope, originNode: undefined | AnyNode, opts: {
-    importedName: undefined | string;
-    relative?: string;
-    source: string;
-  }) {
+  constructor(
+    scope: Scope,
+    originNode: undefined | AnyNode,
+    opts: {
+      importedName: undefined | string;
+      relative?: string;
+      source: string;
+    },
+  ) {
     super(scope, originNode);
     this.importedName = opts.importedName;
-    this.relative = opts.relative === undefined
-      ? scope.evaluator.filename
-      : opts.relative;
+    this.relative =
+      opts.relative === undefined ? scope.evaluator.filename : opts.relative;
     this.source = opts.source;
     this.absolute = undefined;
     this.resolvedType = undefined;
-    scope.evaluator.addImport(this, {
-      importedName: this.importedName,
-      relative: this.relative,
-      source: this.source,
-    });
+    scope.evaluator.addImport(
+      this,
+      {
+        importedName: this.importedName,
+        relative: this.relative,
+        source: this.source,
+      },
+    );
   }
 
   static type = 'ImportT';
@@ -60,11 +66,15 @@ export default class ImportT extends T {
     originNode: undefined | AnyNode,
     data: HydrateData,
   ): T {
-    return new ImportT(scope, originNode, {
-      importedName: String(data.importedName),
-      source: String(data.source),
-      relative: String(data.relative),
-    });
+    return new ImportT(
+      scope,
+      originNode,
+      {
+        importedName: String(data.importedName),
+        source: String(data.source),
+        relative: String(data.relative),
+      },
+    );
   }
 
   humanize(builder: HumanBuilder): string {

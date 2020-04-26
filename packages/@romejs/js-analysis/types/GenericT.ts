@@ -7,7 +7,7 @@
 
 import {AnyNode} from '@romejs/js-ast';
 import T, {SerialTypeFactory} from './T';
-import {HydrateTypeFactory, HydrateData} from '../Evaluator';
+import {HydrateData, HydrateTypeFactory} from '../Evaluator';
 import {Scope} from '../scopes';
 import ClassT from './ClassT';
 import InstanceT from './InstanceT';
@@ -42,7 +42,12 @@ export default class GenericT extends T {
     data: HydrateData,
     getType: HydrateTypeFactory,
   ): T {
-    return new GenericT(scope, originNode, String(data.name), getType(data.type));
+    return new GenericT(
+      scope,
+      originNode,
+      String(data.name),
+      getType(data.type),
+    );
   }
 
   humanize(): string {

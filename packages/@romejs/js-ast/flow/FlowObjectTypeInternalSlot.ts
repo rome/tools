@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, AnyFlowPrimary, FlowObjectTypePropertyKey} from '../index';
+import {AnyFlowPrimary, FlowObjectTypePropertyKey, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type FlowObjectTypeInternalSlot = JSNodeBase & {
@@ -17,12 +17,13 @@ export type FlowObjectTypeInternalSlot = JSNodeBase & {
   method?: boolean;
 };
 
-export const flowObjectTypeInternalSlot = createBuilder<
-  FlowObjectTypeInternalSlot
->('FlowObjectTypeInternalSlot', {
-  bindingKeys: {},
-  visitorKeys: {
-    id: true,
-    value: true,
+export const flowObjectTypeInternalSlot = createBuilder<FlowObjectTypeInternalSlot>(
+  'FlowObjectTypeInternalSlot',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      id: true,
+      value: true,
+    },
   },
-});
+);

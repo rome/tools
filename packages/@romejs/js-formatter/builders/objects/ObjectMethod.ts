@@ -6,11 +6,13 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens} from '../../tokens';
+import {Token} from '../../tokens';
 import {printMethod} from '../utils';
-import {ObjectMethod, objectMethod, AnyNode} from '@romejs/js-ast';
+import {ObjectMethod} from '@romejs/js-ast';
 
-export default function ObjectMethod(builder: Builder, node: AnyNode): Tokens {
-  node = objectMethod.assert(node);
+export default function ObjectMethod(
+  builder: Builder,
+  node: ObjectMethod,
+): Token {
   return printMethod(builder, node);
 }

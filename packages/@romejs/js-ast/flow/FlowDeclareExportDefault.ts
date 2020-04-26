@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, AnyFlowPrimary, AnyFlowDeclare} from '../index';
+import {AnyFlowDeclare, AnyFlowPrimary, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type FlowDeclareExportDefault = JSNodeBase & {

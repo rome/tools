@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, PatternMeta, Identifier} from '../index';
+import {Identifier, JSNodeBase, PatternMeta} from '../index';
 import {createBuilder} from '../utils';
 import '../patterns/PatternMeta';
 

@@ -5,23 +5,19 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-  TSNonNullExpression,
-  tsNonNullExpression,
-  AnyNode,
-} from '@romejs/js-ast';
+import {TSNonNullExpression} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
-import {Tokens, operator} from '../../tokens';
+import {Token, concat} from '../../tokens';
 
 export default function TSNonNullExpression(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = tsNonNullExpression.assert(node);
+  node: TSNonNullExpression,
+): Token {
+  const expr = builder.tokenize(node.expression, node);
 
   if (builder.options.typeAnnotations) {
-    return [...builder.tokenize(node.expression, node), operator('!')];
+    return concat([expr, '!']);
   } else {
-    return builder.tokenize(node.expression, node);
+    return expr;
   }
 }

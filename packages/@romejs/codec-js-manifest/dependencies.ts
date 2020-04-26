@@ -8,14 +8,15 @@
 import {Consumer} from '@romejs/consume';
 import {
   SemverRangeNode,
-  stringifySemver,
   parseSemverRange,
+  stringifySemver,
 } from '@romejs/codec-semver';
 import {tryParseWithOptionalOffsetPosition} from '@romejs/parser-core';
-import {createUnknownFilePath, UnknownFilePath} from '@romejs/path';
+import {UnknownFilePath, createUnknownFilePath} from '@romejs/path';
 import {normalizeName} from './name';
-import {add} from '@romejs/ob1';
+import {ob1Add} from '@romejs/ob1';
 import {descriptions} from '@romejs/diagnostics';
+import {ManifestName} from './types';
 
 export type DependencyPattern =
   | HostedGitPattern
@@ -27,7 +28,7 @@ export type DependencyPattern =
   | NpmPattern
   | LinkPattern;
 
-export type ManifestDependencies = Map<string, DependencyPattern>;
+export type ManifestDependencies = Map<ManifestName, DependencyPattern>;
 
 type UrlWithHash = {
   url: string;
@@ -106,7 +107,9 @@ type IncompleteHostedGitPattern = {
   commitish: undefined | string;
 };
 
-type HostedGitPattern = IncompleteHostedGitPattern & {url: string};
+type HostedGitPattern = IncompleteHostedGitPattern & {
+  url: string;
+};
 
 const GITHUB_SHORTHAND = /^[^:@%\/\s.\-][^:@%\/\s]*[\/][^:@\s\/%]+(?:#.*)?$/;
 
@@ -176,7 +179,9 @@ export function getHostedGitURL(pattern: IncompleteHostedGitPattern): string {
 }
 
 //# REGULAR GIT
-type GitPattern = UrlWithHash & {type: 'git'};
+type GitPattern = UrlWithHash & {
+  type: 'git';
+};
 
 const GIT_PATTERN_MATCHERS = [
   /^git:/,
@@ -194,7 +199,9 @@ function parseGit(pattern: string, consumer: Consumer): GitPattern {
 }
 
 //# TARBALL
-type HTTPTarballPattern = UrlWithHash & {type: 'http-tarball'};
+type HTTPTarballPattern = UrlWithHash & {
+  type: 'http-tarball';
+};
 
 function parseHttpTarball(
   pattern: string,
@@ -217,14 +224,17 @@ function parseSemver(
   consumer: Consumer,
   loose: boolean,
 ): SemverPattern {
-  const ast = tryParseWithOptionalOffsetPosition({
-    loose,
-    path: consumer.path,
-    input: pattern,
-  }, {
-    getOffsetPosition: () => consumer.getLocation('inner-value').start,
-    parse: (opts) => parseSemverRange(opts),
-  });
+  const ast = tryParseWithOptionalOffsetPosition(
+    {
+      loose,
+      path: consumer.path,
+      input: pattern,
+    },
+    {
+      getOffsetPosition: () => consumer.getLocation('inner-value').start,
+      parse: (opts) => parseSemverRange(opts),
+    },
+  );
 
   return {
     type: 'semver',
@@ -284,7 +294,7 @@ const NPM_PREFIX = 'npm:';
 
 type NpmPattern = {
   type: 'npm';
-  name: string;
+  name: ManifestName;
   range: undefined | SemverRangeNode;
 };
 
@@ -301,7 +311,10 @@ function parseNpm(
     consumer.unexpected(descriptions.MANIFEST.EMPTY_NPM_PATTERN);
     return {
       type: 'npm',
-      name: 'unknown',
+      name: {
+        org: undefined,
+        packageName: undefined,
+      },
       range: undefined,
     };
   }
@@ -331,37 +344,45 @@ function parseNpm(
     name: nameRaw,
     loose,
     unexpected({description, at, start, end}) {
-      consumer.unexpected(description, {
-        at,
-        loc: start === undefined
-          ? undefined
-          : consumer.getLocationRange(add(start, offset), end === undefined
+      consumer.unexpected(
+        description,
+        {
+          at,
+          loc: start === undefined
             ? undefined
-            : add(end, offset), 'inner-value'),
-      });
+            : consumer.getLocationRange(
+                ob1Add(start, offset),
+                end === undefined ? undefined : ob1Add(end, offset),
+                'inner-value',
+              ),
+        },
+      );
     },
   });
 
   // Increase offset passed name
-  offset += name.length;
+  offset += nameRaw.length;
   offset++;
 
   let range: undefined | SemverRangeNode;
   if (rangeRaw !== undefined) {
-    range = tryParseWithOptionalOffsetPosition({
-      loose,
-      path: consumer.path,
-      input: rangeRaw,
-    }, {
-      getOffsetPosition: () => {
-        const pos = consumer.getLocation('inner-value').start;
-        return {
-          ...pos,
-          column: add(pos.column, offset),
-        };
+    range = tryParseWithOptionalOffsetPosition(
+      {
+        loose,
+        path: consumer.path,
+        input: rangeRaw,
       },
-      parse: (opts) => parseSemverRange(opts),
-    });
+      {
+        getOffsetPosition: () => {
+          const pos = consumer.getLocation('inner-value').start;
+          return {
+            ...pos,
+            column: ob1Add(pos.column, offset),
+          };
+        },
+        parse: (opts) => parseSemverRange(opts),
+      },
+    );
   }
 
   return {
@@ -420,8 +441,11 @@ export function parseDependencyPattern(
     return parseLink(pattern);
   }
 
-  if (FILE_PREFIX_REGEX.test(pattern) ||
-      createUnknownFilePath(pattern).isAbsolute() || pattern.startsWith('file:')) {
+  if (
+    FILE_PREFIX_REGEX.test(pattern) ||
+    createUnknownFilePath(pattern).isAbsolute() ||
+    pattern.startsWith('file:')
+  ) {
     return parseFile(pattern);
   }
 
@@ -450,15 +474,18 @@ export function normalizeDependencies(
     return map;
   }
 
-  for (const [name, value] of consumer.asMap()) {
-    normalizeName({
-      name,
+  for (const [rawName, value] of consumer.asMap()) {
+    const name = normalizeName({
+      name: rawName,
       loose,
       unexpected: ({description, at}) => {
-        value.unexpected(description, {
-          at,
-          target: 'key',
-        });
+        value.unexpected(
+          description,
+          {
+            at,
+            target: 'key',
+          },
+        );
       },
     });
 

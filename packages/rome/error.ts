@@ -6,9 +6,9 @@
  */
 
 import {
+  DiagnosticSuppressions,
   Diagnostics,
   getDiagnosticsFromError,
-  DiagnosticSuppressions,
 } from '@romejs/diagnostics';
 import {printDiagnosticsToString} from '@romejs/cli-diagnostics';
 
@@ -35,28 +35,33 @@ export function throwDiagnostics(diagnostics: Diagnostics) {
   const suppressions: DiagnosticSuppressions = [];
 
   // We do not want to expose the `diagnostics`
-  const err = new RomeDiagnosticsError(printDiagnosticsToString({
-    diagnostics,
-    suppressions,
-    format: 'none',
-  }));
-  err.getHTML = () => printDiagnosticsToString({
-    diagnostics,
-    suppressions,
-    format: 'html',
-  });
-  err.getAnsi = () => printDiagnosticsToString({
-    diagnostics,
-    suppressions,
-    format: 'ansi',
-  });
+  const err = new RomeDiagnosticsError(
+    printDiagnosticsToString({
+      diagnostics,
+      suppressions,
+      format: 'none',
+    }),
+  );
+  err.getHTML = () =>
+    printDiagnosticsToString({
+      diagnostics,
+      suppressions,
+      format: 'html',
+    })
+  ;
+  err.getAnsi = () =>
+    printDiagnosticsToString({
+      diagnostics,
+      suppressions,
+      format: 'ansi',
+    })
+  ;
   throw err;
 }
 
-export function wrapForErrors<
-  T,
-  Args extends Array<unknown>
->(callback: (...args: Args) => Promise<T>): (...args: Args) => Promise<T> {
+export function wrapForErrors<T, Args extends Array<unknown>>(
+  callback: (...args: Args) => Promise<T>,
+): (...args: Args) => Promise<T> {
   return async function(...args: Args): Promise<T> {
     try {
       return await callback(...args);

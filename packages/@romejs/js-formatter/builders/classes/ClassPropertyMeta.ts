@@ -6,34 +6,32 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, word} from '../../tokens';
-import {classPropertyMeta, AnyNode} from '@romejs/js-ast';
+import {Token, concat, space} from '../../tokens';
+import {ClassPropertyMeta} from '@romejs/js-ast';
 
 export default function ClassPropertyMeta(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = classPropertyMeta.assert(node);
-
-  const tokens: Tokens = [];
+  node: ClassPropertyMeta,
+): Token {
+  const tokens: Array<Token> = [];
 
   if (!builder.options.typeAnnotations) {
     if (node.accessibility) {
-      tokens.push(word(node.accessibility));
+      tokens.push(node.accessibility);
     }
 
     if (node.readonly) {
-      tokens.push(word('readonly'));
+      tokens.push('readonly', space);
     }
 
     if (node.abstract) {
-      tokens.push(word('abstract'));
+      tokens.push('abstract', space);
     }
   }
 
   if (node.static) {
-    tokens.push(word('static'));
+    tokens.push('static', space);
   }
 
-  return tokens;
+  return concat(tokens);
 }

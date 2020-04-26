@@ -7,7 +7,7 @@
 
 import {AnyNode} from '@romejs/js-ast';
 import T, {SerialTypeFactory, TypeCompatibilityReturn} from './T';
-import {HydrateTypeFactory, HydrateData} from '../Evaluator';
+import {HydrateData, HydrateTypeFactory} from '../Evaluator';
 import {Scope} from '../scopes';
 import {HumanBuilder} from '../Utils';
 import StringLiteralT from './StringLiteralT';
@@ -27,11 +27,15 @@ export default class InstanceT extends ObjT {
       target,
       new StringLiteralT(scope, originNode, 'prototype'),
     );
-    super(scope, originNode, {
-      props: [],
-      proto: prototype,
-      calls: [],
-    });
+    super(
+      scope,
+      originNode,
+      {
+        props: [],
+        proto: prototype,
+        calls: [],
+      },
+    );
 
     this.typeParameters = typeParameters;
     this.target = target;
@@ -55,9 +59,12 @@ export default class InstanceT extends ObjT {
     data: HydrateData,
     getType: HydrateTypeFactory,
   ): T {
-    return new InstanceT(scope, originNode, getType(data.target), Array(
-      data.params,
-    ).map((id) => getType(id)));
+    return new InstanceT(
+      scope,
+      originNode,
+      getType(data.target),
+      Array(data.params).map((id) => getType(id)),
+    );
   }
 
   humanize(builder: HumanBuilder): string {
@@ -73,9 +80,9 @@ export default class InstanceT extends ObjT {
   }
 
   compatibleWith(otherType: T): boolean | TypeCompatibilityReturn {
-    return otherType instanceof InstanceT && this.utils.checkCompability(
-      this.target,
-      otherType.target,
+    return (
+      otherType instanceof InstanceT &&
+      this.utils.checkCompability(this.target, otherType.target)
     );
   }
 }

@@ -51,13 +51,21 @@ export type ManifestBugs = {
 
 export type ManifestExports = RelativeFilePathMap<ManifestExportConditions>;
 
-export type ManifestExportConditions = Map<string, {
-  consumer: Consumer;
-  relative: RelativeFilePath;
-}>;
+export type ManifestExportConditions = Map<
+  string,
+  {
+    consumer: Consumer;
+    relative: RelativeFilePath;
+  }
+>;
+
+export type ManifestName = {
+  org?: string;
+  packageName?: string;
+};
 
 export type Manifest = {
-  name: MString;
+  name: ManifestName;
   description: MString;
   version: undefined | SemverVersionNode;
   license: undefined | SPDXExpressionNode;
@@ -88,7 +96,7 @@ export type Manifest = {
 
 // Serialized version of a Manifest
 export type JSONManifest = {
-  name: Manifest['name'];
+  name: MString;
   description: Manifest['description'];
   version: MString;
   license: MString;

@@ -5,12 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Tokens} from '../../tokens';
-import {MockParent, mockParent, AnyNode} from '@romejs/js-ast';
+import {Token} from '../../tokens';
 
-export default function MockParent(builder: Builder, node: AnyNode): Tokens {
-  node = mockParent.assert(node);
-  mockParent.assert(node);
+export default function MockParent(): Token {
   throw new Error('unimplemented');
 }

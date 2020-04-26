@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {operator, Tokens} from '../../tokens';
+import {Token} from '../../tokens';
 
-export default function FlowExistsTypeAnnotation(): Tokens {
-  return [operator('*')];
+export default function FlowExistsTypeAnnotation(): Token {
+  return '*';
 }

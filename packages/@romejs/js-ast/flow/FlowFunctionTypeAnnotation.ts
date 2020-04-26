@@ -6,10 +6,10 @@
  */
 
 import {
-  JSNodeBase,
-  FlowTypeParameterDeclaration,
-  FlowFunctionTypeParam,
   AnyFlowPrimary,
+  FlowFunctionTypeParam,
+  FlowTypeParameterDeclaration,
+  JSNodeBase,
 } from '../index';
 import {createBuilder} from '../utils';
 
@@ -21,14 +21,15 @@ export type FlowFunctionTypeAnnotation = JSNodeBase & {
   returnType?: AnyFlowPrimary;
 };
 
-export const flowFunctionTypeAnnotation = createBuilder<
-  FlowFunctionTypeAnnotation
->('FlowFunctionTypeAnnotation', {
-  bindingKeys: {},
-  visitorKeys: {
-    typeParameters: true,
-    params: true,
-    rest: true,
-    returnType: true,
+export const flowFunctionTypeAnnotation = createBuilder<FlowFunctionTypeAnnotation>(
+  'FlowFunctionTypeAnnotation',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      typeParameters: true,
+      params: true,
+      rest: true,
+      returnType: true,
+    },
   },
-});
+);

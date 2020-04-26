@@ -6,53 +6,54 @@
  */
 
 import {
-  isStrictBindReservedWord,
   IndexTracker,
   createIndexTracker,
+  isStrictBindReservedWord,
 } from '@romejs/js-parser-utils';
 import {Position, SourceLocation} from '@romejs/parser-core';
 import {types as tt} from '../tokenizer/types';
 import {
+  AmbiguousFlowTypeCastExpression,
+  AnyAssignmentPattern,
+  AnyAuxiliary,
+  AnyBindingPattern,
   AnyExpression,
   AnyNode,
-  AnyBindingPattern,
-  AnyAssignmentPattern,
-  SpreadElement,
-  BindingAssignmentPattern,
-  SpreadProperty,
+  AnyParamBindingPattern,
+  AnyTargetAssignmentPattern,
+  AnyTargetBindingPattern,
+  ArrayHole,
+  AssignmentIdentifier,
+  AssignmentObjectPatternProperty,
   BindingArrayPattern,
+  BindingAssignmentPattern,
+  BindingIdentifier,
+  BindingObjectPattern,
+  BindingObjectPatternProperty,
   ConstTSAccessibility,
   FlowTypeCastExpression,
-  BindingObjectPattern,
-  BindingIdentifier,
-  AnyTargetBindingPattern,
-  AssignmentObjectPatternProperty,
-  AnyAuxiliary,
-  AnyTargetAssignmentPattern,
-  BindingObjectPatternProperty,
-  AssignmentIdentifier,
-  AnyParamBindingPattern,
   ReferenceIdentifier,
-  AmbiguousFlowTypeCastExpression,
+  SpreadElement,
+  SpreadProperty,
 } from '@romejs/js-ast';
 import {JSParser, OpeningContext} from '../parser';
 import {
+  ambiguousTypeCastToParameter,
+  hasTSModifier,
   parseMaybeAssign,
   parseObjectPattern,
-  ambiguousTypeCastToParameter,
   parsePrimaryTypeAnnotation,
   parseTSAccessModifier,
-  hasTSModifier,
 } from './index';
 import {descriptions} from '@romejs/diagnostics';
-import {get0} from '@romejs/ob1';
+import {ob1Get0} from '@romejs/ob1';
 import {
+  parseArrayHole,
   parseBindingIdentifier,
   toAssignmentIdentifier,
   toBindingIdentifier,
   toReferenceIdentifier,
 } from './expression';
-
 const VALID_REST_ARGUMENT_TYPES = ['Identifier', 'MemberExpression'];
 
 type ToAssignmentPatternNode =
@@ -77,10 +78,11 @@ export function toAssignmentPattern(
       return node;
 
     case 'AmbiguousFlowTypeCastExpression':
-      return toAssignmentPattern(parser, ambiguousTypeCastToParameter(
+      return toAssignmentPattern(
         parser,
-        node,
-      ), contextDescription);
+        ambiguousTypeCastToParameter(parser, node),
+        contextDescription,
+      );
 
     case 'BindingIdentifier':
     case 'ReferenceIdentifier':
@@ -167,12 +169,10 @@ export function toAssignmentPattern(
 
     case 'AssignmentExpression': {
       if (node.operator !== '=') {
-        parser.addDiagnostic(
-          {
-            loc: parser.getLoc(node.left),
-            description: descriptions.JS_PARSER.INVALID_ASSIGNMENT_PATTERN_OPERATOR,
-          },
-        );
+        parser.addDiagnostic({
+          loc: parser.getLoc(node.left),
+          description: descriptions.JS_PARSER.INVALID_ASSIGNMENT_PATTERN_OPERATOR,
+        });
       }
 
       return {
@@ -191,9 +191,10 @@ export function toAssignmentPattern(
           contextDescription,
         ),
       });
-      return toAssignmentIdentifier(parser, parser.createUnknownIdentifier(
-        contextDescription,
-      ));
+      return toAssignmentIdentifier(
+        parser,
+        parser.createUnknownIdentifier(contextDescription),
+      );
     }
   }
 }
@@ -296,21 +297,15 @@ export function toBindingPattern(
         rest: binding.rest === undefined
           ? undefined
           : toBindingIdentifier(parser, binding.rest),
-        properties: binding.properties.map(
-          (prop) => {
-            const bindingProp = toBindingPattern(
-              parser,
-              prop,
-              contextDescription,
-            );
+        properties: binding.properties.map((prop) => {
+          const bindingProp = toBindingPattern(parser, prop, contextDescription);
 
-            if (bindingProp.type !== 'BindingObjectPatternProperty') {
-              throw new Error('impossible condition');
-            }
+          if (bindingProp.type !== 'BindingObjectPatternProperty') {
+            throw new Error('impossible condition');
+          }
 
-            return bindingProp;
-          },
-        ),
+          return bindingProp;
+        }),
       };
       return newNode;
     }
@@ -328,9 +323,11 @@ export function toBindingPattern(
       const newNode: BindingArrayPattern = {
         ...binding,
         type: 'BindingArrayPattern',
-        elements: binding.elements.map((elem) => elem === undefined
-          ? elem
-          : toParamBindingPattern(parser, elem, contextDescription)),
+        elements: binding.elements.map((elem) =>
+          elem.type === 'ArrayHole'
+            ? elem
+            : toParamBindingPattern(parser, elem, contextDescription)
+        ),
         rest: binding.rest === undefined
           ? undefined
           : toTargetBindingPattern(parser, binding.rest, contextDescription),
@@ -366,12 +363,10 @@ export function toAssignmentObjectProperty(
 ): AssignmentObjectPatternProperty {
   switch (prop.type) {
     case 'ObjectMethod': {
-      parser.addDiagnostic(
-        {
-          loc: prop.key.loc,
-          description: descriptions.JS_PARSER.OBJECT_PATTERN_CANNOT_CONTAIN_METHODS,
-        },
-      );
+      parser.addDiagnostic({
+        loc: prop.key.loc,
+        description: descriptions.JS_PARSER.OBJECT_PATTERN_CANNOT_CONTAIN_METHODS,
+      });
 
       const fakeProp: AssignmentObjectPatternProperty = {
         type: 'AssignmentObjectPatternProperty',
@@ -436,18 +431,18 @@ export function toAssignmentObjectProperty(
 export function toAssignableList(
   parser: JSParser,
   exprList: Array<
-    | undefined
+    | ArrayHole
     | AnyAssignmentPattern
     | AmbiguousFlowTypeCastExpression
     | SpreadElement
-    | AnyExpression>,
-
+    | AnyExpression
+  >,
   contextDescription: string,
 ): {
-  list: Array<undefined | AnyAssignmentPattern>;
+  list: Array<ArrayHole | AnyAssignmentPattern>;
   rest: undefined | AnyTargetAssignmentPattern;
 } {
-  const newList: Array<AnyAssignmentPattern> = [];
+  const newList: Array<ArrayHole | AnyAssignmentPattern> = [];
   let rest: undefined | AnyTargetAssignmentPattern;
 
   let end = exprList.length;
@@ -466,12 +461,18 @@ export function toAssignableList(
       end--;
     }
 
-    if (last !== undefined && last.type === 'AmbiguousFlowTypeCastExpression' &&
-        last.expression.type === 'SpreadElement') {
-      rest = ambiguousTypeCastToParameter(parser, {
-        ...last,
-        expression: last.expression.argument,
-      });
+    if (
+      last !== undefined &&
+      last.type === 'AmbiguousFlowTypeCastExpression' &&
+      last.expression.type === 'SpreadElement'
+    ) {
+      rest = ambiguousTypeCastToParameter(
+        parser,
+        {
+          ...last,
+          expression: last.expression.argument,
+        },
+      );
       end--;
     }
   }
@@ -479,32 +480,29 @@ export function toAssignableList(
   // Turn type casts that we found in function parameter head into type annotated params
   for (let i = 0; i < end; i++) {
     const expr = exprList[i];
-    if (expr === undefined) {
-      continue;
-    }
 
     if (expr.type === 'AmbiguousFlowTypeCastExpression') {
       exprList[i] = ambiguousTypeCastToParameter(parser, expr);
     }
 
     if (expr.type === 'TSAsExpression' || expr.type === 'TSTypeAssertion') {
-      parser.addDiagnostic(
-        {
-          loc: expr.loc,
-          description: descriptions.JS_PARSER.TS_UNEXPECTED_CAST_IN_PARAMETER_POSITION,
-        },
-      );
+      parser.addDiagnostic({
+        loc: expr.loc,
+        description: descriptions.JS_PARSER.TS_UNEXPECTED_CAST_IN_PARAMETER_POSITION,
+      });
     }
   }
 
   for (let i = 0; i < end; i++) {
     const elt = exprList[i];
-    if (elt === undefined) {
-      continue;
-    }
 
     if (elt.type === 'SpreadElement') {
       raiseRestNotLast(parser, parser.getLoc(elt));
+    }
+
+    if (elt.type === 'ArrayHole') {
+      newList.push(elt);
+      continue;
     }
 
     const assign = toAssignmentPattern(parser, elt, contextDescription);
@@ -516,7 +514,7 @@ export function toAssignableList(
 
 export function toFunctionParamsBindingList(
   parser: JSParser,
-  exprList: Array<undefined | ToReferencedItem>,
+  exprList: Array<ArrayHole | ToReferencedItem>,
   contextDescription: string,
 ): {
   params: Array<BindingAssignmentPattern | AnyTargetBindingPattern>;
@@ -530,9 +528,10 @@ export function toFunctionParamsBindingList(
     contextDescription,
   );
 
-  const bindingRest = assignmentRest === undefined
-    ? assignmentRest
-    : toTargetBindingPattern(parser, assignmentRest, contextDescription);
+  const bindingRest =
+    assignmentRest === undefined
+      ? assignmentRest
+      : toTargetBindingPattern(parser, assignmentRest, contextDescription);
 
   for (const item of assignmentList) {
     if (item === undefined) {
@@ -580,12 +579,12 @@ export function toReferencedList(
 
 export function toReferencedListOptional(
   parser: JSParser,
-  exprList: Array<undefined | ToReferencedItem>,
+  exprList: Array<ArrayHole | ToReferencedItem>,
   isParenthesizedExpr?: boolean,
-): Array<undefined | SpreadElement | AnyExpression> {
+): Array<ArrayHole | SpreadElement | AnyExpression> {
   for (let i = 0; i < exprList.length; i++) {
     const expr = exprList[i];
-    if (expr !== undefined) {
+    if (expr.type !== 'ArrayHole') {
       exprList[i] = toReferencedItem(
         parser,
         expr,
@@ -660,9 +659,7 @@ export function toReferencedItem(
   return node;
 }
 
-export function filterSpread<
-  T extends AnyNode
->(
+export function filterSpread<T extends AnyNode>(
   parser: JSParser,
   elems: Array<T | ReferenceIdentifier | SpreadElement>,
 ): Array<ReferenceIdentifier | T> {
@@ -673,9 +670,10 @@ export function filterSpread<
         description: descriptions.JS_PARSER.UNEXPECTED_SPREAD,
       });
 
-      elems[i] = toReferenceIdentifier(parser, parser.createUnknownIdentifier(
-        'spread substitute',
-      ));
+      elems[i] = toReferenceIdentifier(
+        parser,
+        parser.createUnknownIdentifier('spread substitute'),
+      );
     }
   }
   // @ts-ignore Technically wrong but we removed all SpreadElement
@@ -694,21 +692,25 @@ export function toReferencedListDeep(
 
 export function toReferencedListDeepOptional(
   parser: JSParser,
-  exprList: Array<undefined | ToReferencedItem>,
+  exprList: Array<ArrayHole | ToReferencedItem>,
   isParenthesizedExpr?: boolean,
-): Array<undefined | AnyExpression | SpreadElement> {
-  const refList = toReferencedListOptional(parser, exprList, isParenthesizedExpr);
+): Array<ArrayHole | AnyExpression | SpreadElement> {
+  const refList = toReferencedListOptional(
+    parser,
+    exprList,
+    isParenthesizedExpr,
+  );
   toReferencedListDeepItems(parser, refList);
   return refList;
 }
 
 function toReferencedListDeepItems(
   parser: JSParser,
-  exprList: Array<undefined | ToReferencedItem>,
+  exprList: Array<ArrayHole | ToReferencedItem>,
 ) {
   for (let i = 0; i < exprList.length; i++) {
     const expr = exprList[i];
-    if (expr !== undefined && expr.type === 'ArrayExpression') {
+    if (expr.type === 'ArrayExpression') {
       toReferencedListDeepOptional(parser, expr.elements);
     }
   }
@@ -731,14 +733,17 @@ export function parseSpread(
     refNeedsArrowPos,
   );
 
-  if (get0(parser.state.commaAfterSpreadAt) === -1 && parser.match(tt.comma)) {
+  if (ob1Get0(parser.state.commaAfterSpreadAt) === -1 && parser.match(tt.comma)) {
     parser.state.commaAfterSpreadAt = parser.state.index;
   }
 
-  return parser.finishNode(start, {
-    type: 'SpreadElement',
-    argument,
-  });
+  return parser.finishNode(
+    start,
+    {
+      type: 'SpreadElement',
+      argument,
+    },
+  );
 }
 
 // Parses lvalue (assignable) atom.
@@ -764,23 +769,26 @@ function parseArrayPattern(parser: JSParser): BindingArrayPattern {
     'array pattern',
   );
   const {list: elements, rest} = parseBindingList(parser, openContext, true);
-  return parser.finishNode(start, {
-    type: 'BindingArrayPattern',
-    elements,
-    rest,
-  });
+  return parser.finishNode(
+    start,
+    {
+      type: 'BindingArrayPattern',
+      elements,
+      rest,
+    },
+  );
 }
 
 export function parseBindingList(
   parser: JSParser,
   openContext: OpeningContext,
-  allowEmpty: boolean = false,
+  allowHoles: boolean = false,
   allowTSModifiers: boolean = false,
 ): {
-  list: Array<undefined | AnyParamBindingPattern>;
+  list: Array<ArrayHole | AnyParamBindingPattern>;
   rest: undefined | AnyTargetBindingPattern;
 } {
-  const elts: Array<undefined | AnyParamBindingPattern> = [];
+  const elts: Array<ArrayHole | AnyParamBindingPattern> = [];
   let rest: undefined | AnyTargetBindingPattern;
 
   let first = true;
@@ -803,8 +811,8 @@ export function parseBindingList(
       }
     }
 
-    if (allowEmpty && parser.match(tt.comma)) {
-      elts.push(undefined);
+    if (allowHoles && parser.match(tt.comma)) {
+      elts.push(parseArrayHole(parser));
     } else if (parser.match(openContext.close)) {
       parser.expectClosing(openContext);
       break;
@@ -863,31 +871,35 @@ export function parseBindingListItem(
 
   if (accessibility !== undefined || readonly) {
     if (!parser.isSyntaxEnabled('ts')) {
-      parser.addDiagnostic(
-        {
-          description: descriptions.JS_PARSER.TS_DISABLED_BUT_ACCESSIBILITY_OR_READONLY,
-        },
-      );
+      parser.addDiagnostic({
+        description: descriptions.JS_PARSER.TS_DISABLED_BUT_ACCESSIBILITY_OR_READONLY,
+      });
     }
 
-    if (elt.type !== 'BindingIdentifier' && elt.type !==
-        'BindingAssignmentPattern') {
-      parser.addDiagnostic(
-        {
+    if (
+      elt.type !== 'BindingIdentifier' &&
+      elt.type !== 'BindingAssignmentPattern'
+    ) {
+      parser.addDiagnostic({
+        start,
+        description: descriptions.JS_PARSER.TS_PARAMETER_PROPERTY_BINDING_PATTERN,
+      });
+    }
+
+    return parser.finishNode(
+      start,
+      {
+        ...elt,
+        meta: parser.finishNode(
           start,
-          description: descriptions.JS_PARSER.TS_PARAMETER_PROPERTY_BINDING_PATTERN,
-        },
-      );
-    }
-
-    return parser.finishNode(start, {
-      ...elt,
-      meta: parser.finishNode(start, {
-        type: 'PatternMeta',
-        accessibility,
-        readonly,
-      }),
-    });
+          {
+            type: 'PatternMeta',
+            accessibility,
+            readonly,
+          },
+        ),
+      },
+    );
   }
 
   return elt;
@@ -918,11 +930,14 @@ export function parseBindingListItemTypes(
 
   return parser.finalizeNode({
     ...param,
-    meta: parser.finishNode(start, {
-      type: 'PatternMeta',
-      optional,
-      typeAnnotation,
-    }),
+    meta: parser.finishNode(
+      start,
+      {
+        type: 'PatternMeta',
+        optional,
+        typeAnnotation,
+      },
+    ),
   });
 }
 
@@ -939,20 +954,26 @@ export function parseMaybeDefault(
       parser,
       'assignment pattern right',
     );
-    const assign: BindingAssignmentPattern = parser.finishNode(start, {
-      type: 'BindingAssignmentPattern',
-      left,
-      right,
-    });
+    const assign: BindingAssignmentPattern = parser.finishNode(
+      start,
+      {
+        type: 'BindingAssignmentPattern',
+        left,
+        right,
+      },
+    );
     target = assign;
   } else {
     target = left;
   }
 
-  if (target.type === 'BindingAssignmentPattern' && target.meta !== undefined &&
-        target.meta.typeAnnotation !== undefined &&
-        parser.getLoc(target.right).start.index <
-        parser.getLoc(target.meta.typeAnnotation).start.index) {
+  if (
+    target.type === 'BindingAssignmentPattern' &&
+    target.meta !== undefined &&
+    target.meta.typeAnnotation !== undefined &&
+    parser.getLoc(target.right).start.index <
+    parser.getLoc(target.meta.typeAnnotation).start.index
+  ) {
     parser.addDiagnostic({
       loc: target.meta.typeAnnotation.loc,
       description: descriptions.JS_PARSER.TYPE_ANNOTATION_AFTER_ASSIGNMENT,
@@ -976,22 +997,22 @@ const ALLOWED_PARENTHESIZED_LVAL_TYPES = [
 // to.
 export function checkLVal(
   parser: JSParser,
-  expr: AnyAssignmentPattern | AnyBindingPattern | AnyExpression,
+  expr: ArrayHole | AnyAssignmentPattern | AnyBindingPattern | AnyExpression,
   maybeIsBinding: undefined | boolean,
   checkClashes: undefined | Map<string, AnyNode>,
   contextDescription: string,
 ): void {
-  const isBinding: boolean = maybeIsBinding === undefined
-    ? false
-    : maybeIsBinding;
+  const isBinding: boolean =
+    maybeIsBinding === undefined ? false : maybeIsBinding;
 
   // Verify that nodes aren't parenthesized
-  if (parser.isParenthesized(expr) &&
-      !ALLOWED_PARENTHESIZED_LVAL_TYPES.includes(expr.type)) {
+  if (
+    parser.isParenthesized(expr) &&
+    !ALLOWED_PARENTHESIZED_LVAL_TYPES.includes(expr.type)
+  ) {
     parser.addDiagnostic({
       description: descriptions.JS_PARSER.INVALID_PARENTEHSIZED_LVAL(
-          expr.type ===
-          'BindingObjectPattern'
+        expr.type === 'BindingObjectPattern'
           ? 'object'
           : expr.type === 'BindingArrayPattern' ? 'array' : undefined,
       ),
@@ -1002,11 +1023,8 @@ export function checkLVal(
   switch (expr.type) {
     case 'FlowTypeCastExpression':
       // Allow 'typecasts' to appear on the left of assignment expressions,
-
       // because it may be in an arrow function.
-
       // e.g. `const f = (foo: number = 0) => foo;`
-
       // This will be validated later
       return undefined;
 
@@ -1026,10 +1044,10 @@ export function checkLVal(
     case 'BindingIdentifier':
     case 'ReferenceIdentifier':
     case 'AssignmentIdentifier': {
-      if (parser.inScope('STRICT') && isStrictBindReservedWord(
-          expr.name,
-          parser.inModule,
-        )) {
+      if (
+        parser.inScope('STRICT') &&
+        isStrictBindReservedWord(expr.name, parser.inModule)
+      ) {
         parser.addDiagnostic({
           loc: expr.loc,
           description: descriptions.JS_PARSER.RESERVED_WORD(expr.name),
@@ -1093,21 +1111,25 @@ export function checkLVal(
       }
 
       for (const elem of expr.elements) {
-        if (elem) {
-          checkLVal(
-            parser,
-            elem,
-            isBinding,
-            checkClashes,
-            'array destructuring pattern',
-          );
-        }
+        checkLVal(
+          parser,
+          elem,
+          isBinding,
+          checkClashes,
+          'array destructuring pattern',
+        );
       }
       break;
     }
 
     case 'BindingAssignmentPattern': {
-      checkLVal(parser, expr.left, isBinding, checkClashes, 'assignment pattern');
+      checkLVal(
+        parser,
+        expr.left,
+        isBinding,
+        checkClashes,
+        'assignment pattern',
+      );
       break;
     }
   }
@@ -1147,9 +1169,11 @@ export function raiseRestNotLast(
 }
 
 export function checkCommaAfterRestFromSpread(parser: JSParser): void {
-  if (get0(parser.state.commaAfterSpreadAt) > -1) {
-    raiseRestNotLast(parser, undefined, parser.getPositionFromIndex(
-      parser.state.commaAfterSpreadAt,
-    ));
+  if (ob1Get0(parser.state.commaAfterSpreadAt) > -1) {
+    raiseRestNotLast(
+      parser,
+      undefined,
+      parser.getPositionFromIndex(parser.state.commaAfterSpreadAt),
+    );
   }
 }

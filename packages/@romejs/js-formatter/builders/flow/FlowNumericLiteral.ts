@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Tokens} from '../../tokens';
+import {Token} from '../../tokens';
 
-export default function FlowNumericLiteral(): Tokens {
+export default function FlowNumericLiteral(): Token {
   throw new Error('unimplemented');
 }

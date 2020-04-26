@@ -6,10 +6,10 @@
  */
 
 import {
-  JSNodeBase,
+  AnyFlowPrimary,
   BindingIdentifier,
   FlowTypeParameterDeclaration,
-  AnyFlowPrimary,
+  JSNodeBase,
 } from '../index';
 import {createBuilder} from '../utils';
 
@@ -21,14 +21,17 @@ export type FlowOpaqueType = JSNodeBase & {
   impltype?: AnyFlowPrimary;
 };
 
-export const flowOpaqueType = createBuilder<FlowOpaqueType>('FlowOpaqueType', {
-  bindingKeys: {
-    id: true,
+export const flowOpaqueType = createBuilder<FlowOpaqueType>(
+  'FlowOpaqueType',
+  {
+    bindingKeys: {
+      id: true,
+    },
+    visitorKeys: {
+      id: true,
+      typeParameters: true,
+      impltype: true,
+      supertype: true,
+    },
   },
-  visitorKeys: {
-    id: true,
-    typeParameters: true,
-    impltype: true,
-    supertype: true,
-  },
-});
+);

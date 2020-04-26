@@ -5,37 +5,31 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-  TSPropertySignature,
-  tsPropertySignature,
-  AnyNode,
-} from '@romejs/js-ast';
+import {TSPropertySignature} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
-import {Tokens, word, operator, space} from '../../tokens';
+import {Token, concat, space} from '../../tokens';
 
 export default function TSPropertySignature(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = tsPropertySignature.assert(node);
-
-  let tokens: Tokens = [];
+  node: TSPropertySignature,
+): Token {
+  const tokens: Array<Token> = [];
 
   if (node.readonly) {
-    tokens = [word('readonly'), space];
+    tokens.push('readonly', space);
   }
 
-  tokens = [...tokens, ...builder.tokenize(node.key, node)];
+  tokens.push(builder.tokenize(node.key, node));
 
   if (node.optional) {
-    tokens.push(operator('?'));
+    tokens.push('?');
   }
 
-  return [
-    ...tokens,
-    operator(':'),
-    space,
-    ...builder.tokenize(node.typeAnnotation, node),
-    operator(';'),
-  ];
+  if (node.typeAnnotation) {
+    tokens.push(':', space, builder.tokenize(node.typeAnnotation, node));
+  }
+
+  tokens.push(';');
+
+  return concat(tokens);
 }

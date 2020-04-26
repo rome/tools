@@ -5,26 +5,36 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import {DoWhileStatement} from '@romejs/js-ast';
 import Builder from '../../Builder';
-import {Tokens, word, space, operator, concat} from '../../tokens';
-import {doWhileStatement, AnyNode} from '@romejs/js-ast';
+import {
+  Token,
+  concat,
+  group,
+  hardline,
+  indent,
+  softline,
+  space,
+} from '../../tokens';
+import {printClause} from '../utils';
 
 export default function DoWhileStatement(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = doWhileStatement.assert(node);
-
-  return [
-    word('do'),
+  node: DoWhileStatement,
+): Token {
+  return concat([
+    group(concat(['do', printClause(builder, node.body, node)])),
+    node.body.type === 'BlockStatement' ? space : hardline,
+    'while',
     space,
-    concat(builder.tokenize(node.body, node)),
-    space,
-    word('while'),
-    space,
-    operator('('),
-    concat(builder.tokenize(node.test, node)),
-    operator(')'),
-    operator(';'),
-  ];
+    '(',
+    group(
+      concat([
+        indent(concat([softline, builder.tokenize(node.test, node)])),
+        softline,
+      ]),
+    ),
+    ')',
+    ';',
+  ]);
 }

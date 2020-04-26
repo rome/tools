@@ -6,16 +6,9 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, word, operator, concat} from '../../tokens';
-import {importCall, AnyNode} from '@romejs/js-ast';
+import {Token, concat} from '../../tokens';
+import {ImportCall} from '@romejs/js-ast';
 
-export default function ImportCall(builder: Builder, node: AnyNode): Tokens {
-  node = importCall.assert(node);
-
-  return [
-    word('import'),
-    operator('('),
-    concat(builder.tokenize(node.argument, node)),
-    operator(')'),
-  ];
+export default function ImportCall(builder: Builder, node: ImportCall): Token {
+  return concat(['import(', builder.tokenize(node.argument, node), ')']);
 }

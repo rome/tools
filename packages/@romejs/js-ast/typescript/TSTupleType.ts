@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, AnyTSPrimary, TSOptionalType} from '../index';
+import {AnyTSPrimary, JSNodeBase, TSOptionalType} from '../index';
 import {createBuilder} from '../utils';
 
 export type TSTupleType = JSNodeBase & {
@@ -14,10 +14,13 @@ export type TSTupleType = JSNodeBase & {
   rest?: AnyTSPrimary;
 };
 
-export const tsTupleType = createBuilder<TSTupleType>('TSTupleType', {
-  bindingKeys: {},
-  visitorKeys: {
-    elementTypes: true,
-    rest: true,
+export const tsTupleType = createBuilder<TSTupleType>(
+  'TSTupleType',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      elementTypes: true,
+      rest: true,
+    },
   },
-});
+);

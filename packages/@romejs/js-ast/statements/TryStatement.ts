@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, BlockStatement, CatchClause} from '../index';
+import {BlockStatement, CatchClause, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type TryStatement = JSNodeBase & {
@@ -15,11 +15,14 @@ export type TryStatement = JSNodeBase & {
   finalizer: undefined | BlockStatement;
 };
 
-export const tryStatement = createBuilder<TryStatement>('TryStatement', {
-  bindingKeys: {},
-  visitorKeys: {
-    block: true,
-    handler: true,
-    finalizer: true,
+export const tryStatement = createBuilder<TryStatement>(
+  'TryStatement',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      block: true,
+      handler: true,
+      finalizer: true,
+    },
   },
-});
+);

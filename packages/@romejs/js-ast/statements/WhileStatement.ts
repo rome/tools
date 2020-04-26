@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, AnyExpression, AnyStatement} from '../index';
+import {AnyExpression, AnyStatement, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type WhileStatement = JSNodeBase & {
@@ -14,10 +14,13 @@ export type WhileStatement = JSNodeBase & {
   body: AnyStatement;
 };
 
-export const whileStatement = createBuilder<WhileStatement>('WhileStatement', {
-  bindingKeys: {},
-  visitorKeys: {
-    test: true,
-    body: true,
+export const whileStatement = createBuilder<WhileStatement>(
+  'WhileStatement',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      test: true,
+      body: true,
+    },
   },
-});
+);

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, AnyRegExpEscapedCharacter} from '../index';
+import {AnyRegExpEscapedCharacter, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type RegExpCharSetRange = JSNodeBase & {

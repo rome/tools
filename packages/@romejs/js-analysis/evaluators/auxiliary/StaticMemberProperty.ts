@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   StaticMemberProperty,
   staticMemberProperty,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function StaticMemberProperty(node: AnyNode, scope: Scope) {

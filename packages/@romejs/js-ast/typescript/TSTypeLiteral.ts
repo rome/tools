@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, AnyTSTypeElement} from '../index';
+import {AnyTSTypeElement, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type TSTypeLiteral = JSNodeBase & {
@@ -13,9 +13,12 @@ export type TSTypeLiteral = JSNodeBase & {
   members: Array<AnyTSTypeElement>;
 };
 
-export const tsTypeLiteral = createBuilder<TSTypeLiteral>('TSTypeLiteral', {
-  bindingKeys: {},
-  visitorKeys: {
-    members: true,
+export const tsTypeLiteral = createBuilder<TSTypeLiteral>(
+  'TSTypeLiteral',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      members: true,
+    },
   },
-});
+);

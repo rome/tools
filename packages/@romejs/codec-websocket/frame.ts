@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Frame, BuildFrameOpts} from './types';
+import {BuildFrameOpts, Frame} from './types';
 
 import crypto = require('crypto');
 
@@ -106,7 +106,9 @@ export function parseFrame(buffer: Buffer): Frame {
 
       // if payload length is greater than this number.
       if (leftPart >= Number.MAX_SAFE_INTEGER) {
-        throw new Error('Unsupported WebSocket frame: payload length > 2^53 - 1');
+        throw new Error(
+          'Unsupported WebSocket frame: payload length > 2^53 - 1',
+        );
       }
 
       const rightPart = buffer.readUInt32BE(currentOffset);

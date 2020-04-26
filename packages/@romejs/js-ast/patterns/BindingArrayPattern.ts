@@ -3,20 +3,19 @@
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
- */
-
-import {
-  JSNodeBase,
-  PatternMeta,
+ */ import {
   AnyParamBindingPattern,
   AnyTargetBindingPattern,
+  ArrayHole,
+  JSNodeBase,
+  PatternMeta,
 } from '../index';
 import {createBuilder} from '../utils';
 
 export type BindingArrayPattern = JSNodeBase & {
   type: 'BindingArrayPattern';
   meta?: PatternMeta;
-  elements: Array<undefined | AnyParamBindingPattern>;
+  elements: Array<ArrayHole | AnyParamBindingPattern>;
   rest: undefined | AnyTargetBindingPattern;
 };
 

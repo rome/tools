@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   FlowObjectTypeAnnotation,
   flowObjectTypeAnnotation,
-  AnyNode,
 } from '@romejs/js-ast';
 import ObjT from '../../types/ObjT';
 import T from '../../types/T';
@@ -24,9 +24,13 @@ export default function FlowObjectTypeAnnotation(node: AnyNode, scope: Scope) {
     props.push(scope.evaluate(prop));
   }
 
-  return new ObjT(scope, node, {
-    props,
-    proto: scope.intrinsics.ObjectPrototype,
-    calls,
-  });
+  return new ObjT(
+    scope,
+    node,
+    {
+      props,
+      proto: scope.intrinsics.ObjectPrototype,
+      calls,
+    },
+  );
 }

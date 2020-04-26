@@ -13,9 +13,12 @@ export type TSInferType = JSNodeBase & {
   typeParameter: TSTypeParameter;
 };
 
-export const tsInferType = createBuilder<TSInferType>('TSInferType', {
-  bindingKeys: {},
-  visitorKeys: {
-    typeParameter: true,
+export const tsInferType = createBuilder<TSInferType>(
+  'TSInferType',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      typeParameter: true,
+    },
   },
-});
+);

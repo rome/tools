@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {ImportCall, importCall, AnyNode} from '@romejs/js-ast';
+import {AnyNode, ImportCall, importCall} from '@romejs/js-ast';
 
 export default function ImportCall(node: AnyNode, scope: Scope) {
   node = importCall.assert(node);

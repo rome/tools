@@ -120,13 +120,16 @@ export default class Event<Param, Ret = void> {
       let timedOut = false;
 
       if (timeout !== undefined) {
-        timeoutId = setTimeout(() => {
-          timedOut = true;
-          listener.unsubscribe();
-          reject(new Error(
-            `Timed out after waiting ${timeout}ms for ${this.name}`,
-          ));
-        }, timeout);
+        timeoutId = setTimeout(
+          () => {
+            timedOut = true;
+            listener.unsubscribe();
+            reject(
+              new Error(`Timed out after waiting ${timeout}ms for ${this.name}`),
+            );
+          },
+          timeout,
+        );
       }
 
       const listener = this.subscribe((param) => {
@@ -187,16 +190,14 @@ export default class Event<Param, Ret = void> {
     if (this.subscriptions.has(callback)) {
       this.subscriptions.delete(callback);
       this.onSubscriptionChange();
-      return undefined;
+      return;
     }
 
     // If this callback was the root subscription, then set it to the next one
     if (callback === this.rootSubscription) {
       this.rootSubscription = Array.from(this.subscriptions)[0];
       this.onSubscriptionChange();
-      return undefined;
+      return;
     }
-
-    throw new Error('Not a current subscription');
   }
 }

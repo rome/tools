@@ -102,7 +102,6 @@ export function groupDiffByLines(rawDiffs: Diffs): Array<Diffs> {
 
 export default function stringDiff(text1: string, text2: string): Diffs {
   // only pass fix_unicode=true at the top level, not when main is
-
   // recursively invoked
   return main(text1, text2, true);
 }
@@ -189,12 +188,8 @@ function compute(text1: string, text2: string): Diffs {
 
   if (shorttext.length === 1) {
     // Single character string.
-
     // After the previous speedup, the character can't be an equality.
-    return [
-      [DIFF_DELETE, text1],
-      [DIFF_INSERT, text2],
-    ];
+    return [[DIFF_DELETE, text1], [DIFF_INSERT, text2]];
   }
 
   // Check to see if the problem can be split in two.
@@ -260,14 +255,17 @@ function bisect(text1: string, text2: string): Diffs {
     for (let k1 = -d + k1Start; k1 <= d - k1End; k1 += 2) {
       let k1Offset = vOffset + k1;
       let x1;
-      if (k1 === -d || k1 !== d && v1[k1Offset - 1] < v1[k1Offset + 1]) {
+      if (k1 === -d || (k1 !== d && v1[k1Offset - 1] < v1[k1Offset + 1])) {
         x1 = v1[k1Offset + 1];
       } else {
         x1 = v1[k1Offset - 1] + 1;
       }
       let y1 = x1 - k1;
-      while (x1 < text1Length && y1 < text2Length && text1.charAt(x1) ===
-        text2.charAt(y1)) {
+      while (
+        x1 < text1Length &&
+        y1 < text2Length &&
+        text1.charAt(x1) === text2.charAt(y1)
+      ) {
         x1++;
         y1++;
       }
@@ -295,14 +293,18 @@ function bisect(text1: string, text2: string): Diffs {
     for (let k2 = -d + k2Start; k2 <= d - k2End; k2 += 2) {
       let k2Offset = vOffset + k2;
       let x2: number;
-      if (k2 === -d || k2 !== d && v2[k2Offset - 1] < v2[k2Offset + 1]) {
+      if (k2 === -d || (k2 !== d && v2[k2Offset - 1] < v2[k2Offset + 1])) {
         x2 = v2[k2Offset + 1];
       } else {
         x2 = v2[k2Offset - 1] + 1;
       }
       let y2 = x2 - k2;
-      while (x2 < text1Length && y2 < text2Length && text1.charAt(text1Length -
-        x2 - 1) === text2.charAt(text2Length - y2 - 1)) {
+      while (
+        x2 < text1Length &&
+        y2 < text2Length &&
+        text1.charAt(text1Length - x2 - 1) ===
+        text2.charAt(text2Length - y2 - 1)
+      ) {
         x2++;
         y2++;
       }
@@ -331,10 +333,7 @@ function bisect(text1: string, text2: string): Diffs {
   // Diff took too long and hit the deadline or
 
   // number of diffs equals number of characters, no commonality at all.
-  return [
-    [DIFF_DELETE, text1],
-    [DIFF_INSERT, text2],
-  ];
+  return [[DIFF_DELETE, text1], [DIFF_INSERT, text2]];
 }
 
 /**
@@ -380,10 +379,10 @@ function commonPrefix(text1: string, text2: string): number {
   let pointermid = pointermax;
   let pointerstart = 0;
   while (pointermin < pointermid) {
-    if (text1.substring(pointerstart, pointermid) === text2.substring(
-        pointerstart,
-        pointermid,
-      )) {
+    if (
+      text1.substring(pointerstart, pointermid) ===
+      text2.substring(pointerstart, pointermid)
+    ) {
       pointermin = pointermid;
       pointerstart = pointermin;
     } else {
@@ -419,8 +418,10 @@ function commonSuffix(text1: string, text2: string): number {
   let pointermid = pointermax;
   let pointerend = 0;
   while (pointermin < pointermid) {
-    if (text1.substring(text1.length - pointermid, text1.length - pointerend) ===
-        text2.substring(text2.length - pointermid, text2.length - pointerend)) {
+    if (
+      text1.substring(text1.length - pointermid, text1.length - pointerend) ===
+      text2.substring(text2.length - pointermid, text2.length - pointerend)
+    ) {
       pointermin = pointermid;
       pointerend = pointermin;
     } else {
@@ -530,7 +531,8 @@ function halfMatchI(
       shorttext.substring(0, j),
     );
     if (bestCommon.length < suffixLength + prefixLength) {
-      bestCommon = shorttext.substring(j - suffixLength, j) +
+      bestCommon =
+        shorttext.substring(j - suffixLength, j) +
         shorttext.substring(j, j + prefixLength);
       bestLongtextA = longtext.substring(0, i - suffixLength);
       bestLongtextB = longtext.substring(i + prefixLength);
@@ -588,27 +590,19 @@ function cleanupMerge(diffs: Diffs, fixUnicode: boolean) {
         let previousEquality = pointer - countInsert - countDelete - 1;
         if (fixUnicode) {
           // prevent splitting of unicode surrogate pairs.  when fix_unicode is true,
-
           // we assume that the old and new text in the diff are complete and correct
-
           // unicode-encoded JS strings, but the tuple boundaries may fall between
-
           // surrogate pairs.  we fix this by shaving off stray surrogates from the end
-
           // of the previous equality and the beginning of this equality.  this may create
-
           // empty equalities or a common prefix or suffix.  for example, if AB and AC are
-
           // emojis, `[[0, 'A'], [-1, 'BA'], [0, 'C']]` would turn into deleting 'ABAC' and
-
           // inserting 'AC', and then the common suffix 'AC' will be eliminated.  in this
-
           // particular case, both equalities go away, we absorb any previous inequalities,
-
           // and we keep scanning for the next equality before rewriting the tuples.
-          if (previousEquality >= 0 && endsWithPairStart(
-              diffs[previousEquality][1],
-            )) {
+          if (
+            previousEquality >= 0 &&
+            endsWithPairStart(diffs[previousEquality][1])
+          ) {
             let stray = diffs[previousEquality][1].slice(-1);
             diffs[previousEquality][1] = diffs[previousEquality][1].slice(0, -1);
             textDelete = stray + textDelete;
@@ -655,10 +649,11 @@ function cleanupMerge(diffs: Diffs, fixUnicode: boolean) {
                   commonlength,
                 );
               } else {
-                diffs.splice(0, 0, [
-                  DIFF_EQUAL,
-                  textInsert.substring(0, commonlength),
-                ]);
+                diffs.splice(
+                  0,
+                  0,
+                  [DIFF_EQUAL, textInsert.substring(0, commonlength)],
+                );
                 pointer++;
               }
               textInsert = textInsert.substring(commonlength);
@@ -668,12 +663,17 @@ function cleanupMerge(diffs: Diffs, fixUnicode: boolean) {
             // Factor out any common suffixes.
             commonlength = commonSuffix(textInsert, textDelete);
             if (commonlength !== 0) {
-              diffs[pointer][1] = textInsert.substring(textInsert.length -
-                commonlength) + diffs[pointer][1];
-              textInsert = textInsert.substring(0, textInsert.length -
-                commonlength);
-              textDelete = textDelete.substring(0, textDelete.length -
-                commonlength);
+              diffs[pointer][1] =
+                textInsert.substring(textInsert.length - commonlength) +
+                diffs[pointer][1];
+              textInsert = textInsert.substring(
+                0,
+                textInsert.length - commonlength,
+              );
+              textDelete = textDelete.substring(
+                0,
+                textDelete.length - commonlength,
+              );
             }
           }
 
@@ -689,10 +689,12 @@ function cleanupMerge(diffs: Diffs, fixUnicode: boolean) {
             diffs.splice(pointer - n, n, [DIFF_DELETE, textDelete]);
             pointer = pointer - n + 1;
           } else {
-            diffs.splice(pointer - n, n, [DIFF_DELETE, textDelete], [
-              DIFF_INSERT,
-              textInsert,
-            ]);
+            diffs.splice(
+              pointer - n,
+              n,
+              [DIFF_DELETE, textDelete],
+              [DIFF_INSERT, textInsert],
+            );
             pointer = pointer - n + 2;
           }
         }
@@ -725,26 +727,36 @@ function cleanupMerge(diffs: Diffs, fixUnicode: boolean) {
   // Intentionally ignore the first and last element (don't need checking).
 
   while (pointer < diffs.length - 1) {
-    if (diffs[pointer - 1][0] === DIFF_EQUAL && diffs[pointer + 1][0] ===
-        DIFF_EQUAL) {
+    if (
+      diffs[pointer - 1][0] === DIFF_EQUAL &&
+      diffs[pointer + 1][0] === DIFF_EQUAL
+    ) {
       // This is a single edit surrounded by equalities.
-      if (diffs[pointer][1].substring(diffs[pointer][1].length - diffs[pointer -
-          1][1].length) === diffs[pointer - 1][1]) {
-        // Shift the edit over the previous equality.
-        diffs[pointer][1] = diffs[pointer - 1][1] + diffs[pointer][1].substring(
-          0,
+      if (
+        diffs[pointer][1].substring(
           diffs[pointer][1].length - diffs[pointer - 1][1].length,
-        );
+        ) ===
+        diffs[pointer - 1][1]
+      ) {
+        // Shift the edit over the previous equality.
+        diffs[pointer][1] =
+          diffs[pointer - 1][1] +
+          diffs[pointer][1].substring(
+            0,
+            diffs[pointer][1].length - diffs[pointer - 1][1].length,
+          );
         diffs[pointer + 1][1] = diffs[pointer - 1][1] + diffs[pointer + 1][1];
         diffs.splice(pointer - 1, 1);
         changes = true;
-      } else if (diffs[pointer][1].substring(0, diffs[pointer + 1][1].length) ===
-          diffs[pointer + 1][1]) {
+      } else if (
+        diffs[pointer][1].substring(0, diffs[pointer + 1][1].length) ===
+        diffs[pointer + 1][1]
+      ) {
         // Shift the edit over the next equality.
         diffs[pointer - 1][1] += diffs[pointer + 1][1];
-        diffs[pointer][1] = diffs[pointer][1].substring(
-          diffs[pointer + 1][1].length,
-        ) + diffs[pointer + 1][1];
+        diffs[pointer][1] =
+          diffs[pointer][1].substring(diffs[pointer + 1][1].length) +
+          diffs[pointer + 1][1];
         diffs.splice(pointer + 1, 1);
         changes = true;
       }
@@ -752,6 +764,7 @@ function cleanupMerge(diffs: Diffs, fixUnicode: boolean) {
     pointer++;
   }
   // If shifts were made, the diff needs reordering and another shift sweep.
+
   if (changes) {
     cleanupMerge(diffs, fixUnicode);
   }

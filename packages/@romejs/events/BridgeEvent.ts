@@ -7,10 +7,10 @@
 
 import {JSONPropertyValue} from '@romejs/codec-json';
 import {
-  EventOptions,
-  BridgeSuccessResponseMessage,
   BridgeErrorResponseMessage,
+  BridgeSuccessResponseMessage,
   BridgeType,
+  EventOptions,
 } from './types';
 import Bridge from './Bridge';
 import BridgeError from './BridgeError';
@@ -41,8 +41,8 @@ function validateDirection(
   for (const [eventDirection, bridgeType] of invalidDirections) {
     if (event.direction === eventDirection && event.bridge.type === bridgeType) {
       throw new Error(
-          `The ${eventDirection} event "${event.name}" cannot be ${verb} by a ${bridgeType} bridge`,
-        );
+        `The ${eventDirection} event "${event.name}" cannot be ${verb} by a ${bridgeType} bridge`,
+      );
     }
   }
 }
@@ -61,11 +61,14 @@ export default class BridgeEvent<
 
   bridge: Bridge;
   direction: BridgeEventDirection;
-  requestCallbacks: Map<number, {
-    completed: undefined | (() => void);
-    resolve: (data: Ret) => void;
-    reject: (err: Error) => void;
-  }>;
+  requestCallbacks: Map<
+    number,
+    {
+      completed: undefined | (() => void);
+      resolve: (data: Ret) => void;
+      reject: (err: Error) => void;
+    }
+  >;
 
   clear() {
     super.clear();
@@ -79,10 +82,11 @@ export default class BridgeEvent<
   }
 
   onSubscriptionChange() {
-    validateDirection(this, [
-      ['server->client', 'client'],
-      ['server<-client', 'server'],
-    ], 'subscribed');
+    validateDirection(
+      this,
+      [['server->client', 'client'], ['server<-client', 'server']],
+      'subscribed',
+    );
     this.bridge.sendSubscriptions();
   }
 
@@ -106,7 +110,11 @@ export default class BridgeEvent<
       // @ts-ignore
       callbacks.resolve(data.value);
     } else if (data.responseStatus === 'error') {
-      callbacks.reject(this.bridge.buildError(data.value, data.metadata));
+      try {
+        callbacks.reject(this.bridge.buildError(data.value, data.metadata));
+      } catch (err) {
+        callbacks.reject(err);
+      }
     } else {
       // ???
     }
@@ -121,10 +129,11 @@ export default class BridgeEvent<
   }
 
   validateCanSend(): void {
-    validateDirection(this, [
-      ['server<-client', 'client'],
-      ['server->client', 'server'],
-    ], 'called');
+    validateDirection(
+      this,
+      [['server<-client', 'client'], ['server->client', 'server']],
+      'called',
+    );
   }
 
   send(param: Param): void {
@@ -155,18 +164,23 @@ export default class BridgeEvent<
 
         let completed;
         if (timeout !== undefined) {
-          const timeoutId = setTimeout(() => {
-            // Remove the request callback
-            this.requestCallbacks.delete(id);
+          const timeoutId = setTimeout(
+            () => {
+              // Remove the request callback
+              this.requestCallbacks.delete(id);
 
-            // Reject the promise
-            reject(new BridgeError(
-              `Timeout of ${String(timeout)}ms for ${this.name}(${String(
-                JSON.stringify(param),
-              )}) event exceeded`,
-              this.bridge,
-            ));
-          }, timeout);
+              // Reject the promise
+              reject(
+                new BridgeError(
+                  `Timeout of ${String(timeout)}ms for ${this.name}(${String(
+                    JSON.stringify(param),
+                  )}) event exceeded`,
+                  this.bridge,
+                ),
+              );
+            },
+            timeout,
+          );
 
           // Cancel the timeout if the response returns before the timer
           completed = () => {
@@ -174,11 +188,14 @@ export default class BridgeEvent<
           };
         }
 
-        this.requestCallbacks.set(id, {
-          completed,
-          reject,
-          resolve,
-        });
+        this.requestCallbacks.set(
+          id,
+          {
+            completed,
+            reject,
+            resolve,
+          },
+        );
 
         this.bridge.sendMessage({
           id,

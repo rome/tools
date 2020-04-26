@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {StaticPropertyKey, staticPropertyKey, AnyNode} from '@romejs/js-ast';
+import {AnyNode, StaticPropertyKey, staticPropertyKey} from '@romejs/js-ast';
 
 export default function StaticPropertyKey(node: AnyNode, scope: Scope) {
   node = staticPropertyKey.assert(node);

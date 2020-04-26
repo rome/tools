@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AbsoluteFilePath, UnknownFilePath, RelativeFilePath} from '.';
+import {AbsoluteFilePath, RelativeFilePath, UnknownFilePath} from '.';
 
 // Sometimes we don't want to have to deal with what a FilePath serializes into
 // For those purposes we have these wrappers around Map and Set. Here we can add some custom logic
@@ -35,11 +35,7 @@ class FilePathMap<FilePath extends UnknownFilePath, Value> {
 
   *[Symbol.iterator](): Iterator<[FilePath, Value]> {
     for (const [joined, value] of this.joinedToValue) {
-      const path = this.joinedToPath.get(joined);
-      if (path === undefined) {
-        throw new Error('Impossible');
-      }
-
+      const path = this.joinedToPath.get(joined)!;
       yield [path, value];
     }
   }
@@ -125,24 +121,18 @@ class FilePathSet<FilePath extends UnknownFilePath> {
   }
 }
 
-export class AbsoluteFilePathMap<Value> extends FilePathMap<
-  AbsoluteFilePath,
-  Value
-> {
+export class AbsoluteFilePathMap<Value>
+  extends FilePathMap<AbsoluteFilePath, Value> {
   type: 'absolute' = 'absolute';
 }
 
-export class RelativeFilePathMap<Value> extends FilePathMap<
-  RelativeFilePath,
-  Value
-> {
+export class RelativeFilePathMap<Value>
+  extends FilePathMap<RelativeFilePath, Value> {
   type: 'relative' = 'relative';
 }
 
-export class UnknownFilePathMap<Value> extends FilePathMap<
-  UnknownFilePath,
-  Value
-> {
+export class UnknownFilePathMap<Value>
+  extends FilePathMap<UnknownFilePath, Value> {
   type: 'unknown' = 'unknown';
 }
 

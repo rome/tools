@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, AnyBindingPattern, BlockStatement} from '../index';
+import {AnyBindingPattern, BlockStatement, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type CatchClause = JSNodeBase & {
@@ -14,12 +14,15 @@ export type CatchClause = JSNodeBase & {
   body: BlockStatement;
 };
 
-export const catchClause = createBuilder<CatchClause>('CatchClause', {
-  bindingKeys: {
-    param: true,
+export const catchClause = createBuilder<CatchClause>(
+  'CatchClause',
+  {
+    bindingKeys: {
+      param: true,
+    },
+    visitorKeys: {
+      param: true,
+      body: true,
+    },
   },
-  visitorKeys: {
-    param: true,
-    body: true,
-  },
-});
+);

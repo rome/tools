@@ -13,6 +13,7 @@ import {LocalCommand, localCommands} from './commands';
 import Client from './Client';
 import {consumeUnknown} from '@romejs/consume';
 import {BridgeError} from '@romejs/events';
+import review from './review';
 
 export type ClientRequestType = 'local' | 'master';
 
@@ -31,9 +32,18 @@ export default class ClientRequest {
   type: ClientRequestType;
   client: Client;
 
+  fork(query: PartialMasterQueryRequest): ClientRequest {
+    return new ClientRequest(this.client, this.type, query);
+  }
+
   async init(): Promise<MasterQueryResponse> {
     try {
-      return await this.initCommand();
+      const {requestFlags} = this.query;
+      if (requestFlags !== undefined && requestFlags.review) {
+        return await this.initReview();
+      } else {
+        return await this.initCommand();
+      }
     } catch (err) {
       return {
         type: 'ERROR',
@@ -46,8 +56,12 @@ export default class ClientRequest {
     }
   }
 
+  async initReview(): Promise<MasterQueryResponse> {
+    return review(this);
+  }
+
   async initCommand(): Promise<MasterQueryResponse> {
-    const localCommand = localCommands.get(this.query.command);
+    const localCommand = localCommands.get(this.query.commandName);
 
     if (this.type === 'master' || localCommand === undefined) {
       return this.initFromMaster();
@@ -56,16 +70,17 @@ export default class ClientRequest {
     }
   }
 
-  async initFromLocal( // rome-suppress-next-line lint/noExplicitAny
-  localCommand: LocalCommand<any>): Promise<MasterQueryResponse> {
+  async initFromLocal(
+    // rome-suppress-next-line lint/noExplicitAny
+    localCommand: LocalCommand<any>,
+  ): Promise<MasterQueryResponse> {
     const {query} = this;
 
     let flags;
     if (localCommand.defineFlags !== undefined) {
-      flags = localCommand.defineFlags(consumeUnknown(
-        query.commandFlags,
-        'flags/invalid',
-      ));
+      flags = localCommand.defineFlags(
+        consumeUnknown(query.commandFlags, 'flags/invalid'),
+      );
     }
 
     const res = await localCommand.callback(this, flags);
@@ -100,13 +115,13 @@ export default class ClientRequest {
     } catch (err) {
       if (err instanceof BridgeError) {
         return {
-            type: 'ERROR',
-            fatal: true,
-            handled: false,
-            name: 'Error',
-            message: 'Server died while processing command. Results may be incomplete.',
-            stack: undefined,
-          };
+          type: 'ERROR',
+          fatal: true,
+          handled: false,
+          name: 'Error',
+          message: 'Server died while processing command. Results may be incomplete.',
+          stack: undefined,
+        };
       } else {
         throw err;
       }

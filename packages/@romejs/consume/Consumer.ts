@@ -6,54 +6,54 @@
  */
 
 import {
-  DiagnosticAdvice,
-  Diagnostics,
   Diagnostic,
-  DiagnosticsError,
+  DiagnosticAdvice,
+  DiagnosticDescriptionOptionalCategory,
   DiagnosticLocation,
+  Diagnostics,
+  DiagnosticsError,
+  catchDiagnosticsSync,
   createBlessedDiagnosticMessage,
   createSingleDiagnosticError,
-  catchDiagnosticsSync,
-  DiagnosticDescriptionOptionalCategory,
   descriptions,
 } from '@romejs/diagnostics';
 import {UnknownObject} from '@romejs/typescript-helpers';
 import {
-  JSONValue,
-  JSONPropertyValue,
-  JSONObject,
   JSONArray,
+  JSONObject,
+  JSONPropertyValue,
+  JSONValue,
 } from '@romejs/codec-json';
 import {
-  ConsumerOptions,
-  ConsumePath,
   ConsumeContext,
   ConsumeKey,
-  ConsumerHandleUnexpected,
-  ConsumeSourceLocationRequestTarget,
-  ConsumerOnDefinition,
+  ConsumePath,
   ConsumePropertyDefinition,
   ConsumePropertyMetadata,
+  ConsumeSourceLocationRequestTarget,
+  ConsumerHandleUnexpected,
+  ConsumerOnDefinition,
+  ConsumerOptions,
 } from './types';
-import {UNKNOWN_POSITION, SourceLocation} from '@romejs/parser-core';
+import {SourceLocation, UNKNOWN_POSITION} from '@romejs/parser-core';
 import {
   Number0,
   Number1,
-  coerce0,
-  coerce1,
   UnknownNumber,
-  add,
+  ob1Add,
+  ob1Coerce0,
+  ob1Coerce1,
 } from '@romejs/ob1';
 import {isValidIdentifierName} from '@romejs/js-ast-utils';
 import {escapeString} from '@romejs/string-escape';
 import {
-  UnknownFilePath,
+  AbsoluteFilePath,
   RelativeFilePath,
   URLFilePath,
-  createUnknownFilePath,
-  AbsoluteFilePath,
-  createURLFilePath,
+  UnknownFilePath,
   createAbsoluteFilePath,
+  createURLFilePath,
+  createUnknownFilePath,
 } from '@romejs/path';
 
 type UnexpectedConsumerOptions = {
@@ -118,7 +118,6 @@ export default class Consumer {
 
         definitions.push(def);
       },
-
       handleUnexpectedDiagnostic(diag) {
         diagnostics.push(diag);
       },
@@ -155,11 +154,14 @@ export default class Consumer {
     def: Omit<ConsumePropertyDefinition, 'objectPath' | 'metadata'>,
   ) {
     if (this.onDefinition !== undefined) {
-      this.onDefinition(({
-        ...def,
-        objectPath: this.keyPath,
-        metadata: this.propertyMetadata,
-      } as ConsumePropertyDefinition), this);
+      this.onDefinition(
+        ({
+          ...def,
+          objectPath: this.keyPath,
+          metadata: this.propertyMetadata,
+        } as ConsumePropertyDefinition),
+        this,
+      );
     }
   }
 
@@ -180,9 +182,11 @@ export default class Consumer {
 
   getLocation(target?: ConsumeSourceLocationRequestTarget): SourceLocation {
     const location = this.getDiagnosticLocation(target);
-    if (location === undefined || location.start === undefined ||
-          location.end ===
-          undefined) {
+    if (
+      location === undefined ||
+      location.start === undefined ||
+      location.end === undefined
+    ) {
       return {
         filename: this.filename,
         start: UNKNOWN_POSITION,
@@ -218,13 +222,13 @@ export default class Consumer {
       ...loc,
       start: {
         ...start,
-        column: add(start.column, startIndex),
-        index: add(start.index, startIndex),
+        column: ob1Add(start.column, startIndex),
+        index: ob1Add(start.index, startIndex),
       },
       end: {
         ...start,
-        column: add(start.column, endIndex),
-        index: add(start.index, endIndex),
+        column: ob1Add(start.column, endIndex),
+        index: ob1Add(start.index, endIndex),
       },
     };
   }
@@ -269,11 +273,15 @@ export default class Consumer {
       // If we are a computed property then wrap in brackets, the previous part would not have inserted a dot
       // We allow a computed part at the beginning of a path
       if (isComputedPart(part) && i > 0) {
-        const inner = typeof part === 'number'
-          ? String(part)
-          : escapeString(part, {
-            quote: "'",
-          });
+        const inner =
+          typeof part === 'number'
+            ? String(part)
+            : escapeString(
+                part,
+                {
+                  quote: "'",
+                },
+              );
 
         str += `[${inner}]`;
       } else {
@@ -340,13 +348,11 @@ export default class Consumer {
     // Make the errors more descriptive
     if (fromSource) {
       if (this.hasChangedFromSource()) {
-        advice.push(
-          {
-            type: 'log',
-            category: 'warn',
-            message: 'Our internal value has been modified since we read the original source',
-          },
-        );
+        advice.push({
+          type: 'log',
+          category: 'warn',
+          text: 'Our internal value has been modified since we read the original source',
+        });
       }
     } else {
       // Go up the consumer tree and take the position from the first consumer found in the source
@@ -368,13 +374,11 @@ export default class Consumer {
 
       // Warn that we didn't find this value in the source if it's parent wasn't either
       if (this.parent === undefined || !this.parent.wasInSource()) {
-        advice.push(
-          {
-            type: 'log',
-            category: 'warn',
-            message: `This value was expected to be found at <emphasis>${this.getKeyPathString()}</emphasis> but was not in the original source`,
-          },
-        );
+        advice.push({
+          type: 'log',
+          category: 'warn',
+          text: `This value was expected to be found at <emphasis>${this.getKeyPathString()}</emphasis> but was not in the original source`,
+        });
       }
     }
 
@@ -450,10 +454,12 @@ export default class Consumer {
   ) {
     // We require this cache as we sometimes want to store state about a forked property such as used items
     const cached = this.forkCache.get(String(key));
-    if (cached !== undefined && cached.value === value &&
-        (cached.propertyMetadata ===
-            undefined ||
-          cached.propertyMetadata === propertyMetadata)) {
+    if (
+      cached !== undefined &&
+      cached.value === value &&
+      (cached.propertyMetadata === undefined ||
+      cached.propertyMetadata === propertyMetadata)
+    ) {
       return cached;
     }
 
@@ -503,9 +509,11 @@ export default class Consumer {
 
     // Validate the parent is an object
     const parentValue = parent.asUnknown();
-    if (parentValue === undefined || parentValue === null ||
-          typeof parentValue !==
-          'object') {
+    if (
+      parentValue === undefined ||
+      parentValue === null ||
+      typeof parentValue !== 'object'
+    ) {
       throw parent.unexpected(descriptions.CONSUME.SET_PROPERTY_NON_OBJECT);
     }
 
@@ -541,19 +549,27 @@ export default class Consumer {
       return;
     }
 
-    const knownProperties = Array.from(this.usedNames.keys());
+    let knownProperties = Array.from(this.usedNames.keys());
+
+    const {normalizeKey} = this.context;
+    if (normalizeKey !== undefined) {
+      knownProperties = knownProperties.map((key) => normalizeKey(key));
+    }
 
     for (const [key, value] of this.asMap(false, false)) {
       if (!this.usedNames.has(key)) {
-        value.unexpected(descriptions.CONSUME.UNUSED_PROPERTY(
-          this.getKeyPathString([key]),
-          type,
-          knownProperties,
-        ), {
-          target: 'key',
-          at: 'suffix',
-          atParent: true,
-        });
+        value.unexpected(
+          descriptions.CONSUME.UNUSED_PROPERTY(
+            this.getKeyPathString([key]),
+            type,
+            knownProperties,
+          ),
+          {
+            target: 'key',
+            at: 'suffix',
+            atParent: true,
+          },
+        );
       }
 
       if (recursive) {
@@ -630,8 +646,11 @@ export default class Consumer {
 
   isObject(): boolean {
     const {value} = this;
-    return typeof value === 'object' && value !== null && value.constructor ===
-      Object;
+    return (
+      typeof value === 'object' &&
+      value !== null &&
+      value.constructor === Object
+    );
   }
 
   // OBJECTS
@@ -749,7 +768,7 @@ export default class Consumer {
     this.declareDefinition({
       type: 'date',
       default: def,
-      required: true,
+      required: def === undefined,
     });
     return this._asDate(def);
   }
@@ -781,7 +800,7 @@ export default class Consumer {
     this.declareDefinition({
       type: 'boolean',
       default: def,
-      required: true,
+      required: def === undefined,
     });
     return this._asBoolean(def);
   }
@@ -797,24 +816,27 @@ export default class Consumer {
 
   // STRINGS
   asStringOrVoid(def?: string): undefined | string {
+    if (this.exists()) {
+      return this.asString(def);
+    } else {
+      this._declareOptionalString(def);
+      return undefined;
+    }
+  }
+
+  _declareOptionalString(def?: string) {
     this.declareDefinition({
       type: 'string',
       default: def,
       required: false,
     });
-
-    if (this.exists()) {
-      return this._asString(def);
-    } else {
-      return undefined;
-    }
   }
 
   asString(def?: string): string {
     this.declareDefinition({
       type: 'string',
       default: def,
-      required: true,
+      required: def === undefined,
     });
     return this._asString(def);
   }
@@ -839,10 +861,16 @@ export default class Consumer {
       // @ts-ignore
       return value;
     } else {
-      this.unexpected(descriptions.CONSUME.INVALID_STRING_SET_VALUE(value, ( // rome-suppress-next-line lint/noExplicitAny
-      (validValues as any) as Array<string>)), {
-        target: 'value',
-      });
+      this.unexpected(
+        descriptions.CONSUME.INVALID_STRING_SET_VALUE(
+          value,
+          // rome-suppress-next-line lint/noExplicitAny
+          ((validValues as any) as Array<string>),
+        ),
+        {
+          target: 'value',
+        },
+      );
       return validValues[0];
     }
   }
@@ -875,7 +903,7 @@ export default class Consumer {
     this.declareDefinition({
       type: 'bigint',
       default: def,
-      required: true,
+      required: def === undefined,
     });
     return this._asBigInt(def);
   }
@@ -896,8 +924,8 @@ export default class Consumer {
   }
 
   // PATHS
-  asURLFilePath(): URLFilePath {
-    const path = this.asUnknownFilePath();
+  asURLFilePath(def?: string): URLFilePath {
+    const path = this.asUnknownFilePath(def);
     if (path.isURL()) {
       return path.assertURL();
     } else {
@@ -906,22 +934,54 @@ export default class Consumer {
     }
   }
 
-  asUnknownFilePath(): UnknownFilePath {
-    return createUnknownFilePath(this.asString());
+  asURLFilePathOrVoid(def?: string): undefined | URLFilePath {
+    if (this.exists()) {
+      return this.asURLFilePath(def);
+    } else {
+      this._declareOptionalString(def);
+      return undefined;
+    }
   }
 
-  asAbsoluteFilePath(): AbsoluteFilePath {
-    const path = this.asUnknownFilePath();
+  asUnknownFilePath(def?: string): UnknownFilePath {
+    return createUnknownFilePath(this.asString(def));
+  }
+
+  asUnknownFilePathOrVoid(def?: string): undefined | UnknownFilePath {
+    if (this.exists()) {
+      return this.asUnknownFilePath(def);
+    } else {
+      this._declareOptionalString(def);
+      return undefined;
+    }
+  }
+
+  asAbsoluteFilePath(def?: string, cwd?: AbsoluteFilePath): AbsoluteFilePath {
+    const path = this.asUnknownFilePath(def);
     if (path.isAbsolute()) {
       return path.assertAbsolute();
+    } else if (cwd !== undefined && path.isRelative()) {
+      return cwd.resolve(path);
     } else {
       this.unexpected(descriptions.CONSUME.EXPECTED_ABSOLUTE_PATH);
       return createAbsoluteFilePath('/').append(path);
     }
   }
 
-  asRelativeFilePath(): RelativeFilePath {
-    const path = this.asUnknownFilePath();
+  asAbsoluteFilePathOrVoid(
+    def?: string,
+    cwd?: AbsoluteFilePath,
+  ): undefined | AbsoluteFilePath {
+    if (this.exists()) {
+      return this.asAbsoluteFilePath(def, cwd);
+    } else {
+      this._declareOptionalString(def);
+      return undefined;
+    }
+  }
+
+  asRelativeFilePath(def?: string): RelativeFilePath {
+    const path = this.asUnknownFilePath(def);
     if (path.isRelative()) {
       return path.assertRelative();
     } else {
@@ -930,14 +990,32 @@ export default class Consumer {
     }
   }
 
-  asExplicitRelativeFilePath(): RelativeFilePath {
-    const path = this.asRelativeFilePath();
+  asRelativeFilePathOrVoid(def?: string): undefined | RelativeFilePath {
+    if (this.exists()) {
+      return this.asRelativeFilePath(def);
+    } else {
+      this._declareOptionalString(def);
+      return undefined;
+    }
+  }
+
+  asExplicitRelativeFilePath(def?: string): RelativeFilePath {
+    const path = this.asRelativeFilePath(def);
 
     if (path.isExplicitRelative()) {
       return path;
     } else {
       this.unexpected(descriptions.CONSUME.EXPECTED_EXPLICIT_RELATIVE_PATH);
       return path.toExplicitRelative();
+    }
+  }
+
+  asExplicitRelativeFilePathOrVoid(def?: string): undefined | RelativeFilePath {
+    if (this.exists()) {
+      return this.asExplicitRelativeFilePath(def);
+    } else {
+      this._declareOptionalString(def);
+      return undefined;
     }
   }
 
@@ -957,18 +1035,18 @@ export default class Consumer {
   }
 
   asZeroIndexedNumber(): Number0 {
-    return coerce0(this.asNumber());
+    return ob1Coerce0(this.asNumber());
   }
 
   asOneIndexedNumber(): Number1 {
-    return coerce1(this.asNumber());
+    return ob1Coerce1(this.asNumber());
   }
 
   asNumberFromString(def?: number): number {
     this.declareDefinition({
       type: 'number',
       default: def,
-      required: true,
+      required: def === undefined,
     });
     return this._asNumberFromString(def);
   }
@@ -1006,37 +1084,48 @@ export default class Consumer {
     this.declareDefinition({
       type: 'number',
       default: def,
-      required: true,
+      required: def === undefined,
     });
     return this._asNumber(def);
   }
 
-  asNumberInRange(opts: {min?: number; max?: number; default?: number}): number
+  asNumberInRange(
+    opts: {
+      min?: number;
+      max?: number;
+      default?: number;
+    },
+  ): number
 
-  asNumberInRange(opts: {
-    min: Number0;
-    max?: Number0;
-    default?: Number0;
-  }): Number0
+  asNumberInRange(
+    opts: {
+      min: Number0;
+      max?: Number0;
+      default?: Number0;
+    },
+  ): Number0
 
-  asNumberInRange(opts: {
-    min: Number1;
-    max?: Number1;
-    default?: Number1;
-  }): Number1
+  asNumberInRange(
+    opts: {
+      min: Number1;
+      max?: Number1;
+      default?: Number1;
+    },
+  ): Number1
 
-  asNumberInRange(opts: {
-    min?: UnknownNumber;
-    max?: UnknownNumber;
-    default?: UnknownNumber;
-  }): UnknownNumber {
+  asNumberInRange(
+    opts: {
+      min?: UnknownNumber;
+      max?: UnknownNumber;
+      default?: UnknownNumber;
+    },
+  ): UnknownNumber {
     const num = this._asNumber(opts.default);
     const {min, max} = opts;
 
     this.declareDefinition({
       type: 'number-range',
       default: opts.default,
-      required: true,
       // @ts-ignore
       min,
       max,

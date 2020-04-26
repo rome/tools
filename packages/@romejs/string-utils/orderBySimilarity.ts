@@ -5,10 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-function getMap<
-  Key,
-  Value
->(
+function getMap<Key, Value>(
   map: Map<Key, NonNullable<Value>>,
   key: Key,
   defaultValue?: NonNullable<Value>,
@@ -114,27 +111,30 @@ export function orderBySimilarity(
   }
 
   // Calculate the rating for each target string
-  const ratings: Ratings = Array.from(targets, (target: string): Rating => {
-    let compareTarget = target;
-    if (formatItem !== undefined) {
-      compareTarget = formatItem(target);
-    }
+  const ratings: Ratings = Array.from(
+    targets,
+    (target: string): Rating => {
+      let compareTarget = target;
+      if (formatItem !== undefined) {
+        compareTarget = formatItem(target);
+      }
 
-    if (ignoreCase) {
+      if (ignoreCase) {
+        return {
+          target,
+          rating: compareTwoStrings(
+            compareStr.toLowerCase(),
+            compareTarget.toLowerCase(),
+          ),
+        };
+      }
+
       return {
         target,
-        rating: compareTwoStrings(
-          compareStr.toLowerCase(),
-          compareTarget.toLowerCase(),
-        ),
+        rating: compareTwoStrings(compareStr, compareTarget),
       };
-    }
-
-    return {
-      target,
-      rating: compareTwoStrings(compareStr, compareTarget),
-    };
-  });
+    },
+  );
 
   // Sort ratings, with the highest at the beginning
   const sortedRatings: Ratings = ratings.sort((a, b) => {

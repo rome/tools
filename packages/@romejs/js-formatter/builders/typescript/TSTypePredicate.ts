@@ -5,30 +5,25 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSTypePredicate, tsTypePredicate, AnyNode} from '@romejs/js-ast';
+import {TSTypePredicate} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
-import {Tokens, space, word} from '../../tokens';
+import {Token, concat, space} from '../../tokens';
 
-export default function TSTypePredicate(builder: Builder, node: AnyNode): Tokens {
-  node = tsTypePredicate.assert(node);
-
-  let tokens: Tokens = [];
+export default function TSTypePredicate(
+  builder: Builder,
+  node: TSTypePredicate,
+): Token {
+  const tokens: Array<Token> = [];
 
   if (node.asserts) {
-    tokens = [word('asserts'), space];
+    tokens.push('asserts', space);
   }
 
-  tokens = [...tokens, ...builder.tokenize(node.parameterName, node)];
+  tokens.push(builder.tokenize(node.parameterName, node));
 
   if (node.typeAnnotation) {
-    return [
-      ...tokens,
-      space,
-      word('is'),
-      space,
-      ...builder.tokenize(node.typeAnnotation, node),
-    ];
-  } else {
-    return tokens;
+    tokens.push(space, 'is', space, builder.tokenize(node.typeAnnotation, node));
   }
+
+  return concat(tokens);
 }

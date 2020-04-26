@@ -6,10 +6,10 @@
  */
 
 import {
-  JSNodeBase,
   AnyFlowPrimary,
   AnyPrimaryType,
   FlowVariance,
+  JSNodeBase,
 } from '../index';
 import {createBuilder} from '../utils';
 

@@ -7,7 +7,7 @@
 
 import {NodeBase} from '@romejs/parser-core';
 import {AnyNode} from './index';
-import {inheritLoc, assertSingleNode} from '@romejs/js-ast-utils';
+import {assertSingleNode, inheritLoc} from '@romejs/js-ast-utils';
 import {JSNodeBase} from './base';
 import {TransformExitResult} from '@romejs/js-compiler';
 
@@ -15,9 +15,12 @@ export const bindingKeys: Map<string, Array<string>> = new Map();
 export const visitorKeys: Map<string, Array<string>> = new Map();
 export const nodeNames: Set<string> = new Set();
 
-type JustNodeKeysProp<K, V> = V extends NodeBase | Array<NodeBase> | Array<
-  | undefined
-  | NodeBase> ? K : never;
+type JustNodeKeysProp<K, V> = V extends
+  | NodeBase
+  | Array<NodeBase>
+  | Array<undefined | NodeBase>
+  ? K
+  : never;
 
 type JustNodeKeys<T> = ExcludeCoreNodeKeys<{ [K in keyof T]: JustNodeKeysProp<
   K,
@@ -61,9 +64,10 @@ export function createQuickBuilder<
   return new QuickBuilder(type, opts.visitorKeys, quickKey);
 }
 
-export function createBuilder<
-  Node extends AnyNode
->(type: string, opts: CreateBuilderOptions<Node>): Builder<Node> {
+export function createBuilder<Node extends AnyNode>(
+  type: string,
+  opts: CreateBuilderOptions<Node>,
+): Builder<Node> {
   declareBuilder(type, opts);
 
   return new Builder(type, opts.visitorKeys);

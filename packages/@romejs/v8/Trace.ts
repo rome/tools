@@ -8,7 +8,7 @@
 import {Profile, TraceEvent} from './types';
 import * as sourceMapManager from './sourceMapManager';
 import {urlToFilename} from './utils';
-import {coerce0To1, coerce1To0, get0, coerce0} from '@romejs/ob1';
+import {ob1Coerce0, ob1Coerce0To1, ob1Coerce1To0, ob1Get0} from '@romejs/ob1';
 
 export default class Trace {
   constructor() {
@@ -29,9 +29,7 @@ export default class Trace {
 
   decodeProfileSourceMap(profile: Profile) {
     // This method mutates the profile for performance/ergonomics
-
     // Nothing else should be relying on this so it doesn't really matter
-
     for (const node of profile.cpuProfile.nodes) {
       const {callFrame} = node;
       const filename = urlToFilename(callFrame.url);
@@ -41,13 +39,14 @@ export default class Trace {
       }
 
       // Call frame line numbers are 0-index while Rome is 1-indexed
-      const resolved = sourceMap.approxOriginalPositionFor(coerce0To1(coerce0(
-        callFrame.lineNumber,
-      )), coerce0(callFrame.columnNumber));
+      const resolved = sourceMap.approxOriginalPositionFor(
+        ob1Coerce0To1(ob1Coerce0(callFrame.lineNumber)),
+        ob1Coerce0(callFrame.columnNumber),
+      );
       if (resolved !== undefined) {
         callFrame.url = resolved.source;
-        callFrame.lineNumber = get0(coerce1To0(resolved.line));
-        callFrame.columnNumber = get0(resolved.column);
+        callFrame.lineNumber = ob1Get0(ob1Coerce1To0(resolved.line));
+        callFrame.columnNumber = ob1Get0(resolved.column);
 
         if (resolved.name !== undefined) {
           callFrame.functionName = resolved.name;

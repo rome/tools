@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {NumericLiteral, numericLiteral, AnyNode} from '@romejs/js-ast';
+import {AnyNode, NumericLiteral, numericLiteral} from '@romejs/js-ast';
 import NumericLiteralT from '../../types/NumericLiteralT';
 
 export default function NumericLiteral(node: AnyNode, scope: Scope) {

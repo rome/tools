@@ -6,18 +6,12 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator} from '../../tokens';
-import {
-  TSAssignmentNonNullExpression,
-  tsAssignmentNonNullExpression,
-  AnyNode,
-} from '@romejs/js-ast';
+import {Token, concat} from '../../tokens';
+import {TSAssignmentNonNullExpression} from '@romejs/js-ast';
 
 export default function TSAssignmentNonNullExpression(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = tsAssignmentNonNullExpression.assert(node);
-
-  return [...builder.tokenize(node.expression, node), operator('!')];
+  node: TSAssignmentNonNullExpression,
+): Token {
+  return concat([builder.tokenize(node.expression, node), '!']);
 }

@@ -5,140 +5,118 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import {
+  AnyBindingPattern,
+  AnyNode,
+  BreakStatement,
+  ClassMethod,
+  ContinueStatement,
+  ObjectMethod,
+  PatternMeta,
+  ReturnStatement,
+  TSDeclareMethod,
+  ThrowStatement,
+} from '@romejs/js-ast';
+import {isBinary} from '@romejs/js-ast-utils';
 import Builder, {BuilderMethod} from '../Builder';
 import {
-  awaitExpression,
-  forOfStatement,
-  AnyNode,
-  throwStatement,
-  TSDeclareMethod,
-  ObjectMethod,
-  AnyBindingPattern,
-  ClassMethod,
-  PatternMeta,
-} from '@romejs/js-ast';
-import {
-  Tokens,
-  operator,
-  word,
-  space,
-  terminatorless,
-  breakGroup,
+  Token,
   concat,
+  group,
+  hardline,
+  ifBreak,
+  indent,
+  join,
+  lineOrSpace,
+  softline,
+  space,
 } from '../tokens';
+import {hasInnerComments} from './comments';
 
-export function buildForXStatementBuilder(op: 'of' | 'in'): BuilderMethod {
-  return function(builder: Builder, node: AnyNode): Tokens {
-    node = node.type === 'ForInStatement' ? node : forOfStatement.assert(node);
+export function buildLabelStatementBuilder(
+  prefix: string,
+): BuilderMethod<BreakStatement | ContinueStatement> {
+  return (builder, node): Token => {
+    const tokens: Array<Token> = [prefix];
 
-    const tokens: Tokens = [word('for'), space];
-
-    if (op === 'of' && node.type === 'ForOfStatement' && node.await === true) {
-      tokens.push(word('await'));
-      tokens.push(space);
+    if (node.label) {
+      tokens.push(space, builder.tokenize(node.label, node));
     }
 
-    return [
-      concat(tokens),
-      operator('('),
-      concat(builder.tokenize(node.left, node)),
-      space,
-      word(op),
-      space,
-      concat(builder.tokenize(node.right, node)),
-      operator(')'),
-      space,
-      concat(builder.tokenize(node.body, node)),
-    ];
+    tokens.push(';');
+
+    return concat(tokens);
   };
 }
 
-export function buildYieldAwaitBuilder(keyword: string): BuilderMethod {
-  return function(builder: Builder, node: AnyNode): Tokens {
-      node = node.type === 'YieldExpression'
-        ? node
-        : awaitExpression.assert(node);
+export function buildThrowAndReturnStatementBuilder(
+  prefix: string,
+): BuilderMethod<ReturnStatement | ThrowStatement> {
+  return (builder, node): Token => {
+    const tokens: Array<Token> = [prefix];
 
-      const tokens: Tokens = [word(keyword)];
+    if (node.argument) {
+      tokens.push(space);
 
-      if (node.type === 'YieldExpression' && node.delegate === true) {
-        tokens.push(operator('*'));
-      }
-
-      if (node.argument) {
-        return [
-          concat(tokens),
-          space,
-          terminatorless(builder.tokenize(node.argument, node)),
-        ];
+      if (
+        node.argument.type === 'BinaryExpression' ||
+        node.argument.type === 'LogicalExpression' ||
+        node.argument.type === 'SequenceExpression'
+      ) {
+        tokens.push(
+          group(
+            concat([
+              ifBreak('('),
+              indent(concat([softline, builder.tokenize(node.argument, node)])),
+              softline,
+              ifBreak(')'),
+            ]),
+          ),
+        );
       } else {
-        return tokens;
+        tokens.push(builder.tokenize(node.argument, node));
       }
-    };
-}
-
-export function buildLabelStatementBuilder(prefix: string): BuilderMethod {
-  return function(builder: Builder, node: AnyNode): Tokens {
-      node =
-        node.type === 'ContinueStatement' || node.type === 'ReturnStatement' ||
-        node.type === 'BreakStatement' ? node : throwStatement.assert(node);
-
-    const tokens: Tokens = [word(prefix)];
-
-    if ((node.type === 'ContinueStatement' || node.type === 'BreakStatement') &&
-        node.label !== undefined) {
-      tokens.push(space);
-      tokens.push(concat(builder.tokenize(node.label, node)));
     }
 
-    if ((node.type === 'ThrowStatement' || node.type === 'ReturnStatement') &&
-          node.argument !==
-          undefined) {
-      tokens.push(space);
-      tokens.push(breakGroup([
-        [terminatorless(builder.tokenize(node.argument, node))],
-      ]));
-    }
+    tokens.push(';');
 
-    tokens.push(operator(';'));
-
-    return tokens;
+    return concat(tokens);
   };
 }
 
 export function printMethod(
   builder: Builder,
   node: TSDeclareMethod | ClassMethod | ObjectMethod,
-): Tokens {
+): Token {
   const kind = node.kind;
 
-  const tokens: Tokens = [];
+  const tokens: Array<Token> = [];
 
   if (kind === 'method' && node.head.generator === true) {
-    tokens.push(operator('*'));
+    tokens.push('*');
   }
 
   if (kind === 'get' || kind === 'set') {
-    tokens.push(word(kind));
+    tokens.push(kind);
     tokens.push(space);
   }
 
   if (node.head.async === true) {
-    tokens.push(word('async'));
+    tokens.push('async');
     tokens.push(space);
   }
 
   if (node.type === 'TSDeclareMethod') {
-    return [concat(tokens), concat(builder.tokenize(node.head, node))];
+    return concat([concat(tokens), builder.tokenize(node.head, node)]);
   }
 
-  return [
+  return concat([
     concat(tokens),
-    concat(builder.tokenize(node.key, node)),
-    concat(builder.tokenize(node.head, node)),
+    builder.tokenize(node.key, node),
+    builder.tokenize(node.head, node),
     space,
-    concat(builder.tokenize(node.body, node)),
-  ];
+    builder.tokenize(node.body, node),
+  ]);
 }
 
 export function printBindingPatternParams(
@@ -146,55 +124,134 @@ export function printBindingPatternParams(
   node: AnyNode,
   params: Array<AnyBindingPattern>,
   rest: undefined | AnyBindingPattern,
-): Tokens {
-  const group = builder.tokenizeCommaList(params, node, {
-    trailing: rest === undefined,
-  });
-
-  if (rest !== undefined) {
-    group.groups.push([operator('...'), concat(builder.tokenize(rest, node))]);
+): Token {
+  if (params.length === 0 && rest === undefined) {
+    if (hasInnerComments(node)) {
+      return concat([
+        '(',
+        builder.tokenizeInnerComments(node, true),
+        hardline,
+        ')',
+      ]);
+    } else {
+      return '()';
+    }
   }
 
-  return [group];
+  const tokens: Array<Token> = [
+    softline,
+    join(
+      concat([',', lineOrSpace]),
+      params.map((param) => builder.tokenize(param, node)),
+    ),
+  ];
+
+  if (rest) {
+    if (params.length > 0) {
+      tokens.push(',', lineOrSpace);
+    }
+    tokens.push('...', builder.tokenize(rest, node));
+  }
+
+  if (params.length > 0 && !rest) {
+    tokens.push(ifBreak(','));
+  }
+
+  return concat(['(', indent(concat(tokens)), softline, ')']);
 }
 
 export function printTSBraced(
   builder: Builder,
   node: AnyNode,
   members: Array<AnyNode>,
-): Tokens {
-  return [
-    operator('{'),
-    builder.tokenizeJoin(members, node, {
-      breakOnNewline: true,
-      newline: true,
-      priority: true,
-      broken: {},
-      unbroken: {
-        separator: [space],
-        trim: ';',
-      },
-    }),
-    operator('}'),
-  ];
+): Token {
+  return group(
+    concat([
+      '{',
+      indent(
+        concat([
+          hardline,
+          join(
+            hardline,
+            members.map((member) => builder.tokenize(member, node)),
+          ),
+        ]),
+      ),
+      hardline,
+      '}',
+    ]),
+  );
 }
 
 export function printPatternMeta(
   builder: Builder,
   node: AnyNode,
   meta: undefined | PatternMeta,
-): Tokens {
+): Token {
   if (builder.options.typeAnnotations && meta !== undefined) {
-    const tokens: Tokens = [];
+    const tokens: Array<Token> = [];
+
     if (meta.optional) {
-      tokens.push(operator('?'));
+      tokens.push('?');
     }
 
-    return [
-      concat(tokens),
-      concat(builder.tokenizeTypeColon(meta.typeAnnotation, node)),
-    ];
+    if (meta.typeAnnotation) {
+      tokens.push(':', space, builder.tokenize(meta.typeAnnotation, node));
+    }
+
+    return concat(tokens);
   } else {
-    return [];
+    return '';
   }
+}
+
+export function printClause(
+  builder: Builder,
+  clause: AnyNode,
+  parent: AnyNode,
+): Token {
+  if (clause.type === 'EmptyStatement') {
+    return ';';
+  }
+
+  if (clause.type === 'BlockStatement') {
+    return concat([space, builder.tokenize(clause, parent)]);
+  }
+
+  return indent(concat([lineOrSpace, builder.tokenize(clause, parent)]));
+}
+
+export function printCommaList(
+  builder: Builder,
+  nodes: Array<AnyNode>,
+  parent: AnyNode,
+): Token {
+  return join(
+    concat([',', lineOrSpace]),
+    nodes.map((node) => builder.tokenize(node, parent)),
+  );
+}
+
+export function printAssignment(
+  builder: Builder,
+  node: AnyNode,
+  left: AnyNode,
+  operator: Token,
+  right: AnyNode,
+): Token {
+  const canBreak =
+    right.type === 'BinaryExpression' ||
+    right.type === 'LogicalExpression' ||
+    right.type === 'SequenceExpression' ||
+    (right.type === 'ConditionalExpression' && isBinary(right.test));
+
+  return group(
+    concat([
+      builder.tokenize(left, node),
+      operator,
+      canBreak
+        ? group(indent(concat([lineOrSpace, builder.tokenize(right, node)])))
+        : concat([space, builder.tokenize(right, node)]),
+    ]),
+  );
 }

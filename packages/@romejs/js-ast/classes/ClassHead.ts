@@ -6,12 +6,12 @@
  */
 
 import {
-  JSNodeBase,
-  AnyExpression,
   AnyClassMember,
-  AnyTypeParameter,
+  AnyExpression,
   AnyTypeArguments,
+  AnyTypeParameter,
   FlowClassImplements,
+  JSNodeBase,
   TSExpressionWithTypeArguments,
 } from '../index';
 import {createQuickBuilder} from '../utils';
@@ -22,9 +22,9 @@ export type ClassHead = JSNodeBase & {
   body: Array<AnyClassMember>;
   typeParameters?: AnyTypeParameter;
   superTypeParameters?: AnyTypeArguments;
-  implements?: undefined | Array<
-    | FlowClassImplements
-    | TSExpressionWithTypeArguments>;
+  implements?:
+    | undefined
+    | Array<FlowClassImplements | TSExpressionWithTypeArguments>;
 };
 
 export const classHead = createQuickBuilder<ClassHead, 'body'>(

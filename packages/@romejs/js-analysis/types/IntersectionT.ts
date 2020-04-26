@@ -6,7 +6,7 @@
  */
 
 import {AnyNode} from '@romejs/js-ast';
-import {HydrateTypeFactory, HydrateData} from '../Evaluator';
+import {HydrateData, HydrateTypeFactory} from '../Evaluator';
 import T, {SerialTypeFactory, TypeCompatibilityReturn} from './T';
 import {Scope} from '../scopes';
 import {HumanBuilder} from '../Utils';
@@ -32,9 +32,11 @@ export default class IntersectionT extends T {
     data: HydrateData,
     getType: HydrateTypeFactory,
   ): T {
-    return new IntersectionT(scope, originNode, Array(data.types).map(
-      (id) => getType(id),
-    ));
+    return new IntersectionT(
+      scope,
+      originNode,
+      Array(data.types).map((id) => getType(id)),
+    );
   }
 
   compatibleWith(otherType: T): boolean | TypeCompatibilityReturn {

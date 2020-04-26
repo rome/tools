@@ -8,21 +8,17 @@
 import {commandCategories} from '../../common/commands';
 import {createLocalCommand} from '../commands';
 import ClientRequest from '../ClientRequest';
-import {Consumer} from '@romejs/consume';
 
 export default createLocalCommand({
   description: 'connect to an lsp',
   category: commandCategories.PROJECT_MANAGEMENT,
   usage: '',
   examples: [],
-
-  defineFlags(consumer: Consumer) {
-    // vscode-languageclient adds these on
-    consumer.get('stdio').asBooleanOrVoid();
-    consumer.get('clientProcessId').asStringOrVoid();
+  // vscode-languageclient adds these on
+  ignoreFlags: ['stdio', 'clientProcessId'],
+  defineFlags() {
     return {};
   },
-
   async callback(req: ClientRequest) {
     req.client.setFlags({
       clientName: 'lsp',
@@ -41,13 +37,19 @@ export default createLocalCommand({
       req.client.derivedReporterStreams.stdout.write(chunk);
     });
 
-    stdin.on('data', (chunk) => {
-      bridge.lspFromClientBuffer.call(chunk.toString());
-    });
+    stdin.on(
+      'data',
+      (chunk) => {
+        bridge.lspFromClientBuffer.call(chunk.toString());
+      },
+    );
 
-    await req.client.query({
-      command: 'lsp',
-    }, 'master');
+    await req.client.query(
+      {
+        commandName: 'lsp',
+      },
+      'master',
+    );
 
     return true;
   },

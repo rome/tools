@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Diagnostics, DiagnosticSuppressions} from '@romejs/diagnostics';
+import {DiagnosticSuppressions, Diagnostics} from '@romejs/diagnostics';
 import {DiagnosticsPrinterOptions} from './types';
 import {Reporter, ReporterStream} from '@romejs/cli-reporter';
 import DiagnosticsPrinter from './DiagnosticsPrinter';
@@ -21,17 +21,19 @@ export * from './constants';
 
 export * from './types';
 
-export function printDiagnostics({
-  diagnostics,
-  suppressions,
-  printerOptions,
-  excludeFooter,
-}: {
-  diagnostics: Diagnostics;
-  suppressions: DiagnosticSuppressions;
-  printerOptions: DiagnosticsPrinterOptions;
-  excludeFooter?: boolean;
-}): DiagnosticsPrinter {
+export function printDiagnostics(
+  {
+    diagnostics,
+    suppressions,
+    printerOptions,
+    excludeFooter,
+  }: {
+    diagnostics: Diagnostics;
+    suppressions: DiagnosticSuppressions;
+    printerOptions: DiagnosticsPrinterOptions;
+    excludeFooter?: boolean;
+  },
+): DiagnosticsPrinter {
   const printer = new DiagnosticsPrinter(printerOptions);
   printer.processor.addDiagnostics(diagnostics);
   printer.processor.addSuppressions(suppressions);
@@ -42,13 +44,15 @@ export function printDiagnostics({
   return printer;
 }
 
-export function printDiagnosticsToString(opts: {
-  diagnostics: Diagnostics;
-  suppressions: DiagnosticSuppressions;
-  printerOptions?: DiagnosticsPrinterOptions;
-  format?: ReporterStream['format'];
-  excludeFooter?: boolean;
-}): string {
+export function printDiagnosticsToString(
+  opts: {
+    diagnostics: Diagnostics;
+    suppressions: DiagnosticSuppressions;
+    printerOptions?: DiagnosticsPrinterOptions;
+    format?: ReporterStream['format'];
+    excludeFooter?: boolean;
+  },
+): string {
   const reporter = new Reporter();
   const stream = reporter.attachCaptureStream(opts.format);
   printDiagnostics({

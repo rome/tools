@@ -6,10 +6,10 @@
  */
 
 import {
-  JSNodeBase,
-  BindingIdentifier,
-  AnyTypeParameter,
   AnyPrimaryType,
+  AnyTypeParameter,
+  BindingIdentifier,
+  JSNodeBase,
 } from '../index';
 import {createBuilder} from '../utils';
 

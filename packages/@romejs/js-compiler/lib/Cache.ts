@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TransformRequest, TransformProjectDefinition} from '../types';
+import {TransformProjectDefinition, TransformRequest} from '../types';
 import {Program} from '@romejs/js-ast';
 import {JSONObject} from '@romejs/codec-json';
 
@@ -24,8 +24,11 @@ export default class Cache<Result> {
 
   cache: WeakMap<Program, Map<string, Result>>;
 
-  static buildQuery(req: TransformRequest, options?: JSONObject): CacheQuery {
-    const {ast, project} = req;
+  static buildQuery(
+    req: TransformRequest,
+    additionalOptions?: JSONObject,
+  ): CacheQuery {
+    const {ast, project, options} = req;
     const keyParts: Array<string> = [];
 
     let projectId = projectToId.get(project);
@@ -38,8 +41,12 @@ export default class Cache<Result> {
     keyParts.push(String(projectId));
 
     // Add options if they exist
-    if (options !== undefined && Object.keys(options).length > 0) {
-      keyParts.push(JSON.stringify(options));
+    const extra = {
+      ...options,
+      ...additionalOptions,
+    };
+    if (Object.keys(extra).length > 0) {
+      keyParts.push(JSON.stringify(extra));
     }
 
     return {

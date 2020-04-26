@@ -6,11 +6,11 @@
  */
 
 import {
-  JSNodeBase,
-  VariableDeclaration,
   AnyExpression,
   AnyStatement,
   AnyTargetAssignmentPattern,
+  JSNodeBase,
+  VariableDeclaration,
 } from '../index';
 import {createBuilder} from '../utils';
 
@@ -22,11 +22,14 @@ export type ForOfStatement = JSNodeBase & {
   body: AnyStatement;
 };
 
-export const forOfStatement = createBuilder<ForOfStatement>('ForOfStatement', {
-  bindingKeys: {},
-  visitorKeys: {
-    left: true,
-    right: true,
-    body: true,
+export const forOfStatement = createBuilder<ForOfStatement>(
+  'ForOfStatement',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      left: true,
+      right: true,
+      body: true,
+    },
   },
-});
+);

@@ -6,14 +6,13 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens} from '../../tokens';
-import {optionalCallExpression, AnyNode} from '@romejs/js-ast';
+import {Token} from '../../tokens';
+import {OptionalCallExpression} from '@romejs/js-ast';
 import CallExpression from './CallExpression';
 
 export default function OptionalCallExpression(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = optionalCallExpression.assert(node);
+  node: OptionalCallExpression,
+): Token {
   return CallExpression(builder, node);
 }

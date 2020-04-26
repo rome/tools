@@ -5,39 +5,77 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import {
+  AnyArrayPattern,
+  ArrayExpression,
+  AssignmentArrayPattern,
+  BindingArrayPattern,
+} from '@romejs/js-ast';
 import Builder from '../../Builder';
-import {Tokens, space, operator, concat} from '../../tokens';
-import {arrayExpression, AnyNode} from '@romejs/js-ast';
+import {
+  Token,
+  concat,
+  group,
+  hardline,
+  ifBreak,
+  indent,
+  join,
+  lineOrSpace,
+  softline,
+} from '../../tokens';
+import {hasInnerComments} from '../comments';
 
 export default function ArrayExpression(
   builder: Builder,
-  _node: AnyNode,
-): Tokens {
-  const node = _node.type === 'BindingArrayPattern' || _node.type ===
-    'AssignmentArrayPattern' ? _node : arrayExpression.assert(_node);
+  node: ArrayExpression | BindingArrayPattern | AssignmentArrayPattern,
+): Token {
+  const hasContents = node.elements.length > 0;
+  const hasRest =
+    (node.type === 'BindingArrayPattern' ||
+    node.type === 'AssignmentArrayPattern') &&
+    node.rest !== undefined;
 
-  const elems = node.elements;
-
-  const tokens: Tokens = [
-    operator('['),
-    concat(builder.tokenizeInnerComments(node)),
-    builder.tokenizeCommaList(elems, node, {
-      trailing: true,
-      breakOnNewline: true,
-    }),
-  ];
-
-  if ((node.type === 'BindingArrayPattern' || node.type ===
-      'AssignmentArrayPattern') && node.rest !== undefined) {
-    if (elems.length > 0) {
-      tokens.push(operator(','));
-      tokens.push(space);
+  if (!hasContents && !hasRest) {
+    if (hasInnerComments(node)) {
+      return concat([
+        '[',
+        builder.tokenizeInnerComments(node, true),
+        hardline,
+        ']',
+      ]);
+    } else {
+      return '[]';
     }
-
-    tokens.push(operator('...'), concat(builder.tokenize(node.rest, node)));
   }
 
-  tokens.push(operator(']'));
+  const tokens: Array<Token> = [];
 
-  return tokens;
+  if (hasContents) {
+    const elements: Array<Token> = [];
+
+    for (const element of node.elements) {
+      if (element === undefined) {
+        elements.push('');
+      } else {
+        elements.push(builder.tokenize(element, node));
+      }
+    }
+
+    tokens.push(join(concat([',', lineOrSpace]), elements));
+
+    if (hasRest) {
+      tokens.push(',', lineOrSpace);
+    } else {
+      // Add trailing comma
+      tokens.push(ifBreak(','));
+    }
+  }
+
+  if (hasRest) {
+    tokens.push('...', builder.tokenize((node as AnyArrayPattern).rest, node));
+  }
+
+  return group(
+    concat(['[', indent(concat([softline, concat(tokens)])), softline, ']']),
+  );
 }

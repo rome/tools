@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   BooleanKeywordTypeAnnotation,
   booleanKeywordTypeAnnotation,
-  AnyNode,
 } from '@romejs/js-ast';
 import BooleanT from '../../types/BooleanT';
 

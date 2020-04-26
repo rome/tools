@@ -7,12 +7,12 @@
 
 import {
   JSNodeBase,
+  JSXElement,
+  JSXExpressionContainer,
+  JSXFragment,
   JSXIdentifier,
   JSXNamespacedName,
-  JSXElement,
-  JSXFragment,
   StringLiteral,
-  JSXExpressionContainer,
 } from '../index';
 import {createBuilder} from '../utils';
 
@@ -27,10 +27,13 @@ export type JSXAttribute = JSNodeBase & {
     | JSXExpressionContainer;
 };
 
-export const jsxAttribute = createBuilder<JSXAttribute>('JSXAttribute', {
-  bindingKeys: {},
-  visitorKeys: {
-    name: true,
-    value: true,
+export const jsxAttribute = createBuilder<JSXAttribute>(
+  'JSXAttribute',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      name: true,
+      value: true,
+    },
   },
-});
+);

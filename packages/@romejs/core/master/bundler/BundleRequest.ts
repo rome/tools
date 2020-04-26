@@ -15,14 +15,14 @@ import {
 } from '../../common/bridges/WorkerBridge';
 import {DependencyOrder} from '../dependencies/DependencyOrderer';
 import {
-  CompileResult,
   BundleCompileResolvedImports,
+  CompileResult,
   getPrefixedBundleNamespace,
 } from '@romejs/js-compiler';
 
 import {DiagnosticsProcessor, descriptions} from '@romejs/diagnostics';
 import {AbsoluteFilePath} from '@romejs/path';
-import {add} from '@romejs/ob1';
+import {ob1Add} from '@romejs/ob1';
 import {readFile} from '@romejs/fs';
 import crypto = require('crypto');
 
@@ -37,19 +37,21 @@ export type BundleOptions = {
 };
 
 export default class BundleRequest {
-  constructor({
-    bundler,
-    reporter,
-    mode,
-    resolvedEntry,
-    options,
-  }: {
-    bundler: Bundler;
-    reporter: Reporter;
-    mode: BundlerMode;
-    resolvedEntry: AbsoluteFilePath;
-    options: BundleOptions;
-  }) {
+  constructor(
+    {
+      bundler,
+      reporter,
+      mode,
+      resolvedEntry,
+      options,
+    }: {
+      bundler: Bundler;
+      reporter: Reporter;
+      mode: BundlerMode;
+      resolvedEntry: AbsoluteFilePath;
+      options: BundleOptions;
+    },
+  ) {
     this.options = options;
     this.reporter = reporter;
     this.bundler = bundler;
@@ -59,17 +61,14 @@ export default class BundleRequest {
     this.resolvedEntry = resolvedEntry;
     this.resolvedEntryUid = bundler.master.projectManager.getUid(resolvedEntry);
 
-      this.diagnostics =
-      bundler.request.createDiagnosticsProcessor(
+    this.diagnostics = bundler.request.createDiagnosticsProcessor({
+      origins: [
         {
-          origins: [
-            {
-              category: 'bundler',
-              message: `Requested bundle for <filelink target="${this.resolvedEntryUid}" />`,
-            },
-          ],
+          category: 'bundler',
+          message: `Requested bundle for <filelink target="${this.resolvedEntryUid}" />`,
         },
-      );
+      ],
+    });
     this.diagnostics.addAllowedUnusedSuppressionPrefix('lint');
 
     this.compiles = new Map();
@@ -158,12 +157,11 @@ export default class BundleRequest {
     }
 
     // Diagnostics would have already been added during the initial DependencyGraph.seed
-
     // We're doing the work of resolving everything again, maybe we should cache it?
     const resolvedImports: BundleCompileResolvedImports = mod.resolveImports().resolved;
 
     let assetPath: undefined | string;
-    if (mod.handler !== undefined && mod.handler.isAsset) {
+    if (mod.handler?.isAsset) {
       const buffer = await readFile(mod.path);
 
       // Asset path in the form of: BASENAME-SHA1HASH.EXTENSIONS
@@ -220,9 +218,8 @@ export default class BundleRequest {
     // We allow deferring the generation of source maps. We don't do this by default as it's slower than generating them upfront
     // which is what most callers need. But for things like tests, we want to lazily compute the source map only when diagnostics
     // are present.
-    let deferredSourceMaps = !forceSourceMaps &&
-        this.options.deferredSourceMaps ===
-        true;
+    let deferredSourceMaps =
+      !forceSourceMaps && this.options.deferredSourceMaps === true;
     if (deferredSourceMaps) {
       sourceMap.addMaterializer(() => {
         this.stepCombine(order, true);
@@ -259,7 +256,7 @@ export default class BundleRequest {
           ...mapping,
           generated: {
             ...mapping.generated,
-            line: add(lineOffset, mapping.generated.line),
+            line: ob1Add(lineOffset, mapping.generated.line),
           },
         });
       }

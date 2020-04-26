@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, AnyExpression, AnyStatement} from '../index';
+import {AnyExpression, AnyStatement, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type SwitchCase = JSNodeBase & {
@@ -14,10 +14,13 @@ export type SwitchCase = JSNodeBase & {
   consequent: Array<AnyStatement>;
 };
 
-export const switchCase = createBuilder<SwitchCase>('SwitchCase', {
-  bindingKeys: {},
-  visitorKeys: {
-    test: true,
-    consequent: true,
+export const switchCase = createBuilder<SwitchCase>(
+  'SwitchCase',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      test: true,
+      consequent: true,
+    },
   },
-});
+);

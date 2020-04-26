@@ -32,19 +32,25 @@ export default class TestWorker {
   }
 
   buildBridge(): TestWorkerBridge {
-    const bridge = createBridgeFromParentProcess(TestWorkerBridge, {
-      type: 'server',
-    });
+    const bridge = createBridgeFromParentProcess(
+      TestWorkerBridge,
+      {
+        type: 'server',
+      },
+    );
 
-    process.on('unhandledRejection', (err) => {
-      bridge.testError.send({
-        ref: undefined,
-        diagnostic: deriveDiagnosticFromError({
-          error: err,
-          category: 'tests/unhandledRejection',
-        }),
-      });
-    });
+    process.on(
+      'unhandledRejection',
+      (err) => {
+        bridge.testError.send({
+          ref: undefined,
+          diagnostic: deriveDiagnosticFromError({
+            error: err,
+            category: 'tests/unhandledRejection',
+          }),
+        });
+      },
+    );
 
     bridge.inspectorDetails.subscribe(() => {
       return {

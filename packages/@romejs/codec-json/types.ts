@@ -7,9 +7,9 @@
 
 import {
   BaseTokens,
+  ParserOptions,
   SimpleToken,
   ValueToken,
-  ParserOptions,
 } from '@romejs/parser-core';
 import {ConsumeContext} from '@romejs/consume';
 import {DiagnosticCategory} from '@romejs/diagnostics';
@@ -70,6 +70,8 @@ export type JSONValue =
 
 export type JSONPropertyValue = undefined | void | JSONValue;
 
-export type JSONObject = {[x: string]: JSONPropertyValue};
+export type JSONObject = {
+  [x: string]: JSONPropertyValue;
+};
 
 export type JSONArray = Array<JSONValue>;

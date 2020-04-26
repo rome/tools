@@ -6,20 +6,19 @@
  */
 
 import Builder from '../../Builder';
-import {AnyNode, templateLiteral, templateElement} from '@romejs/js-ast';
-import {operator} from '@romejs/js-formatter/tokens';
+import {AnyNode, TemplateElement, templateLiteral} from '@romejs/js-ast';
+import {Token} from '../../tokens';
 
 export default function TemplateElement(
   builder: Builder,
-  node: AnyNode,
+  node: TemplateElement,
   parent: AnyNode,
-) {
-  node = templateElement.assert(node);
+): Token {
   parent = templateLiteral.assert(parent);
 
   const isFirst = parent.quasis[0] === node;
   const isLast = parent.quasis[parent.quasis.length - 1] === node;
 
   const value = (isFirst ? '`' : '}') + node.raw + (isLast ? '`' : '${');
-  return [operator(value)];
+  return value;
 }

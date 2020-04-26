@@ -6,18 +6,13 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens} from '../../tokens';
-import {
-  AnyNode,
-  ExportExternalSpecifier,
-  exportExternalSpecifier,
-} from '@romejs/js-ast';
+import {Token} from '../../tokens';
+import {ExportExternalSpecifier} from '@romejs/js-ast';
 import ExportLocalSpecifier from './ExportLocalSpecifier';
 
 export default function ExportExternalSpecifier(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = exportExternalSpecifier.assert(node);
+  node: ExportExternalSpecifier,
+): Token {
   return ExportLocalSpecifier(builder, node);
 }

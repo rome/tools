@@ -5,101 +5,58 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, AnyComment} from '@romejs/js-ast';
+import {AnyComment, AnyNode} from '@romejs/js-ast';
+import {isTypeExpressionWrapperNode, isTypeNode} from '@romejs/js-ast-utils';
+import CommentsConsumer from '@romejs/js-parser/CommentsConsumer';
+import {
+  printComment,
+  printLeadingComment,
+  printTrailingComment,
+} from './builders/comments';
 import builderFunctions from './builders/index';
 import * as n from './node/index';
-import {isTypeNode, isTypeExpressionWrapperNode} from '@romejs/js-ast-utils';
-import {SourceMap} from '@romejs/codec-source-map';
-import {
-  Tokens,
-  GroupToken,
-  operator,
-  space,
-  newline,
-  derivedNewline,
-  indent,
-  comment,
-  positionMarker,
-  concat,
-} from './tokens';
-import CommentsConsumer from '@romejs/js-parser/CommentsConsumer';
+import {Token, concat, hardline, indent, join, mark} from './tokens';
 
-export type BuilderMethod = (
+export type BuilderMethod<T extends AnyNode = AnyNode> = (
   builder: Builder,
-  node: AnyNode,
+  node: T,
   parent: AnyNode,
-) => Tokens | never;
+) => Token | never;
 
 export type BuilderOptions = {
   typeAnnotations: boolean;
   format?: 'pretty' | 'compact';
-  indent?: number;
-  comments?: Array<AnyComment>;
   sourceMaps?: boolean;
-  inputSourceMap?: SourceMap;
-  sourceMapTarget?: string;
-  sourceRoot?: string;
-  sourceFileName?: string;
   sourceText?: string;
-};
-
-type PrintJoinOptions = Omit<GroupToken, 'type' | 'groups'> & {
-  newline: boolean;
 };
 
 export default class Builder {
   constructor(opts: BuilderOptions, comments: Array<AnyComment> = []) {
     this.options = opts;
-    this.inForStatementInitCounter = 0;
-    this.printStack = [];
     this.comments = new CommentsConsumer(comments);
     this.printedComments = new Set();
+    this.printStack = [];
   }
 
-  comments: CommentsConsumer;
   options: BuilderOptions;
-  printStack: Array<AnyNode>;
-  inForStatementInitCounter: number;
+  comments: CommentsConsumer;
   printedComments: Set<string>;
+  printStack: Array<AnyNode>;
 
-  checkTrailingCommentsSameLine(node: AnyNode, nextNode: undefined | AnyNode): {
-    hasNextTrailingCommentOnSameLine: boolean;
-    nextNode: undefined | AnyNode;
-  } {
-    // Don't print a newline if the next node has a leadingComment that begins on the same line as this node
-    let hasNextTrailingCommentOnSameLine = false;
-
-    // Lots of refinements...
-    if (nextNode !== undefined && node.loc !== undefined && nextNode.loc !==
-        undefined && nextNode.leadingComments !== undefined) {
-      const firstNextNodeLeadingComments = this.comments.getCommentFromId(
-        nextNode.leadingComments[0],
-      );
-      if (firstNextNodeLeadingComments !== undefined &&
-            firstNextNodeLeadingComments.loc !==
-            undefined) {
-        nextNode = firstNextNodeLeadingComments;
-        hasNextTrailingCommentOnSameLine = node.loc.end.line ===
-          firstNextNodeLeadingComments.loc.start.line;
-      }
-    }
-
-    return {nextNode, hasNextTrailingCommentOnSameLine};
-  }
-
-  tokenize(node: undefined | AnyNode, parent: AnyNode): Tokens {
+  tokenize(node: undefined | AnyNode, parent: AnyNode): Token {
     if (node === undefined) {
-      return [];
+      return '';
     }
 
-    if (this.options.typeAnnotations === false && isTypeNode(node) &&
-        !isTypeExpressionWrapperNode(node)) {
-      return [];
+    if (
+      !this.options.typeAnnotations &&
+      isTypeNode(node) &&
+      !isTypeExpressionWrapperNode(node)
+    ) {
+      return '';
     }
 
-    const tokenizeNode: undefined | BuilderMethod = builderFunctions.get(
-      node.type,
-    );
+    const tokenizeNode = builderFunctions.get(node.type);
     if (tokenizeNode === undefined) {
       throw new Error(
         `No known builder for node ${node.type} with parent ${parent.type}`,
@@ -107,218 +64,122 @@ export default class Builder {
     }
 
     this.printStack.push(node);
-
-    const tokens: Tokens = [];
-
+    let printedNode = tokenizeNode(this, node, parent);
     const needsParens = n.needsParens(node, parent, this.printStack);
-
-    if (needsParens) {
-      tokens.push(operator('('));
-    }
-
-    const leadingComments = this.getComments('leadingComments', node);
-
-    // If leading comment had an empty line after then retain it
-    if (leadingComments !== undefined) {
-      tokens.push(concat(this.tokenizeComments(leadingComments)), concat(
-        this.maybeCommentNewlines(node, leadingComments[leadingComments.length -
-          1], false),
-      ));
-    }
-
-    const nodeTokens = tokenizeNode(this, node, parent);
-    if (node.loc === undefined || !this.options.sourceMaps) {
-      tokens.push(concat(nodeTokens));
-    } else {
-      tokens.push(positionMarker(nodeTokens, node.loc));
-    }
-
-    if (needsParens) {
-      tokens.push(operator(')'));
-    }
-
-    // If there's an empty line between the node and it's trailing comments then keep it
-    const trailingComments = this.getComments('trailingComments', node);
-    if (trailingComments !== undefined) {
-      tokens.push(concat(this.maybeCommentNewlines(
-        node,
-        trailingComments[0],
-        true,
-      )));
-    }
-    tokens.push(concat(this.tokenizeComments(trailingComments)));
-
     this.printStack.pop();
 
-    return tokens;
-  }
+    if (printedNode !== '') {
+      if (this.options.sourceMaps && node.loc !== undefined) {
+        printedNode = concat([
+          mark(node.loc, 'start'),
+          printedNode,
+          mark(node.loc, 'end'),
+        ]);
+      }
 
-  tokenizeJoin(
-    nodes: undefined | Array<undefined | AnyNode>,
-    parent: AnyNode,
-    opts: PrintJoinOptions,
-  ): GroupToken {
-    const groups: GroupToken['groups'] = [];
-
-    let forceBroken = opts.broken.force || opts.breakOnNewline && n.isMultiLine(
-      parent,
-    );
-
-    if (nodes !== undefined) {
-      for (let i = 0; i < nodes.length; i++) {
-        const node = nodes[i];
-
-        if (node === undefined) {
-          groups.push([]);
-        } else {
-          const isLastNode = i === nodes.length - 1;
-
-          const {
-            nextNode,
-            hasNextTrailingCommentOnSameLine,
-          } = this.checkTrailingCommentsSameLine(node, nodes[i + 1]);
-
-          const afterBroken: Tokens = [];
-          if (!isLastNode && opts.newline && !hasNextTrailingCommentOnSameLine) {
-            afterBroken.push(newline);
-          }
-
-          const newlines = this.maybeInsertExtraStatementNewlines(node, nextNode);
-
-          groups.push({
-            tokens: this.tokenize(node, parent),
-            afterBroken: [concat(afterBroken), concat(newlines)],
-            afterUnbroken: newlines,
-          });
-        }
+      if (needsParens) {
+        printedNode = concat(['(', printedNode, ')']);
       }
     }
 
-    return {
-      type: 'Group',
-      groups,
-      ...opts,
-      broken: {
-        ...opts.broken,
-        force: forceBroken,
-      },
-    };
+    return this.tokenizeComments(node, printedNode);
   }
 
-  tokenizeCommaList(
-    items: undefined | Array<undefined | AnyNode>,
-    parent: AnyNode,
-    opts: {
-      breakOnNewline?: boolean;
-      trailing?: boolean;
-      forceBroken?: boolean;
-      indentNewline?: boolean;
-      indent?: boolean;
-    } = {},
-  ): GroupToken {
-    return this.tokenizeJoin(items, parent, {
-      breakOnNewline: opts.breakOnNewline,
-      newline: true,
-      broken: {
-        force: opts.forceBroken,
-        indent: opts.indent,
-        indentNewline: opts.indentNewline,
-        separator: [operator(',')],
-        trailing: opts.trailing === true ? [operator(',')] : [],
-      },
-      unbroken: {
-        separator: [operator(','), space],
-      },
-    });
-  }
+  tokenizeComments(node: AnyNode, printed: Token): Token {
+    const tokens = [];
 
-  tokenizeStatementList(
-    nodes: undefined | Array<undefined | AnyNode>,
-    parent: AnyNode,
-    shouldIndent: boolean = false,
-  ): Tokens {
-    const tokens: Tokens = [];
-    if (nodes === undefined || nodes.length === 0) {
-      return tokens;
+    const leadingComments = this.getComments('leadingComments', node);
+    if (leadingComments !== undefined) {
+      let next = node;
+
+      // Leading comments are traversed backward in order to get `next` right
+      for (let i = leadingComments.length - 1; i >= 0; i--) {
+        const comment = leadingComments[i];
+        this.printedComments.add(comment.id);
+        tokens.unshift(printLeadingComment(comment, next));
+        next = comment;
+      }
     }
 
+    tokens.push(printed);
+
+    const trailingComments = this.getComments('trailingComments', node);
+    if (trailingComments !== undefined) {
+      let previous = node;
+
+      for (const comment of trailingComments) {
+        this.printedComments.add(comment.id);
+        tokens.push(printTrailingComment(comment, previous));
+        previous = comment;
+      }
+    }
+
+    return concat(tokens);
+  }
+
+  tokenizeStatementList(nodes: Array<AnyNode>, parent: AnyNode): Token {
+    if (nodes.length === 0) {
+      return '';
+    }
+
+    const tokens: Array<Token> = [];
+
     for (let i = 0; i < nodes.length; i++) {
+      const isLast = i === nodes.length - 1;
       const node = nodes[i];
-      if (node === undefined) {
+
+      if (node.type === 'EmptyStatement') {
         continue;
       }
 
-      tokens.push(concat(this.tokenize(node, parent)));
+      let printed = this.tokenize(node, parent);
 
-      const {
-        nextNode,
-        hasNextTrailingCommentOnSameLine,
-      } = this.checkTrailingCommentsSameLine(node, nodes[i + 1]);
+      if (!isLast) {
+        const nextNode = nodes[i + 1];
+        const trailingComments = this.getComments(
+          'trailingComments',
+          node,
+          true,
+        );
 
-      if (!hasNextTrailingCommentOnSameLine) {
-        tokens.push(newline);
+        let currentNode = node;
+        if (trailingComments && trailingComments.length > 0) {
+          currentNode = trailingComments[trailingComments.length - 1];
+        }
+
+        if (n.getLinesBetween(currentNode, nextNode) > 1) {
+          printed = concat([printed, hardline]);
+        }
       }
 
-      tokens.push(concat(this.maybeInsertExtraStatementNewlines(node, nextNode)));
+      tokens.push(printed);
     }
 
-    if (shouldIndent) {
-      return [newline, indent(tokens), newline];
-    }
-
-    return tokens;
+    return join(hardline, tokens);
   }
 
-  tokenizeTypeColon(node: undefined | AnyNode, parent: AnyNode): Tokens {
-    if (node === undefined) {
-      return [];
-    } else {
-      return [operator(':'), space, concat(this.tokenize(node, parent))];
-    }
-  }
-
-  tokenizeInnerComments(node: AnyNode): Tokens {
+  tokenizeInnerComments(node: AnyNode, shouldIndent: boolean): Token {
     const innerComments = this.getComments('innerComments', node);
     if (innerComments === undefined) {
-      return [];
+      return '';
     }
 
-    const tokens: Tokens = [];
+    const tokens: Array<Token> = [];
 
-    if (n.getLinesBetween(node, innerComments[0])) {
-      tokens.push(newline);
+    for (const comment of innerComments) {
+      this.printedComments.add(comment.id);
+      tokens.push(printComment(comment));
     }
 
-    tokens.push(concat(this.tokenizeComments(innerComments)));
-
-    return tokens;
-  }
-
-  tokenizeComments(comments: undefined | Array<AnyComment>): Tokens {
-    if (comments === undefined) {
-      return [];
-    }
-
-    const tokens: Tokens = [];
-
-    for (let i = 0; i < comments.length; i++) {
-      const comment = comments[i];
-      tokens.push(concat(this.tokenizeComment(comment)));
-
-      const nextComment = comments[i + 1];
-      if (nextComment !== undefined) {
-        tokens.push(
-          concat(this.maybeCommentNewlines(comment, nextComment, true)),
-        );
-      }
-    }
-
-    return tokens;
+    return shouldIndent
+      ? indent(concat([hardline, join(hardline, tokens)]))
+      : join(hardline, tokens);
   }
 
   getComments(
     kind: 'leadingComments' | 'trailingComments' | 'innerComments',
     node: AnyNode,
+    all: boolean = false,
   ): undefined | Array<AnyComment> {
     if (!node) {
       return undefined;
@@ -329,75 +190,12 @@ export default class Builder {
       return undefined;
     }
 
-    return this.comments.getCommentsFromIds(ids).filter(
-      (comment) => !this.hasTokenizedComment(comment),
-    );
-  }
+    const comments = this.comments.getCommentsFromIds(ids);
 
-  hasTokenizedComment(comment: undefined | AnyComment): boolean {
-    if (!comment) {
-      return true;
+    if (all) {
+      return comments;
+    } else {
+      return comments.filter((comment) => !this.printedComments.has(comment.id));
     }
-
-    return this.printedComments.has(comment.id);
-  }
-
-  tokenizeComment(node: AnyComment): Tokens {
-    if (this.hasTokenizedComment(node)) {
-      return [];
-    }
-
-    this.printedComments.add(node.id);
-
-    const isBlockComment = node.type === 'CommentBlock';
-    const val = isBlockComment ? `/*${node.value}*/` : `//${node.value}\n`;
-    return [comment(val)];
-  }
-
-  maybeCommentNewlines(
-    node: AnyNode,
-    comment: undefined | AnyComment,
-    trailing: boolean,
-  ): Tokens {
-    if (comment === undefined) {
-      return [];
-    }
-
-    const lines = n.getLinesBetween(node, comment);
-
-    // Will always have at least one newline
-    if (node.type === 'CommentLine' || comment.type === 'CommentLine' &&
-        !trailing) {
-      lines.shift();
-    }
-
-    const tokens: Tokens = [];
-
-    if (lines.length >= 1) {
-      tokens.push(derivedNewline(lines[0]));
-    }
-
-    if (lines.length >= 2) {
-      tokens.push(derivedNewline(lines[1]));
-    }
-
-    return tokens;
-  }
-
-  maybeInsertExtraStatementNewlines(
-    node: AnyNode,
-    nextNode: undefined | AnyNode,
-  ): Tokens {
-    // Insert an inferred newline or extra if it satisfies our conditions
-    const linesBetween = n.getLinesBetween(node, nextNode);
-    if (linesBetween.length > 1) {
-      return [derivedNewline(linesBetween[1])];
-    }
-
-    if (n.hasExtraLineBetween(node)) {
-      //this.forceNewline();
-    }
-
-    return [];
   }
 }

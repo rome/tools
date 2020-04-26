@@ -61,8 +61,8 @@ export default function doesNodeMatchPattern(
 
       if (next === '*' || next === '**') {
         throw new Error(
-            `The next expected part was ${next} but this isn't allowed since we're processing a double star`,
-          );
+          `The next expected part was ${next} but this isn't allowed since we're processing a double star`,
+        );
       }
 
       let found = false;

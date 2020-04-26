@@ -5,30 +5,30 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ConstImportModuleKind, AnyNode} from '@romejs/js-ast';
+import {AnyNode, ConstImportModuleKind} from '@romejs/js-ast';
 import {SourceLocation} from '@romejs/parser-core';
 import {TransformRequest} from '../../types';
 import {
-  ImportRecord,
-  ExportRecord,
-  EscapedCJSRefRecord,
   CJSExportRecord,
   CJSVarRefRecord,
   ESExportRecord,
-  TopLevelAwaitRecord,
+  EscapedCJSRefRecord,
+  ExportRecord,
+  ImportRecord,
   ImportUsageRecord,
+  TopLevelAwaitRecord,
 } from './records';
-import {CompilerContext, Cache} from '@romejs/js-compiler';
+import {Cache, CompilerContext} from '@romejs/js-compiler';
 import transform from '../../methods/transform';
 import visitors from './visitors/index';
 import {
-  AnalyzeDependencyResult,
   AnalyzeDependency,
-  AnyAnalyzeExport,
-  AnalyzeDependencyName,
   AnalyzeDependencyImportFirstUsage,
-  AnalyzeModuleType,
+  AnalyzeDependencyName,
+  AnalyzeDependencyResult,
   AnalyzeDependencyTopLevelLocalBindings,
+  AnalyzeModuleType,
+  AnyAnalyzeExport,
 } from '@romejs/core';
 import {descriptions} from '@romejs/diagnostics';
 
@@ -46,6 +46,8 @@ export default async function analyzeDependencies(
   }
 
   const context = new CompilerContext({
+    ref: req.ref,
+    sourceText: req.sourceText,
     ast,
     project,
     origin: {
@@ -117,9 +119,11 @@ export default async function analyzeDependencies(
       let {data} = record;
 
       // If this source was only ever used as a type then convert us to a value
-      if (data.type === 'es' && data.kind === 'value' && sourcesUsedAsType.has(
-          data.source,
-        )) {
+      if (
+        data.type === 'es' &&
+        data.kind === 'value' &&
+        sourcesUsedAsType.has(data.source)
+      ) {
         const names: Array<AnalyzeDependencyName> = [];
 
         for (const name of data.names) {
@@ -180,9 +184,11 @@ export default async function analyzeDependencies(
       if (firstTopAwaitLocation === undefined) {
         firstTopAwaitLocation = record.loc;
       }
-    } else if (record instanceof ImportUsageRecord && record.isTop &&
-          record.data.kind ===
-          'value') {
+    } else if (
+      record instanceof ImportUsageRecord &&
+      record.isTop &&
+      record.data.kind === 'value'
+    ) {
       // Track the first reference to a value import that's not in a function
       // This is used to detect module cycles
       const {data} = record;
@@ -226,7 +232,8 @@ export default async function analyzeDependencies(
           message: `CommonJS variable <emphasis>${
             record.node.name
           }</emphasis> is not available in an ES module`,
-        });*/}
+        });*/
+      }
     } else if (record instanceof CJSExportRecord) {
       if (moduleType === 'es') {
         context.addNodeDiagnostic(

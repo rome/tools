@@ -6,10 +6,10 @@
  */
 
 import {
-  AnyNode,
-  Program,
-  ConstSourceType,
   AnyComment,
+  AnyNode,
+  ConstSourceType,
+  Program,
   program,
 } from '@romejs/js-ast';
 import {
@@ -17,28 +17,29 @@ import {
   extractSourceLocationRangeFromNodes,
 } from '@romejs/parser-core';
 import {
+  CompilerOptions,
   PathOptions,
   TransformExitResult,
   TransformVisitors,
   Transforms,
-  CompilerOptions,
 } from '@romejs/js-compiler';
 import {
   Diagnostic,
-  DiagnosticOrigin,
-  DiagnosticDescription,
-  DiagnosticSuppressions,
   DiagnosticCategory,
-  DiagnosticsProcessor,
+  DiagnosticDescription,
   DiagnosticLocation,
+  DiagnosticOrigin,
+  DiagnosticSuppressions,
+  DiagnosticsProcessor,
 } from '@romejs/diagnostics';
 import Record from './Record';
 import {RootScope} from '../scope/Scope';
 import reduce from '../methods/reduce';
 import {UnknownFilePath, createUnknownFilePath} from '@romejs/path';
 import {
-  TransformProjectDefinition,
+  LintCompilerOptions,
   LintCompilerOptionsDecision,
+  TransformProjectDefinition,
   TransformVisitor,
 } from '../types';
 import {
@@ -46,18 +47,27 @@ import {
   matchesSuppression,
 } from '../suppressions';
 import CommentsConsumer from '@romejs/js-parser/CommentsConsumer';
-import {get1} from '@romejs/ob1';
+import {ob1Get0, ob1Get1} from '@romejs/ob1';
 import {hookVisitors} from '../transforms';
+import stringDiff from '@romejs/string-diff';
+import {formatJS} from '@romejs/js-formatter';
+import {REDUCE_REMOVE} from '../constants';
+import {FileReference} from '@romejs/core';
+import {DEFAULT_PROJECT_CONFIG} from '@romejs/project';
+import {buildLintDecisionAdviceAction} from '../lint/decisions';
 
 export type ContextArg = {
   ast: Program;
-  project: TransformProjectDefinition;
+  ref?: FileReference;
+  sourceText?: string;
+  project?: TransformProjectDefinition;
   frozen?: boolean;
   options?: CompilerOptions;
   origin?: DiagnosticOrigin;
 };
 
 type AddDiagnosticResult = {
+  loc: undefined | DiagnosticLocation;
   diagnostic: undefined | Diagnostic;
   suppressed: boolean;
 };
@@ -67,15 +77,48 @@ type ContextDiagnostic = Omit<Diagnostic, 'location' | 'description'> & {
   marker?: string;
 };
 
+type DiagnosticTarget =
+  | undefined
+  | {
+      loc?: SourceLocation;
+    }
+  | Array<{
+      loc?: SourceLocation;
+    }>;
+
+function getFormattedCodeFromExitResult(result: TransformExitResult): string {
+  if (Array.isArray(result)) {
+    // TODO?
+    return '';
+  } else if (result === REDUCE_REMOVE) {
+    return '';
+  } else {
+    return formatJS(result).code;
+  }
+}
+
 export default class CompilerContext {
   constructor(arg: ContextArg) {
-    const {ast, project, frozen = false, options = {}, origin} = arg;
+    const {
+      ast,
+      origin,
+      ref,
+      frozen = false,
+      options = {},
+      sourceText = '',
+      project = {
+        folder: undefined,
+        config: DEFAULT_PROJECT_CONFIG,
+      },
+    } = arg;
 
     this.records = [];
 
     this.path = createUnknownFilePath(ast.filename);
     this.filename = ast.filename;
-
+    this.sourceText = sourceText;
+    this.displayFilename =
+      ref === undefined ? ast.filename : ref.relative.join();
     this.frozen = frozen;
     this.mtime = ast.mtime;
     this.project = project;
@@ -91,8 +134,13 @@ export default class CompilerContext {
     this.suppressions = suppressions;
     this.diagnostics = new DiagnosticsProcessor();
     this.diagnostics.addDiagnostics(diagnostics);
-    this.fixableDiagnostics = new Set();
   }
+
+  displayFilename: string;
+  filename: string;
+  path: UnknownFilePath;
+  project: TransformProjectDefinition;
+  sourceText: string;
 
   comments: CommentsConsumer;
   sourceType: ConstSourceType;
@@ -100,24 +148,22 @@ export default class CompilerContext {
   records: Array<Record>;
   diagnostics: DiagnosticsProcessor;
   suppressions: DiagnosticSuppressions;
-  fixableDiagnostics: Set<Diagnostic>;
   frozen: boolean;
   rootScope: undefined | RootScope;
-  filename: undefined | string;
-  path: undefined | UnknownFilePath;
   mtime: undefined | number;
-  project: TransformProjectDefinition;
   origin: undefined | DiagnosticOrigin;
   options: CompilerOptions;
 
   async normalizeTransforms(transforms: Transforms): Promise<TransformVisitors> {
-    return Promise.all(transforms.map(async (visitor) => {
-      if (typeof visitor === 'function') {
-        return await visitor(this);
-      } else {
-        return visitor;
-      }
-    }));
+    return Promise.all(
+      transforms.map(async (visitor) => {
+        if (typeof visitor === 'function') {
+          return await visitor(this);
+        } else {
+          return visitor;
+        }
+      }),
+    );
   }
 
   getComments(ids: undefined | Array<string>): Array<AnyComment> {
@@ -133,10 +179,10 @@ export default class CompilerContext {
     }
 
     for (const suppression of this.suppressions) {
-      if (suppression.category === category && matchesSuppression(
-          loc,
-          suppression,
-        )) {
+      if (
+        suppression.category === category &&
+        matchesSuppression(loc, suppression)
+      ) {
         return true;
       }
     }
@@ -165,10 +211,14 @@ export default class CompilerContext {
     visitors: TransformVisitor | TransformVisitors,
     pathOpts?: PathOptions,
   ): Program {
-    return program.assert(reduce(ast, [
-      ...hookVisitors,
-      ...(Array.isArray(visitors) ? visitors : [visitors]),
-    ], this, pathOpts));
+    return program.assert(
+      reduce(
+        ast,
+        [...hookVisitors, ...(Array.isArray(visitors) ? visitors : [visitors])],
+        this,
+        pathOpts,
+      ),
+    );
   }
 
   reduce(
@@ -188,88 +238,192 @@ export default class CompilerContext {
     this.records.push(record);
   }
 
-  findLintDecisions(
-    loc: undefined | DiagnosticLocation,
-  ): undefined | Array<LintCompilerOptionsDecision> {
-    if (loc === undefined) {
-      return undefined;
-    }
+  hasLintDecisions(): boolean {
+    return this.getLintDecisions() !== undefined;
+  }
 
+  getLintDecisions(): LintCompilerOptions['decisionsByPosition'] {
     const {lint} = this.options;
     if (lint === undefined) {
       return undefined;
     }
 
+    return lint.decisionsByPosition;
+  }
+
+  findLintDecisions(
+    loc: undefined | DiagnosticLocation,
+  ): Array<LintCompilerOptionsDecision> {
+    if (loc === undefined) {
+      return [];
+    }
+
     const {start} = loc;
     if (start === undefined) {
-      return undefined;
+      return [];
     }
 
-    const {decisionsByLine: decisions} = lint;
-    if (decisions === undefined) {
-      return undefined;
+    const decisionsByPosition = this.getLintDecisions();
+    if (decisionsByPosition === undefined) {
+      return [];
     }
 
-    return decisions[get1(start.line)];
+    // Keep in update with packages/@romejs/core/client/commands/lint.ts
+    const pos = `${ob1Get1(start.line)}:${ob1Get0(start.column)}`;
+    return decisionsByPosition[pos] || [];
   }
 
   addFixableDiagnostic<Old extends AnyNode, New extends TransformExitResult>(
     nodes: {
       target?: AnyNode | Array<AnyNode>;
       old: Old;
-      fixed: New | (() => New);
+      fixed?: New;
+      suggestions?: Array<{
+        description: string;
+        title: string;
+        fixed: New;
+      }>;
     },
-
     description: DiagnosticDescription,
     diag: ContextDiagnostic = {},
   ): TransformExitResult {
-    const {old, fixed} = nodes;
+    const {old, fixed: defaultFixed, suggestions} = nodes;
     const target = nodes.target === undefined ? nodes.old : nodes.target;
 
-    diag = {
-      ...diag,
-      fixable: true,
-    };
+    const {category} = description;
+    const advice = [...(description.advice || [])];
+    const loc = this.getLoc(target);
+    const oldCode =
+      loc === undefined
+        ? ''
+        : this.sourceText.slice(
+            ob1Get0(loc.start.index),
+            ob1Get0(loc.end.index),
+          );
 
-    let diagnostic;
-    let suppressed = false;
-    if (Array.isArray(target)) {
-      ({suppressed, diagnostic} = this.addNodesRangeDiagnostic(
-        target,
-        description,
-        diag,
-      ));
-    } else {
-      ({suppressed, diagnostic} = this.addNodeDiagnostic(
-        target,
-        description,
-        diag,
-      ));
+    let fixed: undefined | New = defaultFixed;
+
+    // Add recommended fix
+    if (defaultFixed !== undefined) {
+      advice.push({
+        type: 'log',
+        category: 'info',
+        text: 'Recommended fix',
+      });
+
+      advice.push({
+        type: 'diff',
+        diff: stringDiff(oldCode, getFormattedCodeFromExitResult(defaultFixed)),
+      });
+      if (loc === undefined) {
+        advice.push({
+          type: 'log',
+          category: 'error',
+          text: 'Unable to find target location',
+        });
+      } else {
+        advice.push(
+          buildLintDecisionAdviceAction({
+            noun: 'Apply fix',
+            instruction: 'To apply this fix run',
+            filename: this.displayFilename,
+            action: 'fix',
+            category,
+            start: loc.start,
+          }),
+        );
+      }
     }
 
-    if (suppressed) {
+    if (suggestions !== undefined) {
+      // If we have lint decisions then find the fix that corresponds with this suggestion
+      if (this.hasLintDecisions()) {
+        const decisions = this.findLintDecisions(loc);
+        for (const decision of decisions) {
+          if (
+            decision.category === category &&
+            decision.action === 'fix' &&
+            decision.id !== undefined
+          ) {
+            const suggestion = suggestions[decision.id];
+            if (suggestion !== undefined) {
+              fixed = suggestion.fixed;
+            }
+          }
+        }
+      }
+
+      // Add advice suggestions
+      let index = 0;
+      for (const suggestion of suggestions) {
+        const num = index + 1;
+
+        const titlePrefix =
+          suggestions.length === 1 ? 'Suggested fix' : `Suggested fix #${num}`;
+        advice.push({
+          type: 'log',
+          category: 'none',
+          text: `<emphasis>${titlePrefix}:</emphasis> ${suggestion.title}`,
+        });
+
+        advice.push({
+          type: 'diff',
+          diff: stringDiff(
+            oldCode,
+            getFormattedCodeFromExitResult(suggestion.fixed),
+          ),
+        });
+
+        advice.push({
+          type: 'log',
+          category: 'info',
+          text: suggestion.description,
+        });
+
+        if (loc === undefined) {
+          advice.push({
+            type: 'log',
+            category: 'error',
+            text: 'Unable to find target location',
+          });
+        } else {
+          advice.push(
+            buildLintDecisionAdviceAction({
+              noun: suggestions.length === 1
+                ? 'Apply suggested fix'
+                : `Apply suggested fix "${suggestion.title}"`,
+              shortcut: String(num),
+              instruction: 'To apply this fix run',
+              filename: this.displayFilename,
+              action: 'fix',
+              category,
+              start: loc.start,
+              id: index,
+            }),
+          );
+        }
+
+        index++;
+      }
+    }
+
+    const {suppressed} = this.addLocDiagnostic(
+      loc,
+      {
+        ...description,
+        advice,
+      },
+      {
+        ...diag,
+        fixable: true,
+      },
+    );
+
+    if (suppressed || fixed === undefined) {
       return old;
     }
 
-    if (diagnostic !== undefined) {
-      this.fixableDiagnostics.add(diagnostic);
-    }
-
-    let result: TransformExitResult;
-    if (typeof fixed === 'function') {
-      result = fixed();
-    } else {
-      result = fixed;
-    }
-
-    if (typeof result !== 'symbol' && !Array.isArray(result)) {
-      result = {
-        ...result,
-        loc: old.loc,
-      };
-    }
-
-    return result;
+    return fixed;
   }
 
   addLocDiagnostic(
@@ -287,15 +441,32 @@ export default class CompilerContext {
 
     if (loc !== undefined && loc.filename !== this.filename) {
       throw new Error(
-          `Trying to add a location from ${loc.filename} on a Context from ${this.path}`,
-        );
+        `Trying to add a location from ${loc.filename} on a Context from ${this.path}`,
+      );
+    }
+
+    const {category, advice = []} = description;
+    if (loc !== undefined && loc.start !== undefined) {
+      advice.push(
+        buildLintDecisionAdviceAction({
+          noun: 'Add suppression comment',
+          shortcut: 's',
+          instruction: 'To suppress this error run',
+          filename: this.displayFilename,
+          action: 'suppress',
+          category,
+          start: loc.start,
+        }),
+      );
     }
 
     const {marker, ...diag} = contextDiag;
-
     const diagnostic = this.diagnostics.addDiagnostic({
       ...diag,
-      description,
+      description: {
+        ...description,
+        advice,
+      },
       location: {
         marker,
         mtime: this.mtime,
@@ -310,50 +481,43 @@ export default class CompilerContext {
 
     let suppressed = this.hasLocSuppression(loc, description.category);
 
-    // If we've been passed lint decisions then consider it suppressed unless we have been specifically
-    // told to fix it
+    // If we've been passed lint decisions then consider it suppressed unless we have been specifically told to fix it
     const diagCategory = description.category;
-    if (this.options.lint !== undefined && this.options.lint.decisionsByLine !==
-        undefined) {
+    if (this.hasLintDecisions()) {
       suppressed = true;
 
       const decisions = this.findLintDecisions(loc);
-      if (decisions !== undefined) {
-        for (const {category, action} of decisions) {
-          if (category === diagCategory && action === 'fix') {
-            suppressed = false;
-          }
+      for (const {category, action} of decisions) {
+        if (category === diagCategory && action === 'fix') {
+          suppressed = false;
         }
       }
     }
 
     return {
+      loc,
       diagnostic,
       suppressed,
     };
   }
 
-  addNodeDiagnostic(
-    node: undefined | {loc?: SourceLocation},
-    description: DiagnosticDescription,
-    diag: ContextDiagnostic = {},
-  ): AddDiagnosticResult {
-    return this.addLocDiagnostic(
-      node === undefined ? undefined : node.loc,
-      description,
-      diag,
-    );
+  getLoc(node: DiagnosticTarget): undefined | SourceLocation {
+    if (node === undefined) {
+      return undefined;
+    }
+
+    if (Array.isArray(node)) {
+      return extractSourceLocationRangeFromNodes(node);
+    } else {
+      return node.loc;
+    }
   }
 
-  addNodesRangeDiagnostic(
-    nodes: Array<{loc?: SourceLocation}>,
+  addNodeDiagnostic(
+    node: DiagnosticTarget,
     description: DiagnosticDescription,
     diag: ContextDiagnostic = {},
   ): AddDiagnosticResult {
-    return this.addLocDiagnostic(
-      extractSourceLocationRangeFromNodes(nodes),
-      description,
-      diag,
-    );
+    return this.addLocDiagnostic(this.getLoc(node), description, diag);
   }
 }

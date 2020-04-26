@@ -6,13 +6,13 @@
  */
 
 import {
-  JSNodeBase,
-  AnyTypeParameter,
-  AnyPrimaryType,
-  AnyParamBindingPattern,
   AnyFlowPredicate,
+  AnyParamBindingPattern,
+  AnyPrimaryType,
   AnyTargetBindingPattern,
+  AnyTypeParameter,
   BindingIdentifier,
+  JSNodeBase,
 } from '../index';
 import {createQuickBuilder} from '../utils';
 

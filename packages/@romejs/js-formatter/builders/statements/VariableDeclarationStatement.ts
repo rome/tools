@@ -6,28 +6,22 @@
  */
 
 import Builder from '../../Builder';
-import {variableDeclarationStatement, AnyNode} from '@romejs/js-ast';
-import {Tokens, operator, word, concat} from '@romejs/js-formatter/tokens';
+import {VariableDeclarationStatement} from '@romejs/js-ast';
+import {Token, concat, space} from '../../tokens';
 
 export default function VariableDeclarationStatement(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = variableDeclarationStatement.assert(node);
-
+  node: VariableDeclarationStatement,
+): Token {
   if (node.declare === true && !builder.options.typeAnnotations) {
-    return [];
+    return '';
   }
 
-  const tokens: Tokens = [];
+  const tokens: Array<Token> = [];
 
   if (node.declare) {
-    tokens.push(word('declare'));
+    tokens.push('declare', space);
   }
 
-  return [
-    concat(tokens),
-    concat(builder.tokenize(node.declaration, node)),
-    operator(';'),
-  ];
+  return concat([concat(tokens), builder.tokenize(node.declaration, node), ';']);
 }

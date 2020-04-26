@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, Identifier} from '../index';
+import {Identifier, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type ExportNamespaceSpecifier = JSNodeBase & {

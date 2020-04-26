@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, StringLiteral, Identifier, AnyExpression} from '../index';
+import {AnyExpression, Identifier, JSNodeBase, StringLiteral} from '../index';
 import {createBuilder} from '../utils';
 
 export type TSEnumMember = JSNodeBase & {
@@ -14,10 +14,13 @@ export type TSEnumMember = JSNodeBase & {
   initializer?: AnyExpression;
 };
 
-export const tsEnumMember = createBuilder<TSEnumMember>('TSEnumMember', {
-  bindingKeys: {},
-  visitorKeys: {
-    id: true,
-    initializer: true,
+export const tsEnumMember = createBuilder<TSEnumMember>(
+  'TSEnumMember',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      id: true,
+      initializer: true,
+    },
   },
-});
+);

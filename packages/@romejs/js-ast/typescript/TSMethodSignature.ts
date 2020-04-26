@@ -6,10 +6,10 @@
  */
 
 import {
-  JSNodeBase,
-  TSSignatureDeclarationMeta,
   AnyObjectPropertyKey,
   AnyTSPrimary,
+  JSNodeBase,
+  TSSignatureDeclarationMeta,
 } from '../index';
 import {createBuilder} from '../utils';
 

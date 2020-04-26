@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, Identifier} from '../index';
+import {Identifier, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type TSNamespaceExportDeclaration = JSNodeBase & {
@@ -13,6 +13,7 @@ export type TSNamespaceExportDeclaration = JSNodeBase & {
   id: Identifier;
 };
 
-export const tsNamespaceExportDeclaration = createBuilder<
-  TSNamespaceExportDeclaration
->('TSNamespaceExportDeclaration', {bindingKeys: {}, visitorKeys: {id: true}});
+export const tsNamespaceExportDeclaration = createBuilder<TSNamespaceExportDeclaration>(
+  'TSNamespaceExportDeclaration',
+  {bindingKeys: {}, visitorKeys: {id: true}},
+);

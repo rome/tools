@@ -9,60 +9,60 @@ import {JSParser} from '../parser';
 import {Position} from '@romejs/parser-core';
 import {types as tt} from '../tokenizer/types';
 import {
-  AnyStatement,
-  ExportAllDeclaration,
-  ExportLocalDeclaration,
-  ExportDefaultDeclaration,
-  TSNamespaceExportDeclaration,
-  TSExportAssignment,
-  TSImportEqualsDeclaration,
-  ConstExportModuleKind,
-  ExportLocalSpecifier,
   AnyExportExternalSpecifier,
-  ExportExternalDeclaration,
-  StringLiteral,
-  ImportDeclaration,
   AnyNode,
-  ConstImportModuleKind,
+  AnyStatement,
   BindingIdentifier,
-  ImportSpecifier,
+  ConstExportModuleKind,
+  ConstImportModuleKind,
+  ExportAllDeclaration,
+  ExportDefaultDeclaration,
+  ExportDefaultSpecifier,
+  ExportExternalDeclaration,
+  ExportExternalSpecifier,
+  ExportLocalDeclaration,
+  ExportLocalSpecifier,
+  ExportNamespaceSpecifier,
+  ImportDeclaration,
   ImportDefaultSpecifier,
   ImportNamespaceSpecifier,
+  ImportSpecifier,
   ImportSpecifierLocal,
-  ExportExternalSpecifier,
-  ExportNamespaceSpecifier,
-  ExportDefaultSpecifier,
+  StringLiteral,
+  TSExportAssignment,
+  TSImportEqualsDeclaration,
+  TSNamespaceExportDeclaration,
 } from '@romejs/js-ast';
 import {getBindingIdentifiers} from '@romejs/js-ast-utils';
 import {
-  parseTSExport,
-  parseIdentifier,
-  isAsyncFunctionDeclarationStart,
-  isTSAbstractClass,
-  parseTSInterfaceDeclaration,
-  isLetStart,
-  parseMaybeAssign,
-  parseTypeAlias,
-  parseFlowOpaqueType,
-  parseInterface,
-  parseStatement,
-  isTSDeclarationStart,
-  parseExpressionAtom,
+  checkLVal,
+  checkReservedType,
   checkReservedWord,
   hasTypeImportKind,
-  parseTSImportEqualsDeclaration,
-  parseFlowRestrictedIdentifier,
-  checkLVal,
+  isAsyncFunctionDeclarationStart,
+  isLetStart,
   isMaybeDefaultImport,
-  checkReservedType,
-  parseStringLiteral,
+  isTSAbstractClass,
+  isTSDeclarationStart,
   parseBindingIdentifier,
-  toBindingIdentifier,
-  parseReferenceIdentifier,
-  toIdentifier,
-  parseTSExportDefaultAbstractClass,
-  parseExportDefaultFunctionDeclaration,
   parseExportDefaultClassDeclaration,
+  parseExportDefaultFunctionDeclaration,
+  parseExpressionAtom,
+  parseFlowOpaqueType,
+  parseFlowRestrictedIdentifier,
+  parseIdentifier,
+  parseInterface,
+  parseMaybeAssign,
+  parseReferenceIdentifier,
+  parseStatement,
+  parseStringLiteral,
+  parseTSExport,
+  parseTSExportDefaultAbstractClass,
+  parseTSImportEqualsDeclaration,
+  parseTSInterfaceDeclaration,
+  parseTypeAlias,
+  toBindingIdentifier,
+  toIdentifier,
 } from './index';
 import {descriptions} from '@romejs/diagnostics';
 
@@ -96,11 +96,14 @@ export function parseExport(
     const defStart = parser.getPosition();
     const defExported = parseIdentifier(parser, true);
 
-    let namedSpecifiers: Array<ExportExternalSpecifier> = [];
-    let defaultSpecifier: ExportDefaultSpecifier = parser.finishNode(defStart, {
-      type: 'ExportDefaultSpecifier',
-      exported: defExported,
-    });
+    let namedSpecifiers: Array<ExportLocalSpecifier> = [];
+    let defaultSpecifier: ExportDefaultSpecifier = parser.finishNode(
+      defStart,
+      {
+        type: 'ExportDefaultSpecifier',
+        exported: defExported,
+      },
+    );
     let namespaceSpecifier: undefined | ExportNamespaceSpecifier;
 
     if (parser.match(tt.comma) && parser.lookaheadState().tokenType === tt.star) {
@@ -109,15 +112,15 @@ export function parseExport(
       parser.expect(tt.star);
       parser.expectContextual('as');
       const exported = parseIdentifier(parser);
-      namespaceSpecifier = parser.finishNode(specifierStart, {
-        type: 'ExportNamespaceSpecifier',
-        exported,
-      });
-    } else {
-      namedSpecifiers = convertLocalToExternalSpecifiers(
-        parser,
-        parseExportLocalSpecifiersMaybe(parser),
+      namespaceSpecifier = parser.finishNode(
+        specifierStart,
+        {
+          type: 'ExportNamespaceSpecifier',
+          exported,
+        },
       );
+    } else {
+      namedSpecifiers = parseExportLocalSpecifiersMaybe(parser);
     }
 
     const source = parseExportFromExpect(parser);
@@ -132,12 +135,22 @@ export function parseExport(
   } else if (parser.eat(tt._default)) {
     // export default ...
     const declaration = parseExportDefaultExpression(parser);
-    checkExport(parser, localSpecifiers, declaration, true, true);
+    checkExport(
+      parser,
+      {
+        specifiers: localSpecifiers,
+        declaration,
+        isDefault: true,
+      },
+    );
 
-    const node: ExportDefaultDeclaration = parser.finishNode(start, {
-      type: 'ExportDefaultDeclaration',
-      declaration,
-    });
+    const node: ExportDefaultDeclaration = parser.finishNode(
+      start,
+      {
+        type: 'ExportDefaultDeclaration',
+        declaration,
+      },
+    );
     return node;
   } else if (shouldParseExportDeclaration(parser)) {
     let source;
@@ -160,14 +173,15 @@ export function parseExport(
         start,
         undefined,
         undefined,
-        convertLocalToExternalSpecifiers(parser, localSpecifiers),
+        localSpecifiers === undefined ? [] : localSpecifiers,
         source,
         exportKind,
       );
     }
-  } else if (parser.isContextual('async') && !isAsyncFunctionDeclarationStart(
-      parser,
-    )) {
+  } else if (
+    parser.isContextual('async') &&
+    !isAsyncFunctionDeclarationStart(parser)
+  ) {
     const next = parser.lookaheadState();
 
     parser.addDiagnostic({
@@ -188,28 +202,34 @@ export function parseExport(
         start,
         undefined,
         undefined,
-        convertLocalToExternalSpecifiers(parser, localSpecifiers),
+        localSpecifiers,
         source,
       );
     }
   }
 
-  checkExport(parser, localSpecifiers, declaration, true, false);
+  checkExport(
+    parser,
+    {
+      specifiers: localSpecifiers,
+      declaration,
+      isDefault: false,
+    },
+  );
 
   if (declaration !== undefined) {
-    if (declaration.type !== 'VariableDeclarationStatement' &&
-                    declaration.type !==
-                    'ClassDeclaration' && declaration.type !==
-                  'FunctionDeclaration' &&
-                  declaration.type !==
-                  'TSModuleDeclaration' &&
-              declaration.type !== 'TSEnumDeclaration' &&
-              declaration.type !==
-              'FlowInterfaceDeclaration' &&
-          declaration.type !== 'TypeAliasTypeAnnotation' && declaration.type !==
-          'TSInterfaceDeclaration' && declaration.type !== 'TSDeclareFunction' &&
-          declaration.type !==
-          'FlowOpaqueType') {
+    if (
+      declaration.type !== 'VariableDeclarationStatement' &&
+      declaration.type !== 'ClassDeclaration' &&
+      declaration.type !== 'FunctionDeclaration' &&
+      declaration.type !== 'TSModuleDeclaration' &&
+      declaration.type !== 'TSEnumDeclaration' &&
+      declaration.type !== 'FlowInterfaceDeclaration' &&
+      declaration.type !== 'TypeAliasTypeAnnotation' &&
+      declaration.type !== 'TSInterfaceDeclaration' &&
+      declaration.type !== 'TSDeclareFunction' &&
+      declaration.type !== 'FlowOpaqueType'
+    ) {
       parser.addDiagnostic({
         loc: declaration.loc,
         description: descriptions.JS_PARSER.INVALID_EXPORT_DECLARATION,
@@ -218,12 +238,15 @@ export function parseExport(
     }
   }
 
-  const node: ExportLocalDeclaration = parser.finishNode(start, {
-    type: 'ExportLocalDeclaration',
-    exportKind,
-    specifiers: localSpecifiers,
-    declaration,
-  });
+  const node: ExportLocalDeclaration = parser.finishNode(
+    start,
+    {
+      type: 'ExportLocalDeclaration',
+      exportKind,
+      specifiers: localSpecifiers,
+      declaration,
+    },
+  );
   return node;
 }
 
@@ -232,26 +255,39 @@ function createExportExternalDeclaration(
   start: Position,
   defaultSpecifier: undefined | ExportDefaultSpecifier,
   namespaceSpecifier: undefined | ExportNamespaceSpecifier,
-  namedSpecifiers: Array<ExportExternalSpecifier>,
+  namedSpecifiers: Array<ExportLocalSpecifier>,
   source: StringLiteral,
   exportKind?: ConstExportModuleKind,
 ): ExportExternalDeclaration {
   checkExport(
     parser,
-    [defaultSpecifier, namespaceSpecifier, ...namedSpecifiers],
-    undefined,
-    true,
-    false,
+    {
+      specifiers: [defaultSpecifier, namespaceSpecifier, ...namedSpecifiers],
+      declaration: undefined,
+      isDefault: false,
+      localIsExternal: true,
+    },
   );
 
-  return parser.finishNode(start, {
-    type: 'ExportExternalDeclaration',
-    exportKind,
-    source,
-    namedSpecifiers,
-    defaultSpecifier,
-    namespaceSpecifier,
-  });
+  const node = parser.finishNode(
+    start,
+    {
+      type: 'ExportExternalDeclaration',
+      exportKind,
+      source,
+      namedSpecifiers: [],
+      defaultSpecifier,
+      namespaceSpecifier,
+    },
+  );
+
+  // We convert the specifiers after we've finished the ExportExternalDeclaration node
+  // as the comment attachment logic may mess with the specifiers and so we need to
+  // clone them after
+  return {
+    ...node,
+    namedSpecifiers: convertLocalToExternalSpecifiers(parser, namedSpecifiers),
+  };
 }
 
 function convertLocalToExternalSpecifiers(
@@ -310,7 +346,9 @@ function parseExportDefaultExpression(
   return res;
 }
 
-function parseExportDeclaration(parser: JSParser): {
+function parseExportDeclaration(
+  parser: JSParser,
+): {
   exportKind: ConstExportModuleKind;
   declaration?: AnyStatement;
   localSpecifiers?: Array<ExportLocalSpecifier>;
@@ -365,9 +403,10 @@ function parseExportDeclaration(parser: JSParser): {
 
 function isExportDefaultSpecifier(parser: JSParser): boolean {
   const lookahead = parser.lookaheadState();
-  if (lookahead.tokenType === tt.comma || lookahead.tokenType === tt.name &&
-        lookahead.tokenValue ===
-        'from') {
+  if (
+    lookahead.tokenType === tt.comma ||
+    (lookahead.tokenType === tt.name && lookahead.tokenValue === 'from')
+  ) {
     return true;
   }
 
@@ -375,15 +414,19 @@ function isExportDefaultSpecifier(parser: JSParser): boolean {
     return false;
   }
 
-  if (parser.match(tt.name) && (parser.state.tokenValue === 'type' ||
-        parser.state.tokenValue ===
-        'interface' || parser.state.tokenValue === 'opaque')) {
+  if (
+    parser.match(tt.name) &&
+    (parser.state.tokenValue === 'type' ||
+    parser.state.tokenValue === 'interface' ||
+    parser.state.tokenValue === 'opaque')
+  ) {
     return false;
   }
 
   if (parser.match(tt.name)) {
-    return parser.state.tokenValue !== 'async' && parser.state.tokenValue !==
-      'let';
+    return (
+      parser.state.tokenValue !== 'async' && parser.state.tokenValue !== 'let'
+    );
   }
 
   if (!parser.match(tt._default)) {
@@ -449,9 +492,11 @@ function parseExportFrom(
 }
 
 function shouldParseExportStar(parser: JSParser): boolean {
-  return parser.match(tt.star) || parser.isContextual('type') &&
-      parser.lookaheadState().tokenType ===
-      tt.star;
+  return (
+    parser.match(tt.star) ||
+    (parser.isContextual('type') &&
+    parser.lookaheadState().tokenType === tt.star)
+  );
 }
 
 function parseExportStar(
@@ -467,22 +512,28 @@ function parseExportStar(
 
   if (parser.isContextual('as')) {
     const {source, namedSpecifiers} = parseExportNamespace(parser, exportKind);
-    return parser.finishNode(start, {
-      type: 'ExportExternalDeclaration',
-      exportKind,
-      namedSpecifiers,
-      source,
-    });
+    return parser.finishNode(
+      start,
+      {
+        type: 'ExportExternalDeclaration',
+        exportKind,
+        namedSpecifiers,
+        source,
+      },
+    );
   } else {
     const source = parseExportFrom(parser, true);
     if (source === undefined) {
       throw new Error('Passed `true` above which expects there to be a string');
     }
-    return parser.finishNode(start, {
-      type: 'ExportAllDeclaration',
-      exportKind,
-      source,
-    });
+    return parser.finishNode(
+      start,
+      {
+        type: 'ExportAllDeclaration',
+        exportKind,
+        source,
+      },
+    );
   }
 }
 
@@ -504,10 +555,13 @@ function parseExportNamespace(
   parser.next();
   const exported = parseIdentifier(parser, true);
 
-  const namespaceSpecifier = parser.finishNode(specifierStart, {
-    type: 'ExportNamespaceSpecifier',
-    exported,
-  });
+  const namespaceSpecifier = parser.finishNode(
+    specifierStart,
+    {
+      type: 'ExportNamespaceSpecifier',
+      exported,
+    },
+  );
 
   const namedSpecifiers = convertLocalToExternalSpecifiers(
     parser,
@@ -519,31 +573,37 @@ function parseExportNamespace(
 }
 
 function shouldParseExportDeclaration(parser: JSParser): boolean {
-  return isTSDeclarationStart(parser) || parser.isContextual('type') ||
-        parser.isContextual('interface') || parser.isContextual('opaque') ||
-        parser.state.tokenType.keyword ===
-        'var' || parser.state.tokenType.keyword === 'const' ||
-      parser.state.tokenType.keyword ===
-      'function' || parser.state.tokenType.keyword === 'class' || isLetStart(
-    parser,
-  ) || isAsyncFunctionDeclarationStart(parser) || parser.match(tt.at);
+  return (
+    isTSDeclarationStart(parser) ||
+    parser.isContextual('type') ||
+    parser.isContextual('interface') ||
+    parser.isContextual('opaque') ||
+    parser.state.tokenType.keyword === 'var' ||
+    parser.state.tokenType.keyword === 'const' ||
+    parser.state.tokenType.keyword === 'function' ||
+    parser.state.tokenType.keyword === 'class' ||
+    isLetStart(parser) ||
+    isAsyncFunctionDeclarationStart(parser) ||
+    parser.match(tt.at)
+  );
 }
 
 function checkExport(
   parser: JSParser,
-  specifiers: undefined | Array<
-    | undefined
-    | ExportLocalSpecifier
-    | AnyExportExternalSpecifier>,
-
-  declaration: undefined | AnyNode,
-  checkNames: boolean = false,
-  isDefault: boolean = false,
+  {
+    specifiers,
+    declaration,
+    localIsExternal = false,
+    isDefault = false,
+  }: {
+    localIsExternal?: boolean;
+    specifiers?: Array<
+      undefined | ExportLocalSpecifier | AnyExportExternalSpecifier
+    >;
+    declaration?: AnyNode;
+    isDefault: boolean;
+  },
 ): void {
-  if (checkNames === false) {
-    return undefined;
-  }
-
   // Check for duplicate exports
   if (isDefault) {
     // Default exports
@@ -587,7 +647,7 @@ function checkExport(
 
       checkDuplicateExports(parser, specifier, specifier.exported.name);
 
-      if (specifier.type === 'ExportLocalSpecifier') {
+      if (specifier.type === 'ExportLocalSpecifier' && !localIsExternal) {
         const {local} = specifier;
         if (local !== undefined) {
           // check for keywords used as local names
@@ -657,13 +717,17 @@ function parseExportSpecifiers(parser: JSParser): Array<ExportLocalSpecifier> {
     const exported = parser.eatContextual('as')
       ? parseIdentifier(parser, true)
       : toIdentifier(parser, parser.cloneNode(local));
-    specifiers.push(parser.finishNode(start, {
-      type: 'ExportLocalSpecifier',
-      local,
-      exported
-      // TODO exportKind?
-      ,
-    }));
+    specifiers.push(
+      parser.finishNode(
+        start,
+        {
+          type: 'ExportLocalSpecifier',
+          local,
+          exported,
+          // TODO exportKind?
+        },
+      ),
+    );
   }
 
   return specifiers;
@@ -703,22 +767,28 @@ export function parseImport(
         description: descriptions.JS_PARSER.IMPORT_MISSING_SOURCE,
       });
 
-      source = parser.finishNode(start, {
-        type: 'StringLiteral',
-        value: '',
-      });
+      source = parser.finishNode(
+        start,
+        {
+          type: 'StringLiteral',
+          value: '',
+        },
+      );
     }
   }
 
   parser.semicolon();
-  return parser.finishNode(start, {
-    type: 'ImportDeclaration',
-    namedSpecifiers,
-    namespaceSpecifier,
-    defaultSpecifier,
-    source,
-    importKind,
-  });
+  return parser.finishNode(
+    start,
+    {
+      type: 'ImportDeclaration',
+      namedSpecifiers,
+      namespaceSpecifier,
+      defaultSpecifier,
+      source,
+      importKind,
+    },
+  );
 }
 
 // eslint-disable-next-line no-unused-vars
@@ -746,15 +816,21 @@ function parseImportSpecifierLocal(
 
   checkLVal(parser, local, true, undefined, contextDescription);
 
-  return parser.finishNode(start, {
-    type: 'ImportSpecifierLocal',
-    name: local,
-    importKind,
-  });
+  return parser.finishNode(
+    start,
+    {
+      type: 'ImportSpecifierLocal',
+      name: local,
+      importKind,
+    },
+  );
 }
 
 // Parses a comma-separated list of module imports.
-function parseImportSpecifiers(parser: JSParser, start: Position): {
+function parseImportSpecifiers(
+  parser: JSParser,
+  start: Position,
+): {
   namedSpecifiers: Array<ImportSpecifier>;
   namespaceSpecifier: undefined | ImportNamespaceSpecifier;
   defaultSpecifier: undefined | ImportDefaultSpecifier;
@@ -766,8 +842,10 @@ function parseImportSpecifiers(parser: JSParser, start: Position): {
 
   // TODO probably need to check for a comma and `as`
   const lh = parser.lookaheadState();
-  if (lh.tokenType !== tt.name || lh.tokenType === tt.name && lh.tokenValue !==
-      'from') {
+  if (
+    lh.tokenType !== tt.name ||
+    (lh.tokenType === tt.name && lh.tokenValue !== 'from')
+  ) {
     if (parser.match(tt._typeof)) {
       importKind = 'typeof';
     } else if (parser.isContextual('type')) {
@@ -783,9 +861,11 @@ function parseImportSpecifiers(parser: JSParser, start: Position): {
       });
     }
 
-    if (isMaybeDefaultImport(lh) || lh.tokenType === tt.braceL ||
-          lh.tokenType ===
-          tt.star) {
+    if (
+      isMaybeDefaultImport(lh) ||
+      lh.tokenType === tt.braceL ||
+      lh.tokenType === tt.star
+    ) {
       parser.next();
     }
   }
@@ -804,10 +884,13 @@ function parseImportSpecifiers(parser: JSParser, start: Position): {
       'default import specifier',
     );
 
-    defaultSpecifier = parser.finishNode(start, {
-      type: 'ImportDefaultSpecifier',
-      local: meta,
-    });
+    defaultSpecifier = parser.finishNode(
+      start,
+      {
+        type: 'ImportDefaultSpecifier',
+        local: meta,
+      },
+    );
 
     if (!parser.eat(tt.comma)) {
       return {
@@ -829,10 +912,13 @@ function parseImportSpecifiers(parser: JSParser, start: Position): {
       'import namespace specifier',
     );
 
-    namespaceSpecifier = parser.finishNode(start, {
-      type: 'ImportNamespaceSpecifier',
-      local: meta,
-    });
+    namespaceSpecifier = parser.finishNode(
+      start,
+      {
+        type: 'ImportNamespaceSpecifier',
+        local: meta,
+      },
+    );
 
     return {namedSpecifiers, namespaceSpecifier, defaultSpecifier, importKind};
   }
@@ -892,9 +978,11 @@ function parseImportSpecifier(
   let isBinding = false;
   if (parser.isContextual('as') && !parser.isLookaheadContextual('as')) {
     const asIdent = parseIdentifier(parser, true);
-    if (importKind !== undefined && !parser.match(tt.name) &&
-          parser.state.tokenType.keyword ===
-          undefined) {
+    if (
+      importKind !== undefined &&
+      !parser.match(tt.name) &&
+      parser.state.tokenType.keyword === undefined
+    ) {
       // `import {type as ,` or `import {type as }`
       imported = asIdent;
       local = toBindingIdentifier(parser, parser.cloneNode(asIdent));
@@ -904,8 +992,10 @@ function parseImportSpecifier(
       importKind = undefined;
       local = parseBindingIdentifier(parser);
     }
-  } else if (importKind !== undefined && (parser.match(tt.name) ||
-      parser.state.tokenType.keyword)) {
+  } else if (
+    importKind !== undefined &&
+    (parser.match(tt.name) || parser.state.tokenType.keyword)
+  ) {
     // `import {type foo`
     imported = parseIdentifier(parser, true);
     if (parser.eatContextual('as')) {
@@ -925,12 +1015,10 @@ function parseImportSpecifier(
   const specifierIsTypeImport = hasTypeImportKind(importKind);
 
   if (nodeIsTypeImport && specifierIsTypeImport) {
-    parser.addDiagnostic(
-      {
-        start: firstIdentPos,
-        description: descriptions.JS_PARSER.IMPORT_KIND_SPECIFIER_ON_IMPORT_DECLARATION_WITH_KIND,
-      },
-    );
+    parser.addDiagnostic({
+      start: firstIdentPos,
+      description: descriptions.JS_PARSER.IMPORT_KIND_SPECIFIER_ON_IMPORT_DECLARATION_WITH_KIND,
+    });
   }
 
   const loc = parser.finishLoc(start);
@@ -945,13 +1033,19 @@ function parseImportSpecifier(
 
   checkLVal(parser, local, true, undefined, 'import specifier');
 
-  return parser.finishNode(start, {
-    type: 'ImportSpecifier',
-    imported,
-    local: parser.finishNode(start, {
-      type: 'ImportSpecifierLocal',
-      name: local,
-      importKind,
-    }),
-  });
+  return parser.finishNode(
+    start,
+    {
+      type: 'ImportSpecifier',
+      imported,
+      local: parser.finishNode(
+        start,
+        {
+          type: 'ImportSpecifierLocal',
+          name: local,
+          importKind,
+        },
+      ),
+    },
+  );
 }

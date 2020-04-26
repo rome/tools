@@ -66,28 +66,28 @@ export default function prettyFormat(
   switch (typeof obj) {
     case 'symbol': {
       const val = maybeEscapeMarkup(formatSymbol(obj), opts);
-      return opts.markup ? markupTag('green', val) : val;
+      return opts.markup ? markupTag('color', val, {fg: 'green'}) : val;
     }
 
     case 'string': {
       const val = maybeEscapeMarkup(formatString(obj), opts);
-      return opts.markup ? markupTag('green', val) : val;
+      return opts.markup ? markupTag('color', val, {fg: 'green'}) : val;
     }
 
     case 'bigint':
     case 'number': {
       const val = formatNumber(obj);
-      return opts.markup ? markupTag('yellow', val) : val;
+      return opts.markup ? markupTag('color', val, {fg: 'yellow'}) : val;
     }
 
     case 'boolean': {
       const val = formatBoolean(obj);
-      return opts.markup ? markupTag('yellow', val) : val;
+      return opts.markup ? markupTag('color', val, {fg: 'yellow'}) : val;
     }
 
     case 'undefined': {
       const val = formatUndefined();
-      return opts.markup ? markupTag('brightBlack', val) : val;
+      return opts.markup ? markupTag('color', val, {fg: 'brightBlack'}) : val;
     }
 
     case 'function':
@@ -124,9 +124,12 @@ function formatSymbol(val: Symbol): string {
 }
 
 function formatString(val: string): string {
-  return escapeString(val, {
-    quote: "'",
-  });
+  return escapeString(
+    val,
+    {
+      quote: "'",
+    },
+  );
 }
 
 // This function is used by rome-json so make sure it can parse whatever you return here
@@ -176,7 +179,10 @@ function formatFunction(val: Function, opts: FormatOptions): string {
   return formatObject(label, (val as any), opts, []);
 }
 
-function getExtraObjectProps(obj: Objectish, opts: FormatOptions): {
+function getExtraObjectProps(
+  obj: Objectish,
+  opts: FormatOptions,
+): {
   props: Array<string>;
   ignoreKeys: UnknownObject;
 } {
@@ -185,9 +191,8 @@ function getExtraObjectProps(obj: Objectish, opts: FormatOptions): {
 
   if (obj instanceof Map) {
     for (const [key, val] of obj) {
-      const formattedKey = typeof key === 'string'
-        ? formatKey(key, opts)
-        : prettyFormat(key, opts);
+      const formattedKey =
+        typeof key === 'string' ? formatKey(key, opts) : prettyFormat(key, opts);
       props.push(`${formattedKey} => ${prettyFormat(val, opts)}`);
     }
   } else if (isIterable(obj)) {
@@ -275,7 +280,7 @@ function formatObject(
   const {stack} = opts;
   if (stack.length > 0 && stack.includes(obj)) {
     label = `Circular ${label} ${stack.indexOf(obj)}`;
-    return opts.markup ? markupTag('cyan', label) : label;
+    return opts.markup ? markupTag('color', label, {fg: 'cyan'}) : label;
   }
 
   //
@@ -344,7 +349,7 @@ function formatObject(
     }
   }
 
-  label = opts.markup ? markupTag('cyan', label) : label;
+  label = opts.markup ? markupTag('color', label, {fg: 'cyan'}) : label;
   return `${label} ${open}${inner}${close}`;
 }
 
@@ -369,12 +374,12 @@ function formatObjectish(val: null | Objectish, opts: FormatOptions): string {
 
   if (val instanceof RegExp) {
     const str = formatRegExp(val);
-    return opts.markup ? markupTag('red', str) : str;
+    return opts.markup ? markupTag('color', str, {fg: 'red'}) : str;
   }
 
   if (val instanceof Date) {
     const str = formatDate(val);
-    return opts.markup ? markupTag('magenta', str) : str;
+    return opts.markup ? markupTag('color', str, {fg: 'magenta'}) : str;
   }
 
   let label = 'null';

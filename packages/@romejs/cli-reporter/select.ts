@@ -7,25 +7,8 @@
 
 import {ansiEscapes} from '@romejs/string-markup';
 import Reporter from './Reporter';
+import {SelectArguments, SelectOption, SelectOptions} from './types';
 import readline = require('readline');
-
-type SelectOption = {
-  label: string;
-  shortcut?: string;
-  disabled?: boolean;
-  disabledReason?: string;
-};
-
-export type SelectOptions = {
-  [key: string]: SelectOption;
-};
-
-export type SelectArguments<Options> = {
-  options: Options;
-  defaults?: Array<keyof Options>;
-  radio?: boolean;
-  yes?: boolean;
-};
 
 function formatShortcut({shortcut}: SelectOption): string {
   if (shortcut === undefined) {
@@ -35,26 +18,19 @@ function formatShortcut({shortcut}: SelectOption): string {
   }
 }
 
-export default async function select<
-  Options extends SelectOptions
->(reporter: Reporter, message: string, {
-  options,
-  defaults = [],
-  radio = false,
-  yes = false,
-}: SelectArguments<Options>): Promise<Set<keyof Options>> {
-  const optionNames: Array<keyof Options> = [];
-  let optionCount = 0;
-  for (const key in options) {
-    optionCount++;
-    const {disabled} = options[key];
-    if (!disabled) {
-      optionNames.push(key);
-    }
-  }
-
-  const enabledOptionCount = optionNames.length;
-  if (enabledOptionCount === 0) {
+export default async function select<Options extends SelectOptions>(
+  reporter: Reporter,
+  message: string,
+  {
+    options,
+    defaults = [],
+    radio = false,
+    yes = false,
+  }: SelectArguments<Options>,
+): Promise<Set<keyof Options>> {
+  const optionNames: Array<keyof Options> = Object.keys(options);
+  let optionCount = optionNames.length;
+  if (optionCount === 0) {
     return new Set();
   }
 
@@ -62,7 +38,7 @@ export default async function select<
     return new Set(defaults);
   }
 
-  let prompt = `<brightBlack>❯</brightBlack> <emphasis>${message}</emphasis>`;
+  let prompt = `<dim>❯</dim> <emphasis>${message}</emphasis>`;
   reporter.logAll(prompt);
 
   if (radio) {
@@ -84,7 +60,7 @@ export default async function select<
   }
 
   function boundActive() {
-    activeOption = Math.min(activeOption, enabledOptionCount - 1);
+    activeOption = Math.min(activeOption, optionCount - 1);
     activeOption = Math.max(activeOption, 0);
 
     if (radio) {
@@ -105,12 +81,13 @@ export default async function select<
     for (let i = 0; i < optionNames.length; i++) {
       const key = optionNames[i];
       const option = options[key];
-      const {label, disabled, disabledReason} = option;
+      const {label} = option;
       const shortcut = formatShortcut(option);
 
-      let formattedLabel = optionNames.indexOf(key) === activeOption
-        ? `<underline>${label}</underline>`
-        : label;
+      let formattedLabel =
+        optionNames.indexOf(key) === activeOption
+          ? `<underline>${label}</underline>`
+          : label;
 
       let symbol = '';
       if (radio) {
@@ -119,20 +96,13 @@ export default async function select<
         symbol = selectedOptions.has(key) ? '\u2611' : '\u2610';
       }
 
-      let line = `${formattedLabel}${shortcut}`;
-
-      if (disabled) {
-        line = `<strike>${line}</strike>`;
-
-        if (disabledReason) {
-          line = `${line} ${disabledReason}`;
-        }
-      }
-
-      reporter.logAll(`  ${symbol} ${line}`, {
-        // Don't put a newline on the last option
-        newline: i !== optionNames.length - 1,
-      });
+      reporter.logAll(
+        `  ${symbol} ${formattedLabel}${shortcut}`,
+        {
+          // Don't put a newline on the last option
+          newline: i !== optionNames.length - 1,
+        },
+      );
     }
   }
   function cleanup() {
@@ -192,15 +162,18 @@ export default async function select<
 
       resolve();
     }
-    onkeypress = (chunk: Buffer, key: {
-      name: string;
-      ctrl: boolean;
-    }) => {
+    onkeypress = (
+      chunk: Buffer,
+      key: {
+        name: string;
+        ctrl: boolean;
+      },
+    ) => {
       // Check if this is an option shortcut
       if (!key.ctrl) {
         for (const optionName in options) {
-          const {shortcut, disabled} = options[optionName];
-          if (!disabled && shortcut === key.name) {
+          const {shortcut} = options[optionName];
+          if (shortcut === key.name) {
             if (radio) {
               selectedOptions.clear();
               selectedOptions.add(optionName);
@@ -233,7 +206,7 @@ export default async function select<
 
         case 'c': {
           if (key.ctrl) {
-            reporter.forceSpacer();
+            reporter.br(true);
             reporter.warn('Cancelled by user');
             process.exit(1);
           }
@@ -241,7 +214,7 @@ export default async function select<
         }
 
         case 'escape': {
-          reporter.forceSpacer();
+          reporter.br(true);
           reporter.warn('Cancelled by user');
           process.exit(1);
           return;

@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {FlowTypeParameter, flowTypeParameter, AnyNode} from '@romejs/js-ast';
+import {AnyNode, FlowTypeParameter, flowTypeParameter} from '@romejs/js-ast';
 import AnyT from '../../types/AnyT';
 
 export default function FlowTypeParameter(node: AnyNode, scope: Scope) {

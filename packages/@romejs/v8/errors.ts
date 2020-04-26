@@ -7,9 +7,9 @@
 
 import {Position, SourceLocation} from '@romejs/parser-core';
 import {DiagnosticAdvice} from '@romejs/diagnostics';
-import {ErrorFrames, ErrorFrame} from './types';
+import {ErrorFrame, ErrorFrames} from './types';
 import {isPlainObject} from '@romejs/typescript-helpers';
-import {number1, number0, number0Neg1} from '@romejs/ob1';
+import {ob1Number0, ob1Number0Neg1, ob1Number1} from '@romejs/ob1';
 
 export * from './types';
 
@@ -62,12 +62,14 @@ export function getErrorStructure(err: unknown): StructuredError {
   let framesToPop = 0;
   let looksLikeValidError = false;
 
-  if (isPlainObject<{
-    [ERROR_ADVICE_PROP]: unknown;
-    [ERROR_POP_FRAMES_PROP]: unknown;
-    [ERROR_FRAMES_PROP]: unknown;
-    [ERROR_MARKUP_MESSAGE_PROP]: unknown;
-  }>(err)) {
+  if (
+    isPlainObject<{
+      [ERROR_ADVICE_PROP]: unknown;
+      [ERROR_POP_FRAMES_PROP]: unknown;
+      [ERROR_FRAMES_PROP]: unknown;
+      [ERROR_MARKUP_MESSAGE_PROP]: unknown;
+    }>(err)
+  ) {
     if (typeof err.name === 'string') {
       looksLikeValidError = true;
       name = err.name;
@@ -123,9 +125,9 @@ export function getSourceLocationFromErrorFrame(
   frame: ErrorFrame,
 ): SourceLocation {
   const pos: Position = {
-    index: number0Neg1,
-    line: frame.lineNumber === undefined ? number1 : frame.lineNumber,
-    column: frame.columnNumber === undefined ? number0 : frame.columnNumber,
+    index: ob1Number0Neg1,
+    line: frame.lineNumber === undefined ? ob1Number1 : frame.lineNumber,
+    column: frame.columnNumber === undefined ? ob1Number0 : frame.columnNumber,
   };
 
   return {

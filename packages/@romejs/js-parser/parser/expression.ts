@@ -7,7 +7,12 @@
 
 import {Position, SourceLocation} from '@romejs/parser-core';
 import {JSParser, OpeningContext} from '../parser';
-import {RegExpTokenValue, readRegexp, finishToken} from '../tokenizer/index';
+import {
+  NumberTokenValue,
+  RegExpTokenValue,
+  finishToken,
+  readRegexp,
+} from '../tokenizer/index';
 import * as charCodes from '@romejs/string-charcodes';
 import {types as tt} from '../tokenizer/types';
 import {
@@ -19,106 +24,113 @@ import {
   isStrictReservedWord,
 } from '@romejs/js-parser-utils';
 import {
-  AnyExpression,
-  Identifier,
-  PrivateName,
-  BlockStatement,
-  FunctionHead,
-  StaticPropertyKey,
-  AnyObjectPropertyKey,
-  AnyTargetBindingPattern,
-  AnyNode,
-  ComputedPropertyKey,
-  SpreadElement,
   AmbiguousFlowTypeCastExpression,
-  AnyObjectMember,
-  BindingObjectPatternProperty,
-  TSAsExpression,
-  AssignmentOperator,
-  BinaryOperator,
-  LogicalOperator,
-  LogicalExpression,
-  BinaryExpression,
-  UnaryOperator,
-  UnaryExpression,
-  UpdateOperator,
-  UpdateExpression,
-  CallExpression,
-  AnyTypeArguments,
-  ArrowFunctionExpression,
-  TaggedTemplateExpression,
-  MetaProperty,
-  FunctionExpression,
-  BooleanLiteral,
+  AnyBindingPattern,
+  AnyExpression,
   AnyFlowPredicate,
+  AnyNode,
+  AnyObjectMember,
+  AnyObjectPropertyKey,
   AnyPrimaryType,
-  NewExpression,
-  OptionalCallExpression,
-  TemplateLiteral,
-  TemplateElement,
-  MemberExpression,
-  ObjectExpression,
-  SpreadProperty,
-  BindingObjectPattern,
+  AnyTargetBindingPattern,
+  AnyTypeArguments,
+  ArrayExpression,
+  ArrayHole,
+  ArrowFunctionExpression,
+  AssignmentIdentifier,
+  AssignmentOperator,
+  AwaitExpression,
+  BigIntLiteral,
+  BinaryExpression,
+  BinaryOperator,
   BindingIdentifier,
-  FlowFunctionTypeAnnotation,
-  ObjectMethod,
+  BindingObjectPattern,
+  BindingObjectPatternProperty,
+  BlockStatement,
+  BooleanLiteral,
+  CallExpression,
   ClassMethod,
+  ClassMethodKind,
   ClassPrivateMethod,
+  ComputedPropertyKey,
+  DoExpression,
+  FlowFunctionTypeAnnotation,
+  FunctionExpression,
+  FunctionHead,
+  Identifier,
+  ImportCall,
+  LogicalExpression,
+  LogicalOperator,
+  MemberExpression,
+  MetaProperty,
+  NewExpression,
+  NullLiteral,
+  NumericLiteral,
+  ObjectExpression,
+  ObjectMethod,
+  ObjectMethodKind,
+  ObjectProperty,
+  OptionalCallExpression,
+  PrivateName,
+  ReferenceIdentifier,
+  RegExpLiteral,
+  SpreadElement,
+  SpreadProperty,
+  StaticPropertyKey,
+  StringLiteral,
+  Super,
+  TSAsExpression,
   TSDeclareFunction,
   TSDeclareMethod,
-  ObjectProperty,
-  ReferenceIdentifier,
-  AnyBindingPattern,
-  AssignmentIdentifier,
-  ObjectMethodKind,
-  AwaitExpression,
+  TaggedTemplateExpression,
+  TemplateElement,
+  TemplateLiteral,
+  UnaryExpression,
+  UnaryOperator,
+  UpdateExpression,
+  UpdateOperator,
   YieldExpression,
-  NullLiteral,
-  StringLiteral,
-  BigIntLiteral,
-  RegExpLiteral,
-  ClassMethodKind,
-  NumericLiteral,
-  ImportCall,
-  Super,
-  DoExpression,
-  ArrayExpression,
 } from '@romejs/js-ast';
 import {TypeAnnotationAndPredicate} from './type-systems';
 import {types as tc} from '../tokenizer/context';
 import {
-  toReferencedListDeep,
-  checkLVal,
-  parseBlock,
-  parseFunctionParams,
-  parseMaybeDefault,
-  parseSpread,
-  toReferencedList,
-  toReferencedListOptional,
-  parseJSXElement,
-  parseTypeAnnotationAndPredicate,
-  parseFlowVariance,
-  parseAsyncArrowWithFlowTypeParameters,
+  ToReferencedItem,
   checkCommaAfterRestFromSpread,
-  parsePrimaryTypeAnnotation,
-  maybeParseTypeParameters,
+  checkLVal,
+  filterSpread,
   isTypeSystemEnabled,
+  maybeParseTypeParameters,
+  parseAsyncArrowWithFlowTypeParameters,
+  parseBlock,
+  parseClassExpression,
+  parseFlowVariance,
+  parseFunctionExpression,
+  parseFunctionParams,
+  parseJSXElement,
+  parseMaybeDefault,
+  parsePrimaryTypeAnnotation,
+  parseSpread,
   parseTSTypeAssertion,
-  tryTSNextParseConstantContext,
-  tsCheckLiteralForConstantContext,
-  tsNextThenParseType,
-  parseTypeParameters,
+  parseTypeAnnotationAndPredicate,
   parseTypeCallArguments,
+  parseTypeParameters,
   raiseRestNotLast,
   toAssignmentPattern,
   toFunctionParamsBindingList,
-  filterSpread,
-  ToReferencedItem,
-  parseClassExpression,
-  parseFunctionExpression,
+  toReferencedList,
+  toReferencedListDeep,
+  toReferencedListOptional,
+  tryTSNextParseConstantContext,
+  tsCheckLiteralForConstantContext,
+  tsNextThenParseType,
 } from './index';
-import {number0, number0Neg1, Number0, get0, inc} from '@romejs/ob1';
+import {
+  Number0,
+  ob1Get0,
+  ob1Inc,
+  ob1Number0,
+  ob1Number0Neg1,
+} from '@romejs/ob1';
 import {splitFunctionParams} from './statement';
 import {createRegExpParser} from '@romejs/codec-js-regexp';
 import {descriptions} from '@romejs/diagnostics';
@@ -135,8 +147,11 @@ export function checkPropClash(
   const key = prop.key.value;
 
   // We can only check these for collisions since they're statically known
-  if (key.type !== 'Identifier' && key.type !== 'StringLiteral' && key.type !==
-      'NumericLiteral') {
+  if (
+    key.type !== 'Identifier' &&
+    key.type !== 'StringLiteral' &&
+    key.type !== 'NumericLiteral'
+  ) {
     return;
   }
 
@@ -166,27 +181,25 @@ export function parseExpression(
   if (parser.match(tt.comma)) {
     let expressions: Array<AnyExpression> = [expr];
     while (parser.eat(tt.comma)) {
-      expressions.push(parseMaybeAssign(
-        parser,
-        context,
-        noIn,
-        refShorthandDefaultPos,
-      ));
+      expressions.push(
+        parseMaybeAssign(parser, context, noIn, refShorthandDefaultPos),
+      );
     }
 
     expressions = filterSpread(parser, toReferencedList(parser, expressions));
 
-    return parser.finishNode(startPos, {
-      type: 'SequenceExpression',
-      expressions,
-    });
+    return parser.finishNode(
+      startPos,
+      {
+        type: 'SequenceExpression',
+        expressions,
+      },
+    );
   }
   return expr;
 }
 
-export function parseMaybeAssign<
-  T extends AnyNode = AnyExpression
->(
+export function parseMaybeAssign<T extends AnyNode = AnyExpression>(
   parser: JSParser,
   context: ExpressionContext,
   noIn?: boolean,
@@ -197,18 +210,23 @@ export function parseMaybeAssign<
   const branches = parser.createBranch<AnyExpression | T>();
 
   // Try parsing as JSX
-  if ((parser.isRelational('<') || parser.match(tt.jsxTagStart)) &&
-      parser.shouldTokenizeJSX()) {
-    branches.add(() => {
-      return _parseMaybeAssign(
-        parser,
-        context,
-        noIn,
-        refShorthandDefaultPos,
-        afterLeftParse,
-        refNeedsArrowPos,
-      );
-    }, {diagnosticsPriority: 1});
+  if (
+    (parser.isRelational('<') || parser.match(tt.jsxTagStart)) &&
+    parser.shouldTokenizeJSX()
+  ) {
+    branches.add(
+      () => {
+        return _parseMaybeAssign(
+          parser,
+          context,
+          noIn,
+          refShorthandDefaultPos,
+          afterLeftParse,
+          refNeedsArrowPos,
+        );
+      },
+      {diagnosticsPriority: 1},
+    );
 
     // Remove `tc.j_expr` and `tc.j_oTag` from 'context added
 
@@ -230,14 +248,16 @@ export function parseMaybeAssign<
       const arrowExpression = forwardNoArrowParamsConversionAt(
         parser,
         start,
-        () => _parseMaybeAssign<T>(
-          parser,
-          context,
-          noIn,
-          refShorthandDefaultPos,
-          afterLeftParse,
-          refNeedsArrowPos,
-        ),
+        () =>
+          _parseMaybeAssign<T>(
+            parser,
+            context,
+            noIn,
+            refShorthandDefaultPos,
+            afterLeftParse,
+            refNeedsArrowPos,
+          )
+        ,
       );
       parser.resetStartLocationFromNode(arrowExpression, typeParameters);
 
@@ -251,9 +271,10 @@ export function parseMaybeAssign<
           loc: typeParameters.loc,
           description: descriptions.JS_PARSER.EXPECTED_ARROW_AFTER_TYPE_PARAMS,
         });
-        return toReferenceIdentifier(parser, parser.createUnknownIdentifier(
-          'type params without arrow function',
-        ));
+        return toReferenceIdentifier(
+          parser,
+          parser.createUnknownIdentifier('type params without arrow function'),
+        );
       }
     });
   }
@@ -279,9 +300,7 @@ type MaybeAssignAfterParse<T> = (
   startPos: Position,
 ) => T;
 
-function _parseMaybeAssign<
-  T extends AnyNode
->(
+function _parseMaybeAssign<T extends AnyNode>(
   parser: JSParser,
   context: ExpressionContext,
   noIn?: boolean,
@@ -300,14 +319,13 @@ function _parseMaybeAssign<
       return left;
     } else {
       // The tokenizer will assume an expression is allowed after
-
       // `yield`, but this isn't that kind of yield
       parser.state.exprAllowed = false;
     }
   }
 
   const oldCommaAfterSpreadAt = parser.state.commaAfterSpreadAt;
-  parser.state.commaAfterSpreadAt = number0Neg1;
+  parser.state.commaAfterSpreadAt = ob1Number0Neg1;
 
   let failOnShorthandAssign;
   if (refShorthandDefaultPos) {
@@ -337,7 +355,7 @@ function _parseMaybeAssign<
     const leftPatt = toAssignmentPattern(parser, left, 'assignment expression');
 
     // reset because shorthand default was used correctly
-    refShorthandDefaultPos.index = number0;
+    refShorthandDefaultPos.index = ob1Number0;
 
     checkLVal(parser, leftPatt, undefined, undefined, 'assignment expression');
 
@@ -351,16 +369,19 @@ function _parseMaybeAssign<
 
     parser.next();
     const right = parseMaybeAssign(parser, 'assignment right', noIn);
-    return parser.finishNode(startPos, {
-      type: 'AssignmentExpression',
-      operator,
-      left: leftPatt,
-      right,
-    });
-  } else if (failOnShorthandAssign && get0(refShorthandDefaultPos.index) > 0) {
-    parser.unexpectedToken(parser.getPositionFromIndex(
-      refShorthandDefaultPos.index,
-    ));
+    return parser.finishNode(
+      startPos,
+      {
+        type: 'AssignmentExpression',
+        operator,
+        left: leftPatt,
+        right,
+      },
+    );
+  } else if (failOnShorthandAssign && ob1Get0(refShorthandDefaultPos.index) > 0) {
+    parser.unexpectedToken(
+      parser.getPositionFromIndex(refShorthandDefaultPos.index),
+    );
   }
 
   parser.state.commaAfterSpreadAt = oldCommaAfterSpreadAt;
@@ -379,20 +400,23 @@ export function parseMaybeConditional(
   const potentialArrowAt = parser.state.potentialArrowAt;
   const expr = parseExpressionOps(parser, context, noIn, refShorthandDefaultPos);
 
-  if (expr.type === 'ArrowFunctionExpression' &&
-        parser.getLoc(expr).start.index ===
-        potentialArrowAt) {
+  if (
+    expr.type === 'ArrowFunctionExpression' &&
+    parser.getLoc(expr).start.index === potentialArrowAt
+  ) {
     return expr;
   }
 
-  if (refShorthandDefaultPos && get0(refShorthandDefaultPos.index) > 0) {
+  if (refShorthandDefaultPos && ob1Get0(refShorthandDefaultPos.index) > 0) {
     return expr;
   }
 
   return parseConditional(parser, expr, noIn, startPos, refNeedsArrowPos);
 }
 
-export function tryParseConditionalConsequent(parser: JSParser): {
+export function tryParseConditionalConsequent(
+  parser: JSParser,
+): {
   consequent: AnyExpression;
   failed: boolean;
 } {
@@ -433,9 +457,12 @@ export function parseConditional(
   if (refNeedsArrowPos) {
     const branch = parser.createBranch<AnyExpression>();
 
-    branch.add(() => _parseConditional(parser, expr, noIn, startPos), {
-      maxNewDiagnostics: 0,
-    });
+    branch.add(
+      () => _parseConditional(parser, expr, noIn, startPos),
+      {
+        maxNewDiagnostics: 0,
+      },
+    );
 
     if (branch.hasBranch()) {
       return branch.pick();
@@ -459,27 +486,34 @@ export function parseConditional(
   const alternate = forwardNoArrowParamsConversionAt(
     parser,
     startPos,
-    () => parseMaybeAssign(
-      parser,
-      'conditional alternate',
-      noIn,
-      undefined,
-      undefined,
-      undefined,
-    ),
+    () =>
+      parseMaybeAssign(
+        parser,
+        'conditional alternate',
+        noIn,
+        undefined,
+        undefined,
+        undefined,
+      )
+    ,
   );
 
-  return parser.finishNode(startPos, {
-    type: 'ConditionalExpression',
-    test: expr,
-    consequent,
-    alternate,
-  });
+  return parser.finishNode(
+    startPos,
+    {
+      type: 'ConditionalExpression',
+      test: expr,
+      consequent,
+      alternate,
+    },
+  );
 }
 
-export function forwardNoArrowParamsConversionAt<
-  T
->(parser: JSParser, start: Position, parse: () => T): T {
+export function forwardNoArrowParamsConversionAt<T>(
+  parser: JSParser,
+  start: Position,
+  parse: () => T,
+): T {
   if (parser.state.noArrowParamsConversionAt.includes(start.index)) {
     let result: T;
     parser.state.noArrowParamsConversionAt.push(parser.state.startPos.index);
@@ -502,12 +536,15 @@ function _parseConditional(
     const consequent = parseMaybeAssign(parser, 'conditional consequent');
     parser.expect(tt.colon);
     const alternate = parseMaybeAssign(parser, 'conditional alternate', noIn);
-    return parser.finishNode(startPos, {
-      type: 'ConditionalExpression',
-      test,
-      consequent,
-      alternate,
-    });
+    return parser.finishNode(
+      startPos,
+      {
+        type: 'ConditionalExpression',
+        test,
+        consequent,
+        alternate,
+      },
+    );
   }
   return expr;
 }
@@ -522,12 +559,13 @@ export function parseExpressionOps(
   const potentialArrowAt = parser.state.potentialArrowAt;
   const expr = parseMaybeUnary(parser, context, refShorthandDefaultPos);
 
-  if (expr.type === 'ArrowFunctionExpression' &&
-        parser.getLoc(expr).start.index ===
-        potentialArrowAt) {
+  if (
+    expr.type === 'ArrowFunctionExpression' &&
+    parser.getLoc(expr).start.index === potentialArrowAt
+  ) {
     return expr;
   }
-  if (refShorthandDefaultPos && get0(refShorthandDefaultPos.index) > 0) {
+  if (refShorthandDefaultPos && ob1Get0(refShorthandDefaultPos.index) > 0) {
     return expr;
   }
 
@@ -542,8 +580,11 @@ export function parseExpressionOp(
   minPrec: number,
   noIn: boolean = false,
 ): AnyExpression {
-  if (tt._in.getBinop() > minPrec && !parser.hasPrecedingLineBreak() &&
-      parser.isContextual('as')) {
+  if (
+    tt._in.getBinop() > minPrec &&
+    !parser.hasPrecedingLineBreak() &&
+    parser.isContextual('as')
+  ) {
     const _const = tryTSNextParseConstantContext(parser);
 
     let typeAnnotation;
@@ -554,11 +595,14 @@ export function parseExpressionOp(
       typeAnnotation = tsNextThenParseType(parser);
     }
 
-    const node: TSAsExpression = parser.finishNode(leftStartPos, {
-      type: 'TSAsExpression',
-      typeAnnotation,
-      expression: left,
-    });
+    const node: TSAsExpression = parser.finishNode(
+      leftStartPos,
+      {
+        type: 'TSAsExpression',
+        typeAnnotation,
+        expression: left,
+      },
+    );
 
     return parseExpressionOp(parser, context, node, leftStartPos, minPrec, noIn);
   }
@@ -570,8 +614,11 @@ export function parseExpressionOp(
         | BinaryOperator
         | LogicalOperator);
 
-      if (operator === '**' && left.type === 'UnaryExpression' &&
-          !parser.isParenthesized(left)) {
+      if (
+        operator === '**' &&
+        left.type === 'UnaryExpression' &&
+        !parser.isParenthesized(left)
+      ) {
         parser.addDiagnostic({
           loc: left.argument.loc,
           description: descriptions.JS_PARSER.WRAP_EXPONENTIATION,
@@ -583,26 +630,36 @@ export function parseExpressionOp(
 
       const startPos = parser.state.startPos;
 
-      const right = parseExpressionOp(parser, context, parseMaybeUnary(
+      const right = parseExpressionOp(
         parser,
         context,
-      ), startPos, op.rightAssociative ? prec - 1 : prec, noIn);
+        parseMaybeUnary(parser, context),
+        startPos,
+        op.rightAssociative ? prec - 1 : prec,
+        noIn,
+      );
 
       let node: LogicalExpression | BinaryExpression;
       if (operator === '||' || operator === '&&' || operator === '??') {
-        node = parser.finishNode(leftStartPos, {
-          type: 'LogicalExpression',
-          left,
-          right,
-          operator,
-        });
+        node = parser.finishNode(
+          leftStartPos,
+          {
+            type: 'LogicalExpression',
+            left,
+            right,
+            operator,
+          },
+        );
       } else {
-        node = parser.finishNode(leftStartPos, {
-          type: 'BinaryExpression',
-          left,
-          right,
-          operator,
-        });
+        node = parser.finishNode(
+          leftStartPos,
+          {
+            type: 'BinaryExpression',
+            left,
+            right,
+            operator,
+          },
+        );
       }
 
       return parseExpressionOp(
@@ -625,8 +682,11 @@ export function parseMaybeUnary(
   context: ExpressionContext,
   refShorthandDefaultPos?: IndexTracker,
 ): AnyExpression {
-  if (parser.isSyntaxEnabled('ts') && !parser.isSyntaxEnabled('jsx') &&
-      parser.isRelational('<')) {
+  if (
+    parser.isSyntaxEnabled('ts') &&
+    !parser.isSyntaxEnabled('jsx') &&
+    parser.isRelational('<')
+  ) {
     return parseTSTypeAssertion(parser);
   }
 
@@ -646,10 +706,10 @@ export function parseMaybeUnary(
 
     const argument = parseMaybeUnary(parser, context);
 
-    if (refShorthandDefaultPos && get0(refShorthandDefaultPos.index) > 0) {
-      parser.unexpectedToken(parser.getPositionFromIndex(
-        refShorthandDefaultPos.index,
-      ));
+    if (refShorthandDefaultPos && ob1Get0(refShorthandDefaultPos.index) > 0) {
+      parser.unexpectedToken(
+        parser.getPositionFromIndex(refShorthandDefaultPos.index),
+      );
     }
 
     if (update) {
@@ -660,9 +720,10 @@ export function parseMaybeUnary(
           loc: argument.loc,
           description: descriptions.JS_PARSER.DELETE_LOCAL_VARIABLE_IN_STRICT,
         });
-      } else if (argument.type === 'MemberExpression' &&
-            argument.property.value.type ===
-            'PrivateName') {
+      } else if (
+        argument.type === 'MemberExpression' &&
+        argument.property.value.type === 'PrivateName'
+      ) {
         parser.addDiagnostic({
           loc: argument.property.loc,
           description: descriptions.JS_PARSER.DELETE_PRIVATE_FIELD,
@@ -676,23 +737,29 @@ export function parseMaybeUnary(
         throw new Error('Expected ++/-- operator only for UpdateExpression');
       }
 
-      node = parser.finishNode(start, {
-        type: 'UpdateExpression',
-        argument,
-        operator,
-        prefix,
-      });
+      node = parser.finishNode(
+        start,
+        {
+          type: 'UpdateExpression',
+          argument,
+          operator,
+          prefix,
+        },
+      );
     } else {
       if (operator === '++' || operator === '--') {
         throw new Error('BinaryExpression cannot have ++/-- operator');
       }
 
-      node = parser.finishNode(start, {
-        type: 'UnaryExpression',
-        argument,
-        operator,
-        prefix,
-      });
+      node = parser.finishNode(
+        start,
+        {
+          type: 'UnaryExpression',
+          argument,
+          operator,
+          prefix,
+        },
+      );
     }
 
     return node;
@@ -705,7 +772,7 @@ export function parseMaybeUnary(
     context,
     refShorthandDefaultPos,
   );
-  if (refShorthandDefaultPos && get0(refShorthandDefaultPos.index) > 0) {
+  if (refShorthandDefaultPos && ob1Get0(refShorthandDefaultPos.index) > 0) {
     return expr;
   }
 
@@ -714,12 +781,15 @@ export function parseMaybeUnary(
     checkLVal(parser, expr, undefined, undefined, 'postfix operation');
     parser.next();
 
-    const updateNode: UpdateExpression = parser.finishNode(startPos, {
-      type: 'UpdateExpression',
-      operator,
-      prefix: false,
-      argument: expr,
-    });
+    const updateNode: UpdateExpression = parser.finishNode(
+      startPos,
+      {
+        type: 'UpdateExpression',
+        operator,
+        prefix: false,
+        argument: expr,
+      },
+    );
     expr = updateNode;
   }
 
@@ -736,13 +806,14 @@ export function parseExpressionWithPossibleSubscripts(
   const potentialArrowAt = parser.state.potentialArrowAt;
   const expr = parseExpressionAtom(parser, context, refShorthandDefaultPos);
 
-  if (expr.type === 'ArrowFunctionExpression' &&
-        parser.getLoc(expr).start.index ===
-        potentialArrowAt) {
+  if (
+    expr.type === 'ArrowFunctionExpression' &&
+    parser.getLoc(expr).start.index === potentialArrowAt
+  ) {
     return expr;
   }
 
-  if (refShorthandDefaultPos && get0(refShorthandDefaultPos.index) > 0) {
+  if (refShorthandDefaultPos && ob1Get0(refShorthandDefaultPos.index) > 0) {
     return expr;
   }
 
@@ -757,8 +828,11 @@ export function parseSubscripts(
 ): AnyExpression {
   const maybeAsyncArrow = atPossibleAsync(parser, base);
 
-  if (base.type === 'ReferenceIdentifier' && base.name === 'async' &&
-      parser.state.noArrowAt.includes(startPos.index)) {
+  if (
+    base.type === 'ReferenceIdentifier' &&
+    base.name === 'async' &&
+    parser.state.noArrowAt.includes(startPos.index)
+  ) {
     const argsStart = parser.getPosition();
     const openContext = parser.expectOpening(
       tt.parenL,
@@ -767,22 +841,30 @@ export function parseSubscripts(
     );
     const callee = base;
     const {args} = parseCallExpressionArguments(parser, openContext, false);
-    base = parser.finishNodeWithCommentStarts([argsStart, startPos], {
-      type: 'CallExpression',
-      callee,
-      arguments: args,
-    });
-  } else if (base.type === 'ReferenceIdentifier' && base.name === 'async' &&
-      parser.isRelational('<')) {
+    base = parser.finishNodeWithCommentStarts(
+      [argsStart, startPos],
+      {
+        type: 'CallExpression',
+        callee,
+        arguments: args,
+      },
+    );
+  } else if (
+    base.type === 'ReferenceIdentifier' &&
+    base.name === 'async' &&
+    parser.isRelational('<')
+  ) {
     const branch = parser.createBranch<AnyExpression>();
     branch.add(() => parseAsyncArrowWithFlowTypeParameters(parser, startPos));
-    branch.add(() => parseExpressionSubscriptsRecursively(
-      parser,
-      base,
-      startPos,
-      noCalls,
-      maybeAsyncArrow,
-    ));
+    branch.add(() =>
+      parseExpressionSubscriptsRecursively(
+        parser,
+        base,
+        startPos,
+        noCalls,
+        maybeAsyncArrow,
+      )
+    );
     return branch.pick();
   }
 
@@ -836,10 +918,13 @@ export function parseExpressionSubscript(
     parser.state.exprAllowed = false;
     parser.next();
 
-    return parser.finishNode(startPos, {
-      type: 'TSNonNullExpression',
-      expression: base,
-    });
+    return parser.finishNode(
+      startPos,
+      {
+        type: 'TSNonNullExpression',
+        expression: base,
+      },
+    );
   }
 
   if (parser.match(tt.questionDot)) {
@@ -867,12 +952,15 @@ export function parseExpressionSubscript(
         'call arguments',
       );
       const {args} = parseCallExpressionArguments(parser, openContext, false);
-      return parser.finishNode(startPos, {
-        type: 'OptionalCallExpression',
-        arguments: args,
-        callee,
-        typeArguments,
-      });
+      return parser.finishNode(
+        startPos,
+        {
+          type: 'OptionalCallExpression',
+          arguments: args,
+          callee,
+          typeArguments,
+        },
+      );
     }
 
     if (parser.match(tt.bracketL)) {
@@ -888,15 +976,21 @@ export function parseExpressionSubscript(
         'optional member expression property',
       );
       parser.expectClosing(openContext);
-      return parser.finishNode(startPos, {
-        type: 'MemberExpression',
-        object,
-        property: parser.finishNode(propStart, {
-          type: 'ComputedMemberProperty',
-          optional: true,
-          value: property,
-        }),
-      });
+      return parser.finishNode(
+        startPos,
+        {
+          type: 'MemberExpression',
+          object,
+          property: parser.finishNode(
+            propStart,
+            {
+              type: 'ComputedMemberProperty',
+              optional: true,
+              value: property,
+            },
+          ),
+        },
+      );
     }
 
     if (parser.match(tt.parenL)) {
@@ -908,41 +1002,50 @@ export function parseExpressionSubscript(
       const callee = base;
       const {args} = parseCallExpressionArguments(parser, openContext, false);
 
-      return parser.finishNode(startPos, {
-        type: 'OptionalCallExpression',
-        callee,
-        arguments: args,
-      });
+      return parser.finishNode(
+        startPos,
+        {
+          type: 'OptionalCallExpression',
+          callee,
+          arguments: args,
+        },
+      );
     }
 
     const object = base;
     const property = parseIdentifier(parser, true);
 
-    return parser.finishNode(startPos, {
-      type: 'MemberExpression',
-      object,
-      property: {
-        type: 'StaticMemberProperty',
-        loc: property.loc,
-        optional: true,
-        value: property,
+    return parser.finishNode(
+      startPos,
+      {
+        type: 'MemberExpression',
+        object,
+        property: {
+          type: 'StaticMemberProperty',
+          loc: property.loc,
+          optional: true,
+          value: property,
+        },
       },
-    });
+    );
   }
 
   if (parser.eat(tt.dot)) {
     const object = base;
     const property = parseMaybePrivateName(parser);
 
-    return parser.finishNode(startPos, {
-      type: 'MemberExpression',
-      object,
-      property: {
-        type: 'StaticMemberProperty',
-        loc: property.loc,
-        value: property,
+    return parser.finishNode(
+      startPos,
+      {
+        type: 'MemberExpression',
+        object,
+        property: {
+          type: 'StaticMemberProperty',
+          loc: property.loc,
+          value: property,
+        },
       },
-    });
+    );
   }
 
   if (parser.match(tt.bracketL)) {
@@ -959,14 +1062,20 @@ export function parseExpressionSubscript(
     );
     parser.expectClosing(openContext);
 
-    return parser.finishNode(startPos, {
-      type: 'MemberExpression',
-      object,
-      property: parser.finishNode(propStart, {
-        type: 'ComputedMemberProperty',
-        value: property,
-      }),
-    });
+    return parser.finishNode(
+      startPos,
+      {
+        type: 'MemberExpression',
+        object,
+        property: parser.finishNode(
+          propStart,
+          {
+            type: 'ComputedMemberProperty',
+            value: property,
+          },
+        ),
+      },
+    );
   }
 
   // Supports: foo<Foo>(); and foo<Foo>``;
@@ -982,15 +1091,15 @@ export function parseExpressionSubscript(
           'call arguments',
         );
         const {args} = parseCallExpressionArguments(parser, openContext, false);
-        const node: CallExpression = parser.finishNodeWithCommentStarts([
-          argsStart,
-          startPos,
-        ], {
-          type: 'CallExpression',
-          arguments: args,
-          callee: base,
-          typeArguments,
-        });
+        const node: CallExpression = parser.finishNodeWithCommentStarts(
+          [argsStart, startPos],
+          {
+            type: 'CallExpression',
+            arguments: args,
+            callee: base,
+            typeArguments,
+          },
+        );
         return node;
       }
 
@@ -1017,8 +1126,8 @@ export function parseExpressionSubscript(
     const oldYieldPos = parser.state.yieldPos;
     const oldAwaitPos = parser.state.awaitPos;
     parser.state.maybeInArrowParameters = true;
-    parser.state.yieldPos = number0;
-    parser.state.awaitPos = number0;
+    parser.state.yieldPos = ob1Number0;
+    parser.state.awaitPos = ob1Number0;
 
     const argsStart = parser.getPosition();
     const openContext = parser.expectOpening(
@@ -1029,7 +1138,7 @@ export function parseExpressionSubscript(
     const callee = base;
 
     const oldCommaAfterSpreadAt = parser.state.commaAfterSpreadAt;
-    parser.state.commaAfterSpreadAt = number0Neg1;
+    parser.state.commaAfterSpreadAt = ob1Number0Neg1;
 
     let {args, params} = parseCallExpressionArguments(
       parser,
@@ -1045,8 +1154,7 @@ export function parseExpressionSubscript(
       const node = parseAsyncArrowFromCallExpression(
         parser,
         startPos,
-          params ===
-          undefined ? args : params,
+        params === undefined ? args : params,
       );
       checkYieldAwaitInDefaultParams(parser);
       parser.state.yieldPos = oldYieldPos;
@@ -1065,11 +1173,14 @@ export function parseExpressionSubscript(
     parser.state.maybeInArrowParameters = oldMaybeInArrowParameters;
     parser.state.commaAfterSpreadAt = oldCommaAfterSpreadAt;
 
-    return parser.finishNodeWithCommentStarts([argsStart, startPos], {
-      type: 'CallExpression',
-      callee,
-      arguments: args,
-    });
+    return parser.finishNodeWithCommentStarts(
+      [argsStart, startPos],
+      {
+        type: 'CallExpression',
+        callee,
+        arguments: args,
+      },
+    );
   }
 
   if (parser.match(tt.backQuote)) {
@@ -1094,25 +1205,30 @@ export function parseTaggedTemplateExpression(
   }
 
   const quasi = parseTemplate(parser, true);
-  return parser.finishNode(startPos, {
-    type: 'TaggedTemplateExpression',
-    tag,
-    quasi,
-    typeArguments,
-  });
+  return parser.finishNode(
+    startPos,
+    {
+      type: 'TaggedTemplateExpression',
+      tag,
+      quasi,
+      typeArguments,
+    },
+  );
 }
 
 export function checkYieldAwaitInDefaultParams(parser: JSParser) {
-  if (get0(parser.state.yieldPos) > 0 && (parser.state.awaitPos === number0 ||
-        parser.state.yieldPos <
-        parser.state.awaitPos)) {
+  if (
+    ob1Get0(parser.state.yieldPos) > 0 &&
+    (parser.state.awaitPos === ob1Number0 ||
+    parser.state.yieldPos < parser.state.awaitPos)
+  ) {
     parser.addDiagnostic({
       index: parser.state.yieldPos,
       description: descriptions.JS_PARSER.YIELD_IN_GENERATOR_PARAMS,
     });
   }
 
-  if (get0(parser.state.awaitPos) > 0) {
+  if (ob1Get0(parser.state.awaitPos) > 0) {
     parser.addDiagnostic({
       index: parser.state.awaitPos,
       description: descriptions.JS_PARSER.AWAIT_IN_ASYNC_PARAMS,
@@ -1122,12 +1238,13 @@ export function checkYieldAwaitInDefaultParams(parser: JSParser) {
 
 export function atPossibleAsync(parser: JSParser, base: AnyExpression): boolean {
   const loc = parser.getLoc(base);
-  return base.type === 'ReferenceIdentifier' && base.name === 'async' &&
-      parser.state.lastEndPos.index ===
-      loc.end.index && !parser.canInsertSemicolon() && parser.getRawInput(
-    loc.start.index,
-    loc.end.index,
-  ) === 'async';
+  return (
+    base.type === 'ReferenceIdentifier' &&
+    base.name === 'async' &&
+    parser.state.lastEndPos.index === loc.end.index &&
+    !parser.canInsertSemicolon() &&
+    parser.getRawInput(loc.start.index, loc.end.index) === 'async'
+  );
 }
 
 export function parseCallExpressionArguments(
@@ -1137,16 +1254,14 @@ export function parseCallExpressionArguments(
   refTrailingCommaPos?: IndexTracker,
 ): {
   args: CallExpression['arguments'];
-  params: undefined | Array<
-    | AnyExpression
-    | SpreadElement
-    | AmbiguousFlowTypeCastExpression>;
+  params:
+    | undefined
+    | Array<AnyExpression | SpreadElement | AmbiguousFlowTypeCastExpression>;
 } {
   let callArgs: CallExpression['arguments'] = [];
   let funcParams: Array<
-    | AnyExpression
-    | SpreadElement
-    | AmbiguousFlowTypeCastExpression> = [];
+    AnyExpression | SpreadElement | AmbiguousFlowTypeCastExpression
+  > = [];
 
   let innerParenStart;
   let first = true;
@@ -1184,7 +1299,7 @@ export function parseCallExpressionArguments(
       possibleAsyncArrow ? createIndexTracker() : undefined,
       possibleAsyncArrow ? refTrailingCommaPos : undefined,
     );
-    if (elt === undefined) {
+    if (elt.type === 'ArrayHole') {
       throw new Error('Expected element');
     }
 
@@ -1216,16 +1331,17 @@ export function parseCallExpressionArguments(
   }
 
   if (forceAsyncArrow && !shouldParseAsyncArrow(parser)) {
-    parser.addDiagnostic(
-      {
-        description: descriptions.JS_PARSER.EXPECTED_ARROW_AFTER_ASYNC_TYPE_PARAMS,
-      },
-    );
+    parser.addDiagnostic({
+      description: descriptions.JS_PARSER.EXPECTED_ARROW_AFTER_ASYNC_TYPE_PARAMS,
+    });
   }
 
   // we found an async arrow function so let's not allow any inner parens
-  if (possibleAsyncArrow && innerParenStart !== undefined &&
-      shouldParseAsyncArrow(parser)) {
+  if (
+    possibleAsyncArrow &&
+    innerParenStart !== undefined &&
+    shouldParseAsyncArrow(parser)
+  ) {
     parser.addDiagnostic({
       start: innerParenStart,
       description: descriptions.JS_PARSER.PARENTHESIZED_FUNCTION_PARAMS,
@@ -1239,8 +1355,10 @@ export function parseCallExpressionArguments(
 }
 
 export function shouldParseAsyncArrow(parser: JSParser): boolean {
-  return parser.match(tt.colon) || parser.match(tt.arrow) &&
-    !parser.canInsertSemicolon();
+  return (
+    parser.match(tt.colon) ||
+    (parser.match(tt.arrow) && !parser.canInsertSemicolon())
+  );
 }
 
 export function parseAsyncArrowFromCallExpression(
@@ -1260,9 +1378,14 @@ export function parseAsyncArrowFromCallExpression(
   const oldYield = parser.state.yieldInPossibleArrowParameters;
   parser.state.yieldInPossibleArrowParameters = undefined;
   parser.expect(tt.arrow);
-  const node = parseArrowExpression(parser, start, {
-    assignmentList: args,
-  }, true);
+  const node = parseArrowExpression(
+    parser,
+    start,
+    {
+      assignmentList: args,
+    },
+    true,
+  );
   parser.state.yieldInPossibleArrowParameters = oldYield;
   return {
     ...node,
@@ -1349,21 +1472,21 @@ export function parseExpressionAtom(
   refShorthandDefaultPos?: IndexTracker,
 ): AnyExpression {
   // If a division operator appears in an expression position, the
-
   // tokenizer got confused, and we force it to read a regexp instead.
   if (parser.state.tokenType === tt.slash) {
     readRegexp(parser);
   }
 
-  const canBeArrow = parser.state.potentialArrowAt ===
-    parser.state.startPos.index;
+  const canBeArrow =
+    parser.state.potentialArrowAt === parser.state.startPos.index;
 
   // We don't want to match <! as it's the start of a HTML comment
-  if (parser.isRelational('<') && parser.input.charCodeAt(get0(
-      parser.state.index,
-    )) !== charCodes.exclamationMark) {
+  if (
+    parser.isRelational('<') &&
+    parser.input.charCodeAt(ob1Get0(parser.state.index)) !==
+    charCodes.exclamationMark
+  ) {
     // In case we encounter an lt token here it will always be the start of
-
     // jsx as the lt sign is not allowed in places that expect an expression
     finishToken(parser, tt.jsxTagStart);
     return parseJSXElement(parser);
@@ -1390,23 +1513,35 @@ export function parseExpressionAtom(
       const containsEsc = parser.state.escapePosition !== undefined;
       const id = parseIdentifier(parser);
 
-      if (!containsEsc && id.name === 'async' && parser.match(tt._function) &&
-          !parser.canInsertSemicolon()) {
+      if (
+        !containsEsc &&
+        id.name === 'async' &&
+        parser.match(tt._function) &&
+        !parser.canInsertSemicolon()
+      ) {
         parser.next();
         return parseFunctionExpression(parser, start, true);
       }
 
-      if (canBeArrow && !containsEsc && id.name === 'async' && parser.match(
-          tt.name,
-        )) {
+      if (
+        canBeArrow &&
+        !containsEsc &&
+        id.name === 'async' &&
+        parser.match(tt.name)
+      ) {
         const oldYield = parser.state.yieldInPossibleArrowParameters;
         parser.state.yieldInPossibleArrowParameters = undefined;
         const params = [parseReferenceIdentifier(parser)];
         parser.expect(tt.arrow);
         // let foo = bar => {};
-        const node = parseArrowExpression(parser, start, {
-          assignmentList: params,
-        }, true);
+        const node = parseArrowExpression(
+          parser,
+          start,
+          {
+            assignmentList: params,
+          },
+          true,
+        );
         parser.state.yieldInPossibleArrowParameters = oldYield;
         return node;
       }
@@ -1414,9 +1549,13 @@ export function parseExpressionAtom(
       if (canBeArrow && !parser.canInsertSemicolon() && parser.eat(tt.arrow)) {
         const oldYield = parser.state.yieldInPossibleArrowParameters;
         parser.state.yieldInPossibleArrowParameters = undefined;
-        const node = parseArrowExpression(parser, start, {
-          assignmentList: [toReferenceIdentifier(parser, id)],
-        });
+        const node = parseArrowExpression(
+          parser,
+          start,
+          {
+            assignmentList: [toReferenceIdentifier(parser, id)],
+          },
+        );
         parser.state.yieldInPossibleArrowParameters = oldYield;
         return node;
       }
@@ -1477,10 +1616,10 @@ export function parseExpressionAtom(
         ),
       });
       parser.next();
-      return toReferenceIdentifier(parser, parser.createUnknownIdentifier(
-        context,
-        start,
-      ));
+      return toReferenceIdentifier(
+        parser,
+        parser.createUnknownIdentifier(context, start),
+      );
     }
   }
 }
@@ -1489,10 +1628,13 @@ export function parseBooleanLiteral(parser: JSParser): BooleanLiteral {
   const start = parser.getPosition();
   const value = parser.match(tt._true);
   parser.next();
-  return parser.finishNode(start, {
-    type: 'BooleanLiteral',
-    value,
-  });
+  return parser.finishNode(
+    start,
+    {
+      type: 'BooleanLiteral',
+      value,
+    },
+  );
 }
 
 export function parseMaybePrivateName(
@@ -1505,10 +1647,13 @@ export function parseMaybePrivateName(
     parser.next();
     parser.assertNoSpace(descriptions.JS_PARSER.SPACE_BETWEEN_PRIVATE_HASH);
     const id = parseIdentifier(parser, true);
-    return parser.finishNode(start, {
-      type: 'PrivateName',
-      id,
-    });
+    return parser.finishNode(
+      start,
+      {
+        type: 'PrivateName',
+        id,
+      },
+    );
   } else {
     return parseIdentifier(parser, true);
   }
@@ -1550,8 +1695,11 @@ export function parseMetaProperty(
   meta: Identifier,
   propertyName: string,
 ): MetaProperty {
-  if (meta.name === 'function' && propertyName === 'sent' &&
-      !parser.isContextual(propertyName)) {
+  if (
+    meta.name === 'function' &&
+    propertyName === 'sent' &&
+    !parser.isContextual(propertyName)
+  ) {
     // They didn't actually say `function.sent`, just `function.`, so a simple error would be less confusing.
     parser.unexpectedToken();
   }
@@ -1571,11 +1719,14 @@ export function parseMetaProperty(
     });
   }
 
-  return parser.finishNode(start, {
-    type: 'MetaProperty',
-    meta,
-    property,
-  });
+  return parser.finishNode(
+    start,
+    {
+      type: 'MetaProperty',
+      meta,
+      property,
+    },
+  );
 }
 
 export function parseImportMetaProperty(parser: JSParser): MetaProperty {
@@ -1627,8 +1778,8 @@ export function parseParenAndDistinguishExpression(
   const oldYield = parser.state.yieldInPossibleArrowParameters;
   parser.state.maybeInArrowParameters = true;
   parser.state.yieldInPossibleArrowParameters = undefined;
-  parser.state.yieldPos = number0;
-  parser.state.awaitPos = number0;
+  parser.state.yieldPos = ob1Number0;
+  parser.state.awaitPos = ob1Number0;
 
   const innerStart = parser.getPosition();
   const exprList: Array<ToReferencedItem> = [];
@@ -1642,9 +1793,14 @@ export function parseParenAndDistinguishExpression(
     if (first) {
       first = false;
     } else {
-      if (!parser.expect(tt.comma, refNeedsArrowPos.index === number0
-          ? undefined
-          : parser.getPositionFromIndex(refNeedsArrowPos.index))) {
+      if (
+        !parser.expect(
+          tt.comma,
+          refNeedsArrowPos.index === ob1Number0
+            ? undefined
+            : parser.getPositionFromIndex(refNeedsArrowPos.index),
+        )
+      ) {
         break;
       }
 
@@ -1657,26 +1813,28 @@ export function parseParenAndDistinguishExpression(
     if (parser.match(tt.ellipsis)) {
       const spreadNodeStartPos = parser.state.startPos;
       spreadStart = parser.state.startPos;
-      exprList.push(parseParenItem(
-        parser,
-        parseSpread(parser),
-        spreadNodeStartPos,
-      ));
+      exprList.push(
+        parseParenItem(parser, parseSpread(parser), spreadNodeStartPos),
+      );
 
-      if (parser.match(tt.comma) && parser.lookaheadState().tokenType ===
-          tt.parenR) {
+      if (
+        parser.match(tt.comma) &&
+        parser.lookaheadState().tokenType === tt.parenR
+      ) {
         raiseRestNotLast(parser);
         parser.eat(tt.comma);
       }
     } else {
-      exprList.push(parseMaybeAssign<ReturnType<typeof parseParenItem>>(
-        parser,
-        context,
-        false,
-        refShorthandDefaultPos,
-        parseParenItem,
-        refNeedsArrowPos,
-      ));
+      exprList.push(
+        parseMaybeAssign<ReturnType<typeof parseParenItem>>(
+          parser,
+          context,
+          false,
+          refShorthandDefaultPos,
+          parseParenItem,
+          refNeedsArrowPos,
+        ),
+      );
     }
   }
 
@@ -1703,9 +1861,13 @@ export function parseParenAndDistinguishExpression(
         }
       }
 
-      const arrow = parseArrowExpression(parser, arrowStart, {
-        assignmentList: exprList,
-      });
+      const arrow = parseArrowExpression(
+        parser,
+        arrowStart,
+        {
+          assignmentList: exprList,
+        },
+      );
       parser.state.yieldInPossibleArrowParameters = oldYield;
       return {
         ...arrow,
@@ -1733,11 +1895,16 @@ export function parseParenAndDistinguishExpression(
       description: descriptions.JS_PARSER.EMPTY_PARENTHESIZED_EXPRESSION,
     });
 
-    exprList.push(toReferenceIdentifier(parser, parser.createUnknownIdentifier(
-      'empty parenthesized expression',
-      innerStart,
-      innerEnd,
-    )));
+    exprList.push(
+      toReferenceIdentifier(
+        parser,
+        parser.createUnknownIdentifier(
+          'empty parenthesized expression',
+          innerStart,
+          innerEnd,
+        ),
+      ),
+    );
   }
 
   if (optionalCommaStart !== undefined) {
@@ -1748,27 +1915,31 @@ export function parseParenAndDistinguishExpression(
     parser.unexpectedToken(spreadStart);
   }
 
-  if (get0(refShorthandDefaultPos.index) > 0) {
-    parser.unexpectedToken(parser.getPositionFromIndex(
-      refShorthandDefaultPos.index,
-    ));
+  if (ob1Get0(refShorthandDefaultPos.index) > 0) {
+    parser.unexpectedToken(
+      parser.getPositionFromIndex(refShorthandDefaultPos.index),
+    );
   }
 
-  if (get0(refNeedsArrowPos.index) > 0) {
+  if (ob1Get0(refNeedsArrowPos.index) > 0) {
     parser.unexpectedToken(parser.getPositionFromIndex(refNeedsArrowPos.index));
   }
 
-  const filterList = filterSpread(parser, toReferencedListDeep(
+  const filterList = filterSpread(
     parser,
-    exprList, /* isParenthesizedExpr */true,
-  ));
+    toReferencedListDeep(parser, exprList, /* isParenthesizedExpr */ true),
+  );
 
   let val: AnyExpression = filterList[0];
   if (filterList.length > 1) {
-    val = parser.finishNodeAt(innerStart, innerEnd, {
-      type: 'SequenceExpression',
-      expressions: filterList,
-    });
+    val = parser.finishNodeAt(
+      innerStart,
+      innerEnd,
+      {
+        type: 'SequenceExpression',
+        expressions: filterList,
+      },
+    );
   }
 
   parser.addParenthesized(val);
@@ -1780,7 +1951,9 @@ export function shouldParseArrow(parser: JSParser): boolean {
   return parser.match(tt.colon) || !parser.canInsertSemicolon();
 }
 
-export function parseArrowHead(parser: JSParser): {
+export function parseArrowHead(
+  parser: JSParser,
+): {
   valid: boolean;
   predicate: undefined | AnyFlowPredicate;
   returnType: undefined | AnyPrimaryType;
@@ -1851,21 +2024,27 @@ export function parseParenItem(
 
   if (parser.match(tt.colon)) {
     const typeAnnotation = parsePrimaryTypeAnnotation(parser);
-    return parser.finishNode(startPos, {
-      type: 'AmbiguousFlowTypeCastExpression',
-      expression: node,
-      typeAnnotation,
-      optional,
-    });
+    return parser.finishNode(
+      startPos,
+      {
+        type: 'AmbiguousFlowTypeCastExpression',
+        expression: node,
+        typeAnnotation,
+        optional,
+      },
+    );
   }
 
   if (optional) {
-    return parser.finishNode(startPos, {
-      type: 'AmbiguousFlowTypeCastExpression',
-      expression: node,
-      typeAnnotation: undefined,
-      optional,
-    });
+    return parser.finishNode(
+      startPos,
+      {
+        type: 'AmbiguousFlowTypeCastExpression',
+        expression: node,
+        typeAnnotation: undefined,
+        optional,
+      },
+    );
   }
 
   return node;
@@ -1878,9 +2057,10 @@ export function parseNew(parser: JSParser): NewExpression | MetaProperty {
   if (parser.eat(tt.dot)) {
     const metaProp = parseMetaProperty(parser, start, meta, 'target');
 
-    if (!parser.inScope('NON_ARROW_FUNCTION') && !parser.inScope(
-        'CLASS_PROPERTY',
-      )) {
+    if (
+      !parser.inScope('NON_ARROW_FUNCTION') &&
+      !parser.inScope('CLASS_PROPERTY')
+    ) {
       parser.addDiagnostic({
         loc: metaProp.loc,
         description: descriptions.JS_PARSER.NEW_TARGET_OUTSIDE_CLASS,
@@ -1938,20 +2118,21 @@ export function parseNew(parser: JSParser): NewExpression | MetaProperty {
     );
     args = toReferencedList(parser, args);
   } else if (parser.isSyntaxEnabled('ts') && typeArguments !== undefined) {
-    parser.addDiagnostic(
-      {
-        description: descriptions.JS_PARSER.NEW_WITH_TYPESCRIPT_TYPE_ARGUMENTS_NO_PARENS,
-      },
-    );
+    parser.addDiagnostic({
+      description: descriptions.JS_PARSER.NEW_WITH_TYPESCRIPT_TYPE_ARGUMENTS_NO_PARENS,
+    });
   }
 
-  return parser.finishNode(start, {
-    type: 'NewExpression',
-    callee,
-    typeArguments,
-    arguments: args,
-    optional,
-  });
+  return parser.finishNode(
+    start,
+    {
+      type: 'NewExpression',
+      callee,
+      typeArguments,
+      arguments: args,
+      optional,
+    },
+  );
 }
 
 function getFirstOptionalChainMember(
@@ -2001,12 +2182,15 @@ export function parseTemplateElement(
 
   parser.next();
   const tail = parser.match(tt.backQuote);
-  return parser.finishNode(start, {
-    type: 'TemplateElement',
-    raw,
-    cooked,
-    tail,
-  });
+  return parser.finishNode(
+    start,
+    {
+      type: 'TemplateElement',
+      raw,
+      cooked,
+      tail,
+    },
+  );
 }
 
 export function parseTemplate(
@@ -2042,11 +2226,14 @@ export function parseTemplate(
 
   parser.expectClosing(openContext);
 
-  return parser.finishNode(start, {
-    type: 'TemplateLiteral',
-    expressions,
-    quasis,
-  });
+  return parser.finishNode(
+    start,
+    {
+      type: 'TemplateLiteral',
+      expressions,
+      quasis,
+    },
+  );
 }
 
 export function parseObjectExpression(
@@ -2101,9 +2288,13 @@ export function parseObjectExpression(
       }
 
       const asyncId = parseIdentifier(parser);
-      if (parser.match(tt.colon) || parser.match(tt.parenL) || parser.match(
-          tt.braceR,
-        ) || parser.match(tt.eq) || parser.match(tt.comma)) {
+      if (
+        parser.match(tt.colon) ||
+        parser.match(tt.parenL) ||
+        parser.match(tt.braceR) ||
+        parser.match(tt.eq) ||
+        parser.match(tt.comma)
+      ) {
         key = {
           type: 'StaticPropertyKey',
           loc: asyncId.loc,
@@ -2129,15 +2320,18 @@ export function parseObjectExpression(
       key = parseObjectPropertyKey(parser);
     }
 
-    const prop = parseObjectPropertyValue(parser, {
-      key,
-      start,
-      isGenerator,
-      isAsync,
-      isPattern: false,
-      refShorthandDefaultPos,
-      escapePosition,
-    });
+    const prop = parseObjectPropertyValue(
+      parser,
+      {
+        key,
+        start,
+        isGenerator,
+        isAsync,
+        isPattern: false,
+        refShorthandDefaultPos,
+        escapePosition,
+      },
+    );
     if (prop === undefined) {
       continue;
     }
@@ -2149,10 +2343,13 @@ export function parseObjectExpression(
     properties.push(prop);
   }
 
-  return parser.finishNode(start, {
-    type: 'ObjectExpression',
-    properties,
-  });
+  return parser.finishNode(
+    start,
+    {
+      type: 'ObjectExpression',
+      properties,
+    },
+  );
 }
 
 export function parseObjectPattern(
@@ -2208,8 +2405,10 @@ export function parseObjectPattern(
         break;
       }
 
-      if (parser.match(tt.comma) && parser.lookaheadState().tokenType ===
-          tt.braceR) {
+      if (
+        parser.match(tt.comma) &&
+        parser.lookaheadState().tokenType === tt.braceR
+      ) {
         parser.addDiagnostic({
           description: descriptions.JS_PARSER.TRAILING_COMMA_AFTER_REST,
         });
@@ -2224,15 +2423,18 @@ export function parseObjectPattern(
     start = parser.getPosition();
 
     const key = parseObjectPropertyKey(parser);
-    const prop = parseObjectPropertyValue(parser, {
-      key,
-      start,
-      isGenerator,
-      isAsync,
-      isPattern: true,
-      refShorthandDefaultPos,
-      escapePosition: undefined,
-    });
+    const prop = parseObjectPropertyValue(
+      parser,
+      {
+        key,
+        start,
+        isGenerator,
+        isAsync,
+        isPattern: true,
+        refShorthandDefaultPos,
+        escapePosition: undefined,
+      },
+    );
 
     if (prop === undefined) {
       continue;
@@ -2257,11 +2459,14 @@ export function parseObjectPattern(
     raiseRestNotLast(parser, firstRestLocation);
   }
 
-  return parser.finishNode(start, {
-    type: 'BindingObjectPattern',
-    properties,
-    rest,
-  });
+  return parser.finishNode(
+    start,
+    {
+      type: 'BindingObjectPattern',
+      properties,
+      rest,
+    },
+  );
 }
 
 export function isGetterOrSetterMethod(
@@ -2271,18 +2476,21 @@ export function isGetterOrSetterMethod(
   keyVal: Identifier | AnyExpression | PrivateName,
   isPattern: boolean,
 ): keyVal is Identifier {
-  return !isPattern && key.type === 'StaticPropertyKey' && keyVal.type ===
-      'Identifier' && (keyVal.name === 'get' || keyVal.name === 'set') &&
+  return (
+    !isPattern &&
+    key.type === 'StaticPropertyKey' &&
+    keyVal.type === 'Identifier' &&
+    (keyVal.name === 'get' || keyVal.name === 'set') &&
     (parser.match(tt.string) ||
-            // get "string"() {}
-            parser.match(tt.num) ||
-          // get 1() {}
-          parser.match(tt.bracketL) ||
-        // get ["string"]() {}
-        parser.match(tt.name) ||
-      // get foo() {}
-      !!parser.state.tokenType.keyword) // get debugger() {}
-  ;
+    // get "string"() {}
+    parser.match(tt.num) ||
+    // get 1() {}
+    parser.match(tt.bracketL) ||
+    // get ["string"]() {}
+    parser.match(tt.name) ||
+    // get foo() {}
+    !!parser.state.tokenType.keyword) // get debugger() {}
+  );
 }
 
 // get methods aren't allowed to have any parameters
@@ -2296,12 +2504,10 @@ export function checkGetterSetterParamCount(
     | ClassPrivateMethod
     | TSDeclareFunction
     | TSDeclareMethod,
-
   kind: string,
 ): void {
-  const head = method.type === 'FlowFunctionTypeAnnotation'
-    ? method
-    : method.head;
+  const head =
+    method.type === 'FlowFunctionTypeAnnotation' ? method : method.head;
 
   if (kind === 'get') {
     if (head.rest !== undefined || head.params.length !== 0) {
@@ -2334,14 +2540,17 @@ type ParseObjectMethodOpts = {
   escapePosition: undefined | Number0;
 };
 
-export function parseObjectMethod(parser: JSParser, {
-  key,
-  start,
-  isGenerator,
-  isAsync,
-  isPattern,
-  escapePosition,
-}: ParseObjectMethodOpts): undefined | ObjectMethod {
+export function parseObjectMethod(
+  parser: JSParser,
+  {
+    key,
+    start,
+    isGenerator,
+    isAsync,
+    isPattern,
+    escapePosition,
+  }: ParseObjectMethodOpts,
+): undefined | ObjectMethod {
   if (isAsync || isGenerator || parser.match(tt.parenL)) {
     if (isPattern) {
       parser.addDiagnostic({
@@ -2349,26 +2558,32 @@ export function parseObjectMethod(parser: JSParser, {
       });
     }
 
-    const partial = parseMethod(parser, {
-      kind: 'method',
-      isClass: false,
-      isGenerator,
-      isAsync,
-      isConstructor: false,
-    });
+    const partial = parseMethod(
+      parser,
+      {
+        kind: 'method',
+        isClass: false,
+        isGenerator,
+        isAsync,
+        isConstructor: false,
+      },
+    );
 
     const {body} = partial;
     if (body === undefined || body.type !== 'BlockStatement') {
       throw new Error('Expected body');
     }
 
-    return parser.finishNode(start, {
-      ...partial,
-      body,
-      key,
-      type: 'ObjectMethod',
-      kind: 'method',
-    });
+    return parser.finishNode(
+      start,
+      {
+        ...partial,
+        body,
+        key,
+        type: 'ObjectMethod',
+        kind: 'method',
+      },
+    );
   }
 
   if (isGetterOrSetterMethod(parser, key, key.value, isPattern)) {
@@ -2394,26 +2609,32 @@ export function parseObjectMethod(parser: JSParser, {
 
     const newKey = parseObjectPropertyKey(parser);
 
-    const partial = parseMethod(parser, {
-      kind,
-      isClass: false,
-      isGenerator: false,
-      isAsync: false,
-      isConstructor: false,
-    });
+    const partial = parseMethod(
+      parser,
+      {
+        kind,
+        isClass: false,
+        isGenerator: false,
+        isAsync: false,
+        isConstructor: false,
+      },
+    );
 
     const {body, head} = partial;
     if (body === undefined || body.type !== 'BlockStatement') {
       throw new Error('Expected body');
     }
 
-    const method: ObjectMethod = parser.finishNode(start, {
-      head,
-      body,
-      key: newKey,
-      type: 'ObjectMethod',
-      kind,
-    });
+    const method: ObjectMethod = parser.finishNode(
+      start,
+      {
+        head,
+        body,
+        key: newKey,
+        type: 'ObjectMethod',
+        kind,
+      },
+    );
     checkGetterSetterParamCount(parser, method, method.kind);
     return method;
   }
@@ -2431,11 +2652,14 @@ export function parseObjectProperty(
   if (parser.eat(tt.colon)) {
     if (isPattern) {
       const value = parseMaybeDefault(parser);
-      return parser.finishNode(start, {
-        key,
-        type: 'BindingObjectPatternProperty',
-        value,
-      });
+      return parser.finishNode(
+        start,
+        {
+          key,
+          type: 'BindingObjectPatternProperty',
+          value,
+        },
+      );
     } else {
       const value = parseMaybeAssign(
         parser,
@@ -2443,11 +2667,14 @@ export function parseObjectProperty(
         false,
         refShorthandDefaultPos,
       );
-      return parser.finishNode(start, {
-        key,
-        type: 'ObjectProperty',
-        value,
-      });
+      return parser.finishNode(
+        start,
+        {
+          key,
+          type: 'ObjectProperty',
+          value,
+        },
+      );
     }
   }
 
@@ -2467,25 +2694,31 @@ export function parseObjectProperty(
       );
 
       if (parser.match(tt.eq) && refShorthandDefaultPos) {
-        if (refShorthandDefaultPos.index === number0) {
+        if (refShorthandDefaultPos.index === ob1Number0) {
           refShorthandDefaultPos.index = parser.state.startPos.index;
         }
 
         value = parseMaybeDefault(parser, start, value);
       }
 
-      return parser.finishNode(start, {
-        type: 'BindingObjectPatternProperty',
-        key,
-        value,
-      });
+      return parser.finishNode(
+        start,
+        {
+          type: 'BindingObjectPatternProperty',
+          key,
+          value,
+        },
+      );
     }
 
-    return parser.finishNode(start, {
-      type: 'ObjectProperty',
-      key,
-      value: toReferenceIdentifier(parser, parser.cloneNode(key.value)),
-    });
+    return parser.finishNode(
+      start,
+      {
+        type: 'ObjectProperty',
+        key,
+        value: toReferenceIdentifier(parser, parser.cloneNode(key.value)),
+      },
+    );
   }
 
   return undefined;
@@ -2530,20 +2763,19 @@ export function parseObjectPropertyValue(
     | undefined
     | ObjectMethod
     | ObjectProperty
-    | BindingObjectPatternProperty = parseObjectMethod(parser, {
-    key,
-    start,
-    isGenerator,
-    isAsync,
-    isPattern,
-    escapePosition,
-  }) || parseObjectProperty(
-    parser,
-    key,
-    start,
-    isPattern,
-    refShorthandDefaultPos,
-  );
+    | BindingObjectPatternProperty =
+    parseObjectMethod(
+      parser,
+      {
+        key,
+        start,
+        isGenerator,
+        isAsync,
+        isPattern,
+        escapePosition,
+      },
+    ) ||
+    parseObjectProperty(parser, key, start, isPattern, refShorthandDefaultPos);
 
   if (node === undefined) {
     parser.unexpectedToken();
@@ -2553,14 +2785,14 @@ export function parseObjectPropertyValue(
   if (typeParameters === undefined) {
     return node;
   } else {
-    if (node.type === 'ObjectProperty' || node.type ===
-        'BindingObjectPatternProperty') {
-      parser.addDiagnostic(
-        {
-          loc: typeParameters.loc,
-          description: descriptions.JS_PARSER.OBJECT_PROPERTY_WITH_TYPE_PARAMETERS,
-        },
-      );
+    if (
+      node.type === 'ObjectProperty' ||
+      node.type === 'BindingObjectPatternProperty'
+    ) {
+      parser.addDiagnostic({
+        loc: typeParameters.loc,
+        description: descriptions.JS_PARSER.OBJECT_PROPERTY_WITH_TYPE_PARAMETERS,
+      });
       return node;
     }
 
@@ -2589,11 +2821,14 @@ export function parseObjectPropertyKey(
 
     const value = parseMaybeAssign(parser, 'property name');
     parser.expectClosing(openContext);
-    return parser.finishNode(start, {
-      type: 'ComputedPropertyKey',
-      value,
-      variance,
-    });
+    return parser.finishNode(
+      start,
+      {
+        type: 'ComputedPropertyKey',
+        value,
+        variance,
+      },
+    );
   } else {
     parser.pushScope('PROPERTY_NAME', true);
 
@@ -2609,22 +2844,28 @@ export function parseObjectPropertyKey(
 
     parser.popScope('PROPERTY_NAME');
 
-    return parser.finishNode(start, {
-      type: 'StaticPropertyKey',
-      value,
-      variance,
-    });
+    return parser.finishNode(
+      start,
+      {
+        type: 'StaticPropertyKey',
+        value,
+        variance,
+      },
+    );
   }
 }
 
 // Parse object or class method.
-export function parseMethod(parser: JSParser, opts: {
-  kind: ClassMethodKind | ObjectMethodKind;
-  isGenerator: boolean;
-  isAsync: boolean;
-  isConstructor: boolean;
-  isClass: boolean;
-}): {
+export function parseMethod(
+  parser: JSParser,
+  opts: {
+    kind: ClassMethodKind | ObjectMethodKind;
+    isGenerator: boolean;
+    isAsync: boolean;
+    isConstructor: boolean;
+    isClass: boolean;
+  },
+): {
   head: FunctionHead;
   body: undefined | ParseFunctionBodyReturn['body'];
 } {
@@ -2636,8 +2877,8 @@ export function parseMethod(parser: JSParser, opts: {
   parser.pushScope('NON_ARROW_FUNCTION');
   parser.pushScope('METHOD', kind);
   parser.pushScope('GENERATOR', isGenerator);
-  parser.state.yieldPos = number0;
-  parser.state.awaitPos = number0;
+  parser.state.yieldPos = ob1Number0;
+  parser.state.awaitPos = ob1Number0;
 
   const allowTSModifiers = isConstructor;
   const headStart = parser.getPosition();
@@ -2647,18 +2888,21 @@ export function parseMethod(parser: JSParser, opts: {
     allowTSModifiers,
   );
   const start = parser.getPosition();
-  const {body, head} = parseFunctionBodyAndFinish(parser, {
-    headStart,
-    rest,
-    params,
-    id: undefined,
-    allowBodiless: isClass,
-    isArrowFunction: false,
-    isAsync,
-    isGenerator,
-    isMethod: true,
-    start,
-  });
+  const {body, head} = parseFunctionBodyAndFinish(
+    parser,
+    {
+      headStart,
+      rest,
+      params,
+      id: undefined,
+      allowBodiless: isClass,
+      isArrowFunction: false,
+      isAsync,
+      isGenerator,
+      isMethod: true,
+      start,
+    },
+  );
 
   parser.popScope('METHOD');
   parser.popScope('GENERATOR');
@@ -2707,14 +2951,17 @@ function createFunctionHead(
   };
 }
 
-export function parseArrowExpression(parser: JSParser, start: Position, opts: {
-  bindingList?: Array<AnyBindingPattern>;
-  assignmentList?: Array<undefined | ToReferencedItem>;
-  rest?: AnyTargetBindingPattern;
-},
-isAsync: boolean = false): ArrowFunctionExpression {
+export function parseArrowExpression(
+  parser: JSParser,
+  start: Position,
+  opts: {
+    bindingList?: Array<AnyBindingPattern>;
+    assignmentList?: Array<ArrayHole | ToReferencedItem>;
+    rest?: AnyTargetBindingPattern;
+  },
+  isAsync: boolean = false,
+): ArrowFunctionExpression {
   // if we got there, it's no more "yield in possible arrow parameters";
-
   // it's just "yield in arrow parameters"
   if (parser.state.yieldInPossibleArrowParameters) {
     parser.addDiagnostic({
@@ -2730,8 +2977,8 @@ isAsync: boolean = false): ArrowFunctionExpression {
   const oldMaybeInArrowParameters = parser.state.maybeInArrowParameters;
   parser.pushScope('GENERATOR', false);
   parser.state.maybeInArrowParameters = false;
-  parser.state.yieldPos = number0;
-  parser.state.awaitPos = number0;
+  parser.state.yieldPos = ob1Number0;
+  parser.state.awaitPos = ob1Number0;
 
   const headEnd = parser.getPosition();
 
@@ -2750,39 +2997,50 @@ isAsync: boolean = false): ArrowFunctionExpression {
     ));
   }
 
-  let head = parser.finishNodeAt(start, headEnd, createFunctionHead(
-    parser,
-    params,
-    rest,
-    {
-      hasHoistedVars: false,
-      async: isAsync,
-    },
-  ));
-
-  const {body, hasHoistedVars} = parseFunctionBody(parser, {
-    id: undefined,
-    allowBodiless: false,
-    isArrowFunction: true,
-    isMethod: false,
-    isAsync,
-    isGenerator: false,
+  let head = parser.finishNodeAt(
     start,
-  });
+    headEnd,
+    createFunctionHead(
+      parser,
+      params,
+      rest,
+      {
+        hasHoistedVars: false,
+        async: isAsync,
+      },
+    ),
+  );
+
+  const {body, hasHoistedVars} = parseFunctionBody(
+    parser,
+    {
+      id: undefined,
+      allowBodiless: false,
+      isArrowFunction: true,
+      isMethod: false,
+      isAsync,
+      isGenerator: false,
+      start,
+    },
+  );
 
   head = {
     ...head,
     hasHoistedVars,
   };
 
-  checkFunctionNameAndParams(parser, {
-    isArrowFunction: true,
-    isMethod: false,
-    id: undefined,
-    params,
-    rest,
-    start,
-  }, body);
+  checkFunctionNameAndParams(
+    parser,
+    {
+      isArrowFunction: true,
+      isMethod: false,
+      id: undefined,
+      params,
+      rest,
+      start,
+    },
+    body,
+  );
 
   parser.popScope('GENERATOR');
   parser.popScope('FUNCTION');
@@ -2790,11 +3048,14 @@ isAsync: boolean = false): ArrowFunctionExpression {
   parser.state.yieldPos = oldYieldPos;
   parser.state.awaitPos = oldAwaitPos;
 
-  return parser.finishNode(start, {
-    type: 'ArrowFunctionExpression',
-    body,
-    head,
-  });
+  return parser.finishNode(
+    start,
+    {
+      type: 'ArrowFunctionExpression',
+      body,
+      head,
+    },
+  );
 }
 
 export function isStrictBody(parser: JSParser, body: AnyNode): boolean {
@@ -2821,9 +3082,10 @@ type FunctionBodyParseOpts = {
 
 export function parseFunctionBodyAndFinish(
   parser: JSParser,
-  opts: CheckFunctionNameParamsOpts & FunctionBodyParseOpts & {
-    headStart: Position;
-  },
+  opts: CheckFunctionNameParamsOpts &
+    FunctionBodyParseOpts & {
+      headStart: Position;
+    },
 ): {
   head: FunctionHead;
   body: undefined | ParseFunctionBodyReturn['body'];
@@ -2837,21 +3099,28 @@ export function parseFunctionBodyAndFinish(
   }
 
   const headEnd = parser.getPosition();
-  const head = parser.finishNodeAt(opts.headStart, headEnd, createFunctionHead(
-    parser,
-    opts.params,
-    opts.rest,
-    {
-      generator: opts.isGenerator,
-      async: opts.isAsync,
-      hasHoistedVars: false,
-      returnType,
-      predicate,
-    },
-  ));
+  const head = parser.finishNodeAt(
+    opts.headStart,
+    headEnd,
+    createFunctionHead(
+      parser,
+      opts.params,
+      opts.rest,
+      {
+        generator: opts.isGenerator,
+        async: opts.isAsync,
+        hasHoistedVars: false,
+        returnType,
+        predicate,
+      },
+    ),
+  );
 
-  if (opts.allowBodiless && !parser.match(tt.braceL) &&
-      parser.isLineTerminator()) {
+  if (
+    opts.allowBodiless &&
+    !parser.match(tt.braceL) &&
+    parser.isLineTerminator()
+  ) {
     return {
       head,
       body: undefined,
@@ -2860,14 +3129,18 @@ export function parseFunctionBodyAndFinish(
 
   const {body, hasHoistedVars} = parseFunctionBody(parser, opts);
 
-  checkFunctionNameAndParams(parser, {
-    isArrowFunction: opts.isArrowFunction,
-    isMethod: opts.isMethod,
-    id: opts.id,
-    start: opts.start,
-    params: opts.params,
-    rest: opts.rest,
-  }, body);
+  checkFunctionNameAndParams(
+    parser,
+    {
+      isArrowFunction: opts.isArrowFunction,
+      isMethod: opts.isMethod,
+      id: opts.id,
+      start: opts.start,
+      params: opts.params,
+      rest: opts.rest,
+    },
+    body,
+  );
 
   head.hasHoistedVars = hasHoistedVars;
 
@@ -2915,7 +3188,6 @@ function _parseFunctionBody(
     body = parseMaybeAssign(parser, 'function body');
   } else {
     // Start a new scope with regard to labels and the `inGenerator`
-
     // flag (restore them to their old value afterwards).
     const oldLabels = parser.state.labels;
     parser.pushScope('GENERATOR', isGenerator);
@@ -2956,22 +3228,25 @@ export function checkFunctionNameAndParams(
 ): void {
   const {isArrowFunction, isMethod, id, rest, params, start} = opts;
 
-  if (!isSimpleParamList(params, rest) && body.type === 'BlockStatement' &&
-        body.directives !==
-        undefined) {
+  if (
+    !isSimpleParamList(params, rest) &&
+    body.type === 'BlockStatement' &&
+    body.directives !== undefined
+  ) {
     const firstDirective = body.directives[0];
     if (firstDirective !== undefined && firstDirective.value === 'use strict') {
-      parser.addDiagnostic(
-        {
-          loc: firstDirective.loc,
-          description: descriptions.JS_PARSER.STRICT_DIRECTIVE_IN_NON_SIMPLE_PARAMS,
-        },
-      );
+      parser.addDiagnostic({
+        loc: firstDirective.loc,
+        description: descriptions.JS_PARSER.STRICT_DIRECTIVE_IN_NON_SIMPLE_PARAMS,
+      });
     }
   }
 
-  if (isArrowFunction && force !== true &&
-      parser.state.noArrowParamsConversionAt.includes(start.index)) {
+  if (
+    isArrowFunction &&
+    force !== true &&
+    parser.state.noArrowParamsConversionAt.includes(start.index)
+  ) {
     return undefined;
   }
 
@@ -2982,8 +3257,8 @@ export function checkFunctionNameAndParams(
   const isStrict = parser.inScope('STRICT') || _isStrictBody;
 
   const isSimpleParams = isSimpleParamList(params, rest);
-  const shouldCheckLVal: boolean = isStrict || isArrowFunction || isMethod ||
-    !isSimpleParams;
+  const shouldCheckLVal: boolean =
+    isStrict || isArrowFunction || isMethod || !isSimpleParams;
 
   parser.pushScope('STRICT', isStrict);
 
@@ -2996,12 +3271,10 @@ export function checkFunctionNameAndParams(
 
     for (const param of params) {
       if (_isStrictBody && param.type !== 'BindingIdentifier') {
-        parser.addDiagnostic(
-          {
-            loc: param.loc,
-            description: descriptions.JS_PARSER.NON_SIMPLE_PARAM_IN_EXPLICIT_STRICT_FUNCTION,
-          },
-        );
+        parser.addDiagnostic({
+          loc: param.loc,
+          description: descriptions.JS_PARSER.NON_SIMPLE_PARAM_IN_EXPLICIT_STRICT_FUNCTION,
+        });
       }
       checkLVal(parser, param, true, clashes, 'function parameter list');
     }
@@ -3052,12 +3325,9 @@ export function parseExpressionList(
       }
     }
 
-    elts.push(parseCallArgument(
-      parser,
-      context,
-      allowEmpty,
-      refShorthandDefaultPos,
-    ));
+    elts.push(
+      parseCallArgument(parser, context, allowEmpty, refShorthandDefaultPos),
+    );
   }
 
   parser.expectClosing(openContext);
@@ -3085,30 +3355,29 @@ export function parseExpressionListNonEmpty(
 export function parseCallArgument(
   parser: JSParser,
   context: ExpressionContext,
-  maybeAllowEmpty?: boolean,
+  allowHoles: boolean = false,
   refShorthandDefaultPos?: IndexTracker,
   refNeedsArrowPos?: IndexTracker,
   refTrailingCommaPos?: IndexTracker,
-): undefined | AnyExpression | SpreadElement | AmbiguousFlowTypeCastExpression {
-  const allowEmpty = Boolean(maybeAllowEmpty);
-
-  let elt: undefined | ReturnType<typeof parseParenItem>;
-  if (allowEmpty && parser.match(tt.comma)) {
-    elt = undefined;
+): ArrayHole | AnyExpression | SpreadElement | AmbiguousFlowTypeCastExpression {
+  if (allowHoles && parser.match(tt.comma)) {
+    return parseArrayHole(parser);
   } else if (parser.match(tt.ellipsis)) {
     const spreadNodeStart = parser.state.startPos;
 
-    elt = parseParenItem(parser, parseSpread(
+    const elt = parseParenItem(
       parser,
-      refShorthandDefaultPos,
-      refNeedsArrowPos,
-    ), spreadNodeStart);
+      parseSpread(parser, refShorthandDefaultPos, refNeedsArrowPos),
+      spreadNodeStart,
+    );
 
     if (refTrailingCommaPos && parser.match(tt.comma)) {
       refTrailingCommaPos.index = parser.state.startPos.index;
     }
+
+    return elt;
   } else {
-    elt = parseMaybeAssign<ReturnType<typeof parseParenItem>>(
+    return parseMaybeAssign<ReturnType<typeof parseParenItem>>(
       parser,
       context,
       false,
@@ -3117,8 +3386,6 @@ export function parseCallArgument(
       refNeedsArrowPos,
     );
   }
-
-  return elt;
 }
 
 // Parse the next token as an identifier. If `liberal` is true (used
@@ -3189,10 +3456,13 @@ export function createIdentifier(
   start: Position,
   name: string,
 ): Identifier {
-  return parser.finishNode(start, {
-    type: 'Identifier',
-    name,
-  });
+  return parser.finishNode(
+    start,
+    {
+      type: 'Identifier',
+      name,
+    },
+  );
 }
 
 export function parseIdentifierName(
@@ -3227,11 +3497,12 @@ export function parseIdentifierName(
     // If the previous token is a dot, this does not apply because the
 
     // context-managing code already ignored the keyword
-    if ((name === 'class' || name === 'function') &&
-        (parser.state.lastEndPos.index !==
-            inc(parser.state.lastStartPos.index) ||
-            parser.input.charCodeAt(get0(parser.state.lastStartPos.index)) !==
-            charCodes.dot)) {
+    if (
+      (name === 'class' || name === 'function') &&
+      (parser.state.lastEndPos.index !== ob1Inc(parser.state.lastStartPos.index) ||
+      parser.input.charCodeAt(ob1Get0(parser.state.lastStartPos.index)) !==
+      charCodes.dot)
+    ) {
       parser.state.context.pop();
     }
   } else {
@@ -3242,8 +3513,13 @@ export function parseIdentifierName(
   }
 
   if (!liberal) {
-    checkReservedWord(parser, name, loc, parser.state.tokenType.keyword !==
-      undefined, false);
+    checkReservedWord(
+      parser,
+      name,
+      loc,
+      parser.state.tokenType.keyword !== undefined,
+      false,
+    );
   }
 
   parser.next();
@@ -3259,9 +3535,7 @@ export function checkReservedWord(
 ): void {
   if (parser.isSyntaxEnabled('ts')) {
     // TypeScript support in Babel disables reserved word checking...
-
     // This is mostly because TS allows reserved words in certain scenarios
-
     // TODO we should just allow those rather than relying on this hack
     return undefined;
   }
@@ -3367,9 +3641,12 @@ export function parseYield(parser: JSParser, noIn?: boolean): YieldExpression {
     });
   }
 
-  if (parser.state.maybeInArrowParameters && // We only set yieldInPossibleArrowParameters if we haven't already
-  // found a possible invalid YieldExpression.
-  parser.state.yieldInPossibleArrowParameters === undefined) {
+  if (
+    parser.state.maybeInArrowParameters &&
+    // We only set yieldInPossibleArrowParameters if we haven't already
+    // found a possible invalid YieldExpression.
+    parser.state.yieldInPossibleArrowParameters === undefined
+  ) {
     parser.state.yieldInPossibleArrowParameters = start;
   }
 
@@ -3377,19 +3654,25 @@ export function parseYield(parser: JSParser, noIn?: boolean): YieldExpression {
 
   let delegate: undefined | boolean;
   let argument: undefined | AnyExpression;
-  if (parser.match(tt.semi) || !parser.match(tt.star) &&
-      !parser.state.tokenType.startsExpr || parser.canInsertSemicolon()) {
+  if (
+    parser.match(tt.semi) ||
+    (!parser.match(tt.star) && !parser.state.tokenType.startsExpr) ||
+    parser.canInsertSemicolon()
+  ) {
     delegate = false;
   } else {
     delegate = parser.eat(tt.star);
     argument = parseMaybeAssign<AnyExpression>(parser, 'yield argument', noIn);
   }
 
-  return parser.finishNode(start, {
-    type: 'YieldExpression',
-    delegate,
-    argument,
-  });
+  return parser.finishNode(
+    start,
+    {
+      type: 'YieldExpression',
+      delegate,
+      argument,
+    },
+  );
 }
 
 function parseNullLiteral(parser: JSParser): NullLiteral {
@@ -3402,30 +3685,45 @@ export function parseStringLiteral(parser: JSParser): StringLiteral {
   const start = parser.getPosition();
   const value = String(parser.state.tokenValue);
   parser.next();
-  return parser.finishNode(start, {
-    type: 'StringLiteral',
-    value,
-  });
+  return parser.finishNode(
+    start,
+    {
+      type: 'StringLiteral',
+      value,
+    },
+  );
 }
 
 function parseBigIntLiteral(parser: JSParser): BigIntLiteral {
   const start = parser.getPosition();
   const value = String(parser.state.tokenValue);
   parser.next();
-  return parser.finishNode(start, {
-    type: 'BigIntLiteral',
-    value,
-  });
+  return parser.finishNode(
+    start,
+    {
+      type: 'BigIntLiteral',
+      value,
+    },
+  );
 }
 
 export function parseNumericLiteral(parser: JSParser): NumericLiteral {
   const start = parser.getPosition();
-  const value = Number(parser.state.tokenValue);
+  const {tokenValue} = parser.state;
+  if (!(tokenValue instanceof NumberTokenValue)) {
+    throw new Error('Expected NumberTokenValue');
+  }
+
+  const {value, format} = tokenValue;
   parser.next();
-  return parser.finishNode(start, {
-    type: 'NumericLiteral',
-    value,
-  });
+  return parser.finishNode(
+    start,
+    {
+      type: 'NumericLiteral',
+      format,
+      value,
+    },
+  );
 }
 
 function parseRegExpLiteral(parser: JSParser): RegExpLiteral {
@@ -3442,8 +3740,8 @@ function parseRegExpLiteral(parser: JSParser): RegExpLiteral {
     offsetPosition: {
       // Advance passed first slash
       ...start,
-      column: inc(start.column),
-      index: inc(start.index),
+      column: ob1Inc(start.column),
+      index: ob1Inc(start.index),
     },
     path: parser.filename,
     input: pattern,
@@ -3456,16 +3754,19 @@ function parseRegExpLiteral(parser: JSParser): RegExpLiteral {
     parser.addDiagnostic(diagnostic);
   }
 
-  return parser.finishNode(start, {
-    type: 'RegExpLiteral',
-    expression,
-    global: flags.has('g'),
-    multiline: flags.has('m'),
-    sticky: flags.has('y'),
-    insensitive: flags.has('i'),
-    noDotNewline: flags.has('s'),
-    unicode: flags.has('u'),
-  });
+  return parser.finishNode(
+    start,
+    {
+      type: 'RegExpLiteral',
+      expression,
+      global: flags.has('g'),
+      multiline: flags.has('m'),
+      sticky: flags.has('y'),
+      insensitive: flags.has('i'),
+      noDotNewline: flags.has('s'),
+      unicode: flags.has('u'),
+    },
+  );
 }
 
 function parseImportOrMetaProperty(parser: JSParser): ImportCall | MetaProperty {
@@ -3489,15 +3790,16 @@ function parseImportCall(parser: JSParser): ImportCall {
       description: descriptions.JS_PARSER.IMPORT_EXACT_ARGUMENTS,
     });
 
-    argument = toReferenceIdentifier(parser, parser.createUnknownIdentifier(
-      'import call argument',
-    ));
+    argument = toReferenceIdentifier(
+      parser,
+      parser.createUnknownIdentifier('import call argument'),
+    );
   } else {
     const callArg = parseCallArgument(parser, 'call expression argument', false);
-    if (callArg === undefined) {
+    if (callArg.type === 'ArrayHole') {
       throw new Error(
-          'Expected argument, parseExpressionListItem was passed maybeAllowEmpty: false',
-        );
+        'Expected argument, parseExpressionListItem was passed maybeAllowEmpty: false',
+      );
     } else {
       argument = callArg;
     }
@@ -3521,20 +3823,25 @@ function parseImportCall(parser: JSParser): ImportCall {
 
   parser.expectClosing(openContext);
 
-  const spreadOrExpression: AnyExpression | SpreadElement = argument.type ===
-    'AmbiguousFlowTypeCastExpression' ? argument.expression : argument;
+  const spreadOrExpression: AnyExpression | SpreadElement =
+    argument.type === 'AmbiguousFlowTypeCastExpression'
+      ? argument.expression
+      : argument;
 
-  const expression: AnyExpression = spreadOrExpression.type === 'SpreadElement'
-    ? spreadOrExpression.argument
-    : spreadOrExpression;
+  const expression: AnyExpression =
+    spreadOrExpression.type === 'SpreadElement'
+      ? spreadOrExpression.argument
+      : spreadOrExpression;
 
   return parser.finishNode(start, {type: 'ImportCall', argument: expression});
 }
 
 function parseSuper(parser: JSParser): Super {
-  if (!parser.inScope('METHOD') && !parser.inScope('CLASS_PROPERTY') &&
-        parser.sourceType !==
-        'template') {
+  if (
+    !parser.inScope('METHOD') &&
+    !parser.inScope('CLASS_PROPERTY') &&
+    parser.sourceType !== 'template'
+  ) {
     parser.addDiagnostic({
       description: descriptions.JS_PARSER.SUPER_OUTSIDE_METHOD,
     });
@@ -3543,9 +3850,11 @@ function parseSuper(parser: JSParser): Super {
   const start = parser.getPosition();
   parser.next();
 
-  if (!parser.match(tt.parenL) && !parser.match(tt.bracketL) && !parser.match(
-      tt.dot,
-    )) {
+  if (
+    !parser.match(tt.parenL) &&
+    !parser.match(tt.bracketL) &&
+    !parser.match(tt.dot)
+  ) {
     parser.addDiagnostic({
       description: descriptions.JS_PARSER.INVALID_SUPER_SUFFIX,
     });
@@ -3553,10 +3862,12 @@ function parseSuper(parser: JSParser): Super {
 
   const loc = parser.finishLoc(start);
 
-  if (parser.match(tt.parenL) && (parser.getLastScope('METHOD') !==
-        'constructor' || parser.getLastScope('CLASS') !== 'derived') &&
-        parser.sourceType !==
-        'template') {
+  if (
+    parser.match(tt.parenL) &&
+    (parser.getLastScope('METHOD') !== 'constructor' ||
+    parser.getLastScope('CLASS') !== 'derived') &&
+    parser.sourceType !== 'template'
+  ) {
     parser.addDiagnostic({
       loc,
       description: descriptions.JS_PARSER.SUPER_CALL_OUTSIDE_CONSTRUCTOR,
@@ -3578,10 +3889,22 @@ function parseDoExpression(parser: JSParser): DoExpression {
   const body = parseBlock(parser, false);
   parser.popScope('FUNCTION');
   parser.state.labels = oldLabels;
-  return parser.finishNode(start, {
-    type: 'DoExpression',
-    body,
-  });
+  return parser.finishNode(
+    start,
+    {
+      type: 'DoExpression',
+      body,
+    },
+  );
+}
+
+export function parseArrayHole(parser: JSParser): ArrayHole {
+  return parser.finishNode(
+    parser.getPosition(),
+    {
+      type: 'ArrayHole',
+    },
+  );
 }
 
 function parseArrayExpression(
@@ -3591,16 +3914,22 @@ function parseArrayExpression(
   const start = parser.getPosition();
   const openContext = parser.expectOpening(tt.bracketL, tt.bracketR, 'array');
 
-  const elements = toReferencedListOptional(parser, parseExpressionList(
+  const elements = toReferencedListOptional(
     parser,
-    'array element',
-    openContext,
-    true,
-    refShorthandDefaultPos,
-  ));
+    parseExpressionList(
+      parser,
+      'array element',
+      openContext,
+      true,
+      refShorthandDefaultPos,
+    ),
+  );
 
-  return parser.finishNode(start, {
-    type: 'ArrayExpression',
-    elements,
-  });
+  return parser.finishNode(
+    start,
+    {
+      type: 'ArrayExpression',
+      elements,
+    },
+  );
 }

@@ -15,7 +15,8 @@ export {default as Record} from './lib/Record';
 export {default as Cache} from './lib/Cache';
 
 // methods
-export {default as lint} from './api/lint';
+export * from './lint/decisions';
+export {default as lint} from './lint/index';
 export {default as compile} from './api/compile';
 export {
   default as analyzeDependencies,
@@ -29,12 +30,8 @@ export * from './scope/bindings';
 // utils
 export * from './constants';
 
-export {
-  areAnalyzeDependencyResultsEqual,
-} from './api/analyzeDependencies/utils';
-export {
-  getPrefixedNamespace as getPrefixedBundleNamespace,
-} from './transforms/compileForBundle/_utils';
+export {areAnalyzeDependencyResultsEqual} from './api/analyzeDependencies/utils';
+export {getPrefixedNamespace as getPrefixedBundleNamespace} from './transforms/compileForBundle/_utils';
 export {default as createHook} from './api/createHook';
 export {
   extractSuppressionsFromProgram,
@@ -42,7 +39,7 @@ export {
 } from './suppressions';
 
 // types
-export {LintResult} from './api/lint';
+export {LintResult} from './lint/index';
 export {CompileResult} from './api/compile';
 export {HookDescriptor} from './api/createHook';
 export * from './types';

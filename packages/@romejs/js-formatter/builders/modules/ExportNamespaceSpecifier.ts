@@ -6,20 +6,12 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator, space, word, concat} from '../../tokens';
-import {exportNamespaceSpecifier, AnyNode} from '@romejs/js-ast';
+import {Token, concat, space} from '../../tokens';
+import {ExportNamespaceSpecifier} from '@romejs/js-ast';
 
 export default function ExportNamespaceSpecifier(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = exportNamespaceSpecifier.assert(node);
-
-  return [
-    operator('*'),
-    space,
-    word('as'),
-    space,
-    concat(builder.tokenize(node.exported, node)),
-  ];
+  node: ExportNamespaceSpecifier,
+): Token {
+  return concat(['*', space, 'as', space, builder.tokenize(node.exported, node)]);
 }

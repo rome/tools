@@ -6,35 +6,32 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator, space} from '../../tokens';
-import {
-  FlowFunctionTypeAnnotation,
-  flowFunctionTypeAnnotation,
-  AnyNode,
-} from '@romejs/js-ast';
+import {Token, concat, space} from '../../tokens';
+import {AnyNode, FlowFunctionTypeAnnotation} from '@romejs/js-ast';
+import {printCommaList} from '../utils';
 
 export default function FlowFunctionTypeAnnotation(
   builder: Builder,
-  node: AnyNode,
+  node: FlowFunctionTypeAnnotation,
   parent: AnyNode,
-): Tokens {
-  node = flowFunctionTypeAnnotation.assert(node);
-
-  let tokens: Tokens = [
-    ...builder.tokenize(node.typeParameters, node),
-    operator('('),
-    builder.tokenizeCommaList(node.params, node),
-    operator(')'),
+): Token {
+  const tokens: Array<Token> = [
+    builder.tokenize(node.typeParameters, node),
+    '(',
+    printCommaList(builder, node.params, node),
+    ')',
   ];
 
   // this node type is overloaded, not sure why but it makes it EXTREMELY annoying
-  if (parent.type === 'FlowObjectTypeCallProperty' || parent.type ===
-      'FlowDeclareFunction') {
-    tokens.push(operator(':'));
+  if (
+    parent.type === 'FlowObjectTypeCallProperty' ||
+    parent.type === 'FlowDeclareFunction'
+  ) {
+    tokens.push(':');
   } else {
     tokens.push(space);
-    tokens.push(operator('=>'));
+    tokens.push('=>');
   }
 
-  return [...tokens, space, ...builder.tokenize(node.returnType, node)];
+  return concat([concat(tokens), space, builder.tokenize(node.returnType, node)]);
 }

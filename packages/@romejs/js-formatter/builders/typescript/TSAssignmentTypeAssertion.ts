@@ -6,24 +6,18 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator, space} from '../../tokens';
-import {
-  TSAssignmentTypeAssertion,
-  tsAssignmentTypeAssertion,
-  AnyNode,
-} from '@romejs/js-ast';
+import {Token, concat, space} from '../../tokens';
+import {TSAssignmentTypeAssertion} from '@romejs/js-ast';
 
 export default function TSAssignmentTypeAssertion(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = tsAssignmentTypeAssertion.assert(node);
-
-  return [
-    operator('<'),
-    ...builder.tokenize(node.typeAnnotation, node),
-    operator('>'),
+  node: TSAssignmentTypeAssertion,
+): Token {
+  return concat([
+    '<',
+    builder.tokenize(node.typeAnnotation, node),
+    '>',
     space,
-    ...builder.tokenize(node.expression, node),
-  ];
+    builder.tokenize(node.expression, node),
+  ]);
 }

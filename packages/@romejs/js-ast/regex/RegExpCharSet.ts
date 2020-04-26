@@ -6,9 +6,9 @@
  */
 
 import {
+  AnyRegExpEscapedCharacter,
   JSNodeBase,
   RegExpCharSetRange,
-  AnyRegExpEscapedCharacter,
 } from '../index';
 import {createBuilder} from '../utils';
 
@@ -18,9 +18,12 @@ export type RegExpCharSet = JSNodeBase & {
   body: Array<RegExpCharSetRange | AnyRegExpEscapedCharacter>;
 };
 
-export const regExpCharSet = createBuilder<RegExpCharSet>('RegExpCharSet', {
-  bindingKeys: {},
-  visitorKeys: {
-    body: true,
+export const regExpCharSet = createBuilder<RegExpCharSet>(
+  'RegExpCharSet',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      body: true,
+    },
   },
-});
+);

@@ -6,18 +6,13 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens} from '../../tokens';
-import {
-  AssignmentObjectPattern,
-  assignmentObjectPattern,
-  AnyNode,
-} from '@romejs/js-ast';
+import {Token} from '../../tokens';
+import {AssignmentObjectPattern} from '@romejs/js-ast';
 import ObjectExpression from '../objects/ObjectExpression';
 
 export default function AssignmentObjectPattern(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = assignmentObjectPattern.assert(node);
+  node: AssignmentObjectPattern,
+): Token {
   return ObjectExpression(builder, node);
 }

@@ -6,26 +6,22 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator} from '../../tokens';
-import {
-  FlowTypeCastExpression,
-  flowTypeCastExpression,
-  AnyNode,
-} from '@romejs/js-ast';
+import {Token, concat, space} from '../../tokens';
+import {FlowTypeCastExpression} from '@romejs/js-ast';
 
 export default function FlowTypeCastExpression(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = flowTypeCastExpression.assert(node);
-
+  node: FlowTypeCastExpression,
+): Token {
   if (builder.options.typeAnnotations) {
-    return [
-      operator('('),
-      ...builder.tokenize(node.expression, node),
-      ...builder.tokenizeTypeColon(node.typeAnnotation, node),
-      operator(')'),
-    ];
+    return concat([
+      '(',
+      builder.tokenize(node.expression, node),
+      ':',
+      space,
+      builder.tokenize(node.typeAnnotation, node),
+      ')',
+    ]);
   } else {
     return builder.tokenize(node.expression, node);
   }

@@ -6,11 +6,11 @@
  */
 
 import {
-  JSNodeBase,
-  Super,
   AnyExpression,
-  SpreadElement,
   AnyTypeArguments,
+  JSNodeBase,
+  SpreadElement,
+  Super,
 } from '../index';
 import {createBuilder} from '../utils';
 

@@ -6,15 +6,13 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, indent, operator, concat} from '../../tokens';
-import {jsxFragment, AnyNode} from '@romejs/js-ast';
+import {Token, concat, indent} from '../../tokens';
+import {JSXFragment} from '@romejs/js-ast';
 
-export default function JSXFragment(builder: Builder, node: AnyNode): Tokens {
-  node = jsxFragment.assert(node);
-
-  return [
-    operator('<>'),
-    indent(node.children.map((child) => concat(builder.tokenize(child, node)))),
-    operator('</>'),
-  ];
+export default function JSXFragment(builder: Builder, node: JSXFragment): Token {
+  return concat([
+    '<>',
+    indent(concat(node.children.map((child) => builder.tokenize(child, node)))),
+    '</>',
+  ]);
 }

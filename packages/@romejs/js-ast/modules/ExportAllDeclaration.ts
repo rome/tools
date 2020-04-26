@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, ConstExportModuleKind, StringLiteral} from '../index';
+import {ConstExportModuleKind, JSNodeBase, StringLiteral} from '../index';
 import {createBuilder} from '../utils';
 
 export type ExportAllDeclaration = JSNodeBase & {

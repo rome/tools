@@ -6,9 +6,9 @@
  */
 
 import {
+  AnyNode,
   TSImportEqualsDeclaration,
   tsImportEqualsDeclaration,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function TSImportEqualsDeclaration(node: AnyNode) {

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, AnyFlowPrimary} from '../index';
+import {AnyFlowPrimary, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type FlowNullableTypeAnnotation = JSNodeBase & {
@@ -13,11 +13,12 @@ export type FlowNullableTypeAnnotation = JSNodeBase & {
   typeAnnotation: AnyFlowPrimary;
 };
 
-export const flowNullableTypeAnnotation = createBuilder<
-  FlowNullableTypeAnnotation
->('FlowNullableTypeAnnotation', {
-  bindingKeys: {},
-  visitorKeys: {
-    typeAnnotation: true,
+export const flowNullableTypeAnnotation = createBuilder<FlowNullableTypeAnnotation>(
+  'FlowNullableTypeAnnotation',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      typeAnnotation: true,
+    },
   },
-});
+);

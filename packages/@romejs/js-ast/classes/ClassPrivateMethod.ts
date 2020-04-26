@@ -6,11 +6,11 @@
  */
 
 import {
+  BlockStatement,
   ClassMethodKind,
-  JSNodeBase,
   ClassPropertyMeta,
   FunctionHead,
-  BlockStatement,
+  JSNodeBase,
   PrivateName,
 } from '../index';
 import {createBuilder} from '../utils';

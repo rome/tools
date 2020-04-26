@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, AnyExpression} from '../index';
+import {AnyExpression, JSNodeBase} from '../index';
 import {createQuickBuilder} from '../utils';
 
 export type ComputedMemberProperty = JSNodeBase & {
@@ -17,9 +17,13 @@ export type ComputedMemberProperty = JSNodeBase & {
 export const computedMemberProperty = createQuickBuilder<
   ComputedMemberProperty,
   'value'
->('ComputedMemberProperty', 'value', {
-  bindingKeys: {},
-  visitorKeys: {
-    value: true,
+>(
+  'ComputedMemberProperty',
+  'value',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      value: true,
+    },
   },
-});
+);

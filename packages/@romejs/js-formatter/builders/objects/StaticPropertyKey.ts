@@ -6,13 +6,12 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens} from '../../tokens';
-import {StaticPropertyKey, staticPropertyKey, AnyNode} from '@romejs/js-ast';
+import {Token} from '../../tokens';
+import {StaticPropertyKey} from '@romejs/js-ast';
 
 export default function StaticPropertyKey(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = staticPropertyKey.assert(node);
+  node: StaticPropertyKey,
+): Token {
   return builder.tokenize(node.value, node);
 }

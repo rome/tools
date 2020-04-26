@@ -6,21 +6,46 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, word, space, operator, concat} from '../../tokens';
-import {switchStatement, AnyNode} from '@romejs/js-ast';
+import {
+  Token,
+  concat,
+  group,
+  hardline,
+  indent,
+  softline,
+  space,
+} from '../../tokens';
+import {SwitchStatement} from '@romejs/js-ast';
 
-export default function SwitchStatement(builder: Builder, node: AnyNode): Tokens {
-  node = switchStatement.assert(node);
-
-  return [
-    word('switch'),
+export default function SwitchStatement(
+  builder: Builder,
+  node: SwitchStatement,
+): Token {
+  return concat([
+    group(
+      concat([
+        'switch',
+        space,
+        '(',
+        group(
+          concat([
+            indent(
+              concat([softline, builder.tokenize(node.discriminant, node)]),
+            ),
+            softline,
+          ]),
+        ),
+        ')',
+      ]),
+    ),
     space,
-    operator('('),
-    concat(builder.tokenize(node.discriminant, node)),
-    operator(')'),
-    space,
-    operator('{'),
-    concat(builder.tokenizeStatementList(node.cases, node, true)),
-    operator('}'),
-  ];
+    '{',
+    node.cases.length > 0
+      ? indent(
+          concat([hardline, builder.tokenizeStatementList(node.cases, node)]),
+        )
+      : '',
+    hardline,
+    '}',
+  ]);
 }

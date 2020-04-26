@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {MetaProperty, metaProperty, AnyNode} from '@romejs/js-ast';
+import {AnyNode, MetaProperty, metaProperty} from '@romejs/js-ast';
 
 export default function MetaProperty(node: AnyNode, scope: Scope) {
   node = metaProperty.assert(node);

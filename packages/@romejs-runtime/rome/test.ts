@@ -5,15 +5,53 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import {JSONPropertyValue} from './types';
+
 export type AsyncFunc = () => undefined | Promise<void>;
 
 export type SyncThrower = () => void;
 
 export type ExpectedError = undefined | string | RegExp | Function;
 
+export type TestSnapshotOptions = {
+  filename?: string;
+  language?: string;
+};
+
+// These diagnostics are subsets of the official diagnostics
+// We can potentially normalize these and ensure backwards compatibility with the official diagnostics
+
+export type TestDiagnosticLogCategory = 'none' | 'info' | 'warn' | 'error';
+
+export type TestDiagnosticAdviceInspect = {
+  type: 'inspect';
+  data: JSONPropertyValue;
+};
+
+export type TestDiagnosticAdviceList = {
+  type: 'list';
+  list: Array<string>;
+};
+
+export type TestDiagnosticAdviceCode = {
+  type: 'code';
+  code: string;
+};
+
+export type TestDiagnosticAdviceLog = {
+  type: 'log';
+  category: TestDiagnosticLogCategory;
+  text: string;
+};
+
+export type TestDiagnosticAdviceItem =
+  | TestDiagnosticAdviceInspect
+  | TestDiagnosticAdviceCode
+  | TestDiagnosticAdviceLog
+  | TestDiagnosticAdviceList;
+
 export interface TestHelper {
-  // TODO this should be DiagnosticAdviceItem
-  addToAdvice(item: unknown): void;
+  addToAdvice(item: TestDiagnosticAdviceItem): void;
   clearAdvice(): void;
   onTeardown(callback: AsyncFunc): void;
   clearTimeout(): void;
@@ -28,27 +66,47 @@ export interface TestHelper {
   not(received: unknown, expected: unknown, message?: string): void;
   looksLike(received: unknown, expected: unknown, message?: string): void;
   notLooksLike(received: unknown, expected: unknown, message?: string): void;
-  throws(thrower: SyncThrower, expected?: ExpectedError, message?: string): void;
-  throwsAsync(thrower: AsyncFunc, expected?: ExpectedError, message?: string): Promise<
-    void
-  >;
+  throws(
+    thrower: SyncThrower,
+    expected?: ExpectedError,
+    message?: string,
+  ): void;
+  throwsAsync(
+    thrower: AsyncFunc,
+    expected?: ExpectedError,
+    message?: string,
+  ): Promise<void>;
   notThrows(nonThrower: SyncThrower, message?: string): void;
   notThrowsAsync(nonThrower: AsyncFunc, message?: string): Promise<void>;
   regex(contents: string, regex: RegExp, message?: string): void;
   notRegex(contents: string, regex: RegExp, message?: string): void;
-  snapshot(expected: unknown, message?: string): string;
-  snapshotNamed(name: string, expected: unknown, message?: string): string;
-  getSnapshot(snapshotName: string): unknown;
+  snapshot(
+    expected: unknown,
+    message?: string,
+    opts?: TestSnapshotOptions,
+  ): Promise<string>;
+  snapshotNamed(
+    name: string,
+    expected: unknown,
+    message?: string,
+    opts?: TestSnapshotOptions,
+  ): Promise<string>;
 }
 
 export type TestName = string | Array<string>;
 
 declare const __ROME__TEST_OPTIONS__: GlobalTestOptions;
 
-export type GlobalTestOptions = undefined | {
-  dirname?: string;
-  register?: (err: Error, opts: TestOptions, callback?: TestCallback) => void;
-};
+export type GlobalTestOptions =
+  | undefined
+  | {
+      dirname?: string;
+      register?: (
+        err: Error,
+        opts: TestOptions,
+        callback?: TestCallback,
+      ) => void;
+    };
 
 type NamelessTestOptions = {
   timeout?: number;
@@ -57,12 +115,14 @@ type NamelessTestOptions = {
 
 export type TestCallback = (t: TestHelper) => void | undefined | Promise<void>;
 
-export type TestOptions = NamelessTestOptions & {name: TestName};
+export type TestOptions = NamelessTestOptions & {
+  name: TestName;
+};
 
 type TestArg = TestName | NamelessTestOptions | TestCallback | undefined;
 
-export const testOptions: NonNullable<GlobalTestOptions> = __ROME__TEST_OPTIONS__ ===
-  undefined ? {} : __ROME__TEST_OPTIONS__;
+export const testOptions: NonNullable<GlobalTestOptions> =
+  __ROME__TEST_OPTIONS__ === undefined ? {} : __ROME__TEST_OPTIONS__;
 
 function registerTest(
   callsiteError: Error,
@@ -82,7 +142,9 @@ function isOptionsObject(arg: TestArg): arg is NamelessTestOptions {
   return typeof arg === 'object' && arg != null && !Array.isArray(arg);
 }
 
-function splitArgs(args: TestRegisterFunctionArgs): {
+function splitArgs(
+  args: TestRegisterFunctionArgs,
+): {
   options: TestOptions;
   callback: undefined | TestCallback;
 } {
@@ -130,16 +192,17 @@ function splitArgs(args: TestRegisterFunctionArgs): {
   };
 }
 
-type TestRegisterFunctionArgs = [TestName] | [TestName, TestCallback] | [
-  TestName,
-  NamelessTestOptions,
-  TestCallback
-];
+type TestRegisterFunctionArgs =
+  | [TestName]
+  | [TestName, TestCallback]
+  | [TestName, NamelessTestOptions, TestCallback];
 
 type TestRegisterFunction = (...args: TestRegisterFunctionArgs) => void;
 
 export const test: {
-  (...args: TestRegisterFunctionArgs): void;
+  (
+    ...args: TestRegisterFunctionArgs
+  ): void;
   skip: TestRegisterFunction;
   only: TestRegisterFunction;
 } = function(...args: TestRegisterFunctionArgs) {
@@ -154,8 +217,12 @@ test.skip = function(...args: TestRegisterFunctionArgs) {
 
 test.only = function(...args: TestRegisterFunctionArgs) {
   const {options, callback} = splitArgs(args);
-  registerTest(new Error(), {
-    ...options,
-    only: true,
-  }, callback);
+  registerTest(
+    new Error(),
+    {
+      ...options,
+      only: true,
+    },
+    callback,
+  );
 };

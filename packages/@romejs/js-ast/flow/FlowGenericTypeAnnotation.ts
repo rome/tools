@@ -6,10 +6,10 @@
  */
 
 import {
-  JSNodeBase,
-  ReferenceIdentifier,
   FlowQualifiedTypeIdentifier,
   FlowTypeParameterInstantiation,
+  JSNodeBase,
+  ReferenceIdentifier,
 } from '../index';
 import {createBuilder} from '../utils';
 

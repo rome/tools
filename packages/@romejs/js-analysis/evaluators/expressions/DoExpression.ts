@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {DoExpression, doExpression, AnyNode} from '@romejs/js-ast';
+import {AnyNode, DoExpression, doExpression} from '@romejs/js-ast';
 
 export default function DoExpression(node: AnyNode, scope: Scope) {
   node = doExpression.assert(node);

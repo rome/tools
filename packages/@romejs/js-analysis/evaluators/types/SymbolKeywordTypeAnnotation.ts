@@ -6,9 +6,9 @@
  */
 
 import {
+  AnyNode,
   SymbolKeywordTypeAnnotation,
   symbolKeywordTypeAnnotation,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function SymbolKeywordTypeAnnotation(node: AnyNode) {

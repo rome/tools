@@ -6,21 +6,21 @@
  */
 
 import {
-  CODE_FRAME_INDENT,
   CODE_FRAME_CONTEXT_LINES,
+  CODE_FRAME_INDENT,
   GUTTER,
   MAX_PATCH_LINES,
 } from './constants';
 import {showInvisibles} from './utils';
 import {Diffs, diffConstants, groupDiffByLines} from '@romejs/string-diff';
-import {markupTag, escapeMarkup} from '@romejs/string-markup';
+import {escapeMarkup, markupTag} from '@romejs/string-markup';
 
 function formatDiffLine(diffs: Diffs) {
   return diffs.map(([type, text]) => {
     if (type === diffConstants.DELETE) {
-      return markupTag('red', escapeMarkup(showInvisibles(text)));
+      return markupTag('error', escapeMarkup(showInvisibles(text)));
     } else if (type === diffConstants.ADD) {
-      return markupTag('green', escapeMarkup(showInvisibles(text)));
+      return markupTag('success', escapeMarkup(showInvisibles(text)));
     } else {
       // type === diffConstants.EQUAL
       return escapeMarkup(text);
@@ -28,8 +28,8 @@ function formatDiffLine(diffs: Diffs) {
   }).join('');
 }
 
-const DELETE_MARKER = markupTag('red', '-');
-const ADD_MARKER = markupTag('green', '+');
+const DELETE_MARKER = markupTag('error', '-');
+const ADD_MARKER = markupTag('success', '+');
 
 export default function buildPatchCodeFrame(
   rawDiffs: Diffs,
@@ -55,8 +55,11 @@ export default function buildPatchCodeFrame(
     }
 
     if (hasChange) {
-      for (let start = i - CODE_FRAME_CONTEXT_LINES; start < i +
-        CODE_FRAME_CONTEXT_LINES; start++) {
+      for (
+        let start = i - CODE_FRAME_CONTEXT_LINES;
+        start < i + CODE_FRAME_CONTEXT_LINES;
+        start++
+      ) {
         shownLines.add(start);
 
         if (start > lastVisibleLine) {
@@ -130,8 +133,7 @@ export default function buildPatchCodeFrame(
       gutterWithLine = `<emphasis>${CODE_FRAME_INDENT}<pad count="${String(
         lineLength,
       )}">${String(lineNo)}</pad>${GUTTER}</emphasis>`;
-        gutterNoLine =
-        `<emphasis>${CODE_FRAME_INDENT}${' '.repeat(lineLength)}${GUTTER}</emphasis>`;
+      gutterNoLine = `<emphasis>${CODE_FRAME_INDENT}${' '.repeat(lineLength)}${GUTTER}</emphasis>`;
     }
 
     if (hasDeletions) {

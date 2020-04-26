@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {NullLiteral, nullLiteral, AnyNode} from '@romejs/js-ast';
+import {AnyNode, NullLiteral, nullLiteral} from '@romejs/js-ast';
 import NullT from '../../types/NullT';
 
 export default function NullLiteral(node: AnyNode, scope: Scope) {

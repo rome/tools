@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {FlowDeclareClass, flowDeclareClass, AnyNode} from '@romejs/js-ast';
+import {AnyNode, FlowDeclareClass, flowDeclareClass} from '@romejs/js-ast';
 import ClassT from '../../types/ClassT';
 
 export default function FlowDeclareClass(node: AnyNode, scope: Scope) {
@@ -22,8 +22,10 @@ export default function FlowDeclareClass(node: AnyNode, scope: Scope) {
 
   for (const propNode of node.body.properties) {
     const prop = bodyScope.evaluate(propNode);
-    if (propNode.type !== 'FlowObjectTypeSpreadProperty' && propNode.static ===
-        true) {
+    if (
+      propNode.type !== 'FlowObjectTypeSpreadProperty' &&
+      propNode.static === true
+    ) {
       statics.push(prop);
     } else if (propNode.type === 'FlowObjectTypeCallProperty') {
       calls.push(scope.evaluate(propNode));
@@ -37,13 +39,17 @@ export default function FlowDeclareClass(node: AnyNode, scope: Scope) {
     xtends = scope.evaluate(node.extends[0]);
   }
 
-  const type = new ClassT(bodyScope, node.id, {
-    _constructor: undefined,
-    instances,
-    statics,
-    extends: xtends,
-    calls,
-  });
+  const type = new ClassT(
+    bodyScope,
+    node.id,
+    {
+      _constructor: undefined,
+      instances,
+      statics,
+      extends: xtends,
+      calls,
+    },
+  );
   scope.addBinding(node.id.name, type);
   type.setHuman(node.id.name);
   return type;

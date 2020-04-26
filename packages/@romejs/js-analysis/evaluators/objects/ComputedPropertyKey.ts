@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   ComputedPropertyKey,
   computedPropertyKey,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function ComputedPropertyKey(node: AnyNode, scope: Scope) {

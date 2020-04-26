@@ -18,9 +18,13 @@ export type ReferenceIdentifier = JSNodeBase & {
 export const referenceIdentifier = createQuickBuilder<
   ReferenceIdentifier,
   'name'
->('ReferenceIdentifier', 'name', {
-  bindingKeys: {},
-  visitorKeys: {
-    meta: true,
+>(
+  'ReferenceIdentifier',
+  'name',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      meta: true,
+    },
   },
-});
+);

@@ -6,17 +6,28 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens} from '../../tokens';
-import {NumericLiteral, numericLiteral, AnyNode} from '@romejs/js-ast';
+import {Token} from '../../tokens';
+import {NumericLiteral} from '@romejs/js-ast';
 import {humanizeNumber} from '@romejs/string-utils';
-import {number} from '@romejs/js-formatter/tokens';
 
-export default function NumericLiteral(builder: Builder, node: AnyNode): Tokens {
-  node = numericLiteral.assert(node);
-
+export default function NumericLiteral(
+  builder: Builder,
+  node: NumericLiteral,
+): Token {
   if (builder.options.format === 'pretty') {
-    return [number(humanizeNumber(node.value))];
+    if (node.format === undefined) {
+      return humanizeNumber(node.value);
+    } else {
+      switch (node.format) {
+        case 'binary':
+          return `0b${node.value.toString(2)}`;
+        case 'octal':
+          return `0o${node.value.toString(8)}`;
+        case 'hex':
+          return `0x${node.value.toString(16)}`;
+      }
+    }
   } else {
-    return [number(String(node.value))];
+    return String(node.value);
   }
 }

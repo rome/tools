@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, AnyFlowPrimary} from '../index';
+import {AnyFlowPrimary, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type FlowObjectTypeCallProperty = JSNodeBase & {
@@ -14,11 +14,12 @@ export type FlowObjectTypeCallProperty = JSNodeBase & {
   static?: boolean;
 };
 
-export const flowObjectTypeCallProperty = createBuilder<
-  FlowObjectTypeCallProperty
->('FlowObjectTypeCallProperty', {
-  bindingKeys: {},
-  visitorKeys: {
-    value: true,
+export const flowObjectTypeCallProperty = createBuilder<FlowObjectTypeCallProperty>(
+  'FlowObjectTypeCallProperty',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      value: true,
+    },
   },
-});
+);

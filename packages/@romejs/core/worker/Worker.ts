@@ -7,13 +7,13 @@
 
 import {ModuleSignature, TypeCheckProvider} from '@romejs/js-analysis';
 import WorkerBridge, {
-  WorkerProjects,
   PrefetchedModuleSignatures,
+  WorkerParseOptions,
   WorkerPartialManifest,
   WorkerPartialManifests,
-  WorkerParseOptions,
+  WorkerProjects,
 } from '../common/bridges/WorkerBridge';
-import {Program, ConstSourceType, ConstProgramSyntax} from '@romejs/js-ast';
+import {ConstProgramSyntax, ConstSourceType, Program} from '@romejs/js-ast';
 import Logger from '../common/utils/Logger';
 import {parseJS} from '@romejs/js-parser';
 import {Profiler} from '@romejs/v8';
@@ -24,13 +24,13 @@ import {UserConfig, loadUserConfig} from '../common/userConfig';
 import {hydrateJSONProjectConfig} from '@romejs/project';
 import {Diagnostics, DiagnosticsError} from '@romejs/diagnostics';
 import {
-  createUnknownFilePath,
   AbsoluteFilePath,
   AbsoluteFilePathMap,
   UnknownFilePathMap,
   createAbsoluteFilePath,
+  createUnknownFilePath,
 } from '@romejs/path';
-import {lstat, writeFile, readFileText} from '@romejs/fs';
+import {lstat, readFileText, writeFile} from '@romejs/fs';
 import {
   FileReference,
   convertTransportFileReference,
@@ -63,19 +63,23 @@ export default class Worker {
     this.moduleSignatureCache = new UnknownFilePathMap();
     this.buffers = new AbsoluteFilePathMap();
 
-    this.logger = new Logger('worker', () => opts.bridge.log.hasSubscribers(), {
-      streams: [
-        {
-          type: 'all',
-          format: 'none',
-          columns: Reporter.DEFAULT_COLUMNS,
-          unicode: true,
-          write(chunk) {
-            opts.bridge.log.send(chunk.toString());
+    this.logger = new Logger(
+      'worker',
+      () => opts.bridge.log.hasSubscribers(),
+      {
+        streams: [
+          {
+            type: 'all',
+            format: 'none',
+            columns: Reporter.DEFAULT_COLUMNS,
+            unicode: true,
+            write(chunk) {
+              opts.bridge.log.send(chunk.toString());
+            },
           },
-        },
-      ],
-    });
+        ],
+      },
+    );
 
     //
     this.api = new WorkerAPI(this);
@@ -110,7 +114,6 @@ export default class Worker {
 
   end() {
     // This will only actually be called when a Worker is created inside of the Master
-
     // Clear internal maps for memory, in case the Worker instance sticks around
     this.astCache.clear();
     this.projects.clear();
@@ -174,9 +177,10 @@ export default class Worker {
     });
 
     bridge.analyzeDependencies.subscribe((payload) => {
-      return this.api.analyzeDependencies(convertTransportFileReference(
-        payload.file,
-      ), payload.parseOptions);
+      return this.api.analyzeDependencies(
+        convertTransportFileReference(payload.file),
+        payload.parseOptions,
+      );
     });
 
     bridge.evict.subscribe((payload) => {
@@ -185,9 +189,10 @@ export default class Worker {
     });
 
     bridge.moduleSignatureJS.subscribe((payload) => {
-      return this.api.moduleSignatureJS(convertTransportFileReference(
-        payload.file,
-      ), payload.parseOptions);
+      return this.api.moduleSignatureJS(
+        convertTransportFileReference(payload.file),
+        payload.parseOptions,
+      );
     });
 
     bridge.updateProjects.subscribe((payload) => {
@@ -255,28 +260,30 @@ export default class Worker {
 
       switch (value.type) {
         case 'RESOLVED': {
-          this.moduleSignatureCache.set(createUnknownFilePath(
-            value.graph.filename,
-          ), value.graph);
+          this.moduleSignatureCache.set(
+            createUnknownFilePath(value.graph.filename),
+            value.graph,
+          );
           return value.graph;
         }
 
         case 'OWNED':
-          return this.api.moduleSignatureJS(convertTransportFileReference(
-            value.file,
-          ), parseOptions);
+          return this.api.moduleSignatureJS(
+            convertTransportFileReference(value.file),
+            parseOptions,
+          );
 
         case 'POINTER':
           return resolveGraph(value.key);
 
         case 'USE_CACHED': {
-          const cached = this.moduleSignatureCache.get(createUnknownFilePath(
-            value.filename,
-          ));
+          const cached = this.moduleSignatureCache.get(
+            createUnknownFilePath(value.filename),
+          );
           if (cached === undefined) {
             throw new Error(
-                `Master told us we have the export types for ${value.filename} cached but we dont!`,
-              );
+              `Master told us we have the export types for ${value.filename} cached but we dont!`,
+            );
           }
           return cached;
         }
@@ -355,7 +362,6 @@ export default class Worker {
 
     if (cacheEnabled) {
       // Update the lastAccessed of the ast cache and return it, it will be evicted on
-
       // any file change
       const cachedResult: undefined | ParseResult = this.astCache.get(path);
       if (cachedResult !== undefined) {
@@ -366,10 +372,13 @@ export default class Worker {
         }
 
         if (useCached) {
-          this.astCache.set(path, {
-            ...cachedResult,
-            lastAccessed: Date.now(),
-          });
+          this.astCache.set(
+            path,
+            {
+              ...cachedResult,
+              lastAccessed: Date.now(),
+            },
+          );
           return cachedResult;
         }
       }
@@ -468,10 +477,13 @@ export default class Worker {
       if (config === undefined) {
         this.projects.delete(id);
       } else {
-        this.projects.set(id, {
-          folder: createAbsoluteFilePath(folder),
-          config: hydrateJSONProjectConfig(config),
-        });
+        this.projects.set(
+          id,
+          {
+            folder: createAbsoluteFilePath(folder),
+            config: hydrateJSONProjectConfig(config),
+          },
+        );
       }
     }
   }

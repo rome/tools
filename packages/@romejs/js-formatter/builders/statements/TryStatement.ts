@@ -6,29 +6,26 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, space, word, concat} from '../../tokens';
-import {tryStatement, AnyNode} from '@romejs/js-ast';
+import {Token, concat, space} from '../../tokens';
+import {TryStatement} from '@romejs/js-ast';
 
-export default function TryStatement(builder: Builder, node: AnyNode): Tokens {
-  node = tryStatement.assert(node);
-
-  const tokens: Tokens = [
-    word('try'),
+export default function TryStatement(
+  builder: Builder,
+  node: TryStatement,
+): Token {
+  const tokens: Array<Token> = [
+    'try',
     space,
-    concat(builder.tokenize(node.block, node)),
-    space,
-    concat(builder.tokenize(node.handler, node)),
+    builder.tokenize(node.block, node),
   ];
 
-  if (node.finalizer) {
-    return [
-      concat(tokens),
-      space,
-      word('finally'),
-      space,
-      concat(builder.tokenize(node.finalizer, node)),
-    ];
-  } else {
-    return tokens;
+  if (node.handler) {
+    tokens.push(space, builder.tokenize(node.handler, node));
   }
+
+  if (node.finalizer) {
+    tokens.push(space, 'finally', space, builder.tokenize(node.finalizer, node));
+  }
+
+  return concat(tokens);
 }

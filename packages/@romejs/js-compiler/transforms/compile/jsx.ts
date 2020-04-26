@@ -6,45 +6,45 @@
  */
 
 import {
-  AnyNode,
   AnyExpression,
-  ObjectProperty,
+  AnyNode,
+  CallExpression,
+  JSXAttribute,
+  JSXElement,
+  JSXExpressionContainer,
   JSXIdentifier,
   JSXNamespacedName,
-  JSXAttribute,
-  ObjectProperties,
   MemberExpression,
-  ThisExpression,
-  StringLiteral,
-  JSXElement,
-  staticPropertyKey,
+  ObjectProperties,
+  ObjectProperty,
   ReferenceIdentifier,
-  referenceIdentifier,
-  computedMemberProperty,
-  staticMemberProperty,
-  jsxNamespacedName,
-  objectExpression,
-  objectProperty,
-  stringLiteral,
-  identifier,
-  memberExpression,
-  thisExpression,
+  StringLiteral,
+  ThisExpression,
   booleanLiteral,
-  nullLiteral,
   callExpression,
-  jsxIdentifier,
+  computedMemberProperty,
+  computedPropertyKey,
+  identifier,
   jsxElement,
   jsxExpressionContainer,
-  computedPropertyKey,
-  JSXExpressionContainer,
-  CallExpression,
+  jsxIdentifier,
+  jsxNamespacedName,
+  memberExpression,
+  nullLiteral,
+  objectExpression,
+  objectProperty,
+  referenceIdentifier,
   spreadElement,
+  staticMemberProperty,
+  staticPropertyKey,
+  stringLiteral,
+  thisExpression,
 } from '@romejs/js-ast';
 import {Path} from '@romejs/js-compiler';
 import {
-  template,
-  isValidIdentifierName,
   inheritLoc,
+  isValidIdentifierName,
+  template,
 } from '@romejs/js-ast-utils';
 import {descriptions} from '@romejs/diagnostics';
 
@@ -57,9 +57,12 @@ function convertJSXIdentifier(
     if (node.name === 'this') {
       return thisExpression.create({});
     } else {
-      return referenceIdentifier.create({
-        name: node.name,
-      }, node);
+      return referenceIdentifier.create(
+        {
+          name: node.name,
+        },
+        node,
+      );
     }
   } else if (node.type === 'JSXIdentifier') {
     return stringLiteral.quick(node.name);
@@ -79,8 +82,8 @@ function convertJSXIdentifier(
     }
   } else {
     throw new Error(
-        `Received a node of type ${node.type}, the only node types that should be in this position are JSXIdentifier and JSXMemberExpression`,
-      );
+      `Received a node of type ${node.type}, the only node types that should be in this position are JSXIdentifier and JSXMemberExpression`,
+    );
   }
 }
 
@@ -103,11 +106,16 @@ function extractName(node: JSXIdentifier | JSXNamespacedName): string {
 }
 
 function convertAttribute(node: JSXAttribute): ObjectProperty {
-  let valueNode = convertAttributeValue(node.value || booleanLiteral.create({
-    value: true,
-  }));
-  if (valueNode.type === 'StringLiteral' && (!node.value || node.value.type !==
-      'JSXExpressionContainer')) {
+  let valueNode = convertAttributeValue(
+    node.value ||
+    booleanLiteral.create({
+      value: true,
+    }),
+  );
+  if (
+    valueNode.type === 'StringLiteral' &&
+    (!node.value || node.value.type !== 'JSXExpressionContainer')
+  ) {
     valueNode = stringLiteral.create({
       value: valueNode.value.replace(/\n\s+/g, ' '),
     });
@@ -150,10 +158,7 @@ function buildOpeningElementAttributes(attribs: JSXElement['attributes']) {
   const objs: Array<AnyExpression> = [];
 
   while (attribs.length > 0) {
-    const prop = attribs.shift();
-    if (prop === undefined) {
-      throw new Error('Already validated length');
-    }
+    const prop = attribs.shift()!;
 
     if (prop.type === 'JSXSpreadAttribute') {
       _props = pushProps(_props, objs);

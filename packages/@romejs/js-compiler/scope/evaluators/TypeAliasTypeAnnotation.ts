@@ -7,16 +7,22 @@
 
 import Scope from '../Scope';
 import {TypeBinding} from '@romejs/js-compiler';
-import {TypeAliasTypeAnnotation, AnyNode} from '@romejs/js-ast';
+import {AnyNode, TypeAliasTypeAnnotation} from '@romejs/js-ast';
 
 export default {
   creator: false,
   build(node: TypeAliasTypeAnnotation, parent: AnyNode, scope: Scope) {
     scope.evaluate(node.typeParameters);
-    scope.addBinding(new TypeBinding({
-      node: node.id,
-      name: node.id.name,
-      scope,
-    }, node, 'typealias'));
+    scope.addBinding(
+      new TypeBinding(
+        {
+          node: node.id,
+          name: node.id.name,
+          scope,
+        },
+        node,
+        'typealias',
+      ),
+    );
   },
 };

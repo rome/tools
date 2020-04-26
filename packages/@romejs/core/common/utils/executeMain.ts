@@ -14,13 +14,13 @@ import vm = require('vm');
 
 import {
   Diagnostic,
-  truncateSourceText,
   INTERNAL_ERROR_LOG_ADVICE,
   descriptions,
+  truncateSourceText,
 } from '@romejs/diagnostics';
 import {AbsoluteFilePath} from '@romejs/path';
 import {Position} from '@romejs/parser-core';
-import {number0Neg1, coerce1, number0} from '@romejs/ob1';
+import {ob1Coerce1, ob1Number0, ob1Number0Neg1} from '@romejs/ob1';
 
 type ExecuteMainOptions = {
   path: AbsoluteFilePath;
@@ -31,20 +31,19 @@ type ExecuteMainOptions = {
 
 export default async function executeMain(
   opts: ExecuteMainOptions,
-): Promise<{syntaxError: undefined | Diagnostic}> {
+): Promise<{
+  syntaxError: undefined | Diagnostic;
+}> {
   const {path, code, sourceMap, globals} = opts;
 
   const filename = path.join();
 
   // Create global context
   const sandbox: UnknownObject = {
-    ...globals,
-
     process: {
       argv: [process.argv[0], filename],
       __proto__: process,
     },
-
     Buffer,
     clearImmediate,
     clearInterval,
@@ -58,6 +57,7 @@ export default async function executeMain(
     console,
     __dirname: path.getParent().join(),
     __filename: filename,
+    ...globals,
   };
   sandbox.global = sandbox;
   const context = vm.createContext(sandbox);
@@ -65,10 +65,13 @@ export default async function executeMain(
   // Here we do some gymnastics to catch a syntax error to correctly identify it as being our fault
   let script;
   try {
-    script = new vm.Script(code, {
-      filename,
-      displayErrors: true,
-    });
+    script = new vm.Script(
+      code,
+      {
+        filename,
+        displayErrors: true,
+      },
+    );
   } catch (err) {
     if (err instanceof SyntaxError && err.stack !== undefined) {
       const lineMatch = err.stack.match(/^(.*?):(\d+)/);
@@ -79,9 +82,9 @@ export default async function executeMain(
       const line = Number(lineMatch[2]);
 
       const pos: Position = {
-        index: number0Neg1,
-        column: number0,
-        line: coerce1(line),
+        index: ob1Number0Neg1,
+        column: ob1Number0,
+        line: ob1Coerce1(line),
       };
 
       const syntaxError: Diagnostic = {

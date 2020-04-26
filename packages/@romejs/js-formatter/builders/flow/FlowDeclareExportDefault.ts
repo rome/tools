@@ -5,20 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Tokens} from '../../tokens';
-import {
-  FlowDeclareExportDefault,
-  flowDeclareExportDefault,
-  AnyNode,
-} from '@romejs/js-ast';
+import {Token} from '../../tokens';
 
-export default function FlowDeclareExportDefault(
-  builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = flowDeclareExportDefault.assert(node);
-
-  flowDeclareExportDefault.assert(node);
+export default function FlowDeclareExportDefault(): Token {
   throw new Error('unimplemented');
 }

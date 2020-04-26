@@ -6,54 +6,19 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator, word, breakGroup, space, concat} from '../../tokens';
-import {
-  AnyNode,
-  AssignmentExpression,
-  BinaryExpression,
-  LogicalExpression,
-  assignmentExpression,
-} from '@romejs/js-ast';
-import * as n from '../../node/index';
-
-type OurNode = AssignmentExpression | BinaryExpression | LogicalExpression;
+import {Token, concat, space} from '../../tokens';
+import {AssignmentExpression} from '@romejs/js-ast';
+import {printAssignment} from '../utils';
 
 export default function AssignmentExpression(
   builder: Builder,
-  _node: AnyNode,
-  parent: AnyNode,
-): Tokens {
-  const node: OurNode = _node.type === 'BinaryExpression' || _node.type ===
-    'LogicalExpression' ? _node : assignmentExpression.assert(_node);
-
-  let tokens: Tokens = [];
-
-  // Somewhere inside a for statement `init` node but doesn't usually
-  // needs a paren except for `in` expressions: `for (a in b ? a : b;;)`
-  const needsExtraParens = builder.inForStatementInitCounter > 0 &&
-      node.operator ===
-      'in' && !n.needsParens(node, parent, []);
-
-  if (needsExtraParens) {
-    tokens.push(operator('('));
-  }
-
-  const left = builder.tokenize(node.left, node);
-
-  let sep;
-  if (node.operator === 'in' || node.operator === 'instanceof') {
-    sep = word(node.operator);
-  } else {
-    sep = operator(node.operator);
-  }
-
-  const right = builder.tokenize(node.right, node);
-
-  tokens.push(breakGroup([[concat(left), space, sep], right]));
-
-  if (needsExtraParens) {
-    tokens.push(operator(')'));
-  }
-
-  return tokens;
+  node: AssignmentExpression,
+): Token {
+  return printAssignment(
+    builder,
+    node,
+    node.left,
+    concat([space, node.operator]),
+    node.right,
+  );
 }

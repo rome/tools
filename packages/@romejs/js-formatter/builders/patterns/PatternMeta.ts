@@ -5,12 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Tokens} from '../../tokens';
-import {PatternMeta, patternMeta, AnyNode} from '@romejs/js-ast';
+import {Token} from '../../tokens';
 
-export default function PatternMeta(builder: Builder, node: AnyNode): Tokens {
-  node = patternMeta.assert(node);
-  patternMeta.assert(node);
+export default function PatternMeta(): Token {
   throw new Error('unimplemented');
 }

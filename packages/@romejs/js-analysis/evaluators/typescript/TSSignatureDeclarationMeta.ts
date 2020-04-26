@@ -8,8 +8,8 @@
 import {Scope} from '../../scopes';
 import {
   AnyNode,
-  tsSignatureDeclarationMeta,
   TSSignatureDeclarationMeta,
+  tsSignatureDeclarationMeta,
 } from '@romejs/js-ast';
 
 export default function TSSignatureDeclarationMeta(node: AnyNode, scope: Scope) {

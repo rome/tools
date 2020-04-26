@@ -6,28 +6,49 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, word, space, concat} from '../../tokens';
-import {classHead, AnyNode} from '@romejs/js-ast';
+import {Token, concat, group, indent, lineOrSpace, space} from '../../tokens';
+import {ClassHead} from '@romejs/js-ast';
+import {printCommaList} from '../utils';
 
-export default function ClassHead(builder: Builder, node: AnyNode): Tokens {
-  node = classHead.assert(node);
+export default function ClassHead(builder: Builder, node: ClassHead): Token {
+  const tokens: Array<Token> = [];
+  const tokenGroups: Array<Token> = [];
 
-  const tokens: Tokens = builder.tokenize(node.typeParameters, node);
+  tokens.push(builder.tokenize(node.typeParameters, node));
 
   if (node.superClass) {
-    tokens.push(space, word('extends'), space, concat(builder.tokenize(
-      node.superClass,
-      node,
-    )), concat(builder.tokenize(node.superTypeParameters, node)));
+    tokenGroups.push(
+      group(
+        concat([
+          lineOrSpace,
+          'extends',
+          space,
+          builder.tokenize(node.superClass, node),
+          builder.tokenize(node.superTypeParameters, node),
+        ]),
+      ),
+    );
   }
 
-  if (node.implements !== undefined && node.implements.length > 0 &&
-      builder.options.typeAnnotations) {
-    tokens.push(space, word('implements'), space, builder.tokenizeCommaList(
-      node.implements,
-      node,
-    ));
+  if (
+    builder.options.typeAnnotations &&
+    node.implements &&
+    node.implements.length > 0
+  ) {
+    tokenGroups.push(
+      lineOrSpace,
+      'implements',
+      group(
+        indent(
+          concat([lineOrSpace, printCommaList(builder, node.implements, node)]),
+        ),
+      ),
+    );
   }
 
-  return tokens;
+  if (tokenGroups.length > 0) {
+    tokens.push(group(indent(concat(tokenGroups))));
+  }
+
+  return concat(tokens);
 }

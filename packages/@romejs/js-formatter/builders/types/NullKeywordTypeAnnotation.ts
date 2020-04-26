@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Tokens, word} from '../../tokens';
+import {Token} from '../../tokens';
 
-export default function NullKeywordTypeAnnotation(): Tokens {
-  return [word('null')];
+export default function NullKeywordTypeAnnotation(): Token {
+  return 'null';
 }

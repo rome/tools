@@ -10,7 +10,8 @@ import {MarkupTagName} from './types';
 
 // A tagged template literal helper that will escape all interpolated strings, ensuring only markup works
 export function markup(
-  strs: TemplateStringsArray,...values: Array<unknown>
+  strs: TemplateStringsArray,
+  ...values: Array<unknown>
 ): string {
   let out = '';
 
@@ -65,7 +66,7 @@ export function escapeMarkup(input: string): string {
 export function markupTag(
   tagName: MarkupTagName,
   text: string,
-  attrs?: Dict<string | number>,
+  attrs?: Dict<string | number | boolean>,
 ): string {
   let ret = `<${tagName}`;
 

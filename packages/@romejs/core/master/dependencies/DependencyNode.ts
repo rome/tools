@@ -10,21 +10,21 @@ import {BundleCompileResolvedImports} from '@romejs/js-compiler';
 import {ConstImportModuleKind} from '@romejs/js-ast';
 import {SourceLocation} from '@romejs/parser-core';
 import {
-  Diagnostics,
   Diagnostic,
-  descriptions,
   DiagnosticLocation,
+  Diagnostics,
+  descriptions,
 } from '@romejs/diagnostics';
 import {ProjectDefinition} from '@romejs/project';
 import DependencyOrderer, {DependencyOrder} from './DependencyOrderer';
 import {WorkerAnalyzeDependencyResult} from '../../common/bridges/WorkerBridge';
 import {AbsoluteFilePath, AbsoluteFilePathMap} from '@romejs/path';
-import {getFileHandler, ExtensionHandler} from '../../common/fileHandlers';
+import {ExtensionHandler, getFileHandler} from '../../common/fileHandlers';
 import {
-  AnalyzeModuleType,
   AnalyzeDependency,
   AnalyzeDependencyName,
   AnalyzeExportLocal,
+  AnalyzeModuleType,
   AnyAnalyzeExport,
 } from '@romejs/core';
 import {FileReference} from '@romejs/core/common/types/files';
@@ -49,9 +49,11 @@ function equalKind(
   consumerKind: ConstImportModuleKind,
 ): boolean {
   // Allow importing functions and classes as `type` and `typeof`
-  if (producer.type === 'local' && (producer.valueType === 'class' ||
-        producer.valueType ===
-        'function') && (consumerKind === 'type' || consumerKind === 'typeof')) {
+  if (
+    producer.type === 'local' &&
+    (producer.valueType === 'class' || producer.valueType === 'function') &&
+    (consumerKind === 'type' || consumerKind === 'typeof')
+  ) {
     return true;
   }
 
@@ -154,10 +156,13 @@ export default class DependencyNode {
     dep: AnalyzeDependency,
   ) {
     this.relativeToAbsolutePath.set(relative, absolute);
-    this.absoluteToAnalyzeDependency.set(absolute, {
-      analyze: dep,
-      path: absolute,
-    });
+    this.absoluteToAnalyzeDependency.set(
+      absolute,
+      {
+        analyze: dep,
+        path: absolute,
+      },
+    );
   }
 
   getDependencyInfoFromAbsolute(
@@ -223,9 +228,10 @@ export default class DependencyNode {
     }
 
     for (const exp of this.analyze.exports) {
-      if (exp.type === 'externalAll' && this.relativeToAbsolutePath.has(
-          exp.source,
-        )) {
+      if (
+        exp.type === 'externalAll' &&
+        this.relativeToAbsolutePath.has(exp.source)
+      ) {
         this.getNodeFromRelativeDependency(exp.source).getExportedModules(chain);
       }
     }
@@ -303,48 +309,50 @@ export default class DependencyNode {
     // Check if there was a matching local in any of the exported modules
     for (const mod of resolved.node.getExportedModules()) {
       // We use an object as a hash map so need to check for pollution
-      if (Object.prototype.hasOwnProperty.call(
+      if (
+        Object.prototype.hasOwnProperty.call(
           mod.analyze.topLevelLocalBindings,
           expectedName,
-        )) {
+        )
+      ) {
         const localLoc = mod.analyze.topLevelLocalBindings[expectedName];
         if (localLoc !== undefined) {
           return {
-              description: descriptions.RESOLVER.UNKNOWN_EXPORT_POSSIBLE_UNEXPORTED_LOCAL(
-                expectedName,
-                fromSource,
-                localLoc,
-              ),
-              location,
-            };
+            description: descriptions.RESOLVER.UNKNOWN_EXPORT_POSSIBLE_UNEXPORTED_LOCAL(
+              expectedName,
+              fromSource,
+              localLoc,
+            ),
+            location,
+          };
         }
       }
     }
 
     return {
-        description: descriptions.RESOLVER.UNKNOWN_EXPORT(
-          expectedName,
-          fromSource,
-          Array.from(resolved.node.getExportedNames(kind)),
-          (name: string) => {
-            const exportInfo = resolved.node.resolveImport(name, undefined);
+      description: descriptions.RESOLVER.UNKNOWN_EXPORT(
+        expectedName,
+        fromSource,
+        Array.from(resolved.node.getExportedNames(kind)),
+        (name: string) => {
+          const exportInfo = resolved.node.resolveImport(name, undefined);
 
-            if (exportInfo.type === 'NOT_FOUND') {
-              throw new Error(
-                  `mod.resolveImport returned NOT_FOUND for an export ${name} in ${exportInfo.node.path} despite being returned by getExportedNames`,
-                );
-            }
+          if (exportInfo.type === 'NOT_FOUND') {
+            throw new Error(
+              `mod.resolveImport returned NOT_FOUND for an export ${name} in ${exportInfo.node.path} despite being returned by getExportedNames`,
+            );
+          }
 
-            return {
-              location: exportInfo.record.loc,
-              source: exportInfo.node === resolved.node
-                ? undefined
-                : exportInfo.node.path.join(),
-            };
-          },
-        ),
-        location,
-      };
+          return {
+            location: exportInfo.record.loc,
+            source: exportInfo.node === resolved.node
+              ? undefined
+              : exportInfo.node.path.join(),
+          };
+        },
+      ),
+      location,
+    };
   }
 
   buildDiagnosticForTypeMismatch(
@@ -363,7 +371,6 @@ export default class DependencyNode {
         record.kind,
         record.loc,
       ),
-
       location: {
         ...loc,
         mtime: this.getMtime(),
@@ -415,11 +422,9 @@ export default class DependencyNode {
 
         // Flag imports of the wrong type
         if (!allowTypeImportsAsValue && !equalKind(resolved.record, kind)) {
-          diagnostics.push(this.buildDiagnosticForTypeMismatch(
-            resolved,
-            mod,
-            nameInfo,
-          ));
+          diagnostics.push(
+            this.buildDiagnosticForTypeMismatch(resolved, mod, nameInfo),
+          );
           continue;
         }
 
@@ -467,8 +472,10 @@ export default class DependencyNode {
         continue;
       }
 
-      if (record.type === 'local' && (record.name === name || record.name ===
-          '*')) {
+      if (
+        record.type === 'local' &&
+        (record.name === name || record.name === '*')
+      ) {
         return {
           type: 'FOUND',
           node: this,

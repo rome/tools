@@ -12,9 +12,10 @@ export type RegExpWordBoundaryCharacter = JSNodeBase & {
   type: 'RegExpWordBoundaryCharacter';
 };
 
-export const regExpWordBoundaryCharacter = createBuilder<
-  RegExpWordBoundaryCharacter
->('RegExpWordBoundaryCharacter', {
-  bindingKeys: {},
-  visitorKeys: {},
-});
+export const regExpWordBoundaryCharacter = createBuilder<RegExpWordBoundaryCharacter>(
+  'RegExpWordBoundaryCharacter',
+  {
+    bindingKeys: {},
+    visitorKeys: {},
+  },
+);

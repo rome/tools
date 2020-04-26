@@ -6,9 +6,9 @@
  */
 
 import {
+  AnyNode,
   TSTypeParameterDeclaration,
   tsTypeParameterDeclaration,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function TSTypeParameterDeclaration(node: AnyNode) {

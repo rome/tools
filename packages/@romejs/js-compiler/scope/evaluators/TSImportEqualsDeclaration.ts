@@ -6,7 +6,7 @@
  */
 
 import Scope from '../Scope';
-import {TSImportEqualsDeclaration, AnyNode} from '@romejs/js-ast';
+import {AnyNode, TSImportEqualsDeclaration} from '@romejs/js-ast';
 import {ImportBinding} from '@romejs/js-compiler';
 
 export default {
@@ -15,15 +15,20 @@ export default {
     const {moduleReference, id} = node;
 
     if (moduleReference.type === 'TSExternalModuleReference') {
-      scope.addBinding(new ImportBinding({
-        node: id,
-        name: id.name,
-        scope,
-      }, {
-        type: 'namespace',
-        kind: 'value',
-        source: moduleReference.expression.value,
-      }));
+      scope.addBinding(
+        new ImportBinding(
+          {
+            node: id,
+            name: id.name,
+            scope,
+          },
+          {
+            type: 'namespace',
+            kind: 'value',
+            source: moduleReference.expression.value,
+          },
+        ),
+      );
     } else {
       // TODO
     }

@@ -5,39 +5,39 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {consumeUnknown, Consumer} from '@romejs/consume';
+import {Consumer, consumeUnknown} from '@romejs/consume';
 import {
-  LSPResponseMessage,
   LSPDiagnostic,
-  LSPPosition,
-  LSPTextEdit,
   LSPDiagnosticRelatedInformation,
+  LSPPosition,
   LSPRange,
+  LSPResponseMessage,
+  LSPTextEdit,
 } from './types';
 import Master, {MasterClient} from '../Master';
 import {
-  createAbsoluteFilePath,
   AbsoluteFilePath,
   AbsoluteFilePathMap,
   AbsoluteFilePathSet,
+  createAbsoluteFilePath,
 } from '@romejs/path';
-import {Diagnostics, DiagnosticLocation} from '@romejs/diagnostics';
+import {DiagnosticLocation, Diagnostics} from '@romejs/diagnostics';
 import {Position} from '@romejs/parser-core';
-import {coerce1To0, number0, Number0, inc} from '@romejs/ob1';
+import {Number0, ob1Coerce1To0, ob1Inc, ob1Number0} from '@romejs/ob1';
 import {markupToPlainText} from '@romejs/string-markup';
 import {
-  PartialMasterQueryRequest,
   MasterQueryResponse,
+  PartialMasterQueryRequest,
 } from '@romejs/core/common/bridges/MasterBridge';
 import Linter from '../linter/Linter';
-import MasterRequest from '../MasterRequest';
+import MasterRequest, {EMPTY_SUCCESS_RESPONSE} from '../MasterRequest';
 import {DEFAULT_CLIENT_REQUEST_FLAGS} from '@romejs/core/common/types/client';
 import stringDiff, {Diffs, diffConstants} from '@romejs/string-diff';
 import {JSONObject, JSONPropertyValue} from '@romejs/codec-json';
 import {
+  Reporter,
   ReporterProgress,
   ReporterProgressBase,
-  Reporter,
   ReporterProgressOptions,
 } from '@romejs/cli-reporter';
 
@@ -79,12 +79,12 @@ function parseHeaders(buffer: string): Headers {
 function convertPositionToLSP(pos: undefined | Position): LSPPosition {
   if (pos === undefined) {
     return {
-      line: number0,
-      character: number0,
+      line: ob1Number0,
+      character: ob1Number0,
     };
   } else {
     return {
-      line: coerce1To0(pos.line),
+      line: ob1Coerce1To0(pos.line),
       character: pos.column,
     };
   }
@@ -113,14 +113,17 @@ function convertDiagnosticsToLSP(
       for (let i = 0; i < advice.length; i++) {
         const item = advice[i];
         const nextItem = advice[i + 1];
-        if (item.type === 'log' && nextItem !== undefined && nextItem.type ===
-            'frame') {
+        if (
+          item.type === 'log' &&
+          nextItem !== undefined &&
+          nextItem.type === 'frame'
+        ) {
           const abs = master.projectManager.getFilePathFromUidOrAbsolute(
             nextItem.location.filename,
           );
           if (abs !== undefined) {
             relatedInformation.push({
-              message: markupToPlainText(item.message),
+              message: markupToPlainText(item.text),
               location: {
                 uri: `file://${abs.join()}`,
                 range: convertDiagnosticLocationToLSPRange(nextItem.location),
@@ -153,16 +156,16 @@ function diffTextEdits(original: string, desired: string): Array<LSPTextEdit> {
 
   const diffs: Diffs = stringDiff(original, desired);
 
-  let currLine: Number0 = number0;
-  let currChar: Number0 = number0;
+  let currLine: Number0 = ob1Number0;
+  let currChar: Number0 = ob1Number0;
 
   function advance(str: string) {
     for (const char of str) {
       if (char === '\n') {
-        currLine = inc(currLine);
-        currChar = number0;
+        currLine = ob1Inc(currLine);
+        currChar = ob1Number0;
       } else {
-        currChar = inc(currChar);
+        currChar = ob1Inc(currChar);
       }
     }
   }
@@ -337,12 +340,7 @@ export default class LSPServer {
     // TODO maybe unset all buffers?
     const req = this.lintSessions.get(path);
     if (req !== undefined) {
-      req.teardown({
-        type: 'SUCCESS',
-        hasData: false,
-        data: undefined,
-        markers: [],
-      });
+      req.teardown(EMPTY_SUCCESS_RESPONSE);
       this.lintSessions.delete(path);
     }
   }
@@ -369,7 +367,14 @@ export default class LSPServer {
     const req = this.createFakeMasterRequest('lsp_project', [path.join()]);
     await req.init();
 
-    const linter = new Linter(req, {});
+    const linter = new Linter(
+      req,
+      {
+        save: false,
+        hasDecisions: false,
+        formatOnly: false,
+      },
+    );
 
     const subscription = await linter.watch({
       onRunStart: () => {},
@@ -422,10 +427,13 @@ export default class LSPServer {
   async sendClientRequest(
     req: PartialMasterQueryRequest,
   ): Promise<MasterQueryResponse> {
-    return this.master.handleRequest(this.client, {
-      silent: true,
-      ...req,
-    });
+    return this.master.handleRequest(
+      this.client,
+      {
+        silent: true,
+        ...req,
+      },
+    );
   }
 
   async handleRequest(

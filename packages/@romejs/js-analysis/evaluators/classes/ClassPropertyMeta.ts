@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {ClassPropertyMeta, classPropertyMeta, AnyNode} from '@romejs/js-ast';
+import {AnyNode, ClassPropertyMeta, classPropertyMeta} from '@romejs/js-ast';
 
 export default function ClassPropertyMeta(node: AnyNode, scope: Scope) {
   node = classPropertyMeta.assert(node);

@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, VariableDeclarator, AnyStatement} from '@romejs/js-ast';
-import {Path, ConstBinding} from '@romejs/js-compiler';
+import {AnyNode, AnyStatement, VariableDeclarator} from '@romejs/js-ast';
+import {ConstBinding, Path} from '@romejs/js-compiler';
 import {getRequireSource, isInTypeAnnotation} from '@romejs/js-ast-utils';
 
 const NON_INLINED_REQUIRES: Array<string> = [];
@@ -22,8 +22,12 @@ export default {
       // Inline references to a require variable
       if (binding !== undefined && binding instanceof ConstBinding) {
         const source = getRequireSource(binding.value, path.scope, true);
-        if (source !== undefined && !NON_INLINED_REQUIRES.includes(source) &&
-            !isInTypeAnnotation(path) && binding.value !== undefined) {
+        if (
+          source !== undefined &&
+          !NON_INLINED_REQUIRES.includes(source) &&
+          !isInTypeAnnotation(path) &&
+          binding.value !== undefined
+        ) {
           return binding.value;
         }
       }
@@ -31,7 +35,6 @@ export default {
 
     return node;
   },
-
   exit(path: Path): AnyNode {
     const {node} = path;
 
@@ -41,9 +44,10 @@ export default {
 
       // Remove all require declarations that could have been inlined
       for (const bodyNode of node.body) {
-        if (bodyNode.type === 'VariableDeclarationStatement' &&
-              bodyNode.declaration.kind ===
-              'const') {
+        if (
+          bodyNode.type === 'VariableDeclarationStatement' &&
+          bodyNode.declaration.kind === 'const'
+        ) {
           let hadRequireDeclarators = false;
           const declarators: Array<VariableDeclarator> = [];
 

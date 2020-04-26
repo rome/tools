@@ -5,19 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import {AssignmentAssignmentPattern} from '@romejs/js-ast';
 import Builder from '../../Builder';
-import {Tokens} from '../../tokens';
-import {
-  AssignmentAssignmentPattern,
-  assignmentAssignmentPattern,
-  AnyNode,
-} from '@romejs/js-ast';
+import {Token} from '../../tokens';
+import BindingAssignmentPattern from './BindingAssignmentPattern';
 
 export default function AssignmentAssignmentPattern(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = assignmentAssignmentPattern.assert(node);
-
-  throw new Error('unimplemented');
+  node: AssignmentAssignmentPattern,
+): Token {
+  return BindingAssignmentPattern(builder, node);
 }

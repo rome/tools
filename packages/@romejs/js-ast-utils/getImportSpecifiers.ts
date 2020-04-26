@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ImportDeclaration, AnyImportSpecifier} from '@romejs/js-ast';
+import {AnyImportSpecifier, ImportDeclaration} from '@romejs/js-ast';
 
 export default function getImportSpecifiers(
   node: ImportDeclaration,

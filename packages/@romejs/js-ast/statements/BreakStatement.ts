@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, Identifier} from '../index';
+import {Identifier, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type BreakStatement = JSNodeBase & {
@@ -13,9 +13,12 @@ export type BreakStatement = JSNodeBase & {
   label?: Identifier;
 };
 
-export const breakStatement = createBuilder<BreakStatement>('BreakStatement', {
-  bindingKeys: {},
-  visitorKeys: {
-    label: true,
+export const breakStatement = createBuilder<BreakStatement>(
+  'BreakStatement',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      label: true,
+    },
   },
-});
+);

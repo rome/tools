@@ -6,7 +6,7 @@
  */
 
 import Scope from '../Scope';
-import {ForStatement, AnyNode} from '@romejs/js-ast';
+import {AnyNode, ForStatement} from '@romejs/js-ast';
 
 export default {
   creator: true,

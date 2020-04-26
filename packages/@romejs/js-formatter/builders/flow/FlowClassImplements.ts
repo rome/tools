@@ -6,18 +6,13 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens} from '../../tokens';
-import {
-  FlowClassImplements,
-  flowClassImplements,
-  AnyNode,
-} from '@romejs/js-ast';
+import {Token} from '../../tokens';
+import {FlowClassImplements} from '@romejs/js-ast';
 import FlowInterfaceExtends from './FlowInterfaceExtends';
 
 export default function FlowClassImplements(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = flowClassImplements.assert(node);
+  node: FlowClassImplements,
+): Token {
   return FlowInterfaceExtends(builder, node);
 }

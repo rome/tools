@@ -12,9 +12,10 @@ export type NeverKeywordTypeAnnotation = JSNodeBase & {
   type: 'NeverKeywordTypeAnnotation';
 };
 
-export const neverKeywordTypeAnnotation = createBuilder<
-  NeverKeywordTypeAnnotation
->('NeverKeywordTypeAnnotation', {
-  bindingKeys: {},
-  visitorKeys: {},
-});
+export const neverKeywordTypeAnnotation = createBuilder<NeverKeywordTypeAnnotation>(
+  'NeverKeywordTypeAnnotation',
+  {
+    bindingKeys: {},
+    visitorKeys: {},
+  },
+);

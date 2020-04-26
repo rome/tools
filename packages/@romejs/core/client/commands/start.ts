@@ -14,11 +14,9 @@ export default createLocalCommand({
   description: 'start daemon (if none running)',
   usage: '',
   examples: [],
-
   defineFlags() {
     return {};
   },
-
   async callback(req: ClientRequest) {
     const existingServer = await req.client.tryConnectToExistingDaemon();
     if (existingServer) {

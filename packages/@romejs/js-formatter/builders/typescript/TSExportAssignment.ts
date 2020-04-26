@@ -5,22 +5,20 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSExportAssignment, tsExportAssignment, AnyNode} from '@romejs/js-ast';
+import {TSExportAssignment} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
-import {Tokens, space, operator, word} from '../../tokens';
+import {Token, concat, space} from '../../tokens';
 
 export default function TSExportAssignment(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = tsExportAssignment.assert(node);
-
-  return [
-    word('export'),
+  node: TSExportAssignment,
+): Token {
+  return concat([
+    'export',
     space,
-    operator('='),
+    '=',
     space,
-    ...builder.tokenize(node.expression, node),
-    operator(';'),
-  ];
+    builder.tokenize(node.expression, node),
+    ';',
+  ]);
 }

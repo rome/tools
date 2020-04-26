@@ -6,38 +6,37 @@
  */
 
 import {
-  Position,
-  SourceLocation,
-  TokensShape,
   BaseTokens,
-  EOFToken,
-  SOFToken,
-  ValueToken,
-  NodeBase,
-  SimpleToken,
-  TokenBase,
   ComplexToken,
+  EOFToken,
+  NodeBase,
+  Position,
+  SOFToken,
+  SimpleToken,
+  SourceLocation,
+  TokenBase,
+  TokensShape,
+  ValueToken,
 } from './types';
 import {
-  createSingleDiagnosticError,
   Diagnostic,
   DiagnosticCategory,
   DiagnosticDescription,
   DiagnosticsError,
-  descriptions,
   catchDiagnosticsSync,
+  createSingleDiagnosticError,
+  descriptions,
 } from '@romejs/diagnostics';
 import {
-  Number1,
   Number0,
-  number1,
-  number0,
-  inc,
-  coerce0,
-  get0,
-  add,
-  sub,
-  dec,
+  Number1,
+  ob1Add,
+  ob1Coerce0,
+  ob1Get0,
+  ob1Inc,
+  ob1Number0,
+  ob1Number1,
+  ob1Sub,
 } from '@romejs/ob1';
 import {UnknownFilePath, createUnknownFilePath} from '@romejs/path';
 import {Class, OptionalProps} from '@romejs/typescript-helpers';
@@ -72,10 +71,13 @@ export type TokenValues<Tokens extends TokensShape> =
 export function tryParseWithOptionalOffsetPosition<
   Opts extends ParserOptions,
   Ret
->(parserOpts: Opts, opts: {
-  getOffsetPosition: () => Position;
-  parse: (opts: Opts) => Ret;
-}): Ret {
+>(
+  parserOpts: Opts,
+  opts: {
+    getOffsetPosition: () => Position;
+    parse: (opts: Opts) => Ret;
+  },
+): Ret {
   const {value} = catchDiagnosticsSync(() => {
     return opts.parse(parserOpts);
   });
@@ -94,8 +96,8 @@ export function tryParseWithOptionalOffsetPosition<
 
 const SOF_TOKEN: SOFToken = {
   type: 'SOF',
-  start: number0,
-  end: number0,
+  start: ob1Number0,
+  end: ob1Number0,
 };
 
 type ParserSnapshot<Tokens extends TokensShape, State> = {
@@ -130,23 +132,23 @@ export class ParserCore<Tokens extends TokensShape, State> {
     this.filename = this.path === undefined ? undefined : this.path.join();
     this.mtime = mtime;
     this.input = normalizeInput(opts);
-    this.length = coerce0(this.input.length);
+    this.length = ob1Coerce0(this.input.length);
 
     this.eofToken = {
       type: 'EOF',
-      start: coerce0(this.input.length),
-      end: coerce0(this.input.length),
+      start: ob1Coerce0(this.input.length),
+      end: ob1Coerce0(this.input.length),
     };
 
     // Parser/tokenizer state
     this.offsetPosition = offsetPosition;
     this.diagnosticCategory = diagnosticCategory;
     this.tokenizing = false;
-    this.currLine = offsetPosition === undefined ? number1 : offsetPosition.line;
-    this.currColumn = offsetPosition === undefined
-      ? number0
-      : offsetPosition.column;
-    this.nextTokenIndex = number0;
+    this.currLine =
+      offsetPosition === undefined ? ob1Number1 : offsetPosition.line;
+    this.currColumn =
+      offsetPosition === undefined ? ob1Number0 : offsetPosition.column;
+    this.nextTokenIndex = ob1Number0;
     this.currentToken = SOF_TOKEN;
     this.prevToken = SOF_TOKEN;
     this.state = initialState;
@@ -225,10 +227,16 @@ export class ParserCore<Tokens extends TokensShape, State> {
   }
 
   // Alternate tokenize method to allow that allows the use of state
-  tokenizeWithState(index: Number0, input: string, state: State): undefined | {
-    token: TokenValues<Tokens>;
-    state: State;
-  } {
+  tokenizeWithState(
+    index: Number0,
+    input: string,
+    state: State,
+  ):
+    | undefined
+    | {
+        token: TokenValues<Tokens>;
+        state: State;
+      } {
     const token = this.tokenize(index, input);
     if (token !== undefined) {
       return {token, state};
@@ -237,17 +245,23 @@ export class ParserCore<Tokens extends TokensShape, State> {
     }
   }
 
-  _tokenizeWithState(index: Number0, input: string, state: State): undefined | {
-    token: TokenValues<Tokens>;
-    state: State;
-  } {
+  _tokenizeWithState(
+    index: Number0,
+    input: string,
+    state: State,
+  ):
+    | undefined
+    | {
+        token: TokenValues<Tokens>;
+        state: State;
+      } {
     if (this.ignoreWhitespaceTokens) {
-      switch (input[get0(index)]) {
+      switch (input[ob1Get0(index)]) {
         case ' ':
         case '\t':
         case '\r':
         case '\n':
-          return this.lookahead(inc(index));
+          return this.lookahead(ob1Inc(index));
       }
     }
 
@@ -300,13 +314,13 @@ export class ParserCore<Tokens extends TokensShape, State> {
 
     if (nextToken.end === prevToken.end) {
       throw new Error(
-          `tokenize() returned a token with the same position as the last - Previous token: ${JSON.stringify(
-            prevToken,
-          )}; Next token: ${JSON.stringify(nextToken)}; Input: ${this.input.slice(
-            0,
-            100,
-          )}`,
-        );
+        `tokenize() returned a token with the same position as the last - Previous token: ${JSON.stringify(
+          prevToken,
+        )}; Next token: ${JSON.stringify(nextToken)}; Input: ${this.input.slice(
+          0,
+          100,
+        )}`,
+      );
     }
 
     const {line, column} = this.getPositionFromIndex(nextToken.start);
@@ -349,7 +363,9 @@ export class ParserCore<Tokens extends TokensShape, State> {
   }
 
   // Return the token and state that's after the current token without advancing to it
-  lookahead(index: Number0 = this.nextTokenIndex): {
+  lookahead(
+    index: Number0 = this.nextTokenIndex,
+  ): {
     token: TokenValues<Tokens>;
     state: State;
   } {
@@ -414,20 +430,23 @@ export class ParserCore<Tokens extends TokensShape, State> {
     }
 
     // Sometimes the end position may be empty as it hasn't been filled yet
-    if (end.index === number0) {
+    if (end.index === ob1Number0) {
       end = start;
     }
 
     // Normalize message, we need to be defensive here because it could have been called while tokenizing the first token
     if (metadata === undefined) {
-      if (currentToken !== undefined && start !== undefined && start.index ===
-          currentToken.start) {
+      if (
+        currentToken !== undefined &&
+        start !== undefined &&
+        start.index === currentToken.start
+      ) {
         metadata = descriptions.PARSER_CORE.UNEXPECTED(currentToken.type);
       } else {
         if (this.isEOF(start.index)) {
           metadata = descriptions.PARSER_CORE.UNEXPECTED_EOF;
         } else {
-          const char = this.input[get0(start.index)];
+          const char = this.input[ob1Get0(start.index)];
           metadata = descriptions.PARSER_CORE.UNEXPECTED_CHARACTER(char);
         }
       }
@@ -481,7 +500,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
 
   // Check if we're at the end of the input
   isEOF(index: Number0): boolean {
-    return get0(index) >= this.input.length;
+    return ob1Get0(index) >= this.input.length;
   }
 
   // Check if the current token matches the input type
@@ -500,16 +519,14 @@ export class ParserCore<Tokens extends TokensShape, State> {
       // @ts-ignore
       return token;
     } else {
-      throw this.unexpected(
-        {
-          description: _metadata === undefined
-            ? descriptions.PARSER_CORE.EXPECTED_TOKEN(
+      throw this.unexpected({
+        description: _metadata === undefined
+          ? descriptions.PARSER_CORE.EXPECTED_TOKEN(
               token.type,
               (type as string),
             )
-            : _metadata,
-        },
-      );
+          : _metadata,
+      });
     }
   }
 
@@ -522,13 +539,16 @@ export class ParserCore<Tokens extends TokensShape, State> {
     let value = '';
 
     while (true) {
-      if (get0(index) >= input.length) {
+      if (ob1Get0(index) >= input.length) {
         return [value, index, true];
       }
 
-      if (callback === undefined || callback(input[get0(index)], index, input)) {
-        value += input[get0(index)];
-        index = inc(index);
+      if (
+        callback === undefined ||
+        callback(input[ob1Get0(index)], index, input)
+      ) {
+        value += input[ob1Get0(index)];
+        index = ob1Inc(index);
       } else {
         break;
       }
@@ -539,7 +559,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
 
   // Get the string between the specified range
   getRawInput(start: Number0, end: Number0): string {
-    return this.input.slice(get0(start), get0(end));
+    return this.input.slice(ob1Get0(start), ob1Get0(end));
   }
 
   //# Utility methods to make it easy to construct nodes or tokens
@@ -553,7 +573,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
 
   finishToken<Type extends string>(
     type: Type,
-    end: Number0 = inc(this.nextTokenIndex),
+    end: Number0 = ob1Inc(this.nextTokenIndex),
   ): SimpleToken<Type> {
     return {
       type,
@@ -565,7 +585,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
   finishValueToken<Type extends string, Value>(
     type: Type,
     value: Value,
-    end: Number0 = inc(this.nextTokenIndex),
+    end: Number0 = ob1Inc(this.nextTokenIndex),
   ): ValueToken<Type, Value> {
     return {
       type,
@@ -578,7 +598,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
   finishComplexToken<Type extends string, Data>(
     type: Type,
     data: Data,
-    end: Number0 = inc(this.nextTokenIndex),
+    end: Number0 = ob1Inc(this.nextTokenIndex),
   ): ComplexToken<Type, Data> {
     return {
       type,
@@ -616,10 +636,8 @@ export class ParserCore<Tokens extends TokensShape, State> {
   }
 }
 
-export class ParserWithRequiredPath<Tokens extends TokensShape, State> extends ParserCore<
-  Tokens,
-  State
-> {
+export class ParserWithRequiredPath<Tokens extends TokensShape, State>
+  extends ParserCore<Tokens, State> {
   constructor(
     opts: ParserOptionsWithRequiredPath,
     diagnosticCategory: DiagnosticCategory,
@@ -637,11 +655,15 @@ export class ParserWithRequiredPath<Tokens extends TokensShape, State> extends P
 type GetPosition = () => Position;
 
 export class PositionTracker {
-  constructor(input: string, offsetPosition: Position = {
-    line: number1,
-    column: number0,
-    index: number0,
-  }, getPosition?: GetPosition) {
+  constructor(
+    input: string,
+    offsetPosition: Position = {
+      line: ob1Number1,
+      column: ob1Number0,
+      index: ob1Number0,
+    },
+    getPosition?: GetPosition,
+  ) {
     this.getPosition = getPosition;
     this.input = input;
     this.offsetPosition = offsetPosition;
@@ -656,11 +678,11 @@ export class PositionTracker {
   getPosition: undefined | GetPosition;
 
   addOffset(index: Number0): Number0 {
-    return add(index, this.offsetPosition.index);
+    return ob1Add(index, this.offsetPosition.index);
   }
 
   removeOffset(index: Number0): Number0 {
-    return sub(index, this.offsetPosition.index);
+    return ob1Sub(index, this.offsetPosition.index);
   }
 
   getPositionFromIndex(index: Number0): Position {
@@ -669,37 +691,41 @@ export class PositionTracker {
       return cached;
     }
 
-    let line: Number1 = number1;
-    let column: Number0 = number0;
+    let line: Number1 = ob1Number1;
+    let column: Number0 = ob1Number0;
     let indexSearchWithoutOffset: number = 0;
 
     const indexWithOffset = this.addOffset(index);
 
     // Reuse existing line information if possible
     const {latestPosition} = this;
-    const currPosition = this.getPosition === undefined
-      ? undefined
-      : this.getPosition();
-    if (currPosition !== undefined && currPosition.index > latestPosition.index &&
-        currPosition.index < indexWithOffset) {
+    const currPosition =
+      this.getPosition === undefined ? undefined : this.getPosition();
+    if (
+      currPosition !== undefined &&
+      currPosition.index > latestPosition.index &&
+      currPosition.index < indexWithOffset
+    ) {
       line = currPosition.line;
       column = currPosition.column;
-      indexSearchWithoutOffset = get0(this.removeOffset(currPosition.index));
+      indexSearchWithoutOffset = ob1Get0(this.removeOffset(currPosition.index));
     } else if (latestPosition.index < indexWithOffset) {
       line = latestPosition.line;
       column = latestPosition.column;
-      indexSearchWithoutOffset = get0(this.removeOffset(latestPosition.index));
+      indexSearchWithoutOffset = ob1Get0(
+        this.removeOffset(latestPosition.index),
+      );
     }
 
     // Read the rest of the input until we hit the index
-    for (let i = indexSearchWithoutOffset; i < get0(index); i++) {
+    for (let i = indexSearchWithoutOffset; i < ob1Get0(index); i++) {
       const char = this.input[i];
 
       if (char === '\n') {
-        line = inc(line);
-        column = number0;
+        line = ob1Inc(line);
+        column = ob1Number0;
       } else {
-        column = inc(column);
+        column = ob1Inc(column);
       }
     }
 
@@ -739,25 +765,12 @@ export function isESIdentifierStart(char: undefined | string): boolean {
   return char !== undefined && /[A-Fa-z_$]/.test(char);
 }
 
-export function isEscaped(index: Number0, input: string): boolean {
-  const prevChar = input[get0(index) - 1];
-
-  if (prevChar === '\\') {
-    return !isEscaped(dec(index), input);
-  } else {
-    return false;
-  }
-}
-
 export function readUntilLineBreak(char: string): boolean {
   return char !== '\n';
 }
 
 // Lazy initialize a ParserCore subclass... Circular dependencies are wild and necessitate this as ParserCore may not be available
-export function createParser<
-  T,
-  Args extends Array<unknown>
->(
+export function createParser<T, Args extends Array<unknown>>(
   callback: (
     parser: typeof ParserCore,
     parserRequiredPath: typeof ParserWithRequiredPath,
@@ -776,7 +789,9 @@ export function createParser<
 
 // Utility methods for dealing with nodes
 export function extractSourceLocationRangeFromNodes(
-  nodes: Array<{loc?: SourceLocation}>,
+  nodes: Array<{
+    loc?: SourceLocation;
+  }>,
 ): undefined | SourceLocation {
   if (nodes.length === 0) {
     return undefined;

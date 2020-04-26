@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, Identifier} from '../index';
+import {Identifier, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type PrivateName = JSNodeBase & {
@@ -13,9 +13,12 @@ export type PrivateName = JSNodeBase & {
   id: Identifier;
 };
 
-export const privateName = createBuilder<PrivateName>('PrivateName', {
-  bindingKeys: {},
-  visitorKeys: {
-    id: true,
+export const privateName = createBuilder<PrivateName>(
+  'PrivateName',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      id: true,
+    },
   },
-});
+);

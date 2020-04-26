@@ -2,6 +2,5 @@
   "name": "@romejs/pretty-format",
   "private": true,
   "type": "module",
-  "main": "index.ts",
-  "version": "0.0.0"
+  "main": "index.ts"
 }

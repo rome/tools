@@ -6,12 +6,12 @@
  */
 
 import {
-  JSNodeBase,
+  FlowObjectTypeCallProperty,
+  FlowObjectTypeIndexer,
+  FlowObjectTypeInternalSlot,
   FlowObjectTypeProperty,
   FlowObjectTypeSpreadProperty,
-  FlowObjectTypeIndexer,
-  FlowObjectTypeCallProperty,
-  FlowObjectTypeInternalSlot,
+  JSNodeBase,
 } from '../index';
 import {createBuilder} from '../utils';
 
@@ -22,7 +22,8 @@ export type FlowObjectTypeAnnotation = JSNodeBase & {
     | FlowObjectTypeSpreadProperty
     | FlowObjectTypeIndexer
     | FlowObjectTypeCallProperty
-    | FlowObjectTypeInternalSlot>;
+    | FlowObjectTypeInternalSlot
+  >;
   exact?: boolean;
   inexact?: boolean;
 };

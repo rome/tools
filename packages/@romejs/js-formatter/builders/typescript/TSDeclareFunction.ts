@@ -5,27 +5,26 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSDeclareFunction, tsDeclareFunction, AnyNode} from '@romejs/js-ast';
+import {TSDeclareFunction} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
-import {Tokens, word, operator, space} from '../../tokens';
+import {Token, concat, space} from '../../tokens';
 
 export default function TSDeclareFunction(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = tsDeclareFunction.assert(node);
-
-  let tokens: Tokens = [];
+  node: TSDeclareFunction,
+): Token {
+  let tokens: Array<Token> = [];
 
   if (node.declare) {
-    tokens = [word('declare'), space];
+    tokens.push('declare', space);
   }
 
-  return [
-    ...tokens,
-    word('function'),
-    ...builder.tokenize(node.id, node),
-    ...builder.tokenize(node.head, node),
-    operator(';'),
-  ];
+  return concat([
+    concat(tokens),
+    'function',
+    space,
+    builder.tokenize(node.id, node),
+    builder.tokenize(node.head, node),
+    ';',
+  ]);
 }

@@ -8,29 +8,28 @@
 // In this file, all methods are synchronous. This is pretty gross since the rest of Rome is async everything.
 // This is required so we can integrate the project config code in third-party integrations with sync architectures.
 // Project configs are initialized very infrequently anyway so we can live with the extremely minor perf hit.
-
 import {Consumer} from '@romejs/consume';
 import {
-  ProjectConfig,
-  PartialProjectConfig,
-  ProjectConfigObjects,
-  ProjectConfigMeta,
-  ProjectConfigTarget,
-  ProjectConfigMetaHard,
   DEFAULT_PROJECT_CONFIG,
+  PartialProjectConfig,
+  ProjectConfig,
+  ProjectConfigMeta,
+  ProjectConfigMetaHard,
+  ProjectConfigObjects,
+  ProjectConfigTarget,
 } from './types';
 import {parsePathPattern} from '@romejs/path-match';
 import {
-  arrayOfStrings,
   arrayOfPatterns,
-  mergeArrays,
-  mergeAbsoluteFilePathSets,
+  arrayOfStrings,
   getParentConfigDependencies,
+  mergeAbsoluteFilePathSets,
+  mergeArrays,
 } from './utils';
-import {consumeJSONExtra, ConsumeJSONResult} from '@romejs/codec-json';
+import {ConsumeJSONResult, consumeJSONExtra} from '@romejs/codec-json';
 import {AbsoluteFilePath, AbsoluteFilePathSet} from '@romejs/path';
-import {coerce1, number0, add, inc} from '@romejs/ob1';
-import {existsSync, readFileTextSync, readdirSync, lstatSync} from '@romejs/fs';
+import {ob1Add, ob1Coerce1, ob1Inc, ob1Number0} from '@romejs/ob1';
+import {existsSync, lstatSync, readFileTextSync, readdirSync} from '@romejs/fs';
 import crypto = require('crypto');
 
 import {ROME_CONFIG_PACKAGE_JSON_FIELD} from './constants';
@@ -96,7 +95,7 @@ export function loadCompleteProjectConfig(
       const file = readFileTextSync(possiblePath);
       const lines: Array<string> = file.split('\n');
 
-      let index = number0;
+      let index = ob1Number0;
 
       consumer.handleThrownDiagnostics(() => {
         const patterns = lines.map((line, i) => {
@@ -105,15 +104,15 @@ export function loadCompleteProjectConfig(
             path: possiblePath,
             offsetPosition: {
               index,
-              line: coerce1(i),
-              column: number0,
+              line: ob1Coerce1(i),
+              column: ob1Number0,
             },
           });
 
-          index = add(index, line.length);
+          index = ob1Add(index, line.length);
 
           // Newline char
-          index = inc(index);
+          index = ob1Inc(index);
 
           return pattern;
         });
@@ -127,12 +126,8 @@ export function loadCompleteProjectConfig(
   // Set fs.watchman=true when the file .watchmanconfig is present and no fs.watchman config was set
   if (partial.files.watchman === undefined) {
     // Try the project and vcs.root folder for a .watchmanconfig
-
     // We do the Set magic to only visit the projectFolder once if it is also the vcs.root
-    for (const dir of new AbsoluteFilePathSet([
-      projectFolder,
-      config.vcs.root,
-    ])) {
+    for (const dir of new AbsoluteFilePathSet([projectFolder, config.vcs.root])) {
       const watchmanConfigPath = dir.append(WATCHMAN_CONFIG_FILENAME);
       meta.configDependencies.add(watchmanConfigPath);
       if (existsSync(watchmanConfigPath)) {
@@ -193,7 +188,6 @@ export function normalizeProjectConfig(
     resolver: {},
     develop: {},
     typeCheck: {},
-    format: {},
     tests: {},
     files: {},
     vcs: {},
@@ -249,8 +243,7 @@ export function normalizeProjectConfig(
   const bundler = consumer.get('bundler');
   if (categoryExists(bundler)) {
     if (bundler.has('mode')) {
-        config.bundler.mode =
-        bundler.get('mode').asStringSet(['modern', 'legacy']);
+      config.bundler.mode = bundler.get('mode').asStringSet(['modern', 'legacy']);
     }
   }
 
@@ -272,9 +265,10 @@ export function normalizeProjectConfig(
     }
 
     if (typeChecking.has('libs')) {
-      const libs = normalizeTypeCheckingLibs(projectFolder, typeChecking.get(
-        'libs',
-      ));
+      const libs = normalizeTypeCheckingLibs(
+        projectFolder,
+        typeChecking.get('libs'),
+      );
       config.typeCheck.libs = libs.files;
       meta.configDependencies = new AbsoluteFilePathSet([
         ...meta.configDependencies,
@@ -293,10 +287,6 @@ export function normalizeProjectConfig(
 
   const lint = consumer.get('lint');
   if (categoryExists(lint)) {
-    if (lint.has('enabled')) {
-      config.lint.enabled = lint.get('enabled').asBoolean();
-    }
-
     if (lint.has('ignore')) {
       config.lint.ignore = arrayOfPatterns(lint.get('ignore'));
     }
@@ -306,23 +296,8 @@ export function normalizeProjectConfig(
     }
   }
 
-  const format = consumer.get('format');
-  if (categoryExists(format)) {
-    if (format.has('enabled')) {
-      config.format.enabled = format.get('enabled').asBoolean();
-    }
-
-    if (format.has('ignore')) {
-      config.format.ignore = arrayOfPatterns(format.get('ignore'));
-    }
-  }
-
   const tests = consumer.get('tests');
   if (categoryExists(tests)) {
-    if (tests.has('enabled')) {
-      config.tests.enabled = tests.get('enabled').asBoolean();
-    }
-
     if (tests.has('ignore')) {
       config.tests.ignore = arrayOfPatterns(tests.get('ignore'));
     }
@@ -352,11 +327,9 @@ export function normalizeProjectConfig(
     }
 
     if (files.has('assetExtensions')) {
-      config.files.assetExtensions = files.get('assetExtensions').asArray().map(
-        (
-          item,
-        ) => item.asString(),
-      );
+      config.files.assetExtensions = files.get('assetExtensions').asArray().map((
+        item,
+      ) => item.asString());
     }
   }
 
@@ -376,8 +349,8 @@ export function normalizeProjectConfig(
   if (categoryExists(targets)) {
     for (const [name, object] of targets.asMap()) {
       const target: ProjectConfigTarget = {
-        constraints: object.get('constraints').asImplicitArray().map(
-          (item) => item.asString(),
+        constraints: object.get('constraints').asImplicitArray().map((item) =>
+          item.asString()
         ),
       };
       object.enforceUsedProperties('config target property');
@@ -478,7 +451,10 @@ function extendProjectConfig(
     merged.haste.ignore = hasteIgnore;
   }
 
-  const testingIgnore = mergeArrays(extendsObj.tests.ignore, config.tests.ignore);
+  const testingIgnore = mergeArrays(
+    extendsObj.tests.ignore,
+    config.tests.ignore,
+  );
   if (testingIgnore !== undefined) {
     merged.tests.ignore = testingIgnore;
   }
@@ -555,10 +531,6 @@ function mergePartialConfig<
     tests: {
       ...a.tests,
       ...b.tests,
-    },
-    format: {
-      ...a.format,
-      ...b.format,
     },
     files: {
       ...a.files,

@@ -13,7 +13,10 @@ export type BigIntLiteral = JSNodeBase & {
   value: string;
 };
 
-export const bigIntLiteral = createBuilder<BigIntLiteral>('BigIntLiteral', {
-  bindingKeys: {},
-  visitorKeys: {},
-});
+export const bigIntLiteral = createBuilder<BigIntLiteral>(
+  'BigIntLiteral',
+  {
+    bindingKeys: {},
+    visitorKeys: {},
+  },
+);

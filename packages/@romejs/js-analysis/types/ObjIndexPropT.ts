@@ -7,7 +7,7 @@
 
 import {AnyNode} from '@romejs/js-ast';
 import T, {SerialTypeFactory} from './T';
-import {HydrateTypeFactory, HydrateData} from '../Evaluator';
+import {HydrateData, HydrateTypeFactory} from '../Evaluator';
 import {HumanBuilder} from '../Utils';
 import {Scope} from '../scopes';
 
@@ -36,9 +36,12 @@ export default class ObjIndexPropT extends T {
     data: HydrateData,
     getType: HydrateTypeFactory,
   ): T {
-    return new ObjIndexPropT(scope, originNode, getType(data.key), getType(
-      data.value,
-    ));
+    return new ObjIndexPropT(
+      scope,
+      originNode,
+      getType(data.key),
+      getType(data.value),
+    );
   }
 
   humanize(builder: HumanBuilder): string {

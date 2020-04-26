@@ -24,15 +24,17 @@ export function sortMapKeys<T>(map: Map<string, T>): Map<string, T> {
 export function formatPercent(num: number): string {
   const str = String(Math.floor(num));
   if (num > 80) {
-    return `<green>${str}</green>`;
+    return `<success>${str}</success>`;
   } else if (num > 40) {
-    return `<yellow>${str}</yellow>`;
+    return `<warn>${str}</warn>`;
   } else {
-    return `<red>${str}</red>`;
+    return `<error>${str}</error>`;
   }
 }
 
-export function percentInsideCoverageFolder(folder: CoverageFolder): {
+export function percentInsideCoverageFolder(
+  folder: CoverageFolder,
+): {
   functions: number;
   branches: number;
   lines: number;
@@ -44,10 +46,7 @@ export function percentInsideCoverageFolder(folder: CoverageFolder): {
 
   const folders = [folder];
   while (folders.length > 0) {
-    const folder = folders.shift();
-    if (folder === undefined) {
-      throw new Error('folders.length has already been validated');
-    }
+    const folder = folders.shift()!;
 
     for (const file of folder.files.values()) {
       totalFiles++;

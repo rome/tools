@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, AnyFlowPrimary, AnyTSPrimary} from '../index';
+import {AnyFlowPrimary, AnyTSPrimary, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type IntersectionTypeAnnotation = JSNodeBase & {
@@ -13,11 +13,12 @@ export type IntersectionTypeAnnotation = JSNodeBase & {
   types: Array<AnyFlowPrimary | AnyTSPrimary>;
 };
 
-export const intersectionTypeAnnotation = createBuilder<
-  IntersectionTypeAnnotation
->('IntersectionTypeAnnotation', {
-  bindingKeys: {},
-  visitorKeys: {
-    types: true,
+export const intersectionTypeAnnotation = createBuilder<IntersectionTypeAnnotation>(
+  'IntersectionTypeAnnotation',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      types: true,
+    },
   },
-});
+);

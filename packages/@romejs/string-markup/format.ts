@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Children, TagAttributes, MarkupTagName, TagNode} from './types';
+import {Children, MarkupTagName, TagAttributes, TagNode} from './types';
 import {parseMarkup} from './parse';
 import {
+  humanizeFileSize,
   humanizeNumber,
   humanizeTime,
-  humanizeFileSize,
 } from '@romejs/string-utils';
-import {formatAnsi, ansiPad} from './ansi';
+import {ansiPad} from './ansi';
 import {AbsoluteFilePath, createUnknownFilePath} from '@romejs/path';
 import {escapeMarkup} from './escape';
 
@@ -40,7 +40,10 @@ type FormatReduceOptions = {
   ) => string;
 };
 
-function formatReduceFromInput(input: string, opts: FormatReduceOptions): string {
+export function formatReduceFromInput(
+  input: string,
+  opts: FormatReduceOptions,
+): string {
   return formatReduceFromChildren(parseMarkup(input), opts);
 }
 
@@ -76,14 +79,13 @@ function formatReduceFromChildren(
       // Clone it since we'll be deleting attributes
       const attributes = new Map(child.attributes.entries());
 
-      let emphasis = attributes.get('emphasis') === 'true' && !shouldIgnoreTag(
-        'emphasis',
-        opts,
-      );
+      let emphasis =
+        attributes.get('emphasis') === 'true' &&
+        !shouldIgnoreTag('emphasis', opts);
       attributes.delete('emphasis');
 
-      let dim = attributes.get('dim') === 'true' &&
-        !shouldIgnoreTag('dim', opts);
+      let dim =
+        attributes.get('dim') === 'true' && !shouldIgnoreTag('dim', opts);
       attributes.delete('dim');
 
       const applyTags: Array<TagNode> = [];
@@ -103,17 +105,20 @@ function formatReduceFromChildren(
           children: [],
         });
       }
-      if (attributes.size > 0 || attributes.size === 0 && !shouldIgnoreTag(
-          child.name,
-          opts,
-        )) {
+      if (
+        attributes.size > 0 ||
+        (attributes.size === 0 && !shouldIgnoreTag(child.name, opts))
+      ) {
         applyTags.push(child);
       }
 
-      let res = formatReduceFromChildren(child.children, {
-        ...opts,
-        ancestry: [...opts.ancestry, ...applyTags],
-      });
+      let res = formatReduceFromChildren(
+        child.children,
+        {
+          ...opts,
+          ancestry: [...opts.ancestry, ...applyTags],
+        },
+      );
 
       if (formatTag !== undefined) {
         for (const tag of applyTags) {
@@ -129,7 +134,7 @@ function formatReduceFromChildren(
   return buff;
 }
 
-function formatFileLink(
+export function formatFileLink(
   attributes: TagAttributes,
   value: string,
   opts: MarkupFormatOptions,
@@ -164,7 +169,7 @@ function formatFileLink(
   return {text, filename};
 }
 
-function formatApprox(attributes: TagAttributes, value: string) {
+export function formatApprox(attributes: TagAttributes, value: string) {
   if (attributes.get('approx') === 'true') {
     return `~${value}`;
   } else {
@@ -172,7 +177,7 @@ function formatApprox(attributes: TagAttributes, value: string) {
   }
 }
 
-function formatGrammarNumber(attributes: TagAttributes, value: string) {
+export function formatGrammarNumber(attributes: TagAttributes, value: string) {
   const num = Number(value);
 
   const none = attributes.get('none');
@@ -193,14 +198,14 @@ function formatGrammarNumber(attributes: TagAttributes, value: string) {
   return '';
 }
 
-function formatNumber(attributes: TagAttributes, value: string) {
+export function formatNumber(attributes: TagAttributes, value: string) {
   const num = Number(value);
   const human = humanizeNumber(num);
   const humanWithApprox = formatApprox(attributes, human);
   return humanWithApprox;
 }
 
-function formatPad(attributes: TagAttributes, value: string) {
+export function formatPad(attributes: TagAttributes, value: string) {
   const left = attributes.get('dir') !== 'right';
   const count = Number(attributes.get('count') || 0);
   const char = attributes.get('char');
@@ -212,281 +217,99 @@ export function markupToPlainText(
   input: string,
   opts: MarkupFormatOptions = {},
 ): string {
-  return formatReduceFromInput(input, {
-    ancestry: [],
-    formatText: (text) => {
-      return text;
+  return formatReduceFromInput(
+    input,
+    {
+      ancestry: [],
+      formatText: (text) => {
+        return text;
+      },
+      formatTag: (tag, attributes, value) => {
+        switch (tag) {
+          case 'filelink':
+            return formatFileLink(attributes, value, opts).text;
+
+          case 'number':
+            return formatNumber(attributes, value);
+
+          case 'grammarNumber':
+            return formatGrammarNumber(attributes, value);
+
+          case 'duration':
+            return formatApprox(attributes, humanizeTime(Number(value), true));
+
+          case 'filesize':
+            return humanizeFileSize(Number(value));
+
+          case 'pad':
+            return formatPad(attributes, value);
+
+          case 'command':
+            return `\`${value}\``;
+
+          case 'italic':
+            return `_${value}_`;
+
+          default:
+            return value;
+        }
+      },
     },
-    formatTag: (tag, attributes, value) => {
-      switch (tag) {
-        case 'filelink':
-          return formatFileLink(attributes, value, opts).text;
-
-        case 'number':
-          return formatNumber(attributes, value);
-
-        case 'grammarNumber':
-          return formatGrammarNumber(attributes, value);
-
-        case 'duration':
-          return formatApprox(attributes, humanizeTime(Number(value), true));
-
-        case 'filesize':
-          return humanizeFileSize(Number(value));
-
-        case 'pad':
-          return formatPad(attributes, value);
-
-        case 'command':
-          return `\`${value}\``;
-
-        case 'italic':
-          return `_${value}_`;
-
-        default:
-          return value;
-      }
-    },
-  });
+  );
 }
 
 export function normalizeMarkup(
   input: string,
   opts: MarkupFormatOptions = {},
 ): string {
-  return formatReduceFromInput(input, {
-    ancestry: [],
-    formatText: (text) => {
-      return escapeMarkup(text);
-    },
-    formatTag: (tag, attributes, value) => {
-      switch (tag) {
-        case // Normalize filename of <filelink target>
-        'filelink': {
-          const {text, filename} = formatFileLink(attributes, value, opts);
-          attributes.set('target', filename);
-          value = text;
-          break;
+  return formatReduceFromInput(
+    input,
+    {
+      ancestry: [],
+      formatText: (text) => {
+        return escapeMarkup(text);
+      },
+      formatTag: (tag, attributes, value) => {
+        switch (tag) {
+          case // Normalize filename of <filelink target>
+          'filelink': {
+            const {text, filename} = formatFileLink(attributes, value, opts);
+            attributes.set('target', filename);
+            value = text;
+            break;
+          }
+
+          // We don't technically need to normalize this but it's one less tag to have to support
+          // if other tools need to consume it
+          case 'grammarNumber':
+            return formatGrammarNumber(attributes, value);
         }
 
-        // We don't technically need to normalize this but it's one less tag to have to support
-        // if other tools need to consume it
-        case 'grammarNumber':
-          return formatGrammarNumber(attributes, value);
-      }
+        let attrStr = Array.from(
+          attributes,
+          ([key, value]) => {
+            if (value === 'true') {
+              return key;
+            } else {
+              const escapedValue = escapeMarkup(value);
+              return `${key}="${escapedValue}"`;
+            }
+          },
+        ).join(' ');
 
-      let attrStr = Array.from(attributes, ([key, value]) => {
-        return `${key}="${value.replace(/"/g, '\\"')}"`;
-      }).join(' ');
+        let open = `<${tag}`;
+        if (attrStr !== '') {
+          open += ` ${attrStr}`;
+        }
 
-      let open = `<${tag}`;
-      if (attrStr !== '') {
-        open += ` ${attrStr}`;
-      }
-
-      if (value === '') {
-        return `${open} />`;
-      } else {
-        return `${open}>${value}</${tag}>`;
-      }
+        if (value === '') {
+          return `${open} />`;
+        } else {
+          return `${open}>${value}</${tag}>`;
+        }
+      },
     },
-  });
-}
-
-export function markupToAnsi(
-  input: string,
-  opts: MarkupFormatOptions = {},
-): string {
-  return formatReduceFromInput(input, {
-    ancestry: [],
-    formatTag: ansiFormatTag,
-    formatText: (value, tags) => {
-      // Format tags in reverse
-      for (let i = tags.length - 1; i >= 0; i--) {
-        const tag = tags[i];
-        value = ansiFormatText(tag, value, opts);
-      }
-
-      return formatAnsi.reset(value);
-    },
-  });
-}
-
-function ansiFormatTag(
-  tagName: MarkupTagName,
-  attributes: TagAttributes,
-  value: string,
-): string {
-  switch (tagName) {
-    case 'pad':
-      return formatPad(attributes, value);
-
-    case 'command':
-      return '`' + value + '`';
-
-    default:
-      return value;
-  }
-}
-
-function ansiFormatText(
-  {name: tagName, attributes}: TagNode,
-  value: string,
-  opts: MarkupFormatOptions,
-): string {
-  switch (tagName) {
-    case 'hyperlink': {
-      let text = value;
-      let hyperlink = attributes.get('target');
-
-      if (hyperlink === undefined) {
-        hyperlink = text;
-      }
-
-      if (text === '') {
-        text = hyperlink;
-      }
-
-      return formatAnsi.hyperlink(text, hyperlink);
-    }
-
-    case 'pad':
-      return value;
-
-    case 'filelink': {
-      const {text, filename} = formatFileLink(attributes, value, opts);
-      return formatAnsi.hyperlink(text, `file://${filename}`);
-    }
-
-    case 'inverse':
-      return formatAnsi.inverse(` ${value} `);
-
-    case 'emphasis':
-      return formatAnsi.bold(value);
-
-    case 'dim':
-      return formatAnsi.dim(value);
-
-    case 'filesize':
-      return humanizeFileSize(Number(value));
-
-    case 'duration':
-      return formatApprox(attributes, humanizeTime(Number(value), true));
-
-    case 'number':
-      return formatNumber(attributes, value);
-
-    case 'grammarNumber':
-      return formatGrammarNumber(attributes, value);
-
-    case 'italic':
-      return formatAnsi.italic(value);
-
-    case 'underline':
-      return formatAnsi.underline(value);
-
-    case 'strike':
-      return formatAnsi.strikethrough(value);
-
-    case 'black':
-      return formatAnsi.black(value);
-
-    case 'brightBlack':
-      return formatAnsi.brightBlack(value);
-
-    case 'red':
-      return formatAnsi.red(value);
-
-    case 'brightRed':
-      return formatAnsi.brightRed(value);
-
-    case 'green':
-      return formatAnsi.green(value);
-
-    case 'brightGreen':
-      return formatAnsi.brightGreen(value);
-
-    case 'yellow':
-      return formatAnsi.yellow(value);
-
-    case 'brightYellow':
-      return formatAnsi.brightYellow(value);
-
-    case 'blue':
-      return formatAnsi.blue(value);
-
-    case 'brightBlue':
-      return formatAnsi.brightBlue(value);
-
-    case 'magenta':
-      return formatAnsi.magenta(value);
-
-    case 'brightMagenta':
-      return formatAnsi.brightMagenta(value);
-
-    case 'cyan':
-      return formatAnsi.cyan(value);
-
-    case 'brightCyan':
-      return formatAnsi.brightCyan(value);
-
-    case 'white':
-      return formatAnsi.white(value);
-
-    case 'brightWhite':
-      return formatAnsi.brightWhite(value);
-
-    case 'bgBlack':
-      return formatAnsi.bgBlack(value);
-
-    case 'bgBrightBlack':
-      return formatAnsi.bgBrightBlack(value);
-
-    case 'bgRed':
-      return formatAnsi.bgRed(value);
-
-    case 'bgBrightRed':
-      return formatAnsi.bgBrightRed(value);
-
-    case 'bgGreen':
-      return formatAnsi.bgGreen(value);
-
-    case 'bgBrightGreen':
-      return formatAnsi.bgBrightGreen(value);
-
-    case 'bgYellow':
-      return formatAnsi.bgYellow(value);
-
-    case 'bgBrightYellow':
-      return formatAnsi.bgBrightYellow(value);
-
-    case 'bgBlue':
-      return formatAnsi.bgBlue(value);
-
-    case 'bgBrightBlue':
-      return formatAnsi.bgBrightBlue(value);
-
-    case 'bgMagenta':
-      return formatAnsi.bgMagenta(value);
-
-    case 'bgBrightMagenta':
-      return formatAnsi.bgBrightMagenta(value);
-
-    case 'bgCyan':
-      return formatAnsi.bgCyan(value);
-
-    case 'bgBrightCyan':
-      return formatAnsi.bgBrightCyan(value);
-
-    case 'bgWhite':
-      return formatAnsi.bgWhite(value);
-
-    case 'bgBrightWhite':
-      return formatAnsi.bgBrightWhite(value);
-
-    case 'command':
-      return formatAnsi.italic(value);
-  }
+  );
 }
 
 export function humanizeMarkupFilename(

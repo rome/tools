@@ -11,8 +11,8 @@ import {AbsoluteFilePath} from '@romejs/path';
 import {createDirectory, writeFile} from '@romejs/fs';
 import {
   DEFAULT_PROJECT_CONFIG,
-  ProjectConfig,
   DEFAULT_PROJECT_CONFIG_META,
+  ProjectConfig,
 } from '@romejs/project';
 
 export default class VirtualModules {

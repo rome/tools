@@ -6,11 +6,11 @@
  */
 
 import {
+  BlockStatement,
+  ComputedPropertyKey,
+  FunctionHead,
   JSNodeBase,
   StaticPropertyKey,
-  ComputedPropertyKey,
-  BlockStatement,
-  FunctionHead,
 } from '../index';
 import {createBuilder} from '../utils';
 
@@ -24,11 +24,14 @@ export type ObjectMethod = JSNodeBase & {
   body: BlockStatement;
 };
 
-export const objectMethod = createBuilder<ObjectMethod>('ObjectMethod', {
-  bindingKeys: {},
-  visitorKeys: {
-    key: true,
-    head: true,
-    body: true,
+export const objectMethod = createBuilder<ObjectMethod>(
+  'ObjectMethod',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      key: true,
+      head: true,
+      body: true,
+    },
   },
-});
+);

@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {ObjectExpression, objectExpression, AnyNode} from '@romejs/js-ast';
+import {AnyNode, ObjectExpression, objectExpression} from '@romejs/js-ast';
 import ObjPropT from '../../types/ObjPropT';
 import ObjT from '../../types/ObjT';
 
@@ -45,9 +45,13 @@ export default function ObjectExpression(node: AnyNode, scope: Scope) {
     }
   }
 
-  return new ObjT(scope, node, {
-    calls: [],
-    props,
-    proto: scope.intrinsics.ObjectPrototype,
-  });
+  return new ObjT(
+    scope,
+    node,
+    {
+      calls: [],
+      props,
+      proto: scope.intrinsics.ObjectPrototype,
+    },
+  );
 }

@@ -7,15 +7,16 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   FlowInterfaceDeclaration,
   flowInterfaceDeclaration,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function FlowInterfaceDeclaration(node: AnyNode, scope: Scope) {
-  node = node.type === 'FlowDeclareInterface'
-    ? node
-    : flowInterfaceDeclaration.assert(node);
+  node =
+    node.type === 'FlowDeclareInterface'
+      ? node
+      : flowInterfaceDeclaration.assert(node);
 
   const typeScope = scope.fork();
   if (node.typeParameters) {

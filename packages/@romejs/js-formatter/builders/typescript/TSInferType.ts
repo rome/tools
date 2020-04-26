@@ -5,16 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSInferType, tsInferType, AnyNode} from '@romejs/js-ast';
+import {TSInferType} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
-import {Tokens, operator, space} from '../../tokens';
+import {Token, concat, space} from '../../tokens';
 
-export default function TSInferType(builder: Builder, node: AnyNode): Tokens {
-  node = tsInferType.assert(node);
-
-  return [
-    operator('infer'),
-    space,
-    ...builder.tokenize(node.typeParameter, node),
-  ];
+export default function TSInferType(builder: Builder, node: TSInferType): Token {
+  return concat(['infer', space, builder.tokenize(node.typeParameter, node)]);
 }

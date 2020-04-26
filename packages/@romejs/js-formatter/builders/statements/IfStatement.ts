@@ -7,61 +7,70 @@
 
 import Builder from '../../Builder';
 import {
-  Tokens,
-  breakGroup,
-  indent,
-  operator,
-  word,
-  space,
-  newline,
+  Token,
   concat,
+  group,
+  hardline,
+  indent,
+  softline,
+  space,
 } from '../../tokens';
-import {ifStatement, AnyNode} from '@romejs/js-ast';
+import {AnyNode, IfStatement} from '@romejs/js-ast';
 import {isStatement} from '@romejs/js-ast-utils';
 
-export default function IfStatement(builder: Builder, node: AnyNode): Tokens {
-  node = ifStatement.assert(node);
-
-  const tokens: Tokens = [
-    word('if'),
-    space,
-    operator('('),
-    breakGroup([builder.tokenize(node.test, node)], true),
-    operator(')'),
+export default function IfStatement(builder: Builder, node: IfStatement): Token {
+  const tokens: Array<Token> = [
+    group(
+      concat([
+        'if',
+        space,
+        '(',
+        group(
+          concat([
+            indent(concat([softline, builder.tokenize(node.test, node)])),
+            softline,
+          ]),
+        ),
+        ')',
+      ]),
+    ),
     space,
   ];
 
   let needsBlock = false;
-  if (node.alternate !== undefined) {
+  if (node.alternate) {
     needsBlock = getLastStatement(node.consequent).type === 'IfStatement';
   }
+
   if (needsBlock) {
-    tokens.push(operator('{'), newline, indent(builder.tokenize(
-      node.consequent,
-      node,
-    )), newline, operator('}'));
+    tokens.push(
+      '{',
+      indent(concat([hardline, builder.tokenize(node.consequent, node)])),
+      hardline,
+      '}',
+    );
   } else {
-    tokens.push(concat(builder.tokenize(node.consequent, node)));
+    tokens.push(builder.tokenize(node.consequent, node));
   }
 
   if (node.alternate) {
-    tokens.push(space, word('else'), space, concat(builder.tokenize(
-      node.alternate,
-      node,
-    )));
+    tokens.push(space, 'else', space, builder.tokenize(node.alternate, node));
   }
 
-  return tokens;
+  return concat(tokens);
 }
 
 // Recursively get the last statement.
 function getLastStatement(statement: AnyNode): AnyNode {
-  if ((statement.type === 'WithStatement' || statement.type === 'WhileStatement' ||
-              statement.type === 'DoWhileStatement' ||
-            statement.type === 'ForOfStatement' ||
-          statement.type === 'ForInStatement' ||
-        statement.type === 'ForStatement') &&
-      isStatement(statement.body)) {
+  if (
+    (statement.type === 'WithStatement' ||
+    statement.type === 'WhileStatement' ||
+    statement.type === 'DoWhileStatement' ||
+    statement.type === 'ForOfStatement' ||
+    statement.type === 'ForInStatement' ||
+    statement.type === 'ForStatement') &&
+    isStatement(statement.body)
+  ) {
     return getLastStatement(statement.body);
   } else {
     return statement;

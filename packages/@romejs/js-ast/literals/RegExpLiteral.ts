@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, RegExpSubExpression, RegExpAlternation} from '../index';
+import {JSNodeBase, RegExpAlternation, RegExpSubExpression} from '../index';
 import {createBuilder} from '../utils';
 
 export type RegExpLiteral = JSNodeBase & {
@@ -19,9 +19,12 @@ export type RegExpLiteral = JSNodeBase & {
   unicode?: boolean;
 };
 
-export const regExpLiteral = createBuilder<RegExpLiteral>('RegExpLiteral', {
-  bindingKeys: {},
-  visitorKeys: {
-    expression: true,
+export const regExpLiteral = createBuilder<RegExpLiteral>(
+  'RegExpLiteral',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      expression: true,
+    },
   },
-});
+);

@@ -14,7 +14,10 @@ export type CommentBlock = JSNodeBase & {
   id: string;
 };
 
-export const commentBlock = createBuilder<CommentBlock>('CommentBlock', {
-  bindingKeys: {},
-  visitorKeys: {},
-});
+export const commentBlock = createBuilder<CommentBlock>(
+  'CommentBlock',
+  {
+    bindingKeys: {},
+    visitorKeys: {},
+  },
+);

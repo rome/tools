@@ -7,11 +7,11 @@
 
 import {SourceMapConsumer} from '@romejs/codec-source-map';
 import {ErrorFrame} from '@romejs/v8';
-import {coerce1, coerce1To0, Number1, Number0} from '@romejs/ob1';
+import {Number0, Number1, ob1Coerce1, ob1Coerce1To0} from '@romejs/ob1';
 import {
-  getErrorStructure,
   ERROR_FRAMES_PROP,
   ERROR_POP_FRAMES_PROP,
+  getErrorStructure,
 } from './errors';
 
 type ResolvedLocation = {
@@ -97,9 +97,11 @@ function buildStackString(err: Error): string {
 
     if (isNative) {
       parts.push('native');
-    } else if (filename !== undefined && lineNumber !== undefined &&
-          columnNumber !==
-          undefined) {
+    } else if (
+      filename !== undefined &&
+      lineNumber !== undefined &&
+      columnNumber !== undefined
+    ) {
       parts.push(`(${filename}:${lineNumber}:${columnNumber})`);
     }
 
@@ -121,11 +123,13 @@ function noNull<T>(val: null | T): undefined | T {
   }
 }
 
-function addErrorFrames(err: Error & {
-  [ERROR_FRAMES_PROP]?: unknown;
-  [ERROR_POP_FRAMES_PROP]?: unknown;
-},
-frames: Array<NodeJS.CallSite>): void {
+function addErrorFrames(
+  err: Error & {
+    [ERROR_FRAMES_PROP]?: unknown;
+    [ERROR_POP_FRAMES_PROP]?: unknown;
+  },
+  frames: Array<NodeJS.CallSite>,
+): void {
   if (err[ERROR_FRAMES_PROP]) {
     return;
   }
@@ -139,27 +143,26 @@ frames: Array<NodeJS.CallSite>): void {
       typeName: noNull(frameApi.getTypeName()),
       functionName: noNull(frameApi.getFunctionName()),
       methodName: noNull(frameApi.getMethodName()),
-
       isTopLevel: frameApi.isToplevel(),
       isEval: frameApi.isEval(),
       isNative: frameApi.isNative(),
       isConstructor: frameApi.isConstructor(),
-
       // TODO frameApi.isAsync
       isAsync: false,
-
       resolvedLocation: true,
-
       filename: noNull(filename),
-      lineNumber: lineNumber == null ? undefined : coerce1(lineNumber),
-
+      lineNumber: lineNumber == null ? undefined : ob1Coerce1(lineNumber),
       // Rome expects 0-indexed columns, V8 provides 1-indexed
-      columnNumber: columnNumber == null ? undefined : coerce1To0(columnNumber),
+      columnNumber: columnNumber == null
+        ? undefined
+        : ob1Coerce1To0(columnNumber),
     };
 
-    if (frame.filename !== undefined && frame.lineNumber !== undefined &&
-          frame.columnNumber !==
-          undefined) {
+    if (
+      frame.filename !== undefined &&
+      frame.lineNumber !== undefined &&
+      frame.columnNumber !== undefined
+    ) {
       const {found, line, column, filename, name} = resolveLocation(
         frame.filename,
         frame.lineNumber,

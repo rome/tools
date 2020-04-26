@@ -7,9 +7,9 @@
 
 import {
   AnyNode,
-  ForStatement,
   ForInStatement,
   ForOfStatement,
+  ForStatement,
 } from '@romejs/js-ast';
 
 export default function isFor(

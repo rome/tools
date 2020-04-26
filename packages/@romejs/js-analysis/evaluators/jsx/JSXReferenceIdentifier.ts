@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   JSXReferenceIdentifier,
   jsxReferenceIdentifier,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function JSXReferenceIdentifier(node: AnyNode, scope: Scope) {

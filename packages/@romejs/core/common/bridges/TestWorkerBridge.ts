@@ -25,16 +25,30 @@ export type TestWorkerBridgeRunOptions = {
 };
 
 export default class TestWorkerBridge extends Bridge {
-  inspectorDetails = this.createEvent<void, {inspectorUrl: undefined | string}>(
+  inspectorDetails = this.createEvent<
+    void,
     {
-      name: 'inspectorDetails',
-      direction: 'server->client',
-    },
-  );
+      inspectorUrl: undefined | string;
+    }
+  >({
+    name: 'inspectorDetails',
+    direction: 'server->client',
+  });
 
   prepareTest = this.createEvent<TestWorkerBridgeRunOptions, void>({
     name: 'prepareTest',
     direction: 'server->client',
+  });
+
+  snapshotUpdated = this.createEvent<
+    {
+      filename: string;
+      event: 'delete' | 'update' | 'create';
+    },
+    void
+  >({
+    name: 'snapshotUpdated',
+    direction: 'server<-client',
   });
 
   runTest = this.createEvent<number, void>({
@@ -42,28 +56,42 @@ export default class TestWorkerBridge extends Bridge {
     direction: 'server->client',
   });
 
-  testsFound = this.createEvent<Array<{
-    ref: TestRef;
-    isSkipped: boolean;
-  }>, void>({
+  testsFound = this.createEvent<
+    Array<{
+      ref: TestRef;
+      isSkipped: boolean;
+    }>,
+    void
+  >({
     name: 'onTestFounds',
     direction: 'server<-client',
   });
 
-  testStart = this.createEvent<{
-    ref: TestRef;
-    timeout: undefined | number;
-  }, void>({
+  testStart = this.createEvent<
+    {
+      ref: TestRef;
+      timeout: undefined | number;
+    },
+    void
+  >({
     name: 'onTestStart',
     direction: 'server<-client',
   });
 
-  testError = this.createEvent<{
-    ref: undefined | TestRef;
-    diagnostic: Diagnostic;
-  }, void>({name: 'onTestError', direction: 'server<-client'});
+  testError = this.createEvent<
+    {
+      ref: undefined | TestRef;
+      diagnostic: Diagnostic;
+    },
+    void
+  >({name: 'onTestError', direction: 'server<-client'});
 
-  testSuccess = this.createEvent<{ref: TestRef}, void>({
+  testSuccess = this.createEvent<
+    {
+      ref: TestRef;
+    },
+    void
+  >({
     name: 'onTestSuccess',
     direction: 'server<-client',
   });

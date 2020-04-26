@@ -5,9 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Tokens} from '../../tokens';
-import {word} from '@romejs/js-formatter/tokens';
+import {Token} from '../../tokens';
 
-export default function NullLiteral(): Tokens {
-  return [word('null')];
+export default function NullLiteral(): Token {
+  return 'null';
 }

@@ -6,30 +6,24 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, space, operator, word} from '../../tokens';
-import {
-  FlowDeclareFunction,
-  flowDeclareFunction,
-  AnyNode,
-} from '@romejs/js-ast';
+import {Token, concat, space} from '../../tokens';
+import {AnyNode, FlowDeclareFunction} from '@romejs/js-ast';
 
 export default function FlowDeclareFunction(
   builder: Builder,
-  node: AnyNode,
+  node: FlowDeclareFunction,
   parent: AnyNode,
-) {
-  node = flowDeclareFunction.assert(node);
-
-  let tokens: Tokens = [];
+): Token {
+  const tokens: Array<Token> = [];
   if (parent.type !== 'ExportLocalDeclaration') {
-    tokens = [word('declare'), space];
+    tokens.push('declare', space);
   }
 
-  return [
-    ...tokens,
-    word('function'),
+  return concat([
+    concat(tokens),
+    'function',
     space,
-    ...builder.tokenize(node.id, node),
-    operator(';'),
-  ];
+    builder.tokenize(node.id, node),
+    ';',
+  ]);
 }

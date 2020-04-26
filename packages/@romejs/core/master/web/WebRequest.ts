@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {WebBridge, Master, MasterRequest} from '@romejs/core';
+import {Master, MasterRequest, WebBridge} from '@romejs/core';
 import {
-  getDiagnosticsFromError,
   deriveDiagnosticFromError,
+  getDiagnosticsFromError,
 } from '@romejs/diagnostics';
-import {removeSuffix, removePrefix} from '@romejs/string-utils';
+import {removePrefix, removeSuffix} from '@romejs/string-utils';
 import Bundler from '../bundler/Bundler';
 import {WebSocketInterface, createKey} from '@romejs/codec-websocket';
 import {Reporter} from '@romejs/cli-reporter';
@@ -19,7 +19,7 @@ import {createUnknownFilePath} from '@romejs/path';
 import {WebServer} from './index';
 import {ProjectDefinition} from '@romejs/project';
 import {HmrClientMessage} from './hmr';
-import {consumeUrl, ConsumableUrl} from '@romejs/codec-url';
+import {ConsumableUrl, consumeUrl} from '@romejs/codec-url';
 import http = require('http');
 
 const waitForever = new Promise(() => {});
@@ -65,13 +65,19 @@ export default class WebRequest {
     let rawBody = '';
 
     return new Promise((resolve) => {
-      req.on('data', (chunk) => {
-        rawBody += chunk;
-      });
+      req.on(
+        'data',
+        (chunk) => {
+          rawBody += chunk;
+        },
+      );
 
-      req.on('end', () => {
-        resolve(rawBody);
-      });
+      req.on(
+        'end',
+        () => {
+          resolve(rawBody);
+        },
+      );
     });
   }
 
@@ -192,11 +198,15 @@ export default class WebRequest {
   ): Promise<boolean> {
     project;
 
-    const possibleStaticPath = await this.server.pathnameToAbsolutePath(pathname);
+    const possibleStaticPath = await this.server.pathnameToAbsolutePath(
+      pathname,
+    );
 
     // TODO check if it is a file
-    if (possibleStaticPath !== undefined &&
-        (await this.master.memoryFs.existsHard(possibleStaticPath))) {
+    if (
+      possibleStaticPath !== undefined &&
+      (await this.master.memoryFs.existsHard(possibleStaticPath))
+    ) {
       return true;
     }
 
@@ -207,13 +217,16 @@ export default class WebRequest {
     const {res} = this;
     res.writeHead(200, {'Content-Type': 'application/javascript'});
 
-    const bundler = new Bundler(this.masterRequest, {
-      inlineSourceMap: false,
-      cwd: this.masterRequest.client.flags.cwd,
-      resolver: {
-        platform: 'web',
+    const bundler = new Bundler(
+      this.masterRequest,
+      {
+        inlineSourceMap: false,
+        cwd: this.masterRequest.client.flags.cwd,
+        resolver: {
+          platform: 'web',
+        },
       },
-    });
+    );
     const resolved = await this.master.resolver.resolveEntryAssertPath({
       origin: this.masterRequest.client.flags.cwd,
       source: createUnknownFilePath('@romejs-web/frontend'),
@@ -268,9 +281,12 @@ export default class WebRequest {
     const socket = new WebSocketInterface('server', req.socket);
     this.server.deviceWebsockets.add(socket);
 
-    req.socket.on('error', (err) => {
-      console.log(err.stack);
-    });
+    req.socket.on(
+      'error',
+      (err) => {
+        console.log(err.stack);
+      },
+    );
 
     this.reporter.success(`Device websocket client connected`);
 
@@ -306,14 +322,21 @@ export default class WebRequest {
     this.negotiateWebsocket();
 
     const socket = new WebSocketInterface('server', req.socket);
-    const bridge = createBridgeFromWebSocketInterface(WebBridge, socket, {
-      type: 'client',
-    });
+    const bridge = createBridgeFromWebSocketInterface(
+      WebBridge,
+      socket,
+      {
+        type: 'client',
+      },
+    );
     this.server.frontendWebsocketBridges.add(bridge);
 
-    req.socket.on('close', () => {
-      this.server.frontendWebsocketBridges.delete(bridge);
-    });
+    req.socket.on(
+      'close',
+      () => {
+        this.server.frontendWebsocketBridges.delete(bridge);
+      },
+    );
 
     await bridge.handshake();
 

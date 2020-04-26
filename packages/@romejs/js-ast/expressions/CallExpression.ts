@@ -6,11 +6,11 @@
  */
 
 import {
-  JSNodeBase,
-  Super,
   AnyExpression,
-  SpreadElement,
   AnyTypeArguments,
+  JSNodeBase,
+  SpreadElement,
+  Super,
 } from '../index';
 import {createBuilder} from '../utils';
 
@@ -21,11 +21,14 @@ export type CallExpression = JSNodeBase & {
   typeArguments?: AnyTypeArguments;
 };
 
-export const callExpression = createBuilder<CallExpression>('CallExpression', {
-  bindingKeys: {},
-  visitorKeys: {
-    callee: true,
-    arguments: true,
-    typeArguments: true,
+export const callExpression = createBuilder<CallExpression>(
+  'CallExpression',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      callee: true,
+      arguments: true,
+      typeArguments: true,
+    },
   },
-});
+);

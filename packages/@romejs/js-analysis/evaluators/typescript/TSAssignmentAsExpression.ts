@@ -6,9 +6,9 @@
  */
 
 import {
+  AnyNode,
   TSAssignmentAsExpression,
   tsAssignmentAsExpression,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function TSAssignmentAsExpression(node: AnyNode) {

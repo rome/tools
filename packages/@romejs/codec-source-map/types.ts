@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Number1, Number0} from '@romejs/ob1';
+import {Number0, Number1} from '@romejs/ob1';
 
 export type Mappings = Array<Mapping>;
 

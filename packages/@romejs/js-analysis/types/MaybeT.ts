@@ -6,7 +6,7 @@
  */
 
 import {AnyNode} from '@romejs/js-ast';
-import {HydrateTypeFactory, HydrateData} from '../Evaluator';
+import {HydrateData, HydrateTypeFactory} from '../Evaluator';
 import T, {SerialTypeFactory, TypeCompatibilityReturn} from './T';
 import {HumanBuilder} from '../Utils';
 import {Scope} from '../scopes';
@@ -53,8 +53,11 @@ export default class MaybeT extends T {
     if (otherType instanceof MaybeT) {
       return this.utils.checkCompability(this.parent, otherType.parent);
     } else {
-      return otherType instanceof VoidT || otherType instanceof NullT ||
-        this.utils.checkCompability(this.parent, otherType);
+      return (
+        otherType instanceof VoidT ||
+        otherType instanceof NullT ||
+        this.utils.checkCompability(this.parent, otherType)
+      );
     }
   }
 }

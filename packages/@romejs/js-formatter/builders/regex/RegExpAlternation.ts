@@ -6,18 +6,16 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, verbatim, concat} from '../../tokens';
-import {AnyNode, regExpAlternation} from '@romejs/js-ast';
+import {Token, concat} from '../../tokens';
+import {RegExpAlternation} from '@romejs/js-ast';
 
 export default function RegExpAlternation(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = regExpAlternation.assert(node);
-
-  return [
-    concat(builder.tokenize(node.left, node)),
-    verbatim('|'),
-    concat(builder.tokenize(node.right, node)),
-  ];
+  node: RegExpAlternation,
+): Token {
+  return concat([
+    builder.tokenize(node.left, node),
+    '|',
+    builder.tokenize(node.right, node),
+  ]);
 }

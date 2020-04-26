@@ -6,10 +6,10 @@
  */
 
 import {
-  JSNodeBase,
-  SpreadElement,
   AnyExpression,
   AnyPrimaryType,
+  JSNodeBase,
+  SpreadElement,
 } from '../index';
 import {createBuilder} from '../utils';
 
@@ -24,12 +24,13 @@ export type AmbiguousFlowTypeCastExpression = JSNodeBase & {
   optional?: boolean;
 };
 
-export const ambiguousFlowTypeCastExpression = createBuilder<
-  AmbiguousFlowTypeCastExpression
->('AmbiguousFlowTypeCastExpression', {
-  bindingKeys: {},
-  visitorKeys: {
-    expression: true,
-    typeAnnotation: true,
+export const ambiguousFlowTypeCastExpression = createBuilder<AmbiguousFlowTypeCastExpression>(
+  'AmbiguousFlowTypeCastExpression',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      expression: true,
+      typeAnnotation: true,
+    },
   },
-});
+);

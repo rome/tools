@@ -6,19 +6,20 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, concat} from '../../tokens';
-import {computedMemberProperty, AnyNode} from '@romejs/js-ast';
-import {operator} from '@romejs/js-formatter/tokens';
+import {Token, concat} from '../../tokens';
+import {ComputedMemberProperty} from '@romejs/js-ast';
 
 export default function ComputedMemberProperty(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = computedMemberProperty.assert(node);
+  node: ComputedMemberProperty,
+): Token {
+  const tokens: Array<Token> = [];
 
-  return [
-    operator('['),
-    concat(builder.tokenize(node.value, node)),
-    operator(']'),
-  ];
+  if (node.optional) {
+    tokens.push('?.');
+  }
+
+  tokens.push('[', builder.tokenize(node.value, node), ']');
+
+  return concat(tokens);
 }

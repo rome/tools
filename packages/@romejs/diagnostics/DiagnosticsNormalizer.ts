@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Diagnostic, DiagnosticLocation, DiagnosticAdviceItem} from './types';
+import {Diagnostic, DiagnosticAdviceItem, DiagnosticLocation} from './types';
 import DiagnosticsProcessor from './DiagnosticsProcessor';
 import {SourceMapConsumerCollection} from '@romejs/codec-source-map';
-import {normalizeMarkup, MarkupFormatOptions} from '@romejs/string-markup';
+import {MarkupFormatOptions, normalizeMarkup} from '@romejs/string-markup';
 import {createBlessedDiagnosticMessage} from './descriptions';
 
 export default class DiagnosticsNormalizer {
@@ -111,7 +111,7 @@ export default class DiagnosticsNormalizer {
       case 'log':
         return {
           ...item,
-          message: this.normalizeMarkup(item.message),
+          text: this.normalizeMarkup(item.text),
         };
 
       case 'stacktrace':
@@ -119,8 +119,12 @@ export default class DiagnosticsNormalizer {
           ...item,
           frames: item.frames.map((frame) => {
             const {filename, line, column} = frame;
-            if (filename === undefined || line === undefined || column ===
-                undefined || !sourceMaps.has(filename)) {
+            if (
+              filename === undefined ||
+              line === undefined ||
+              column === undefined ||
+              !sourceMaps.has(filename)
+            ) {
               return {
                 ...frame,
                 filename: this.normalizeFilename(frame.filename),
@@ -172,9 +176,9 @@ export default class DiagnosticsNormalizer {
       location: this.normalizeLocation(diag.location),
       description: {
         ...description,
-        message: createBlessedDiagnosticMessage(this.normalizeMarkup(
-          description.message.value,
-        )),
+        message: createBlessedDiagnosticMessage(
+          this.normalizeMarkup(description.message.value),
+        ),
         advice,
       },
     };

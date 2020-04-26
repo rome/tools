@@ -6,11 +6,10 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator} from '../../tokens';
-import {jsxText, AnyNode} from '@romejs/js-ast';
+import {Token} from '../../tokens';
+import {JSXText} from '@romejs/js-ast';
 import {escapeXHTMLEntities} from '@romejs/js-parser';
 
-export default function JSXText(builder: Builder, node: AnyNode): Tokens {
-  node = jsxText.assert(node);
-  return [operator(escapeXHTMLEntities(node.value))];
+export default function JSXText(builder: Builder, node: JSXText): Token {
+  return escapeXHTMLEntities(node.value);
 }

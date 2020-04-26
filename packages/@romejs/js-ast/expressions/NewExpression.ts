@@ -6,11 +6,11 @@
  */
 
 import {
-  JSNodeBase,
-  Super,
   AnyExpression,
-  SpreadElement,
   FlowTypeParameterInstantiation,
+  JSNodeBase,
+  SpreadElement,
+  Super,
   TSTypeParameterInstantiation,
 } from '../index';
 import {createBuilder} from '../utils';
@@ -26,11 +26,14 @@ export type NewExpression = JSNodeBase & {
   optional?: boolean;
 };
 
-export const newExpression = createBuilder<NewExpression>('NewExpression', {
-  bindingKeys: {},
-  visitorKeys: {
-    callee: true,
-    arguments: true,
-    typeArguments: true,
+export const newExpression = createBuilder<NewExpression>(
+  'NewExpression',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      callee: true,
+      arguments: true,
+      typeArguments: true,
+    },
   },
-});
+);

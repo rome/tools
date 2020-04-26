@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, AnyStatement} from '../index';
+import {AnyStatement, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type TSModuleBlock = JSNodeBase & {
@@ -13,9 +13,12 @@ export type TSModuleBlock = JSNodeBase & {
   body: Array<AnyStatement>;
 };
 
-export const tsModuleBlock = createBuilder<TSModuleBlock>('TSModuleBlock', {
-  bindingKeys: {},
-  visitorKeys: {
-    body: true,
+export const tsModuleBlock = createBuilder<TSModuleBlock>(
+  'TSModuleBlock',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      body: true,
+    },
   },
-});
+);

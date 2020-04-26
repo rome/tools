@@ -6,15 +6,16 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator, concat} from '../../tokens';
-import {metaProperty, AnyNode} from '@romejs/js-ast';
+import {Token, concat} from '../../tokens';
+import {MetaProperty} from '@romejs/js-ast';
 
-export default function MetaProperty(builder: Builder, node: AnyNode): Tokens {
-  node = metaProperty.assert(node);
-
-  return [
-    concat(builder.tokenize(node.meta, node)),
-    operator('.'),
-    concat(builder.tokenize(node.property, node)),
-  ];
+export default function MetaProperty(
+  builder: Builder,
+  node: MetaProperty,
+): Token {
+  return concat([
+    builder.tokenize(node.meta, node),
+    '.',
+    builder.tokenize(node.property, node),
+  ]);
 }

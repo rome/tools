@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   ImportDefaultSpecifier,
   importDefaultSpecifier,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function ImportDefaultSpecifier(node: AnyNode, scope: Scope) {

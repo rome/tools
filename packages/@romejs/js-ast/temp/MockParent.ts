@@ -8,12 +8,17 @@
 import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
-export type MockParent = JSNodeBase & {type: 'MockParent'};
+export type MockParent = JSNodeBase & {
+  type: 'MockParent';
+};
 
-export const mockParent = createBuilder<MockParent>('MockParent', {
-  bindingKeys: {},
-  visitorKeys: {},
-});
+export const mockParent = createBuilder<MockParent>(
+  'MockParent',
+  {
+    bindingKeys: {},
+    visitorKeys: {},
+  },
+);
 
 export const MOCK_PARENT: MockParent = {
   type: 'MockParent',

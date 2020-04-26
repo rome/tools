@@ -6,26 +6,34 @@
  */
 
 import {AnyNode} from '@romejs/js-ast';
-import {HydrateTypeFactory, HydrateData} from '../Evaluator';
+import {HydrateData, HydrateTypeFactory} from '../Evaluator';
 import T, {SerialTypeFactory} from './T';
 import {Scope} from '../scopes';
 import {HumanBuilder} from '../Utils';
 import ObjT from './ObjT';
 
 export default class FunctionT extends ObjT {
-  constructor(scope: Scope, originNode: undefined | AnyNode, opts: {
-    params: Array<T>;
-    rest: undefined | T;
-    returns: T;
-    props?: Array<T>;
-    proto?: T;
-    body?: T;
-  }) {
-    super(scope, originNode, {
-      props: opts.props,
-      proto: opts.proto,
-      calls: [],
-    });
+  constructor(
+    scope: Scope,
+    originNode: undefined | AnyNode,
+    opts: {
+      params: Array<T>;
+      rest: undefined | T;
+      returns: T;
+      props?: Array<T>;
+      proto?: T;
+      body?: T;
+    },
+  ) {
+    super(
+      scope,
+      originNode,
+      {
+        props: opts.props,
+        proto: opts.proto,
+        calls: [],
+      },
+    );
     this.params = opts.params;
     this.rest = opts.rest;
     this.returns = opts.returns;
@@ -56,20 +64,24 @@ export default class FunctionT extends ObjT {
     data: HydrateData,
     getType: HydrateTypeFactory,
   ): T {
-    return new FunctionT(scope, originNode, {
-      params: Array(data.params).map((id) => getType(id)),
-      rest: data.rest === undefined ? undefined : getType(data.rest),
-      returns: getType(data.returns),
-      props: Array(data.props).map((id) => getType(id)),
-      proto: data.proto === undefined ? undefined : getType(data.proto),
-      body: data.body === undefined ? undefined : getType(data.body),
-    });
+    return new FunctionT(
+      scope,
+      originNode,
+      {
+        params: Array(data.params).map((id) => getType(id)),
+        rest: data.rest === undefined ? undefined : getType(data.rest),
+        returns: getType(data.returns),
+        props: Array(data.props).map((id) => getType(id)),
+        proto: data.proto === undefined ? undefined : getType(data.proto),
+        body: data.body === undefined ? undefined : getType(data.body),
+      },
+    );
   }
 
   humanize(builder: HumanBuilder): string {
     return `(${this.params.map((param) => builder.humanize(param)).join(', ')}) => ${builder.humanize(
-        this.returns,
-      )}`;
+      this.returns,
+    )}`;
   }
 
   reduce(): T {
@@ -82,14 +94,18 @@ export default class FunctionT extends ObjT {
     // Reduce the body and create a new function
     const reducedBody = this.utils.reduce(body);
     if (reducedBody !== body) {
-      return new FunctionT(this.scope, this.originNode, {
-        params: this.params,
-        rest: this.rest,
-        returns: this.returns,
-        props: this.props,
-        proto: this.proto,
-        body: reducedBody,
-      });
+      return new FunctionT(
+        this.scope,
+        this.originNode,
+        {
+          params: this.params,
+          rest: this.rest,
+          returns: this.returns,
+          props: this.props,
+          proto: this.proto,
+          body: reducedBody,
+        },
+      );
     }
 
     // Already been reduced

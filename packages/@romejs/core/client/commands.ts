@@ -12,7 +12,6 @@ import stop from './commands/stop';
 import run from './commands/run';
 import restart from './commands/restart';
 import status from './commands/status';
-import lint from './commands/lint';
 import lsp from './commands/lsp';
 
 //
@@ -28,9 +27,9 @@ export type LocalCommand<Flags extends Dict<unknown>> = SharedCommand<Flags> & {
   ) => Promise<boolean | MasterQueryResponse>;
 };
 
-export function createLocalCommand<
-  Flags extends Dict<unknown>
->(cmd: LocalCommand<Flags>): LocalCommand<Flags> {
+export function createLocalCommand<Flags extends Dict<unknown>>(
+  cmd: LocalCommand<Flags>,
+): LocalCommand<Flags> {
   return cmd;
 }
 
@@ -43,5 +42,4 @@ localCommands.set('stop', stop);
 localCommands.set('run', run);
 localCommands.set('restart', restart);
 localCommands.set('status', status);
-localCommands.set('lint', lint);
 localCommands.set('lsp', lsp);

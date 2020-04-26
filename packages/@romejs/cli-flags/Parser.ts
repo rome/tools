@@ -8,13 +8,13 @@
 import {Reporter} from '@romejs/cli-reporter';
 import {serializeCLIFlags} from './serializeCLIFlags';
 import {
-  consume,
-  Consumer,
   ConsumePath,
   ConsumePropertyDefinition,
   ConsumeSourceLocationRequestTarget,
+  Consumer,
+  consume,
 } from '@romejs/consume';
-import {toKebabCase, toCamelCase, naturalCompare} from '@romejs/string-utils';
+import {naturalCompare, toCamelCase, toKebabCase} from '@romejs/string-utils';
 import {createUnknownFilePath} from '@romejs/path';
 import {Dict} from '@romejs/typescript-helpers';
 import {markup} from '@romejs/string-markup';
@@ -31,6 +31,7 @@ type CommandOptions<T extends Dict<unknown>> = {
   description?: string;
   usage?: string;
   examples?: Examples;
+  ignoreFlags?: Array<string>;
   defineFlags?: (consumer: Consumer) => T;
   callback: (flags: T) => void | Promise<void>;
 };
@@ -54,12 +55,17 @@ export type ParserOptions<T> = {
   usage?: string;
   description?: string;
   version?: string;
+  ignoreFlags?: Array<string>;
   defineFlags: (consumer: Consumer) => T;
 };
 
 function splitCommandName(cmd: string): Array<string> {
   return cmd.split(' ');
 }
+
+type _FlagValue = undefined | number | string | boolean;
+
+export type FlagValue = _FlagValue | Array<_FlagValue>;
 
 export default class Parser<T> {
   constructor(
@@ -72,7 +78,6 @@ export default class Parser<T> {
 
     this.shorthandFlags = new Set();
     this.incorrectCaseFlags = new Set();
-
     this.declaredFlags = new Map();
     this.defaultFlags = new Map();
     this.flags = new Map();
@@ -126,7 +131,7 @@ export default class Parser<T> {
 
   incorrectCaseFlags: Set<string>;
   shorthandFlags: Set<string>;
-  flags: Map<string, string | boolean>;
+  flags: Map<string, FlagValue>;
   defaultFlags: Map<string, unknown>;
   declaredFlags: Map<string, ArgDeclaration>;
   flagToArgIndex: Map<string, number>;
@@ -140,7 +145,7 @@ export default class Parser<T> {
   helpMode: boolean;
 
   looksLikeFlag(flag: undefined | string): boolean {
-    return flag !== undefined && flag[0] === '-';
+    return flag?.[0] === '-';
   }
 
   toCamelCase(name: string): string {
@@ -152,6 +157,19 @@ export default class Parser<T> {
     }
 
     return camelName;
+  }
+
+  setFlag(key: string, value: string | boolean) {
+    let newValue: FlagValue = value;
+    const existing = this.flags.get(key);
+    if (existing !== undefined) {
+      if (Array.isArray(existing)) {
+        newValue = [...existing, value];
+      } else {
+        newValue = [existing, value];
+      }
+    }
+    this.flags.set(key, newValue);
   }
 
   consumeRawArgs(rawArgs: Array<string>) {
@@ -169,7 +187,7 @@ export default class Parser<T> {
         // Flags beginning with no- are always false
         if (name.startsWith('no-')) {
           const camelName = this.toCamelCase(name.slice(3));
-          this.flags.set(camelName, false);
+          this.setFlag(camelName, false);
           continue;
         }
 
@@ -178,7 +196,7 @@ export default class Parser<T> {
         if (equalsIndex !== -1) {
           const cleanName = this.toCamelCase(name.slice(0, equalsIndex));
           const value = name.slice(equalsIndex + 1);
-          this.flags.set(cleanName, value);
+          this.setFlag(cleanName, value);
           continue;
         }
 
@@ -186,10 +204,10 @@ export default class Parser<T> {
 
         // If the next argument is a flag or we're at the end of the args then just set it to `true`
         if (rawArgs.length === 0 || this.looksLikeFlag(rawArgs[0])) {
-          this.flags.set(camelName, true);
+          this.setFlag(camelName, true);
         } else {
           // Otherwise, take that value
-          this.flags.set(camelName, String(rawArgs.shift()));
+          this.setFlag(camelName, String(rawArgs.shift()));
         }
 
         this.flagToArgIndex.set(camelName, this.args.length);
@@ -205,9 +223,9 @@ export default class Parser<T> {
   }
 
   getFlagsConsumer(): Consumer {
-    const defaultFlags: Dict<unknown> = {};
+    const defaultFlags: Dict<FlagValue> = {};
 
-    const flags: Dict<unknown> = {};
+    const flags: Dict<FlagValue> = {};
     for (const [key, value] of this.flags) {
       flags[toCamelCase(key)] = value;
     }
@@ -215,7 +233,6 @@ export default class Parser<T> {
     return consume({
       filePath: createUnknownFilePath('argv'),
       value: flags,
-
       onDefinition: (def, valueConsumer) => {
         const key = def.objectPath.join('.');
 
@@ -236,13 +253,16 @@ export default class Parser<T> {
           command: this.currentCommand,
           definition: def,
         });
-        defaultFlags[key] = def.default;
+        defaultFlags[key] = (def.default as FlagValue);
 
         // We've parsed arguments like `--foo bar` as `{foo: 'bar}`
         // However, --foo may be a boolean flag, so `bar` needs to be correctly added to args
-        if (def.type === 'boolean' && value !== true && value !== false &&
-              value !==
-              undefined) {
+        if (
+          def.type === 'boolean' &&
+          value !== true &&
+          value !== false &&
+          value !== undefined
+        ) {
           const argIndex = this.flagToArgIndex.get(key);
           if (argIndex === undefined) {
             throw new Error('No arg index. Should always exist.');
@@ -258,37 +278,36 @@ export default class Parser<T> {
           valueConsumer.setValue(true);
         }
       },
-
       context: {
         category: 'flags/invalid',
-
         normalizeKey: (key) => {
           return this.incorrectCaseFlags.has(key) ? key : toKebabCase(key);
         },
-
         getOriginalValue: (keys: ConsumePath) => {
           return flags[keys[0]];
         },
-
         getDiagnosticPointer: (
           keys: ConsumePath,
           target: ConsumeSourceLocationRequestTarget,
         ) => {
           const {programName} = this.opts;
 
-          return serializeCLIFlags({
-            programName,
-            commandName: this.currentCommand,
-            args: this.args,
-            defaultFlags,
-            flags,
-            incorrectCaseFlags: this.incorrectCaseFlags,
-            shorthandFlags: this.shorthandFlags,
-          }, {
-            type: 'flag',
-            key: String(keys[0]),
-            target,
-          });
+          return serializeCLIFlags(
+            {
+              programName,
+              commandName: this.currentCommand,
+              args: this.args,
+              defaultFlags,
+              flags,
+              incorrectCaseFlags: this.incorrectCaseFlags,
+              shorthandFlags: this.shorthandFlags,
+            },
+            {
+              type: 'flag',
+              key: String(keys[0]),
+              target,
+            },
+          );
         },
       },
     });
@@ -300,9 +319,8 @@ export default class Parser<T> {
 
   declareArgument(decl: ArgDeclaration) {
     // Commands may have colliding flags, this is only a problem in help mode, so make it unique
-    const key = decl.command === undefined
-      ? decl.name
-      : `${decl.command}.${decl.name}`;
+    const key =
+      decl.command === undefined ? decl.name : `${decl.command}.${decl.name}`;
 
     // Ensure it hasn't been declared more than once
     if (this.declaredFlags.has(key)) {
@@ -335,6 +353,37 @@ export default class Parser<T> {
     return await this.defineCommandFlags(commandName, consumer);
   }
 
+  checkBadFlags(consumer: Consumer, definedCommand: undefined | DefinedCommand) {
+    if (this.helpMode) {
+      return;
+    }
+
+    // Ignore flags from command and root parser options
+    const ignoreFlags: Array<string> = [
+      ...((definedCommand !== undefined && definedCommand.command.ignoreFlags) || []),
+      ...(this.opts.ignoreFlags || []),
+    ];
+    for (const key of ignoreFlags) {
+      this.shorthandFlags.delete(key);
+      this.incorrectCaseFlags.delete(key);
+      consumer.markUsedProperty(key);
+    }
+
+    for (const shorthandName of this.shorthandFlags) {
+      consumer.get(shorthandName).unexpected(
+        descriptions.FLAGS.UNSUPPORTED_SHORTHANDS,
+      );
+    }
+
+    for (const incorrectName of this.incorrectCaseFlags) {
+      consumer.get(incorrectName).unexpected(
+        descriptions.FLAGS.INCORRECT_CASED_FLAG(incorrectName),
+      );
+    }
+
+    consumer.enforceUsedProperties('flag', false);
+  }
+
   async init(): Promise<T> {
     // Show help for --version
     if (this.flags.has('version')) {
@@ -347,18 +396,6 @@ export default class Parser<T> {
     let definedCommand: undefined | DefinedCommand;
 
     const rootFlags = await consumer.bufferDiagnostics(async (consumer) => {
-      for (const shorthandName of this.shorthandFlags) {
-        consumer.get(shorthandName).unexpected(
-          descriptions.FLAGS.UNSUPPORTED_SHORTHANDS,
-        );
-      }
-
-      for (const incorrectName of this.incorrectCaseFlags) {
-        consumer.get(incorrectName).unexpected(
-          descriptions.FLAGS.INCORRECT_CASED_FLAG(incorrectName),
-        );
-      }
-
       const rootFlags = this.opts.defineFlags(consumer);
 
       for (const key of this.commands.keys()) {
@@ -370,9 +407,7 @@ export default class Parser<T> {
         }
       }
 
-      if (!this.helpMode) {
-        consumer.enforceUsedProperties('flag', false);
-      }
+      this.checkBadFlags(consumer, definedCommand);
       this.currentCommand = undefined;
 
       return rootFlags;
@@ -380,9 +415,9 @@ export default class Parser<T> {
 
     // Show help for --help
     if (this.helpMode) {
-      await this.showHelp(definedCommand === undefined
-        ? undefined
-        : definedCommand.command.name);
+      await this.showHelp(
+        definedCommand === undefined ? undefined : definedCommand.command.name,
+      );
       process.exit(1);
     }
 
@@ -427,7 +462,6 @@ export default class Parser<T> {
       // Add input specifier unless a boolean
       if (def.type !== 'boolean') {
         // TODO some way to customize this
-
         // Property metadata in the consumer is a fine place but we want this to be non-CLI specific
         let inputName = undefined;
 
@@ -439,7 +473,18 @@ export default class Parser<T> {
           }
         }
 
-        argCol += ` <${inputName}>`;
+        argCol += ` <${inputName}`;
+
+        const defaultValue = def.default;
+        if (
+          !def.required &&
+          defaultValue !== undefined &&
+          (typeof defaultValue === 'number' || typeof defaultValue === 'string')
+        ) {
+          argCol += `=${defaultValue}`;
+        }
+
+        argCol += '>';
       }
 
       // Set arg col length if we'll be longer
@@ -447,8 +492,10 @@ export default class Parser<T> {
         argColumnLength = argCol.length;
       }
 
-      const descCol: string = metadata === undefined || metadata.description ===
-        undefined ? 'no description found' : metadata.description;
+      const descCol: string =
+        metadata === undefined || metadata.description === undefined
+          ? 'no description found'
+          : metadata.description;
 
       optionOutput.push({
         argName,
@@ -463,7 +510,7 @@ export default class Parser<T> {
     // Output options
     for (const {arg, description} of optionOutput) {
       lines.push(
-        markup`<brightBlack><pad count="${argColumnLength}" dir="right">${arg}</pad></brightBlack>  ${description}`,
+        markup`<color fg="brightBlack"><pad count="${argColumnLength}" dir="right">${arg}</pad></color>  ${description}`,
       );
     }
 
@@ -478,21 +525,24 @@ export default class Parser<T> {
     const {reporter} = this;
     const {programName} = this.opts;
 
-    reporter.section(`Usage`, () => {
-      if (description !== undefined) {
-        reporter.logAll(description);
-        reporter.forceSpacer();
-      }
+    reporter.section(
+      `Usage`,
+      () => {
+        if (description !== undefined) {
+          reporter.logAll(description);
+          reporter.br(true);
+        }
 
-      const commandParts = [programName];
-      if (prefix !== undefined) {
-        commandParts.push(prefix);
-      }
-      commandParts.push(usage);
+        const commandParts = [programName];
+        if (prefix !== undefined) {
+          commandParts.push(prefix);
+        }
+        commandParts.push(usage);
 
-      const command = commandParts.join(' ');
-      reporter.command(command);
-    });
+        const command = commandParts.join(' ');
+        reporter.command(command);
+      },
+    );
   }
 
   showFocusedCommandHelp(commandName: string) {
@@ -504,7 +554,7 @@ export default class Parser<T> {
     const {reporter} = this;
     const {name, usage, description, examples} = command;
 
-    reporter.forceSpacer();
+    reporter.br(true);
     this.showUsageHelp(description, usage, name);
     this.showHelpExamples(examples, name);
 
@@ -518,34 +568,43 @@ export default class Parser<T> {
 
     const optLines = this.buildOptionsHelp(argKeys);
     if (optLines.length > 0) {
-      reporter.section('Command Flags', () => {
-        for (const line of optLines) {
-          reporter.logAll(line);
-        }
-      });
+      reporter.section(
+        'Command Flags',
+        () => {
+          for (const line of optLines) {
+            reporter.logAll(line);
+          }
+        },
+      );
     }
 
-    reporter.section('Global Flags', () => {
-      reporter.info('To view global flags run');
-      reporter.command('rome --help');
-    });
+    reporter.section(
+      'Global Flags',
+      () => {
+        reporter.info('To view global flags run');
+        reporter.command('rome --help');
+      },
+    );
   }
 
   showGlobalFlags() {
     const {reporter} = this;
-    reporter.section('Global Flags', () => {
-      // Show options not attached to any commands
-      const lonerArgKeys = [];
-      for (const [key, decl] of this.declaredFlags) {
-        if (decl.command === undefined) {
-          lonerArgKeys.push(key);
+    reporter.section(
+      'Global Flags',
+      () => {
+        // Show options not attached to any commands
+        const lonerArgKeys = [];
+        for (const [key, decl] of this.declaredFlags) {
+          if (decl.command === undefined) {
+            lonerArgKeys.push(key);
+          }
         }
-      }
 
-      for (const line of this.buildOptionsHelp(lonerArgKeys)) {
-        reporter.logAll(line);
-      }
-    });
+        for (const line of this.buildOptionsHelp(lonerArgKeys)) {
+          reporter.logAll(line);
+        }
+      },
+    );
   }
 
   async showHelp(commandName: undefined | string = this.ranCommand) {
@@ -578,40 +637,44 @@ export default class Parser<T> {
       categoryNames.add(category);
     }
 
-    reporter.section('Commands', () => {
-      const sortedCategoryNames: Array<string | undefined> = Array.from(
-        categoryNames,
-      ).sort();
+    reporter.section(
+      'Commands',
+      () => {
+        const sortedCategoryNames: Array<string | undefined> = Array.from(
+          categoryNames,
+        ).sort();
 
-      // Always make sure categoryless commands are displayed first
-      if (sortedCategoryNames.includes(undefined)) {
-        sortedCategoryNames.splice(sortedCategoryNames.indexOf(undefined), 1);
-        sortedCategoryNames.unshift(undefined);
-      }
-
-      for (const category of sortedCategoryNames) {
-        const commands = commandsByCategory.get(category);
-        if (commands === undefined) {
-          throw new Error('Impossible. Should always be populated.');
+        // Always make sure categoryless commands are displayed first
+        if (sortedCategoryNames.includes(undefined)) {
+          sortedCategoryNames.splice(sortedCategoryNames.indexOf(undefined), 1);
+          sortedCategoryNames.unshift(undefined);
         }
 
-        if (category !== undefined) {
-          reporter.logAll(`<emphasis>${category} Commands</emphasis>`);
+        for (const category of sortedCategoryNames) {
+          const commands = commandsByCategory.get(category)!;
+
+          if (category !== undefined) {
+            reporter.logAll(`<emphasis>${category} Commands</emphasis>`);
+          }
+
+          // Sort by name
+          commands.sort((a, b) => a.name.localeCompare(b.name));
+
+          reporter.list(
+            commands.map((cmd) => {
+              return `<emphasis>${cmd.name}</emphasis> ${cmd.description ===
+              undefined
+                ? ''
+                : cmd.description}`;
+            }),
+          );
+          reporter.br();
         }
 
-        // Sort by name
-        commands.sort((a, b) => a.name.localeCompare(b.name));
-
-        reporter.list(commands.map((cmd) => {
-          return `<emphasis>${cmd.name}</emphasis> ${cmd.description ===
-            undefined ? '' : cmd.description}`;
-        }));
-        reporter.spacer();
-      }
-
-      reporter.info('To view help for a specific command run');
-      reporter.command(`${programName} command_name --help`);
-    });
+        reporter.info('To view help for a specific command run');
+        reporter.command(`${programName} command_name --help`);
+      },
+    );
 
     this.showHelpExamples(examples);
   }
@@ -624,26 +687,29 @@ export default class Parser<T> {
       return;
     }
 
-    reporter.section('Examples', () => {
-      for (const {description, command} of examples) {
-        const commandParts = [];
-        if (programName !== undefined) {
-          commandParts.push(programName);
-        }
-        if (prefix !== undefined) {
-          commandParts.push(prefix);
-        }
-        commandParts.push(command);
+    reporter.section(
+      'Examples',
+      () => {
+        for (const {description, command} of examples) {
+          const commandParts = [];
+          if (programName !== undefined) {
+            commandParts.push(programName);
+          }
+          if (prefix !== undefined) {
+            commandParts.push(prefix);
+          }
+          commandParts.push(command);
 
-        const builtCommand = commandParts.join(' ');
+          const builtCommand = commandParts.join(' ');
 
-        reporter.spacer();
-        if (description !== undefined) {
-          reporter.logAll(description);
+          reporter.br();
+          if (description !== undefined) {
+            reporter.logAll(description);
+          }
+          reporter.command(builtCommand);
         }
-        reporter.command(builtCommand);
-      }
-    });
+      },
+    );
   }
 
   commandRequired() {

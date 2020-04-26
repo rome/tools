@@ -5,18 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Tokens} from '../../tokens';
-import {
-  TemplateLiteralTypeAnnotation,
-  templateLiteralTypeAnnotation,
-  AnyNode,
-} from '@romejs/js-ast';
+import {Token} from '../../tokens';
 
-export default function TemplateLiteralTypeAnnotation(
-  builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = templateLiteralTypeAnnotation.assert(node);
+export default function TemplateLiteralTypeAnnotation(): Token {
   throw new Error('unimplemented');
 }

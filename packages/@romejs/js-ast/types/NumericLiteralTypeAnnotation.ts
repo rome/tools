@@ -5,17 +5,19 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase} from '../index';
+import {JSNodeBase, NumericLiteral} from '../index';
 import {createBuilder} from '../utils';
 
 export type NumericLiteralTypeAnnotation = JSNodeBase & {
   type: 'NumericLiteralTypeAnnotation';
   value: number;
+  format?: NumericLiteral['format'];
 };
 
-export const numericLiteralTypeAnnotation = createBuilder<
-  NumericLiteralTypeAnnotation
->('NumericLiteralTypeAnnotation', {
-  bindingKeys: {},
-  visitorKeys: {},
-});
+export const numericLiteralTypeAnnotation = createBuilder<NumericLiteralTypeAnnotation>(
+  'NumericLiteralTypeAnnotation',
+  {
+    bindingKeys: {},
+    visitorKeys: {},
+  },
+);

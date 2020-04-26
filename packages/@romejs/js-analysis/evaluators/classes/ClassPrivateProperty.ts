@@ -7,9 +7,9 @@
 
 import {Scope} from '../../scopes';
 import {
+  AnyNode,
   ClassPrivateProperty,
   classPrivateProperty,
-  AnyNode,
 } from '@romejs/js-ast';
 
 export default function ClassPrivateProperty(node: AnyNode, scope: Scope) {

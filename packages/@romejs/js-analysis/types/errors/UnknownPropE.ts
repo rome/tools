@@ -13,13 +13,17 @@ import E, {ErrorDefinition} from './E';
 import {AnyNode} from '@romejs/js-ast';
 
 export default class UnknownPropE extends E {
-  constructor(scope: Scope, originNode: undefined | AnyNode, opts: {
-    object: T;
-    property: T;
-    key: string;
-    thisKeys: Array<string>;
-    protoKeys: Array<string>;
-  }) {
+  constructor(
+    scope: Scope,
+    originNode: undefined | AnyNode,
+    opts: {
+      object: T;
+      property: T;
+      key: string;
+      thisKeys: Array<string>;
+      protoKeys: Array<string>;
+    },
+  ) {
     super(scope, originNode);
     this.thisKeys = opts.thisKeys;
     this.protoKeys = opts.protoKeys;
@@ -49,12 +53,9 @@ export default class UnknownPropE extends E {
 
   getError(): ErrorDefinition {
     return {
-        description: descriptions.TYPE_CHECK.UNKNOWN_PROP(
-          this.key,
-          this.allProps,
-        ),
-        lowerTarget: this.property,
-        upperTarget: this.object,
-      };
+      description: descriptions.TYPE_CHECK.UNKNOWN_PROP(this.key, this.allProps),
+      lowerTarget: this.property,
+      upperTarget: this.object,
+    };
   }
 }

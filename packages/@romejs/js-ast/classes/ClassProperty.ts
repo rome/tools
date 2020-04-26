@@ -6,11 +6,11 @@
  */
 
 import {
-  JSNodeBase,
-  ClassPropertyMeta,
   AnyExpression,
-  AnyPrimaryType,
   AnyObjectPropertyKey,
+  AnyPrimaryType,
+  ClassPropertyMeta,
+  JSNodeBase,
 } from '../index';
 import {createBuilder} from '../utils';
 
@@ -23,12 +23,15 @@ export type ClassProperty = JSNodeBase & {
   definite?: boolean;
 };
 
-export const classProperty = createBuilder<ClassProperty>('ClassProperty', {
-  bindingKeys: {},
-  visitorKeys: {
-    key: true,
-    meta: true,
-    value: true,
-    typeAnnotation: true,
+export const classProperty = createBuilder<ClassProperty>(
+  'ClassProperty',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      key: true,
+      meta: true,
+      value: true,
+      typeAnnotation: true,
+    },
   },
-});
+);

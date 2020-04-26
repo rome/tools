@@ -6,7 +6,7 @@
  */
 
 import {ProjectConfig, ProjectConfigJSON} from './types';
-import {createAbsoluteFilePath, AbsoluteFilePathSet} from '@romejs/path';
+import {AbsoluteFilePathSet, createAbsoluteFilePath} from '@romejs/path';
 
 export function serializeJSONProjectConfig(
   config: ProjectConfig,
@@ -49,9 +49,9 @@ export function hydrateJSONProjectConfig(
     },
     typeCheck: {
       ...config.typeCheck,
-      libs: new AbsoluteFilePathSet(config.typeCheck.libs.map(
-        (str) => createAbsoluteFilePath(str),
-      )),
+      libs: new AbsoluteFilePathSet(
+        config.typeCheck.libs.map((str) => createAbsoluteFilePath(str)),
+      ),
     },
     targets: new Map(Object.entries(config.targets)),
   };

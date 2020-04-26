@@ -7,13 +7,13 @@
 
 import {
   AnyNode,
-  assignmentIdentifier,
   assignmentExpression,
+  assignmentIdentifier,
   identifier,
 } from '@romejs/js-ast';
 import {Path} from '@romejs/js-compiler';
-import {doesNodeMatchPattern, template, inheritLoc} from '@romejs/js-ast-utils';
-import {getPrefixedNamespace, getOptions} from '../_utils';
+import {doesNodeMatchPattern, inheritLoc, template} from '@romejs/js-ast-utils';
+import {getOptions, getPrefixedNamespace} from '../_utils';
 
 export default {
   name: 'requireRewriteTransform',
@@ -23,10 +23,10 @@ export default {
     const {relativeSourcesToModuleId, moduleId} = getOptions(context);
 
     // Replace all references to module.exports to the correct version
-    if (node.type === 'MemberExpression' && doesNodeMatchPattern(
-        node,
-        'module.exports',
-      )) {
+    if (
+      node.type === 'MemberExpression' &&
+      doesNodeMatchPattern(node, 'module.exports')
+    ) {
       return identifier.create({
         name: getPrefixedNamespace(moduleId),
         loc: inheritLoc(node, 'module.exports'),
@@ -34,10 +34,10 @@ export default {
     }
 
     // Replace all assignments of module.exports to the correct version
-    if (node.type === 'AssignmentExpression' && doesNodeMatchPattern(
-        node.left,
-        'module.exports',
-      )) {
+    if (
+      node.type === 'AssignmentExpression' &&
+      doesNodeMatchPattern(node.left, 'module.exports')
+    ) {
       return assignmentExpression.create({
         operator: node.operator,
         left: assignmentIdentifier.create({
@@ -49,9 +49,10 @@ export default {
     }
 
     // Replace import foo = require('module');
-    if (node.type === 'TSImportEqualsDeclaration' &&
-          node.moduleReference.type ===
-          'TSExternalModuleReference') {
+    if (
+      node.type === 'TSImportEqualsDeclaration' &&
+      node.moduleReference.type === 'TSExternalModuleReference'
+    ) {
       return template.statement`const ${node.id} = require(${node.moduleReference.expression});`;
     }
 

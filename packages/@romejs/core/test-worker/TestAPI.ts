@@ -5,11 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-  DiagnosticAdvice,
-  DiagnosticAdviceItem,
-  getErrorStackAdvice,
-} from '@romejs/diagnostics';
+import {DiagnosticAdvice, getErrorStackAdvice} from '@romejs/diagnostics';
 import SnapshotManager from './SnapshotManager';
 import {TestRunnerOptions} from '../master/testing/types';
 import {Event} from '@romejs/events';
@@ -19,12 +15,13 @@ import prettyFormat from '@romejs/pretty-format';
 import {FileReference} from '../common/types/files';
 import {markup} from '@romejs/string-markup';
 import {
-  TestHelper,
   AsyncFunc,
-  SyncThrower,
   ExpectedError,
+  SyncThrower,
+  TestDiagnosticAdviceItem,
+  TestHelper,
+  TestSnapshotOptions,
 } from '@romejs-runtime/rome/test';
-
 function formatExpectedError(expected: ExpectedError): string {
   if (typeof expected === 'string') {
     return JSON.stringify(expected);
@@ -63,27 +60,44 @@ function matchExpectedError(error: Error, expected: ExpectedError): boolean {
 
 export type OnTimeout = (time: number) => void;
 
+type SnapshotOptions = {
+  entryName: string;
+  expected: unknown;
+  message?: string;
+  opts?: TestSnapshotOptions;
+};
+
 export default class TestAPI implements TestHelper {
-  constructor({
-    testName,
-    onTimeout,
-    file,
-    snapshotManager,
-    options,
-  }: {
-    file: FileReference;
-    testName: string;
-    onTimeout: OnTimeout;
-    snapshotManager: SnapshotManager;
-    options: TestRunnerOptions;
-  }) {
+  constructor(
+    {
+      testName,
+      onTimeout,
+      file,
+      snapshotManager,
+      options,
+    }: {
+      file: FileReference;
+      testName: string;
+      onTimeout: OnTimeout;
+      snapshotManager: SnapshotManager;
+      options: TestRunnerOptions;
+    },
+  ) {
     this.testName = testName;
     this.options = options;
     this.snapshotManager = snapshotManager;
     this.snapshotCounter = 0;
+    this.loadingSnapshots = 0;
     this.file = file;
 
     this.teardownEvent = new Event({name: 'TestAPI.teardown'});
+    this.onTeardown(async () => {
+      if (this.loadingSnapshots) {
+        throw new Error(
+          `Test finished while we were still loading snapshots. Did you forget an await before t.snapshot?`,
+        );
+      }
+    });
 
     this.startTime = Date.now();
     this.onTimeout = onTimeout;
@@ -106,18 +120,23 @@ export default class TestAPI implements TestHelper {
   advice: DiagnosticAdvice;
   teardownEvent: Event<void, void>;
   testName: string;
+  loadingSnapshots: number;
   snapshotCounter: number;
   snapshotManager: SnapshotManager;
 
-  buildMatchAdvice(received: unknown, expected: unknown, {
-    visualMethod,
-    expectedAlias,
-    receivedAlias,
-  }: {
-    visualMethod?: string;
-    expectedAlias?: string;
-    receivedAlias?: string;
-  } = {}): DiagnosticAdvice {
+  buildMatchAdvice(
+    received: unknown,
+    expected: unknown,
+    {
+      visualMethod,
+      expectedAlias,
+      receivedAlias,
+    }: {
+      visualMethod?: string;
+      expectedAlias?: string;
+      receivedAlias?: string;
+    } = {},
+  ): DiagnosticAdvice {
     let expectedFormat;
     let receivedFormat;
     if (typeof received === 'string' && typeof expected === 'string') {
@@ -135,7 +154,7 @@ export default class TestAPI implements TestHelper {
       advice.push({
         type: 'log',
         category: 'info',
-        message: `Both the received and expected values are visually identical`,
+        text: `Both the received and expected values are visually identical`,
       });
 
       advice.push({
@@ -147,14 +166,14 @@ export default class TestAPI implements TestHelper {
         advice.push({
           type: 'log',
           category: 'info',
-          message: `Try using t.${visualMethod} if you wanted a visual match`,
+          text: `Try using t.${visualMethod} if you wanted a visual match`,
         });
       }
     } else {
       advice.push({
         type: 'log',
         category: 'info',
-        message: `Expected to receive`,
+        text: `Expected to receive`,
       });
 
       advice.push({
@@ -165,7 +184,7 @@ export default class TestAPI implements TestHelper {
       advice.push({
         type: 'log',
         category: 'info',
-        message: `But got`,
+        text: `But got`,
       });
 
       advice.push({
@@ -176,7 +195,7 @@ export default class TestAPI implements TestHelper {
       advice.push({
         type: 'log',
         category: 'info',
-        message: 'Diff',
+        text: 'Diff',
       });
 
       advice.push({
@@ -192,7 +211,7 @@ export default class TestAPI implements TestHelper {
     return advice;
   }
 
-  addToAdvice(item: DiagnosticAdviceItem): void {
+  addToAdvice(item: TestDiagnosticAdviceItem): void {
     this.advice.push(item);
   }
 
@@ -230,9 +249,12 @@ export default class TestAPI implements TestHelper {
     this.timeoutStart = Date.now();
     this.timeoutMax = time;
 
-    this.timeoutId = setTimeout(() => {
-      this.onTimeout(time);
-    }, time);
+    this.timeoutId = setTimeout(
+      () => {
+        this.onTimeout(time);
+      },
+      time,
+    );
   }
 
   checkTimeout(): void {
@@ -262,65 +284,81 @@ export default class TestAPI implements TestHelper {
 
   truthy(value: unknown, message: string = 'Expected value to be truthy'): void {
     if (Boolean(value) === false) {
-      this.fail(message, [
-        {
-          type: 'log',
-          category: 'info',
-          message: `Received`,
-        },
-        {
-          type: 'code',
-          code: prettyFormat(value),
-        },
-      ], 1);
+      this.fail(
+        message,
+        [
+          {
+            type: 'log',
+            category: 'info',
+            text: `Received`,
+          },
+          {
+            type: 'code',
+            code: prettyFormat(value),
+          },
+        ],
+        1,
+      );
     }
   }
 
   falsy(value: unknown, message: string = 'Expected value to be falsy'): void {
     if (Boolean(value) === true) {
-      this.fail(message, [
-        {
-          type: 'log',
-          category: 'info',
-          message: `Received`,
-        },
-        {
-          type: 'code',
-          code: prettyFormat(value),
-        },
-      ], 1);
+      this.fail(
+        message,
+        [
+          {
+            type: 'log',
+            category: 'info',
+            text: `Received`,
+          },
+          {
+            type: 'code',
+            code: prettyFormat(value),
+          },
+        ],
+        1,
+      );
     }
   }
 
   true(value: unknown, message: string = 'Expected value to be true'): void {
     if (value !== true) {
-      this.fail(message, [
-        {
-          type: 'log',
-          category: 'info',
-          message: `Received`,
-        },
-        {
-          type: 'code',
-          code: prettyFormat(value),
-        },
-      ], 1);
+      this.fail(
+        message,
+        [
+          {
+            type: 'log',
+            category: 'info',
+            text: `Received`,
+          },
+          {
+            type: 'code',
+            code: prettyFormat(value),
+          },
+        ],
+        1,
+      );
     }
   }
 
   false(value: unknown, message: string = 'Expected value to be false'): void {
     if (value !== false) {
-      this.fail(message, [
-        {
-          type: 'log',
-          category: 'info',
-          message: `Received`,
-        },
-        {
-          type: 'code',
-          code: prettyFormat(value),
-        },
-      ], 1);
+      this.fail(
+        message,
+        [
+          {
+            type: 'log',
+            category: 'info',
+            text: `Received`,
+          },
+          {
+            type: 'code',
+            code: prettyFormat(value),
+          },
+        ],
+        1,
+      );
     }
   }
 
@@ -330,9 +368,17 @@ export default class TestAPI implements TestHelper {
     message: string = 't.is() failed, using Object.is semantics',
   ): void {
     if (Object.is(received, expected) !== true) {
-      this.fail(message, this.buildMatchAdvice(received, expected, {
-        visualMethod: 'looksLike',
-      }), 1);
+      this.fail(
+        message,
+        this.buildMatchAdvice(
+          received,
+          expected,
+          {
+            visualMethod: 'looksLike',
+          },
+        ),
+        1,
+      );
     }
   }
 
@@ -342,9 +388,17 @@ export default class TestAPI implements TestHelper {
     message: string = 't.not() failed, using !Object.is() semantics',
   ): void {
     if (Object.is(received, expected) === true) {
-      this.fail(message, this.buildMatchAdvice(received, expected, {
-        visualMethod: 'notLooksLike',
-      }), 1);
+      this.fail(
+        message,
+        this.buildMatchAdvice(
+          received,
+          expected,
+          {
+            visualMethod: 'notLooksLike',
+          },
+        ),
+        1,
+      );
     }
   }
 
@@ -428,26 +482,50 @@ export default class TestAPI implements TestHelper {
     throw new Error('unimplemented');
   }
 
-  snapshot(expected: unknown, message?: string): string {
-    const id = this.snapshotCounter++;
-    return this._snapshotNamed(String(id), expected, message, 2);
-  }
-
-  snapshotNamed(name: string, expected: unknown, message?: string): string {
-    return this._snapshotNamed(name, expected, message, 1);
-  }
-
-  getSnapshot(snapshotName: string): unknown {
-    return this.snapshotManager.get(this.testName, snapshotName);
-  }
-
-  _snapshotNamed(
-    name: string,
+  snapshot(
     expected: unknown,
     message?: string,
-    framesToPop?: number,
-  ): string {
-    let language: undefined | string;
+    opts?: TestSnapshotOptions,
+  ): Promise<string> {
+    const id = this.snapshotCounter++;
+    return this.catchNamedSnapshot({
+      entryName: String(id),
+      expected,
+      message,
+      opts,
+    });
+  }
+
+  snapshotNamed(
+    entryName: string,
+    expected: unknown,
+    message?: string,
+    opts?: TestSnapshotOptions,
+  ): Promise<string> {
+    return this.catchNamedSnapshot({
+      entryName,
+      expected,
+      message,
+      opts,
+    });
+  }
+
+  catchNamedSnapshot(opts: SnapshotOptions): Promise<string> {
+    this.loadingSnapshots++;
+    return this.compareNamedSnapshot(opts).finally(() => {
+      this.loadingSnapshots--;
+    });
+  }
+
+  async compareNamedSnapshot(
+    {
+      entryName,
+      message,
+      expected,
+      opts = {},
+    }: SnapshotOptions,
+  ): Promise<string> {
+    let language: undefined | string = opts.language;
 
     let formatted = '';
     if (typeof expected === 'string') {
@@ -458,16 +536,21 @@ export default class TestAPI implements TestHelper {
     }
 
     // Get the current snapshot
-    const existingSnapshot = this.snapshotManager.get(this.testName, name);
+    const existingSnapshot = await this.snapshotManager.get(
+      this.testName,
+      entryName,
+      opts.filename,
+    );
     if (existingSnapshot === undefined) {
       // No snapshot exists, let's save this one!
       this.snapshotManager.set({
         testName: this.testName,
-        snapshotName: String(name),
+        entryName,
         value: formatted,
         language,
+        optionalFilename: opts.filename,
       });
-      return name;
+      return entryName;
     }
 
     // Compare the snapshots
@@ -482,29 +565,25 @@ export default class TestAPI implements TestHelper {
       );
 
       if (message === undefined) {
-          message =
-          markup`Snapshot ${name} at <filelink emphasis target="${this.snapshotManager.path.join()}" /> doesn't match`;
+        message = markup`Snapshot ${entryName} at <filelink emphasis target="${this.snapshotManager.defaultSnapshotPath.join()}" /> doesn't match`;
       } else {
-        advice.push(
-          {
-            type: 'log',
-            category: 'info',
-            message: markup`Snapshot can be found at <filelink emphasis target="${this.snapshotManager.path.join()}" />`,
-          },
-        );
-      }
-
-      advice.push(
-        {
+        advice.push({
           type: 'log',
           category: 'info',
-          message: markup`Run <command>rome test <filelink target="${this.file.uid}" /> --update-snapshots</command> to update this snapshot`,
-        },
-      );
+          text: markup`Snapshot can be found at <filelink emphasis target="${this.snapshotManager.defaultSnapshotPath.join()}" />`,
+        });
+      }
 
-      this.fail(message, advice, framesToPop);
+      advice.push({
+        type: 'log',
+        category: 'info',
+        text: markup`Run <command>rome test <filelink target="${this.file.uid}" /> --update-snapshots</command> to update this snapshot`,
+      });
+
+      // Ignore the original t.snapshot call and caughtNamedSnapshot
+      this.fail(message, advice, 2);
     }
 
-    return name;
+    return entryName;
   }
 }

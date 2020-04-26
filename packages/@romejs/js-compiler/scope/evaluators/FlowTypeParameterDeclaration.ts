@@ -8,17 +8,23 @@
 import Scope from '../Scope';
 import {TypeBinding} from '@romejs/js-compiler';
 import {getBindingIdentifiers} from '@romejs/js-ast-utils';
-import {FlowTypeParameterDeclaration, AnyNode} from '@romejs/js-ast';
+import {AnyNode, FlowTypeParameterDeclaration} from '@romejs/js-ast';
 
 export default {
   creator: false,
   build(node: FlowTypeParameterDeclaration, parent: AnyNode, scope: Scope) {
     for (const id of getBindingIdentifiers(node)) {
-      scope.addBinding(new TypeBinding({
-        node: id,
-        name: id.name,
-        scope,
-      }, node, 'parameter'));
+      scope.addBinding(
+        new TypeBinding(
+          {
+            node: id,
+            name: id.name,
+            scope,
+          },
+          node,
+          'parameter',
+        ),
+      );
     }
   },
 };

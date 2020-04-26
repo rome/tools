@@ -7,15 +7,15 @@
 
 import {Consumer, consumeUnknown} from '@romejs/consume';
 import {consumeJSON} from '@romejs/codec-json';
-import {test, TestHelper, testOptions} from '@romejs-runtime/rome';
+import {TestHelper, test, testOptions} from '@romejs-runtime/rome';
 
 import {
   AbsoluteFilePath,
-  createAbsoluteFilePath,
   AbsoluteFilePathSet,
   UnknownFilePath,
+  createAbsoluteFilePath,
 } from '@romejs/path';
-import {readFileText, lstat, exists, readFile, readdir} from '@romejs/fs';
+import {exists, lstat, readFile, readFileText, readdir} from '@romejs/fs';
 
 const dirname = testOptions.dirname === undefined ? '' : testOptions.dirname;
 
@@ -45,12 +45,14 @@ export type FixtureFile = {
   content: Buffer;
 };
 
-async function _getFixtures(opts: {
-  name: undefined | string;
-  dir: AbsoluteFilePath;
-  parts: Array<string>;
-  options: Consumer;
-}): Promise<Array<Fixture>> {
+async function _getFixtures(
+  opts: {
+    name: undefined | string;
+    dir: AbsoluteFilePath;
+    parts: Array<string>;
+    options: Consumer;
+  },
+): Promise<Array<Fixture>> {
   const {name, dir, parts, options: inheritOptions} = opts;
 
   // Check if directory even exists
@@ -73,12 +75,16 @@ async function _getFixtures(opts: {
   }
 
   // Merge options
-  const options: Consumer = ownOptions === undefined
-    ? inheritOptions
-    : consumeUnknown({
-      ...inheritOptions.asUnknownObject(),
-      ...ownOptions.asUnknownObject(),
-    }, 'tests/fixtureOptions');
+  const options: Consumer =
+    ownOptions === undefined
+      ? inheritOptions
+      : consumeUnknown(
+          {
+            ...inheritOptions.asUnknownObject(),
+            ...ownOptions.asUnknownObject(),
+          },
+          'tests/fixtureOptions',
+        );
 
   // An array of folders names that lead to this fixture
   const ownParts = name === undefined ? parts : [...parts, name];
@@ -99,12 +105,14 @@ async function _getFixtures(opts: {
     let fixtures: Array<Fixture> = [];
 
     for (const path of folders) {
-      fixtures = fixtures.concat(await _getFixtures({
-        name: path.getBasename(),
-        dir: path,
-        parts: ownParts,
-        options,
-      }));
+      fixtures = fixtures.concat(
+        await _getFixtures({
+          name: path.getBasename(),
+          dir: path,
+          parts: ownParts,
+          options,
+        }),
+      );
     }
 
     return fixtures;
@@ -113,11 +121,14 @@ async function _getFixtures(opts: {
   // Get the contents of all the files
   const fileContents: Map<string, FixtureFile> = new Map();
   for (const path of filenames) {
-    fileContents.set(path.getBasename(), {
-      relative: dir.relative(path),
-      absolute: path,
-      content: await readFile(path),
-    });
+    fileContents.set(
+      path.getBasename(),
+      {
+        relative: dir.relative(path),
+        absolute: path,
+        content: await readFile(path),
+      },
+    );
   }
 
   // Create the fixture
@@ -152,7 +163,7 @@ export async function createFixtureTests(
         t.addToAdvice({
           type: 'log',
           category: 'info',
-          message: 'Fixture options',
+          text: 'Fixture options',
         });
 
         t.addToAdvice({
@@ -163,18 +174,18 @@ export async function createFixtureTests(
         t.addToAdvice({
           type: 'log',
           category: 'info',
-          message: 'Fixture files',
+          text: 'Fixture files',
         });
 
-        t.addToAdvice(
-          {
-            type: 'list',
-            list: Array.from(
-              fixture.files,
-              ([basename, info]) => `<filelink target="${info.absolute}">${basename}</filelink>`,
-            ),
-          },
-        );
+        t.addToAdvice({
+          type: 'list',
+          list: Array.from(
+            fixture.files,
+            ([basename, info]) =>
+              `<filelink target="${info.absolute}">${basename}</filelink>`
+            ,
+          ),
+        });
 
         await callback(fixture, t);
       },

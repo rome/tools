@@ -42,8 +42,8 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-const intToCharMap = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'.split(
-  '',
+const intToCharMap = Array.from(
+  'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/',
 );
 
 /**
@@ -114,7 +114,6 @@ export function encodeVLQ(value: number): string {
     vlq >>>= VLQ_BASE_SHIFT;
     if (vlq > 0) {
       // There are still more digits in this value, so we must make sure the
-
       // continuation bit is marked.
       digit |= VLQ_CONTINUATION_BIT;
     }
@@ -174,14 +173,13 @@ export function decodeVLQ(aStr: string, aIndex: number): [number, number] {
   let result = 0;
   let shift = 0;
   let continuation = false;
-  let digit;
 
   do {
     if (aIndex >= strLen) {
       throw new Error('Expected more digits in base 64 VLQ value.');
     }
 
-    digit = decode(aStr.charCodeAt(aIndex++));
+    let digit = decode(aStr.charCodeAt(aIndex++));
     if (digit === -1) {
       throw new Error(`Invalid base64 digit: ${aStr.charAt(aIndex - 1)}`);
     }

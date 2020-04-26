@@ -27,14 +27,7 @@
     "bundler": {
       "mode": "modern"
     },
-    "tests": {
-      "enabled": true
-    },
-    "format": {
-      "enabled": true
-    },
     "lint": {
-      "enabled": true,
       "ignore": [
         "build",
         "coverage",
@@ -50,7 +43,8 @@
         "website",
         "@romejs-web",
         "out",
-        "vscode/node_modules"
+        "vscode/node_modules",
+        "packages/@romejs/project/types.ts"
       ]
     }
   }

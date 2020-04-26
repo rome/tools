@@ -6,17 +6,12 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, verbatim} from '../../tokens';
-import {
-  AnyNode,
-  RegExpNumericBackReference,
-  regExpNumericBackReference,
-} from '@romejs/js-ast';
+import {Token} from '../../tokens';
+import {RegExpNumericBackReference} from '@romejs/js-ast';
 
 export default function RegExpNumericBackReference(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = regExpNumericBackReference.assert(node);
-  return [verbatim(`\\${node.value}`)];
+  node: RegExpNumericBackReference,
+): Token {
+  return `\\${node.value}`;
 }

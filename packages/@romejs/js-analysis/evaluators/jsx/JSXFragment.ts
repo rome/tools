@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {JSXFragment, jsxFragment, AnyNode} from '@romejs/js-ast';
+import {AnyNode, JSXFragment, jsxFragment} from '@romejs/js-ast';
 
 export default function JSXFragment(node: AnyNode, scope: Scope) {
   node = jsxFragment.assert(node);

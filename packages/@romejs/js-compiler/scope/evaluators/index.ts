@@ -24,9 +24,6 @@ import FlowDeclareFunction from './FlowDeclareFunction';
 import FlowDeclareClass from './FlowDeclareClass';
 import TSImportEqualsDeclaration from './TSImportEqualsDeclaration';
 import ArrowFunctionExpression from './ArrowFunctionExpression';
-import ClassMethod from './ClassMethod';
-import FunctionExpression from './FunctionExpression';
-import ObjectMethod from './ObjectMethod';
 import BlockStatement from './BlockStatement';
 import ClassExpression from './ClassExpression';
 import CatchClause from './CatchClause';
@@ -36,6 +33,7 @@ import ForOfStatement from './ForOfStatement';
 import VariableDeclarationStatement from './VariableDeclarationStatement';
 import TSInterfaceDeclaration from './TSInterfaceDeclaration';
 import TSDeclareFunction from './TSDeclareFunction';
+import FunctionHead from './FunctionHead';
 import {AnyNode} from '@romejs/js-ast';
 
 type ScopeEvaluator = {
@@ -47,6 +45,7 @@ type ScopeEvaluator = {
 
 const evaluators: Map<string, ScopeEvaluator> = new Map();
 
+evaluators.set('FunctionHead', FunctionHead);
 evaluators.set('TSDeclareFunction', TSDeclareFunction);
 evaluators.set('ClassDeclaration', ClassDeclaration);
 evaluators.set('FunctionDeclaration', FunctionDeclaration);
@@ -68,9 +67,6 @@ evaluators.set('FlowDeclareClass', FlowDeclareClass);
 evaluators.set('TypeAliasTypeAnnotation', TypeAliasTypeAnnotation);
 evaluators.set('TSImportEqualsDeclaration', TSImportEqualsDeclaration);
 evaluators.set('ArrowFunctionExpression', ArrowFunctionExpression);
-evaluators.set('ClassMethod', ClassMethod);
-evaluators.set('FunctionExpression', FunctionExpression);
-evaluators.set('ObjectMethod', ObjectMethod);
 evaluators.set('BlockStatement', BlockStatement);
 evaluators.set('ClassExpression', ClassExpression);
 evaluators.set('CatchClause', CatchClause);

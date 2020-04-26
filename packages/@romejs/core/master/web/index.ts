@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {MasterRequest, Master, WebBridge} from '@romejs/core';
+import {Master, MasterRequest, WebBridge} from '@romejs/core';
 import Bundler from '../bundler/Bundler';
 import {WebSocketInterface} from '@romejs/codec-websocket';
 import prettyFormat from '@romejs/pretty-format';
@@ -251,7 +251,9 @@ export class WebServer {
     }
   }
 
-  async getBundler(url: ConsumableUrl): Promise<{
+  async getBundler(
+    url: ConsumableUrl,
+  ): Promise<{
     bundler: Bundler;
     path: AbsoluteFilePath;
   }> {
@@ -263,10 +265,13 @@ export class WebServer {
     }
 
     const pathPointer = url.path.getDiagnosticLocation();
-    const path = await this.master.resolver.resolveEntryAssertPath({
-      origin: this.masterRequest.client.flags.cwd,
-      source: absolute,
-    }, pathPointer === undefined ? undefined : {location: pathPointer});
+    const path = await this.master.resolver.resolveEntryAssertPath(
+      {
+        origin: this.masterRequest.client.flags.cwd,
+        source: absolute,
+      },
+      pathPointer === undefined ? undefined : {location: pathPointer},
+    );
 
     const platform = url.query.get('platform').asStringSetOrVoid(PLATFORMS);
     const cacheKey = JSON.stringify({
@@ -278,11 +283,9 @@ export class WebServer {
       return {bundler: cached, path};
     }
 
-    const bundlerConfig: BundlerConfig = this.masterRequest.getBundlerConfigFromFlags(
-      {
-        platform,
-      },
-    );
+    const bundlerConfig: BundlerConfig = this.masterRequest.getBundlerConfigFromFlags({
+      platform,
+    });
 
     const bundler = new Bundler(this.masterRequest, bundlerConfig);
     this.bundlerCache.set(cacheKey, bundler);

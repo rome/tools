@@ -6,19 +6,17 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, concat} from '../../tokens';
-import {bindingArrayPattern, AnyNode} from '@romejs/js-ast';
+import {Token, concat} from '../../tokens';
+import {BindingArrayPattern} from '@romejs/js-ast';
 import ArrayExpression from '../expressions/ArrayExpression';
 import {printPatternMeta} from '../utils';
 
 export default function BindingArrayPattern(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = bindingArrayPattern.assert(node);
-
-  return [
-    concat(ArrayExpression(builder, node)),
-    concat(printPatternMeta(builder, node, node.meta)),
-  ];
+  node: BindingArrayPattern,
+): Token {
+  return concat([
+    ArrayExpression(builder, node),
+    printPatternMeta(builder, node, node.meta),
+  ]);
 }

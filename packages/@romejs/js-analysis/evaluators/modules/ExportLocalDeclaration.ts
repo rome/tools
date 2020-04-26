@@ -7,7 +7,7 @@
 
 import {Scope} from '../../scopes';
 import {getBindingIdentifiers} from '@romejs/js-ast-utils';
-import {exportLocalDeclaration, AnyNode} from '@romejs/js-ast';
+import {AnyNode, exportLocalDeclaration} from '@romejs/js-ast';
 import ImportT from '../../types/ImportT';
 import Hub from '../../Hub';
 
@@ -67,16 +67,22 @@ export default function ExportLocalDeclaration(
   const {specifiers} = node;
   if (specifiers !== undefined) {
     for (const specifier of specifiers) {
-      if (specifier.type === 'ExportLocalSpecifier' || specifier.type ===
-          'ExportExternalSpecifier') {
+      if (
+        specifier.type === 'ExportLocalSpecifier' ||
+        specifier.type === 'ExportExternalSpecifier'
+      ) {
         let type;
         if (source === undefined) {
           type = scope.evaluate(specifier.local);
         } else {
-          type = new ImportT(scope, node, {
-            importedName: specifier.local.name,
-            source,
-          });
+          type = new ImportT(
+            scope,
+            node,
+            {
+              importedName: specifier.local.name,
+              source,
+            },
+          );
         }
         evaluator.addExport(specifier.exported.name, type);
       }

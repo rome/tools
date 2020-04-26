@@ -94,28 +94,33 @@ export class ModuleSignatureManager {
 
       if (type === undefined) {
         throw new Error(
-            `${graph.filename}: Expected type of id ${id} but it doesn't exist, serialized data: ${String(
-              JSON.stringify(currGetType),
-            )}`,
-          );
+          `${graph.filename}: Expected type of id ${id} but it doesn't exist, serialized data: ${String(
+            JSON.stringify(currGetType),
+          )}`,
+        );
       }
 
       return type;
     };
 
     // Fetch the graphs of `export *` dependencies, future calls to `this.getModuleSignature` will fetch from 'cache
-    await Promise.all(graph.exports.map((def) => {
-      if (def.type === 'all') {
-        return this.getModuleSignature(def.source, graph.filename);
-      } else {
-        return undefined;
-      }
-    }));
+    await Promise.all(
+      graph.exports.map((def) => {
+        if (def.type === 'all') {
+          return this.getModuleSignature(def.source, graph.filename);
+        } else {
+          return undefined;
+        }
+      }),
+    );
 
     // Resolve all exports
     for (const def of graph.exports) {
       if (def.type === 'all') {
-        const manager = await this.getModuleSignature(def.source, graph.filename);
+        const manager = await this.getModuleSignature(
+          def.source,
+          graph.filename,
+        );
         if (manager !== undefined) {
           this.addAll(manager);
         }
@@ -167,11 +172,15 @@ export class ModuleSignatureManager {
     const maybeExportId = this.exportNamesToTypeId.get(importedName);
     if (maybeExportId === undefined) {
       // Export not found in the module so let's link it to an error
-      const error = new UnknownImportE(this.topScope, type.originNode, {
-        possibleNames: Array.from(this.exportNamesToTypeId.keys()),
-        importedName,
-        source: graph.filename,
-      });
+      const error = new UnknownImportE(
+        this.topScope,
+        type.originNode,
+        {
+          possibleNames: Array.from(this.exportNamesToTypeId.keys()),
+          importedName,
+          source: graph.filename,
+        },
+      );
       error.shouldMatch(type);
       return;
     }
@@ -187,14 +196,16 @@ export class ModuleSignatureManager {
   }
 }
 
-type Export = {
-  type: 'local';
-  name: string;
-  value: T;
-} | {
-  type: 'all';
-  source: string;
-};
+type Export =
+  | {
+      type: 'local';
+      name: string;
+      value: T;
+    }
+  | {
+      type: 'all';
+      source: string;
+    };
 
 export default class Evaluator {
   constructor(hub: Hub, filename: string) {
@@ -261,8 +272,8 @@ export default class Evaluator {
     const type = this.nodeToType.get(node);
     if (type === undefined) {
       throw new Error(
-          'getTypeFromEvaluatedNode() called on a node that has not been validated yet',
-        );
+        'getTypeFromEvaluatedNode() called on a node that has not been validated yet',
+      );
     } else {
       return type;
     }
@@ -283,11 +294,14 @@ export default class Evaluator {
     });
   }
 
-  addImport(t: ImportT, opts: {
-    importedName: undefined | string;
-    source: string;
-    relative: string;
-  }) {
+  addImport(
+    t: ImportT,
+    opts: {
+      importedName: undefined | string;
+      source: string;
+      relative: string;
+    },
+  ) {
     this.imports.push({
       relative: opts.relative,
       importedName: opts.importedName,

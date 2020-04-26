@@ -8,53 +8,54 @@
 import {JSParser} from '../parser';
 import {Position} from '@romejs/parser-core';
 import {
-  FlowClassImplements,
-  AnyPrimaryType,
-  TSExpressionWithTypeArguments,
-  TSInterfaceDeclaration,
-  FlowInterfaceDeclaration,
+  AmbiguousFlowTypeCastExpression,
+  AnyExpression,
   AnyFlowDeclare,
   AnyFlowPredicate,
-  TypeAliasTypeAnnotation,
-  AnyTypeParameter,
-  AnyTypeArguments,
-  FlowOpaqueType,
-  AnyExpression,
-  AmbiguousFlowTypeCastExpression,
   AnyLiteralTypeAnnotation,
+  AnyPrimaryType,
   AnyTargetAssignmentPattern,
+  AnyTypeArguments,
+  AnyTypeParameter,
+  FlowClassImplements,
+  FlowInterfaceDeclaration,
+  FlowOpaqueType,
   PatternMeta,
+  TSExpressionWithTypeArguments,
+  TSInterfaceDeclaration,
+  TypeAliasTypeAnnotation,
 } from '@romejs/js-ast';
 import {types as tt} from '../tokenizer/types';
 import {
   TSDeclareNode,
-  parseFlowTypeAnnotation,
-  parseTSTypeAnnotation,
-  parseFlowTypeParameterDeclaration,
-  parseTSTypeParameters,
-  parseFlowTypeParameterInstantiation,
-  parseTSTypeArguments,
-  parseFlowInterface,
-  parseFlowDeclare,
-  parseTSTypeAliasTypeAnnotation,
-  parseTSInterfaceDeclaration,
-  parseTSDeclare,
   parseFlowClassImplemented,
-  parseTSHeritageClause,
+  parseFlowDeclare,
+  parseFlowInterface,
   parseFlowOpaqueType,
-  parseTSEnumDeclaration,
-  parseTSAmbientExternalModuleDeclaration,
-  parseTSModuleOrNamespaceDeclaration,
-  parseTSModuleBlock,
-  parseFlowTypeAndPredicateInitialiser,
-  parseTSTypeOrTypePredicateAnnotation,
-  parseTSAbstractClass,
-  parseFlowTypeParameterInstantiationCallOrNew,
-  toBindingIdentifier,
   parseFlowTypeAliasTypeAnnotation,
+  parseFlowTypeAndPredicateInitialiser,
+  parseFlowTypeAnnotation,
+  parseFlowTypeParameterDeclaration,
+  parseFlowTypeParameterInstantiation,
+  parseFlowTypeParameterInstantiationCallOrNew,
+  parseTSAbstractClass,
+  parseTSAmbientExternalModuleDeclaration,
+  parseTSDeclare,
+  parseTSEnumDeclaration,
+  parseTSHeritageClause,
+  parseTSInterfaceDeclaration,
+  parseTSModuleBlock,
+  parseTSModuleOrNamespaceDeclaration,
+  parseTSTypeAliasTypeAnnotation,
+  parseTSTypeAnnotation,
+  parseTSTypeArguments,
+  parseTSTypeOrTypePredicateAnnotation,
+  parseTSTypeParameters,
+  toBindingIdentifier,
   toTargetAssignmentPattern,
 } from './index';
 import {descriptions} from '@romejs/diagnostics';
+import {NumberTokenValue} from '../tokenizer';
 
 export function isTypeSystemEnabled(parser: JSParser): boolean {
   return parser.isSyntaxEnabled('flow') || parser.isSyntaxEnabled('ts');
@@ -69,33 +70,49 @@ export function parseTypeLiteralAnnotation(
     case tt.string: {
       const value = String(parser.state.tokenValue);
       parser.next();
-      return parser.finishNode(start, {
-        type: 'StringLiteralTypeAnnotation',
-        value,
-      });
+      return parser.finishNode(
+        start,
+        {
+          type: 'StringLiteralTypeAnnotation',
+          value,
+        },
+      );
     }
 
     case tt.num: {
-      const value = Number(parser.state.tokenValue);
+      const {tokenValue} = parser.state;
+      if (!(tokenValue instanceof NumberTokenValue)) {
+        throw new Error('Expected NumberTokenValue');
+      }
+
+      const {value, format} = tokenValue;
       parser.next();
-      return parser.finishNode(start, {
-        type: 'NumericLiteralTypeAnnotation',
-        value,
-      });
+      return parser.finishNode(
+        start,
+        {
+          type: 'NumericLiteralTypeAnnotation',
+          value,
+          format,
+        },
+      );
     }
 
     case tt._true:
     case tt._false: {
       const value = parser.match(tt._true);
       parser.next();
-      return parser.finishNode(start, {
-        type: 'BooleanLiteralTypeAnnotation',
-        value,
-      });
+      return parser.finishNode(
+        start,
+        {
+          type: 'BooleanLiteralTypeAnnotation',
+          value,
+        },
+      );
     }
 
     case tt.plusMin: {
-      if (parser.state.tokenValue === '-') {
+      const {tokenValue} = parser.state;
+      if (tokenValue === '-') {
         parser.next();
 
         if (!parser.match(tt.num)) {
@@ -103,18 +120,30 @@ export function parseTypeLiteralAnnotation(
             description: descriptions.JS_PARSER.TYPE_NUMERIC_LITERAL_EXPECTED,
           });
           parser.next();
-          return parser.finishNode(start, {
-            type: 'NumericLiteralTypeAnnotation',
-            value: 0,
-          });
+          return parser.finishNode(
+            start,
+            {
+              type: 'NumericLiteralTypeAnnotation',
+              value: 0,
+            },
+          );
         }
 
-        const value = Number(parser.state.tokenValue);
+        const {tokenValue} = parser.state;
+        if (!(tokenValue instanceof NumberTokenValue)) {
+          throw new Error('Expected NumberTokenValue');
+        }
+
+        const {value, format} = tokenValue;
         parser.next();
-        return parser.finishNode(start, {
-          type: 'NumericLiteralTypeAnnotation',
-          value: -value,
-        });
+        return parser.finishNode(
+          start,
+          {
+            type: 'NumericLiteralTypeAnnotation',
+            value: -value,
+            format,
+          },
+        );
       } else {
         parser.addDiagnostic({
           description: descriptions.JS_PARSER.TYPE_NUMERIC_LITERAL_PLUS,
@@ -126,10 +155,13 @@ export function parseTypeLiteralAnnotation(
             description: descriptions.JS_PARSER.TYPE_NUMERIC_LITERAL_EXPECTED,
           });
           parser.next();
-          return parser.finishNode(start, {
-            type: 'NumericLiteralTypeAnnotation',
-            value: 0,
-          });
+          return parser.finishNode(
+            start,
+            {
+              type: 'NumericLiteralTypeAnnotation',
+              value: 0,
+            },
+          );
         }
 
         return parseTypeLiteralAnnotation(parser);
@@ -143,10 +175,7 @@ export function parseTypeLiteralAnnotation(
   }
 }
 
-function parseFlowOrTS<
-  F,
-  TS
->(
+function parseFlowOrTS<F, TS>(
   parser: JSParser,
   label: string,
   flow: (parser: JSParser) => F,
@@ -262,37 +291,44 @@ export function parseInterface(
     start,
   });
 
-  return parseFlowOrTS(parser, 'interface', () => parseFlowInterface(
+  return parseFlowOrTS(
     parser,
-    start,
-  ), () => parseTSInterfaceDeclaration(parser, start));
+    'interface',
+    () => parseFlowInterface(parser, start),
+    () => parseTSInterfaceDeclaration(parser, start),
+  );
 }
 
 export function parseDeclare(
   parser: JSParser,
   start: Position,
 ): TSDeclareNode | AnyFlowDeclare {
-  return parseFlowOrTS(parser, 'type declaration', () => parseFlowDeclare(
+  return parseFlowOrTS(
     parser,
-    start,
-  ), () => parseTSDeclare(parser, start));
+    'type declaration',
+    () => parseFlowDeclare(parser, start),
+    () => parseTSDeclare(parser, start),
+  );
 }
 
-export type TypeAnnotationAndPredicate = [undefined | AnyPrimaryType,
-  | undefined
-  | AnyFlowPredicate];
+export type TypeAnnotationAndPredicate = [
+  undefined | AnyPrimaryType,
+  undefined | AnyFlowPredicate,
+];
 
 export function parseTypeAnnotationAndPredicate(
   parser: JSParser,
 ): TypeAnnotationAndPredicate {
-  return parseFlowOrTS(parser, 'type annotation and a predicate', () => {
-    return parseFlowTypeAndPredicateInitialiser(parser);
-  }, () => {
-    return [
-      parseTSTypeOrTypePredicateAnnotation(parser, tt.colon),
-      undefined,
-    ];
-  });
+  return parseFlowOrTS(
+    parser,
+    'type annotation and a predicate',
+    () => {
+      return parseFlowTypeAndPredicateInitialiser(parser);
+    },
+    () => {
+      return [parseTSTypeOrTypePredicateAnnotation(parser, tt.colon), undefined];
+    },
+  );
 }
 
 export function parseTypeAlias(
@@ -386,11 +422,14 @@ export function parseTypeExpressionStatement(
 
   switch (expr.name) {
     case 'declare':
-      if (parser.match(tt._class) || parser.match(tt.name) || parser.match(
-          tt._function,
-        ) || parser.match(tt._const) || parser.match(tt._var) || parser.match(
-          tt._export,
-        )) {
+      if (
+        parser.match(tt._class) ||
+        parser.match(tt.name) ||
+        parser.match(tt._function) ||
+        parser.match(tt._const) ||
+        parser.match(tt._var) ||
+        parser.match(tt._export)
+      ) {
         return parseDeclare(parser, start);
       } else {
         break;
@@ -421,7 +460,7 @@ export function parseTypeExpressionStatement(
     case 'enum': {
       if (parser.match(tt.name)) {
         addTSDiagnostic(parser, 'enum declaration', start);
-        return parseTSEnumDeclaration(parser, start, /* isConst */false);
+        return parseTSEnumDeclaration(parser, start, /* isConst */ false);
       } else {
         break;
       }
@@ -450,19 +489,21 @@ export function parseTypeExpressionStatement(
     // TODO abstract this into typescript.js
     case 'global':
       // `global { }` (with no `declare`) may appear inside an ambient module declaration.
-
       // Would like to use parseTSAmbientExternalModuleDeclaration here, but already ran past 'global'.
       if (parser.match(tt.braceL)) {
         addTSDiagnostic(parser, 'module declaration', start);
         const global = true;
         const id = toBindingIdentifier(parser, expr);
         const body = parseTSModuleBlock(parser);
-        return parser.finishNode(start, {
-          type: 'TSModuleDeclaration',
-          global,
-          id,
-          body,
-        });
+        return parser.finishNode(
+          start,
+          {
+            type: 'TSModuleDeclaration',
+            global,
+            id,
+            body,
+          },
+        );
       }
   }
 
@@ -476,15 +517,21 @@ export function ambiguousTypeCastToParameter(
   const start = parser.getPosition();
   const expr = toTargetAssignmentPattern(parser, node.expression, 'parameter');
 
-  const meta: PatternMeta = parser.finishNode(start, {
-    type: 'PatternMeta',
-    optional: node.optional,
-    typeAnnotation: node.typeAnnotation,
-  });
+  const meta: PatternMeta = parser.finishNode(
+    start,
+    {
+      type: 'PatternMeta',
+      optional: node.optional,
+      typeAnnotation: node.typeAnnotation,
+    },
+  );
 
-  return parser.finishNode(start, {
-    ...expr,
-    // @ts-ignore
-    meta,
-  });
+  return parser.finishNode(
+    start,
+    {
+      ...expr,
+      // @ts-ignore
+      meta,
+    },
+  );
 }

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, AnyTargetAssignmentPattern} from '../index';
+import {AnyTargetAssignmentPattern, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type TSAssignmentNonNullExpression = JSNodeBase & {
@@ -13,9 +13,10 @@ export type TSAssignmentNonNullExpression = JSNodeBase & {
   expression: AnyTargetAssignmentPattern;
 };
 
-export const tsAssignmentNonNullExpression = createBuilder<
-  TSAssignmentNonNullExpression
->('TSAssignmentNonNullExpression', {
-  bindingKeys: {},
-  visitorKeys: {expression: true},
-});
+export const tsAssignmentNonNullExpression = createBuilder<TSAssignmentNonNullExpression>(
+  'TSAssignmentNonNullExpression',
+  {
+    bindingKeys: {},
+    visitorKeys: {expression: true},
+  },
+);

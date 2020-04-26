@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {ClassPrivateMethod, classPrivateMethod, AnyNode} from '@romejs/js-ast';
+import {AnyNode, ClassPrivateMethod, classPrivateMethod} from '@romejs/js-ast';
 
 export default function ClassPrivateMethod(node: AnyNode, scope: Scope) {
   node = classPrivateMethod.assert(node);

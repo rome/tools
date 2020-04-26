@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, AnyExpression} from '../index';
+import {AnyExpression, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type ImportCall = JSNodeBase & {
@@ -13,9 +13,12 @@ export type ImportCall = JSNodeBase & {
   argument: AnyExpression;
 };
 
-export const importCall = createBuilder<ImportCall>('ImportCall', {
-  bindingKeys: {},
-  visitorKeys: {
-    argument: true,
+export const importCall = createBuilder<ImportCall>(
+  'ImportCall',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      argument: true,
+    },
   },
-});
+);

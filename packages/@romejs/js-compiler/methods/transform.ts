@@ -6,9 +6,9 @@
  */
 
 import {Program} from '@romejs/js-ast';
-import {Diagnostics, DiagnosticSuppressions} from '@romejs/diagnostics';
+import {DiagnosticSuppressions, Diagnostics} from '@romejs/diagnostics';
 import {TransformRequest, TransformVisitors} from '../types';
-import {stageTransforms, stageOrder} from '../transforms/index';
+import {stageOrder, stageTransforms} from '../transforms/index';
 import {Cache} from '@romejs/js-compiler';
 import CompilerContext from '../lib/CompilerContext';
 
@@ -19,8 +19,8 @@ type TransformResult = {
   cacheDependencies: Array<string>;
 };
 
-const transformCaches: Array<Cache<TransformResult>> = stageOrder.map(
-  () => new Cache(),
+const transformCaches: Array<Cache<TransformResult>> = stageOrder.map(() =>
+  new Cache()
 );
 
 export default async function transform(
@@ -54,6 +54,8 @@ export default async function transform(
   }
 
   const context = new CompilerContext({
+    ref: req.ref,
+    sourceText: req.sourceText,
     ast,
     project,
     options,
@@ -65,7 +67,9 @@ export default async function transform(
   const transformFactory = stageTransforms[stage];
   const transforms = transformFactory(project.config, options);
 
-  let visitors: TransformVisitors = await context.normalizeTransforms(transforms);
+  let visitors: TransformVisitors = await context.normalizeTransforms(
+    transforms,
+  );
 
   const compiledAst = context.reduceRoot(ast, visitors);
 

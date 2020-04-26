@@ -7,19 +7,21 @@
 
 import {UnknownObject} from '@romejs/typescript-helpers';
 import {
-  DiagnosticAdvice,
   Diagnostic,
+  DiagnosticAdvice,
+  DiagnosticLogCategory,
   INTERNAL_ERROR_LOG_ADVICE,
-  createSingleDiagnosticError,
-  descriptions,
-  createBlessedDiagnosticMessage,
-  deriveDiagnosticFromError,
   catchDiagnostics,
+  createBlessedDiagnosticMessage,
+  createSingleDiagnosticError,
+  deriveDiagnosticFromError,
+  descriptions,
+  getErrorStackAdvice,
 } from '@romejs/diagnostics';
 import {
+  GlobalTestOptions,
   TestCallback,
   TestOptions,
-  GlobalTestOptions,
 } from '@romejs-runtime/rome/test';
 import {
   default as TestWorkerBridge,
@@ -33,10 +35,55 @@ import {
   FileReference,
   convertTransportFileReference,
 } from '../common/types/files';
-import {createAbsoluteFilePath, AbsoluteFilePath} from '@romejs/path';
-import {markup, escapeMarkup} from '@romejs/string-markup';
+import {AbsoluteFilePath, createAbsoluteFilePath} from '@romejs/path';
+import {escapeMarkup, markup} from '@romejs/string-markup';
+import {ErrorFrames, getErrorStructure} from '@romejs/v8';
+import prettyFormat from '@romejs/pretty-format';
 
 const MAX_RUNNING_TESTS = 20;
+
+function cleanFrames(frames: ErrorFrames): ErrorFrames {
+  // TODO we should actually get the frames before module init and do it that way
+  // Remove everything before the original module factory
+  let latestTestWorkerFrame = frames.find((frame, i) => {
+    if (
+      frame.typeName === 'global' &&
+      frame.methodName === undefined &&
+      frame.functionName === undefined
+    ) {
+      // We are the global.<anonymous> frame
+      // Now check for Script.runInContext
+      const nextFrame = frames[i + 1];
+      if (
+        nextFrame !== undefined &&
+        nextFrame.typeName === 'Script' &&
+        nextFrame.methodName === 'runInContext'
+      ) {
+        // Yes!
+        // TODO also check for ___$romejs$core$common$utils$executeMain_ts$default (packages/romejs/core/common/utils/executeMain.ts:69:17)
+        return true;
+      }
+    }
+
+    return false;
+  });
+
+  // And if there was no module factory frame, then we must be inside of a test
+  if (latestTestWorkerFrame === undefined) {
+    latestTestWorkerFrame = frames.find((frame) => {
+      return (
+        frame.typeName !== undefined &&
+        frame.typeName.includes('$TestWorkerRunner')
+      );
+    });
+  }
+
+  if (latestTestWorkerFrame === undefined) {
+    return frames;
+  }
+
+  return frames.slice(0, frames.indexOf(latestTestWorkerFrame));
+}
 
 export default class TestWorkerRunner {
   constructor(opts: TestWorkerBridgeRunOptions, bridge: TestWorkerBridge) {
@@ -47,21 +94,26 @@ export default class TestWorkerRunner {
     this.bridge = bridge;
     this.projectFolder = createAbsoluteFilePath(opts.projectFolder);
 
-    this.snapshotManager = new SnapshotManager(this, createAbsoluteFilePath(
-      opts.file.real,
-    ));
+    this.snapshotManager = new SnapshotManager(
+      this,
+      createAbsoluteFilePath(opts.file.real),
+    );
 
+    this.emitConsoleDiagnostics = false;
+    this.consoleAdvice = [];
     this.hasFocusedTest = false;
     this.foundTests = new Map();
   }
 
-  foundTests: Map<string, {
-    callsiteError: Error;
-    options: TestOptions;
-    callback: undefined | TestCallback;
-  }>;
+  foundTests: Map<
+    string,
+    {
+      callsiteError: Error;
+      options: TestOptions;
+      callback: undefined | TestCallback;
+    }
+  >;
   hasFocusedTest: boolean;
-
   bridge: TestWorkerBridge;
   projectFolder: AbsoluteFilePath;
   file: FileReference;
@@ -69,6 +121,78 @@ export default class TestWorkerRunner {
   snapshotManager: SnapshotManager;
   opts: TestWorkerBridgeRunOptions;
   locked: boolean;
+  consoleAdvice: DiagnosticAdvice;
+  emitConsoleDiagnostics: boolean;
+
+  createConsole(): Partial<Console> {
+    const addDiagnostic = (
+      category: DiagnosticLogCategory,
+      args: Array<unknown>,
+    ) => {
+      let textParts: Array<string> = [];
+      if (args.length === 1 && typeof args[0] === 'string') {
+        textParts.push(escapeMarkup(args[0]));
+      } else {
+        textParts = args.map((arg) => prettyFormat(arg, {markup: true}));
+      }
+      const text = textParts.join(' ');
+
+      const err = new Error();
+
+      // Remove the first two frames to get to the actual source
+      const frames = cleanFrames(getErrorStructure(err).frames.slice(2));
+
+      this.consoleAdvice.push({
+        type: 'log',
+        category,
+        text,
+      });
+      this.consoleAdvice = this.consoleAdvice.concat(
+        getErrorStackAdvice(err, undefined, frames),
+      );
+    };
+
+    function logInfo(...args: Array<unknown>): void {
+      addDiagnostic('info', args);
+    }
+
+    return {
+      assert(expression: unknown, ...args: Array<unknown>): void {
+        if (!expression) {
+          args[0] = `Assertion failed${args.length === 0 ? '' : `: ${args[0]}`}`;
+          addDiagnostic('warn', args);
+        }
+      },
+      dir(obj: unknown): void {
+        addDiagnostic('info', [obj]);
+      },
+      error: (...args: Array<unknown>): void => {
+        addDiagnostic('error', args);
+      },
+      warn: (...args: Array<unknown>): void => {
+        addDiagnostic('warn', args);
+      },
+      dirxml: logInfo,
+      debug: logInfo,
+      info: logInfo,
+      log: logInfo,
+      trace: logInfo,
+      // Noop
+      count(): void {},
+      countReset(): void {},
+      table(): void {},
+      time(): void {},
+      timeEnd(): void {},
+      timeLog(): void {},
+      clear(): void {},
+      group(): void {},
+      groupCollapsed(): void {},
+      groupEnd(): void {},
+      profile(): void {},
+      profileEnd(): void {},
+      timeStamp(): void {},
+    };
+  }
 
   //  Global variables to expose to tests
   getEnvironment(): UnknownObject {
@@ -85,6 +209,7 @@ export default class TestWorkerRunner {
 
     return {
       __ROME__TEST_OPTIONS__: testOptions,
+      console: this.createConsole(),
     };
   }
 
@@ -145,22 +270,28 @@ export default class TestWorkerRunner {
       throw new Error(`Test ${testName} has already been defined`);
     }
 
-    this.foundTests.set(testName, {
-      callback,
-      options,
-      callsiteError,
-    });
+    this.foundTests.set(
+      testName,
+      {
+        callback,
+        options,
+        callsiteError,
+      },
+    );
 
     if (options.only === true) {
       this.hasFocusedTest = true;
     }
   }
 
-  onError(testName: undefined | string, opts: {
-    error: Error;
-    firstAdvice: DiagnosticAdvice;
-    lastAdvice: DiagnosticAdvice;
-  }) {
+  onError(
+    testName: undefined | string,
+    opts: {
+      error: Error;
+      firstAdvice: DiagnosticAdvice;
+      lastAdvice: DiagnosticAdvice;
+    },
+  ) {
     const filename = this.file.real.join();
 
     let ref = undefined;
@@ -178,43 +309,7 @@ export default class TestWorkerRunner {
       category: 'tests/failure',
       label: escapeMarkup(testName),
       filename,
-      cleanFrames(frames) {
-        // TODO we should actually get the frames before module init and do it that way
-        // Remove everything before the original module factory
-        let latestTestWorkerFrame = frames.find((frame, i) => {
-          if (frame.typeName === 'global' && frame.methodName === undefined &&
-                frame.functionName ===
-                undefined) {
-            // We are the global.<anonymous> frame
-            // Now check for Script.runInContext
-            const nextFrame = frames[i + 1];
-            if (nextFrame !== undefined && nextFrame.typeName === 'Script' &&
-                  nextFrame.methodName ===
-                  'runInContext') {
-              // Yes!
-              // TODO also check for ___$romejs$core$common$utils$executeMain_ts$default (packages/romejs/core/common/utils/executeMain.ts:69:17)
-              return true;
-            }
-          }
-
-          return false;
-        });
-
-        // And if there was no module factory frame, then we must be inside of a test
-        if (latestTestWorkerFrame === undefined) {
-          latestTestWorkerFrame = frames.find((frame) => {
-            return frame.typeName !== undefined && frame.typeName.includes(
-              '$TestWorkerRunner',
-            );
-          });
-        }
-
-        if (latestTestWorkerFrame === undefined) {
-          return frames;
-        }
-
-        return frames.slice(0, frames.indexOf(latestTestWorkerFrame));
-      },
+      cleanFrames,
     });
 
     diagnostic = {
@@ -229,6 +324,7 @@ export default class TestWorkerRunner {
       },
     };
 
+    this.emitConsoleDiagnostics = true;
     this.bridge.testError.send({
       ref,
       diagnostic,
@@ -250,7 +346,7 @@ export default class TestWorkerRunner {
             {
               type: 'log',
               category: 'info',
-              message: `Error occured while running <emphasis>teardown</emphasis> for test <emphasis>${testName}</emphasis>`,
+              text: `Error occured while running <emphasis>teardown</emphasis> for test <emphasis>${testName}</emphasis>`,
             },
           ],
         },
@@ -292,11 +388,14 @@ export default class TestWorkerRunner {
         },
       });
     } catch (err) {
-      this.onError(testName, {
-        error: err,
-        firstAdvice: [],
-        lastAdvice: api.advice,
-      });
+      this.onError(
+        testName,
+        {
+          error: err,
+          firstAdvice: [],
+          lastAdvice: api.advice,
+        },
+      );
     } finally {
       await this.teardownTest(testName, api);
     }
@@ -354,6 +453,15 @@ export default class TestWorkerRunner {
 
     // Save the snapshot
     await this.snapshotManager.save();
+
+    if (this.emitConsoleDiagnostics) {
+      await this.emitDiagnostic({
+        description: descriptions.TESTS.LOGS(this.consoleAdvice),
+        location: {
+          filename: this.file.uid,
+        },
+      });
+    }
   }
 
   async emitFoundTests() {
@@ -399,7 +507,7 @@ export default class TestWorkerRunner {
             {
               type: 'log',
               category: 'info',
-              message: markup`Error occured while executing test file <filelink emphasis target="${this.file.uid}" />`,
+              text: markup`Error occured while executing test file <filelink emphasis target="${this.file.uid}" />`,
             },
             INTERNAL_ERROR_LOG_ADVICE,
           ],
@@ -411,7 +519,7 @@ export default class TestWorkerRunner {
   async prepare(): Promise<void> {
     return this.wrap(async () => {
       // Setup
-      await this.snapshotManager.load();
+      await this.snapshotManager.init();
       await this.discoverTests();
       await this.emitFoundTests();
 

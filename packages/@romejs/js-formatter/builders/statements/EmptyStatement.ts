@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Tokens, operator} from '../../tokens';
+import {Token} from '../../tokens';
 
-export default function EmptyStatement(): Tokens {
-  return [operator(';')];
+export default function EmptyStatement(): Token {
+  return ';';
 }

@@ -6,9 +6,9 @@
  */
 
 import {
-  JSNodeBase,
   FlowInterfaceExtends,
   FlowObjectTypeAnnotation,
+  JSNodeBase,
 } from '../index';
 import {createBuilder} from '../utils';
 
@@ -18,12 +18,13 @@ export type FlowInterfaceTypeAnnotation = JSNodeBase & {
   body: FlowObjectTypeAnnotation;
 };
 
-export const flowInterfaceTypeAnnotation = createBuilder<
-  FlowInterfaceTypeAnnotation
->('FlowInterfaceTypeAnnotation', {
-  bindingKeys: {},
-  visitorKeys: {
-    body: true,
-    extends: true,
+export const flowInterfaceTypeAnnotation = createBuilder<FlowInterfaceTypeAnnotation>(
+  'FlowInterfaceTypeAnnotation',
+  {
+    bindingKeys: {},
+    visitorKeys: {
+      body: true,
+      extends: true,
+    },
   },
-});
+);

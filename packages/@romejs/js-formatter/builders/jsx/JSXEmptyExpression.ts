@@ -6,13 +6,12 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens} from '../../tokens';
-import {jsxEmptyExpression, AnyNode} from '@romejs/js-ast';
+import {Token} from '../../tokens';
+import {JSXEmptyExpression} from '@romejs/js-ast';
 
 export default function JSXEmptyExpression(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = jsxEmptyExpression.assert(node);
-  return builder.tokenizeInnerComments(node);
+  node: JSXEmptyExpression,
+): Token {
+  return builder.tokenizeInnerComments(node, false);
 }

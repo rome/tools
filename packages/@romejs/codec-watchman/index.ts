@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {dumpToBuffer, BunserBuf} from './bser';
+import {BunserBuf, dumpToBuffer} from './bser';
 import {Reporter} from '@romejs/cli-reporter';
 import {Event} from '@romejs/events';
 import childProcess = require('child_process');
@@ -45,10 +45,8 @@ function normalizeWatchmanSubscription(res: Consumer): WatchmanSubscriptionValue
     unilateral: res.get('unilateral').asBoolean(),
     subscription: res.get('subscription').asString(),
     root: res.get('root').asString(),
-
     // This can be a massive array... We should still probably efficiently validate it though somehow
     files: res.get('files').asAny(),
-
     isFreshInstance: res.get('is_fresh_instance').asBoolean(),
     version: res.get('version').asString(),
     since: res.get('since').asString(),
@@ -85,9 +83,12 @@ export class WatchmanClient {
   listen() {
     const {socket} = this;
 
-    socket.on('error', function() {
-      //
-    });
+    socket.on(
+      'error',
+      function() {
+        //
+      },
+    );
 
     const bunser = new BunserBuf();
 
@@ -95,13 +96,19 @@ export class WatchmanClient {
       this.processResponse(consumeUnknown(obj, 'parse/json'));
     });
 
-    socket.on('data', (chunk) => {
-      bunser.append(chunk);
-    });
+    socket.on(
+      'data',
+      (chunk) => {
+        bunser.append(chunk);
+      },
+    );
 
-    socket.on('end', () => {
-      this.end();
-    });
+    socket.on(
+      'end',
+      () => {
+        this.end();
+      },
+    );
   }
 
   processResponse(res: Consumer) {
@@ -202,11 +209,14 @@ export async function getWatchmanSocketLocation(): Promise<string> {
       const data = JSON.parse(stdout);
 
       // Validate JSON result
-      if (typeof data !== 'object' || data == null || typeof data.sockname !==
-          'string') {
+      if (
+        typeof data !== 'object' ||
+        data == null ||
+        typeof data.sockname !== 'string'
+      ) {
         throw new Error(
-            `Watchman returned JSON payload that wasnt an object with a sockname property`,
-          );
+          `Watchman returned JSON payload that wasnt an object with a sockname property`,
+        );
       }
 
       return data.sockname;
@@ -239,12 +249,18 @@ export async function createWatchmanClient(
   const socket = net.createConnection(sockname);
 
   return new Promise((resolve, reject) => {
-    socket.on('error', (err) => {
-      reject(err);
-    });
+    socket.on(
+      'error',
+      (err) => {
+        reject(err);
+      },
+    );
 
-    socket.on('connect', () => {
-      resolve(new WatchmanClient(socket, reporter));
-    });
+    socket.on(
+      'connect',
+      () => {
+        resolve(new WatchmanClient(socket, reporter));
+      },
+    );
   });
 }

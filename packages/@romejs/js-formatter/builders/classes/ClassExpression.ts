@@ -6,11 +6,13 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens} from '../../tokens';
-import {classExpression, AnyNode} from '@romejs/js-ast';
+import {Token} from '../../tokens';
+import {ClassExpression} from '@romejs/js-ast';
 import ClassDeclaration from './ClassDeclaration';
 
-export default function ClassExpression(builder: Builder, node: AnyNode): Tokens {
-  node = classExpression.assert(node);
+export default function ClassExpression(
+  builder: Builder,
+  node: ClassExpression,
+): Token {
   return ClassDeclaration(builder, node);
 }

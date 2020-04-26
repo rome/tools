@@ -6,24 +6,16 @@
  */
 
 import Builder from '../../Builder';
-import {Tokens, operator} from '../../tokens';
+import {Token, concat} from '../../tokens';
 import {
+  FlowTypeParameterDeclaration,
   FlowTypeParameterInstantiation,
-  flowTypeParameterInstantiation,
-  AnyNode,
 } from '@romejs/js-ast';
+import {printCommaList} from '../utils';
 
 export default function FlowTypeParameterInstantiation(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = node.type === 'FlowTypeParameterDeclaration'
-    ? node
-    : flowTypeParameterInstantiation.assert(node);
-
-  return [
-    operator('<'),
-    builder.tokenizeCommaList(node.params, node),
-    operator('>'),
-  ];
+  node: FlowTypeParameterDeclaration | FlowTypeParameterInstantiation,
+): Token {
+  return concat(['<', printCommaList(builder, node.params, node), '>']);
 }

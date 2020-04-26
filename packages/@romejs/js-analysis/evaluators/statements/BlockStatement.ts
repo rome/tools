@@ -6,7 +6,7 @@
  */
 
 import {Scope} from '../../scopes';
-import {BlockStatement, blockStatement, AnyNode} from '@romejs/js-ast';
+import {AnyNode, BlockStatement, blockStatement} from '@romejs/js-ast';
 import {getBindingIdentifiers, isTypeNode} from '@romejs/js-ast-utils';
 import BlockT from '../../types/BlockT';
 
@@ -19,8 +19,10 @@ function shouldHoistExecute(node: undefined | AnyNode): boolean {
     return true;
   }
 
-  if (node.type === 'ExportLocalDeclaration' || node.type ===
-      'ExportDefaultDeclaration') {
+  if (
+    node.type === 'ExportLocalDeclaration' ||
+    node.type === 'ExportDefaultDeclaration'
+  ) {
     return shouldHoistExecute(node.declaration);
   }
 

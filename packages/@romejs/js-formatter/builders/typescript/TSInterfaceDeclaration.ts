@@ -5,43 +5,36 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-  TSInterfaceDeclaration,
-  tsInterfaceDeclaration,
-  AnyNode,
-} from '@romejs/js-ast';
+import {TSInterfaceDeclaration} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
-import {Tokens, word, space} from '../../tokens';
+import {Token, concat, space} from '../../tokens';
+import {printCommaList} from '../utils';
 
 export default function TSInterfaceDeclaration(
   builder: Builder,
-  node: AnyNode,
-): Tokens {
-  node = tsInterfaceDeclaration.assert(node);
-
-  let tokens: Tokens = [];
+  node: TSInterfaceDeclaration,
+): Token {
+  const tokens: Array<Token> = [];
 
   if (node.declare) {
-    tokens = [word('declare'), space];
+    tokens.push('declare', space);
   }
 
-  tokens = [
-    ...tokens,
-    word('interface'),
+  tokens.push(
+    'interface',
     space,
-    ...builder.tokenize(node.id, node),
-    ...builder.tokenize(node.typeParameters, node),
-  ];
+    builder.tokenize(node.id, node),
+    builder.tokenize(node.typeParameters, node),
+  );
 
   if (node.extends) {
-    tokens = [
-      ...tokens,
+    tokens.push(
       space,
-      word('extends'),
+      'extends',
       space,
-      builder.tokenizeCommaList(node.extends, node),
-    ];
+      printCommaList(builder, node.extends, node),
+    );
   }
 
-  return [...tokens, space, ...builder.tokenize(node.body, node)];
+  return concat([concat(tokens), space, builder.tokenize(node.body, node)]);
 }

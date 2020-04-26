@@ -38,6 +38,17 @@ Object {
       description: Object {
         category: 'analyzeDependencies/cjsExportInES'
         message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'You cannot use CommonJS exports in an ES module'}
+        advice: Array [
+          action {
+            command: 'lint'
+            hidden: true
+            instruction: 'To suppress this error run'
+            noun: 'Add suppression comment'
+            shortcut: 's'
+            args: Array ['unknown']
+            commandFlags: Object {decisions: Array ['suppress-analyzeDependencies/cjsExportInES-unknown-2']}
+          }
+        ]
       }
       location: Object {
         filename: 'unknown'
@@ -275,11 +286,11 @@ Object {
         advice: Array [
           log {
             category: 'info'
-            message: 'Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module'
+            text: 'Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module'
           }
           log {
             category: 'info'
-            message: 'Add <emphasis>"type": "module"</emphasis> to your <filelink emphasis target="package.json" />'
+            text: 'Add <emphasis>"type": "module"</emphasis> to your <filelink emphasis target="package.json" />'
           }
         ]
       }

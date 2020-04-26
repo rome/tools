@@ -12,6 +12,7 @@ export type UndefinedKeywordTypeAnnotation = JSNodeBase & {
   type: 'UndefinedKeywordTypeAnnotation';
 };
 
-export const undefinedKeywordTypeAnnotation = createBuilder<
-  UndefinedKeywordTypeAnnotation
->('UndefinedKeywordTypeAnnotation', {bindingKeys: {}, visitorKeys: {}});
+export const undefinedKeywordTypeAnnotation = createBuilder<UndefinedKeywordTypeAnnotation>(
+  'UndefinedKeywordTypeAnnotation',
+  {bindingKeys: {}, visitorKeys: {}},
+);

@@ -5,16 +5,55 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSTupleType, tsTupleType, AnyNode} from '@romejs/js-ast';
+import {TSTupleType} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
-import {Tokens, operator} from '../../tokens';
+import {
+  Token,
+  concat,
+  group,
+  hardline,
+  ifBreak,
+  indent,
+  join,
+  lineOrSpace,
+  softline,
+} from '../../tokens';
+import {hasInnerComments} from '../comments';
 
-export default function TSTupleType(builder: Builder, node: AnyNode): Tokens {
-  node = tsTupleType.assert(node);
+export default function TSTupleType(builder: Builder, node: TSTupleType): Token {
+  if (node.elementTypes.length === 0 && node.rest === undefined) {
+    if (hasInnerComments(node)) {
+      return concat([
+        '[',
+        builder.tokenizeInnerComments(node, true),
+        hardline,
+        ']',
+      ]);
+    } else {
+      return '[]';
+    }
+  }
 
-  return [
-    operator('['),
-    builder.tokenizeCommaList(node.elementTypes, node),
-    operator(']'),
+  const parts: Array<Token> = [];
+
+  for (const elementType of node.elementTypes) {
+    parts.push(builder.tokenize(elementType, node));
+  }
+
+  if (node.rest !== undefined) {
+    parts.push(concat(['...', builder.tokenize(node.rest, node)]));
+  }
+
+  const tokens: Array<Token> = [
+    '[',
+    indent(concat([softline, join(concat([',', lineOrSpace]), parts)])),
   ];
+
+  if (node.rest === undefined) {
+    tokens.push(ifBreak(','));
+  }
+
+  tokens.push(softline, ']');
+
+  return group(concat(tokens));
 }
