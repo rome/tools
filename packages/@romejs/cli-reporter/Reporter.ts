@@ -686,9 +686,12 @@ export default class Reporter {
       // Format all rows
       const builtRows = rows.map((row): string => {
         for (let i = 0; i < row.length; i++) {
+          const isLastColumn = i === row.length - 1;
           const field = row[i];
-          const padding = cols[i] - this.markupifyLength(stream, field);
-          row[i] = field + ' '.repeat(padding);
+          const paddingAmount = cols[i] - this.markupifyLength(stream, field);
+          const paddedField =
+            field + (isLastColumn ? '' : ' '.repeat(paddingAmount));
+          row[i] = paddedField;
         }
         return row.join(' ');
       });
