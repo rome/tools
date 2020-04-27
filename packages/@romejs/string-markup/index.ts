@@ -11,6 +11,7 @@ export {
   MarkupFormatFilenameHumanizer,
   MarkupFormatFilenameNormalizer,
   MarkupFormatOptions,
+  NormalizeMarkupOptions,
   humanizeMarkupFilename,
   markupToPlainText,
   normalizeMarkup,
