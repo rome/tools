@@ -13,7 +13,7 @@
   ✖ A while loop should be used over a for loop
 
     for (; x.running;) x.step();
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ 
 
   ℹ Recommended fix
 
@@ -42,7 +42,7 @@ while (x.running) x.step();
   ✖ A while loop should be used over a for loop
 
     for (;;) doSomething();
-    ^^^^^^^^^^^^^^^^^^^^^^^
+    ^^^^^^^^^^^^^^^^^^^^^^^ 
 
   ℹ Recommended fix
 

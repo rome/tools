@@ -454,7 +454,7 @@ export default class TestWorkerRunner {
     // Save the snapshot
     await this.snapshotManager.save();
 
-    if (this.emitConsoleDiagnostics) {
+    if (this.emitConsoleDiagnostics && this.consoleAdvice.length > 0) {
       await this.emitDiagnostic({
         description: descriptions.TESTS.LOGS(this.consoleAdvice),
         location: {

@@ -113,7 +113,7 @@ do {
 ### `3: formatted`
 
 ```
-for (; !!foo; ) {
+while (!!foo) {
   return 1 + 1;
 }
 

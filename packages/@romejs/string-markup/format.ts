@@ -258,9 +258,13 @@ export function markupToPlainText(
   );
 }
 
+export type NormalizeMarkupOptions = MarkupFormatOptions & {
+  stripPositions?: boolean;
+};
+
 export function normalizeMarkup(
   input: string,
-  opts: MarkupFormatOptions = {},
+  opts: NormalizeMarkupOptions = {},
 ): string {
   return formatReduceFromInput(
     input,
@@ -273,8 +277,14 @@ export function normalizeMarkup(
         switch (tag) {
           case // Normalize filename of <filelink target>
           'filelink': {
+            // Clone
+            attributes = new Map([...attributes]);
             const {text, filename} = formatFileLink(attributes, value, opts);
             attributes.set('target', filename);
+            if (opts.stripPositions) {
+              attributes.delete('line');
+              attributes.delete('column');
+            }
             value = text;
             break;
           }
