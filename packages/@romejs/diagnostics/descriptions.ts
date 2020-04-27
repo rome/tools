@@ -478,6 +478,11 @@ export const descriptions = createMessages(
         message: `Duplicate group name <emphasis>${name}</emphasis> in regular expression`,
       }),
 
+      NO_POSIX_IN_REGULAR_EXPRESSION: {
+        category: 'lint/noPosixInRegularExpression',
+        message: 'POSIX Character Classes and Collating Sequences are not supported in ECMAscript Regular Expressions',
+      },
+
       NO_REFERENCE_TO_NON_EXISTING_GROUP: (name: string) => ({
         category: 'lint/noReferenceToNonExistingGroup',
         message: `Reference to non-existent group <emphasis>"${name}"</emphasis>`,

@@ -5,22 +5,29 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import test from '@romejs/test';
-import {testLint} from '../../api/lint.test';
-import {PartialDiagnostic} from '@romejs/diagnostics/types';
+import {test} from 'rome';
+// import {testLint} from '../../api/lint.test';
+import {testLintMultiple} from '../../api/lint.test';
 
-test('no POSIX in regular expression', async t => {
-  function checkCategory(diagnostic: PartialDiagnostic): Boolean {
-    return diagnostic.category === 'lint/noPosixInRegularExpression';
-  }
+// import {PartialDiagnostic} from '@romejs/diagnostics/types';
+test('no POSIX in regular expression', async (t) => {
+  // function checkCategory(diagnostic: PartialDiagnostic): Boolean {
+  //   return diagnostic.category === 'lint/noPosixInRegularExpression';
+  // }
 
-  const testCases = [
+  // const testCases = [
+  //   'const pattern = /[[:alpha:]]/',
+  //   'const pattern = /[[.ch.]]/',
+  // ];
+
+  // for (const testCase of testCases) {
+  //   const {diagnostics} = await testLint(testCase);
+  //   console.log(diagnostics)
+  //   t.truthy(diagnostics.find(checkCategory));
+  // }
+
+  testLintMultiple(t, [
     'const pattern = /[[:alpha:]]/',
     'const pattern = /[[.ch.]]/',
-  ];
-
-  for (const testCase of testCases) {
-    const {diagnostics} = await testLint(testCase);
-    t.truthy(diagnostics.find(checkCategory));
-  }
+  ], {category: 'lint/noPosixInRegularExpression'});
 });
