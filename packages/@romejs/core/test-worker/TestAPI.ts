@@ -455,31 +455,100 @@ export default class TestAPI implements TestHelper {
   async throwsAsync(
     thrower: AsyncFunc,
     expected?: ExpectedError,
-    message?: string,
+    message: string = 't.throws() failed, callback did not throw an error',
   ): Promise<void> {
-    throw new Error('unimplemented');
+    try {
+      await thrower();
+    } catch (err) {
+      if (matchExpectedError(err, expected)) {
+        return undefined;
+      } else {
+        this.fail(
+          `t.throws() expected an error to be thrown that matches ${formatExpectedError(
+            expected,
+          )} but got ${err.name}: ${JSON.stringify(err.message)}`,
+          getErrorStackAdvice(err, 'Incorrect error stack trace'),
+          1,
+        );
+      }
+    }
+    this.fail(message, undefined, 1);
   }
 
-  notThrows(nonThrower: SyncThrower, message?: string): void {
+  notThrows(nonThrower: SyncThrower, message: string = 't.notThrows() failed, callback threw an error'): void {
     try {
       nonThrower();
     } catch (err) {
-      // TODO
-      message;
-      throw err;
+      const advice = getErrorStackAdvice(err, `t.notThrows did not expect an error to be thrown but got ${err.name}: ${JSON.stringify(err.message)}`);
+      this.fail(message, advice, 1);
     }
   }
 
-  async notThrowsAsync(nonThrower: AsyncFunc, message?: string): Promise<void> {
-    throw new Error('unimplemented');
+  async notThrowsAsync(nonThrower: AsyncFunc, message: string = 't.notThrowsAsync failed, callback threw an error'): Promise<void> {
+    try {
+      await nonThrower();
+    } catch (err) {
+      const advice = getErrorStackAdvice(err, `t.notThrowsAsync did not expect an error to be thrown but got ${err.name}: ${JSON.stringify(err.message)}`);
+      this.fail(message, advice, 1);
+    }
   }
 
-  regex(contents: string, regex: RegExp, message?: string): void {
-    throw new Error('unimplemented');
+  regex(contents: string, regex: RegExp, message: string = 't.regex failed, using RegExp.test semantics'): void {
+    if (!regex.test(contents)) {
+      this.fail(
+        message,
+        [
+          {
+            type: 'log',
+            category: 'info',
+            text: `Expected`,
+          },
+          {
+            type: 'code',
+            code: prettyFormat(contents),
+          },
+          {
+            type: 'log',
+            category: 'info',
+            text: `to match pattern`,
+          },
+          {
+            type: 'code',
+            code: prettyFormat(regex.source),
+          },
+        ],
+        1,
+      );
+    }
   }
 
-  notRegex(contents: string, regex: RegExp, message?: string): void {
-    throw new Error('unimplemented');
+  notRegex(contents: string, regex: RegExp, message: string = 't.regex failed, using RegExp.test semantics'): void {
+    if (regex.test(contents)) {
+      this.fail(
+        message,
+        [
+          {
+            type: 'log',
+            category: 'info',
+            text: `Expected`,
+          },
+          {
+            type: 'code',
+            code: prettyFormat(contents),
+          },
+          {
+            type: 'log',
+            category: 'info',
+            text: `to not match pattern`,
+          },
+          {
+            type: 'code',
+            code: prettyFormat(regex.source),
+          },
+        ],
+        1,
+      );
+    }
   }
 
   snapshot(
