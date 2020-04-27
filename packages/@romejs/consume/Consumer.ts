@@ -78,7 +78,7 @@ export default class Consumer {
     this.context = opts.context;
     this.onDefinition = opts.onDefinition;
     this.propertyMetadata = opts.propertyMetadata;
-    this.usedNames = new Set();
+    this.usedNames = new Set(opts.usedNames);
     this.forkCache = new Map();
     this.forceDiagnosticTarget = opts.forceDiagnosticTarget;
 
@@ -435,6 +435,7 @@ export default class Consumer {
 
   clone(opts: Partial<ConsumerOptions>): Consumer {
     return new Consumer({
+      usedNames: this.usedNames,
       onDefinition: this.onDefinition,
       handleUnexpectedDiagnostic: this.handleUnexpected,
       filePath: this.path,
@@ -850,11 +851,22 @@ export default class Consumer {
     return value;
   }
 
-  asStringSet<ValidValue>(
+  _declareStringSet(validValues: Array<string>, def?: string) {
+    this.declareDefinition({
+      type: 'string',
+      default: def,
+      required: def === undefined,
+      allowedValues: validValues,
+    });
+  }
+
+  asStringSet<ValidValue extends string>(
     validValues: Array<ValidValue>,
     def?: ValidValue,
   ): ValidValue {
-    const value = this.asString(String(def));
+    this._declareStringSet(validValues, def);
+
+    const value = this._asString(String(def));
 
     // @ts-ignore
     if (validValues.includes(value)) {
@@ -877,10 +889,12 @@ export default class Consumer {
 
   asStringSetOrVoid<ValidValue extends string>(
     validValues: Array<ValidValue>,
+    def?: ValidValue,
   ): undefined | ValidValue {
     if (this.exists()) {
-      return this.asStringSet(validValues);
+      return this.asStringSet(validValues, def);
     } else {
+      this._declareStringSet(validValues, def);
       return undefined;
     }
   }

@@ -43,6 +43,7 @@ type ConsumePropertyDefinitionBase = {
   objectPath: ConsumePath;
   default: unknown;
   required: boolean;
+  allowedValues?: Array<unknown>;
   metadata?: ConsumePropertyMetadata;
 };
 
@@ -68,6 +69,7 @@ export type ConsumerOnDefinition = (
 export type ConsumerHandleUnexpected = (diagnostic: Diagnostic) => void;
 
 export type ConsumerOptions = {
+  usedNames?: Iterable<string>;
   handleUnexpectedDiagnostic?: ConsumerHandleUnexpected;
   onDefinition?: ConsumerOnDefinition;
   propertyMetadata?: ConsumePropertyMetadata;

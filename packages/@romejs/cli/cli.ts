@@ -157,7 +157,7 @@ export default async function cli() {
           logPath: c.get(
             'logPath',
             {
-              description: 'Path where to outpuit logs. When omitted logs are not written anywhere',
+              description: 'Path where to output logs. When omitted logs are not written anywhere',
             },
           ).asAbsoluteFilePathOrVoid(undefined, cwd),
           ...overrideCLIFlags,
