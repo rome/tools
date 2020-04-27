@@ -191,6 +191,10 @@ export function hasTSModifier(
 }
 
 function tsIsListTerminator(parser: JSParser, kind: ParsingContext): boolean {
+  if (parser.match(tt.eof)) {
+    return true;
+  }
+
   switch (kind) {
     case 'EnumMembers':
     case 'TypeMembers':
