@@ -475,25 +475,45 @@ export default class TestAPI implements TestHelper {
     this.fail(message, undefined, 1);
   }
 
-  notThrows(nonThrower: SyncThrower, message: string = 't.notThrows() failed, callback threw an error'): void {
+  notThrows(
+    nonThrower: SyncThrower,
+    message: string = 't.notThrows() failed, callback threw an error',
+  ): void {
     try {
       nonThrower();
     } catch (err) {
-      const advice = getErrorStackAdvice(err, `t.notThrows did not expect an error to be thrown but got ${err.name}: ${JSON.stringify(err.message)}`);
+      const advice = getErrorStackAdvice(
+        err,
+        `t.notThrows did not expect an error to be thrown but got ${err.name}: ${JSON.stringify(
+          err.message,
+        )}`,
+      );
       this.fail(message, advice, 1);
     }
   }
 
-  async notThrowsAsync(nonThrower: AsyncFunc, message: string = 't.notThrowsAsync failed, callback threw an error'): Promise<void> {
+  async notThrowsAsync(
+    nonThrower: AsyncFunc,
+    message: string = 't.notThrowsAsync failed, callback threw an error',
+  ): Promise<void> {
     try {
       await nonThrower();
     } catch (err) {
-      const advice = getErrorStackAdvice(err, `t.notThrowsAsync did not expect an error to be thrown but got ${err.name}: ${JSON.stringify(err.message)}`);
+      const advice = getErrorStackAdvice(
+        err,
+        `t.notThrowsAsync did not expect an error to be thrown but got ${err.name}: ${JSON.stringify(
+          err.message,
+        )}`,
+      );
       this.fail(message, advice, 1);
     }
   }
 
-  regex(contents: string, regex: RegExp, message: string = 't.regex failed, using RegExp.test semantics'): void {
+  regex(
+    contents: string,
+    regex: RegExp,
+    message: string = 't.regex failed, using RegExp.test semantics',
+  ): void {
     if (!regex.test(contents)) {
       this.fail(
         message,
@@ -522,7 +542,11 @@ export default class TestAPI implements TestHelper {
     }
   }
 
-  notRegex(contents: string, regex: RegExp, message: string = 't.regex failed, using RegExp.test semantics'): void {
+  notRegex(
+    contents: string,
+    regex: RegExp,
+    message: string = 't.regex failed, using RegExp.test semantics',
+  ): void {
     if (regex.test(contents)) {
       this.fail(
         message,
