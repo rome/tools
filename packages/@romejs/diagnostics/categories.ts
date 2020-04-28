@@ -65,6 +65,7 @@ export type DiagnosticCategory =
   | 'lint/undeclaredVariables'
   | 'lint/unsafeNegation'
   | 'lint/unusedVariables'
+  | 'lint/react/jsxNoDuplicateProps'
   | 'lsp/parse'
   | 'parse/js'
   | 'parse/json'

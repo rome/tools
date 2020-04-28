@@ -50,6 +50,9 @@ import undeclaredVariables from './undeclaredVariables';
 import unsafeNegation from './unsafeNegation';
 import unusedVariables from './unusedVariables';
 
+// Add react imports in alphabetical order
+import jsxNoDuplicateProps from './react/jsxNoDuplicateProps';
+
 // Add transforms in alphabetical order.
 export const lintTransforms = [
   camelCase,
@@ -95,4 +98,7 @@ export const lintTransforms = [
   undeclaredVariables,
   unsafeNegation,
   unusedVariables,
+
+  // react
+  jsxNoDuplicateProps,
 ];

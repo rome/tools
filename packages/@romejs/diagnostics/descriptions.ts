@@ -320,6 +320,10 @@ export const descriptions = createMessages({
       category: 'lint/preferWhile',
       message: 'A while loop should be used over a for loop',
     },
+    REACT_NO_DUPLICATE_PROPS: (key: string) => ({
+      category: 'lint/react/jsxNoDuplicateProps',
+      message: markup`React does not support duplicate props. Found duplicate of: <emphasis>${key}</emphasis>`,
+    }),
     UNSAFE_NEGATION: {
       category: 'lint/unsafeNegation',
       message: 'Unsafe usage of negation operator in left side of binary expression',
