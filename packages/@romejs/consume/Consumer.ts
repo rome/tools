@@ -17,7 +17,7 @@ import {
   createSingleDiagnosticError,
   descriptions,
 } from '@romejs/diagnostics';
-import {UnknownObject} from '@romejs/typescript-helpers';
+import {UnknownObject, isPlainObject} from '@romejs/typescript-helpers';
 import {
   JSONArray,
   JSONObject,
@@ -30,6 +30,9 @@ import {
   ConsumePath,
   ConsumePropertyDefinition,
   ConsumePropertyMetadata,
+  ConsumePropertyNumberDefinition,
+  ConsumePropertyPrimitiveDefinition,
+  ConsumePropertyStringDefinition,
   ConsumeSourceLocationRequestTarget,
   ConsumerHandleUnexpected,
   ConsumerOnDefinition,
@@ -43,6 +46,7 @@ import {
   ob1Add,
   ob1Coerce0,
   ob1Coerce1,
+  ob1Get,
 } from '@romejs/ob1';
 import {isValidIdentifierName} from '@romejs/js-ast-utils';
 import {escapeString} from '@romejs/string-escape';
@@ -81,6 +85,7 @@ export default class Consumer {
     this.usedNames = new Set(opts.usedNames);
     this.forkCache = new Map();
     this.forceDiagnosticTarget = opts.forceDiagnosticTarget;
+    this.declared = false;
 
     // See shouldDispatchUnexpected for explanation
     this.hasHandledUnexpected = false;
@@ -89,7 +94,7 @@ export default class Consumer {
 
   path: undefined | UnknownFilePath;
   filename: undefined | string;
-
+  declared: boolean;
   handleUnexpected: undefined | ConsumerHandleUnexpected;
   onDefinition: undefined | ConsumerOnDefinition;
   propertyMetadata: undefined | ConsumePropertyMetadata;
@@ -151,18 +156,34 @@ export default class Consumer {
   }
 
   declareDefinition(
-    def: Omit<ConsumePropertyDefinition, 'objectPath' | 'metadata'>,
+    partialDef:
+      | Omit<ConsumePropertyStringDefinition, 'objectPath' | 'metadata'>
+      | Omit<ConsumePropertyPrimitiveDefinition, 'objectPath' | 'metadata'>
+      | Omit<ConsumePropertyNumberDefinition, 'objectPath' | 'metadata'>,
+    inputName?: string,
   ) {
-    if (this.onDefinition !== undefined) {
-      this.onDefinition(
-        ({
-          ...def,
-          objectPath: this.keyPath,
-          metadata: this.propertyMetadata,
-        } as ConsumePropertyDefinition),
-        this,
-      );
+    if (this.declared) {
+      return;
     }
+
+    if (this.onDefinition === undefined) {
+      return;
+    }
+
+    const metadata: ConsumePropertyMetadata = {
+      inputName,
+      ...this.propertyMetadata,
+    };
+
+    const def: ConsumePropertyDefinition = {
+      ...partialDef,
+      objectPath: this.keyPath,
+      metadata,
+    };
+
+    this.declared = true;
+
+    this.onDefinition(def, this);
   }
 
   getDiagnosticLocation(
@@ -519,7 +540,7 @@ export default class Consumer {
     }
 
     // Mutate the parent
-    const parentObj = parent.asUnknownObject();
+    const parentObj = parent.asOriginalUnknownObject();
     const key = this.getParentKey();
     parentObj[String(key)] = value;
     parent.setValue(parentObj);
@@ -536,7 +557,7 @@ export default class Consumer {
   }
 
   get(key: string, metadata?: ConsumePropertyMetadata): Consumer {
-    const value = this.asUnknownObject();
+    const value = this.asOriginalUnknownObject();
     this.markUsedProperty(key);
     return this.fork(key, value[key], metadata);
   }
@@ -640,7 +661,6 @@ export default class Consumer {
     }
   }
 
-  //
   exists() {
     return this.value != null;
   }
@@ -654,11 +674,6 @@ export default class Consumer {
     );
   }
 
-  // OBJECTS
-  keys(optional?: boolean): Array<string> {
-    return Object.keys(this.asUnknownObject(optional));
-  }
-
   asUnknownObject(optional: boolean = false): UnknownObject {
     this.declareDefinition({
       type: 'object',
@@ -666,22 +681,33 @@ export default class Consumer {
       required: !optional,
     });
 
+    return {
+      ...this.asOriginalUnknownObject(optional),
+    };
+  }
+
+  asOriginalUnknownObject(optional: boolean = false): UnknownObject {
     if (optional === true && !this.exists()) {
       return {};
     }
 
     const {value} = this;
-    if (!this.isObject()) {
+    if (!isPlainObject(value)) {
       this.unexpected(descriptions.CONSUME.EXPECTED_OBJECT);
       return {};
     }
 
-    // @ts-ignore
-    return {...value};
+    return value;
   }
 
   asMap(optional?: boolean, markUsed = true): Map<string, Consumer> {
-    const value = this.asUnknownObject(optional);
+    this.declareDefinition({
+      type: 'object',
+      default: undefined,
+      required: !optional,
+    });
+
+    const value = this.asOriginalUnknownObject(optional);
     const map = new Map();
     for (const key in value) {
       if (markUsed) {
@@ -690,26 +716,6 @@ export default class Consumer {
       map.set(key, this.fork(key, value[key]));
     }
     return map;
-  }
-
-  // ARRAY-LIKES
-  asSet(optional?: boolean): Set<Consumer> {
-    const arr = this.asArray(optional);
-    const setVals: Set<unknown> = new Set();
-    const set: Set<Consumer> = new Set();
-
-    for (let i = 0; i < arr.length; i++) {
-      const consumer = arr[i];
-      const value = consumer.asUnknown();
-      if (setVals.has(value)) {
-        continue;
-      }
-
-      setVals.add(value);
-      set.add(consumer);
-    }
-
-    return set;
   }
 
   asPlainArray(optional: boolean = false): Array<unknown> {
@@ -751,7 +757,6 @@ export default class Consumer {
     }
   }
 
-  // DATES
   asDateOrVoid(def?: Date): undefined | Date {
     this.declareDefinition({
       type: 'date',
@@ -759,7 +764,7 @@ export default class Consumer {
       required: false,
     });
     if (this.exists()) {
-      return this._asDate(def);
+      return this.asUndeclaredDate(def);
     } else {
       return undefined;
     }
@@ -771,10 +776,10 @@ export default class Consumer {
       default: def,
       required: def === undefined,
     });
-    return this._asDate(def);
+    return this.asUndeclaredDate(def);
   }
 
-  _asDate(def?: Date): Date {
+  asUndeclaredDate(def?: Date): Date {
     const value = this.getValue(def);
     if (!(value instanceof Date)) {
       this.unexpected(descriptions.CONSUME.EXPECTED_DATE);
@@ -783,7 +788,6 @@ export default class Consumer {
     return value;
   }
 
-  // BOOLEANS
   asBooleanOrVoid(def?: boolean): undefined | boolean {
     this.declareDefinition({
       type: 'boolean',
@@ -791,7 +795,7 @@ export default class Consumer {
       required: false,
     });
     if (this.exists()) {
-      return this._asBoolean(def);
+      return this.asUndeclaredBoolean(def);
     } else {
       return undefined;
     }
@@ -803,10 +807,10 @@ export default class Consumer {
       default: def,
       required: def === undefined,
     });
-    return this._asBoolean(def);
+    return this.asUndeclaredBoolean(def);
   }
 
-  _asBoolean(def?: boolean): boolean {
+  asUndeclaredBoolean(def?: boolean): boolean {
     const value = this.getValue(def);
     if (typeof value !== 'boolean') {
       this.unexpected(descriptions.CONSUME.EXPECTED_BOOLEAN);
@@ -815,22 +819,18 @@ export default class Consumer {
     return value;
   }
 
-  // STRINGS
   asStringOrVoid(def?: string): undefined | string {
-    if (this.exists()) {
-      return this.asString(def);
-    } else {
-      this._declareOptionalString(def);
-      return undefined;
-    }
-  }
-
-  _declareOptionalString(def?: string) {
     this.declareDefinition({
       type: 'string',
       default: def,
       required: false,
     });
+
+    if (this.exists()) {
+      return this.asUndeclaredString(def);
+    } else {
+      return undefined;
+    }
   }
 
   asString(def?: string): string {
@@ -839,10 +839,10 @@ export default class Consumer {
       default: def,
       required: def === undefined,
     });
-    return this._asString(def);
+    return this.asUndeclaredString(def);
   }
 
-  _asString(def?: string): string {
+  asUndeclaredString(def?: string): string {
     const value = this.getValue(def);
     if (typeof value !== 'string') {
       this.unexpected(descriptions.CONSUME.EXPECTED_STRING);
@@ -851,22 +851,24 @@ export default class Consumer {
     return value;
   }
 
-  _declareStringSet(validValues: Array<string>, def?: string) {
+  asStringSet<ValidValue extends string>(
+    validValues: Array<ValidValue>,
+    def?: ValidValue,
+  ): ValidValue {
     this.declareDefinition({
       type: 'string',
       default: def,
       required: def === undefined,
       allowedValues: validValues,
     });
+    return this.asUndeclaredStringSet(validValues, def);
   }
 
-  asStringSet<ValidValue extends string>(
+  asUndeclaredStringSet<ValidValue extends string>(
     validValues: Array<ValidValue>,
     def?: ValidValue,
   ): ValidValue {
-    this._declareStringSet(validValues, def);
-
-    const value = this._asString(String(def));
+    const value = this.asUndeclaredString(String(def));
 
     // @ts-ignore
     if (validValues.includes(value)) {
@@ -891,15 +893,20 @@ export default class Consumer {
     validValues: Array<ValidValue>,
     def?: ValidValue,
   ): undefined | ValidValue {
+    this.declareDefinition({
+      type: 'string',
+      default: def,
+      required: false,
+      allowedValues: validValues,
+    });
+
     if (this.exists()) {
-      return this.asStringSet(validValues, def);
+      return this.asUndeclaredStringSet(validValues, def);
     } else {
-      this._declareStringSet(validValues, def);
       return undefined;
     }
   }
 
-  // BIGINT
   asBigIntOrVoid(def?: number | bigint): undefined | bigint {
     this.declareDefinition({
       type: 'bigint',
@@ -907,7 +914,7 @@ export default class Consumer {
       required: false,
     });
     if (this.exists()) {
-      return this._asBigInt(def);
+      return this.asUndeclaredBigInt(def);
     } else {
       return undefined;
     }
@@ -919,10 +926,10 @@ export default class Consumer {
       default: def,
       required: def === undefined,
     });
-    return this._asBigInt(def);
+    return this.asUndeclaredBigInt(def);
   }
 
-  _asBigInt(def?: number | bigint): bigint {
+  asUndeclaredBigInt(def?: number | bigint): bigint {
     const value = this.getValue(def);
 
     if (typeof value === 'number') {
@@ -937,7 +944,17 @@ export default class Consumer {
     return BigInt('0');
   }
 
-  // PATHS
+  _declareOptionalFilePath(def?: string) {
+    this.declareDefinition(
+      {
+        type: 'string',
+        default: def,
+        required: false,
+      },
+      'path',
+    );
+  }
+
   asURLFilePath(def?: string): URLFilePath {
     const path = this.asUnknownFilePath(def);
     if (path.isURL()) {
@@ -952,20 +969,29 @@ export default class Consumer {
     if (this.exists()) {
       return this.asURLFilePath(def);
     } else {
-      this._declareOptionalString(def);
+      this._declareOptionalFilePath(def);
       return undefined;
     }
   }
 
   asUnknownFilePath(def?: string): UnknownFilePath {
-    return createUnknownFilePath(this.asString(def));
+    this.declareDefinition(
+      {
+        type: 'string',
+        default: def,
+        required: def === undefined,
+      },
+      'path',
+    );
+
+    return createUnknownFilePath(this.asUndeclaredString(def));
   }
 
   asUnknownFilePathOrVoid(def?: string): undefined | UnknownFilePath {
     if (this.exists()) {
       return this.asUnknownFilePath(def);
     } else {
-      this._declareOptionalString(def);
+      this._declareOptionalFilePath(def);
       return undefined;
     }
   }
@@ -989,7 +1015,7 @@ export default class Consumer {
     if (this.exists()) {
       return this.asAbsoluteFilePath(def, cwd);
     } else {
-      this._declareOptionalString(def);
+      this._declareOptionalFilePath(def);
       return undefined;
     }
   }
@@ -1008,7 +1034,7 @@ export default class Consumer {
     if (this.exists()) {
       return this.asRelativeFilePath(def);
     } else {
-      this._declareOptionalString(def);
+      this._declareOptionalFilePath(def);
       return undefined;
     }
   }
@@ -1028,12 +1054,11 @@ export default class Consumer {
     if (this.exists()) {
       return this.asExplicitRelativeFilePath(def);
     } else {
-      this._declareOptionalString(def);
+      this._declareOptionalFilePath(def);
       return undefined;
     }
   }
 
-  // NUMBER
   asNumberOrVoid(def?: number): undefined | number {
     this.declareDefinition({
       type: 'number',
@@ -1042,7 +1067,7 @@ export default class Consumer {
     });
 
     if (this.exists()) {
-      return this._asNumber(def);
+      return this.asUndeclaredNumber(def);
     } else {
       return undefined;
     }
@@ -1062,7 +1087,7 @@ export default class Consumer {
       default: def,
       required: def === undefined,
     });
-    return this._asNumberFromString(def);
+    return this.asUndeclaredNumberFromString(def);
   }
 
   asNumberFromStringOrVoid(def?: number): undefined | number {
@@ -1073,18 +1098,18 @@ export default class Consumer {
     });
 
     if (this.exists()) {
-      return this._asNumberFromString(def);
+      return this.asUndeclaredNumberFromString(def);
     } else {
       return undefined;
     }
   }
 
-  _asNumberFromString(def?: number): number {
+  asUndeclaredNumberFromString(def?: number): number {
     if (def !== undefined && !this.exists()) {
       return def;
     }
 
-    const str = this._asString();
+    const str = this.asUndeclaredString();
     const num = Number(str);
     if (isNaN(num)) {
       this.unexpected(descriptions.CONSUME.EXPECTED_VALID_NUMBER);
@@ -1100,7 +1125,7 @@ export default class Consumer {
       default: def,
       required: def === undefined,
     });
-    return this._asNumber(def);
+    return this.asUndeclaredNumber(def);
   }
 
   asNumberInRange(
@@ -1134,13 +1159,14 @@ export default class Consumer {
       default?: UnknownNumber;
     },
   ): UnknownNumber {
-    const num = this._asNumber(opts.default);
-    const {min, max} = opts;
+    const num = this.asUndeclaredNumber(opts.default);
+    const min = ob1Get(opts.min);
+    const max = ob1Get(opts.max);
 
     this.declareDefinition({
-      type: 'number-range',
+      type: 'number',
       default: opts.default,
-      // @ts-ignore
+      required: opts.default !== undefined,
       min,
       max,
     });
@@ -1162,7 +1188,7 @@ export default class Consumer {
     return num;
   }
 
-  _asNumber(def?: UnknownNumber): number {
+  asUndeclaredNumber(def?: UnknownNumber): number {
     const value = this.getValue(def);
     if (typeof value !== 'number') {
       this.unexpected(descriptions.CONSUME.EXPECTED_NUMBER);
@@ -1171,7 +1197,6 @@ export default class Consumer {
     return value;
   }
 
-  //
   asUnknown(): unknown {
     return this.value;
   }

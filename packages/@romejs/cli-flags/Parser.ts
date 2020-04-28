@@ -373,6 +373,7 @@ export default class Parser<T> {
       'generateAutocomplete',
       {
         description: 'Generate a shell autocomplete',
+        inputName: 'shellName',
       },
     ).asStringSetOrVoid(['fish', 'bash']);
     if (generateAutocomplete !== undefined) {
@@ -455,16 +456,12 @@ export default class Parser<T> {
         argCol = `--${argCol}`;
       }
 
-      const {default: defaultValue, allowedValues} = def;
-
       // Add input specifier unless a boolean
       if (def.type !== 'boolean') {
-        // TODO some way to customize this
-        // Property metadata in the consumer is a fine place but we want this to be non-CLI specific
-        let inputName = undefined;
+        let {inputName} = metadata;
 
         if (inputName === undefined) {
-          if (def.type === 'number' || def.type === 'number-range') {
+          if (def.type === 'number') {
             inputName = 'num';
           } else {
             inputName = 'input';
@@ -480,16 +477,17 @@ export default class Parser<T> {
       }
 
       let descCol: string =
-        metadata === undefined || metadata.description === undefined
+        metadata.description === undefined
           ? 'no description found'
           : metadata.description;
 
+      const {default: defaultValue} = def;
       if (defaultValue !== undefined && isDisplayableHelpValue(defaultValue)) {
         descCol += ` (default: ${defaultValue})`;
       }
 
-      if (allowedValues !== undefined) {
-        const displayAllowedValues = allowedValues.filter((item) =>
+      if (def.type === 'string' && def.allowedValues !== undefined) {
+        const displayAllowedValues = def.allowedValues.filter((item) =>
           isDisplayableHelpValue(item)
         );
         if (displayAllowedValues !== undefined) {

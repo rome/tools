@@ -65,6 +65,7 @@ export function ob1Get1(x: undefined | Number1): undefined | number {
 }
 
 export function ob1Get(x: UnknownNumber): number;
+export function ob1Get(x: undefined | UnknownNumber): undefined | number;
 export function ob1Get(x: undefined): undefined;
 export function ob1Get(x: undefined | UnknownNumber): undefined | number {
   // @ts-ignore
