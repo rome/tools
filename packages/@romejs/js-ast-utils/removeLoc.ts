@@ -34,6 +34,7 @@ const removeLocTransform: TransformVisitors = [
         const escaped: any = newNode;
         for (const key in newNode) {
           if (escaped[key] === undefined) {
+            // rome-suppress-next-line lint/noDelete
             delete escaped[key];
           }
         }
