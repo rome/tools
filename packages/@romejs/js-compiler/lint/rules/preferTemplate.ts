@@ -177,6 +177,14 @@ function combineTemplateParts(expressions: Array<TemplatePart>) {
   return reducedExpressions;
 }
 
+function createEmptyQuasis(isTail: boolean = false) {
+  return templateElement.create({
+    cooked: '',
+    raw: '',
+    tail: isTail,
+  })
+}
+
 // 'str' + expr + 'str' -> `str${expr}str`
 function convertTemplatePartsToTemplateLiteral(
   nodes: Array<TemplatePart>,
@@ -190,7 +198,7 @@ function convertTemplatePartsToTemplateLiteral(
     let isHead = index === 0;
 
     if (node.type === 'TemplateElement') {
-      templateElement;
+      templateQuasis.push(node);
     } else if (node.type === 'StringLiteral') {
       templateQuasis.push(
         templateElement.create({
@@ -201,14 +209,12 @@ function convertTemplatePartsToTemplateLiteral(
       );
     } else {
       templateExpressions.push(node);
-      if (isTail || isHead) {
-        templateQuasis.push(
-          templateElement.create({
-            cooked: '',
-            raw: '',
-            tail: isTail,
-          }),
-        );
+
+      let next = nodes[index + 1]
+      let isNextQuasis = next?.type === 'StringLiteral' || next?.type === 'TemplateElement'
+
+      if (isTail || isHead || !isNextQuasis) {
+        templateQuasis.push(createEmptyQuasis(isTail));
       }
     }
   }

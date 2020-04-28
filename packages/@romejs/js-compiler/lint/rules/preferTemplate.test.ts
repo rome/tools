@@ -74,5 +74,13 @@ test(
         category: 'lint/preferTemplate',
       },
     );
+
+    await testLint(
+      t,
+      `console.log('foo' + 1 + 2)`,
+      {
+        category: 'lint/preferTemplate',
+      },
+    );
   },
 );

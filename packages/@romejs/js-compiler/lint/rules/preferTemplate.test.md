@@ -232,3 +232,32 @@ console.log(`foo${1}`);
 console.log(`foobarbaz${'bat' + 'bam'}boo`);
 
 ```
+
+### `8`
+
+```
+
+ unknown:1:12 lint/preferTemplate FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Template literals are preferred over string concatenation
+
+    console.log('foo' + 1 + 2)
+                ^^^^^^^^^^^^^ 
+
+  ℹ Recommended fix
+
+  - 'foo'·+·1·+·2
+  + `foo${1}${2}`
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `8: formatted`
+
+```
+console.log(`foo${1}${2}`);
+
+```
