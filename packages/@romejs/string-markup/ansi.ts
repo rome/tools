@@ -42,11 +42,9 @@ export const formatAnsi = {
       b: number;
     },
   ): string {
-    return (
-      `\u001b[38;2;${String(color.r)};${String(color.g)};${String(color.b)}m` +
-      str +
-      createEscape(39)
-    );
+    return `\u001b[38;2;${String(color.r)};${String(color.g)};${String(color.b)}m${str}${createEscape(
+      39,
+    )}`;
   },
   bgRgb(
     str: string,
@@ -56,11 +54,9 @@ export const formatAnsi = {
       b: number;
     },
   ): string {
-    return (
-      `\u001b[48;2;${String(color.r)};${String(color.g)};${String(color.b)}m` +
-      str +
-      createEscape(49)
-    );
+    return `\u001b[48;2;${String(color.r)};${String(color.g)};${String(color.b)}m${str}${createEscape(
+      49,
+    )}`;
   },
   bold(str: string): string {
     return createEscape(1) + str + createEscape(22);

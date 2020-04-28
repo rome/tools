@@ -182,7 +182,7 @@ function createEmptyQuasis(isTail: boolean = false) {
     cooked: '',
     raw: '',
     tail: isTail,
-  })
+  });
 }
 
 // 'str' + expr + 'str' -> `str${expr}str`
@@ -210,8 +210,9 @@ function convertTemplatePartsToTemplateLiteral(
     } else {
       templateExpressions.push(node);
 
-      let next = nodes[index + 1]
-      let isNextQuasis = next?.type === 'StringLiteral' || next?.type === 'TemplateElement'
+      let next = nodes[index + 1];
+      let isNextQuasis =
+        next?.type === 'StringLiteral' || next?.type === 'TemplateElement';
 
       if (isTail || isHead || !isNextQuasis) {
         templateQuasis.push(createEmptyQuasis(isTail));

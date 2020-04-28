@@ -198,9 +198,7 @@ export default function buildMessageCodeFrame(
   const markerLine: string = `${markerGutterIndent}<emphasis>${GUTTER}</emphasis>${pointerIndent}${pointer} ${markerMessage}`;
 
   // Build up the line we display when source lines are omitted
-  const omittedLine =
-    `<pad count="${String(maxGutterLength)}"><emphasis>...</emphasis></pad>` +
-    GUTTER;
+  const omittedLine = `<pad count="${String(maxGutterLength)}"><emphasis>...</emphasis></pad>${GUTTER}`;
 
   // Build the frame
   const result = [];
@@ -216,8 +214,7 @@ export default function buildMessageCodeFrame(
       result.push(line);
     } else {
       result.push(
-        `<emphasis><pad count="${String(maxGutterLength)}">${gutter}</pad></emphasis>` +
-        line,
+        `<emphasis><pad count="${String(maxGutterLength)}">${gutter}</pad></emphasis>${line}`,
       );
     }
     if (lineIndex === endLineIndex && !noMarkerLine) {

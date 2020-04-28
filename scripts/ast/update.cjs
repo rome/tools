@@ -88,10 +88,7 @@ readIndexFile(
   [
     {
       iterator({category, nodeType}) {
-        return (
-          `import ${nodeType} from './${category}/${nodeType}';\n` +
-          `builders.set('${nodeType}', ${nodeType});\n\n`
-        );
+        return `import ${nodeType} from './${category}/${nodeType}';\nbuilders.set('${nodeType}', ${nodeType});\n\n`;
       },
     },
   ],
@@ -103,10 +100,7 @@ readIndexFile(
   [
     {
       iterator({category, nodeType}) {
-        return (
-          `import ${nodeType} from './${category}/${nodeType}';\n` +
-          `evaluators.set('${nodeType}', ${nodeType});\n\n`
-        );
+        return `import ${nodeType} from './${category}/${nodeType}';\nevaluators.set('${nodeType}', ${nodeType});\n\n`;
       },
     },
   ],
