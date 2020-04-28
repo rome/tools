@@ -13,7 +13,7 @@ test(
   async (t) => {
     await testLint(
       t,
-      `const foo = 'bar'; console.log(foo + 'baz')`,
+      `console.log(1 + 'foo')`,
       {
         category: 'lint/preferTemplate',
       },
@@ -21,7 +21,7 @@ test(
 
     await testLint(
       t,
-      `console.log((1 * 2) + 'baz')`,
+      `console.log((1 * 2) + 'foo')`,
       {
         category: 'lint/preferTemplate',
       },
@@ -29,7 +29,47 @@ test(
 
     await testLint(
       t,
-      `const foo = 'bar'; const bar = 'foo' console.log(foo + 'baz' + bar + 'bam' + 'boo' + foo)`,
+      `console.log(1 + 'foo' + 2 + 'bar' + 'baz' + 3)`,
+      {
+        category: 'lint/preferTemplate',
+      },
+    );
+
+    await testLint(
+      t,
+      `console.log((1 + 'foo') * 2)`,
+      {
+        category: 'lint/preferTemplate',
+      },
+    );
+
+    await testLint(
+      t,
+      `console.log((1 * (2 + 'foo')) + 'bar')`,
+      {
+        category: 'lint/preferTemplate',
+      },
+    );
+
+    await testLint(
+      t,
+      `console.log('foo' + 'bar')`,
+      {
+        category: 'lint/preferTemplate',
+      },
+    );
+
+    await testLint(
+      t,
+      `console.log(\`foo\` + 1)`,
+      {
+        category: 'lint/preferTemplate',
+      },
+    );
+
+    await testLint(
+      t,
+      `console.log('foo' + \`bar\${\`baz\${'bat' + 'bam'}\`}\` + 'boo')`,
       {
         category: 'lint/preferTemplate',
       },

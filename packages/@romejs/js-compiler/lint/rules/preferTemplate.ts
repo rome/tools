@@ -11,12 +11,16 @@ import {
   AnyNode,
   BinaryExpression,
   StringLiteral,
+  TemplateElement,
   TemplateLiteral,
   stringLiteral,
   templateElement,
   templateLiteral,
 } from '@romejs/js-ast';
 import {descriptions} from '@romejs/diagnostics';
+
+type TemplatePart = AnyExpression | TemplateElement;
+type StaticString = StringLiteral | TemplateElement;
 
 // expr + expr
 function isBinaryAddExpression(node: AnyNode): node is BinaryExpression {
@@ -28,12 +32,10 @@ function isBinaryAddExpression(node: AnyNode): node is BinaryExpression {
 // expr + 'str'
 // expr + (expr + 'str')
 // (expr + 'str') + expr
-// expr * (expr + 'str')
-// (expr * expr) + 'str'
 function isUnnecessaryStringConcatExpression(
   node: AnyNode,
 ): node is BinaryExpression {
-  if (node.type !== 'BinaryExpression') {
+  if (!isBinaryAddExpression(node)) {
     return false;
   }
 
@@ -49,15 +51,19 @@ function isUnnecessaryStringConcatExpression(
     }
   }
 
-  if (!isBinaryAddExpression(node)) {
-    return false;
-  }
-
   if (node.left.type === 'StringLiteral' && !node.left.value.includes('`')) {
     return true;
   }
 
   if (node.right.type === 'StringLiteral' && !node.right.value.includes('`')) {
+    return true;
+  }
+
+  if (node.left.type === 'TemplateLiteral') {
+    return true;
+  }
+
+  if (node.right.type === 'TemplateLiteral') {
     return true;
   }
 
@@ -89,20 +95,56 @@ function collectBinaryAddExpressionExpressions(
   return expressions;
 }
 
+// zips template.quasis and template.expressions into one array
+function zipTemplateLiteralParts(template: TemplateLiteral): Array<TemplatePart> {
+  let templateParts = [];
+
+  for (let i = 0; i < template.quasis.length; i++) {
+    templateParts.push(template.quasis[i]);
+
+    if (i + 1 < template.quasis.length) {
+      templateParts.push(template.expressions[i]);
+    }
+  }
+
+  return templateParts;
+}
+
+// flattens an array of expressions into TemplateLiteral parts
+function flattenExpressionsToTemplateParts(
+  expressions: Array<AnyExpression>,
+): Array<TemplatePart> {
+  let parts: Array<TemplatePart> = [];
+  let queue: Array<TemplatePart> = [...expressions];
+
+  while (true) {
+    let node = queue.shift();
+    if (!node) break;
+
+    if (node.type === 'TemplateLiteral') {
+      queue = [...zipTemplateLiteralParts(node), ...queue];
+    } else {
+      parts.push(node);
+    }
+  }
+
+  return parts;
+}
+
 // 'str' + 'str' + expr -> 'strstr' + expr
-function reduceBinaryExpressionExpressions(expressions: Array<AnyExpression>) {
+function combineTemplateParts(expressions: Array<TemplatePart>) {
   let reducedExpressions: Array<AnyExpression> = [];
   let index = 0;
 
   while (index < expressions.length) {
     let current = expressions[index];
 
-    if (current.type === 'StringLiteral') {
-      let strings: Array<StringLiteral> = [current];
+    if (current.type === 'StringLiteral' || current.type === 'TemplateElement') {
+      let strings: Array<StaticString> = [current];
 
       while (index + 1 < expressions.length) {
         let next = expressions[index + 1];
-        if (next.type === 'StringLiteral') {
+        if (next.type === 'StringLiteral' || next.type === 'TemplateElement') {
           strings.push(next);
           index++;
         } else {
@@ -110,12 +152,18 @@ function reduceBinaryExpressionExpressions(expressions: Array<AnyExpression>) {
         }
       }
 
-      if (strings.length === 1) {
+      if (strings.length === 1 && current.type === 'StringLiteral') {
         reducedExpressions.push(current);
       } else {
         reducedExpressions.push(
           stringLiteral.create({
-            value: strings.map((string) => string.value).join(''),
+            value: strings.map((string) => {
+              if (string.type === 'TemplateElement') {
+                return string.raw;
+              } else {
+                return string.value;
+              }
+            }).join(''),
           }),
         );
       }
@@ -130,29 +178,31 @@ function reduceBinaryExpressionExpressions(expressions: Array<AnyExpression>) {
 }
 
 // 'str' + expr + 'str' -> `str${expr}str`
-function convertExpressionsToTemplateLiteral(
-  items: Array<AnyExpression>,
+function convertTemplatePartsToTemplateLiteral(
+  nodes: Array<TemplatePart>,
 ): TemplateLiteral {
-  let expressions = [];
-  let quasis = [];
+  let templateExpressions: Array<AnyExpression> = [];
+  let templateQuasis: Array<TemplateElement> = [];
 
-  for (let index = 0; index < items.length; index++) {
-    let item = items[index];
-    let isTail = index === items.length - 1;
+  for (let index = 0; index < nodes.length; index++) {
+    let node = nodes[index];
+    let isTail = index === nodes.length - 1;
     let isHead = index === 0;
 
-    if (item.type === 'StringLiteral') {
-      quasis.push(
+    if (node.type === 'TemplateElement') {
+      templateElement;
+    } else if (node.type === 'StringLiteral') {
+      templateQuasis.push(
         templateElement.create({
-          cooked: item.value,
-          raw: item.value,
+          cooked: node.value,
+          raw: node.value,
           tail: isTail,
         }),
       );
     } else {
-      expressions.push(item);
+      templateExpressions.push(node);
       if (isTail || isHead) {
-        quasis.push(
+        templateQuasis.push(
           templateElement.create({
             cooked: '',
             raw: '',
@@ -164,9 +214,25 @@ function convertExpressionsToTemplateLiteral(
   }
 
   return templateLiteral.create({
-    expressions,
-    quasis,
+    expressions: templateExpressions,
+    quasis: templateQuasis,
   });
+}
+
+// Ignore:
+// str + str
+// str + str + str
+// Replace:
+// str + expr
+// str + expr + str
+function shouldReplace(expressions: Array<AnyExpression>): boolean {
+  for (let expression of expressions) {
+    if (expression.type !== 'StringLiteral') {
+      return true;
+    }
+  }
+
+  return false;
 }
 
 export default {
@@ -176,16 +242,20 @@ export default {
 
     if (isUnnecessaryStringConcatExpression(node)) {
       let expressions = collectBinaryAddExpressionExpressions(node);
-      let reducedExpressions = reduceBinaryExpressionExpressions(expressions);
-      let template = convertExpressionsToTemplateLiteral(reducedExpressions);
 
-      return path.context.addFixableDiagnostic(
-        {
-          old: node,
-          fixed: template,
-        },
-        descriptions.LINT.PREFER_TEMPLATE,
-      );
+      if (shouldReplace(expressions)) {
+        let templateParts = flattenExpressionsToTemplateParts(expressions);
+        let combinedParts = combineTemplateParts(templateParts);
+        let template = convertTemplatePartsToTemplateLiteral(combinedParts);
+
+        return path.context.addFixableDiagnostic(
+          {
+            old: node,
+            fixed: template,
+          },
+          descriptions.LINT.PREFER_TEMPLATE,
+        );
+      }
     }
 
     return node;
