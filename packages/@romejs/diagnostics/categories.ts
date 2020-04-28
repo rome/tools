@@ -35,6 +35,7 @@ export type DiagnosticCategory =
   | 'lint/noCompareNegZero'
   | 'lint/noCondAssign'
   | 'lint/noDebugger'
+  | 'lint/noDelete'
   | 'lint/noDeleteVars'
   | 'lint/noDupeArgs'
   | 'lint/noDuplicateCase'
