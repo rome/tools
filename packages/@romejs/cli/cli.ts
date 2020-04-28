@@ -40,7 +40,7 @@ type CLIFlags = {
   ragePath: undefined | UnknownFilePath;
   profile: boolean;
   profilePath: undefined | UnknownFilePath;
-  profileTimeout: number;
+  profileTimeout: undefined | number;
   profileSampling: number;
   profileWorkers: boolean;
   temporaryDaemon: boolean;
@@ -111,7 +111,7 @@ export default async function cli() {
             {
               description: 'Stop the profile after the milliseconds specified. When omitted the profile is of the whole command',
             },
-          ).asNumber(0),
+          ).asNumberOrVoid(),
           profileWorkers: c.get(
             'profileWorkers',
             {
@@ -122,6 +122,7 @@ export default async function cli() {
             'profileSampling',
             {
               description: 'Profiler sampling interval in microseconds',
+              inputName: 'microsec',
             },
           ).asNumber(100),
           temporaryDaemon: c.get(
@@ -239,6 +240,7 @@ export default async function cli() {
             'resolverPlatform',
             {
               description: 'Specify the platform for module resolution',
+              inputName: 'platform',
             },
           ).asStringSetOrVoid(PLATFORMS),
           resolverScale: c.get(
