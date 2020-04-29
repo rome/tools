@@ -6,21 +6,16 @@
  */
 
 export * from './parse';
-
 export {
   MarkupFormatFilenameHumanizer,
   MarkupFormatFilenameNormalizer,
   MarkupFormatOptions,
   NormalizeMarkupOptions,
-  humanizeMarkupFilename,
+  markupToAnsi,
   markupToPlainText,
+  markupToPlainTextString,
   normalizeMarkup,
 } from './format';
-
-export * from './formatAnsi';
-
 export * from './escape';
 
 export * from './ansi';
-
-export * from './ansiSplit';

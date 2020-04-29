@@ -28,6 +28,14 @@ export type Package = {
   version?: string;
 };
 
+export type ReporterTableField =
+  | number
+  | string
+  | {
+      align: 'left' | 'right';
+      value: number | string;
+    };
+
 export type ReporterStreamMeta = {
   type: 'out' | 'error' | 'all';
   columns: number;

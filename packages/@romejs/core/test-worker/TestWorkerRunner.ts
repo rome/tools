@@ -152,8 +152,8 @@ export default class TestWorkerRunner {
       );
     };
 
-    function logInfo(...args: Array<unknown>): void {
-      addDiagnostic('info', args);
+    function log(...args: Array<unknown>): void {
+      addDiagnostic('none', args);
     }
 
     return {
@@ -172,11 +172,13 @@ export default class TestWorkerRunner {
       warn: (...args: Array<unknown>): void => {
         addDiagnostic('warn', args);
       },
-      dirxml: logInfo,
-      debug: logInfo,
-      info: logInfo,
-      log: logInfo,
-      trace: logInfo,
+      dirxml: log,
+      debug: log,
+      info: (...args: Array<unknown>): void => {
+        addDiagnostic('info', args);
+      },
+      log,
+      trace: log,
       // Noop
       count(): void {},
       countReset(): void {},

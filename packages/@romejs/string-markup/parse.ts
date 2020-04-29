@@ -28,7 +28,6 @@ import {unescapeTextValue} from './escape';
 const globalAttributes: Array<string> = ['emphasis', 'dim'];
 
 const tags: Map<MarkupTagName, Array<string>> = new Map();
-tags.set('pad', ['dir', 'char', 'count']);
 tags.set('emphasis', []);
 tags.set('number', ['approx', 'pluralSuffix', 'singularSuffix']);
 tags.set('grammarNumber', ['plural', 'singular', 'none']);
@@ -48,6 +47,12 @@ tags.set('info', []);
 tags.set('command', []);
 tags.set('color', ['fg', 'bg']);
 tags.set('highlight', ['i']);
+tags.set('table', []);
+tags.set('tr', []);
+tags.set('td', ['align']);
+tags.set('hr', []);
+tags.set('pad', ['width', 'align']);
+tags.set('nobr', []);
 
 //
 function isStringValueChar(char: string, index: Number0, input: string): boolean {
@@ -191,7 +196,7 @@ const createStringMarkupParser = createParser((ParserCore) =>
         });
       }
 
-      const attributes: TagAttributes = new Map();
+      const attributes: TagAttributes = {};
       const children: Children = [];
       let selfClosing = false;
 
@@ -223,7 +228,7 @@ const createStringMarkupParser = createParser((ParserCore) =>
             this.matchToken('Slash') ||
             this.matchToken('Greater')
           ) {
-            attributes.set(key, 'true');
+            attributes[key] = 'true';
             continue;
           }
 
@@ -235,7 +240,7 @@ const createStringMarkupParser = createParser((ParserCore) =>
           }
           const value = valueToken.value;
 
-          attributes.set(key, value);
+          attributes[key] = value;
         } else if (keyToken.type === 'Slash') {
           this.nextToken();
           selfClosing = true;

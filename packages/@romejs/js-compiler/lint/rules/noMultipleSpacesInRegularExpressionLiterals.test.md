@@ -15,7 +15,8 @@
     /foo  bar/
         ^ 
 
-  ℹ It's hard to visually count the amount of spaces, it's clearer if you use a quantifier instead. eg / {3}/
+  ℹ It's hard to visually count the amount of spaces, it's clearer if you use a quantifier instead. 
+    eg / {3}/
 
   ℹ Recommended fix
 

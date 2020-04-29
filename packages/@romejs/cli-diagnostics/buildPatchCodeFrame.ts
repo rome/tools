@@ -11,7 +11,7 @@ import {
   GUTTER,
   MAX_PATCH_LINES,
 } from './constants';
-import {showInvisibles} from './utils';
+import {joinNoBreak, showInvisibles} from './utils';
 import {Diffs, diffConstants, groupDiffByLines} from '@romejs/string-diff';
 import {escapeMarkup, markupTag} from '@romejs/string-markup';
 
@@ -130,9 +130,7 @@ export default function buildPatchCodeFrame(
     let gutterNoLine = '';
 
     if (!noGutter) {
-      gutterWithLine = `<emphasis>${CODE_FRAME_INDENT}<pad count="${String(
-        lineLength,
-      )}">${String(lineNo)}</pad>${GUTTER}</emphasis>`;
+      gutterWithLine = `<emphasis>${CODE_FRAME_INDENT}<pad width="${lineLength}">${lineNo}</pad>${GUTTER}</emphasis>`;
       gutterNoLine = `<emphasis>${CODE_FRAME_INDENT}${' '.repeat(lineLength)}${GUTTER}</emphasis>`;
     }
 
@@ -161,6 +159,6 @@ export default function buildPatchCodeFrame(
 
   return {
     truncated,
-    frame: frame.join('\n'),
+    frame: joinNoBreak(frame),
   };
 }
