@@ -13,7 +13,6 @@ import {
 } from '@romejs/js-ast';
 import {descriptions} from '@romejs/diagnostics';
 import {naturalCompare} from '@romejs/string-utils';
-import {removeLoc} from '@romejs/js-ast-utils';
 
 function compareImportSpecifiers(a: ImportSpecifier, b: ImportSpecifier): number {
   const order = naturalCompare(a.local.name.name, b.local.name.name, false);
@@ -60,7 +59,7 @@ export default {
           return context.addFixableDiagnostic(
             {
               old: node,
-              fixed: removeLoc({...node, namedSpecifiers: sortedSpecifiers}),
+              fixed: {...node, namedSpecifiers: sortedSpecifiers},
             },
             descriptions.LINT.SORT_IMPORT_SPECIFIERS,
           );
@@ -76,7 +75,7 @@ export default {
           return context.addFixableDiagnostic(
             {
               old: node,
-              fixed: removeLoc({...node, namedSpecifiers: sortedSpecifiers}),
+              fixed: {...node, namedSpecifiers: sortedSpecifiers},
             },
             descriptions.LINT.SORT_EXPORT_SPECIFIERS,
           );
@@ -92,7 +91,7 @@ export default {
           return context.addFixableDiagnostic(
             {
               old: node,
-              fixed: removeLoc({...node, specifiers: sortedSpecifiers}),
+              fixed: {...node, specifiers: sortedSpecifiers},
             },
             descriptions.LINT.SORT_EXPORT_SPECIFIERS,
           );
