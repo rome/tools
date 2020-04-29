@@ -312,6 +312,10 @@ export const descriptions = createMessages({
         },
       ],
     }),
+    PREFER_BLOCK_STATEMENT: {
+      category: 'lint/preferBlockStatements',
+      message: 'Block statements are preferred in this position',
+    },
     PREFER_TEMPLATE: {
       category: 'lint/preferTemplate',
       message: 'Template literals are preferred over string concatenation',

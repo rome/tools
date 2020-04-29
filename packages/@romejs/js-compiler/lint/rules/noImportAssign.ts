@@ -35,10 +35,12 @@ export default {
       path.parentPath.node.type === 'UpdateExpression')
     ) {
       const binding = scope.getBinding(node.name);
-      if (binding !== undefined && binding.kind === 'import') path.context.addNodeDiagnostic(
-        node,
-        descriptions.LINT.NO_IMPORT_ASSIGN(node.name),
-      );
+      if (binding !== undefined && binding.kind === 'import') {
+        path.context.addNodeDiagnostic(
+          node,
+          descriptions.LINT.NO_IMPORT_ASSIGN(node.name),
+        );
+      }
     }
 
     return node;

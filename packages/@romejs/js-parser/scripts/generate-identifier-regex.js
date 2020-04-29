@@ -26,19 +26,27 @@ const cont = [8_204, 8_205].concat(
 
 function search(arr, ch, starting) {
   for (let i = starting; arr[i] <= ch && i < arr.length; last = i++) {
-    if (arr[i] === ch) return i;
+    if (arr[i] === ch) {
+      return i;
+    }
   }
   return -1;
 }
 
 function pad(str, width) {
-  while (str.length < width) str = `0${str}`;
+  while (str.length < width) {
+    str = `0${str}`;
+  }
   return str;
 }
 
 function esc(code) {
   const hex = code.toString(16);
-  if (hex.length <= 2) return `\\x${pad(hex, 2)}`; else return `\\u${pad(hex, 4)}`;
+  if (hex.length <= 2) {
+    return `\\x${pad(hex, 2)}`;
+  } else {
+    return `\\u${pad(hex, 4)}`;
+  }
 }
 
 function generate(chars) {
@@ -52,8 +60,13 @@ function generate(chars) {
       to++;
     }
     if (to <= 65_535) {
-      if (from === to) re += esc(from); else if (from + 1 === to) re +=
-        esc(from) + esc(to); else re += `${esc(from)}-esc(to)`;
+      if (from === to) {
+        re += esc(from);
+      } else if (from + 1 === to) {
+        re += esc(from) + esc(to);
+      } else {
+        re += `${esc(from)}-esc(to)`;
+      }
     } else {
       astral.push(from - at, to - from);
       at = to;
