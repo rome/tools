@@ -28,7 +28,7 @@ import {commandCategories} from '@romejs/core/common/commands';
 import {writeFile} from '@romejs/fs';
 import fs = require('fs');
 
-import {markup, stripAnsi} from '@romejs/string-markup';
+import {markup} from '@romejs/string-markup';
 import {Dict} from '@romejs/typescript-helpers';
 
 type CLIFlags = {
@@ -109,6 +109,7 @@ export default async function cli() {
           profileTimeout: c.get(
             'profileTimeout',
             {
+              inputName: 'millisec',
               description: 'Stop the profile after the milliseconds specified. When omitted the profile is of the whole command',
             },
           ).asNumberOrVoid(),
@@ -425,7 +426,7 @@ export default async function cli() {
           if (fileout === undefined) {
             client.reporter.writeAll(chunk);
           } else {
-            fileout.write(stripAnsi(chunk));
+            fileout.write(chunk);
           }
         },
       );

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Reporter} from '@romejs/cli-reporter';
+import {Reporter, ReporterTableField} from '@romejs/cli-reporter';
 import {serializeCLIFlags} from './serializeCLIFlags';
 import {
   ConsumePath,
@@ -373,7 +373,7 @@ export default class Parser<T> {
       'generateAutocomplete',
       {
         description: 'Generate a shell autocomplete',
-        inputName: 'shellName',
+        inputName: 'shell',
       },
     ).asStringSetOrVoid(['fish', 'bash']);
     if (generateAutocomplete !== undefined) {
@@ -431,7 +431,7 @@ export default class Parser<T> {
     return rootFlags;
   }
 
-  buildOptionsHelp(keys: Array<string>): Array<Array<string>> {
+  buildOptionsHelp(keys: Array<string>): Array<Array<ReporterTableField>> {
     const optionOutput: Array<{
       argName: string;
       arg: string;
@@ -483,7 +483,7 @@ export default class Parser<T> {
 
       const {default: defaultValue} = def;
       if (defaultValue !== undefined && isDisplayableHelpValue(defaultValue)) {
-        descCol += ` (default: ${defaultValue})`;
+        descCol += ` (default: ${JSON.stringify(defaultValue)})`;
       }
 
       if (def.type === 'string' && def.allowedValues !== undefined) {
@@ -506,7 +506,10 @@ export default class Parser<T> {
     optionOutput.sort((a, b) => naturalCompare(a.argName, b.argName));
 
     // Build table rows
-    return optionOutput.map((opt) => [opt.arg, opt.description]);
+    return optionOutput.map((opt) => [
+      {align: 'right', value: opt.arg},
+      opt.description,
+    ]);
   }
 
   showUsageHelp(

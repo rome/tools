@@ -23,6 +23,7 @@ type AnyNumber = Number0 | Number1;
 export type UnknownNumber = AnyNumber | number;
 
 // Add two offsets or numbers.
+export function ob1Add(a: Number1, b: Number1): Number1;
 export function ob1Add(a: Number1, b: number): Number1;
 export function ob1Add(a: number, b: Number1): Number1;
 export function ob1Add(a: Number0, b: number): Number0;

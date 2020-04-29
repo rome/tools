@@ -22,7 +22,11 @@ import {
   DiagnosticsPrinterOptions,
 } from './types';
 
-import {formatAnsi, markup, markupToPlainText} from '@romejs/string-markup';
+import {
+  formatAnsi,
+  markup,
+  markupToPlainTextString,
+} from '@romejs/string-markup';
 import {toLines} from './utils';
 import printAdvice from './printAdvice';
 
@@ -212,7 +216,7 @@ export default class DiagnosticsPrinter extends Error {
 
     // Match against the supplied grep pattern
     let ignored =
-      markupToPlainText(diag.description.message.value).toLowerCase().includes(
+      markupToPlainTextString(diag.description.message.value).toLowerCase().includes(
         grep,
       ) === false;
     if (inverseGrep) {

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {stripAnsi} from '@romejs/string-markup';
+import {markupToPlainTextString} from '@romejs/string-markup';
 import highlightCode, {AnsiHighlightOptions} from './highlightCode';
 import {NEWLINE} from '@romejs/js-parser-utils';
 
@@ -39,8 +39,7 @@ export function showInvisibles(str: string): string {
 }
 
 export function cleanEquivalentString(str: string): string {
-  // Strip ansi
-  str = stripAnsi(str);
+  str = markupToPlainTextString(str);
 
   // Replace all whitespace with spaces
   str = str.replace(/[\s\n]+/g, ' ');
@@ -52,6 +51,10 @@ export function cleanEquivalentString(str: string): string {
   str = str.replace(/^"(.*?)"$/, '$1');
 
   return str;
+}
+
+export function joinNoBreak(lines: Array<string>): string {
+  return `<nobr>${lines.join('\n')}</nobr>`;
 }
 
 export function splitLines(src: string): Array<string> {

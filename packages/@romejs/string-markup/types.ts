@@ -6,6 +6,7 @@
  */
 
 import {BaseTokens, SimpleToken, ValueToken} from '@romejs/parser-core';
+import {Dict} from '@romejs/typescript-helpers';
 
 export type Tokens = BaseTokens & {
   Text: ValueToken<'Text', string>;
@@ -23,7 +24,7 @@ export type TextNode = {
   value: string;
 };
 
-export type TagAttributes = Map<string, string>;
+export type TagAttributes = Dict<undefined | string>;
 
 export type TagNode = {
   type: 'Tag';
@@ -37,6 +38,7 @@ export type ChildNode = TextNode | TagNode;
 export type Children = Array<ChildNode>;
 
 export type MarkupTagName =
+  | 'hr'
   | 'pad'
   | 'grammarNumber'
   | 'command'
@@ -56,4 +58,8 @@ export type MarkupTagName =
   | 'warn'
   | 'info'
   | 'highlight'
-  | 'color';
+  | 'color'
+  | 'table'
+  | 'tr'
+  | 'td'
+  | 'nobr';

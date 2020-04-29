@@ -10,13 +10,8 @@
 Array [
   Tag {
     name: 'filelink'
-    attributes: Map [
-      Array [
-        'target'
-        'C:\\Users\\sebmck\\file.ts'
-      ]
-    ]
     children: Array []
+    attributes: Object {target: 'C:\\Users\\sebmck\\file.ts'}
   }
 ]
 ```
@@ -27,7 +22,7 @@ Array [
 Array [
   Tag {
     name: 'info'
-    attributes: Map []
+    attributes: Object {}
     children: Array [Text {value: '[MemoryFileSystem] Adding new project folder C:\\Users\\sebmck\\rome'}]
   }
 ]
@@ -40,11 +35,11 @@ Array [
   Text {value: '  <info>[MemoryFileSystem] Adding new project folder C:\\Users\\Sebastian\\rome\\</info>\n        '}
   Tag {
     name: 'error'
-    attributes: Map []
+    attributes: Object {}
     children: Array [
       Tag {
         name: 'emphasis'
-        attributes: Map []
+        attributes: Object {}
         children: Array [Text {value: '^'}]
       }
     ]
