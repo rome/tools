@@ -13,7 +13,7 @@
   ✖ Unsafe usage of negation operator in left side of binary expression
 
     !1 in [1,2]
-    ^^^^^^^^^^^ 
+    ^^^^^^^^^^^
 
   ℹ Recommended fix
 

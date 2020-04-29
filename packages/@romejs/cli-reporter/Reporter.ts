@@ -31,7 +31,10 @@ import stream = require('stream');
 import {CWD_PATH} from '@romejs/path';
 import {Event} from '@romejs/events';
 import readline = require('readline');
-import {MarkupTagName} from '@romejs/string-markup/types';
+import {
+  MarkupFormatGridOptions,
+  MarkupTagName,
+} from '@romejs/string-markup/types';
 import select from './select';
 import {MarkupLinesAndWidth} from '@romejs/string-markup/format';
 
@@ -853,19 +856,21 @@ export default class Reporter {
       return {lines: [''], width: 0};
     }
 
-    const viewportWidth =
-      stream.columns - this.indentString.length - viewportShrink;
+    const gridMarkupOptions: MarkupFormatGridOptions = {
+      ...this.markupOptions,
+      columns: stream.columns - this.indentString.length - viewportShrink,
+    };
 
     switch (stream.format) {
       case 'ansi':
-        return markupToAnsi(str, this.markupOptions, viewportWidth);
+        return markupToAnsi(str, gridMarkupOptions);
 
       case 'html':
         // TODO
-        return markupToPlainText(str, this.markupOptions, viewportWidth);
+        return markupToPlainText(str, gridMarkupOptions);
 
       case 'none':
-        return markupToPlainText(str, this.markupOptions, viewportWidth);
+        return markupToPlainText(str, gridMarkupOptions);
 
       case 'markup':
         return {

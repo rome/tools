@@ -130,7 +130,7 @@ export default function buildPatchCodeFrame(
     let gutterNoLine = '';
 
     if (!noGutter) {
-      gutterWithLine = `<emphasis>${CODE_FRAME_INDENT}<pad width="${lineLength}">${lineNo}</pad>${GUTTER}</emphasis>`;
+      gutterWithLine = `<emphasis>${CODE_FRAME_INDENT}<pad align="right" width="${lineLength}">${lineNo}</pad>${GUTTER}</emphasis>`;
       gutterNoLine = `<emphasis>${CODE_FRAME_INDENT}${' '.repeat(lineLength)}${GUTTER}</emphasis>`;
     }
 

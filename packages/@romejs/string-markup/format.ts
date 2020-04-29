@@ -5,33 +5,26 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Children, TagNode} from './types';
+import {
+  Children,
+  MarkupFormatGridOptions,
+  MarkupFormatNormalizeOptions,
+  TagNode,
+} from './types';
 import {parseMarkup} from './parse';
-import {AbsoluteFilePath} from '@romejs/path';
 import {escapeMarkup} from './escape';
 import Grid from './Grid';
-import {ob1Coerce1, ob1Get1} from '@romejs/ob1';
+import {ob1Get1} from '@romejs/ob1';
 import {
   formatGrammarNumber,
   getFileLinkFilename,
   getFileLinkText,
 } from './tagFormatters';
-export type MarkupFormatFilenameNormalizer = (filename: string) => string;
-
-export type MarkupFormatFilenameHumanizer = (
-  filename: string,
-) => undefined | string;
-
-export type MarkupFormatOptions = {
-  normalizeFilename?: MarkupFormatFilenameNormalizer;
-  humanizeFilename?: MarkupFormatFilenameHumanizer;
-  cwd?: AbsoluteFilePath;
-};
 
 function buildTag(
   tag: TagNode,
   inner: string,
-  opts: NormalizeMarkupOptions,
+  opts: MarkupFormatNormalizeOptions,
 ): string {
   let {attributes} = tag;
 
@@ -84,7 +77,7 @@ function buildTag(
 
 function normalizeMarkupChildren(
   children: Children,
-  opts: NormalizeMarkupOptions,
+  opts: MarkupFormatNormalizeOptions,
 ): string {
   // Sometimes we'll populate the inner text of a tag with no children
   if (children.length === 0) {
@@ -107,21 +100,16 @@ function normalizeMarkupChildren(
 
 export function markupToPlainTextString(
   input: string,
-  opts: MarkupFormatOptions = {},
-  columns?: number,
+  opts: MarkupFormatGridOptions = {},
 ): string {
-  return markupToPlainText(input, opts, columns).lines.join('\n');
+  return markupToPlainText(input, opts).lines.join('\n');
 }
 
 export function markupToPlainText(
   input: string,
-  opts: MarkupFormatOptions = {},
-  columns?: number,
+  opts: MarkupFormatGridOptions = {},
 ): MarkupLinesAndWidth {
-  const grid = new Grid(
-    opts,
-    columns === undefined ? undefined : ob1Coerce1(columns),
-  );
+  const grid = new Grid(opts);
   grid.drawRoot(parseMarkup(input));
   return {
     width: ob1Get1(grid.getWidth()),
@@ -136,13 +124,9 @@ export type MarkupLinesAndWidth = {
 
 export function markupToAnsi(
   input: string,
-  opts: MarkupFormatOptions = {},
-  columns?: number,
+  opts: MarkupFormatGridOptions = {},
 ): MarkupLinesAndWidth {
-  const grid = new Grid(
-    opts,
-    columns === undefined ? undefined : ob1Coerce1(columns),
-  );
+  const grid = new Grid(opts);
 
   grid.drawRoot(parseMarkup(input));
 
@@ -152,13 +136,9 @@ export function markupToAnsi(
   };
 }
 
-export type NormalizeMarkupOptions = MarkupFormatOptions & {
-  stripPositions?: boolean;
-};
-
 export function normalizeMarkup(
   input: string,
-  opts: NormalizeMarkupOptions = {},
+  opts: MarkupFormatNormalizeOptions = {},
 ): string {
   return normalizeMarkupChildren(parseMarkup(input), opts);
 }

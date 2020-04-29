@@ -14,7 +14,7 @@
 
     2 │     const arr = [['a','b','c'], [1, 2, 3]];
   > 3 │     delete arr[0][2];
-      │     ^^^^^^^^^^^^^^^^ 
+      │     ^^^^^^^^^^^^^^^^
     4 │    
 
   ℹ Recommended fix
@@ -46,7 +46,7 @@ arr[0][2] = undefined;
 
     2 │     const obj = { a: { b: { c: 123 } } };
   > 3 │     delete obj.a.b.c;
-      │     ^^^^^^^^^^^^^^^^ 
+      │     ^^^^^^^^^^^^^^^^
     4 │    
 
   ℹ Recommended fix

@@ -16,7 +16,7 @@
   > 3 │     get name() {
   > 4 │       console.log('hello')
   > 5 │     };
-      │ ^^^^^ 
+      │ ^^^^^
     6 │   }
     7 │   console.log(new p())
 
@@ -51,7 +51,7 @@ console.log(new p());
   > 4 │     get name() {
   > 5 │       console.log('hello')
   > 6 │     }
-      │ ^^^^^ 
+      │ ^^^^^
     7 │   };
     8 │   console.log(p)
 

@@ -13,7 +13,7 @@
   ✖ Block statements are preferred in this position
 
     if (x) x;
-    ^^^^^^^^^ 
+    ^^^^^^^^^
 
   ℹ Recommended fix
 
@@ -47,7 +47,7 @@ if (x) {
   > 1 │ if (x) {
   > 2 │   x;
   > 3 │ } else y;
-      │ ^^^^^^^^^ 
+      │ ^^^^^^^^^
 
   ℹ Recommended fix
 
@@ -85,7 +85,7 @@ if (x) {
     1 │ if (x) {
     2 │   x
   > 3 │ } else if (y) y;
-      │        ^^^^^^^^^ 
+      │        ^^^^^^^^^
 
   ℹ Recommended fix
 
@@ -119,7 +119,7 @@ if (x) {
   ✖ Block statements are preferred in this position
 
     for (;;);
-    ^^^^^^^^^ 
+    ^^^^^^^^^
 
   ℹ Recommended fix
 
@@ -152,7 +152,7 @@ while (true) {
   ✖ Block statements are preferred in this position
 
     for (p in obj);
-    ^^^^^^^^^^^^^^^ 
+    ^^^^^^^^^^^^^^^
 
   ℹ Recommended fix
 
@@ -185,7 +185,7 @@ for (p in obj) {
   ✖ Block statements are preferred in this position
 
     for (x of xs);
-    ^^^^^^^^^^^^^^ 
+    ^^^^^^^^^^^^^^
 
   ℹ Recommended fix
 
@@ -218,7 +218,7 @@ for (x of xs) {
   ✖ Block statements are preferred in this position
 
     do; while (x);
-    ^^^^^^^^^^^^^^ 
+    ^^^^^^^^^^^^^^
 
   ℹ Recommended fix
 
@@ -251,7 +251,7 @@ do {
   ✖ Block statements are preferred in this position
 
     while (x);
-    ^^^^^^^^^^ 
+    ^^^^^^^^^^
 
   ℹ Recommended fix
 
@@ -284,7 +284,7 @@ while (x) {
   ✖ Block statements are preferred in this position
 
     with (x);with (x);
-    ^^^^^^^^^ 
+    ^^^^^^^^^
 
   ℹ Recommended fix
 

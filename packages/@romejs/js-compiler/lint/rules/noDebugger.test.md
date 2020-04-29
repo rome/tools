@@ -29,7 +29,7 @@ console.log(test); // To not trigger the unused var rule.
   ✖ Unexpected 'debugger' statement
 
     debugger;
-    ^^^^^^^^^ 
+    ^^^^^^^^^
 
   ℹ Recommended fix
 

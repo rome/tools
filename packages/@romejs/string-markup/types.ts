@@ -7,6 +7,7 @@
 
 import {BaseTokens, SimpleToken, ValueToken} from '@romejs/parser-core';
 import {Dict} from '@romejs/typescript-helpers';
+import {AbsoluteFilePath} from '@romejs/path';
 
 export type Tokens = BaseTokens & {
   Text: ValueToken<'Text', string>;
@@ -63,3 +64,23 @@ export type MarkupTagName =
   | 'tr'
   | 'td'
   | 'nobr';
+
+export type MarkupFormatFilenameNormalizer = (filename: string) => string;
+
+export type MarkupFormatFilenameHumanizer = (
+  filename: string,
+) => undefined | string;
+
+export type MarkupFormatOptions = {
+  normalizeFilename?: MarkupFormatFilenameNormalizer;
+  humanizeFilename?: MarkupFormatFilenameHumanizer;
+  cwd?: AbsoluteFilePath;
+};
+
+export type MarkupFormatGridOptions = MarkupFormatOptions & {
+  columns?: number;
+};
+
+export type MarkupFormatNormalizeOptions = MarkupFormatOptions & {
+  stripPositions?: boolean;
+};

@@ -13,7 +13,7 @@
   ✖ Declare each variable separately
 
     let foo, bar;
-    ^^^^^^^^^^^^^ 
+    ^^^^^^^^^^^^^
 
   ℹ Recommended fix
 
