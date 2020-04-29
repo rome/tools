@@ -5,9 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TagAttributes} from './types';
+import {MarkupFormatOptions, TagAttributes} from './types';
 import {humanizeNumber} from '@romejs/string-utils';
-import {MarkupFormatOptions} from './format';
 import {createUnknownFilePath} from '@romejs/path';
 
 export function humanizeMarkupFilename(

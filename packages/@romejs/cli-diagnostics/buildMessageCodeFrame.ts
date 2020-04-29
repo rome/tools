@@ -185,9 +185,7 @@ export default function buildMessageCodeFrame(
   }
 
   const pointerLength: number = Math.max(ob1Get0(markerSize), 1);
-  const pointer: string = `<error><emphasis>${'^'.repeat(
-    pointerLength,
-  )}</emphasis></error>`;
+  const pointer: string = `<error><emphasis>${'^'.repeat(pointerLength)}</emphasis></error>`;
   const pointerIndent: string = ' '.repeat(ob1Get0(markerOffset));
   const paddedMarkerMessage = markerMessage === '' ? '' : ` ${markerMessage}`;
 
@@ -205,9 +203,7 @@ export default function buildMessageCodeFrame(
   }
 
   // Build marker
-  const markerGutterIndent: string = ' '.repeat(
-    maxGutterLength - GUTTER.length,
-  );
+  const markerGutterIndent: string = ' '.repeat(maxGutterLength - GUTTER.length);
   const markerLine: string = `${markerGutterIndent}<emphasis>${GUTTER}</emphasis>${pointerIndent}${pointer}${paddedMarkerMessage}`;
 
   // Build up the line we display when source lines are omitted
@@ -230,7 +226,7 @@ export default function buildMessageCodeFrame(
     } else {
       result.push(
         `<pad align="right" width="${maxGutterLength}"><emphasis>${gutter}</emphasis></pad>` +
-          line,
+        line,
       );
     }
     if (lineIndex === endLineIndex && !noMarkerLine) {
