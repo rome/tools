@@ -20,6 +20,7 @@ import noCatchAssign from './noCatchAssign';
 import noCompareNegZero from './noCompareNegZero';
 import noCondAssign from './noCondAssign';
 import noDebugger from './noDebugger';
+import noDelete from './noDelete';
 import noDeleteVars from './noDeleteVars';
 import noDupeArgs from './noDupeArgs';
 import noDuplicateCase from './noDuplicateCase';
@@ -66,6 +67,7 @@ export const lintTransforms = [
   noCompareNegZero,
   noCondAssign,
   noDebugger,
+  noDelete,
   noDeleteVars,
   noDupeArgs,
   noDuplicateCase,

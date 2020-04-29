@@ -473,6 +473,10 @@ export const descriptions = createMessages({
       category: 'lint/noDupeArgs',
       message: markup`Duplicate argument <emphasis>${name}</emphasis> in function definition`,
     }),
+    NO_DELETE: {
+      category: 'lint/noDelete',
+      message: `Unexpected 'delete' operator.`,
+    },
     NO_DELETE_VARS: {
       category: 'lint/noDeleteVars',
       message: 'Variables should not be deleted.',
