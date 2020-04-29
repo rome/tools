@@ -7,12 +7,16 @@
 
 import {TSModuleBlock} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
-import {Token} from '../../tokens';
-import {printTSBraced} from '../utils';
+import {Token, concat, hardline, indent} from '../../tokens';
 
 export default function TSModuleBlock(
   builder: Builder,
   node: TSModuleBlock,
 ): Token {
-  return printTSBraced(builder, node, node.body);
+  return concat([
+    '{',
+    indent(concat([hardline, builder.tokenizeStatementList(node.body, node)])),
+    hardline,
+    '}',
+  ]);
 }
