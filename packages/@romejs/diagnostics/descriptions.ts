@@ -45,10 +45,10 @@ function join(conjunction: string, items: Array<string>): string {
   }
 }
 
-// rome-suppress-next-line lint/unusedVariables
 function andJoin(items: Array<string>): string {
   return join('and', items);
 }
+andJoin;
 
 function orJoin(items: Array<string>): string {
   return join('or', items);
