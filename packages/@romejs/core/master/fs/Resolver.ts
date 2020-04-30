@@ -37,46 +37,9 @@ function request(
     }
 > {
   return new Promise((resolve) => {
-    const req = https.get(
-      url,
-      (res) => {
-        if (res.statusCode !== 200) {
-          console.log('non-200 return');
-          resolve({
-            type: 'FETCH_ERROR',
-            source: undefined,
-            advice: [
-              {
-                type: 'log',
-                category: 'info',
-                text: `<hyperlink target="${url}" /> returned a ${res.statusCode} status code`,
-              },
-            ],
-          });
-          return;
-        }
-
-        let data = '';
-
-        res.on(
-          'data',
-          (chunk) => {
-            data += chunk;
-          },
-        );
-
-        res.on(
-          'end',
-          () => {
-            resolve({type: 'DOWNLOADED', content: data});
-          },
-        );
-      },
-    );
-
-    req.on(
-      'error',
-      (err) => {
+    const req = https.get(url, (res) => {
+      if (res.statusCode !== 200) {
+        console.log('non-200 return');
         resolve({
           type: 'FETCH_ERROR',
           source: undefined,
@@ -84,12 +47,37 @@ function request(
             {
               type: 'log',
               category: 'info',
-              text: `<hyperlink target="${url}" /> resulted in the error "${err.message}"`,
+              text: `<hyperlink target="${url}" /> returned a ${res.statusCode} status code`,
             },
           ],
         });
-      },
-    );
+        return;
+      }
+
+      let data = '';
+
+      res.on('data', (chunk) => {
+        data += chunk;
+      });
+
+      res.on('end', () => {
+        resolve({type: 'DOWNLOADED', content: data});
+      });
+    });
+
+    req.on('error', (err) => {
+      resolve({
+        type: 'FETCH_ERROR',
+        source: undefined,
+        advice: [
+          {
+            type: 'log',
+            category: 'info',
+            text: `<hyperlink target="${url}" /> resulted in the error "${err.message}"`,
+          },
+        ],
+      });
+    });
   });
 }
 
@@ -217,26 +205,25 @@ function attachExportAliasIfUnresolved(
 
   return {
     ...res,
-    source: location === undefined
-      ? undefined
-      : {
-          location,
-          source: alias.value.join(),
-        },
+    source:
+      location === undefined
+        ? undefined
+        : {
+            location,
+            source: alias.value.join(),
+          },
   };
 }
 
-function getExportsAlias(
-  {
-    manifest,
-    relative,
-    platform,
-  }: {
-    manifest: Manifest;
-    relative: UnknownFilePath;
-    platform?: Platform;
-  },
-): undefined | ExportAlias {
+function getExportsAlias({
+  manifest,
+  relative,
+  platform,
+}: {
+  manifest: Manifest;
+  relative: UnknownFilePath;
+  platform?: Platform;
+}): undefined | ExportAlias {
   if (typeof manifest.exports === 'boolean') {
     return undefined;
   }
@@ -339,9 +326,12 @@ export default class Resolver {
     return res.path;
   }
 
-  async resolveEntry(query: ResolverRemoteQuery): Promise<ResolverQueryResponse> {
+  async resolveEntry(
+    query: ResolverRemoteQuery,
+    querySource?: ResolverQuerySource,
+  ): Promise<ResolverQueryResponse> {
     await this.findProjectFromQuery(query);
-    return this.resolveRemote({...query, entry: true});
+    return this.resolveRemote({...query, entry: true}, querySource);
   }
 
   async resolveAssert(
@@ -512,11 +502,10 @@ export default class Resolver {
     // Check with appended extensions
     if (usesUnknownExtension && !callees.includes('implicitExtension')) {
       for (const ext of IMPLICIT_JS_EXTENSIONS) {
-        yield* this._getFilenameVariants(
-          query,
-          path.addExtension(`.${ext}`),
-          [...callees, 'implicitExtension'],
-        );
+        yield* this._getFilenameVariants(query, path.addExtension(`.${ext}`), [
+          ...callees,
+          'implicitExtension',
+        ]);
       }
     }
 
@@ -531,7 +520,9 @@ export default class Resolver {
         yield* this._getFilenameVariants(
           query,
           path.changeBasename(
-            `${path.getExtensionlessBasename()}@${String(i)}x${path.memoizedExtension}`,
+            `${path.getExtensionlessBasename()}@${String(i)}x${
+              path.memoizedExtension
+            }`,
           ),
           [...callees, 'implicitScale'],
         );
@@ -663,13 +654,17 @@ export default class Resolver {
     moduleName: string,
   ): undefined | ManifestDefinition {
     // Find the project
-    const project = this.master.projectManager.findProjectExisting(query.origin);
+    const project = this.master.projectManager.findProjectExisting(
+      query.origin,
+    );
     if (project === undefined) {
       return undefined;
     }
 
     // Find the package
-    const projects = this.master.projectManager.getHierarchyFromProject(project);
+    const projects = this.master.projectManager.getHierarchyFromProject(
+      project,
+    );
 
     for (const project of projects) {
       const pkg = project.packages.get(moduleName);
@@ -887,7 +882,9 @@ export default class Resolver {
     // Check all parent directories for node_modules
     for (const dir of parentDirectories) {
       const modulePath = dir.append(NODE_MODULES).append(moduleName);
-      const manifestDef = this.master.memoryFs.getManifestDefinition(modulePath);
+      const manifestDef = this.master.memoryFs.getManifestDefinition(
+        modulePath,
+      );
       if (manifestDef !== undefined) {
         return this.resolveManifest(query, manifestDef, moduleNameParts);
       }

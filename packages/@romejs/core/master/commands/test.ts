@@ -35,6 +35,14 @@ export default createMasterCommand({
     const {reporter} = req;
 
     const {paths} = await req.getFilesFromArgs({
+      tryAlternateArg: (path) =>
+        path.hasExtension('test')
+          ? undefined
+          : path
+              .getParent()
+              .append(
+                `${path.getExtensionlessBasename()}.test${path.getExtensions()}`,
+              ),
       test: (path) => path.hasExtension('test'),
       noun: 'test',
       verb: 'testing',
@@ -43,17 +51,13 @@ export default createMasterCommand({
         {
           type: 'log',
           category: 'info',
-          text: 'Searched for files with <emphasis>.test.*</emphasis> file extension',
+          text:
+            'Searched for files with <emphasis>.test.*</emphasis> file extension',
         },
       ],
       extensions: JS_EXTENSIONS,
       disabledDiagnosticCategory: 'tests/disabled',
     });
-
-    if (paths.size === 0) {
-      reporter.warn('No tests ran');
-      return;
-    }
 
     reporter.info(`Bundling test files`);
 
@@ -68,20 +72,14 @@ export default createMasterCommand({
       }),
     );
 
-    for (const [path, res] of await bundler.bundleMultiple(
-      Array.from(paths),
-      {
-        deferredSourceMaps: true,
-      },
-    )) {
-      tests.set(
-        path.join(),
-        {
-          code: res.entry.js.content,
-          sourceMap: res.entry.sourceMap.map,
-          path,
-        },
-      );
+    for (const [path, res] of await bundler.bundleMultiple(Array.from(paths), {
+      deferredSourceMaps: true,
+    })) {
+      tests.set(path.join(), {
+        code: res.entry.js.content,
+        sourceMap: res.entry.sourceMap.map,
+        path,
+      });
     }
 
     reporter.info(`Running tests`);
