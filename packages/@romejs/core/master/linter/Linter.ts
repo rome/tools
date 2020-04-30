@@ -401,8 +401,8 @@ export default class Linter {
   }
 
   shouldSave(): boolean {
-    const {save, hasDecisions} = this.options;
-    return save || hasDecisions || this.shouldApplyFixes();
+    const {save, hasDecisions, formatOnly} = this.options;
+    return save || hasDecisions || formatOnly;
   }
 
   getFileArgOptions(): MasterRequestGetFilesOptions {
