@@ -21,14 +21,10 @@ export type PrinterOutput = {
   mappings: Array<Mapping>;
 };
 
-type Indent = {
-  depth: number;
-  value: string;
-};
-
 type State = {
-  indent: Indent;
   flat: boolean;
+  indent: Box<number>;
+  pendingSpaces: Box<number>;
   buffer: StringBuffer;
   mappings: Array<Mapping>;
   lineSuffixes: Array<[Token, State]>;
@@ -42,11 +38,12 @@ class BreakError extends Error {
   }
 }
 
-function createIndent(depth: number, options: PrinterOptions): Indent {
-  return {
-    depth,
-    value: ' '.repeat(depth * options.indentWidth),
-  };
+class Box<T> {
+  constructor(value: T) {
+    this.value = value;
+  }
+
+  value: T;
 }
 
 function forkState(parent: State, callback: (state: State) => void): void {
@@ -54,6 +51,7 @@ function forkState(parent: State, callback: (state: State) => void): void {
   const state: State = {
     ...parent,
     buffer: StringBuffer.from(parent.buffer),
+    pendingSpaces: new Box(parent.pendingSpaces.value),
   };
 
   try {
@@ -69,6 +67,7 @@ function forkState(parent: State, callback: (state: State) => void): void {
 
   // Merge the states together
   parent.buffer.merge(state.buffer);
+  parent.pendingSpaces.value = state.pendingSpaces.value;
 }
 
 function print(token: Token, state: State, options: PrinterOptions): void {
@@ -79,6 +78,15 @@ function print(token: Token, state: State, options: PrinterOptions): void {
 
     if (typeof token === 'string') {
       if (token !== '') {
+        if (ob1Get0(state.buffer.column) === 0) {
+          state.buffer.push(' '.repeat(state.indent.value));
+        } else {
+          if (state.pendingSpaces.value > 0) {
+            state.buffer.push(' '.repeat(state.pendingSpaces.value));
+            state.pendingSpaces.value = 0;
+          }
+        }
+
         state.buffer.push(token);
 
         // If the line is too long, break the group if it is possible
@@ -150,7 +158,10 @@ function print(token: Token, state: State, options: PrinterOptions): void {
         case 'Indent': {
           stack.push([
             token.contents,
-            {...state, indent: createIndent(state.indent.depth + 1, options)},
+            {
+              ...state,
+              indent: new Box(state.indent.value + options.indentWidth),
+            },
           ]);
           break;
         }
@@ -159,7 +170,7 @@ function print(token: Token, state: State, options: PrinterOptions): void {
           if (state.flat) {
             switch (token.mode) {
               case 'space': {
-                state.buffer.push(' ');
+                state.pendingSpaces.value++;
                 break;
               }
 
@@ -181,9 +192,8 @@ function print(token: Token, state: State, options: PrinterOptions): void {
               break;
             }
 
-            state.buffer.trim();
             state.buffer.push('\n');
-            state.buffer.push(state.indent.value);
+            state.pendingSpaces.value = 0;
           }
           break;
         }
@@ -223,7 +233,7 @@ function print(token: Token, state: State, options: PrinterOptions): void {
         }
 
         case 'Space': {
-          state.buffer.push(' ');
+          state.pendingSpaces.value++;
           break;
         }
       }
@@ -236,8 +246,9 @@ export function printTokenToString(
   options: PrinterOptions,
 ): PrinterOutput {
   const state: State = {
-    indent: createIndent(options.rootIndent, options),
     flat: false,
+    indent: new Box(options.rootIndent * options.indentWidth),
+    pendingSpaces: new Box(0),
     buffer: new StringBuffer(),
     mappings: [],
     lineSuffixes: [],
