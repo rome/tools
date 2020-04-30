@@ -16,7 +16,10 @@ export default {
 
     if (node.type === 'JSXText') {
       if (/^\s*\/(\/|\*)/m.test(node.value)) {
-        path.context.addNodeDiagnostic(node, descriptions.LINT.REACT_JSX_NO_COMMENT_TEXTNODES);
+        path.context.addNodeDiagnostic(
+          node,
+          descriptions.LINT.REACT_JSX_NO_COMMENT_TEXTNODES,
+        );
       }
     }
 

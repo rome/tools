@@ -100,7 +100,6 @@ export const lintTransforms = [
   undeclaredVariables,
   unsafeNegation,
   unusedVariables,
-
   // React lint rules.
   ...reactLintTransforms,
 ];

@@ -9,7 +9,7 @@ import {test} from 'rome';
 import {testLintMultiple} from '../../testHelpers';
 
 test(
-  'case single statement',
+  'jsx no comment textnodes',
   async (t) => {
     await testLintMultiple(
       t,
