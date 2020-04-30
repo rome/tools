@@ -13,7 +13,7 @@
   ✖ Template literals are preferred over string concatenation
 
     const foo = 'bar'; console.log(foo + 'baz')
-                                   ^^^^^^^^^^^ 
+                                   ^^^^^^^^^^^
 
   ℹ Recommended fix
 
@@ -43,7 +43,7 @@ console.log(`${foo}baz`);
   ✖ Template literals are preferred over string concatenation
 
     console.log((1 * 2) + 'baz')
-                ^^^^^^^^^^^^^^^ 
+                ^^^^^^^^^^^^^^^
 
   ℹ Recommended fix
 

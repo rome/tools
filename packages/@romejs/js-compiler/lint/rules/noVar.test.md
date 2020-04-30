@@ -13,7 +13,7 @@
   ✖ Variable declarations using `var` are disallowed, use `let` or `const` instead.
 
   > 1 │ var foobar;
-      │ ^^^^^^^^^^^ 
+      │ ^^^^^^^^^^^
     2 │ foobar
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

@@ -7,12 +7,15 @@
 
 import {Diagnostic, DiagnosticAdviceItem, DiagnosticLocation} from './types';
 import {SourceMapConsumerCollection} from '@romejs/codec-source-map';
-import {NormalizeMarkupOptions, normalizeMarkup} from '@romejs/string-markup';
+import {
+  MarkupFormatNormalizeOptions,
+  normalizeMarkup,
+} from '@romejs/string-markup';
 import {createBlessedDiagnosticMessage} from './descriptions';
 
 export default class DiagnosticsNormalizer {
   constructor(
-    markupOptions?: NormalizeMarkupOptions,
+    markupOptions?: MarkupFormatNormalizeOptions,
     sourceMaps?: SourceMapConsumerCollection,
   ) {
     this.sourceMaps = sourceMaps;
@@ -21,7 +24,7 @@ export default class DiagnosticsNormalizer {
   }
 
   sourceMaps: undefined | SourceMapConsumerCollection;
-  markupOptions: NormalizeMarkupOptions;
+  markupOptions: MarkupFormatNormalizeOptions;
   hasMarkupOptions: boolean;
 
   normalizeFilename(filename: undefined | string): undefined | string {

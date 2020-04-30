@@ -13,7 +13,7 @@
   ✖ Your array contains an empty slot
 
     [1,,2]
-       ^ 
+       ^
 
   ℹ Recommended fix
 

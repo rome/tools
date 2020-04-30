@@ -36,7 +36,7 @@ function foo() {
   ✖ Reassignment of function declaration
 
     [foo] = bar; function foo() { };
-     ^^^ 
+     ^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -61,7 +61,7 @@ function foo() {}
   ✖ Reassignment of function declaration
 
     ({x: foo = 0} = bar); function foo() { };
-         ^^^ 
+         ^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -86,7 +86,7 @@ function foo() {}
   ✖ Reassignment of function declaration
 
     function foo() { [foo] = bar; }
-                      ^^^ 
+                      ^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -112,7 +112,7 @@ function foo() {
   ✖ Reassignment of function declaration
 
     (function() { ({x: foo = 0} = bar); function foo() { }; })();
-                       ^^^ 
+                       ^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -148,7 +148,7 @@ function foo(foo) {
   ✖ Reassignment of function declaration
 
     function foo() { var foo; foo = bar; }
-                              ^^^ 
+                              ^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -238,7 +238,7 @@ function foo() {
   ✖ Reassignment of function declaration
 
     function foo() {}; foo = bar;
-                       ^^^ 
+                       ^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -263,7 +263,7 @@ foo = bar;
   ✖ Reassignment of function declaration
 
     function foo() { foo = bar; }
-                     ^^^ 
+                     ^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -289,7 +289,7 @@ function foo() {
   ✖ Reassignment of function declaration
 
     foo = bar; function foo() { };
-    ^^^ 
+    ^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

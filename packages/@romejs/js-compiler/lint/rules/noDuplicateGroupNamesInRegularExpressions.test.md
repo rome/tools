@@ -13,7 +13,7 @@
   ✖ Duplicate group name month in regular expression
 
     /(?<month>[0-9])-(?<year>[0-9])-(?<month>[0-9])-(?<year>[0-9])-(?<day>[0-9])-([0-9])-(?<month>[0-9])/
-     ^^^^^^^^^^^^^^^ 
+     ^^^^^^^^^^^^^^^
 
   ℹ Defined already here
 
@@ -22,7 +22,7 @@
   ✖ Duplicate group name year in regular expression
 
     /(?<month>[0-9])-(?<year>[0-9])-(?<month>[0-9])-(?<year>[0-9])-(?<day>[0-9])-([0-9])-(?<month>[0-9])/
-                     ^^^^^^^^^^^^^^ 
+                     ^^^^^^^^^^^^^^
 
   ℹ Defined already here
 

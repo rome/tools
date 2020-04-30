@@ -14,7 +14,7 @@
 
     2 │         const user = "Faustina";
   > 3 │         const helloUser = "Hello, ${user}!";
-      │                           ^^^^^^^^^^^^^^^^^ 
+      │                           ^^^^^^^^^^^^^^^^^
     4 │ 
     5 │         // mark consts as used
 

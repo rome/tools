@@ -22,7 +22,7 @@ import {descriptions} from './descriptions';
 import {matchesSuppression} from '@romejs/js-compiler';
 import {SourceMapConsumerCollection} from '@romejs/codec-source-map';
 import DiagnosticsNormalizer from './DiagnosticsNormalizer';
-import {NormalizeMarkupOptions} from '@romejs/string-markup';
+import {MarkupFormatNormalizeOptions} from '@romejs/string-markup';
 
 type UniquePart =
   | 'filename'
@@ -41,7 +41,7 @@ export type DiagnosticsProcessorOptions = {
   max?: number;
   onDiagnostics?: (diags: Diagnostics) => void;
   origins?: Array<DiagnosticOrigin>;
-  markupOptions?: NormalizeMarkupOptions;
+  markupOptions?: MarkupFormatNormalizeOptions;
 };
 
 const DEFAULT_UNIQUE: UniqueRules = [

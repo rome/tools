@@ -13,7 +13,7 @@
   ✖ Redundant double negation.
 
   > 2 │     if (Boolean(foo)) {
-      │         ^^^^^^^^^^^^ 
+      │         ^^^^^^^^^^^^
     3 │       return foo;
     4 │     }
 
@@ -41,7 +41,7 @@ if (Boolean(foo)) {
   ✖ Redundant double negation.
 
   > 2 │     while (!!foo) {
-      │            ^^^^^ 
+      │            ^^^^^
     3 │       return foo;
     4 │     }
 
@@ -71,7 +71,7 @@ while (!!foo) {
     4 │     do {
     5 │         1+1;
   > 6 │     } while (Boolean(x));
-      │              ^^^^^^^^^^ 
+      │              ^^^^^^^^^^
     7 │     
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -100,7 +100,7 @@ do {
   ✖ Redundant double negation.
 
   > 2 │     for (; !!foo; ) {
-      │            ^^^^^ 
+      │            ^^^^^
     3 │       return 1+1;
     4 │     }
 

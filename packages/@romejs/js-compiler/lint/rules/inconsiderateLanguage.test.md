@@ -13,7 +13,7 @@
   ✖ Replace racially-charged language with more accurate and inclusive words
 
     // the blacklist
-         ^^^^^^^^^ 
+         ^^^^^^^^^
 
   ℹ Instead of blacklist use denylist
 
@@ -40,7 +40,7 @@
 
     1 │ /* the
   > 2 │ blacklist */
-      │ ^^^^^^^^^ 
+      │ ^^^^^^^^^
 
   ℹ Instead of blacklist use denylist
 
@@ -67,7 +67,7 @@ blacklist */
   ✖ Replace racially-charged language with more accurate and inclusive words
 
     blacklist;
-    ^^^^^^^^^ 
+    ^^^^^^^^^
 
   ℹ Instead of blacklist use denylist
 
@@ -93,7 +93,7 @@ blacklist;
   ✖ Replace racially-charged language with more accurate and inclusive words
 
     BLACKLIST;
-    ^^^^^^^^^ 
+    ^^^^^^^^^
 
   ℹ Instead of BLACKLIST use DENYLIST
 
@@ -119,7 +119,7 @@ BLACKLIST;
   ✖ Replace racially-charged language with more accurate and inclusive words
 
     someBlacklist;
-        ^^^^^^^^^ 
+        ^^^^^^^^^
 
   ℹ Instead of Blacklist use Denylist
 
@@ -145,7 +145,7 @@ someBlacklist;
   ✖ Replace racially-charged language with more accurate and inclusive words
 
     SOME_BLACKLIST;
-         ^^^^^^^^^ 
+         ^^^^^^^^^
 
   ℹ Instead of BLACKLIST use DENYLIST
 
