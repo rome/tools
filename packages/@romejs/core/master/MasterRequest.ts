@@ -30,7 +30,7 @@ import {
   ProjectConfigCategoriesWithIgnore,
   ProjectDefinition,
 } from '@romejs/project';
-import {ResolverOptions} from './fs/Resolver';
+import {ResolverOptions, ResolverQueryResponseFound} from './fs/Resolver';
 import {BundlerConfig} from '../common/types/bundler';
 import MasterBridge, {
   MasterQueryRequest,
@@ -69,9 +69,11 @@ import {ModuleSignature} from '@romejs/js-analysis';
 import {
   AbsoluteFilePath,
   AbsoluteFilePathSet,
+  UnknownFilePath,
   createAbsoluteFilePath,
   createUnknownFilePath,
 } from '@romejs/path';
+
 import crypto = require('crypto');
 import {createErrorFromStructure, getErrorStructure} from '@romejs/v8';
 import {Dict, RequiredProps} from '@romejs/typescript-helpers';
@@ -110,10 +112,15 @@ export const EMPTY_SUCCESS_RESPONSE: MasterQueryResponseSuccess = {
   markers: [],
 };
 
+type GetFilesTryAlternateArg = (
+  path: UnknownFilePath,
+) => undefined | UnknownFilePath;
+
 export type MasterRequestGetFilesOptions = Omit<
   MemoryFSGlobOptions,
   'getProjectIgnore'
 > & {
+  tryAlternateArg?: GetFilesTryAlternateArg;
   ignoreArgumentMisses?: boolean;
   ignoreProjectIgnore?: boolean;
   disabledDiagnosticCategory?: DiagnosticCategory;
@@ -484,6 +491,7 @@ export default class MasterRequest {
 
   async resolveFilesFromArgs(
     overrideArgs?: Array<string>,
+    tryAlternateArg?: GetFilesTryAlternateArg,
   ): Promise<{
     projects: Set<ProjectDefinition>;
     resolvedArgs: ResolvedArgs;
@@ -493,6 +501,7 @@ export default class MasterRequest {
     const projects: Set<ProjectDefinition> = new Set();
     const rawArgs = overrideArgs === undefined ? this.query.args : overrideArgs;
     const resolvedArgs: ResolvedArgs = [];
+    const {cwd} = this.client.flags;
 
     // If args was explicitly provided then don't assume empty args is the project root
     if (rawArgs.length === 0 && overrideArgs === undefined) {
@@ -513,16 +522,35 @@ export default class MasterRequest {
           key: i,
         });
 
-        const resolved = await this.master.resolver.resolveEntryAssert(
-          {
-            origin: this.client.flags.cwd,
-            source: createUnknownFilePath(arg),
-            requestedType: 'folder',
-          },
-          {
-            location,
-          },
-        );
+        let source = createUnknownFilePath(arg);
+        let resolved: undefined | ResolverQueryResponseFound;
+
+        if (tryAlternateArg !== undefined) {
+          const alternateSource = tryAlternateArg(source);
+          if (alternateSource !== undefined) {
+            const resolvedAlternate = await this.master.resolver.resolveEntry({
+              origin: cwd,
+              source: alternateSource,
+              requestedType: 'folder',
+            });
+            if (resolvedAlternate.type === 'FOUND') {
+              resolved = resolvedAlternate;
+            }
+          }
+        }
+
+        if (resolved === undefined) {
+          resolved = await this.master.resolver.resolveEntryAssert(
+            {
+              origin: cwd,
+              source,
+              requestedType: 'folder',
+            },
+            {
+              location,
+            },
+          );
+        }
 
         const project = this.master.projectManager.assertProjectExisting(
           resolved.path,
@@ -553,7 +581,10 @@ export default class MasterRequest {
     this.checkCancelled();
 
     // Everything needs to be relative to this
-    const {resolvedArgs} = await this.resolveFilesFromArgs();
+    const {resolvedArgs} = await this.resolveFilesFromArgs(
+      opts.args,
+      opts.tryAlternateArg,
+    );
 
     const initial = await this.getFilesFromArgs(opts);
     await callback(initial, true);
@@ -636,7 +667,10 @@ export default class MasterRequest {
 
     const {master} = this;
     const {configCategory, ignoreProjectIgnore} = opts;
-    const {projects, resolvedArgs} = await this.resolveFilesFromArgs(opts.args);
+    const {projects, resolvedArgs} = await this.resolveFilesFromArgs(
+      opts.args,
+      opts.tryAlternateArg,
+    );
 
     const extendedGlobOpts: MemoryFSGlobOptions = {...opts};
 

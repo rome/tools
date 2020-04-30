@@ -35,6 +35,13 @@ export default createMasterCommand({
     const {reporter} = req;
 
     const {paths} = await req.getFilesFromArgs({
+      tryAlternateArg: (path) =>
+        path.hasExtension('test')
+          ? undefined
+          : path.getParent().append(
+              `${path.getExtensionlessBasename()}.test${path.getExtensions()}`,
+            )
+      ,
       test: (path) => path.hasExtension('test'),
       noun: 'test',
       verb: 'testing',
@@ -49,11 +56,6 @@ export default createMasterCommand({
       extensions: JS_EXTENSIONS,
       disabledDiagnosticCategory: 'tests/disabled',
     });
-
-    if (paths.size === 0) {
-      reporter.warn('No tests ran');
-      return;
-    }
 
     reporter.info(`Bundling test files`);
 
