@@ -19,6 +19,7 @@ import {Dict} from '@romejs/typescript-helpers';
 import {EMPTY_SUCCESS_RESPONSE} from '../master/MasterRequest';
 
 type State = {
+  initial: boolean;
   seen: Set<string>;
   resolvedCount: number;
 };
@@ -27,8 +28,16 @@ async function check(
   req: ClientRequest,
   state: State,
 ): Promise<MasterQueryResponse> {
-  const {client} = req;
-  const {reporter} = client;
+  const {reporter} = req.client;
+
+  reporter.clearScreen();
+
+  if (state.initial) {
+    reporter.info('Fetching initial diagnostics');
+    state.initial = false;
+  } else {
+    reporter.info('Updating diagnostics');
+  }
 
   const res = await req.fork({
     ...req.query,
@@ -61,11 +70,30 @@ async function check(
     return res;
   }
 
+  return await ask(diag, req, state, false);
+}
+
+async function ask(
+  diag: Diagnostic,
+  req: ClientRequest,
+  state: State,
+  more: boolean,
+): Promise<MasterQueryResponse> {
+  const {client} = req;
+  const {reporter} = client;
+  reporter.clearScreen();
+
   // Extract actions and remove them from the diagnostic
   let {advice = []} = diag.description;
+  let hasExtraOptions = false;
   const actions: Array<DiagnosticAdviceAction> = [];
   for (const item of advice) {
     if (item.type === 'action') {
+      if (item.extra === true && !more) {
+        hasExtraOptions = true;
+        continue;
+      }
+
       actions.push(item);
     }
   }
@@ -100,6 +128,7 @@ async function check(
   const options: {
     ignore: SelectOption;
     exit: SelectOption;
+    more?: SelectOption;
   } = {
     ignore: {
       label: 'Do nothing',
@@ -112,7 +141,13 @@ async function check(
     },
   };
 
-  reporter.clearScreen();
+  if (!more && hasExtraOptions) {
+    options.more = {
+      label: 'More options...',
+      shortcut: 'm',
+    };
+  }
+
   printDiagnostics({
     diagnostics: [diag],
     suppressions: [],
@@ -128,6 +163,10 @@ async function check(
       options,
     },
   );
+
+  if (answer === 'more') {
+    return await ask(diag, req, state, true);
+  }
 
   if (answer === 'ignore') {
     return await check(req, state);
@@ -169,15 +208,17 @@ export default async function review(
 ): Promise<MasterQueryResponse> {
   const {reporter} = req.client;
   const state: State = {
+    initial: true,
     seen: new Set(),
     resolvedCount: 0,
   };
   const res = await check(req, state);
 
+  reporter.clearScreen();
+
   if (state.seen.size === 0) {
     reporter.success('Nothing to review!');
   } else {
-    reporter.clearScreen();
     if (res.type === 'DIAGNOSTICS') {
       printDiagnostics({
         diagnostics: res.diagnostics,

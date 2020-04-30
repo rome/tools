@@ -170,7 +170,7 @@ class LintRunner {
       hasDecisions,
     } = this.options;
     const shouldSave = this.linter.shouldSave();
-    const shouldApplyFixes = this.linter.shouldApplyFixes();
+    const shouldApplyFixes = !this.linter.shouldOnlyFormat();
 
     const queue: WorkerQueue<void> = new WorkerQueue(master);
 
@@ -412,14 +412,15 @@ export default class Linter {
   request: MasterRequest;
   options: LinterOptions;
 
-  shouldApplyFixes(): boolean {
+  shouldOnlyFormat(): boolean {
     const {formatOnly} = this.options;
-    return !formatOnly;
+    const {review} = this.request.query.requestFlags;
+    return formatOnly || review;
   }
 
   shouldSave(): boolean {
-    const {save, hasDecisions, formatOnly} = this.options;
-    return save || hasDecisions || formatOnly;
+    const {save, hasDecisions} = this.options;
+    return save || hasDecisions || this.shouldOnlyFormat();
   }
 
   getFileArgOptions(): MasterRequestGetFilesOptions {

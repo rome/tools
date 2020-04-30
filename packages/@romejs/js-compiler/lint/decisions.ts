@@ -70,7 +70,7 @@ export function parseDecisionStrings(
   const globalDecisions: Array<LintCompilerOptionsDecision> = [];
 
   function parseGlobalDecision(parts: Array<string>, i: number) {
-    if (parts.length < 3) {
+    if (parts.length !== 3) {
       unexpected(descriptions.LINT_COMMAND.INVALID_DECISION_PART_COUNT(i));
     }
 
@@ -86,7 +86,7 @@ export function parseDecisionStrings(
   }
 
   function parseLineDecision(parts: Array<string>, i: number) {
-    if (parts.length < 4) {
+    if (parts.length < 4 || parts.length > 5) {
       unexpected(descriptions.LINT_COMMAND.INVALID_DECISION_PART_COUNT(i));
     }
 
@@ -128,7 +128,7 @@ export function parseDecisionStrings(
     const parts = escapeSplit(segment, '-');
 
     if (parts[0] === 'global') {
-      parseGlobalDecision(parts, i);
+      parseGlobalDecision(parts.slice(1), i);
     } else {
       parseLineDecision(parts, i);
     }
@@ -137,29 +137,33 @@ export function parseDecisionStrings(
   return {lintCompilerOptionsPerFile, globalDecisions};
 }
 
-export function buildLintDecisionAdviceAction(
+function escapeFilename(filename: string): string {
+  return filename.replace(/-/, '\\-');
+}
+
+export function buildLintDecisionGlobalString(
+  action: LintCompilerOptionsDecisionAction,
+  category: DiagnosticCategory,
+): string {
+  return `global-${action}-${category}`;
+}
+
+export function buildLintDecisionString(
   {
-    noun,
-    instruction,
     filename,
     action,
     category,
     start,
-    shortcut,
     id,
   }: {
-    shortcut?: string;
-    noun: string;
-    instruction: string;
     filename: string;
-    action: LintCompilerOptionsDecision['action'];
+    action: LintCompilerOptionsDecisionAction;
     category: DiagnosticCategory;
     start: Position;
     id?: number;
   },
-): DiagnosticAdviceAction {
-  const escapedFilename = filename.replace(/-/, '\\-');
-
+): string {
+  const escapedFilename = escapeFilename(filename);
   const pos = deriveDecisionPositionKey(action, {start});
 
   const parts = [action, category, escapedFilename, pos];
@@ -168,14 +172,33 @@ export function buildLintDecisionAdviceAction(
     parts.push(String(id));
   }
 
-  const decision = parts.join('-');
+  return parts.join('-');
+}
 
+export function buildLintDecisionAdviceAction(
+  {
+    noun,
+    instruction,
+    filename,
+    shortcut,
+    decision,
+    extra,
+  }: {
+    extra?: boolean;
+    shortcut?: string;
+    noun: string;
+    instruction: string;
+    filename?: string;
+    decision: string;
+  },
+): DiagnosticAdviceAction {
   return {
     type: 'action',
+    extra,
     hidden: true,
     command: 'lint',
     shortcut,
-    args: [filename],
+    args: filename === undefined ? [] : [escapeFilename(filename)],
     noun,
     instruction,
     commandFlags: {

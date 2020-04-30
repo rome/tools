@@ -13,10 +13,10 @@ export type SelectOption = {
 };
 
 export type SelectOptions = {
-  [key: string]: SelectOption;
+  [key: string]: undefined | SelectOption;
 };
 
-export type SelectArguments<Options> = {
+export type SelectArguments<Options extends SelectOptions> = {
   options: Options;
   defaults?: Array<keyof Options>;
   radio?: boolean;

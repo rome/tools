@@ -55,6 +55,8 @@ import {FileReference} from '@romejs/core';
 import {DEFAULT_PROJECT_CONFIG} from '@romejs/project';
 import {
   buildLintDecisionAdviceAction,
+  buildLintDecisionGlobalString,
+  buildLintDecisionString,
   deriveDecisionPositionKey,
 } from '../lint/decisions';
 
@@ -316,16 +318,27 @@ export default class CompilerContext {
       } else {
         advice.push(
           buildLintDecisionAdviceAction({
+            filename: this.displayFilename,
+            decision: buildLintDecisionString({
+              action: 'fix',
+              filename: this.displayFilename,
+              category,
+              start: loc.start,
+            }),
+            shortcut: 'f',
             noun: 'Apply fix',
             instruction: 'To apply this fix run',
-            filename: this.displayFilename,
-            action: 'fix',
-            category,
-            start: loc.start,
           }),
         );
 
-        // TODO add fix all with this category option
+        advice.push(
+          buildLintDecisionAdviceAction({
+            extra: true,
+            noun: 'Apply fix for ALL files with this category',
+            instruction: 'To apply fix for ALL files with this category run',
+            decision: buildLintDecisionGlobalString('fix', category),
+          }),
+        );
       }
     }
 
@@ -391,10 +404,13 @@ export default class CompilerContext {
               shortcut: String(num),
               instruction: 'To apply this fix run',
               filename: this.displayFilename,
-              action: 'fix',
-              category,
-              start: loc.start,
-              id: index,
+              decision: buildLintDecisionString({
+                filename: this.displayFilename,
+                action: 'fix',
+                category,
+                start: loc.start,
+                id: index,
+              }),
             }),
           );
         }
@@ -449,13 +465,23 @@ export default class CompilerContext {
           shortcut: 's',
           instruction: 'To suppress this error run',
           filename: this.displayFilename,
-          action: 'suppress',
-          category,
-          start: loc.start,
+          decision: buildLintDecisionString({
+            filename: this.displayFilename,
+            action: 'suppress',
+            category,
+            start: loc.start,
+          }),
         }),
       );
 
-      // TODO add suppress all action
+      advice.push(
+        buildLintDecisionAdviceAction({
+          extra: true,
+          noun: 'Add suppression comments for ALL files with this category',
+          instruction: 'To add suppression comments for ALL files with this category run',
+          decision: buildLintDecisionGlobalString('suppress', category),
+        }),
+      );
     }
 
     const {marker, ...diag} = contextDiag;
