@@ -6,8 +6,14 @@
  */
 
 import {Mapping} from '@romejs/codec-source-map';
-import {ob1Get0} from '@romejs/ob1';
-import StringBuffer from './StringBuffer';
+import {
+  Number0,
+  Number1,
+  ob1Get0,
+  ob1Inc,
+  ob1Number0,
+  ob1Number1,
+} from '@romejs/ob1';
 import {Token} from './tokens';
 
 export type PrinterOptions = {
@@ -25,7 +31,10 @@ type State = {
   flat: boolean;
   indent: Box<number>;
   pendingSpaces: Box<number>;
-  buffer: StringBuffer;
+  generatedIndex: Box<Number0>;
+  generatedLine: Box<Number1>;
+  generatedColumn: Box<Number0>;
+  buffer: Array<string>;
   mappings: Array<Mapping>;
   lineSuffixes: Array<[Token, State]>;
 };
@@ -47,17 +56,26 @@ class Box<T> {
 }
 
 function forkState(parent: State, callback: (state: State) => void): void {
+  const bufferLength = parent.buffer.length;
   const mappingsLength = parent.mappings.length;
+
   const state: State = {
     ...parent,
-    buffer: StringBuffer.from(parent.buffer),
+    generatedIndex: new Box(parent.generatedIndex.value),
+    generatedLine: new Box(parent.generatedLine.value),
+    generatedColumn: new Box(parent.generatedColumn.value),
     pendingSpaces: new Box(parent.pendingSpaces.value),
   };
 
   try {
     callback(state);
   } catch (err) {
-    // Discard invalid mappings
+    // Discard dirty outputs
+    if (parent.buffer.length !== bufferLength) {
+      parent.buffer.length = bufferLength;
+    }
+
+    // Discard dirty mappings
     if (parent.mappings.length !== mappingsLength) {
       parent.mappings.length = mappingsLength;
     }
@@ -66,8 +84,23 @@ function forkState(parent: State, callback: (state: State) => void): void {
   }
 
   // Merge the states together
-  parent.buffer.merge(state.buffer);
+  parent.generatedIndex.value = state.generatedIndex.value;
+  parent.generatedLine.value = state.generatedLine.value;
+  parent.generatedColumn.value = state.generatedColumn.value;
   parent.pendingSpaces.value = state.pendingSpaces.value;
+}
+
+function write(str: string, state: State): void {
+  for (const ch of str) {
+    state.generatedIndex.value = ob1Inc(state.generatedIndex.value);
+    if (ch === '\n') {
+      state.generatedLine.value = ob1Inc(state.generatedLine.value);
+      state.generatedColumn.value = ob1Number0;
+    } else {
+      state.generatedColumn.value = ob1Inc(state.generatedColumn.value);
+    }
+  }
+  state.buffer.push(str);
 }
 
 function print(token: Token, state: State, options: PrinterOptions): void {
@@ -78,19 +111,26 @@ function print(token: Token, state: State, options: PrinterOptions): void {
 
     if (typeof token === 'string') {
       if (token !== '') {
-        if (ob1Get0(state.buffer.column) === 0) {
-          state.buffer.push(' '.repeat(state.indent.value));
-        } else {
-          if (state.pendingSpaces.value > 0) {
-            state.buffer.push(' '.repeat(state.pendingSpaces.value));
-            state.pendingSpaces.value = 0;
-          }
+        // If the cursor is at the beginning of a new line, the indentation
+        // must be printed.
+        if (state.generatedColumn.value === ob1Number0) {
+          write(' '.repeat(state.indent.value), state);
+          state.pendingSpaces.value = 0;
         }
 
-        state.buffer.push(token);
+        // Print pending spaces
+        if (state.pendingSpaces.value > 0) {
+          write(' '.repeat(state.pendingSpaces.value), state);
+          state.pendingSpaces.value = 0;
+        }
+
+        write(token, state);
 
         // If the line is too long, break the group if it is possible
-        if (state.flat && ob1Get0(state.buffer.column) > options.printWidth) {
+        if (
+          state.flat &&
+          ob1Get0(state.generatedColumn.value) > options.printWidth
+        ) {
           throw new BreakError();
         }
       }
@@ -189,11 +229,9 @@ function print(token: Token, state: State, options: PrinterOptions): void {
               while (state.lineSuffixes.length > 0) {
                 stack.push(state.lineSuffixes.pop()!);
               }
-              break;
+            } else {
+              write('\n', state);
             }
-
-            state.buffer.push('\n');
-            state.pendingSpaces.value = 0;
           }
           break;
         }
@@ -211,16 +249,16 @@ function print(token: Token, state: State, options: PrinterOptions): void {
           if (
             state.mappings.length > 0 &&
             state.mappings[state.mappings.length - 1].generated.index ===
-            state.buffer.index
+            state.generatedIndex.value
           ) {
             break;
           }
 
           state.mappings.push({
             generated: {
-              line: state.buffer.line,
-              column: state.buffer.column,
-              index: state.buffer.index,
+              line: state.generatedLine.value,
+              column: state.generatedColumn.value,
+              index: state.generatedIndex.value,
             },
             original: {
               line: token.loc[token.prop].line,
@@ -249,7 +287,10 @@ export function printTokenToString(
     flat: false,
     indent: new Box(options.rootIndent * options.indentWidth),
     pendingSpaces: new Box(0),
-    buffer: new StringBuffer(),
+    generatedIndex: new Box(ob1Number0),
+    generatedLine: new Box(ob1Number1),
+    generatedColumn: new Box(ob1Number0),
+    buffer: [],
     mappings: [],
     lineSuffixes: [],
   };
@@ -257,7 +298,7 @@ export function printTokenToString(
   print(token, state, options);
 
   return {
-    code: state.buffer.toString(),
+    code: state.buffer.join(''),
     mappings: state.mappings,
   };
 }
