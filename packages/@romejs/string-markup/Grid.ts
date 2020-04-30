@@ -287,9 +287,9 @@ export default class Grid {
       const word = words[i];
       const isLastWord = i === words.length - 1;
 
-      const willOverflow =
-        this.doesOverflowViewport(ob1Add(this.cursor.column, word.length - 1)) &&
-        !this.doesOverflowViewport(ob1Coerce1(word.length - 1));
+      const willOverflow = this.doesOverflowViewport(
+        ob1Add(this.cursor.column, word.length - 1),
+      );
       if (willOverflow) {
         this.newline();
       }
@@ -298,7 +298,7 @@ export default class Grid {
         this.writeChar(char);
       }
 
-      let ignoreLeadingSpace = false;
+      let ignoreTrailingSpace = false;
 
       // Start of a sentence that was caused by line wrapping
       if (
@@ -306,14 +306,23 @@ export default class Grid {
         this.cursor.column === ob1Number1 &&
         word !== ''
       ) {
-        ignoreLeadingSpace = true;
+        ignoreTrailingSpace = true;
+      }
+
+      // If the next word will cause an overflow then don't print a leading space as it will be pointless
+      const nextWord = words[i + 1];
+      if (
+        nextWord !== undefined &&
+        this.doesOverflowViewport(ob1Add(this.cursor.column, nextWord.length))
+      ) {
+        ignoreTrailingSpace = true;
       }
 
       if (isLastWord) {
-        ignoreLeadingSpace = true;
+        ignoreTrailingSpace = true;
       }
 
-      if (!ignoreLeadingSpace) {
+      if (!ignoreTrailingSpace) {
         this.writeChar(' ');
       }
     }
