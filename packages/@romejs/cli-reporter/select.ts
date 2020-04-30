@@ -28,7 +28,27 @@ export default async function select<Options extends SelectOptions>(
     yes = false,
   }: SelectArguments<Options>,
 ): Promise<Set<keyof Options>> {
-  const optionNames: Array<keyof Options> = Object.keys(options);
+  const optionNames: Array<keyof Options> = [];
+  const seenShortcuts: Set<string> = new Set();
+
+  // Verify there's no shortcut collisions and remove empty options
+  for (const key in options) {
+    const option: undefined | SelectOption = options[key];
+
+    if (option !== undefined) {
+      optionNames.push(key);
+
+      const {shortcut} = option;
+      if (shortcut !== undefined) {
+        if (seenShortcuts.has(shortcut)) {
+          throw new Error(`Multiple options have the shortcut ${shortcut}`);
+        } else {
+          seenShortcuts.add(shortcut);
+        }
+      }
+    }
+  }
+
   let optionCount = optionNames.length;
   if (optionCount === 0) {
     return new Set();
@@ -80,7 +100,7 @@ export default async function select<Options extends SelectOptions>(
     const optionNames = Object.keys(options);
     for (let i = 0; i < optionNames.length; i++) {
       const key = optionNames[i];
-      const option = options[key];
+      const option = options[key]!;
       const {label} = option;
       const shortcut = formatShortcut(option);
 
@@ -152,7 +172,7 @@ export default async function select<Options extends SelectOptions>(
 
       prompt += ': ';
       if (selectedOptions.size > 0) {
-        prompt += Array.from(selectedOptions, (key) => options[key].label).join(
+        prompt += Array.from(selectedOptions, (key) => options[key]!.label).join(
           ', ',
         );
       } else {
@@ -172,7 +192,12 @@ export default async function select<Options extends SelectOptions>(
       // Check if this is an option shortcut
       if (!key.ctrl) {
         for (const optionName in options) {
-          const {shortcut} = options[optionName];
+          const option: undefined | SelectOption = options[optionName];
+          if (option === undefined) {
+            continue;
+          }
+
+          const {shortcut} = option;
           if (shortcut === key.name) {
             if (radio) {
               selectedOptions.clear();

@@ -291,7 +291,7 @@ export const descriptions = createMessages({
       formatted: string,
     ) => ({
       category: 'lint/pendingFixes',
-      message: 'Pending autofixes and formatting',
+      message: 'Pending formatting and recommended autofixes',
       advice: [
         {
           type: 'diff',
@@ -299,23 +299,25 @@ export const descriptions = createMessages({
         },
         ({
           type: 'action',
-          hidden: true,
           command: 'lint',
-          instruction: 'To format this file without any fixes run',
-          noun: 'Format file',
+          shortcut: 'f',
+          instruction: 'To apply fixes and formatting run',
+          noun: 'Apply fixes and format',
           args: [relativeFilename],
           commandFlags: {
-            formatOnly: true,
+            save: true,
           },
         } as DiagnosticAdviceAction),
         ({
           type: 'action',
+          hidden: true,
           command: 'lint',
-          instruction: 'To format and apply recommended fixes run',
-          noun: 'Fix file',
+          shortcut: 'o',
+          instruction: 'To format this file without any fixes run',
+          noun: 'Only format',
           args: [relativeFilename],
           commandFlags: {
-            save: true,
+            format: true,
           },
         } as DiagnosticAdviceAction),
       ],

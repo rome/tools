@@ -6,10 +6,16 @@
  */
 
 import {MasterRequest} from '@romejs/core';
-import Linter, {LinterOptions} from '../linter/Linter';
+import Linter, {
+  LinterCompilerOptionsPerFile,
+  LinterOptions,
+} from '../linter/Linter';
 import {markup} from '@romejs/string-markup';
 import {createMasterCommand} from '../commands';
-import {parseDecisionStrings} from '@romejs/js-compiler';
+import {
+  LintCompilerOptionsDecisions,
+  parseDecisionStrings,
+} from '@romejs/js-compiler';
 import {Consumer} from '@romejs/consume';
 import {commandCategories} from '@romejs/core/common/commands';
 
@@ -39,10 +45,11 @@ export default createMasterCommand<Flags>({
   async callback(req: MasterRequest, flags: Flags): Promise<void> {
     const {reporter} = req;
 
-    let compilerOptionsPerFile: LinterOptions['compilerOptionsPerFile'] = {};
+    let lintCompilerOptionsPerFile: LinterCompilerOptionsPerFile = {};
+    let globalDecisions: LintCompilerOptionsDecisions = [];
     const {decisions} = flags;
     if (decisions !== undefined) {
-      compilerOptionsPerFile = parseDecisionStrings(
+      ({lintCompilerOptionsPerFile, globalDecisions} = parseDecisionStrings(
         decisions,
         req.client.flags.cwd,
         (description) => {
@@ -51,7 +58,7 @@ export default createMasterCommand<Flags>({
             target: {type: 'flag', key: 'decisions'},
           });
         },
-      );
+      ));
     }
 
     // Look up arguments manually in vsc if we were passed a changes branch
@@ -75,7 +82,8 @@ export default createMasterCommand<Flags>({
 
     const opts: LinterOptions = {
       hasDecisions: flags.decisions.length > 0,
-      compilerOptionsPerFile,
+      lintCompilerOptionsPerFile,
+      globalDecisions,
       save: flags.save,
       formatOnly: flags.formatOnly,
       args,

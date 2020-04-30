@@ -131,6 +131,7 @@ export type DiagnosticAdviceInspect = {
 export type DiagnosticAdviceAction = {
   type: 'action';
   hidden?: boolean;
+  extra?: boolean;
   shortcut?: string;
   instruction: string;
   noun: string;
