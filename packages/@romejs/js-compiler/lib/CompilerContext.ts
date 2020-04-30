@@ -37,7 +37,6 @@ import {RootScope} from '../scope/Scope';
 import reduce from '../methods/reduce';
 import {UnknownFilePath, createUnknownFilePath} from '@romejs/path';
 import {
-  LintCompilerOptions,
   LintCompilerOptionsDecision,
   TransformProjectDefinition,
   TransformVisitor,
@@ -47,14 +46,17 @@ import {
   matchesSuppression,
 } from '../suppressions';
 import CommentsConsumer from '@romejs/js-parser/CommentsConsumer';
-import {ob1Get0, ob1Get1} from '@romejs/ob1';
+import {ob1Get0} from '@romejs/ob1';
 import {hookVisitors} from '../transforms';
 import stringDiff from '@romejs/string-diff';
 import {formatJS} from '@romejs/js-formatter';
 import {REDUCE_REMOVE} from '../constants';
 import {FileReference} from '@romejs/core';
 import {DEFAULT_PROJECT_CONFIG} from '@romejs/project';
-import {buildLintDecisionAdviceAction} from '../lint/decisions';
+import {
+  buildLintDecisionAdviceAction,
+  deriveDecisionPositionKey,
+} from '../lint/decisions';
 
 export type ContextArg = {
   ast: Program;
@@ -239,38 +241,28 @@ export default class CompilerContext {
   }
 
   hasLintDecisions(): boolean {
-    return this.getLintDecisions() !== undefined;
+    const {lint} = this.options;
+    return lint !== undefined && lint.hasDecisions === true;
   }
 
-  getLintDecisions(): LintCompilerOptions['decisionsByPosition'] {
+  getLintDecisions(key: undefined | string): Array<LintCompilerOptionsDecision> {
     const {lint} = this.options;
     if (lint === undefined) {
-      return undefined;
-    }
-
-    return lint.decisionsByPosition;
-  }
-
-  findLintDecisions(
-    loc: undefined | DiagnosticLocation,
-  ): Array<LintCompilerOptionsDecision> {
-    if (loc === undefined) {
       return [];
     }
 
-    const {start} = loc;
-    if (start === undefined) {
-      return [];
+    const {globalDecisions = []} = lint;
+
+    if (key === undefined) {
+      return globalDecisions;
     }
 
-    const decisionsByPosition = this.getLintDecisions();
+    const {decisionsByPosition} = lint;
     if (decisionsByPosition === undefined) {
-      return [];
+      return globalDecisions;
     }
 
-    // Keep in update with packages/@romejs/core/client/commands/lint.ts
-    const pos = `${ob1Get1(start.line)}:${ob1Get0(start.column)}`;
-    return decisionsByPosition[pos] || [];
+    return [...globalDecisions, ...(decisionsByPosition[key] || [])];
   }
 
   addFixableDiagnostic<Old extends AnyNode, New extends TransformExitResult>(
@@ -332,13 +324,17 @@ export default class CompilerContext {
             start: loc.start,
           }),
         );
+
+        // TODO add fix all with this category option
       }
     }
 
     if (suggestions !== undefined) {
       // If we have lint decisions then find the fix that corresponds with this suggestion
       if (this.hasLintDecisions()) {
-        const decisions = this.findLintDecisions(loc);
+        const decisions = this.getLintDecisions(
+          deriveDecisionPositionKey('fix', loc),
+        );
         for (const decision of decisions) {
           if (
             decision.category === category &&
@@ -458,6 +454,8 @@ export default class CompilerContext {
           start: loc.start,
         }),
       );
+
+      // TODO add suppress all action
     }
 
     const {marker, ...diag} = contextDiag;
@@ -486,7 +484,9 @@ export default class CompilerContext {
     if (this.hasLintDecisions()) {
       suppressed = true;
 
-      const decisions = this.findLintDecisions(loc);
+      const decisions = this.getLintDecisions(
+        deriveDecisionPositionKey('fix', loc),
+      );
       for (const {category, action} of decisions) {
         if (category === diagCategory && action === 'fix') {
           suppressed = false;

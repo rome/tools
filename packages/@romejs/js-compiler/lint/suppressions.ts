@@ -27,8 +27,7 @@ function buildSuppressionCommentValue(categories: Set<string>): string {
 }
 
 export function addSuppressions(context: CompilerContext, ast: Program): Program {
-  const decisionsByPosition = context.getLintDecisions();
-  if (decisionsByPosition === undefined) {
+  if (!context.hasLintDecisions()) {
     return ast;
   }
 
@@ -124,8 +123,8 @@ export function addSuppressions(context: CompilerContext, ast: Program): Program
           return node;
         }
 
-        const decisions = decisionsByPosition[ob1Get1(line)];
-        if (decisions === undefined) {
+        const decisions = context.getLintDecisions(String(ob1Get1(line)));
+        if (decisions.length === 0) {
           return node;
         }
 
