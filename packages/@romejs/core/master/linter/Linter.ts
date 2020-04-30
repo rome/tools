@@ -76,7 +76,7 @@ function createDiagnosticsPrinter(
 ): DiagnosticsPrinter {
   const printer = request.createDiagnosticsPrinter(processor);
 
-  printer.onBeforeFooterPrint((reporter, isError) => {
+  printer.onFooterPrint((reporter, isError) => {
     if (isError) {
       let hasPendingFixes = false;
 

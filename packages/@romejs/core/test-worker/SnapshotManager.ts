@@ -106,11 +106,6 @@ export default class SnapshotManager {
       return;
     }
 
-    // If we're force updating, pretend that no snapshots exist on disk
-    if (this.options.updateSnapshots) {
-      return;
-    }
-
     const content = await readFileText(path);
     const parser = createSnapshotParser({
       path,
@@ -259,6 +254,8 @@ export default class SnapshotManager {
       return;
     }
 
+    const {hasDiagnostics} = this.runner;
+
     for (const [path, {used, existsOnDisk, raw, entries}] of this.snapshots) {
       const lines = this.buildSnapshot(entries.values());
       const formatted = lines.join('\n');
@@ -277,9 +274,12 @@ export default class SnapshotManager {
         }
       } else {
         if (existsOnDisk && !used) {
-          // If a snapshot wasn't used or is empty then delete it!
-          await unlink(path);
-          event = 'delete';
+          // Don't delete a snapshot if there are test failures as those failures may be hiding a snapshot usage
+          if (!hasDiagnostics) {
+            // If a snapshot wasn't used or is empty then delete it!
+            await unlink(path);
+            event = 'delete';
+          }
         } else if (used && formatted !== raw) {
           // Fresh snapshot!
           await writeFile(path, formatted);
@@ -313,6 +313,11 @@ export default class SnapshotManager {
     }
 
     snapshot.used = true;
+
+    // If we're force updating, pretend that there was no entry
+    if (this.options.updateSnapshots) {
+      return undefined;
+    }
 
     const entry = snapshot.entries.get(buildEntriesKey(testName, entryName));
     if (entry === undefined) {
