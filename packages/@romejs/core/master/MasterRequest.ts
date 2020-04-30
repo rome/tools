@@ -30,7 +30,7 @@ import {
   ProjectConfigCategoriesWithIgnore,
   ProjectDefinition,
 } from '@romejs/project';
-import {ResolverOptions} from './fs/Resolver';
+import {ResolverOptions, ResolverQueryResponseFound} from './fs/Resolver';
 import {BundlerConfig} from '../common/types/bundler';
 import MasterBridge, {
   MasterQueryRequest,
@@ -69,11 +69,11 @@ import {ModuleSignature} from '@romejs/js-analysis';
 import {
   AbsoluteFilePath,
   AbsoluteFilePathSet,
+  UnknownFilePath,
   createAbsoluteFilePath,
   createUnknownFilePath,
-  UnknownFilePath,
 } from '@romejs/path';
-import {ResolverQueryResponseFound} from './fs/Resolver';
+
 import crypto = require('crypto');
 import {createErrorFromStructure, getErrorStructure} from '@romejs/v8';
 import {Dict, RequiredProps} from '@romejs/typescript-helpers';
@@ -238,9 +238,7 @@ export default class MasterRequest {
     if (this.query.requestFlags.timing) {
       const end = Date.now();
       this.reporter.info(
-        `Request took <duration emphasis>${String(
-          end - this.start,
-        )}</duration>`,
+        `Request took <duration emphasis>${String(end - this.start)}</duration>`,
       );
     }
 
@@ -380,15 +378,17 @@ export default class MasterRequest {
     }
   }
 
-  throwDiagnosticFlagError({
-    description,
-    target = {type: 'none'},
-    showHelp = true,
-  }: {
-    description: RequiredProps<Partial<DiagnosticDescription>, 'message'>;
-    target?: SerializeCLITarget;
-    showHelp?: boolean;
-  }) {
+  throwDiagnosticFlagError(
+    {
+      description,
+      target = {type: 'none'},
+      showHelp = true,
+    }: {
+      description: RequiredProps<Partial<DiagnosticDescription>, 'message'>;
+      target?: SerializeCLITarget;
+      showHelp?: boolean;
+    },
+  ) {
     const location = this.getDiagnosticPointerFromFlags(target);
 
     let {category} = description;
@@ -428,9 +428,7 @@ export default class MasterRequest {
     };
   }
 
-  getDiagnosticPointerFromFlags(
-    target: SerializeCLITarget,
-  ): DiagnosticLocation {
+  getDiagnosticPointerFromFlags(target: SerializeCLITarget): DiagnosticLocation {
     const {query} = this;
 
     const rawFlags = {
@@ -530,16 +528,11 @@ export default class MasterRequest {
         if (tryAlternateArg !== undefined) {
           const alternateSource = tryAlternateArg(source);
           if (alternateSource !== undefined) {
-            const resolvedAlternate = await this.master.resolver.resolveEntry(
-              {
-                origin: cwd,
-                source: alternateSource,
-                requestedType: 'folder',
-              },
-              {
-                location,
-              },
-            );
+            const resolvedAlternate = await this.master.resolver.resolveEntry({
+              origin: cwd,
+              source: alternateSource,
+              requestedType: 'folder',
+            });
             if (resolvedAlternate.type === 'FOUND') {
               resolved = resolvedAlternate;
             }
@@ -683,7 +676,8 @@ export default class MasterRequest {
 
     if (configCategory !== undefined) {
       extendedGlobOpts.getProjectIgnore = (project) =>
-        ignoreProjectIgnore ? [] : project.config[configCategory].ignore;
+        ignoreProjectIgnore ? [] : project.config[configCategory].ignore
+      ;
     }
 
     // Resolved arguments that resulted in no files
@@ -746,7 +740,8 @@ export default class MasterRequest {
               project,
               (consumer) =>
                 consumer.has(configCategory) &&
-                consumer.get(configCategory).get('ignore'),
+                consumer.get(configCategory).get('ignore')
+              ,
             );
 
             if (ignoreSource.value !== undefined) {
@@ -797,8 +792,7 @@ export default class MasterRequest {
     return {
       ...res,
       cacheDependencies: res.cacheDependencies.map((filename) => {
-        return projectManager.getFileReference(createAbsoluteFilePath(filename))
-          .uid;
+        return projectManager.getFileReference(createAbsoluteFilePath(filename)).uid;
       }),
     };
   }
@@ -872,8 +866,10 @@ export default class MasterRequest {
   ): Promise<void> {
     this.checkCancelled();
 
-    await this.wrapRequestDiagnostic('updateBuffer', path, (bridge, file) =>
-      bridge.updateBuffer.call({file, content}),
+    await this.wrapRequestDiagnostic(
+      'updateBuffer',
+      path,
+      (bridge, file) => bridge.updateBuffer.call({file, content}),
     );
     this.master.fileChangeEvent.send(path);
   }
@@ -884,17 +880,16 @@ export default class MasterRequest {
   ): Promise<Program> {
     this.checkCancelled();
 
-    return this.wrapRequestDiagnostic('parse', path, (bridge, file) =>
-      bridge.parseJS.call({file, options: opts}),
+    return this.wrapRequestDiagnostic(
+      'parse',
+      path,
+      (bridge, file) => bridge.parseJS.call({file, options: opts}),
     );
   }
 
   async requestWorkerLint(
     path: AbsoluteFilePath,
-    optionsWithoutModSigs: Omit<
-      WorkerLintOptions,
-      'prefetchedModuleSignatures'
-    >,
+    optionsWithoutModSigs: Omit<WorkerLintOptions, 'prefetchedModuleSignatures'>,
   ): Promise<WorkerLintResult> {
     this.checkCancelled();
 
@@ -916,16 +911,21 @@ export default class MasterRequest {
       prefetchedModuleSignatures,
     };
 
-    const res = await this.wrapRequestDiagnostic('lint', path, (bridge, file) =>
-      bridge.lint.call({file, options, parseOptions: {}}),
+    const res = await this.wrapRequestDiagnostic(
+      'lint',
+      path,
+      (bridge, file) => bridge.lint.call({file, options, parseOptions: {}}),
     );
 
-    await cache.update(path, (cacheEntry) => ({
-      lint: {
-        ...cacheEntry.lint,
-        [cacheKey]: res,
-      },
-    }));
+    await cache.update(
+      path,
+      (cacheEntry) => ({
+        lint: {
+          ...cacheEntry.lint,
+          [cacheKey]: res,
+        },
+      }),
+    );
 
     return res;
   }
@@ -936,8 +936,10 @@ export default class MasterRequest {
   ): Promise<undefined | WorkerFormatResult> {
     this.checkCancelled();
 
-    return await this.wrapRequestDiagnostic('format', path, (bridge, file) =>
-      bridge.format.call({file, parseOptions}),
+    return await this.wrapRequestDiagnostic(
+      'format',
+      path,
+      (bridge, file) => bridge.format.call({file, parseOptions}),
     );
   }
 
@@ -981,15 +983,18 @@ export default class MasterRequest {
     });
 
     // There's a race condition here between the file being opened and then rewritten
-    await cache.update(path, (cacheEntry) => ({
-      compile: {
-        ...cacheEntry.compile,
-        [cacheKey]: {
-          ...res,
-          cached: true,
+    await cache.update(
+      path,
+      (cacheEntry) => ({
+        compile: {
+          ...cacheEntry.compile,
+          [cacheKey]: {
+            ...res,
+            cached: true,
+          },
         },
-      },
-    }));
+      }),
+    );
 
     return res;
   }
@@ -1012,12 +1017,15 @@ export default class MasterRequest {
       path,
       (bridge, file) => bridge.analyzeDependencies.call({file, parseOptions}),
     );
-    await cache.update(path, {
-      analyzeDependencies: {
-        ...res,
-        cached: true,
+    await cache.update(
+      path,
+      {
+        analyzeDependencies: {
+          ...res,
+          cached: true,
+        },
       },
-    });
+    );
 
     return {
       ...res,
@@ -1043,9 +1051,12 @@ export default class MasterRequest {
       path,
       (bridge, file) => bridge.moduleSignatureJS.call({file, parseOptions}),
     );
-    await cache.update(path, {
-      moduleSignature: res,
-    });
+    await cache.update(
+      path,
+      {
+        moduleSignature: res,
+      },
+    );
     return res;
   }
 
