@@ -35,6 +35,29 @@ export function createBlessedDiagnosticMessage(
   };
 }
 
+function join(conjunction: string, items: Array<string>): string {
+  if (items.length === 0) {
+    return '';
+  } else if (items.length === 1) {
+    return items[0];
+  } else {
+    return [...items, `${conjunction} ${items.pop()!}`].join(', ');
+  }
+}
+
+// rome-suppress-next-line lint/unusedVariables
+function andJoin(items: Array<string>): string {
+  return join('and', items);
+}
+
+function orJoin(items: Array<string>): string {
+  return join('or', items);
+}
+
+function addEmphasis(items: Array<string>): Array<string> {
+  return items.map((item) => `<emphasis>${item}</emphasis>`);
+}
+
 // rome-suppress-next-line lint/AEciilnnoptxy;
 type InputMessagesFactory = (...params: Array<any>) => DiagnosticMetadataString;
 
@@ -691,11 +714,37 @@ export const descriptions = createMessages({
         },
       ],
     }),
-    INVALID_ATTRIBUTE_NAME_FOR_TAG: (tagName: string, attributeName: string) => ({
-      message: markup`${attributeName} is not a valid attribute name for <${tagName}>`,
+    INVALID_ATTRIBUTE_NAME_FOR_TAG: (
+      tagName: string,
+      attributeName: string,
+      validAttributes: Array<string>,
+    ) => ({
+      message: markup`<emphasis>${attributeName}</emphasis> is not a valid attribute name for <emphasis>${tagName}</emphasis>`,
+      advice: buildSuggestionAdvice(attributeName, validAttributes),
     }),
     UNKNOWN_TAG_NAME: (tagName: string) => ({
       message: markup`Unknown tag name <emphasis>${tagName}</emphasis>`,
+    }),
+    RESTRICTED_CHILD: (
+      tagName: string,
+      allowedParents: Array<string>,
+      gotParentName: string = 'none',
+    ) => ({
+      message: markup`The tag <emphasis>${tagName}</emphasis> should only appear as a child of ${orJoin(
+        addEmphasis(allowedParents),
+      )} not <emphasis>${gotParentName}</emphasis>`,
+    }),
+    RESTRICTED_PARENT: (
+      tagName: string,
+      allowedChildren: Array<string>,
+      gotChildName: string,
+    ) => ({
+      message: markup`The tag <emphasis>${tagName}</emphasis> should only contain the tags ${orJoin(
+        addEmphasis(allowedChildren),
+      )} not <emphasis>${gotChildName}</emphasis>`,
+    }),
+    RESTRICTED_PARENT_TEXT: (tagName: string) => ({
+      message: markup`The tag <emphasis>${tagName}</emphasis> should not contain any text`,
     }),
   },
   // @romejs/path-match

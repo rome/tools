@@ -66,14 +66,16 @@ export function escapeMarkup(input: string): string {
 export function markupTag(
   tagName: MarkupTagName,
   text: string,
-  attrs?: Dict<string | number | boolean>,
+  attrs?: Dict<undefined | string | number | boolean>,
 ): string {
   let ret = `<${tagName}`;
 
   if (attrs !== undefined) {
     for (const key in attrs) {
       const value = attrs[key];
-      ret += markup` ${key}="${String(value)}"`;
+      if (value !== undefined) {
+        ret += markup` ${key}="${String(value)}"`;
+      }
     }
   }
 
