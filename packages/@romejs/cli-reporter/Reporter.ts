@@ -24,7 +24,7 @@ import {
   SelectArguments,
   SelectOptions,
 } from './types';
-import {humanizeNumber, removeSuffix} from '@romejs/string-utils';
+import {removeSuffix} from '@romejs/string-utils';
 import Progress from './Progress';
 import prettyFormat from '@romejs/pretty-format';
 import stream = require('stream');
@@ -42,6 +42,7 @@ type ListOptions = {
   reverse?: boolean;
   truncate?: number;
   ordered?: boolean;
+  start?: number;
 };
 
 // rome-suppress-next-line lint/noExplicitAny
@@ -1078,64 +1079,35 @@ export default class Reporter {
       return;
     }
 
-    const indent = this._getListIndentation();
-
-    let tuples: Array<[number, T]>;
-    if (opts.reverse === true) {
-      tuples = items.reverse().map((item, i) => [items.length - i, item]);
-    } else {
-      tuples = items.map((item, i) => [i, item]);
-    }
-
-    // Truncate if necessary
     let truncatedCount = 0;
-    if (opts.truncate !== undefined) {
-      tuples = tuples.slice(0, opts.truncate);
-      truncatedCount = items.length - tuples.length;
+
+    let start = opts.start || 0;
+    if (opts.truncate !== undefined && items.length > opts.truncate) {
+      truncatedCount = items.length - opts.truncate;
+      items = items.slice(0, opts.truncate);
+      start += truncatedCount;
     }
 
-    let indentLength = indent.length;
+    let buff = '';
+
+    for (const item of items) {
+      callback(
+        item,
+        (str) => {
+          // TODO maybe set index + 1?
+          buff += `<li>${str}</li>`;
+        },
+      );
+    }
 
     if (opts.ordered) {
-      // Get the highest visible number. It could be at the start or the end depending on if it was reversed
-      const highestVisible = Math.max(
-        tuples[0][0],
-        tuples[tuples.length - 1][0],
-      );
-
-      // Length of the largest visible number plus the dot for padding
-      const numLen = humanizeNumber(highestVisible + 1).length + 1;
-
-      // "0. "
-      indentLength += numLen + 1;
-
-      for (const [index, item] of tuples) {
-        callback(
-          item,
-          (str) => {
-            this.logAll(
-              `${indent}<dim><pad width="${numLen}">${humanizeNumber(index + 1)}.</pad></dim> ${str}`,
-            );
-          },
-        );
-      }
+      this.logAll(markupTag('ol', buff, {start, reversed: opts.reverse}));
     } else {
-      // "- "
-      indentLength += 2;
-
-      for (const [, item] of tuples) {
-        callback(
-          item,
-          (str) => {
-            this.logAll(`${indent}<dim>-</dim> ${str}`);
-          },
-        );
-      }
+      this.logAll(`<ul>${buff}</ul>`);
     }
 
     if (truncatedCount > 0) {
-      const indent = ' '.repeat(indentLength);
-      this.logAll(`${indent}and <number>${truncatedCount}</number> others...`);
+      this.logAll(`<dim>and <number>${truncatedCount}</number> others...</dim>`);
     }
   }
 

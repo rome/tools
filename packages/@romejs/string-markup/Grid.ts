@@ -22,9 +22,14 @@ import {
   ob1Get1,
   ob1Inc,
   ob1Number1,
+  ob1Sub,
 } from '@romejs/ob1';
 import {formatAnsi} from './ansi';
-import {humanizeFileSize, humanizeTime} from '@romejs/string-utils';
+import {
+  humanizeFileSize,
+  humanizeNumber,
+  humanizeTime,
+} from '@romejs/string-utils';
 import {
   formatApprox,
   formatGrammarNumber,
@@ -51,6 +56,19 @@ function cursorToIndex(
 }
 
 type Ancestry = Array<TagNode>;
+
+function createTag(
+  name: TagNode['name'],
+  attributes: TagNode['attributes'],
+  children: TagNode['children'] = [],
+): TagNode {
+  return {
+    type: 'Tag',
+    name,
+    attributes,
+    children,
+  };
+}
 
 export default class Grid {
   constructor(opts: MarkupFormatGridOptions) {
@@ -223,6 +241,13 @@ export default class Grid {
     this.cursor = cursor;
   }
 
+  moveCursorBottomStart() {
+    this.moveCursor({
+      line: ob1Inc(this.getHeight()),
+      column: ob1Number1,
+    });
+  }
+
   moveCursorRight(columns: Number1 = ob1Number1) {
     if (this.doesOverflowViewport(this.cursor.column)) {
       this.newline();
@@ -231,6 +256,12 @@ export default class Grid {
         line: this.cursor.line,
         column: ob1Add(this.cursor.column, columns),
       });
+    }
+  }
+
+  ensureNewline() {
+    if (this.cursor.column !== ob1Number1) {
+      this.newline();
     }
   }
 
@@ -287,9 +318,12 @@ export default class Grid {
       const word = words[i];
       const isLastWord = i === words.length - 1;
 
-      const willOverflow = this.doesOverflowViewport(
-        ob1Add(this.cursor.column, word.length - 1),
-      );
+      // Check if printing this word would overflow the viewport
+      // If the whole word itself wouldn't fit on it's own line then we will
+      // perform hard line wrapping in writeChar
+      const willOverflow =
+        this.doesOverflowViewport(ob1Add(this.cursor.column, word.length - 1)) &&
+        !this.doesOverflowViewport(ob1Coerce1(word.length));
       if (willOverflow) {
         this.newline();
       }
@@ -383,6 +417,65 @@ export default class Grid {
     }
   }
 
+  drawList(tag: TagNode, ancestry: Ancestry) {
+    let items: Array<TagNode> = [];
+    for (const child of tag.children) {
+      if (child.type === 'Tag' && child.name === 'li') {
+        items.push(child);
+      }
+    }
+    if (items.length === 0) {
+      return;
+    }
+
+    this.ensureNewline();
+
+    const ordered = tag.name === 'ol';
+
+    if (ordered) {
+      const reversed = tag.attributes.reversed === 'true';
+      const startOffset: number = Number(tag.attributes.start) || 0;
+
+      if (reversed) {
+        items = items.reverse();
+      }
+
+      const highestNumSize = humanizeNumber(items.length + startOffset).length;
+
+      for (let i = 0; i < items.length; i++) {
+        const item = items[i];
+        let num = startOffset;
+        if (reversed) {
+          num += items.length - i;
+        } else {
+          num += i + 1;
+        }
+
+        const humanNum = humanizeNumber(num);
+        const padding = ' '.repeat(highestNumSize - humanNum.length);
+        this.writeText(`${padding}${humanNum}. `, [createTag('dim', {})]);
+        this.drawListItem(item, ancestry);
+      }
+    } else {
+      for (const item of items) {
+        this.writeText('- ', [createTag('dim', {})]);
+        this.drawListItem(item, ancestry);
+      }
+    }
+  }
+
+  drawListItem(item: TagNode, ancestry: Ancestry) {
+    const grid = new Grid({
+      ...this.markupOptions,
+      columns: this.viewportWidth === undefined
+        ? undefined
+        : ob1Get1(ob1Sub(this.viewportWidth, this.cursor.column)),
+    });
+    grid.drawTag(item, ancestry);
+    this.drawGrid(grid);
+    this.moveCursorBottomStart();
+  }
+
   drawTable(tag: TagNode, ancestry: Ancestry) {
     const rows: Array<Array<TagNode>> = [];
 
@@ -469,10 +562,7 @@ export default class Grid {
         this.moveCursorRight(ob1Inc(width));
       }
 
-      this.moveCursor({
-        line: ob1Inc(this.getHeight()),
-        column: ob1Number1,
-      });
+      this.moveCursorBottomStart();
     }
   }
 
@@ -525,6 +615,12 @@ export default class Grid {
     }
 
     switch (tag.name) {
+      case 'ol':
+      case 'ul': {
+        this.drawList(tag, subAncestry);
+        break;
+      }
+
       case 'table': {
         this.drawTable(tag, subAncestry);
         break;
@@ -591,32 +687,34 @@ export default class Grid {
 
     const {emphasis, ...attributesWithoutEmphasis} = tag.attributes;
     if (emphasis === 'true') {
-      return this.normalizeChild({
-        type: 'Tag',
-        name: 'emphasis',
-        attributes: {},
-        children: [
-          {
-            ...tag,
-            attributes: attributesWithoutEmphasis,
-          },
-        ],
-      });
+      return this.normalizeChild(
+        createTag(
+          'emphasis',
+          {},
+          [
+            {
+              ...tag,
+              attributes: attributesWithoutEmphasis,
+            },
+          ],
+        ),
+      );
     }
 
     const {dim, ...attributes} = attributesWithoutEmphasis;
     if (dim === 'true') {
-      return this.normalizeChild({
-        type: 'Tag',
-        name: 'dim',
-        attributes: {},
-        children: [
-          {
-            ...tag,
-            attributes,
-          },
-        ],
-      });
+      return this.normalizeChild(
+        createTag(
+          'dim',
+          {},
+          [
+            {
+              ...tag,
+              attributes,
+            },
+          ],
+        ),
+      );
     }
 
     // Insert padding
@@ -648,17 +746,16 @@ export default class Grid {
             ...tag,
             attributes: attributesWithoutLegend,
           },
-          {
-            type: 'Tag',
-            name: 'dim',
-            attributes: {},
-            children: [
+          createTag(
+            'dim',
+            {},
+            [
               {
                 type: 'Text',
                 value: `[${String(index + 1)}]`,
               },
             ],
-          },
+          ),
         ];
       }
     }

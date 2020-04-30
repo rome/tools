@@ -63,7 +63,10 @@ export type MarkupTagName =
   | 'table'
   | 'tr'
   | 'td'
-  | 'nobr';
+  | 'nobr'
+  | 'ol'
+  | 'ul'
+  | 'li';
 
 export type MarkupFormatFilenameNormalizer = (filename: string) => string;
 
