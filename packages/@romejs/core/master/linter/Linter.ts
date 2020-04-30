@@ -76,42 +76,45 @@ function createDiagnosticsPrinter(
 ): DiagnosticsPrinter {
   const printer = request.createDiagnosticsPrinter(processor);
 
-  printer.onBeforeFooterPrint((reporter, isError) => {
-    if (isError) {
-      let hasPendingFixes = false;
+  printer.onFooterPrint(
+    (reporter, isError) => {
+      if (isError) {
+        let hasPendingFixes = false;
 
-      for (const {fixable} of processor.getDiagnostics()) {
-        if (fixable) {
-          hasPendingFixes = true;
+        for (const {fixable} of processor.getDiagnostics()) {
+          if (fixable) {
+            hasPendingFixes = true;
+          }
+        }
+
+        if (hasPendingFixes) {
+          reporter.info(
+            'Fixes available. To apply recommended fixes and formatting run',
+          );
+          reporter.command('rome lint --save');
+          reporter.info('To choose fix suggestions run');
+          reporter.command('rome lint --review');
         }
       }
 
-      if (hasPendingFixes) {
-        reporter.info(
-          'Fixes available. To apply recommended fixes and formatting run',
-        );
-        reporter.command('rome lint --save');
-        reporter.info('To choose fix suggestions run');
-        reporter.command('rome lint --review');
-      }
-    }
-
-    if (savedCount > 0) {
-      reporter.success(
-        `<number emphasis>${savedCount}</number> <grammarNumber plural="files" singular="file">${savedCount}</grammarNumber> updated`,
-      );
-    }
-
-    if (!isError) {
-      if (totalCount === 0) {
-        reporter.warn('No files linted');
-      } else {
-        reporter.info(
-          `<number emphasis>${totalCount}</number> <grammarNumber plural="files" singular="file">${totalCount}</grammarNumber> linted`,
+      if (savedCount > 0) {
+        reporter.success(
+          `<number emphasis>${savedCount}</number> <grammarNumber plural="files" singular="file">${savedCount}</grammarNumber> updated`,
         );
       }
-    }
-  });
+
+      if (!isError) {
+        if (totalCount === 0) {
+          reporter.warn('No files linted');
+        } else {
+          reporter.info(
+            `<number emphasis>${totalCount}</number> <grammarNumber plural="files" singular="file">${totalCount}</grammarNumber> linted`,
+          );
+        }
+      }
+    },
+    true,
+  );
 
   return printer;
 }

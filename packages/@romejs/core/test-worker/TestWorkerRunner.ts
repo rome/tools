@@ -24,6 +24,7 @@ import {
   TestOptions,
 } from '@romejs-runtime/rome/test';
 import {
+  TestRef,
   default as TestWorkerBridge,
   TestWorkerBridgeRunOptions,
 } from '../common/bridges/TestWorkerBridge';
@@ -99,6 +100,7 @@ export default class TestWorkerRunner {
       createAbsoluteFilePath(opts.file.real),
     );
 
+    this.hasDiagnostics = false;
     this.emitConsoleDiagnostics = false;
     this.consoleAdvice = [];
     this.hasFocusedTest = false;
@@ -123,6 +125,7 @@ export default class TestWorkerRunner {
   locked: boolean;
   consoleAdvice: DiagnosticAdvice;
   emitConsoleDiagnostics: boolean;
+  hasDiagnostics: boolean;
 
   createConsole(): Partial<Console> {
     const addDiagnostic = (
@@ -215,9 +218,10 @@ export default class TestWorkerRunner {
     };
   }
 
-  async emitDiagnostic(diagnostic: Diagnostic) {
+  async emitDiagnostic(diagnostic: Diagnostic, ref?: TestRef) {
+    this.hasDiagnostics = true;
     await this.bridge.testError.call({
-      ref: undefined,
+      ref,
       diagnostic,
     });
   }
@@ -327,10 +331,7 @@ export default class TestWorkerRunner {
     };
 
     this.emitConsoleDiagnostics = true;
-    this.bridge.testError.send({
-      ref,
-      diagnostic,
-    });
+    this.emitDiagnostic(diagnostic, ref);
   }
 
   async teardownTest(testName: string, api: TestAPI) {
@@ -408,14 +409,11 @@ export default class TestWorkerRunner {
 
     const {foundTests} = this;
     if (foundTests.size === 0) {
-      this.bridge.testError.send({
-        ref: undefined,
-        diagnostic: {
-          location: {
-            filename: this.file.uid,
-          },
-          description: descriptions.TESTS.UNDECLARED,
+      this.emitDiagnostic({
+        location: {
+          filename: this.file.uid,
         },
+        description: descriptions.TESTS.UNDECLARED,
       });
     }
 
@@ -493,10 +491,7 @@ export default class TestWorkerRunner {
 
       if (diagnostics !== undefined) {
         for (const diagnostic of diagnostics) {
-          await this.bridge.testError.call({
-            ref: undefined,
-            diagnostic,
-          });
+          await this.emitDiagnostic(diagnostic);
         }
       }
     } catch (err) {

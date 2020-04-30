@@ -821,42 +821,54 @@ export default class TestRunner {
     }
   }
 
+  printSnapshotCounts(reporter: Reporter) {
+    const {
+      createdSnapshots,
+      deletedSnapshots,
+      updatedSnapshots,
+    } = this.progress;
+
+    const snapshotCounts: Array<{
+      count: number;
+      noun: string;
+    }> = [
+      {count: createdSnapshots, noun: 'created'},
+      {count: updatedSnapshots, noun: 'updated'},
+      {count: deletedSnapshots, noun: 'deleted'},
+    ].filter(({count}) => count > 0);
+
+    if (snapshotCounts.length === 0) {
+      return;
+    }
+
+    const first = snapshotCounts.shift()!;
+    const parts = [
+      `<number emphasis>${first.count}</number> snapshots ${first.noun}`,
+    ];
+
+    for (const {count, noun} of snapshotCounts) {
+      parts.push(`<number emphasis>${count}</emphasis> ${noun}`);
+    }
+
+    reporter.success(parts.join(', '));
+  }
+
   throwPrinter() {
     const {printer} = this;
 
-    printer.onBeforeFooterPrint((reporter, isError) => {
+    printer.onFooterPrint((reporter, isError) => {
       this.printCoverageReport(isError);
-
-      const {
-        createdSnapshots,
-        deletedSnapshots,
-        updatedSnapshots,
-      } = this.progress;
-      const snapshotLogParts: Array<string> = [];
-      if (createdSnapshots > 0) {
-        snapshotLogParts.push(
-          `<success><number emphasis>${createdSnapshots}</number> created</success>`,
-        );
-      }
-      if (updatedSnapshots > 0) {
-        snapshotLogParts.push(
-          `<success><number emphasis>${updatedSnapshots}</number> updated</success>`,
-        );
-      }
-      if (deletedSnapshots > 0) {
-        snapshotLogParts.push(
-          `<error><number emphasis>${deletedSnapshots}</number> deleted</error>`,
-        );
-      }
-      if (snapshotLogParts.length > 0) {
-        reporter.logAll(`Snapshots: ${snapshotLogParts.join(' ')}`);
-      }
+      this.printSnapshotCounts(reporter);
 
       if (!isError) {
         reporter.success(
           `All <emphasis>${humanizeNumber(this.progress.totalTests)}</emphasis> tests passed!`,
         );
+        return true;
       }
+
+      // Show default footer
+      return false;
     });
 
     throw printer;
