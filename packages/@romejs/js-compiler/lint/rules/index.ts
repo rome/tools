@@ -12,6 +12,7 @@ import defaultExportSameBasename from './defaultExportSameBasename';
 import doubleEquals from './doubleEquals';
 import duplicateImportSource from './duplicateImportSource';
 import emptyBlocks from './emptyBlocks';
+import emptyMatches from './emptyMatches';
 import getterReturn from './getterReturn';
 import inconsiderateLanguage from './inconsiderateLanguage';
 import noArguments from './noArguments';
@@ -51,7 +52,6 @@ import sparseArray from './sparseArray';
 import undeclaredVariables from './undeclaredVariables';
 import unsafeNegation from './unsafeNegation';
 import unusedVariables from './unusedVariables';
-import emptyMatches from './emptyMatches';
 
 // Add transforms in alphabetical order.
 export const lintTransforms = [

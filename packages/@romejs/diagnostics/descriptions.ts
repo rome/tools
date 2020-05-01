@@ -399,6 +399,10 @@ export const descriptions = createMessages({
         },
       ],
     },
+    EMPTY_MATCHES: {
+      category: 'lint/emptyMatches',
+      message: 'The expression can return empty matches, and may match infinitely in some use cases',
+    },
     NEGATE_DOUBLE_EQUALS: {
       category: 'lint/doubleEquals',
       message: 'Use !== instead of !=',
@@ -489,10 +493,6 @@ export const descriptions = createMessages({
     NO_EMPTY_CHAR_SET: {
       category: 'lint/noEmptyCharacterClass',
       message: 'Empty character classes in regular expressions are not allowed',
-    },
-    EMPTY_MATCHES: {
-      category: 'lint/emptyMatches',
-      message: 'The expression can return empty matches, and may match infinitely in some use cases',
     },
     NO_DUPLICATE_KEYS: (key: string) => ({
       category: 'lint/noDuplicateKeys',
