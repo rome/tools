@@ -98,7 +98,7 @@ export async function testLint(
     }),
   );
 
-  await t.snapshotNamed(`${snapshotName}: formatted`, res.src);
+  await t.namedSnapshot(`${snapshotName}: formatted`, res.src);
 
   t.clearAdvice();
 }

@@ -623,7 +623,7 @@ export default class TestAPI implements TestHelper {
     });
   }
 
-  snapshotNamed(
+  namedSnapshot(
     entryName: string,
     expected: unknown,
     message?: string,

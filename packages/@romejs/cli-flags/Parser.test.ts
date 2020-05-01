@@ -38,7 +38,7 @@ async function testParser<T>(
 
   const {diagnostics} = await catchDiagnostics(async () => {
     const flags = await parser.init();
-    await t.snapshotNamed('flags', flags);
+    await t.namedSnapshot('flags', flags);
     if (callback !== undefined) {
       callback(parser, flags);
     }
@@ -54,11 +54,11 @@ async function testParser<T>(
     });
   }
 
-  await t.snapshotNamed('output', stream.read());
+  await t.namedSnapshot('output', stream.read());
 
   const helpStream = reporter.attachCaptureStream();
   await parser.showHelp();
-  await t.snapshotNamed('help', helpStream.read());
+  await t.namedSnapshot('help', helpStream.read());
 }
 
 test(
