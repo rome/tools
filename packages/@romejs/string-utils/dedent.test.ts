@@ -15,10 +15,13 @@ test(
 
     t.is(dedent('\tx\n\t\ty\n\tz'), 'x\n\ty\nz');
 
-    t.is(dedent`
+    t.is(
+      dedent`
         if (x) {
           y = ${'1'};
         }
-      `, 'if (x) {\n  y = 1;\n}');
+      `,
+      'if (x) {\n  y = 1;\n}',
+    );
   },
 );

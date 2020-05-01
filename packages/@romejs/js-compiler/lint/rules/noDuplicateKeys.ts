@@ -6,18 +6,15 @@
  */
 
 import {Path} from '@romejs/js-compiler';
-import {ObjectMethod, ObjectProperty, SpreadProperty} from '@romejs/js-ast';
+import {ObjectMethod, ObjectProperty} from '@romejs/js-ast';
 import {TransformExitResult} from '@romejs/js-compiler/types';
 import {descriptions} from '@romejs/diagnostics';
 import {DiagnosticsDuplicateHelper} from '../../lib/DiagnosticsDuplicateHelper';
 
 function extractPropertyKey(
-  node: ObjectProperty | ObjectMethod | SpreadProperty,
+  node: ObjectProperty | ObjectMethod,
 ): string | undefined {
-  if (
-    (node.type === 'ObjectMethod' || node.type === 'ObjectProperty') &&
-    node.key.type === 'StaticPropertyKey'
-  ) {
+  if (node.key.type === 'StaticPropertyKey') {
     const {value} = node.key;
 
     if (value.type === 'PrivateName') {
@@ -46,9 +43,13 @@ export default {
       );
 
       for (const prop of node.properties) {
+        if (prop.type === 'SpreadProperty') {
+          continue;
+        }
+
         const key = extractPropertyKey(prop);
         if (key !== undefined) {
-          duplicates.addLocation(key, prop.loc);
+          duplicates.addLocation(key, prop.key.loc);
         }
       }
 

@@ -23,7 +23,7 @@ export default {
 
           if (uniqueSwitchCases.has(test.value)) {
             context.addNodeDiagnostic(
-              param,
+              test,
               descriptions.LINT.NO_DUPLICATE_CASE(test.value),
             );
           }

@@ -10,7 +10,7 @@ import {
   deriveDiagnosticFromError,
   getDiagnosticsFromError,
 } from '@romejs/diagnostics';
-import {removePrefix, removeSuffix} from '@romejs/string-utils';
+import {dedent, removePrefix, removeSuffix} from '@romejs/string-utils';
 import Bundler from '../bundler/Bundler';
 import {WebSocketInterface, createKey} from '@romejs/codec-websocket';
 import {Reporter} from '@romejs/cli-reporter';
@@ -142,20 +142,22 @@ export default class WebRequest {
 
       case '/__rome__': {
         res.writeHead(200, {'Content-Type': 'text/html'});
-        res.end(`
-          <!doctype html>
-          <html>
-            <head>
-              <meta charset="utf-8"/>
-              <title>Rome</title>
-              <link rel="stylesheet" href="https://meyerweb.com/eric/tools/css/reset/reset.css">
-            </head>
-            <body>
-              <div id="app"></div>
-              <script src="/__rome__/script.js"></script>
-            </body>
-          </html>
-        `);
+        res.end(
+          dedent`
+            <!doctype html>
+            <html>
+              <head>
+                <meta charset="utf-8">
+                <title>Rome</title>
+                <link rel="stylesheet" href="https://meyerweb.com/eric/tools/css/reset/reset.css">
+              </head>
+              <body>
+                <div id="app"></div>
+                <script src="/__rome__/script.js"></script>
+              </body>
+            </html>
+          `,
+        );
         break;
       }
 

@@ -8,14 +8,14 @@
 
 ```
 
- unknown:3:4 lint/duplicateImportSource FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:2 lint/duplicateImportSource FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ This module has already been imported
 
-    2 │     import foo from './testdummy.ts';
-  > 3 │     import {bar} from './testdummy.ts';
-      │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-    4 │     import type {fooType} from './testdummy.ts';
+    1 │ import foo from './testdummy.ts';
+  > 2 │ import {bar} from './testdummy.ts';
+      │ ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    3 │ import type {fooType} from './testdummy.ts';
 
   ℹ Previously imported here
 
@@ -35,6 +35,5 @@ import type {fooType} from './testdummy.ts';
 const typedFoo: fooType = {
   type: 'foo',
 };
-console.log(typedFoo, foo, bar);
 
 ```
