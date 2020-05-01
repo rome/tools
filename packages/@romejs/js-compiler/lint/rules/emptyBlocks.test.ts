@@ -10,23 +10,36 @@ import {testLintMultiple} from '../testHelpers';
 import {dedent} from '@romejs/string-utils';
 
 test(
-  'prefer while',
+  'empty blocks',
   async (t) => {
     await testLintMultiple(
       t,
       [
+        // VALID
         dedent`
-          for (; x.running;) {
-            x.step();
+          if (foo) foo;
+        `,
+        dedent`
+          if (foo) {
+            foo;
           }
         `,
         dedent`
-          for (;;) {
-            doSomething();
+          if (foo) {
+            // empty
           }
+        `,
+        // INVALID
+        dedent`
+          if (foo) {}
+        `,
+        dedent`
+          if (foo) {
+            // foo;
+          } else {}
         `,
       ],
-      {category: 'lint/preferWhile'},
+      {category: 'lint/emptyBlocks'},
     );
   },
 );
