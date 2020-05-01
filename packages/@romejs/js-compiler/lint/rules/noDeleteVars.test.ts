@@ -7,13 +7,18 @@
 
 import {test} from 'rome';
 import {testLint} from '../testHelpers';
+import {dedent} from '@romejs/string-utils';
 
 test(
   'no delete vars',
   async (t) => {
-    await testLint(t, `
-  const foo = "test";
-  delete foo;
-  `, {category: 'lint/noDeleteVars', sourceType: 'script'});
+    await testLint(
+      t,
+      dedent`
+        const foo = "test";
+        delete foo;
+      `,
+      {category: 'lint/noDeleteVars', sourceType: 'script'},
+    );
   },
 );

@@ -7,18 +7,27 @@
 
 import {test} from 'rome';
 import {testLint} from '../testHelpers';
+import {dedent} from '@romejs/string-utils';
 
 test(
   'no label var',
   async (t) => {
-    await testLint(t, `
-      const x = "test";
-      x: const y = "test";
-      `, {category: 'lint/noLabelVar'});
+    await testLint(
+      t,
+      dedent`
+        const x = 'test';
+        x: const y = 'test';
+      `,
+      {category: 'lint/noLabelVar'},
+    );
 
-    await testLint(t, `
-      const x = "test";
-      z: const y = "test";
-      `, {category: 'lint/noLabelVar'});
+    await testLint(
+      t,
+      dedent`
+        const x = 'test';
+        z: const y = 'test';
+      `,
+      {category: 'lint/noLabelVar'},
+    );
   },
 );

@@ -8,14 +8,13 @@
 
 ```
 
- unknown:3:4 lint/noDelete FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:2 lint/noDelete FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected 'delete' operator.
 
-    2 │     const arr = [['a','b','c'], [1, 2, 3]];
-  > 3 │     delete arr[0][2];
-      │     ^^^^^^^^^^^^^^^^
-    4 │    
+    1 │ const arr = [['a','b','c'], [1, 2, 3]];
+  > 2 │ delete arr[0][2];
+      │ ^^^^^^^^^^^^^^^^
 
   ℹ Recommended fix
 
@@ -40,14 +39,13 @@ arr[0][2] = undefined;
 
 ```
 
- unknown:3:4 lint/noDelete FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:2 lint/noDelete FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected 'delete' operator.
 
-    2 │     const obj = { a: { b: { c: 123 } } };
-  > 3 │     delete obj.a.b.c;
-      │     ^^^^^^^^^^^^^^^^
-    4 │    
+    1 │ const obj = {a: {b: {c: 123}}};
+  > 2 │ delete obj.a.b.c;
+      │ ^^^^^^^^^^^^^^^^
 
   ℹ Recommended fix
 

@@ -7,15 +7,19 @@
 
 import {test} from 'rome';
 import {testLint} from '../testHelpers';
+import {dedent} from '@romejs/string-utils';
 
 test(
   'no duplicated args allowed',
   async (t) => {
-    await testLint(t, `
-  function hello(a, a) {
-    console.log("Hello);
-  }
-  hello();
-  `, {category: 'lint/noDupeArgs'});
+    await testLint(
+      t,
+      dedent`
+        function hello(a, a) {
+          console.log("Hello);
+        }
+      `,
+      {category: 'lint/noDupeArgs'},
+    );
   },
 );
