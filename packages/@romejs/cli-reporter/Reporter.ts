@@ -37,6 +37,7 @@ import {
 } from '@romejs/string-markup/types';
 import select from './select';
 import {MarkupLinesAndWidth} from '@romejs/string-markup/format';
+import {onKeypress} from './util';
 
 type ListOptions = {
   reverse?: boolean;
@@ -533,6 +534,23 @@ export default class Reporter {
       },
     );
     return answer === 'yes';
+  }
+
+  async confirm(message: string = 'Press any key to continue'): Promise<void> {
+    this.logAll(`<dim>${message}</dim>`, {newline: false});
+
+    await new Promise((resolve) => {
+      const keypress = onKeypress(
+        this,
+        () => {
+          keypress.finish();
+          resolve();
+        },
+      );
+    });
+
+    // Newline
+    this.logAll('');
   }
 
   async radio<Options extends SelectOptions>(

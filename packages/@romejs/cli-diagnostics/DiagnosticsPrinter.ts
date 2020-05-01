@@ -363,6 +363,24 @@ export default class DiagnosticsPrinter extends Error {
     this.reporter.redirectOutToErr(restoreRedirect);
   }
 
+  getOutdatedFiles(diag: Diagnostic): UnknownFilePathSet {
+    let outdatedFiles: UnknownFilePathSet = new UnknownFilePathSet();
+    for (const {
+      path,
+      mtime: expectedMtime,
+    } of this.getDependenciesFromDiagnostics([diag])) {
+      const mtime = this.fileMtimes.get(path);
+      if (
+        mtime !== undefined &&
+        expectedMtime !== undefined &&
+        mtime > expectedMtime
+      ) {
+        outdatedFiles.add(path);
+      }
+    }
+    return outdatedFiles;
+  }
+
   displayDiagnostic(diag: Diagnostic) {
     const {reporter} = this;
     const {start, end, filename} = diag.location;
@@ -395,23 +413,8 @@ export default class DiagnosticsPrinter extends Error {
       }
     }
 
-    // Check if any files this diagnostic depends on have changed
-    let outdatedFiles: UnknownFilePathSet = new UnknownFilePathSet();
-    for (const {
-      path,
-      mtime: expectedMtime,
-    } of this.getDependenciesFromDiagnostics([diag])) {
-      const mtime = this.fileMtimes.get(path);
-      if (
-        mtime !== undefined &&
-        expectedMtime !== undefined &&
-        mtime > expectedMtime
-      ) {
-        outdatedFiles.add(path);
-      }
-    }
-
     const outdatedAdvice: DiagnosticAdvice = [];
+    const outdatedFiles = this.getOutdatedFiles(diag);
     const isOutdated = outdatedFiles.size > 0;
     if (isOutdated) {
       const outdatedFilesArr = Array.from(outdatedFiles, (path) => path.join());

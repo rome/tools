@@ -8,7 +8,7 @@
 import {ansiEscapes} from '@romejs/string-markup';
 import Reporter from './Reporter';
 import {SelectArguments, SelectOption, SelectOptions} from './types';
-import readline = require('readline');
+import {onKeypress, setRawMode} from './util';
 
 function formatShortcut({shortcut}: SelectOption): string {
   if (shortcut === undefined) {
@@ -144,21 +144,71 @@ export default async function select<Options extends SelectOptions>(
     }
   }
 
-  let onkeypress = undefined;
-
   const stdin = reporter.getStdin();
 
   render();
 
-  readline.emitKeypressEvents(stdin);
-
-  if (stdin.isTTY && stdin.setRawMode !== undefined) {
-    stdin.setRawMode(true);
-  }
-
-  stdin.resume();
+  setRawMode(stdin, true);
 
   await new Promise((resolve) => {
+    const keypress = onKeypress(
+      reporter,
+      (key) => {
+        // Check if this is an option shortcut
+        if (!key.ctrl) {
+          for (const optionName in options) {
+            const option: undefined | SelectOption = options[optionName];
+            if (option === undefined) {
+              continue;
+            }
+
+            const {shortcut} = option;
+            if (shortcut === key.name) {
+              if (radio) {
+                selectedOptions.clear();
+                selectedOptions.add(optionName);
+                finish();
+              } else {
+                toggleOption(optionName);
+              }
+              return;
+            }
+          }
+        }
+
+        switch (key.name) {
+          case 'up': {
+            activeOption--;
+            break;
+          }
+
+          case 'down': {
+            activeOption++;
+            break;
+          }
+
+          case 'space': {
+            if (!radio) {
+              toggleOption((optionNames[activeOption] as string));
+            }
+            break;
+          }
+
+          case 'return': {
+            finish();
+            return;
+          }
+
+          default:
+            return;
+        }
+
+        boundActive();
+        cleanup();
+        render();
+      },
+    );
+
     function finish() {
       cleanup();
 
@@ -180,97 +230,11 @@ export default async function select<Options extends SelectOptions>(
       }
       reporter.logAll(prompt);
 
+      // Stop listening for keypress
+      keypress.finish();
       resolve();
     }
-    onkeypress = (
-      chunk: Buffer,
-      key: {
-        name: string;
-        ctrl: boolean;
-      },
-    ) => {
-      // Check if this is an option shortcut
-      if (!key.ctrl) {
-        for (const optionName in options) {
-          const option: undefined | SelectOption = options[optionName];
-          if (option === undefined) {
-            continue;
-          }
-
-          const {shortcut} = option;
-          if (shortcut === key.name) {
-            if (radio) {
-              selectedOptions.clear();
-              selectedOptions.add(optionName);
-              finish();
-            } else {
-              toggleOption(optionName);
-            }
-            return;
-          }
-        }
-      }
-
-      switch (key.name) {
-        case 'up': {
-          activeOption--;
-          break;
-        }
-
-        case 'down': {
-          activeOption++;
-          break;
-        }
-
-        case 'space': {
-          if (!radio) {
-            toggleOption((optionNames[activeOption] as string));
-          }
-          break;
-        }
-
-        case 'c': {
-          if (key.ctrl) {
-            reporter.br(true);
-            reporter.warn('Cancelled by user');
-            process.exit(1);
-          }
-          return;
-        }
-
-        case 'escape': {
-          reporter.br(true);
-          reporter.warn('Cancelled by user');
-          process.exit(1);
-          return;
-        }
-
-        case 'return': {
-          finish();
-          return;
-        }
-
-        default:
-          return;
-      }
-
-      boundActive();
-      cleanup();
-      render();
-    };
-
-    stdin.addListener('keypress', onkeypress);
   });
-
-  if (onkeypress !== undefined) {
-    stdin.removeListener('keypress', onkeypress);
-  }
-
-  if (stdin.isTTY && stdin.setRawMode !== undefined) {
-    stdin.setRawMode(false);
-  }
-
-  stdin.pause();
 
   return selectedOptions;
 }
