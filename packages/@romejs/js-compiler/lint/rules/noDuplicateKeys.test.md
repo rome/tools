@@ -8,15 +8,15 @@
 
 ```
 
- unknown:3:4 lint/noDuplicateKeys ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:2:2 lint/noDuplicateKeys ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Duplicate key test
 
-    2 │   const foo = {
-  > 3 │     test: true,
-      │     ^^^^^^^^^^
-    4 │     test2: true,
-    5 │     test: false,
+    1 │ const foo = {
+  > 2 │   test: true,
+      │   ^^^^
+    3 │   test2: true,
+    4 │   test: false,
 
   ℹ Defined already here
 
@@ -34,8 +34,5 @@ const foo = {
   test2: true,
   test: false,
 };
-
-// mark const as used
-console.log(foo);
 
 ```

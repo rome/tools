@@ -7,39 +7,53 @@
 
 import {test} from 'rome';
 import {testLint} from '../testHelpers';
+import {dedent} from '@romejs/string-utils';
 
 test(
   'no arguments',
   async (t) => {
-    await testLint(t, `
-    function f() {
-      console.log(arguments);
-    }
-    f();
-  `, {category: 'lint/noArguments'});
+    await testLint(
+      t,
+      dedent`
+        function f() {
+          console.log(arguments);
+        }
+      `,
+      {category: 'lint/noArguments'},
+    );
 
-    await testLint(t, `
-    (function () {
-      console.log(arguments);
-    })();
-  `, {category: 'lint/noArguments'});
+    await testLint(
+      t,
+      dedent`
+        (function () {
+          console.log(arguments);
+        })();
+      `,
+      {category: 'lint/noArguments'},
+    );
 
-    await testLint(t, `
-    class C {
-      fn() {
-        console.log(arguments);
-      }
-    }
-    (new C()).fn();
-  `, {category: 'lint/noArguments'});
+    await testLint(
+      t,
+      dedent`
+        class C {
+          fn() {
+            console.log(arguments);
+          }
+        }
+      `,
+      {category: 'lint/noArguments'},
+    );
 
-    await testLint(t, `
-    const o = {
-      fn() {
-        console.log(arguments);
-      }
-    };
-    o.fn();
-  `, {category: 'lint/noArguments'});
+    await testLint(
+      t,
+      dedent`
+        const o = {
+          fn() {
+            console.log(arguments);
+          },
+        };
+      `,
+      {category: 'lint/noArguments'},
+    );
   },
 );

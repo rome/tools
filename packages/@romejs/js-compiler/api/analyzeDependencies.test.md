@@ -20,14 +20,14 @@ Object {
       loc: Object {
         filename: 'unknown'
         end: Object {
-          column: 25
-          index: 26
-          line: 2
+          column: 19
+          index: 19
+          line: 1
         }
         start: Object {
-          column: 20
-          index: 21
-          line: 2
+          column: 14
+          index: 14
+          line: 1
         }
       }
     }
@@ -35,21 +35,6 @@ Object {
   diagnostics: Array [
     Object {
       origins: Array [Object {category: 'analyzeDependencies'}]
-      description: Object {
-        category: 'analyzeDependencies/cjsExportInES'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'You cannot use CommonJS exports in an ES module'}
-        advice: Array [
-          action {
-            command: 'lint'
-            hidden: true
-            instruction: 'To suppress this error run'
-            noun: 'Add suppression comment'
-            shortcut: 's'
-            args: Array ['unknown']
-            commandFlags: Object {decisions: Array ['suppress-analyzeDependencies/cjsExportInES-unknown-2']}
-          }
-        ]
-      }
       location: Object {
         filename: 'unknown'
         language: 'js'
@@ -57,15 +42,41 @@ Object {
         mtime: undefined
         sourceType: 'module'
         end: Object {
-          column: 25
-          index: 26
-          line: 2
+          column: 19
+          index: 19
+          line: 1
         }
         start: Object {
-          column: 6
-          index: 7
-          line: 2
+          column: 0
+          index: 0
+          line: 1
         }
+      }
+      description: Object {
+        category: 'analyzeDependencies/cjsExportInES'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'You cannot use CommonJS exports in an ES module'}
+        advice: Array [
+          action {
+            command: 'lint'
+            extra: undefined
+            hidden: true
+            instruction: 'To suppress this error run'
+            noun: 'Add suppression comment'
+            shortcut: 's'
+            args: Array ['unknown']
+            commandFlags: Object {decisions: Array ['suppress-analyzeDependencies/cjsExportInES-unknown-1']}
+          }
+          action {
+            args: Array []
+            command: 'lint'
+            extra: true
+            hidden: true
+            instruction: 'To add suppression comments for ALL files with this category run'
+            noun: 'Add suppression comments for ALL files with this category'
+            shortcut: undefined
+            commandFlags: Object {decisions: Array ['global-suppress-analyzeDependencies/cjsExportInES']}
+          }
+        ]
       }
     }
   ]
@@ -86,14 +97,14 @@ Object {
     foo: Object {
       filename: 'unknown'
       end: Object {
-        column: 22
-        index: 23
-        line: 2
+        column: 16
+        index: 16
+        line: 1
       }
       start: Object {
-        column: 19
-        index: 20
-        line: 2
+        column: 13
+        index: 13
+        line: 1
       }
     }
   }
@@ -105,14 +116,14 @@ Object {
       loc: Object {
         filename: 'unknown'
         end: Object {
-          column: 22
-          index: 23
-          line: 2
+          column: 16
+          index: 16
+          line: 1
         }
         start: Object {
-          column: 19
-          index: 20
-          line: 2
+          column: 13
+          index: 13
+          line: 1
         }
       }
     }
@@ -142,14 +153,14 @@ Object {
       loc: Object {
         filename: 'unknown'
         end: Object {
-          column: 18
-          index: 19
-          line: 2
+          column: 12
+          index: 12
+          line: 1
         }
         start: Object {
-          column: 13
-          index: 14
-          line: 2
+          column: 7
+          index: 7
+          line: 1
         }
       }
     }
@@ -186,27 +197,27 @@ Object {
     bar: Object {
       filename: 'unknown'
       end: Object {
-        column: 15
-        index: 16
-        line: 2
+        column: 11
+        index: 11
+        line: 1
       }
       start: Object {
-        column: 12
-        index: 13
-        line: 2
+        column: 8
+        index: 8
+        line: 1
       }
     }
     foo: Object {
       filename: 'unknown'
       end: Object {
-        column: 13
-        index: 43
-        line: 3
+        column: 9
+        index: 34
+        line: 2
       }
       start: Object {
-        column: 10
-        index: 40
-        line: 3
+        column: 6
+        index: 31
+        line: 2
       }
     }
   }
@@ -220,14 +231,14 @@ Object {
       loc: Object {
         filename: 'unknown'
         end: Object {
-          column: 27
-          index: 28
-          line: 2
+          column: 23
+          index: 23
+          line: 1
         }
         start: Object {
-          column: 22
-          index: 23
-          line: 2
+          column: 18
+          index: 18
+          line: 1
         }
       }
       names: Array [
@@ -236,14 +247,14 @@ Object {
           loc: Object {
             filename: 'unknown'
             end: Object {
-              column: 15
-              index: 16
-              line: 2
+              column: 11
+              index: 11
+              line: 1
             }
             start: Object {
-              column: 12
-              index: 13
-              line: 2
+              column: 8
+              index: 8
+              line: 1
             }
           }
         }
@@ -266,14 +277,14 @@ Object {
     foo: Object {
       filename: 'unknown'
       end: Object {
-        column: 22
-        index: 23
-        line: 2
+        column: 16
+        index: 16
+        line: 1
       }
       start: Object {
-        column: 19
-        index: 20
-        line: 2
+        column: 13
+        index: 13
+        line: 1
       }
     }
   }
@@ -299,14 +310,14 @@ Object {
         mtime: undefined
         sourceType: 'script'
         end: Object {
-          column: 31
-          index: 32
-          line: 2
+          column: 25
+          index: 25
+          line: 1
         }
         start: Object {
-          column: 6
-          index: 7
-          line: 2
+          column: 0
+          index: 0
+          line: 1
         }
       }
     }
@@ -319,14 +330,14 @@ Object {
       loc: Object {
         filename: 'unknown'
         end: Object {
-          column: 22
-          index: 23
-          line: 2
+          column: 16
+          index: 16
+          line: 1
         }
         start: Object {
-          column: 19
-          index: 20
-          line: 2
+          column: 13
+          index: 13
+          line: 1
         }
       }
     }
@@ -337,14 +348,14 @@ Object {
       loc: Object {
         filename: 'unknown'
         end: Object {
-          column: 25
-          index: 58
-          line: 3
+          column: 19
+          index: 45
+          line: 2
         }
         start: Object {
-          column: 20
-          index: 53
-          line: 3
+          column: 14
+          index: 40
+          line: 2
         }
       }
     }
@@ -372,14 +383,14 @@ Object {
     yes: Object {
       filename: 'unknown'
       end: Object {
-        column: 18
-        index: 43
-        line: 4
+        column: 12
+        index: 30
+        line: 3
       }
       start: Object {
-        column: 15
-        index: 40
-        line: 4
+        column: 9
+        index: 27
+        line: 3
       }
     }
   }
@@ -394,14 +405,14 @@ Object {
       loc: Object {
         filename: 'unknown'
         end: Object {
-          column: 20
-          index: 21
-          line: 2
+          column: 14
+          index: 14
+          line: 1
         }
         start: Object {
-          column: 13
-          index: 14
-          line: 2
+          column: 7
+          index: 7
+          line: 1
         }
       }
     }
@@ -415,14 +426,14 @@ Object {
       loc: Object {
         filename: 'unknown'
         end: Object {
-          column: 22
-          index: 70
-          line: 5
+          column: 16
+          index: 51
+          line: 4
         }
         start: Object {
-          column: 15
-          index: 63
-          line: 5
+          column: 9
+          index: 44
+          line: 4
         }
       }
     }
@@ -449,14 +460,14 @@ Object {
       loc: Object {
         filename: 'unknown'
         end: Object {
-          column: 33
-          index: 34
-          line: 2
+          column: 27
+          index: 27
+          line: 1
         }
         start: Object {
-          column: 20
-          index: 21
-          line: 2
+          column: 14
+          index: 14
+          line: 1
         }
       }
     }
@@ -489,14 +500,14 @@ Object {
       loc: Object {
         filename: 'unknown'
         end: Object {
-          column: 36
-          index: 37
-          line: 2
+          column: 30
+          index: 30
+          line: 1
         }
         start: Object {
-          column: 23
-          index: 24
-          line: 2
+          column: 17
+          index: 17
+          line: 1
         }
       }
     }
@@ -524,40 +535,40 @@ Object {
     Bar: Object {
       filename: 'unknown'
       end: Object {
-        column: 22
-        index: 83
-        line: 4
+        column: 16
+        index: 64
+        line: 3
       }
       start: Object {
-        column: 19
-        index: 80
-        line: 4
+        column: 13
+        index: 61
+        line: 3
       }
     }
     foo: Object {
       filename: 'unknown'
       end: Object {
-        column: 25
-        index: 55
-        line: 3
+        column: 19
+        index: 42
+        line: 2
       }
       start: Object {
-        column: 22
-        index: 52
-        line: 3
+        column: 16
+        index: 39
+        line: 2
       }
     }
     yes: Object {
       filename: 'unknown'
       end: Object {
-        column: 22
-        index: 23
-        line: 2
+        column: 16
+        index: 16
+        line: 1
       }
       start: Object {
-        column: 19
-        index: 20
-        line: 2
+        column: 13
+        index: 13
+        line: 1
       }
     }
   }
@@ -569,14 +580,14 @@ Object {
       loc: Object {
         filename: 'unknown'
         end: Object {
-          column: 22
-          index: 23
-          line: 2
+          column: 16
+          index: 16
+          line: 1
         }
         start: Object {
-          column: 19
-          index: 20
-          line: 2
+          column: 13
+          index: 13
+          line: 1
         }
       }
     }
@@ -587,14 +598,14 @@ Object {
       loc: Object {
         filename: 'unknown'
         end: Object {
-          column: 25
-          index: 55
-          line: 3
+          column: 19
+          index: 42
+          line: 2
         }
         start: Object {
-          column: 22
-          index: 52
-          line: 3
+          column: 16
+          index: 39
+          line: 2
         }
       }
     }
@@ -605,14 +616,14 @@ Object {
       loc: Object {
         filename: 'unknown'
         end: Object {
-          column: 22
-          index: 83
-          line: 4
+          column: 16
+          index: 64
+          line: 3
         }
         start: Object {
-          column: 19
-          index: 80
-          line: 4
+          column: 13
+          index: 61
+          line: 3
         }
       }
     }
@@ -639,14 +650,14 @@ Object {
       loc: Object {
         filename: 'unknown'
         end: Object {
-          column: 26
-          index: 27
-          line: 2
+          column: 20
+          index: 20
+          line: 1
         }
         start: Object {
-          column: 21
-          index: 22
-          line: 2
+          column: 15
+          index: 15
+          line: 1
         }
       }
     }
@@ -673,14 +684,14 @@ Object {
       loc: Object {
         filename: 'unknown'
         end: Object {
-          column: 17
-          index: 18
-          line: 2
+          column: 11
+          index: 11
+          line: 1
         }
         start: Object {
-          column: 14
-          index: 15
-          line: 2
+          column: 8
+          index: 8
+          line: 1
         }
       }
     }
@@ -692,14 +703,14 @@ Object {
       loc: Object {
         filename: 'unknown'
         end: Object {
-          column: 22
-          index: 23
-          line: 2
+          column: 16
+          index: 16
+          line: 1
         }
         start: Object {
-          column: 19
-          index: 20
-          line: 2
+          column: 13
+          index: 13
+          line: 1
         }
       }
     }
@@ -711,14 +722,14 @@ Object {
       loc: Object {
         filename: 'unknown'
         end: Object {
-          column: 37
-          index: 38
-          line: 2
+          column: 31
+          index: 31
+          line: 1
         }
         start: Object {
-          column: 24
-          index: 25
-          line: 2
+          column: 18
+          index: 18
+          line: 1
         }
       }
     }
@@ -730,14 +741,14 @@ Object {
       loc: Object {
         filename: 'unknown'
         end: Object {
-          column: 49
-          index: 50
-          line: 2
+          column: 43
+          index: 43
+          line: 1
         }
         start: Object {
-          column: 39
-          index: 40
-          line: 2
+          column: 33
+          index: 33
+          line: 1
         }
       }
     }
@@ -752,14 +763,14 @@ Object {
       loc: Object {
         filename: 'unknown'
         end: Object {
-          column: 64
-          index: 65
-          line: 2
+          column: 58
+          index: 58
+          line: 1
         }
         start: Object {
-          column: 56
-          index: 57
-          line: 2
+          column: 50
+          index: 50
+          line: 1
         }
       }
       names: Array [
@@ -768,14 +779,14 @@ Object {
           loc: Object {
             filename: 'unknown'
             end: Object {
-              column: 17
-              index: 18
-              line: 2
+              column: 11
+              index: 11
+              line: 1
             }
             start: Object {
-              column: 14
-              index: 15
-              line: 2
+              column: 8
+              index: 8
+              line: 1
             }
           }
         }
@@ -784,14 +795,14 @@ Object {
           loc: Object {
             filename: 'unknown'
             end: Object {
-              column: 22
-              index: 23
-              line: 2
+              column: 16
+              index: 16
+              line: 1
             }
             start: Object {
-              column: 19
-              index: 20
-              line: 2
+              column: 13
+              index: 13
+              line: 1
             }
           }
         }
@@ -800,14 +811,14 @@ Object {
           loc: Object {
             filename: 'unknown'
             end: Object {
-              column: 37
-              index: 38
-              line: 2
+              column: 31
+              index: 31
+              line: 1
             }
             start: Object {
-              column: 24
-              index: 25
-              line: 2
+              column: 18
+              index: 18
+              line: 1
             }
           }
         }
@@ -816,14 +827,14 @@ Object {
           loc: Object {
             filename: 'unknown'
             end: Object {
-              column: 49
-              index: 50
-              line: 2
+              column: 43
+              index: 43
+              line: 1
             }
             start: Object {
-              column: 39
-              index: 40
-              line: 2
+              column: 33
+              index: 33
+              line: 1
             }
           }
         }
@@ -850,14 +861,14 @@ Object {
       loc: Object {
         filename: 'unknown'
         end: Object {
-          column: 29
-          index: 30
-          line: 2
+          column: 23
+          index: 23
+          line: 1
         }
         start: Object {
-          column: 6
-          index: 7
-          line: 2
+          column: 0
+          index: 0
+          line: 1
         }
       }
     }
@@ -873,14 +884,14 @@ Object {
       loc: Object {
         filename: 'unknown'
         end: Object {
-          column: 28
-          index: 29
-          line: 2
+          column: 22
+          index: 22
+          line: 1
         }
         start: Object {
-          column: 20
-          index: 21
-          line: 2
+          column: 14
+          index: 14
+          line: 1
         }
       }
     }
@@ -902,14 +913,14 @@ Object {
     bar: Object {
       filename: 'unknown'
       end: Object {
-        column: 16
-        index: 17
-        line: 2
+        column: 10
+        index: 10
+        line: 1
       }
       start: Object {
-        column: 13
-        index: 14
-        line: 2
+        column: 7
+        index: 7
+        line: 1
       }
     }
   }
@@ -923,14 +934,14 @@ Object {
       loc: Object {
         filename: 'unknown'
         end: Object {
-          column: 30
-          index: 31
-          line: 2
+          column: 24
+          index: 24
+          line: 1
         }
         start: Object {
-          column: 22
-          index: 23
-          line: 2
+          column: 16
+          index: 16
+          line: 1
         }
       }
       names: Array [
@@ -939,14 +950,14 @@ Object {
           loc: Object {
             filename: 'unknown'
             end: Object {
-              column: 16
-              index: 17
-              line: 2
+              column: 10
+              index: 10
+              line: 1
             }
             start: Object {
-              column: 6
-              index: 7
-              line: 2
+              column: 0
+              index: 0
+              line: 1
             }
           }
         }
@@ -970,53 +981,53 @@ Object {
     bar: Object {
       filename: 'unknown'
       end: Object {
-        column: 17
-        index: 18
-        line: 2
+        column: 11
+        index: 11
+        line: 1
       }
       start: Object {
-        column: 14
-        index: 15
-        line: 2
+        column: 8
+        index: 8
+        line: 1
       }
     }
     foo: Object {
       filename: 'unknown'
       end: Object {
-        column: 22
-        index: 23
-        line: 2
+        column: 16
+        index: 16
+        line: 1
       }
       start: Object {
-        column: 19
-        index: 20
-        line: 2
+        column: 13
+        index: 13
+        line: 1
       }
     }
     lol: Object {
       filename: 'unknown'
       end: Object {
-        column: 38
-        index: 39
-        line: 2
+        column: 32
+        index: 32
+        line: 1
       }
       start: Object {
-        column: 35
-        index: 36
-        line: 2
+        column: 29
+        index: 29
+        line: 1
       }
     }
     to: Object {
       filename: 'unknown'
       end: Object {
-        column: 48
-        index: 49
-        line: 2
+        column: 42
+        index: 42
+        line: 1
       }
       start: Object {
-        column: 46
-        index: 47
-        line: 2
+        column: 40
+        index: 40
+        line: 1
       }
     }
   }
@@ -1030,14 +1041,14 @@ Object {
       loc: Object {
         filename: 'unknown'
         end: Object {
-          column: 63
-          index: 64
-          line: 2
+          column: 57
+          index: 57
+          line: 1
         }
         start: Object {
-          column: 55
-          index: 56
-          line: 2
+          column: 49
+          index: 49
+          line: 1
         }
       }
       names: Array [
@@ -1046,14 +1057,14 @@ Object {
           loc: Object {
             filename: 'unknown'
             end: Object {
-              column: 17
-              index: 18
-              line: 2
+              column: 11
+              index: 11
+              line: 1
             }
             start: Object {
-              column: 14
-              index: 15
-              line: 2
+              column: 8
+              index: 8
+              line: 1
             }
           }
         }
@@ -1062,14 +1073,14 @@ Object {
           loc: Object {
             filename: 'unknown'
             end: Object {
-              column: 22
-              index: 23
-              line: 2
+              column: 16
+              index: 16
+              line: 1
             }
             start: Object {
-              column: 19
-              index: 20
-              line: 2
+              column: 13
+              index: 13
+              line: 1
             }
           }
         }
@@ -1078,14 +1089,14 @@ Object {
           loc: Object {
             filename: 'unknown'
             end: Object {
-              column: 38
-              index: 39
-              line: 2
+              column: 32
+              index: 32
+              line: 1
             }
             start: Object {
-              column: 24
-              index: 25
-              line: 2
+              column: 18
+              index: 18
+              line: 1
             }
           }
         }
@@ -1094,14 +1105,14 @@ Object {
           loc: Object {
             filename: 'unknown'
             end: Object {
-              column: 48
-              index: 49
-              line: 2
+              column: 42
+              index: 42
+              line: 1
             }
             start: Object {
-              column: 40
-              index: 41
-              line: 2
+              column: 34
+              index: 34
+              line: 1
             }
           }
         }
@@ -1133,14 +1144,14 @@ Object {
       loc: Object {
         filename: 'unknown'
         end: Object {
-          column: 35
-          index: 36
-          line: 2
+          column: 29
+          index: 29
+          line: 1
         }
         start: Object {
-          column: 27
-          index: 28
-          line: 2
+          column: 21
+          index: 21
+          line: 1
         }
       }
     }
@@ -1167,14 +1178,14 @@ Object {
       loc: Object {
         filename: 'unknown'
         end: Object {
-          column: 17
-          index: 18
-          line: 2
+          column: 11
+          index: 11
+          line: 1
         }
         start: Object {
-          column: 14
-          index: 15
-          line: 2
+          column: 8
+          index: 8
+          line: 1
         }
       }
     }
@@ -1185,14 +1196,14 @@ Object {
       loc: Object {
         filename: 'unknown'
         end: Object {
-          column: 22
-          index: 23
-          line: 2
+          column: 16
+          index: 16
+          line: 1
         }
         start: Object {
-          column: 19
-          index: 20
-          line: 2
+          column: 13
+          index: 13
+          line: 1
         }
       }
     }
@@ -1203,14 +1214,14 @@ Object {
       loc: Object {
         filename: 'unknown'
         end: Object {
-          column: 27
-          index: 28
-          line: 2
+          column: 21
+          index: 21
+          line: 1
         }
         start: Object {
-          column: 24
-          index: 25
-          line: 2
+          column: 18
+          index: 18
+          line: 1
         }
       }
     }
@@ -1232,14 +1243,14 @@ Object {
     yeah: Object {
       filename: 'unknown'
       end: Object {
-        column: 19
-        index: 55
-        line: 4
+        column: 13
+        index: 42
+        line: 3
       }
       start: Object {
-        column: 15
-        index: 51
-        line: 4
+        column: 9
+        index: 38
+        line: 3
       }
     }
   }
@@ -1254,14 +1265,14 @@ Object {
       loc: Object {
         filename: 'unknown'
         end: Object {
-          column: 32
-          index: 33
-          line: 2
+          column: 26
+          index: 26
+          line: 1
         }
         start: Object {
-          column: 27
-          index: 28
-          line: 2
+          column: 21
+          index: 21
+          line: 1
         }
       }
     }
@@ -1275,14 +1286,14 @@ Object {
       loc: Object {
         filename: 'unknown'
         end: Object {
-          column: 22
-          index: 82
-          line: 5
+          column: 16
+          index: 63
+          line: 4
         }
         start: Object {
-          column: 8
-          index: 68
-          line: 5
+          column: 2
+          index: 49
+          line: 4
         }
       }
     }
@@ -1304,14 +1315,14 @@ Object {
   firstTopAwaitLocation: Object {
     filename: 'unknown'
     end: Object {
-      column: 20
-      index: 21
-      line: 2
+      column: 14
+      index: 14
+      line: 1
     }
     start: Object {
-      column: 6
-      index: 7
-      line: 2
+      column: 0
+      index: 0
+      line: 1
     }
   }
 }
@@ -1339,14 +1350,14 @@ Object {
     yes: Object {
       filename: 'unknown'
       end: Object {
-        column: 18
-        index: 90
-        line: 7
+        column: 12
+        index: 59
+        line: 6
       }
       start: Object {
-        column: 15
-        index: 87
-        line: 7
+        column: 9
+        index: 56
+        line: 6
       }
     }
   }
