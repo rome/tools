@@ -16,7 +16,7 @@ test(
       t,
       dedent`
         function hello(a, a) {
-          console.log("Hello);
+          //
         }
       `,
       {category: 'lint/noDupeArgs'},
