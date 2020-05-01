@@ -6,6 +6,8 @@
  */
 
 import {ReporterProgress} from './types';
+import Reporter from './Reporter';
+import readline = require('readline');
 
 export function mergeProgresses(
   progresses: Array<ReporterProgress>,
@@ -71,4 +73,64 @@ export function mergeProgresses(
       }
     },
   };
+}
+
+type Key = {
+  name: string;
+  ctrl: boolean;
+};
+
+export function onKeypress(
+  reporter: Reporter,
+  callback: (key: Key) => void,
+): {
+  finish: () => void;
+} {
+  const stdin = reporter.getStdin();
+
+  setRawMode(stdin, true);
+  readline.emitKeypressEvents(stdin);
+
+  function onkeypress(chunk: Buffer, key: Key) {
+    switch (key.name) {
+      case 'c': {
+        if (key.ctrl) {
+          reporter.br(true);
+          reporter.warn('Cancelled by user');
+          process.exit(1);
+        }
+        return;
+      }
+
+      case 'escape': {
+        reporter.br(true);
+        reporter.warn('Cancelled by user');
+        process.exit(1);
+        return;
+      }
+    }
+
+    callback(key);
+  }
+
+  stdin.addListener('keypress', onkeypress);
+
+  return {
+    finish() {
+      stdin.removeListener('keypress', onkeypress);
+      setRawMode(stdin, false);
+    },
+  };
+}
+
+export function setRawMode(stdin: NodeJS.ReadStream, raw: boolean) {
+  if (stdin.isTTY && stdin.setRawMode !== undefined) {
+    stdin.setRawMode(raw);
+  }
+
+  if (raw) {
+    stdin.resume();
+  } else {
+    stdin.pause();
+  }
 }

@@ -6,7 +6,7 @@
  */
 
 import ClientRequest from './ClientRequest';
-import {printDiagnostics} from '@romejs/cli-diagnostics';
+import {DiagnosticsPrinter, printDiagnostics} from '@romejs/cli-diagnostics';
 import {SelectOption} from '@romejs/cli-reporter';
 import {
   Diagnostic,
@@ -77,7 +77,7 @@ async function ask(
   diag: Diagnostic,
   req: ClientRequest,
   state: State,
-  more: boolean,
+  showMoreOptions: boolean,
 ): Promise<MasterQueryResponse> {
   const {client} = req;
   const {reporter} = client;
@@ -89,8 +89,13 @@ async function ask(
   const actions: Array<DiagnosticAdviceAction> = [];
   for (const item of advice) {
     if (item.type === 'action') {
-      if (item.extra === true && !more) {
+      // Only show extra items and hide all non-extra items when `more === true`
+      if (item.extra === true) {
         hasExtraOptions = true;
+        if (!showMoreOptions) {
+          continue;
+        }
+      } else if (showMoreOptions) {
         continue;
       }
 
@@ -129,6 +134,7 @@ async function ask(
     ignore: SelectOption;
     exit: SelectOption;
     more?: SelectOption;
+    less?: SelectOption;
   } = {
     ignore: {
       label: 'Do nothing',
@@ -141,21 +147,25 @@ async function ask(
     },
   };
 
-  if (!more && hasExtraOptions) {
-    options.more = {
-      label: 'More options...',
-      shortcut: 'm',
-    };
+  if (hasExtraOptions) {
+    if (showMoreOptions) {
+      options.more = {
+        label: 'Less options...',
+        shortcut: 'l',
+      };
+    } else {
+      options.more = {
+        label: 'More options...',
+        shortcut: 'm',
+      };
+    }
   }
 
-  printDiagnostics({
-    diagnostics: [diag],
-    suppressions: [],
-    excludeFooter: true,
-    printerOptions: {
-      reporter,
-    },
+  const printer = new DiagnosticsPrinter({
+    reporter,
   });
+  diag = printer.processor.addDiagnosticAssert(diag);
+  printer.print();
 
   const answer = await reporter.radio(
     'How do you want to resolve this?',
@@ -163,6 +173,37 @@ async function ask(
       options,
     },
   );
+
+  // Check if this diagnostic is now out of date
+  printer.fetchFileSources([diag]);
+  const outdatedFiles = printer.getOutdatedFiles(diag);
+  if (outdatedFiles.size > 0) {
+    const files = Array.from(
+      outdatedFiles,
+      (path) => `<filelink emphasis target="${path.join()}" />`,
+    );
+
+    reporter.br();
+
+    if (files.length === 1) {
+      reporter.warn(
+        `The file ${files[0]} changed while waiting for your response.`,
+      );
+    } else {
+      reporter.warn(
+        'The following diagnostic dependencies changed while waiting for your response.',
+      );
+      reporter.list(files);
+    }
+
+    await reporter.confirm('Press any key to try again');
+
+    return await check(req, state);
+  }
+
+  if (answer === 'less') {
+    return await ask(diag, req, state, false);
+  }
 
   if (answer === 'more') {
     return await ask(diag, req, state, true);
