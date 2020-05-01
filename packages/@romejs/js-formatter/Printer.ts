@@ -111,9 +111,15 @@ function print(token: Token, state: State, options: PrinterOptions): void {
 
     if (typeof token === 'string') {
       if (token !== '') {
+        // Print pending spaces
+        if (state.pendingSpaces.value > 0) {
+          write(' '.repeat(state.pendingSpaces.value), state);
+          state.pendingSpaces.value = 0;
+        }
+
         let currentLine = state.generatedLine.value;
 
-        state.buffer.push(token);
+        write(token, state);
 
         if (state.flat) {
           // If the line is too long, break the group
