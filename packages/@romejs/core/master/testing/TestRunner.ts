@@ -49,6 +49,7 @@ import {escapeMarkup, markup} from '@romejs/string-markup';
 import {MAX_WORKER_COUNT} from '@romejs/core/common/constants';
 import {TestWorkerFlags} from '@romejs/core/test-worker/TestWorker';
 import net = require('net');
+import {TestWorkerFileResult} from '@romejs/core/test-worker/TestWorkerRunner';
 
 class BridgeStructuredError extends NativeStructuredError {
   constructor(struct: Partial<StructuredError>, bridge: Bridge) {
@@ -164,6 +165,18 @@ export default class TestRunner {
     createdSnapshots: number;
   };
 
+  async processTestResult(
+    path: AbsoluteFilePath,
+    res: TestWorkerFileResult,
+  ): Promise<void> {
+    this.progress.createdSnapshots += res.snapshotCounts.created;
+    this.progress.updatedSnapshots += res.snapshotCounts.updated;
+    this.progress.deletedSnapshots += res.snapshotCounts.deleted;
+
+    // TODO
+    res.inlineSnapshotUpdates;
+  }
+
   async runWorker({bridge, process, inspector}: TestWorkerContainer) {
     const {options: opts, sourcesQueue} = this;
     const req = this.request;
@@ -213,7 +226,8 @@ export default class TestRunner {
           code,
         });
 
-        await bridge.runTest.call(id);
+        const result = await bridge.runTest.call(id);
+        await this.processTestResult(path, result);
       } finally {
         removeSourceMap();
       }
@@ -587,25 +601,6 @@ export default class TestRunner {
                 filename: ref.filename,
               },
             });
-          }
-        }
-      });
-
-      bridge.snapshotUpdated.subscribe(({event}) => {
-        switch (event) {
-          case 'create': {
-            this.progress.createdSnapshots++;
-            break;
-          }
-
-          case 'update': {
-            this.progress.updatedSnapshots++;
-            break;
-          }
-
-          case 'delete': {
-            this.progress.deletedSnapshots++;
-            break;
           }
         }
       });

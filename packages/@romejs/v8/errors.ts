@@ -25,11 +25,10 @@ export type StructuredError = {
   stack: undefined | string;
   frames: ErrorFrames;
   advice: DiagnosticAdvice;
-  framesToPop: number;
 };
 
 export class NativeStructuredError extends Error {
-  constructor(struct: Partial<StructuredError>) {
+  constructor(struct: Partial<StructuredError>, framesToShift?: number) {
     super(struct.message);
     this.name = struct.name === undefined ? 'Error' : struct.name;
     this.stack = struct.stack;
@@ -37,7 +36,7 @@ export class NativeStructuredError extends Error {
     this[ERROR_MARKUP_MESSAGE_PROP] = struct.markupMessage;
     this[ERROR_FRAMES_PROP] = struct.frames;
     this[ERROR_ADVICE_PROP] = struct.advice;
-    this[ERROR_POP_FRAMES_PROP] = struct.framesToPop;
+    this[ERROR_POP_FRAMES_PROP] = framesToShift;
   }
 
   [ERROR_MARKUP_MESSAGE_PROP]: undefined | string;
@@ -48,8 +47,9 @@ export class NativeStructuredError extends Error {
 
 export function createErrorFromStructure(
   struct: Partial<StructuredError>,
+  framesToShift: undefined | number,
 ): Error {
-  return new NativeStructuredError(struct);
+  return new NativeStructuredError(struct, framesToShift);
 }
 
 export function getErrorStructure(err: unknown): StructuredError {
@@ -59,7 +59,6 @@ export function getErrorStructure(err: unknown): StructuredError {
   let markupMessage: string | undefined = undefined;
   let frames: ErrorFrames = [];
   let advice: DiagnosticAdvice = [];
-  let framesToPop = 0;
   let looksLikeValidError = false;
 
   if (
@@ -100,9 +99,9 @@ export function getErrorStructure(err: unknown): StructuredError {
       advice = err[ERROR_ADVICE_PROP];
     }
 
-    const _framesToPop = err[ERROR_POP_FRAMES_PROP];
-    if (typeof _framesToPop === 'number') {
-      framesToPop = _framesToPop;
+    const framesToShift = err[ERROR_POP_FRAMES_PROP];
+    if (typeof framesToShift === 'number') {
+      frames = frames.slice(framesToShift);
     }
   }
 
@@ -117,7 +116,6 @@ export function getErrorStructure(err: unknown): StructuredError {
     stack,
     frames,
     advice,
-    framesToPop,
   };
 }
 

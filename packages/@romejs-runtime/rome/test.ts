@@ -85,6 +85,7 @@ export interface TestHelper {
     message?: string,
     opts?: TestSnapshotOptions,
   ): Promise<string>;
+  inlineSnapshot(received: unknown, expected?: string): void;
   snapshotNamed(
     name: string,
     expected: unknown,

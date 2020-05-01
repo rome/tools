@@ -9,6 +9,7 @@ import {Diagnostic} from '@romejs/diagnostics';
 import {TestRunnerOptions} from '../../master/testing/types';
 import {Bridge} from '@romejs/events';
 import {JSONFileReference} from '../types/files';
+import {TestWorkerFileResult} from '@romejs/core/test-worker/TestWorkerRunner';
 
 export type TestRef = {
   filename: string;
@@ -40,18 +41,7 @@ export default class TestWorkerBridge extends Bridge {
     direction: 'server->client',
   });
 
-  snapshotUpdated = this.createEvent<
-    {
-      filename: string;
-      event: 'delete' | 'update' | 'create';
-    },
-    void
-  >({
-    name: 'snapshotUpdated',
-    direction: 'server<-client',
-  });
-
-  runTest = this.createEvent<number, void>({
+  runTest = this.createEvent<number, TestWorkerFileResult>({
     name: 'runTest',
     direction: 'server->client',
   });

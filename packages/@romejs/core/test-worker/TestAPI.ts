@@ -10,7 +10,7 @@ import SnapshotManager from './SnapshotManager';
 import {TestRunnerOptions} from '../master/testing/types';
 import {Event} from '@romejs/events';
 import diff from '@romejs/string-diff';
-import {createErrorFromStructure} from '@romejs/v8';
+import {createErrorFromStructure, getErrorStructure} from '@romejs/v8';
 import prettyFormat from '@romejs/pretty-format';
 import {FileReference} from '../common/types/files';
 import {markup} from '@romejs/string-markup';
@@ -272,14 +272,17 @@ export default class TestAPI implements TestHelper {
   fail(
     message: string = 'Test failure triggered by t.fail()',
     advice: DiagnosticAdvice = [],
-    framesToPop: number = 0,
+    framesToShift: number = 0,
   ): never {
-    throw createErrorFromStructure({
-      message,
-      markupMessage: message,
-      advice,
-      framesToPop: framesToPop + 1,
-    });
+    throw createErrorFromStructure(
+      {
+        ...getErrorStructure(new Error()),
+        message,
+        markupMessage: message,
+        advice,
+      },
+      framesToShift + 1,
+    );
   }
 
   truthy(value: unknown, message: string = 'Expected value to be truthy'): void {
@@ -570,6 +573,37 @@ export default class TestAPI implements TestHelper {
             code: prettyFormat(regex.source),
           },
         ],
+        1,
+      );
+    }
+  }
+
+  inlineSnapshot(received: unknown, snapshot?: string) {
+    const callFrame = getErrorStructure(new Error()).frames[1];
+
+    let formatted = '';
+    if (typeof received === 'string') {
+      formatted = received;
+    } else {
+      formatted = prettyFormat(received);
+    }
+
+    const same = this.snapshotManager.testInlineSnapshot(
+      callFrame,
+      formatted,
+      snapshot,
+    );
+    if (!same) {
+      this.fail(
+        'Inline snapshots do not match',
+        this.buildMatchAdvice(
+          formatted,
+          snapshot,
+          {
+            receivedAlias: 'What the code gave us',
+            expectedAlias: 'Existing inline snapshot',
+          },
+        ),
         1,
       );
     }

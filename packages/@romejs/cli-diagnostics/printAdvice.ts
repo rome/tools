@@ -450,6 +450,7 @@ function printStacktrace(
     },
     {
       ordered: true,
+      reverse: true,
       truncate: opts.flags.verboseDiagnostics ? undefined : 20,
     },
   );

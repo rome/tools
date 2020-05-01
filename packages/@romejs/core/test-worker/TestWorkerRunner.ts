@@ -29,7 +29,10 @@ import {
   TestWorkerBridgeRunOptions,
 } from '../common/bridges/TestWorkerBridge';
 import {TestRunnerOptions} from '../master/testing/types';
-import SnapshotManager from './SnapshotManager';
+import SnapshotManager, {
+  InlineSnapshotUpdate,
+  SnapshotCounts,
+} from './SnapshotManager';
 import TestAPI, {OnTimeout} from './TestAPI';
 import executeMain from '../common/utils/executeMain';
 import {
@@ -85,6 +88,11 @@ function cleanFrames(frames: ErrorFrames): ErrorFrames {
 
   return frames.slice(0, frames.indexOf(latestTestWorkerFrame));
 }
+
+export type TestWorkerFileResult = {
+  snapshotCounts: SnapshotCounts;
+  inlineSnapshotUpdates: Array<InlineSnapshotUpdate>;
+};
 
 export default class TestWorkerRunner {
   constructor(opts: TestWorkerBridgeRunOptions, bridge: TestWorkerBridge) {
@@ -404,7 +412,7 @@ export default class TestWorkerRunner {
     }
   }
 
-  async run(): Promise<void> {
+  async run(): Promise<TestWorkerFileResult> {
     const promises: Set<Promise<void>> = new Set();
 
     const {foundTests} = this;
@@ -462,6 +470,11 @@ export default class TestWorkerRunner {
         },
       });
     }
+
+    return {
+      inlineSnapshotUpdates: this.snapshotManager.inlineSnapshotsUpdates,
+      snapshotCounts: this.snapshotManager.snapshotCounts,
+    };
   }
 
   async emitFoundTests() {
