@@ -7,18 +7,16 @@
 
 import {test} from 'rome';
 import {testLint} from '../testHelpers';
-import {dedent} from '@romejs/string-utils';
 
 test(
   'no template curly in string',
   async (t) => {
-    await testLint(
-      t,
-      dedent`
+    await testLint(t, `
         const user = "Faustina";
         const helloUser = "Hello, \${user}!";
-      `,
-      {category: 'lint/noTemplateCurlyInString'},
-    );
+
+        // mark consts as used
+        console.log(user, helloUser)
+      `, {category: 'lint/noTemplateCurlyInString'});
   },
 );

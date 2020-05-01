@@ -8,14 +8,15 @@
 
 ```
 
- unknown:2:14 lint/noArguments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:3:18 lint/noArguments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use the rest parameters instead of 'arguments'
 
-    1 │ function f() {
-  > 2 │   console.log(arguments);
-      │               ^^^^^^^^^
-    3 │ }
+    2 │     function f() {
+  > 3 │       console.log(arguments);
+      │                   ^^^^^^^^^
+    4 │     }
+    5 │     f();
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -29,6 +30,7 @@
 function f() {
   console.log(arguments);
 }
+f();
 
 ```
 
@@ -36,14 +38,15 @@ function f() {
 
 ```
 
- unknown:2:14 lint/noArguments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:3:18 lint/noArguments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use the rest parameters instead of 'arguments'
 
-    1 │ (function () {
-  > 2 │   console.log(arguments);
-      │               ^^^^^^^^^
-    3 │ })();
+    2 │     (function () {
+  > 3 │       console.log(arguments);
+      │                   ^^^^^^^^^
+    4 │     })();
+    5 │   
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -64,16 +67,16 @@ function f() {
 
 ```
 
- unknown:3:16 lint/noArguments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:4:20 lint/noArguments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use the rest parameters instead of 'arguments'
 
-    1 │ class C {
-    2 │   fn() {
-  > 3 │     console.log(arguments);
-      │                 ^^^^^^^^^
-    4 │   }
-    5 │ }
+    2 │     class C {
+    3 │       fn() {
+  > 4 │         console.log(arguments);
+      │                     ^^^^^^^^^
+    5 │       }
+    6 │     }
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -89,6 +92,7 @@ class C {
     console.log(arguments);
   }
 }
+new C().fn();
 
 ```
 
@@ -96,16 +100,16 @@ class C {
 
 ```
 
- unknown:3:16 lint/noArguments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:4:20 lint/noArguments ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Use the rest parameters instead of 'arguments'
 
-    1 │ const o = {
-    2 │   fn() {
-  > 3 │     console.log(arguments);
-      │                 ^^^^^^^^^
-    4 │   },
-    5 │ };
+    2 │     const o = {
+    3 │       fn() {
+  > 4 │         console.log(arguments);
+      │                     ^^^^^^^^^
+    5 │       }
+    6 │     };
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -121,5 +125,6 @@ const o = {
     console.log(arguments);
   },
 };
+o.fn();
 
 ```

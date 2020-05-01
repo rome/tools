@@ -7,65 +7,52 @@
 
 import {test} from 'rome';
 import {testLint} from '../testHelpers';
-import {dedent} from '@romejs/string-utils';
 
 test(
   'no setter return',
   async (t) => {
-    await testLint(
-      t,
-      dedent`
-        class p {
-          set name(value) {
-            if (!value) {
-              return 'wrong';
-            }
-          }
+    await testLint(t, `
+    class p {
+      set name(value) {
+        if (!value) {
+          return 'wrong';
         }
-      `,
-      {category: 'lint/noSetterReturn'},
-    );
+      }
+    }
+    console.log(new p());
+  `, {category: 'lint/noSetterReturn'});
 
-    await testLint(
-      t,
-      dedent`
-        class p {
-          static set name(value) {
-            if (!value) {
-              return 'wrong';
-            }
-          }
+    await testLint(t, `
+    class p {
+      static set name(value) {
+        if (!value) {
+          return 'wrong';
         }
-      `,
-      {category: 'lint/noSetterReturn'},
-    );
+      }
+    }
+    console.log(p);
+  `, {category: 'lint/noSetterReturn'});
 
-    await testLint(
-      t,
-      dedent`
-        let p = {
-          set name(value) {
-            if (!value) {
-              return 'wrong';
-            }
-          }
-        };
-      `,
-      {category: 'lint/noSetterReturn'},
-    );
-
-    await testLint(
-      t,
-      dedent`
-        class p {
-          set name(value) {
-            if (!value) {
-              return;
-            }
-          }
+    await testLint(t, `
+    let p = {
+      set name(value) {
+        if (!value) {
+          return 'wrong';
         }
-      `,
-      {category: 'lint/noSetterReturn'},
-    );
+      }
+    };
+    console.log(p);
+  `, {category: 'lint/noSetterReturn'});
+
+    await testLint(t, `
+    class p {
+      set name(value) {
+        if (!value) {
+          return;
+        }
+      }
+    };
+    console.log(p);
+  `, {category: 'lint/noSetterReturn'});
   },
 );

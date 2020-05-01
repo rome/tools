@@ -8,14 +8,14 @@
 
 ```
 
- unknown:1:16 lint/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Cannot assign variable in loop condition
 
   > 1 │ for (let i = 1; i = 10; i++) {
-      │                 ^^^^^^
-    2 │   console.log('foo');
-    3 │ }
+  > 2 │     console.log('foo')
+  > 3 │   }
+      │ ^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -36,14 +36,14 @@ for (let i = 1; i = 10; i++) {
 
 ```
 
- unknown:1:4 lint/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Cannot assign variable in loop condition
 
-  > 1 │ if (foo = 'bar') {
-      │     ^^^^^^^^^^^
-    2 │   console.log('foo');
-    3 │ }
+  > 1 │ if(foo = 'bar') {
+  > 2 │     console.log('foo')
+  > 3 │   }
+      │ ^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -64,14 +64,14 @@ if (foo = 'bar') {
 
 ```
 
- unknown:1:7 lint/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Cannot assign variable in loop condition
 
-  > 1 │ while (foo = 'bar') {
-      │        ^^^^^^^^^^^
-    2 │   console.log('foo');
-    3 │ }
+  > 1 │ while (foo = 'bar' {
+  > 2 │     console.log('foo')
+  > 3 │   }
+      │ ^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -91,19 +91,7 @@ while (foo = 'bar') {
 ### `3`
 
 ```
-
- unknown:3:9 lint/noCondAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Cannot assign variable in loop condition
-
-    1 │ do {
-    2 │   console.log('foo');
-  > 3 │ } while (foo = 'bar')
-      │          ^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
+✔ No known problems!
 
 ```
 
@@ -111,7 +99,9 @@ while (foo = 'bar') {
 
 ```
 do {
-  console.log('foo');
-} while (foo = 'bar');
+  console.log('foo)\n  } while (foo = ');
+  bar;
+  ')';
+} while (INVALID_PLACEHOLDER);
 
 ```
