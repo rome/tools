@@ -17,7 +17,10 @@ export default {
   name: 'noEmptyCharacterClass',
   enter(path: Path): TransformExitResult {
     const {context, node} = path;
-    if (node.type === 'RegExpLiteral') {
+    if (
+      node.type === 'RegExpLiteral' &&
+      node.expression.type === 'RegExpSubExpression'
+    ) {
       const {body} = node.expression;
       if (body && body.every(isQuantifiedMinZero)) {
         context.addNodeDiagnostic(node, descriptions.LINT.EMPTY_MATCHES);
