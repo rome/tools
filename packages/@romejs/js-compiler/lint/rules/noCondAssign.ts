@@ -22,7 +22,10 @@ export default {
       node.test &&
       node.test.type === 'AssignmentExpression'
     ) {
-      path.context.addNodeDiagnostic(node, descriptions.LINT.NO_COND_ASSIGN);
+      path.context.addNodeDiagnostic(
+        node.test,
+        descriptions.LINT.NO_COND_ASSIGN,
+      );
     }
 
     return node;
