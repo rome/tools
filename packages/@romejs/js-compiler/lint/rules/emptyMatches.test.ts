@@ -14,10 +14,9 @@ test(
     await testLintMultiple(
       t,
       [
-        // infinite match possible 
+        // infinite match possible
         'let a = /a*/',
         'let b = /a*(abc)?[1,2,3]*/',
-
         // valid regexes
         'let a = /a*(abc)+[1,2,3]?/',
         'let b = /a+(abc)*/',
