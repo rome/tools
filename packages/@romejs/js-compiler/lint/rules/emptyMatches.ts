@@ -8,12 +8,15 @@
 import {Path, TransformExitResult} from '@romejs/js-compiler';
 import {descriptions} from '@romejs/diagnostics';
 
+function isQuantifiedMinZero(el: AnyRegExpBodyItem): bool {
+    return el.type === 'RegExpQuantified' && el.min == 0;
+}
+
 export default {
   name: 'noEmptyCharacterClass',
   enter(path: Path): TransformExitResult {
     const {context, node} = path;
     if (node.type === 'RegExpSubExpression') {
-      let isQuantifiedMinZero = el => el.type === 'RegExpQuantified' && el.min == 0;
       if (node.body.every(isQuantifiedMinZero)) {
         context.addNodeDiagnostic(node, descriptions.LINT.EMPTY_MATCHES);
       }
