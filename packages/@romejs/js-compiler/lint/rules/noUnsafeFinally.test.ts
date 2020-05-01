@@ -7,73 +7,64 @@
 
 import {test} from 'rome';
 import {testLint} from '../testHelpers';
-import {dedent} from '@romejs/string-utils';
 
 test(
   'disallow unsafe usage of break, continue, throw and return',
   async (t) => {
-    await testLint(
-      t,
-      dedent`
-        function greet1() {
-          try {
-            throw new Error("Try")
-          } catch(err) {
+    await testLint(t, `
+      function greet1() {
+        try {
+          throw new Error("Try")
+        } catch(err) {
             throw err;
-          } finally {
+        } finally {
             return 1;
-          }
         }
-      `,
-      {category: 'lint/noUnsafeFinally'},
-    );
+      }
 
-    await testLint(
-      t,
-      dedent`
-        function greet2() {
-          try {
-            throw new Error("Try")
-          } catch(err) {
+      greet1();
+    `, {category: 'lint/noUnsafeFinally'});
+
+    await testLint(t, `
+      function greet2() {
+        try {
+          throw new Error("Try")
+        } catch(err) {
             throw err;
-          } finally {
+        } finally {
             break;
-          }
         }
-      `,
-      {category: 'lint/noUnsafeFinally'},
-    );
+      }
 
-    await testLint(
-      t,
-      dedent`
-        function greet3() {
-          try {
-            throw new Error("Try")
-          } catch(err) {
+      greet2();
+    `, {category: 'lint/noUnsafeFinally'});
+
+    await testLint(t, `
+      function greet3() {
+        try {
+          throw new Error("Try")
+        } catch(err) {
             throw err;
-          } finally {
+        } finally {
             continue;
-          }
         }
-      `,
-      {category: 'lint/noUnsafeFinally'},
-    );
+      }
 
-    await testLint(
-      t,
-      dedent`
-        function greet4() {
-          try {
-            throw new Error("Try")
-          } catch(err) {
+      greet3();
+    `, {category: 'lint/noUnsafeFinally'});
+
+    await testLint(t, `
+      function greet4() {
+        try {
+          throw new Error("Try")
+        } catch(err) {
             throw err;
-          } finally {
+        } finally {
             throw new Error("Finally");
-          }
         }
-      `,
-      {category: 'lint/noUnsafeFinally'},
-    );
+      }
+
+      greet4();
+      `, {category: 'lint/noUnsafeFinally'});
   },
 );

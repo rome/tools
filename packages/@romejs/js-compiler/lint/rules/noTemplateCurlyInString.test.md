@@ -8,13 +8,15 @@
 
 ```
 
- unknown:2:18 lint/noTemplateCurlyInString ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:3:26 lint/noTemplateCurlyInString ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unexpected template string expression.
 
-    1 │ const user = "Faustina";
-  > 2 │ const helloUser = "Hello, \${user}!";
-      │                   ^^^^^^^^^^^^^^^^^^
+    2 │         const user = "Faustina";
+  > 3 │         const helloUser = "Hello, ${user}!";
+      │                           ^^^^^^^^^^^^^^^^^
+    4 │ 
+    5 │         // mark consts as used
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -27,5 +29,8 @@
 ```
 const user = 'Faustina';
 const helloUser = 'Hello, ${user}!';
+
+// mark consts as used
+console.log(user, helloUser);
 
 ```

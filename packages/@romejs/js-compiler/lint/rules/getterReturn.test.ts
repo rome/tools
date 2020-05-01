@@ -7,46 +7,37 @@
 
 import {test} from 'rome';
 import {testLint} from '../testHelpers';
-import {dedent} from '@romejs/string-utils';
 
 test(
   'getter return',
   async (t) => {
-    await testLint(
-      t,
-      dedent`
-        class p {
-          get name() {
-            console.log('hello');
-          }
-        }
-      `,
-      {category: 'lint/getterReturn'},
-    );
+    await testLint(t, `
+  class p {
+    get name() {
+      console.log('hello')
+    };
+  }
+  console.log(new p())
+  `, {category: 'lint/getterReturn'});
 
-    await testLint(
-      t,
-      dedent`
-        let p = {
-          get name() {
-            console.log('hello');
-          },
-        };
-      `,
-      {category: 'lint/getterReturn'},
-    );
+    await testLint(t, `
+  let p;
+  p = {
+    get name() {
+      console.log('hello')
+    }
+  };
+  console.log(p)
+  `, {category: 'lint/getterReturn'});
 
-    await testLint(
-      t,
-      dedent`
-        let p = {};
-        Object.defineProperty(p, {
-          get: function () {
-            console.log('hello');
-          },
-        });
-      `,
-      {category: 'lint/getterReturn'},
-    );
+    await testLint(t, `
+  let p = {};
+  Object.defineProperty(p, {
+    get: function (){
+        console.log('hello')
+    }
+  });
+  console.log(p)
+  `, {category: 'lint/getterReturn'});
   },
 );

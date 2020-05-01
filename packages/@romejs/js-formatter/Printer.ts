@@ -111,20 +111,20 @@ function print(token: Token, state: State, options: PrinterOptions): void {
 
     if (typeof token === 'string') {
       if (token !== '') {
-        let currentLine = state.generatedLine.value;
+        // Print pending spaces
+        if (state.pendingSpaces.value > 0) {
+          write(' '.repeat(state.pendingSpaces.value), state);
+          state.pendingSpaces.value = 0;
+        }
 
-        state.buffer.push(token);
+        write(token, state);
 
-        if (state.flat) {
-          // If the line is too long, break the group
-          if (ob1Get0(state.generatedColumn.value) > options.printWidth) {
-            throw new BreakError();
-          }
-
-          // If a new line was printed, break the group
-          if (currentLine !== state.generatedLine.value) {
-            throw new BreakError();
-          }
+        // If the line is too long, break the group if it is possible
+        if (
+          state.flat &&
+          ob1Get0(state.generatedColumn.value) > options.printWidth
+        ) {
+          throw new BreakError();
         }
       }
     } else {

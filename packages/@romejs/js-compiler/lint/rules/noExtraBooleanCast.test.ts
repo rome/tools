@@ -7,50 +7,34 @@
 
 import {test} from 'rome';
 import {testLint} from '../testHelpers';
-import {dedent} from '@romejs/string-utils';
 
 test(
   'disallow unnecessary boolean casts',
   async (t) => {
-    await testLint(
-      t,
-      dedent`
-        if (Boolean(foo)) {
-          return foo;
-        }
-      `,
-      {category: 'lint/noExtraBooleanCast'},
-    );
+    await testLint(t, `
+    if (Boolean(foo)) {
+      return foo;
+    }
+    `, {category: 'lint/noExtraBooleanCast'});
 
-    await testLint(
-      t,
-      dedent`
-        while (!!foo) {
-          return foo;
-        }
-      `,
-      {category: 'lint/noExtraBooleanCast'},
-    );
+    await testLint(t, `
+    while (!!foo) {
+      return foo;
+    }
+    `, {category: 'lint/noExtraBooleanCast'});
 
-    await testLint(
-      t,
-      dedent`
-        let x = 1;
-        do {
-          1 + 1;
-        } while (Boolean(x));
-      `,
-      {category: 'lint/noExtraBooleanCast'},
-    );
+    await testLint(t, `
+    let x = 1;
 
-    await testLint(
-      t,
-      dedent`
-        for (; !!foo; ) {
-          return 1 + 1;
-        }
-      `,
-      {category: 'lint/noExtraBooleanCast'},
-    );
+    do {
+        1+1;
+    } while (Boolean(x));
+    `, {category: 'lint/noExtraBooleanCast'});
+
+    await testLint(t, `
+    for (; !!foo; ) {
+      return 1+1;
+    }
+    `, {category: 'lint/noExtraBooleanCast'});
   },
 );

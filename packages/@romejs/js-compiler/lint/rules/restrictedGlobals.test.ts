@@ -19,9 +19,7 @@ test(
       },
     );
 
-    await testLint(
-      t,
-      `
+    await testLint(t, `
     // valid use of event into the function scope.
     function foo(event) {
       console.info(event);
@@ -29,8 +27,6 @@ test(
 
     // invalid, event is used as a global.
     foo(event)
-    `,
-      {category: 'lint/restrictedGlobals'},
-    );
+    `, {category: 'lint/restrictedGlobals'});
   },
 );
