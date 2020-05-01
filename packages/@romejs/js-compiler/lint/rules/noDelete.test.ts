@@ -7,24 +7,22 @@
 
 import {test} from 'rome';
 import {testLintMultiple} from '../testHelpers';
-import {dedent} from '@romejs/string-utils';
 
 test(
   'no delete',
   async (t) => {
     await testLintMultiple(
       t,
-      [
-        dedent`
-          const arr = [['a','b','c'], [1, 2, 3]];
-          delete arr[0][2];
-        `,
-        dedent`
-          const obj = {a: {b: {c: 123}}};
-          delete obj.a.b.c;
-        `,
-      ],
-      {category: 'lint/noDelete'},
+      [`
+				const arr = [['a','b','c'], [1, 2, 3]];
+				delete arr[0][2];
+			`, `
+				const obj = { a: { b: { c: 123 } } };
+				delete obj.a.b.c;
+			`],
+      {
+        category: 'lint/noDelete',
+      },
     );
   },
 );

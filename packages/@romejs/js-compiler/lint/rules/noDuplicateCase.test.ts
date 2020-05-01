@@ -7,31 +7,26 @@
 
 import {test} from 'rome';
 import {testLint} from '../testHelpers';
-import {dedent} from '@romejs/string-utils';
 
 test(
   'no duplicated switch cases allowed',
   async (t) => {
-    await testLint(
-      t,
-      dedent`
-        const expr = 'a';
-        switch (expr) {
-          case 'a':
-            break;
-          case 'b':
-            break;
-          case 'c':
-            break;
-          case 'd':
-            break;
-          case 'c':
-            break;
-          default:
-            break;
-        }
-      `,
-      {category: 'lint/noDuplicateCase'},
-    );
+    await testLint(t, `
+    const expr = 'a';
+    switch (expr) {
+      case 'a':
+        break;
+      case 'b':
+        break;
+      case 'c':
+        break;
+      case 'd':
+        break;
+      case 'c':
+        break;
+      default:
+        break;
+    }
+  `, {category: 'lint/noDuplicateCase'});
   },
 );
