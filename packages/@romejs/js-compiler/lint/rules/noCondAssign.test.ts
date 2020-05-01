@@ -46,7 +46,7 @@ test(
       t,
       dedent`
         do {
-          console.log('foo);
+          console.log('foo');
         } while (foo = 'bar')
       `,
       {category: 'lint/noCondAssign'},
