@@ -67,6 +67,7 @@ export type DiagnosticCategory =
   | 'lint/undeclaredVariables'
   | 'lint/unsafeNegation'
   | 'lint/unusedVariables'
+  | 'lint/emptyMatches'
   | 'lsp/parse'
   | 'parse/js'
   | 'parse/json'

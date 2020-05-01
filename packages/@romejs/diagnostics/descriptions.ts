@@ -490,6 +490,10 @@ export const descriptions = createMessages({
       category: 'lint/noEmptyCharacterClass',
       message: 'Empty character classes in regular expressions are not allowed',
     },
+    EMPTY_MATCHES: {
+      category: 'lint/emptyMatches',
+      message: 'The expression can return empty matches, and may match infinitely in some use cases',
+    },
     NO_DUPLICATE_KEYS: (key: string) => ({
       category: 'lint/noDuplicateKeys',
       message: markup`Duplicate key <emphasis>${key}</emphasis>`,
