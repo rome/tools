@@ -349,8 +349,8 @@ export const descriptions = createMessages({
       category: 'lint/preferWhile',
       message: 'A while loop should be used over a for loop',
     },
-    REACT_JSX_NO_COMMENT_TEXTNODES: {
-      category: 'lint/react/jsxNoCommentTextnodes',
+    REACT_JSX_NO_COMMENT_TEXT: {
+      category: 'lint/react/jsxNoCommentText',
       message: 'Comments inside children should be placed in braces',
     },
     UNSAFE_NEGATION: {

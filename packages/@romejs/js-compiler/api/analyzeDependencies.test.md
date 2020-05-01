@@ -35,21 +35,6 @@ Object {
   diagnostics: Array [
     Object {
       origins: Array [Object {category: 'analyzeDependencies'}]
-      description: Object {
-        category: 'analyzeDependencies/cjsExportInES'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'You cannot use CommonJS exports in an ES module'}
-        advice: Array [
-          action {
-            command: 'lint'
-            hidden: true
-            instruction: 'To suppress this error run'
-            noun: 'Add suppression comment'
-            shortcut: 's'
-            args: Array ['unknown']
-            commandFlags: Object {decisions: Array ['suppress-analyzeDependencies/cjsExportInES-unknown-2']}
-          }
-        ]
-      }
       location: Object {
         filename: 'unknown'
         language: 'js'
@@ -66,6 +51,32 @@ Object {
           index: 7
           line: 2
         }
+      }
+      description: Object {
+        category: 'analyzeDependencies/cjsExportInES'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'You cannot use CommonJS exports in an ES module'}
+        advice: Array [
+          action {
+            command: 'lint'
+            extra: undefined
+            hidden: true
+            instruction: 'To suppress this error run'
+            noun: 'Add suppression comment'
+            shortcut: 's'
+            args: Array ['unknown']
+            commandFlags: Object {decisions: Array ['suppress-analyzeDependencies/cjsExportInES-unknown-2']}
+          }
+          action {
+            args: Array []
+            command: 'lint'
+            extra: true
+            hidden: true
+            instruction: 'To add suppression comments for ALL files with this category run'
+            noun: 'Add suppression comments for ALL files with this category'
+            shortcut: undefined
+            commandFlags: Object {decisions: Array ['global-suppress-analyzeDependencies/cjsExportInES']}
+          }
+        ]
       }
     }
   ]
