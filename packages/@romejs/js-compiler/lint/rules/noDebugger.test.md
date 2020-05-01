@@ -16,7 +16,6 @@
 ```
 const test = {debugger: 1};
 test.debugger;
-console.log(test); // To not trigger the unused var rule.
 
 ```
 

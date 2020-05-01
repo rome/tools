@@ -117,14 +117,20 @@ function print(token: Token, state: State, options: PrinterOptions): void {
           state.pendingSpaces.value = 0;
         }
 
+        let currentLine = state.generatedLine.value;
+
         write(token, state);
 
-        // If the line is too long, break the group if it is possible
-        if (
-          state.flat &&
-          ob1Get0(state.generatedColumn.value) > options.printWidth
-        ) {
-          throw new BreakError();
+        if (state.flat) {
+          // If the line is too long, break the group
+          if (ob1Get0(state.generatedColumn.value) > options.printWidth) {
+            throw new BreakError();
+          }
+
+          // If a new line was printed, break the group
+          if (currentLine !== state.generatedLine.value) {
+            throw new BreakError();
+          }
         }
       }
     } else {
