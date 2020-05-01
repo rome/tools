@@ -17,7 +17,7 @@ test(
       t,
       dedent`
         let valid: Array<foo>;
-        let invalid = bar[];
+        let invalid: bar[];
       `,
       {category: 'lint/noShorthandArrayType', syntax: ['ts']},
     );
@@ -27,7 +27,7 @@ test(
       t,
       dedent`
         let valid: Array<foo>;
-        let invalid = bar[];
+        let invalid: bar[];
       `,
       {category: 'lint/noShorthandArrayType', syntax: ['flow']},
     );

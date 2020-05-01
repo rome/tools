@@ -436,7 +436,7 @@ export const descriptions = createMessages({
     },
     NO_SHORTHAND_ARRAY_TYPE: {
       category: 'lint/noShorthandArrayType',
-      message: 'Use Array<T> instead of shorthand T[]',
+      message: escapeMarkup('Use Array<T> instead of shorthand T[]'),
     },
     NO_UNSAFE_FINALLY: (type: string) => ({
       category: 'lint/noUnsafeFinally',
