@@ -5,10 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import {AnyRegExpBodyItem} from '@romejs/js-ast';
 import {Path, TransformExitResult} from '@romejs/js-compiler';
 import {descriptions} from '@romejs/diagnostics';
 
-function isQuantifiedMinZero(el: AnyRegExpBodyItem): bool {
+function isQuantifiedMinZero(el: AnyRegExpBodyItem): boolean {
     return el.type === 'RegExpQuantified' && el.min == 0;
 }
 
