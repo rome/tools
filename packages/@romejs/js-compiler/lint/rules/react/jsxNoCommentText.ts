@@ -10,7 +10,7 @@ import {AnyNode} from '@romejs/js-ast';
 import {descriptions} from '@romejs/diagnostics';
 
 export default {
-  name: 'jsxNoCommentTextnodes',
+  name: 'jsxNoCommentText',
   enter(path: Path): AnyNode {
     const {node} = path;
 
@@ -18,7 +18,7 @@ export default {
       if (/^\s*\/(\/|\*)/m.test(node.value)) {
         path.context.addNodeDiagnostic(
           node,
-          descriptions.LINT.REACT_JSX_NO_COMMENT_TEXTNODES,
+          descriptions.LINT.REACT_JSX_NO_COMMENT_TEXT,
         );
       }
     }

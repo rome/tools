@@ -51,7 +51,7 @@ import sparseArray from './sparseArray';
 import undeclaredVariables from './undeclaredVariables';
 import unsafeNegation from './unsafeNegation';
 import unusedVariables from './unusedVariables';
-import {reactLintTransforms} from './react';
+import {reactLintTransforms as reactLintRules} from './react';
 
 // Add transforms in alphabetical order.
 export const lintTransforms = [
@@ -100,6 +100,5 @@ export const lintTransforms = [
   undeclaredVariables,
   unsafeNegation,
   unusedVariables,
-  // React lint rules.
-  ...reactLintTransforms,
+  ...reactLintRules,
 ];
