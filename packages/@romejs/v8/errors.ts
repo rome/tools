@@ -47,7 +47,7 @@ export class NativeStructuredError extends Error {
 
 export function createErrorFromStructure(
   struct: Partial<StructuredError>,
-  framesToShift: undefined | number,
+  framesToShift?: number,
 ): Error {
   return new NativeStructuredError(struct, framesToShift);
 }
