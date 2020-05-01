@@ -111,13 +111,6 @@ function print(token: Token, state: State, options: PrinterOptions): void {
 
     if (typeof token === 'string') {
       if (token !== '') {
-        // If the cursor is at the beginning of a new line, the indentation
-        // must be printed.
-        if (state.generatedColumn.value === ob1Number0) {
-          write(' '.repeat(state.indent.value), state);
-          state.pendingSpaces.value = 0;
-        }
-
         // Print pending spaces
         if (state.pendingSpaces.value > 0) {
           write(' '.repeat(state.pendingSpaces.value), state);
@@ -231,6 +224,9 @@ function print(token: Token, state: State, options: PrinterOptions): void {
               }
             } else {
               write('\n', state);
+
+              // Enqueue the indentation
+              state.pendingSpaces.value = state.indent.value;
             }
           }
           break;
