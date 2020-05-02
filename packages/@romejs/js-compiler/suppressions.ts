@@ -13,30 +13,10 @@ import {
   Diagnostics,
   descriptions,
 } from '@romejs/diagnostics';
-import {Dict} from '@romejs/typescript-helpers';
-import {Number1, ob1Inc} from '@romejs/ob1';
 import CompilerContext from './lib/CompilerContext';
 import Path from './lib/Path';
 
-export const SUPPRESSION_NEXT_LINE_START = 'rome-ignore-next-line';
-const SUPPRESSION_CURRENT_LINE_START = 'rome-ignore-line';
-const SUPPRESSION_NEXT_NODE_START = 'rome-ignore-next';
-
-const prefixMistakes: Dict<string> = {
-  disable: SUPPRESSION_NEXT_LINE_START,
-  suppress: SUPPRESSION_NEXT_LINE_START,
-  ignore: SUPPRESSION_NEXT_LINE_START,
-  next: SUPPRESSION_NEXT_NODE_START,
-  'next-line': SUPPRESSION_NEXT_LINE_START,
-  line: SUPPRESSION_CURRENT_LINE_START,
-  'current-line': SUPPRESSION_CURRENT_LINE_START,
-};
-for (const key in prefixMistakes) {
-  const suggestion = prefixMistakes[key];
-  prefixMistakes[`ignore-${key}`] = suggestion;
-  prefixMistakes[`suppress-${key}`] = suggestion;
-  prefixMistakes[`disable-${key}`] = suggestion;
-}
+export const SUPPRESSION_START = 'rome-ignore';
 
 type ExtractedSuppressions = {
   suppressions: DiagnosticSuppressions;
@@ -45,53 +25,10 @@ type ExtractedSuppressions = {
 
 type NodeToComment = Map<AnyComment, AnyNode>;
 
-// Perform a test on the comment line to see if it's a potential suppression typo
-function detectPossibleMistake(
-  line: string,
-):
-  | undefined
-  | {
-      prefix: string;
-      suggestion: string;
-    } {
-  // Match the first word
-  const prefixMatch = line.match(/^(?:[\s]+|)(.*?)[$\s]/);
-  if (prefixMatch == null) {
-    return undefined;
-  }
-
-  // Normalize the prefix, removing leading @
-  const prefix = prefixMatch[1];
-  let normalizedPrefix = prefix;
-  normalizedPrefix = normalizedPrefix.replace(/^@/, '');
-
-  // "Fast" check to ignore
-  if (!normalizedPrefix.startsWith('rome')) {
-    return undefined;
-  }
-
-  // Replace all underscores with dashes, remove leading rome and any dashes
-  normalizedPrefix = normalizedPrefix.replace(/_/g, '-');
-  normalizedPrefix = normalizedPrefix.replace(/^rome/, '');
-  normalizedPrefix = normalizedPrefix.replace(/^-+/, '');
-
-  for (const key in prefixMistakes) {
-    const suggestion = prefixMistakes[key];
-    if (normalizedPrefix.startsWith(key)) {
-      return {
-        suggestion,
-        prefix,
-      };
-    }
-  }
-
-  return undefined;
-}
-
 function extractSuppressionsFromComment(
   context: CompilerContext,
   comment: AnyComment,
-  getNodeToComment: () => NodeToComment,
+  nodeToComment: NodeToComment,
 ): undefined | ExtractedSuppressions {
   const commentLocation = comment.loc;
   if (commentLocation === undefined) {
@@ -109,54 +46,23 @@ function extractSuppressionsFromComment(
   });
 
   for (const line of cleanLines) {
-    // Find suppression start
-    let matchedPrefix: undefined | string;
-    let startLine: undefined | Number1;
-    let endLine: undefined | Number1;
-    if (line.startsWith(SUPPRESSION_CURRENT_LINE_START)) {
-      matchedPrefix = SUPPRESSION_CURRENT_LINE_START;
-      startLine = commentLocation.start.line;
-      endLine = startLine;
-    } else if (line.startsWith(SUPPRESSION_NEXT_LINE_START)) {
-      matchedPrefix = SUPPRESSION_NEXT_LINE_START;
-      startLine = ob1Inc(commentLocation.start.line);
-      endLine = startLine;
-    } else if (line.startsWith(SUPPRESSION_NEXT_NODE_START)) {
-      matchedPrefix = SUPPRESSION_NEXT_NODE_START;
-
-      const nodeToComment = getNodeToComment();
-      const nextNode = nodeToComment.get(comment);
-      if (nextNode === undefined || nextNode.loc === undefined) {
-        diagnostics.push({
-          description: descriptions.SUPPRESSIONS.NEXT_STATEMENT_NOT_FOUND,
-          location: commentLocation,
-        });
-        continue;
-      } else {
-        startLine = nextNode.loc.start.line;
-        endLine = nextNode.loc.end.line;
-      }
-    }
-
-    if (
-      matchedPrefix === undefined ||
-      endLine === undefined ||
-      startLine === undefined
-    ) {
-      const mistake = detectPossibleMistake(line);
-      if (mistake !== undefined) {
-        diagnostics.push({
-          description: descriptions.SUPPRESSIONS.PREFIX_TYPO(
-            mistake.prefix,
-            mistake.suggestion,
-          ),
-          location: commentLocation,
-        });
-      }
+    if (!line.startsWith(SUPPRESSION_START)) {
       continue;
     }
 
-    const lineWithoutPrefix = line.slice(matchedPrefix.length);
+    const nextNode = nodeToComment.get(comment);
+    if (nextNode === undefined || nextNode.loc === undefined) {
+      diagnostics.push({
+        description: descriptions.SUPPRESSIONS.MISSING_TARGET,
+        location: commentLocation,
+      });
+      continue;
+    }
+
+    const startLine = nextNode.loc.start.line;
+    const endLine = nextNode.loc.end.line;
+
+    const lineWithoutPrefix = line.slice(SUPPRESSION_START.length);
     if (lineWithoutPrefix[0] !== ' ') {
       diagnostics.push({
         description: descriptions.SUPPRESSIONS.MISSING_SPACE,
@@ -219,46 +125,33 @@ export function extractSuppressionsFromProgram(
   let diagnostics: Diagnostics = [];
   let suppressions: DiagnosticSuppressions = [];
 
-  let cachedNodeToComment: undefined | NodeToComment;
+  const nodeToComment: NodeToComment = new Map();
+  context.reduce(
+    ast,
+    {
+      name: 'extractSuppressions',
+      enter(path: Path): AnyNode {
+        const {node} = path;
 
-  // Lazily instantiate NodeToComment only when it's needed
-  function getNodeToComment(): NodeToComment {
-    if (cachedNodeToComment !== undefined) {
-      return cachedNodeToComment;
-    }
+        for (const comment of context.comments.getCommentsFromIds(
+          node.leadingComments,
+        )) {
+          nodeToComment.set(comment, node);
+        }
 
-    const nodeToComment: NodeToComment = new Map();
-    cachedNodeToComment = nodeToComment;
-
-    context.reduce(
-      ast,
-      {
-        name: 'extractSuppressions',
-        enter(path: Path): AnyNode {
-          const {node} = path;
-
-          for (const comment of context.comments.getCommentsFromIds(
-            node.leadingComments,
-          )) {
-            nodeToComment.set(comment, node);
-          }
-
-          return node;
-        },
+        return node;
       },
-      {
-        noScopeCreation: true,
-      },
-    );
-
-    return nodeToComment;
-  }
+    },
+    {
+      noScopeCreation: true,
+    },
+  );
 
   for (const comment of comments) {
     const result = extractSuppressionsFromComment(
       context,
       comment,
-      getNodeToComment,
+      nodeToComment,
     );
     if (result !== undefined) {
       diagnostics = diagnostics.concat(result.diagnostics);

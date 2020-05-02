@@ -62,6 +62,7 @@ import {
 
 export type ContextArg = {
   ast: Program;
+  suppressions?: DiagnosticSuppressions;
   ref?: FileReference;
   sourceText?: string;
   project?: TransformProjectDefinition;
@@ -114,6 +115,7 @@ export default class CompilerContext {
         folder: undefined,
         config: DEFAULT_PROJECT_CONFIG,
       },
+      suppressions,
     } = arg;
 
     this.records = [];
@@ -133,14 +135,18 @@ export default class CompilerContext {
     this.rootScope = new RootScope(this, ast);
 
     this.comments = new CommentsConsumer(ast.comments);
-
-    const {suppressions, diagnostics} = extractSuppressionsFromProgram(
-      this,
-      ast,
-    );
-    this.suppressions = suppressions;
     this.diagnostics = new DiagnosticsProcessor();
-    this.diagnostics.addDiagnostics(diagnostics);
+
+    if (suppressions === undefined) {
+      const {suppressions, diagnostics} = extractSuppressionsFromProgram(
+        this,
+        ast,
+      );
+      this.suppressions = suppressions;
+      this.diagnostics.addDiagnostics(diagnostics);
+    } else {
+      this.suppressions = suppressions;
+    }
   }
 
   displayFilename: string;

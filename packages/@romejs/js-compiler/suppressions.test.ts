@@ -7,48 +7,44 @@
 
 import {test} from 'rome';
 import {extractSuppressionsFromProgram} from './suppressions';
-import {AnyComment, CommentBlock, MOCK_PROGRAM, program} from '@romejs/js-ast';
-import {ob1Coerce1, ob1Number0} from '@romejs/ob1';
 import CompilerContext from './lib/CompilerContext';
+import {parseJS} from '@romejs/js-parser';
+import {dedent} from '@romejs/string-utils';
 
-function extractSuppressionsFromComments(comments: Array<AnyComment>) {
-  const ast = program.create({
-    ...MOCK_PROGRAM,
-    comments,
+function extractSuppressionsFromSource(sourceText: string) {
+  const ast = parseJS({
+    sourceType: 'script',
+    path: 'unknown',
+    input: sourceText,
   });
   const context = new CompilerContext({ast});
   return extractSuppressionsFromProgram(context, ast);
-}
-
-function generateComment(value: string, line: number): CommentBlock {
-  const pos = {
-    index: ob1Number0,
-    column: ob1Number0,
-    line: ob1Coerce1(line),
-  };
-
-  return {
-    type: 'CommentBlock',
-    value,
-    id: '0',
-    loc: {
-      filename: 'unknown',
-      start: pos,
-      end: pos,
-    },
-  };
 }
 
 test(
   'single category',
   async (t) => {
     t.snapshot(
-      extractSuppressionsFromComments([
-        generateComment('rome-ignore-line foo', 1),
-        generateComment('* rome-ignore-line foo', 2),
-        generateComment(' * rome-ignore-line foo', 3),
-        generateComment('* wow\n * rome-ignore-line foo', 4),
-      ]),
+      extractSuppressionsFromSource(
+        dedent`
+      // rome-ignore foo
+      foo();
+
+      /** rome-ignore bar */
+      bar();
+
+      /**
+       * rome-ignore yes
+       */
+      yes();
+
+      /**
+       * hello
+       * rome-ignore wow
+       */
+      wow();
+    `,
+      ),
     );
   },
 );
@@ -57,26 +53,26 @@ test(
   'multiple categories',
   async (t) => {
     t.snapshot(
-      extractSuppressionsFromComments([
-        generateComment('rome-ignore-line foo bar', 1),
-        generateComment('* rome-ignore-line foo bar', 2),
-        generateComment(' * rome-ignore-line foo bar', 3),
-        generateComment(
-          '* wow\n * rome-ignore-line foo bar\n* rome-ignore-line cat dog',
-          4,
-        ),
-      ]),
-    );
-  },
-);
+      extractSuppressionsFromSource(
+        dedent`
+      // rome-ignore foo dog
+      foo();
 
-test(
-  'typos',
-  async (t) => {
-    t.snapshot(
-      extractSuppressionsFromComments([
-        generateComment('rome-ignore foo bar', 1),
-      ]),
+      /** rome-ignore bar cat */
+      bar();
+
+      /**
+       * rome-ignore yes frog
+       */
+      yes();
+
+      /**
+       * hello
+       * rome-ignore wow fish
+       */
+      wow();
+    `,
+      ),
     );
   },
 );
@@ -85,9 +81,15 @@ test(
   'duplicates',
   async (t) => {
     t.snapshot(
-      extractSuppressionsFromComments([
-        generateComment('rome-ignore-line foo foo', 1),
-      ]),
+      extractSuppressionsFromSource(
+        dedent`
+      // rome-ignore dog dog
+      foo();
+
+      // rome-ignore dog cat dog
+      bar();
+    `,
+      ),
     );
   },
 );

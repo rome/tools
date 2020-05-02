@@ -9,7 +9,7 @@ import Event from './Event';
 
 export {Event};
 
-// rome-ignore-next-line lint/noExplicitAny
+// rome-ignore lint/noExplicitAny
 export type AnyEvent = Event<any, any>;
 
 export {default as Bridge} from './Bridge';

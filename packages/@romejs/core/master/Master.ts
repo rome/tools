@@ -301,10 +301,9 @@ export default class Master {
     process.exit();
   }
 
-  // rome-ignore-next-line lint/noExplicitAny
+  // rome-ignore lint/noExplicitAny
   wrapFatal<T extends (...args: Array<any>) => any>(callback: T): T {
-    return ((// rome-ignore-next-line lint/noExplicitAny
-    (...args: Array<any>): any => {
+    return (((...args: Array<any>): any => {
       try {
         const res = callback(...args);
         if (res instanceof Promise) {

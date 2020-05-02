@@ -59,7 +59,7 @@ function addEmphasis(items: Array<string>): Array<string> {
   return items.map((item) => `<emphasis>${item}</emphasis>`);
 }
 
-// rome-ignore-next-line lint/AEciilnnoptxy;
+// rome-ignore lint/AEciilnnoptxy;
 type InputMessagesFactory = (...params: Array<any>) => DiagnosticMetadataString;
 
 type InputMessagesCategory = {
@@ -103,11 +103,11 @@ type OutputMessages<Input extends InputMessages> = {
 function createMessages<Input extends InputMessages>(
   messages: Input,
 ): OutputMessages<Input> {
-  // rome-ignore-next-line lint/noExplicitAny
+  // rome-ignore lint/noExplicitAny
   const out: OutputMessages<Input> = ({} as any);
 
   for (const categoryName in messages) {
-    // rome-ignore-next-line lint/noExplicitAny
+    // rome-ignore lint/noExplicitAny
     const category: OutputMessagesCategory<any> = {};
     out[categoryName] = category;
 
@@ -120,7 +120,7 @@ function createMessages<Input extends InputMessages>(
           message: createBlessedDiagnosticMessage(value),
         };
       } else if (typeof value === 'function') {
-        // rome-ignore-next-line lint/noExplicitAny
+        // rome-ignore lint/noExplicitAny
         const callback: InputMessagesFactory = (value as any);
 
         category[key] = function(...params) {
@@ -131,7 +131,7 @@ function createMessages<Input extends InputMessages>(
           };
         };
       } else {
-        // rome-ignore-next-line lint/noExplicitAny
+        // rome-ignore lint/noExplicitAny
         const {message, ...obj} = (value as any);
         category[key] = {
           ...obj,
@@ -806,21 +806,10 @@ export const descriptions = createMessages({
       category: 'suppressions/missingSpace',
       message: 'Missing space between prefix and suppression categories',
     },
-    NEXT_STATEMENT_NOT_FOUND: {
+    MISSING_TARGET: {
       category: 'suppressions/missingTarget',
-      message: 'We could not find a statement to attach this suppression to',
+      message: 'We could not find a target for this suppression',
     },
-    PREFIX_TYPO: (prefix: string, suggestion: string) => ({
-      category: 'suppressions/incorrectPrefix',
-      message: markup`Invalid suppression prefix <emphasis>${prefix}</emphasis>`,
-      advice: [
-        {
-          type: 'log',
-          category: 'info',
-          text: `Did you mean <emphasis>${suggestion}</emphasis>?`,
-        },
-      ],
-    }),
     DUPLICATE: (category: string) => ({
       category: 'suppressions/duplicate',
       message: markup`Duplicate suppression category <emphasis>${category}</emphasis>`,

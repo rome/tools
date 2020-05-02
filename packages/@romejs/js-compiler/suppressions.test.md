@@ -10,13 +10,13 @@ Object {
     Object {
       description: Object {
         category: 'suppressions/duplicate'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Duplicate suppression category <emphasis>foo</emphasis>'}
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Duplicate suppression category <emphasis>dog</emphasis>'}
       }
       location: Object {
         filename: 'unknown'
         end: Object {
-          column: 0
-          index: 0
+          column: 22
+          index: 22
           line: 1
         }
         start: Object {
@@ -26,25 +26,81 @@ Object {
         }
       }
     }
+    Object {
+      description: Object {
+        category: 'suppressions/duplicate'
+        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Duplicate suppression category <emphasis>dog</emphasis>'}
+      }
+      location: Object {
+        filename: 'unknown'
+        end: Object {
+          column: 26
+          index: 57
+          line: 4
+        }
+        start: Object {
+          column: 0
+          index: 31
+          line: 4
+        }
+      }
+    }
   ]
   suppressions: Array [
     Object {
-      category: 'foo'
-      endLine: 1
+      category: 'dog'
+      endLine: 2
       filename: 'unknown'
-      startLine: 1
-      suppressionType: 'current'
+      startLine: 2
       commentLocation: Object {
         filename: 'unknown'
         end: Object {
-          column: 0
-          index: 0
+          column: 22
+          index: 22
           line: 1
         }
         start: Object {
           column: 0
           index: 0
           line: 1
+        }
+      }
+    }
+    Object {
+      category: 'dog'
+      endLine: 5
+      filename: 'unknown'
+      startLine: 5
+      commentLocation: Object {
+        filename: 'unknown'
+        end: Object {
+          column: 26
+          index: 57
+          line: 4
+        }
+        start: Object {
+          column: 0
+          index: 31
+          line: 4
+        }
+      }
+    }
+    Object {
+      category: 'cat'
+      endLine: 5
+      filename: 'unknown'
+      startLine: 5
+      commentLocation: Object {
+        filename: 'unknown'
+        end: Object {
+          column: 26
+          index: 57
+          line: 4
+        }
+        start: Object {
+          column: 0
+          index: 31
+          line: 4
         }
       }
     }
@@ -60,201 +116,153 @@ Object {
   suppressions: Array [
     Object {
       category: 'foo'
-      endLine: 1
-      filename: 'unknown'
-      startLine: 1
-      suppressionType: 'current'
-      commentLocation: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-    }
-    Object {
-      category: 'bar'
-      endLine: 1
-      filename: 'unknown'
-      startLine: 1
-      suppressionType: 'current'
-      commentLocation: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-    }
-    Object {
-      category: 'foo'
       endLine: 2
       filename: 'unknown'
       startLine: 2
-      suppressionType: 'current'
       commentLocation: Object {
         filename: 'unknown'
         end: Object {
-          column: 0
-          index: 0
-          line: 2
+          column: 22
+          index: 22
+          line: 1
         }
         start: Object {
           column: 0
           index: 0
-          line: 2
+          line: 1
         }
       }
     }
     Object {
-      category: 'bar'
+      category: 'dog'
       endLine: 2
       filename: 'unknown'
       startLine: 2
-      suppressionType: 'current'
       commentLocation: Object {
         filename: 'unknown'
         end: Object {
-          column: 0
-          index: 0
-          line: 2
+          column: 22
+          index: 22
+          line: 1
         }
         start: Object {
           column: 0
           index: 0
-          line: 2
-        }
-      }
-    }
-    Object {
-      category: 'foo'
-      endLine: 3
-      filename: 'unknown'
-      startLine: 3
-      suppressionType: 'current'
-      commentLocation: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 0
-          index: 0
-          line: 3
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 3
+          line: 1
         }
       }
     }
     Object {
       category: 'bar'
-      endLine: 3
+      endLine: 5
       filename: 'unknown'
-      startLine: 3
-      suppressionType: 'current'
+      startLine: 5
       commentLocation: Object {
         filename: 'unknown'
         end: Object {
-          column: 0
-          index: 0
-          line: 3
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 3
-        }
-      }
-    }
-    Object {
-      category: 'foo'
-      endLine: 4
-      filename: 'unknown'
-      startLine: 4
-      suppressionType: 'current'
-      commentLocation: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 0
-          index: 0
+          column: 26
+          index: 57
           line: 4
         }
         start: Object {
           column: 0
-          index: 0
-          line: 4
-        }
-      }
-    }
-    Object {
-      category: 'bar'
-      endLine: 4
-      filename: 'unknown'
-      startLine: 4
-      suppressionType: 'current'
-      commentLocation: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 0
-          index: 0
-          line: 4
-        }
-        start: Object {
-          column: 0
-          index: 0
+          index: 31
           line: 4
         }
       }
     }
     Object {
       category: 'cat'
-      endLine: 4
+      endLine: 5
       filename: 'unknown'
-      startLine: 4
-      suppressionType: 'current'
+      startLine: 5
       commentLocation: Object {
         filename: 'unknown'
         end: Object {
-          column: 0
-          index: 0
+          column: 26
+          index: 57
           line: 4
         }
         start: Object {
           column: 0
-          index: 0
+          index: 31
           line: 4
         }
       }
     }
     Object {
-      category: 'dog'
-      endLine: 4
+      category: 'yes'
+      endLine: 10
       filename: 'unknown'
-      startLine: 4
-      suppressionType: 'current'
+      startLine: 10
       commentLocation: Object {
         filename: 'unknown'
         end: Object {
-          column: 0
-          index: 0
-          line: 4
+          column: 3
+          index: 97
+          line: 9
         }
         start: Object {
           column: 0
-          index: 0
-          line: 4
+          index: 66
+          line: 7
+        }
+      }
+    }
+    Object {
+      category: 'frog'
+      endLine: 10
+      filename: 'unknown'
+      startLine: 10
+      commentLocation: Object {
+        filename: 'unknown'
+        end: Object {
+          column: 3
+          index: 97
+          line: 9
+        }
+        start: Object {
+          column: 0
+          index: 66
+          line: 7
+        }
+      }
+    }
+    Object {
+      category: 'wow'
+      endLine: 16
+      filename: 'unknown'
+      startLine: 16
+      commentLocation: Object {
+        filename: 'unknown'
+        end: Object {
+          column: 3
+          index: 146
+          line: 15
+        }
+        start: Object {
+          column: 0
+          index: 106
+          line: 12
+        }
+      }
+    }
+    Object {
+      category: 'fish'
+      endLine: 16
+      filename: 'unknown'
+      startLine: 16
+      commentLocation: Object {
+        filename: 'unknown'
+        end: Object {
+          column: 3
+          index: 146
+          line: 15
+        }
+        start: Object {
+          column: 0
+          index: 106
+          line: 12
         }
       }
     }
@@ -270,81 +278,77 @@ Object {
   suppressions: Array [
     Object {
       category: 'foo'
-      endLine: 1
-      filename: 'unknown'
-      startLine: 1
-      suppressionType: 'current'
-      commentLocation: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-    }
-    Object {
-      category: 'foo'
       endLine: 2
       filename: 'unknown'
       startLine: 2
-      suppressionType: 'current'
       commentLocation: Object {
         filename: 'unknown'
         end: Object {
-          column: 0
-          index: 0
-          line: 2
+          column: 18
+          index: 18
+          line: 1
         }
         start: Object {
           column: 0
           index: 0
-          line: 2
+          line: 1
         }
       }
     }
     Object {
-      category: 'foo'
-      endLine: 3
+      category: 'bar'
+      endLine: 5
       filename: 'unknown'
-      startLine: 3
-      suppressionType: 'current'
+      startLine: 5
       commentLocation: Object {
         filename: 'unknown'
         end: Object {
-          column: 0
-          index: 0
-          line: 3
+          column: 22
+          index: 49
+          line: 4
         }
         start: Object {
           column: 0
-          index: 0
-          line: 3
+          index: 27
+          line: 4
         }
       }
     }
     Object {
-      category: 'foo'
-      endLine: 4
+      category: 'yes'
+      endLine: 10
       filename: 'unknown'
-      startLine: 4
-      suppressionType: 'current'
+      startLine: 10
       commentLocation: Object {
         filename: 'unknown'
         end: Object {
-          column: 0
-          index: 0
-          line: 4
+          column: 3
+          index: 84
+          line: 9
         }
         start: Object {
           column: 0
-          index: 0
-          line: 4
+          index: 58
+          line: 7
+        }
+      }
+    }
+    Object {
+      category: 'wow'
+      endLine: 16
+      filename: 'unknown'
+      startLine: 16
+      commentLocation: Object {
+        filename: 'unknown'
+        end: Object {
+          column: 3
+          index: 128
+          line: 15
+        }
+        start: Object {
+          column: 0
+          index: 93
+          line: 12
         }
       }
     }

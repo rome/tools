@@ -32,7 +32,7 @@ export default function getBindingIdentifiers(
     }
 
     for (const key of keys) {
-      // rome-ignore-next-line lint/noExplicitAny
+      // rome-ignore lint/noExplicitAny
       const val = (node as any)[key];
       if (val === undefined) {
         continue;
