@@ -9,7 +9,6 @@ import {AnyComment, AnyNode, Program} from '@romejs/js-ast';
 import {
   DiagnosticLocation,
   DiagnosticSuppression,
-  DiagnosticSuppressionType,
   DiagnosticSuppressions,
   Diagnostics,
   descriptions,
@@ -21,13 +20,13 @@ import Path from './lib/Path';
 
 export const SUPPRESSION_NEXT_LINE_START = 'rome-ignore-next-line';
 const SUPPRESSION_CURRENT_LINE_START = 'rome-ignore-line';
-const SUPPRESSION_NEXT_STATEMENT_START = 'rome-ignore-next-statement';
+const SUPPRESSION_NEXT_NODE_START = 'rome-ignore-next';
 
 const prefixMistakes: Dict<string> = {
   disable: SUPPRESSION_NEXT_LINE_START,
   suppress: SUPPRESSION_NEXT_LINE_START,
   ignore: SUPPRESSION_NEXT_LINE_START,
-  'next-statement': SUPPRESSION_NEXT_STATEMENT_START,
+  next: SUPPRESSION_NEXT_NODE_START,
   'next-line': SUPPRESSION_NEXT_LINE_START,
   line: SUPPRESSION_CURRENT_LINE_START,
   'current-line': SUPPRESSION_CURRENT_LINE_START,
@@ -114,21 +113,16 @@ function extractSuppressionsFromComment(
     let matchedPrefix: undefined | string;
     let startLine: undefined | Number1;
     let endLine: undefined | Number1;
-    let suppressionType: undefined | DiagnosticSuppressionType;
     if (line.startsWith(SUPPRESSION_CURRENT_LINE_START)) {
       matchedPrefix = SUPPRESSION_CURRENT_LINE_START;
       startLine = commentLocation.start.line;
       endLine = startLine;
-      suppressionType = 'current';
-    }
-    if (line.startsWith(SUPPRESSION_NEXT_LINE_START)) {
+    } else if (line.startsWith(SUPPRESSION_NEXT_LINE_START)) {
       matchedPrefix = SUPPRESSION_NEXT_LINE_START;
       startLine = ob1Inc(commentLocation.start.line);
       endLine = startLine;
-      suppressionType = 'next';
-    }
-    if (line.startsWith(SUPPRESSION_NEXT_STATEMENT_START)) {
-      matchedPrefix = SUPPRESSION_NEXT_STATEMENT_START;
+    } else if (line.startsWith(SUPPRESSION_NEXT_NODE_START)) {
+      matchedPrefix = SUPPRESSION_NEXT_NODE_START;
 
       const nodeToComment = getNodeToComment();
       const nextNode = nodeToComment.get(comment);
@@ -139,7 +133,6 @@ function extractSuppressionsFromComment(
         });
         continue;
       } else {
-        suppressionType = 'statement';
         startLine = nextNode.loc.start.line;
         endLine = nextNode.loc.end.line;
       }
@@ -148,8 +141,7 @@ function extractSuppressionsFromComment(
     if (
       matchedPrefix === undefined ||
       endLine === undefined ||
-      startLine === undefined ||
-      suppressionType === undefined
+      startLine === undefined
     ) {
       const mistake = detectPossibleMistake(line);
       if (mistake !== undefined) {
@@ -197,7 +189,6 @@ function extractSuppressionsFromComment(
         suppressedCategories.add(category);
 
         suppressions.push({
-          type: suppressionType,
           filename: context.filename,
           category,
           commentLocation,

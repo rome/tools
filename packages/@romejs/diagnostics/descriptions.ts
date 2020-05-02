@@ -783,16 +783,11 @@ export const descriptions = createMessages({
   },
   SUPPRESSIONS: {
     UNUSED: (suppression: DiagnosticSuppression) => {
-      let description = {
-        next: 'next line',
-        current: 'current line',
-        statement: 'next statement',
-      }[suppression.type];
-
+      let description = '';
       if (suppression.startLine === suppression.endLine) {
-        description += ` line ${suppression.startLine}`;
+        description = `line ${suppression.startLine}`;
       } else {
-        description += ` lines ${suppression.startLine}-${suppression.endLine}`;
+        description += `lines ${suppression.startLine} to ${suppression.endLine}`;
       }
 
       return {
@@ -802,7 +797,7 @@ export const descriptions = createMessages({
           {
             type: 'log',
             category: 'info',
-            text: `This suppression prefixes hides the <emphasis>${description}</emphasis>`,
+            text: `This suppression should hide <emphasis>${description}</emphasis>`,
           },
         ],
       };
