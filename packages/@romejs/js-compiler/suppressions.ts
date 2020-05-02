@@ -19,9 +19,9 @@ import {Number1, ob1Inc} from '@romejs/ob1';
 import CompilerContext from './lib/CompilerContext';
 import Path from './lib/Path';
 
-export const SUPPRESSION_NEXT_LINE_START = 'rome-disable-next-line';
-const SUPPRESSION_CURRENT_LINE_START = 'rome-disable-line';
-const SUPPRESSION_NEXT_STATEMENT_START = 'rome-disable-next-statement';
+export const SUPPRESSION_NEXT_LINE_START = 'rome-ignore-next-line';
+const SUPPRESSION_CURRENT_LINE_START = 'rome-ignore-line';
+const SUPPRESSION_NEXT_STATEMENT_START = 'rome-ignore-next-statement';
 
 const prefixMistakes: Dict<string> = {
   disable: SUPPRESSION_NEXT_LINE_START,

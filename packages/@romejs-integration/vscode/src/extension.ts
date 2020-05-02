@@ -11,7 +11,7 @@ import {
   ServerOptions,
   TransportKind,
 } from 'vscode-languageclient';
-// rome-disable-next-line resolver/notFound
+// rome-ignore-next-line resolver/notFound
 import * as vscode from 'vscode';
 import path = require('path');
 

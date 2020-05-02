@@ -365,7 +365,7 @@ Object {
         advice: Array [
           log {
             category: 'info'
-            text: 'Did you mean <emphasis>rome-disable-next-line</emphasis>?'
+            text: 'Did you mean <emphasis>rome-ignore-next-line</emphasis>?'
           }
         ]
       }

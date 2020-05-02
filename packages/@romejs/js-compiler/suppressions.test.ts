@@ -44,10 +44,10 @@ test(
   async (t) => {
     t.snapshot(
       extractSuppressionsFromComments([
-        generateComment('rome-disable-line foo', 1),
-        generateComment('* rome-disable-line foo', 2),
-        generateComment(' * rome-disable-line foo', 3),
-        generateComment('* wow\n * rome-disable-line foo', 4),
+        generateComment('rome-ignore-line foo', 1),
+        generateComment('* rome-ignore-line foo', 2),
+        generateComment(' * rome-ignore-line foo', 3),
+        generateComment('* wow\n * rome-ignore-line foo', 4),
       ]),
     );
   },
@@ -58,11 +58,11 @@ test(
   async (t) => {
     t.snapshot(
       extractSuppressionsFromComments([
-        generateComment('rome-disable-line foo bar', 1),
-        generateComment('* rome-disable-line foo bar', 2),
-        generateComment(' * rome-disable-line foo bar', 3),
+        generateComment('rome-ignore-line foo bar', 1),
+        generateComment('* rome-ignore-line foo bar', 2),
+        generateComment(' * rome-ignore-line foo bar', 3),
         generateComment(
-          '* wow\n * rome-disable-line foo bar\n* rome-disable-line cat dog',
+          '* wow\n * rome-ignore-line foo bar\n* rome-ignore-line cat dog',
           4,
         ),
       ]),
@@ -86,7 +86,7 @@ test(
   async (t) => {
     t.snapshot(
       extractSuppressionsFromComments([
-        generateComment('rome-disable-line foo foo', 1),
+        generateComment('rome-ignore-line foo foo', 1),
       ]),
     );
   },

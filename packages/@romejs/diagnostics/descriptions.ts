@@ -58,7 +58,7 @@ function addEmphasis(items: Array<string>): Array<string> {
   return items.map((item) => `<emphasis>${item}</emphasis>`);
 }
 
-// rome-disable-next-line lint/AEciilnnoptxy;
+// rome-ignore-next-line lint/AEciilnnoptxy;
 type InputMessagesFactory = (...params: Array<any>) => DiagnosticMetadataString;
 
 type InputMessagesCategory = {
@@ -102,11 +102,11 @@ type OutputMessages<Input extends InputMessages> = {
 function createMessages<Input extends InputMessages>(
   messages: Input,
 ): OutputMessages<Input> {
-  // rome-disable-next-line lint/noExplicitAny
+  // rome-ignore-next-line lint/noExplicitAny
   const out: OutputMessages<Input> = ({} as any);
 
   for (const categoryName in messages) {
-    // rome-disable-next-line lint/noExplicitAny
+    // rome-ignore-next-line lint/noExplicitAny
     const category: OutputMessagesCategory<any> = {};
     out[categoryName] = category;
 
@@ -119,7 +119,7 @@ function createMessages<Input extends InputMessages>(
           message: createBlessedDiagnosticMessage(value),
         };
       } else if (typeof value === 'function') {
-        // rome-disable-next-line lint/noExplicitAny
+        // rome-ignore-next-line lint/noExplicitAny
         const callback: InputMessagesFactory = (value as any);
 
         category[key] = function(...params) {
@@ -130,7 +130,7 @@ function createMessages<Input extends InputMessages>(
           };
         };
       } else {
-        // rome-disable-next-line lint/noExplicitAny
+        // rome-ignore-next-line lint/noExplicitAny
         const {message, ...obj} = (value as any);
         category[key] = {
           ...obj,

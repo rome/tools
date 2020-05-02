@@ -301,9 +301,9 @@ export default class Master {
     process.exit();
   }
 
-  // rome-disable-next-line lint/noExplicitAny
+  // rome-ignore-next-line lint/noExplicitAny
   wrapFatal<T extends (...args: Array<any>) => any>(callback: T): T {
-    return ((// rome-disable-next-line lint/noExplicitAny
+    return ((// rome-ignore-next-line lint/noExplicitAny
     (...args: Array<any>): any => {
       try {
         const res = callback(...args);
