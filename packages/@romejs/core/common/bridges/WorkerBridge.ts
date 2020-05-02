@@ -264,7 +264,7 @@ export default class WorkerBridge extends Bridge {
         hydrate(err, data) {
           return new DiagnosticsError(
             String(err.message),
-            // rome-ignore-next-line lint/noExplicitAny
+            // rome-ignore lint/noExplicitAny
             (data.diagnostics as any),
           );
         },

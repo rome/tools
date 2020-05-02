@@ -44,6 +44,7 @@ export default async function transform(
 
   let prevStageDiagnostics: Diagnostics = [];
   let prevStageCacheDeps: Array<string> = [];
+  let suppressions: undefined | DiagnosticSuppressions;
 
   // Run the previous stage
   if (stageNo > 0) {
@@ -51,9 +52,11 @@ export default async function transform(
     prevStageDiagnostics = prevStage.diagnostics;
     prevStageCacheDeps = prevStage.cacheDependencies;
     ast = prevStage.ast;
+    suppressions = prevStage.suppressions;
   }
 
   const context = new CompilerContext({
+    suppressions,
     ref: req.ref,
     sourceText: req.sourceText,
     ast,

@@ -24,10 +24,7 @@ export type DiagnosticFilter = {
 
 export type DiagnosticFilters = Array<DiagnosticFilter>;
 
-export type DiagnosticSuppressionType = 'next' | 'current' | 'statement';
-
 export type DiagnosticSuppression = {
-  type: DiagnosticSuppressionType;
   filename: string;
   category: string;
   startLine: Number1;

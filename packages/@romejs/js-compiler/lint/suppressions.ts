@@ -9,7 +9,7 @@ import {AnyComment, AnyNode, Program} from '@romejs/js-ast';
 import {CompilerContext} from '@romejs/js-compiler';
 import {Number1, ob1Get1} from '@romejs/ob1';
 import Path from '../lib/Path';
-import {SUPPRESSION_NEXT_LINE_START} from '../suppressions';
+import {SUPPRESSION_START} from '../suppressions';
 import {commentInjector} from '../transforms/defaultHooks/index';
 import {LintCompilerOptionsDecision} from '../types';
 
@@ -23,7 +23,7 @@ function getStartLine(node: AnyNode): undefined | Number1 {
 }
 
 function buildSuppressionCommentValue(categories: Set<string>): string {
-  return `${SUPPRESSION_NEXT_LINE_START} ${Array.from(categories).join(' ')}`;
+  return `${SUPPRESSION_START} ${Array.from(categories).join(' ')}`;
 }
 
 export function addSuppressions(context: CompilerContext, ast: Program): Program {
@@ -56,7 +56,7 @@ export function addSuppressions(context: CompilerContext, ast: Program): Program
     ).pop();
     if (
       lastComment !== undefined &&
-      lastComment.value.includes(SUPPRESSION_NEXT_LINE_START)
+      lastComment.value.includes(SUPPRESSION_START)
     ) {
       updateComment = lastComment;
     }
@@ -91,7 +91,7 @@ export function addSuppressions(context: CompilerContext, ast: Program): Program
         {
           ...updateComment,
           value: updateComment.value.replace(
-            SUPPRESSION_NEXT_LINE_START,
+            SUPPRESSION_START,
             buildSuppressionCommentValue(suppressionCategories),
           ),
         },
