@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyRegExpBodyItem} from '@romejs/js-ast';
+import {AnyRegExpExpression, AnyRegExpBodyItem} from '@romejs/js-ast';
 import {Path, TransformExitResult} from '@romejs/js-compiler';
 import {descriptions} from '@romejs/diagnostics';
 
@@ -13,18 +13,28 @@ function isQuantifiedMinZero(el: AnyRegExpBodyItem): boolean {
   return el.type === 'RegExpQuantified' && el.min === 0;
 }
 
+function lintEmptyMatches(expr: AnyRegExpExpression): boolean {
+  if (expr.type === 'RegExpSubExpression') {
+    return expr.body
+      .map((item) => {
+        if (item.type === 'RegExpGroupNonCapture' || item.type === 'RegExpGroupCapture') {
+          return lintEmptyMatches(item.expression);
+        } else {
+          return isQuantifiedMinZero(item);
+        }
+      })
+      .every(el => el === true);
+  } else {
+    return lintEmptyMatches(expr.left) || lintEmptyMatches(expr.right);
+  }
+}
+
 export default {
-  name: 'noEmptyCharacterClass',
+  name: 'emptyMatches',
   enter(path: Path): TransformExitResult {
     const {context, node} = path;
-    if (
-      node.type === 'RegExpLiteral' &&
-      node.expression.type === 'RegExpSubExpression'
-    ) {
-      const {body} = node.expression;
-      if (body && body.every(isQuantifiedMinZero)) {
-        context.addNodeDiagnostic(node, descriptions.LINT.EMPTY_MATCHES);
-      }
+    if (node.type === 'RegExpLiteral' && lintEmptyMatches(node.expression)) {
+      context.addNodeDiagnostic(node, descriptions.LINT.EMPTY_MATCHES);
     }
     return node;
   },
