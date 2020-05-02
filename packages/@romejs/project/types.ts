@@ -33,15 +33,9 @@ export type ProjectDefinition = {
 
 // Project config objects to categorize settings
 export type ProjectConfigObjects = {
-  cache: {
-
-  };
-  resolver: {
-
-  };
-  compiler: {
-
-  };
+  cache: {};
+  resolver: {};
+  compiler: {};
   bundler: {
     mode: BundlerMode;
   };
