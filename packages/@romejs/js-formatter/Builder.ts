@@ -16,6 +16,7 @@ import {
 import builderFunctions from './builders/index';
 import * as n from './node/index';
 import {Token, concat, hardline, indent, join, mark} from './tokens';
+import {ob1Get1} from '@romejs/ob1';
 
 export type BuilderMethod<T extends AnyNode = AnyNode> = (
   builder: Builder,
@@ -136,18 +137,8 @@ export default class Builder {
 
       if (!isLast) {
         const nextNode = nodes[i + 1];
-        const trailingComments = this.getComments(
-          'trailingComments',
-          node,
-          true,
-        );
 
-        let currentNode = node;
-        if (trailingComments && trailingComments.length > 0) {
-          currentNode = trailingComments[trailingComments.length - 1];
-        }
-
-        if (n.getLinesBetween(currentNode, nextNode) > 1) {
+        if (this.getLinesBetween(node, nextNode) > 1) {
           printed = concat([printed, hardline]);
         }
       }
@@ -197,5 +188,65 @@ export default class Builder {
     } else {
       return comments.filter((comment) => !this.printedComments.has(comment.id));
     }
+  }
+
+  getLinesBetween(a: AnyNode, b: AnyNode): number {
+    if (a.loc === undefined || b.loc === undefined) {
+      return 0;
+    }
+
+    let aEndLine = ob1Get1(a.loc.end.line);
+    let bStartLine = ob1Get1(b.loc.start.line);
+
+    // Simple cases:
+    //  1. `a` and `b` are on the same line
+    //  2. `a` and `b` are on their own line without empty lines between them
+    if (bStartLine - aEndLine <= 1) {
+      return bStartLine - aEndLine;
+    }
+
+    // If the are more than one line between `a` and `b`, the comment nodes must
+    // be inspected to detect empty lines.
+    //
+    // In the following example, `getLinesBetween` should return `1`.
+    //
+    //     a;
+    //     /* COMMENT */
+    //     b;
+
+    const aTrailingComments = this.getComments('trailingComments', a, true);
+    const bLeadingComments = this.getComments('leadingComments', b, true);
+
+    // Comments must be deduplicated because they are shared between nodes.
+    // Walk them in order to calculate the nodes' boundaries.
+    if (aTrailingComments !== undefined || bLeadingComments !== undefined) {
+      const seenComments: Set<AnyComment> = new Set();
+
+      // Expand `a` boundaries
+      if (aTrailingComments !== undefined) {
+        for (const comment of aTrailingComments) {
+          seenComments.add(comment);
+
+          if (comment.loc !== undefined) {
+            aEndLine = Math.max(aEndLine, ob1Get1(comment.loc.end.line));
+          }
+        }
+      }
+
+      // Expand `b` boundaries
+      if (bLeadingComments !== undefined) {
+        for (const comment of bLeadingComments) {
+          if (seenComments.has(comment)) {
+            continue;
+          }
+
+          if (comment.loc !== undefined) {
+            bStartLine = Math.min(bStartLine, ob1Get1(comment.loc.start.line));
+          }
+        }
+      }
+    }
+
+    return bStartLine - aEndLine;
   }
 }
