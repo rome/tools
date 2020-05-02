@@ -16,7 +16,6 @@ export * from './types';
 export const ERROR_FRAMES_PROP = Symbol();
 export const ERROR_MARKUP_MESSAGE_PROP = Symbol();
 export const ERROR_ADVICE_PROP = Symbol();
-export const ERROR_POP_FRAMES_PROP = Symbol();
 
 export type StructuredError = {
   name: string;
@@ -28,7 +27,7 @@ export type StructuredError = {
 };
 
 export class NativeStructuredError extends Error {
-  constructor(struct: Partial<StructuredError>, framesToShift?: number) {
+  constructor(struct: Partial<StructuredError>) {
     super(struct.message);
     this.name = struct.name === undefined ? 'Error' : struct.name;
     this.stack = struct.stack;
@@ -36,23 +35,23 @@ export class NativeStructuredError extends Error {
     this[ERROR_MARKUP_MESSAGE_PROP] = struct.markupMessage;
     this[ERROR_FRAMES_PROP] = struct.frames;
     this[ERROR_ADVICE_PROP] = struct.advice;
-    this[ERROR_POP_FRAMES_PROP] = framesToShift;
   }
 
   [ERROR_MARKUP_MESSAGE_PROP]: undefined | string;
   [ERROR_FRAMES_PROP]: undefined | ErrorFrames;
   [ERROR_ADVICE_PROP]: undefined | DiagnosticAdvice;
-  [ERROR_POP_FRAMES_PROP]: undefined | number;
 }
 
 export function createErrorFromStructure(
   struct: Partial<StructuredError>,
-  framesToShift?: number,
 ): Error {
-  return new NativeStructuredError(struct, framesToShift);
+  return new NativeStructuredError(struct);
 }
 
-export function getErrorStructure(err: unknown): StructuredError {
+export function getErrorStructure(
+  err: unknown,
+  framesToShift: number = 0,
+): StructuredError {
   let name = 'Error';
   let message = 'Unknown message';
   let stack = undefined;
@@ -64,7 +63,6 @@ export function getErrorStructure(err: unknown): StructuredError {
   if (
     isPlainObject<{
       [ERROR_ADVICE_PROP]: unknown;
-      [ERROR_POP_FRAMES_PROP]: unknown;
       [ERROR_FRAMES_PROP]: unknown;
       [ERROR_MARKUP_MESSAGE_PROP]: unknown;
     }>(err)
@@ -98,12 +96,9 @@ export function getErrorStructure(err: unknown): StructuredError {
       // @ts-ignore
       advice = err[ERROR_ADVICE_PROP];
     }
-
-    const framesToShift = err[ERROR_POP_FRAMES_PROP];
-    if (typeof framesToShift === 'number') {
-      frames = frames.slice(framesToShift);
-    }
   }
+
+  frames = frames.slice(framesToShift);
 
   if (!looksLikeValidError) {
     message = `Not an error instance: ${String(err)}`;

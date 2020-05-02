@@ -11,7 +11,7 @@ import {
   createAbsoluteFilePath,
 } from '@romejs/path';
 import {exists, readFileText, unlink, writeFile} from '@romejs/fs';
-import {TestRunnerOptions} from '../master/testing/types';
+import {TestMasterRunnerOptions} from '../master/testing/types';
 import TestWorkerRunner from './TestWorkerRunner';
 import {DiagnosticDescription, descriptions} from '@romejs/diagnostics';
 import createSnapshotParser from './SnapshotParser';
@@ -56,6 +56,8 @@ export type InlineSnapshotUpdate = {
   snapshot: string;
 };
 
+export type InlineSnapshotUpdates = Array<InlineSnapshotUpdate>;
+
 export type SnapshotCounts = {
   deleted: number;
   updated: number;
@@ -68,7 +70,6 @@ export default class SnapshotManager {
       `${testPath.getExtensionlessBasename()}${SNAPSHOT_EXT}`,
     );
     this.testPath = testPath;
-
     this.runner = runner;
     this.options = runner.options;
     this.snapshots = new AbsoluteFilePathMap();
@@ -85,7 +86,7 @@ export default class SnapshotManager {
   defaultSnapshotPath: AbsoluteFilePath;
   snapshots: AbsoluteFilePathMap<Snapshot>;
   runner: TestWorkerRunner;
-  options: TestRunnerOptions;
+  options: TestMasterRunnerOptions;
   snapshotCounts: SnapshotCounts;
 
   normalizeSnapshotPath(filename: undefined | string): AbsoluteFilePath {
@@ -277,8 +278,6 @@ export default class SnapshotManager {
       if (this.options.freezeSnapshots) {
         if (!used) {
           await this.emitDiagnostic(descriptions.SNAPSHOTS.REDUNDANT);
-        } else if (!existsOnDisk) {
-          await this.emitDiagnostic(descriptions.SNAPSHOTS.MISSING);
         } else if (formatted !== raw) {
           await this.emitDiagnostic(
             descriptions.SNAPSHOTS.INCORRECT(raw, formatted),
@@ -309,37 +308,31 @@ export default class SnapshotManager {
     callFrame: ErrorFrame,
     received: string,
     snapshot?: string,
-  ): boolean {
+  ): 'MATCH' | 'NO_MATCH' | 'UPDATE' {
     // Matches, no need to do anything
     if (received === snapshot) {
-      return true;
+      return 'MATCH';
     }
 
     const shouldSave = this.options.updateSnapshots || snapshot === undefined;
-
-    if (snapshot === undefined) {
-      snapshot = received;
-    }
-
     if (shouldSave) {
       const {lineNumber, columnNumber} = callFrame;
       if (lineNumber === undefined || columnNumber === undefined) {
         throw new Error('Call frame has no line or column');
       }
 
-      if (this.options.freezeSnapshots) {
-        throw new Error('Requested a snapshot update but frozen');
+      if (!this.options.freezeSnapshots) {
+        this.inlineSnapshotsUpdates.push({
+          line: lineNumber,
+          column: columnNumber,
+          snapshot: received,
+        });
       }
 
-      this.inlineSnapshotsUpdates.push({
-        line: lineNumber,
-        column: columnNumber,
-        snapshot,
-      });
-      return true;
+      return 'UPDATE';
     }
 
-    return false;
+    return 'NO_MATCH';
   }
 
   async get(

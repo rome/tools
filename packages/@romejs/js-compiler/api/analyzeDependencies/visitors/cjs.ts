@@ -155,20 +155,22 @@ export default {
       }
 
       if (isExports) {
-        const [, parts] = getNodeReferenceParts(node.left);
+        const {parts} = getNodeReferenceParts(node.left);
 
-        // parts[0] is exports
-        const name = parts[1];
+        if (parts.length >= 2) {
+          // parts[0] is exports
+          const name = parts[1].value;
 
-        context.record(
-          new ExportRecord({
-            type: 'local',
-            loc: getDeclarationLoc(scope, node.right),
-            valueType: getAnalyzeExportValueType(scope, node.right),
-            kind: 'value',
-            name,
-          }),
-        );
+          context.record(
+            new ExportRecord({
+              type: 'local',
+              loc: getDeclarationLoc(scope, node.right),
+              valueType: getAnalyzeExportValueType(scope, node.right),
+              kind: 'value',
+              name,
+            }),
+          );
+        }
       }
     }
 

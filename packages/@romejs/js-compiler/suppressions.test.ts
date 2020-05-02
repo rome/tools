@@ -32,7 +32,7 @@ function generateComment(value: string, line: number): CommentBlock {
 test(
   'single category',
   async (t) => {
-    await t.snapshot(
+    t.snapshot(
       extractSuppressionsFromComments([
         generateComment('rome-suppress foo', 1),
         generateComment('* rome-suppress foo', 2),
@@ -46,7 +46,7 @@ test(
 test(
   'multiple categories',
   async (t) => {
-    await t.snapshot(
+    t.snapshot(
       extractSuppressionsFromComments([
         generateComment('rome-suppress foo bar', 1),
         generateComment('* rome-suppress foo bar', 2),
@@ -63,7 +63,7 @@ test(
 test(
   'typos',
   async (t) => {
-    await t.snapshot(
+    t.snapshot(
       extractSuppressionsFromComments([
         generateComment('rome-ignore foo bar', 1),
       ]),
@@ -74,7 +74,7 @@ test(
 test(
   'duplicates',
   async (t) => {
-    await t.snapshot(
+    t.snapshot(
       extractSuppressionsFromComments([
         generateComment('rome-suppress foo foo', 1),
       ]),

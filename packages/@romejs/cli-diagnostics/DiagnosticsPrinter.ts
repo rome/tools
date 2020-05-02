@@ -384,13 +384,26 @@ export default class DiagnosticsPrinter extends Error {
   displayDiagnostic(diag: Diagnostic) {
     const {reporter} = this;
     const {start, end, filename} = diag.location;
-    const {advice} = diag.description;
+    let advice = [...(diag.description.advice || [])];
+
+    // Remove stacktrace from beginning if it contains only one frame that matches the root diagnostic location
+    const firstAdvice = advice[0];
+    if (
+      firstAdvice !== undefined &&
+      firstAdvice.type === 'stacktrace' &&
+      firstAdvice.frames.length === 1
+    ) {
+      const frame = firstAdvice.frames[0];
+      if (frame.filename === filename && equalPosition(frame, start)) {
+        advice.shift();
+      }
+    }
 
     // Determine if we should skip showing the frame at the top of the diagnostic output
     // We check if there are any frame advice entries that match us exactly, this is
     // useful for stuff like reporting call stacks
     let skipFrame = false;
-    if (start !== undefined && end !== undefined && advice !== undefined) {
+    if (start !== undefined && end !== undefined) {
       adviceLoop: for (const item of advice) {
         if (
           item.type === 'frame' &&
@@ -454,14 +467,14 @@ export default class DiagnosticsPrinter extends Error {
 
     reporter.indent(() => {
       // Concat all the advice together
-      const advice: DiagnosticAdvice = [
+      const allAdvice: DiagnosticAdvice = [
         ...derived.advice,
         ...outdatedAdvice,
-        ...(diag.description.advice || []),
+        ...advice,
       ];
 
       // Print advice
-      for (const item of advice) {
+      for (const item of allAdvice) {
         const res = printAdvice(
           item,
           {

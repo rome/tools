@@ -98,6 +98,8 @@ export type DiagnosticCategory =
   | 'tests/fixtureOptions'
   | 'tests/logs'
   | 'tests/noneDeclared'
+  | 'tests/snapshots/inlineMissingReceived'
+  | 'tests/snapshots/inlineCollision'
   | 'tests/snapshots/incorrect'
   | 'tests/snapshots/missing'
   | 'tests/snapshots/redundant'

@@ -91,14 +91,14 @@ export async function testLint(
     };
   });
 
-  const snapshotName = await t.snapshot(
+  const snapshotName = t.snapshot(
     printDiagnosticsToString({
       diagnostics,
       suppressions: res.suppressions,
     }),
   );
 
-  await t.namedSnapshot(`${snapshotName}: formatted`, res.src);
+  t.namedSnapshot(`${snapshotName}: formatted`, res.src);
 
   t.clearAdvice();
 }

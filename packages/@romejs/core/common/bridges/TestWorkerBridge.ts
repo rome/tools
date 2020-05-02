@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Diagnostic} from '@romejs/diagnostics';
-import {TestRunnerOptions} from '../../master/testing/types';
+import {Diagnostic, DiagnosticOrigin} from '@romejs/diagnostics';
+import {TestMasterRunnerOptions} from '../../master/testing/types';
 import {Bridge} from '@romejs/events';
 import {JSONFileReference} from '../types/files';
 import {TestWorkerFileResult} from '@romejs/core/test-worker/TestWorkerRunner';
@@ -22,7 +22,7 @@ export type TestWorkerBridgeRunOptions = {
   projectFolder: string;
   code: string;
   cwd: string;
-  options: TestRunnerOptions;
+  options: TestMasterRunnerOptions;
 };
 
 export default class TestWorkerBridge extends Bridge {
@@ -68,16 +68,20 @@ export default class TestWorkerBridge extends Bridge {
     direction: 'server<-client',
   });
 
-  testError = this.createEvent<
+  testDiagnostic = this.createEvent<
     {
-      ref: undefined | TestRef;
       diagnostic: Diagnostic;
+      origin: DiagnosticOrigin;
     },
     void
-  >({name: 'onTestError', direction: 'server<-client'});
+  >({
+    name: 'testDiagnostic',
+    direction: 'server<-client',
+  });
 
-  testSuccess = this.createEvent<
+  testFinish = this.createEvent<
     {
+      success: boolean;
       ref: TestRef;
     },
     void
