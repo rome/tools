@@ -197,7 +197,7 @@ function extractSuppressionsFromComment(
         suppressedCategories.add(category);
 
         suppressions.push({
-          suppressionType,
+          type: suppressionType,
           filename: context.filename,
           category,
           commentLocation,
