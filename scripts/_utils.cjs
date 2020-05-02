@@ -43,7 +43,10 @@ exports.execNode = function(args) {
   exports.exec(process.execPath, [...process.execArgv, ...args]);
 };
 
+exports.writtenFiles = [];
+
 exports.write = function(loc, content) {
+  exports.writtenFiles.push(loc);
   console.log('Wrote', loc);
   fs.mkdirSync(path.dirname(loc), {recursive: true});
   fs.writeFileSync(loc, content);
