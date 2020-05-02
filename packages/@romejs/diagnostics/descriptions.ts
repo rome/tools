@@ -11,6 +11,7 @@ import {
   DiagnosticBlessedMessage,
   DiagnosticDescription,
   DiagnosticLocation,
+  DiagnosticSuppression,
 } from './types';
 import {escapeMarkup, markup} from '@romejs/string-markup';
 import stringDiff from '@romejs/string-diff';
@@ -781,9 +782,30 @@ export const descriptions = createMessages({
     }),
   },
   SUPPRESSIONS: {
-    UNUSED: {
-      message: 'Unused suppression. Did not hide any errors.',
-      category: 'suppressions/unused',
+    UNUSED: (suppression: DiagnosticSuppression) => {
+      let description = {
+        next: 'next line',
+        current: 'current line',
+        statement: 'next statement',
+      }[suppression.type];
+
+      if (suppression.startLine === suppression.endLine) {
+        description += ` line ${suppression.startLine}`;
+      } else {
+        description += ` lines ${suppression.startLine}-${suppression.endLine}`;
+      }
+
+      return {
+        message: 'Unused suppression. Did not hide any errors.',
+        category: 'suppressions/unused',
+        advice: [
+          {
+            type: 'log',
+            category: 'info',
+            text: `This suppression prefixes hides the <emphasis>${description}</emphasis>`,
+          },
+        ],
+      };
     },
     MISSING_SPACE: {
       category: 'suppressions/missingSpace',

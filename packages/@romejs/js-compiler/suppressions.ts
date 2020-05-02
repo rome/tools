@@ -139,7 +139,7 @@ function extractSuppressionsFromComment(
         });
         continue;
       } else {
-        suppressionType = 'range';
+        suppressionType = 'statement';
         startLine = nextNode.loc.start.line;
         endLine = nextNode.loc.end.line;
       }
