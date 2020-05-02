@@ -24,12 +24,15 @@ export type DiagnosticFilter = {
 
 export type DiagnosticFilters = Array<DiagnosticFilter>;
 
-export type DiagnosticSuppressionType = 'current' | 'next';
+export type DiagnosticSuppressionType = 'next' | 'current' | 'range';
 
 export type DiagnosticSuppression = {
   type: DiagnosticSuppressionType;
+  filename: string;
   category: string;
-  loc: SourceLocation;
+  startLine: Number1;
+  endLine: Number1;
+  commentLocation: SourceLocation;
 };
 
 export type DiagnosticSuppressions = Array<DiagnosticSuppression>;
