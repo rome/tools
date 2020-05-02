@@ -5,7 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import jsxKey from './jsxKey';
 import jsxNoCommentText from './jsxNoCommentText';
 
 // Add transforms in alphabetical order.
-export const reactLintTransforms = [jsxNoCommentText];
+export const reactLintTransforms = [jsxKey, jsxNoCommentText];

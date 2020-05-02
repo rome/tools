@@ -354,6 +354,10 @@ export const descriptions = createMessages({
       category: 'lint/react/jsxNoCommentText',
       message: 'Comments inside children should be placed in braces',
     },
+    REACT_JSX_KEY: (origin: string) => ({
+      category: 'lint/react/jsxKey',
+      message: markup`Missing the "key" prop for element in ${origin}`,
+    }),
     UNSAFE_NEGATION: {
       category: 'lint/unsafeNegation',
       message: 'Unsafe usage of negation operator in left side of binary expression',
