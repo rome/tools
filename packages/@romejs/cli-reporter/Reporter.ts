@@ -970,22 +970,17 @@ export default class Reporter {
         stream,
         prefix,
       );
-      for (const line of prefixLines) {
-        this.logOneNoMarkup(
-          stream,
-          line,
-          {
-            newline: false,
-            noPrefix: true,
-            ...opts,
-          },
-        );
+      const prefixLine = prefixLines[0];
+      if (prefixLines.length !== 1) {
+        throw new Error('Expected 1 prefix line');
       }
 
       const {lines} = this.markupify(stream, inner, prefixWidth);
       for (let i = 0; i < lines.length; i++) {
         let line = lines[i];
-        if (i > 0) {
+        if (i === 0) {
+          line = `${prefixLine}${line}`;
+        } else {
           line = `${' '.repeat(prefixWidth)}${line}`;
         }
         this.logOneNoMarkup(
@@ -1091,10 +1086,12 @@ export default class Reporter {
     items: Array<T>,
     callback: (item: T, display: (str: string) => void) => void,
     opts: ListOptions = {},
-  ) {
+  ): {
+    truncated: boolean;
+  } {
     if (items.length === 0) {
       // We make some assumptions that there's at least one item
-      return;
+      return {truncated: false};
     }
 
     let truncatedCount = 0;
@@ -1126,11 +1123,14 @@ export default class Reporter {
 
     if (truncatedCount > 0) {
       this.logAll(`<dim>and <number>${truncatedCount}</number> others...</dim>`);
+      return {truncated: true};
+    } else {
+      return {truncated: false};
     }
   }
 
   list(items: Array<string>, opts: ListOptions = {}) {
-    this.processedList(items, (str, display) => display(str), opts);
+    return this.processedList(items, (str, display) => display(str), opts);
   }
 
   progress(opts?: ReporterProgressOptions): ReporterProgress {

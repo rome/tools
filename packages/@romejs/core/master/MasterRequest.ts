@@ -73,7 +73,6 @@ import {
   createAbsoluteFilePath,
   createUnknownFilePath,
 } from '@romejs/path';
-
 import crypto = require('crypto');
 import {createErrorFromStructure, getErrorStructure} from '@romejs/v8';
 import {Dict, RequiredProps} from '@romejs/typescript-helpers';
@@ -83,6 +82,7 @@ import {markup} from '@romejs/string-markup';
 import {DiagnosticsProcessorOptions} from '@romejs/diagnostics/DiagnosticsProcessor';
 import {JSONObject} from '@romejs/codec-json';
 import {VCSClient} from '@romejs/vcs';
+import {InlineSnapshotUpdates} from '../test-worker/SnapshotManager';
 
 type MasterRequestOptions = {
   master: Master;
@@ -884,6 +884,22 @@ export default class MasterRequest {
       'parse',
       path,
       (bridge, file) => bridge.parseJS.call({file, options: opts}),
+    );
+  }
+
+  async requestWorkerUpdateInlineSnapshots(
+    path: AbsoluteFilePath,
+    updates: InlineSnapshotUpdates,
+    parseOptions: WorkerParseOptions,
+  ): Promise<Diagnostics> {
+    this.checkCancelled();
+
+    return this.wrapRequestDiagnostic(
+      'updateInlineSnapshots',
+      path,
+      (bridge, file) =>
+        bridge.updateInlineSnapshots.call({file, updates, parseOptions})
+      ,
     );
   }
 

@@ -28,7 +28,7 @@ async function testAnalyzeDeps(input: string, sourceType: ConstSourceType) {
 test(
   "discovers require('module') call",
   async (t) => {
-    await t.snapshot(
+    t.snapshot(
       await testAnalyzeDeps(
         dedent`
           import * as foo from 'foo';
@@ -46,7 +46,7 @@ test(
 test(
   'ignores require(dynamic) call',
   async (t) => {
-    await t.snapshot(
+    t.snapshot(
       await testAnalyzeDeps(
         dedent`
           require(dynamic);
@@ -60,7 +60,7 @@ test(
 test(
   'ignores require() call if shadowed',
   async (t) => {
-    await t.snapshot(
+    t.snapshot(
       await testAnalyzeDeps(
         dedent`
           {
@@ -82,7 +82,7 @@ test(
 test(
   "discovers async import('foo')",
   async (t) => {
-    await t.snapshot(
+    t.snapshot(
       await testAnalyzeDeps(
         dedent`
           import('./foo');
@@ -100,7 +100,7 @@ test(
 test(
   'discovers local export specifiers',
   async (t) => {
-    await t.snapshot(
+    t.snapshot(
       await testAnalyzeDeps(
         dedent`
           export {foo, bar, yes as no};
@@ -114,7 +114,7 @@ test(
 test(
   'discovers export declarations',
   async (t) => {
-    await t.snapshot(
+    t.snapshot(
       await testAnalyzeDeps(
         dedent`
           export const yes = '';
@@ -130,7 +130,7 @@ test(
 test(
   'discovers export default',
   async (t) => {
-    await t.snapshot(
+    t.snapshot(
       await testAnalyzeDeps(
         dedent`
           export default 'yes';
@@ -144,7 +144,7 @@ test(
 test(
   'discovers export from',
   async (t) => {
-    await t.snapshot(
+    t.snapshot(
       await testAnalyzeDeps(
         dedent`
           export {foo, bar, default as no, boo as noo} from 'foobar';
@@ -158,7 +158,7 @@ test(
 test(
   'discovers export star',
   async (t) => {
-    await t.snapshot(
+    t.snapshot(
       await testAnalyzeDeps(
         dedent`
           export * from 'foobar';
@@ -172,7 +172,7 @@ test(
 test(
   'discovers import star',
   async (t) => {
-    await t.snapshot(
+    t.snapshot(
       await testAnalyzeDeps(
         dedent`
           import * as bar from 'foobar';
@@ -186,7 +186,7 @@ test(
 test(
   'discovers import specifiers',
   async (t) => {
-    await t.snapshot(
+    t.snapshot(
       await testAnalyzeDeps(
         dedent`
           import {bar, foo, default as lol, ya as to} from 'foobar';
@@ -200,7 +200,7 @@ test(
 test(
   'discovers import default',
   async (t) => {
-    await t.snapshot(
+    t.snapshot(
       await testAnalyzeDeps(
         dedent`
           import bar from 'foobar';
@@ -214,7 +214,7 @@ test(
 test(
   'discovers commonjs exports',
   async (t) => {
-    await t.snapshot(
+    t.snapshot(
       await testAnalyzeDeps(
         dedent`
           exports.yes = function() {};
@@ -228,7 +228,7 @@ test(
 test(
   'discovers commonjs module.exports',
   async (t) => {
-    await t.snapshot(
+    t.snapshot(
       await testAnalyzeDeps(
         dedent`
           module.exports = function() {};
@@ -242,7 +242,7 @@ test(
 test(
   'discovers top level await',
   async (t) => {
-    await t.snapshot(
+    t.snapshot(
       await testAnalyzeDeps(
         dedent`
           await foobar();
@@ -256,7 +256,7 @@ test(
 test(
   'correctly identifies a file with es imports as es',
   async (t) => {
-    await t.snapshot(
+    t.snapshot(
       await testAnalyzeDeps(
         dedent`
           import 'bar';
@@ -270,7 +270,7 @@ test(
 test(
   'correctly identifies a file with es exports as es',
   async (t) => {
-    await t.snapshot(
+    t.snapshot(
       await testAnalyzeDeps(
         dedent`
           export const foo = 'bar';
@@ -284,7 +284,7 @@ test(
 test(
   'correctly identifies a file with cjs exports as cjs',
   async (t) => {
-    await t.snapshot(
+    t.snapshot(
       await testAnalyzeDeps(
         dedent`
           exports.foo = 'bar';
@@ -298,7 +298,7 @@ test(
 test(
   'correctly identifies a file with no imports or exports as unknown',
   async (t) => {
-    await t.snapshot(
+    t.snapshot(
       await testAnalyzeDeps(
         dedent`
           foo();
@@ -312,7 +312,7 @@ test(
 test(
   'disallow mix of es and cjs exports',
   async (t) => {
-    await t.snapshot(
+    t.snapshot(
       await testAnalyzeDeps(
         dedent`
           export const foo = 'bar';
@@ -327,7 +327,7 @@ test(
 test(
   'defines topLevelLocalBindings',
   async (t) => {
-    await t.snapshot(
+    t.snapshot(
       await testAnalyzeDeps(
         dedent`
           import {bar} from 'foo';

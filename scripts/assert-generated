@@ -10,14 +10,14 @@
 require('./_setup.cjs');
 
 const child_process = require('child_process');
-const {execDev} = require('./_utils.cjs');
+const {execDev, writtenFiles} = require('./_utils.cjs');
 
 // Generate files
 require('./runtime-modules/update.cjs');
 require('./ast/update.cjs');
 
 // Autofix them
-execDev(['lint', '--save']);
+execDev(['lint', ...writtenFiles, '--save']);
 
 // Check that `git status` is fine
 const out = child_process

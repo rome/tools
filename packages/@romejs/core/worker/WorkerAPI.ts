@@ -6,11 +6,13 @@
  */
 
 import {FileReference, Worker} from '@romejs/core';
-import {Program} from '@romejs/js-ast';
+import {AnyNode, Program, stringLiteral} from '@romejs/js-ast';
 import {Diagnostics, catchDiagnostics, descriptions} from '@romejs/diagnostics';
 import {
   CompileResult,
+  CompilerContext,
   CompilerOptions,
+  Path,
   TransformStageName,
   compile,
 } from '@romejs/js-compiler';
@@ -31,6 +33,12 @@ import {
   AnalyzeDependencyResult,
   UNKNOWN_ANALYZE_DEPENDENCIES_RESULT,
 } from '../common/types/analyzeDependencies';
+import {
+  InlineSnapshotUpdate,
+  InlineSnapshotUpdates,
+} from '../test-worker/SnapshotManager';
+import {formatJS} from '@romejs/js-formatter';
+import {getNodeReferenceParts} from '@romejs/js-ast-utils';
 
 // Some Windows git repos will automatically convert Unix line endings to Windows
 // This retains the line endings for the formatted code if they were present in the source
@@ -97,6 +105,102 @@ export default class WorkerAPI {
         parseOptions,
       ),
     });
+  }
+
+  async updateInlineSnapshots(
+    ref: FileReference,
+    updates: InlineSnapshotUpdates,
+    parseOptions: WorkerParseOptions,
+  ): Promise<Diagnostics> {
+    let {ast, sourceText} = await this.worker.parseJS(ref, parseOptions);
+
+    const appliedUpdatesToCallees: Set<AnyNode> = new Set();
+    const pendingUpdates: Set<InlineSnapshotUpdate> = new Set(updates);
+    const context = new CompilerContext({
+      ast,
+      ref,
+    });
+    ast = context.reduceRoot(
+      ast,
+      {
+        name: 'updateInlineSnapshots',
+        enter(path: Path): AnyNode {
+          const {node} = path;
+          if (node.type !== 'CallExpression' || pendingUpdates.size === 0) {
+            return node;
+          }
+
+          let matchedUpdate: undefined | InlineSnapshotUpdate;
+
+          const {callee} = node;
+          for (const {node} of getNodeReferenceParts(callee).parts) {
+            const {loc} = node;
+            if (loc === undefined) {
+              continue;
+            }
+
+            for (const update of pendingUpdates) {
+              if (
+                loc.start.column === update.column &&
+                loc.start.line === update.line
+              ) {
+                matchedUpdate = update;
+                break;
+              }
+            }
+
+            if (matchedUpdate !== undefined) {
+              break;
+            }
+          }
+
+          if (matchedUpdate !== undefined) {
+            if (appliedUpdatesToCallees.has(callee)) {
+              context.addNodeDiagnostic(
+                node,
+                descriptions.SNAPSHOTS.INLINE_COLLISION,
+              );
+              return node;
+            }
+
+            pendingUpdates.delete(matchedUpdate);
+            appliedUpdatesToCallees.add(callee);
+
+            const args = node.arguments;
+            if (args.length < 1) {
+              context.addNodeDiagnostic(
+                node,
+                descriptions.SNAPSHOTS.INLINE_MISSING_RECEIVED,
+              );
+              return node;
+            }
+
+            return {
+              ...node,
+              arguments: [
+                args[0],
+                stringLiteral.create({value: matchedUpdate.snapshot}),
+              ],
+            };
+          }
+
+          return node;
+        },
+      },
+    );
+
+    const diags = context.diagnostics.getDiagnostics();
+
+    if (pendingUpdates.size > 0 && diags.length === 0) {
+      throw new Error('Left over inline snapshots that were not updated');
+    }
+
+    if (diags.length === 0) {
+      const formatted = formatJS(ast, {sourceText}).code;
+      await this.worker.writeFile(ref.real, formatted);
+    }
+
+    return diags;
   }
 
   async analyzeDependencies(

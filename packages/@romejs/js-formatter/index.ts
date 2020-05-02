@@ -12,7 +12,7 @@ import {PrinterOutput, printTokenToString} from './Printer';
 export {Builder};
 
 export type FormatterOptions = {
-  typeAnnotations: boolean;
+  typeAnnotations?: boolean;
   format?: 'pretty' | 'compact';
   indent?: number;
   comments?: Array<AnyComment>;
@@ -22,26 +22,29 @@ export type FormatterOptions = {
 
 export function formatJS(
   ast: AnyNode,
-  opts: FormatterOptions = {
-    typeAnnotations: true,
-    format: 'pretty',
-  },
+  {
+    format = 'pretty',
+    typeAnnotations = true,
+    sourceMaps = false,
+    comments,
+    indent = 0,
+  }: FormatterOptions = {},
 ): PrinterOutput {
   const builder = new Builder(
     {
-      format: opts.format,
-      sourceMaps: opts.sourceMaps ?? false,
-      typeAnnotations: opts.typeAnnotations,
+      format,
+      sourceMaps,
+      typeAnnotations,
     },
-    ast.type === 'Program' ? ast.comments : opts.comments,
+    ast.type === 'Program' ? ast.comments : comments,
   );
   const token = builder.tokenize(ast, MOCK_PARENT);
   const formatted = printTokenToString(
     token,
     {
       indentWidth: 2,
-      printWidth: opts.format === 'pretty' ? 80 : Infinity,
-      rootIndent: opts.indent ?? 0,
+      printWidth: format === 'pretty' ? 80 : Infinity,
+      rootIndent: indent,
     },
   );
 

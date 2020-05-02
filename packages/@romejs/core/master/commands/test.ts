@@ -10,12 +10,12 @@ import {Diagnostics} from '@romejs/diagnostics';
 import {Consumer} from '@romejs/consume';
 import {commandCategories} from '../../common/commands';
 import {createMasterCommand} from '../commands';
-import TestRunner from '../testing/TestRunner';
+import TestMasterRunner from '../testing/TestMasterRunner';
 import Bundler from '../bundler/Bundler';
 import {JS_EXTENSIONS} from '../../common/fileHandlers';
-import {TestRunnerOptions, TestSources} from '../testing/types';
+import {TestMasterRunnerOptions, TestSources} from '../testing/types';
 
-type Flags = Omit<TestRunnerOptions, 'verboseDiagnostics'>;
+type Flags = Omit<TestMasterRunnerOptions, 'verboseDiagnostics'>;
 
 export default createMasterCommand({
   category: commandCategories.CODE_QUALITY,
@@ -81,14 +81,14 @@ export default createMasterCommand({
         {
           code: res.entry.js.content,
           sourceMap: res.entry.sourceMap.map,
-          path,
+          ref: req.master.projectManager.getFileReference(path),
         },
       );
     }
 
     reporter.info(`Running tests`);
 
-    const runner = new TestRunner({
+    const runner = new TestMasterRunner({
       addDiagnostics,
       options: {
         coverage: commandFlags.coverage,

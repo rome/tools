@@ -828,6 +828,21 @@ export const descriptions = createMessages({
         },
       ],
     }),
+    INLINE_COLLISION: {
+      category: 'tests/snapshots/inlineCollision',
+      message: 'Trying to update this inline snapshot multiple times',
+      advice: [
+        {
+          type: 'log',
+          category: 'info',
+          text: '<emphasis>t.inlineSnapshot</emphasis> can only be called once. Did you call it in a loop?',
+        },
+      ],
+    },
+    INLINE_MISSING_RECEIVED: {
+      category: 'tests/snapshots/inlineMissingReceived',
+      message: 'This inline snapshot call does not have a received argument',
+    },
   },
   BUNDLER: {
     TOP_LEVEL_AWAIT_IN_LEGACY: {

@@ -6,11 +6,7 @@
  */
 
 import {Reporter} from '@romejs/cli-reporter';
-import {
-  DiagnosticOrigin,
-  deriveDiagnosticFromError,
-  descriptions,
-} from '@romejs/diagnostics';
+import {deriveDiagnosticFromError, descriptions} from '@romejs/diagnostics';
 import {TestRef} from '../../common/bridges/TestWorkerBridge';
 import {Master, MasterRequest, TestWorkerBridge} from '@romejs/core';
 import {DiagnosticsPrinter} from '@romejs/cli-diagnostics';
@@ -33,12 +29,12 @@ import {
 } from '@romejs/v8';
 import fork from '../../common/utils/fork';
 import {ManifestDefinition} from '@romejs/codec-js-manifest';
-import {AbsoluteFilePath, createAbsoluteFilePath} from '@romejs/path';
+import {AbsoluteFilePath} from '@romejs/path';
 import {ob1Coerce0To1} from '@romejs/ob1';
 import {
   CoverageFolder,
-  TestRunnerConstructorOptions,
-  TestRunnerOptions,
+  TestMasterRunnerConstructorOptions,
+  TestMasterRunnerOptions,
   TestSource,
   TestSources,
   TestWorkerContainer,
@@ -49,6 +45,8 @@ import {escapeMarkup, markup} from '@romejs/string-markup';
 import {MAX_WORKER_COUNT} from '@romejs/core/common/constants';
 import {TestWorkerFlags} from '@romejs/core/test-worker/TestWorker';
 import net = require('net');
+import {TestWorkerFileResult} from '@romejs/core/test-worker/TestWorkerRunner';
+import {FileReference} from '@romejs/core/common/types/files';
 
 class BridgeStructuredError extends NativeStructuredError {
   constructor(struct: Partial<StructuredError>, bridge: Bridge) {
@@ -87,8 +85,8 @@ function findAvailablePort(): Promise<number> {
   });
 }
 
-export default class TestRunner {
-  constructor(opts: TestRunnerConstructorOptions) {
+export default class TestMasterRunner {
+  constructor(opts: TestMasterRunnerConstructorOptions) {
     this.sources = opts.sources;
     this.reporter = opts.request.reporter;
     this.master = opts.request.master;
@@ -109,6 +107,7 @@ export default class TestRunner {
       updatedSnapshots: 0,
       deletedSnapshots: 0,
       createdSnapshots: 0,
+      updatedInlineSnapshots: 0,
     };
 
     this.runningTests = new Map();
@@ -135,7 +134,7 @@ export default class TestRunner {
   }
 
   coverageCollector: CoverageCollector;
-  options: TestRunnerOptions;
+  options: TestMasterRunnerOptions;
   request: MasterRequest;
   reporter: Reporter;
   sources: TestSources;
@@ -159,10 +158,54 @@ export default class TestRunner {
     totalTests: number;
     startedTests: number;
     finishedTests: number;
+    updatedInlineSnapshots: number;
     updatedSnapshots: number;
     deletedSnapshots: number;
     createdSnapshots: number;
   };
+
+  async processTestResult(
+    ref: FileReference,
+    {inlineSnapshotUpdates, snapshotCounts}: TestWorkerFileResult,
+  ): Promise<void> {
+    this.progress.createdSnapshots += snapshotCounts.created;
+    this.progress.updatedSnapshots += snapshotCounts.updated;
+    this.progress.deletedSnapshots += snapshotCounts.deleted;
+    this.progress.updatedInlineSnapshots += inlineSnapshotUpdates.length;
+
+    if (inlineSnapshotUpdates.length > 0) {
+      const path = ref.real;
+      const filename = path.join();
+
+      // Resolve source maps. These will originally be pointed to the compiled source.
+      inlineSnapshotUpdates = inlineSnapshotUpdates.map((update) => {
+        const resolved = sourceMapManager.resolveLocation(
+          filename,
+          update.line,
+          update.column,
+        );
+
+        if (resolved.filename !== filename && resolved.filename !== ref.uid) {
+          throw new Error(
+            `Inline snapshot update resolved to ${resolved.filename} when it should be ${filename}`,
+          );
+        }
+
+        return {
+          ...update,
+          line: resolved.line,
+          column: resolved.column,
+        };
+      });
+
+      const diagnostics = await this.request.requestWorkerUpdateInlineSnapshots(
+        path,
+        inlineSnapshotUpdates,
+        {},
+      );
+      this.printer.processor.addDiagnostics(diagnostics);
+    }
+  }
 
   async runWorker({bridge, process, inspector}: TestWorkerContainer) {
     const {options: opts, sourcesQueue} = this;
@@ -191,7 +234,7 @@ export default class TestRunner {
       if (item === undefined) {
         throw new Error('testQueue.length was validated above');
       }
-      const [filename, {path, code, sourceMap}] = item;
+      const [filename, {ref, code, sourceMap}] = item;
 
       // Source map locations will always be resolved in the worker, but this is in case we need to resolve them in master in the case of an unresponsive worker
       // TODO remove this after test has ran
@@ -207,13 +250,16 @@ export default class TestRunner {
         await bridge.prepareTest.call({
           id,
           options: opts,
-          projectFolder: req.master.projectManager.assertProjectExisting(path).folder.join(),
-          file: req.master.projectManager.getTransportFileReference(path),
+          projectFolder: req.master.projectManager.assertProjectExisting(
+            ref.real,
+          ).folder.join(),
+          file: req.master.projectManager.getTransportFileReference(ref.real),
           cwd: flags.cwd.join(),
           code,
         });
 
-        await bridge.runTest.call(id);
+        const result = await bridge.runTest.call(id);
+        await this.processTestResult(ref, result);
       } finally {
         removeSourceMap();
       }
@@ -471,7 +517,7 @@ export default class TestRunner {
 
   getWorkers(): TestWorkerContainers {
     if (this.workers === undefined) {
-      throw new Error('TestRunner.init has not been called yet');
+      throw new Error('TestMasterRunner.init has not been called yet');
     } else {
       return this.workers;
     }
@@ -591,25 +637,6 @@ export default class TestRunner {
         }
       });
 
-      bridge.snapshotUpdated.subscribe(({event}) => {
-        switch (event) {
-          case 'create': {
-            this.progress.createdSnapshots++;
-            break;
-          }
-
-          case 'update': {
-            this.progress.updatedSnapshots++;
-            break;
-          }
-
-          case 'delete': {
-            this.progress.deletedSnapshots++;
-            break;
-          }
-        }
-      });
-
       bridge.testsFound.subscribe((tests) => {
         for (const {ref, isSkipped} of tests) {
           this.onTestFound(ref, isSkipped);
@@ -623,27 +650,11 @@ export default class TestRunner {
         progress.pushText(getProgressTestRefText(data.ref));
       });
 
-      bridge.testError.subscribe((data) => {
-        let origin: DiagnosticOrigin = {
-          category: 'test/error',
-          message: 'Generated from a test worker without being attached to a test',
-        };
-
-        const {ref} = data;
-        if (ref !== undefined) {
-          const uid = this.master.projectManager.getUid(
-            createAbsoluteFilePath(ref.filename),
-          );
-          origin.message = markup`Generated from the file <filelink target="${uid}" /> and test name "${ref.testName}"`;
-          this.onTestFinished(ref);
-          progress.popText(getProgressTestRefText(ref));
-          progress.tick();
-        }
-
-        this.printer.processor.addDiagnostic(data.diagnostic, origin);
+      bridge.testDiagnostic.subscribe(({diagnostic, origin}) => {
+        this.printer.processor.addDiagnostic(diagnostic, origin);
       });
 
-      bridge.testSuccess.subscribe((data) => {
+      bridge.testFinish.subscribe((data) => {
         this.onTestFinished(data.ref);
         progress.popText(getProgressTestRefText(data.ref));
         progress.tick();
@@ -679,8 +690,8 @@ export default class TestRunner {
 
     // Get the packages associated with all the ran tests, we will filter code coverage to those packages only
     const testedPackages: Set<undefined | ManifestDefinition> = new Set();
-    for (const {path} of this.sources.values()) {
-      testedPackages.add(master.memoryFs.getOwnedManifest(path));
+    for (const {ref} of this.sources.values()) {
+      testedPackages.add(master.memoryFs.getOwnedManifest(ref.real));
     }
 
     let root: CoverageFolder = {
@@ -826,15 +837,18 @@ export default class TestRunner {
       createdSnapshots,
       deletedSnapshots,
       updatedSnapshots,
+      updatedInlineSnapshots,
     } = this.progress;
 
     const snapshotCounts: Array<{
+      inline: boolean;
       count: number;
       noun: string;
     }> = [
-      {count: createdSnapshots, noun: 'created'},
-      {count: updatedSnapshots, noun: 'updated'},
-      {count: deletedSnapshots, noun: 'deleted'},
+      {inline: false, count: createdSnapshots, noun: 'created'},
+      {inline: false, count: updatedSnapshots, noun: 'updated'},
+      {inline: false, count: deletedSnapshots, noun: 'deleted'},
+      {inline: true, count: updatedInlineSnapshots, noun: 'updated'},
     ].filter(({count}) => count > 0);
 
     if (snapshotCounts.length === 0) {
@@ -843,10 +857,16 @@ export default class TestRunner {
 
     const first = snapshotCounts.shift()!;
     const parts = [
-      `<number emphasis>${first.count}</number> snapshots ${first.noun}`,
+      // Inline snapshots will always be the last element, so if it's inline here then there's no others
+      `<number emphasis>${first.count}</number> ${first.inline
+        ? 'inline snapshots'
+        : 'snapshots'} ${first.noun}`,
     ];
 
-    for (const {count, noun} of snapshotCounts) {
+    for (let {inline, count, noun} of snapshotCounts) {
+      if (inline) {
+        noun = `inline ${noun}`;
+      }
       parts.push(`<number emphasis>${count}</emphasis> ${noun}`);
     }
 

@@ -7,7 +7,7 @@
 
 import {JSONPropertyValue} from './types';
 
-export type AsyncFunc = () => undefined | Promise<void>;
+export type AsyncFunc = () => void | undefined | Promise<void>;
 
 export type SyncThrower = () => void;
 
@@ -84,13 +84,14 @@ export interface TestHelper {
     expected: unknown,
     message?: string,
     opts?: TestSnapshotOptions,
-  ): Promise<string>;
-  snapshotNamed(
+  ): string;
+  inlineSnapshot(received: unknown, expected?: string): void;
+  namedSnapshot(
     name: string,
     expected: unknown,
     message?: string,
     opts?: TestSnapshotOptions,
-  ): Promise<string>;
+  ): string;
 }
 
 export type TestName = string | Array<string>;
