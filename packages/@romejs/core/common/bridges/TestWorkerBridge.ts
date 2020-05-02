@@ -71,7 +71,7 @@ export default class TestWorkerBridge extends Bridge {
   testDiagnostic = this.createEvent<
     {
       diagnostic: Diagnostic;
-      origin: DiagnosticOrigin;
+      origin: undefined | DiagnosticOrigin;
     },
     void
   >({

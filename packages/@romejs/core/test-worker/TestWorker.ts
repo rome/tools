@@ -42,8 +42,8 @@ export default class TestWorker {
     process.on(
       'unhandledRejection',
       (err) => {
-        bridge.testError.send({
-          ref: undefined,
+        bridge.testDiagnostic.send({
+          origin: undefined,
           diagnostic: deriveDiagnosticFromError({
             error: err,
             category: 'tests/unhandledRejection',
