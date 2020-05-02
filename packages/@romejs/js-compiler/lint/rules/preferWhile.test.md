@@ -12,15 +12,15 @@
 
   ✖ A while loop should be used over a for loop
 
-    for (; x.running;) x.step();
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  > 1 │ for (; x.running;) {
+  > 2 │   x.step();
+  > 3 │ }
 
   ℹ Recommended fix
 
-      │ - for (;·x.running;) 
+      │ - for (;·x.running;) {
     1 │ + while (x.running) {
-    2 │ + ··x.step();
-    3 │ + }
+    2 │     x.step();
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -45,15 +45,15 @@ while (x.running) {
 
   ✖ A while loop should be used over a for loop
 
-    for (;;) doSomething();
-    ^^^^^^^^^^^^^^^^^^^^^^^
+  > 1 │ for (;;) {
+  > 2 │   doSomething();
+  > 3 │ }
 
   ℹ Recommended fix
 
-      │ - for (;;)
-    1 │ + while (true)·{
-    2 │ + · doSomething();
-    3 │ + }
+      │ - for (;;) {
+    1 │ + while (true) {
+    2 │     doSomething();
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

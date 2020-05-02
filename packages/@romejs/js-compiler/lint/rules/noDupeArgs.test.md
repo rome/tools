@@ -8,14 +8,14 @@
 
 ```
 
- unknown:2:20 lint/noDupeArgs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:18 lint/noDupeArgs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Duplicate argument a in function definition
 
-  > 2 │   function hello(a, a) {
-      │                     ^
-    3 │     console.log("Hello);
-    4 │   }
+  > 1 │ function hello(a, a) {
+      │                   ^
+    2 │   //
+    3 │ }a
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -27,7 +27,7 @@
 
 ```
 function hello(a, a) {
-  console.log('Hello);\n  }\n  hello();\n  ');
+  //
 }
 
 ```

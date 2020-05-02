@@ -10,21 +10,36 @@ import {testLintMultiple} from '../testHelpers';
 import {dedent} from '@romejs/string-utils';
 
 test(
-  'no delete',
+  'empty blocks',
   async (t) => {
     await testLintMultiple(
       t,
       [
+        // VALID
         dedent`
-          const arr = [['a','b','c'], [1, 2, 3]];
-          delete arr[0][2];
+          if (foo) foo;
         `,
         dedent`
-          const obj = {a: {b: {c: 123}}};
-          delete obj.a.b.c;
+          if (foo) {
+            foo;
+          }
+        `,
+        dedent`
+          if (foo) {
+            // empty
+          }
+        `,
+        // INVALID
+        dedent`
+          if (foo) {}
+        `,
+        dedent`
+          if (foo) {
+            // foo;
+          } else {}
         `,
       ],
-      {category: 'lint/noDelete'},
+      {category: 'lint/emptyBlocks'},
     );
   },
 );

@@ -349,6 +349,10 @@ export const descriptions = createMessages({
       category: 'lint/preferWhile',
       message: 'A while loop should be used over a for loop',
     },
+    REACT_JSX_NO_COMMENT_TEXT: {
+      category: 'lint/react/jsxNoCommentText',
+      message: 'Comments inside children should be placed in braces',
+    },
     UNSAFE_NEGATION: {
       category: 'lint/unsafeNegation',
       message: 'Unsafe usage of negation operator in left side of binary expression',
@@ -432,7 +436,7 @@ export const descriptions = createMessages({
     },
     NO_SHORTHAND_ARRAY_TYPE: {
       category: 'lint/noShorthandArrayType',
-      message: 'Use Array<T> instead of shorthand T[]',
+      message: escapeMarkup('Use Array<T> instead of shorthand T[]'),
     },
     NO_UNSAFE_FINALLY: (type: string) => ({
       category: 'lint/noUnsafeFinally',

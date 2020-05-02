@@ -7,19 +7,23 @@
 
 import {test} from 'rome';
 import {testLint} from '../testHelpers';
+import {dedent} from '@romejs/string-utils';
 
 test(
   'duplicate import source',
   async (t) => {
-    await testLint(t, `
-    import foo from './testdummy.ts';
-    import {bar} from './testdummy.ts';
-    import type {fooType} from './testdummy.ts';
+    await testLint(
+      t,
+      dedent`
+        import foo from './testdummy.ts';
+        import {bar} from './testdummy.ts';
+        import type {fooType} from './testdummy.ts';
 
-    const typedFoo: fooType = {
-      type: 'foo'
-    }
-    console.log(typedFoo, foo, bar);
-    `, {category: 'lint/duplicateImportSource'});
+        const typedFoo: fooType = {
+          type: 'foo'
+        };
+      `,
+      {category: 'lint/duplicateImportSource'},
+    );
   },
 );

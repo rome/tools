@@ -38,6 +38,13 @@ export default {
           descriptions.LINT.EMPTY_BLOCKS,
         );
       }
+
+      if (node.alternate !== undefined && isEmpty(node.alternate)) {
+        context.addNodeDiagnostic(
+          node.alternate,
+          descriptions.LINT.EMPTY_BLOCKS,
+        );
+      }
     }
 
     return node;

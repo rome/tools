@@ -8,17 +8,16 @@
 
 ```
 
- unknown:3:15 lint/getterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:2:13 lint/getterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a 'return' at end of a getter method but got empty block
 
-    2 │   class p {
-  > 3 │     get name() {
-  > 4 │       console.log('hello')
-  > 5 │     };
-      │ ^^^^^
-    6 │   }
-    7 │   console.log(new p())
+    1 │ class p {
+  > 2 │   get name() {
+  > 3 │     console.log('hello');
+  > 4 │   }
+      │ ^^^
+    5 │ }
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -34,7 +33,6 @@ class p {
     console.log('hello');
   }
 }
-console.log(new p());
 
 ```
 
@@ -42,18 +40,16 @@ console.log(new p());
 
 ```
 
- unknown:4:15 lint/getterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:2:13 lint/getterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Expected a 'return' at end of a getter method but got empty block
 
-    2 │   let p;
-    3 │   p = {
-  > 4 │     get name() {
-  > 5 │       console.log('hello')
-  > 6 │     }
-      │ ^^^^^
-    7 │   };
-    8 │   console.log(p)
+    1 │ let p = {
+  > 2 │   get name() {
+  > 3 │     console.log('hello');
+  > 4 │   },
+      │ ^^^
+    5 │ };
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -64,13 +60,11 @@ console.log(new p());
 ### `1: formatted`
 
 ```
-let p;
-p = {
+let p = {
   get name() {
     console.log('hello');
   },
 };
-console.log(p);
 
 ```
 
@@ -93,6 +87,5 @@ Object.defineProperty(
     },
   },
 );
-console.log(p);
 
 ```

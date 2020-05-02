@@ -7,7 +7,23 @@
 ### `0`
 
 ```
-✔ No known problems!
+
+ unknown:2:13 lint/noShorthandArrayType FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Use Array<T> instead of shorthand T[]
+
+    1 │ let valid: Array<foo>;
+  > 2 │ let invalid: bar[];
+      │              ^^^^^
+
+  ℹ Recommended fix
+
+  - bar[]
+  + Array<bar>
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
@@ -15,14 +31,30 @@
 
 ```
 let valid: Array<foo>;
-let invalid = bar[INVALID_PLACEHOLDER];
+let invalid: Array<bar>;
 
 ```
 
 ### `1`
 
 ```
-✔ No known problems!
+
+ unknown:2:13 lint/noShorthandArrayType FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Use Array<T> instead of shorthand T[]
+
+    1 │ let valid: Array<foo>;
+  > 2 │ let invalid: bar[];
+      │              ^^^^^
+
+  ℹ Recommended fix
+
+  - bar[]
+  + Array<bar>
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
@@ -30,6 +62,6 @@ let invalid = bar[INVALID_PLACEHOLDER];
 
 ```
 let valid: Array<foo>;
-let invalid = bar[INVALID_PLACEHOLDER];
+let invalid: Array<bar>;
 
 ```

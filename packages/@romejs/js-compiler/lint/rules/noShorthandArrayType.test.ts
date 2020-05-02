@@ -7,20 +7,29 @@
 
 import {test} from 'rome';
 import {testLint} from '../testHelpers';
+import {dedent} from '@romejs/string-utils';
 
 test(
   'no shorthand array type',
   async (t) => {
     // TypeScript
-    await testLint(t, `
+    await testLint(
+      t,
+      dedent`
         let valid: Array<foo>;
-        let invalid = bar[];
-      `, {category: 'lint/noShorthandArrayType', syntax: ['ts']});
+        let invalid: bar[];
+      `,
+      {category: 'lint/noShorthandArrayType', syntax: ['ts']},
+    );
 
     // Flow
-    await testLint(t, `
+    await testLint(
+      t,
+      dedent`
         let valid: Array<foo>;
-        let invalid = bar[];
-      `, {category: 'lint/noShorthandArrayType', syntax: ['flow']});
+        let invalid: bar[];
+      `,
+      {category: 'lint/noShorthandArrayType', syntax: ['flow']},
+    );
   },
 );
