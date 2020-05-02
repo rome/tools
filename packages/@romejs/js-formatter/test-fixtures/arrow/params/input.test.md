@@ -333,7 +333,9 @@ foo(
 ### `Output`
 
 ```javascript
-fooooooooooooooooooooooooooooooooooooooooooooooooooo((action) => (next) => dispatch(action));
+fooooooooooooooooooooooooooooooooooooooooooooooooooo((action) => (next) =>
+  dispatch(action)
+);
 
 foo((
   {

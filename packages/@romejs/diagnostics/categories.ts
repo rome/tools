@@ -92,6 +92,7 @@ export type DiagnosticCategory =
   | 'suppressions/duplicate'
   | 'suppressions/incorrectPrefix'
   | 'suppressions/missingSpace'
+  | 'suppressions/missingTarget'
   | 'suppressions/unused'
   | 'tests/cancelled'
   | 'tests/disabled'

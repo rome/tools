@@ -9,7 +9,7 @@ import Event from './Event';
 
 export {Event};
 
-// rome-suppress-next-line lint/noExplicitAny
+// rome-disable-next-line lint/noExplicitAny
 export type AnyEvent = Event<any, any>;
 
 export {default as Bridge} from './Bridge';

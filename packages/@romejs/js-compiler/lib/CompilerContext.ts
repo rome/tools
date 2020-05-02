@@ -134,7 +134,10 @@ export default class CompilerContext {
 
     this.comments = new CommentsConsumer(ast.comments);
 
-    const {suppressions, diagnostics} = extractSuppressionsFromProgram(ast);
+    const {suppressions, diagnostics} = extractSuppressionsFromProgram(
+      this,
+      ast,
+    );
     this.suppressions = suppressions;
     this.diagnostics = new DiagnosticsProcessor();
     this.diagnostics.addDiagnostics(diagnostics);

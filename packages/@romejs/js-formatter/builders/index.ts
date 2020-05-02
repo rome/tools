@@ -7,7 +7,7 @@
 
 import {BuilderMethod} from '../Builder';
 
-// rome-suppress-next-line lint/noExplicitAny
+// rome-disable-next-line lint/noExplicitAny
 const builders: Map<string, BuilderMethod<any>> = new Map();
 
 export default builders;
