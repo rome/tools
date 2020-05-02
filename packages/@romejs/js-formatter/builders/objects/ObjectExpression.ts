@@ -51,7 +51,7 @@ export default function ObjectExpression(
     }
 
     tokens.push('...', builder.tokenize(node.rest, node));
-  } else {
+  } else if (props.length > 0) {
     // Add trailing comma
     tokens.push(ifBreak(','));
   }

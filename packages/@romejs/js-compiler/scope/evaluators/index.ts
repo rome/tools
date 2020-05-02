@@ -39,7 +39,7 @@ import {AnyNode} from '@romejs/js-ast';
 type ScopeEvaluator = {
   creator: boolean;
 
-  // rome-suppress-next-line lint/noExplicitAny
+  // rome-ignore-next-line lint/noExplicitAny
   build: (node: any, parent: AnyNode, scope: Scope) => void | Scope;
 };
 

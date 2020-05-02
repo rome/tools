@@ -371,8 +371,8 @@ export default class DiagnosticsProcessor {
       }
 
       diagnostics.push({
-        location: suppression.loc,
-        description: descriptions.SUPPRESSIONS.UNUSED,
+        location: suppression.commentLocation,
+        description: descriptions.SUPPRESSIONS.UNUSED(suppression),
       });
     }
 

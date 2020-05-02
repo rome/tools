@@ -867,7 +867,7 @@ export default class TestMasterRunner {
       if (inline) {
         noun = `inline ${noun}`;
       }
-      parts.push(`<number emphasis>${count}</emphasis> ${noun}`);
+      parts.push(`<number emphasis>${count}</number> ${noun}`);
     }
 
     reporter.success(parts.join(', '));
