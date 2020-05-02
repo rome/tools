@@ -155,7 +155,7 @@ class LintRunner {
 
   async runLint(
     {
-      evictedPaths: changedPaths,
+      evictedPaths,
       processor,
     }: LintRunOptions,
   ): Promise<{
@@ -175,7 +175,7 @@ class LintRunner {
     const queue: WorkerQueue<void> = new WorkerQueue(master);
 
     const progress = this.events.createProgress({title: 'Linting'});
-    progress.setTotal(changedPaths.size);
+    progress.setTotal(evictedPaths.size);
 
     queue.addCallback(async (path) => {
       const filename = path.join();
@@ -227,7 +227,7 @@ class LintRunner {
       progress.tick();
     });
 
-    for (const path of changedPaths) {
+    for (const path of evictedPaths) {
       await queue.pushQueue(path);
     }
 
@@ -397,7 +397,7 @@ class LintRunner {
       evictedPaths: opts.evictedPaths,
       changes,
       savedCount,
-      totalCount: validatedDependencyPaths.size,
+      totalCount: opts.evictedPaths.size,
       runner: this,
     };
   }
