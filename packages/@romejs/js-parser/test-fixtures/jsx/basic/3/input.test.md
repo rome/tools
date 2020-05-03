@@ -194,6 +194,7 @@ Program {
               name: 'value'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'value'
                 end: Object {
                   column: 22
                   index: 22

@@ -38,6 +38,7 @@ Program {
         name: 'foo'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'foo'
           end: Object {
             column: 12
             index: 12
@@ -107,6 +108,7 @@ Program {
             name: 'nullableNum'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'nullableNum'
               end: Object {
                 column: 24
                 index: 24

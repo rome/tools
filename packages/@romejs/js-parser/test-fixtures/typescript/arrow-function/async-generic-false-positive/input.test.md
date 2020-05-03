@@ -63,6 +63,7 @@ Program {
           name: 'async'
           loc: Object {
             filename: 'input.ts'
+            identifierName: 'async'
             end: Object {
               column: 5
               index: 5
@@ -159,6 +160,7 @@ Program {
             name: 'async'
             loc: Object {
               filename: 'input.ts'
+              identifierName: 'async'
               end: Object {
                 column: 5
                 index: 16
@@ -205,6 +207,7 @@ Program {
                   name: 'T'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'T'
                     end: Object {
                       column: 7
                       index: 18

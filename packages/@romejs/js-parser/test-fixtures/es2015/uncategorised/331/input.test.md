@@ -105,6 +105,7 @@ Program {
           name: 'Cls'
           loc: Object {
             filename: 'input.js'
+            identifierName: 'Cls'
             end: Object {
               column: 23
               index: 23

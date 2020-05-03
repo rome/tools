@@ -58,6 +58,7 @@ Program {
         name: 'null'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'null'
           end: Object {
             column: 13
             index: 13

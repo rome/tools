@@ -150,6 +150,7 @@ Program {
                 name: '__proto__'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: '__proto__'
                   end: Object {
                     column: 31
                     index: 31

@@ -53,6 +53,7 @@ Program {
         name: 'C'
         loc: Object {
           filename: 'input.ts'
+          identifierName: 'C'
           end: Object {
             column: 7
             index: 7
@@ -104,6 +105,7 @@ Program {
                 name: 'constructor'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'constructor'
                   end: Object {
                     column: 15
                     index: 25
@@ -430,6 +432,7 @@ Program {
                     leadingComments: undefined
                     loc: Object {
                       filename: 'input.ts'
+                      identifierName: 'x'
                       end: Object {
                         column: 18
                         index: 216
@@ -513,6 +516,7 @@ Program {
                     name: 'y'
                     loc: Object {
                       filename: 'input.ts'
+                      identifierName: 'y'
                       end: Object {
                         column: 16
                         index: 238

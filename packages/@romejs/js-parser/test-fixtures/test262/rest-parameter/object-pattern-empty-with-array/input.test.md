@@ -35,6 +35,7 @@ Program {
         name: 'emptyWithArray'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'emptyWithArray'
           end: Object {
             column: 23
             index: 23
@@ -138,6 +139,7 @@ Program {
                   name: 'p'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'p'
                     end: Object {
                       column: 29
                       index: 29

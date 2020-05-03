@@ -38,6 +38,7 @@ Program {
         name: 'Dictionary'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'Dictionary'
           end: Object {
             column: 20
             index: 20
@@ -89,6 +90,7 @@ Program {
               name: 'index'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'index'
                 end: Object {
                   column: 29
                   index: 29
@@ -153,6 +155,7 @@ Program {
               name: 'length'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'length'
                 end: Object {
                   column: 54
                   index: 54

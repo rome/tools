@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1:15 lint/react/jsxNoCommentText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:15 lint/jsxNoCommentText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Comments inside children should be placed in braces
 
@@ -32,7 +32,7 @@ const a = <div>// comment</div>;
 
 ```
 
- unknown:1:15 lint/react/jsxNoCommentText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:15 lint/jsxNoCommentText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Comments inside children should be placed in braces
 

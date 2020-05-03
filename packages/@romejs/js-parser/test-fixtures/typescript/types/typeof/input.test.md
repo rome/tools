@@ -123,6 +123,7 @@ Program {
                       name: 'y'
                       loc: Object {
                         filename: 'input.ts'
+                        identifierName: 'y'
                         end: Object {
                           column: 15
                           index: 15
@@ -139,6 +140,7 @@ Program {
                       name: 'z'
                       loc: Object {
                         filename: 'input.ts'
+                        identifierName: 'z'
                         end: Object {
                           column: 17
                           index: 17

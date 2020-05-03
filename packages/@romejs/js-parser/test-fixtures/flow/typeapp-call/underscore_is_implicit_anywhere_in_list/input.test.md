@@ -87,6 +87,7 @@ Program {
           leadingComments: undefined
           loc: Object {
             filename: 'input.js'
+            identifierName: 'test'
             end: Object {
               column: 4
               index: 12
@@ -134,6 +135,7 @@ Program {
                 name: '_'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: '_'
                   end: Object {
                     column: 14
                     index: 22
@@ -181,6 +183,7 @@ Program {
                 name: '_'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: '_'
                   end: Object {
                     column: 25
                     index: 33
@@ -213,6 +216,7 @@ Program {
                 name: '_'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: '_'
                   end: Object {
                     column: 28
                     index: 36
@@ -245,6 +249,7 @@ Program {
                 name: '_'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: '_'
                   end: Object {
                     column: 31
                     index: 39
@@ -277,6 +282,7 @@ Program {
                 name: 'Foo'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'Foo'
                   end: Object {
                     column: 36
                     index: 44
@@ -309,6 +315,7 @@ Program {
                 name: 'Bar'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'Bar'
                   end: Object {
                     column: 41
                     index: 49
@@ -341,6 +348,7 @@ Program {
                 name: 'Baz'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'Baz'
                   end: Object {
                     column: 46
                     index: 54

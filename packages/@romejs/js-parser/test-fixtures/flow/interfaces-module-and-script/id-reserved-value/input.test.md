@@ -38,6 +38,7 @@ Program {
         name: 'switch'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'switch'
           end: Object {
             column: 16
             index: 16

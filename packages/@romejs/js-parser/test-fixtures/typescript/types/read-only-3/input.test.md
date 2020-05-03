@@ -76,6 +76,7 @@ Program {
         name: 'T32'
         loc: Object {
           filename: 'input.ts'
+          identifierName: 'T32'
           end: Object {
             column: 8
             index: 8

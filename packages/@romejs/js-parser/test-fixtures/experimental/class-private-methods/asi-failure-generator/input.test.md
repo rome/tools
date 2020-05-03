@@ -58,6 +58,7 @@ Program {
         name: 'Foo'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'Foo'
           end: Object {
             column: 9
             index: 9
@@ -108,6 +109,7 @@ Program {
                 name: 'p'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'p'
                   end: Object {
                     column: 3
                     index: 15
@@ -150,22 +152,6 @@ Program {
                   line: 2
                 }
               }
-              left: ReferenceIdentifier {
-                name: 'x'
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 7
-                    index: 19
-                    line: 2
-                  }
-                  start: Object {
-                    column: 6
-                    index: 18
-                    line: 2
-                  }
-                }
-              }
               right: ReferenceIdentifier {
                 name: 'INVALID_PLACEHOLDER'
                 loc: Object {
@@ -179,6 +165,23 @@ Program {
                     column: 3
                     index: 23
                     line: 3
+                  }
+                }
+              }
+              left: ReferenceIdentifier {
+                name: 'x'
+                loc: Object {
+                  filename: 'input.js'
+                  identifierName: 'x'
+                  end: Object {
+                    column: 7
+                    index: 19
+                    line: 2
+                  }
+                  start: Object {
+                    column: 6
+                    index: 18
+                    line: 2
                   }
                 }
               }
@@ -232,6 +235,7 @@ Program {
                 name: 'm'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'm'
                   end: Object {
                     column: 5
                     index: 25

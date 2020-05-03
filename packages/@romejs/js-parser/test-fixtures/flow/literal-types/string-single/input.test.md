@@ -38,6 +38,7 @@ Program {
         name: 'createElement'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'createElement'
           end: Object {
             column: 22
             index: 22
@@ -106,6 +107,7 @@ Program {
             name: 'HTMLDivElement'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'HTMLDivElement'
               end: Object {
                 column: 54
                 index: 54
@@ -138,6 +140,7 @@ Program {
             name: 'tagName'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'tagName'
               end: Object {
                 column: 30
                 index: 30

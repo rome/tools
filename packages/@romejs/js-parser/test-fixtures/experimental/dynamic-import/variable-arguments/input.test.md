@@ -65,6 +65,7 @@ Program {
               name: 'testVarible'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'testVarible'
                 end: Object {
                   column: 17
                   index: 17
@@ -226,6 +227,7 @@ Program {
               name: 'testVarible'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'testVarible'
                 end: Object {
                   column: 18
                   index: 49
@@ -244,6 +246,7 @@ Program {
               name: 'then'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'then'
                 end: Object {
                   column: 24
                   index: 55
@@ -258,6 +261,7 @@ Program {
             }
             loc: Object {
               filename: 'input.js'
+              identifierName: 'then'
               end: Object {
                 column: 24
                 index: 55

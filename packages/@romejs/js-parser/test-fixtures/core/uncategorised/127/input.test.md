@@ -96,6 +96,7 @@ Program {
               name: 'prepareForElection'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'prepareForElection'
                 end: Object {
                   column: 39
                   index: 39
@@ -110,6 +111,7 @@ Program {
             }
             loc: Object {
               filename: 'input.js'
+              identifierName: 'prepareForElection'
               end: Object {
                 column: 39
                 index: 39
@@ -141,6 +143,7 @@ Program {
                 name: 'Indonesia'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'Indonesia'
                   end: Object {
                     column: 20
                     index: 20
@@ -155,6 +158,7 @@ Program {
               }
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'Indonesia'
                 end: Object {
                   column: 20
                   index: 20
@@ -185,6 +189,7 @@ Program {
                 name: 'earth'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'earth'
                   end: Object {
                     column: 5
                     index: 5
@@ -202,6 +207,7 @@ Program {
                   name: 'asia'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'asia'
                     end: Object {
                       column: 10
                       index: 10
@@ -216,6 +222,7 @@ Program {
                 }
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'asia'
                   end: Object {
                     column: 10
                     index: 10

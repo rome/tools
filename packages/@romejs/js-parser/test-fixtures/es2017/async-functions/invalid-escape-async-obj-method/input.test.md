@@ -89,6 +89,7 @@ Program {
                 name: 'async'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'async'
                   end: Object {
                     column: 13
                     index: 13
@@ -120,6 +121,7 @@ Program {
               name: 'async'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'async'
                 end: Object {
                   column: 13
                   index: 13
@@ -182,6 +184,7 @@ Program {
           name: 'x'
           loc: Object {
             filename: 'input.js'
+            identifierName: 'x'
             end: Object {
               column: 15
               index: 15
@@ -230,6 +233,7 @@ Program {
             name: 'await'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'await'
               end: Object {
                 column: 25
                 index: 25
@@ -261,6 +265,7 @@ Program {
             name: 'x'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'x'
               end: Object {
                 column: 27
                 index: 27

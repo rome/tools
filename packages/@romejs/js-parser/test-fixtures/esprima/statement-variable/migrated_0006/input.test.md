@@ -65,6 +65,7 @@ Program {
               name: 'private'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'private'
                 end: Object {
                   column: 11
                   index: 11
@@ -97,6 +98,7 @@ Program {
               name: 'protected'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'protected'
                 end: Object {
                   column: 22
                   index: 22
@@ -129,6 +131,7 @@ Program {
               name: 'public'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'public'
                 end: Object {
                   column: 30
                   index: 30
@@ -161,6 +164,7 @@ Program {
               name: 'static'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'static'
                 end: Object {
                   column: 38
                   index: 38

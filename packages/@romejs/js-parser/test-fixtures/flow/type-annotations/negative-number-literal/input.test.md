@@ -56,6 +56,7 @@ Program {
         name: 'DirectionVector'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'DirectionVector'
           end: Object {
             column: 20
             index: 38
@@ -218,6 +219,7 @@ Program {
                     name: 'DirectionVector'
                     loc: Object {
                       filename: 'input.js'
+                      identifierName: 'DirectionVector'
                       end: Object {
                         column: 21
                         index: 84
@@ -362,6 +364,7 @@ Program {
             name: 'console'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'console'
               end: Object {
                 column: 7
                 index: 98
@@ -379,6 +382,7 @@ Program {
               name: 'log'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'log'
                 end: Object {
                   column: 11
                   index: 102
@@ -393,6 +397,7 @@ Program {
             }
             loc: Object {
               filename: 'input.js'
+              identifierName: 'log'
               end: Object {
                 column: 11
                 index: 102

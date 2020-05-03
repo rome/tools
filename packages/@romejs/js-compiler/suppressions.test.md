@@ -355,38 +355,3 @@ Object {
   ]
 }
 ```
-
-## `typos`
-
-```javascript
-Object {
-  suppressions: Array []
-  diagnostics: Array [
-    Object {
-      description: Object {
-        category: 'suppressions/incorrectPrefix'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Invalid suppression prefix <emphasis>rome-ignore</emphasis>'}
-        advice: Array [
-          log {
-            category: 'info'
-            text: 'Did you mean <emphasis>rome-ignore-next-line</emphasis>?'
-          }
-        ]
-      }
-      location: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-    }
-  ]
-}
-```

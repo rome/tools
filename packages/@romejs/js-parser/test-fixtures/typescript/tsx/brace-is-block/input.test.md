@@ -57,6 +57,7 @@ Program {
         leadingComments: undefined
         loc: Object {
           filename: 'input.tsx'
+          identifierName: 'C'
           end: Object {
             column: 7
             index: 106
@@ -105,6 +106,7 @@ Program {
           name: 'D'
           loc: Object {
             filename: 'input.tsx'
+            identifierName: 'D'
             end: Object {
               column: 17
               index: 116
@@ -151,6 +153,7 @@ Program {
                 name: 'T'
                 loc: Object {
                   filename: 'input.tsx'
+                  identifierName: 'T'
                   end: Object {
                     column: 19
                     index: 118

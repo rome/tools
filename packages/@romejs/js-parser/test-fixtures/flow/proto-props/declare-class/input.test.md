@@ -38,6 +38,7 @@ Program {
         name: 'A'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'A'
           end: Object {
             column: 15
             index: 15
@@ -90,6 +91,7 @@ Program {
               name: 'proto'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'proto'
                 end: Object {
                   column: 7
                   index: 25
@@ -107,6 +109,7 @@ Program {
                 name: 'T'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'T'
                   end: Object {
                     column: 10
                     index: 28
@@ -160,6 +163,7 @@ Program {
         name: 'B'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'B'
           end: Object {
             column: 15
             index: 48
@@ -212,6 +216,7 @@ Program {
               name: 'x'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'x'
                 end: Object {
                   column: 9
                   index: 60
@@ -229,6 +234,7 @@ Program {
                 name: 'T'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'T'
                   end: Object {
                     column: 12
                     index: 63
@@ -282,6 +288,7 @@ Program {
         name: 'C'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'C'
           end: Object {
             column: 15
             index: 83
@@ -334,6 +341,7 @@ Program {
               name: 'x'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'x'
                 end: Object {
                   column: 10
                   index: 96
@@ -351,6 +359,7 @@ Program {
                 name: 'T'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'T'
                   end: Object {
                     column: 13
                     index: 99

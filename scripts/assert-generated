@@ -15,6 +15,7 @@ const {execDev, writtenFiles} = require('./_utils.cjs');
 // Generate files
 require('./runtime-modules/update.cjs');
 require('./ast/update.cjs');
+require('./lint/update.cjs');
 
 // Autofix them
 execDev(['lint', ...writtenFiles, '--save']);

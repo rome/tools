@@ -58,6 +58,7 @@ Program {
         name: 'test'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'test'
           end: Object {
             column: 13
             index: 13
@@ -137,22 +138,6 @@ Program {
                 line: 1
               }
             }
-            rest: BindingIdentifier {
-              name: ''
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 19
-                  index: 19
-                  line: 1
-                }
-                start: Object {
-                  column: 18
-                  index: 18
-                  line: 1
-                }
-              }
-            }
             meta: PatternMeta {
               optional: undefined
               typeAnnotation: undefined
@@ -170,6 +155,23 @@ Program {
                 }
               }
             }
+            rest: BindingIdentifier {
+              name: ''
+              loc: Object {
+                filename: 'input.js'
+                identifierName: ''
+                end: Object {
+                  column: 19
+                  index: 19
+                  line: 1
+                }
+                start: Object {
+                  column: 18
+                  index: 18
+                  line: 1
+                }
+              }
+            }
             properties: Array [
               BindingObjectPatternProperty {
                 key: StaticPropertyKey {
@@ -177,6 +179,7 @@ Program {
                     name: ''
                     loc: Object {
                       filename: 'input.js'
+                      identifierName: ''
                       end: Object {
                         column: 20
                         index: 20
@@ -208,6 +211,7 @@ Program {
                   name: ''
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: ''
                     end: Object {
                       column: 20
                       index: 20

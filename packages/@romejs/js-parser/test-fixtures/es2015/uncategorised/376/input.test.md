@@ -58,6 +58,7 @@ Program {
         name: 'enum'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'enum'
           end: Object {
             column: 13
             index: 13

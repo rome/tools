@@ -87,6 +87,7 @@ Program {
           leadingComments: undefined
           loc: Object {
             filename: 'input.js'
+            identifierName: 'f'
             end: Object {
               column: 1
               index: 10
@@ -119,6 +120,7 @@ Program {
                 name: 'T'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'T'
                   end: Object {
                     column: 3
                     index: 12

@@ -136,6 +136,7 @@ Program {
         name: 'string'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'string'
           end: Object {
             column: 10
             index: 10

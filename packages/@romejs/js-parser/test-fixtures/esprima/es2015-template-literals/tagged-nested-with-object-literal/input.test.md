@@ -63,6 +63,7 @@ Program {
           name: 'raw'
           loc: Object {
             filename: 'input.js'
+            identifierName: 'raw'
             end: Object {
               column: 3
               index: 3

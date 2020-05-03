@@ -58,22 +58,6 @@ Program {
             line: 1
           }
         }
-        test: ReferenceIdentifier {
-          name: 'y'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 1
-              index: 1
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
         alternate: NumericLiteral {
           value: 2
           format: undefined
@@ -104,6 +88,23 @@ Program {
             start: Object {
               column: 4
               index: 4
+              line: 1
+            }
+          }
+        }
+        test: ReferenceIdentifier {
+          name: 'y'
+          loc: Object {
+            filename: 'input.js'
+            identifierName: 'y'
+            end: Object {
+              column: 1
+              index: 1
+              line: 1
+            }
+            start: Object {
+              column: 0
+              index: 0
               line: 1
             }
           }

@@ -96,6 +96,7 @@ Object {
   topLevelLocalBindings: Object {
     foo: Object {
       filename: 'unknown'
+      identifierName: 'foo'
       end: Object {
         column: 16
         index: 16
@@ -115,6 +116,7 @@ Object {
       valueType: 'other'
       loc: Object {
         filename: 'unknown'
+        identifierName: 'foo'
         end: Object {
           column: 16
           index: 16
@@ -196,6 +198,7 @@ Object {
   topLevelLocalBindings: Object {
     bar: Object {
       filename: 'unknown'
+      identifierName: 'bar'
       end: Object {
         column: 11
         index: 11
@@ -209,6 +212,7 @@ Object {
     }
     foo: Object {
       filename: 'unknown'
+      identifierName: 'foo'
       end: Object {
         column: 9
         index: 34
@@ -276,6 +280,7 @@ Object {
   topLevelLocalBindings: Object {
     foo: Object {
       filename: 'unknown'
+      identifierName: 'foo'
       end: Object {
         column: 16
         index: 16
@@ -329,6 +334,7 @@ Object {
       valueType: 'other'
       loc: Object {
         filename: 'unknown'
+        identifierName: 'foo'
         end: Object {
           column: 16
           index: 16
@@ -382,6 +388,7 @@ Object {
   topLevelLocalBindings: Object {
     yes: Object {
       filename: 'unknown'
+      identifierName: 'yes'
       end: Object {
         column: 12
         index: 30
@@ -534,6 +541,7 @@ Object {
   topLevelLocalBindings: Object {
     Bar: Object {
       filename: 'unknown'
+      identifierName: 'Bar'
       end: Object {
         column: 16
         index: 64
@@ -547,6 +555,7 @@ Object {
     }
     foo: Object {
       filename: 'unknown'
+      identifierName: 'foo'
       end: Object {
         column: 19
         index: 42
@@ -560,6 +569,7 @@ Object {
     }
     yes: Object {
       filename: 'unknown'
+      identifierName: 'yes'
       end: Object {
         column: 16
         index: 16
@@ -579,6 +589,7 @@ Object {
       valueType: 'other'
       loc: Object {
         filename: 'unknown'
+        identifierName: 'yes'
         end: Object {
           column: 16
           index: 16
@@ -597,6 +608,7 @@ Object {
       valueType: 'function'
       loc: Object {
         filename: 'unknown'
+        identifierName: 'foo'
         end: Object {
           column: 19
           index: 42
@@ -615,6 +627,7 @@ Object {
       valueType: 'class'
       loc: Object {
         filename: 'unknown'
+        identifierName: 'Bar'
         end: Object {
           column: 16
           index: 64
@@ -912,6 +925,7 @@ Object {
   topLevelLocalBindings: Object {
     bar: Object {
       filename: 'unknown'
+      identifierName: 'bar'
       end: Object {
         column: 10
         index: 10
@@ -980,6 +994,7 @@ Object {
   topLevelLocalBindings: Object {
     bar: Object {
       filename: 'unknown'
+      identifierName: 'bar'
       end: Object {
         column: 11
         index: 11
@@ -993,6 +1008,7 @@ Object {
     }
     foo: Object {
       filename: 'unknown'
+      identifierName: 'foo'
       end: Object {
         column: 16
         index: 16
@@ -1006,6 +1022,7 @@ Object {
     }
     lol: Object {
       filename: 'unknown'
+      identifierName: 'lol'
       end: Object {
         column: 32
         index: 32
@@ -1019,6 +1036,7 @@ Object {
     }
     to: Object {
       filename: 'unknown'
+      identifierName: 'to'
       end: Object {
         column: 42
         index: 42
@@ -1177,6 +1195,7 @@ Object {
       valueType: 'other'
       loc: Object {
         filename: 'unknown'
+        identifierName: 'foo'
         end: Object {
           column: 11
           index: 11
@@ -1195,6 +1214,7 @@ Object {
       valueType: 'other'
       loc: Object {
         filename: 'unknown'
+        identifierName: 'bar'
         end: Object {
           column: 16
           index: 16
@@ -1213,6 +1233,7 @@ Object {
       valueType: 'other'
       loc: Object {
         filename: 'unknown'
+        identifierName: 'yes'
         end: Object {
           column: 21
           index: 21
@@ -1242,6 +1263,7 @@ Object {
   topLevelLocalBindings: Object {
     yeah: Object {
       filename: 'unknown'
+      identifierName: 'yeah'
       end: Object {
         column: 13
         index: 42
@@ -1349,6 +1371,7 @@ Object {
   topLevelLocalBindings: Object {
     yes: Object {
       filename: 'unknown'
+      identifierName: 'yes'
       end: Object {
         column: 12
         index: 59

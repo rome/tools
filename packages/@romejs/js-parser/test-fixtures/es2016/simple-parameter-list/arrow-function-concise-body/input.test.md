@@ -65,6 +65,7 @@ Program {
               name: 'a'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'a'
                 end: Object {
                   column: 5
                   index: 5
@@ -108,6 +109,7 @@ Program {
                 name: 'options'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'options'
                   end: Object {
                     column: 33
                     index: 33
@@ -156,22 +158,6 @@ Program {
                         line: 1
                       }
                     }
-                    left: BindingIdentifier {
-                      name: 'options'
-                      loc: Object {
-                        filename: 'input.js'
-                        end: Object {
-                          column: 16
-                          index: 16
-                          line: 1
-                        }
-                        start: Object {
-                          column: 9
-                          index: 9
-                          line: 1
-                        }
-                      }
-                    }
                     right: ObjectExpression {
                       properties: Array []
                       loc: Object {
@@ -184,6 +170,23 @@ Program {
                         start: Object {
                           column: 19
                           index: 19
+                          line: 1
+                        }
+                      }
+                    }
+                    left: BindingIdentifier {
+                      name: 'options'
+                      loc: Object {
+                        filename: 'input.js'
+                        identifierName: 'options'
+                        end: Object {
+                          column: 16
+                          index: 16
+                          line: 1
+                        }
+                        start: Object {
+                          column: 9
+                          index: 9
                           line: 1
                         }
                       }

@@ -92,6 +92,7 @@ Program {
         name: 'cond'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'cond'
           end: Object {
             column: 12
             index: 12
@@ -172,6 +173,7 @@ Program {
                       name: 'a'
                       loc: Object {
                         filename: 'input.js'
+                        identifierName: 'a'
                         end: Object {
                           column: 30
                           index: 30

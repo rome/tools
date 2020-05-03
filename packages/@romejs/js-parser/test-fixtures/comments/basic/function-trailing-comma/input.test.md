@@ -80,6 +80,7 @@ Program {
           name: 'fn'
           loc: Object {
             filename: 'input.js'
+            identifierName: 'fn'
             end: Object {
               column: 2
               index: 2
@@ -97,6 +98,7 @@ Program {
             name: 'a'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'a'
               end: Object {
                 column: 4
                 index: 4
@@ -114,6 +116,7 @@ Program {
             trailingComments: Array ['0']
             loc: Object {
               filename: 'input.js'
+              identifierName: 'b'
               end: Object {
                 column: 7
                 index: 7

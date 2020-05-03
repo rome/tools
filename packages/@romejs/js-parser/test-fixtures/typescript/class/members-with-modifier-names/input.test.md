@@ -35,6 +35,7 @@ Program {
         name: 'C'
         loc: Object {
           filename: 'input.ts'
+          identifierName: 'C'
           end: Object {
             column: 7
             index: 7
@@ -86,6 +87,7 @@ Program {
                 name: 'public'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'public'
                   end: Object {
                     column: 10
                     index: 20
@@ -199,6 +201,7 @@ Program {
                 name: 'static'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'static'
                   end: Object {
                     column: 17
                     index: 47
@@ -213,6 +216,7 @@ Program {
               }
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'static'
                 end: Object {
                   column: 17
                   index: 47
@@ -305,6 +309,7 @@ Program {
                 name: 'readonly'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'readonly'
                   end: Object {
                     column: 12
                     index: 69
@@ -398,6 +403,7 @@ Program {
                 name: 'async'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'async'
                   end: Object {
                     column: 9
                     index: 84
@@ -544,6 +550,7 @@ Program {
                 name: 'abstract'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'abstract'
                   end: Object {
                     column: 12
                     index: 109

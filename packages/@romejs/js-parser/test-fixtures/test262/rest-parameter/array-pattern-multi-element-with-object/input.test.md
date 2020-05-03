@@ -35,6 +35,7 @@ Program {
         name: 'multiElementWithObject'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'multiElementWithObject'
           end: Object {
             column: 31
             index: 31
@@ -171,6 +172,7 @@ Program {
                       name: 'p'
                       loc: Object {
                         filename: 'input.js'
+                        identifierName: 'p'
                         end: Object {
                           column: 38
                           index: 38
@@ -202,6 +204,7 @@ Program {
                     name: 'q'
                     loc: Object {
                       filename: 'input.js'
+                      identifierName: 'q'
                       end: Object {
                         column: 41
                         index: 41
@@ -269,6 +272,7 @@ Program {
                       name: 'r'
                       loc: Object {
                         filename: 'input.js'
+                        identifierName: 'r'
                         end: Object {
                           column: 46
                           index: 46
@@ -300,6 +304,7 @@ Program {
                     name: 'r'
                     loc: Object {
                       filename: 'input.js'
+                      identifierName: 'r'
                       end: Object {
                         column: 46
                         index: 46
@@ -367,6 +372,7 @@ Program {
                       name: 's'
                       loc: Object {
                         filename: 'input.js'
+                        identifierName: 's'
                         end: Object {
                           column: 51
                           index: 51
@@ -412,6 +418,7 @@ Program {
                       name: 's'
                       loc: Object {
                         filename: 'input.js'
+                        identifierName: 's'
                         end: Object {
                           column: 51
                           index: 51

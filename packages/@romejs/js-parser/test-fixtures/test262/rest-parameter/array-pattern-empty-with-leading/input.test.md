@@ -35,6 +35,7 @@ Program {
         name: 'emptyWithLeading'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'emptyWithLeading'
           end: Object {
             column: 25
             index: 25
@@ -137,6 +138,7 @@ Program {
             name: 'x'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'x'
               end: Object {
                 column: 27
                 index: 27

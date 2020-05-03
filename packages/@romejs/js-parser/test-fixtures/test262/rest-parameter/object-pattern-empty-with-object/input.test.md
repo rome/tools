@@ -35,6 +35,7 @@ Program {
         name: 'emptyWithObject'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'emptyWithObject'
           end: Object {
             column: 24
             index: 24
@@ -138,6 +139,7 @@ Program {
                   name: 'p'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'p'
                     end: Object {
                       column: 30
                       index: 30

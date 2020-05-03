@@ -63,6 +63,7 @@ Program {
           name: 'ary'
           loc: Object {
             filename: 'input.js'
+            identifierName: 'ary'
             end: Object {
               column: 10
               index: 10
@@ -95,6 +96,7 @@ Program {
               name: 'v'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'v'
                 end: Object {
                   column: 2
                   index: 2

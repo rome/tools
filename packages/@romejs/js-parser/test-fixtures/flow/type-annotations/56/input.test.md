@@ -38,6 +38,7 @@ Program {
         name: 'Array'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'Array'
           end: Object {
             column: 11
             index: 11
@@ -89,6 +90,7 @@ Program {
                 name: 'concat'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'concat'
                   end: Object {
                     column: 20
                     index: 20
@@ -199,6 +201,7 @@ Program {
                   name: 'items'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'items'
                     end: Object {
                       column: 26
                       index: 26

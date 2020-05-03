@@ -127,6 +127,7 @@ Program {
                 name: ''
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: ''
                   end: Object {
                     column: 14
                     index: 29
@@ -206,39 +207,6 @@ Program {
                         line: 2
                       }
                     }
-                    left: BindingIdentifier {
-                      name: 'x'
-                      loc: Object {
-                        filename: 'input.js'
-                        end: Object {
-                          column: 15
-                          index: 30
-                          line: 2
-                        }
-                        start: Object {
-                          column: 14
-                          index: 29
-                          line: 2
-                        }
-                      }
-                      meta: PatternMeta {
-                        optional: undefined
-                        typeAnnotation: undefined
-                        loc: Object {
-                          filename: 'input.js'
-                          end: Object {
-                            column: 15
-                            index: 30
-                            line: 2
-                          }
-                          start: Object {
-                            column: 14
-                            index: 29
-                            line: 2
-                          }
-                        }
-                      }
-                    }
                     right: YieldExpression {
                       delegate: false
                       loc: Object {
@@ -267,6 +235,40 @@ Program {
                           start: Object {
                             column: 24
                             index: 39
+                            line: 2
+                          }
+                        }
+                      }
+                    }
+                    left: BindingIdentifier {
+                      name: 'x'
+                      loc: Object {
+                        filename: 'input.js'
+                        identifierName: 'x'
+                        end: Object {
+                          column: 15
+                          index: 30
+                          line: 2
+                        }
+                        start: Object {
+                          column: 14
+                          index: 29
+                          line: 2
+                        }
+                      }
+                      meta: PatternMeta {
+                        optional: undefined
+                        typeAnnotation: undefined
+                        loc: Object {
+                          filename: 'input.js'
+                          end: Object {
+                            column: 15
+                            index: 30
+                            line: 2
+                          }
+                          start: Object {
+                            column: 14
+                            index: 29
                             line: 2
                           }
                         }

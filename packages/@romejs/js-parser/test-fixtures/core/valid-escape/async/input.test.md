@@ -63,6 +63,7 @@ Program {
           name: 'async'
           loc: Object {
             filename: 'input.js'
+            identifierName: 'async'
             end: Object {
               column: 11
               index: 11

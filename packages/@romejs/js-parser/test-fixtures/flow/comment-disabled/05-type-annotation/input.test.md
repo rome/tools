@@ -73,6 +73,7 @@ Program {
         name: 'method'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'method'
           end: Object {
             column: 15
             index: 15
@@ -143,6 +144,7 @@ Program {
             trailingComments: Array ['0']
             loc: Object {
               filename: 'input.js'
+              identifierName: 'param'
               end: Object {
                 column: 21
                 index: 21

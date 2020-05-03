@@ -189,6 +189,7 @@ Program {
           name: 'function'
           loc: Object {
             filename: 'input.ts'
+            identifierName: 'function'
             end: Object {
               column: 23
               index: 55
@@ -242,6 +243,7 @@ Program {
               name: 'f'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'f'
                 end: Object {
                   column: 25
                   index: 57
@@ -420,6 +422,7 @@ Program {
                   name: 'C'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'C'
                     end: Object {
                       column: 22
                       index: 89
@@ -489,6 +492,7 @@ Program {
                   name: 'I'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'I'
                     end: Object {
                       column: 26
                       index: 119
@@ -556,6 +560,7 @@ Program {
                   name: 'T'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'T'
                     end: Object {
                       column: 21
                       index: 144
@@ -621,6 +626,7 @@ Program {
                   name: 'M'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'M'
                     end: Object {
                       column: 23
                       index: 178
@@ -686,6 +692,7 @@ Program {
                   name: 'N'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'N'
                     end: Object {
                       column: 26
                       index: 208
@@ -751,6 +758,7 @@ Program {
                   name: 'foo'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'foo'
                     end: Object {
                       column: 23
                       index: 235

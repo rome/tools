@@ -35,6 +35,7 @@ Program {
         name: 'C'
         loc: Object {
           filename: 'input.ts'
+          identifierName: 'C'
           end: Object {
             column: 7
             index: 7
@@ -86,6 +87,7 @@ Program {
                 name: 'f'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'f'
                   end: Object {
                     column: 5
                     index: 15
@@ -207,6 +209,7 @@ Program {
                   name: 'T'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'T'
                     end: Object {
                       column: 35
                       index: 45
@@ -259,6 +262,7 @@ Program {
                 name: 'c'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'c'
                   end: Object {
                     column: 26
                     index: 36
@@ -318,6 +322,7 @@ Program {
                         name: 'T'
                         loc: Object {
                           filename: 'input.ts'
+                          identifierName: 'T'
                           end: Object {
                             column: 29
                             index: 39
@@ -339,6 +344,7 @@ Program {
                   name: 'a'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'a'
                     end: Object {
                       column: 10
                       index: 20
@@ -384,6 +390,7 @@ Program {
                         name: 'T'
                         loc: Object {
                           filename: 'input.ts'
+                          identifierName: 'T'
                           end: Object {
                             column: 13
                             index: 23
@@ -403,6 +410,7 @@ Program {
                   name: 'b'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'b'
                     end: Object {
                       column: 16
                       index: 26
@@ -448,6 +456,7 @@ Program {
                         name: 'T'
                         loc: Object {
                           filename: 'input.ts'
+                          identifierName: 'T'
                           end: Object {
                             column: 20
                             index: 30
@@ -487,6 +496,7 @@ Program {
                   name: 'Symbol'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'Symbol'
                     end: Object {
                       column: 11
                       index: 60
@@ -504,6 +514,7 @@ Program {
                     name: 'iterator'
                     loc: Object {
                       filename: 'input.ts'
+                      identifierName: 'iterator'
                       end: Object {
                         column: 20
                         index: 69
@@ -518,6 +529,7 @@ Program {
                   }
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'iterator'
                     end: Object {
                       column: 20
                       index: 69
@@ -642,6 +654,7 @@ Program {
                   name: 'T'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'T'
                     end: Object {
                       column: 29
                       index: 78

@@ -86,6 +86,7 @@ Program {
           name: '\u2163\u2161\u200a'
           loc: Object {
             filename: 'input.js'
+            identifierName: '\u2163\u2161\u200a'
             end: Object {
               column: 18
               index: 18
@@ -116,6 +117,7 @@ Program {
             name: '\u2009'
             loc: Object {
               filename: 'input.js'
+              identifierName: '\u2009'
               end: Object {
                 column: 25
                 index: 25

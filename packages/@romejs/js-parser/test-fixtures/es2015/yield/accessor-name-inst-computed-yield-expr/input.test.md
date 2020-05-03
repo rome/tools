@@ -65,6 +65,7 @@ Program {
               name: 'yieldSet'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'yieldSet'
                 end: Object {
                   column: 12
                   index: 12
@@ -97,6 +98,7 @@ Program {
               name: 'C'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'C'
                 end: Object {
                   column: 15
                   index: 15
@@ -129,6 +131,7 @@ Program {
               name: 'iter'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'iter'
                 end: Object {
                   column: 21
                   index: 21
@@ -164,6 +167,7 @@ Program {
         name: 'g'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'g'
           end: Object {
             column: 11
             index: 34
@@ -234,6 +238,7 @@ Program {
               name: 'C_'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'C_'
                 end: Object {
                   column: 10
                   index: 49
@@ -527,6 +532,7 @@ Program {
                         name: 'param'
                         loc: Object {
                           filename: 'input.js'
+                          identifierName: 'param'
                           end: Object {
                             column: 21
                             index: 115
@@ -607,6 +613,7 @@ Program {
                             name: 'yieldSet'
                             loc: Object {
                               filename: 'input.js'
+                              identifierName: 'yieldSet'
                               end: Object {
                                 column: 33
                                 index: 127
@@ -623,6 +630,7 @@ Program {
                             name: 'param'
                             loc: Object {
                               filename: 'input.js'
+                              identifierName: 'param'
                               end: Object {
                                 column: 41
                                 index: 135
@@ -676,6 +684,7 @@ Program {
                 name: 'C'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'C'
                   end: Object {
                     column: 3
                     index: 147
@@ -692,6 +701,7 @@ Program {
                 name: 'C_'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'C_'
                   end: Object {
                     column: 8
                     index: 152

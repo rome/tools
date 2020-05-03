@@ -117,6 +117,7 @@ Program {
                         name: 'numVal'
                         loc: Object {
                           filename: 'input.js'
+                          identifierName: 'numVal'
                           end: Object {
                             column: 14
                             index: 14
@@ -168,6 +169,7 @@ Program {
                         name: 'strVal'
                         loc: Object {
                           filename: 'input.js'
+                          identifierName: 'strVal'
                           end: Object {
                             column: 30
                             index: 30

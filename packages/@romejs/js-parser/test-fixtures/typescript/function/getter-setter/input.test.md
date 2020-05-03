@@ -65,6 +65,7 @@ Program {
               name: 'g'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'g'
                 end: Object {
                   column: 7
                   index: 7
@@ -112,6 +113,7 @@ Program {
                       name: 'm'
                       loc: Object {
                         filename: 'input.ts'
+                        identifierName: 'm'
                         end: Object {
                           column: 7
                           index: 19
@@ -195,6 +197,7 @@ Program {
                       name: 'this'
                       loc: Object {
                         filename: 'input.ts'
+                        identifierName: 'this'
                         end: Object {
                           column: 12
                           index: 24
@@ -282,6 +285,7 @@ Program {
               name: 's'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 's'
                 end: Object {
                   column: 7
                   index: 43
@@ -329,6 +333,7 @@ Program {
                       name: 'm'
                       loc: Object {
                         filename: 'input.ts'
+                        identifierName: 'm'
                         end: Object {
                           column: 7
                           index: 55
@@ -412,6 +417,7 @@ Program {
                         name: 'value'
                         loc: Object {
                           filename: 'input.ts'
+                          identifierName: 'value'
                           end: Object {
                             column: 23
                             index: 71
@@ -446,6 +452,7 @@ Program {
                       name: 'this'
                       loc: Object {
                         filename: 'input.ts'
+                        identifierName: 'this'
                         end: Object {
                           column: 12
                           index: 60

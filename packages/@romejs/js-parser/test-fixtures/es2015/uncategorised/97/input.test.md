@@ -82,6 +82,7 @@ Program {
             name: 'null'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'null'
               end: Object {
                 column: 13
                 index: 13
@@ -99,6 +100,7 @@ Program {
               name: 'nil'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'nil'
                 end: Object {
                   column: 20
                   index: 20

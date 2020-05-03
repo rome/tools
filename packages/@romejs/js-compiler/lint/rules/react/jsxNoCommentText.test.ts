@@ -6,7 +6,7 @@
  */
 
 import {test} from 'rome';
-import {testLintMultiple} from '../../testHelpers';
+import {testLintMultiple} from '../testHelpers';
 
 test(
   'jsx no comment textnodes',
@@ -21,7 +21,7 @@ test(
         'const a = <div>{/* comment */}</div>',
         'const a = <div className={"cls" /* comment */}></div>',
       ],
-      {category: 'lint/react/jsxNoCommentText'},
+      {category: 'lint/jsxNoCommentText'},
     );
   },
 );

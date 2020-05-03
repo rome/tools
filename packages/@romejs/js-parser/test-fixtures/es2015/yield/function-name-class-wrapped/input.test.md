@@ -35,6 +35,7 @@ Program {
         name: 'wrap'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'wrap'
           end: Object {
             column: 14
             index: 14
@@ -105,6 +106,7 @@ Program {
               name: 'A'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'A'
                 end: Object {
                   column: 11
                   index: 30
@@ -156,6 +158,7 @@ Program {
                       name: 'yield'
                       loc: Object {
                         filename: 'input.js'
+                        identifierName: 'yield'
                         end: Object {
                           column: 19
                           index: 38

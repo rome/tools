@@ -91,6 +91,7 @@ Program {
               name: '@@asyncIterator'
               loc: Object {
                 filename: 'input.js'
+                identifierName: '@@asyncIterator'
                 end: Object {
                   column: 19
                   index: 19

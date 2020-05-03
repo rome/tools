@@ -35,6 +35,7 @@ Program {
         name: 'await'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'await'
           end: Object {
             column: 11
             index: 11

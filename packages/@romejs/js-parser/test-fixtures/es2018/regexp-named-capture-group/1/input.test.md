@@ -65,6 +65,7 @@ Program {
               name: 're'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 're'
                 end: Object {
                   column: 6
                   index: 6

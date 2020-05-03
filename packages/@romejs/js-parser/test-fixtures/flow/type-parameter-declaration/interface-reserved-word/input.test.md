@@ -38,6 +38,7 @@ Program {
         name: 'X'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'X'
           end: Object {
             column: 11
             index: 11
@@ -90,6 +91,7 @@ Program {
               name: 'foobar'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'foobar'
                 end: Object {
                   column: 8
                   index: 22
@@ -194,6 +196,7 @@ Program {
               name: 'delete'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'delete'
                 end: Object {
                   column: 8
                   index: 43
@@ -298,6 +301,7 @@ Program {
               name: 'yield'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'yield'
                 end: Object {
                   column: 7
                   index: 63
@@ -402,6 +406,7 @@ Program {
               name: 'do'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'do'
                 end: Object {
                   column: 4
                   index: 80

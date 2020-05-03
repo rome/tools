@@ -38,6 +38,7 @@ Program {
         name: 'A'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'A'
           end: Object {
             column: 6
             index: 6
@@ -69,6 +70,7 @@ Program {
           name: 'Foo'
           loc: Object {
             filename: 'input.js'
+            identifierName: 'Foo'
             end: Object {
               column: 12
               index: 12
@@ -147,6 +149,7 @@ Program {
                         name: 'type'
                         loc: Object {
                           filename: 'input.js'
+                          identifierName: 'type'
                           end: Object {
                             column: 9
                             index: 23
@@ -218,6 +221,7 @@ Program {
                         name: 'type'
                         loc: Object {
                           filename: 'input.js'
+                          identifierName: 'type'
                           end: Object {
                             column: 9
                             index: 39
@@ -277,6 +281,7 @@ Program {
         name: 'B'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'B'
           end: Object {
             column: 6
             index: 56
@@ -308,6 +313,7 @@ Program {
           name: 'Foo'
           loc: Object {
             filename: 'input.js'
+            identifierName: 'Foo'
             end: Object {
               column: 12
               index: 62
@@ -386,6 +392,7 @@ Program {
                         name: 'type'
                         loc: Object {
                           filename: 'input.js'
+                          identifierName: 'type'
                           end: Object {
                             column: 9
                             index: 73
@@ -457,6 +464,7 @@ Program {
                         name: 'type'
                         loc: Object {
                           filename: 'input.js'
+                          identifierName: 'type'
                           end: Object {
                             column: 9
                             index: 89

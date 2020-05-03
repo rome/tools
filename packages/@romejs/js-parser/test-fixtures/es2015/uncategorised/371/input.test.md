@@ -88,6 +88,7 @@ Program {
               name: 'enum'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'enum'
                 end: Object {
                   column: 10
                   index: 10
@@ -132,6 +133,7 @@ Program {
                 name: 'foo'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'foo'
                   end: Object {
                     column: 16
                     index: 16

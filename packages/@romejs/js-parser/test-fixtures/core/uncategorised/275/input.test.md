@@ -65,6 +65,7 @@ Program {
                 name: 'message'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'message'
                   end: Object {
                     column: 15
                     index: 15
