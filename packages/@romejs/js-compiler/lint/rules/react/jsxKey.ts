@@ -33,16 +33,16 @@ export default {
     // Array.prototype.map
     if (
       node.type === 'CallExpression' &&
-      node.callee?.type === 'MemberExpression' &&
-      (node.callee.property?.value)?.type === 'Identifier' &&
+      node.callee.type === 'MemberExpression' &&
+      node.callee.property.value.type === 'Identifier' &&
       node.callee.property.value.name === 'map'
     ) {
       const fn = node.arguments[0];
 
       // Short hand arrow function
       if (
-        fn?.type === 'ArrowFunctionExpression' &&
-        fn.body?.type === 'JSXElement' &&
+        fn.type === 'ArrowFunctionExpression' &&
+        fn.body.type === 'JSXElement' &&
         !containsKeyAttr(fn.body)
       ) {
         context.addNodeDiagnostic(
@@ -56,7 +56,7 @@ export default {
         fn &&
         (fn.type === 'FunctionExpression' ||
         fn.type === 'ArrowFunctionExpression') &&
-        fn.body?.type === 'BlockStatement'
+        fn.body.type === 'BlockStatement'
       ) {
         fn.body.body.forEach((statement) => {
           if (

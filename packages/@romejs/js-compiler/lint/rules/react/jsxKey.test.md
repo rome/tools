@@ -8,14 +8,14 @@
 
 ```
 
- unknown:1:11 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:11 lint/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Missing the "key" prop for element in array
 
     const a = [<div />, <div />]
                ^^^^^^^
 
- unknown:1:20 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:20 lint/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Missing the "key" prop for element in array
 
@@ -39,7 +39,7 @@ const a = [<div />, <div />];
 
 ```
 
- unknown:1:26 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:26 lint/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Missing the "key" prop for element in iterator
 
@@ -63,7 +63,7 @@ const a = [1, 2].map((x) => <div>{x}</div>);
 
 ```
 
- unknown:2:9 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:2:9 lint/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Missing the "key" prop for element in iterator
 
@@ -91,7 +91,7 @@ const a = [1, 2].map((x) => {
 
 ```
 
- unknown:2:9 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:2:9 lint/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Missing the "key" prop for element in iterator
 

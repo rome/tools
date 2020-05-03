@@ -355,7 +355,7 @@ export const descriptions = createMessages({
       message: 'Comments inside children should be placed in braces',
     },
     REACT_JSX_KEY: (origin: string) => ({
-      category: 'lint/react/jsxKey',
+      category: 'lint/jsxKey',
       message: markup`Missing the "key" prop for element in ${origin}`,
     }),
     UNSAFE_NEGATION: {

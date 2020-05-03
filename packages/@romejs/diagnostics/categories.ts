@@ -99,6 +99,7 @@ type LintDiagnosticCategory =
   | 'lint/emptyBlocks'
   | 'lint/getterReturn'
   | 'lint/inconsiderateLanguage'
+  | 'lint/jsxKey'
   | 'lint/jsxNoCommentText'
   | 'lint/noArguments'
   | 'lint/noAsyncPromiseExecutor'

@@ -7,7 +7,7 @@
 
 import {test} from 'rome';
 import {dedent} from '@romejs/string-utils';
-import {testLintMultiple} from '../../testHelpers';
+import {testLintMultiple} from '../testHelpers';
 
 test(
   'jsx key',
@@ -58,7 +58,7 @@ test(
         `,
         ),
       ],
-      {category: 'lint/react/jsxKey'},
+      {category: 'lint/jsxKey'},
     );
   },
 );
