@@ -165,6 +165,12 @@ export function printTSBraced(
   node: AnyNode,
   members: Array<AnyNode>,
 ): Token {
+  if (members.length === 0) {
+    return group(
+      concat(['{', builder.tokenizeInnerComments(node, true), softline, '}']),
+    );
+  }
+
   return group(
     concat([
       '{',
@@ -173,7 +179,17 @@ export function printTSBraced(
           hardline,
           join(
             hardline,
-            members.map((member) => builder.tokenize(member, node)),
+            members.map((member, index) => {
+              const printed = builder.tokenize(member, node);
+              if (
+                index > 0 &&
+                builder.getLinesBetween(members[index - 1], member) > 1
+              ) {
+                return concat([hardline, printed]);
+              } else {
+                return printed;
+              }
+            }),
           ),
         ]),
       ),

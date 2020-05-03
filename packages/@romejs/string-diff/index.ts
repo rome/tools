@@ -229,8 +229,8 @@ function bisect(text1: string, text2: string): Diffs {
   let vLength = 2 * maxD;
   let v1 = new Array(vLength);
   let v2 = new Array(vLength);
-  // Setting all elements to -1 is faster in Chrome & Firefox than mixing
 
+  // Setting all elements to -1 is faster in Chrome & Firefox than mixing
   // integers and undefined.
   for (let x = 0; x < vLength; x++) {
     v1[x] = -1;
@@ -239,12 +239,12 @@ function bisect(text1: string, text2: string): Diffs {
   v1[vOffset + 1] = 0;
   v2[vOffset + 1] = 0;
   let delta = text1Length - text2Length;
-  // If the total number of characters is odd, then the front path will collide
 
+  // If the total number of characters is odd, then the front path will collide
   // with the reverse path.
   let front = delta % 2 !== 0;
-  // Offsets for start and end of k loop.
 
+  // Offsets for start and end of k loop.
   // Prevents mapping of space beyond the grid.
   let k1Start = 0;
   let k1End = 0;
@@ -330,8 +330,8 @@ function bisect(text1: string, text2: string): Diffs {
       }
     }
   }
-  // Diff took too long and hit the deadline or
 
+  // Diff took too long and hit the deadline or
   // number of diffs equals number of characters, no commonality at all.
   return [[DIFF_DELETE, text1], [DIFF_INSERT, text2]];
 }
@@ -372,7 +372,6 @@ function commonPrefix(text1: string, text2: string): number {
   }
 
   // Binary search.
-
   // Performance analysis: http://neil.fraser.name/news/2007/10/09/
   let pointermin = 0;
   let pointermax = Math.min(text1.length, text2.length);
@@ -714,18 +713,17 @@ function cleanupMerge(diffs: Diffs, fixUnicode: boolean) {
     }
   }
   if (diffs[diffs.length - 1][1] === '') {
-    diffs.pop(); // Remove the dummy entry at the end.
+    // Remove the dummy entry at the end.
+    diffs.pop();
   }
 
   // Second pass: look for single edits surrounded on both sides by equalities
-
   // which can be shifted sideways to eliminate an equality.
-
   // e.g: A<ins>BA</ins>C -> <ins>AB</ins>AC
   let changes = false;
   pointer = 1;
-  // Intentionally ignore the first and last element (don't need checking).
 
+  // Intentionally ignore the first and last element (don't need checking).
   while (pointer < diffs.length - 1) {
     if (
       diffs[pointer - 1][0] === DIFF_EQUAL &&
@@ -763,8 +761,8 @@ function cleanupMerge(diffs: Diffs, fixUnicode: boolean) {
     }
     pointer++;
   }
-  // If shifts were made, the diff needs reordering and another shift sweep.
 
+  // If shifts were made, the diff needs reordering and another shift sweep.
   if (changes) {
     cleanupMerge(diffs, fixUnicode);
   }
