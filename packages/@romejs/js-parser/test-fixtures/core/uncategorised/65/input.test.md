@@ -66,6 +66,7 @@ Program {
         name: 'answer'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'answer'
           end: Object {
             column: 14
             index: 14
@@ -147,6 +148,7 @@ Program {
                   leadingComments: undefined
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'bingo'
                     end: Object {
                       column: 46
                       index: 46

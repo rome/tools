@@ -88,6 +88,7 @@ Program {
               name: 'if'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'if'
                 end: Object {
                   column: 6
                   index: 6

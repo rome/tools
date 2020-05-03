@@ -38,6 +38,7 @@ Program {
         name: 'IFoo'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'IFoo'
           end: Object {
             column: 14
             index: 14
@@ -90,6 +91,7 @@ Program {
               name: 'x'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'x'
                 end: Object {
                   column: 3
                   index: 20
@@ -141,6 +143,7 @@ Program {
               name: 'static'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'static'
                 end: Object {
                   column: 8
                   index: 39

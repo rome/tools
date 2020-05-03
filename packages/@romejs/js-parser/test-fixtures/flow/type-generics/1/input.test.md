@@ -68,6 +68,7 @@ Program {
               name: 'functionReturningIdentityAsAField'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'functionReturningIdentityAsAField'
                 end: Object {
                   column: 39
                   index: 39
@@ -150,6 +151,7 @@ Program {
                         name: 'id'
                         loc: Object {
                           filename: 'input.js'
+                          identifierName: 'id'
                           end: Object {
                             column: 53
                             index: 53
@@ -195,6 +197,7 @@ Program {
                         name: 'value'
                         loc: Object {
                           filename: 'input.js'
+                          identifierName: 'value'
                           end: Object {
                             column: 80
                             index: 80
@@ -267,6 +270,7 @@ Program {
                             name: 'T'
                             loc: Object {
                               filename: 'input.js'
+                              identifierName: 'T'
                               end: Object {
                                 column: 71
                                 index: 71
@@ -330,6 +334,7 @@ Program {
                                   name: 'T'
                                   loc: Object {
                                     filename: 'input.js'
+                                    identifierName: 'T'
                                     end: Object {
                                       column: 67
                                       index: 67

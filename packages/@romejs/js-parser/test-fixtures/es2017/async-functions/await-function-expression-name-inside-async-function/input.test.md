@@ -35,6 +35,7 @@ Program {
         name: 'fn'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'fn'
           end: Object {
             column: 17
             index: 17
@@ -119,6 +120,7 @@ Program {
                 name: 'await'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'await'
                   end: Object {
                     column: 17
                     index: 39

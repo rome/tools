@@ -82,6 +82,7 @@ Program {
             name: 'if'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'if'
               end: Object {
                 column: 11
                 index: 11
@@ -98,6 +99,7 @@ Program {
             name: 'if'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'if'
               end: Object {
                 column: 11
                 index: 11

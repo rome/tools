@@ -70,6 +70,7 @@ Program {
         name: 'f'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'f'
           end: Object {
             column: 10
             index: 10
@@ -225,6 +226,7 @@ Program {
                     leadingComments: undefined
                     loc: Object {
                       filename: 'input.js'
+                      identifierName: 'each'
                       end: Object {
                         column: 65
                         index: 65

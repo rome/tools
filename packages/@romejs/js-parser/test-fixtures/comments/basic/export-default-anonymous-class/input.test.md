@@ -139,6 +139,7 @@ Program {
                   leadingComments: undefined
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'method1'
                     end: Object {
                       column: 11
                       index: 110

@@ -83,22 +83,6 @@ Program {
             line: 1
           }
         }
-        right: ReferenceIdentifier {
-          name: 'obj'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 14
-              index: 14
-              line: 1
-            }
-            start: Object {
-              column: 11
-              index: 11
-              line: 1
-            }
-          }
-        }
         left: AssignmentObjectPattern {
           properties: Array []
           rest: undefined
@@ -112,6 +96,23 @@ Program {
             start: Object {
               column: 1
               index: 1
+              line: 1
+            }
+          }
+        }
+        right: ReferenceIdentifier {
+          name: 'obj'
+          loc: Object {
+            filename: 'input.js'
+            identifierName: 'obj'
+            end: Object {
+              column: 14
+              index: 14
+              line: 1
+            }
+            start: Object {
+              column: 11
+              index: 11
               line: 1
             }
           }

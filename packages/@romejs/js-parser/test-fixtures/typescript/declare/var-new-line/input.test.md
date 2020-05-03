@@ -48,6 +48,7 @@ Program {
         name: 'declare'
         loc: Object {
           filename: 'input.ts'
+          identifierName: 'declare'
           end: Object {
             column: 7
             index: 7
@@ -96,6 +97,7 @@ Program {
               name: 'x'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'x'
                 end: Object {
                   column: 5
                   index: 13
@@ -144,6 +146,7 @@ Program {
         name: 'declare'
         loc: Object {
           filename: 'input.ts'
+          identifierName: 'declare'
           end: Object {
             column: 7
             index: 23

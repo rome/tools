@@ -58,6 +58,7 @@ Program {
         name: 't'
         loc: Object {
           filename: 'input.js'
+          identifierName: 't'
           end: Object {
             column: 10
             index: 10
@@ -127,6 +128,7 @@ Program {
             name: 'false'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'false'
               end: Object {
                 column: 16
                 index: 16

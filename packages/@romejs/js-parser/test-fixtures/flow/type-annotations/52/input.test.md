@@ -38,6 +38,7 @@ Program {
         name: 'foo'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'foo'
           end: Object {
             column: 12
             index: 12
@@ -107,6 +108,7 @@ Program {
             name: 'requiredParam'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'requiredParam'
               end: Object {
                 column: 26
                 index: 26
@@ -140,6 +142,7 @@ Program {
             name: 'optParam'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'optParam'
               end: Object {
                 column: 36
                 index: 36

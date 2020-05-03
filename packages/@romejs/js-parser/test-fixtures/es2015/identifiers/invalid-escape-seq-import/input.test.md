@@ -88,6 +88,7 @@ Program {
               name: 'import'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'import'
                 end: Object {
                   column: 40
                   index: 40

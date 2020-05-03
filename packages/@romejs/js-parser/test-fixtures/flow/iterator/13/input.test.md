@@ -38,6 +38,7 @@ Program {
         name: 'foo'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'foo'
           end: Object {
             column: 12
             index: 12
@@ -188,6 +189,7 @@ Program {
                 name: '@@asyncIterator'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: '@@asyncIterator'
                   end: Object {
                     column: 33
                     index: 33

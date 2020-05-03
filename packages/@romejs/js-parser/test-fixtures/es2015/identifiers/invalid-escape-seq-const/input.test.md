@@ -88,6 +88,7 @@ Program {
               name: 'const'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'const'
                 end: Object {
                   column: 14
                   index: 14

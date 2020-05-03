@@ -99,6 +99,7 @@ Program {
                     name: 'Array'
                     loc: Object {
                       filename: 'input.js'
+                      identifierName: 'Array'
                       end: Object {
                         column: 11
                         index: 11

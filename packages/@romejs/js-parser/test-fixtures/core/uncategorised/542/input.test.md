@@ -111,6 +111,7 @@ Program {
               name: 'split'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'split'
                 end: Object {
                   column: 6
                   index: 12
@@ -125,6 +126,7 @@ Program {
             }
             loc: Object {
               filename: 'input.js'
+              identifierName: 'split'
               end: Object {
                 column: 6
                 index: 12

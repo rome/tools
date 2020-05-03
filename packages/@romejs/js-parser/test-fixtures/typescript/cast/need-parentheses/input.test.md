@@ -63,6 +63,7 @@ Program {
             name: 'y'
             loc: Object {
               filename: 'input.ts'
+              identifierName: 'y'
               end: Object {
                 column: 9
                 index: 9
@@ -77,6 +78,7 @@ Program {
           }
           loc: Object {
             filename: 'input.ts'
+            identifierName: 'y'
             end: Object {
               column: 9
               index: 9
@@ -107,6 +109,7 @@ Program {
             name: 'x'
             loc: Object {
               filename: 'input.ts'
+              identifierName: 'x'
               end: Object {
                 column: 6
                 index: 6
@@ -138,6 +141,7 @@ Program {
               name: 'T'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'T'
                 end: Object {
                   column: 3
                   index: 3
@@ -187,6 +191,7 @@ Program {
             name: 'y'
             loc: Object {
               filename: 'input.ts'
+              identifierName: 'y'
               end: Object {
                 column: 10
                 index: 21
@@ -201,6 +206,7 @@ Program {
           }
           loc: Object {
             filename: 'input.ts'
+            identifierName: 'y'
             end: Object {
               column: 10
               index: 21
@@ -231,6 +237,7 @@ Program {
             name: 'x'
             loc: Object {
               filename: 'input.ts'
+              identifierName: 'x'
               end: Object {
                 column: 2
                 index: 13
@@ -262,6 +269,7 @@ Program {
               name: 'T'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'T'
                 end: Object {
                   column: 7
                   index: 18
@@ -324,6 +332,7 @@ Program {
             name: 'x'
             loc: Object {
               filename: 'input.ts'
+              identifierName: 'x'
               end: Object {
                 column: 1
                 index: 24
@@ -342,6 +351,7 @@ Program {
             name: 'y'
             loc: Object {
               filename: 'input.ts'
+              identifierName: 'y'
               end: Object {
                 column: 4
                 index: 27
@@ -356,6 +366,7 @@ Program {
           }
           loc: Object {
             filename: 'input.ts'
+            identifierName: 'y'
             end: Object {
               column: 4
               index: 27

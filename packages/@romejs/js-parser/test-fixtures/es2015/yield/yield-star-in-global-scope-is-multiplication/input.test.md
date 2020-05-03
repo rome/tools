@@ -63,6 +63,7 @@ Program {
           name: 'yield'
           loc: Object {
             filename: 'input.js'
+            identifierName: 'yield'
             end: Object {
               column: 5
               index: 5

@@ -38,6 +38,7 @@ Program {
         name: 'union'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'union'
           end: Object {
             column: 10
             index: 10
@@ -102,6 +103,7 @@ Program {
                   name: 'type'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'type'
                     end: Object {
                       column: 8
                       index: 21
@@ -173,6 +175,7 @@ Program {
                   name: 'type'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'type'
                     end: Object {
                       column: 8
                       index: 36
@@ -229,6 +232,7 @@ Program {
         name: 'overloads'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'overloads'
           end: Object {
             column: 14
             index: 60
@@ -307,6 +311,7 @@ Program {
                   name: 'x'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'x'
                     end: Object {
                       column: 7
                       index: 70
@@ -403,6 +408,7 @@ Program {
                   name: 'x'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'x'
                     end: Object {
                       column: 7
                       index: 98
@@ -470,6 +476,7 @@ Program {
         name: 'union2'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'union2'
           end: Object {
             column: 11
             index: 133
@@ -519,6 +526,7 @@ Program {
               name: 'x'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'x'
                 end: Object {
                   column: 3
                   index: 141
@@ -569,6 +577,7 @@ Program {
                         name: 'type'
                         loc: Object {
                           filename: 'input.js'
+                          identifierName: 'type'
                           end: Object {
                             column: 11
                             index: 154
@@ -640,6 +649,7 @@ Program {
                         name: 'type'
                         loc: Object {
                           filename: 'input.js'
+                          identifierName: 'type'
                           end: Object {
                             column: 11
                             index: 172
@@ -716,6 +726,7 @@ Program {
         name: 'overloads2'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'overloads2'
           end: Object {
             column: 15
             index: 198
@@ -765,6 +776,7 @@ Program {
               name: 'x'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'x'
                 end: Object {
                   column: 3
                   index: 206
@@ -815,6 +827,7 @@ Program {
                         name: 'type'
                         loc: Object {
                           filename: 'input.js'
+                          identifierName: 'type'
                           end: Object {
                             column: 11
                             index: 219
@@ -886,6 +899,7 @@ Program {
                         name: 'type'
                         loc: Object {
                           filename: 'input.js'
+                          identifierName: 'type'
                           end: Object {
                             column: 11
                             index: 237

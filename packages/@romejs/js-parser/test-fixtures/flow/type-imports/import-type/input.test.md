@@ -85,6 +85,7 @@ Program {
             name: 'Def1'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'Def1'
               end: Object {
                 column: 16
                 index: 16
@@ -166,6 +167,7 @@ Program {
             name: 'named1'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'named1'
               end: Object {
                 column: 19
                 index: 48
@@ -183,6 +185,7 @@ Program {
               name: 'named1'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'named1'
                 end: Object {
                   column: 19
                   index: 48
@@ -264,6 +267,7 @@ Program {
             name: 'Def2'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'Def2'
               end: Object {
                 column: 16
                 index: 78
@@ -311,6 +315,7 @@ Program {
             name: 'named2'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'named2'
               end: Object {
                 column: 25
                 index: 87
@@ -328,6 +333,7 @@ Program {
               name: 'named2'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'named2'
                 end: Object {
                   column: 25
                   index: 87
@@ -410,6 +416,7 @@ Program {
             name: 'switch1'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'switch1'
               end: Object {
                 column: 19
                 index: 120
@@ -491,6 +498,7 @@ Program {
             name: 'switch2'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'switch2'
               end: Object {
                 column: 21
                 index: 154
@@ -508,6 +516,7 @@ Program {
               name: 'switch2'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'switch2'
                 end: Object {
                   column: 21
                   index: 154
@@ -590,6 +599,7 @@ Program {
             name: 'foo1'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'foo1'
               end: Object {
                 column: 18
                 index: 187
@@ -607,6 +617,7 @@ Program {
               name: 'foo1'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'foo1'
                 end: Object {
                   column: 18
                   index: 187
@@ -653,6 +664,7 @@ Program {
             name: 'bar1'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'bar1'
               end: Object {
                 column: 24
                 index: 193
@@ -670,6 +682,7 @@ Program {
               name: 'bar1'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'bar1'
                 end: Object {
                   column: 24
                   index: 193
@@ -752,6 +765,7 @@ Program {
             name: 'type'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'type'
               end: Object {
                 column: 11
                 index: 219
@@ -833,6 +847,7 @@ Program {
             name: 'foo3'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'foo3'
               end: Object {
                 column: 18
                 index: 250
@@ -914,6 +929,7 @@ Program {
             name: 'switch4'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'switch4'
               end: Object {
                 column: 21
                 index: 284
@@ -995,6 +1011,7 @@ Program {
             name: 'switch5'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'switch5'
               end: Object {
                 column: 23
                 index: 320
@@ -1012,6 +1029,7 @@ Program {
               name: 'switch5'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'switch5'
                 end: Object {
                   column: 23
                   index: 320
@@ -1094,6 +1112,7 @@ Program {
             name: 'foo'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'foo'
               end: Object {
                 column: 19
                 index: 354
@@ -1111,6 +1130,7 @@ Program {
               name: 'bar6'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'bar6'
                 end: Object {
                   column: 27
                   index: 362
@@ -1193,6 +1213,7 @@ Program {
             name: 'ns7'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'ns7'
               end: Object {
                 column: 22
                 index: 399
@@ -1274,6 +1295,7 @@ Program {
             name: 'switch8'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'switch8'
               end: Object {
                 column: 26
                 index: 438

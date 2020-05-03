@@ -48,6 +48,7 @@ Program {
         name: 'declare'
         loc: Object {
           filename: 'input.ts'
+          identifierName: 'declare'
           end: Object {
             column: 7
             index: 7

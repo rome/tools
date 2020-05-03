@@ -68,6 +68,7 @@ Program {
         leadingComments: undefined
         loc: Object {
           filename: 'input.ts'
+          identifierName: 'abstract'
           end: Object {
             column: 23
             index: 86

@@ -71,6 +71,7 @@ Program {
         name: 'namespace'
         loc: Object {
           filename: 'input.ts'
+          identifierName: 'namespace'
           end: Object {
             column: 9
             index: 9
@@ -102,6 +103,7 @@ Program {
         name: 'Foo'
         loc: Object {
           filename: 'input.ts'
+          identifierName: 'Foo'
           end: Object {
             column: 3
             index: 13

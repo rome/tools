@@ -58,6 +58,7 @@ Program {
         name: 'hello'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'hello'
           end: Object {
             column: 14
             index: 14
@@ -186,22 +187,6 @@ Program {
                   line: 1
                 }
               }
-              param: BindingIdentifier {
-                name: 'eval'
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 51
-                    index: 51
-                    line: 1
-                  }
-                  start: Object {
-                    column: 47
-                    index: 47
-                    line: 1
-                  }
-                }
-              }
               body: BlockStatement {
                 body: Array []
                 directives: Array []
@@ -215,6 +200,23 @@ Program {
                   start: Object {
                     column: 53
                     index: 53
+                    line: 1
+                  }
+                }
+              }
+              param: BindingIdentifier {
+                name: 'eval'
+                loc: Object {
+                  filename: 'input.js'
+                  identifierName: 'eval'
+                  end: Object {
+                    column: 51
+                    index: 51
+                    line: 1
+                  }
+                  start: Object {
+                    column: 47
+                    index: 47
                     line: 1
                   }
                 }

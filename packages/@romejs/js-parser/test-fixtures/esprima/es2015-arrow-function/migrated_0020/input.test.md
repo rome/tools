@@ -62,6 +62,7 @@ Program {
           name: 'earth'
           loc: Object {
             filename: 'input.js'
+            identifierName: 'earth'
             end: Object {
               column: 14
               index: 14
@@ -99,6 +100,7 @@ Program {
               name: 'sun'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'sun'
                 end: Object {
                   column: 4
                   index: 4

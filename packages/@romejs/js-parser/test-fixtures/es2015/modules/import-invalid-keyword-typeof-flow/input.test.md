@@ -105,6 +105,7 @@ Program {
             name: 'typeof'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'typeof'
               end: Object {
                 column: 15
                 index: 15
@@ -122,6 +123,7 @@ Program {
               name: 'typeof'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'typeof'
                 end: Object {
                   column: 15
                   index: 15

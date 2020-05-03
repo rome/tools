@@ -65,6 +65,7 @@ Program {
               name: '\u212e'
               loc: Object {
                 filename: 'input.js'
+                identifierName: '\u212e'
                 end: Object {
                   column: 5
                   index: 5

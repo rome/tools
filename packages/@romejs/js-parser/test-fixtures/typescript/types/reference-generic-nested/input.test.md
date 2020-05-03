@@ -109,6 +109,7 @@ Program {
                     name: 'Array'
                     loc: Object {
                       filename: 'input.ts'
+                      identifierName: 'Array'
                       end: Object {
                         column: 12
                         index: 12
@@ -154,6 +155,7 @@ Program {
                           name: 'Array'
                           loc: Object {
                             filename: 'input.ts'
+                            identifierName: 'Array'
                             end: Object {
                               column: 18
                               index: 18

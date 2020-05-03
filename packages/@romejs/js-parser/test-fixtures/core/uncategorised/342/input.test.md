@@ -82,6 +82,7 @@ Program {
           trailingComments: Array ['0']
           loc: Object {
             filename: 'input.js'
+            identifierName: 'foo'
             end: Object {
               column: 3
               index: 3
@@ -99,6 +100,7 @@ Program {
           leadingComments: Array ['0']
           loc: Object {
             filename: 'input.js'
+            identifierName: 'baz'
             end: Object {
               column: 4
               index: 16

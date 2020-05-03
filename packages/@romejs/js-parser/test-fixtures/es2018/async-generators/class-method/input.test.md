@@ -35,6 +35,7 @@ Program {
         name: 'Query'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'Query'
           end: Object {
             column: 11
             index: 11
@@ -86,6 +87,7 @@ Program {
                 name: 'queryAll'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'queryAll'
                   end: Object {
                     column: 19
                     index: 33
@@ -179,6 +181,7 @@ Program {
                   name: 'ids'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'ids'
                     end: Object {
                       column: 23
                       index: 37
@@ -245,6 +248,7 @@ Program {
                     name: 'ids'
                     loc: Object {
                       filename: 'input.js'
+                      identifierName: 'ids'
                       end: Object {
                         column: 28
                         index: 69
@@ -278,6 +282,7 @@ Program {
                           name: 'id'
                           loc: Object {
                             filename: 'input.js'
+                            identifierName: 'id'
                             end: Object {
                               column: 21
                               index: 62
@@ -385,6 +390,7 @@ Program {
                                   name: 'id'
                                   loc: Object {
                                     filename: 'input.js'
+                                    identifierName: 'id'
                                     end: Object {
                                       column: 37
                                       index: 110
@@ -432,6 +438,7 @@ Program {
                                     name: 'query'
                                     loc: Object {
                                       filename: 'input.js'
+                                      identifierName: 'query'
                                       end: Object {
                                         column: 34
                                         index: 107
@@ -446,6 +453,7 @@ Program {
                                   }
                                   loc: Object {
                                     filename: 'input.js'
+                                    identifierName: 'query'
                                     end: Object {
                                       column: 34
                                       index: 107

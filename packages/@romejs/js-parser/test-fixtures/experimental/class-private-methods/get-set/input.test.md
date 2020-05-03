@@ -35,6 +35,7 @@ Program {
         name: 'Hotel'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'Hotel'
           end: Object {
             column: 11
             index: 11
@@ -86,6 +87,7 @@ Program {
                 name: 'evil'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'evil'
                   end: Object {
                     column: 11
                     index: 25
@@ -225,6 +227,7 @@ Program {
                       name: 'ohNo'
                       loc: Object {
                         filename: 'input.js'
+                        identifierName: 'ohNo'
                         end: Object {
                           column: 15
                           index: 45
@@ -249,6 +252,7 @@ Program {
                 name: 'evil'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'evil'
                   end: Object {
                     column: 11
                     index: 64
@@ -342,6 +346,7 @@ Program {
                   name: 'x'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'x'
                     end: Object {
                       column: 13
                       index: 66
@@ -421,6 +426,7 @@ Program {
                       name: 'makeEvil'
                       loc: Object {
                         filename: 'input.js'
+                        identifierName: 'makeEvil'
                         end: Object {
                           column: 19
                           index: 89
@@ -438,6 +444,7 @@ Program {
                         name: 'x'
                         loc: Object {
                           filename: 'input.js'
+                          identifierName: 'x'
                           end: Object {
                             column: 21
                             index: 91

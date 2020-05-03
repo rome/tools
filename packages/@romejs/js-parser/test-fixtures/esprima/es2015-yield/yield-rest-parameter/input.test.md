@@ -35,6 +35,7 @@ Program {
         name: 'f'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'f'
           end: Object {
             column: 10
             index: 10
@@ -103,6 +104,7 @@ Program {
           name: 'yield'
           loc: Object {
             filename: 'input.js'
+            identifierName: 'yield'
             end: Object {
               column: 19
               index: 19

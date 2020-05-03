@@ -35,6 +35,7 @@ Program {
         name: 'loadImport'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'loadImport'
           end: Object {
             column: 19
             index: 19
@@ -87,6 +88,7 @@ Program {
             name: 'file'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'file'
               end: Object {
                 column: 24
                 index: 24
@@ -181,6 +183,7 @@ Program {
                     name: 'file'
                     loc: Object {
                       filename: 'input.js'
+                      identifierName: 'file'
                       end: Object {
                         column: 28
                         index: 56

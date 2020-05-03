@@ -84,6 +84,7 @@ Program {
           name: 'a'
           loc: Object {
             filename: 'input.ts'
+            identifierName: 'a'
             end: Object {
               column: 17
               index: 78
@@ -171,6 +172,7 @@ Program {
               name: 'T'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'T'
                 end: Object {
                   column: 12
                   index: 73
@@ -234,6 +236,7 @@ Program {
                     name: 'T'
                     loc: Object {
                       filename: 'input.ts'
+                      identifierName: 'T'
                       end: Object {
                         column: 8
                         index: 69

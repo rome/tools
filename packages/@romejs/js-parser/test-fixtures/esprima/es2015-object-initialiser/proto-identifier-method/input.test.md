@@ -65,6 +65,7 @@ Program {
                 name: '__proto__'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: '__proto__'
                   end: Object {
                     column: 12
                     index: 12
@@ -128,6 +129,7 @@ Program {
                 name: '__proto__'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: '__proto__'
                   end: Object {
                     column: 29
                     index: 29

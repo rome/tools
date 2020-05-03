@@ -35,6 +35,7 @@ Program {
         name: 'emptyWithArray'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'emptyWithArray'
           end: Object {
             column: 23
             index: 23

@@ -70,6 +70,7 @@ Program {
         name: 'C1'
         loc: Object {
           filename: 'input.ts'
+          identifierName: 'C1'
           end: Object {
             column: 17
             index: 17
@@ -122,6 +123,7 @@ Program {
         name: 'C2'
         loc: Object {
           filename: 'input.ts'
+          identifierName: 'C2'
           end: Object {
             column: 25
             index: 46
@@ -192,6 +194,7 @@ Program {
           name: 'C3'
           loc: Object {
             filename: 'input.ts'
+            identifierName: 'C3'
             end: Object {
               column: 24
               index: 74
@@ -332,6 +335,7 @@ Program {
           name: 'C4'
           loc: Object {
             filename: 'input.ts'
+            identifierName: 'C4'
             end: Object {
               column: 32
               index: 199

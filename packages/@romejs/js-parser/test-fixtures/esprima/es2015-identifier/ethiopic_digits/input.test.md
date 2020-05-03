@@ -65,6 +65,7 @@ Program {
               name: '_\u1369\u136a\u136b\u136c\u136d\u136e\u136f\u1370\u1371'
               loc: Object {
                 filename: 'input.js'
+                identifierName: '_\u1369\u136a\u136b\u136c\u136d\u136e\u136f\u1370\u1371'
                 end: Object {
                   column: 14
                   index: 14

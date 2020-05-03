@@ -61,6 +61,7 @@ Program {
         name: 'bool'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'bool'
           end: Object {
             column: 17
             index: 17

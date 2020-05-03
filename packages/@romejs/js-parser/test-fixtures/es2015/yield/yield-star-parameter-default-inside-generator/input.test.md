@@ -58,6 +58,7 @@ Program {
         name: 'fn'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'fn'
           end: Object {
             column: 12
             index: 12
@@ -137,39 +138,6 @@ Program {
                 line: 1
               }
             }
-            left: BindingIdentifier {
-              name: 'x'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 14
-                  index: 14
-                  line: 1
-                }
-                start: Object {
-                  column: 13
-                  index: 13
-                  line: 1
-                }
-              }
-              meta: PatternMeta {
-                optional: undefined
-                typeAnnotation: undefined
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 14
-                    index: 14
-                    line: 1
-                  }
-                  start: Object {
-                    column: 13
-                    index: 13
-                    line: 1
-                  }
-                }
-              }
-            }
             right: YieldExpression {
               delegate: true
               loc: Object {
@@ -198,6 +166,40 @@ Program {
                   start: Object {
                     column: 24
                     index: 24
+                    line: 1
+                  }
+                }
+              }
+            }
+            left: BindingIdentifier {
+              name: 'x'
+              loc: Object {
+                filename: 'input.js'
+                identifierName: 'x'
+                end: Object {
+                  column: 14
+                  index: 14
+                  line: 1
+                }
+                start: Object {
+                  column: 13
+                  index: 13
+                  line: 1
+                }
+              }
+              meta: PatternMeta {
+                optional: undefined
+                typeAnnotation: undefined
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 14
+                    index: 14
+                    line: 1
+                  }
+                  start: Object {
+                    column: 13
+                    index: 13
                     line: 1
                   }
                 }

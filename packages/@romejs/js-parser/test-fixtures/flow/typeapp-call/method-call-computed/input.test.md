@@ -102,6 +102,7 @@ Program {
                 name: 'T'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'T'
                   end: Object {
                     column: 6
                     index: 15
@@ -151,6 +152,7 @@ Program {
             leadingComments: undefined
             loc: Object {
               filename: 'input.js'
+              identifierName: 'o'
               end: Object {
                 column: 1
                 index: 10
@@ -168,6 +170,7 @@ Program {
               name: 'e'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'e'
                 end: Object {
                   column: 3
                   index: 12

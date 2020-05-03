@@ -144,6 +144,7 @@ Program {
                     name: 'Generic'
                     loc: Object {
                       filename: 'input.js'
+                      identifierName: 'Generic'
                       end: Object {
                         column: 14
                         index: 22
@@ -189,6 +190,7 @@ Program {
                           name: '_'
                           loc: Object {
                             filename: 'input.js'
+                            identifierName: '_'
                             end: Object {
                               column: 16
                               index: 24

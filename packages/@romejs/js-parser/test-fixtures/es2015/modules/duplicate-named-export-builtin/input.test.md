@@ -65,6 +65,7 @@ Program {
               name: 'toString'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'toString'
                 end: Object {
                   column: 14
                   index: 14
@@ -146,6 +147,7 @@ Program {
             name: 'toString'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'toString'
               end: Object {
                 column: 17
                 index: 38
@@ -162,6 +164,7 @@ Program {
             name: 'toString'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'toString'
               end: Object {
                 column: 17
                 index: 38

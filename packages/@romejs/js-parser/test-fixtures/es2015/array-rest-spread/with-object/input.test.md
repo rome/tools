@@ -115,6 +115,7 @@ Program {
                         name: 'length'
                         loc: Object {
                           filename: 'input.js'
+                          identifierName: 'length'
                           end: Object {
                             column: 15
                             index: 15
@@ -146,6 +147,7 @@ Program {
                       name: 'length'
                       loc: Object {
                         filename: 'input.js'
+                        identifierName: 'length'
                         end: Object {
                           column: 15
                           index: 15

@@ -150,6 +150,7 @@ Program {
                           name: 'iter'
                           loc: Object {
                             filename: 'input.js'
+                            identifierName: 'iter'
                             end: Object {
                               column: 25
                               index: 40

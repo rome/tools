@@ -82,22 +82,6 @@ Program {
             line: 1
           }
         }
-        left: ReferenceIdentifier {
-          name: 'a'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 1
-              index: 1
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
         right: ReferenceIdentifier {
           name: 'INVALID_PLACEHOLDER'
           loc: Object {
@@ -110,6 +94,23 @@ Program {
             start: Object {
               column: 4
               index: 4
+              line: 1
+            }
+          }
+        }
+        left: ReferenceIdentifier {
+          name: 'a'
+          loc: Object {
+            filename: 'input.js'
+            identifierName: 'a'
+            end: Object {
+              column: 1
+              index: 1
+              line: 1
+            }
+            start: Object {
+              column: 0
+              index: 0
               line: 1
             }
           }
@@ -134,6 +135,7 @@ Program {
         name: 'b'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'b'
           end: Object {
             column: 7
             index: 7

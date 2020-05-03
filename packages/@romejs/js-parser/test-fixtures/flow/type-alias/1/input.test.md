@@ -38,6 +38,7 @@ Program {
         name: 'FBID'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'FBID'
           end: Object {
             column: 9
             index: 9

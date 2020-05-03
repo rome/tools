@@ -35,6 +35,7 @@ Program {
         name: 'multiElementWithRest'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'multiElementWithRest'
           end: Object {
             column: 29
             index: 29
@@ -134,6 +135,7 @@ Program {
             name: 'c'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'c'
               end: Object {
                 column: 44
                 index: 44
@@ -168,6 +170,7 @@ Program {
               name: 'a'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'a'
                 end: Object {
                   column: 35
                   index: 35
@@ -201,6 +204,7 @@ Program {
               name: 'b'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'b'
                 end: Object {
                   column: 38
                   index: 38

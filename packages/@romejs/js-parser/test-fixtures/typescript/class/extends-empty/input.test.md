@@ -58,6 +58,7 @@ Program {
         name: 'foo'
         loc: Object {
           filename: 'input.ts'
+          identifierName: 'foo'
           end: Object {
             column: 13
             index: 13

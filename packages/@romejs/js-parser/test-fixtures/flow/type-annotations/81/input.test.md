@@ -99,6 +99,7 @@ Program {
                     name: 'Map'
                     loc: Object {
                       filename: 'input.js'
+                      identifierName: 'Map'
                       end: Object {
                         column: 10
                         index: 10
@@ -159,6 +160,7 @@ Program {
                           name: 'Array'
                           loc: Object {
                             filename: 'input.js'
+                            identifierName: 'Array'
                             end: Object {
                               column: 24
                               index: 24

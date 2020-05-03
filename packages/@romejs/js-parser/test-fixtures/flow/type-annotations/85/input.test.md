@@ -113,6 +113,7 @@ Program {
                       name: 'Promise'
                       loc: Object {
                         filename: 'input.js'
+                        identifierName: 'Promise'
                         end: Object {
                           column: 14
                           index: 14

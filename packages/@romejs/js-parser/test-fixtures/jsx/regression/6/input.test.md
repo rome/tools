@@ -146,6 +146,7 @@ Program {
               name: 'props'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'props'
                 end: Object {
                   column: 28
                   index: 28

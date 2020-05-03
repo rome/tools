@@ -113,22 +113,6 @@ Program {
                   line: 1
                 }
               }
-              rest: BindingIdentifier {
-                name: 'y'
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 18
-                    index: 18
-                    line: 1
-                  }
-                  start: Object {
-                    column: 17
-                    index: 17
-                    line: 1
-                  }
-                }
-              }
               meta: PatternMeta {
                 optional: undefined
                 typeAnnotation: undefined
@@ -146,6 +130,23 @@ Program {
                   }
                 }
               }
+              rest: BindingIdentifier {
+                name: 'y'
+                loc: Object {
+                  filename: 'input.js'
+                  identifierName: 'y'
+                  end: Object {
+                    column: 18
+                    index: 18
+                    line: 1
+                  }
+                  start: Object {
+                    column: 17
+                    index: 17
+                    line: 1
+                  }
+                }
+              }
               properties: Array [
                 BindingObjectPatternProperty {
                   key: StaticPropertyKey {
@@ -153,6 +154,7 @@ Program {
                       name: 'x'
                       loc: Object {
                         filename: 'input.js'
+                        identifierName: 'x'
                         end: Object {
                           column: 12
                           index: 12
@@ -184,6 +186,7 @@ Program {
                     name: 'x'
                     loc: Object {
                       filename: 'input.js'
+                      identifierName: 'x'
                       end: Object {
                         column: 12
                         index: 12

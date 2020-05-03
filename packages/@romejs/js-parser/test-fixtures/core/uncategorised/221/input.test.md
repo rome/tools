@@ -65,6 +65,7 @@ Program {
               name: 'implements'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'implements'
                 end: Object {
                   column: 14
                   index: 14
@@ -97,6 +98,7 @@ Program {
               name: 'interface'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'interface'
                 end: Object {
                   column: 25
                   index: 25
@@ -129,6 +131,7 @@ Program {
               name: 'package'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'package'
                 end: Object {
                   column: 34
                   index: 34

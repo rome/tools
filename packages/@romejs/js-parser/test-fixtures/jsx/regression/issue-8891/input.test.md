@@ -164,6 +164,7 @@ Program {
                             name: 'function'
                             loc: Object {
                               filename: 'input.js'
+                              identifierName: 'function'
                               end: Object {
                                 column: 24
                                 index: 27
@@ -342,6 +343,7 @@ Program {
                             name: 'class'
                             loc: Object {
                               filename: 'input.js'
+                              identifierName: 'class'
                               end: Object {
                                 column: 21
                                 index: 63
@@ -520,6 +522,7 @@ Program {
                             name: 'delete'
                             loc: Object {
                               filename: 'input.js'
+                              identifierName: 'delete'
                               end: Object {
                                 column: 22
                                 index: 100
@@ -698,6 +701,7 @@ Program {
                             name: 'enum'
                             loc: Object {
                               filename: 'input.js'
+                              identifierName: 'enum'
                               end: Object {
                                 column: 20
                                 index: 135

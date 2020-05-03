@@ -35,6 +35,7 @@ Program {
         name: 'multiElement'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'multiElement'
           end: Object {
             column: 21
             index: 21
@@ -138,6 +139,7 @@ Program {
                   name: 'a'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'a'
                     end: Object {
                       column: 27
                       index: 27
@@ -169,6 +171,7 @@ Program {
                 name: 'r'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'r'
                   end: Object {
                     column: 30
                     index: 30
@@ -201,6 +204,7 @@ Program {
                   name: 'b'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'b'
                     end: Object {
                       column: 33
                       index: 33
@@ -232,6 +236,7 @@ Program {
                 name: 's'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 's'
                   end: Object {
                     column: 36
                     index: 36
@@ -264,6 +269,7 @@ Program {
                   name: 'c'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'c'
                     end: Object {
                       column: 39
                       index: 39
@@ -295,6 +301,7 @@ Program {
                 name: 't'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 't'
                   end: Object {
                     column: 42
                     index: 42

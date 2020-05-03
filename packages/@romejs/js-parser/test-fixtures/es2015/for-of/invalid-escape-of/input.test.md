@@ -68,10 +68,28 @@ Program {
           line: 1
         }
       }
+      body: BlockStatement {
+        body: Array []
+        directives: Array []
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 20
+            index: 20
+            line: 1
+          }
+          start: Object {
+            column: 18
+            index: 18
+            line: 1
+          }
+        }
+      }
       init: ReferenceIdentifier {
         name: 'x'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'x'
           end: Object {
             column: 6
             index: 6
@@ -88,6 +106,7 @@ Program {
         name: 'of'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'of'
           end: Object {
             column: 14
             index: 14
@@ -104,6 +123,7 @@ Program {
         name: 'y'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'y'
           end: Object {
             column: 16
             index: 16
@@ -112,23 +132,6 @@ Program {
           start: Object {
             column: 15
             index: 15
-            line: 1
-          }
-        }
-      }
-      body: BlockStatement {
-        body: Array []
-        directives: Array []
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 20
-            index: 20
-            line: 1
-          }
-          start: Object {
-            column: 18
-            index: 18
             line: 1
           }
         }

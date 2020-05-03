@@ -103,6 +103,7 @@ Program {
         leadingComments: Array ['1']
         loc: Object {
           filename: 'input.js'
+          identifierName: 'a'
           end: Object {
             column: 16
             index: 26

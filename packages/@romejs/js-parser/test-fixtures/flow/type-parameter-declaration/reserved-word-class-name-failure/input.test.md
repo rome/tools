@@ -61,6 +61,7 @@ Program {
         name: 'delete'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'delete'
           end: Object {
             column: 20
             index: 20

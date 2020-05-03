@@ -88,6 +88,7 @@ Program {
               name: 'this'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'this'
                 end: Object {
                   column: 8
                   index: 8

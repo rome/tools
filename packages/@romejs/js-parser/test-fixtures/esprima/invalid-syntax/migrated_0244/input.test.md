@@ -57,6 +57,7 @@ Program {
           frame {
             location: Object {
               filename: 'input.js'
+              identifierName: 't'
               end: Object {
                 column: 16
                 index: 16
@@ -93,6 +94,7 @@ Program {
           name: 'a'
           loc: Object {
             filename: 'input.js'
+            identifierName: 'a'
             end: Object {
               column: 11
               index: 11
@@ -179,6 +181,7 @@ Program {
               name: 't'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 't'
                 end: Object {
                   column: 13
                   index: 13
@@ -212,6 +215,7 @@ Program {
               name: 't'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 't'
                 end: Object {
                   column: 16
                   index: 16

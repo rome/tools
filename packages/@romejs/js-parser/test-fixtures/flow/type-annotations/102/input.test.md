@@ -101,6 +101,7 @@ Program {
             name: 'modifiers'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'modifiers'
               end: Object {
                 column: 28
                 index: 28
@@ -118,6 +119,7 @@ Program {
               name: 'Array'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'Array'
                 end: Object {
                   column: 36
                   index: 36

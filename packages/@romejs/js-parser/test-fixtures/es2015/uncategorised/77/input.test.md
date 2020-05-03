@@ -51,6 +51,7 @@ Program {
           name: 'parse'
           loc: Object {
             filename: 'input.js'
+            identifierName: 'parse'
             end: Object {
               column: 21
               index: 21

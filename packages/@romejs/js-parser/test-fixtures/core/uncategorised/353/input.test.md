@@ -103,6 +103,7 @@ Program {
         name: 'x0'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'x0'
           end: Object {
             column: 3
             index: 3

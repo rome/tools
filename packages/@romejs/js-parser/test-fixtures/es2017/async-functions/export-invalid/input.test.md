@@ -121,6 +121,7 @@ Program {
               name: 'functionX'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'functionX'
                 end: Object {
                   column: 30
                   index: 30

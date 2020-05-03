@@ -110,6 +110,7 @@ Program {
                 name: 'cleanup'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'cleanup'
                   end: Object {
                     column: 25
                     index: 25
@@ -127,6 +128,7 @@ Program {
                   name: 'stuff'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'stuff'
                     end: Object {
                       column: 31
                       index: 31

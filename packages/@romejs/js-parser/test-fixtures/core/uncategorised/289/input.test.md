@@ -35,6 +35,7 @@ Program {
         name: 'eval'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'eval'
           end: Object {
             column: 13
             index: 13
@@ -105,6 +106,7 @@ Program {
               name: 'inner'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'inner'
                 end: Object {
                   column: 32
                   index: 32

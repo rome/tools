@@ -106,6 +106,7 @@ Program {
             name: 'default'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'default'
               end: Object {
                 column: 14
                 index: 14
@@ -123,6 +124,7 @@ Program {
               name: 'default'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'default'
                 end: Object {
                   column: 14
                   index: 14
@@ -169,6 +171,7 @@ Program {
             name: 'from'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'from'
               end: Object {
                 column: 19
                 index: 19
@@ -186,6 +189,7 @@ Program {
               name: 'from'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'from'
                 end: Object {
                   column: 19
                   index: 19
@@ -232,6 +236,7 @@ Program {
             name: ''
             loc: Object {
               filename: 'input.js'
+              identifierName: ''
               end: Object {
                 column: 25
                 index: 25
@@ -249,6 +254,7 @@ Program {
               name: ''
               loc: Object {
                 filename: 'input.js'
+                identifierName: ''
                 end: Object {
                   column: 25
                   index: 25

@@ -61,6 +61,7 @@ Program {
         name: 'Ident'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'Ident'
           end: Object {
             column: 12
             index: 12
@@ -92,6 +93,7 @@ Program {
           name: 'SuperType'
           loc: Object {
             filename: 'input.js'
+            identifierName: 'SuperType'
             end: Object {
               column: 30
               index: 30
@@ -124,6 +126,7 @@ Program {
           name: 'Type'
           loc: Object {
             filename: 'input.js'
+            identifierName: 'Type'
             end: Object {
               column: 18
               index: 18

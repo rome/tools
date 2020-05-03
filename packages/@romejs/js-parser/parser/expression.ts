@@ -3456,13 +3456,15 @@ export function createIdentifier(
   start: Position,
   name: string,
 ): Identifier {
-  return parser.finishNode(
+  const node: Identifier = parser.finishNode(
     start,
     {
       type: 'Identifier',
       name,
     },
   );
+  parser.getLoc(node).identifierName = name;
+  return node;
 }
 
 export function parseIdentifierName(

@@ -86,6 +86,7 @@ Program {
               leadingComments: undefined
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'node'
                 end: Object {
                   column: 8
                   index: 68
