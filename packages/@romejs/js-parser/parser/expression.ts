@@ -2980,7 +2980,7 @@ export function parseArrowExpression(
   parser.state.yieldPos = ob1Number0;
   parser.state.awaitPos = ob1Number0;
 
-  const headEnd = parser.getPosition();
+  const headEnd = parser.getLastEndPosition();
 
   let params: Array<AnyBindingPattern> = [];
   let rest: undefined | AnyTargetBindingPattern = opts.rest;
@@ -3098,7 +3098,7 @@ export function parseFunctionBodyAndFinish(
     [returnType, predicate] = parseTypeAnnotationAndPredicate(parser);
   }
 
-  const headEnd = parser.getPosition();
+  const headEnd = parser.getLastEndPosition();
   const head = parser.finishNodeAt(
     opts.headStart,
     headEnd,
