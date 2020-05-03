@@ -134,6 +134,7 @@ type LintDiagnosticCategory =
   | 'lint/singleVarDeclarator'
   | 'lint/sortImportExportSpecifiers'
   | 'lint/sparseArray'
+  | 'lint/stylePropObject'
   | 'lint/undeclaredVariables'
   | 'lint/unsafeNegation'
   | 'lint/unusedVariables';
