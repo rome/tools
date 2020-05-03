@@ -21,6 +21,7 @@ export type DiagnosticCategory =
   | 'format/disabled'
   | 'internalError/httpServer'
   | 'internalError/request'
+  | 'lint/disabled'
   | 'lint/pendingFixes'
   | 'lsp/parse'
   | 'parse/js'
