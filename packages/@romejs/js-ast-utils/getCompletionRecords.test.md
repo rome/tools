@@ -127,6 +127,7 @@ Array [
         name: 'bar'
         loc: Object {
           filename: 'unknown'
+          identifierName: 'bar'
           end: Object {
             column: 22
             index: 22
@@ -496,6 +497,7 @@ Array [
         name: 'bar'
         loc: Object {
           filename: 'unknown'
+          identifierName: 'bar'
           end: Object {
             column: 22
             index: 22
@@ -666,6 +668,7 @@ Array [
         name: 'foo'
         loc: Object {
           filename: 'unknown'
+          identifierName: 'foo'
           end: Object {
             column: 26
             index: 26
@@ -707,6 +710,7 @@ Array [
         name: 'foo'
         loc: Object {
           filename: 'unknown'
+          identifierName: 'foo'
           end: Object {
             column: 26
             index: 26

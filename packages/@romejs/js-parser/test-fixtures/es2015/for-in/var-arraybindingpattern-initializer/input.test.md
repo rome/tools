@@ -135,6 +135,7 @@ Program {
                   name: 'a'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'a'
                     end: Object {
                       column: 11
                       index: 11

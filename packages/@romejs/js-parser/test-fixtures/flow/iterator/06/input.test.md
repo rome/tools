@@ -61,6 +61,7 @@ Program {
         name: 'T'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'T'
           end: Object {
             column: 7
             index: 7
@@ -112,6 +113,7 @@ Program {
                 name: '@@iterator'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: '@@iterator'
                   end: Object {
                     column: 12
                     index: 22

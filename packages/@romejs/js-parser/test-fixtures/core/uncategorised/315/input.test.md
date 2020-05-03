@@ -84,6 +84,7 @@ Program {
             trailingComments: undefined
             loc: Object {
               filename: 'input.js'
+              identifierName: 'error'
               end: Object {
                 column: 13
                 index: 13
@@ -117,6 +118,7 @@ Program {
             leadingComments: undefined
             loc: Object {
               filename: 'input.js'
+              identifierName: 'error'
               end: Object {
                 column: 15
                 index: 41

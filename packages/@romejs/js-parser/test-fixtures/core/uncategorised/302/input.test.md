@@ -84,6 +84,7 @@ Program {
               trailingComments: undefined
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'x'
                 end: Object {
                   column: 5
                   index: 5

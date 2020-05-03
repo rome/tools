@@ -58,6 +58,7 @@ Program {
         name: 'Spaces'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'Spaces'
           end: Object {
             column: 12
             index: 12
@@ -109,6 +110,7 @@ Program {
                 name: 'wrongSpaces'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'wrongSpaces'
                   end: Object {
                     column: 16
                     index: 31
@@ -248,6 +250,7 @@ Program {
                       name: 'fail'
                       loc: Object {
                         filename: 'input.js'
+                        identifierName: 'fail'
                         end: Object {
                           column: 15
                           index: 51

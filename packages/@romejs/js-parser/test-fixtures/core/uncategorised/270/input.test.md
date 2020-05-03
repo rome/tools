@@ -48,6 +48,7 @@ Program {
         name: 'answer'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'answer'
           end: Object {
             column: 14
             index: 14
@@ -126,6 +127,7 @@ Program {
                   name: 'hi'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'hi'
                     end: Object {
                       column: 29
                       index: 29

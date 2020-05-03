@@ -79,6 +79,7 @@ Program {
         name: 't'
         loc: Object {
           filename: 'input.js'
+          identifierName: 't'
           end: Object {
             column: 10
             index: 10

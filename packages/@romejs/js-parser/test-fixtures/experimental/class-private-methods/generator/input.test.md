@@ -35,6 +35,7 @@ Program {
         name: 'Hotel'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'Hotel'
           end: Object {
             column: 11
             index: 11
@@ -86,6 +87,7 @@ Program {
                 name: 'evil'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'evil'
                   end: Object {
                     column: 8
                     index: 22
@@ -240,6 +242,7 @@ Program {
                         name: 'notReally'
                         loc: Object {
                           filename: 'input.js'
+                          identifierName: 'notReally'
                           end: Object {
                             column: 19
                             index: 46

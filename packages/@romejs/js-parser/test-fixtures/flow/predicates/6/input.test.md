@@ -134,6 +134,7 @@ Program {
                       name: '$Pred'
                       loc: Object {
                         filename: 'input.js'
+                        identifierName: '$Pred'
                         end: Object {
                           column: 38
                           index: 38
@@ -202,6 +203,7 @@ Program {
                 name: 'Array'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'Array'
                   end: Object {
                     column: 69
                     index: 69
@@ -247,6 +249,7 @@ Program {
                       name: '$Refine'
                       loc: Object {
                         filename: 'input.js'
+                        identifierName: '$Refine'
                         end: Object {
                           column: 77
                           index: 77
@@ -292,6 +295,7 @@ Program {
                             name: 'T'
                             loc: Object {
                               filename: 'input.js'
+                              identifierName: 'T'
                               end: Object {
                                 column: 79
                                 index: 79
@@ -324,6 +328,7 @@ Program {
                             name: 'P'
                             loc: Object {
                               filename: 'input.js'
+                              identifierName: 'P'
                               end: Object {
                                 column: 81
                                 index: 81
@@ -380,6 +385,7 @@ Program {
                   name: 'v'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'v'
                     end: Object {
                       column: 44
                       index: 44
@@ -425,6 +431,7 @@ Program {
                       name: 'Array'
                       loc: Object {
                         filename: 'input.js'
+                        identifierName: 'Array'
                         end: Object {
                           column: 51
                           index: 51
@@ -470,6 +477,7 @@ Program {
                             name: 'T'
                             loc: Object {
                               filename: 'input.js'
+                              identifierName: 'T'
                               end: Object {
                                 column: 53
                                 index: 53
@@ -507,6 +515,7 @@ Program {
                   name: 'cb'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'cb'
                     end: Object {
                       column: 58
                       index: 58
@@ -552,6 +561,7 @@ Program {
                       name: 'P'
                       loc: Object {
                         filename: 'input.js'
+                        identifierName: 'P'
                         end: Object {
                           column: 61
                           index: 61

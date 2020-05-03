@@ -35,6 +35,7 @@ Program {
         name: 'encrypt'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'encrypt'
           end: Object {
             column: 16
             index: 16
@@ -107,6 +108,7 @@ Program {
         name: 'decrypt'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'decrypt'
           end: Object {
             column: 13
             index: 36
@@ -188,6 +190,7 @@ Program {
             name: 'encrypt'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'encrypt'
               end: Object {
                 column: 16
                 index: 55
@@ -204,6 +207,7 @@ Program {
             name: 'encrypt'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'encrypt'
               end: Object {
                 column: 16
                 index: 55
@@ -235,6 +239,7 @@ Program {
             name: 'decrypt'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'decrypt'
               end: Object {
                 column: 25
                 index: 64
@@ -251,6 +256,7 @@ Program {
             name: 'decrypt'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'decrypt'
               end: Object {
                 column: 25
                 index: 64

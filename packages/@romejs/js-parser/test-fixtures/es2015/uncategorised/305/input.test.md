@@ -83,6 +83,7 @@ Program {
                       name: 'propName'
                       loc: Object {
                         filename: 'input.js'
+                        identifierName: 'propName'
                         end: Object {
                           column: 13
                           index: 13
@@ -128,6 +129,7 @@ Program {
                       name: 'propName'
                       loc: Object {
                         filename: 'input.js'
+                        identifierName: 'propName'
                         end: Object {
                           column: 13
                           index: 13
@@ -144,6 +146,7 @@ Program {
                       name: 'defaultValue'
                       loc: Object {
                         filename: 'input.js'
+                        identifierName: 'defaultValue'
                         end: Object {
                           column: 28
                           index: 28
@@ -190,6 +193,7 @@ Program {
               name: 'obj'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'obj'
                 end: Object {
                   column: 35
                   index: 35

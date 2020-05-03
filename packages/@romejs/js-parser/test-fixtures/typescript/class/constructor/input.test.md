@@ -35,6 +35,7 @@ Program {
         name: 'C'
         loc: Object {
           filename: 'input.ts'
+          identifierName: 'C'
           end: Object {
             column: 7
             index: 7
@@ -86,6 +87,7 @@ Program {
                 name: 'constructor'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'constructor'
                   end: Object {
                     column: 15
                     index: 25
@@ -180,6 +182,7 @@ Program {
                   name: 'x'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'x'
                     end: Object {
                       column: 17
                       index: 27
@@ -227,6 +230,7 @@ Program {
                   name: 'y'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'y'
                     end: Object {
                       column: 28
                       index: 38
@@ -280,6 +284,7 @@ Program {
                 name: 'constructor'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'constructor'
                   end: Object {
                     column: 15
                     index: 64
@@ -374,6 +379,7 @@ Program {
                   name: 'x'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'x'
                     end: Object {
                       column: 17
                       index: 66
@@ -421,6 +427,7 @@ Program {
                   name: 'y'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'y'
                     end: Object {
                       column: 28
                       index: 77
@@ -474,6 +481,7 @@ Program {
                 name: 'constructor'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'constructor'
                   end: Object {
                     column: 15
                     index: 103
@@ -584,6 +592,7 @@ Program {
                   name: 'x'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'x'
                     end: Object {
                       column: 17
                       index: 105
@@ -631,6 +640,7 @@ Program {
                   name: 'y'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'y'
                     end: Object {
                       column: 25
                       index: 113

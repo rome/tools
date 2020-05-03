@@ -35,6 +35,7 @@ Program {
         name: 'singleElementWithInitializer'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'singleElementWithInitializer'
           end: Object {
             column: 37
             index: 37
@@ -138,6 +139,7 @@ Program {
                   name: 'a'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'a'
                     end: Object {
                       column: 43
                       index: 43
@@ -183,6 +185,7 @@ Program {
                   name: 'b'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'b'
                     end: Object {
                       column: 46
                       index: 46

@@ -90,6 +90,7 @@ Program {
         name: 'T1'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'T1'
           end: Object {
             column: 7
             index: 17
@@ -138,6 +139,7 @@ Program {
         name: 'T2'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'T2'
           end: Object {
             column: 7
             index: 32
@@ -185,6 +187,7 @@ Program {
         name: 'T3'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'T3'
           end: Object {
             column: 7
             index: 49
@@ -233,6 +236,7 @@ Program {
         name: 'T4'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'T4'
           end: Object {
             column: 7
             index: 78
@@ -281,6 +285,7 @@ Program {
         name: 'T5'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'T5'
           end: Object {
             column: 7
             index: 94
@@ -328,6 +333,7 @@ Program {
         name: 'T6'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'T6'
           end: Object {
             column: 7
             index: 112
@@ -375,6 +381,7 @@ Program {
         name: 'T7'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'T7'
           end: Object {
             column: 7
             index: 130
@@ -422,6 +429,7 @@ Program {
         name: 'T8'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'T8'
           end: Object {
             column: 7
             index: 146
@@ -470,6 +478,7 @@ Program {
         name: 'T9'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'T9'
           end: Object {
             column: 7
             index: 193
@@ -518,6 +527,7 @@ Program {
         name: 'T10'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'T10'
           end: Object {
             column: 8
             index: 210
@@ -566,6 +576,7 @@ Program {
         name: 'T11'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'T11'
           end: Object {
             column: 8
             index: 225
@@ -615,6 +626,7 @@ Program {
         name: 'T12'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'T12'
           end: Object {
             column: 8
             index: 239
@@ -663,6 +675,7 @@ Program {
         name: 'T13'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'T13'
           end: Object {
             column: 8
             index: 256

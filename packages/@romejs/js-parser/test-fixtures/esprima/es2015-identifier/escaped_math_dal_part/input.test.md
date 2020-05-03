@@ -65,6 +65,7 @@ Program {
               name: '_\u{1ee03}'
               loc: Object {
                 filename: 'input.js'
+                identifierName: '_\u{1ee03}'
                 end: Object {
                   column: 14
                   index: 14

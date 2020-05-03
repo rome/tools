@@ -65,6 +65,7 @@ Program {
               name: 'eval'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'eval'
                 end: Object {
                   column: 8
                   index: 8
@@ -113,6 +114,7 @@ Program {
               name: 'arguments'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'arguments'
                 end: Object {
                   column: 24
                   index: 24

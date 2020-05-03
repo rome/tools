@@ -58,6 +58,7 @@ Program {
         name: 'fn'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'fn'
           end: Object {
             column: 12
             index: 12
@@ -208,6 +209,7 @@ Program {
                       name: 'x'
                       loc: Object {
                         filename: 'input.js'
+                        identifierName: 'x'
                         end: Object {
                           column: 4
                           index: 21
@@ -239,6 +241,7 @@ Program {
                         name: 'fn'
                         loc: Object {
                           filename: 'input.js'
+                          identifierName: 'fn'
                           end: Object {
                             column: 15
                             index: 32

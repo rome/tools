@@ -70,6 +70,7 @@ Program {
               name: 'foo'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'foo'
                 end: Object {
                   column: 29
                   index: 29

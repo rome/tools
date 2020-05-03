@@ -73,6 +73,7 @@ Program {
         name: 'MyClass'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'MyClass'
           end: Object {
             column: 13
             index: 13

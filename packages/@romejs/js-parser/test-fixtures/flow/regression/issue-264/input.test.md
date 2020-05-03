@@ -68,6 +68,7 @@ Program {
               name: 'map'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'map'
                 end: Object {
                   column: 9
                   index: 9
@@ -129,6 +130,7 @@ Program {
                         name: 'age'
                         loc: Object {
                           filename: 'input.js'
+                          identifierName: 'age'
                           end: Object {
                             column: 6
                             index: 20

@@ -35,6 +35,7 @@ Program {
         name: 'emptyWithRest'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'emptyWithRest'
           end: Object {
             column: 22
             index: 22

@@ -113,6 +113,7 @@ Program {
               name: 'toString'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'toString'
                 end: Object {
                   column: 13
                   index: 13
@@ -127,6 +128,7 @@ Program {
             }
             loc: Object {
               filename: 'input.js'
+              identifierName: 'toString'
               end: Object {
                 column: 13
                 index: 13

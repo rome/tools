@@ -63,6 +63,7 @@ Program {
           name: 'sampleTag'
           loc: Object {
             filename: 'input.js'
+            identifierName: 'sampleTag'
             end: Object {
               column: 9
               index: 9

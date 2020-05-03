@@ -81,6 +81,7 @@ Program {
                 name: 'foo'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'foo'
                   end: Object {
                     column: 16
                     index: 16
@@ -195,6 +196,7 @@ Program {
                     name: 'bar'
                     loc: Object {
                       filename: 'input.js'
+                      identifierName: 'bar'
                       end: Object {
                         column: 17
                         index: 39
@@ -238,22 +240,6 @@ Program {
                         line: 2
                       }
                     }
-                    rest: BindingIdentifier {
-                      name: 'foo'
-                      loc: Object {
-                        filename: 'input.js'
-                        end: Object {
-                          column: 32
-                          index: 54
-                          line: 2
-                        }
-                        start: Object {
-                          column: 29
-                          index: 51
-                          line: 2
-                        }
-                      }
-                    }
                     meta: PatternMeta {
                       optional: undefined
                       typeAnnotation: undefined
@@ -271,6 +257,23 @@ Program {
                         }
                       }
                     }
+                    rest: BindingIdentifier {
+                      name: 'foo'
+                      loc: Object {
+                        filename: 'input.js'
+                        identifierName: 'foo'
+                        end: Object {
+                          column: 32
+                          index: 54
+                          line: 2
+                        }
+                        start: Object {
+                          column: 29
+                          index: 51
+                          line: 2
+                        }
+                      }
+                    }
                     properties: Array [
                       BindingObjectPatternProperty {
                         key: StaticPropertyKey {
@@ -278,6 +281,7 @@ Program {
                             name: 'baz'
                             loc: Object {
                               filename: 'input.js'
+                              identifierName: 'baz'
                               end: Object {
                                 column: 24
                                 index: 46
@@ -309,6 +313,7 @@ Program {
                           name: 'baz'
                           loc: Object {
                             filename: 'input.js'
+                            identifierName: 'baz'
                             end: Object {
                               column: 24
                               index: 46
@@ -356,6 +361,7 @@ Program {
                 name: 'qux'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'qux'
                   end: Object {
                     column: 41
                     index: 63

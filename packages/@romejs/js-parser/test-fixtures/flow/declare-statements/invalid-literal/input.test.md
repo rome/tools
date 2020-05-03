@@ -74,6 +74,7 @@ Program {
         name: 'declare'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'declare'
           end: Object {
             column: 7
             index: 7

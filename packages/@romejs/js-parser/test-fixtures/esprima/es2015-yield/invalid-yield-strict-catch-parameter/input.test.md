@@ -116,22 +116,6 @@ Program {
             line: 1
           }
         }
-        param: BindingIdentifier {
-          name: 'yield'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 33
-              index: 33
-              line: 1
-            }
-            start: Object {
-              column: 28
-              index: 28
-              line: 1
-            }
-          }
-        }
         body: BlockStatement {
           body: Array []
           directives: Array []
@@ -145,6 +129,23 @@ Program {
             start: Object {
               column: 35
               index: 35
+              line: 1
+            }
+          }
+        }
+        param: BindingIdentifier {
+          name: 'yield'
+          loc: Object {
+            filename: 'input.js'
+            identifierName: 'yield'
+            end: Object {
+              column: 33
+              index: 33
+              line: 1
+            }
+            start: Object {
+              column: 28
+              index: 28
               line: 1
             }
           }

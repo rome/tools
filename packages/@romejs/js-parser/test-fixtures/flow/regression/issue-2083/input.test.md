@@ -38,6 +38,7 @@ Program {
         name: 'Foo'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'Foo'
           end: Object {
             column: 9
             index: 9
@@ -89,6 +90,7 @@ Program {
                 name: 'foo'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'foo'
                   end: Object {
                     column: 5
                     index: 17
@@ -275,6 +277,7 @@ Program {
                             name: 'MatrixType'
                             loc: Object {
                               filename: 'input.js'
+                              identifierName: 'MatrixType'
                               end: Object {
                                 column: 22
                                 index: 61
@@ -292,6 +295,7 @@ Program {
                               name: 'IsScaling'
                               loc: Object {
                                 filename: 'input.js'
+                                identifierName: 'IsScaling'
                                 end: Object {
                                   column: 32
                                   index: 71
@@ -306,6 +310,7 @@ Program {
                             }
                             loc: Object {
                               filename: 'input.js'
+                              identifierName: 'IsScaling'
                               end: Object {
                                 column: 32
                                 index: 71
@@ -337,6 +342,7 @@ Program {
                             name: 'MatrixType'
                             loc: Object {
                               filename: 'input.js'
+                              identifierName: 'MatrixType'
                               end: Object {
                                 column: 45
                                 index: 84
@@ -354,6 +360,7 @@ Program {
                               name: 'IsTranslation'
                               loc: Object {
                                 filename: 'input.js'
+                                identifierName: 'IsTranslation'
                                 end: Object {
                                   column: 59
                                   index: 98
@@ -368,6 +375,7 @@ Program {
                             }
                             loc: Object {
                               filename: 'input.js'
+                              identifierName: 'IsTranslation'
                               end: Object {
                                 column: 59
                                 index: 98
@@ -395,6 +403,7 @@ Program {
                 name: 'bar'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'bar'
                   end: Object {
                     column: 5
                     index: 117
@@ -535,6 +544,7 @@ Program {
                       name: 'typeB'
                       loc: Object {
                         filename: 'input.js'
+                        identifierName: 'typeB'
                         end: Object {
                           column: 32
                           index: 154
@@ -566,6 +576,7 @@ Program {
                         name: 'typeA'
                         loc: Object {
                           filename: 'input.js'
+                          identifierName: 'typeA'
                           end: Object {
                             column: 18
                             index: 140

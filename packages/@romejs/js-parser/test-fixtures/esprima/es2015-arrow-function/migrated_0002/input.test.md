@@ -99,6 +99,7 @@ Program {
               name: 'e'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'e'
                 end: Object {
                   column: 2
                   index: 2

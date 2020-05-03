@@ -103,6 +103,7 @@ Program {
           name: 'defValue'
           loc: Object {
             filename: 'input.js'
+            identifierName: 'defValue'
             end: Object {
               column: 31
               index: 31
@@ -137,6 +138,7 @@ Program {
                   name: 'eval'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'eval'
                     end: Object {
                       column: 20
                       index: 20
@@ -168,6 +170,7 @@ Program {
                 name: 'eval'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'eval'
                   end: Object {
                     column: 20
                     index: 20
@@ -247,6 +250,7 @@ Program {
           name: 'obj'
           loc: Object {
             filename: 'input.js'
+            identifierName: 'obj'
             end: Object {
               column: 38
               index: 38

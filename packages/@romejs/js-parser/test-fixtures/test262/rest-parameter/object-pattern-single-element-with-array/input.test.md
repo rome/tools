@@ -35,6 +35,7 @@ Program {
         name: 'singleElementWithArray'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'singleElementWithArray'
           end: Object {
             column: 31
             index: 31
@@ -138,6 +139,7 @@ Program {
                   name: 'p'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'p'
                     end: Object {
                       column: 37
                       index: 37
@@ -185,6 +187,7 @@ Program {
                     name: 'a'
                     loc: Object {
                       filename: 'input.js'
+                      identifierName: 'a'
                       end: Object {
                         column: 41
                         index: 41

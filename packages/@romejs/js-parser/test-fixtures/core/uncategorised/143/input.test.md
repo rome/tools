@@ -64,6 +64,7 @@ Program {
           name: 'arguments'
           loc: Object {
             filename: 'input.js'
+            identifierName: 'arguments'
             end: Object {
               column: 11
               index: 11

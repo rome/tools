@@ -125,6 +125,7 @@ Program {
           leadingComments: undefined
           loc: Object {
             filename: 'input.js'
+            identifierName: 'a'
             end: Object {
               column: 1
               index: 48
@@ -208,6 +209,7 @@ Program {
               name: 'g'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'g'
                 end: Object {
                   column: 28
                   index: 75
@@ -244,6 +246,7 @@ Program {
                   name: 'e'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'e'
                     end: Object {
                       column: 18
                       index: 65
@@ -262,6 +265,7 @@ Program {
                   name: 'f'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'f'
                     end: Object {
                       column: 23
                       index: 70

@@ -114,6 +114,7 @@ Program {
               name: 'L'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'L'
                 end: Object {
                   column: 5
                   index: 18
@@ -146,6 +147,7 @@ Program {
                 trailingComments: undefined
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'let'
                   end: Object {
                     column: 10
                     index: 23

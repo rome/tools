@@ -196,6 +196,7 @@ Program {
               name: 'fn'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'fn'
                 end: Object {
                   column: 40
                   index: 40

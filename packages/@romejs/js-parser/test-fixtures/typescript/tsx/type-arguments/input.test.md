@@ -66,6 +66,7 @@ Program {
           name: 'f'
           loc: Object {
             filename: 'input.tsx'
+            identifierName: 'f'
             end: Object {
               column: 1
               index: 1
@@ -112,6 +113,7 @@ Program {
                 name: 'T'
                 loc: Object {
                   filename: 'input.tsx'
+                  identifierName: 'T'
                   end: Object {
                     column: 3
                     index: 3
@@ -163,6 +165,7 @@ Program {
           name: 'C'
           loc: Object {
             filename: 'input.tsx'
+            identifierName: 'C'
             end: Object {
               column: 5
               index: 13
@@ -209,6 +212,7 @@ Program {
                 name: 'T'
                 loc: Object {
                   filename: 'input.tsx'
+                  identifierName: 'T'
                   end: Object {
                     column: 7
                     index: 15
@@ -231,6 +235,7 @@ Program {
         name: 'A'
         loc: Object {
           filename: 'input.tsx'
+          identifierName: 'A'
           end: Object {
             column: 6
             index: 26
@@ -275,6 +280,7 @@ Program {
           name: 'T'
           loc: Object {
             filename: 'input.tsx'
+            identifierName: 'T'
             end: Object {
               column: 10
               index: 30
@@ -321,6 +327,7 @@ Program {
                 name: 'T'
                 loc: Object {
                   filename: 'input.tsx'
+                  identifierName: 'T'
                   end: Object {
                     column: 12
                     index: 32

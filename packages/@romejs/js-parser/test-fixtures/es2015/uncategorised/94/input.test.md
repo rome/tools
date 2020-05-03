@@ -82,6 +82,7 @@ Program {
             name: 'encrypt'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'encrypt'
               end: Object {
                 column: 16
                 index: 16
@@ -99,6 +100,7 @@ Program {
               name: 'enc'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'enc'
                 end: Object {
                   column: 23
                   index: 23

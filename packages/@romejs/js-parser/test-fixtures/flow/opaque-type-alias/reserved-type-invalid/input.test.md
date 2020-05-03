@@ -61,6 +61,7 @@ Program {
         name: 'string'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'string'
           end: Object {
             column: 18
             index: 18

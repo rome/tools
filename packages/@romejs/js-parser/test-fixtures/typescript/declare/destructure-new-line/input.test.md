@@ -48,6 +48,7 @@ Program {
         name: 'declare'
         loc: Object {
           filename: 'input.ts'
+          identifierName: 'declare'
           end: Object {
             column: 7
             index: 7
@@ -114,6 +115,7 @@ Program {
                       name: 'x'
                       loc: Object {
                         filename: 'input.ts'
+                        identifierName: 'x'
                         end: Object {
                           column: 9
                           index: 17
@@ -145,6 +147,7 @@ Program {
                     name: 'x'
                     loc: Object {
                       filename: 'input.ts'
+                      identifierName: 'x'
                       end: Object {
                         column: 9
                         index: 17
@@ -177,6 +180,7 @@ Program {
                       name: 'y'
                       loc: Object {
                         filename: 'input.ts'
+                        identifierName: 'y'
                         end: Object {
                           column: 12
                           index: 20
@@ -208,6 +212,7 @@ Program {
                     name: 'y'
                     loc: Object {
                       filename: 'input.ts'
+                      identifierName: 'y'
                       end: Object {
                         column: 12
                         index: 20
@@ -271,6 +276,7 @@ Program {
                           name: 'x'
                           loc: Object {
                             filename: 'input.ts'
+                            identifierName: 'x'
                             end: Object {
                               column: 19
                               index: 27
@@ -335,6 +341,7 @@ Program {
                           name: 'y'
                           loc: Object {
                             filename: 'input.ts'
+                            identifierName: 'y'
                             end: Object {
                               column: 30
                               index: 38

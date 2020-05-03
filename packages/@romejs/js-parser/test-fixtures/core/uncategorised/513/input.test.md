@@ -75,6 +75,7 @@ Program {
         name: 'static'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'static'
           end: Object {
             column: 29
             index: 29

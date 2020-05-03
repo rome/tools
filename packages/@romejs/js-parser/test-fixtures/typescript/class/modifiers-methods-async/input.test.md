@@ -53,6 +53,7 @@ Program {
         name: 'C'
         loc: Object {
           filename: 'input.ts'
+          identifierName: 'C'
           end: Object {
             column: 16
             index: 58
@@ -107,6 +108,7 @@ Program {
                 name: 'a'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'a'
                   end: Object {
                     column: 20
                     index: 81
@@ -206,6 +208,7 @@ Program {
                 name: 's'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 's'
                   end: Object {
                     column: 18
                     index: 103
@@ -321,6 +324,7 @@ Program {
                 name: 'pua'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'pua'
                   end: Object {
                     column: 29
                     index: 138
@@ -420,6 +424,7 @@ Program {
                 name: 'pus'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'pus'
                   end: Object {
                     column: 27
                     index: 169
@@ -535,6 +540,7 @@ Program {
                 name: 'pu'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'pu'
                   end: Object {
                     column: 19
                     index: 195
@@ -650,6 +656,7 @@ Program {
                 name: 'po'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'po'
                   end: Object {
                     column: 22
                     index: 223
@@ -765,6 +772,7 @@ Program {
                 name: 'pi'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'pi'
                   end: Object {
                     column: 20
                     index: 249

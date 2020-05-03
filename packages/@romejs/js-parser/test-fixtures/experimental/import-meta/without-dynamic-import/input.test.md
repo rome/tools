@@ -65,6 +65,7 @@ Program {
               name: 'x'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'x'
                 end: Object {
                   column: 7
                   index: 7
@@ -108,6 +109,7 @@ Program {
                 name: 'import'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'import'
                   end: Object {
                     column: 16
                     index: 16
@@ -124,6 +126,7 @@ Program {
                 name: 'meta'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'meta'
                   end: Object {
                     column: 21
                     index: 21
@@ -176,6 +179,7 @@ Program {
               name: 'url'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'url'
                 end: Object {
                   column: 9
                   index: 32
@@ -220,6 +224,7 @@ Program {
                   name: 'url'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'url'
                     end: Object {
                       column: 27
                       index: 50
@@ -234,6 +239,7 @@ Program {
                 }
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'url'
                   end: Object {
                     column: 27
                     index: 50
@@ -264,6 +270,7 @@ Program {
                   name: 'import'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'import'
                     end: Object {
                       column: 18
                       index: 41
@@ -280,6 +287,7 @@ Program {
                   name: 'meta'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'meta'
                     end: Object {
                       column: 23
                       index: 46
@@ -330,6 +338,7 @@ Program {
           name: 'import'
           loc: Object {
             filename: 'input.js'
+            identifierName: 'import'
             end: Object {
               column: 6
               index: 58
@@ -346,6 +355,7 @@ Program {
           name: 'meta'
           loc: Object {
             filename: 'input.js'
+            identifierName: 'meta'
             end: Object {
               column: 11
               index: 63
@@ -393,6 +403,7 @@ Program {
             name: 'url'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'url'
               end: Object {
                 column: 15
                 index: 80
@@ -407,6 +418,7 @@ Program {
           }
           loc: Object {
             filename: 'input.js'
+            identifierName: 'url'
             end: Object {
               column: 15
               index: 80
@@ -437,6 +449,7 @@ Program {
             name: 'import'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'import'
               end: Object {
                 column: 6
                 index: 71
@@ -453,6 +466,7 @@ Program {
             name: 'meta'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'meta'
               end: Object {
                 column: 11
                 index: 76
@@ -532,6 +546,7 @@ Program {
               name: 'couldBeMutable'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'couldBeMutable'
                 end: Object {
                   column: 26
                   index: 108
@@ -546,6 +561,7 @@ Program {
             }
             loc: Object {
               filename: 'input.js'
+              identifierName: 'couldBeMutable'
               end: Object {
                 column: 26
                 index: 108
@@ -576,6 +592,7 @@ Program {
               name: 'import'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'import'
                 end: Object {
                   column: 6
                   index: 88
@@ -592,6 +609,7 @@ Program {
               name: 'meta'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'meta'
                 end: Object {
                   column: 11
                   index: 93

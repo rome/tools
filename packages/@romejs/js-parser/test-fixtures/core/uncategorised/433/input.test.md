@@ -71,6 +71,7 @@ Program {
         name: 'hello'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'hello'
           end: Object {
             column: 7
             index: 7

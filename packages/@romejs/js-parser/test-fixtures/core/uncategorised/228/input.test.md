@@ -49,6 +49,7 @@ Program {
         name: 'morning'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'morning'
           end: Object {
             column: 11
             index: 11
@@ -94,6 +95,7 @@ Program {
             name: 'goodMorning'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'goodMorning'
               end: Object {
                 column: 24
                 index: 24

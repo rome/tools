@@ -35,6 +35,7 @@ Program {
         name: 'C'
         loc: Object {
           filename: 'input.ts'
+          identifierName: 'C'
           end: Object {
             column: 7
             index: 7
@@ -99,6 +100,7 @@ Program {
                   name: 'Symbol'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'Symbol'
                     end: Object {
                       column: 11
                       index: 21
@@ -116,6 +118,7 @@ Program {
                     name: 'iterator'
                     loc: Object {
                       filename: 'input.ts'
+                      identifierName: 'iterator'
                       end: Object {
                         column: 20
                         index: 30
@@ -130,6 +133,7 @@ Program {
                   }
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'iterator'
                     end: Object {
                       column: 20
                       index: 30
@@ -235,6 +239,7 @@ Program {
                   name: 'Symbol'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'Symbol'
                     end: Object {
                       column: 11
                       index: 52
@@ -252,6 +257,7 @@ Program {
                     name: 'iterator'
                     loc: Object {
                       filename: 'input.ts'
+                      identifierName: 'iterator'
                       end: Object {
                         column: 20
                         index: 61
@@ -266,6 +272,7 @@ Program {
                   }
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'iterator'
                     end: Object {
                       column: 20
                       index: 61

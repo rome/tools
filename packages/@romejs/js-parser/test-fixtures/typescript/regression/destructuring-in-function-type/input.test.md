@@ -35,6 +35,7 @@ Program {
         name: 'MyType'
         loc: Object {
           filename: 'input.ts'
+          identifierName: 'MyType'
           end: Object {
             column: 11
             index: 11
@@ -160,6 +161,7 @@ Program {
                       name: 'theme'
                       loc: Object {
                         filename: 'input.ts'
+                        identifierName: 'theme'
                         end: Object {
                           column: 22
                           index: 22
@@ -191,6 +193,7 @@ Program {
                     name: 'theme'
                     loc: Object {
                       filename: 'input.ts'
+                      identifierName: 'theme'
                       end: Object {
                         column: 22
                         index: 22
@@ -228,6 +231,7 @@ Program {
         name: 'AnotherType'
         loc: Object {
           filename: 'input.ts'
+          identifierName: 'AnotherType'
           end: Object {
             column: 16
             index: 55
@@ -351,6 +355,7 @@ Program {
                   name: 'a'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'a'
                     end: Object {
                       column: 22
                       index: 61

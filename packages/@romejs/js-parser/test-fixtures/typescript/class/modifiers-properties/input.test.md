@@ -35,6 +35,7 @@ Program {
         name: 'C'
         loc: Object {
           filename: 'input.ts'
+          identifierName: 'C'
           end: Object {
             column: 16
             index: 16
@@ -86,6 +87,7 @@ Program {
                 name: 'r'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'r'
                   end: Object {
                     column: 14
                     index: 33
@@ -162,6 +164,7 @@ Program {
                 name: 'r2'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'r2'
                   end: Object {
                     column: 15
                     index: 50
@@ -252,6 +255,7 @@ Program {
                 name: 'a'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'a'
                   end: Object {
                     column: 14
                     index: 75
@@ -328,6 +332,7 @@ Program {
                 name: 's'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 's'
                   end: Object {
                     column: 12
                     index: 89
@@ -404,6 +409,7 @@ Program {
                 name: 'pu'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'pu'
                   end: Object {
                     column: 13
                     index: 105
@@ -480,6 +486,7 @@ Program {
                 name: 'po'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'po'
                   end: Object {
                     column: 16
                     index: 123
@@ -556,6 +563,7 @@ Program {
                 name: 'pi'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'pi'
                   end: Object {
                     column: 14
                     index: 139
@@ -632,6 +640,7 @@ Program {
                 name: 'ra'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'ra'
                   end: Object {
                     column: 24
                     index: 166
@@ -708,6 +717,7 @@ Program {
                 name: 'ar'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'ar'
                   end: Object {
                     column: 24
                     index: 192
@@ -784,6 +794,7 @@ Program {
                 name: 'sr'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'sr'
                   end: Object {
                     column: 22
                     index: 216
@@ -860,6 +871,7 @@ Program {
                 name: 'pur'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'pur'
                   end: Object {
                     column: 23
                     index: 242
@@ -936,6 +948,7 @@ Program {
                 name: 'pua'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'pua'
                   end: Object {
                     column: 23
                     index: 267
@@ -1012,6 +1025,7 @@ Program {
                 name: 'pus'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'pus'
                   end: Object {
                     column: 21
                     index: 290
@@ -1088,6 +1102,7 @@ Program {
                 name: 'pura'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'pura'
                   end: Object {
                     column: 33
                     index: 325
@@ -1164,6 +1179,7 @@ Program {
                 name: 'puar'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'puar'
                   end: Object {
                     column: 33
                     index: 360
@@ -1240,6 +1256,7 @@ Program {
                 name: 'pusr'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'pusr'
                   end: Object {
                     column: 31
                     index: 393

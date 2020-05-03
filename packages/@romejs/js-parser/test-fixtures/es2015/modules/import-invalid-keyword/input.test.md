@@ -105,6 +105,7 @@ Program {
             name: 'debugger'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'debugger'
               end: Object {
                 column: 17
                 index: 17
@@ -122,6 +123,7 @@ Program {
               name: 'debugger'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'debugger'
                 end: Object {
                   column: 17
                   index: 17

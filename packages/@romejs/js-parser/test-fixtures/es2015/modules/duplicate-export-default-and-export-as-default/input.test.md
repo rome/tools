@@ -211,6 +211,7 @@ Program {
             name: 'default'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'default'
               end: Object {
                 column: 23
                 index: 53
@@ -227,6 +228,7 @@ Program {
             name: 'foo'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'foo'
               end: Object {
                 column: 12
                 index: 42

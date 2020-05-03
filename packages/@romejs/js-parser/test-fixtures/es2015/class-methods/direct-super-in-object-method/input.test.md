@@ -99,6 +99,7 @@ Program {
             name: 'Object'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'Object'
               end: Object {
                 column: 6
                 index: 6
@@ -116,6 +117,7 @@ Program {
               name: 'create'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'create'
                 end: Object {
                   column: 13
                   index: 13
@@ -130,6 +132,7 @@ Program {
             }
             loc: Object {
               filename: 'input.js'
+              identifierName: 'create'
               end: Object {
                 column: 13
                 index: 13
@@ -181,6 +184,7 @@ Program {
                     name: 'foo'
                     loc: Object {
                       filename: 'input.js'
+                      identifierName: 'foo'
                       end: Object {
                         column: 5
                         index: 25
@@ -229,6 +233,7 @@ Program {
                           name: 'get'
                           loc: Object {
                             filename: 'input.js'
+                            identifierName: 'get'
                             end: Object {
                               column: 7
                               index: 36
@@ -359,6 +364,7 @@ Program {
                                     name: 'foo'
                                     loc: Object {
                                       filename: 'input.js'
+                                      identifierName: 'foo'
                                       end: Object {
                                         column: 22
                                         index: 72
@@ -373,6 +379,7 @@ Program {
                                   }
                                   loc: Object {
                                     filename: 'input.js'
+                                    identifierName: 'foo'
                                     end: Object {
                                       column: 22
                                       index: 72

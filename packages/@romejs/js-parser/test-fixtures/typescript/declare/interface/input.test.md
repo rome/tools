@@ -35,6 +35,7 @@ Program {
         name: 'I'
         loc: Object {
           filename: 'input.ts'
+          identifierName: 'I'
           end: Object {
             column: 19
             index: 19

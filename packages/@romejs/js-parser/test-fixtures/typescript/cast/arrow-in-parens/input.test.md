@@ -65,6 +65,7 @@ Program {
               name: 'asserted1'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'asserted1'
                 end: Object {
                   column: 13
                   index: 13
@@ -164,6 +165,7 @@ Program {
                     name: 'n'
                     loc: Object {
                       filename: 'input.ts'
+                      identifierName: 'n'
                       end: Object {
                         column: 24
                         index: 24
@@ -212,6 +214,7 @@ Program {
                       name: 'n'
                       loc: Object {
                         filename: 'input.ts'
+                        identifierName: 'n'
                         end: Object {
                           column: 39
                           index: 39

@@ -35,6 +35,7 @@ Program {
         name: 'Comma'
         loc: Object {
           filename: 'input.ts'
+          identifierName: 'Comma'
           end: Object {
             column: 15
             index: 15
@@ -83,6 +84,7 @@ Program {
                 name: 'x'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'x'
                   end: Object {
                     column: 19
                     index: 19
@@ -147,6 +149,7 @@ Program {
                 name: 'y'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'y'
                   end: Object {
                     column: 30
                     index: 30
@@ -213,6 +216,7 @@ Program {
         name: 'Semi'
         loc: Object {
           filename: 'input.ts'
+          identifierName: 'Semi'
           end: Object {
             column: 14
             index: 55
@@ -261,6 +265,7 @@ Program {
                 name: 'x'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'x'
                   end: Object {
                     column: 18
                     index: 59
@@ -325,6 +330,7 @@ Program {
                 name: 'y'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'y'
                   end: Object {
                     column: 29
                     index: 70
@@ -391,6 +397,7 @@ Program {
         name: 'Newline'
         loc: Object {
           filename: 'input.ts'
+          identifierName: 'Newline'
           end: Object {
             column: 17
             index: 98
@@ -439,6 +446,7 @@ Program {
                 name: 'x'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'x'
                   end: Object {
                     column: 5
                     index: 106
@@ -503,6 +511,7 @@ Program {
                 name: 'y'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'y'
                   end: Object {
                     column: 5
                     index: 120

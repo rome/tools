@@ -35,6 +35,7 @@ Program {
         name: 'multiElementWithInitializer'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'multiElementWithInitializer'
           end: Object {
             column: 36
             index: 36
@@ -167,6 +168,7 @@ Program {
                 name: 'a'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'a'
                   end: Object {
                     column: 42
                     index: 42
@@ -201,6 +203,7 @@ Program {
               name: 'b'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'b'
                 end: Object {
                   column: 49
                   index: 49
@@ -265,6 +268,7 @@ Program {
                 name: 'c'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'c'
                   end: Object {
                     column: 52
                     index: 52

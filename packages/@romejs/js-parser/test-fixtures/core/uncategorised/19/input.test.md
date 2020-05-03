@@ -59,22 +59,6 @@ Program {
             line: 1
           }
         }
-        left: AssignmentIdentifier {
-          name: '\u2163\u2161'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 2
-              index: 2
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
         right: ArrayExpression {
           elements: Array []
           loc: Object {
@@ -87,6 +71,23 @@ Program {
             start: Object {
               column: 5
               index: 5
+              line: 1
+            }
+          }
+        }
+        left: AssignmentIdentifier {
+          name: '\u2163\u2161'
+          loc: Object {
+            filename: 'input.js'
+            identifierName: '\u2163\u2161'
+            end: Object {
+              column: 2
+              index: 2
+              line: 1
+            }
+            start: Object {
+              column: 0
+              index: 0
               line: 1
             }
           }

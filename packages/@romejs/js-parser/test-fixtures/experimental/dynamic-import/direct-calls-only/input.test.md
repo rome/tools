@@ -58,6 +58,7 @@ Program {
         name: 'failsParse'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'failsParse'
           end: Object {
             column: 19
             index: 19
@@ -170,6 +171,7 @@ Program {
                   name: 'import'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'import'
                     end: Object {
                       column: 15
                       index: 39
@@ -186,6 +188,7 @@ Program {
                   name: 'then'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'then'
                     end: Object {
                       column: 20
                       index: 44

@@ -120,6 +120,7 @@ Program {
             name: 'async'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'async'
               end: Object {
                 column: 5
                 index: 5
@@ -136,6 +137,7 @@ Program {
             name: 'T'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'T'
               end: Object {
                 column: 8
                 index: 8
@@ -167,6 +169,7 @@ Program {
             name: 'fn'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'fn'
               end: Object {
                 column: 12
                 index: 12
@@ -201,6 +204,7 @@ Program {
                 name: 'T'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'T'
                   end: Object {
                     column: 21
                     index: 21
@@ -283,6 +287,7 @@ Program {
               name: 'fn'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'fn'
                 end: Object {
                   column: 30
                   index: 165
@@ -346,6 +351,7 @@ Program {
                     name: 'T'
                     loc: Object {
                       filename: 'input.js'
+                      identifierName: 'T'
                       end: Object {
                         column: 24
                         index: 159
@@ -411,6 +417,7 @@ Program {
               name: 'fn'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'fn'
                 end: Object {
                   column: 17
                   index: 152
@@ -428,6 +435,7 @@ Program {
                 name: 'T'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'T'
                   end: Object {
                     column: 20
                     index: 155
@@ -477,6 +485,7 @@ Program {
               leadingComments: undefined
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'async'
                 end: Object {
                   column: 6
                   index: 141
@@ -508,6 +517,7 @@ Program {
                 name: 'T'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'T'
                   end: Object {
                     column: 9
                     index: 144
@@ -524,6 +534,7 @@ Program {
                 name: 'U'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'U'
                   end: Object {
                     column: 13
                     index: 148

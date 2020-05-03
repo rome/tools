@@ -83,87 +83,6 @@ Program {
             line: 1
           }
         }
-        left: AssignmentObjectPattern {
-          rest: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 4
-              index: 4
-              line: 1
-            }
-            start: Object {
-              column: 1
-              index: 1
-              line: 1
-            }
-          }
-          properties: Array [
-            AssignmentObjectPatternProperty {
-              key: StaticPropertyKey {
-                value: Identifier {
-                  name: 'x'
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 3
-                      index: 3
-                      line: 1
-                    }
-                    start: Object {
-                      column: 2
-                      index: 2
-                      line: 1
-                    }
-                  }
-                }
-                variance: undefined
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 3
-                    index: 3
-                    line: 1
-                  }
-                  start: Object {
-                    column: 2
-                    index: 2
-                    line: 1
-                  }
-                }
-              }
-              value: AssignmentIdentifier {
-                name: 'x'
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 3
-                    index: 3
-                    line: 1
-                  }
-                  start: Object {
-                    column: 2
-                    index: 2
-                    line: 1
-                  }
-                }
-              }
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 3
-                  index: 3
-                  line: 1
-                }
-                start: Object {
-                  column: 2
-                  index: 2
-                  line: 1
-                }
-              }
-            }
-          ]
-        }
         right: ObjectExpression {
           loc: Object {
             filename: 'input.js'
@@ -185,6 +104,7 @@ Program {
                   name: 'x'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'x'
                     end: Object {
                       column: 10
                       index: 10
@@ -239,6 +159,89 @@ Program {
                 start: Object {
                   column: 9
                   index: 9
+                  line: 1
+                }
+              }
+            }
+          ]
+        }
+        left: AssignmentObjectPattern {
+          rest: undefined
+          loc: Object {
+            filename: 'input.js'
+            end: Object {
+              column: 4
+              index: 4
+              line: 1
+            }
+            start: Object {
+              column: 1
+              index: 1
+              line: 1
+            }
+          }
+          properties: Array [
+            AssignmentObjectPatternProperty {
+              key: StaticPropertyKey {
+                value: Identifier {
+                  name: 'x'
+                  loc: Object {
+                    filename: 'input.js'
+                    identifierName: 'x'
+                    end: Object {
+                      column: 3
+                      index: 3
+                      line: 1
+                    }
+                    start: Object {
+                      column: 2
+                      index: 2
+                      line: 1
+                    }
+                  }
+                }
+                variance: undefined
+                loc: Object {
+                  filename: 'input.js'
+                  end: Object {
+                    column: 3
+                    index: 3
+                    line: 1
+                  }
+                  start: Object {
+                    column: 2
+                    index: 2
+                    line: 1
+                  }
+                }
+              }
+              value: AssignmentIdentifier {
+                name: 'x'
+                loc: Object {
+                  filename: 'input.js'
+                  identifierName: 'x'
+                  end: Object {
+                    column: 3
+                    index: 3
+                    line: 1
+                  }
+                  start: Object {
+                    column: 2
+                    index: 2
+                    line: 1
+                  }
+                }
+              }
+              loc: Object {
+                filename: 'input.js'
+                end: Object {
+                  column: 3
+                  index: 3
+                  line: 1
+                }
+                start: Object {
+                  column: 2
+                  index: 2
                   line: 1
                 }
               }

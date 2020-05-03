@@ -141,6 +141,7 @@ Program {
                         name: 'this'
                         loc: Object {
                           filename: 'input.ts'
+                          identifierName: 'this'
                           end: Object {
                             column: 12
                             index: 12
