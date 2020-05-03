@@ -6,7 +6,7 @@
  */
 
 import {TestHelper} from 'rome';
-import lint from './index';
+import lint from '../index';
 import {parseJS} from '@romejs/js-parser';
 import {createUnknownFilePath} from '@romejs/path';
 import {DEFAULT_PROJECT_CONFIG} from '@romejs/project';

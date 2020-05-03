@@ -21,5 +21,21 @@ exports.analysisFolder = path.join(
   'js-analysis',
   'evaluators',
 );
+exports.lintRulesFolder = path.join(
+  exports.packages,
+  'js-compiler',
+  'lint',
+  'rules',
+);
+exports.categoriesFile = path.join(
+  exports.packages,
+  'diagnostics',
+  'categories.ts',
+);
+exports.descriptionsFile = path.join(
+  exports.packages,
+  'diagnostics',
+  'descriptions.ts',
+);
 exports.astFolder = path.join(exports.packages, 'js-ast');
 exports.argv = process.argv.slice(2);

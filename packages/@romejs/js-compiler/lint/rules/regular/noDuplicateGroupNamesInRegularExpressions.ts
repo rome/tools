@@ -8,7 +8,7 @@
 import {AnyNode} from '@romejs/js-ast';
 import {Path} from '@romejs/js-compiler';
 import {descriptions} from '@romejs/diagnostics';
-import {DiagnosticsDuplicateHelper} from '../../lib/DiagnosticsDuplicateHelper';
+import {DiagnosticsDuplicateHelper} from '../../../lib/DiagnosticsDuplicateHelper';
 
 export default {
   name: 'noDuplicateGroupNamesInRegularExpressions',
