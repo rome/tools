@@ -83,6 +83,7 @@ Program {
                       name: 'async'
                       loc: Object {
                         filename: 'input.js'
+                        identifierName: 'async'
                         end: Object {
                           column: 13
                           index: 13
@@ -124,22 +125,6 @@ Program {
                         line: 1
                       }
                     }
-                    left: BindingIdentifier {
-                      name: 'async'
-                      loc: Object {
-                        filename: 'input.js'
-                        end: Object {
-                          column: 13
-                          index: 13
-                          line: 1
-                        }
-                        start: Object {
-                          column: 8
-                          index: 8
-                          line: 1
-                        }
-                      }
-                    }
                     right: BooleanLiteral {
                       value: true
                       loc: Object {
@@ -152,6 +137,23 @@ Program {
                         start: Object {
                           column: 16
                           index: 16
+                          line: 1
+                        }
+                      }
+                    }
+                    left: BindingIdentifier {
+                      name: 'async'
+                      loc: Object {
+                        filename: 'input.js'
+                        identifierName: 'async'
+                        end: Object {
+                          column: 13
+                          index: 13
+                          line: 1
+                        }
+                        start: Object {
+                          column: 8
+                          index: 8
                           line: 1
                         }
                       }
@@ -190,6 +192,7 @@ Program {
               name: 'foo'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'foo'
                 end: Object {
                   column: 28
                   index: 28

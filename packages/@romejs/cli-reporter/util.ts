@@ -5,35 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import prettyFormat from '@romejs/pretty-format';
 import {ReporterProgress} from './types';
-
-const formatOpts = {
-  maxDepth: 5,
-  markup: true,
-};
-
-export function interpolate(msg: string, args: Array<unknown>): string {
-  let argIndex: number = 0;
-
-  // replace %s in the message with each argument
-  let interpolated: string = msg.replace(
-    /%s/g,
-    () => {
-      return prettyFormat(args[argIndex++], formatOpts);
-    },
-  );
-
-  // add on all other arguments to the end, separate with spaces
-  if (argIndex < args.length) {
-    interpolated += ' ';
-    interpolated += args.slice(argIndex).map((arg) =>
-      prettyFormat(arg, formatOpts)
-    ).join(' ');
-  }
-
-  return interpolated;
-}
+import Reporter from './Reporter';
+import readline = require('readline');
 
 export function mergeProgresses(
   progresses: Array<ReporterProgress>,
@@ -99,4 +73,64 @@ export function mergeProgresses(
       }
     },
   };
+}
+
+type Key = {
+  name: string;
+  ctrl: boolean;
+};
+
+export function onKeypress(
+  reporter: Reporter,
+  callback: (key: Key) => void,
+): {
+  finish: () => void;
+} {
+  const stdin = reporter.getStdin();
+
+  setRawMode(stdin, true);
+  readline.emitKeypressEvents(stdin);
+
+  function onkeypress(chunk: Buffer, key: Key) {
+    switch (key.name) {
+      case 'c': {
+        if (key.ctrl) {
+          reporter.br(true);
+          reporter.warn('Cancelled by user');
+          process.exit(1);
+        }
+        return;
+      }
+
+      case 'escape': {
+        reporter.br(true);
+        reporter.warn('Cancelled by user');
+        process.exit(1);
+        return;
+      }
+    }
+
+    callback(key);
+  }
+
+  stdin.addListener('keypress', onkeypress);
+
+  return {
+    finish() {
+      stdin.removeListener('keypress', onkeypress);
+      setRawMode(stdin, false);
+    },
+  };
+}
+
+export function setRawMode(stdin: NodeJS.ReadStream, raw: boolean) {
+  if (stdin.isTTY && stdin.setRawMode !== undefined) {
+    stdin.setRawMode(raw);
+  }
+
+  if (raw) {
+    stdin.resume();
+  } else {
+    stdin.pause();
+  }
 }

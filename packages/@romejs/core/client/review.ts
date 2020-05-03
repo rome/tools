@@ -6,7 +6,7 @@
  */
 
 import ClientRequest from './ClientRequest';
-import {printDiagnostics} from '@romejs/cli-diagnostics';
+import {DiagnosticsPrinter, printDiagnostics} from '@romejs/cli-diagnostics';
 import {SelectOption} from '@romejs/cli-reporter';
 import {
   Diagnostic,
@@ -19,6 +19,7 @@ import {Dict} from '@romejs/typescript-helpers';
 import {EMPTY_SUCCESS_RESPONSE} from '../master/MasterRequest';
 
 type State = {
+  initial: boolean;
   seen: Set<string>;
   resolvedCount: number;
 };
@@ -27,8 +28,16 @@ async function check(
   req: ClientRequest,
   state: State,
 ): Promise<MasterQueryResponse> {
-  const {client} = req;
-  const {reporter} = client;
+  const {reporter} = req.client;
+
+  reporter.clearScreen();
+
+  if (state.initial) {
+    reporter.info('Fetching initial diagnostics');
+    state.initial = false;
+  } else {
+    reporter.info('Updating diagnostics');
+  }
 
   const res = await req.fork({
     ...req.query,
@@ -61,11 +70,35 @@ async function check(
     return res;
   }
 
+  return await ask(diag, req, state, false);
+}
+
+async function ask(
+  diag: Diagnostic,
+  req: ClientRequest,
+  state: State,
+  showMoreOptions: boolean,
+): Promise<MasterQueryResponse> {
+  const {client} = req;
+  const {reporter} = client;
+  reporter.clearScreen();
+
   // Extract actions and remove them from the diagnostic
   let {advice = []} = diag.description;
+  let hasExtraOptions = false;
   const actions: Array<DiagnosticAdviceAction> = [];
   for (const item of advice) {
     if (item.type === 'action') {
+      // Only show extra items and hide all non-extra items when `more === true`
+      if (item.extra === true) {
+        hasExtraOptions = true;
+        if (!showMoreOptions) {
+          continue;
+        }
+      } else if (showMoreOptions) {
+        continue;
+      }
+
       actions.push(item);
     }
   }
@@ -100,6 +133,8 @@ async function check(
   const options: {
     ignore: SelectOption;
     exit: SelectOption;
+    more?: SelectOption;
+    less?: SelectOption;
   } = {
     ignore: {
       label: 'Do nothing',
@@ -112,15 +147,25 @@ async function check(
     },
   };
 
-  reporter.clearScreen();
-  printDiagnostics({
-    diagnostics: [diag],
-    suppressions: [],
-    excludeFooter: true,
-    printerOptions: {
-      reporter,
-    },
+  if (hasExtraOptions) {
+    if (showMoreOptions) {
+      options.more = {
+        label: 'Less options...',
+        shortcut: 'l',
+      };
+    } else {
+      options.more = {
+        label: 'More options...',
+        shortcut: 'm',
+      };
+    }
+  }
+
+  const printer = new DiagnosticsPrinter({
+    reporter,
   });
+  diag = printer.processor.addDiagnosticAssert(diag);
+  printer.print();
 
   const answer = await reporter.radio(
     'How do you want to resolve this?',
@@ -128,6 +173,41 @@ async function check(
       options,
     },
   );
+
+  // Check if this diagnostic is now out of date
+  printer.fetchFileSources([diag]);
+  const outdatedFiles = printer.getOutdatedFiles(diag);
+  if (outdatedFiles.size > 0) {
+    const files = Array.from(
+      outdatedFiles,
+      (path) => `<filelink emphasis target="${path.join()}" />`,
+    );
+
+    reporter.br();
+
+    if (files.length === 1) {
+      reporter.warn(
+        `The file ${files[0]} changed while waiting for your response.`,
+      );
+    } else {
+      reporter.warn(
+        'The following diagnostic dependencies changed while waiting for your response.',
+      );
+      reporter.list(files);
+    }
+
+    await reporter.confirm('Press any key to try again');
+
+    return await check(req, state);
+  }
+
+  if (answer === 'less') {
+    return await ask(diag, req, state, false);
+  }
+
+  if (answer === 'more') {
+    return await ask(diag, req, state, true);
+  }
 
   if (answer === 'ignore') {
     return await check(req, state);
@@ -169,15 +249,17 @@ export default async function review(
 ): Promise<MasterQueryResponse> {
   const {reporter} = req.client;
   const state: State = {
+    initial: true,
     seen: new Set(),
     resolvedCount: 0,
   };
   const res = await check(req, state);
 
+  reporter.clearScreen();
+
   if (state.seen.size === 0) {
     reporter.success('Nothing to review!');
   } else {
-    reporter.clearScreen();
     if (res.type === 'DIAGNOSTICS') {
       printDiagnostics({
         diagnostics: res.diagnostics,

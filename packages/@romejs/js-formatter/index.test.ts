@@ -73,7 +73,7 @@ const promise = createFixtureTests(async (fixture, t) => {
     inputFile.absolute.getExtensionlessBasename(),
   ).join();
 
-  await t.snapshotNamed(
+  t.namedSnapshot(
     'Input',
     inputContent,
     undefined,
@@ -83,7 +83,7 @@ const promise = createFixtureTests(async (fixture, t) => {
     },
   );
 
-  await t.snapshotNamed(
+  t.namedSnapshot(
     'Output',
     printed.code,
     undefined,

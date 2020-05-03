@@ -11,10 +11,12 @@ import {
   createAbsoluteFilePath,
 } from '@romejs/path';
 import {exists, readFileText, unlink, writeFile} from '@romejs/fs';
-import {TestRunnerOptions} from '../master/testing/types';
+import {TestMasterRunnerOptions} from '../master/testing/types';
 import TestWorkerRunner from './TestWorkerRunner';
 import {DiagnosticDescription, descriptions} from '@romejs/diagnostics';
 import createSnapshotParser from './SnapshotParser';
+import {ErrorFrame} from '@romejs/v8';
+import {Number0, Number1} from '@romejs/ob1';
 
 function cleanHeading(key: string): string {
   if (key[0] === '`') {
@@ -48,31 +50,44 @@ function buildEntriesKey(testName: string, entryName: string): string {
   return `${testName}#${entryName}`;
 }
 
+export type InlineSnapshotUpdate = {
+  line: Number1;
+  column: Number0;
+  snapshot: string;
+};
+
+export type InlineSnapshotUpdates = Array<InlineSnapshotUpdate>;
+
+export type SnapshotCounts = {
+  deleted: number;
+  updated: number;
+  created: number;
+};
+
 export default class SnapshotManager {
   constructor(runner: TestWorkerRunner, testPath: AbsoluteFilePath) {
     this.defaultSnapshotPath = testPath.getParent().append(
       `${testPath.getExtensionlessBasename()}${SNAPSHOT_EXT}`,
     );
     this.testPath = testPath;
-
     this.runner = runner;
     this.options = runner.options;
     this.snapshots = new AbsoluteFilePathMap();
-    this.loadingSnapshotCount = 0;
+    this.inlineSnapshotsUpdates = [];
+    this.snapshotCounts = {
+      deleted: 0,
+      updated: 0,
+      created: 0,
+    };
   }
 
-  loadingSnapshotCount: number;
+  inlineSnapshotsUpdates: Array<InlineSnapshotUpdate>;
   testPath: AbsoluteFilePath;
   defaultSnapshotPath: AbsoluteFilePath;
   snapshots: AbsoluteFilePathMap<Snapshot>;
   runner: TestWorkerRunner;
-  options: TestRunnerOptions;
-
-  teardown() {
-    if (this.loadingSnapshotCount > 0) {
-      throw new Error();
-    }
-  }
+  options: TestMasterRunnerOptions;
+  snapshotCounts: SnapshotCounts;
 
   normalizeSnapshotPath(filename: undefined | string): AbsoluteFilePath {
     if (filename === undefined) {
@@ -103,11 +118,6 @@ export default class SnapshotManager {
 
   async loadSnapshot(path: AbsoluteFilePath): Promise<undefined | Snapshot> {
     if (!(await exists(path))) {
-      return;
-    }
-
-    // If we're force updating, pretend that no snapshots exist on disk
-    if (this.options.updateSnapshots) {
       return;
     }
 
@@ -259,17 +269,15 @@ export default class SnapshotManager {
       return;
     }
 
+    const {hasDiagnostics} = this.runner;
+
     for (const [path, {used, existsOnDisk, raw, entries}] of this.snapshots) {
       const lines = this.buildSnapshot(entries.values());
       const formatted = lines.join('\n');
 
-      let event: undefined | 'delete' | 'update' | 'create';
-
       if (this.options.freezeSnapshots) {
         if (!used) {
           await this.emitDiagnostic(descriptions.SNAPSHOTS.REDUNDANT);
-        } else if (!existsOnDisk) {
-          await this.emitDiagnostic(descriptions.SNAPSHOTS.MISSING);
         } else if (formatted !== raw) {
           await this.emitDiagnostic(
             descriptions.SNAPSHOTS.INCORRECT(raw, formatted),
@@ -277,23 +285,54 @@ export default class SnapshotManager {
         }
       } else {
         if (existsOnDisk && !used) {
-          // If a snapshot wasn't used or is empty then delete it!
-          await unlink(path);
-          event = 'delete';
+          // Don't delete a snapshot if there are test failures as those failures may be hiding a snapshot usage
+          if (!hasDiagnostics) {
+            // If a snapshot wasn't used or is empty then delete it!
+            await unlink(path);
+            this.snapshotCounts.deleted++;
+          }
         } else if (used && formatted !== raw) {
           // Fresh snapshot!
           await writeFile(path, formatted);
-          event = existsOnDisk ? 'update' : 'create';
+          if (existsOnDisk) {
+            this.snapshotCounts.updated++;
+          } else {
+            this.snapshotCounts.created++;
+          }
         }
       }
+    }
+  }
 
-      if (event !== undefined) {
-        await this.runner.bridge.snapshotUpdated.call({
-          filename: path.join(),
-          event,
+  testInlineSnapshot(
+    callFrame: ErrorFrame,
+    received: string,
+    snapshot?: string,
+  ): 'MATCH' | 'NO_MATCH' | 'UPDATE' {
+    // Matches, no need to do anything
+    if (received === snapshot) {
+      return 'MATCH';
+    }
+
+    const shouldSave = this.options.updateSnapshots || snapshot === undefined;
+    if (shouldSave) {
+      const {lineNumber, columnNumber} = callFrame;
+      if (lineNumber === undefined || columnNumber === undefined) {
+        throw new Error('Call frame has no line or column');
+      }
+
+      if (!this.options.freezeSnapshots) {
+        this.inlineSnapshotsUpdates.push({
+          line: lineNumber,
+          column: columnNumber,
+          snapshot: received,
         });
       }
+
+      return 'UPDATE';
     }
+
+    return 'NO_MATCH';
   }
 
   async get(
@@ -313,6 +352,11 @@ export default class SnapshotManager {
     }
 
     snapshot.used = true;
+
+    // If we're force updating, pretend that there was no entry
+    if (this.options.updateSnapshots) {
+      return undefined;
+    }
 
     const entry = snapshot.entries.get(buildEntriesKey(testName, entryName));
     if (entry === undefined) {

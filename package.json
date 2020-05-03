@@ -43,8 +43,7 @@
         "website",
         "@romejs-web",
         "out",
-        "vscode/node_modules",
-        "packages/@romejs/project/types.ts"
+        "vscode/node_modules"
       ]
     }
   }

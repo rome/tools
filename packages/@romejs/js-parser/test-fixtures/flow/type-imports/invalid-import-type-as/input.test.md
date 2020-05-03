@@ -108,6 +108,7 @@ Program {
             name: 'type'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'type'
               end: Object {
                 column: 13
                 index: 13
@@ -125,6 +126,7 @@ Program {
               name: 'debugger'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'debugger'
                 end: Object {
                   column: 25
                   index: 25

@@ -103,6 +103,7 @@ Program {
             leadingComments: undefined
             loc: Object {
               filename: 'input.js'
+              identifierName: 'FOO'
               end: Object {
                 column: 11
                 index: 25
@@ -122,6 +123,7 @@ Program {
             trailingComments: undefined
             loc: Object {
               filename: 'input.js'
+              identifierName: 'FOO'
               end: Object {
                 column: 11
                 index: 25

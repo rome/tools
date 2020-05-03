@@ -65,6 +65,7 @@ Program {
               name: 'foo'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'foo'
                 end: Object {
                   column: 7
                   index: 7
@@ -132,6 +133,7 @@ Program {
                     name: 'promise'
                     loc: Object {
                       filename: 'input.js'
+                      identifierName: 'promise'
                       end: Object {
                         column: 32
                         index: 32
@@ -211,6 +213,7 @@ Program {
                         name: 'promise'
                         loc: Object {
                           filename: 'input.js'
+                          identifierName: 'promise'
                           end: Object {
                             column: 49
                             index: 49

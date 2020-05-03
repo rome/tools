@@ -61,6 +61,7 @@ Program {
         name: 'T'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'T'
           end: Object {
             column: 7
             index: 7
@@ -112,6 +113,7 @@ Program {
                 name: '@@asyncIterator'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: '@@asyncIterator'
                   end: Object {
                     column: 17
                     index: 27

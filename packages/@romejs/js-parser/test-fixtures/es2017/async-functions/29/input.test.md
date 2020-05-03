@@ -65,6 +65,7 @@ Program {
               name: 'foo'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'foo'
                 end: Object {
                   column: 9
                   index: 9
@@ -184,6 +185,7 @@ Program {
                             name: 'async'
                             loc: Object {
                               filename: 'input.js'
+                              identifierName: 'async'
                               end: Object {
                                 column: 28
                                 index: 28
@@ -225,22 +227,6 @@ Program {
                               line: 1
                             }
                           }
-                          left: BindingIdentifier {
-                            name: 'async'
-                            loc: Object {
-                              filename: 'input.js'
-                              end: Object {
-                                column: 28
-                                index: 28
-                                line: 1
-                              }
-                              start: Object {
-                                column: 23
-                                index: 23
-                                line: 1
-                              }
-                            }
-                          }
                           right: BooleanLiteral {
                             value: true
                             loc: Object {
@@ -253,6 +239,23 @@ Program {
                               start: Object {
                                 column: 31
                                 index: 31
+                                line: 1
+                              }
+                            }
+                          }
+                          left: BindingIdentifier {
+                            name: 'async'
+                            loc: Object {
+                              filename: 'input.js'
+                              identifierName: 'async'
+                              end: Object {
+                                column: 28
+                                index: 28
+                                line: 1
+                              }
+                              start: Object {
+                                column: 23
+                                index: 23
                                 line: 1
                               }
                             }

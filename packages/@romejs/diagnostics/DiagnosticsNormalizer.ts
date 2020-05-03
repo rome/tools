@@ -6,19 +6,26 @@
  */
 
 import {Diagnostic, DiagnosticAdviceItem, DiagnosticLocation} from './types';
-import DiagnosticsProcessor from './DiagnosticsProcessor';
 import {SourceMapConsumerCollection} from '@romejs/codec-source-map';
-import {MarkupFormatOptions, normalizeMarkup} from '@romejs/string-markup';
+import {
+  MarkupFormatNormalizeOptions,
+  normalizeMarkup,
+} from '@romejs/string-markup';
 import {createBlessedDiagnosticMessage} from './descriptions';
 
 export default class DiagnosticsNormalizer {
-  constructor(processor: DiagnosticsProcessor) {
-    this.sourceMaps = processor.sourceMaps;
-    this.markupOptions = processor.options.markupOptions;
+  constructor(
+    markupOptions?: MarkupFormatNormalizeOptions,
+    sourceMaps?: SourceMapConsumerCollection,
+  ) {
+    this.sourceMaps = sourceMaps;
+    this.markupOptions = markupOptions || {};
+    this.hasMarkupOptions = markupOptions !== undefined;
   }
 
-  sourceMaps: SourceMapConsumerCollection;
-  markupOptions: undefined | MarkupFormatOptions;
+  sourceMaps: undefined | SourceMapConsumerCollection;
+  markupOptions: MarkupFormatNormalizeOptions;
+  hasMarkupOptions: boolean;
 
   normalizeFilename(filename: undefined | string): undefined | string {
     const {markupOptions} = this;
@@ -33,8 +40,19 @@ export default class DiagnosticsNormalizer {
     return normalizeFilename(filename);
   }
 
+  normalizePositionValue<T>(value: T): undefined | T {
+    if (this.markupOptions !== undefined && this.markupOptions.stripPositions) {
+      return undefined;
+    } else {
+      return value;
+    }
+  }
+
   normalizeLocation(location: DiagnosticLocation): DiagnosticLocation {
     const {sourceMaps} = this;
+    if (sourceMaps === undefined) {
+      return location;
+    }
 
     let {marker, filename, start, end} = location;
 
@@ -77,8 +95,8 @@ export default class DiagnosticsNormalizer {
       ...location,
       filename: this.normalizeFilename(filename),
       marker: this.maybeNormalizeMarkup(marker),
-      start,
-      end,
+      start: this.normalizePositionValue(start),
+      end: this.normalizePositionValue(end),
     };
   }
 
@@ -114,35 +132,51 @@ export default class DiagnosticsNormalizer {
           text: this.normalizeMarkup(item.text),
         };
 
+      case 'action':
+        if (this.markupOptions.stripPositions) {
+          return {
+            ...item,
+            // Command flags could have position information
+            commandFlags: {},
+          };
+        } else {
+          return item;
+        }
+
       case 'stacktrace':
         return {
           ...item,
           frames: item.frames.map((frame) => {
             const {filename, line, column} = frame;
+
             if (
               filename === undefined ||
               line === undefined ||
               column === undefined ||
-              !sourceMaps.has(filename)
+              (sourceMaps !== undefined && !sourceMaps.has(filename))
             ) {
               return {
                 ...frame,
-                filename: this.normalizeFilename(frame.filename),
+                start: this.normalizePositionValue(line),
+                column: this.normalizePositionValue(column),
+                filename: this.normalizeFilename(filename),
               };
             }
 
-            const resolved = sourceMaps.approxOriginalPositionFor(
-              filename,
-              line,
-              column,
-            );
-            if (resolved !== undefined) {
-              return {
-                ...frame,
-                filename: this.normalizeFilename(resolved.source),
-                line: resolved.line,
-                column: resolved.column,
-              };
+            if (sourceMaps !== undefined) {
+              const resolved = sourceMaps.approxOriginalPositionFor(
+                filename,
+                line,
+                column,
+              );
+              if (resolved !== undefined) {
+                return {
+                  ...frame,
+                  filename: this.normalizeFilename(resolved.source),
+                  line: this.normalizePositionValue(resolved.line),
+                  column: this.normalizePositionValue(resolved.column),
+                };
+              }
             }
 
             return frame;
@@ -154,10 +188,13 @@ export default class DiagnosticsNormalizer {
   }
 
   normalizeDiagnostic(diag: Diagnostic): Diagnostic {
-    const {markupOptions, sourceMaps} = this;
+    const {sourceMaps} = this;
 
     // Fast path for a common case
-    if (markupOptions === undefined && !sourceMaps.hasAny()) {
+    if (
+      !this.hasMarkupOptions &&
+      (sourceMaps === undefined || !sourceMaps.hasAny())
+    ) {
       return diag;
     }
 

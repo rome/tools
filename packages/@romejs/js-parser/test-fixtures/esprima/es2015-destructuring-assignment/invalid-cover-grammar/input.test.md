@@ -387,6 +387,7 @@ Program {
                                                                                           name: 'b'
                                                                                           loc: Object {
                                                                                             filename: 'input.js'
+                                                                                            identifierName: 'b'
                                                                                             end: Object {
                                                                                               column: 24
                                                                                               index: 24
@@ -421,6 +422,7 @@ Program {
                                                                                                   name: 'a'
                                                                                                   loc: Object {
                                                                                                     filename: 'input.js'
+                                                                                                    identifierName: 'a'
                                                                                                     end: Object {
                                                                                                       column: 22
                                                                                                       index: 22
@@ -452,6 +454,7 @@ Program {
                                                                                                 name: 'a'
                                                                                                 loc: Object {
                                                                                                   filename: 'input.js'
+                                                                                                  identifierName: 'a'
                                                                                                   end: Object {
                                                                                                     column: 22
                                                                                                     index: 22

@@ -79,6 +79,7 @@ Program {
         name: '_'
         loc: Object {
           filename: 'input.js'
+          identifierName: '_'
           end: Object {
             column: 6
             index: 14

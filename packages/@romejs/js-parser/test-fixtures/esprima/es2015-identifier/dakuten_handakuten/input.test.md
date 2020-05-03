@@ -63,6 +63,7 @@ Program {
           name: '\u309b'
           loc: Object {
             filename: 'input.js'
+            identifierName: '\u309b'
             end: Object {
               column: 1
               index: 1
@@ -79,6 +80,7 @@ Program {
           name: '\u309c'
           loc: Object {
             filename: 'input.js'
+            identifierName: '\u309c'
             end: Object {
               column: 4
               index: 4

@@ -11,6 +11,7 @@ import {
   DiagnosticBlessedMessage,
   DiagnosticDescription,
   DiagnosticLocation,
+  DiagnosticSuppression,
 } from './types';
 import {escapeMarkup, markup} from '@romejs/string-markup';
 import stringDiff from '@romejs/string-diff';
@@ -35,7 +36,30 @@ export function createBlessedDiagnosticMessage(
   };
 }
 
-// rome-suppress-next-line lint/AEciilnnoptxy;
+function join(conjunction: string, items: Array<string>): string {
+  if (items.length === 0) {
+    return '';
+  } else if (items.length === 1) {
+    return items[0];
+  } else {
+    return [...items, `${conjunction} ${items.pop()!}`].join(', ');
+  }
+}
+
+function andJoin(items: Array<string>): string {
+  return join('and', items);
+}
+andJoin;
+
+function orJoin(items: Array<string>): string {
+  return join('or', items);
+}
+
+function addEmphasis(items: Array<string>): Array<string> {
+  return items.map((item) => `<emphasis>${item}</emphasis>`);
+}
+
+// rome-ignore lint/AEciilnnoptxy;
 type InputMessagesFactory = (...params: Array<any>) => DiagnosticMetadataString;
 
 type InputMessagesCategory = {
@@ -62,24 +86,28 @@ type OutputMessagesValue<Value> = Value extends string
       message: DiagnosticBlessedMessage;
     }
   : Value extends DiagnosticMetadataString
-      ? OuputMessagesFactoryReturn<Value>
-      : Value extends InputMessagesFactory
-          ? OutputMessagesFactory<Value>
-          : never;
+    ? OuputMessagesFactoryReturn<Value>
+    : Value extends InputMessagesFactory
+      ? OutputMessagesFactory<Value>
+      : never;
 
-type OutputMessagesCategory<Input extends InputMessagesCategory> = { [Key in keyof Input]: OutputMessagesValue<Input[Key]> };
+type OutputMessagesCategory<Input extends InputMessagesCategory> = {
+  [Key in keyof Input]: OutputMessagesValue<Input[Key]>
+};
 
-type OutputMessages<Input extends InputMessages> = { [Key in keyof Input]: OutputMessagesCategory<Input[Key]> };
+type OutputMessages<Input extends InputMessages> = {
+  [Key in keyof Input]: OutputMessagesCategory<Input[Key]>
+};
 
 // This is a lot of gross meta programming
 function createMessages<Input extends InputMessages>(
   messages: Input,
 ): OutputMessages<Input> {
-  // rome-suppress-next-line lint/noExplicitAny
+  // rome-ignore lint/noExplicitAny
   const out: OutputMessages<Input> = ({} as any);
 
   for (const categoryName in messages) {
-    // rome-suppress-next-line lint/noExplicitAny
+    // rome-ignore lint/noExplicitAny
     const category: OutputMessagesCategory<any> = {};
     out[categoryName] = category;
 
@@ -92,7 +120,7 @@ function createMessages<Input extends InputMessages>(
           message: createBlessedDiagnosticMessage(value),
         };
       } else if (typeof value === 'function') {
-        // rome-suppress-next-line lint/noExplicitAny
+        // rome-ignore lint/noExplicitAny
         const callback: InputMessagesFactory = (value as any);
 
         category[key] = function(...params) {
@@ -103,7 +131,7 @@ function createMessages<Input extends InputMessages>(
           };
         };
       } else {
-        // rome-suppress-next-line lint/noExplicitAny
+        // rome-ignore lint/noExplicitAny
         const {message, ...obj} = (value as any);
         category[key] = {
           ...obj,
@@ -264,7 +292,7 @@ export const descriptions = createMessages({
       formatted: string,
     ) => ({
       category: 'lint/pendingFixes',
-      message: 'Pending autofixes and formatting',
+      message: 'Pending formatting and recommended autofixes',
       advice: [
         {
           type: 'diff',
@@ -272,23 +300,25 @@ export const descriptions = createMessages({
         },
         ({
           type: 'action',
-          hidden: true,
           command: 'lint',
-          instruction: 'To format this file without any fixes run',
-          noun: 'Format file',
+          shortcut: 'f',
+          instruction: 'To apply fixes and formatting run',
+          noun: 'Apply fixes and format',
           args: [relativeFilename],
           commandFlags: {
-            formatOnly: true,
+            save: true,
           },
         } as DiagnosticAdviceAction),
         ({
           type: 'action',
+          hidden: true,
           command: 'lint',
-          instruction: 'To format and apply recommended fixes run',
-          noun: 'Fix file',
+          shortcut: 'o',
+          instruction: 'To format this file without any fixes run',
+          noun: 'Only format',
           args: [relativeFilename],
           commandFlags: {
-            save: true,
+            format: true,
           },
         } as DiagnosticAdviceAction),
       ],
@@ -308,9 +338,21 @@ export const descriptions = createMessages({
         },
       ],
     }),
+    PREFER_BLOCK_STATEMENT: {
+      category: 'lint/preferBlockStatements',
+      message: 'Block statements are preferred in this position',
+    },
     PREFER_TEMPLATE: {
       category: 'lint/preferTemplate',
       message: 'Template literals are preferred over string concatenation',
+    },
+    PREFER_WHILE: {
+      category: 'lint/preferWhile',
+      message: 'A while loop should be used over a for loop',
+    },
+    REACT_JSX_NO_COMMENT_TEXT: {
+      category: 'lint/jsxNoCommentText',
+      message: 'Comments inside children should be placed in braces',
     },
     UNSAFE_NEGATION: {
       category: 'lint/unsafeNegation',
@@ -395,7 +437,7 @@ export const descriptions = createMessages({
     },
     NO_SHORTHAND_ARRAY_TYPE: {
       category: 'lint/noShorthandArrayType',
-      message: 'Use Array<T> instead of shorthand T[]',
+      message: escapeMarkup('Use Array<T> instead of shorthand T[]'),
     },
     NO_UNSAFE_FINALLY: (type: string) => ({
       category: 'lint/noUnsafeFinally',
@@ -465,6 +507,10 @@ export const descriptions = createMessages({
       category: 'lint/noDupeArgs',
       message: markup`Duplicate argument <emphasis>${name}</emphasis> in function definition`,
     }),
+    NO_DELETE: {
+      category: 'lint/noDelete',
+      message: `Unexpected 'delete' operator.`,
+    },
     NO_DELETE_VARS: {
       category: 'lint/noDeleteVars',
       message: 'Variables should not be deleted.',
@@ -675,11 +721,37 @@ export const descriptions = createMessages({
         },
       ],
     }),
-    INVALID_ATTRIBUTE_NAME_FOR_TAG: (tagName: string, attributeName: string) => ({
-      message: markup`${attributeName} is not a valid attribute name for <${tagName}>`,
+    INVALID_ATTRIBUTE_NAME_FOR_TAG: (
+      tagName: string,
+      attributeName: string,
+      validAttributes: Array<string>,
+    ) => ({
+      message: markup`<emphasis>${attributeName}</emphasis> is not a valid attribute name for <emphasis>${tagName}</emphasis>`,
+      advice: buildSuggestionAdvice(attributeName, validAttributes),
     }),
     UNKNOWN_TAG_NAME: (tagName: string) => ({
       message: markup`Unknown tag name <emphasis>${tagName}</emphasis>`,
+    }),
+    RESTRICTED_CHILD: (
+      tagName: string,
+      allowedParents: Array<string>,
+      gotParentName: string = 'none',
+    ) => ({
+      message: markup`The tag <emphasis>${tagName}</emphasis> should only appear as a child of ${orJoin(
+        addEmphasis(allowedParents),
+      )} not <emphasis>${gotParentName}</emphasis>`,
+    }),
+    RESTRICTED_PARENT: (
+      tagName: string,
+      allowedChildren: Array<string>,
+      gotChildName: string,
+    ) => ({
+      message: markup`The tag <emphasis>${tagName}</emphasis> should only contain the tags ${orJoin(
+        addEmphasis(allowedChildren),
+      )} not <emphasis>${gotChildName}</emphasis>`,
+    }),
+    RESTRICTED_PARENT_TEXT: (tagName: string) => ({
+      message: markup`The tag <emphasis>${tagName}</emphasis> should not contain any text`,
     }),
   },
   // @romejs/path-match
@@ -710,25 +782,34 @@ export const descriptions = createMessages({
     }),
   },
   SUPPRESSIONS: {
-    UNUSED: {
-      message: 'Unused suppression. Did not hide any errors.',
-      category: 'suppressions/unused',
+    UNUSED: (suppression: DiagnosticSuppression) => {
+      let description = '';
+      if (suppression.startLine === suppression.endLine) {
+        description = `line ${suppression.startLine}`;
+      } else {
+        description += `lines ${suppression.startLine} to ${suppression.endLine}`;
+      }
+
+      return {
+        message: 'Unused suppression. Did not hide any errors.',
+        category: 'suppressions/unused',
+        advice: [
+          {
+            type: 'log',
+            category: 'info',
+            text: `This suppression should hide <emphasis>${description}</emphasis>`,
+          },
+        ],
+      };
     },
     MISSING_SPACE: {
       category: 'suppressions/missingSpace',
       message: 'Missing space between prefix and suppression categories',
     },
-    PREFIX_TYPO: (prefix: string, suggestion: string) => ({
-      category: 'suppressions/incorrectPrefix',
-      message: markup`Invalid suppression prefix <emphasis>${prefix}</emphasis>`,
-      advice: [
-        {
-          type: 'log',
-          category: 'info',
-          text: `Did you mean <emphasis>${suggestion}</emphasis>?`,
-        },
-      ],
-    }),
+    MISSING_TARGET: {
+      category: 'suppressions/missingTarget',
+      message: 'We could not find a target for this suppression',
+    },
     DUPLICATE: (category: string) => ({
       category: 'suppressions/duplicate',
       message: markup`Duplicate suppression category <emphasis>${category}</emphasis>`,
@@ -757,6 +838,21 @@ export const descriptions = createMessages({
         },
       ],
     }),
+    INLINE_COLLISION: {
+      category: 'tests/snapshots/inlineCollision',
+      message: 'Trying to update this inline snapshot multiple times',
+      advice: [
+        {
+          type: 'log',
+          category: 'info',
+          text: '<emphasis>t.inlineSnapshot</emphasis> can only be called once. Did you call it in a loop?',
+        },
+      ],
+    },
+    INLINE_MISSING_RECEIVED: {
+      category: 'tests/snapshots/inlineMissingReceived',
+      message: 'This inline snapshot call does not have a received argument',
+    },
   },
   BUNDLER: {
     TOP_LEVEL_AWAIT_IN_LEGACY: {
@@ -1184,14 +1280,14 @@ export const descriptions = createMessages({
             },
           ]
         : patternType === 'array'
-            ? [
-                {
-                  type: 'log',
-                  category: 'info',
-                  text: 'Did you use `([a]) = 0` instead of `([a] = 0)`?',
-                },
-              ]
-            : [],
+          ? [
+              {
+                type: 'log',
+                category: 'info',
+                text: 'Did you use `([a]) = 0` instead of `([a] = 0)`?',
+              },
+            ]
+          : [],
     }),
     EXPECTED_COMMA_SEPARATOR: (context: string) => ({
       message: `Expected a comma to separate items in ${context}`,

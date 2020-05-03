@@ -298,8 +298,6 @@ function buildJSHandler(
       const out = formatJS(
         ast,
         {
-          typeAnnotations: true,
-          format: 'pretty',
           sourceText,
         },
       );

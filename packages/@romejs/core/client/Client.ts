@@ -59,7 +59,7 @@ type ClientOptions = {
 
 export type ClientProfileOptions = {
   samplingInterval: number;
-  timeoutInterval: number;
+  timeoutInterval: undefined | number;
   includeWorkers: boolean;
 };
 
@@ -176,7 +176,7 @@ export default class Client {
     // Start a profile timer if one was specified
     let hasProfiled: undefined | Promise<void>;
     let timeout: undefined | NodeJS.Timeout;
-    if (timeoutInterval > 0) {
+    if (timeoutInterval !== undefined) {
       timeout = setTimeout(
         () => {
           hasProfiled = stopProfile(true);

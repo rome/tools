@@ -121,6 +121,7 @@ Program {
                 name: 'MyType'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'MyType'
                   end: Object {
                     column: 35
                     index: 58
@@ -217,6 +218,7 @@ Program {
         name: 'string'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'string'
           end: Object {
             column: 52
             index: 75

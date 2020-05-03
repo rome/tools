@@ -86,29 +86,37 @@ export type ProjectConfigTarget = {
 
 // This is a project config that contains only things that can be JSON serializable
 // This is used to transport and reserialize projects in workers
-export type ProjectConfigJSON = ProjectConfigJSONObjectReducer<ProjectConfigBase> &
-  { [ObjectKey in keyof ProjectConfigObjects]: ProjectConfigJSONPropertyReducer<ProjectConfigObjects[ObjectKey]> };
+export type ProjectConfigJSON = ProjectConfigJSONObjectReducer<ProjectConfigBase> & {
+  [ObjectKey in keyof ProjectConfigObjects]: ProjectConfigJSONPropertyReducer<
+    ProjectConfigObjects[ObjectKey]
+  >
+};
 
 // Weird way to get the value type from a map
-// rome-suppress-next-line lint/noExplicitAny
+// rome-ignore lint/noExplicitAny
 type MapValue<T extends Map<string, any>> = NonNullable<ReturnType<T['get']>>;
 
 // Turn any file paths into strings
 // Turn maps into objects
 // TODO maybe add path patterns
+// rome-ignore lint/noExplicitAny
 type ProjectConfigJSONPropertyReducer<Type> = Type extends AbsoluteFilePath
   ? string
   : Type extends Array<AbsoluteFilePath>
+    ? Array<string>
+    : Type extends AbsoluteFilePathSet
       ? Array<string>
-      : Type extends AbsoluteFilePathSet // rome-suppress-next-line lint/noExplicitAny
-          ? Array<string> // rome-suppress-next-line lint/noExplicitAny
-          : Type extends Map<string, any> // rome-suppress-next-line lint/noExplicitAny
-              ? Dict<MapValue<Type>> // rome-suppress-next-line lint/noExplicitAny
-              : Type extends Dict<any>
-                  ? ProjectConfigJSONObjectReducer<Type>
-                  : Type;
+      : Type extends Map<string, any>
+        ? Dict<MapValue<Type>>
+        : Type extends Dict<any>
+          ? ProjectConfigJSONObjectReducer<Type>
+          : Type;
 
-type ProjectConfigJSONObjectReducer<Object> = { [PropertyKey in keyof Object]: ProjectConfigJSONPropertyReducer<Object[PropertyKey]> };
+type ProjectConfigJSONObjectReducer<Object> = {
+  [PropertyKey in keyof Object]: ProjectConfigJSONPropertyReducer<
+    Object[PropertyKey]
+  >
+};
 
 // Base of a project config without any objects
 type ProjectConfigBase = {
@@ -118,10 +126,13 @@ type ProjectConfigBase = {
 };
 
 // Data structure we pass around when normalizing and merging project configs
-export type PartialProjectConfig = Partial<ProjectConfigBase> &
-  { [Key in keyof ProjectConfigObjects]: PartialProjectValue<ProjectConfigObjects[Key]> };
+export type PartialProjectConfig = Partial<ProjectConfigBase> & {
+  [Key in keyof ProjectConfigObjects]: PartialProjectValue<
+    ProjectConfigObjects[Key]
+  >
+};
 
-// rome-suppress-next-line lint/noExplicitAny
+// rome-ignore lint/noExplicitAny
 type PartialProjectValue<Type> = Type extends Map<string, any>
   ? Type
   : Partial<Type>;

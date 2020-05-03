@@ -322,9 +322,9 @@ async function createWatchmanWatcher(
         return;
       }
 
-      // rome-suppress-next-line lint/noExplicitAny
+      // rome-ignore lint/noExplicitAny
       const dirs: Array<[AbsoluteFilePath, any]> = [];
-      // rome-suppress-next-line lint/noExplicitAny
+      // rome-ignore lint/noExplicitAny
       const files: Array<[AbsoluteFilePath, any]> = [];
 
       for (const file of data.files) {
@@ -847,7 +847,7 @@ export default class MemoryFileSystem {
 
       const manifest = this.getManifest(packagePath);
 
-      // rome-suppress-next-line lint/camelCase
+      // rome-ignore lint/camelCase
       if ((manifest?.raw)?.haste_commonjs === true) {
         return false;
       }

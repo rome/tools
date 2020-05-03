@@ -7,10 +7,10 @@
 
 import {DiagnosticAdvice, getErrorStackAdvice} from '@romejs/diagnostics';
 import SnapshotManager from './SnapshotManager';
-import {TestRunnerOptions} from '../master/testing/types';
+import {TestMasterRunnerOptions} from '../master/testing/types';
 import {Event} from '@romejs/events';
 import diff from '@romejs/string-diff';
-import {createErrorFromStructure} from '@romejs/v8';
+import {createErrorFromStructure, getErrorStructure} from '@romejs/v8';
 import prettyFormat from '@romejs/pretty-format';
 import {FileReference} from '../common/types/files';
 import {markup} from '@romejs/string-markup';
@@ -22,6 +22,7 @@ import {
   TestHelper,
   TestSnapshotOptions,
 } from '@romejs-runtime/rome/test';
+
 function formatExpectedError(expected: ExpectedError): string {
   if (typeof expected === 'string') {
     return JSON.stringify(expected);
@@ -67,6 +68,8 @@ type SnapshotOptions = {
   opts?: TestSnapshotOptions;
 };
 
+type EmitError = (error: Error) => Promise<void>;
+
 export default class TestAPI implements TestHelper {
   constructor(
     {
@@ -75,42 +78,35 @@ export default class TestAPI implements TestHelper {
       file,
       snapshotManager,
       options,
+      emitError,
     }: {
+      emitError: EmitError;
       file: FileReference;
       testName: string;
       onTimeout: OnTimeout;
       snapshotManager: SnapshotManager;
-      options: TestRunnerOptions;
+      options: TestMasterRunnerOptions;
     },
   ) {
     this.testName = testName;
     this.options = options;
     this.snapshotManager = snapshotManager;
     this.snapshotCounter = 0;
-    this.loadingSnapshots = 0;
     this.file = file;
-
     this.teardownEvent = new Event({name: 'TestAPI.teardown'});
-    this.onTeardown(async () => {
-      if (this.loadingSnapshots) {
-        throw new Error(
-          `Test finished while we were still loading snapshots. Did you forget an await before t.snapshot?`,
-        );
-      }
-    });
-
     this.startTime = Date.now();
     this.onTimeout = onTimeout;
+    this.emitError = emitError;
     this.timeoutMax = 0;
     this.timeoutId = undefined;
     this.setTimeout(5_000);
-
     this.advice = [];
   }
 
   startTime: number;
-  options: TestRunnerOptions;
+  options: TestMasterRunnerOptions;
   file: FileReference;
+  emitError: EmitError;
 
   onTimeout: OnTimeout;
   timeoutId: undefined | NodeJS.Timeout;
@@ -120,7 +116,6 @@ export default class TestAPI implements TestHelper {
   advice: DiagnosticAdvice;
   teardownEvent: Event<void, void>;
   testName: string;
-  loadingSnapshots: number;
   snapshotCounter: number;
   snapshotManager: SnapshotManager;
 
@@ -170,40 +165,45 @@ export default class TestAPI implements TestHelper {
         });
       }
     } else {
-      advice.push({
-        type: 'log',
-        category: 'info',
-        text: `Expected to receive`,
-      });
+      const bothSingleLine =
+        !expectedFormat.match(/\n/g) && !receivedFormat.match(/\n/g);
 
-      advice.push({
-        type: 'code',
-        code: expectedFormat,
-      });
+      if (!bothSingleLine) {
+        advice.push({
+          type: 'log',
+          category: 'info',
+          text: `Expected to receive`,
+        });
 
-      advice.push({
-        type: 'log',
-        category: 'info',
-        text: `But got`,
-      });
+        advice.push({
+          type: 'code',
+          code: expectedFormat,
+        });
 
-      advice.push({
-        type: 'code',
-        code: receivedFormat,
-      });
+        advice.push({
+          type: 'log',
+          category: 'info',
+          text: `But got`,
+        });
 
-      advice.push({
-        type: 'log',
-        category: 'info',
-        text: 'Diff',
-      });
+        advice.push({
+          type: 'code',
+          code: receivedFormat,
+        });
+
+        advice.push({
+          type: 'log',
+          category: 'info',
+          text: 'Diff',
+        });
+      }
 
       advice.push({
         type: 'diff',
         diff: diff(expectedFormat, receivedFormat),
         legend: {
-          add: receivedAlias ? receivedAlias : 'What we received',
-          delete: expectedAlias ? expectedAlias : 'What we expected',
+          add: receivedAlias ? receivedAlias : 'Received',
+          delete: expectedAlias ? expectedAlias : 'Expected',
         },
       });
     }
@@ -272,13 +272,13 @@ export default class TestAPI implements TestHelper {
   fail(
     message: string = 'Test failure triggered by t.fail()',
     advice: DiagnosticAdvice = [],
-    framesToPop: number = 0,
+    framesToShift: number = 0,
   ): never {
     throw createErrorFromStructure({
+      ...getErrorStructure(new Error(), framesToShift + 1),
       message,
       markupMessage: message,
       advice,
-      framesToPop: framesToPop + 1,
     });
   }
 
@@ -455,40 +455,180 @@ export default class TestAPI implements TestHelper {
   async throwsAsync(
     thrower: AsyncFunc,
     expected?: ExpectedError,
-    message?: string,
+    message: string = 't.throws() failed, callback did not throw an error',
   ): Promise<void> {
-    throw new Error('unimplemented');
+    try {
+      await thrower();
+    } catch (err) {
+      if (matchExpectedError(err, expected)) {
+        return undefined;
+      } else {
+        this.fail(
+          `t.throws() expected an error to be thrown that matches ${formatExpectedError(
+            expected,
+          )} but got ${err.name}: ${JSON.stringify(err.message)}`,
+          getErrorStackAdvice(err, 'Incorrect error stack trace'),
+          1,
+        );
+      }
+    }
+    this.fail(message, undefined, 1);
   }
 
-  notThrows(nonThrower: SyncThrower, message?: string): void {
+  notThrows(
+    nonThrower: SyncThrower,
+    message: string = 't.notThrows() failed, callback threw an error',
+  ): void {
     try {
       nonThrower();
     } catch (err) {
-      // TODO
-      message;
-      throw err;
+      const advice = getErrorStackAdvice(
+        err,
+        `t.notThrows did not expect an error to be thrown but got ${err.name}: ${JSON.stringify(
+          err.message,
+        )}`,
+      );
+      this.fail(message, advice, 1);
     }
   }
 
-  async notThrowsAsync(nonThrower: AsyncFunc, message?: string): Promise<void> {
-    throw new Error('unimplemented');
+  async notThrowsAsync(
+    nonThrower: AsyncFunc,
+    message: string = 't.notThrowsAsync failed, callback threw an error',
+  ): Promise<void> {
+    try {
+      await nonThrower();
+    } catch (err) {
+      const advice = getErrorStackAdvice(
+        err,
+        `t.notThrowsAsync did not expect an error to be thrown but got ${err.name}: ${JSON.stringify(
+          err.message,
+        )}`,
+      );
+      this.fail(message, advice, 1);
+    }
   }
 
-  regex(contents: string, regex: RegExp, message?: string): void {
-    throw new Error('unimplemented');
+  regex(
+    contents: string,
+    regex: RegExp,
+    message: string = 't.regex failed, using RegExp.test semantics',
+  ): void {
+    if (!regex.test(contents)) {
+      this.fail(
+        message,
+        [
+          {
+            type: 'log',
+            category: 'info',
+            text: `Expected`,
+          },
+          {
+            type: 'code',
+            code: prettyFormat(contents),
+          },
+          {
+            type: 'log',
+            category: 'info',
+            text: `to match pattern`,
+          },
+          {
+            type: 'code',
+            code: prettyFormat(regex.source),
+          },
+        ],
+        1,
+      );
+    }
   }
 
-  notRegex(contents: string, regex: RegExp, message?: string): void {
-    throw new Error('unimplemented');
+  notRegex(
+    contents: string,
+    regex: RegExp,
+    message: string = 't.regex failed, using RegExp.test semantics',
+  ): void {
+    if (regex.test(contents)) {
+      this.fail(
+        message,
+        [
+          {
+            type: 'log',
+            category: 'info',
+            text: `Expected`,
+          },
+          {
+            type: 'code',
+            code: prettyFormat(contents),
+          },
+          {
+            type: 'log',
+            category: 'info',
+            text: `to not match pattern`,
+          },
+          {
+            type: 'code',
+            code: prettyFormat(regex.source),
+          },
+        ],
+        1,
+      );
+    }
+  }
+
+  inlineSnapshot(received: unknown, snapshot?: string) {
+    const callFrame = getErrorStructure(new Error()).frames[1];
+
+    let formatted = '';
+    if (typeof received === 'string') {
+      formatted = received;
+    } else {
+      formatted = prettyFormat(received);
+    }
+
+    const callError = getErrorStructure(new Error(), 1);
+
+    this.onTeardown(async () => {
+      const status = this.snapshotManager.testInlineSnapshot(
+        callFrame,
+        formatted,
+        snapshot,
+      );
+
+      if (status === 'UPDATE' && this.options.freezeSnapshots) {
+        await this.emitError(
+          createErrorFromStructure({
+            ...callError,
+            message: 'Inline snapshot cannot be updated as snapshots are frozen',
+          }),
+        );
+      }
+
+      if (status === 'NO_MATCH') {
+        await this.emitError(
+          createErrorFromStructure({
+            ...callError,
+            message: 'Inline snapshots do not match',
+            advice: this.buildMatchAdvice(
+              formatted,
+              snapshot,
+              {
+                receivedAlias: 'What the code gave us',
+                expectedAlias: 'Existing inline snapshot',
+              },
+            ),
+          }),
+        );
+      }
+    });
   }
 
   snapshot(
     expected: unknown,
     message?: string,
     opts?: TestSnapshotOptions,
-  ): Promise<string> {
+  ): string {
     const id = this.snapshotCounter++;
-    return this.catchNamedSnapshot({
+    return this.bufferSnapshot({
       entryName: String(id),
       expected,
       message,
@@ -496,13 +636,13 @@ export default class TestAPI implements TestHelper {
     });
   }
 
-  snapshotNamed(
+  namedSnapshot(
     entryName: string,
     expected: unknown,
     message?: string,
     opts?: TestSnapshotOptions,
-  ): Promise<string> {
-    return this.catchNamedSnapshot({
+  ): string {
+    return this.bufferSnapshot({
       entryName,
       expected,
       message,
@@ -510,21 +650,14 @@ export default class TestAPI implements TestHelper {
     });
   }
 
-  catchNamedSnapshot(opts: SnapshotOptions): Promise<string> {
-    this.loadingSnapshots++;
-    return this.compareNamedSnapshot(opts).finally(() => {
-      this.loadingSnapshots--;
-    });
-  }
-
-  async compareNamedSnapshot(
+  bufferSnapshot(
     {
       entryName,
       message,
       expected,
       opts = {},
     }: SnapshotOptions,
-  ): Promise<string> {
+  ): string {
     let language: undefined | string = opts.language;
 
     let formatted = '';
@@ -535,54 +668,72 @@ export default class TestAPI implements TestHelper {
       formatted = prettyFormat(expected);
     }
 
-    // Get the current snapshot
-    const existingSnapshot = await this.snapshotManager.get(
-      this.testName,
-      entryName,
-      opts.filename,
-    );
-    if (existingSnapshot === undefined) {
-      // No snapshot exists, let's save this one!
-      this.snapshotManager.set({
-        testName: this.testName,
+    const callError = getErrorStructure(new Error(), 2);
+
+    this.onTeardown(async () => {
+      // Get the current snapshot
+      const existingSnapshot = await this.snapshotManager.get(
+        this.testName,
         entryName,
-        value: formatted,
-        language,
-        optionalFilename: opts.filename,
-      });
-      return entryName;
-    }
-
-    // Compare the snapshots
-    if (formatted !== existingSnapshot) {
-      const advice: DiagnosticAdvice = this.buildMatchAdvice(
-        formatted,
-        existingSnapshot,
-        {
-          receivedAlias: 'What the code gave us',
-          expectedAlias: 'Existing snapshot',
-        },
+        opts.filename,
       );
+      if (existingSnapshot === undefined) {
+        if (this.options.freezeSnapshots) {
+          await this.emitError(
+            createErrorFromStructure({
+              ...callError,
+              message: 'Snapshot cannot be created as snapshots are frozen',
+            }),
+          );
+        } else {
+          // No snapshot exists, let's save this one!
+          this.snapshotManager.set({
+            testName: this.testName,
+            entryName,
+            value: formatted,
+            language,
+            optionalFilename: opts.filename,
+          });
+        }
+        return;
+      }
 
-      if (message === undefined) {
-        message = markup`Snapshot ${entryName} at <filelink emphasis target="${this.snapshotManager.defaultSnapshotPath.join()}" /> doesn't match`;
-      } else {
+      // Compare the snapshots
+      if (formatted !== existingSnapshot) {
+        const advice: DiagnosticAdvice = this.buildMatchAdvice(
+          formatted,
+          existingSnapshot,
+          {
+            receivedAlias: 'What the code gave us',
+            expectedAlias: 'Existing snapshot',
+          },
+        );
+
+        if (message === undefined) {
+          message = markup`Snapshot ${entryName} at <filelink emphasis target="${this.snapshotManager.defaultSnapshotPath.join()}" /> doesn't match`;
+        } else {
+          advice.push({
+            type: 'log',
+            category: 'info',
+            text: markup`Snapshot can be found at <filelink emphasis target="${this.snapshotManager.defaultSnapshotPath.join()}" />`,
+          });
+        }
+
         advice.push({
           type: 'log',
           category: 'info',
-          text: markup`Snapshot can be found at <filelink emphasis target="${this.snapshotManager.defaultSnapshotPath.join()}" />`,
+          text: markup`Run <command>rome test <filelink target="${this.file.uid}" /> --update-snapshots</command> to update this snapshot`,
         });
+
+        await this.emitError(
+          createErrorFromStructure({
+            ...callError,
+            message,
+            advice,
+          }),
+        );
       }
-
-      advice.push({
-        type: 'log',
-        category: 'info',
-        text: markup`Run <command>rome test <filelink target="${this.file.uid}" /> --update-snapshots</command> to update this snapshot`,
-      });
-
-      // Ignore the original t.snapshot call and caughtNamedSnapshot
-      this.fail(message, advice, 2);
-    }
+    });
 
     return entryName;
   }

@@ -65,6 +65,7 @@ Program {
               name: 'triplicate'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'triplicate'
                 end: Object {
                   column: 14
                   index: 14

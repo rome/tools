@@ -139,6 +139,7 @@ Program {
             leadingComments: undefined
             loc: Object {
               filename: 'input.mjs'
+              identifierName: 'mdx'
               end: Object {
                 column: 11
                 index: 27
@@ -159,6 +160,7 @@ Program {
               trailingComments: undefined
               loc: Object {
                 filename: 'input.mjs'
+                identifierName: 'mdx'
                 end: Object {
                   column: 11
                   index: 27
@@ -209,6 +211,7 @@ Program {
           name: 'MDXContent'
           loc: Object {
             filename: 'input.mjs'
+            identifierName: 'MDXContent'
             end: Object {
               column: 34
               index: 87

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Reporter} from '@romejs/cli-reporter';
+import {Reporter, ReporterTableField} from '@romejs/cli-reporter';
 import {serializeCLIFlags} from './serializeCLIFlags';
 import {
   ConsumePath,
@@ -63,9 +63,16 @@ function splitCommandName(cmd: string): Array<string> {
   return cmd.split(' ');
 }
 
+// Whether we can display this value in help
+function isDisplayableHelpValue(value: unknown): value is string | number {
+  return typeof value === 'string' || typeof value === 'number';
+}
+
 type _FlagValue = undefined | number | string | boolean;
 
 export type FlagValue = _FlagValue | Array<_FlagValue>;
+
+type SupportedAutocompleteShells = 'bash' | 'fish';
 
 export default class Parser<T> {
   constructor(
@@ -92,43 +99,10 @@ export default class Parser<T> {
     this.commands = new Map();
     this.ranCommand = undefined;
     this.currentCommand = undefined;
-
-    if (opts.version !== undefined) {
-      this.declareArgument({
-        command: undefined,
-        name: 'version',
-        definition: {
-          type: 'boolean',
-          objectPath: ['version'],
-          default: false,
-          required: false,
-          metadata: {
-            description: 'show the version',
-          },
-        },
-      });
-    }
-
-    this.declareArgument({
-      command: undefined,
-      name: 'help',
-      definition: {
-        type: 'boolean',
-        objectPath: ['help'],
-        default: false,
-        required: false,
-        metadata: {
-          description: 'show this help screen',
-        },
-      },
-    });
-
-    this.helpMode = this.flags.has('help');
   }
 
   reporter: Reporter;
   opts: ParserOptions<T>;
-
   incorrectCaseFlags: Set<string>;
   shorthandFlags: Set<string>;
   flags: Map<string, FlagValue>;
@@ -136,13 +110,10 @@ export default class Parser<T> {
   declaredFlags: Map<string, ArgDeclaration>;
   flagToArgIndex: Map<string, number>;
   flagToArgOffset: number;
-
-  ranCommand: undefined | string;
+  currentCommand: undefined | string;
+  ranCommand: undefined | AnyCommandOptions;
   commands: Map<string, AnyCommandOptions>;
   args: Array<string>;
-
-  currentCommand: undefined | string;
-  helpMode: boolean;
 
   looksLikeFlag(flag: undefined | string): boolean {
     return flag?.[0] === '-';
@@ -336,12 +307,12 @@ export default class Parser<T> {
     return new ParserInterface(this);
   }
 
-  async maybeDefineCommand(
-    commandName: string,
+  async maybeDefineCommandFlags(
+    command: AnyCommandOptions,
     consumer: Consumer,
-  ): Promise<undefined | DefinedCommand> {
+  ): Promise<undefined | Dict<unknown>> {
     // A command name could be made of multiple strings
-    const commandParts = splitCommandName(commandName);
+    const commandParts = splitCommandName(command.name);
     for (let i = 0; i < commandParts.length; i++) {
       if (commandParts[i] !== this.args[i]) {
         return;
@@ -350,14 +321,10 @@ export default class Parser<T> {
 
     // Remove command name from arguments
     this.args = this.args.slice(commandParts.length);
-    return await this.defineCommandFlags(commandName, consumer);
+    return await this.defineCommandFlags(command, consumer);
   }
 
   checkBadFlags(consumer: Consumer, definedCommand: undefined | DefinedCommand) {
-    if (this.helpMode) {
-      return;
-    }
-
     // Ignore flags from command and root parser options
     const ignoreFlags: Array<string> = [
       ...((definedCommand !== undefined && definedCommand.command.ignoreFlags) || []),
@@ -385,53 +352,86 @@ export default class Parser<T> {
   }
 
   async init(): Promise<T> {
+    const consumer = this.getFlagsConsumer();
+
     // Show help for --version
-    if (this.flags.has('version')) {
-      this.reporter.logAll(String(this.opts.version));
+    const version = this.opts.version;
+    if (version !== undefined) {
+      const shouldDisplayVersion = consumer.get(
+        'version',
+        {
+          description: 'Show the version',
+        },
+      ).asBoolean(false);
+      if (shouldDisplayVersion) {
+        this.reporter.logAll(version);
+        process.exit(0);
+      }
+    }
+
+    const generateAutocomplete: undefined | SupportedAutocompleteShells = consumer.get(
+      'generateAutocomplete',
+      {
+        description: 'Generate a shell autocomplete',
+        inputName: 'shell',
+      },
+    ).asStringSetOrVoid(['fish', 'bash']);
+    if (generateAutocomplete !== undefined) {
+      await this.generateAutocomplete(generateAutocomplete);
       process.exit(0);
     }
 
-    const consumer = this.getFlagsConsumer();
+    // Show help for --help
+    const shouldShowHelp = consumer.get(
+      'help',
+      {
+        description: 'Show this help screen',
+      },
+    ).asBoolean(false);
 
     let definedCommand: undefined | DefinedCommand;
 
     const rootFlags = await consumer.bufferDiagnostics(async (consumer) => {
       const rootFlags = this.opts.defineFlags(consumer);
 
-      for (const key of this.commands.keys()) {
-        const defined = await this.maybeDefineCommand(key, consumer);
-        if (defined) {
+      for (const [key, command] of this.commands) {
+        const definedFlags = await this.maybeDefineCommandFlags(
+          command,
+          consumer,
+        );
+        if (definedFlags !== undefined) {
           this.currentCommand = key;
-          definedCommand = defined;
+          definedCommand = {flags: definedFlags, command};
           break;
         }
       }
 
-      this.checkBadFlags(consumer, definedCommand);
+      if (!shouldShowHelp) {
+        this.checkBadFlags(consumer, definedCommand);
+      }
+
       this.currentCommand = undefined;
 
       return rootFlags;
     });
 
     // Show help for --help
-    if (this.helpMode) {
+    if (shouldShowHelp) {
       await this.showHelp(
-        definedCommand === undefined ? undefined : definedCommand.command.name,
+        definedCommand === undefined ? undefined : definedCommand.command,
       );
       process.exit(1);
     }
 
     if (definedCommand !== undefined) {
-      this.ranCommand = definedCommand.command.name;
+      this.ranCommand = definedCommand.command;
       await definedCommand.command.callback(definedCommand.flags);
     }
 
     return rootFlags;
   }
 
-  buildOptionsHelp(keys: Array<string>): Array<string> {
-    const lines = [];
-
+  buildOptionsHelp(keys: Array<string>): Array<Array<ReporterTableField>> {
     const optionOutput: Array<{
       argName: string;
       arg: string;
@@ -441,10 +441,7 @@ export default class Parser<T> {
 
     // Build up options, we need to do this to line up the columns correctly
     for (const key of keys) {
-      const decl = this.declaredFlags.get(key);
-      if (decl === undefined) {
-        throw new Error('Expected argument declaration');
-      }
+      const decl = this.declaredFlags.get(key)!;
 
       const {definition: def} = decl;
       const {metadata} = def;
@@ -461,30 +458,17 @@ export default class Parser<T> {
 
       // Add input specifier unless a boolean
       if (def.type !== 'boolean') {
-        // TODO some way to customize this
-        // Property metadata in the consumer is a fine place but we want this to be non-CLI specific
-        let inputName = undefined;
+        let {inputName} = metadata;
 
         if (inputName === undefined) {
-          if (def.type === 'number' || def.type === 'number-range') {
+          if (def.type === 'number') {
             inputName = 'num';
           } else {
             inputName = 'input';
           }
         }
 
-        argCol += ` <${inputName}`;
-
-        const defaultValue = def.default;
-        if (
-          !def.required &&
-          defaultValue !== undefined &&
-          (typeof defaultValue === 'number' || typeof defaultValue === 'string')
-        ) {
-          argCol += `=${defaultValue}`;
-        }
-
-        argCol += '>';
+        argCol += ` <${inputName}>`;
       }
 
       // Set arg col length if we'll be longer
@@ -492,14 +476,28 @@ export default class Parser<T> {
         argColumnLength = argCol.length;
       }
 
-      const descCol: string =
-        metadata === undefined || metadata.description === undefined
+      let descCol: string =
+        metadata.description === undefined
           ? 'no description found'
           : metadata.description;
 
+      const {default: defaultValue} = def;
+      if (defaultValue !== undefined && isDisplayableHelpValue(defaultValue)) {
+        descCol += ` (default: ${JSON.stringify(defaultValue)})`;
+      }
+
+      if (def.type === 'string' && def.allowedValues !== undefined) {
+        const displayAllowedValues = def.allowedValues.filter((item) =>
+          isDisplayableHelpValue(item)
+        );
+        if (displayAllowedValues !== undefined) {
+          descCol += ` (values: ${displayAllowedValues.join('|')})`;
+        }
+      }
+
       optionOutput.push({
         argName,
-        arg: argCol,
+        arg: markup`<color fg="brightBlack">${argCol}</color>`,
         description: descCol,
       });
     }
@@ -507,14 +505,11 @@ export default class Parser<T> {
     // Sort options by argument name
     optionOutput.sort((a, b) => naturalCompare(a.argName, b.argName));
 
-    // Output options
-    for (const {arg, description} of optionOutput) {
-      lines.push(
-        markup`<color fg="brightBlack"><pad count="${argColumnLength}" dir="right">${arg}</pad></color>  ${description}`,
-      );
-    }
-
-    return lines;
+    // Build table rows
+    return optionOutput.map((opt) => [
+      {align: 'right', value: opt.arg},
+      opt.description,
+    ]);
   }
 
   showUsageHelp(
@@ -545,12 +540,7 @@ export default class Parser<T> {
     );
   }
 
-  showFocusedCommandHelp(commandName: string) {
-    const command = this.commands.get(commandName);
-    if (command === undefined) {
-      throw new Error(`Unknown command ${commandName}`);
-    }
-
+  showFocusedCommandHelp(command: AnyCommandOptions) {
     const {reporter} = this;
     const {name, usage, description, examples} = command;
 
@@ -566,14 +556,12 @@ export default class Parser<T> {
       }
     }
 
-    const optLines = this.buildOptionsHelp(argKeys);
-    if (optLines.length > 0) {
+    const optRows = this.buildOptionsHelp(argKeys);
+    if (optRows.length > 0) {
       reporter.section(
         'Command Flags',
         () => {
-          for (const line of optLines) {
-            reporter.logAll(line);
-          }
+          reporter.table([], optRows);
         },
       );
     }
@@ -600,16 +588,45 @@ export default class Parser<T> {
           }
         }
 
-        for (const line of this.buildOptionsHelp(lonerArgKeys)) {
-          reporter.logAll(line);
-        }
+        reporter.table([], this.buildOptionsHelp(lonerArgKeys));
       },
     );
   }
 
-  async showHelp(commandName: undefined | string = this.ranCommand) {
-    if (commandName !== undefined) {
-      this.showFocusedCommandHelp(commandName);
+  async generateAutocomplete(shell: SupportedAutocompleteShells) {
+    const {reporter} = this;
+
+    // Execute all command defineFlags. Only one is usually ran when the arguments match the command name.
+    // But to generate autocomplete we want all the flags to be declared for all commands.
+    const flags = this.getFlagsConsumer();
+    for (const command of this.commands.values()) {
+      // capture() will cause diagnostics to be suppressed
+      const {consumer} = flags.capture();
+      await this.defineCommandFlags(command, consumer);
+    }
+
+    // this.declaredFlags contains flag information, ignore the keys as they will have command suffixes
+    // utilize `command` for the owned command and `name` for the actual flag name
+
+    // this.commands contains command information
+
+    // reporter.logAllNoMarkup to output to stdout
+    reporter;
+
+    switch (shell) {
+      case 'bash':
+        // TODO
+        break;
+
+      case 'fish':
+        // TODO
+        break;
+    }
+  }
+
+  async showHelp(command: undefined | AnyCommandOptions = this.ranCommand) {
+    if (command !== undefined) {
+      this.showFocusedCommandHelp(command);
       return;
     }
 
@@ -741,27 +758,19 @@ export default class Parser<T> {
   }
 
   async defineCommandFlags(
-    cmd: string,
+    command: AnyCommandOptions,
     consumer: Consumer,
-  ): Promise<DefinedCommand> {
-    const opts = this.commands.get(cmd);
-    if (opts === undefined) {
-      throw new Error('Expected options');
-    }
-
-    this.currentCommand = cmd;
+  ): Promise<Dict<unknown>> {
+    this.currentCommand = command.name;
 
     let flags: Dict<unknown> = {};
-    if (opts.defineFlags !== undefined) {
-      flags = opts.defineFlags(consumer);
+    if (command.defineFlags !== undefined) {
+      flags = command.defineFlags(consumer);
     }
 
     this.currentCommand = undefined;
 
-    return {
-      flags,
-      command: opts,
-    };
+    return flags;
   }
 }
 

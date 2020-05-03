@@ -8,7 +8,7 @@
 import {ansiEscapes} from '@romejs/string-markup';
 import Reporter from './Reporter';
 import {SelectArguments, SelectOption, SelectOptions} from './types';
-import readline = require('readline');
+import {onKeypress, setRawMode} from './util';
 
 function formatShortcut({shortcut}: SelectOption): string {
   if (shortcut === undefined) {
@@ -28,7 +28,27 @@ export default async function select<Options extends SelectOptions>(
     yes = false,
   }: SelectArguments<Options>,
 ): Promise<Set<keyof Options>> {
-  const optionNames: Array<keyof Options> = Object.keys(options);
+  const optionNames: Array<keyof Options> = [];
+  const seenShortcuts: Set<string> = new Set();
+
+  // Verify there's no shortcut collisions and remove empty options
+  for (const key in options) {
+    const option: undefined | SelectOption = options[key];
+
+    if (option !== undefined) {
+      optionNames.push(key);
+
+      const {shortcut} = option;
+      if (shortcut !== undefined) {
+        if (seenShortcuts.has(shortcut)) {
+          throw new Error(`Multiple options have the shortcut ${shortcut}`);
+        } else {
+          seenShortcuts.add(shortcut);
+        }
+      }
+    }
+  }
+
   let optionCount = optionNames.length;
   if (optionCount === 0) {
     return new Set();
@@ -80,7 +100,7 @@ export default async function select<Options extends SelectOptions>(
     const optionNames = Object.keys(options);
     for (let i = 0; i < optionNames.length; i++) {
       const key = optionNames[i];
-      const option = options[key];
+      const option = options[key]!;
       const {label} = option;
       const shortcut = formatShortcut(option);
 
@@ -124,21 +144,71 @@ export default async function select<Options extends SelectOptions>(
     }
   }
 
-  let onkeypress = undefined;
-
   const stdin = reporter.getStdin();
 
   render();
 
-  readline.emitKeypressEvents(stdin);
-
-  if (stdin.isTTY && stdin.setRawMode !== undefined) {
-    stdin.setRawMode(true);
-  }
-
-  stdin.resume();
+  setRawMode(stdin, true);
 
   await new Promise((resolve) => {
+    const keypress = onKeypress(
+      reporter,
+      (key) => {
+        // Check if this is an option shortcut
+        if (!key.ctrl) {
+          for (const optionName in options) {
+            const option: undefined | SelectOption = options[optionName];
+            if (option === undefined) {
+              continue;
+            }
+
+            const {shortcut} = option;
+            if (shortcut === key.name) {
+              if (radio) {
+                selectedOptions.clear();
+                selectedOptions.add(optionName);
+                finish();
+              } else {
+                toggleOption(optionName);
+              }
+              return;
+            }
+          }
+        }
+
+        switch (key.name) {
+          case 'up': {
+            activeOption--;
+            break;
+          }
+
+          case 'down': {
+            activeOption++;
+            break;
+          }
+
+          case 'space': {
+            if (!radio) {
+              toggleOption((optionNames[activeOption] as string));
+            }
+            break;
+          }
+
+          case 'return': {
+            finish();
+            return;
+          }
+
+          default:
+            return;
+        }
+
+        boundActive();
+        cleanup();
+        render();
+      },
+    );
+
     function finish() {
       cleanup();
 
@@ -152,7 +222,7 @@ export default async function select<Options extends SelectOptions>(
 
       prompt += ': ';
       if (selectedOptions.size > 0) {
-        prompt += Array.from(selectedOptions, (key) => options[key].label).join(
+        prompt += Array.from(selectedOptions, (key) => options[key]!.label).join(
           ', ',
         );
       } else {
@@ -160,92 +230,11 @@ export default async function select<Options extends SelectOptions>(
       }
       reporter.logAll(prompt);
 
+      // Stop listening for keypress
+      keypress.finish();
       resolve();
     }
-    onkeypress = (
-      chunk: Buffer,
-      key: {
-        name: string;
-        ctrl: boolean;
-      },
-    ) => {
-      // Check if this is an option shortcut
-      if (!key.ctrl) {
-        for (const optionName in options) {
-          const {shortcut} = options[optionName];
-          if (shortcut === key.name) {
-            if (radio) {
-              selectedOptions.clear();
-              selectedOptions.add(optionName);
-              finish();
-            } else {
-              toggleOption(optionName);
-            }
-            return;
-          }
-        }
-      }
-
-      switch (key.name) {
-        case 'up': {
-          activeOption--;
-          break;
-        }
-
-        case 'down': {
-          activeOption++;
-          break;
-        }
-
-        case 'space': {
-          if (!radio) {
-            toggleOption((optionNames[activeOption] as string));
-          }
-          break;
-        }
-
-        case 'c': {
-          if (key.ctrl) {
-            reporter.br(true);
-            reporter.warn('Cancelled by user');
-            process.exit(1);
-          }
-          return;
-        }
-
-        case 'escape': {
-          reporter.br(true);
-          reporter.warn('Cancelled by user');
-          process.exit(1);
-          return;
-        }
-
-        case 'return': {
-          finish();
-          return;
-        }
-
-        default:
-          return;
-      }
-
-      boundActive();
-      cleanup();
-      render();
-    };
-
-    stdin.addListener('keypress', onkeypress);
   });
-
-  if (onkeypress !== undefined) {
-    stdin.removeListener('keypress', onkeypress);
-  }
-
-  if (stdin.isTTY && stdin.setRawMode !== undefined) {
-    stdin.setRawMode(false);
-  }
-
-  stdin.pause();
 
   return selectedOptions;
 }

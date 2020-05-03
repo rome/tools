@@ -35,6 +35,7 @@ Program {
         name: 'singleElementWithRest'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'singleElementWithRest'
           end: Object {
             column: 30
             index: 30
@@ -135,6 +136,7 @@ Program {
             name: 'a'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'a'
               end: Object {
                 column: 39
                 index: 39

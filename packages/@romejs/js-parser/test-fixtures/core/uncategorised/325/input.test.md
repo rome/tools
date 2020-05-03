@@ -48,6 +48,7 @@ Program {
         name: 'price_9\u03369\u0336_89'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'price_9\u03369\u0336_89'
           end: Object {
             column: 13
             index: 13

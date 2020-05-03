@@ -52,6 +52,7 @@ Program {
           name: 'A'
           loc: Object {
             filename: 'input.js'
+            identifierName: 'A'
             end: Object {
               column: 30
               index: 30

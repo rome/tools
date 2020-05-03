@@ -81,6 +81,7 @@ Program {
             name: 'crypto'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'crypto'
               end: Object {
                 column: 13
                 index: 13
@@ -128,6 +129,7 @@ Program {
             name: 'decrypt'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'decrypt'
               end: Object {
                 column: 24
                 index: 24
@@ -145,6 +147,7 @@ Program {
               name: 'decrypt'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'decrypt'
                 end: Object {
                   column: 24
                   index: 24
@@ -191,6 +194,7 @@ Program {
             name: 'encrypt'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'encrypt'
               end: Object {
                 column: 33
                 index: 33
@@ -208,6 +212,7 @@ Program {
               name: 'enc'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'enc'
                 end: Object {
                   column: 40
                   index: 40

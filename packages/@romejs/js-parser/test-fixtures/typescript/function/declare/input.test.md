@@ -59,6 +59,7 @@ Program {
         name: 'function'
         loc: Object {
           filename: 'input.ts'
+          identifierName: 'function'
           end: Object {
             column: 16
             index: 16
@@ -112,6 +113,7 @@ Program {
             name: 'f'
             loc: Object {
               filename: 'input.ts'
+              identifierName: 'f'
               end: Object {
                 column: 18
                 index: 18
@@ -274,6 +276,7 @@ Program {
               name: 'function'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'function'
                 end: Object {
                   column: 16
                   index: 44
@@ -327,6 +330,7 @@ Program {
                   name: 'f'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'f'
                     end: Object {
                       column: 18
                       index: 46
@@ -437,6 +441,7 @@ Program {
                         name: 'T'
                         loc: Object {
                           filename: 'input.ts'
+                          identifierName: 'T'
                           end: Object {
                             column: 20
                             index: 48
@@ -501,6 +506,7 @@ Program {
                     name: 'T'
                     loc: Object {
                       filename: 'input.ts'
+                      identifierName: 'T'
                       end: Object {
                         column: 26
                         index: 54

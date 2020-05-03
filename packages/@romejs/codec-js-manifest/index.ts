@@ -453,10 +453,6 @@ function normalizeExports(consumer: Consumer): boolean | ManifestExports {
         value.unexpected(descriptions.MANIFEST.MIXED_EXPORTS_PATHS);
       }
 
-      if (dotConditions.size === 0) {
-        exports.set(createRelativeFilePath('.'), dotConditions);
-      }
-
       dotConditions.set(
         relative,
         {
@@ -473,6 +469,10 @@ function normalizeExports(consumer: Consumer): boolean | ManifestExports {
 
     const conditions = normalizeExportsConditions(value);
     exports.set(value.getKey().asExplicitRelativeFilePath(), conditions);
+  }
+
+  if (dotConditions.size > 0) {
+    exports.set(createRelativeFilePath('.'), dotConditions);
   }
 
   return exports;

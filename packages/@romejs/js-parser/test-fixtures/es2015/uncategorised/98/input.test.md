@@ -82,6 +82,7 @@ Program {
             name: 'crypto'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'crypto'
               end: Object {
                 column: 18
                 index: 18

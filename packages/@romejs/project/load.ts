@@ -243,7 +243,10 @@ export function normalizeProjectConfig(
   const bundler = consumer.get('bundler');
   if (categoryExists(bundler)) {
     if (bundler.has('mode')) {
-      config.bundler.mode = bundler.get('mode').asStringSet(['modern', 'legacy']);
+      config.bundler.mode = bundler.get('mode').asStringSetOrVoid([
+        'modern',
+        'legacy',
+      ]);
     }
   }
 
@@ -485,7 +488,7 @@ function extendProjectConfig(
 type MergedPartialConfig<
   A extends PartialProjectConfig,
   B extends PartialProjectConfig
-> = { [Key in keyof ProjectConfigObjects]: A[Key] & B[Key] };
+> = {[Key in keyof ProjectConfigObjects]: A[Key] & B[Key]};
 
 function mergePartialConfig<
   A extends PartialProjectConfig,

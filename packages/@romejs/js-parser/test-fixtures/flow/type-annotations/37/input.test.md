@@ -117,6 +117,7 @@ Program {
                         name: 'subObj'
                         loc: Object {
                           filename: 'input.js'
+                          identifierName: 'subObj'
                           end: Object {
                             column: 14
                             index: 14
@@ -152,6 +153,7 @@ Program {
                               name: 'strVal'
                               loc: Object {
                                 filename: 'input.js'
+                                identifierName: 'strVal'
                                 end: Object {
                                   column: 23
                                   index: 23

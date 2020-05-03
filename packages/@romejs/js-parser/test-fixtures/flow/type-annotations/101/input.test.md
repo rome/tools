@@ -116,6 +116,7 @@ Program {
                 name: 'ReturnType'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'ReturnType'
                   end: Object {
                     column: 36
                     index: 36
@@ -179,6 +180,7 @@ Program {
                   name: 'SomeType'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'SomeType'
                     end: Object {
                       column: 20
                       index: 20

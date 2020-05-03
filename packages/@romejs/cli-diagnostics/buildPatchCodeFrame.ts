@@ -11,9 +11,10 @@ import {
   GUTTER,
   MAX_PATCH_LINES,
 } from './constants';
-import {showInvisibles} from './utils';
+import {joinNoBreak, showInvisibles} from './utils';
 import {Diffs, diffConstants, groupDiffByLines} from '@romejs/string-diff';
-import {escapeMarkup, markupTag} from '@romejs/string-markup';
+import {escapeMarkup, markup, markupTag} from '@romejs/string-markup';
+import {DiagnosticAdviceDiff} from '@romejs/diagnostics';
 
 function formatDiffLine(diffs: Diffs) {
   return diffs.map(([type, text]) => {
@@ -31,14 +32,18 @@ function formatDiffLine(diffs: Diffs) {
 const DELETE_MARKER = markupTag('error', '-');
 const ADD_MARKER = markupTag('success', '+');
 
+function formatSingleLineMarker(text: string): string {
+  return markup`<emphasis>${text}</emphasis>:`;
+}
+
 export default function buildPatchCodeFrame(
-  rawDiffs: Diffs,
+  item: DiagnosticAdviceDiff,
   verbose: boolean,
 ): {
   truncated: boolean;
   frame: string;
 } {
-  const diffsByLine = groupDiffByLines(rawDiffs);
+  const diffsByLine = groupDiffByLines(item.diff);
   let lastVisibleLine = -1;
 
   // Calculate the parts of the diff we should show
@@ -72,8 +77,9 @@ export default function buildPatchCodeFrame(
   const lineLength = String(lastVisibleLine).length;
 
   // Don't output a gutter if there's only a single line
-  const noGutter = diffsByLine.length === 1;
+  const singleLine = diffsByLine.length === 1;
 
+  const {legend} = item;
   const frame = [];
   let displayedLines = 0;
   let truncated = false;
@@ -128,21 +134,26 @@ export default function buildPatchCodeFrame(
 
     let gutterWithLine = '';
     let gutterNoLine = '';
+    let deleteMarker = DELETE_MARKER;
+    let addMarker = ADD_MARKER;
 
-    if (!noGutter) {
-      gutterWithLine = `<emphasis>${CODE_FRAME_INDENT}<pad count="${String(
-        lineLength,
-      )}">${String(lineNo)}</pad>${GUTTER}</emphasis>`;
+    if (!singleLine) {
+      gutterWithLine = `<emphasis>${CODE_FRAME_INDENT}<pad align="right" width="${lineLength}">${lineNo}</pad>${GUTTER}</emphasis>`;
       gutterNoLine = `<emphasis>${CODE_FRAME_INDENT}${' '.repeat(lineLength)}${GUTTER}</emphasis>`;
+    }
+
+    if (singleLine && legend !== undefined) {
+      addMarker = formatSingleLineMarker(legend.add);
+      deleteMarker = formatSingleLineMarker(legend.delete);
     }
 
     if (hasDeletions) {
       const gutter = hasAddition ? gutterNoLine : gutterWithLine;
-      frame.push(`${gutter}${DELETE_MARKER} ${formatDiffLine(deletions)}`);
+      frame.push(`${gutter}${deleteMarker} ${formatDiffLine(deletions)}`);
     }
 
     if (hasAddition) {
-      frame.push(`${gutterWithLine}${ADD_MARKER} ${formatDiffLine(addition)}`);
+      frame.push(`${gutterWithLine}${addMarker} ${formatDiffLine(addition)}`);
     }
 
     if (!hasAddition && !hasDeletions) {
@@ -159,8 +170,15 @@ export default function buildPatchCodeFrame(
     );
   }
 
+  if (legend !== undefined && !singleLine) {
+    frame.push('');
+    frame.push(`<error>- ${escapeMarkup(legend.delete)}</error>`);
+    frame.push(`<success>+ ${escapeMarkup(legend.add)}</success>`);
+    frame.push('');
+  }
+
   return {
     truncated,
-    frame: frame.join('\n'),
+    frame: joinNoBreak(frame),
   };
 }

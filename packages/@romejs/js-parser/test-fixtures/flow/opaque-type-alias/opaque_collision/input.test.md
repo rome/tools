@@ -38,6 +38,7 @@ Program {
         name: 'opaque'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'opaque'
           end: Object {
             column: 18
             index: 18
@@ -86,6 +87,7 @@ Program {
         name: 'not_transparent'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'not_transparent'
           end: Object {
             column: 27
             index: 56
@@ -118,6 +120,7 @@ Program {
           name: 'opaque'
           loc: Object {
             filename: 'input.js'
+            identifierName: 'opaque'
             end: Object {
               column: 36
               index: 65

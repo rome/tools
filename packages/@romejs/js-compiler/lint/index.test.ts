@@ -5,10 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-// TODO: Shift file into packages/@romejs/js-compiler/transforms/lint/__rtests__
-// after all open linting PRs have been merged.
 import {test} from 'rome';
-import {testLint} from './testHelpers';
+import {testLint} from './rules/testHelpers';
 
 test(
   'format disabled in project config should not regenerate the file',

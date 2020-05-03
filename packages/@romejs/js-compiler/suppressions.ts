@@ -5,40 +5,33 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyComment, Program} from '@romejs/js-ast';
+import {AnyComment, AnyNode, Program} from '@romejs/js-ast';
 import {
   DiagnosticLocation,
   DiagnosticSuppression,
-  DiagnosticSuppressionType,
   DiagnosticSuppressions,
   Diagnostics,
   descriptions,
 } from '@romejs/diagnostics';
-import {Dict} from '@romejs/typescript-helpers';
-import {ob1Add} from '@romejs/ob1';
+import CompilerContext from './lib/CompilerContext';
+import Path from './lib/Path';
 
-export const SUPPRESSION_NEXT_LINE_START = 'rome-suppress-next-line';
-const SUPPRESSION_CURRENT_LINE_START = 'rome-suppress-current-line';
-
-const SUPPRESSION_PREFIX_MISTAKES: Dict<string> = {
-  'rome-suppress': SUPPRESSION_NEXT_LINE_START,
-  '@rome-suppress': SUPPRESSION_NEXT_LINE_START,
-  'rome-ignore': SUPPRESSION_NEXT_LINE_START,
-  '@rome-ignore': SUPPRESSION_NEXT_LINE_START,
-  '@rome-suppression-next-line': SUPPRESSION_NEXT_LINE_START,
-  '@rome-suppression-current-line': SUPPRESSION_CURRENT_LINE_START,
-};
+export const SUPPRESSION_START = 'rome-ignore';
 
 type ExtractedSuppressions = {
   suppressions: DiagnosticSuppressions;
   diagnostics: Diagnostics;
 };
 
-export function extractSuppressionsFromComment(
+type NodeToComment = Map<AnyComment, AnyNode>;
+
+function extractSuppressionsFromComment(
+  context: CompilerContext,
   comment: AnyComment,
+  nodeToComment: NodeToComment,
 ): undefined | ExtractedSuppressions {
-  const {loc} = comment;
-  if (loc === undefined) {
+  const commentLocation = comment.loc;
+  if (commentLocation === undefined) {
     return undefined;
   }
 
@@ -53,39 +46,27 @@ export function extractSuppressionsFromComment(
   });
 
   for (const line of cleanLines) {
-    // Find suppression start
-    let suppressionType: undefined | DiagnosticSuppressionType;
-    let matchedPrefix: undefined | string;
-    if (line.startsWith(SUPPRESSION_CURRENT_LINE_START)) {
-      matchedPrefix = SUPPRESSION_CURRENT_LINE_START;
-      suppressionType = 'current';
-    }
-    if (line.startsWith(SUPPRESSION_NEXT_LINE_START)) {
-      matchedPrefix = SUPPRESSION_NEXT_LINE_START;
-      suppressionType = 'next';
-    }
-
-    if (suppressionType === undefined || matchedPrefix === undefined) {
-      for (const prefix in SUPPRESSION_PREFIX_MISTAKES) {
-        const suggestion = SUPPRESSION_PREFIX_MISTAKES[prefix];
-        if (line.startsWith(prefix)) {
-          diagnostics.push({
-            description: descriptions.SUPPRESSIONS.PREFIX_TYPO(
-              prefix,
-              suggestion,
-            ),
-            location: loc,
-          });
-        }
-      }
+    if (!line.startsWith(SUPPRESSION_START)) {
       continue;
     }
 
-    const lineWithoutPrefix = line.slice(matchedPrefix.length);
+    const nextNode = nodeToComment.get(comment);
+    if (nextNode === undefined || nextNode.loc === undefined) {
+      diagnostics.push({
+        description: descriptions.SUPPRESSIONS.MISSING_TARGET,
+        location: commentLocation,
+      });
+      continue;
+    }
+
+    const startLine = nextNode.loc.start.line;
+    const endLine = nextNode.loc.end.line;
+
+    const lineWithoutPrefix = line.slice(SUPPRESSION_START.length);
     if (lineWithoutPrefix[0] !== ' ') {
       diagnostics.push({
         description: descriptions.SUPPRESSIONS.MISSING_SPACE,
-        location: loc,
+        location: commentLocation,
       });
       continue;
     }
@@ -108,15 +89,17 @@ export function extractSuppressionsFromComment(
       if (suppressedCategories.has(category)) {
         diagnostics.push({
           description: descriptions.SUPPRESSIONS.DUPLICATE(category),
-          location: loc,
+          location: commentLocation,
         });
       } else {
         suppressedCategories.add(category);
 
         suppressions.push({
-          type: suppressionType,
+          filename: context.filename,
           category,
-          loc,
+          commentLocation,
+          startLine,
+          endLine,
         });
       }
 
@@ -133,14 +116,43 @@ export function extractSuppressionsFromComment(
   }
 }
 
-export function extractSuppressionsFromComments(
-  comments: Array<AnyComment>,
+export function extractSuppressionsFromProgram(
+  context: CompilerContext,
+  ast: Program,
 ): ExtractedSuppressions {
+  const {comments} = ast;
+
   let diagnostics: Diagnostics = [];
   let suppressions: DiagnosticSuppressions = [];
 
+  const nodeToComment: NodeToComment = new Map();
+  context.reduce(
+    ast,
+    {
+      name: 'extractSuppressions',
+      enter(path: Path): AnyNode {
+        const {node} = path;
+
+        for (const comment of context.comments.getCommentsFromIds(
+          node.leadingComments,
+        )) {
+          nodeToComment.set(comment, node);
+        }
+
+        return node;
+      },
+    },
+    {
+      noScopeCreation: true,
+    },
+  );
+
   for (const comment of comments) {
-    const result = extractSuppressionsFromComment(comment);
+    const result = extractSuppressionsFromComment(
+      context,
+      comment,
+      nodeToComment,
+    );
     if (result !== undefined) {
       diagnostics = diagnostics.concat(result.diagnostics);
       suppressions = suppressions.concat(result.suppressions);
@@ -150,29 +162,15 @@ export function extractSuppressionsFromComments(
   return {suppressions, diagnostics};
 }
 
-export function extractSuppressionsFromProgram(
-  ast: Program,
-): ExtractedSuppressions {
-  return extractSuppressionsFromComments(ast.comments);
-}
-
 export function matchesSuppression(
-  loc: DiagnosticLocation,
+  {filename, start, end}: DiagnosticLocation,
   suppression: DiagnosticSuppression,
 ): boolean {
-  const targetLine =
-    suppression.type === 'current'
-      ? suppression.loc.end.line
-      : ob1Add(suppression.loc.end.line, 1);
-
-  if (
-    loc.filename !== undefined &&
-    loc.start !== undefined &&
-    loc.filename === suppression.loc.filename &&
-    loc.start.line === targetLine
-  ) {
-    return true;
-  }
-
-  return false;
+  return (
+    filename === suppression.filename &&
+    start !== undefined &&
+    end !== undefined &&
+    start.line >= suppression.startLine &&
+    end.line <= suppression.endLine
+  );
 }

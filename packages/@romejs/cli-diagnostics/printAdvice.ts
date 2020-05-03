@@ -196,7 +196,7 @@ function printDiff(
   opts: AdvicePrintOptions,
 ): PrintAdviceResult {
   const {frame, truncated} = buildPatchCodeFrame(
-    item.diff,
+    item,
     opts.flags.verboseDiagnostics,
   );
   if (frame === '') {
@@ -204,14 +204,6 @@ function printDiff(
   }
 
   opts.reporter.logAll(frame);
-
-  const {legend} = item;
-  if (legend !== undefined) {
-    opts.reporter.br();
-    opts.reporter.logAll(`<error>- ${escapeMarkup(legend.delete)}</error>`);
-    opts.reporter.logAll(`<success>+ ${escapeMarkup(legend.add)}</success>`);
-    opts.reporter.br();
-  }
 
   const hint = generateDiffHint(item.diff);
   if (hint !== undefined) {
@@ -233,7 +225,7 @@ function printList(
   if (item.list.length === 0) {
     return DID_NOT_PRINT;
   } else {
-    opts.reporter.list(
+    const {truncated} = opts.reporter.list(
       item.list,
       {
         truncate: opts.flags.verboseDiagnostics ? undefined : 20,
@@ -241,7 +233,10 @@ function printList(
         ordered: item.ordered,
       },
     );
-    return DID_PRINT;
+    return {
+      printed: true,
+      truncated,
+    };
   }
 }
 
@@ -253,16 +248,18 @@ function printCode(
 
   const truncated =
     !opts.flags.verboseDiagnostics && item.code.length > RAW_CODE_MAX_LENGTH;
-  const code = truncated ? item.code.slice(0, RAW_CODE_MAX_LENGTH) : item.code;
+  let code = truncated ? item.code.slice(0, RAW_CODE_MAX_LENGTH) : item.code;
 
   reporter.indent(() => {
     if (code === '') {
       reporter.logAll('<dim>empty input</dim>');
-    } else if (code.trim() === '') {
-      // If it's a string with only whitespace then make it obvious
-      reporter.logAll(showInvisibles(code));
     } else {
-      reporter.logAll(escapeMarkup(code));
+      // If it's a string with only whitespace then make it obvious
+      if (code.trim() === '') {
+        code = showInvisibles(code);
+      }
+
+      reporter.logAll(`<nobr>${escapeMarkup(code)}</nobr>`);
     }
 
     if (truncated) {
@@ -336,8 +333,6 @@ function printStacktrace(
   item: DiagnosticAdviceStacktrace,
   opts: AdvicePrintOptions,
 ): PrintAdviceResult {
-  // Here we duplicate some of the list logic that is in Reporter
-  // This is different as we also want to push frames after some of the items
   const {diagnostic} = opts;
   const {frames} = item;
 
@@ -448,6 +443,7 @@ function printStacktrace(
     },
     {
       ordered: true,
+      reverse: true,
       truncate: opts.flags.verboseDiagnostics ? undefined : 20,
     },
   );

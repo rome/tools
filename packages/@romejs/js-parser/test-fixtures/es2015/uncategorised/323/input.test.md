@@ -44,22 +44,6 @@ Program {
           line: 1
         }
       }
-      right: ReferenceIdentifier {
-        name: 'obj'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 29
-            index: 29
-            line: 1
-          }
-          start: Object {
-            column: 26
-            index: 26
-            line: 1
-          }
-        }
-      }
       body: BlockStatement {
         body: Array []
         directives: Array []
@@ -73,6 +57,23 @@ Program {
           start: Object {
             column: 31
             index: 31
+            line: 1
+          }
+        }
+      }
+      right: ReferenceIdentifier {
+        name: 'obj'
+        loc: Object {
+          filename: 'input.js'
+          identifierName: 'obj'
+          end: Object {
+            column: 29
+            index: 29
+            line: 1
+          }
+          start: Object {
+            column: 26
+            index: 26
             line: 1
           }
         }
@@ -114,6 +115,7 @@ Program {
                   name: 'name'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'name'
                     end: Object {
                       column: 14
                       index: 14
@@ -147,6 +149,7 @@ Program {
                   name: 'value'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'value'
                     end: Object {
                       column: 21
                       index: 21

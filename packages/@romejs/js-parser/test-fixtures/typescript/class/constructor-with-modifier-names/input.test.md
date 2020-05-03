@@ -35,6 +35,7 @@ Program {
         name: 'Foo'
         loc: Object {
           filename: 'input.ts'
+          identifierName: 'Foo'
           end: Object {
             column: 9
             index: 9
@@ -86,6 +87,7 @@ Program {
                 name: 'constructor'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'constructor'
                   end: Object {
                     column: 13
                     index: 25
@@ -196,6 +198,7 @@ Program {
                   name: 'set'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'set'
                     end: Object {
                       column: 17
                       index: 29
@@ -229,6 +232,7 @@ Program {
                   name: 'readonly'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'readonly'
                     end: Object {
                       column: 27
                       index: 39
@@ -268,6 +272,7 @@ Program {
                 name: 'constructor'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'constructor'
                   end: Object {
                     column: 13
                     index: 57
@@ -378,6 +383,7 @@ Program {
                   name: 'set'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'set'
                     end: Object {
                       column: 17
                       index: 61
@@ -425,6 +431,7 @@ Program {
                   name: 'readonly'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'readonly'
                     end: Object {
                       column: 32
                       index: 76

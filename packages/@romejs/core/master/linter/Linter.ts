@@ -22,6 +22,7 @@ import {ReporterProgress, ReporterProgressOptions} from '@romejs/cli-reporter';
 import DependencyNode from '../dependencies/DependencyNode';
 import {
   LintCompilerOptions,
+  LintCompilerOptionsDecisions,
   areAnalyzeDependencyResultsEqual,
 } from '@romejs/js-compiler';
 import {markup} from '@romejs/string-markup';
@@ -34,12 +35,15 @@ type LintWatchChanges = Array<{
   diagnostics: Diagnostics;
 }>;
 
+export type LinterCompilerOptionsPerFile = Dict<Required<LintCompilerOptions>>;
+
 export type LinterOptions = {
   save: boolean;
   args?: Array<string>;
   hasDecisions: boolean;
   formatOnly: boolean;
-  compilerOptionsPerFile?: Dict<Required<LintCompilerOptions>>;
+  globalDecisions?: LintCompilerOptionsDecisions;
+  lintCompilerOptionsPerFile?: LinterCompilerOptionsPerFile;
 };
 
 type ProgressFactory = (opts: ReporterProgressOptions) => ReporterProgress;
@@ -76,7 +80,7 @@ function createDiagnosticsPrinter(
 ): DiagnosticsPrinter {
   const printer = request.createDiagnosticsPrinter(processor);
 
-  printer.onBeforeFooterPrint((reporter, isError) => {
+  printer.onFooterPrint((reporter, isError) => {
     if (isError) {
       let hasPendingFixes = false;
 
@@ -151,7 +155,7 @@ class LintRunner {
 
   async runLint(
     {
-      evictedPaths: changedPaths,
+      evictedPaths,
       processor,
     }: LintRunOptions,
   ): Promise<{
@@ -160,30 +164,44 @@ class LintRunner {
     let savedCount = 0;
     const {master} = this.request;
 
-    const {compilerOptionsPerFile, hasDecisions, formatOnly} = this.options;
+    const {
+      lintCompilerOptionsPerFile = {},
+      globalDecisions = [],
+      hasDecisions,
+    } = this.options;
     const shouldSave = this.linter.shouldSave();
+    const shouldApplyFixes = !this.linter.shouldOnlyFormat();
 
     const queue: WorkerQueue<void> = new WorkerQueue(master);
 
     const progress = this.events.createProgress({title: 'Linting'});
-    progress.setTotal(changedPaths.size);
+    progress.setTotal(evictedPaths.size);
 
     queue.addCallback(async (path) => {
       const filename = path.join();
       const text = markup`<filelink target="${filename}" />`;
       progress.pushText(text);
 
-      let compilerOptions =
-        compilerOptionsPerFile === undefined
-          ? undefined
-          : compilerOptionsPerFile[filename];
+      let compilerOptions = lintCompilerOptionsPerFile[filename];
 
       // If we have decisions then make sure it's declared on all files
       if (hasDecisions) {
-        compilerOptions = {
-          decisionsByPosition: {},
-          ...compilerOptions,
-        };
+        if (compilerOptions === undefined) {
+          compilerOptions = {
+            hasDecisions: true,
+            globalDecisions,
+            decisionsByPosition: {},
+          };
+        } else {
+          compilerOptions = {
+            ...compilerOptions,
+            hasDecisions: true,
+            globalDecisions: [
+              ...(compilerOptions.globalDecisions || []),
+              ...globalDecisions,
+            ],
+          };
+        }
       }
 
       const {
@@ -194,7 +212,7 @@ class LintRunner {
         path,
         {
           save: shouldSave,
-          applyFixes: !formatOnly,
+          applyFixes: shouldApplyFixes,
           compilerOptions,
         },
       );
@@ -209,7 +227,7 @@ class LintRunner {
       progress.tick();
     });
 
-    for (const path of changedPaths) {
+    for (const path of evictedPaths) {
       await queue.pushQueue(path);
     }
 
@@ -379,7 +397,7 @@ class LintRunner {
       evictedPaths: opts.evictedPaths,
       changes,
       savedCount,
-      totalCount: validatedDependencyPaths.size,
+      totalCount: opts.evictedPaths.size,
       runner: this,
     };
   }
@@ -394,14 +412,15 @@ export default class Linter {
   request: MasterRequest;
   options: LinterOptions;
 
+  shouldOnlyFormat(): boolean {
+    const {formatOnly} = this.options;
+    const {review} = this.request.query.requestFlags;
+    return formatOnly || review;
+  }
+
   shouldSave(): boolean {
-    const {save, hasDecisions, formatOnly} = this.options;
-    return (
-      save ||
-      hasDecisions ||
-      formatOnly ||
-      this.request.query.requestFlags.review
-    );
+    const {save, hasDecisions} = this.options;
+    return save || hasDecisions || this.shouldOnlyFormat();
   }
 
   getFileArgOptions(): MasterRequestGetFilesOptions {

@@ -10,6 +10,7 @@ import {
   Diagnostic,
   DiagnosticAdvice,
   DiagnosticLogCategory,
+  DiagnosticOrigin,
   INTERNAL_ERROR_LOG_ADVICE,
   catchDiagnostics,
   createBlessedDiagnosticMessage,
@@ -24,11 +25,15 @@ import {
   TestOptions,
 } from '@romejs-runtime/rome/test';
 import {
+  TestRef,
   default as TestWorkerBridge,
   TestWorkerBridgeRunOptions,
 } from '../common/bridges/TestWorkerBridge';
-import {TestRunnerOptions} from '../master/testing/types';
-import SnapshotManager from './SnapshotManager';
+import {TestMasterRunnerOptions} from '../master/testing/types';
+import SnapshotManager, {
+  InlineSnapshotUpdate,
+  SnapshotCounts,
+} from './SnapshotManager';
 import TestAPI, {OnTimeout} from './TestAPI';
 import executeMain from '../common/utils/executeMain';
 import {
@@ -85,6 +90,11 @@ function cleanFrames(frames: ErrorFrames): ErrorFrames {
   return frames.slice(0, frames.indexOf(latestTestWorkerFrame));
 }
 
+export type TestWorkerFileResult = {
+  snapshotCounts: SnapshotCounts;
+  inlineSnapshotUpdates: Array<InlineSnapshotUpdate>;
+};
+
 export default class TestWorkerRunner {
   constructor(opts: TestWorkerBridgeRunOptions, bridge: TestWorkerBridge) {
     this.opts = opts;
@@ -99,6 +109,7 @@ export default class TestWorkerRunner {
       createAbsoluteFilePath(opts.file.real),
     );
 
+    this.hasDiagnostics = false;
     this.emitConsoleDiagnostics = false;
     this.consoleAdvice = [];
     this.hasFocusedTest = false;
@@ -117,12 +128,13 @@ export default class TestWorkerRunner {
   bridge: TestWorkerBridge;
   projectFolder: AbsoluteFilePath;
   file: FileReference;
-  options: TestRunnerOptions;
+  options: TestMasterRunnerOptions;
   snapshotManager: SnapshotManager;
   opts: TestWorkerBridgeRunOptions;
   locked: boolean;
   consoleAdvice: DiagnosticAdvice;
   emitConsoleDiagnostics: boolean;
+  hasDiagnostics: boolean;
 
   createConsole(): Partial<Console> {
     const addDiagnostic = (
@@ -152,8 +164,8 @@ export default class TestWorkerRunner {
       );
     };
 
-    function logInfo(...args: Array<unknown>): void {
-      addDiagnostic('info', args);
+    function log(...args: Array<unknown>): void {
+      addDiagnostic('none', args);
     }
 
     return {
@@ -172,11 +184,13 @@ export default class TestWorkerRunner {
       warn: (...args: Array<unknown>): void => {
         addDiagnostic('warn', args);
       },
-      dirxml: logInfo,
-      debug: logInfo,
-      info: logInfo,
-      log: logInfo,
-      trace: logInfo,
+      dirxml: log,
+      debug: log,
+      info: (...args: Array<unknown>): void => {
+        addDiagnostic('info', args);
+      },
+      log,
+      trace: log,
       // Noop
       count(): void {},
       countReset(): void {},
@@ -213,11 +227,17 @@ export default class TestWorkerRunner {
     };
   }
 
-  async emitDiagnostic(diagnostic: Diagnostic) {
-    await this.bridge.testError.call({
-      ref: undefined,
-      diagnostic,
-    });
+  async emitDiagnostic(diagnostic: Diagnostic, ref?: TestRef) {
+    let origin: DiagnosticOrigin = {
+      category: 'test/error',
+      message: 'Generated from a test worker without being attached to a test',
+    };
+
+    if (ref !== undefined) {
+      origin.message = markup`Generated from the file <filelink target="${this.file.uid}" /> and test name "${ref.testName}"`;
+    }
+
+    await this.bridge.testDiagnostic.call({diagnostic, origin});
   }
 
   // execute the test file and discover tests
@@ -284,30 +304,20 @@ export default class TestWorkerRunner {
     }
   }
 
-  onError(
+  async onError(
     testName: undefined | string,
     opts: {
       error: Error;
-      firstAdvice: DiagnosticAdvice;
-      lastAdvice: DiagnosticAdvice;
+      firstAdvice?: DiagnosticAdvice;
+      lastAdvice?: DiagnosticAdvice;
     },
-  ) {
+  ): Promise<void> {
     const filename = this.file.real.join();
-
-    let ref = undefined;
-    if (testName === undefined) {
-      testName = 'unknown';
-    } else {
-      ref = {
-        filename,
-        testName,
-      };
-    }
 
     let diagnostic: Diagnostic = deriveDiagnosticFromError({
       error: opts.error,
       category: 'tests/failure',
-      label: escapeMarkup(testName),
+      label: testName === undefined ? undefined : escapeMarkup(testName),
       filename,
       cleanFrames,
     });
@@ -317,27 +327,28 @@ export default class TestWorkerRunner {
       description: {
         ...diagnostic.description,
         advice: [
-          ...opts.firstAdvice,
+          ...(opts.firstAdvice || []),
           ...(diagnostic.description.advice || []),
-          ...opts.lastAdvice,
+          ...(opts.lastAdvice || []),
         ],
       },
     };
 
     this.emitConsoleDiagnostics = true;
-    this.bridge.testError.send({
-      ref,
+    await this.emitDiagnostic(
       diagnostic,
-    });
+      testName === undefined ? undefined : this.createTestRef(testName),
+    );
   }
 
-  async teardownTest(testName: string, api: TestAPI) {
+  async teardownTest(testName: string, api: TestAPI): Promise<boolean> {
     api.clearTimeout();
 
     try {
       await api.teardownEvent.callOptional();
+      return true;
     } catch (err) {
-      this.onError(
+      await this.onError(
         testName,
         {
           error: err,
@@ -348,10 +359,19 @@ export default class TestWorkerRunner {
               category: 'info',
               text: `Error occured while running <emphasis>teardown</emphasis> for test <emphasis>${testName}</emphasis>`,
             },
+            ...api.advice,
           ],
         },
       );
+      return false;
     }
+  }
+
+  createTestRef(testName: string): TestRef {
+    return {
+      testName,
+      filename: this.file.real.join(),
+    };
   }
 
   async runTest(testName: string, callback: TestCallback) {
@@ -371,7 +391,18 @@ export default class TestWorkerRunner {
       onTimeout,
       snapshotManager: this.snapshotManager,
       options: this.options,
+      emitError: (error: Error): Promise<void> => {
+        return this.onError(
+          testName,
+          {
+            error,
+            lastAdvice: api.advice,
+          },
+        );
+      },
     });
+
+    let testSuccess = false;
 
     try {
       const res = callback(api);
@@ -381,14 +412,9 @@ export default class TestWorkerRunner {
         await Promise.race([timeoutPromise, res]);
       }
 
-      this.bridge.testSuccess.send({
-        ref: {
-          filename: this.file.real.join(),
-          testName,
-        },
-      });
+      testSuccess = true;
     } catch (err) {
-      this.onError(
+      await this.onError(
         testName,
         {
           error: err,
@@ -397,23 +423,24 @@ export default class TestWorkerRunner {
         },
       );
     } finally {
-      await this.teardownTest(testName, api);
+      const teardownSuccess = await this.teardownTest(testName, api);
+      await this.bridge.testFinish.call({
+        success: testSuccess && teardownSuccess,
+        ref: this.createTestRef(testName),
+      });
     }
   }
 
-  async run(): Promise<void> {
+  async run(): Promise<TestWorkerFileResult> {
     const promises: Set<Promise<void>> = new Set();
 
     const {foundTests} = this;
     if (foundTests.size === 0) {
-      this.bridge.testError.send({
-        ref: undefined,
-        diagnostic: {
-          location: {
-            filename: this.file.uid,
-          },
-          description: descriptions.TESTS.UNDECLARED,
+      this.emitDiagnostic({
+        location: {
+          filename: this.file.uid,
         },
+        description: descriptions.TESTS.UNDECLARED,
       });
     }
 
@@ -454,7 +481,7 @@ export default class TestWorkerRunner {
     // Save the snapshot
     await this.snapshotManager.save();
 
-    if (this.emitConsoleDiagnostics) {
+    if (this.emitConsoleDiagnostics && this.consoleAdvice.length > 0) {
       await this.emitDiagnostic({
         description: descriptions.TESTS.LOGS(this.consoleAdvice),
         location: {
@@ -462,6 +489,11 @@ export default class TestWorkerRunner {
         },
       });
     }
+
+    return {
+      inlineSnapshotUpdates: this.snapshotManager.inlineSnapshotsUpdates,
+      snapshotCounts: this.snapshotManager.snapshotCounts,
+    };
   }
 
   async emitFoundTests() {
@@ -491,14 +523,11 @@ export default class TestWorkerRunner {
 
       if (diagnostics !== undefined) {
         for (const diagnostic of diagnostics) {
-          await this.bridge.testError.call({
-            ref: undefined,
-            diagnostic,
-          });
+          await this.emitDiagnostic(diagnostic);
         }
       }
     } catch (err) {
-      this.onError(
+      await this.onError(
         undefined,
         {
           error: err,

@@ -638,6 +638,7 @@ Program {
           leadingComments: undefined
           loc: Object {
             filename: 'input.js'
+            identifierName: 'a'
             end: Object {
               column: 1
               index: 39
@@ -668,6 +669,7 @@ Program {
             name: 'd'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'd'
               end: Object {
                 column: 16
                 index: 54
@@ -704,6 +706,7 @@ Program {
                 name: 'b'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'b'
                   end: Object {
                     column: 6
                     index: 44
@@ -722,6 +725,7 @@ Program {
                 name: 'c'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'c'
                   end: Object {
                     column: 11
                     index: 49
@@ -788,6 +792,7 @@ Program {
           name: 'e'
           loc: Object {
             filename: 'input.js'
+            identifierName: 'e'
             end: Object {
               column: 20
               index: 96
@@ -805,6 +810,7 @@ Program {
           leadingComments: undefined
           loc: Object {
             filename: 'input.js'
+            identifierName: 'a'
             end: Object {
               column: 1
               index: 77
@@ -835,6 +841,7 @@ Program {
             name: 'd'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'd'
               end: Object {
                 column: 16
                 index: 92
@@ -871,6 +878,7 @@ Program {
                 name: 'b'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'b'
                   end: Object {
                     column: 6
                     index: 82
@@ -889,6 +897,7 @@ Program {
                 name: 'c'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'c'
                   end: Object {
                     column: 11
                     index: 87
@@ -958,6 +967,7 @@ Program {
           name: 'b'
           loc: Object {
             filename: 'input.js'
+            identifierName: 'b'
             end: Object {
               column: 6
               index: 129
@@ -975,6 +985,7 @@ Program {
           leadingComments: undefined
           loc: Object {
             filename: 'input.js'
+            identifierName: 'a'
             end: Object {
               column: 1
               index: 124
@@ -1005,6 +1016,7 @@ Program {
             name: 'e'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'e'
               end: Object {
                 column: 22
                 index: 145
@@ -1041,6 +1053,7 @@ Program {
                 name: 'c'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'c'
                   end: Object {
                     column: 12
                     index: 135
@@ -1059,6 +1072,7 @@ Program {
                 name: 'd'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'd'
                   end: Object {
                     column: 17
                     index: 140
@@ -1147,6 +1161,7 @@ Program {
           leadingComments: undefined
           loc: Object {
             filename: 'input.js'
+            identifierName: 'a'
             end: Object {
               column: 1
               index: 218
@@ -1177,6 +1192,7 @@ Program {
             name: 'f'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'f'
               end: Object {
                 column: 27
                 index: 244
@@ -1213,6 +1229,7 @@ Program {
                 name: 'e'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'e'
                   end: Object {
                     column: 22
                     index: 239
@@ -1260,6 +1277,7 @@ Program {
                   name: 'b'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'b'
                     end: Object {
                       column: 6
                       index: 223
@@ -1290,6 +1308,7 @@ Program {
                     name: 'd'
                     loc: Object {
                       filename: 'input.js'
+                      identifierName: 'd'
                       end: Object {
                         column: 17
                         index: 234
@@ -1327,6 +1346,7 @@ Program {
                         name: 'c'
                         loc: Object {
                           filename: 'input.js'
+                          identifierName: 'c'
                           end: Object {
                             column: 11
                             index: 228
@@ -1386,6 +1406,7 @@ Program {
           name: 'g'
           loc: Object {
             filename: 'input.js'
+            identifierName: 'g'
             end: Object {
               column: 31
               index: 310
@@ -1403,6 +1424,7 @@ Program {
           leadingComments: undefined
           loc: Object {
             filename: 'input.js'
+            identifierName: 'a'
             end: Object {
               column: 1
               index: 280
@@ -1433,6 +1455,7 @@ Program {
             name: 'f'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'f'
               end: Object {
                 column: 27
                 index: 306
@@ -1469,6 +1492,7 @@ Program {
                 name: 'e'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'e'
                   end: Object {
                     column: 22
                     index: 301
@@ -1516,6 +1540,7 @@ Program {
                   name: 'b'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'b'
                     end: Object {
                       column: 6
                       index: 285
@@ -1546,6 +1571,7 @@ Program {
                     name: 'd'
                     loc: Object {
                       filename: 'input.js'
+                      identifierName: 'd'
                       end: Object {
                         column: 17
                         index: 296
@@ -1583,6 +1609,7 @@ Program {
                         name: 'c'
                         loc: Object {
                           filename: 'input.js'
+                          identifierName: 'c'
                           end: Object {
                             column: 11
                             index: 290
@@ -1642,6 +1669,7 @@ Program {
           name: 'h'
           loc: Object {
             filename: 'input.js'
+            identifierName: 'h'
             end: Object {
               column: 34
               index: 417
@@ -1659,6 +1687,7 @@ Program {
           leadingComments: undefined
           loc: Object {
             filename: 'input.js'
+            identifierName: 'b'
             end: Object {
               column: 5
               index: 388
@@ -1689,6 +1718,7 @@ Program {
             name: 'g'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'g'
               end: Object {
                 column: 30
                 index: 413
@@ -1705,6 +1735,7 @@ Program {
             name: 'c'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'c'
               end: Object {
                 column: 9
                 index: 392
@@ -1735,6 +1766,7 @@ Program {
               name: 'f'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'f'
                 end: Object {
                   column: 25
                   index: 408
@@ -1771,6 +1803,7 @@ Program {
                   name: 'd'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'd'
                     end: Object {
                       column: 14
                       index: 397
@@ -1789,6 +1822,7 @@ Program {
                   name: 'e'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'e'
                     end: Object {
                       column: 19
                       index: 402
@@ -1875,6 +1909,7 @@ Program {
           leadingComments: undefined
           loc: Object {
             filename: 'input.js'
+            identifierName: 'a'
             end: Object {
               column: 1
               index: 455
@@ -1905,6 +1940,7 @@ Program {
             name: 'h'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'h'
               end: Object {
                 column: 34
                 index: 488
@@ -1921,6 +1957,7 @@ Program {
             name: 'b'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'b'
               end: Object {
                 column: 5
                 index: 459
@@ -1951,6 +1988,7 @@ Program {
               name: 'g'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'g'
                 end: Object {
                   column: 30
                   index: 484
@@ -1967,6 +2005,7 @@ Program {
               name: 'c'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'c'
                 end: Object {
                   column: 9
                   index: 463
@@ -1997,6 +2036,7 @@ Program {
                 name: 'f'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'f'
                   end: Object {
                     column: 25
                     index: 479
@@ -2033,6 +2073,7 @@ Program {
                     name: 'd'
                     loc: Object {
                       filename: 'input.js'
+                      identifierName: 'd'
                       end: Object {
                         column: 14
                         index: 468
@@ -2051,6 +2092,7 @@ Program {
                     name: 'e'
                     loc: Object {
                       filename: 'input.js'
+                      identifierName: 'e'
                       end: Object {
                         column: 19
                         index: 473
@@ -2122,6 +2164,7 @@ Program {
           name: 'g'
           loc: Object {
             filename: 'input.js'
+            identifierName: 'g'
             end: Object {
               column: 32
               index: 563
@@ -2139,6 +2182,7 @@ Program {
           leadingComments: undefined
           loc: Object {
             filename: 'input.js'
+            identifierName: 'a'
             end: Object {
               column: 1
               index: 532
@@ -2169,6 +2213,7 @@ Program {
             name: 'c'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'c'
               end: Object {
                 column: 10
                 index: 541
@@ -2185,6 +2230,7 @@ Program {
             name: 'b'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'b'
               end: Object {
                 column: 5
                 index: 536
@@ -2215,6 +2261,7 @@ Program {
               name: 'f'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'f'
                 end: Object {
                   column: 28
                   index: 559
@@ -2251,6 +2298,7 @@ Program {
                   name: 'd'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'd'
                     end: Object {
                       column: 16
                       index: 547
@@ -2269,6 +2317,7 @@ Program {
                   name: 'e'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'e'
                     end: Object {
                       column: 22
                       index: 553
@@ -2343,6 +2392,7 @@ Program {
           leadingComments: undefined
           loc: Object {
             filename: 'input.js'
+            identifierName: 'a'
             end: Object {
               column: 1
               index: 630
@@ -2373,6 +2423,7 @@ Program {
             name: 'g'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'g'
               end: Object {
                 column: 31
                 index: 660
@@ -2409,6 +2460,7 @@ Program {
                 name: 'e'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'e'
                   end: Object {
                     column: 21
                     index: 650
@@ -2427,6 +2479,7 @@ Program {
                 name: 'f'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'f'
                   end: Object {
                     column: 26
                     index: 655
@@ -2474,6 +2527,7 @@ Program {
             name: 'd'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'd'
               end: Object {
                 column: 16
                 index: 645
@@ -2510,6 +2564,7 @@ Program {
                 name: 'b'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'b'
                   end: Object {
                     column: 6
                     index: 635
@@ -2528,6 +2583,7 @@ Program {
                 name: 'c'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'c'
                   end: Object {
                     column: 11
                     index: 640
@@ -2597,6 +2653,7 @@ Program {
           name: 'g'
           loc: Object {
             filename: 'input.js'
+            identifierName: 'g'
             end: Object {
               column: 31
               index: 803
@@ -2614,6 +2671,7 @@ Program {
           leadingComments: undefined
           loc: Object {
             filename: 'input.js'
+            identifierName: 'a'
             end: Object {
               column: 1
               index: 773
@@ -2664,6 +2722,7 @@ Program {
                 name: 'b'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'b'
                   end: Object {
                     column: 6
                     index: 778
@@ -2682,6 +2741,7 @@ Program {
                 name: 'c'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'c'
                   end: Object {
                     column: 11
                     index: 783
@@ -2728,6 +2788,7 @@ Program {
               name: 'f'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'f'
                 end: Object {
                   column: 27
                   index: 799
@@ -2764,6 +2825,7 @@ Program {
                   name: 'd'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'd'
                     end: Object {
                       column: 17
                       index: 789
@@ -2782,6 +2844,7 @@ Program {
                   name: 'e'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'e'
                     end: Object {
                       column: 22
                       index: 794
@@ -2868,6 +2931,7 @@ Program {
           leadingComments: undefined
           loc: Object {
             filename: 'input.js'
+            identifierName: 'a'
             end: Object {
               column: 1
               index: 843
@@ -2918,6 +2982,7 @@ Program {
                 name: 'b'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'b'
                   end: Object {
                     column: 6
                     index: 848
@@ -2936,6 +3001,7 @@ Program {
                 name: 'c'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'c'
                   end: Object {
                     column: 11
                     index: 853
@@ -2982,6 +3048,7 @@ Program {
               name: 'f'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'f'
                 end: Object {
                   column: 30
                   index: 872
@@ -3054,6 +3121,7 @@ Program {
                   name: 'd'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'd'
                     end: Object {
                       column: 20
                       index: 862
@@ -3072,6 +3140,7 @@ Program {
                   name: 'e'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'e'
                     end: Object {
                       column: 25
                       index: 867
@@ -3161,6 +3230,7 @@ Program {
           leadingComments: undefined
           loc: Object {
             filename: 'input.js'
+            identifierName: 'a'
             end: Object {
               column: 1
               index: 910
@@ -3247,6 +3317,7 @@ Program {
                 name: 'b'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'b'
                   end: Object {
                     column: 9
                     index: 918
@@ -3265,6 +3336,7 @@ Program {
                 name: 'c'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'c'
                   end: Object {
                     column: 14
                     index: 923
@@ -3311,6 +3383,7 @@ Program {
               name: 'f'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'f'
                 end: Object {
                   column: 30
                   index: 939
@@ -3347,6 +3420,7 @@ Program {
                   name: 'd'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'd'
                     end: Object {
                       column: 20
                       index: 929
@@ -3365,6 +3439,7 @@ Program {
                   name: 'e'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'e'
                     end: Object {
                       column: 25
                       index: 934
@@ -3454,6 +3529,7 @@ Program {
           leadingComments: undefined
           loc: Object {
             filename: 'input.js'
+            identifierName: 'a'
             end: Object {
               column: 1
               index: 1_018
@@ -3484,6 +3560,7 @@ Program {
             name: 'e'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'e'
               end: Object {
                 column: 21
                 index: 1_038
@@ -3538,6 +3615,7 @@ Program {
                 name: 'd'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'd'
                   end: Object {
                     column: 16
                     index: 1_033
@@ -3626,6 +3704,7 @@ Program {
           leadingComments: undefined
           loc: Object {
             filename: 'input.js'
+            identifierName: 'a'
             end: Object {
               column: 1
               index: 1_068
@@ -3656,6 +3735,7 @@ Program {
             name: 'g'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'g'
               end: Object {
                 column: 29
                 index: 1_096
@@ -3672,6 +3752,7 @@ Program {
             name: 'b'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'b'
               end: Object {
                 column: 5
                 index: 1_072
@@ -3702,6 +3783,7 @@ Program {
               name: 'f'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'f'
                 end: Object {
                   column: 25
                   index: 1_092
@@ -3756,6 +3838,7 @@ Program {
                   name: 'e'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'e'
                     end: Object {
                       column: 20
                       index: 1_087
@@ -3845,6 +3928,7 @@ Program {
           leadingComments: undefined
           loc: Object {
             filename: 'input.js'
+            identifierName: 'a'
             end: Object {
               column: 1
               index: 1_199
@@ -3895,6 +3979,7 @@ Program {
                 name: 'b'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'b'
                   end: Object {
                     column: 6
                     index: 1_204
@@ -3913,6 +3998,7 @@ Program {
                 name: 'c'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'c'
                   end: Object {
                     column: 11
                     index: 1_209
@@ -3959,6 +4045,7 @@ Program {
               name: 'g'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'g'
                 end: Object {
                   column: 32
                   index: 1_230
@@ -4013,6 +4100,7 @@ Program {
                   name: 'f'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'f'
                     end: Object {
                       column: 27
                       index: 1_225
@@ -4084,6 +4172,7 @@ Program {
           leadingComments: undefined
           loc: Object {
             filename: 'input.js'
+            identifierName: 'a'
             end: Object {
               column: 1
               index: 1_272
@@ -4118,6 +4207,7 @@ Program {
             name: 'f'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'f'
               end: Object {
                 column: 27
                 index: 1_424
@@ -4135,6 +4225,7 @@ Program {
             leadingComments: undefined
             loc: Object {
               filename: 'input.js'
+              identifierName: 'a'
               end: Object {
                 column: 1
                 index: 1_398
@@ -4165,6 +4256,7 @@ Program {
               name: 'e'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'e'
                 end: Object {
                   column: 23
                   index: 1_420
@@ -4201,6 +4293,7 @@ Program {
                   name: 'b'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'b'
                     end: Object {
                       column: 6
                       index: 1_403
@@ -4233,6 +4326,7 @@ Program {
                     name: 'd'
                     loc: Object {
                       filename: 'input.js'
+                      identifierName: 'd'
                       end: Object {
                         column: 17
                         index: 1_414
@@ -4296,6 +4390,7 @@ Program {
                           name: 'c'
                           loc: Object {
                             filename: 'input.js'
+                            identifierName: 'c'
                             end: Object {
                               column: 12
                               index: 1_409
@@ -4348,22 +4443,6 @@ Program {
               line: 30
             }
           }
-          test: ReferenceIdentifier {
-            name: 'b'
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 5
-                index: 1_276
-                line: 30
-              }
-              start: Object {
-                column: 4
-                index: 1_275
-                line: 30
-              }
-            }
-          }
           alternate: ReferenceIdentifier {
             name: 'INVALID_PLACEHOLDER'
             trailingComments: undefined
@@ -4377,6 +4456,23 @@ Program {
               start: Object {
                 column: 41
                 index: 1_312
+                line: 30
+              }
+            }
+          }
+          test: ReferenceIdentifier {
+            name: 'b'
+            loc: Object {
+              filename: 'input.js'
+              identifierName: 'b'
+              end: Object {
+                column: 5
+                index: 1_276
+                line: 30
+              }
+              start: Object {
+                column: 4
+                index: 1_275
                 line: 30
               }
             }
@@ -4437,6 +4533,7 @@ Program {
                   name: 'e'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'e'
                     end: Object {
                       column: 20
                       index: 1_291
@@ -4483,6 +4580,7 @@ Program {
                 name: 'i'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'i'
                   end: Object {
                     column: 41
                     index: 1_312
@@ -4537,6 +4635,7 @@ Program {
                     name: 'h'
                     loc: Object {
                       filename: 'input.js'
+                      identifierName: 'h'
                       end: Object {
                         column: 36
                         index: 1_307
@@ -4627,6 +4726,7 @@ Program {
           leadingComments: undefined
           loc: Object {
             filename: 'input.js'
+            identifierName: 'a'
             end: Object {
               column: 1
               index: 1_488
@@ -4657,6 +4757,7 @@ Program {
             name: 'd'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'd'
               end: Object {
                 column: 22
                 index: 1_509
@@ -4692,6 +4793,7 @@ Program {
                 name: 'b'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'b'
                   end: Object {
                     column: 12
                     index: 1_499
@@ -4710,6 +4812,7 @@ Program {
                 name: 'c'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'c'
                   end: Object {
                     column: 17
                     index: 1_504
@@ -4776,6 +4879,7 @@ Program {
           name: 'e'
           loc: Object {
             filename: 'input.js'
+            identifierName: 'e'
             end: Object {
               column: 26
               index: 1_566
@@ -4793,6 +4897,7 @@ Program {
           leadingComments: undefined
           loc: Object {
             filename: 'input.js'
+            identifierName: 'a'
             end: Object {
               column: 1
               index: 1_541
@@ -4823,6 +4928,7 @@ Program {
             name: 'd'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'd'
               end: Object {
                 column: 22
                 index: 1_562
@@ -4858,6 +4964,7 @@ Program {
                 name: 'b'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'b'
                   end: Object {
                     column: 12
                     index: 1_552
@@ -4876,6 +4983,7 @@ Program {
                 name: 'c'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'c'
                   end: Object {
                     column: 17
                     index: 1_557
@@ -4961,6 +5069,7 @@ Program {
           leadingComments: undefined
           loc: Object {
             filename: 'input.js'
+            identifierName: 'a'
             end: Object {
               column: 1
               index: 1_600
@@ -4991,6 +5100,7 @@ Program {
             name: 'e'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'e'
               end: Object {
                 column: 27
                 index: 1_626
@@ -5044,6 +5154,7 @@ Program {
                 name: 'd'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'd'
                   end: Object {
                     column: 22
                     index: 1_621
@@ -5132,6 +5243,7 @@ Program {
           leadingComments: undefined
           loc: Object {
             filename: 'input.js'
+            identifierName: 'a'
             end: Object {
               column: 1
               index: 1_663
@@ -5182,6 +5294,7 @@ Program {
                 name: 'b'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'b'
                   end: Object {
                     column: 12
                     index: 1_674
@@ -5214,6 +5327,7 @@ Program {
               name: 'f'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'f'
                 end: Object {
                   column: 34
                   index: 1_696
@@ -5268,6 +5382,7 @@ Program {
                   name: 'e'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'e'
                     end: Object {
                       column: 29
                       index: 1_691
@@ -5341,6 +5456,7 @@ Program {
               leadingComments: undefined
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'icecream'
                 end: Object {
                   column: 12
                   index: 1_803
@@ -5412,22 +5528,6 @@ Program {
                     line: 42
                   }
                 }
-                left: ReferenceIdentifier {
-                  name: 'what'
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 19
-                      index: 1_810
-                      line: 42
-                    }
-                    start: Object {
-                      column: 15
-                      index: 1_806
-                      line: 42
-                    }
-                  }
-                }
                 right: StringLiteral {
                   value: 'cone'
                   loc: Object {
@@ -5440,6 +5540,23 @@ Program {
                     start: Object {
                       column: 23
                       index: 1_814
+                      line: 42
+                    }
+                  }
+                }
+                left: ReferenceIdentifier {
+                  name: 'what'
+                  loc: Object {
+                    filename: 'input.js'
+                    identifierName: 'what'
+                    end: Object {
+                      column: 19
+                      index: 1_810
+                      line: 42
+                    }
+                    start: Object {
+                      column: 15
+                      index: 1_806
                       line: 42
                     }
                   }
@@ -5482,6 +5599,7 @@ Program {
                       name: 'p'
                       loc: Object {
                         filename: 'input.js'
+                        identifierName: 'p'
                         end: Object {
                           column: 5
                           index: 1_826
@@ -5552,6 +5670,7 @@ Program {
                         name: 'p'
                         loc: Object {
                           filename: 'input.js'
+                          identifierName: 'p'
                           end: Object {
                             column: 5
                             index: 1_899
@@ -5599,6 +5718,7 @@ Program {
                         name: 'p'
                         loc: Object {
                           filename: 'input.js'
+                          identifierName: 'p'
                           end: Object {
                             column: 25
                             index: 1_919
@@ -5615,6 +5735,7 @@ Program {
                         name: 'what'
                         loc: Object {
                           filename: 'input.js'
+                          identifierName: 'what'
                           end: Object {
                             column: 33
                             index: 1_927

@@ -128,6 +128,7 @@ Program {
               name: 'otherNumVal'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'otherNumVal'
                 end: Object {
                   column: 31
                   index: 31

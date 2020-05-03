@@ -38,6 +38,7 @@ Program {
         name: 'T'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'T'
           end: Object {
             column: 6
             index: 6
@@ -87,6 +88,7 @@ Program {
               name: 'a'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'a'
                 end: Object {
                   column: 12
                   index: 12
@@ -158,6 +160,7 @@ Program {
         name: 'T1'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'T1'
           end: Object {
             column: 7
             index: 35
@@ -207,6 +210,7 @@ Program {
               name: 'a'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'a'
                 end: Object {
                   column: 13
                   index: 41
@@ -313,6 +317,7 @@ Program {
         name: 'T2'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'T2'
           end: Object {
             column: 7
             index: 67
@@ -362,6 +367,7 @@ Program {
               name: 'a'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'a'
                 end: Object {
                   column: 13
                   index: 73
@@ -433,6 +439,7 @@ Program {
         name: 'T3'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'T3'
           end: Object {
             column: 7
             index: 92
@@ -482,6 +489,7 @@ Program {
               name: 'a'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'a'
                 end: Object {
                   column: 13
                   index: 98
@@ -588,6 +596,7 @@ Program {
         name: 'T4'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'T4'
           end: Object {
             column: 7
             index: 121
@@ -688,6 +697,7 @@ Program {
         name: 'T5'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'T5'
           end: Object {
             column: 7
             index: 147
@@ -804,6 +814,7 @@ Program {
                     name: 'x'
                     loc: Object {
                       filename: 'input.js'
+                      identifierName: 'x'
                       end: Object {
                         column: 17
                         index: 157
@@ -849,6 +860,7 @@ Program {
                         name: 'T'
                         loc: Object {
                           filename: 'input.js'
+                          identifierName: 'T'
                           end: Object {
                             column: 20
                             index: 160
@@ -903,6 +915,7 @@ Program {
         name: 'T6'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'T6'
           end: Object {
             column: 16
             index: 190
@@ -955,6 +968,7 @@ Program {
               name: 'foo'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'foo'
                 end: Object {
                   column: 22
                   index: 196
@@ -1026,6 +1040,7 @@ Program {
         name: 'T7'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'T7'
           end: Object {
             column: 16
             index: 226
@@ -1078,6 +1093,7 @@ Program {
               name: 'foo'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'foo'
                 end: Object {
                   column: 29
                   index: 239
@@ -1149,6 +1165,7 @@ Program {
         name: 'T8'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'T8'
           end: Object {
             column: 16
             index: 269
@@ -1252,6 +1269,7 @@ Program {
         name: 'T9'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'T9'
           end: Object {
             column: 16
             index: 301

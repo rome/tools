@@ -80,6 +80,7 @@ Program {
           name: 'let'
           loc: Object {
             filename: 'input.js'
+            identifierName: 'let'
             end: Object {
               column: 10
               index: 10

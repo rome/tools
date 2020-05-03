@@ -10,50 +10,104 @@ import {
   DiagnosticAdviceAction,
   DiagnosticCategory,
   DiagnosticDescriptionOptionalCategory,
+  DiagnosticLocation,
   descriptions,
 } from '@romejs/diagnostics';
-import {LintCompilerOptionsDecision} from '../types';
+import {
+  LintCompilerOptionsDecision,
+  LintCompilerOptionsDecisionAction,
+} from '../types';
 import {ob1Get0, ob1Get1} from '@romejs/ob1';
 import {AbsoluteFilePath} from '@romejs/path';
-import {LinterOptions} from '@romejs/core/master/linter/Linter';
+import {LinterCompilerOptionsPerFile} from '@romejs/core/master/linter/Linter';
 import {escapeSplit} from '@romejs/string-utils';
+
+type UnexpectedDecision = (
+  description: DiagnosticDescriptionOptionalCategory,
+) => void;
+
+function validateAction(
+  raw: string,
+  unexpected: UnexpectedDecision,
+): undefined | LintCompilerOptionsDecisionAction {
+  if (raw === 'fix' || raw === 'suppress' || raw === 'ignore') {
+    return raw;
+  } else {
+    unexpected(descriptions.LINT_COMMAND.INVALID_DECISION_ACTION(raw));
+    return undefined;
+  }
+}
+
+export function deriveDecisionPositionKey(
+  action: LintCompilerOptionsDecisionAction,
+  loc: undefined | DiagnosticLocation,
+): undefined | string {
+  if (loc === undefined) {
+    return undefined;
+  }
+
+  const {start} = loc;
+  if (start === undefined) {
+    return undefined;
+  }
+
+  if (action === 'suppress') {
+    return `${ob1Get1(start.line)}`;
+  } else {
+    return `${ob1Get1(start.line)}:${ob1Get0(start.column)}`;
+  }
+}
 
 export function parseDecisionStrings(
   decisions: Array<string>,
   cwd: AbsoluteFilePath,
-  unexpected: (description: DiagnosticDescriptionOptionalCategory) => void,
-): LinterOptions['compilerOptionsPerFile'] {
-  const compilerOptionsPerFile: LinterOptions['compilerOptionsPerFile'] = {};
+  unexpected: UnexpectedDecision,
+): {
+  lintCompilerOptionsPerFile: LinterCompilerOptionsPerFile;
+  globalDecisions: Array<LintCompilerOptionsDecision>;
+} {
+  const lintCompilerOptionsPerFile: LinterCompilerOptionsPerFile = {};
+  const globalDecisions: Array<LintCompilerOptionsDecision> = [];
 
-  for (let i = 0; i < decisions.length; i++) {
-    const segment = decisions[i];
-    const parts = escapeSplit(segment, '-');
+  function parseGlobalDecision(parts: Array<string>, i: number) {
+    if (parts.length !== 3) {
+      unexpected(descriptions.LINT_COMMAND.INVALID_DECISION_PART_COUNT(i));
+    }
 
-    if (parts.length < 4) {
+    const [rawAction, rawCategory] = parts;
+
+    const action = validateAction(rawAction, unexpected);
+    if (action === undefined) {
+      return;
+    }
+
+    const category = (rawCategory as DiagnosticCategory);
+    globalDecisions.push({category, action});
+  }
+
+  function parseLineDecision(parts: Array<string>, i: number) {
+    if (parts.length < 4 || parts.length > 5) {
       unexpected(descriptions.LINT_COMMAND.INVALID_DECISION_PART_COUNT(i));
     }
 
     const [rawAction, rawCategory, rawFilename, pos, id] = parts;
 
-    if (
-      rawAction !== 'fix' &&
-      rawAction !== 'suppress' &&
-      rawAction !== 'ignore'
-    ) {
-      unexpected(descriptions.LINT_COMMAND.INVALID_DECISION_ACTION(rawAction));
-      break;
+    const action = validateAction(rawAction, unexpected);
+    if (action === undefined) {
+      return;
     }
 
-    const action = rawAction;
     const category = (rawCategory as DiagnosticCategory);
     const resolvedFilename = cwd.resolve(rawFilename).join();
 
-    let compilerOptions = compilerOptionsPerFile[resolvedFilename];
+    let compilerOptions = lintCompilerOptionsPerFile[resolvedFilename];
     if (compilerOptions === undefined) {
       compilerOptions = {
+        hasDecisions: true,
+        globalDecisions: [],
         decisionsByPosition: {},
       };
-      compilerOptionsPerFile[resolvedFilename] = compilerOptions;
+      lintCompilerOptionsPerFile[resolvedFilename] = compilerOptions;
     }
 
     let decisionsForPosition = compilerOptions.decisionsByPosition[pos];
@@ -69,36 +123,48 @@ export function parseDecisionStrings(
     });
   }
 
-  return compilerOptionsPerFile;
+  for (let i = 0; i < decisions.length; i++) {
+    const segment = decisions[i];
+    const parts = escapeSplit(segment, '-');
+
+    if (parts[0] === 'global') {
+      parseGlobalDecision(parts.slice(1), i);
+    } else {
+      parseLineDecision(parts, i);
+    }
+  }
+
+  return {lintCompilerOptionsPerFile, globalDecisions};
 }
 
-export function buildLintDecisionAdviceAction(
+function escapeFilename(filename: string): string {
+  return filename.replace(/-/, '\\-');
+}
+
+export function buildLintDecisionGlobalString(
+  action: LintCompilerOptionsDecisionAction,
+  category: DiagnosticCategory,
+): string {
+  return `global-${action}-${category}`;
+}
+
+export function buildLintDecisionString(
   {
-    noun,
-    instruction,
     filename,
     action,
     category,
     start,
-    shortcut,
     id,
   }: {
-    shortcut?: string;
-    noun: string;
-    instruction: string;
     filename: string;
-    action: LintCompilerOptionsDecision['action'];
+    action: LintCompilerOptionsDecisionAction;
     category: DiagnosticCategory;
     start: Position;
     id?: number;
   },
-): DiagnosticAdviceAction {
-  const escapedFilename = filename.replace(/-/, '\\-');
-
-  const pos =
-    action === 'suppress'
-      ? `${ob1Get1(start.line)}`
-      : `${ob1Get1(start.line)}:${ob1Get0(start.column)}`;
+): string {
+  const escapedFilename = escapeFilename(filename);
+  const pos = deriveDecisionPositionKey(action, {start});
 
   const parts = [action, category, escapedFilename, pos];
 
@@ -106,14 +172,33 @@ export function buildLintDecisionAdviceAction(
     parts.push(String(id));
   }
 
-  const decision = parts.join('-');
+  return parts.join('-');
+}
 
+export function buildLintDecisionAdviceAction(
+  {
+    noun,
+    instruction,
+    filename,
+    shortcut,
+    decision,
+    extra,
+  }: {
+    extra?: boolean;
+    shortcut?: string;
+    noun: string;
+    instruction: string;
+    filename?: string;
+    decision: string;
+  },
+): DiagnosticAdviceAction {
   return {
     type: 'action',
+    extra,
     hidden: true,
     command: 'lint',
     shortcut,
-    args: [filename],
+    args: filename === undefined ? [] : [escapeFilename(filename)],
     noun,
     instruction,
     commandFlags: {

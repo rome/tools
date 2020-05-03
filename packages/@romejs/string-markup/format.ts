@@ -5,128 +5,92 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Children, MarkupTagName, TagAttributes, TagNode} from './types';
-import {parseMarkup} from './parse';
 import {
-  humanizeFileSize,
-  humanizeNumber,
-  humanizeTime,
-} from '@romejs/string-utils';
-import {ansiPad} from './ansi';
-import {AbsoluteFilePath, createUnknownFilePath} from '@romejs/path';
+  Children,
+  MarkupFormatGridOptions,
+  MarkupFormatNormalizeOptions,
+  TagNode,
+} from './types';
+import {parseMarkup} from './parse';
 import {escapeMarkup} from './escape';
+import Grid from './Grid';
+import {ob1Get1} from '@romejs/ob1';
+import {
+  formatGrammarNumber,
+  getFileLinkFilename,
+  getFileLinkText,
+} from './tagFormatters';
 
-export type MarkupFormatFilenameNormalizer = (filename: string) => string;
-
-export type MarkupFormatFilenameHumanizer = (
-  filename: string,
-) => undefined | string;
-
-export type MarkupFormatOptions = {
-  normalizeFilename?: MarkupFormatFilenameNormalizer;
-  humanizeFilename?: MarkupFormatFilenameHumanizer;
-  cwd?: AbsoluteFilePath;
-};
-
-const EMPTY_ATTRIBUTES: Map<string, string> = new Map();
-
-type FormatReduceOptions = {
-  ancestry: Array<TagNode>;
-  formatText: (value: string, tags: Array<TagNode>) => string;
-  formatTag?: (
-    name: MarkupTagName,
-    attributes: TagAttributes,
-    value: string,
-  ) => string;
-};
-
-export function formatReduceFromInput(
-  input: string,
-  opts: FormatReduceOptions,
+function buildTag(
+  tag: TagNode,
+  inner: string,
+  opts: MarkupFormatNormalizeOptions,
 ): string {
-  return formatReduceFromChildren(parseMarkup(input), opts);
-}
+  let {attributes} = tag;
 
-// Ignore nested bare tags eg. <emphasis><emphasis>foo</emphasis></emphasis>
-function shouldIgnoreTag(
-  tagName: MarkupTagName,
-  opts: FormatReduceOptions,
-): boolean {
-  for (const tag of opts.ancestry) {
-    if (tag.attributes.size === 0 && tag.name === tagName) {
-      return true;
+  switch (tag.name) {
+    case // Normalize filename of <filelink target>
+    'filelink': {
+      // Clone
+      attributes = {...attributes};
+
+      const filename = getFileLinkFilename(attributes, opts);
+      const text = getFileLinkText(filename, attributes, opts);
+      attributes.target = filename;
+      if (opts.stripPositions) {
+        attributes.line = undefined;
+        attributes.column = undefined;
+      }
+      inner = text;
+      break;
+    }
+
+    // We don't technically need to normalize this but it's one less tag to have to support
+    // if other tools need to consume it
+    case 'grammarNumber':
+      return formatGrammarNumber(attributes, inner);
+  }
+
+  let open = `<${tag.name}`;
+
+  // Print attributes
+  for (const key in attributes) {
+    const value = attributes[key];
+    if (value === undefined) {
+      continue;
+    }
+
+    if (value === 'true') {
+      open += ` ${key}`;
+    } else {
+      const escapedValue = escapeMarkup(value);
+      open += ` ${key}="${escapedValue}"`;
     }
   }
-  return false;
+
+  if (inner === '') {
+    return `${open} />`;
+  } else {
+    return `${open}>${inner}</${tag.name}>`;
+  }
 }
 
-function formatReduceFromChildren(
+function normalizeMarkupChildren(
   children: Children,
-  opts: FormatReduceOptions,
+  opts: MarkupFormatNormalizeOptions,
 ): string {
-  const {formatTag, formatText} = opts;
-
   // Sometimes we'll populate the inner text of a tag with no children
   if (children.length === 0) {
-    return formatText('', opts.ancestry);
+    return '';
   }
 
   let buff = '';
   for (const child of children) {
     if (child.type === 'Text') {
-      buff += formatText(child.value, opts.ancestry);
+      buff += escapeMarkup(child.value);
     } else if (child.type === 'Tag') {
-      // Clone it since we'll be deleting attributes
-      const attributes = new Map(child.attributes.entries());
-
-      let emphasis =
-        attributes.get('emphasis') === 'true' &&
-        !shouldIgnoreTag('emphasis', opts);
-      attributes.delete('emphasis');
-
-      let dim =
-        attributes.get('dim') === 'true' && !shouldIgnoreTag('dim', opts);
-      attributes.delete('dim');
-
-      const applyTags: Array<TagNode> = [];
-      if (emphasis) {
-        applyTags.push({
-          type: 'Tag',
-          name: 'emphasis',
-          attributes: EMPTY_ATTRIBUTES,
-          children: [],
-        });
-      }
-      if (dim) {
-        applyTags.push({
-          type: 'Tag',
-          name: 'dim',
-          attributes: EMPTY_ATTRIBUTES,
-          children: [],
-        });
-      }
-      if (
-        attributes.size > 0 ||
-        (attributes.size === 0 && !shouldIgnoreTag(child.name, opts))
-      ) {
-        applyTags.push(child);
-      }
-
-      let res = formatReduceFromChildren(
-        child.children,
-        {
-          ...opts,
-          ancestry: [...opts.ancestry, ...applyTags],
-        },
-      );
-
-      if (formatTag !== undefined) {
-        for (const tag of applyTags) {
-          res = formatTag(tag.name, tag.attributes, res);
-        }
-      }
-
-      buff += res;
+      const inner = normalizeMarkupChildren(child.children, opts);
+      buff += buildTag(child, inner, opts);
     } else {
       throw new Error('Unknown child node type');
     }
@@ -134,194 +98,47 @@ function formatReduceFromChildren(
   return buff;
 }
 
-export function formatFileLink(
-  attributes: TagAttributes,
-  value: string,
-  opts: MarkupFormatOptions,
-): {
-  text: string;
-  filename: string;
-} {
-  let text = value;
-
-  // Normalize filename
-  let filename = attributes.get('target') || '';
-  if (opts.normalizeFilename !== undefined) {
-    filename = opts.normalizeFilename(filename);
-  }
-
-  // Default text to a humanized version of the filename
-  if (text === '') {
-    text = humanizeMarkupFilename(filename, opts);
-
-    const line = attributes.get('line');
-    if (line !== undefined) {
-      text += `:${line}`;
-
-      const column = attributes.get('column');
-      // Ignore a 0 column and just target the line
-      if (column !== undefined && column !== '0') {
-        text += `:${column}`;
-      }
-    }
-  }
-
-  return {text, filename};
-}
-
-export function formatApprox(attributes: TagAttributes, value: string) {
-  if (attributes.get('approx') === 'true') {
-    return `~${value}`;
-  } else {
-    return value;
-  }
-}
-
-export function formatGrammarNumber(attributes: TagAttributes, value: string) {
-  const num = Number(value);
-
-  const none = attributes.get('none');
-  if (none !== undefined && num === 0) {
-    return none;
-  }
-
-  const singular = attributes.get('singular');
-  if (singular !== undefined && num === 1) {
-    return singular;
-  }
-
-  const plural = attributes.get('plural');
-  if (plural !== undefined) {
-    return plural;
-  }
-
-  return '';
-}
-
-export function formatNumber(attributes: TagAttributes, value: string) {
-  const num = Number(value);
-  const human = humanizeNumber(num);
-  const humanWithApprox = formatApprox(attributes, human);
-  return humanWithApprox;
-}
-
-export function formatPad(attributes: TagAttributes, value: string) {
-  const left = attributes.get('dir') !== 'right';
-  const count = Number(attributes.get('count') || 0);
-  const char = attributes.get('char');
-  const padded = ansiPad(left ? 'left' : 'right', value, count, char);
-  return padded;
+export function markupToPlainTextString(
+  input: string,
+  opts: MarkupFormatGridOptions = {},
+): string {
+  return markupToPlainText(input, opts).lines.join('\n');
 }
 
 export function markupToPlainText(
   input: string,
-  opts: MarkupFormatOptions = {},
-): string {
-  return formatReduceFromInput(
-    input,
-    {
-      ancestry: [],
-      formatText: (text) => {
-        return text;
-      },
-      formatTag: (tag, attributes, value) => {
-        switch (tag) {
-          case 'filelink':
-            return formatFileLink(attributes, value, opts).text;
+  opts: MarkupFormatGridOptions = {},
+): MarkupLinesAndWidth {
+  const grid = new Grid(opts);
+  grid.drawRoot(parseMarkup(input));
+  return {
+    width: ob1Get1(grid.getWidth()),
+    lines: grid.getLines(),
+  };
+}
 
-          case 'number':
-            return formatNumber(attributes, value);
+export type MarkupLinesAndWidth = {
+  width: number;
+  lines: Array<string>;
+};
 
-          case 'grammarNumber':
-            return formatGrammarNumber(attributes, value);
+export function markupToAnsi(
+  input: string,
+  opts: MarkupFormatGridOptions = {},
+): MarkupLinesAndWidth {
+  const grid = new Grid(opts);
 
-          case 'duration':
-            return formatApprox(attributes, humanizeTime(Number(value), true));
+  grid.drawRoot(parseMarkup(input));
 
-          case 'filesize':
-            return humanizeFileSize(Number(value));
-
-          case 'pad':
-            return formatPad(attributes, value);
-
-          case 'command':
-            return `\`${value}\``;
-
-          case 'italic':
-            return `_${value}_`;
-
-          default:
-            return value;
-        }
-      },
-    },
-  );
+  return {
+    width: ob1Get1(grid.getWidth()),
+    lines: grid.getFormattedLines(),
+  };
 }
 
 export function normalizeMarkup(
   input: string,
-  opts: MarkupFormatOptions = {},
+  opts: MarkupFormatNormalizeOptions = {},
 ): string {
-  return formatReduceFromInput(
-    input,
-    {
-      ancestry: [],
-      formatText: (text) => {
-        return escapeMarkup(text);
-      },
-      formatTag: (tag, attributes, value) => {
-        switch (tag) {
-          case // Normalize filename of <filelink target>
-          'filelink': {
-            const {text, filename} = formatFileLink(attributes, value, opts);
-            attributes.set('target', filename);
-            value = text;
-            break;
-          }
-
-          // We don't technically need to normalize this but it's one less tag to have to support
-          // if other tools need to consume it
-          case 'grammarNumber':
-            return formatGrammarNumber(attributes, value);
-        }
-
-        let attrStr = Array.from(
-          attributes,
-          ([key, value]) => {
-            if (value === 'true') {
-              return key;
-            } else {
-              const escapedValue = escapeMarkup(value);
-              return `${key}="${escapedValue}"`;
-            }
-          },
-        ).join(' ');
-
-        let open = `<${tag}`;
-        if (attrStr !== '') {
-          open += ` ${attrStr}`;
-        }
-
-        if (value === '') {
-          return `${open} />`;
-        } else {
-          return `${open}>${value}</${tag}>`;
-        }
-      },
-    },
-  );
-}
-
-export function humanizeMarkupFilename(
-  filename: string,
-  opts: MarkupFormatOptions = {},
-): string {
-  if (opts.humanizeFilename !== undefined) {
-    const override = opts.humanizeFilename(filename);
-    if (override !== undefined) {
-      return override;
-    }
-  }
-
-  return createUnknownFilePath(filename).format(opts.cwd);
+  return normalizeMarkupChildren(parseMarkup(input), opts);
 }

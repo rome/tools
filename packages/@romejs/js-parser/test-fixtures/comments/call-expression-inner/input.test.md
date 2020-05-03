@@ -83,6 +83,7 @@ Program {
           name: 'callExpression'
           loc: Object {
             filename: 'input.js'
+            identifierName: 'callExpression'
             end: Object {
               column: 14
               index: 14

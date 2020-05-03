@@ -180,6 +180,7 @@ export function printTSBraced(
       hardline,
       '}',
     ]),
+    true,
   );
 }
 

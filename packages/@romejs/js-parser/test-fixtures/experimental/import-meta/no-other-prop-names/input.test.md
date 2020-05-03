@@ -85,6 +85,7 @@ Program {
           name: 'import'
           loc: Object {
             filename: 'input.js'
+            identifierName: 'import'
             end: Object {
               column: 6
               index: 6
@@ -101,6 +102,7 @@ Program {
           name: 'notMeta'
           loc: Object {
             filename: 'input.js'
+            identifierName: 'notMeta'
             end: Object {
               column: 14
               index: 14

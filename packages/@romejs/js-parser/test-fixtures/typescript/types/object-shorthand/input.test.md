@@ -83,6 +83,7 @@ Program {
               name: 'table'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'table'
                 end: Object {
                   column: 11
                   index: 11
@@ -130,6 +131,7 @@ Program {
                       name: 'put'
                       loc: Object {
                         filename: 'input.ts'
+                        identifierName: 'put'
                         end: Object {
                           column: 5
                           index: 21
@@ -215,6 +217,7 @@ Program {
                         name: 'value'
                         loc: Object {
                           filename: 'input.ts'
+                          identifierName: 'value'
                           end: Object {
                             column: 37
                             index: 53
@@ -260,6 +263,7 @@ Program {
                               name: 'T'
                               loc: Object {
                                 filename: 'input.ts'
+                                identifierName: 'T'
                                 end: Object {
                                   column: 40
                                   index: 56
@@ -328,6 +332,7 @@ Program {
                                     name: 'id'
                                     loc: Object {
                                       filename: 'input.ts'
+                                      identifierName: 'id'
                                       end: Object {
                                         column: 20
                                         index: 36

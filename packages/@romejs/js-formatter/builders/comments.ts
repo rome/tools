@@ -58,7 +58,9 @@ function printCommentSeparator(left: AnyNode, right: AnyNode): Token {
   const linesBetween = getLinesBetween(left, right);
   return linesBetween === 0
     ? space
-    : linesBetween === 1 ? hardline : concat([hardline, hardline]);
+    : linesBetween === 1
+      ? hardline
+      : concat([hardline, hardline]);
 }
 
 export function printLeadingComment(node: AnyComment, next: AnyNode): Token {

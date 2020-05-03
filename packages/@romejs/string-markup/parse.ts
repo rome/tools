@@ -27,8 +27,8 @@ import {unescapeTextValue} from './escape';
 
 const globalAttributes: Array<string> = ['emphasis', 'dim'];
 
+// Tags and their corresponding supported attributes
 const tags: Map<MarkupTagName, Array<string>> = new Map();
-tags.set('pad', ['dir', 'char', 'count']);
 tags.set('emphasis', []);
 tags.set('number', ['approx', 'pluralSuffix', 'singularSuffix']);
 tags.set('grammarNumber', ['plural', 'singular', 'none']);
@@ -48,6 +48,28 @@ tags.set('info', []);
 tags.set('command', []);
 tags.set('color', ['fg', 'bg']);
 tags.set('highlight', ['i']);
+tags.set('table', []);
+tags.set('tr', []);
+tags.set('td', ['align']);
+tags.set('hr', []);
+tags.set('pad', ['width', 'align']);
+tags.set('nobr', []);
+tags.set('li', []);
+tags.set('ul', []);
+tags.set('ol', ['reversed', 'start']);
+
+// Tags that only support certain other tags as their children
+const tagsToOnlyChildren: Map<MarkupTagName, Array<MarkupTagName>> = new Map();
+tagsToOnlyChildren.set('table', ['tr']);
+tagsToOnlyChildren.set('tr', ['td']);
+tagsToOnlyChildren.set('ol', ['li']);
+tagsToOnlyChildren.set('ul', ['li']);
+
+// Tags that should only be children of other tags
+const tagsToOnlyParent: Map<MarkupTagName, Array<MarkupTagName>> = new Map();
+tagsToOnlyParent.set('tr', ['table']);
+tagsToOnlyParent.set('td', ['tr']);
+tagsToOnlyParent.set('li', ['ol', 'ul']);
 
 //
 function isStringValueChar(char: string, index: Number0, input: string): boolean {
@@ -179,7 +201,10 @@ const createStringMarkupParser = createParser((ParserCore) =>
       return this.matchToken('Less') && this.lookahead().token.type === 'Slash';
     }
 
-    parseTag(headStart: Position): TagNode {
+    parseTag(
+      headStart: Position,
+      parentTagName: undefined | MarkupTagName,
+    ): TagNode {
       const nameToken = this.expectToken('Word');
       const tagName = (nameToken.value as MarkupTagName);
 
@@ -187,11 +212,47 @@ const createStringMarkupParser = createParser((ParserCore) =>
       if (allowedAttributes === undefined) {
         throw this.unexpected({
           description: descriptions.STRING_MARKUP.UNKNOWN_TAG_NAME(tagName),
-          start: this.getPositionFromIndex(nameToken.start),
+          token: nameToken,
         });
       }
 
-      const attributes: TagAttributes = new Map();
+      // Check if this tag is restricted to certain parents
+      const onlyAllowedAsChild = tagsToOnlyParent.get(tagName);
+      if (onlyAllowedAsChild !== undefined) {
+        if (
+          parentTagName === undefined ||
+          !onlyAllowedAsChild.includes(parentTagName)
+        ) {
+          throw this.unexpected({
+            description: descriptions.STRING_MARKUP.RESTRICTED_CHILD(
+              tagName,
+              onlyAllowedAsChild,
+              parentTagName,
+            ),
+            token: nameToken,
+          });
+        }
+      }
+
+      // Check if the parent only allows certain children
+      if (parentTagName !== undefined) {
+        const onlyAllowedAsParent = tagsToOnlyChildren.get(parentTagName);
+        if (
+          onlyAllowedAsParent !== undefined &&
+          !onlyAllowedAsParent.includes(tagName)
+        ) {
+          throw this.unexpected({
+            description: descriptions.STRING_MARKUP.RESTRICTED_PARENT(
+              parentTagName,
+              onlyAllowedAsParent,
+              tagName,
+            ),
+            token: nameToken,
+          });
+        }
+      }
+
+      const attributes: TagAttributes = {};
       const children: Children = [];
       let selfClosing = false;
 
@@ -211,6 +272,7 @@ const createStringMarkupParser = createParser((ParserCore) =>
               description: descriptions.STRING_MARKUP.INVALID_ATTRIBUTE_NAME_FOR_TAG(
                 tagName,
                 key,
+                [...allowedAttributes, ...globalAttributes],
               ),
             });
           }
@@ -223,7 +285,7 @@ const createStringMarkupParser = createParser((ParserCore) =>
             this.matchToken('Slash') ||
             this.matchToken('Greater')
           ) {
-            attributes.set(key, 'true');
+            attributes[key] = 'true';
             continue;
           }
 
@@ -235,7 +297,7 @@ const createStringMarkupParser = createParser((ParserCore) =>
           }
           const value = valueToken.value;
 
-          attributes.set(key, value);
+          attributes[key] = value;
         } else if (keyToken.type === 'Slash') {
           this.nextToken();
           selfClosing = true;
@@ -257,7 +319,10 @@ const createStringMarkupParser = createParser((ParserCore) =>
           !this.matchToken('EOF') &&
           !this.atTagEnd()
         ) {
-          children.push(this.parseChild());
+          const child = this.parseChild(tagName);
+          if (child !== undefined) {
+            children.push(child);
+          }
         }
 
         if (this.matchToken('EOF')) {
@@ -301,18 +366,36 @@ const createStringMarkupParser = createParser((ParserCore) =>
       };
     }
 
-    parseChild(): ChildNode {
+    parseChild(parentTagName: undefined | MarkupTagName): undefined | ChildNode {
       const start = this.getPosition();
       const token = this.getToken();
       this.nextToken();
 
       if (token.type === 'Text') {
+        // If this tag has restricted children then no text is allowed
+        if (parentTagName !== undefined) {
+          const onlyAllowedAsParent = tagsToOnlyChildren.get(parentTagName);
+          if (onlyAllowedAsParent !== undefined) {
+            // Ignore text that's just whitespace
+            if (token.value.trim() === '') {
+              return undefined;
+            } else {
+              throw this.unexpected({
+                description: descriptions.STRING_MARKUP.RESTRICTED_PARENT_TEXT(
+                  parentTagName,
+                ),
+                token,
+              });
+            }
+          }
+        }
+
         return {
           type: 'Text',
           value: token.value,
         };
       } else if (token.type === 'Less') {
-        return this.parseTag(start);
+        return this.parseTag(start, parentTagName);
       } else {
         throw this.unexpected({
           description: descriptions.STRING_MARKUP.UNKNOWN_START,
@@ -323,7 +406,10 @@ const createStringMarkupParser = createParser((ParserCore) =>
     parse(): Children {
       const children: Children = [];
       while (!this.matchToken('EOF')) {
-        children.push(this.parseChild());
+        const child = this.parseChild(undefined);
+        if (child !== undefined) {
+          children.push(child);
+        }
       }
       return children;
     }

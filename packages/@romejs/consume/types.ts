@@ -37,28 +37,35 @@ export type ConsumeContext = {
 
 export type ConsumePropertyMetadata = {
   description?: string;
+  inputName?: string;
 };
 
 type ConsumePropertyDefinitionBase = {
   objectPath: ConsumePath;
   default: unknown;
   required: boolean;
-  metadata?: ConsumePropertyMetadata;
+  metadata: ConsumePropertyMetadata;
 };
 
-type ConsumePropertyPrimitiveDefinition = ConsumePropertyDefinitionBase & {
-  type: 'string' | 'number' | 'boolean' | 'bigint' | 'date' | 'array' | 'object';
+export type ConsumePropertyPrimitiveDefinition = ConsumePropertyDefinitionBase & {
+  type: 'boolean' | 'bigint' | 'date' | 'array' | 'object';
 };
 
-type ConsumePropertyNumberRangeDefinition = ConsumePropertyDefinitionBase & {
-  type: 'number-range';
-  min: undefined | number;
-  max: undefined | number;
+export type ConsumePropertyStringDefinition = ConsumePropertyDefinitionBase & {
+  type: 'string';
+  allowedValues?: Array<string>;
+};
+
+export type ConsumePropertyNumberDefinition = ConsumePropertyDefinitionBase & {
+  type: 'number';
+  min?: number;
+  max?: number;
 };
 
 export type ConsumePropertyDefinition =
+  | ConsumePropertyStringDefinition
   | ConsumePropertyPrimitiveDefinition
-  | ConsumePropertyNumberRangeDefinition;
+  | ConsumePropertyNumberDefinition;
 
 export type ConsumerOnDefinition = (
   definition: ConsumePropertyDefinition,
@@ -68,6 +75,7 @@ export type ConsumerOnDefinition = (
 export type ConsumerHandleUnexpected = (diagnostic: Diagnostic) => void;
 
 export type ConsumerOptions = {
+  usedNames?: Iterable<string>;
   handleUnexpectedDiagnostic?: ConsumerHandleUnexpected;
   onDefinition?: ConsumerOnDefinition;
   propertyMetadata?: ConsumePropertyMetadata;

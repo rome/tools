@@ -30,10 +30,11 @@ const removeLocTransform: TransformVisitors = [
         const newNode: JSNodeBase = removeProp(node);
 
         // Also remove any `undefined` properties
-        // rome-suppress-next-line lint/noExplicitAny
+        // rome-ignore lint/noExplicitAny
         const escaped: any = newNode;
         for (const key in newNode) {
           if (escaped[key] === undefined) {
+            // rome-ignore lint/noDelete
             delete escaped[key];
           }
         }

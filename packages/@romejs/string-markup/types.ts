@@ -6,6 +6,8 @@
  */
 
 import {BaseTokens, SimpleToken, ValueToken} from '@romejs/parser-core';
+import {Dict} from '@romejs/typescript-helpers';
+import {AbsoluteFilePath} from '@romejs/path';
 
 export type Tokens = BaseTokens & {
   Text: ValueToken<'Text', string>;
@@ -23,7 +25,7 @@ export type TextNode = {
   value: string;
 };
 
-export type TagAttributes = Map<string, string>;
+export type TagAttributes = Dict<undefined | string>;
 
 export type TagNode = {
   type: 'Tag';
@@ -37,6 +39,7 @@ export type ChildNode = TextNode | TagNode;
 export type Children = Array<ChildNode>;
 
 export type MarkupTagName =
+  | 'hr'
   | 'pad'
   | 'grammarNumber'
   | 'command'
@@ -56,4 +59,31 @@ export type MarkupTagName =
   | 'warn'
   | 'info'
   | 'highlight'
-  | 'color';
+  | 'color'
+  | 'table'
+  | 'tr'
+  | 'td'
+  | 'nobr'
+  | 'ol'
+  | 'ul'
+  | 'li';
+
+export type MarkupFormatFilenameNormalizer = (filename: string) => string;
+
+export type MarkupFormatFilenameHumanizer = (
+  filename: string,
+) => undefined | string;
+
+export type MarkupFormatOptions = {
+  normalizeFilename?: MarkupFormatFilenameNormalizer;
+  humanizeFilename?: MarkupFormatFilenameHumanizer;
+  cwd?: AbsoluteFilePath;
+};
+
+export type MarkupFormatGridOptions = MarkupFormatOptions & {
+  columns?: number;
+};
+
+export type MarkupFormatNormalizeOptions = MarkupFormatOptions & {
+  stripPositions?: boolean;
+};

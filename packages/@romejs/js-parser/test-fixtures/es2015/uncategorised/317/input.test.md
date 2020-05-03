@@ -194,6 +194,7 @@ Program {
                     name: 'exec'
                     loc: Object {
                       filename: 'input.js'
+                      identifierName: 'exec'
                       end: Object {
                         column: 12
                         index: 12
@@ -208,6 +209,7 @@ Program {
                   }
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'exec'
                     end: Object {
                       column: 12
                       index: 12

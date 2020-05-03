@@ -123,6 +123,7 @@ Program {
               leadingComments: undefined
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'v1'
                 end: Object {
                   column: 6
                   index: 149
@@ -198,6 +199,7 @@ Program {
                   name: 'const'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'const'
                     end: Object {
                       column: 23
                       index: 166
@@ -251,6 +253,7 @@ Program {
               name: 'v2'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'v2'
                 end: Object {
                   column: 6
                   index: 174
@@ -309,6 +312,7 @@ Program {
                   name: 'const'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'const'
                     end: Object {
                       column: 23
                       index: 191
@@ -398,6 +402,7 @@ Program {
               name: 'v3'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'v3'
                 end: Object {
                   column: 6
                   index: 199
@@ -473,6 +478,7 @@ Program {
                   name: 'const'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'const'
                     end: Object {
                       column: 20
                       index: 213
@@ -526,6 +532,7 @@ Program {
               name: 'v4'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'v4'
                 end: Object {
                   column: 6
                   index: 221
@@ -584,6 +591,7 @@ Program {
                   name: 'const'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'const'
                     end: Object {
                       column: 21
                       index: 236
@@ -671,6 +679,7 @@ Program {
               name: 'v5'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'v5'
                 end: Object {
                   column: 6
                   index: 244
@@ -729,6 +738,7 @@ Program {
                   name: 'const'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'const'
                     end: Object {
                       column: 21
                       index: 259
@@ -816,6 +826,7 @@ Program {
               name: 'v6'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'v6'
                 end: Object {
                   column: 6
                   index: 267
@@ -891,6 +902,7 @@ Program {
                   name: 'const'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'const'
                     end: Object {
                       column: 20
                       index: 281
@@ -944,6 +956,7 @@ Program {
               name: 'v7'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'v7'
                 end: Object {
                   column: 6
                   index: 289
@@ -1002,6 +1015,7 @@ Program {
                   name: 'const'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'const'
                     end: Object {
                       column: 21
                       index: 304
@@ -1089,6 +1103,7 @@ Program {
               name: 'v8'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'v8'
                 end: Object {
                   column: 6
                   index: 312
@@ -1163,6 +1178,7 @@ Program {
                   name: 'const'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'const'
                     end: Object {
                       column: 22
                       index: 328
@@ -1216,6 +1232,7 @@ Program {
               name: 'v9'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'v9'
                 end: Object {
                   column: 6
                   index: 336
@@ -1290,6 +1307,7 @@ Program {
                   name: 'const'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'const'
                     end: Object {
                       column: 23
                       index: 353
@@ -1343,6 +1361,7 @@ Program {
               name: 'a1'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'a1'
                 end: Object {
                   column: 6
                   index: 362
@@ -1417,6 +1436,7 @@ Program {
                   name: 'const'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'const'
                     end: Object {
                       column: 20
                       index: 376
@@ -1470,6 +1490,7 @@ Program {
               name: 'a2'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'a2'
                 end: Object {
                   column: 6
                   index: 384
@@ -1528,6 +1549,7 @@ Program {
                   name: 'const'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'const'
                     end: Object {
                       column: 27
                       index: 405
@@ -1649,6 +1671,7 @@ Program {
               name: 'a3'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'a3'
                 end: Object {
                   column: 6
                   index: 413
@@ -1707,6 +1730,7 @@ Program {
                   name: 'const'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'const'
                     end: Object {
                       column: 37
                       index: 444
@@ -1826,6 +1850,7 @@ Program {
               name: 'a4'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'a4'
                 end: Object {
                   column: 6
                   index: 452
@@ -1884,6 +1909,7 @@ Program {
                   name: 'const'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'const'
                     end: Object {
                       column: 32
                       index: 478
@@ -2037,6 +2063,7 @@ Program {
               name: 'a5'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'a5'
                 end: Object {
                   column: 6
                   index: 486
@@ -2169,6 +2196,7 @@ Program {
               name: 'a6'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'a6'
                 end: Object {
                   column: 6
                   index: 506
@@ -2227,6 +2255,7 @@ Program {
                   name: 'const'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'const'
                     end: Object {
                       column: 25
                       index: 525
@@ -2273,6 +2302,7 @@ Program {
                       name: 'a5'
                       loc: Object {
                         filename: 'input.ts'
+                        identifierName: 'a5'
                         end: Object {
                           column: 15
                           index: 515
@@ -2328,6 +2358,7 @@ Program {
               name: 'a8'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'a8'
                 end: Object {
                   column: 6
                   index: 533
@@ -2386,6 +2417,7 @@ Program {
                   name: 'const'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'const'
                     end: Object {
                       column: 32
                       index: 559
@@ -2448,6 +2480,7 @@ Program {
                       name: 'a7'
                       loc: Object {
                         filename: 'input.ts'
+                        identifierName: 'a7'
                         end: Object {
                           column: 22
                           index: 549
@@ -2503,6 +2536,7 @@ Program {
               name: 'o1'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'o1'
                 end: Object {
                   column: 6
                   index: 568
@@ -2561,6 +2595,7 @@ Program {
                   name: 'const'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'const'
                     end: Object {
                       column: 34
                       index: 596
@@ -2595,6 +2630,7 @@ Program {
                         name: 'x'
                         loc: Object {
                           filename: 'input.ts'
+                          identifierName: 'x'
                           end: Object {
                             column: 12
                             index: 574
@@ -2659,6 +2695,7 @@ Program {
                         name: 'y'
                         loc: Object {
                           filename: 'input.ts'
+                          identifierName: 'y'
                           end: Object {
                             column: 19
                             index: 581
@@ -2759,6 +2796,7 @@ Program {
               name: 'o2'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'o2'
                 end: Object {
                   column: 6
                   index: 604
@@ -2817,6 +2855,7 @@ Program {
                   name: 'const'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'const'
                     end: Object {
                       column: 67
                       index: 665
@@ -2851,6 +2890,7 @@ Program {
                         name: 'a'
                         loc: Object {
                           filename: 'input.ts'
+                          identifierName: 'a'
                           end: Object {
                             column: 12
                             index: 610
@@ -3044,6 +3084,7 @@ Program {
                         name: 'd'
                         loc: Object {
                           filename: 'input.ts'
+                          identifierName: 'd'
                           end: Object {
                             column: 36
                             index: 634
@@ -3264,6 +3305,7 @@ Program {
               name: 'o3'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'o3'
                 end: Object {
                   column: 6
                   index: 673
@@ -3322,6 +3364,7 @@ Program {
                   name: 'const'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'const'
                     end: Object {
                       column: 34
                       index: 701
@@ -3368,6 +3411,7 @@ Program {
                       name: 'o1'
                       loc: Object {
                         filename: 'input.ts'
+                        identifierName: 'o1'
                         end: Object {
                           column: 16
                           index: 683
@@ -3399,6 +3443,7 @@ Program {
                       name: 'o2'
                       loc: Object {
                         filename: 'input.ts'
+                        identifierName: 'o2'
                         end: Object {
                           column: 23
                           index: 690
@@ -3454,6 +3499,7 @@ Program {
               name: 'o5'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'o5'
                 end: Object {
                   column: 6
                   index: 709
@@ -3512,6 +3558,7 @@ Program {
                   name: 'const'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'const'
                     end: Object {
                       column: 27
                       index: 730
@@ -3558,6 +3605,7 @@ Program {
                       name: 'o4'
                       loc: Object {
                         filename: 'input.ts'
+                        identifierName: 'o4'
                         end: Object {
                           column: 16
                           index: 719
@@ -3613,6 +3661,7 @@ Program {
               name: 'o7'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'o7'
                 end: Object {
                   column: 6
                   index: 738
@@ -3671,6 +3720,7 @@ Program {
                   name: 'const'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'const'
                     end: Object {
                       column: 26
                       index: 758
@@ -3717,6 +3767,7 @@ Program {
                       name: 'd'
                       loc: Object {
                         filename: 'input.ts'
+                        identifierName: 'd'
                         end: Object {
                           column: 15
                           index: 747
@@ -3774,6 +3825,7 @@ Program {
               name: 'o9'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'o9'
                 end: Object {
                   column: 6
                   index: 766
@@ -3832,6 +3884,7 @@ Program {
                   name: 'const'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'const'
                     end: Object {
                       column: 50
                       index: 810
@@ -3866,6 +3919,7 @@ Program {
                         name: 'x'
                         loc: Object {
                           filename: 'input.ts'
+                          identifierName: 'x'
                           end: Object {
                             column: 12
                             index: 772
@@ -3931,6 +3985,7 @@ Program {
                         name: 'foo'
                         loc: Object {
                           filename: 'input.ts'
+                          identifierName: 'foo'
                           end: Object {
                             column: 21
                             index: 781
@@ -4091,6 +4146,7 @@ Program {
                                   name: 'x'
                                   loc: Object {
                                     filename: 'input.ts'
+                                    identifierName: 'x'
                                     end: Object {
                                       column: 32
                                       index: 792
@@ -4105,6 +4161,7 @@ Program {
                                 }
                                 loc: Object {
                                   filename: 'input.ts'
+                                  identifierName: 'x'
                                   end: Object {
                                     column: 32
                                     index: 792
@@ -4168,6 +4225,7 @@ Program {
               leadingComments: undefined
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'p1'
                 end: Object {
                   column: 6
                   index: 829
@@ -4244,6 +4302,7 @@ Program {
                   name: 'const'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'const'
                     end: Object {
                       column: 22
                       index: 845
@@ -4297,6 +4356,7 @@ Program {
               name: 'p2'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'p2'
                 end: Object {
                   column: 6
                   index: 853
@@ -4355,6 +4415,7 @@ Program {
                   name: 'const'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'const'
                     end: Object {
                       column: 25
                       index: 872
@@ -4442,6 +4503,7 @@ Program {
               name: 'p3'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'p3'
                 end: Object {
                   column: 6
                   index: 880
@@ -4500,6 +4562,7 @@ Program {
                   name: 'const'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'const'
                     end: Object {
                       column: 26
                       index: 900
@@ -4587,6 +4650,7 @@ Program {
               name: 'p4'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'p4'
                 end: Object {
                   column: 6
                   index: 908
@@ -4645,6 +4709,7 @@ Program {
                   name: 'const'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'const'
                     end: Object {
                       column: 28
                       index: 930
@@ -4783,6 +4848,7 @@ Program {
               name: 'x1'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'x1'
                 end: Object {
                   column: 6
                   index: 939
@@ -4841,6 +4907,7 @@ Program {
                   name: 'const'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'const'
                     end: Object {
                       column: 61
                       index: 994
@@ -4875,6 +4942,7 @@ Program {
                         name: 'x'
                         loc: Object {
                           filename: 'input.ts'
+                          identifierName: 'x'
                           end: Object {
                             column: 12
                             index: 945
@@ -4939,6 +5007,7 @@ Program {
                         name: 'y'
                         loc: Object {
                           filename: 'input.ts'
+                          identifierName: 'y'
                           end: Object {
                             column: 19
                             index: 952
@@ -5037,6 +5106,7 @@ Program {
                         name: 'z'
                         loc: Object {
                           filename: 'input.ts'
+                          identifierName: 'z'
                           end: Object {
                             column: 32
                             index: 965
@@ -5085,6 +5155,7 @@ Program {
                               name: 'a'
                               loc: Object {
                                 filename: 'input.ts'
+                                identifierName: 'a'
                                 end: Object {
                                   column: 37
                                   index: 970
@@ -5133,6 +5204,7 @@ Program {
                                     name: 'b'
                                     loc: Object {
                                       filename: 'input.ts'
+                                      identifierName: 'b'
                                       end: Object {
                                         column: 42
                                         index: 975
@@ -5265,6 +5337,7 @@ Program {
               name: 'q1'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'q1'
                 end: Object {
                   column: 6
                   index: 1_003
@@ -5340,6 +5413,7 @@ Program {
                   name: 'const'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'const'
                     end: Object {
                       column: 15
                       index: 1_012
@@ -5393,6 +5467,7 @@ Program {
               name: 'q2'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'q2'
                 end: Object {
                   column: 6
                   index: 1_024
@@ -5467,6 +5542,7 @@ Program {
                   name: 'const'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'const'
                     end: Object {
                       column: 15
                       index: 1_033
@@ -5520,6 +5596,7 @@ Program {
               name: 'q3'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'q3'
                 end: Object {
                   column: 6
                   index: 1_048
@@ -5594,6 +5671,7 @@ Program {
                   name: 'const'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'const'
                     end: Object {
                       column: 15
                       index: 1_057
@@ -5647,6 +5725,7 @@ Program {
               name: 'q4'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'q4'
                 end: Object {
                   column: 6
                   index: 1_071
@@ -5705,6 +5784,7 @@ Program {
                   name: 'const'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'const'
                     end: Object {
                       column: 15
                       index: 1_080
@@ -5826,6 +5906,7 @@ Program {
               name: 'q5'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'q5'
                 end: Object {
                   column: 6
                   index: 1_099
@@ -5884,6 +5965,7 @@ Program {
                   name: 'const'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'const'
                     end: Object {
                       column: 15
                       index: 1_108
@@ -5918,6 +6000,7 @@ Program {
                         name: 'x'
                         loc: Object {
                           filename: 'input.ts'
+                          identifierName: 'x'
                           end: Object {
                             column: 20
                             index: 1_113
@@ -5982,6 +6065,7 @@ Program {
                         name: 'y'
                         loc: Object {
                           filename: 'input.ts'
+                          identifierName: 'y'
                           end: Object {
                             column: 27
                             index: 1_120

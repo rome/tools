@@ -146,22 +146,6 @@ Program {
             line: 1
           }
         }
-        left: ReferenceIdentifier {
-          name: 'i'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 7
-              index: 7
-              line: 1
-            }
-            start: Object {
-              column: 6
-              index: 6
-              line: 1
-            }
-          }
-        }
         right: ObjectExpression {
           properties: Array []
           loc: Object {
@@ -174,6 +158,23 @@ Program {
             start: Object {
               column: 11
               index: 11
+              line: 1
+            }
+          }
+        }
+        left: ReferenceIdentifier {
+          name: 'i'
+          loc: Object {
+            filename: 'input.js'
+            identifierName: 'i'
+            end: Object {
+              column: 7
+              index: 7
+              line: 1
+            }
+            start: Object {
+              column: 6
+              index: 6
               line: 1
             }
           }

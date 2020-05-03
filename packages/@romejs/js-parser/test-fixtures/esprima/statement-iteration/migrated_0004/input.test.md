@@ -93,6 +93,7 @@ Program {
             name: 'that'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'that'
               end: Object {
                 column: 7
                 index: 7

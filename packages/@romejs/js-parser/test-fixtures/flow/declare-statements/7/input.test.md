@@ -38,6 +38,7 @@ Program {
         name: 'IViewFactory'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'IViewFactory'
           end: Object {
             column: 26
             index: 26
@@ -90,6 +91,7 @@ Program {
               name: 'didAnimate'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'didAnimate'
                 end: Object {
                   column: 39
                   index: 39
@@ -139,6 +141,7 @@ Program {
                     name: 'view'
                     loc: Object {
                       filename: 'input.js'
+                      identifierName: 'view'
                       end: Object {
                         column: 44
                         index: 44
@@ -184,6 +187,7 @@ Program {
                         name: 'Object'
                         loc: Object {
                           filename: 'input.js'
+                          identifierName: 'Object'
                           end: Object {
                             column: 51
                             index: 51
@@ -218,6 +222,7 @@ Program {
                     name: 'prop'
                     loc: Object {
                       filename: 'input.js'
+                      identifierName: 'prop'
                       end: Object {
                         column: 57
                         index: 57

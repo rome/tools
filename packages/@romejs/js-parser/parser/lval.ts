@@ -1014,7 +1014,9 @@ export function checkLVal(
       description: descriptions.JS_PARSER.INVALID_PARENTEHSIZED_LVAL(
         expr.type === 'BindingObjectPattern'
           ? 'object'
-          : expr.type === 'BindingArrayPattern' ? 'array' : undefined,
+          : expr.type === 'BindingArrayPattern'
+            ? 'array'
+            : undefined,
       ),
       loc: expr.loc,
     });

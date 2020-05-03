@@ -147,6 +147,7 @@ Program {
             name: 'doThis'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'doThis'
               end: Object {
                 column: 16
                 index: 16

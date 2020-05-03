@@ -25,6 +25,7 @@ import {ProjectConfigJSON} from '@romejs/project';
 import {Bridge} from '@romejs/events';
 import {JSONFileReference} from '../types/files';
 import {AnalyzeDependencyResult} from '../types/analyzeDependencies';
+import {InlineSnapshotUpdates} from '@romejs/core/test-worker/SnapshotManager';
 
 export type WorkerProjects = Array<{
   id: number;
@@ -209,6 +210,15 @@ export default class WorkerBridge extends Bridge {
     WorkerLintResult
   >({name: 'lint', direction: 'server->client'});
 
+  updateInlineSnapshots = this.createEvent<
+    {
+      file: JSONFileReference;
+      updates: InlineSnapshotUpdates;
+      parseOptions: WorkerParseOptions;
+    },
+    Diagnostics
+  >({name: 'updateInlineSnapshots', direction: 'server->client'});
+
   compileJS = this.createEvent<
     {
       file: JSONFileReference;
@@ -254,7 +264,7 @@ export default class WorkerBridge extends Bridge {
         hydrate(err, data) {
           return new DiagnosticsError(
             String(err.message),
-            // rome-suppress-next-line lint/noExplicitAny
+            // rome-ignore lint/noExplicitAny
             (data.diagnostics as any),
           );
         },

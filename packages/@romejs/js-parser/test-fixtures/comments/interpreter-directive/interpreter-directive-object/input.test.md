@@ -120,6 +120,7 @@ Program {
                       leadingComments: undefined
                       loc: Object {
                         filename: 'input.js'
+                        identifierName: 'spawn'
                         end: Object {
                           column: 11
                           index: 38
@@ -153,6 +154,7 @@ Program {
                     leadingComments: undefined
                     loc: Object {
                       filename: 'input.js'
+                      identifierName: 'spawn'
                       end: Object {
                         column: 11
                         index: 38
@@ -200,6 +202,7 @@ Program {
               name: 'x'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'x'
                 end: Object {
                   column: 17
                   index: 44

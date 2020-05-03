@@ -163,6 +163,7 @@ Program {
           leadingComments: undefined
           loc: Object {
             filename: 'input.js'
+            identifierName: 'a'
             end: Object {
               column: 1
               index: 100
@@ -213,6 +214,7 @@ Program {
                 name: 'b'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'b'
                   end: Object {
                     column: 6
                     index: 105
@@ -231,6 +233,7 @@ Program {
                 name: 'c'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'c'
                   end: Object {
                     column: 11
                     index: 110
@@ -277,6 +280,7 @@ Program {
               name: 'f'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'f'
                 end: Object {
                   column: 27
                   index: 126
@@ -313,6 +317,7 @@ Program {
                   name: 'd'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'd'
                     end: Object {
                       column: 17
                       index: 116
@@ -331,6 +336,7 @@ Program {
                   name: 'e'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'e'
                     end: Object {
                       column: 22
                       index: 121

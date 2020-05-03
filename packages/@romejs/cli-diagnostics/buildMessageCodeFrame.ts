@@ -14,7 +14,7 @@ import {
   MAX_CODE_FRAME_LINES,
 } from './constants';
 import {Position} from '@romejs/parser-core';
-import {cleanEquivalentString} from './utils';
+import {cleanEquivalentString, joinNoBreak} from './utils';
 import {
   Number0,
   ob1Coerce0,
@@ -26,7 +26,7 @@ import {
   ob1Number1Neg1,
   ob1Sub,
 } from '@romejs/ob1';
-import {markupToPlainText} from '@romejs/string-markup';
+import {markupToPlainTextString} from '@romejs/string-markup';
 
 export default function buildMessageCodeFrame(
   sourceText: string,
@@ -36,7 +36,11 @@ export default function buildMessageCodeFrame(
   markerMessage: string,
 ): string {
   if (start === undefined || end === undefined) {
-    return CODE_FRAME_INDENT + markerMessage;
+    if (markerMessage === '') {
+      return '';
+    } else {
+      return `<nobr>${markerMessage}</nobr>`;
+    }
   }
 
   const startLineIndex = ob1Coerce1To0(start.line);
@@ -148,7 +152,11 @@ export default function buildMessageCodeFrame(
     end.line === ob1Number1Neg1 ||
     start.line === ob1Number1Neg1
   ) {
-    return CODE_FRAME_INDENT + markerMessage;
+    if (markerMessage === '') {
+      return '';
+    } else {
+      return `<nobr>${markerMessage}</nobr>`;
+    }
   }
 
   // Don't output a gutter if there's only a single line
@@ -170,7 +178,7 @@ export default function buildMessageCodeFrame(
     const text = sourceText.slice(ob1Get0(start.index), ob1Get0(end.index));
     if (
       cleanEquivalentString(text) ===
-      cleanEquivalentString(markupToPlainText(markerMessage))
+      cleanEquivalentString(markupToPlainTextString(markerMessage))
     ) {
       markerMessage = '';
     }
@@ -179,6 +187,7 @@ export default function buildMessageCodeFrame(
   const pointerLength: number = Math.max(ob1Get0(markerSize), 1);
   const pointer: string = `<error><emphasis>${'^'.repeat(pointerLength)}</emphasis></error>`;
   const pointerIndent: string = ' '.repeat(ob1Get0(markerOffset));
+  const paddedMarkerMessage = markerMessage === '' ? '' : ` ${markerMessage}`;
 
   // If the marker is just pointing to the first character and we have no message, no point showing it
   const noMarkerLine =
@@ -188,18 +197,18 @@ export default function buildMessageCodeFrame(
   if (noGutter) {
     const result = [...allLines];
     if (!noMarkerLine) {
-      result.push(`${pointerIndent}${pointer} ${markerMessage}`);
+      result.push(`${pointerIndent}${pointer}${paddedMarkerMessage}`);
     }
-    return CODE_FRAME_INDENT + result.join(`\n${CODE_FRAME_INDENT}`);
+    return joinNoBreak(result.map((line) => `${CODE_FRAME_INDENT}${line}`));
   }
 
   // Build marker
   const markerGutterIndent: string = ' '.repeat(maxGutterLength - GUTTER.length);
-  const markerLine: string = `${markerGutterIndent}<emphasis>${GUTTER}</emphasis>${pointerIndent}${pointer} ${markerMessage}`;
+  const markerLine: string = `${markerGutterIndent}<emphasis>${GUTTER}</emphasis>${pointerIndent}${pointer}${paddedMarkerMessage}`;
 
   // Build up the line we display when source lines are omitted
   const omittedLine =
-    `<pad count="${String(maxGutterLength)}"><emphasis>...</emphasis></pad>` +
+    `<emphasis><pad align="right" width="${maxGutterLength}">...</pad></emphasis>` +
     GUTTER;
 
   // Build the frame
@@ -216,7 +225,7 @@ export default function buildMessageCodeFrame(
       result.push(line);
     } else {
       result.push(
-        `<emphasis><pad count="${String(maxGutterLength)}">${gutter}</pad></emphasis>` +
+        `<pad align="right" width="${maxGutterLength}"><emphasis>${gutter}</emphasis></pad>` +
         line,
       );
     }
@@ -225,6 +234,5 @@ export default function buildMessageCodeFrame(
     }
   }
 
-  const frame: string = result.join('\n');
-  return frame;
+  return joinNoBreak(result);
 }

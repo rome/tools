@@ -24,12 +24,12 @@ export type DiagnosticFilter = {
 
 export type DiagnosticFilters = Array<DiagnosticFilter>;
 
-export type DiagnosticSuppressionType = 'current' | 'next';
-
 export type DiagnosticSuppression = {
-  type: DiagnosticSuppressionType;
+  filename: string;
   category: string;
-  loc: SourceLocation;
+  startLine: Number1;
+  endLine: Number1;
+  commentLocation: SourceLocation;
 };
 
 export type DiagnosticSuppressions = Array<DiagnosticSuppression>;
@@ -131,6 +131,7 @@ export type DiagnosticAdviceInspect = {
 export type DiagnosticAdviceAction = {
   type: 'action';
   hidden?: boolean;
+  extra?: boolean;
   shortcut?: string;
   instruction: string;
   noun: string;

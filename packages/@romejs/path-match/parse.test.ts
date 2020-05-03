@@ -17,38 +17,38 @@ test(
   'pattern',
   async (t) => {
     // Negate and wildcard
-    await t.snapshot(_parsePathPattern('!foo'));
-    await t.snapshot(_parsePathPattern(''));
+    t.snapshot(_parsePathPattern('!foo'));
+    t.snapshot(_parsePathPattern(''));
 
     // Trailing slash and wildcards
-    await t.snapshot(_parsePathPattern('/foo/bar'));
-    await t.snapshot(_parsePathPattern('*/foo/bar'));
-    await t.snapshot(_parsePathPattern('**/foo/bar'));
-    await t.snapshot(_parsePathPattern('**/*foo/bar'));
+    t.snapshot(_parsePathPattern('/foo/bar'));
+    t.snapshot(_parsePathPattern('*/foo/bar'));
+    t.snapshot(_parsePathPattern('**/foo/bar'));
+    t.snapshot(_parsePathPattern('**/*foo/bar'));
 
     // Random
-    await t.snapshot(_parsePathPattern('foo'));
-    await t.snapshot(_parsePathPattern('foo/'));
-    await t.snapshot(_parsePathPattern('foo/bar'));
-    await t.snapshot(_parsePathPattern('foo//bar'));
-    await t.snapshot(_parsePathPattern('foo/*/bar'));
-    await t.snapshot(_parsePathPattern('foo/**/bar'));
-    await t.snapshot(_parsePathPattern('foo/*bar'));
-    await t.snapshot(_parsePathPattern('foo/bar*'));
-    await t.snapshot(_parsePathPattern('foo/*bar*'));
-    await t.snapshot(_parsePathPattern('foo/*bar*foob'));
+    t.snapshot(_parsePathPattern('foo'));
+    t.snapshot(_parsePathPattern('foo/'));
+    t.snapshot(_parsePathPattern('foo/bar'));
+    t.snapshot(_parsePathPattern('foo//bar'));
+    t.snapshot(_parsePathPattern('foo/*/bar'));
+    t.snapshot(_parsePathPattern('foo/**/bar'));
+    t.snapshot(_parsePathPattern('foo/*bar'));
+    t.snapshot(_parsePathPattern('foo/bar*'));
+    t.snapshot(_parsePathPattern('foo/*bar*'));
+    t.snapshot(_parsePathPattern('foo/*bar*foob'));
 
     // Comments
-    await t.snapshot(_parsePathPattern('# foobar'));
-    await t.snapshot(_parsePathPattern('foo/bar # foobar'));
-    await t.snapshot(_parsePathPattern('foo/bar\\#foobar'));
-    await t.snapshot(_parsePathPattern('foo/\\#foobar'));
+    t.snapshot(_parsePathPattern('# foobar'));
+    t.snapshot(_parsePathPattern('foo/bar # foobar'));
+    t.snapshot(_parsePathPattern('foo/bar\\#foobar'));
+    t.snapshot(_parsePathPattern('foo/\\#foobar'));
 
     // Windows separators
-    await t.snapshot(_parsePathPattern('\\\\foo\\\\bar'));
-    await t.snapshot(_parsePathPattern('*\\\\foo\\\\bar'));
-    await t.snapshot(_parsePathPattern('**\\\\foo\\\\bar'));
-    await t.snapshot(_parsePathPattern('**\\\\*foo\\\\bar'));
-    await t.snapshot(_parsePathPattern('hello\\\\world'));
+    t.snapshot(_parsePathPattern('\\\\foo\\\\bar'));
+    t.snapshot(_parsePathPattern('*\\\\foo\\\\bar'));
+    t.snapshot(_parsePathPattern('**\\\\foo\\\\bar'));
+    t.snapshot(_parsePathPattern('**\\\\*foo\\\\bar'));
+    t.snapshot(_parsePathPattern('hello\\\\world'));
   },
 );

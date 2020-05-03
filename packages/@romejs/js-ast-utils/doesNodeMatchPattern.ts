@@ -23,7 +23,7 @@ export default function doesNodeMatchPattern(
     ? match.slice()
     : match.split('.');
 
-  const [bailed, actualParts] = getNodeReferenceParts(member);
+  const {bailed, parts: actualParts} = getNodeReferenceParts(member);
 
   // Bailed will be true if we were unable to derive a name for one of the parts
   if (bailed && !allowPartial) {
@@ -47,7 +47,7 @@ export default function doesNodeMatchPattern(
       return allowPartial;
     }
 
-    const actual = actualParts.shift();
+    const actual = actualParts.shift()!.value;
     const expected = expectedParts.shift();
 
     // A star part can accept anything

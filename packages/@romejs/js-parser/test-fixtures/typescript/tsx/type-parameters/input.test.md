@@ -38,6 +38,7 @@ Program {
         name: 'f'
         loc: Object {
           filename: 'input.tsx'
+          identifierName: 'f'
           end: Object {
             column: 10
             index: 10

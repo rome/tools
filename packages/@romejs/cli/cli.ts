@@ -28,7 +28,7 @@ import {commandCategories} from '@romejs/core/common/commands';
 import {writeFile} from '@romejs/fs';
 import fs = require('fs');
 
-import {markup, stripAnsi} from '@romejs/string-markup';
+import {markup} from '@romejs/string-markup';
 import {Dict} from '@romejs/typescript-helpers';
 
 type CLIFlags = {
@@ -40,7 +40,7 @@ type CLIFlags = {
   ragePath: undefined | UnknownFilePath;
   profile: boolean;
   profilePath: undefined | UnknownFilePath;
-  profileTimeout: number;
+  profileTimeout: undefined | number;
   profileSampling: number;
   profileWorkers: boolean;
   temporaryDaemon: boolean;
@@ -109,9 +109,10 @@ export default async function cli() {
           profileTimeout: c.get(
             'profileTimeout',
             {
+              inputName: 'millisec',
               description: 'Stop the profile after the milliseconds specified. When omitted the profile is of the whole command',
             },
-          ).asNumber(0),
+          ).asNumberOrVoid(),
           profileWorkers: c.get(
             'profileWorkers',
             {
@@ -122,6 +123,7 @@ export default async function cli() {
             'profileSampling',
             {
               description: 'Profiler sampling interval in microseconds',
+              inputName: 'microsec',
             },
           ).asNumber(100),
           temporaryDaemon: c.get(
@@ -157,7 +159,7 @@ export default async function cli() {
           logPath: c.get(
             'logPath',
             {
-              description: 'Path where to outpuit logs. When omitted logs are not written anywhere',
+              description: 'Path where to output logs. When omitted logs are not written anywhere',
             },
           ).asAbsoluteFilePathOrVoid(undefined, cwd),
           ...overrideCLIFlags,
@@ -239,6 +241,7 @@ export default async function cli() {
             'resolverPlatform',
             {
               description: 'Specify the platform for module resolution',
+              inputName: 'platform',
             },
           ).asStringSetOrVoid(PLATFORMS),
           resolverScale: c.get(
@@ -423,7 +426,7 @@ export default async function cli() {
           if (fileout === undefined) {
             client.reporter.writeAll(chunk);
           } else {
-            fileout.write(stripAnsi(chunk));
+            fileout.write(chunk);
           }
         },
       );

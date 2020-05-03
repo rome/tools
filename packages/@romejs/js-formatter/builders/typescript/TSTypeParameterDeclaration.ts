@@ -21,7 +21,9 @@ export default function TSTypeParameterDeclaration(
   const shouldInline =
     params.length === 1 &&
     params[0].type !== 'IntersectionTypeAnnotation' &&
-    params[0].type !== 'UnionTypeAnnotation';
+    params[0].type !== 'UnionTypeAnnotation' &&
+    params[0].type !== 'TSIndexedAccessType' &&
+    params[0].type !== 'TSMappedType';
 
   if (shouldInline) {
     return concat(['<', builder.tokenize(params[0], node), '>']);

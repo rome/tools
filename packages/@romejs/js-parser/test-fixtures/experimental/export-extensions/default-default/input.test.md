@@ -81,6 +81,7 @@ Program {
           name: 'default'
           loc: Object {
             filename: 'input.js'
+            identifierName: 'default'
             end: Object {
               column: 14
               index: 14

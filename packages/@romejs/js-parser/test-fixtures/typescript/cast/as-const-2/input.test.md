@@ -108,6 +108,7 @@ Program {
               name: 'e'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'e'
                 end: Object {
                   column: 5
                   index: 5
@@ -151,6 +152,7 @@ Program {
                 name: 'v'
                 loc: Object {
                   filename: 'input.ts'
+                  identifierName: 'v'
                   end: Object {
                     column: 9
                     index: 9
@@ -182,6 +184,7 @@ Program {
                   name: 'const'
                   loc: Object {
                     filename: 'input.ts'
+                    identifierName: 'const'
                     end: Object {
                       column: 18
                       index: 18

@@ -59,22 +59,6 @@ Program {
             line: 1
           }
         }
-        callee: ReferenceIdentifier {
-          name: 'foo'
-          loc: Object {
-            filename: 'input.ts'
-            end: Object {
-              column: 3
-              index: 3
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
         typeArguments: TSTypeParameterInstantiation {
           params: Array []
           loc: Object {
@@ -87,6 +71,23 @@ Program {
             start: Object {
               column: 3
               index: 3
+              line: 1
+            }
+          }
+        }
+        callee: ReferenceIdentifier {
+          name: 'foo'
+          loc: Object {
+            filename: 'input.ts'
+            identifierName: 'foo'
+            end: Object {
+              column: 3
+              index: 3
+              line: 1
+            }
+            start: Object {
+              column: 0
+              index: 0
               line: 1
             }
           }

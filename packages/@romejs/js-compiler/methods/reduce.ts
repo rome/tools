@@ -170,7 +170,7 @@ export default function reduce(
 
     // Reduce the children
     for (const key of visitorKeys) {
-      // rome-suppress-next-line lint/noExplicitAny
+      // rome-ignore lint/noExplicitAny
       const oldVal = (node as any)[key];
 
       if (Array.isArray(oldVal)) {

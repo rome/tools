@@ -8,11 +8,9 @@
 import {
   MarkupFormatOptions,
   ansiEscapes,
-  lineWrapAnsi,
   markupTag,
   markupToAnsi,
   markupToPlainText,
-  stripAnsi,
 } from '@romejs/string-markup';
 import {
   RemoteReporterClientMessage,
@@ -22,27 +20,33 @@ import {
   ReporterProgressOptions,
   ReporterStream,
   ReporterStreamMeta,
+  ReporterTableField,
   SelectArguments,
   SelectOptions,
 } from './types';
-import {humanizeNumber, removeSuffix} from '@romejs/string-utils';
+import {removeSuffix} from '@romejs/string-utils';
 import Progress from './Progress';
-import {interpolate} from './util';
 import prettyFormat from '@romejs/pretty-format';
 import stream = require('stream');
 import {CWD_PATH} from '@romejs/path';
 import {Event} from '@romejs/events';
 import readline = require('readline');
-import {MarkupTagName} from '@romejs/string-markup/types';
+import {
+  MarkupFormatGridOptions,
+  MarkupTagName,
+} from '@romejs/string-markup/types';
 import select from './select';
+import {MarkupLinesAndWidth} from '@romejs/string-markup/format';
+import {onKeypress} from './util';
 
 type ListOptions = {
   reverse?: boolean;
   truncate?: number;
   ordered?: boolean;
+  start?: number;
 };
 
-// rome-suppress-next-line lint/noExplicitAny
+// rome-ignore lint/noExplicitAny
 type WrapperFactory = <T extends (...args: Array<any>) => any>(callback: T) => T;
 
 export type ReporterOptions = {
@@ -70,7 +74,6 @@ export type LogCategoryOptions = LogOptions & {
   unicodePrefix: string;
   rawPrefix: string;
   markupTag: MarkupTagName;
-  unicodeSuffix?: string;
 };
 
 type QuestionValidateResult<T> = [false, string] | [true, T];
@@ -113,7 +116,8 @@ export default class Reporter {
     this.enabled = opts.disabled === true ? 0 : 1;
     this.markupOptions =
       opts.markupOptions === undefined ? {} : opts.markupOptions;
-    this.streamHasSpacer = new Set();
+    this.streamsWithDoubleNewlineEnd = new Set();
+    this.streamsWithNewlineEnd = new Set();
     this.shouldRedirectOutToErr = false;
     this.stdin = opts.stdin;
 
@@ -254,7 +258,8 @@ export default class Reporter {
   isRemote: boolean;
   noProgress: boolean;
   isVerbose: boolean;
-  streamHasSpacer: Set<ReporterStream>;
+  streamsWithNewlineEnd: Set<ReporterStream>;
+  streamsWithDoubleNewlineEnd: Set<ReporterStream>;
   indentLevel: number;
   indentString: string;
   enabled: number;
@@ -346,7 +351,11 @@ export default class Reporter {
 
     // Don't indent if there is no indent, or the message is empty
     const {indentString} = this;
-    if (indentString !== '' && msg !== '') {
+    if (
+      this.streamsWithNewlineEnd.has(stream) &&
+      indentString !== '' &&
+      msg !== ''
+    ) {
       // Indent each line, leaving out the indentation for empty lines
       msg = indentString + msg.replace(/\n([^\n])/g, `\n${indentString}$1`);
     }
@@ -377,6 +386,7 @@ export default class Reporter {
   }
 
   addStream(stream: ReporterStream) {
+    this.streamsWithNewlineEnd.add(stream);
     this.streams.add(stream);
 
     if (stream.type === 'error' || stream.type === 'all') {
@@ -526,6 +536,23 @@ export default class Reporter {
     return answer === 'yes';
   }
 
+  async confirm(message: string = 'Press any key to continue'): Promise<void> {
+    this.logAll(`<dim>${message}</dim>`, {newline: false});
+
+    await new Promise((resolve) => {
+      const keypress = onKeypress(
+        this,
+        () => {
+          keypress.finish();
+          resolve();
+        },
+      );
+    });
+
+    // Newline
+    this.logAll('');
+  }
+
   async radio<Options extends SelectOptions>(
     message: string,
     arg: SelectArguments<Options>,
@@ -643,58 +670,37 @@ export default class Reporter {
   }
 
   //# VISUALISATION
-  table(head: Array<string>, rawBody: Array<Array<string | number>>) {
-    // Format the head, just treat it like another row
-    head = head.map((field: string): string => markupTag('emphasis', field));
+  table(
+    head: Array<ReporterTableField>,
+    rawBody: Array<Array<ReporterTableField>>,
+  ) {
+    let body = '';
 
-    // Humanize all number fields
-    const rows: Array<Array<string>> = [];
     if (head.length > 0) {
-      rows.push(head);
-    }
-    for (const row of rawBody) {
-      rows.push(
-        row.map((field) => {
-          if (typeof field === 'number') {
-            return humanizeNumber(field);
-          } else {
-            return field;
-          }
-        }),
-      );
-    }
-
-    // Get the max number of columns for a row
-    const columnCount = Math.max(...rows.map((columns) => columns.length));
-
-    for (const stream of this.getStreams(false)) {
-      // Get column widths
-      const cols: Array<number> = [];
-      for (let i = 0; i < columnCount; i++) {
-        const widths = rows.map((row): number => {
-          const str = row[i];
-          if (str === undefined) {
-            // Could be an excessive column
-            return 0;
-          } else {
-            return this.markupifyLength(stream, str);
-          }
-        });
-        cols[i] = Math.max(...widths);
+      body += '<tr>';
+      for (const field of head) {
+        body += `<td><emphasis>${field}</emphasis></td>`;
       }
-
-      // Format all rows
-      const builtRows = rows.map((row): string => {
-        for (let i = 0; i < row.length; i++) {
-          const field = row[i];
-          const padding = cols[i] - this.markupifyLength(stream, field);
-          row[i] = field + ' '.repeat(padding);
-        }
-        return row.join(' ');
-      });
-
-      this.logOne(stream, builtRows.join('\n'));
+      body += '</tr>';
     }
+
+    for (const row of rawBody) {
+      body += '<tr>';
+      for (let field of row) {
+        if (typeof field === 'string' || typeof field === 'number') {
+          field = {align: 'left', value: field};
+        }
+
+        let {value, align} = field;
+        if (typeof value === 'number') {
+          value = `<number>${value}</number>`;
+        }
+        body += `<td align="${align}">${value}</td>`;
+      }
+      body += '</tr>';
+    }
+
+    this.logAll(`<table>${body}</table>`);
   }
 
   verboseInspect(val: unknown) {
@@ -784,7 +790,7 @@ export default class Reporter {
     });
   }
 
-  hr(text?: string) {
+  hr(text: string = '') {
     const {hasClearScreen} = this;
 
     this.br();
@@ -793,17 +799,7 @@ export default class Reporter {
       return;
     }
 
-    for (const stream of this.getStreams(false)) {
-      const prefix = this.markupify(
-        stream,
-        text === undefined ? '' : ` ${text} `,
-      );
-      const prefixLength =
-        this.indentString.length + this.markupifyLength(stream, prefix);
-      const barLength = Math.max(0, stream.columns - prefixLength);
-      this.logOneNoMarkup(stream, prefix + '\u2501'.repeat(barLength));
-    }
-
+    this.logAll(`<hr>${text}</hr>`);
     this.br();
   }
 
@@ -851,7 +847,7 @@ export default class Reporter {
 
   br(force: boolean = false) {
     for (const stream of this.getStreams(false)) {
-      if (!this.streamHasSpacer.has(stream) || force) {
+      if (!this.streamsWithDoubleNewlineEnd.has(stream) || force) {
         this.logOne(stream, '');
       }
     }
@@ -866,34 +862,40 @@ export default class Reporter {
     }
   };
 
-  //# LOG
-  stripMarkup(str: string) {
-    return markupToPlainText(str, this.markupOptions);
+  stripMarkup(str: string): string {
+    return markupToPlainText(str, this.markupOptions).lines.join('\n');
   }
 
-  markupifyLength(stream: ReporterStream, str: string): number {
-    const markup = this.markupify(stream, str);
-
-    if (stream.format === 'ansi') {
-      return stripAnsi(markup).length;
+  markupify(
+    stream: ReporterStreamMeta,
+    str: string,
+    viewportShrink: number = 0,
+  ): MarkupLinesAndWidth {
+    if (str === '') {
+      return {lines: [''], width: 0};
     }
 
-    // TODO html
-    return markup.length;
-  }
+    const gridMarkupOptions: MarkupFormatGridOptions = {
+      ...this.markupOptions,
+      columns: stream.columns - this.indentString.length - viewportShrink,
+    };
 
-  markupify(stream: ReporterStreamMeta, str: string): string {
     switch (stream.format) {
       case 'ansi':
-        return markupToAnsi(str, this.markupOptions);
+        return markupToAnsi(str, gridMarkupOptions);
 
       case 'html':
-      case 'none':
         // TODO
-        return markupToPlainText(str);
+        return markupToPlainText(str, gridMarkupOptions);
+
+      case 'none':
+        return markupToPlainText(str, gridMarkupOptions);
 
       case 'markup':
-        return str;
+        return {
+          width: 0,
+          lines: [str],
+        };
     }
   }
 
@@ -912,8 +914,10 @@ export default class Reporter {
   logOne(stream: ReporterStream, tty: string, opts: LogOptions = {}) {
     const msg =
       stream.format !== 'none' || opts.nonTTY === undefined ? tty : opts.nonTTY;
-    const formatted = this.markupify(stream, msg);
-    this.logOneNoMarkup(stream, formatted, opts);
+    const {lines} = this.markupify(stream, msg);
+    for (const line of lines) {
+      this.logOneNoMarkup(stream, line, opts);
+    }
   }
 
   logOneNoMarkup(stream: ReporterStream, tty: string, opts: LogOptions = {}) {
@@ -927,11 +931,16 @@ export default class Reporter {
     }
 
     // Track if there's going to be a completely empty line
-    const hasSpacer = msg === '\n' || msg.endsWith('\n\n');
-    if (hasSpacer) {
-      this.streamHasSpacer.add(stream);
+    const hasDoubleNewline = msg === '\n' || msg.endsWith('\n\n');
+    if (hasDoubleNewline) {
+      this.streamsWithDoubleNewlineEnd.add(stream);
     } else {
-      this.streamHasSpacer.delete(stream);
+      this.streamsWithDoubleNewlineEnd.delete(stream);
+    }
+    if (msg.endsWith('\n')) {
+      this.streamsWithNewlineEnd.add(stream);
+    } else {
+      this.streamsWithNewlineEnd.delete(stream);
     }
 
     this.writeSpecific(stream, msg, opts);
@@ -947,10 +956,6 @@ export default class Reporter {
     }
 
     const inner = markupTag(opts.markupTag, rawInner);
-    const unicodeSuffix =
-      opts.unicodeSuffix === undefined
-        ? ''
-        : markupTag('emphasis', markupTag(opts.markupTag, opts.unicodeSuffix));
 
     for (const stream of this.getStreams(opts.stderr)) {
       // Format the prefix, selecting it depending on if we're a unicode stream
@@ -960,37 +965,33 @@ export default class Reporter {
         markupTag(opts.markupTag, this.getMessagePrefix() + prefixInner),
       );
 
-      const prefixMarkup = this.markupify(stream, prefix);
-      const innerMarkup = this.markupify(stream, inner);
-
-      // Ignore suffix unless we're a unicode stream
-      const suffixMarkup = stream.unicode
-        ? this.markupify(stream, unicodeSuffix)
-        : '';
-
-      // Format with string-markup, we only do the first message rather than the interpolated string so you can pass in any data and not have to worry about escaping it
-      const formatted = prefixMarkup + innerMarkup + suffixMarkup;
-
-      // Interpolate %s
-      const interpolated = interpolate(formatted, args);
-
-      // Line wrap
-      let wrapped = interpolated;
-      if (stream.format === 'ansi') {
-        const allowedWidth = stream.columns - INDENT.length * this.indentLevel;
-        const indent = stripAnsi(prefixMarkup).length;
-        wrapped = lineWrapAnsi(interpolated, allowedWidth, indent);
+      // Should only be one line
+      const {lines: prefixLines, width: prefixWidth} = this.markupify(
+        stream,
+        prefix,
+      );
+      const prefixLine = prefixLines[0];
+      if (prefixLines.length !== 1) {
+        throw new Error('Expected 1 prefix line');
       }
 
-      this.logOneNoMarkup(
-        stream,
-        wrapped,
-        {
-          // No prefix as we added it ourselves at the beginning, this is so the indentation is correct when line wrapped
-          noPrefix: true,
-          ...opts,
-        },
-      );
+      const {lines} = this.markupify(stream, inner, prefixWidth);
+      for (let i = 0; i < lines.length; i++) {
+        let line = lines[i];
+        if (i === 0) {
+          line = `${prefixLine}${line}`;
+        } else {
+          line = `${' '.repeat(prefixWidth)}${line}`;
+        }
+        this.logOneNoMarkup(
+          stream,
+          line,
+          {
+            noPrefix: true,
+            ...opts,
+          },
+        );
+      }
     }
   }
 
@@ -1042,7 +1043,6 @@ export default class Reporter {
       {
         unicodePrefix: '\u26a0 ',
         rawPrefix: '! ',
-        unicodeSuffix: ' \u26a0',
         markupTag: 'warn',
         stderr: true,
       },
@@ -1086,76 +1086,51 @@ export default class Reporter {
     items: Array<T>,
     callback: (item: T, display: (str: string) => void) => void,
     opts: ListOptions = {},
-  ) {
+  ): {
+    truncated: boolean;
+  } {
     if (items.length === 0) {
       // We make some assumptions that there's at least one item
-      return;
+      return {truncated: false};
     }
 
-    const indent = this._getListIndentation();
-
-    let tuples: Array<[number, T]>;
-    if (opts.reverse === true) {
-      tuples = items.reverse().map((item, i) => [items.length - i, item]);
-    } else {
-      tuples = items.map((item, i) => [i, item]);
-    }
-
-    // Truncate if necessary
     let truncatedCount = 0;
-    if (opts.truncate !== undefined) {
-      tuples = tuples.slice(0, opts.truncate);
-      truncatedCount = items.length - tuples.length;
+
+    let start = opts.start || 0;
+    if (opts.truncate !== undefined && items.length > opts.truncate) {
+      truncatedCount = items.length - opts.truncate;
+      items = items.slice(0, opts.truncate);
+      start += truncatedCount;
     }
 
-    let indentLength = indent.length;
+    let buff = '';
+
+    for (const item of items) {
+      callback(
+        item,
+        (str) => {
+          // TODO maybe set index + 1?
+          buff += `<li>${str}</li>`;
+        },
+      );
+    }
 
     if (opts.ordered) {
-      // Get the highest visible number. It could be at the start or the end depending on if it was reversed
-      const highestVisible = Math.max(
-        tuples[0][0],
-        tuples[tuples.length - 1][0],
-      );
-
-      // Length of the largest visible number plus the dot for padding
-      const numLen = humanizeNumber(highestVisible + 1).length + 1;
-
-      // "0. "
-      indentLength += numLen + 1;
-
-      for (const [index, item] of tuples) {
-        callback(
-          item,
-          (str) => {
-            const num: string = `<pad count="${numLen}" dir="right">${humanizeNumber(
-              index + 1,
-            )}.</pad>`;
-            this.logAll(`${indent}<dim>${num}</dim> ${str}`);
-          },
-        );
-      }
+      this.logAll(markupTag('ol', buff, {start, reversed: opts.reverse}));
     } else {
-      // "- "
-      indentLength += 2;
-
-      for (const [, item] of tuples) {
-        callback(
-          item,
-          (str) => {
-            this.logAll(`${indent}<dim>-</dim> ${str}`);
-          },
-        );
-      }
+      this.logAll(`<ul>${buff}</ul>`);
     }
 
     if (truncatedCount > 0) {
-      const indent = ' '.repeat(indentLength);
-      this.logAll(`${indent}and <number>${truncatedCount}</number> others...`);
+      this.logAll(`<dim>and <number>${truncatedCount}</number> others...</dim>`);
+      return {truncated: true};
+    } else {
+      return {truncated: false};
     }
   }
 
   list(items: Array<string>, opts: ListOptions = {}) {
-    this.processedList(items, (str, display) => display(str), opts);
+    return this.processedList(items, (str, display) => display(str), opts);
   }
 
   progress(opts?: ReporterProgressOptions): ReporterProgress {

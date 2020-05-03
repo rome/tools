@@ -131,6 +131,7 @@ Program {
               leadingComments: undefined
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'there'
                 end: Object {
                   column: 5
                   index: 40

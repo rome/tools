@@ -189,30 +189,6 @@ export function hasAnsi(str: string): boolean {
   return regex.test(str);
 }
 
-const DEFAULT_SPACER = ' ';
-
-export function ansiPad(
-  side: 'left' | 'right',
-  str: string,
-  len: number,
-  spacerChar: string = DEFAULT_SPACER,
-) {
-  const stripped = stripAnsi(str);
-  const remainder = len - stripped.length;
-
-  if (remainder <= 0) {
-    return str;
-  }
-
-  const spacer = spacerChar.repeat(remainder);
-  if (side === 'left') {
-    return spacer + str;
-  } else {
-    //right
-    return str + spacer;
-  }
-}
-
 export const ansiEscapes = {
   clearScreen: '\x1bc',
   eraseLine: `${ESC}2K`,

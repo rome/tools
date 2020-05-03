@@ -35,6 +35,7 @@ Program {
         name: 'Semicolon'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'Semicolon'
           end: Object {
             column: 15
             index: 15

@@ -58,6 +58,7 @@ Program {
         name: 'false'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'false'
           end: Object {
             column: 14
             index: 14

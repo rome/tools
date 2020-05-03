@@ -35,6 +35,7 @@ Program {
         name: 'singleElementWithObject'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'singleElementWithObject'
           end: Object {
             column: 32
             index: 32
@@ -138,6 +139,7 @@ Program {
                   name: 'p'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'p'
                     end: Object {
                       column: 38
                       index: 38
@@ -187,6 +189,7 @@ Program {
                         name: 'a'
                         loc: Object {
                           filename: 'input.js'
+                          identifierName: 'a'
                           end: Object {
                             column: 42
                             index: 42
@@ -218,6 +221,7 @@ Program {
                       name: 'b'
                       loc: Object {
                         filename: 'input.js'
+                        identifierName: 'b'
                         end: Object {
                           column: 45
                           index: 45

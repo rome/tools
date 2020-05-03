@@ -89,6 +89,7 @@ Program {
               name: 'foo'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'foo'
                 end: Object {
                   column: 9
                   index: 9
@@ -132,6 +133,7 @@ Program {
                 name: 'async'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'async'
                   end: Object {
                     column: 17
                     index: 17
@@ -164,6 +166,7 @@ Program {
                     name: 'bar'
                     loc: Object {
                       filename: 'input.js'
+                      identifierName: 'bar'
                       end: Object {
                         column: 32
                         index: 32
@@ -198,6 +201,7 @@ Program {
                             name: 'async'
                             loc: Object {
                               filename: 'input.js'
+                              identifierName: 'async'
                               end: Object {
                                 column: 26
                                 index: 26
@@ -212,6 +216,7 @@ Program {
                           }
                           loc: Object {
                             filename: 'input.js'
+                            identifierName: 'async'
                             end: Object {
                               column: 26
                               index: 26
@@ -228,6 +233,7 @@ Program {
                           name: 'async'
                           loc: Object {
                             filename: 'input.js'
+                            identifierName: 'async'
                             end: Object {
                               column: 26
                               index: 26
@@ -390,6 +396,7 @@ Program {
             name: 'await'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'await'
               end: Object {
                 column: 7
                 index: 48
@@ -421,6 +428,7 @@ Program {
             name: 'baz'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'baz'
               end: Object {
                 column: 11
                 index: 52

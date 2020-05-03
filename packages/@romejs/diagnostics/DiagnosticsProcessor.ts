@@ -22,7 +22,7 @@ import {descriptions} from './descriptions';
 import {matchesSuppression} from '@romejs/js-compiler';
 import {SourceMapConsumerCollection} from '@romejs/codec-source-map';
 import DiagnosticsNormalizer from './DiagnosticsNormalizer';
-import {MarkupFormatOptions} from '@romejs/string-markup';
+import {MarkupFormatNormalizeOptions} from '@romejs/string-markup';
 
 type UniquePart =
   | 'filename'
@@ -41,7 +41,7 @@ export type DiagnosticsProcessorOptions = {
   max?: number;
   onDiagnostics?: (diags: Diagnostics) => void;
   origins?: Array<DiagnosticOrigin>;
-  markupOptions?: MarkupFormatOptions;
+  markupOptions?: MarkupFormatNormalizeOptions;
 };
 
 const DEFAULT_UNIQUE: UniqueRules = [
@@ -57,17 +57,22 @@ export default class DiagnosticsProcessor {
     this.includedKeys = new Set();
     this.unique = options.unique === undefined ? DEFAULT_UNIQUE : options.unique;
     this.throwAfter = undefined;
+    this.locked = false;
     this.origins = options.origins === undefined ? [] : [...options.origins];
     this.allowedUnusedSuppressionPrefixes = new Set();
     this.usedSuppressions = new Set();
     this.suppressions = new Set();
     this.sourceMaps = new SourceMapConsumerCollection();
-    this.normalizer = new DiagnosticsNormalizer(this);
+    this.normalizer = new DiagnosticsNormalizer(
+      options.markupOptions,
+      this.sourceMaps,
+    );
 
     this.diagnostics = [];
     this.cachedDiagnostics = undefined;
   }
 
+  locked: boolean;
   normalizer: DiagnosticsNormalizer;
   sourceMaps: SourceMapConsumerCollection;
   unique: UniqueRules;
@@ -92,6 +97,10 @@ export default class DiagnosticsProcessor {
       },
     });
     return diagnostics;
+  }
+
+  lock() {
+    this.locked = true;
   }
 
   unshiftOrigin(origin: DiagnosticOrigin) {
@@ -238,6 +247,10 @@ export default class DiagnosticsProcessor {
     return keys;
   }
 
+  addDiagnosticAssert(diag: Diagnostic, origin?: DiagnosticOrigin): Diagnostic {
+    return this.addDiagnostics([diag], origin, true)[0];
+  }
+
   addDiagnostic(
     diag: Diagnostic,
     origin?: DiagnosticOrigin,
@@ -245,12 +258,22 @@ export default class DiagnosticsProcessor {
     return this.addDiagnostics([diag], origin)[0];
   }
 
-  addDiagnostics(diags: Diagnostics, origin?: DiagnosticOrigin): Diagnostics {
+  addDiagnostics(
+    diags: Diagnostics,
+    origin?: DiagnosticOrigin,
+    force?: boolean,
+  ): Diagnostics {
     if (diags.length === 0) {
       return diags;
     }
 
     this.cachedDiagnostics = undefined;
+
+    if (this.locked) {
+      throw new Error(
+        'DiagnosticsProcessor is locked and cannot accept anymore diagnostics',
+      );
+    }
 
     const {max} = this.options;
     const added: Diagnostics = [];
@@ -264,27 +287,29 @@ export default class DiagnosticsProcessor {
 
     // Filter diagnostics
     diagLoop: for (let diag of diags) {
-      if (max !== undefined && this.diagnostics.length > max) {
+      if (!force && max !== undefined && this.diagnostics.length > max) {
         break;
       }
 
       // Check before normalization
-      if (this.doesMatchFilter(diag)) {
+      if (!force && this.doesMatchFilter(diag)) {
         continue;
       }
 
       diag = this.normalizer.normalizeDiagnostic(diag);
 
       // Check after normalization
-      if (this.doesMatchFilter(diag)) {
+      if (!force && this.doesMatchFilter(diag)) {
         continue;
       }
 
       const keys = this.buildDedupeKeys(diag);
 
-      for (const key of keys) {
-        if (this.includedKeys.has(key)) {
-          continue diagLoop;
+      if (!force) {
+        for (const key of keys) {
+          if (this.includedKeys.has(key)) {
+            continue diagLoop;
+          }
         }
       }
 
@@ -346,8 +371,8 @@ export default class DiagnosticsProcessor {
       }
 
       diagnostics.push({
-        location: suppression.loc,
-        description: descriptions.SUPPRESSIONS.UNUSED,
+        location: suppression.commentLocation,
+        description: descriptions.SUPPRESSIONS.UNUSED(suppression),
       });
     }
 

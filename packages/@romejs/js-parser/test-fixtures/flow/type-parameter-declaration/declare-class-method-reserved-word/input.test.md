@@ -38,6 +38,7 @@ Program {
         name: 'X'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'X'
           end: Object {
             column: 15
             index: 15
@@ -90,6 +91,7 @@ Program {
               name: 'foobar'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'foobar'
                 end: Object {
                   column: 8
                   index: 26
@@ -194,6 +196,7 @@ Program {
               name: 'delete'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'delete'
                 end: Object {
                   column: 8
                   index: 47
@@ -298,6 +301,7 @@ Program {
               name: 'yield'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'yield'
                 end: Object {
                   column: 7
                   index: 67
@@ -402,6 +406,7 @@ Program {
               name: 'do'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'do'
                 end: Object {
                   column: 4
                   index: 84
@@ -506,6 +511,7 @@ Program {
               name: 'foobar'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'foobar'
                 end: Object {
                   column: 15
                   index: 112
@@ -610,6 +616,7 @@ Program {
               name: 'delete'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'delete'
                 end: Object {
                   column: 15
                   index: 140
@@ -714,6 +721,7 @@ Program {
               name: 'yield'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'yield'
                 end: Object {
                   column: 14
                   index: 167
@@ -818,6 +826,7 @@ Program {
               name: 'do'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'do'
                 end: Object {
                   column: 11
                   index: 191

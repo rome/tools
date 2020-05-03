@@ -106,6 +106,7 @@ Program {
               name: 'eval'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'eval'
                 end: Object {
                   column: 5
                   index: 5

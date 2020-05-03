@@ -76,6 +76,7 @@ Program {
         name: 'T33'
         loc: Object {
           filename: 'input.ts'
+          identifierName: 'T33'
           end: Object {
             column: 8
             index: 8
@@ -136,6 +137,7 @@ Program {
             name: 'Array'
             loc: Object {
               filename: 'input.ts'
+              identifierName: 'Array'
               end: Object {
                 column: 25
                 index: 25

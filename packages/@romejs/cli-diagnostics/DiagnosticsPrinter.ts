@@ -22,7 +22,11 @@ import {
   DiagnosticsPrinterOptions,
 } from './types';
 
-import {formatAnsi, markup, markupToPlainText} from '@romejs/string-markup';
+import {
+  formatAnsi,
+  markup,
+  markupToPlainTextString,
+} from '@romejs/string-markup';
 import {toLines} from './utils';
 import printAdvice from './printAdvice';
 
@@ -79,7 +83,10 @@ function equalPosition(
   return true;
 }
 
-type BeforeFooterPrintFn = (reporter: Reporter, error: boolean) => void;
+type FooterPrintCallback = (
+  reporter: Reporter,
+  error: boolean,
+) => void | boolean;
 
 export const DEFAULT_PRINTER_FLAGS: DiagnosticsPrinterFlags = {
   grep: '',
@@ -139,12 +146,12 @@ export default class DiagnosticsPrinter extends Error {
     this.missingFileSources = new AbsoluteFilePathSet();
     this.fileSources = new UnknownFilePathMap();
     this.fileMtimes = new UnknownFilePathMap();
-    this.beforeFooterPrint = [];
+    this.onFooterPrintCallbacks = [];
   }
 
   reporter: Reporter;
   processor: DiagnosticsProcessor;
-  beforeFooterPrint: Array<BeforeFooterPrintFn>;
+  onFooterPrintCallbacks: Array<FooterPrintCallback>;
   flags: DiagnosticsPrinterFlags;
   cwd: AbsoluteFilePath;
   readFile: DiagnosticsFileReader;
@@ -212,7 +219,7 @@ export default class DiagnosticsPrinter extends Error {
 
     // Match against the supplied grep pattern
     let ignored =
-      markupToPlainText(diag.description.message.value).toLowerCase().includes(
+      markupToPlainTextString(diag.description.message.value).toLowerCase().includes(
         grep,
       ) === false;
     if (inverseGrep) {
@@ -356,16 +363,47 @@ export default class DiagnosticsPrinter extends Error {
     this.reporter.redirectOutToErr(restoreRedirect);
   }
 
+  getOutdatedFiles(diag: Diagnostic): UnknownFilePathSet {
+    let outdatedFiles: UnknownFilePathSet = new UnknownFilePathSet();
+    for (const {
+      path,
+      mtime: expectedMtime,
+    } of this.getDependenciesFromDiagnostics([diag])) {
+      const mtime = this.fileMtimes.get(path);
+      if (
+        mtime !== undefined &&
+        expectedMtime !== undefined &&
+        mtime > expectedMtime
+      ) {
+        outdatedFiles.add(path);
+      }
+    }
+    return outdatedFiles;
+  }
+
   displayDiagnostic(diag: Diagnostic) {
     const {reporter} = this;
     const {start, end, filename} = diag.location;
-    const {advice} = diag.description;
+    let advice = [...(diag.description.advice || [])];
+
+    // Remove stacktrace from beginning if it contains only one frame that matches the root diagnostic location
+    const firstAdvice = advice[0];
+    if (
+      firstAdvice !== undefined &&
+      firstAdvice.type === 'stacktrace' &&
+      firstAdvice.frames.length === 1
+    ) {
+      const frame = firstAdvice.frames[0];
+      if (frame.filename === filename && equalPosition(frame, start)) {
+        advice.shift();
+      }
+    }
 
     // Determine if we should skip showing the frame at the top of the diagnostic output
     // We check if there are any frame advice entries that match us exactly, this is
     // useful for stuff like reporting call stacks
     let skipFrame = false;
-    if (start !== undefined && end !== undefined && advice !== undefined) {
+    if (start !== undefined && end !== undefined) {
       adviceLoop: for (const item of advice) {
         if (
           item.type === 'frame' &&
@@ -388,23 +426,8 @@ export default class DiagnosticsPrinter extends Error {
       }
     }
 
-    // Check if any files this diagnostic depends on have changed
-    let outdatedFiles: UnknownFilePathSet = new UnknownFilePathSet();
-    for (const {
-      path,
-      mtime: expectedMtime,
-    } of this.getDependenciesFromDiagnostics([diag])) {
-      const mtime = this.fileMtimes.get(path);
-      if (
-        mtime !== undefined &&
-        expectedMtime !== undefined &&
-        mtime > expectedMtime
-      ) {
-        outdatedFiles.add(path);
-      }
-    }
-
     const outdatedAdvice: DiagnosticAdvice = [];
+    const outdatedFiles = this.getOutdatedFiles(diag);
     const isOutdated = outdatedFiles.size > 0;
     if (isOutdated) {
       const outdatedFilesArr = Array.from(outdatedFiles, (path) => path.join());
@@ -444,14 +467,14 @@ export default class DiagnosticsPrinter extends Error {
 
     reporter.indent(() => {
       // Concat all the advice together
-      const advice: DiagnosticAdvice = [
+      const allAdvice: DiagnosticAdvice = [
         ...derived.advice,
         ...outdatedAdvice,
-        ...(diag.description.advice || []),
+        ...advice,
       ];
 
       // Print advice
-      for (const item of advice) {
+      for (const item of allAdvice) {
         const res = printAdvice(
           item,
           {
@@ -514,8 +537,8 @@ export default class DiagnosticsPrinter extends Error {
     return filteredDiagnostics;
   }
 
-  onBeforeFooterPrint(fn: BeforeFooterPrintFn) {
-    this.beforeFooterPrint.push(fn);
+  onFooterPrint(fn: FooterPrintCallback) {
+    this.onFooterPrintCallbacks.push(fn);
   }
 
   footer() {
@@ -535,14 +558,27 @@ export default class DiagnosticsPrinter extends Error {
       );
     }
 
-    for (const handler of this.beforeFooterPrint) {
-      handler(reporter, isError);
+    if (isError) {
+      if (this.flags.fieri) {
+        this.showBanner(errorBanner);
+      }
+    } else {
+      if (this.flags.fieri) {
+        this.showBanner(successBanner);
+      }
+    }
+
+    for (const handler of this.onFooterPrintCallbacks) {
+      const stop = handler(reporter, isError);
+      if (stop) {
+        return;
+      }
     }
 
     if (isError) {
       this.footerError();
     } else {
-      this.footerSuccess();
+      reporter.success('No known problems!');
     }
   }
 
@@ -575,22 +611,8 @@ export default class DiagnosticsPrinter extends Error {
     }
   }
 
-  footerSuccess() {
-    const {reporter} = this;
-
-    if (this.flags.fieri) {
-      this.showBanner(successBanner);
-    }
-
-    reporter.success('No known problems!');
-  }
-
   footerError() {
     const {reporter, filteredCount} = this;
-
-    if (this.flags.fieri) {
-      this.showBanner(errorBanner);
-    }
 
     const displayableProblems = this.getDisplayedProblemsCount();
     let str = `Found <number emphasis>${displayableProblems}</number> <grammarNumber plural="problems" singular="problem">${displayableProblems}</grammarNumber>`;

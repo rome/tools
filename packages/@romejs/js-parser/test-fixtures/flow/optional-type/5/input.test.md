@@ -89,6 +89,7 @@ Program {
           name: 'b'
           loc: Object {
             filename: 'input.js'
+            identifierName: 'b'
             end: Object {
               column: 5
               index: 5
@@ -105,6 +106,7 @@ Program {
           name: 'a'
           loc: Object {
             filename: 'input.js'
+            identifierName: 'a'
             end: Object {
               column: 1
               index: 1
@@ -135,6 +137,7 @@ Program {
             name: 'd'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'd'
               end: Object {
                 column: 13
                 index: 13
@@ -151,6 +154,7 @@ Program {
             name: 'c'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'c'
               end: Object {
                 column: 9
                 index: 9
@@ -181,6 +185,7 @@ Program {
               name: 'f'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'f'
                 end: Object {
                   column: 21
                   index: 21
@@ -197,6 +202,7 @@ Program {
               name: 'e'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'e'
                 end: Object {
                   column: 17
                   index: 17
@@ -227,6 +233,7 @@ Program {
                 name: 'h'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'h'
                   end: Object {
                     column: 29
                     index: 29
@@ -243,6 +250,7 @@ Program {
                 name: 'g'
                 loc: Object {
                   filename: 'input.js'
+                  identifierName: 'g'
                   end: Object {
                     column: 25
                     index: 25
@@ -273,6 +281,7 @@ Program {
                   name: 'j'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'j'
                     end: Object {
                       column: 37
                       index: 37
@@ -289,6 +298,7 @@ Program {
                   name: 'i'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'i'
                     end: Object {
                       column: 33
                       index: 33
@@ -319,6 +329,7 @@ Program {
                     name: 'l'
                     loc: Object {
                       filename: 'input.js'
+                      identifierName: 'l'
                       end: Object {
                         column: 45
                         index: 45
@@ -335,6 +346,7 @@ Program {
                     name: 'k'
                     loc: Object {
                       filename: 'input.js'
+                      identifierName: 'k'
                       end: Object {
                         column: 41
                         index: 41
@@ -365,6 +377,7 @@ Program {
                       name: 'o'
                       loc: Object {
                         filename: 'input.js'
+                        identifierName: 'o'
                         end: Object {
                           column: 58
                           index: 58
@@ -381,6 +394,7 @@ Program {
                       name: 'n'
                       loc: Object {
                         filename: 'input.js'
+                        identifierName: 'n'
                         end: Object {
                           column: 53
                           index: 53
@@ -397,6 +411,7 @@ Program {
                       name: 'm'
                       loc: Object {
                         filename: 'input.js'
+                        identifierName: 'm'
                         end: Object {
                           column: 49
                           index: 49
@@ -435,6 +450,7 @@ Program {
         name: 'p'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'p'
           end: Object {
             column: 62
             index: 62

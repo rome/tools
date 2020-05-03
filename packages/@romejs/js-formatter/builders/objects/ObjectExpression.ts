@@ -51,22 +51,21 @@ export default function ObjectExpression(
     }
 
     tokens.push('...', builder.tokenize(node.rest, node));
-  } else {
+  } else if (props.length > 0) {
     // Add trailing comma
     tokens.push(ifBreak(','));
   }
 
   // If the first property is not one the same line as the opening brace,
   // the object is printed on multiple lines.
-  const forceBreak =
+  const shouldBreak =
     node.loc !== undefined &&
     props.length > 0 &&
     props[0].loc !== undefined &&
     props[0].loc.start.line !== node.loc.start.line;
 
-  // HACK: When a hardline is output on flat mode, the group is split
-  // TODO: Add a `break` property on group tokens to force this behavior
-  const line = forceBreak ? hardline : softline;
-
-  return group(concat(['{', indent(concat([line, concat(tokens)])), line, '}']));
+  return group(
+    concat(['{', indent(concat([softline, concat(tokens)])), softline, '}']),
+    shouldBreak,
+  );
 }

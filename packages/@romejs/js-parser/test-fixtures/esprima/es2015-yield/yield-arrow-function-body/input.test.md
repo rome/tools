@@ -83,6 +83,7 @@ Program {
               name: 'z'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'z'
                 end: Object {
                   column: 2
                   index: 2
@@ -146,6 +147,7 @@ Program {
                   name: 'yield'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'yield'
                     end: Object {
                       column: 14
                       index: 14
@@ -162,6 +164,7 @@ Program {
                   name: 'z'
                   loc: Object {
                     filename: 'input.js'
+                    identifierName: 'z'
                     end: Object {
                       column: 18
                       index: 18

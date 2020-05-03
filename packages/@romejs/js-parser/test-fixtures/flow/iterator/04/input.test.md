@@ -91,6 +91,7 @@ Program {
               name: '@@iterator'
               loc: Object {
                 filename: 'input.js'
+                identifierName: '@@iterator'
                 end: Object {
                   column: 14
                   index: 14

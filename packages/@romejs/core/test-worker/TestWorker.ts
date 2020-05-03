@@ -9,7 +9,7 @@ import {TestWorkerBridgeRunOptions} from '../common/bridges/TestWorkerBridge';
 import {deriveDiagnosticFromError} from '@romejs/diagnostics';
 import {TestWorkerBridge} from '@romejs/core';
 import {createBridgeFromParentProcess} from '@romejs/events';
-import TestWorkerRunner from './TestWorkerRunner';
+import TestWorkerRunner, {TestWorkerFileResult} from './TestWorkerRunner';
 import inspector = require('inspector');
 
 export type TestWorkerFlags = {
@@ -42,8 +42,8 @@ export default class TestWorker {
     process.on(
       'unhandledRejection',
       (err) => {
-        bridge.testError.send({
-          ref: undefined,
+        bridge.testDiagnostic.send({
+          origin: undefined,
           diagnostic: deriveDiagnosticFromError({
             error: err,
             category: 'tests/unhandledRejection',
@@ -69,12 +69,12 @@ export default class TestWorker {
     return bridge;
   }
 
-  async runTest(id: number): Promise<void> {
+  async runTest(id: number): Promise<TestWorkerFileResult> {
     const runner = this.runners.get(id);
     if (runner === undefined) {
       throw new Error(`No runner ${id} found`);
     } else {
-      await runner.run();
+      return await runner.run();
     }
   }
 

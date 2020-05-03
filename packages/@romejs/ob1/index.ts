@@ -23,6 +23,7 @@ type AnyNumber = Number0 | Number1;
 export type UnknownNumber = AnyNumber | number;
 
 // Add two offsets or numbers.
+export function ob1Add(a: Number1, b: Number1): Number1;
 export function ob1Add(a: Number1, b: number): Number1;
 export function ob1Add(a: number, b: Number1): Number1;
 export function ob1Add(a: Number0, b: number): Number0;
@@ -65,6 +66,7 @@ export function ob1Get1(x: undefined | Number1): undefined | number {
 }
 
 export function ob1Get(x: UnknownNumber): number;
+export function ob1Get(x: undefined | UnknownNumber): undefined | number;
 export function ob1Get(x: undefined): undefined;
 export function ob1Get(x: undefined | UnknownNumber): undefined | number {
   // @ts-ignore

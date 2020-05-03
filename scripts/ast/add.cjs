@@ -21,7 +21,7 @@ const {write, getBuilderName} = require('../_utils.cjs');
 const nodeType = process.argv[2];
 const category = process.argv[3];
 if (nodeType === undefined || category === undefined) {
-  console.error('node add-new-ast-type.js [node-type] [category]');
+  console.error('node scripts/ast/add.cjs [node-type] [category]');
   process.exit(1);
 }
 

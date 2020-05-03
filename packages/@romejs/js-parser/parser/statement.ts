@@ -943,7 +943,7 @@ export function parseWhileStatement(
   parser.state.labels.push(loopLabel);
   const body = parseStatement(parser, 'while');
   parser.state.labels.pop();
-  return {loc: parser.finishLoc(start), type: 'WhileStatement', test, body};
+  return parser.finishNode(start, {type: 'WhileStatement', test, body});
 }
 
 export function parseWithStatement(
@@ -1300,7 +1300,7 @@ export function parseVar(
 ): Array<VariableDeclarator> {
   const declarations: Array<VariableDeclarator> = [];
 
-  for (;;) {
+  while (true) {
     const start = parser.getPosition();
     const id = parseVarHead(parser, start);
 

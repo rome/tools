@@ -82,6 +82,7 @@ Program {
               name: 'global'
               loc: Object {
                 filename: 'input.ts'
+                identifierName: 'global'
                 end: Object {
                   column: 10
                   index: 31

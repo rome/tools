@@ -108,6 +108,7 @@ Program {
             name: 'namespace'
             loc: Object {
               filename: 'input.js'
+              identifierName: 'namespace'
               end: Object {
                 column: 26
                 index: 26

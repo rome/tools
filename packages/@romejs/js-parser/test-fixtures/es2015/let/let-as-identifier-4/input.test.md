@@ -59,22 +59,6 @@ Program {
             line: 1
           }
         }
-        left: ReferenceIdentifier {
-          name: 'let'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 3
-              index: 3
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
         right: ObjectExpression {
           properties: Array []
           loc: Object {
@@ -87,6 +71,23 @@ Program {
             start: Object {
               column: 7
               index: 7
+              line: 1
+            }
+          }
+        }
+        left: ReferenceIdentifier {
+          name: 'let'
+          loc: Object {
+            filename: 'input.js'
+            identifierName: 'let'
+            end: Object {
+              column: 3
+              index: 3
+              line: 1
+            }
+            start: Object {
+              column: 0
+              index: 0
               line: 1
             }
           }

@@ -176,6 +176,14 @@ export default class Worker {
       );
     });
 
+    bridge.updateInlineSnapshots.subscribe((payload) => {
+      return this.api.updateInlineSnapshots(
+        convertTransportFileReference(payload.file),
+        payload.updates,
+        payload.parseOptions,
+      );
+    });
+
     bridge.analyzeDependencies.subscribe((payload) => {
       return this.api.analyzeDependencies(
         convertTransportFileReference(payload.file),

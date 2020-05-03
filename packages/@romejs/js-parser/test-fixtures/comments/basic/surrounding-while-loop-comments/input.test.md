@@ -70,6 +70,7 @@ Program {
         name: 'f'
         loc: Object {
           filename: 'input.js'
+          identifierName: 'f'
           end: Object {
             column: 10
             index: 10
@@ -136,6 +137,8 @@ Program {
         }
         body: Array [
           WhileStatement {
+            leadingComments: Array ['0']
+            trailingComments: Array ['1']
             loc: Object {
               filename: 'input.js'
               end: Object {
@@ -151,7 +154,7 @@ Program {
             }
             test: BooleanLiteral {
               value: true
-              leadingComments: Array ['0']
+              leadingComments: undefined
               loc: Object {
                 filename: 'input.js'
                 end: Object {
@@ -169,7 +172,7 @@ Program {
             body: BlockStatement {
               body: Array []
               directives: Array []
-              trailingComments: Array ['1']
+              trailingComments: undefined
               loc: Object {
                 filename: 'input.js'
                 end: Object {
@@ -223,6 +226,7 @@ Program {
                     leadingComments: undefined
                     loc: Object {
                       filename: 'input.js'
+                      identifierName: 'each'
                       end: Object {
                         column: 65
                         index: 65

@@ -28,7 +28,9 @@ export type TransformStageFactory = (
   options: Object,
 ) => Transforms;
 
-export type TransformStageFactories = { [key in TransformStageName]: TransformStageFactory };
+export type TransformStageFactories = {
+  [key in TransformStageName]: TransformStageFactory
+};
 
 //
 export type Transform =
@@ -94,13 +96,17 @@ export type BundleCompileOptions = {
 };
 
 export type LintCompilerOptions = {
+  hasDecisions?: boolean;
+  globalDecisions?: LintCompilerOptionsDecisions;
   decisionsByPosition?: Dict<LintCompilerOptionsDecisions>;
 };
 
 export type LintCompilerOptionsDecisions = Array<LintCompilerOptionsDecision>;
 
+export type LintCompilerOptionsDecisionAction = 'suppress' | 'fix' | 'ignore';
+
 export type LintCompilerOptionsDecision = {
-  action: 'suppress' | 'fix' | 'ignore';
+  action: LintCompilerOptionsDecisionAction;
   category: DiagnosticCategory;
   id?: number;
 };

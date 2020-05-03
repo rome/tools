@@ -26,13 +26,13 @@ test(
       '1.2.3-45pre.42yes+45build',
     ];
     for (const str of versionTests) {
-      await t.snapshot(parseSemverVersion({input: str}));
+      t.snapshot(parseSemverVersion({input: str}));
     }
 
     // loose mode
     const looseRangeTests = ['* - 1.2.3', 'v1.2.3', '||', '', '1.2.3prerelease'];
     for (const str of looseRangeTests) {
-      await t.snapshot(parseSemverRange({input: str, loose: true}));
+      t.snapshot(parseSemverRange({input: str, loose: true}));
 
       t.throws(() => {
         parseSemverRange({input: str, loose: false});
@@ -89,7 +89,7 @@ test(
 
     // run range tests
     for (const str of rangeTests) {
-      await t.snapshot(parseSemverRange({input: str}));
+      t.snapshot(parseSemverRange({input: str}));
     }
 
     // ensure ranges throw in version mode

@@ -8,11 +8,7 @@
 import {SourceMapConsumer} from '@romejs/codec-source-map';
 import {ErrorFrame} from '@romejs/v8';
 import {Number0, Number1, ob1Coerce1, ob1Coerce1To0} from '@romejs/ob1';
-import {
-  ERROR_FRAMES_PROP,
-  ERROR_POP_FRAMES_PROP,
-  getErrorStructure,
-} from './errors';
+import {ERROR_FRAMES_PROP, getErrorStructure} from './errors';
 
 type ResolvedLocation = {
   found: boolean;
@@ -126,7 +122,6 @@ function noNull<T>(val: null | T): undefined | T {
 function addErrorFrames(
   err: Error & {
     [ERROR_FRAMES_PROP]?: unknown;
-    [ERROR_POP_FRAMES_PROP]?: unknown;
   },
   frames: Array<NodeJS.CallSite>,
 ): void {
@@ -184,14 +179,6 @@ function addErrorFrames(
       return frame;
     }
   });
-
-  // This is a property that an error object can define that will remove that amount of frames
-
-  // This is useful for removing levels of indirection, for example, an invariant error
-  const framesToProp = err[ERROR_POP_FRAMES_PROP];
-  if (typeof framesToProp === 'number') {
-    builtFrames = builtFrames.slice(framesToProp);
-  }
 
   err[ERROR_FRAMES_PROP] = builtFrames;
 }

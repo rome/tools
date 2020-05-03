@@ -140,6 +140,7 @@ Program {
               name: 'arguments'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'arguments'
                 end: Object {
                   column: 24
                   index: 24
@@ -156,6 +157,7 @@ Program {
               name: 'a'
               loc: Object {
                 filename: 'input.js'
+                identifierName: 'a'
                 end: Object {
                   column: 27
                   index: 27

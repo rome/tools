@@ -8,7 +8,6 @@
 import {
   Diagnostic,
   DiagnosticAdvice,
-  DiagnosticLocation,
   DiagnosticOrigin,
   Diagnostics,
 } from './types';
@@ -21,6 +20,7 @@ import {
 } from '@romejs/v8';
 import {DiagnosticCategory} from './categories';
 import {createBlessedDiagnosticMessage} from './descriptions';
+import DiagnosticsNormalizer from './DiagnosticsNormalizer';
 
 function normalizeArray<T>(val: undefined | Array<T>): Array<T> {
   if (Array.isArray(val)) {
@@ -74,48 +74,12 @@ export function getDiagnosticHeader(
   return markup`<filelink target="${filename}" line="${start.line}" column="${start.column}" />`;
 }
 
-function removePositionFromLocation(loc: DiagnosticLocation): DiagnosticLocation {
-  return {
-    ...loc,
-    start: undefined,
-    end: undefined,
-  };
-}
-
 export function derivePositionlessKeyFromDiagnostic(diag: Diagnostic): string {
-  // Remove all line/column positions from the diagnostic and then JSON stringify it
-  let advice = diag.description.advice || [];
-
-  advice = advice.map((item) => {
-    switch (item.type) {
-      case 'frame':
-        return {
-          ...item,
-          location: removePositionFromLocation(item.location),
-        };
-
-      case 'action':
-        return {
-          ...item,
-          // Command flags could have position information
-          commandFlags: {},
-        };
-
-      default:
-        return item;
-    }
+  const normalizer = new DiagnosticsNormalizer({
+    stripPositions: true,
   });
 
-  diag = {
-    ...diag,
-    description: {
-      ...diag.description,
-      advice,
-    },
-    location: removePositionFromLocation(diag.location),
-  };
-
-  return JSON.stringify(diag);
+  return JSON.stringify(normalizer.normalizeDiagnostic(diag));
 }
 
 export function deriveRootAdviceFromDiagnostic(

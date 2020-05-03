@@ -117,6 +117,7 @@ Program {
                         name: 'param1'
                         loc: Object {
                           filename: 'input.js'
+                          identifierName: 'param1'
                           end: Object {
                             column: 14
                             index: 14
@@ -168,6 +169,7 @@ Program {
                         name: 'param2'
                         loc: Object {
                           filename: 'input.js'
+                          identifierName: 'param2'
                           end: Object {
                             column: 31
                             index: 31
@@ -219,6 +221,7 @@ Program {
                         name: 'param3'
                         loc: Object {
                           filename: 'input.js'
+                          identifierName: 'param3'
                           end: Object {
                             column: 47
                             index: 47

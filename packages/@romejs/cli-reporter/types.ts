@@ -13,10 +13,10 @@ export type SelectOption = {
 };
 
 export type SelectOptions = {
-  [key: string]: SelectOption;
+  [key: string]: undefined | SelectOption;
 };
 
-export type SelectArguments<Options> = {
+export type SelectArguments<Options extends SelectOptions> = {
   options: Options;
   defaults?: Array<keyof Options>;
   radio?: boolean;
@@ -27,6 +27,14 @@ export type Package = {
   name: string;
   version?: string;
 };
+
+export type ReporterTableField =
+  | number
+  | string
+  | {
+      align: 'left' | 'right';
+      value: number | string;
+    };
 
 export type ReporterStreamMeta = {
   type: 'out' | 'error' | 'all';
