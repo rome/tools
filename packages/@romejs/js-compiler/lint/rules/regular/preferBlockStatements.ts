@@ -8,7 +8,7 @@
 import {Path, TransformExitResult} from '@romejs/js-compiler';
 import {blockStatement} from '@romejs/js-ast';
 import {descriptions} from '@romejs/diagnostics';
-import {commentInjector} from '../../transforms/defaultHooks';
+import {commentInjector} from '../../../transforms/defaultHooks';
 
 export default {
   name: 'preferBlockStatements',

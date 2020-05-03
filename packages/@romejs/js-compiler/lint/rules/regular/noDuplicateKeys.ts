@@ -9,7 +9,7 @@ import {Path} from '@romejs/js-compiler';
 import {ObjectMethod, ObjectProperty} from '@romejs/js-ast';
 import {TransformExitResult} from '@romejs/js-compiler/types';
 import {descriptions} from '@romejs/diagnostics';
-import {DiagnosticsDuplicateHelper} from '../../lib/DiagnosticsDuplicateHelper';
+import {DiagnosticsDuplicateHelper} from '../../../lib/DiagnosticsDuplicateHelper';
 
 function extractPropertyKey(
   node: ObjectProperty | ObjectMethod,
