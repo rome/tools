@@ -111,8 +111,8 @@ Program {
           loc: Object {
             filename: 'input.js'
             end: Object {
-              column: 17
-              index: 17
+              column: 16
+              index: 16
               line: 1
             }
             start: Object {
@@ -215,8 +215,8 @@ Program {
           loc: Object {
             filename: 'input.js'
             end: Object {
-              column: 22
-              index: 43
+              column: 21
+              index: 42
               line: 2
             }
             start: Object {
@@ -354,8 +354,8 @@ Program {
           loc: Object {
             filename: 'input.js'
             end: Object {
-              column: 22
-              index: 69
+              column: 21
+              index: 68
               line: 3
             }
             start: Object {
@@ -490,8 +490,8 @@ Program {
           loc: Object {
             filename: 'input.js'
             end: Object {
-              column: 24
-              index: 97
+              column: 23
+              index: 96
               line: 4
             }
             start: Object {
@@ -659,8 +659,8 @@ Program {
           loc: Object {
             filename: 'input.js'
             end: Object {
-              column: 23
-              index: 125
+              column: 22
+              index: 124
               line: 6
             }
             start: Object {
@@ -762,8 +762,8 @@ Program {
           loc: Object {
             filename: 'input.js'
             end: Object {
-              column: 28
-              index: 157
+              column: 27
+              index: 156
               line: 7
             }
             start: Object {
@@ -900,8 +900,8 @@ Program {
           loc: Object {
             filename: 'input.js'
             end: Object {
-              column: 28
-              index: 189
+              column: 27
+              index: 188
               line: 8
             }
             start: Object {
@@ -1035,8 +1035,8 @@ Program {
           loc: Object {
             filename: 'input.js'
             end: Object {
-              column: 30
-              index: 223
+              column: 29
+              index: 222
               line: 9
             }
             start: Object {

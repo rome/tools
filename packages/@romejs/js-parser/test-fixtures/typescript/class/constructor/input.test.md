@@ -577,8 +577,8 @@ Program {
               loc: Object {
                 filename: 'input.ts'
                 end: Object {
-                  column: 32
-                  index: 120
+                  column: 31
+                  index: 119
                   line: 4
                 }
                 start: Object {

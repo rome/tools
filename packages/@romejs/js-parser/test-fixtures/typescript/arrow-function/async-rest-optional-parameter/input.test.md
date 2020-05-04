@@ -83,8 +83,8 @@ Program {
           loc: Object {
             filename: 'input.ts'
             end: Object {
-              column: 32
-              index: 32
+              column: 31
+              index: 31
               line: 1
             }
             start: Object {

@@ -130,8 +130,8 @@ Program {
         loc: Object {
           filename: 'input.js'
           end: Object {
-            column: 19
-            index: 33
+            column: 18
+            index: 32
             line: 2
           }
           start: Object {

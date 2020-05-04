@@ -183,8 +183,8 @@ Program {
               loc: Object {
                 filename: 'input.ts'
                 end: Object {
-                  column: 29
-                  index: 41
+                  column: 28
+                  index: 40
                   line: 2
                 }
                 start: Object {
@@ -368,8 +368,8 @@ Program {
               loc: Object {
                 filename: 'input.ts'
                 end: Object {
-                  column: 43
-                  index: 87
+                  column: 42
+                  index: 86
                   line: 3
                 }
                 start: Object {
