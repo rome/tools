@@ -16,7 +16,6 @@ import {
   Token,
   concat,
   group,
-  hardline,
   ifBreak,
   indent,
   join,
@@ -37,12 +36,9 @@ export default function ArrayExpression(
 
   if (!hasContents && !hasRest) {
     if (hasInnerComments(node)) {
-      return concat([
-        '[',
-        builder.tokenizeInnerComments(node, true),
-        hardline,
-        ']',
-      ]);
+      return group(
+        concat(['[', builder.tokenizeInnerComments(node, true), softline, ']']),
+      );
     } else {
       return '[]';
     }
@@ -53,11 +49,14 @@ export default function ArrayExpression(
   if (hasContents) {
     const elements: Array<Token> = [];
 
-    for (const element of node.elements) {
-      if (element === undefined) {
-        elements.push('');
+    for (let i = 0; i < node.elements.length; i++) {
+      const element = node.elements[i];
+      const printed = builder.tokenize(element, node);
+
+      if (i > 0 && builder.getLinesBetween(node.elements[i - 1], element) > 1) {
+        elements.push(concat([softline, printed]));
       } else {
-        elements.push(builder.tokenize(element, node));
+        elements.push(printed);
       }
     }
 

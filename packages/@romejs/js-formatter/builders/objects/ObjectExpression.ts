@@ -6,6 +6,7 @@
  */
 
 import {
+  AnyNode,
   AssignmentObjectPattern,
   BindingObjectPattern,
   ObjectExpression,
@@ -15,31 +16,40 @@ import {
   Token,
   concat,
   group,
-  hardline,
   ifBreak,
   indent,
+  join,
   lineOrSpace,
   softline,
 } from '../../tokens';
 import {hasInnerComments} from '../comments';
-import {printCommaList} from '../utils';
 
 export default function ObjectExpression(
   builder: Builder,
   node: ObjectExpression | AssignmentObjectPattern | BindingObjectPattern,
 ): Token {
   if (hasInnerComments(node)) {
-    return concat([
-      '{',
-      builder.tokenizeInnerComments(node, true),
-      hardline,
-      '}',
-    ]);
+    return group(
+      concat(['{', builder.tokenizeInnerComments(node, true), softline, '}']),
+    );
   }
 
-  const props = node.properties;
+  const tokens: Array<Token> = [];
+  const props: Array<AnyNode> = node.properties;
 
-  const tokens: Array<Token> = [printCommaList(builder, props, node)];
+  tokens.push(
+    join(
+      concat([',', lineOrSpace]),
+      props.map((prop, index) => {
+        const printed = builder.tokenize(prop, node);
+        if (index > 0 && builder.getLinesBetween(props[index - 1], prop) > 1) {
+          return concat([softline, printed]);
+        } else {
+          return printed;
+        }
+      }),
+    ),
+  );
 
   if (
     (node.type === 'BindingObjectPattern' ||
@@ -48,6 +58,9 @@ export default function ObjectExpression(
   ) {
     if (props.length > 0) {
       tokens.push(',', lineOrSpace);
+      if (builder.getLinesBetween(props[props.length - 1], node.rest) > 1) {
+        tokens.push(softline);
+      }
     }
 
     tokens.push('...', builder.tokenize(node.rest, node));

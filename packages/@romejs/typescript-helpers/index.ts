@@ -25,9 +25,7 @@ export type OptionalProps<Obj, Keys extends keyof Obj> = Omit<Obj, Keys> & {
 };
 
 // Turn a type that contains interfaces into regular objects
-export type InterfaceToObject<T> = T extends {
-
-}
+export type InterfaceToObject<T> = T extends {}
   ? {[K in keyof T]: InterfaceToObject<T[K]>}
   : T;
 
