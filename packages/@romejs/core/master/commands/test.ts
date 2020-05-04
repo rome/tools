@@ -42,6 +42,7 @@ export default createMasterCommand({
               `${path.getExtensionlessBasename()}.test${path.getExtensions()}`,
             )
       ,
+
       test: (path) => path.hasExtension('test'),
       noun: 'test',
       verb: 'testing',
