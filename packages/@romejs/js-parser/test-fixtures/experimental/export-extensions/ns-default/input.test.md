@@ -62,6 +62,38 @@ Program {
           }
         }
       }
+      namespaceSpecifier: ExportNamespaceSpecifier {
+        loc: Object {
+          filename: 'input.js'
+          end: Object {
+            column: 19
+            index: 19
+            line: 1
+          }
+          start: Object {
+            column: 7
+            index: 7
+            line: 1
+          }
+        }
+        exported: Identifier {
+          name: 'default'
+          loc: Object {
+            filename: 'input.js'
+            identifierName: 'default'
+            end: Object {
+              column: 19
+              index: 19
+              line: 1
+            }
+            start: Object {
+              column: 12
+              index: 12
+              line: 1
+            }
+          }
+        }
+      }
     }
   ]
 }

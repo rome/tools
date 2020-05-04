@@ -511,11 +511,15 @@ function parseExportStar(
   parser.expect(tt.star);
 
   if (parser.isContextual('as')) {
-    const {source, namedSpecifiers} = parseExportNamespace(parser, exportKind);
+    const {source, namespaceSpecifier, namedSpecifiers} = parseExportNamespace(
+      parser,
+      exportKind,
+    );
     return parser.finishNode(
       start,
       {
         type: 'ExportExternalDeclaration',
+        namespaceSpecifier,
         exportKind,
         namedSpecifiers,
         source,
