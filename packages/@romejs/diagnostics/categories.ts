@@ -97,6 +97,7 @@ type LintDiagnosticCategory =
   | 'lint/doubleEquals'
   | 'lint/duplicateImportSource'
   | 'lint/emptyBlocks'
+  | 'lint/emptyMatches'
   | 'lint/getterReturn'
   | 'lint/inconsiderateLanguage'
   | 'lint/jsxKey'
