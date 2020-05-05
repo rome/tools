@@ -22,11 +22,6 @@ import {
   ROME_CONFIG_FILENAMES,
 } from '@romejs/project';
 import {DiagnosticsProcessor, catchDiagnostics} from '@romejs/diagnostics';
-import {Reporter} from '@romejs/cli-reporter';
-import {
-  WatchmanSubscriptionValue,
-  createWatchmanClient,
-} from '@romejs/codec-watchman';
 import {Event} from '@romejs/events';
 import {consumeJSON} from '@romejs/codec-json';
 import {humanizeNumber} from '@romejs/string-utils';
@@ -37,15 +32,10 @@ import {
   AbsoluteFilePathSet,
 } from '@romejs/path';
 import {exists, lstat, readFileText, readdir, watch} from '@romejs/fs';
-import crypto = require('crypto');
-
-import fs = require('fs');
-
-import {
-  getFileHandler,
-  getFileHandlerExtensions,
-} from '../../common/fileHandlers';
+import {getFileHandler} from '../../common/fileHandlers';
 import {markup} from '@romejs/string-markup';
+import crypto = require('crypto');
+import fs = require('fs');
 
 const DEFAULT_DENYLIST = ['.hg', '.git'];
 
@@ -138,7 +128,7 @@ export type MemoryFSGlobOptions = {
   test?: (path: AbsoluteFilePath) => boolean;
 };
 
-async function createRegularWatcher(
+async function createWatcher(
   memoryFs: MemoryFileSystem,
   diagnostics: DiagnosticsProcessor,
   projectFolderPath: AbsoluteFilePath,
@@ -248,175 +238,6 @@ async function createRegularWatcher(
       watcher.close();
     }
   };
-}
-
-async function createWatchmanWatcher(
-  memoryFs: MemoryFileSystem,
-  diagnostics: DiagnosticsProcessor,
-  projectFolderPath: AbsoluteFilePath,
-  projectConfig: ProjectConfig,
-): Promise<WatcherClose> {
-  const projectFolder = projectFolderPath.join();
-  const {connectedReporters} = memoryFs.master;
-
-  const activity = connectedReporters.progress({
-    title: `Adding project ${projectFolder} with watchman`,
-  });
-
-  let timeout;
-
-  function queueCallout() {
-    timeout = setTimeout(
-      memoryFs.master.wrapFatal(() => {
-        connectedReporters.warn(
-          'Watchman is taking a while to respond. Watchman may have just started and is still crawling the disk.',
-        );
-
-        // Show an even more aggressive message when watchman takes longer
-        queueCallout();
-      }),
-      5_000,
-    );
-  }
-
-  // Show a message when watchman takes too long
-  queueCallout();
-
-  try {
-    const client = await createWatchmanClient(Reporter.fromProcess());
-
-    const event = await client.createSubscription(
-      projectFolder,
-      {
-        fields: ['mtime', 'name', 'size', 'type', 'exists'],
-        expression: [
-          'anyof',
-          ['type', 'd'],
-          ['suffix', getFileHandlerExtensions(projectConfig)],
-        ],
-      },
-    );
-
-    const initial: WatchmanSubscriptionValue = await event.wait();
-    if (initial.isFreshInstance !== true) {
-      throw new Error('Expected this to be a fresh instance');
-    }
-    clearTimeout(timeout);
-
-    async function processChanges(
-      data: WatchmanSubscriptionValue,
-      diagnostics: DiagnosticsProcessor,
-    ) {
-      if (data['state-enter'] || data['state-leave']) {
-        return;
-      }
-
-      // rome-ignore lint/noExplicitAny
-      const dirs: Array<[AbsoluteFilePath, any]> = [];
-      // rome-ignore lint/noExplicitAny
-      const files: Array<[AbsoluteFilePath, any]> = [];
-
-      for (const file of data.files) {
-        const path = projectFolderPath.append(file.name);
-
-        if (file.exists === false) {
-          memoryFs.handleDeletion(path);
-          continue;
-        }
-
-        if (file.type === 'f') {
-          const basename = path.getBasename();
-
-          if (PRIORITY_FILES.has(basename)) {
-            files.unshift([path, file]);
-          } else {
-            files.push([path, file]);
-          }
-        } else if (file.type === 'd') {
-          dirs.push([path, file]);
-        }
-      }
-
-      await Promise.all(
-        dirs.map(async ([path, info]) => {
-          await memoryFs.addDirectory(
-            path,
-            {
-              size: info.size,
-              mtime: info.mtime,
-              type: 'directory',
-            },
-            {diagnostics, crawl: false},
-          );
-        }),
-      );
-
-      await Promise.all(
-        files.map(async ([path, info]) => {
-          const stats: Stats = {
-            size: info.size,
-            mtime: info.mtime,
-            type: 'file',
-          };
-
-          if (memoryFs.files.has(path)) {
-            await memoryFs.handleFileChange(
-              path,
-              stats,
-              {
-                diagnostics,
-                crawl: false,
-              },
-            );
-          } else {
-            await memoryFs.addFile(
-              path,
-              stats,
-              {
-                diagnostics,
-                crawl: false,
-              },
-            );
-          }
-        }),
-      );
-    }
-
-    activity.setText(`Processing results`);
-    await processChanges(initial, diagnostics);
-
-    event.subscribe((data: WatchmanSubscriptionValue) => {
-      processChanges(
-        data,
-        memoryFs.master.createDisconnectedDiagnosticsProcessor([
-          {
-            category: 'memory-fs',
-            message: 'Processing watchman changes',
-          },
-        ]),
-      );
-    });
-
-    activity.end();
-
-    return () => {
-      // TODO close
-    };
-  } catch (err) {
-    activity.end();
-
-    if (err.message.includes('RootResolveError')) {
-      // Fallback to node processor
-      memoryFs.master.connectedReporters.error(
-        `Failed to use watchman: ${err.message}`,
-      );
-      return createRegularWatcher(memoryFs, diagnostics, projectFolderPath);
-    } else {
-      throw err;
-    }
-  } finally {
-    clearTimeout(timeout);
-  }
 }
 
 export default class MemoryFileSystem {
@@ -707,19 +528,8 @@ export default class MemoryFileSystem {
       ],
     });
 
-    let promise;
-    if (projectConfig.files.watchman) {
-      logger.info(`[MemoryFileSystem] Watching ${folderLink} with watchman`);
-      promise = createWatchmanWatcher(
-        this,
-        diagnostics,
-        projectFolderPath,
-        projectConfig,
-      );
-    } else {
-      logger.info(`[MemoryFileSystem] Watching ${folderLink} with fs.watch`);
-      promise = createRegularWatcher(this, diagnostics, projectFolderPath);
-    }
+    logger.info(`[MemoryFileSystem] Watching ${folderLink}`);
+    const promise = createWatcher(this, diagnostics, projectFolderPath);
     this.watchPromises.set(
       projectFolder,
       {

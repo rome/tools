@@ -36,7 +36,6 @@ import {ROME_CONFIG_PACKAGE_JSON_FIELD} from './constants';
 import {parseSemverRange} from '@romejs/codec-semver';
 import {descriptions} from '@romejs/diagnostics';
 
-const WATCHMAN_CONFIG_FILENAME = '.watchmanconfig';
 const IGNORE_FILENAMES = ['.gitignore', '.hgignore'];
 
 function categoryExists(consumer: Consumer): boolean {
@@ -120,19 +119,6 @@ export function loadCompleteProjectConfig(
         // TODO: Maybe these are useful in other places?
         config.lint.ignore = [...config.lint.ignore, ...patterns];
       });
-    }
-  }
-
-  // Set fs.watchman=true when the file .watchmanconfig is present and no fs.watchman config was set
-  if (partial.files.watchman === undefined) {
-    // Try the project and vcs.root folder for a .watchmanconfig
-    // We do the Set magic to only visit the projectFolder once if it is also the vcs.root
-    for (const dir of new AbsoluteFilePathSet([projectFolder, config.vcs.root])) {
-      const watchmanConfigPath = dir.append(WATCHMAN_CONFIG_FILENAME);
-      meta.configDependencies.add(watchmanConfigPath);
-      if (existsSync(watchmanConfigPath)) {
-        config.files.watchman = true;
-      }
     }
   }
 
@@ -303,10 +289,6 @@ export function normalizeProjectConfig(
 
   const files = consumer.get('files');
   if (categoryExists(files)) {
-    if (files.has('watchman')) {
-      config.files.watchman = files.get('watchman').asBoolean();
-    }
-
     if (files.has('vendorPath')) {
       config.files.vendorPath = projectFolder.resolve(
         files.get('vendorPath').asString(),
