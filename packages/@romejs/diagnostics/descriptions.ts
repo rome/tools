@@ -507,6 +507,10 @@ export const descriptions = createMessages({
       category: 'lint/noDuplicateKeys',
       message: markup`Duplicate key <emphasis>${key}</emphasis>`,
     }),
+    NO_POSIX_IN_REGULAR_EXPRESSION: {
+      category: 'lint/noPosixInRegularExpression',
+      message: 'POSIX Character Classes and Collating Sequences are not supported in ECMAscript Regular Expressions',
+    },
     NO_DUPLICATE_CASE: (value: string) => ({
       category: 'lint/noDuplicateCase',
       message: markup`Duplicate case <emphasis>${value}</emphasis> not allowed.`,
