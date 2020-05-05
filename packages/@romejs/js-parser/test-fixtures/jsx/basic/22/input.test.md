@@ -250,8 +250,8 @@ Program {
           loc: Object {
             filename: 'input.mjs'
             end: Object {
-              column: 37
-              index: 90
+              column: 36
+              index: 89
               line: 4
             }
             start: Object {

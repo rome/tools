@@ -102,6 +102,7 @@ Program {
       body: BlockStatement {
         body: Array []
         directives: Array []
+        leadingComments: Array ['1']
         loc: Object {
           filename: 'input.js'
           end: Object {
@@ -125,11 +126,12 @@ Program {
         returnType: undefined
         thisType: undefined
         typeParameters: undefined
+        trailingComments: Array ['1']
         loc: Object {
           filename: 'input.js'
           end: Object {
-            column: 51
-            index: 51
+            column: 36
+            index: 36
             line: 1
           }
           start: Object {

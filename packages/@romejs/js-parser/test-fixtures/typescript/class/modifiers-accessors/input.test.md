@@ -262,8 +262,8 @@ Program {
               loc: Object {
                 filename: 'input.ts'
                 end: Object {
-                  column: 19
-                  index: 100
+                  column: 18
+                  index: 99
                   line: 4
                 }
                 start: Object {
@@ -511,8 +511,8 @@ Program {
               loc: Object {
                 filename: 'input.ts'
                 end: Object {
-                  column: 28
-                  index: 173
+                  column: 27
+                  index: 172
                   line: 6
                 }
                 start: Object {
@@ -660,8 +660,8 @@ Program {
               loc: Object {
                 filename: 'input.ts'
                 end: Object {
-                  column: 20
-                  index: 208
+                  column: 19
+                  index: 207
                   line: 8
                 }
                 start: Object {
@@ -809,8 +809,8 @@ Program {
               loc: Object {
                 filename: 'input.ts'
                 end: Object {
-                  column: 23
-                  index: 245
+                  column: 22
+                  index: 244
                   line: 9
                 }
                 start: Object {
@@ -958,8 +958,8 @@ Program {
               loc: Object {
                 filename: 'input.ts'
                 end: Object {
-                  column: 21
-                  index: 280
+                  column: 20
+                  index: 279
                   line: 10
                 }
                 start: Object {
