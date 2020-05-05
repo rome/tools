@@ -49,6 +49,7 @@ import restrictedGlobals from './regular/restrictedGlobals';
 import singleVarDeclarator from './regular/singleVarDeclarator';
 import sortImportExportSpecifiers from './regular/sortImportExportSpecifiers';
 import sparseArray from './regular/sparseArray';
+import stylePropObject from './react/stylePropObject';
 import undeclaredVariables from './regular/undeclaredVariables';
 import unsafeNegation from './regular/unsafeNegation';
 import unusedVariables from './regular/unusedVariables';
@@ -97,6 +98,7 @@ export const lintTransforms = [
   singleVarDeclarator,
   sortImportExportSpecifiers,
   sparseArray,
+  stylePropObject,
   undeclaredVariables,
   unsafeNegation,
   unusedVariables,
