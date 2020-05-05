@@ -288,7 +288,7 @@ export const descriptions = createMessages({
   LINT: {
     STYLE_PROP_OBJECT: {
       category: 'lint/stylePropObject',
-      message: markup`<emphasis>style</emphasis> property value must be an object.`,
+      message: '<emphasis>style</emphasis> property value must be an object.',
     },
     PENDING_FIXES: (
       relativeFilename: string,
