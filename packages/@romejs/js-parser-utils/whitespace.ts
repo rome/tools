@@ -5,8 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-// Matches a whole line break (where CRLF is considered a single
-// line break). Used to count lines.
+// Matches a whole line break (where CRLF is considered a single line break). Used to count lines.
 export const lineBreak = /\r\n?|\n|u2028|u2029/;
 export const lineBreakG = new RegExp(lineBreak.source, 'g');
 
@@ -16,6 +15,7 @@ export function isNewLine(code: number): boolean {
 
 export const nonASCIIwhitespace = /[\u1680\u180e\u2000-\u200a\u202f\u205f\u3000\ufeff]/;
 
+// rome-ignore lint/emptyMatches
 export const skipWhiteSpace = /(?:\s|\/\/.*|\/\*[^]*?\*\/)*/g;
 
 export const NEWLINE = /\r\n|[\n\r\u2028\u2029]/;
