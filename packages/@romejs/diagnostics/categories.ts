@@ -120,6 +120,7 @@ type LintDiagnosticCategory =
   | 'lint/noImportAssign'
   | 'lint/noLabelVar'
   | 'lint/noMultipleSpacesInRegularExpressionLiterals'
+  | 'lint/noPosixInRegularExpression'
   | 'lint/noReferenceToNonExistingGroup'
   | 'lint/noSetterReturn'
   | 'lint/noShadowRestrictedNames'
