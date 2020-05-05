@@ -12,6 +12,7 @@ import defaultExportSameBasename from './regular/defaultExportSameBasename';
 import doubleEquals from './regular/doubleEquals';
 import duplicateImportSource from './regular/duplicateImportSource';
 import emptyBlocks from './regular/emptyBlocks';
+import emptyMatches from './regular/emptyMatches';
 import getterReturn from './regular/getterReturn';
 import inconsiderateLanguage from './regular/inconsiderateLanguage';
 import jsxKey from './react/jsxKey';
@@ -64,6 +65,7 @@ export const lintTransforms = [
   doubleEquals,
   duplicateImportSource,
   emptyBlocks,
+  emptyMatches,
   getterReturn,
   inconsiderateLanguage,
   jsxKey,

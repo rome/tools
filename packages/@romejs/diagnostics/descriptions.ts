@@ -416,6 +416,10 @@ export const descriptions = createMessages({
         },
       ],
     },
+    EMPTY_MATCHES: {
+      category: 'lint/emptyMatches',
+      message: 'The expression can return empty matches, and may match infinitely in some use cases',
+    },
     NEGATE_DOUBLE_EQUALS: {
       category: 'lint/doubleEquals',
       message: 'Use !== instead of !=',
