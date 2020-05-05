@@ -19,6 +19,7 @@ import jsxNoCommentText from './react/jsxNoCommentText';
 import noArguments from './regular/noArguments';
 import noAsyncPromiseExecutor from './regular/noAsyncPromiseExecutor';
 import noCatchAssign from './regular/noCatchAssign';
+import noChildrenProp from './react/noChildrenProp';
 import noCompareNegZero from './regular/noCompareNegZero';
 import noCondAssign from './regular/noCondAssign';
 import noDebugger from './regular/noDebugger';
@@ -70,6 +71,7 @@ export const lintTransforms = [
   noArguments,
   noAsyncPromiseExecutor,
   noCatchAssign,
+  noChildrenProp,
   noCompareNegZero,
   noCondAssign,
   noDebugger,
