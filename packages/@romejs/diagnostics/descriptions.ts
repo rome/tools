@@ -342,6 +342,10 @@ export const descriptions = createMessages({
         },
       ],
     }),
+    NO_CHILDREN_PROP: {
+      category: 'lint/noChildrenProp',
+      message: 'children should not be passed as a prop',
+    },
     PREFER_BLOCK_STATEMENT: {
       category: 'lint/preferBlockStatements',
       message: 'Block statements are preferred in this position',
