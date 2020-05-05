@@ -184,7 +184,6 @@ export function normalizeProjectConfig(
     bundler: {},
     cache: {},
     lint: {},
-    haste: {},
     resolver: {},
     develop: {},
     typeCheck: {},
@@ -247,17 +246,6 @@ export function normalizeProjectConfig(
         'modern',
         'legacy',
       ]);
-    }
-  }
-
-  const haste = consumer.get('haste');
-  if (categoryExists(haste)) {
-    if (haste.has('enabled')) {
-      config.haste.enabled = haste.get('enabled').asBoolean();
-    }
-
-    if (haste.has('ignore')) {
-      config.haste.ignore = arrayOfPatterns(haste.get('ignore'));
     }
   }
 
@@ -449,11 +437,6 @@ function extendProjectConfig(
     merged.lint.globals = lintGlobals;
   }
 
-  const hasteIgnore = mergeArrays(extendsObj.haste.ignore, config.haste.ignore);
-  if (hasteIgnore !== undefined) {
-    merged.haste.ignore = hasteIgnore;
-  }
-
   const testingIgnore = mergeArrays(
     extendsObj.tests.ignore,
     config.tests.ignore,
@@ -522,10 +505,6 @@ function mergePartialConfig<
     resolver: {
       ...a.resolver,
       ...b.resolver,
-    },
-    haste: {
-      ...a.haste,
-      ...b.haste,
     },
     typeCheck: {
       ...a.typeCheck,

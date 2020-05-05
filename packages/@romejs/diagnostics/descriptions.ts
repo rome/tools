@@ -663,17 +663,6 @@ export const descriptions = createMessages({
         },
       ],
     }),
-    HASTE_COLLISION: (hasteName: string, existing: string) => ({
-      category: 'projectManager/nameCollision',
-      message: `Found a haste collision for <emphasis>${hasteName}</emphasis>`,
-      advice: [
-        {
-          type: 'log',
-          category: 'info',
-          text: markup`Defined already by <filelink emphasis target="${existing}" />`,
-        },
-      ],
-    }),
     NOT_FOUND: {
       category: 'projectManager/missing',
       message: `Couldn't find a project`,

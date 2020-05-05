@@ -31,7 +31,6 @@ import {
   createSingleDiagnosticError,
   descriptions,
 } from '@romejs/diagnostics';
-import {matchPathPatterns} from '@romejs/path-match';
 import {
   ManifestDefinition,
   manifestNameToString,
@@ -280,22 +279,6 @@ export default class ProjectManager {
     }
 
     const project = this.assertProjectExisting(path);
-
-    // For haste projects, use the haste name as the uid. If the user has multiple projects
-
-    // with colliding uids then that's fine, it will just cause more cache misses as we compare
-
-    // mtime, project config hash etc stored in the cache.
-    if (this.isHasteDeclared(path, project)) {
-      const hasteName = this.master.memoryFs.getHasteName(path);
-      if (hasteName === undefined) {
-        throw new Error(
-          'isHasteDeclared returned true so this should always return a valid name',
-        );
-      }
-      this.setUid(path, hasteName);
-      return hasteName;
-    }
 
     // Format of uids will be <PROJECT_NAME>/<PACKAGE_NAME>/<RELATIVE>
     const parts: Array<string> = [];
@@ -631,7 +614,6 @@ export default class ProjectManager {
       id: this.projectIdCounter++,
       packages: new Map(),
       manifests: new Map(),
-      hasteMap: new Map(),
       parent: parentProject,
       children: new Set(),
     };
@@ -708,77 +690,6 @@ export default class ProjectManager {
       if (isProjectPackage && name !== undefined) {
         project.packages.set(name, def);
       }
-    }
-  }
-
-  isHasteIgnored(path: AbsoluteFilePath, config: ProjectConfig): boolean {
-    return matchPathPatterns(path, config.haste.ignore) !== 'NO_MATCH';
-  }
-
-  isHasteDeclared(path: AbsoluteFilePath, project: ProjectDefinition): boolean {
-    if (project.config.haste.enabled === false) {
-      return false;
-    }
-
-    const hasteName = this.master.memoryFs.getHasteName(path);
-    if (hasteName === undefined) {
-      return false;
-    }
-
-    const existing = project.hasteMap.get(hasteName);
-    if (existing === undefined) {
-      return false;
-    }
-
-    return existing.equal(path);
-  }
-
-  declareHaste(
-    path: AbsoluteFilePath,
-    hasteName: string,
-    hastePath: AbsoluteFilePath,
-    diagnostics: DiagnosticsProcessor,
-  ) {
-    for (const project of this.getHierarchyFromFilename(path)) {
-      const {hasteMap, config} = project;
-
-      if (config.haste.enabled === false) {
-        break;
-      }
-
-      if (this.isHasteIgnored(path, config)) {
-        continue;
-      }
-
-      let existing = hasteMap.get(hasteName);
-      if (existing !== undefined && !existing.equal(hastePath)) {
-        const existingResolved = this.master.resolver.resolvePath({
-          // `existing` will be absolute so the origin doesn't really matter
-          origin: existing,
-          source: existing,
-        });
-
-        // If both resolve to the same location then this isn't a collision and we should just ignore it
-        if (
-          existingResolved.type === 'FOUND' &&
-          hastePath.equal(existingResolved.ref.real)
-        ) {
-          continue;
-        }
-
-        diagnostics.addDiagnostic({
-          description: descriptions.PROJECT_MANAGER.HASTE_COLLISION(
-            hasteName,
-            existing.join(),
-          ),
-          location: {
-            filename: hastePath.join(),
-          },
-        });
-        continue;
-      }
-
-      hasteMap.set(hasteName, hastePath);
     }
   }
 

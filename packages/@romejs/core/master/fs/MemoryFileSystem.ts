@@ -9,7 +9,6 @@ import Master from '../Master';
 import {
   Manifest,
   ManifestDefinition,
-  manifestNameToString,
   normalizeManifest,
 } from '@romejs/codec-js-manifest';
 import {
@@ -49,8 +48,6 @@ import {
 import {markup} from '@romejs/string-markup';
 
 const DEFAULT_DENYLIST = ['.hg', '.git'];
-
-const PACKAGE_JSON = 'package.json';
 
 const GLOB_IGNORE: PathPatterns = [
   parsePathPattern({input: 'node_modules'}),
@@ -115,8 +112,6 @@ type DeclareManifestOpts = {
   diagnostics: DiagnosticsProcessor;
   dirname: AbsoluteFilePath;
   path: AbsoluteFilePath;
-  hasteName: undefined | string;
-  hastePath: AbsoluteFilePath;
 };
 
 type CrawlOptions = {
@@ -142,12 +137,6 @@ export type MemoryFSGlobOptions = {
   getProjectIgnore?: (project: ProjectDefinition) => PathPatterns;
   test?: (path: AbsoluteFilePath) => boolean;
 };
-
-export type HasteCollisionCallback = (
-  hasteName: string,
-  existing: string,
-  filename: string,
-) => void;
 
 async function createRegularWatcher(
   memoryFs: MemoryFileSystem,
@@ -608,9 +597,6 @@ export default class MemoryFileSystem {
     // Remove from 'all possible caches
     this.files.delete(path);
 
-    // Remove from 'haste maps
-    this.handleDeletedHaste(path);
-
     // If this is a manifest filename then clear it from 'any possible package and our internal module map
     const basename = path.getBasename();
     if (basename === 'package.json') {
@@ -625,21 +611,6 @@ export default class MemoryFileSystem {
     }
 
     this.deletedFileEvent.send(path);
-  }
-
-  handleDeletedHaste(path: AbsoluteFilePath): void {
-    const hasteName = this.getHasteName(path);
-    if (hasteName === undefined) {
-      return;
-    }
-
-    const projects = this.master.projectManager.getHierarchyFromFilename(path);
-    for (const {hasteMap} of projects) {
-      const existing = hasteMap.get(hasteName);
-      if (existing !== undefined && existing.equal(path)) {
-        hasteMap.delete(hasteName);
-      }
-    }
   }
 
   handleDeletedManifest(path: AbsoluteFilePath): void {
@@ -832,77 +803,23 @@ export default class MemoryFileSystem {
     return path.getSegments().includes('node_modules') === false;
   }
 
-  isInsideHaste(path: AbsoluteFilePath): boolean {
-    if (!this.isInsideProject(path)) {
-      return false;
-    }
-
-    // Check if we're inside a haste package, child files of a haste package shouldn't be added to the haste map
-    for (const dir of path.getChain()) {
-      const packagePath = dir.append(PACKAGE_JSON);
-      if (path.equal(packagePath)) {
-        // isInsideHaste will be called after we declare a haste package, all it's subfiles wont be inside the haste map but we should still be
-        continue;
-      }
-
-      const manifest = this.getManifest(packagePath);
-
-      // rome-ignore lint/camelCase
-      if ((manifest?.raw)?.haste_commonjs === true) {
-        return false;
-      }
-    }
-
-    return true;
-  }
-
-  getHasteName(path: AbsoluteFilePath): undefined | string {
-    const filename = path.join();
-
-    let {handler, ext} = this.master.projectManager.getHandlerWithProject(path);
-    if (handler === undefined || handler.hasteMode === undefined) {
-      return undefined;
-    }
-
-    const basename = path.getBasename();
-
-    if (handler.hasteMode === 'ext') {
-      ext = `.${ext}`; // we also want to remove the dot suffix from the haste name
-      if (!filename.endsWith(ext)) {
-        throw new Error(
-          `Expected ${filename} to end with ${ext} as it was returned as the extension name`,
-        );
-      }
-
-      return basename.slice(0, -ext.length);
-    } else if (handler.hasteMode === 'noext') {
-      return basename;
-    }
-
-    return undefined;
-  }
-
   // This is a wrapper around _declareManifest as it can produce diagnostics
-  async declareManifest(opts: DeclareManifestOpts): Promise<undefined | string> {
-    const {value, diagnostics} = await catchDiagnostics(() => {
+  async declareManifest(opts: DeclareManifestOpts): Promise<void> {
+    const {diagnostics} = await catchDiagnostics(() => {
       return this._declareManifest(opts);
     });
 
-    if (diagnostics === undefined) {
-      return value;
-    } else {
+    if (diagnostics !== undefined) {
       opts.diagnostics.addDiagnostics(diagnostics);
-      return undefined;
     }
   }
 
   async _declareManifest(
     {
       path,
-      hasteName,
       diagnostics,
     }: DeclareManifestOpts,
-  ): Promise<undefined | string> {
+  ): Promise<void> {
     // Fetch the manifest
     const manifestRaw = await readFileText(path);
     const hash = crypto.createHash('sha256').update(manifestRaw).digest('hex');
@@ -937,11 +854,6 @@ export default class MemoryFileSystem {
 
     this.manifests.set(folder, def);
 
-    // Set haste name and haste location to the directory itself
-    if (manifest.name !== undefined) {
-      hasteName = manifestNameToString(manifest.name);
-    }
-
     // If we aren't in node_modules then this is a project package
     const isProjectPackage = this.isInsideProject(path);
     const {projectManager} = this.master;
@@ -961,8 +873,6 @@ export default class MemoryFileSystem {
         manifests: [{id: def.id, manifest: this.getPartialManifest(def)}],
       });
     }
-
-    return hasteName;
   }
 
   glob(
@@ -1116,7 +1026,7 @@ export default class MemoryFileSystem {
         }
       };
 
-      // Give priority to package.json as we base some haste heuristics on it's entry
+      // Give priority to package.json in case we want to derive something from the project config
       for (const file of files) {
         if (PRIORITY_FILES.has(file.getBasename())) {
           files.delete(file);
@@ -1183,9 +1093,6 @@ export default class MemoryFileSystem {
     this.files.set(path, stats);
     this.addFileToDirectoryListing(path);
 
-    let hastePath = path;
-    let hasteName = this.getHasteName(path);
-
     const basename = path.getBasename();
     const dirname = path.getParent();
 
@@ -1198,21 +1105,12 @@ export default class MemoryFileSystem {
       await projectManager.queueAddProject(dirname, path);
     }
 
-    // If this is a package.json then declare this module and setup the correct haste variables
     if (isValidManifest(path)) {
-      hasteName = await this.declareManifest({
+      await this.declareManifest({
         diagnostics: opts.diagnostics,
         dirname,
         path,
-        hasteName,
-        hastePath,
       });
-      hastePath = dirname;
-    }
-
-    // Add to haste map
-    if (hasteName !== undefined && this.isInsideHaste(path)) {
-      projectManager.declareHaste(path, hasteName, hastePath, opts.diagnostics);
     }
 
     return true;

@@ -26,7 +26,6 @@ export type ProjectDefinition = {
   config: ProjectConfig;
   packages: Map<string, ManifestDefinition>;
   manifests: Map<number, ManifestDefinition>;
-  hasteMap: Map<string, AbsoluteFilePath>;
   children: Set<ProjectDefinition>;
   parent: undefined | ProjectDefinition;
 };
@@ -38,10 +37,6 @@ export type ProjectConfigObjects = {
   compiler: {};
   bundler: {
     mode: BundlerMode;
-  };
-  haste: {
-    enabled: boolean;
-    ignore: PathPatterns;
   };
   lint: {
     globals: Array<string>;
@@ -179,10 +174,6 @@ export const DEFAULT_PROJECT_CONFIG: ProjectConfig = {
   },
   dependencies: {
     enabled: false,
-  },
-  haste: {
-    enabled: false,
-    ignore: [],
   },
   lint: {
     ignore: [],
