@@ -6,31 +6,34 @@
  */
 
 import {Path} from '@romejs/js-compiler';
-import {AnyNode, JSXAttribute} from '@romejs/js-ast';
+import {AnyNode, JSXAttribute, JSXSpreadAttribute, ObjectProperty, ObjectMethod, SpreadProperty} from '@romejs/js-ast';
+import {doesNodeMatchPattern} from '@romejs/js-ast-utils';
 import {descriptions} from '@romejs/diagnostics';
+
+const isAttributePassingChildrenProp = (attribute: JSXAttribute|JSXSpreadAttribute): boolean => (
+  attribute.type === 'JSXAttribute' && 
+  attribute.name.name === 'children'
+)
+
+const isCreateElementPassingChildrenProp = (property: ObjectProperty|ObjectMethod|SpreadProperty): boolean => (
+  property.type === 'ObjectProperty' &&
+  property.key.value.type === 'Identifier' &&
+  property.key.value.name === 'children'
+)
 
 export default {
   name: 'noChildrenProp',
   enter(path: Path): AnyNode {
     const {node} = path;
-
     if (
       (
         node.type === 'JSXElement' &&
-        node.attributes.find(attribute => (attribute as JSXAttribute).name.name === 'children')
+        node.attributes.find(isAttributePassingChildrenProp)
       ) || (
         node.type === 'CallExpression' &&
-        node.callee.type === 'MemberExpression' &&
-        node.callee.object.type === 'ReferenceIdentifier' &&
-        node.callee.object.name === 'React' && 
-        node.callee.property.value.type === 'Identifier' &&
-        node.callee.property.value.name === 'createElement' &&
+        doesNodeMatchPattern(node.callee, 'React.createElement') &&
         node.arguments[1].type === 'ObjectExpression' &&
-        node.arguments[1].properties.find(property => (
-          property.type === 'ObjectProperty' &&
-          property.key.value.type === 'Identifier' &&
-          property.key.value.name === 'children'
-        ))
+        node.arguments[1].properties.find(isCreateElementPassingChildrenProp)
       )
     ) {
       path.context.addNodeDiagnostic(

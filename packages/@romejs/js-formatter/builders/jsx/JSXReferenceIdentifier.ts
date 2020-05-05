@@ -6,7 +6,12 @@
  */
 
 import {Token} from '../../tokens';
+import Builder from '../../Builder';
+import {JSXReferenceIdentifier} from '@romejs/js-ast';
 
-export default function JSXReferenceIdentifier(): Token {
-  throw new Error('unimplemented');
+export default function JSXReferenceIdentifier(
+  builder: Builder,
+  node: JSXReferenceIdentifier,
+): Token {
+  return node.name;
 }
