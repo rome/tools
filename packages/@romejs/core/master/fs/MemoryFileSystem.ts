@@ -9,7 +9,6 @@ import Master from '../Master';
 import {
   Manifest,
   ManifestDefinition,
-  manifestNameToString,
   normalizeManifest,
 } from '@romejs/codec-js-manifest';
 import {
@@ -23,11 +22,6 @@ import {
   ROME_CONFIG_FILENAMES,
 } from '@romejs/project';
 import {DiagnosticsProcessor, catchDiagnostics} from '@romejs/diagnostics';
-import {Reporter} from '@romejs/cli-reporter';
-import {
-  WatchmanSubscriptionValue,
-  createWatchmanClient,
-} from '@romejs/codec-watchman';
 import {Event} from '@romejs/events';
 import {consumeJSON} from '@romejs/codec-json';
 import {humanizeNumber} from '@romejs/string-utils';
@@ -38,19 +32,12 @@ import {
   AbsoluteFilePathSet,
 } from '@romejs/path';
 import {exists, lstat, readFileText, readdir, watch} from '@romejs/fs';
+import {getFileHandler} from '../../common/fileHandlers';
+import {markup} from '@romejs/string-markup';
 import crypto = require('crypto');
-
 import fs = require('fs');
 
-import {
-  getFileHandler,
-  getFileHandlerExtensions,
-} from '../../common/fileHandlers';
-import {markup} from '@romejs/string-markup';
-
 const DEFAULT_DENYLIST = ['.hg', '.git'];
-
-const PACKAGE_JSON = 'package.json';
 
 const GLOB_IGNORE: PathPatterns = [
   parsePathPattern({input: 'node_modules'}),
@@ -115,8 +102,6 @@ type DeclareManifestOpts = {
   diagnostics: DiagnosticsProcessor;
   dirname: AbsoluteFilePath;
   path: AbsoluteFilePath;
-  hasteName: undefined | string;
-  hastePath: AbsoluteFilePath;
 };
 
 type CrawlOptions = {
@@ -143,13 +128,7 @@ export type MemoryFSGlobOptions = {
   test?: (path: AbsoluteFilePath) => boolean;
 };
 
-export type HasteCollisionCallback = (
-  hasteName: string,
-  existing: string,
-  filename: string,
-) => void;
-
-async function createRegularWatcher(
+async function createWatcher(
   memoryFs: MemoryFileSystem,
   diagnostics: DiagnosticsProcessor,
   projectFolderPath: AbsoluteFilePath,
@@ -259,175 +238,6 @@ async function createRegularWatcher(
       watcher.close();
     }
   };
-}
-
-async function createWatchmanWatcher(
-  memoryFs: MemoryFileSystem,
-  diagnostics: DiagnosticsProcessor,
-  projectFolderPath: AbsoluteFilePath,
-  projectConfig: ProjectConfig,
-): Promise<WatcherClose> {
-  const projectFolder = projectFolderPath.join();
-  const {connectedReporters} = memoryFs.master;
-
-  const activity = connectedReporters.progress({
-    title: `Adding project ${projectFolder} with watchman`,
-  });
-
-  let timeout;
-
-  function queueCallout() {
-    timeout = setTimeout(
-      memoryFs.master.wrapFatal(() => {
-        connectedReporters.warn(
-          'Watchman is taking a while to respond. Watchman may have just started and is still crawling the disk.',
-        );
-
-        // Show an even more aggressive message when watchman takes longer
-        queueCallout();
-      }),
-      5_000,
-    );
-  }
-
-  // Show a message when watchman takes too long
-  queueCallout();
-
-  try {
-    const client = await createWatchmanClient(Reporter.fromProcess());
-
-    const event = await client.createSubscription(
-      projectFolder,
-      {
-        fields: ['mtime', 'name', 'size', 'type', 'exists'],
-        expression: [
-          'anyof',
-          ['type', 'd'],
-          ['suffix', getFileHandlerExtensions(projectConfig)],
-        ],
-      },
-    );
-
-    const initial: WatchmanSubscriptionValue = await event.wait();
-    if (initial.isFreshInstance !== true) {
-      throw new Error('Expected this to be a fresh instance');
-    }
-    clearTimeout(timeout);
-
-    async function processChanges(
-      data: WatchmanSubscriptionValue,
-      diagnostics: DiagnosticsProcessor,
-    ) {
-      if (data['state-enter'] || data['state-leave']) {
-        return;
-      }
-
-      // rome-ignore lint/noExplicitAny
-      const dirs: Array<[AbsoluteFilePath, any]> = [];
-      // rome-ignore lint/noExplicitAny
-      const files: Array<[AbsoluteFilePath, any]> = [];
-
-      for (const file of data.files) {
-        const path = projectFolderPath.append(file.name);
-
-        if (file.exists === false) {
-          memoryFs.handleDeletion(path);
-          continue;
-        }
-
-        if (file.type === 'f') {
-          const basename = path.getBasename();
-
-          if (PRIORITY_FILES.has(basename)) {
-            files.unshift([path, file]);
-          } else {
-            files.push([path, file]);
-          }
-        } else if (file.type === 'd') {
-          dirs.push([path, file]);
-        }
-      }
-
-      await Promise.all(
-        dirs.map(async ([path, info]) => {
-          await memoryFs.addDirectory(
-            path,
-            {
-              size: info.size,
-              mtime: info.mtime,
-              type: 'directory',
-            },
-            {diagnostics, crawl: false},
-          );
-        }),
-      );
-
-      await Promise.all(
-        files.map(async ([path, info]) => {
-          const stats: Stats = {
-            size: info.size,
-            mtime: info.mtime,
-            type: 'file',
-          };
-
-          if (memoryFs.files.has(path)) {
-            await memoryFs.handleFileChange(
-              path,
-              stats,
-              {
-                diagnostics,
-                crawl: false,
-              },
-            );
-          } else {
-            await memoryFs.addFile(
-              path,
-              stats,
-              {
-                diagnostics,
-                crawl: false,
-              },
-            );
-          }
-        }),
-      );
-    }
-
-    activity.setText(`Processing results`);
-    await processChanges(initial, diagnostics);
-
-    event.subscribe((data: WatchmanSubscriptionValue) => {
-      processChanges(
-        data,
-        memoryFs.master.createDisconnectedDiagnosticsProcessor([
-          {
-            category: 'memory-fs',
-            message: 'Processing watchman changes',
-          },
-        ]),
-      );
-    });
-
-    activity.end();
-
-    return () => {
-      // TODO close
-    };
-  } catch (err) {
-    activity.end();
-
-    if (err.message.includes('RootResolveError')) {
-      // Fallback to node processor
-      memoryFs.master.connectedReporters.error(
-        `Failed to use watchman: ${err.message}`,
-      );
-      return createRegularWatcher(memoryFs, diagnostics, projectFolderPath);
-    } else {
-      throw err;
-    }
-  } finally {
-    clearTimeout(timeout);
-  }
 }
 
 export default class MemoryFileSystem {
@@ -608,9 +418,6 @@ export default class MemoryFileSystem {
     // Remove from 'all possible caches
     this.files.delete(path);
 
-    // Remove from 'haste maps
-    this.handleDeletedHaste(path);
-
     // If this is a manifest filename then clear it from 'any possible package and our internal module map
     const basename = path.getBasename();
     if (basename === 'package.json') {
@@ -625,21 +432,6 @@ export default class MemoryFileSystem {
     }
 
     this.deletedFileEvent.send(path);
-  }
-
-  handleDeletedHaste(path: AbsoluteFilePath): void {
-    const hasteName = this.getHasteName(path);
-    if (hasteName === undefined) {
-      return;
-    }
-
-    const projects = this.master.projectManager.getHierarchyFromFilename(path);
-    for (const {hasteMap} of projects) {
-      const existing = hasteMap.get(hasteName);
-      if (existing !== undefined && existing.equal(path)) {
-        hasteMap.delete(hasteName);
-      }
-    }
   }
 
   handleDeletedManifest(path: AbsoluteFilePath): void {
@@ -736,19 +528,8 @@ export default class MemoryFileSystem {
       ],
     });
 
-    let promise;
-    if (projectConfig.files.watchman) {
-      logger.info(`[MemoryFileSystem] Watching ${folderLink} with watchman`);
-      promise = createWatchmanWatcher(
-        this,
-        diagnostics,
-        projectFolderPath,
-        projectConfig,
-      );
-    } else {
-      logger.info(`[MemoryFileSystem] Watching ${folderLink} with fs.watch`);
-      promise = createRegularWatcher(this, diagnostics, projectFolderPath);
-    }
+    logger.info(`[MemoryFileSystem] Watching ${folderLink}`);
+    const promise = createWatcher(this, diagnostics, projectFolderPath);
     this.watchPromises.set(
       projectFolder,
       {
@@ -832,77 +613,23 @@ export default class MemoryFileSystem {
     return path.getSegments().includes('node_modules') === false;
   }
 
-  isInsideHaste(path: AbsoluteFilePath): boolean {
-    if (!this.isInsideProject(path)) {
-      return false;
-    }
-
-    // Check if we're inside a haste package, child files of a haste package shouldn't be added to the haste map
-    for (const dir of path.getChain()) {
-      const packagePath = dir.append(PACKAGE_JSON);
-      if (path.equal(packagePath)) {
-        // isInsideHaste will be called after we declare a haste package, all it's subfiles wont be inside the haste map but we should still be
-        continue;
-      }
-
-      const manifest = this.getManifest(packagePath);
-
-      // rome-ignore lint/camelCase
-      if ((manifest?.raw)?.haste_commonjs === true) {
-        return false;
-      }
-    }
-
-    return true;
-  }
-
-  getHasteName(path: AbsoluteFilePath): undefined | string {
-    const filename = path.join();
-
-    let {handler, ext} = this.master.projectManager.getHandlerWithProject(path);
-    if (handler === undefined || handler.hasteMode === undefined) {
-      return undefined;
-    }
-
-    const basename = path.getBasename();
-
-    if (handler.hasteMode === 'ext') {
-      ext = `.${ext}`; // we also want to remove the dot suffix from the haste name
-      if (!filename.endsWith(ext)) {
-        throw new Error(
-          `Expected ${filename} to end with ${ext} as it was returned as the extension name`,
-        );
-      }
-
-      return basename.slice(0, -ext.length);
-    } else if (handler.hasteMode === 'noext') {
-      return basename;
-    }
-
-    return undefined;
-  }
-
   // This is a wrapper around _declareManifest as it can produce diagnostics
-  async declareManifest(opts: DeclareManifestOpts): Promise<undefined | string> {
-    const {value, diagnostics} = await catchDiagnostics(() => {
+  async declareManifest(opts: DeclareManifestOpts): Promise<void> {
+    const {diagnostics} = await catchDiagnostics(() => {
       return this._declareManifest(opts);
     });
 
-    if (diagnostics === undefined) {
-      return value;
-    } else {
+    if (diagnostics !== undefined) {
       opts.diagnostics.addDiagnostics(diagnostics);
-      return undefined;
     }
   }
 
   async _declareManifest(
     {
       path,
-      hasteName,
       diagnostics,
     }: DeclareManifestOpts,
-  ): Promise<undefined | string> {
+  ): Promise<void> {
     // Fetch the manifest
     const manifestRaw = await readFileText(path);
     const hash = crypto.createHash('sha256').update(manifestRaw).digest('hex');
@@ -937,11 +664,6 @@ export default class MemoryFileSystem {
 
     this.manifests.set(folder, def);
 
-    // Set haste name and haste location to the directory itself
-    if (manifest.name !== undefined) {
-      hasteName = manifestNameToString(manifest.name);
-    }
-
     // If we aren't in node_modules then this is a project package
     const isProjectPackage = this.isInsideProject(path);
     const {projectManager} = this.master;
@@ -961,8 +683,6 @@ export default class MemoryFileSystem {
         manifests: [{id: def.id, manifest: this.getPartialManifest(def)}],
       });
     }
-
-    return hasteName;
   }
 
   glob(
@@ -1116,7 +836,7 @@ export default class MemoryFileSystem {
         }
       };
 
-      // Give priority to package.json as we base some haste heuristics on it's entry
+      // Give priority to package.json in case we want to derive something from the project config
       for (const file of files) {
         if (PRIORITY_FILES.has(file.getBasename())) {
           files.delete(file);
@@ -1183,9 +903,6 @@ export default class MemoryFileSystem {
     this.files.set(path, stats);
     this.addFileToDirectoryListing(path);
 
-    let hastePath = path;
-    let hasteName = this.getHasteName(path);
-
     const basename = path.getBasename();
     const dirname = path.getParent();
 
@@ -1198,21 +915,12 @@ export default class MemoryFileSystem {
       await projectManager.queueAddProject(dirname, path);
     }
 
-    // If this is a package.json then declare this module and setup the correct haste variables
     if (isValidManifest(path)) {
-      hasteName = await this.declareManifest({
+      await this.declareManifest({
         diagnostics: opts.diagnostics,
         dirname,
         path,
-        hasteName,
-        hastePath,
       });
-      hastePath = dirname;
-    }
-
-    // Add to haste map
-    if (hasteName !== undefined && this.isInsideHaste(path)) {
-      projectManager.declareHaste(path, hasteName, hastePath, opts.diagnostics);
     }
 
     return true;

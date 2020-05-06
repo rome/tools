@@ -334,10 +334,6 @@ function getPackageSuggestions(
     );
 
     for (const project of projects) {
-      for (const [name, value] of project.hasteMap) {
-        possibleGlobalPackages.set(name, value.join());
-      }
-
       for (const [name, value] of project.packages) {
         possibleGlobalPackages.set(name, value.folder.join());
       }

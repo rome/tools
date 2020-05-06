@@ -36,7 +36,6 @@ import {ROME_CONFIG_PACKAGE_JSON_FIELD} from './constants';
 import {parseSemverRange} from '@romejs/codec-semver';
 import {descriptions} from '@romejs/diagnostics';
 
-const WATCHMAN_CONFIG_FILENAME = '.watchmanconfig';
 const IGNORE_FILENAMES = ['.gitignore', '.hgignore'];
 
 function categoryExists(consumer: Consumer): boolean {
@@ -123,19 +122,6 @@ export function loadCompleteProjectConfig(
     }
   }
 
-  // Set fs.watchman=true when the file .watchmanconfig is present and no fs.watchman config was set
-  if (partial.files.watchman === undefined) {
-    // Try the project and vcs.root folder for a .watchmanconfig
-    // We do the Set magic to only visit the projectFolder once if it is also the vcs.root
-    for (const dir of new AbsoluteFilePathSet([projectFolder, config.vcs.root])) {
-      const watchmanConfigPath = dir.append(WATCHMAN_CONFIG_FILENAME);
-      meta.configDependencies.add(watchmanConfigPath);
-      if (existsSync(watchmanConfigPath)) {
-        config.files.watchman = true;
-      }
-    }
-  }
-
   return {
     config,
     meta,
@@ -184,7 +170,6 @@ export function normalizeProjectConfig(
     bundler: {},
     cache: {},
     lint: {},
-    haste: {},
     resolver: {},
     develop: {},
     typeCheck: {},
@@ -250,17 +235,6 @@ export function normalizeProjectConfig(
     }
   }
 
-  const haste = consumer.get('haste');
-  if (categoryExists(haste)) {
-    if (haste.has('enabled')) {
-      config.haste.enabled = haste.get('enabled').asBoolean();
-    }
-
-    if (haste.has('ignore')) {
-      config.haste.ignore = arrayOfPatterns(haste.get('ignore'));
-    }
-  }
-
   const typeChecking = consumer.get('typeChecking');
   if (categoryExists(typeChecking)) {
     if (typeChecking.has('enabled')) {
@@ -315,10 +289,6 @@ export function normalizeProjectConfig(
 
   const files = consumer.get('files');
   if (categoryExists(files)) {
-    if (files.has('watchman')) {
-      config.files.watchman = files.get('watchman').asBoolean();
-    }
-
     if (files.has('vendorPath')) {
       config.files.vendorPath = projectFolder.resolve(
         files.get('vendorPath').asString(),
@@ -449,11 +419,6 @@ function extendProjectConfig(
     merged.lint.globals = lintGlobals;
   }
 
-  const hasteIgnore = mergeArrays(extendsObj.haste.ignore, config.haste.ignore);
-  if (hasteIgnore !== undefined) {
-    merged.haste.ignore = hasteIgnore;
-  }
-
   const testingIgnore = mergeArrays(
     extendsObj.tests.ignore,
     config.tests.ignore,
@@ -522,10 +487,6 @@ function mergePartialConfig<
     resolver: {
       ...a.resolver,
       ...b.resolver,
-    },
-    haste: {
-      ...a.haste,
-      ...b.haste,
     },
     typeCheck: {
       ...a.typeCheck,
