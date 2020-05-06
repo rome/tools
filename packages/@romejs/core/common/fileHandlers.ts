@@ -97,7 +97,6 @@ export type ExtensionHandlerMethodInfo = {
 export type ExtensionHandler = {
   sourceType?: ConstSourceType;
   syntax?: Array<ConstProgramSyntax>;
-  hasteMode?: 'ext' | 'noext';
   isAsset?: boolean;
   canHaveScale?: boolean;
   lint?: (info: ExtensionLintInfo) => Promise<ExtensionLintResult>;
@@ -164,7 +163,6 @@ const assetHandler: ExtensionHandler = {
 const jsonHandler: ExtensionHandler = {
   // analyzeDependencies shim
   ...textHandler,
-  hasteMode: 'noext',
   async format(info: ExtensionHandlerMethodInfo): Promise<ExtensionLintResult> {
     const {file, worker} = info;
     const {uid} = file;
@@ -260,7 +258,6 @@ function buildJSHandler(
   JS_EXTENSIONS.push(ext);
 
   return {
-    hasteMode: 'ext',
     syntax,
     sourceType,
     async analyzeDependencies({file, worker, parseOptions}) {

@@ -12,12 +12,15 @@ import defaultExportSameBasename from './regular/defaultExportSameBasename';
 import doubleEquals from './regular/doubleEquals';
 import duplicateImportSource from './regular/duplicateImportSource';
 import emptyBlocks from './regular/emptyBlocks';
+import emptyMatches from './regular/emptyMatches';
 import getterReturn from './regular/getterReturn';
 import inconsiderateLanguage from './regular/inconsiderateLanguage';
+import jsxKey from './react/jsxKey';
 import jsxNoCommentText from './react/jsxNoCommentText';
 import noArguments from './regular/noArguments';
 import noAsyncPromiseExecutor from './regular/noAsyncPromiseExecutor';
 import noCatchAssign from './regular/noCatchAssign';
+import noChildrenProp from './react/noChildrenProp';
 import noCompareNegZero from './regular/noCompareNegZero';
 import noCondAssign from './regular/noCondAssign';
 import noDebugger from './regular/noDebugger';
@@ -34,6 +37,7 @@ import noFunctionAssign from './regular/noFunctionAssign';
 import noImportAssign from './regular/noImportAssign';
 import noLabelVar from './regular/noLabelVar';
 import noMultipleSpacesInRegularExpressionLiterals from './regular/noMultipleSpacesInRegularExpressionLiterals';
+import noPosixInRegularExpression from './regular/noPosixInRegularExpression';
 import noReferenceToNonExistingGroup from './regular/noReferenceToNonExistingGroup';
 import noSetterReturn from './regular/noSetterReturn';
 import noShadowRestrictedNames from './regular/noShadowRestrictedNames';
@@ -49,6 +53,7 @@ import restrictedGlobals from './regular/restrictedGlobals';
 import singleVarDeclarator from './regular/singleVarDeclarator';
 import sortImportExportSpecifiers from './regular/sortImportExportSpecifiers';
 import sparseArray from './regular/sparseArray';
+import stylePropObject from './react/stylePropObject';
 import undeclaredVariables from './regular/undeclaredVariables';
 import unsafeNegation from './regular/unsafeNegation';
 import unusedVariables from './regular/unusedVariables';
@@ -60,12 +65,15 @@ export const lintTransforms = [
   doubleEquals,
   duplicateImportSource,
   emptyBlocks,
+  emptyMatches,
   getterReturn,
   inconsiderateLanguage,
+  jsxKey,
   jsxNoCommentText,
   noArguments,
   noAsyncPromiseExecutor,
   noCatchAssign,
+  noChildrenProp,
   noCompareNegZero,
   noCondAssign,
   noDebugger,
@@ -82,6 +90,7 @@ export const lintTransforms = [
   noImportAssign,
   noLabelVar,
   noMultipleSpacesInRegularExpressionLiterals,
+  noPosixInRegularExpression,
   noReferenceToNonExistingGroup,
   noSetterReturn,
   noShadowRestrictedNames,
@@ -97,6 +106,7 @@ export const lintTransforms = [
   singleVarDeclarator,
   sortImportExportSpecifiers,
   sparseArray,
+  stylePropObject,
   undeclaredVariables,
   unsafeNegation,
   unusedVariables,

@@ -728,7 +728,7 @@ export default class TestAPI implements TestHelper {
         await this.emitError(
           createErrorFromStructure({
             ...callError,
-            message,
+            markupMessage: message,
             advice,
           }),
         );

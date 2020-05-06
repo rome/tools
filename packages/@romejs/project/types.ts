@@ -26,7 +26,6 @@ export type ProjectDefinition = {
   config: ProjectConfig;
   packages: Map<string, ManifestDefinition>;
   manifests: Map<number, ManifestDefinition>;
-  hasteMap: Map<string, AbsoluteFilePath>;
   children: Set<ProjectDefinition>;
   parent: undefined | ProjectDefinition;
 };
@@ -38,10 +37,6 @@ export type ProjectConfigObjects = {
   compiler: {};
   bundler: {
     mode: BundlerMode;
-  };
-  haste: {
-    enabled: boolean;
-    ignore: PathPatterns;
   };
   lint: {
     globals: Array<string>;
@@ -62,7 +57,6 @@ export type ProjectConfigObjects = {
   };
   files: {
     assetExtensions: Array<string>;
-    watchman: boolean;
     maxSize: number;
     vendorPath: AbsoluteFilePath;
   };
@@ -180,10 +174,6 @@ export const DEFAULT_PROJECT_CONFIG: ProjectConfig = {
   dependencies: {
     enabled: false,
   },
-  haste: {
-    enabled: false,
-    ignore: [],
-  },
   lint: {
     ignore: [],
     globals: [],
@@ -197,7 +187,6 @@ export const DEFAULT_PROJECT_CONFIG: ProjectConfig = {
   files: {
     vendorPath: TEMP_PATH.append(`rome-remote`),
     assetExtensions: [],
-    watchman: false,
     maxSize: 40_000_000, // 40 megabytes
   },
   targets: new Map(),

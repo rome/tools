@@ -121,7 +121,6 @@ type ResolverQueryResponseFoundType =
   | 'package'
   | 'mock'
   | 'virtual'
-  | 'haste'
   | 'implicitPlatform'
   | 'implicitScale'
   | 'implicitExtension'
@@ -774,46 +773,6 @@ export default class Resolver {
     return QUERY_RESPONSE_MISSING;
   }
 
-  resolveHaste(
-    query: ResolverLocalQuery,
-    mainProject: ProjectDefinition,
-    moduleName: string,
-    moduleNameParts: Array<string>,
-  ): ResolverQueryResponse {
-    const projects = this.master.projectManager.getHierarchyFromProject(
-      mainProject,
-    );
-
-    for (const project of projects) {
-      // Check for an entry for the direct name, in the case we're given something like react-relay/modern/ReactRelayQueryFetcher we'll resolve react-relay then resolve from it with the rest of the path
-      const resolved = project.hasteMap.get(moduleName);
-      if (resolved !== undefined) {
-        if (moduleNameParts.length === 0) {
-          return this.finishResolverQueryResponse(resolved, ['haste']);
-        } else {
-          return this.resolvePath(
-            {
-              ...query,
-              source: resolved.append(moduleNameParts),
-            },
-            true,
-            ['haste'],
-          );
-        }
-      }
-
-      // Check all filename variants, we use the full module path here so using the parts separately isn't necessary
-      for (const {path} of this.getFilenameVariants(query, query.source)) {
-        const resolved = project.hasteMap.get(path.join());
-        if (resolved !== undefined) {
-          return this.finishResolverQueryResponse(resolved, ['haste']);
-        }
-      }
-    }
-
-    return QUERY_RESPONSE_MISSING;
-  }
-
   // Given a reference to a module, extract the module name and any trailing relative paths
   splitModuleName(path: UnknownFilePath): [string, Array<string>] {
     // fetch the first part of the path as that's the module name
@@ -859,19 +818,6 @@ export default class Resolver {
         true,
         ['virtual'],
       );
-    }
-
-    // Check the haste map
-    if (project !== undefined && project.hasteMap.size > 0) {
-      const hasteResolved = this.resolveHaste(
-        query,
-        project,
-        moduleName,
-        moduleNameParts,
-      );
-      if (shouldReturnQueryResponse(hasteResolved)) {
-        return hasteResolved;
-      }
     }
 
     // Check if it matches any of our project packages

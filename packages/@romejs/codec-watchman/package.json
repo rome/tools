@@ -1,6 +1,0 @@
-{
-  "name": "@romejs/codec-watchman",
-  "private": true,
-  "type": "module",
-  "main": "index.ts"
-}

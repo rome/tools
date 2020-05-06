@@ -286,6 +286,10 @@ export const descriptions = createMessages({
   },
   // @romejs/js-compiler
   LINT: {
+    STYLE_PROP_OBJECT: {
+      category: 'lint/stylePropObject',
+      message: '<emphasis>style</emphasis> property value must be an object.',
+    },
     PENDING_FIXES: (
       relativeFilename: string,
       original: string,
@@ -338,6 +342,10 @@ export const descriptions = createMessages({
         },
       ],
     }),
+    NO_CHILDREN_PROP: {
+      category: 'lint/noChildrenProp',
+      message: 'children should not be passed as a prop',
+    },
     PREFER_BLOCK_STATEMENT: {
       category: 'lint/preferBlockStatements',
       message: 'Block statements are preferred in this position',
@@ -354,6 +362,10 @@ export const descriptions = createMessages({
       category: 'lint/jsxNoCommentText',
       message: 'Comments inside children should be placed in braces',
     },
+    REACT_JSX_KEY: (origin: string) => ({
+      category: 'lint/jsxKey',
+      message: markup`Missing the "key" prop for element in ${origin}`,
+    }),
     UNSAFE_NEGATION: {
       category: 'lint/unsafeNegation',
       message: 'Unsafe usage of negation operator in left side of binary expression',
@@ -403,6 +415,10 @@ export const descriptions = createMessages({
           text: '== is only allowed when comparing against null',
         },
       ],
+    },
+    EMPTY_MATCHES: {
+      category: 'lint/emptyMatches',
+      message: 'The expression can return empty matches, and may match infinitely in some use cases',
     },
     NEGATE_DOUBLE_EQUALS: {
       category: 'lint/doubleEquals',
@@ -499,6 +515,10 @@ export const descriptions = createMessages({
       category: 'lint/noDuplicateKeys',
       message: markup`Duplicate key <emphasis>${key}</emphasis>`,
     }),
+    NO_POSIX_IN_REGULAR_EXPRESSION: {
+      category: 'lint/noPosixInRegularExpression',
+      message: 'POSIX Character Classes and Collating Sequences are not supported in ECMAscript Regular Expressions',
+    },
     NO_DUPLICATE_CASE: (value: string) => ({
       category: 'lint/noDuplicateCase',
       message: markup`Duplicate case <emphasis>${value}</emphasis> not allowed.`,
@@ -640,17 +660,6 @@ export const descriptions = createMessages({
           type: 'log',
           category: 'info',
           text: markup`Defined already by <filelink target="${existing}" />`,
-        },
-      ],
-    }),
-    HASTE_COLLISION: (hasteName: string, existing: string) => ({
-      category: 'projectManager/nameCollision',
-      message: `Found a haste collision for <emphasis>${hasteName}</emphasis>`,
-      advice: [
-        {
-          type: 'log',
-          category: 'info',
-          text: markup`Defined already by <filelink emphasis target="${existing}" />`,
         },
       ],
     }),
