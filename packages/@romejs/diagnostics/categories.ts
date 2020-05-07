@@ -111,6 +111,7 @@ type LintDiagnosticCategory =
   | 'lint/noDebugger'
   | 'lint/noDelete'
   | 'lint/noDeleteVars'
+  | 'lint/noDirectMutationState'
   | 'lint/noDupeArgs'
   | 'lint/noDuplicateCase'
   | 'lint/noDuplicateGroupNamesInRegularExpressions'

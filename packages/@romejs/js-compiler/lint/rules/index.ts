@@ -26,6 +26,7 @@ import noCondAssign from './regular/noCondAssign';
 import noDebugger from './regular/noDebugger';
 import noDelete from './regular/noDelete';
 import noDeleteVars from './regular/noDeleteVars';
+import noDirectMutationState from './react/noDirectMutationState';
 import noDupeArgs from './regular/noDupeArgs';
 import noDuplicateCase from './regular/noDuplicateCase';
 import noDuplicateGroupNamesInRegularExpressions from './regular/noDuplicateGroupNamesInRegularExpressions';
@@ -79,6 +80,7 @@ export const lintTransforms = [
   noDebugger,
   noDelete,
   noDeleteVars,
+  noDirectMutationState,
   noDupeArgs,
   noDuplicateCase,
   noDuplicateGroupNamesInRegularExpressions,

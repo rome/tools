@@ -346,6 +346,10 @@ export const descriptions = createMessages({
       category: 'lint/noChildrenProp',
       message: 'children should not be passed as a prop',
     },
+    NO_DIRECT_MUTATION_STATE: {
+      category: 'lint/noDirectMutationState',
+      message: 'Cannot directly mutate state, try using setState or spreading',
+    },
     PREFER_BLOCK_STATEMENT: {
       category: 'lint/preferBlockStatements',
       message: 'Block statements are preferred in this position',
