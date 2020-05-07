@@ -7,26 +7,55 @@
 
 import {AnyNode} from '@romejs/js-ast';
 import getNodeReferenceParts from './getNodeReferenceParts';
+import isIdentifierish from './isIdentifierish';
 
-// TODO make this accept multiple matches
+const splitCache: Map<string, SplitResult> = new Map();
+
+type SplitResult = {
+  hasDoubleStar: boolean;
+  parts: Array<string>;
+};
+
+function split(str: string): SplitResult {
+  const cached = splitCache.get(str);
+  if (cached !== undefined) {
+    return cached;
+  }
+
+  const parts = str.split('.');
+
+  let hasDoubleStar = false;
+  for (const part of parts) {
+    if (part === '**') {
+      hasDoubleStar = true;
+      break;
+    }
+  }
+
+  const result: SplitResult = {parts, hasDoubleStar};
+  splitCache.set(str, result);
+  return result;
+}
+
 export default function doesNodeMatchPattern(
-  member: AnyNode,
-  match: string | Array<string>,
-  allowPartial: boolean = false,
+  node: undefined | AnyNode,
+  match: string,
 ): boolean {
-  // Not a member expression
-  if (member.type !== 'MemberExpression' && member.type !== 'Identifier') {
+  if (node === undefined) {
     return false;
   }
 
-  const expectedParts: Array<string> = Array.isArray(match)
-    ? match.slice()
-    : match.split('.');
+  // Not a member expression
+  if (node.type !== 'MemberExpression' && !isIdentifierish(node)) {
+    return false;
+  }
 
-  const {bailed, parts: actualParts} = getNodeReferenceParts(member);
+  const {parts: expectedParts, hasDoubleStar} = split(match);
+
+  const {bailed, parts: actualParts} = getNodeReferenceParts(node);
 
   // Bailed will be true if we were unable to derive a name for one of the parts
-  if (bailed && !allowPartial) {
+  if (bailed && !hasDoubleStar) {
     return false;
   }
 
@@ -35,29 +64,40 @@ export default function doesNodeMatchPattern(
     return false;
   }
 
-  // I there's more parts than we expect and we weren't passed the allowPartial flag then it's never going to match either
-  if (allowPartial === false && actualParts.length > expectedParts.length) {
+  // I there's more parts than we expect then it's never going to match either
+  if (!hasDoubleStar && actualParts.length > expectedParts.length) {
     return false;
   }
 
+  let nextActualIndex = 0;
+  let nextExpectedIndex = 0;
+
   // Loop over the parts we received and match them
-  while (actualParts.length > 0) {
-    // If we have no more expected parts then return based on if we allow partial matches
-    if (expectedParts.length === 0) {
-      return allowPartial;
+  while (nextActualIndex < actualParts.length) {
+    // If we have no more expected parts then we can't possibly match it
+    if (nextActualIndex >= expectedParts.length) {
+      return false;
     }
 
-    const actual = actualParts.shift()!.value;
-    const expected = expectedParts.shift();
+    const actual = actualParts[nextActualIndex].value;
+    nextActualIndex++;
+
+    const expected = expectedParts[nextExpectedIndex];
+    nextExpectedIndex++;
 
     // A star part can accept anything
     if (expected === '*') {
       continue;
     }
 
-    // A double star will eat as many parts from 'actual until we find the next expected part
     if (expected === '**') {
-      const next = expectedParts.shift();
+      // Ran out of matches but we've accepted the current part
+      if (nextExpectedIndex >= expectedParts.length) {
+        return true;
+      }
+
+      const next = expectedParts[nextExpectedIndex];
+      nextExpectedIndex++;
 
       if (next === '*' || next === '**') {
         throw new Error(
@@ -67,8 +107,10 @@ export default function doesNodeMatchPattern(
 
       let found = false;
 
-      while (actualParts.length > 0) {
-        const actual = actualParts.shift();
+      // Eat as many parts until we find the next expected part
+      while (nextActualIndex < actualParts.length) {
+        const actual = actualParts[nextActualIndex].value;
+        nextActualIndex++;
         if (actual === next) {
           found = true;
           break;

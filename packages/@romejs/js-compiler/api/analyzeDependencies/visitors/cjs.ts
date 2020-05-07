@@ -60,10 +60,12 @@ export default {
     if (node.type === 'AssignmentExpression') {
       const isModuleExports =
         path.scope.getBinding('module') === undefined &&
-        doesNodeMatchPattern(node.left, 'module.exports', true);
+        (doesNodeMatchPattern(node.left, 'module.exports') ||
+        doesNodeMatchPattern(node.left, 'module.exports.**'));
       const isExports =
         path.scope.getBinding('exports') === undefined &&
-        doesNodeMatchPattern(node.left, 'exports', true);
+        (doesNodeMatchPattern(node.left, 'exports') ||
+        doesNodeMatchPattern(node.left, 'exports.**'));
 
       if (isModuleExports || isExports) {
         context.record(new CJSExportRecord(node));

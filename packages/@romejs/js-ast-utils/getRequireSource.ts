@@ -9,9 +9,6 @@ import {Scope} from '@romejs/js-compiler';
 import {AnyNode} from '@romejs/js-ast';
 import doesNodeMatchPattern from './doesNodeMatchPattern';
 
-const ROME_DEFAULT_REQUIRE = ['Rome', 'requireDefault'];
-const ROME_NAMESPACE_REQUIRE = ['Rome', 'requireNamespace'];
-
 export default function getRequireSource(
   node: undefined | AnyNode,
   scope: Scope,
@@ -46,8 +43,8 @@ export default function getRequireSource(
     scope.getBinding('require') === undefined;
 
   const validRomeRequreCallee =
-    (doesNodeMatchPattern(callee, ROME_DEFAULT_REQUIRE) ||
-    doesNodeMatchPattern(callee, ROME_NAMESPACE_REQUIRE)) &&
+    (doesNodeMatchPattern(callee, 'Rome.requireDefault') ||
+    doesNodeMatchPattern(callee, 'Rome.requireNamespace')) &&
     scope.getBinding('Rome') === undefined;
 
   if (validRequireCallee || validRomeRequreCallee) {
