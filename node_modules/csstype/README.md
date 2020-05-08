@@ -36,7 +36,7 @@ $ yarn add csstype
 
 Properties are categorized in different uses and in several technical variations to provide typings that suits as many as possible.
 
-All interfaces has one optional generic argument to define length. It defaults to `string | 0` because `0` is the [only unitless length](https://www.w3.org/TR/REC-CSS2/syndata.html#length-units). You can specify this, e.g. `string | number`, for platforms and libraries that accepts any numeric value as length with a specific unit.
+All interfaces has one optional generic argument to define length. It defaults to `string | 0` because `0` is the only [length where the unit identifier is optional](https://drafts.csswg.org/css-values-3/#lengths). You can specify this, e.g. `string | number`, for platforms and libraries that accepts any numeric value as length with a specific unit.
 
 |                | Default              | `Hyphen`                   | `Fallback`                   | `HyphenFallback`                   |
 | -------------- | -------------------- | -------------------------- | ---------------------------- | ---------------------------------- |

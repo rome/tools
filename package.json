@@ -9,11 +9,11 @@
   "dependencies": {},
   "///": "Only used for static type checking",
   "devDependencies": {
-    "@types/vscode": "^1.43.0",
-    "@types/node": "^13.7.7",
-    "@types/react": "^16.8.23",
-    "@types/react-dom": "^16.8.5",
-    "typescript": "^3.7.0"
+    "@types/node": "^13.13.5",
+    "@types/react": "^16.9.34",
+    "@types/react-dom": "^16.9.7",
+    "@types/vscode": "^1.45.0",
+    "typescript": "^3.8.3"
   },
   "romeLSPBin": "./scripts/vendor-rome",
   "scripts": {
