@@ -110,7 +110,6 @@ export default class TestWorkerRunner {
     );
 
     this.hasDiagnostics = false;
-    this.emitConsoleDiagnostics = false;
     this.consoleAdvice = [];
     this.hasFocusedTest = false;
     this.foundTests = new Map();
@@ -133,7 +132,6 @@ export default class TestWorkerRunner {
   opts: TestWorkerBridgeRunOptions;
   locked: boolean;
   consoleAdvice: DiagnosticAdvice;
-  emitConsoleDiagnostics: boolean;
   hasDiagnostics: boolean;
 
   createConsole(): Partial<Console> {
@@ -237,6 +235,7 @@ export default class TestWorkerRunner {
       origin.message = markup`Generated from the file <filelink target="${this.file.uid}" /> and test name "${ref.testName}"`;
     }
 
+    this.hasDiagnostics = true;
     await this.bridge.testDiagnostic.call({diagnostic, origin});
   }
 
@@ -244,27 +243,44 @@ export default class TestWorkerRunner {
   async discoverTests() {
     const {code} = this.opts;
 
-    const res = await executeMain({
-      path: this.file.real,
-      code,
-      globals: this.getEnvironment(),
-    });
-
-    if (res.syntaxError !== undefined) {
-      const message = `A bundle was generated that contained a syntax error: ${res.syntaxError.description.message.value}`;
-
-      throw createSingleDiagnosticError({
-        ...res.syntaxError,
-        description: {
-          ...res.syntaxError.description,
-          message: createBlessedDiagnosticMessage(message),
-          advice: [INTERNAL_ERROR_LOG_ADVICE],
-        },
-        location: {
-          ...res.syntaxError.location,
-          filename: this.file.uid,
-        },
+    try {
+      const res = await executeMain({
+        path: this.file.real,
+        code,
+        globals: this.getEnvironment(),
       });
+
+      if (res.syntaxError !== undefined) {
+        const message = `A bundle was generated that contained a syntax error: ${res.syntaxError.description.message.value}`;
+
+        throw createSingleDiagnosticError({
+          ...res.syntaxError,
+          description: {
+            ...res.syntaxError.description,
+            message: createBlessedDiagnosticMessage(message),
+            advice: [INTERNAL_ERROR_LOG_ADVICE],
+          },
+          location: {
+            ...res.syntaxError.location,
+            filename: this.file.uid,
+          },
+        });
+      }
+    } catch (err) {
+      await this.onError(
+        undefined,
+        {
+          error: err,
+          firstAdvice: [],
+          lastAdvice: [
+            {
+              type: 'log',
+              category: 'info',
+              text: markup`Error occured while executing test file <filelink emphasis target="${this.file.uid}" />`,
+            },
+          ],
+        },
+      );
     }
   }
 
@@ -324,6 +340,7 @@ export default class TestWorkerRunner {
 
     diagnostic = {
       ...diagnostic,
+      unique: true,
       description: {
         ...diagnostic.description,
         advice: [
@@ -334,7 +351,6 @@ export default class TestWorkerRunner {
       },
     };
 
-    this.emitConsoleDiagnostics = true;
     await this.emitDiagnostic(
       diagnostic,
       testName === undefined ? undefined : this.createTestRef(testName),
@@ -435,7 +451,10 @@ export default class TestWorkerRunner {
     const promises: Set<Promise<void>> = new Set();
 
     const {foundTests} = this;
-    if (foundTests.size === 0) {
+
+    // Emit error about no found tests. If we already have diagnostics then there was an issue
+    // during initialization.
+    if (foundTests.size === 0 && !this.hasDiagnostics) {
       this.emitDiagnostic({
         location: {
           filename: this.file.uid,
@@ -481,7 +500,7 @@ export default class TestWorkerRunner {
     // Save the snapshot
     await this.snapshotManager.save();
 
-    if (this.emitConsoleDiagnostics && this.consoleAdvice.length > 0) {
+    if (this.hasDiagnostics && this.consoleAdvice.length > 0) {
       await this.emitDiagnostic({
         description: descriptions.TESTS.LOGS(this.consoleAdvice),
         location: {

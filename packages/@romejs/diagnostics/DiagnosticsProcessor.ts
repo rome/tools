@@ -210,6 +210,10 @@ export default class DiagnosticsProcessor {
   }
 
   buildDedupeKeys(diag: Diagnostic): Array<string> {
+    if (diag.unique) {
+      return [];
+    }
+
     // We don't do anything with `end` in this method, it's fairly meaningless for deduping errors
     let {start} = diag.location;
 

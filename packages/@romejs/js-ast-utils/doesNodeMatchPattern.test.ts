@@ -14,32 +14,32 @@ test(
   (t) => {
     t.inlineSnapshot(
       doesNodeMatchPattern(template.expression`foo`, 'foo'),
-      'true',
+      true,
     );
 
     t.inlineSnapshot(
       doesNodeMatchPattern(template.expression`this.foo`, 'this.foo'),
-      'true',
+      true,
     );
 
     t.inlineSnapshot(
       doesNodeMatchPattern(template.expression`exports.foo`, 'exports.**'),
-      'true',
+      true,
     );
 
     t.inlineSnapshot(
       doesNodeMatchPattern(template.expression`this.foo.bar`, 'this.foo.*'),
-      'true',
+      true,
     );
 
     t.inlineSnapshot(
       doesNodeMatchPattern(template.expression`this.foo.bar.yes`, 'this.foo.*'),
-      'false',
+      false,
     );
 
     t.inlineSnapshot(
       doesNodeMatchPattern(template.expression`this.foo.bar.yes`, 'this.foo.**'),
-      'true',
+      true,
     );
   },
 );

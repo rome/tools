@@ -35,3 +35,6 @@ export {default as removeLoc} from './removeLoc';
 export {default as removeShallowLoc} from './removeShallowLoc';
 export {default as renameBindings} from './renameBindings';
 export {default as template} from './template';
+export {default as valueToNode} from './valueToNode';
+export {default as createPropertyKey} from './createPropertyKey';
+export {default as createMemberProperty} from './createMemberProperty';

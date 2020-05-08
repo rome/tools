@@ -575,22 +575,14 @@ export default class TestAPI implements TestHelper {
     }
   }
 
-  inlineSnapshot(received: unknown, snapshot?: string) {
+  inlineSnapshot(received: unknown, snapshot?: string | boolean | number) {
     const callFrame = getErrorStructure(new Error()).frames[1];
-
-    let formatted = '';
-    if (typeof received === 'string') {
-      formatted = received;
-    } else {
-      formatted = prettyFormat(received);
-    }
-
     const callError = getErrorStructure(new Error(), 1);
 
     this.onTeardown(async () => {
-      const status = this.snapshotManager.testInlineSnapshot(
+      const {status} = this.snapshotManager.testInlineSnapshot(
         callFrame,
-        formatted,
+        received,
         snapshot,
       );
 
@@ -609,7 +601,7 @@ export default class TestAPI implements TestHelper {
             ...callError,
             message: 'Inline snapshots do not match',
             advice: this.buildMatchAdvice(
-              formatted,
+              received,
               snapshot,
               {
                 receivedAlias: 'What the code gave us',

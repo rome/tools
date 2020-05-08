@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import {assertSingleNode, inheritLoc} from '@romejs/js-ast-utils';
 import {NodeBase} from '@romejs/parser-core';
 import {AnyNode} from './index';
-import {assertSingleNode, inheritLoc} from '@romejs/js-ast-utils';
 import {JSNodeBase} from './base';
 import {TransformExitResult} from '@romejs/js-compiler';
 
