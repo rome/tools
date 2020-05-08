@@ -6,7 +6,7 @@
  */
 
 import {JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {createQuickBuilder} from '../utils';
 
 export type NumericLiteral = JSNodeBase & {
   type: 'NumericLiteral';
@@ -14,8 +14,9 @@ export type NumericLiteral = JSNodeBase & {
   format?: 'octal' | 'binary' | 'hex';
 };
 
-export const numericLiteral = createBuilder<NumericLiteral>(
+export const numericLiteral = createQuickBuilder<NumericLiteral, 'value'>(
   'NumericLiteral',
+  'value',
   {
     bindingKeys: {},
     visitorKeys: {},
