@@ -6,23 +6,43 @@
  */
 
 import {AnyNode} from '@romejs/js-ast';
+import isIdentifierish from './isIdentifierish';
 
 type Parts = Array<{
   value: string;
   node: AnyNode;
 }>;
 
-export default function getNodeReferenceParts(
-  node: AnyNode,
-): {
+type Result = {
   bailed: boolean;
   parts: Parts;
-} {
+};
+
+const cache: WeakMap<AnyNode, Result> = new WeakMap();
+
+const EMPTY: Result = {
+  bailed: true,
+  parts: [],
+};
+
+export default function getNodeReferenceParts(node: undefined | AnyNode): Result {
+  if (node === undefined) {
+    return EMPTY;
+  }
+
+  const cached = cache.get(node);
+  if (cached !== undefined) {
+    return cached;
+  }
+
   const parts: Parts = [];
 
   function add(node: AnyNode): boolean {
-    if (node.type === 'Identifier' || node.type === 'ReferenceIdentifier') {
+    if (isIdentifierish(node)) {
       parts.push({node, value: node.name});
+      return false;
+    } else if (node.type === 'ThisExpression') {
+      parts.push({node, value: 'this'});
       return false;
     } else if (node.type === 'StringLiteral') {
       parts.push({node, value: node.value});
@@ -51,6 +71,7 @@ export default function getNodeReferenceParts(
   }
 
   const bailed = add(node);
-
-  return {bailed, parts};
+  const result: Result = {bailed, parts};
+  cache.set(node, result);
+  return result;
 }
