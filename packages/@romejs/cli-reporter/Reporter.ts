@@ -217,10 +217,11 @@ export default class Reporter {
     format: ReporterStream['format'] = 'none',
   ): {
     read: () => string;
+    remove: () => void;
   } {
     let buff = '';
 
-    this.addStream({
+    const stream: ReporterStream = {
       format,
       type: 'all',
       columns: Reporter.DEFAULT_COLUMNS,
@@ -228,11 +229,16 @@ export default class Reporter {
       write(chunk) {
         buff += chunk;
       },
-    });
+    };
+
+    this.addStream(stream);
 
     return {
       read() {
         return buff;
+      },
+      remove: () => {
+        this.removeStream(stream);
       },
     };
   }
@@ -1084,7 +1090,7 @@ export default class Reporter {
 
   processedList<T>(
     items: Array<T>,
-    callback: (item: T, display: (str: string) => void) => void,
+    callback: (reporter: Reporter, item: T) => void,
     opts: ListOptions = {},
   ): {
     truncated: boolean;
@@ -1106,13 +1112,13 @@ export default class Reporter {
     let buff = '';
 
     for (const item of items) {
-      callback(
-        item,
-        (str) => {
-          // TODO maybe set index + 1?
-          buff += `<li>${str}</li>`;
-        },
-      );
+      const reporter = this.fork({
+        streams: [],
+      });
+      const stream = reporter.attachCaptureStream('markup');
+      callback(reporter, item);
+      stream.remove();
+      buff += `<li>${stream.read()}</li>`;
     }
 
     if (opts.ordered) {
@@ -1130,7 +1136,13 @@ export default class Reporter {
   }
 
   list(items: Array<string>, opts: ListOptions = {}) {
-    return this.processedList(items, (str, display) => display(str), opts);
+    return this.processedList(
+      items,
+      (reporter, str) => {
+        reporter.logAll(str, {newline: false});
+      },
+      opts,
+    );
   }
 
   progress(opts?: ReporterProgressOptions): ReporterProgress {
