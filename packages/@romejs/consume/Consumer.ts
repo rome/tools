@@ -364,7 +364,7 @@ export default class Consumer {
       message: createBlessedDiagnosticMessage(message),
     };
 
-    const advice: DiagnosticAdvice = [...(description.advice || [])];
+    const advice: DiagnosticAdvice = [...description.advice];
 
     // Make the errors more descriptive
     if (fromSource) {

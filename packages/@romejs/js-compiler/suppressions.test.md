@@ -9,6 +9,7 @@ Object {
   diagnostics: Array [
     Object {
       description: Object {
+        advice: Array []
         category: 'suppressions/duplicate'
         message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Duplicate suppression category <emphasis>dog</emphasis>'}
       }
@@ -28,6 +29,7 @@ Object {
     }
     Object {
       description: Object {
+        advice: Array []
         category: 'suppressions/duplicate'
         message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Duplicate suppression category <emphasis>dog</emphasis>'}
       }

@@ -294,7 +294,7 @@ export default class CompilerContext {
     const target = nodes.target === undefined ? nodes.old : nodes.target;
 
     const {category} = description;
-    const advice = [...(description.advice || [])];
+    const advice = [...description.advice];
     const loc = this.getLoc(target);
     const oldCode =
       loc === undefined

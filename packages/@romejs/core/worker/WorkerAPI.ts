@@ -67,14 +67,12 @@ export default class WorkerAPI {
   }>(val: T, generated: boolean): T {
     if (generated) {
       const diagnostics = val.diagnostics.map((diag) => {
-        const diagAdvice =
-          diag.description.advice === undefined ? [] : diag.description.advice;
         return {
           ...diag,
           metadata: {
             ...diag.description,
             advice: [
-              ...diagAdvice,
+              ...diag.description.advice,
               {
                 type: 'log',
                 category: 'warn',

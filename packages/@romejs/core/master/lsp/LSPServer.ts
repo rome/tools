@@ -109,27 +109,25 @@ function convertDiagnosticsToLSP(
     // Infer relatedInformation from log messages followed by frames
     let relatedInformation: Array<LSPDiagnosticRelatedInformation> = [];
     const {advice} = description;
-    if (advice !== undefined) {
-      for (let i = 0; i < advice.length; i++) {
-        const item = advice[i];
-        const nextItem = advice[i + 1];
-        if (
-          item.type === 'log' &&
-          nextItem !== undefined &&
-          nextItem.type === 'frame'
-        ) {
-          const abs = master.projectManager.getFilePathFromUidOrAbsolute(
-            nextItem.location.filename,
-          );
-          if (abs !== undefined) {
-            relatedInformation.push({
-              message: markupToPlainTextString(item.text),
-              location: {
-                uri: `file://${abs.join()}`,
-                range: convertDiagnosticLocationToLSPRange(nextItem.location),
-              },
-            });
-          }
+    for (let i = 0; i < advice.length; i++) {
+      const item = advice[i];
+      const nextItem = advice[i + 1];
+      if (
+        item.type === 'log' &&
+        nextItem !== undefined &&
+        nextItem.type === 'frame'
+      ) {
+        const abs = master.projectManager.getFilePathFromUidOrAbsolute(
+          nextItem.location.filename,
+        );
+        if (abs !== undefined) {
+          relatedInformation.push({
+            message: markupToPlainTextString(item.text),
+            location: {
+              uri: `file://${abs.join()}`,
+              range: convertDiagnosticLocationToLSPRange(nextItem.location),
+            },
+          });
         }
       }
     }

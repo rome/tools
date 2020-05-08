@@ -65,7 +65,7 @@ export class DiagnosticsDuplicateHelper {
         {
           ...description,
           advice: [
-            ...(description.advice || []),
+            ...description.advice,
             ...buildDuplicateLocationAdvice(restLocations),
           ],
         },

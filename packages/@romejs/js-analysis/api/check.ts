@@ -98,7 +98,7 @@ function resolveGraph(hub: Hub): Diagnostics {
 
       description = {
         ...description,
-        advice: [...advice, ...(description.advice || [])],
+        advice: [...advice, ...description.advice],
       };
 
       context.addNodeDiagnostic(

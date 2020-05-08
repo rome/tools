@@ -402,6 +402,7 @@ export default class MasterRequest {
 
     const diag: Diagnostic = {
       description: {
+        advice: [],
         ...description,
         category,
       },
@@ -706,8 +707,7 @@ export default class MasterRequest {
       for (const {path, project, location} of noArgMatches) {
         let category: DiagnosticCategory = 'args/fileNotFound';
 
-        let advice: DiagnosticAdvice =
-          opts.advice === undefined ? [] : [...opts.advice];
+        let advice: DiagnosticAdvice = [...opts.advice];
 
         // Hint if all files were ignored
         if (configCategory !== undefined && !ignoreProjectIgnore) {
@@ -855,7 +855,7 @@ export default class MasterRequest {
           description: {
             ...diag.description,
             advice: [
-              ...(diag.description.advice || []),
+              ...diag.description.advice,
               {
                 type: 'log',
                 category: 'info',

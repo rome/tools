@@ -280,22 +280,20 @@ export default class DiagnosticsPrinter extends Error {
         }
       }
 
-      if (advice !== undefined) {
-        for (const item of advice) {
-          if (item.type === 'frame') {
-            const {location} = item;
-            if (
-              location.filename !== undefined &&
-              location.sourceText === undefined
-            ) {
-              deps.push({
-                type: 'reference',
-                path: this.createFilePath(location.filename),
-                language: location.language,
-                sourceType: location.sourceType,
-                mtime: location.mtime,
-              });
-            }
+      for (const item of advice) {
+        if (item.type === 'frame') {
+          const {location} = item;
+          if (
+            location.filename !== undefined &&
+            location.sourceText === undefined
+          ) {
+            deps.push({
+              type: 'reference',
+              path: this.createFilePath(location.filename),
+              language: location.language,
+              sourceType: location.sourceType,
+              mtime: location.mtime,
+            });
           }
         }
       }
@@ -384,7 +382,7 @@ export default class DiagnosticsPrinter extends Error {
   displayDiagnostic(diag: Diagnostic) {
     const {reporter} = this;
     const {start, end, filename} = diag.location;
-    let advice = [...(diag.description.advice || [])];
+    let advice = [...diag.description.advice];
 
     // Remove stacktrace from beginning if it contains only one frame that matches the root diagnostic location
     const firstAdvice = advice[0];

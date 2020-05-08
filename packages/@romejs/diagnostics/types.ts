@@ -78,7 +78,7 @@ export type Diagnostics = Array<Diagnostic>;
 export type DiagnosticDescription = {
   category: DiagnosticCategory;
   message: DiagnosticBlessedMessage;
-  advice?: DiagnosticAdvice;
+  advice: DiagnosticAdvice;
 };
 
 export type DiagnosticDescriptionOptionalCategory = {

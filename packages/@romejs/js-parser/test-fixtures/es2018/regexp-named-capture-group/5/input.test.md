@@ -32,6 +32,7 @@ Program {
     Object {
       origins: Array [Object {category: 'js-parser'}]
       description: Object {
+        advice: Array []
         category: 'parse/regex'
         message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unclosed named capture'}
       }

@@ -983,10 +983,7 @@ export default class Master {
       ...errorDiag,
       description: {
         ...errorDiag.description,
-        advice: [
-          ...(errorDiag.description.advice || []),
-          INTERNAL_ERROR_LOG_ADVICE,
-        ],
+        advice: [...errorDiag.description.advice, INTERNAL_ERROR_LOG_ADVICE],
       },
     });
     printer.print();
