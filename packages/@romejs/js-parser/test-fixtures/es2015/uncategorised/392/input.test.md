@@ -32,6 +32,7 @@ Program {
     Object {
       origins: Array [Object {category: 'js-parser'}]
       description: Object {
+        advice: Array []
         category: 'parse/js'
         message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'ES2015 named imports do not destructure. Use another statement for destructuring after the import.'}
       }

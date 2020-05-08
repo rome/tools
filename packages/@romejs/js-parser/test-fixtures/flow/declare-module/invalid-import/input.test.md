@@ -35,6 +35,7 @@ Program {
     Object {
       origins: Array [Object {category: 'js-parser'}]
       description: Object {
+        advice: Array []
         category: 'parse/js'
         message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Imports within a `declare module` body must always be `import type` or `import typeof`'}
       }

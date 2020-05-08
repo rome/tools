@@ -338,9 +338,7 @@ function printStacktrace(
 
   let shownCodeFrames = 0;
 
-  const isFirstPart =
-    diagnostic.description.advice !== undefined &&
-    diagnostic.description.advice[0] === item;
+  const isFirstPart = diagnostic.description.advice[0] === item;
   if (!isFirstPart) {
     const {title} = item;
     if (title !== undefined) {

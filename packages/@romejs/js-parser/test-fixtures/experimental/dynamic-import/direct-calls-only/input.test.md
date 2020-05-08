@@ -32,6 +32,7 @@ Program {
     Object {
       origins: Array [Object {category: 'js-parser'}]
       description: Object {
+        advice: Array []
         category: 'parse/js'
         message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'The only valid meta property for import is import.meta'}
       }

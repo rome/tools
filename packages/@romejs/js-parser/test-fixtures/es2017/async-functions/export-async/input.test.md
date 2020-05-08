@@ -32,6 +32,7 @@ Program {
     Object {
       origins: Array [Object {category: 'js-parser'}]
       description: Object {
+        advice: Array []
         category: 'parse/js'
         message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Started with `export async` so we expected to receive an async function but no function keyword was found'}
       }

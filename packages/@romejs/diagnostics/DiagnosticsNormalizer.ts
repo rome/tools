@@ -200,12 +200,9 @@ export default class DiagnosticsNormalizer {
 
     const {description} = diag;
 
-    let {advice} = description;
-    if (advice !== undefined) {
-      advice = advice.map((item) => {
-        return this.normalizeDiagnosticAdviceItem(item);
-      });
-    }
+    const advice = description.advice.map((item) => {
+      return this.normalizeDiagnosticAdviceItem(item);
+    });
 
     diag = {
       ...diag,

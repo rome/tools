@@ -370,7 +370,7 @@ export default class TestWorkerRunner {
       label,
       description: {
         ...diag.description,
-        advice: [...(diag.description.advice || []), ...(advice || [])],
+        advice: [...diag.description.advice, ...(advice || [])],
       },
     };
 
@@ -410,7 +410,7 @@ export default class TestWorkerRunner {
         ...diagnostic.description,
         advice: [
           ...(opts.firstAdvice || []),
-          ...(diagnostic.description.advice || []),
+          ...diagnostic.description.advice,
           ...(opts.lastAdvice || []),
         ],
       },

@@ -35,6 +35,7 @@ Program {
     Object {
       origins: Array [Object {category: 'js-parser'}]
       description: Object {
+        advice: Array []
         category: 'parse/js'
         message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Type parameter declaration needs a default, since a preceding type parameter declaration has a default.'}
       }
