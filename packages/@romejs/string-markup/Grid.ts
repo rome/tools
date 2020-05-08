@@ -436,14 +436,11 @@ export default class Grid {
       const reversed = tag.attributes.reversed === 'true';
       const startOffset: number = Number(tag.attributes.start) || 0;
 
-      if (reversed) {
-        items = items.reverse();
-      }
-
       const highestNumSize = humanizeNumber(items.length + startOffset).length;
 
       for (let i = 0; i < items.length; i++) {
         const item = items[i];
+
         let num = startOffset;
         if (reversed) {
           num += items.length - i;

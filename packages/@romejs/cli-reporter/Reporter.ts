@@ -217,10 +217,11 @@ export default class Reporter {
     format: ReporterStream['format'] = 'none',
   ): {
     read: () => string;
+    remove: () => void;
   } {
     let buff = '';
 
-    this.addStream({
+    const stream: ReporterStream = {
       format,
       type: 'all',
       columns: Reporter.DEFAULT_COLUMNS,
@@ -228,11 +229,16 @@ export default class Reporter {
       write(chunk) {
         buff += chunk;
       },
-    });
+    };
+
+    this.addStream(stream);
 
     return {
       read() {
         return buff;
+      },
+      remove: () => {
+        this.removeStream(stream);
       },
     };
   }
@@ -1106,13 +1112,14 @@ export default class Reporter {
     let buff = '';
 
     for (const item of items) {
+      const stream = this.attachCaptureStream('markup');
       callback(
         item,
         (str) => {
-          // TODO maybe set index + 1?
-          buff += `<li>${str}</li>`;
+          buff += `<li>${str}${stream.read()}</li>`;
         },
       );
+      stream.remove();
     }
 
     if (opts.ordered) {

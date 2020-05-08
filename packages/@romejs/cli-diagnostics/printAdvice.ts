@@ -406,9 +406,6 @@ function printStacktrace(
         }
       }
 
-      display(logParts.join(' '));
-
-      // Push on frame
       if (
         shownCodeFrames < 2 &&
         filename !== undefined &&
@@ -440,6 +437,8 @@ function printStacktrace(
           shownCodeFrames++;
         }
       }
+
+      display(logParts.join(' '));
     },
     {
       ordered: true,
