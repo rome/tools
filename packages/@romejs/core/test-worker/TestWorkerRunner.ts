@@ -16,7 +16,7 @@ import {
   catchDiagnostics,
   createBlessedDiagnosticMessage,
   createSingleDiagnosticError,
-  deriveDiagnosticFromError,
+  deriveDiagnosticFromErrorStructure,
   descriptions,
   getErrorStackAdvice,
 } from '@romejs/diagnostics';
@@ -47,7 +47,7 @@ import {AbsoluteFilePath, createAbsoluteFilePath} from '@romejs/path';
 import {escapeMarkup, markup} from '@romejs/string-markup';
 import {
   ErrorFrames,
-  createErrorFromStructure,
+  StructuredError,
   getErrorStructure,
   getSourceLocationFromErrorFrame,
 } from '@romejs/v8';
@@ -131,7 +131,7 @@ export default class TestWorkerRunner {
     this.consoleAdvice = [];
     this.hasFocusedTests = false;
     this.focusedTests = [];
-    this.pendingErrors = [];
+    this.pendingDiagnostics = [];
     this.foundTests = new Map();
   }
 
@@ -147,7 +147,7 @@ export default class TestWorkerRunner {
   locked: boolean;
   consoleAdvice: DiagnosticAdvice;
   hasDiagnostics: boolean;
-  pendingErrors: Array<Error>;
+  pendingDiagnostics: Array<Diagnostic>;
 
   createConsole(): Partial<Console> {
     const addDiagnostic = (
@@ -173,7 +173,12 @@ export default class TestWorkerRunner {
         text,
       });
       this.consoleAdvice = this.consoleAdvice.concat(
-        getErrorStackAdvice(err, undefined, frames),
+        getErrorStackAdvice(
+          getErrorStructure({
+            ...err,
+            frames,
+          }),
+        ),
       );
     };
 
@@ -238,20 +243,6 @@ export default class TestWorkerRunner {
       __ROME__TEST_OPTIONS__: testOptions,
       console: this.createConsole(),
     };
-  }
-
-  async emitDiagnostic(diagnostic: Diagnostic, ref?: TestRef) {
-    let origin: DiagnosticOrigin = {
-      category: 'test/error',
-      message: 'Generated from a test worker without being attached to a test',
-    };
-
-    if (ref !== undefined) {
-      origin.message = markup`Generated from the file <filelink target="${this.file.uid}" /> and test name "${ref.testName}"`;
-    }
-
-    this.hasDiagnostics = true;
-    await this.bridge.testDiagnostic.call({diagnostic, origin});
   }
 
   // execute the test file and discover tests
@@ -340,14 +331,64 @@ export default class TestWorkerRunner {
       this.hasFocusedTests = true;
 
       if (!this.options.focusAllowed) {
-        this.pendingErrors.push(
-          createErrorFromStructure({
-            ...callsiteStruct,
-            message: 'Focused tests are not allowed due to a set flag',
-          }),
-        );
+        const diag = this.deriveDiagnosticFromErrorStructure(callsiteStruct);
+
+        this.pendingDiagnostics.push({
+          ...diag,
+          description: {
+            ...diag.description,
+            message: createBlessedDiagnosticMessage(
+              'Focused tests are not allowed due to a set flag',
+            ),
+          },
+        });
       }
     }
+  }
+
+  async emitDiagnostic(
+    diag: Diagnostic,
+    ref?: TestRef,
+    advice?: DiagnosticAdvice,
+  ) {
+    let origin: DiagnosticOrigin = {
+      category: 'test/error',
+      message: 'Generated from a test worker without being attached to a test',
+    };
+
+    if (ref !== undefined) {
+      origin.message = markup`Generated from the file <filelink target="${this.file.uid}" /> and test name "${ref.testName}"`;
+    }
+
+    let label = diag.label;
+    if (label !== undefined && ref !== undefined) {
+      label = escapeMarkup(ref.testName);
+    }
+
+    diag = {
+      ...diag,
+      label,
+      description: {
+        ...diag.description,
+        advice: [...(diag.description.advice || []), ...(advice || [])],
+      },
+    };
+
+    this.hasDiagnostics = true;
+    await this.bridge.testDiagnostic.call({diagnostic: diag, origin});
+  }
+
+  deriveDiagnosticFromErrorStructure(struct: StructuredError): Diagnostic {
+    return deriveDiagnosticFromErrorStructure(
+      struct,
+      {
+        description: {
+          category: 'tests/failure',
+        },
+        filename: this.file.real.join(),
+        cleanFrames,
+      },
+    );
   }
 
   async onError(
@@ -358,15 +399,9 @@ export default class TestWorkerRunner {
       lastAdvice?: DiagnosticAdvice;
     },
   ): Promise<void> {
-    const filename = this.file.real.join();
-
-    let diagnostic: Diagnostic = deriveDiagnosticFromError({
-      error: opts.error,
-      category: 'tests/failure',
-      label: testName === undefined ? undefined : escapeMarkup(testName),
-      filename,
-      cleanFrames,
-    });
+    let diagnostic = this.deriveDiagnosticFromErrorStructure(
+      getErrorStructure(opts.error),
+    );
 
     diagnostic = {
       ...diagnostic,
@@ -431,31 +466,37 @@ export default class TestWorkerRunner {
       };
     });
 
+    const ref = this.createTestRef(testName);
+
+    const emitDiagnostic = (diag: Diagnostic): Promise<void> => {
+      return this.emitDiagnostic(diag, ref, api.advice);
+    };
+
     const api = new TestAPI({
       file: this.file,
       testName,
       onTimeout,
       snapshotManager: this.snapshotManager,
       options: this.options,
-      emitError: (error: Error): Promise<void> => {
-        return this.onError(
-          testName,
-          {
-            error,
-            lastAdvice: api.advice,
-          },
-        );
-      },
+      emitDiagnostic,
     });
 
     let testSuccess = false;
 
     try {
-      const res = callback(api);
+      const {diagnostics} = await catchDiagnostics(async () => {
+        const res = callback(api);
 
-      // Ducktyping this to detect a cross-realm Promise
-      if (res !== undefined && typeof res.then === 'function') {
-        await Promise.race([timeoutPromise, res]);
+        // Ducktyping this to detect a cross-realm Promise
+        if (res !== undefined && typeof res.then === 'function') {
+          await Promise.race([timeoutPromise, res]);
+        }
+      });
+
+      if (diagnostics !== undefined) {
+        for (const diag of diagnostics) {
+          await emitDiagnostic(diag);
+        }
       }
 
       testSuccess = true;
@@ -472,7 +513,7 @@ export default class TestWorkerRunner {
       const teardownSuccess = await this.teardownTest(testName, api);
       await this.bridge.testFinish.call({
         success: testSuccess && teardownSuccess,
-        ref: this.createTestRef(testName),
+        ref,
       });
     }
   }
@@ -546,8 +587,8 @@ export default class TestWorkerRunner {
       });
     }
 
-    for (const error of this.pendingErrors) {
-      await this.onError(undefined, {error});
+    for (const diag of this.pendingDiagnostics) {
+      await this.emitDiagnostic(diag);
     }
 
     return {

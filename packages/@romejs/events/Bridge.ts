@@ -20,8 +20,8 @@ import BridgeError from './BridgeError';
 import BridgeEvent, {BridgeEventOptions} from './BridgeEvent';
 import Event from './Event';
 import {
+  ERROR_FRAMES_PROP,
   StructuredError,
-  createErrorFromStructure,
   getErrorStructure,
 } from '@romejs/v8';
 
@@ -279,12 +279,18 @@ export default class Bridge {
   }
 
   //# Error serialization
-  buildError(value: StructuredError, data: JSONObject) {
-    const transport = this.errorTransports.get(value.name);
+  buildError(struct: StructuredError, data: JSONObject) {
+    const transport = this.errorTransports.get(struct.name);
     if (transport === undefined) {
-      return createErrorFromStructure(value);
+      const err: Error & {
+        [ERROR_FRAMES_PROP]?: unknown;
+      } = new Error(struct.message);
+      err.name = struct.name || 'Error';
+      err.stack = struct.stack;
+      err[ERROR_FRAMES_PROP] = struct.frames;
+      return err;
     } else {
-      return transport.hydrate(value, data);
+      return transport.hydrate(struct, data);
     }
   }
 

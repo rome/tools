@@ -7,9 +7,14 @@
 
 import {Reporter, ReporterProgress} from '@romejs/cli-reporter';
 import {
+  Diagnostic,
+  DiagnosticsError,
+  createBlessedDiagnosticMessage,
   deriveDiagnosticFromError,
+  deriveDiagnosticFromErrorStructure,
   descriptions,
   diagnosticLocationToMarkupFilelink,
+  getDiagnosticsFromError,
 } from '@romejs/diagnostics';
 import {TestRef} from '../../common/bridges/TestWorkerBridge';
 import {Master, MasterRequest, TestWorkerBridge} from '@romejs/core';
@@ -26,8 +31,6 @@ import {
   ErrorFrame,
   InspectorClient,
   InspectorClientCloseError,
-  NativeStructuredError,
-  StructuredError,
   sourceMapManager,
   urlToFilename,
 } from '@romejs/v8';
@@ -55,9 +58,9 @@ import {
 } from '@romejs/core/test-worker/TestWorkerRunner';
 import {FileReference} from '@romejs/core/common/types/files';
 
-class BridgeStructuredError extends NativeStructuredError {
-  constructor(struct: Partial<StructuredError>, bridge: Bridge) {
-    super(struct);
+class BridgeDiagnosticsError extends DiagnosticsError {
+  constructor(diag: Diagnostic, bridge: Bridge) {
+    super(diag.description.message.value, [diag]);
     this.bridge = bridge;
   }
 
@@ -330,17 +333,33 @@ export default class TestMasterRunner {
   }
 
   handlePossibleBridgeError(err: Error) {
-    if (err instanceof BridgeError || err instanceof BridgeStructuredError) {
-      if (!this.ignoreBridgeEndError.has(err.bridge)) {
-        this.printer.processor.addDiagnostic(
-          deriveDiagnosticFromError({
-            category: 'tests/failure',
-            error: err,
-          }),
-        );
-      }
-    } else {
+    let diagnostics = getDiagnosticsFromError(err);
+    let bridge: undefined | Bridge;
+
+    if (err instanceof BridgeDiagnosticsError) {
+      bridge = err.bridge;
+    }
+
+    if (err instanceof BridgeError) {
+      bridge = err.bridge;
+      diagnostics = [
+        deriveDiagnosticFromError(
+          err,
+          {
+            description: {
+              category: 'tests/failure',
+            },
+          },
+        ),
+      ];
+    }
+
+    if (diagnostics === undefined || bridge === undefined) {
       throw err;
+    } else {
+      if (!this.ignoreBridgeEndError.has(bridge)) {
+        this.printer.processor.addDiagnostics(diagnostics);
+      }
     }
   }
 
@@ -558,18 +577,28 @@ export default class TestMasterRunner {
     }
 
     bridge.endWithError(
-      new BridgeStructuredError(
-        {
-          message: `Test worker was unresponsive for <emphasis>${duration}</emphasis>. Possible infinite loop. Below is a stack trace before the test was terminated.`,
-          frames,
-          advice: [
-            {
-              type: 'log',
-              category: 'info',
-              text: `You can find the specific test that caused this by running <command>rome test --sync-tests</command>`,
+      new BridgeDiagnosticsError(
+        deriveDiagnosticFromErrorStructure(
+          {
+            name: 'Error',
+            frames,
+          },
+          {
+            description: {
+              category: 'tests/timeout',
+              message: createBlessedDiagnosticMessage(
+                `Test worker was unresponsive for <emphasis>${duration}</emphasis>. Possible infinite loop. Below is a stack trace before the test was terminated.`,
+              ),
+              advice: [
+                {
+                  type: 'log',
+                  category: 'info',
+                  text: `You can find the specific test that caused this by running <command>rome test --sync-tests</command>`,
+                },
+              ],
             },
-          ],
-        },
+          },
+        ),
         bridge,
       ),
     );
@@ -675,12 +704,16 @@ export default class TestMasterRunner {
             // If we only have one test to cancel then let's only point the bridge error to this test
             this.ignoreBridgeEndError.add(bridge);
 
-            const errDiag = deriveDiagnosticFromError({
-              label: ref.testName,
-              category: 'tests/failure',
-              filename: ref.filename,
+            const errDiag = deriveDiagnosticFromError(
               error,
-            });
+              {
+                label: ref.testName,
+                filename: ref.filename,
+                description: {
+                  category: 'tests/failure',
+                },
+              },
+            );
 
             this.printer.processor.addDiagnostic({
               ...errDiag,

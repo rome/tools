@@ -8,19 +8,21 @@
 import {
   Diagnostic,
   DiagnosticAdvice,
+  DiagnosticDescription,
   DiagnosticOrigin,
   Diagnostics,
 } from './types';
 import {escapeMarkup} from '@romejs/string-markup';
 import {
   ErrorFrames,
+  StructuredError,
   getErrorStructure,
   getSourceLocationFromErrorFrame,
 } from '@romejs/v8';
-import {DiagnosticCategory} from './categories';
 import {createBlessedDiagnosticMessage} from './descriptions';
 import DiagnosticsNormalizer from './DiagnosticsNormalizer';
 import {diagnosticLocationToMarkupFilelink} from './helpers';
+import {RequiredProps} from '@romejs/typescript-helpers';
 
 function normalizeArray<T>(val: undefined | Array<T>): Array<T> {
   if (Array.isArray(val)) {
@@ -137,24 +139,23 @@ export function deriveRootAdviceFromDiagnostic(
 }
 
 type DeriveErrorDiagnosticOpts = {
-  error: unknown;
-  category: DiagnosticCategory;
+  description: RequiredProps<Partial<DiagnosticDescription>, 'category'>;
   label?: string;
   filename?: string;
   cleanFrames?: (frames: ErrorFrames) => ErrorFrames;
 };
 
-export function deriveDiagnosticFromError(
+export function deriveDiagnosticFromErrorStructure(
+  struct: StructuredError,
   opts: DeriveErrorDiagnosticOpts,
 ): Diagnostic {
-  const {error, filename} = opts;
+  const {filename} = opts;
 
   let targetFilename: undefined | string = filename;
   let targetCode = undefined;
   let targetLoc = undefined;
 
-  const structErr = getErrorStructure(error);
-  let {frames, markupMessage, message, advice} = structErr;
+  let {frames, message = 'Unknown error'} = struct;
 
   const {cleanFrames} = opts;
   if (cleanFrames !== undefined) {
@@ -172,15 +173,16 @@ export function deriveDiagnosticFromError(
     break;
   }
 
-  advice = [...getErrorStackAdvice(error, undefined, frames), ...advice];
+  const advice = getErrorStackAdvice({
+    ...struct,
+    frames,
+  });
 
   return {
     description: {
-      category: opts.category,
-      message: createBlessedDiagnosticMessage(
-        markupMessage === undefined ? escapeMarkup(message) : markupMessage,
-      ),
-      advice,
+      message: createBlessedDiagnosticMessage(escapeMarkup(message)),
+      ...opts.description,
+      advice: [...advice, ...(opts.description?.advice || [])],
     },
     location: {
       filename: targetFilename,
@@ -192,16 +194,19 @@ export function deriveDiagnosticFromError(
   };
 }
 
-export function getErrorStackAdvice(
-  errorLike: unknown,
-  title?: string,
-  _frames?: ErrorFrames,
-): DiagnosticAdvice {
-  const error = getErrorStructure(errorLike);
-  const {stack} = error;
+export function deriveDiagnosticFromError(
+  error: unknown,
+  opts: DeriveErrorDiagnosticOpts,
+): Diagnostic {
+  return deriveDiagnosticFromErrorStructure(getErrorStructure(error), opts);
+}
 
+export function getErrorStackAdvice(
+  error: StructuredError,
+  title?: string,
+): DiagnosticAdvice {
   const advice: DiagnosticAdvice = [];
-  const frames = _frames === undefined ? error.frames : _frames;
+  const {frames, stack} = error;
 
   if (frames.length === 0 && stack !== undefined) {
     // Just in case we didn't get the frames for some reason

@@ -862,6 +862,18 @@ export const descriptions = createMessages({
       category: 'tests/snapshots/inlineMissingReceived',
       message: 'This inline snapshot call does not have a received argument',
     },
+    INLINE_FROZEN: {
+      category: 'tests/snapshots/frozen',
+      message: 'Inline snapshot cannot be updated as snapshots are frozen',
+    },
+    FROZEN: {
+      category: 'tests/snapshots/frozen',
+      message: 'Snapshot cannot be updated as snapshots are frozen',
+    },
+    INLINE_BAD_MATCH: {
+      category: 'tests/snapshots/incorrect',
+      message: 'Inline snapshots do not match',
+    },
   },
   BUNDLER: {
     TOP_LEVEL_AWAIT_IN_LEGACY: {

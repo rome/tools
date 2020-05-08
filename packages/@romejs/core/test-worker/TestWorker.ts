@@ -48,10 +48,14 @@ export default class TestWorker {
       (err) => {
         bridge.testDiagnostic.send({
           origin: undefined,
-          diagnostic: deriveDiagnosticFromError({
-            error: err,
-            category: 'tests/unhandledRejection',
-          }),
+          diagnostic: deriveDiagnosticFromError(
+            err,
+            {
+              description: {
+                category: 'tests/unhandledRejection',
+              },
+            },
+          ),
         });
       },
     );

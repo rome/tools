@@ -5,15 +5,24 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {DiagnosticAdvice, getErrorStackAdvice} from '@romejs/diagnostics';
+import {
+  Diagnostic,
+  DiagnosticAdvice,
+  createBlessedDiagnosticMessage,
+  createSingleDiagnosticError,
+  deriveDiagnosticFromError,
+  deriveDiagnosticFromErrorStructure,
+  descriptions,
+  getErrorStackAdvice,
+} from '@romejs/diagnostics';
 import SnapshotManager from './SnapshotManager';
 import {TestMasterRunnerOptions} from '../master/testing/types';
 import {Event} from '@romejs/events';
 import diff from '@romejs/string-diff';
-import {createErrorFromStructure, getErrorStructure} from '@romejs/v8';
+import {getErrorStructure} from '@romejs/v8';
 import prettyFormat from '@romejs/pretty-format';
 import {FileReference} from '../common/types/files';
-import {markup} from '@romejs/string-markup';
+import {escapeMarkup, markup} from '@romejs/string-markup';
 import {
   AsyncFunc,
   ExpectedError,
@@ -68,7 +77,7 @@ type SnapshotOptions = {
   opts?: TestSnapshotOptions;
 };
 
-type EmitError = (error: Error) => Promise<void>;
+type EmitDiagnostic = (diag: Diagnostic) => Promise<void>;
 
 export default class TestAPI implements TestHelper {
   constructor(
@@ -78,9 +87,9 @@ export default class TestAPI implements TestHelper {
       file,
       snapshotManager,
       options,
-      emitError,
+      emitDiagnostic,
     }: {
-      emitError: EmitError;
+      emitDiagnostic: EmitDiagnostic;
       file: FileReference;
       testName: string;
       onTimeout: OnTimeout;
@@ -96,7 +105,7 @@ export default class TestAPI implements TestHelper {
     this.teardownEvent = new Event({name: 'TestAPI.teardown'});
     this.startTime = Date.now();
     this.onTimeout = onTimeout;
-    this.emitError = emitError;
+    this.emitDiagnostic = emitDiagnostic;
     this.timeoutMax = 0;
     this.timeoutId = undefined;
     this.setTimeout(5_000);
@@ -106,7 +115,7 @@ export default class TestAPI implements TestHelper {
   startTime: number;
   options: TestMasterRunnerOptions;
   file: FileReference;
-  emitError: EmitError;
+  emitDiagnostic: EmitDiagnostic;
 
   onTimeout: OnTimeout;
   timeoutId: undefined | NodeJS.Timeout;
@@ -274,12 +283,17 @@ export default class TestAPI implements TestHelper {
     advice: DiagnosticAdvice = [],
     framesToShift: number = 0,
   ): never {
-    throw createErrorFromStructure({
-      ...getErrorStructure(new Error(), framesToShift + 1),
-      message,
-      markupMessage: message,
-      advice,
-    });
+    const diag = deriveDiagnosticFromErrorStructure(
+      getErrorStructure(new Error(), framesToShift + 1),
+      {
+        description: {
+          category: 'tests/failure',
+          message: createBlessedDiagnosticMessage(message),
+          advice,
+        },
+      },
+    );
+    throw createSingleDiagnosticError(diag);
   }
 
   truthy(value: unknown, message: string = 'Expected value to be truthy'): void {
@@ -443,7 +457,10 @@ export default class TestAPI implements TestHelper {
           `t.throws() expected an error to be thrown that matches ${formatExpectedError(
             expected,
           )} but got ${err.name}: ${JSON.stringify(err.message)}`,
-          getErrorStackAdvice(err, 'Incorrect error stack trace'),
+          getErrorStackAdvice(
+            getErrorStructure(err),
+            'Incorrect error stack trace',
+          ),
           1,
         );
       }
@@ -467,7 +484,10 @@ export default class TestAPI implements TestHelper {
           `t.throws() expected an error to be thrown that matches ${formatExpectedError(
             expected,
           )} but got ${err.name}: ${JSON.stringify(err.message)}`,
-          getErrorStackAdvice(err, 'Incorrect error stack trace'),
+          getErrorStackAdvice(
+            getErrorStructure(err),
+            'Incorrect error stack trace',
+          ),
           1,
         );
       }
@@ -483,7 +503,7 @@ export default class TestAPI implements TestHelper {
       nonThrower();
     } catch (err) {
       const advice = getErrorStackAdvice(
-        err,
+        getErrorStructure(err),
         `t.notThrows did not expect an error to be thrown but got ${err.name}: ${JSON.stringify(
           err.message,
         )}`,
@@ -500,7 +520,7 @@ export default class TestAPI implements TestHelper {
       await nonThrower();
     } catch (err) {
       const advice = getErrorStackAdvice(
-        err,
+        getErrorStructure(err),
         `t.notThrowsAsync did not expect an error to be thrown but got ${err.name}: ${JSON.stringify(
           err.message,
         )}`,
@@ -587,28 +607,34 @@ export default class TestAPI implements TestHelper {
       );
 
       if (status === 'UPDATE' && this.options.freezeSnapshots) {
-        await this.emitError(
-          createErrorFromStructure({
-            ...callError,
-            message: 'Inline snapshot cannot be updated as snapshots are frozen',
-          }),
+        await this.emitDiagnostic(
+          deriveDiagnosticFromError(
+            callError,
+            {
+              description: descriptions.SNAPSHOTS.INLINE_FROZEN,
+            },
+          ),
         );
       }
 
       if (status === 'NO_MATCH') {
-        await this.emitError(
-          createErrorFromStructure({
-            ...callError,
-            message: 'Inline snapshots do not match',
-            advice: this.buildMatchAdvice(
-              received,
-              snapshot,
-              {
-                receivedAlias: 'What the code gave us',
-                expectedAlias: 'Existing inline snapshot',
+        await this.emitDiagnostic(
+          deriveDiagnosticFromError(
+            callError,
+            {
+              description: {
+                ...descriptions.SNAPSHOTS.INLINE_BAD_MATCH,
+                advice: this.buildMatchAdvice(
+                  received,
+                  snapshot,
+                  {
+                    receivedAlias: 'What the code gave us',
+                    expectedAlias: 'Existing inline snapshot',
+                  },
+                ),
               },
-            ),
-          }),
+            },
+          ),
         );
       }
     });
@@ -671,11 +697,13 @@ export default class TestAPI implements TestHelper {
       );
       if (existingSnapshot === undefined) {
         if (this.options.freezeSnapshots) {
-          await this.emitError(
-            createErrorFromStructure({
-              ...callError,
-              message: 'Snapshot cannot be created as snapshots are frozen',
-            }),
+          await this.emitDiagnostic(
+            deriveDiagnosticFromError(
+              callError,
+              {
+                description: descriptions.SNAPSHOTS.FROZEN,
+              },
+            ),
           );
         } else {
           // No snapshot exists, let's save this one!
@@ -704,6 +732,8 @@ export default class TestAPI implements TestHelper {
         if (message === undefined) {
           message = markup`Snapshot ${entryName} at <filelink emphasis target="${this.snapshotManager.defaultSnapshotPath.join()}" /> doesn't match`;
         } else {
+          message = escapeMarkup(message);
+
           advice.push({
             type: 'log',
             category: 'info',
@@ -717,12 +747,17 @@ export default class TestAPI implements TestHelper {
           text: markup`Run <command>rome test <filelink target="${this.file.uid}" /> --update-snapshots</command> to update this snapshot`,
         });
 
-        await this.emitError(
-          createErrorFromStructure({
-            ...callError,
-            markupMessage: message,
-            advice,
-          }),
+        await this.emitDiagnostic(
+          deriveDiagnosticFromError(
+            callError,
+            {
+              description: {
+                category: 'tests/snapshots/incorrect',
+                message: createBlessedDiagnosticMessage(message),
+                advice,
+              },
+            },
+          ),
         );
       }
     });
