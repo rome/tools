@@ -74,6 +74,7 @@ export default createMasterCommand({
         await test.callback(
           req,
           {
+            focusAllowed: false,
             coverage: false,
             freezeSnapshots: !flags.fix,
             updateSnapshots: flags.fix,

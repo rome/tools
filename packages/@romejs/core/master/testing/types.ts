@@ -28,6 +28,7 @@ export type TestMasterRunnerConstructorOptions = {
 };
 
 export type TestMasterRunnerOptions = {
+  focusAllowed: boolean;
   coverage: boolean;
   showAllCoverage: boolean;
   updateSnapshots: boolean;

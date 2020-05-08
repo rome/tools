@@ -19,6 +19,8 @@ import {
   Diagnostics,
   DiagnosticsError,
   DiagnosticsProcessor,
+  createSingleDiagnosticError,
+  deriveDiagnosticFromError,
   descriptions,
   getDiagnosticsFromError,
 } from '@romejs/diagnostics';
@@ -74,7 +76,6 @@ import {
   createUnknownFilePath,
 } from '@romejs/path';
 import crypto = require('crypto');
-import {createErrorFromStructure, getErrorStructure} from '@romejs/v8';
 import {Dict, RequiredProps} from '@romejs/typescript-helpers';
 import {ob1Coerce0, ob1Number0, ob1Number1} from '@romejs/ob1';
 import {MemoryFSGlobOptions} from './fs/MemoryFileSystem';
@@ -840,18 +841,28 @@ export default class MasterRequest {
       let diagnostics = getDiagnosticsFromError(err);
 
       if (diagnostics === undefined) {
-        const info = getErrorStructure(err);
-
-        throw createErrorFromStructure({
-          ...info,
-          advice: [
-            ...info.advice,
-            {
-              type: 'log',
-              category: 'info',
-              text: markup`Error occurred while requesting ${method} for <filelink emphasis target="${ref.uid}" />`,
+        const diag = deriveDiagnosticFromError(
+          err,
+          {
+            description: {
+              category: 'internalError/request',
             },
-          ],
+          },
+        );
+
+        throw createSingleDiagnosticError({
+          ...diag,
+          description: {
+            ...diag.description,
+            advice: [
+              ...(diag.description.advice || []),
+              {
+                type: 'log',
+                category: 'info',
+                text: markup`Error occurred while requesting ${method} for <filelink emphasis target="${ref.uid}" />`,
+              },
+            ],
+          },
         });
       } else {
         // We don't want to tamper with these
