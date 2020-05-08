@@ -9,20 +9,32 @@ import {Diagnostic, DiagnosticOrigin} from '@romejs/diagnostics';
 import {TestMasterRunnerOptions} from '../../master/testing/types';
 import {Bridge} from '@romejs/events';
 import {JSONFileReference} from '../types/files';
-import {TestWorkerFileResult} from '@romejs/core/test-worker/TestWorkerRunner';
+import {
+  FocusedTest,
+  TestWorkerFileResult,
+} from '@romejs/core/test-worker/TestWorkerRunner';
 
 export type TestRef = {
   filename: string;
   testName: string;
 };
 
-export type TestWorkerBridgeRunOptions = {
+export type TestWorkerPrepareTestOptions = {
   id: number;
   file: JSONFileReference;
   projectFolder: string;
   code: string;
   cwd: string;
   options: TestMasterRunnerOptions;
+};
+
+export type TestWorkerPrepareTestResult = {
+  focusedTests: Array<FocusedTest>;
+};
+
+export type TestWorkerRunTestOptions = {
+  id: number;
+  onlyFocusedTests: boolean;
 };
 
 export default class TestWorkerBridge extends Bridge {
@@ -36,23 +48,20 @@ export default class TestWorkerBridge extends Bridge {
     direction: 'server->client',
   });
 
-  prepareTest = this.createEvent<TestWorkerBridgeRunOptions, void>({
+  prepareTest = this.createEvent<
+    TestWorkerPrepareTestOptions,
+    TestWorkerPrepareTestResult
+  >({
     name: 'prepareTest',
     direction: 'server->client',
   });
 
-  runTest = this.createEvent<number, TestWorkerFileResult>({
+  runTest = this.createEvent<TestWorkerRunTestOptions, TestWorkerFileResult>({
     name: 'runTest',
     direction: 'server->client',
   });
 
-  testsFound = this.createEvent<
-    Array<{
-      ref: TestRef;
-      isSkipped: boolean;
-    }>,
-    void
-  >({
+  testsFound = this.createEvent<Array<TestRef>, void>({
     name: 'onTestFounds',
     direction: 'server<-client',
   });

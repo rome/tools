@@ -85,7 +85,7 @@ export interface TestHelper {
     message?: string,
     opts?: TestSnapshotOptions,
   ): string;
-  inlineSnapshot(received: unknown, expected?: string): void;
+  inlineSnapshot(received: unknown, expected?: string | boolean | number): void;
   namedSnapshot(
     name: string,
     expected: unknown,
@@ -102,11 +102,7 @@ export type GlobalTestOptions =
   | undefined
   | {
       dirname?: string;
-      register?: (
-        err: Error,
-        opts: TestOptions,
-        callback?: TestCallback,
-      ) => void;
+      register?: (err: Error, opts: TestOptions, callback: TestCallback) => void;
     };
 
 type NamelessTestOptions = {
@@ -128,7 +124,7 @@ export const testOptions: NonNullable<GlobalTestOptions> =
 function registerTest(
   callsiteError: Error,
   opts: TestOptions,
-  callback: undefined | TestCallback,
+  callback: TestCallback,
 ) {
   const register = testOptions.register;
 
@@ -147,37 +143,21 @@ function splitArgs(
   args: TestRegisterFunctionArgs,
 ): {
   options: TestOptions;
-  callback: undefined | TestCallback;
+  callback: TestCallback;
 } {
-  const name: TestName = args[0];
+  const name = args.shift();
   if (typeof name !== 'string' && !Array.isArray(name)) {
     throw new Error('Expected test name to be a string or an array of strings');
   }
-  args.shift();
 
-  let foundOptions;
-  let options: NamelessTestOptions = {};
-  let callback;
-
-  // Try callback which will always be at the end
-  const callbackOrOpts = args.pop();
-  if (typeof callbackOrOpts === 'function' || callbackOrOpts === undefined) {
-    callback = callbackOrOpts;
-  } else if (isOptionsObject(callbackOrOpts)) {
-    options = callbackOrOpts;
-    foundOptions = true;
-  } else {
-    throw new Error('Expected to find callback or options at the end');
+  const callback = args.pop();
+  if (typeof callback !== 'function') {
+    throw new Error('Expected options callback');
   }
 
-  // Try options which should be in the middle position
-  if (!foundOptions && args.length > 0) {
-    const maybeOptions = args.pop();
-    if (isOptionsObject(maybeOptions)) {
-      options = maybeOptions;
-    } else {
-      throw new Error('Expected to find test options');
-    }
+  const options = args.pop();
+  if (!isOptionsObject(options)) {
+    throw new Error('Expected options object');
   }
 
   if (args.length > 0) {
@@ -194,26 +174,16 @@ function splitArgs(
 }
 
 type TestRegisterFunctionArgs =
-  | [TestName]
   | [TestName, TestCallback]
   | [TestName, NamelessTestOptions, TestCallback];
 
 type TestRegisterFunction = (...args: TestRegisterFunctionArgs) => void;
 
-export const test: {
-  (
-    ...args: TestRegisterFunctionArgs
-  ): void;
-  skip: TestRegisterFunction;
+export const test: TestRegisterFunction & {
   only: TestRegisterFunction;
 } = function(...args: TestRegisterFunctionArgs) {
   const {options, callback} = splitArgs(args);
   registerTest(new Error(), options, callback);
-};
-
-test.skip = function(...args: TestRegisterFunctionArgs) {
-  const {options} = splitArgs(args);
-  registerTest(new Error(), options, undefined);
 };
 
 test.only = function(...args: TestRegisterFunctionArgs) {

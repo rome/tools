@@ -11,8 +11,7 @@ import {
   DiagnosticOrigin,
   Diagnostics,
 } from './types';
-import {Position} from '@romejs/parser-core';
-import {escapeMarkup, markup} from '@romejs/string-markup';
+import {escapeMarkup} from '@romejs/string-markup';
 import {
   ErrorFrames,
   getErrorStructure,
@@ -21,6 +20,7 @@ import {
 import {DiagnosticCategory} from './categories';
 import {createBlessedDiagnosticMessage} from './descriptions';
 import DiagnosticsNormalizer from './DiagnosticsNormalizer';
+import {diagnosticLocationToMarkupFilelink} from './helpers';
 
 function normalizeArray<T>(val: undefined | Array<T>): Array<T> {
   if (Array.isArray(val)) {
@@ -55,25 +55,6 @@ export function mergeDiagnostics(
   };
 }
 
-export function getDiagnosticHeader(
-  opts: {
-    filename: undefined | string;
-    start: undefined | Position;
-  },
-): string {
-  const {start, filename} = opts;
-
-  if (filename === undefined) {
-    return 'unknown';
-  }
-
-  if (start === undefined) {
-    return markup`<filelink target="${filename}" />`;
-  }
-
-  return markup`<filelink target="${filename}" line="${start.line}" column="${start.column}" />`;
-}
-
 export function derivePositionlessKeyFromDiagnostic(diag: Diagnostic): string {
   const normalizer = new DiagnosticsNormalizer({
     stripPositions: true,
@@ -100,10 +81,7 @@ export function deriveRootAdviceFromDiagnostic(
   const advice: DiagnosticAdvice = [];
   const {description, fixable, location} = diag;
 
-  let header = getDiagnosticHeader({
-    start: location.start,
-    filename: location.filename,
-  });
+  let header = diagnosticLocationToMarkupFilelink(location);
 
   if (diag.label !== undefined) {
     header += ` <emphasis>${diag.label}</emphasis>`;

@@ -18,7 +18,7 @@ import {
   DiagnosticAdviceList,
   DiagnosticAdviceLog,
   DiagnosticAdviceStacktrace,
-  getDiagnosticHeader,
+  diagnosticLocationToMarkupFilelink,
 } from '@romejs/diagnostics';
 import {Position} from '@romejs/parser-core';
 import {showInvisibles, toLines} from './utils';
@@ -390,7 +390,7 @@ function printStacktrace(
 
       // Add source
       if (filename !== undefined && line !== undefined && column !== undefined) {
-        const header = getDiagnosticHeader({
+        const header = diagnosticLocationToMarkupFilelink({
           filename,
           start: {
             index: ob1Number0Neg1,

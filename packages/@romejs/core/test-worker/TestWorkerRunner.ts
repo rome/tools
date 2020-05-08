@@ -9,6 +9,7 @@ import {UnknownObject} from '@romejs/typescript-helpers';
 import {
   Diagnostic,
   DiagnosticAdvice,
+  DiagnosticLocation,
   DiagnosticLogCategory,
   DiagnosticOrigin,
   INTERNAL_ERROR_LOG_ADVICE,
@@ -27,7 +28,9 @@ import {
 import {
   TestRef,
   default as TestWorkerBridge,
-  TestWorkerBridgeRunOptions,
+  TestWorkerPrepareTestOptions,
+  TestWorkerPrepareTestResult,
+  TestWorkerRunTestOptions,
 } from '../common/bridges/TestWorkerBridge';
 import {TestMasterRunnerOptions} from '../master/testing/types';
 import SnapshotManager, {
@@ -42,7 +45,12 @@ import {
 } from '../common/types/files';
 import {AbsoluteFilePath, createAbsoluteFilePath} from '@romejs/path';
 import {escapeMarkup, markup} from '@romejs/string-markup';
-import {ErrorFrames, getErrorStructure} from '@romejs/v8';
+import {
+  ErrorFrames,
+  createErrorFromStructure,
+  getErrorStructure,
+  getSourceLocationFromErrorFrame,
+} from '@romejs/v8';
 import prettyFormat from '@romejs/pretty-format';
 
 const MAX_RUNNING_TESTS = 20;
@@ -95,8 +103,18 @@ export type TestWorkerFileResult = {
   inlineSnapshotUpdates: Array<InlineSnapshotUpdate>;
 };
 
+type FoundTest = {
+  options: TestOptions;
+  callback: TestCallback;
+};
+
+export type FocusedTest = {
+  testName: string;
+  location: DiagnosticLocation;
+};
+
 export default class TestWorkerRunner {
-  constructor(opts: TestWorkerBridgeRunOptions, bridge: TestWorkerBridge) {
+  constructor(opts: TestWorkerPrepareTestOptions, bridge: TestWorkerBridge) {
     this.opts = opts;
     this.locked = false;
     this.file = convertTransportFileReference(opts.file);
@@ -111,28 +129,25 @@ export default class TestWorkerRunner {
 
     this.hasDiagnostics = false;
     this.consoleAdvice = [];
-    this.hasFocusedTest = false;
+    this.hasFocusedTests = false;
+    this.focusedTests = [];
+    this.pendingErrors = [];
     this.foundTests = new Map();
   }
 
-  foundTests: Map<
-    string,
-    {
-      callsiteError: Error;
-      options: TestOptions;
-      callback: undefined | TestCallback;
-    }
-  >;
-  hasFocusedTest: boolean;
+  foundTests: Map<string, FoundTest>;
+  hasFocusedTests: boolean;
+  focusedTests: Array<FocusedTest>;
   bridge: TestWorkerBridge;
   projectFolder: AbsoluteFilePath;
   file: FileReference;
   options: TestMasterRunnerOptions;
   snapshotManager: SnapshotManager;
-  opts: TestWorkerBridgeRunOptions;
+  opts: TestWorkerPrepareTestOptions;
   locked: boolean;
   consoleAdvice: DiagnosticAdvice;
   hasDiagnostics: boolean;
+  pendingErrors: Array<Error>;
 
   createConsole(): Partial<Console> {
     const addDiagnostic = (
@@ -213,7 +228,7 @@ export default class TestWorkerRunner {
       register: (
         callsiteError: Error,
         opts: TestOptions,
-        callback?: TestCallback,
+        callback: TestCallback,
       ) => {
         this.registerTest(callsiteError, opts, callback);
       },
@@ -291,7 +306,7 @@ export default class TestWorkerRunner {
   registerTest(
     callsiteError: Error,
     options: TestOptions,
-    callback: undefined | TestCallback,
+    callback: TestCallback,
   ) {
     if (this.locked) {
       throw new Error("Test can't be added outside of init");
@@ -311,12 +326,27 @@ export default class TestWorkerRunner {
       {
         callback,
         options,
-        callsiteError,
       },
     );
 
     if (options.only === true) {
-      this.hasFocusedTest = true;
+      const callsiteStruct = getErrorStructure(callsiteError, 1);
+
+      this.focusedTests.push({
+        testName,
+        location: getSourceLocationFromErrorFrame(callsiteStruct.frames[0]),
+      });
+
+      this.hasFocusedTests = true;
+
+      if (!this.options.focusAllowed) {
+        this.pendingErrors.push(
+          createErrorFromStructure({
+            ...callsiteStruct,
+            message: 'Focused tests are not allowed due to a set flag',
+          }),
+        );
+      }
     }
   }
 
@@ -447,7 +477,7 @@ export default class TestWorkerRunner {
     }
   }
 
-  async run(): Promise<TestWorkerFileResult> {
+  async run(opts: TestWorkerRunTestOptions): Promise<TestWorkerFileResult> {
     const promises: Set<Promise<void>> = new Set();
 
     const {foundTests} = this;
@@ -463,9 +493,16 @@ export default class TestWorkerRunner {
       });
     }
 
+    // We could be pretending we have focused tests here but at least one file was execueted with
+    // focused tests
+    if (opts.onlyFocusedTests) {
+      this.hasFocusedTests = true;
+    }
+
     // Execute all the tests
-    for (const [testName, {options, callback}] of foundTests) {
-      if (callback === undefined) {
+    for (const [testName, test] of foundTests) {
+      const {options, callback} = test;
+      if (this.hasFocusedTests && !test.options.only) {
         continue;
       }
 
@@ -509,6 +546,10 @@ export default class TestWorkerRunner {
       });
     }
 
+    for (const error of this.pendingErrors) {
+      await this.onError(undefined, {error});
+    }
+
     return {
       inlineSnapshotUpdates: this.snapshotManager.inlineSnapshotsUpdates,
       snapshotCounts: this.snapshotManager.snapshotCounts,
@@ -516,20 +557,12 @@ export default class TestWorkerRunner {
   }
 
   async emitFoundTests() {
-    const tests = [];
+    const tests: Array<TestRef> = [];
 
-    for (const [testName, {callback, options}] of this.foundTests) {
-      let isSkipped = callback === undefined;
-      if (this.hasFocusedTest && options.only !== true) {
-        isSkipped = true;
-      }
-
+    for (const testName of this.foundTests.keys()) {
       tests.push({
-        ref: {
-          filename: this.file.real.join(),
-          testName,
-        },
-        isSkipped,
+        filename: this.file.real.join(),
+        testName,
       });
     }
 
@@ -564,15 +597,13 @@ export default class TestWorkerRunner {
     }
   }
 
-  async prepare(): Promise<void> {
-    return this.wrap(async () => {
-      // Setup
+  async prepare(): Promise<TestWorkerPrepareTestResult> {
+    await this.wrap(async () => {
       await this.snapshotManager.init();
       await this.discoverTests();
       await this.emitFoundTests();
-
-      // Execute
       this.lockTests();
     });
+    return {focusedTests: this.focusedTests};
   }
 }

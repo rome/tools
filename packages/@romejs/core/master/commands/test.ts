@@ -28,21 +28,21 @@ export default createMasterCommand({
       showAllCoverage: c.get('showAllCoverage').asBoolean(false),
       updateSnapshots: c.get('updateSnapshots').asBoolean(false),
       freezeSnapshots: c.get('freezeSnapshots').asBoolean(false),
+      focusAllowed: c.get('focusAllowed').asBoolean(true),
       syncTests: c.get('syncTests').asBoolean(false),
     };
   },
   async callback(req: MasterRequest, commandFlags: Flags): Promise<void> {
-    const {reporter} = req;
-
     const {paths} = await req.getFilesFromArgs({
-      tryAlternateArg: (path) =>
-        path.hasExtension('test')
-          ? undefined
-          : path.getParent().append(
-              `${path.getExtensionlessBasename()}.test${path.getExtensions()}`,
-            )
-      ,
-
+      tryAlternateArg: (path) => {
+        if (path.hasExtension('test')) {
+          return undefined;
+        } else {
+          return path.getParent().append(
+            `${path.getExtensionlessBasename()}.test${path.getExtensions()}`,
+          );
+        }
+      },
       test: (path) => path.hasExtension('test'),
       noun: 'test',
       verb: 'testing',
@@ -57,8 +57,6 @@ export default createMasterCommand({
       extensions: JS_EXTENSIONS,
       disabledDiagnosticCategory: 'tests/disabled',
     });
-
-    reporter.info(`Bundling test files`);
 
     let addDiagnostics: Diagnostics = [];
 
@@ -87,16 +85,10 @@ export default createMasterCommand({
       );
     }
 
-    reporter.info(`Running tests`);
-
     const runner = new TestMasterRunner({
       addDiagnostics,
       options: {
-        coverage: commandFlags.coverage,
-        showAllCoverage: commandFlags.showAllCoverage,
-        updateSnapshots: commandFlags.updateSnapshots,
-        freezeSnapshots: commandFlags.freezeSnapshots,
-        syncTests: commandFlags.syncTests,
+        ...commandFlags,
         verboseDiagnostics: req.query.requestFlags.verboseDiagnostics,
       },
       sources: tests,

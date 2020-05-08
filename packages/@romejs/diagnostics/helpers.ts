@@ -149,3 +149,19 @@ export function buildDuplicateLocationAdvice(
     ...locationAdvice,
   ];
 }
+
+export function diagnosticLocationToMarkupFilelink(
+  loc: DiagnosticLocation,
+): string {
+  const {start, filename} = loc;
+
+  if (filename === undefined) {
+    return 'unknown';
+  }
+
+  if (start === undefined) {
+    return markup`<filelink target="${filename}" />`;
+  }
+
+  return markup`<filelink target="${filename}" line="${start.line}" column="${start.column}" />`;
+}

@@ -5,8 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Reporter} from '@romejs/cli-reporter';
-import {deriveDiagnosticFromError, descriptions} from '@romejs/diagnostics';
+import {Reporter, ReporterProgress} from '@romejs/cli-reporter';
+import {
+  deriveDiagnosticFromError,
+  descriptions,
+  diagnosticLocationToMarkupFilelink,
+} from '@romejs/diagnostics';
 import {TestRef} from '../../common/bridges/TestWorkerBridge';
 import {Master, MasterRequest, TestWorkerBridge} from '@romejs/core';
 import {DiagnosticsPrinter} from '@romejs/cli-diagnostics';
@@ -41,11 +45,14 @@ import {
   TestWorkerContainers,
 } from './types';
 import {formatPercent, percentInsideCoverageFolder, sortMapKeys} from './utils';
-import {escapeMarkup, markup} from '@romejs/string-markup';
+import {escapeMarkup, markup, safeMarkup} from '@romejs/string-markup';
 import {MAX_WORKER_COUNT} from '@romejs/core/common/constants';
 import {TestWorkerFlags} from '@romejs/core/test-worker/TestWorker';
 import net = require('net');
-import {TestWorkerFileResult} from '@romejs/core/test-worker/TestWorkerRunner';
+import {
+  FocusedTest,
+  TestWorkerFileResult,
+} from '@romejs/core/test-worker/TestWorkerRunner';
 import {FileReference} from '@romejs/core/common/types/files';
 
 class BridgeStructuredError extends NativeStructuredError {
@@ -55,6 +62,10 @@ class BridgeStructuredError extends NativeStructuredError {
   }
 
   bridge: Bridge;
+}
+
+function grammarNumberTests(num: number): string {
+  return `<grammarNumber plural="tests" singular="test">${num}</grammarNumber>`;
 }
 
 function getProgressTestRefText(ref: TestRef) {
@@ -85,6 +96,10 @@ function findAvailablePort(): Promise<number> {
   });
 }
 
+type TestProgress = {
+  teardown: () => void;
+};
+
 export default class TestMasterRunner {
   constructor(opts: TestMasterRunnerConstructorOptions) {
     this.sources = opts.sources;
@@ -96,7 +111,7 @@ export default class TestMasterRunner {
 
     this.ignoreBridgeEndError = new Set();
 
-    this.sourcesQueue = Array.from(opts.sources.entries());
+    this.sourcesQueue = Array.from(opts.sources.values());
 
     this.coverageCollector = new CoverageCollector();
 
@@ -109,6 +124,8 @@ export default class TestMasterRunner {
       createdSnapshots: 0,
       updatedInlineSnapshots: 0,
     };
+
+    this.focusedTests = [];
 
     this.runningTests = new Map();
     this.testFileCounter = 0;
@@ -142,7 +159,7 @@ export default class TestMasterRunner {
   master: Master;
   cwd: AbsoluteFilePath;
   printer: DiagnosticsPrinter;
-  sourcesQueue: Array<[string, TestSource]>;
+  sourcesQueue: Array<TestSource>;
   testFileCounter: number;
   ignoreBridgeEndError: Set<Bridge>;
 
@@ -163,6 +180,8 @@ export default class TestMasterRunner {
     deletedSnapshots: number;
     createdSnapshots: number;
   };
+
+  focusedTests: Array<FocusedTest>;
 
   async processTestResult(
     ref: FileReference,
@@ -207,7 +226,10 @@ export default class TestMasterRunner {
     }
   }
 
-  async runWorker({bridge, process, inspector}: TestWorkerContainer) {
+  async prepareWorker(
+    {bridge, process, inspector}: TestWorkerContainer,
+    progress: ReporterProgress,
+  ): Promise<() => Promise<void>> {
     const {options: opts, sourcesQueue} = this;
     const req = this.request;
     const {flags} = req.client;
@@ -225,29 +247,27 @@ export default class TestMasterRunner {
       );
     }
 
-    const nextTest = async () => {
+    const tests: Array<{
+      ref: FileReference;
+      id: number;
+    }> = [];
+
+    const prepareTest = async () => {
       if (sourcesQueue.length === 0) {
         return;
       }
 
-      const item = sourcesQueue.pop();
-      if (item === undefined) {
-        throw new Error('testQueue.length was validated above');
-      }
-      const [filename, {ref, code, sourceMap}] = item;
-
-      // Source map locations will always be resolved in the worker, but this is in case we need to resolve them in master in the case of an unresponsive worker
-      // TODO remove this after test has ran
-      const removeSourceMap = sourceMapManager.addSourceMap(
-        filename,
-        () => sourceMap.toConsumer(),
-      );
+      const item = sourcesQueue.pop()!;
+      const {ref, code} = item;
 
       const id = this.testFileCounter;
       this.testFileCounter++;
 
+      const progressText = `<filelink target="${ref.uid}" />`;
+      progress.pushText(progressText);
+
       try {
-        await bridge.prepareTest.call({
+        const {focusedTests} = await bridge.prepareTest.call({
           id,
           options: opts,
           projectFolder: req.master.projectManager.assertProjectExisting(
@@ -258,49 +278,69 @@ export default class TestMasterRunner {
           code,
         });
 
-        const result = await bridge.runTest.call(id);
-        await this.processTestResult(ref, result);
-      } finally {
-        removeSourceMap();
+        this.focusedTests = this.focusedTests.concat(focusedTests);
+
+        tests.push({id, ref});
+      } catch (err) {
+        this.handlePossibleBridgeError(err);
       }
 
-      await nextTest();
+      progress.popText(progressText);
+      progress.tick();
+
+      await prepareTest();
     };
 
-    try {
-      await nextTest();
-    } catch (err) {
-      if (err instanceof BridgeError || err instanceof BridgeStructuredError) {
-        if (!this.ignoreBridgeEndError.has(err.bridge)) {
-          this.printer.processor.addDiagnostic(
-            deriveDiagnosticFromError({
-              category: 'tests/timeout',
-              error: err,
-            }),
-          );
-        }
-      } else {
-        throw err;
-      }
-    } finally {
-      if (inspector !== undefined) {
-        if (opts.coverage) {
-          if (inspector.alive) {
-            const profile = await inspector.call('Profiler.takePreciseCoverage');
-            this.coverageCollector.addCoverage(profile.get('result').asAny());
+    await prepareTest();
 
-            // Not really necessary but let's clean up anyway for completeness
-            await inspector.call('Profiler.stopPreciseCoverage');
-            await inspector.call('Profiler.disable');
-          } else {
-            // TODO log that we failed to fetch some coverage
+    return async () => {
+      try {
+        for (const {ref, id} of tests) {
+          const result = await bridge.runTest.call({
+            id,
+            onlyFocusedTests: this.focusedTests.length > 0,
+          });
+          await this.processTestResult(ref, result);
+        }
+      } catch (err) {
+        this.handlePossibleBridgeError(err);
+      } finally {
+        if (inspector !== undefined) {
+          if (opts.coverage) {
+            if (inspector.alive) {
+              const profile = await inspector.call(
+                'Profiler.takePreciseCoverage',
+              );
+              this.coverageCollector.addCoverage(profile.get('result').asAny());
+
+              // Not really necessary but let's clean up anyway for completeness
+              await inspector.call('Profiler.stopPreciseCoverage');
+              await inspector.call('Profiler.disable');
+            } else {
+              // TODO log that we failed to fetch some coverage
+            }
           }
+
+          inspector.end();
         }
 
-        inspector.end();
+        process.kill();
       }
+    };
+  }
 
-      process.kill();
+  handlePossibleBridgeError(err: Error) {
+    if (err instanceof BridgeError || err instanceof BridgeStructuredError) {
+      if (!this.ignoreBridgeEndError.has(err.bridge)) {
+        this.printer.processor.addDiagnostic(
+          deriveDiagnosticFromError({
+            category: 'tests/failure',
+            error: err,
+          }),
+        );
+      }
+    } else {
+      throw err;
     }
   }
 
@@ -360,16 +400,26 @@ export default class TestMasterRunner {
 
     const {inspectorUrl} = await bridge.inspectorDetails.call();
 
-    let inspector;
+    let inspector: undefined | InspectorClient;
     if (inspectorUrl !== undefined) {
-      const locInspector = new InspectorClient(await createClient(inspectorUrl));
-      inspector = locInspector;
-      await locInspector.call('Debugger.enable');
+      const client = new InspectorClient(await createClient(inspectorUrl));
+      inspector = client;
+      await client.call('Debugger.enable');
 
       bridge.endEvent.subscribe(() => {
-        locInspector.end();
+        client.end();
       });
     }
+
+    bridge.testsFound.subscribe((tests) => {
+      for (const ref of tests) {
+        this.onTestFound(ref);
+      }
+    });
+
+    bridge.testDiagnostic.subscribe(({diagnostic, origin}) => {
+      this.printer.processor.addDiagnostic(diagnostic, origin);
+    });
 
     return {
       bridge,
@@ -405,15 +455,25 @@ export default class TestMasterRunner {
 
   async init() {
     this.workers = await this.setupWorkers();
-    const teardown = this.setupProgress();
 
     const workerContainers: TestWorkerContainers = this.getWorkers();
 
-    await Promise.all(
-      workerContainers.map((container) => this.runWorker(container)),
+    // Prepare all tests
+    const progress = this.reporter.progress({
+      title: 'Preparing',
+    });
+    progress.setTotal(this.sourcesQueue.length);
+    const callbacks = await Promise.all(
+      workerContainers.map((container) =>
+        this.prepareWorker(container, progress)
+      ),
     );
+    progress.end();
 
-    teardown();
+    // Run tests
+    const runProgress = this.setupRunProgress();
+    await Promise.all(callbacks.map((callback) => callback()));
+    runProgress.teardown();
 
     this.throwPrinter();
   }
@@ -527,6 +587,14 @@ export default class TestMasterRunner {
     return `${ref.filename}: ${ref.testName}`;
   }
 
+  getTotalTests(): number {
+    if (this.focusedTests.length > 0) {
+      return this.focusedTests.length;
+    } else {
+      return this.progress.totalTests;
+    }
+  }
+
   onTestStart(
     container: TestWorkerContainer,
     ref: TestRef,
@@ -554,11 +622,7 @@ export default class TestMasterRunner {
     );
   }
 
-  onTestFound(data: TestRef, isSkipped: boolean) {
-    if (isSkipped) {
-      return;
-    }
-
+  onTestFound(data: TestRef) {
     data;
     this.progress.totalTests++;
   }
@@ -578,13 +642,14 @@ export default class TestMasterRunner {
     this.progress.finishedTests++;
   }
 
-  setupProgress(): () => void {
+  setupRunProgress(): TestProgress {
     const workers = this.getWorkers();
 
     const progress = this.request.reporter.progress({
       persistent: true,
       title: 'Running',
     });
+    progress.setTotal(this.getTotalTests());
 
     for (let i = 0; i < workers.length; i++) {
       const container = workers[i];
@@ -637,21 +702,10 @@ export default class TestMasterRunner {
         }
       });
 
-      bridge.testsFound.subscribe((tests) => {
-        for (const {ref, isSkipped} of tests) {
-          this.onTestFound(ref, isSkipped);
-        }
-        progress.setTotal(this.progress.totalTests);
-      });
-
       bridge.testStart.subscribe((data) => {
         ourRunningTests.add(this.refToKey(data.ref));
         this.onTestStart(container, data.ref, data.timeout);
         progress.pushText(getProgressTestRefText(data.ref));
-      });
-
-      bridge.testDiagnostic.subscribe(({diagnostic, origin}) => {
-        this.printer.processor.addDiagnostic(diagnostic, origin);
       });
 
       bridge.testFinish.subscribe((data) => {
@@ -661,8 +715,10 @@ export default class TestMasterRunner {
       });
     }
 
-    return function() {
-      progress.end();
+    return {
+      teardown() {
+        progress.end();
+      },
     };
   }
 
@@ -832,6 +888,39 @@ export default class TestMasterRunner {
     }
   }
 
+  printFocusedTestWarning(reporter: Reporter) {
+    const {focusedTests} = this;
+    if (focusedTests.length === 0) {
+      return;
+    }
+
+    const formattedFocusedTests = focusedTests.map(({testName, location}) => {
+      const loc = this.printer.processor.normalizer.normalizeLocation(location);
+
+      return markup`<emphasis>${testName}</emphasis> at <emphasis>${safeMarkup(
+        diagnosticLocationToMarkupFilelink(loc),
+      )}</emphasis>`;
+    });
+
+    if (focusedTests.length === 1) {
+      reporter.warn(`Only ran the focused test ${formattedFocusedTests[0]}`);
+    } else {
+      reporter.warn(
+        `Only ran the following <number emphasis>${focusedTests.length}</number> focused ${grammarNumberTests(
+          focusedTests.length,
+        )}`,
+      );
+      reporter.list(formattedFocusedTests);
+    }
+
+    const otherTotal = this.progress.totalTests - this.focusedTests.length;
+    reporter.info(
+      `<number emphasis>${otherTotal}</number> other ${grammarNumberTests(
+        otherTotal,
+      )} ignored`,
+    );
+  }
+
   printSnapshotCounts(reporter: Reporter) {
     const {
       createdSnapshots,
@@ -879,10 +968,16 @@ export default class TestMasterRunner {
     printer.onFooterPrint((reporter, isError) => {
       this.printCoverageReport(isError);
       this.printSnapshotCounts(reporter);
+      this.printFocusedTestWarning(reporter);
 
       if (!isError) {
+        // Don't say "all" when we have focused tests
+        let prefix = this.focusedTests.length === 0 ? 'All ' : '';
+        const totalCount = this.getTotalTests();
         reporter.success(
-          `All <emphasis>${humanizeNumber(this.progress.totalTests)}</emphasis> tests passed!`,
+          `${prefix}<emphasis>${humanizeNumber(totalCount)}</emphasis> ${grammarNumberTests(
+            totalCount,
+          )} passed!`,
         );
         return true;
       }

@@ -5,7 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TestWorkerBridgeRunOptions} from '../common/bridges/TestWorkerBridge';
+import {
+  TestWorkerPrepareTestOptions,
+  TestWorkerPrepareTestResult,
+  TestWorkerRunTestOptions,
+} from '../common/bridges/TestWorkerBridge';
 import {deriveDiagnosticFromError} from '@romejs/diagnostics';
 import {TestWorkerBridge} from '@romejs/core';
 import {createBridgeFromParentProcess} from '@romejs/events';
@@ -62,25 +66,28 @@ export default class TestWorker {
       return this.prepareTest(data);
     });
 
-    bridge.runTest.subscribe((id: number) => {
-      return this.runTest(id);
+    bridge.runTest.subscribe((opts) => {
+      return this.runTest(opts);
     });
 
     return bridge;
   }
 
-  async runTest(id: number): Promise<TestWorkerFileResult> {
+  async runTest(opts: TestWorkerRunTestOptions): Promise<TestWorkerFileResult> {
+    const {id} = opts;
     const runner = this.runners.get(id);
     if (runner === undefined) {
       throw new Error(`No runner ${id} found`);
     } else {
-      return await runner.run();
+      return await runner.run(opts);
     }
   }
 
-  async prepareTest(opts: TestWorkerBridgeRunOptions): Promise<void> {
+  async prepareTest(
+    opts: TestWorkerPrepareTestOptions,
+  ): Promise<TestWorkerPrepareTestResult> {
     const runner = new TestWorkerRunner(opts, this.bridge);
-    await runner.prepare();
     this.runners.set(opts.id, runner);
+    return await runner.prepare();
   }
 }
