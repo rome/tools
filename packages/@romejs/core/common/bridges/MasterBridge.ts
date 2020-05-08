@@ -9,18 +9,17 @@ import {Profile} from '@romejs/v8';
 import {Diagnostics} from '@romejs/diagnostics';
 import {ClientFlagsJSON, ClientRequestFlags} from '../types/client';
 import {Bridge} from '@romejs/events';
-import {JSONPropertyValue} from '@romejs/codec-json';
+import {JSONObject, JSONPropertyValue} from '@romejs/codec-json';
 import {
   RemoteReporterClientMessage,
   RemoteReporterReceiveMessage,
   ReporterStream,
 } from '@romejs/cli-reporter';
 import {MasterMarker} from '../../master/Master';
-import {Dict} from '@romejs/typescript-helpers';
 
 export type MasterQueryRequest = {
   requestFlags: ClientRequestFlags;
-  commandFlags: Dict<unknown>;
+  commandFlags: JSONObject;
   args: Array<string>;
   commandName: string;
   silent: boolean;

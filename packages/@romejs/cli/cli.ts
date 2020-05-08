@@ -27,9 +27,8 @@ import {
 import {commandCategories} from '@romejs/core/common/commands';
 import {writeFile} from '@romejs/fs';
 import fs = require('fs');
-
 import {markup} from '@romejs/string-markup';
-import {Dict} from '@romejs/typescript-helpers';
+import {JSONObject} from '@romejs/codec-json';
 
 type CLIFlags = {
   logs: boolean;
@@ -266,7 +265,7 @@ export default async function cli() {
   let overrideClientFlags: undefined | Partial<ClientFlags>;
   let overrideRequestFlags: undefined | Partial<ClientRequestFlags>;
   let overrideCLIFlags: Partial<CLIFlags> = {};
-  let commandFlags: Dict<unknown> = {};
+  let commandFlags: JSONObject = {};
   let args: Array<string> = [];
 
   // Create command handlers. We use a set here since we may have some conflicting master and local command names. We always want the local command to take precedence.
