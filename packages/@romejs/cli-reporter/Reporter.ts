@@ -1090,7 +1090,7 @@ export default class Reporter {
 
   processedList<T>(
     items: Array<T>,
-    callback: (item: T, display: (str: string) => void) => void,
+    callback: (reporter: Reporter, item: T) => void,
     opts: ListOptions = {},
   ): {
     truncated: boolean;
@@ -1112,14 +1112,13 @@ export default class Reporter {
     let buff = '';
 
     for (const item of items) {
-      const stream = this.attachCaptureStream('markup');
-      callback(
-        item,
-        (str) => {
-          buff += `<li>${str}${stream.read()}</li>`;
-        },
-      );
+      const reporter = this.fork({
+        streams: [],
+      });
+      const stream = reporter.attachCaptureStream('markup');
+      callback(reporter, item);
       stream.remove();
+      buff += `<li>${stream.read()}</li>`;
     }
 
     if (opts.ordered) {
@@ -1137,7 +1136,13 @@ export default class Reporter {
   }
 
   list(items: Array<string>, opts: ListOptions = {}) {
-    return this.processedList(items, (str, display) => display(str), opts);
+    return this.processedList(
+      items,
+      (reporter, str) => {
+        reporter.logAll(str, {newline: false});
+      },
+      opts,
+    );
   }
 
   progress(opts?: ReporterProgressOptions): ReporterProgress {

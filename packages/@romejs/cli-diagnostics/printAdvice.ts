@@ -351,7 +351,7 @@ function printStacktrace(
 
   opts.reporter.processedList(
     frames,
-    (frame, display) => {
+    (reporter, frame) => {
       const {
         filename,
         object,
@@ -406,6 +406,8 @@ function printStacktrace(
         }
       }
 
+      reporter.logAll(logParts.join(' '));
+
       if (
         shownCodeFrames < 2 &&
         filename !== undefined &&
@@ -430,15 +432,16 @@ function printStacktrace(
               sourceText: code,
             },
           },
-          opts,
+          {
+            ...opts,
+            reporter,
+          },
         );
         if (!skipped) {
-          opts.reporter.br(true);
+          reporter.br(true);
           shownCodeFrames++;
         }
       }
-
-      display(logParts.join(' '));
     },
     {
       ordered: true,
