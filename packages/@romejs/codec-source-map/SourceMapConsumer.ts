@@ -162,6 +162,10 @@ export default class SourceMapConsumer {
     return map;
   }
 
+  clearCache() {
+    this.mappings = undefined;
+  }
+
   getMappings(): ParsedMappings {
     if (this.mappings === undefined) {
       const mappings = this._getMappings();

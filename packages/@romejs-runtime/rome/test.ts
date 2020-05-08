@@ -156,7 +156,7 @@ function splitArgs(
   }
 
   const options = args.pop();
-  if (!isOptionsObject(options)) {
+  if (options !== undefined && !isOptionsObject(options)) {
     throw new Error('Expected options object');
   }
 

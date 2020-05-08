@@ -206,6 +206,8 @@ export default class CoverageCollector {
         insertedLocs.set(key, loc);
         locs.push(loc);
       }
+
+      map.clearCache();
     }
 
     // Assemble files
