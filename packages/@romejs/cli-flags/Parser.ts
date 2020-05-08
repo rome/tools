@@ -19,13 +19,14 @@ import {createUnknownFilePath} from '@romejs/path';
 import {Dict} from '@romejs/typescript-helpers';
 import {markup} from '@romejs/string-markup';
 import {descriptions} from '@romejs/diagnostics';
+import {JSONObject} from '@romejs/codec-json';
 
 export type Examples = Array<{
   description: string;
   command: string;
 }>;
 
-type CommandOptions<T extends Dict<unknown>> = {
+type CommandOptions<T extends JSONObject> = {
   name: string;
   category?: string;
   description?: string;
@@ -36,7 +37,7 @@ type CommandOptions<T extends Dict<unknown>> = {
   callback: (flags: T) => void | Promise<void>;
 };
 
-type AnyCommandOptions = CommandOptions<Dict<unknown>>;
+type AnyCommandOptions = CommandOptions<JSONObject>;
 
 type ArgDeclaration = {
   definition: ConsumePropertyDefinition;
@@ -45,7 +46,7 @@ type ArgDeclaration = {
 };
 
 type DefinedCommand = {
-  flags: Dict<unknown>;
+  flags: JSONObject;
   command: AnyCommandOptions;
 };
 
@@ -310,7 +311,7 @@ export default class Parser<T> {
   async maybeDefineCommandFlags(
     command: AnyCommandOptions,
     consumer: Consumer,
-  ): Promise<undefined | Dict<unknown>> {
+  ): Promise<undefined | JSONObject> {
     // A command name could be made of multiple strings
     const commandParts = splitCommandName(command.name);
     for (let i = 0; i < commandParts.length; i++) {
@@ -760,10 +761,10 @@ export default class Parser<T> {
   async defineCommandFlags(
     command: AnyCommandOptions,
     consumer: Consumer,
-  ): Promise<Dict<unknown>> {
+  ): Promise<JSONObject> {
     this.currentCommand = command.name;
 
-    let flags: Dict<unknown> = {};
+    let flags: JSONObject = {};
     if (command.defineFlags !== undefined) {
       flags = command.defineFlags(consumer);
     }
