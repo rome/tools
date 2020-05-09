@@ -18,7 +18,6 @@ export default {
     if (
       node.type === 'ClassDeclaration' &&
       node.meta.type === 'ClassHead' &&
-      node.meta.superClass?.type === 'MemberExpression' &&
       doesNodeMatchPattern(node.meta.superClass, 'React.Component')
     ) {
       for (let bodyNode of node.meta.body) {
@@ -29,13 +28,8 @@ export default {
           for (let bodyBodyNode of bodyNode.body.body) {
             if (
               bodyBodyNode.type === 'ExpressionStatement' &&
-              bodyBodyNode.expression.type === 'AssignmentExpression' &&
-              bodyBodyNode.expression.left.type === 'MemberExpression' &&
-              bodyBodyNode.expression.left.object.type === 'MemberExpression' &&
-              bodyBodyNode.expression.left.object.object.type === 'ThisExpression' &&
-              bodyBodyNode.expression.left.object.property.value.type === 'Identifier' &&
-              bodyBodyNode.expression.left.object.property.value.name === 'state'
-            ) {
+              bodyBodyNode.expression.type === 'AssignmentExpression' 
+              ) {
                 path.context.addNodeDiagnostic(node, descriptions.LINT.NO_DIRECT_MUTATION_STATE);
             }
           }

@@ -10,12 +10,12 @@ import getNodeReferenceParts from './getNodeReferenceParts';
 
 // TODO make this accept multiple matches
 export default function doesNodeMatchPattern(
-  member: AnyNode,
+  member: AnyNode | undefined,
   match: string | Array<string>,
   allowPartial: boolean = false,
 ): boolean {
   // Not a member expression
-  if (member.type !== 'MemberExpression' && member.type !== 'Identifier') {
+  if (member?.type !== 'MemberExpression' && member?.type !== 'Identifier') {
     return false;
   }
 
