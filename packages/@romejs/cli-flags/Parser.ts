@@ -620,6 +620,7 @@ export default class Parser<T> {
     switch (shell) {
       case 'bash':
         reporter.logAllNoMarkup(this.genBashCompletions());
+        break;
       case 'fish': {
         reporter.logAllNoMarkup(this.genFishCompletions());
         break;
@@ -627,7 +628,7 @@ export default class Parser<T> {
     }
   }
 
-  genFishCompletions() {
+  genFishCompletions(): string {
     let script = '';
     const scriptPre = 'complete -c rome';
 
@@ -651,7 +652,7 @@ export default class Parser<T> {
     return script;
   }
 
-  genBashCompletions() {
+  genBashCompletions(): string {
     return 'TODO';
   }
 
