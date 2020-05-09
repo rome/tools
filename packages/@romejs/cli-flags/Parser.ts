@@ -612,17 +612,47 @@ export default class Parser<T> {
     // this.commands contains command information
 
     // reporter.logAllNoMarkup to output to stdout
-    reporter;
+
+    // console.log("flags: ", flags);
+    // console.log("declaredFlags: ", this.declaredFlags);
+    // console.log("commands: ", this.commands);
 
     switch (shell) {
       case 'bash':
-        // TODO
+        reporter.logAllNoMarkup(this.genBashCompletions());
+      case 'fish': {
+        reporter.logAllNoMarkup(this.genFishCompletions());
         break;
-
-      case 'fish':
-        // TODO
-        break;
+      }
     }
+  }
+
+  genFishCompletions() {
+    let script = '';
+    const scriptPre = 'complete -c rome';
+
+    // add rome
+    script += `${scriptPre} -f\n`;
+
+    // add command completions
+    for (let [subcmd, meta] of this.commands.entries()) {
+      script += `${scriptPre} -n '__fish_use_subcommand' -a '${subcmd}' -d '${meta.description}'\n`;
+    }
+
+    // add flag completions
+    for (let [, meta] of this.declaredFlags.entries()) {
+      const subcmdCond =
+        meta.command === undefined
+          ? ''
+          : `-n '__fish_seen_subcommand_from ${meta.command}'`;
+      script += `${scriptPre} ${subcmdCond} -l '${meta.name}'\n`;
+    }
+
+    return script;
+  }
+
+  genBashCompletions() {
+    return 'TODO';
   }
 
   async showHelp(command: undefined | AnyCommandOptions = this.ranCommand) {
