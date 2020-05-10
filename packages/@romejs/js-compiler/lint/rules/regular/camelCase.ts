@@ -11,15 +11,31 @@ import {Binding} from '@romejs/js-compiler/scope/bindings';
 import {descriptions} from '@romejs/diagnostics';
 import {
   isIdentifierish,
+  isValidIdentifierName,
   isVariableIdentifier,
   renameBindings,
 } from '@romejs/js-ast-utils';
 
+function normalizeCamelCase(name: string): undefined | string {
+  if (!isValidIdentifierName(name)) {
+    return undefined;
+  }
+
+  if (name === '') {
+    return undefined;
+  }
+
+  return name;
+}
+
 // Allow prefixed underscores
-function toVariableCamelCase(name: string): string {
+export function toVariableCamelCase(
+  name: string,
+  forceCapitalize?: boolean,
+): undefined | string {
   // Allow shouty constants
   if (name.toUpperCase() === name) {
-    return name;
+    return normalizeCamelCase(name);
   }
 
   let prefix = '';
@@ -41,7 +57,8 @@ function toVariableCamelCase(name: string): string {
     slicedName = slicedName.slice(0, -suffix.length);
   }
 
-  return prefix + toCamelCase(slicedName) + suffix;
+  const camelName = prefix + toCamelCase(slicedName, forceCapitalize) + suffix;
+  return normalizeCamelCase(camelName);
 }
 
 export default {
@@ -55,7 +72,7 @@ export default {
 
       for (const [name, binding] of scope.getOwnBindings()) {
         const camelName = toVariableCamelCase(name);
-        if (camelName !== name) {
+        if (camelName !== undefined && camelName !== name) {
           const {suppressed} = context.addNodeDiagnostic(
             binding.node,
             descriptions.LINT.VARIABLE_CAMEL_CASE(name, camelName),
@@ -76,7 +93,7 @@ export default {
     if (isIdentifierish(node) && !isVariableIdentifier(node)) {
       const {name} = node;
       const camelName = toVariableCamelCase(name);
-      if (camelName !== name) {
+      if (camelName !== undefined && camelName !== name) {
         return context.addFixableDiagnostic(
           {
             old: node,

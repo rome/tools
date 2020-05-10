@@ -100,6 +100,7 @@ type LintDiagnosticCategory =
   | 'lint/emptyBlocks'
   | 'lint/emptyMatches'
   | 'lint/getterReturn'
+  | 'lint/importDefaultBasename'
   | 'lint/inconsiderateLanguage'
   | 'lint/jsxKey'
   | 'lint/jsxNoCommentText'

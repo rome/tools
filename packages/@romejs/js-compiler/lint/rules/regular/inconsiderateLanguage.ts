@@ -11,11 +11,14 @@ import {PositionTracker, SourceLocation} from '@romejs/parser-core';
 import {ob1Coerce0} from '@romejs/ob1';
 import {isIdentifierish} from '@romejs/js-ast-utils';
 import {descriptions} from '@romejs/diagnostics';
-import terms from './inconsiderateLanguage.json';
+import inconsiderateLanguage from './inconsiderateLanguage.json';
 import {preserveCasing} from '@romejs/string-utils';
 
 // Fast regex for checking if we need to validate a string
-const regex = new RegExp(terms.map((term) => term.word).join('|'), 'gi');
+const regex = new RegExp(
+  inconsiderateLanguage.map((term) => term.word).join('|'),
+  'gi',
+);
 
 type CheckResult = {
   loc: SourceLocation;
@@ -49,7 +52,7 @@ function check(
   for (let i = 0; i < lower.length; i++) {
     const char = lower[i];
 
-    for (const {word, description, suggestion} of terms) {
+    for (const {word, description, suggestion} of inconsiderateLanguage) {
       if (char === word[0] && lower.startsWith(word, i)) {
         const wordWithSourceCasing = input.slice(i, i + word.length);
 

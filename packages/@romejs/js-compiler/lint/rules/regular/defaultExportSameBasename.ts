@@ -12,11 +12,11 @@ import {
   FunctionDeclaration,
 } from '@romejs/js-ast';
 import {Path} from '@romejs/js-compiler';
-import {toCamelCase} from '@romejs/string-utils';
 import {UnknownFilePath} from '@romejs/path';
 import {renameBindings} from '@romejs/js-ast-utils';
 import {TransformExitResult} from '@romejs/js-compiler/types';
 import {descriptions} from '@romejs/diagnostics';
+import {toVariableCamelCase} from './camelCase';
 
 function isValidDeclaration(
   node: AnyNode,
@@ -24,7 +24,10 @@ function isValidDeclaration(
   return node.type === 'FunctionDeclaration' || node.type === 'ClassDeclaration';
 }
 
-function filenameToId(path: UnknownFilePath, capitalize: boolean): string {
+export function filenameToId(
+  path: UnknownFilePath,
+  capitalize: boolean,
+): undefined | string {
   let basename = path.getExtensionlessBasename();
 
   if (basename === 'index') {
@@ -32,7 +35,7 @@ function filenameToId(path: UnknownFilePath, capitalize: boolean): string {
     basename = path.getParent().getExtensionlessBasename();
   }
 
-  return toCamelCase(basename, capitalize);
+  return toVariableCamelCase(basename, capitalize);
 }
 
 export default {
@@ -62,7 +65,7 @@ export default {
             declaration.type === 'FunctionDeclaration' ? 'function' : 'class';
           const basename = filenameToId(context.path, type === 'class');
 
-          if (basename !== id.name) {
+          if (basename !== undefined && basename !== id.name) {
             const correctFilename = id.name + context.path.getExtensions();
 
             return context.addFixableDiagnostic(
