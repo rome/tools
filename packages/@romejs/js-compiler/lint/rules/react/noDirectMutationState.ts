@@ -52,7 +52,6 @@ export default {
                 )
               )
             ) {
-              console.log(bodyBodyNode.expression.callee.functionDefinition)
               path.context.addNodeDiagnostic(node, descriptions.LINT.NO_DIRECT_MUTATION_STATE);
             }
           }
@@ -66,17 +65,7 @@ export default {
               bodyBodyNode.type === 'ExpressionStatement' &&
               bodyBodyNode.expression.type === 'AssignmentExpression' &&
               bodyBodyNode.expression.left.type === 'MemberExpression' && 
-              (
-                (
-                  bodyBodyNode.expression.left.object.type === 'ThisExpression' &&
-                  bodyBodyNode.expression.left.property.value.type === 'Identifier' &&
-                  bodyBodyNode.expression.left.property.value.name === 'state'
-                ) || (
-                bodyBodyNode.expression.left.object.type === 'MemberExpression' &&
-                bodyBodyNode.expression.left.object.object.type === 'ThisExpression' &&
-                bodyBodyNode.expression.left.object.property.value.type === 'Identifier' &&
-                bodyBodyNode.expression.left.object.property.value.name === 'state'
-                ))
+              doesNodeMatchPattern(bodyBodyNode.expression.left, 'state', true)
               ) {
                 path.context.addNodeDiagnostic(node, descriptions.LINT.NO_DIRECT_MUTATION_STATE);
             }
