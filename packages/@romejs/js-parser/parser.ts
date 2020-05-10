@@ -12,6 +12,7 @@ import {
   Identifier,
   Program,
   StringLiteral,
+  FunctionDeclaration
 } from '@romejs/js-ast';
 import {
   ParserOptionsWithRequiredPath,
@@ -744,6 +745,10 @@ const createJSParser = createParser((ParserCore, ParserWithRequiredPath) => {
         line: state.curLine,
         column: ob1Sub(state.index, state.lineStartIndex),
       };
+    }
+
+    pushFunctionDefinition(functionNode: FunctionDeclaration): void {
+      this.state.functionDefinitions.push(functionNode)
     }
 
     parse(): Program {

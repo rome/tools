@@ -10,7 +10,7 @@ import {ScopeType} from '../parser';
 import {Position, SourceLocation} from '@romejs/parser-core';
 import {TokContext, types as ct} from './context';
 import {TokenTypes, types as tt} from './types';
-import {AnyComment, AnyNode} from '@romejs/js-ast';
+import {AnyComment, AnyNode, FunctionDeclaration} from '@romejs/js-ast';
 import {Token} from '..';
 import {
   Number0,
@@ -121,6 +121,7 @@ export type State = {
   exportedIdentifiers: Map<string, SourceLocation>;
   invalidTemplateEscapePosition: undefined | Number0;
   scopes: Scopes;
+  functionDefinitions: Array<FunctionDeclaration>
 };
 
 export type LabelKind = undefined | 'loop' | 'switch';
@@ -181,5 +182,6 @@ export function createInitialState(): State {
     exportedIdentifiers: new Map(),
     lineStart: true,
     indentLevel: ob1Number0,
+    functionDefinitions: [],
   };
 }
