@@ -462,13 +462,15 @@ function halfMatch(text1: string, text2: string): undefined | HalfMatch {
   let hm: undefined | HalfMatch;
   if (!hm1 && !hm2) {
     return undefined;
-  } else if (!hm2) {
-    hm = hm1;
-  } else if (!hm1) {
-    hm = hm2;
+  } else if (hm2) {
+    if (hm1) {
+      // Both matched.  Select the longest.
+      hm = hm1[4].length > hm2[4].length ? hm1 : hm2;
+    } else {
+      hm = hm2;
+    }
   } else {
-    // Both matched.  Select the longest.
-    hm = hm1[4].length > hm2[4].length ? hm1 : hm2;
+    hm = hm1;
   }
 
   if (hm === undefined) {

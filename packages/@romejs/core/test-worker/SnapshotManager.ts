@@ -277,12 +277,14 @@ export default class SnapshotManager {
       const formatted = lines.join('\n');
 
       if (this.options.freezeSnapshots) {
-        if (!used) {
+        if (used) {
+          if (formatted !== raw) {
+            await this.emitDiagnostic(
+              descriptions.SNAPSHOTS.INCORRECT(raw, formatted),
+            );
+          }
+        } else {
           await this.emitDiagnostic(descriptions.SNAPSHOTS.REDUNDANT);
-        } else if (formatted !== raw) {
-          await this.emitDiagnostic(
-            descriptions.SNAPSHOTS.INCORRECT(raw, formatted),
-          );
         }
       } else {
         if (existsOnDisk && !used) {

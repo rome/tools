@@ -750,10 +750,10 @@ export default class Consumer {
   asImplicitArray(): Array<Consumer> {
     if (Array.isArray(this.asUnknown())) {
       return this.asArray();
-    } else if (!this.exists()) {
-      return [];
-    } else {
+    } else if (this.exists()) {
       return [this];
+    } else {
+      return [];
     }
   }
 

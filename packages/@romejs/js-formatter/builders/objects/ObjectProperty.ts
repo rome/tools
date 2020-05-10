@@ -47,14 +47,14 @@ export default function ObjectProperty(
       space,
       builder.tokenize(node.value.right, node.value),
     ]);
-  } else if (!isShorthand(node.key, node.value)) {
+  } else if (isShorthand(node.key, node.value)) {
+    return concat(tokens);
+  } else {
     return concat([
       concat(tokens),
       ':',
       space,
       builder.tokenize(node.value, node),
     ]);
-  } else {
-    return concat(tokens);
   }
 }
