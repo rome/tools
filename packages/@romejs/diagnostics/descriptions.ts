@@ -358,6 +358,10 @@ export const descriptions = createMessages({
       category: 'lint/preferWhile',
       message: 'A while loop should be used over a for loop',
     },
+    REACT_JSX_VOID_DOM_ELEMENTS_NO_CHILDREN: (element, properties) => ({
+      category: 'lint/voidDomElementsNoChildren',
+      message: markup`<emphasis>${element}</emphasis> is a void element tag and must not have <emphasis>${properties}</emphasis>.`,
+    }),
     REACT_JSX_NO_COMMENT_TEXT: {
       category: 'lint/jsxNoCommentText',
       message: 'Comments inside children should be placed in braces',
