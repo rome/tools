@@ -3435,9 +3435,13 @@ export function toReferenceIdentifier(
   parser: JSParser,
   node: BindingIdentifier | Identifier | AssignmentIdentifier,
 ): ReferenceIdentifier {
+  const functionDefinition = parser.state.functionDefinitions.find(
+    definition => definition.id.name === node.name
+  )
   return parser.finalizeNode({
     ...node,
     type: 'ReferenceIdentifier',
+    functionDefinition
   });
 }
 

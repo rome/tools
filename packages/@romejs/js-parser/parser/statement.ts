@@ -1438,6 +1438,12 @@ export function parseFunctionDeclaration(
     });
   }
 
+  parser.pushFunctionDefinition(parser.finalizeNode({
+    type: 'FunctionDeclaration',
+    ...shape,
+    id,
+    body,
+  }))
   return parser.finalizeNode({
     type: 'FunctionDeclaration',
     ...shape,
