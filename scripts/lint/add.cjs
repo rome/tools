@@ -91,7 +91,7 @@ test(
 let descriptions = fs.readFileSync(descriptionsFile, 'utf8');
 descriptions = descriptions.replace(
   'LINT: {',
-  `LINT: {\n${descriptionKey}: {
+  `LINT: {\n    ${descriptionKey}: {
       category: '${categoryName}',
       message: 'INSERT MESSAGE HERE',
     },`,

@@ -17,6 +17,7 @@ import getterReturn from './regular/getterReturn';
 import inconsiderateLanguage from './regular/inconsiderateLanguage';
 import jsxKey from './react/jsxKey';
 import jsxNoCommentText from './react/jsxNoCommentText';
+import negationElse from './regular/negationElse';
 import noArguments from './regular/noArguments';
 import noAsyncPromiseExecutor from './regular/noAsyncPromiseExecutor';
 import noCatchAssign from './regular/noCatchAssign';
@@ -70,6 +71,7 @@ export const lintTransforms = [
   inconsiderateLanguage,
   jsxKey,
   jsxNoCommentText,
+  negationElse,
   noArguments,
   noAsyncPromiseExecutor,
   noCatchAssign,

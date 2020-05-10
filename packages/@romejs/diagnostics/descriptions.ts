@@ -291,6 +291,10 @@ export const descriptions = createMessages({
   },
   // @romejs/js-compiler
   LINT: {
+    NEGATION_ELSE: {
+      category: 'lint/negationElse',
+      message: 'Invert the blocks when you have a negation test',
+    },
     STYLE_PROP_OBJECT: {
       category: 'lint/stylePropObject',
       message: '<emphasis>style</emphasis> property value must be an object.',

@@ -103,6 +103,7 @@ type LintDiagnosticCategory =
   | 'lint/inconsiderateLanguage'
   | 'lint/jsxKey'
   | 'lint/jsxNoCommentText'
+  | 'lint/negationElse'
   | 'lint/noArguments'
   | 'lint/noAsyncPromiseExecutor'
   | 'lint/noCatchAssign'
