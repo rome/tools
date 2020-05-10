@@ -108,6 +108,7 @@ type LintDiagnosticCategory =
   | 'lint/noAsyncPromiseExecutor'
   | 'lint/noCatchAssign'
   | 'lint/noChildrenProp'
+  | 'lint/noCommaOperator'
   | 'lint/noCompareNegZero'
   | 'lint/noCondAssign'
   | 'lint/noDebugger'
