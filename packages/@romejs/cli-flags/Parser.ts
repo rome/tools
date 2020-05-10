@@ -606,21 +606,11 @@ export default class Parser<T> {
       await this.defineCommandFlags(command, consumer);
     }
 
-    // this.declaredFlags contains flag information, ignore the keys as they will have command suffixes
-    // utilize `command` for the owned command and `name` for the actual flag name
-
-    // this.commands contains command information
-
-    // reporter.logAllNoMarkup to output to stdout
-
-    // console.log("flags: ", flags);
-    // console.log("declaredFlags: ", this.declaredFlags);
-    // console.log("commands: ", this.commands);
-
     switch (shell) {
-      case 'bash':
+      case 'bash': {
         reporter.logAllNoMarkup(this.genBashCompletions());
         break;
+      }
       case 'fish': {
         reporter.logAllNoMarkup(this.genFishCompletions());
         break;
@@ -641,7 +631,7 @@ export default class Parser<T> {
     }
 
     // add flag completions
-    for (let [, meta] of this.declaredFlags.entries()) {
+    for (let meta of this.declaredFlags.values()) {
       const subcmdCond =
         meta.command === undefined
           ? ''
@@ -653,7 +643,94 @@ export default class Parser<T> {
   }
 
   genBashCompletions(): string {
-    return 'TODO';
+    let romeCmds = '';
+    let commandFuncs = '';
+    let globalFlags = '';
+    let cmdFlagMap = new Map();
+
+    for (let subcmd of this.commands.keys()) {
+      romeCmds += `${subcmd} `;
+    }
+
+    for (let meta of this.declaredFlags.values()) {
+      if (meta.command === undefined) {
+        globalFlags += `--${meta.name} `;
+      } else {
+        if (cmdFlagMap.has(meta.command)) {
+          cmdFlagMap.set(
+            meta.command,
+            `${cmdFlagMap.get(meta.command)} --${meta.name}`,
+          );
+        } else {
+          cmdFlagMap.set(meta.command, `--${meta.name}`);
+        }
+      }
+    }
+
+    for (let [cmd, flags] of cmdFlagMap.entries()) {
+      commandFuncs += `__rome_${cmd}()
+{
+    cmds="";
+    local_flags="${flags}"
+}
+
+`;
+    }
+
+    let romeFunc = `__rome()
+{
+    cmds="${romeCmds}"
+    local_flags="";
+}
+
+`;
+
+    return `#!/usr/bin/env bash
+global_flags="${globalFlags}"
+
+# initial state
+cmds=""
+local_flags=""
+
+__is_flag()
+{
+    case $1 in
+        -*) echo "true"
+    esac
+}
+
+__rome_gen_completions()
+{
+    local suggestions func flags index
+   
+    index="$(($\{#COMP_WORDS[@]} - 1))"
+
+    flags="$global_flags $local_flags"
+
+    func="_"
+
+    for ((i=0; i < index; i++))
+    do
+        if [[ ! $(__is_flag $\{COMP_WORDS[$i]}) ]]; then
+            func="$\{func}_$\{COMP_WORDS[$i]}"
+        fi
+    done
+    
+    $func 2> /dev/null
+
+    if [[ $(__is_flag $\{COMP_WORDS[$index]}) ]]; then
+        suggestions=$flags 
+    else
+        suggestions=$cmds
+    fi
+
+    COMPREPLY=($(compgen -W "$\{suggestions}" -- "$\{COMP_WORDS[$index]}"))
+}
+
+${commandFuncs}
+${romeFunc}
+complete -F __rome_gen_completions rome
+`;
   }
 
   async showHelp(command: undefined | AnyCommandOptions = this.ranCommand) {
