@@ -7,12 +7,14 @@
 
 import {JSNodeBase, PatternMeta} from '../index';
 import {createQuickBuilder} from '../utils';
+import { FunctionDeclaration } from '../statements/FunctionDeclaration';
 
 export type ReferenceIdentifier = JSNodeBase & {
   type: 'ReferenceIdentifier';
   name: string;
   definite?: boolean;
   meta?: PatternMeta;
+  functionDefinition?: FunctionDeclaration
 };
 
 export const referenceIdentifier = createQuickBuilder<

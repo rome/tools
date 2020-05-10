@@ -38,6 +38,8 @@ export default function getNodeReferenceParts(
       } else {
         return add(node.property);
       }
+    } else if (node.type === 'ThisExpression') {
+      return false;
     } else if (
       node.type === 'ComputedMemberProperty' &&
       node.value.type === 'StringLiteral'

@@ -35,7 +35,7 @@ export default function doesNodeMatchPattern(
     return false;
   }
 
-  // I there's more parts than we expect and we weren't passed the allowPartial flag then it's never going to match either
+  // If there's more parts than we expect and we weren't passed the allowPartial flag then it's never going to match either
   if (allowPartial === false && actualParts.length > expectedParts.length) {
     return false;
   }
@@ -81,7 +81,6 @@ export default function doesNodeMatchPattern(
         return false;
       }
     }
-
     if (expected !== actual) {
       return false;
     }

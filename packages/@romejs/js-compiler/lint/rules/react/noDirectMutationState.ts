@@ -23,12 +23,60 @@ export default {
       for (let bodyNode of node.meta.body) {
         if (
           (bodyNode.type === 'ClassMethod' || bodyNode.type === 'ClassPrivateMethod') &&
-          bodyNode.kind !== 'constructor'
+          bodyNode.kind === 'constructor'
         ) {
-          for (let bodyBodyNode of bodyNode.body.body) {
+          for (const bodyBodyNode of bodyNode.body.body) {
             if (
               bodyBodyNode.type === 'ExpressionStatement' &&
-              bodyBodyNode.expression.type === 'AssignmentExpression' 
+              bodyBodyNode.expression.type === 'CallExpression' &&
+              bodyBodyNode.expression.callee.type === 'ReferenceIdentifier' &&
+              bodyBodyNode.expression.callee.functionDefinition &&
+              bodyBodyNode.expression.callee.functionDefinition.head.async &&
+              bodyBodyNode.expression.callee.functionDefinition.body.body.find(
+                functionBodyElement => (
+                  functionBodyElement.type === 'ExpressionStatement' &&
+                  functionBodyElement.expression.type === 'AssignmentExpression' &&
+                  functionBodyElement.expression.left.type === 'MemberExpression' &&
+                  (
+                    (
+                      functionBodyElement.expression.left.object.type === 'ThisExpression' &&
+                      functionBodyElement.expression.left.property.value.type === 'Identifier' &&
+                      functionBodyElement.expression.left.property.value.name === 'state'
+                    ) ||
+                    (
+                      functionBodyElement.expression.left.object.type === 'MemberExpression' &&
+                      functionBodyElement.expression.left.object.property.value.type === 'Identifier' &&
+                      functionBodyElement.expression.left.object.property.value.name === 'state'
+                    )
+                  )
+                )
+              )
+            ) {
+              console.log(bodyBodyNode.expression.callee.functionDefinition)
+              path.context.addNodeDiagnostic(node, descriptions.LINT.NO_DIRECT_MUTATION_STATE);
+            }
+          }
+        }
+        if (
+          (bodyNode.type === 'ClassMethod' || bodyNode.type === 'ClassPrivateMethod') &&
+          bodyNode.kind !== 'constructor'
+        ) {
+          for (const bodyBodyNode of bodyNode.body.body) {
+            if (
+              bodyBodyNode.type === 'ExpressionStatement' &&
+              bodyBodyNode.expression.type === 'AssignmentExpression' &&
+              bodyBodyNode.expression.left.type === 'MemberExpression' && 
+              (
+                (
+                  bodyBodyNode.expression.left.object.type === 'ThisExpression' &&
+                  bodyBodyNode.expression.left.property.value.type === 'Identifier' &&
+                  bodyBodyNode.expression.left.property.value.name === 'state'
+                ) || (
+                bodyBodyNode.expression.left.object.type === 'MemberExpression' &&
+                bodyBodyNode.expression.left.object.object.type === 'ThisExpression' &&
+                bodyBodyNode.expression.left.object.property.value.type === 'Identifier' &&
+                bodyBodyNode.expression.left.object.property.value.name === 'state'
+                ))
               ) {
                 path.context.addNodeDiagnostic(node, descriptions.LINT.NO_DIRECT_MUTATION_STATE);
             }
