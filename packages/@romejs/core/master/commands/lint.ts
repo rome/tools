@@ -12,12 +12,12 @@ import Linter, {
 } from '../linter/Linter';
 import {markup} from '@romejs/string-markup';
 import {createMasterCommand} from '../commands';
+import {commandCategories} from '../../common/commands';
 import {
   LintCompilerOptionsDecisions,
   parseDecisionStrings,
 } from '@romejs/js-compiler';
 import {Consumer} from '@romejs/consume';
-import {commandCategories} from '@romejs/core/common/commands';
 
 type Flags = {
   decisions: Array<string>;

@@ -10,8 +10,8 @@ import {commandCategories} from '../../common/commands';
 import {createMasterCommand} from '../commands';
 
 export default createMasterCommand({
-  description: 'evict a file from the memory cache',
   category: commandCategories.INTERNAL,
+  description: 'evict a file from the memory cache',
   usage: '',
   examples: [],
   defineFlags() {

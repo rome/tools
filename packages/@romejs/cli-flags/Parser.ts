@@ -20,6 +20,7 @@ import {Dict} from '@romejs/typescript-helpers';
 import {markup} from '@romejs/string-markup';
 import {descriptions} from '@romejs/diagnostics';
 import {JSONObject} from '@romejs/codec-json';
+import {commandCategories} from '@romejs/core/common/commands';
 
 export type Examples = Array<{
   description: string;
@@ -640,12 +641,12 @@ export default class Parser<T> {
     // Sort commands into their appropriate categories for output
     const commandsByCategory: Map<undefined | string, Array<AnyCommandOptions>> = new Map();
     const categoryNames: Set<string | undefined> = new Set();
-    for (const [name, command] of this.commands) {
-      if (name[0] === '_') {
+    for (const command of this.commands.values()) {
+      const {category} = command;
+      if (category === commandCategories.INTERNAL) {
         continue;
       }
 
-      const {category} = command;
       let commandsForCategory = commandsByCategory.get(category);
       if (commandsForCategory === undefined) {
         commandsForCategory = [];

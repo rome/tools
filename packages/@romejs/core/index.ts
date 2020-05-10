@@ -11,6 +11,7 @@ export {getFileHandler} from './common/fileHandlers';
 
 // API
 export {default as Client} from './client/Client';
+export {commandCategories} from './common/commands';
 export {localCommands} from './client/commands';
 export {masterCommands} from './master/commands';
 
