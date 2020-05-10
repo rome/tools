@@ -8,7 +8,7 @@
 import {AnyNode} from '@romejs/js-ast';
 import {ob1Get0, ob1Get1} from '@romejs/ob1';
 import {SourceLocation} from '@romejs/parser-core';
-import parens from './parentheses';
+import parentheses from './parentheses';
 
 function isOrHasCallExpression(node: AnyNode): boolean {
   if (node.type === 'CallExpression') {
@@ -63,7 +63,7 @@ export function needsParens(
     }
   }
 
-  const fn = parens.get(node.type);
+  const fn = parentheses.get(node.type);
   return fn ? fn(node, parent, printStack) : false;
 }
 

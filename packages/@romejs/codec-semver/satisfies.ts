@@ -12,7 +12,7 @@ import {
   VersionNode,
   WildcardNode,
 } from './types';
-import compare from './compare';
+import {compareFromAst} from './compare';
 
 function buildVersion(
   major: undefined | number,
@@ -40,19 +40,19 @@ function compareOp(
 
   switch (op) {
     case '=':
-      return compare(version, range) === 0;
+      return compareFromAst(version, range) === 0;
 
     case '<':
-      return compare(version, range) < 0;
+      return compareFromAst(version, range) < 0;
 
     case '>':
-      return compare(version, range) > 0;
+      return compareFromAst(version, range) > 0;
 
     case '>=':
-      return compare(version, range) >= 0;
+      return compareFromAst(version, range) >= 0;
 
     case '<=':
-      return compare(version, range) <= 0;
+      return compareFromAst(version, range) <= 0;
 
     case '^': {
       // Make sure that the version isn't less than the range
@@ -140,7 +140,7 @@ function collectVersions(range: RangeNode): Array<VersionNode> {
   }
 }
 
-export default function satisfies(
+export function satisfiesFromAst(
   version: AbsoluteVersionNode,
   range: RangeNode,
 ): boolean {

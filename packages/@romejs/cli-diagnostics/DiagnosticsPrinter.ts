@@ -29,9 +29,8 @@ import {
 } from '@romejs/string-markup';
 import {toLines} from './utils';
 import printAdvice from './printAdvice';
-
-import successBanner from './banners/success.json';
-import errorBanner from './banners/error.json';
+import {default as successBanner} from './banners/success.json';
+import {default as errorBanner} from './banners/error.json';
 import {
   AbsoluteFilePath,
   AbsoluteFilePathSet,

@@ -18,7 +18,7 @@ import {
 import SnapshotManager from './SnapshotManager';
 import {TestMasterRunnerOptions} from '../master/testing/types';
 import {Event} from '@romejs/events';
-import diff from '@romejs/string-diff';
+import stringDiff from '@romejs/string-diff';
 import {getErrorStructure} from '@romejs/v8';
 import prettyFormat from '@romejs/pretty-format';
 import {FileReference} from '../common/types/files';
@@ -209,7 +209,7 @@ export default class TestAPI implements TestHelper {
 
       advice.push({
         type: 'diff',
-        diff: diff(expectedFormat, receivedFormat),
+        diff: stringDiff(expectedFormat, receivedFormat),
         legend: {
           add: receivedAlias ? receivedAlias : 'Received',
           delete: expectedAlias ? expectedAlias : 'Expected',

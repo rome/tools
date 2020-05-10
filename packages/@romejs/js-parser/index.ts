@@ -13,12 +13,12 @@ import {
 } from './options';
 import {Token} from './tokenizer/index';
 import {types as tokTypes} from './tokenizer/types';
-import createParser from './parser';
+import {createJSParser} from './parser';
 import './tokenizer/context';
 
 export function parseJS(userOptions: JSParserUserOptions): Program {
   const options: JSParserOptions = normalizeOptions(userOptions);
-  return createParser(options).parse();
+  return createJSParser(options).parse();
 }
 
 export function tokenizeJS(
@@ -26,7 +26,7 @@ export function tokenizeJS(
   userOptions: JSParserUserOptions,
 ): Array<Token> {
   const options: JSParserOptions = normalizeOptions(userOptions);
-  const parser = createParser({...options, tokens: true, input});
+  const parser = createJSParser({...options, tokens: true, input});
   parser.parse();
 
   const diagnostics = parser.getDiagnostics();
