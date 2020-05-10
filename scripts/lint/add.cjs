@@ -35,13 +35,12 @@ write(
 * LICENSE file in the root directory of this source tree.
 */
 
-import {Path} from '@romejs/js-compiler';
-import {AnyNode} from '@romejs/js-ast';
+import {Path, TransformExitResult} from '@romejs/js-compiler';
 import {descriptions} from '@romejs/diagnostics';
 
 export default {
  name: '${ruleName}',
- enter(path: Path): AnyNode {
+ enter(path: Path): TransformExitResult {
    const {node} = path;
 
    if (false) {
@@ -91,7 +90,7 @@ test(
 let descriptions = fs.readFileSync(descriptionsFile, 'utf8');
 descriptions = descriptions.replace(
   'LINT: {',
-  `LINT: {\n${descriptionKey}: {
+  `LINT: {\n    ${descriptionKey}: {
       category: '${categoryName}',
       message: 'INSERT MESSAGE HERE',
     },`,

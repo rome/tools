@@ -7,7 +7,7 @@
 
 import {DiagnosticAdvice, DiagnosticLocation} from './types';
 import {orderBySimilarity} from '@romejs/string-utils';
-import diff from '@romejs/string-diff';
+import stringDiff from '@romejs/string-diff';
 import {Position} from '@romejs/parser-core';
 import {ob1Get1} from '@romejs/ob1';
 import {NEWLINE} from '@romejs/js-parser-utils';
@@ -73,7 +73,7 @@ export function buildSuggestionAdvice(
 
     advice.push({
       type: 'diff',
-      diff: diff(value, topRatingRaw),
+      diff: stringDiff(value, topRatingRaw),
     });
 
     if (strings.length > 0) {

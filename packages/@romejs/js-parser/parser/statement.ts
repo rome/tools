@@ -492,11 +492,11 @@ export function parseBreakContinueStatement(
   let label;
   if (parser.isLineTerminator()) {
     label = undefined;
-  } else if (!parser.match(tt.name)) {
-    parser.unexpectedToken();
-  } else {
+  } else if (parser.match(tt.name)) {
     label = parseIdentifier(parser);
     parser.semicolon();
+  } else {
+    parser.unexpectedToken();
   }
 
   // Verify that there is an actual destination to break or

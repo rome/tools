@@ -72,7 +72,7 @@ function unescapeTicks(code: string): string {
   return code;
 }
 
-export default createParser((ParserCore) =>
+export const createSnapshotParser = createParser((ParserCore) =>
   class SnapshotParser extends ParserCore<Tokens, void> {
     constructor(opts: ParserOptions) {
       super(opts, 'parse/snapshots');

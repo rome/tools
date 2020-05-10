@@ -12,8 +12,8 @@ import {
   UserVersion,
   UserVersions,
 } from './types';
-import satisfiesFromAst from './satisfies';
-import compareFromAst from './compare';
+import {satisfiesFromAst} from './satisfies';
+import {compareFromAst} from './compare';
 import {
   SemverParserOptions,
   parseSemverRange,

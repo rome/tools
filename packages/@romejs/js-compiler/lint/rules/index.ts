@@ -14,13 +14,16 @@ import duplicateImportSource from './regular/duplicateImportSource';
 import emptyBlocks from './regular/emptyBlocks';
 import emptyMatches from './regular/emptyMatches';
 import getterReturn from './regular/getterReturn';
+import importDefaultBasename from './regular/importDefaultBasename';
 import inconsiderateLanguage from './regular/inconsiderateLanguage';
 import jsxKey from './react/jsxKey';
 import jsxNoCommentText from './react/jsxNoCommentText';
+import negationElse from './regular/negationElse';
 import noArguments from './regular/noArguments';
 import noAsyncPromiseExecutor from './regular/noAsyncPromiseExecutor';
 import noCatchAssign from './regular/noCatchAssign';
 import noChildrenProp from './react/noChildrenProp';
+import noCommaOperator from './regular/noCommaOperator';
 import noCompareNegZero from './regular/noCompareNegZero';
 import noCondAssign from './regular/noCondAssign';
 import noDebugger from './regular/noDebugger';
@@ -67,13 +70,16 @@ export const lintTransforms = [
   emptyBlocks,
   emptyMatches,
   getterReturn,
+  importDefaultBasename,
   inconsiderateLanguage,
   jsxKey,
   jsxNoCommentText,
+  negationElse,
   noArguments,
   noAsyncPromiseExecutor,
   noCatchAssign,
   noChildrenProp,
+  noCommaOperator,
   noCompareNegZero,
   noCondAssign,
   noDebugger,

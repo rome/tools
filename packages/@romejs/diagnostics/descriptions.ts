@@ -291,6 +291,36 @@ export const descriptions = createMessages({
   },
   // @romejs/js-compiler
   LINT: {
+    IMPORT_DEFAULT_BASENAME: (prev: string, basename: string) => ({
+      category: 'lint/importDefaultBasename',
+      message: markup`When importing the default, use the basename <emphasis>${basename}</emphasis>`,
+      advice: [
+        {
+          type: 'log',
+          category: 'info',
+          text: 'If you really meant this then use this instead',
+        },
+        {
+          type: 'code',
+          code: markup`import {default as ${prev}}`,
+        },
+      ],
+    }),
+    NO_COMMA_OPERATOR: {
+      category: 'lint/noCommaOperator',
+      message: 'Avoid usage of the comma operator. It can lead to easy mistakes and ambiguous code.',
+      advice: [
+        {
+          type: 'log',
+          category: 'info',
+          text: 'If you want multiple expressions then break it up.',
+        },
+      ],
+    },
+    NEGATION_ELSE: {
+      category: 'lint/negationElse',
+      message: 'Invert the blocks when you have a negation test',
+    },
     STYLE_PROP_OBJECT: {
       category: 'lint/stylePropObject',
       message: '<emphasis>style</emphasis> property value must be an object.',

@@ -14,7 +14,7 @@ import {exists, readFileText, unlink, writeFile} from '@romejs/fs';
 import {TestMasterRunnerOptions} from '../master/testing/types';
 import TestWorkerRunner from './TestWorkerRunner';
 import {DiagnosticDescription, descriptions} from '@romejs/diagnostics';
-import createSnapshotParser from './SnapshotParser';
+import {createSnapshotParser} from './SnapshotParser';
 import {ErrorFrame} from '@romejs/v8';
 import {Number0, Number1} from '@romejs/ob1';
 import prettyFormat from '@romejs/pretty-format';
@@ -277,12 +277,14 @@ export default class SnapshotManager {
       const formatted = lines.join('\n');
 
       if (this.options.freezeSnapshots) {
-        if (!used) {
+        if (used) {
+          if (formatted !== raw) {
+            await this.emitDiagnostic(
+              descriptions.SNAPSHOTS.INCORRECT(raw, formatted),
+            );
+          }
+        } else {
           await this.emitDiagnostic(descriptions.SNAPSHOTS.REDUNDANT);
-        } else if (formatted !== raw) {
-          await this.emitDiagnostic(
-            descriptions.SNAPSHOTS.INCORRECT(raw, formatted),
-          );
         }
       } else {
         if (existsOnDisk && !used) {

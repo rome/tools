@@ -13,7 +13,7 @@ import {
   printLeadingComment,
   printTrailingComment,
 } from './builders/comments';
-import builderFunctions from './builders/index';
+import builders from './builders/index';
 import * as n from './node/index';
 import {Token, concat, hardline, indent, join, mark} from './tokens';
 import {ob1Get1} from '@romejs/ob1';
@@ -57,7 +57,7 @@ export default class Builder {
       return '';
     }
 
-    const tokenizeNode = builderFunctions.get(node.type);
+    const tokenizeNode = builders.get(node.type);
     if (tokenizeNode === undefined) {
       throw new Error(
         `No known builder for node ${node.type} with parent ${parent.type}`,

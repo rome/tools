@@ -85,7 +85,7 @@ function comparePre(
   throw new Error('Unreachable');
 }
 
-export default function compare(
+export function compareFromAst(
   version: AbsoluteVersionNode,
   range: VersionNode,
 ): CompareRet {

@@ -23,9 +23,9 @@ import ci from './commands/ci';
 import test from './commands/test';
 
 // Hidden commands, useful for internal debugging but not much else
-import evict from './commands/_evict';
-import moduleSignature from './commands/_moduleSignature';
-import noop from './commands/_noop';
+import _evict from './commands/_evict';
+import _moduleSignature from './commands/_moduleSignature';
+import _noop from './commands/_noop';
 
 //
 import {Dict} from '@romejs/typescript-helpers';
@@ -67,6 +67,6 @@ masterCommands.set('ci', ci);
 masterCommands.set('develop', develop);
 masterCommands.set('format', format);
 masterCommands.set('lsp', lsp);
-masterCommands.set('_evict', evict);
-masterCommands.set('_moduleSignature', moduleSignature);
-masterCommands.set('_noop', noop);
+masterCommands.set('_evict', _evict);
+masterCommands.set('_moduleSignature', _moduleSignature);
+masterCommands.set('_noop', _noop);

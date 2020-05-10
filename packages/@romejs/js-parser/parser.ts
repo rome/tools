@@ -93,7 +93,7 @@ const SCOPE_TYPES: Array<ScopeType> = [
   'FLOW_COMMENT',
 ];
 
-const createJSParser = createParser((ParserCore, ParserWithRequiredPath) => {
+export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) => {
   // rome-ignore lint/noExplicitAny
   class JSParser extends ParserWithRequiredPath<any, State> {
     constructor(options: JSParserOptions) {
@@ -781,5 +781,3 @@ const createJSParser = createParser((ParserCore, ParserWithRequiredPath) => {
 });
 
 export type JSParser = ReturnType<typeof createJSParser>;
-
-export default createJSParser;
