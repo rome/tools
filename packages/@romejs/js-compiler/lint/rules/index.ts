@@ -111,5 +111,5 @@ export const lintTransforms = [
   undeclaredVariables,
   unsafeNegation,
   unusedVariables,
-  voidDomElementsNoChildren
+  voidDomElementsNoChildren,
 ];

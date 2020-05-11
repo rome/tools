@@ -24,7 +24,7 @@ test(
         '<div>Children</div>',
         "<div children='Children' />",
         "<div dangerouslySetInnerHTML={{ __html: '' }} />",
-        "<br className='valid' />"
+        "<br className='valid' />",
       ],
       {category: 'lint/voidDomElementsNoChildren'},
     );

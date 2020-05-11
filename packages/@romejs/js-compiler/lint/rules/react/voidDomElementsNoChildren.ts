@@ -7,9 +7,8 @@
 
 import {Path} from '@romejs/js-compiler';
 
-import {AnyNode, jsxElement} from '@romejs/js-ast';
 import {descriptions} from '@romejs/diagnostics';
-import { TransformExitResult } from '@romejs/js-compiler/types';
+import {TransformExitResult} from '@romejs/js-compiler/types';
 
 const VOID_DOM_ELEMENTS = new Set([
   'area',
@@ -45,7 +44,7 @@ export default {
       let properties = new Set();
 
       if (node.children.length !== 0) {
-          properties.add('children');
+        properties.add('children');
       }
 
       const newAttributes = [];
@@ -70,14 +69,16 @@ export default {
               ...node,
               attributes: newAttributes,
               children: [],
-              selfClosing: true
-            }
+              selfClosing: true,
+            },
           },
-          descriptions.LINT.REACT_JSX_VOID_DOM_ELEMENTS_NO_CHILDREN(element, Array.from(properties).join(" or ")),
+          descriptions.LINT.REACT_JSX_VOID_DOM_ELEMENTS_NO_CHILDREN(
+            element,
+            Array.from(properties).join(' or '),
+          ),
         );
       }
     }
-
 
     return node;
   },
