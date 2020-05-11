@@ -291,6 +291,11 @@ export const descriptions = createMessages({
   },
   // @romejs/js-compiler
   LINT: {
+    ACCESSIBLE_EMOJI: {
+      category: 'lint/accessibleEmoji',
+      message:
+        'Emojis should be wrapped in a span tag with aria-label and role="img"',
+    },
     IMPORT_DEFAULT_BASENAME: (prev: string, basename: string) => ({
       category: 'lint/importDefaultBasename',
       message: markup`When importing the default, use the basename <emphasis>${basename}</emphasis>`,
