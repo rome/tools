@@ -41,7 +41,7 @@ export default {
     ) {
       const element = node.name.name;
 
-      let properties = new Set();
+      let properties: Set<string> = new Set();
 
       if (node.children.length !== 0) {
         properties.add('children');
@@ -74,7 +74,7 @@ export default {
           },
           descriptions.LINT.REACT_JSX_VOID_DOM_ELEMENTS_NO_CHILDREN(
             element,
-            Array.from(properties).join(' or '),
+            Array.from(properties),
           ),
         );
       }

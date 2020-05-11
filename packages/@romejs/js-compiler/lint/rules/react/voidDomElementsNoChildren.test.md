@@ -122,7 +122,7 @@
 
  unknown:1 lint/voidDomElementsNoChildren FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ img is a void element tag and must not have children or dangerouslySetInnerHTML.
+  ✖ img is a void element tag and must not have children, or dangerouslySetInnerHTML.
 
     <img dangerouslySetInnerHTML={{__html: ''}} children={'invalid children'}>invalid children</img>
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
