@@ -13,7 +13,7 @@ module.exports = {
   url: 'https://romejs.dev',
   baseUrl: '/',
   favicon: 'img/favicon.ico',
-  organizationName: 'facebookexperimental',
+  organizationName: 'romejs',
   projectName: 'rome',
   themeConfig: {
     image: 'img/rome-logo.png',
@@ -31,7 +31,7 @@ module.exports = {
         },
         // Please keep GitHub link to the right for consistency.
         {
-          href: 'https://github.com/facebookexperimental/rome',
+          href: 'https://github.com/romejs/rome',
           label: 'GitHub',
           position: 'right',
         },
@@ -45,7 +45,7 @@ module.exports = {
           items: [
             {
               label: 'Installation',
-              to: 'docs/introduction/installation'
+              to: 'docs/introduction/installation',
             },
             {
               label: 'Getting Started',
@@ -59,7 +59,7 @@ module.exports = {
             {
               label: 'Code of Conduct',
               href:
-                'https://github.com/facebookexperimental/rome/blob/master/.github/CODE_OF_CONDUCT.md',
+                'https://github.com/romejs/rome/blob/master/.github/CODE_OF_CONDUCT.md',
             },
             {
               label: 'Contributing',
@@ -72,7 +72,7 @@ module.exports = {
           items: [
             {
               label: 'GitHub',
-              href: 'https://github.com/facebookexperimental/rome',
+              href: 'https://github.com/romejs/rome',
             },
           ],
         },

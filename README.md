@@ -36,7 +36,7 @@ See [CONTRIBUTING](.github/CONTRIBUTING.md) for more information.
 
 ## Status
 
-The current area of focus is **linting**. See the umbrella task [#20](https://github.com/facebookexperimental/rome/issues/20) for tracking.
+The current area of focus is **linting**. See the umbrella task [#20](https://github.com/romejs/rome/issues/20) for tracking.
 
 ## Getting Started
 

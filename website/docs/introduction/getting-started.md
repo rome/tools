@@ -15,6 +15,7 @@ First, navigate into your project folder:
 ```bash
 cd my_existing_project
 ```
+
 Now, create a Rome configuration for your project. When prompted,
 use the recommended settings:
 
@@ -52,7 +53,7 @@ rome run index.js
 
 Rome is still under active development and may not be able to properly
 process all source files. If you are able to run a file with `node` but
-not with `rome`, please [create an issue](https://github.com/facebookexperimental/rome/issues/new?labels=bug&template=01_bug.md&title=)
+not with `rome`, please [create an issue](https://github.com/romejs/rome/issues/new?labels=bug&template=01_bug.md&title=)
 
 ## Other Commands
 

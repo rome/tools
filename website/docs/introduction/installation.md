@@ -15,7 +15,7 @@ Rome is not available via `npm` and must be installed from GitHub.
 In a folder of your choice, clone the `rome` repository:
 
 ```bash
-git clone https://github.com/facebookexperimental/rome
+git clone https://github.com/romejs/rome
 ```
 
 Then, navigate into it and build `rome`:
