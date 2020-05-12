@@ -138,6 +138,7 @@ type LintDiagnosticCategory =
   | 'lint/preferFunctionDeclarations'
   | 'lint/preferTemplate'
   | 'lint/preferWhile'
+  | 'lint/reactInJsxScope'
   | 'lint/restrictedGlobals'
   | 'lint/singleVarDeclarator'
   | 'lint/sortImportExportSpecifiers'

@@ -393,6 +393,10 @@ export const descriptions = createMessages({
       category: 'lint/preferWhile',
       message: 'A while loop should be used over a for loop',
     },
+    REACT_IN_JSX_SCOPE: {
+      category: 'lint/reactInJsxScope',
+      message: markup`<emphasis>"React"</emphasis> must be in scope when using JSX`,
+    },
     REACT_JSX_NO_COMMENT_TEXT: {
       category: 'lint/jsxNoCommentText',
       message: 'Comments inside children should be placed in braces',
