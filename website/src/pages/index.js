@@ -52,7 +52,7 @@ function Home() {
           </div>
           <div className="margin-top--lg">
             <iframe
-              src="https://ghbtns.com/github-btn.html?user=facebookexperimental&amp;repo=rome&amp;type=star&amp;count=true&amp;size=large"
+              src="https://ghbtns.com/github-btn.html?user=romejs&amp;repo=rome&amp;type=star&amp;count=true&amp;size=large"
               frameBorder={0}
               scrolling={0}
               width={160}

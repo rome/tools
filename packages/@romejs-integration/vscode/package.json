@@ -22,9 +22,9 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/facebookexperimental/rome.git"
+    "url": "https://github.com/romejs/rome.git"
   },
   "bugs": {
-    "url": "https://github.com/facebookexperimental/rome/issues"
+    "url": "https://github.com/romejs/rome/issues"
   }
 }
