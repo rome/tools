@@ -35,8 +35,8 @@ function spawnSync(argv, cwd) {
 // Ensure git isn't dirty
 const gitRes = child.spawnSync('git', ['diff', '--exit-code']);
 if (gitRes.status === 1) {
-  //console.error('Uncommitted changes');
-  //process.exit(1);
+  console.error('Uncommitted changes');
+  process.exit(1);
 }
 
 // Update root
