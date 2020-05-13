@@ -3,6 +3,7 @@
   "version": "0.0.19",
   "type": "module",
   "license": "MIT",
+  "main": "index.ts",
   "files": [
     "LICENSE"
   ],

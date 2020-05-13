@@ -7,7 +7,7 @@ on:
 jobs:
   publish-npm:
     runs-on: ubuntu-latest
-    name: npm publish
+    name: Publish
 
     steps:
       - uses: actions/checkout@v2
