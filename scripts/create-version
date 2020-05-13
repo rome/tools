@@ -54,7 +54,7 @@ https.get(`https://registry.npmjs.org/rome/${version}`, (res) => {
   spawnSync([version], path.join(root, 'packages', 'rome'));
 
   // Create commit and tag
-  exec('git', ['commit', '-m', `Release v${version}`]);
+  exec('git', ['commit', '-am', `Release v${version}`]);
   exec('git', 'tag', `v${version}`);
 
   console.log('Done. Push to trigger action.');
