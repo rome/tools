@@ -243,6 +243,12 @@ export default class Bundler {
         },
       );
 
+      // If we have a `files` array then set it to all the newly added files
+      // This will have included files already there that we copied
+      if (newManifest.files !== undefined) {
+        newManifest.files = Array.from(files.keys());
+      }
+
       // Add a package.json with updated values
       files.set(
         'package.json',
