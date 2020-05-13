@@ -1,0 +1,35 @@
+name: Publish
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+  publish-npm:
+    runs-on: ubuntu-latest
+    name: npm publish
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+        with:
+          node-version: '13.x'
+
+      - name: Build release
+        run: node scripts/build-release dist
+
+      - name: Create tarball
+        run: tar -C dist -czvf dist.tar.gz .
+
+      - name: Upload tarball
+        uses: actions/upload-artifact@v1
+        with:
+          name: package.tgz
+          path: dist.tar.gz
+
+      - name: Publish
+        run: |
+          cd dist
+          npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
