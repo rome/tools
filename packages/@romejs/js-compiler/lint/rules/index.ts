@@ -61,6 +61,7 @@ import stylePropObject from './react/stylePropObject';
 import undeclaredVariables from './regular/undeclaredVariables';
 import unsafeNegation from './regular/unsafeNegation';
 import unusedVariables from './regular/unusedVariables';
+import voidDomElementsNoChildren from './react/voidDomElementsNoChildren';
 
 export const lintTransforms = [
   camelCase,
@@ -118,4 +119,5 @@ export const lintTransforms = [
   undeclaredVariables,
   unsafeNegation,
   unusedVariables,
+  voidDomElementsNoChildren,
 ];

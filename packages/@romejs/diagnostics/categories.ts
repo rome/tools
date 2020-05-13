@@ -146,4 +146,5 @@ type LintDiagnosticCategory =
   | 'lint/stylePropObject'
   | 'lint/undeclaredVariables'
   | 'lint/unsafeNegation'
-  | 'lint/unusedVariables';
+  | 'lint/unusedVariables'
+  | 'lint/voidDomElementsNoChildren';
