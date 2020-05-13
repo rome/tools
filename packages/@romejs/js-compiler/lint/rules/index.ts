@@ -52,6 +52,7 @@ import preferBlockStatements from './regular/preferBlockStatements';
 import preferFunctionDeclarations from './regular/preferFunctionDeclarations';
 import preferTemplate from './regular/preferTemplate';
 import preferWhile from './regular/preferWhile';
+import reactInJsxScope from './react/reactInJsxScope';
 import restrictedGlobals from './regular/restrictedGlobals';
 import singleVarDeclarator from './regular/singleVarDeclarator';
 import sortImportExportSpecifiers from './regular/sortImportExportSpecifiers';
@@ -109,6 +110,7 @@ export const lintTransforms = [
   preferFunctionDeclarations,
   preferTemplate,
   preferWhile,
+  reactInJsxScope,
   restrictedGlobals,
   singleVarDeclarator,
   sortImportExportSpecifiers,
