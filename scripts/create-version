@@ -56,6 +56,6 @@ https.get(`https://registry.npmjs.org/rome/${version}`, (res) => {
   // Create commit and tag
   exec('git', ['commit', '-am', `Release v${version}`]);
   exec('git', ['tag', `v${version}`]);
-
-  console.log('Done. `git push origin --tags` to push and trigger action.');
+  exec('git', ['push']);
+  exec('git', ['push', 'origin', `v${version}`]);
 });
