@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-const {root, devFolder} = require('./_constants.cjs');
+const {root, devFolder, distFolder} = require('./_constants.cjs');
 const child = require('child_process');
 const path = require('path');
 const fs = require('fs');
@@ -77,6 +77,7 @@ exports.execDev = function(argv) {
 };
 
 exports.buildTrunk = function() {
+  exports.unlink(distFolder);
   exports.unlink(devFolder);
   fs.mkdirSync(devFolder);
 
