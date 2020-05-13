@@ -415,6 +415,7 @@ export default class Worker {
       path: createUnknownFilePath(uid),
       sourceType,
       syntax,
+      allowReturnOutsideFunction: sourceType === 'script',
     });
 
     // If the AST is corrupt then we don't under any circumstance allow it

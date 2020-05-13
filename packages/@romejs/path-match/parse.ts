@@ -206,17 +206,22 @@ const createPathMatchParser = createParser((ParserCore) =>
       }
 
       // TODO Remove duplicate wildcard segments
-
       // - Multiple WildcardSegment
-
       // - Wildcard next to a WildcardSegment
-
       // Remove all wildcard-only segments from end
       while (this.isWildcardOnlySegment(normalized[normalized.length - 1])) {
         normalized.pop();
       }
 
       return normalized;
+    }
+
+    parsePatternsFile(): Array<PathPatternNode> {
+      const patterns: Array<PathPatternNode> = [];
+      while (!this.matchToken('EOF')) {
+        patterns.push(this.parsePattern());
+      }
+      return patterns;
     }
 
     parsePattern(): PathPatternNode {
@@ -230,7 +235,6 @@ const createPathMatchParser = createParser((ParserCore) =>
       }
 
       // Get a trailing comment
-
       let comment = '';
       if (this.eatToken('Hash')) {
         comment = this.getRawInput(
@@ -296,4 +300,11 @@ const createPathMatchParser = createParser((ParserCore) =>
 export function parsePattern(opts: PathMatchParserOptions): PathPatternNode {
   const parser = createPathMatchParser(opts, 'pattern');
   return parser.parsePattern();
+}
+
+export function parsePatternsFile(
+  opts: PathMatchParserOptions,
+): Array<PathPatternNode> {
+  const parser = createPathMatchParser(opts, 'pattern');
+  return parser.parsePatternsFile();
 }

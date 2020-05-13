@@ -51,7 +51,6 @@ function matchSegment(path: string, patternSeg: PatternSegmentNode): boolean {
       }
 
       // We consumed the whole buffer and nothing matched
-
       return false;
     }
 
@@ -152,7 +151,7 @@ export default function match(
     // When given a wildcard segment, keep popping off all the path segments until we find one that matches the next pattern segment
     if (patternSeg.type === 'WildcardSegment') {
       const nextPattern = patternSegs[i + 1];
-      while (!matchSegment(pathSegs[0], nextPattern)) {
+      while (pathSegs.length > 0 && !matchSegment(pathSegs[0], nextPattern)) {
         pathSegs.shift();
       }
       continue;

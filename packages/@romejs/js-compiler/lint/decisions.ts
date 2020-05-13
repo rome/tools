@@ -70,7 +70,7 @@ export function parseDecisionStrings(
   const globalDecisions: Array<LintCompilerOptionsDecision> = [];
 
   function parseGlobalDecision(parts: Array<string>, i: number) {
-    if (parts.length !== 3) {
+    if (parts.length !== 2) {
       unexpected(descriptions.LINT_COMMAND.INVALID_DECISION_PART_COUNT(i));
     }
 
