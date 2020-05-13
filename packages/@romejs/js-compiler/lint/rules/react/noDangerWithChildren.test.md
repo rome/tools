@@ -36,8 +36,8 @@
 
   ✖ Only set one of children or props.dangerouslySetInnerHTML.
 
-    <Invalid dangerouslySetInnerHTML={{ __html: "HTML" }}>children</Invalid>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    <div dangerouslySetInnerHTML={{ __html: "HTML" }} children={"children"} />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -48,151 +48,31 @@
 ### `10`
 
 ```
-✔ No known problems!
+
+ unknown:1 lint/noDangerWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Only set one of children or props.dangerouslySetInnerHTML.
+
+    React.createElement("Invalid", { dangerouslySetInnerHTML: { __html: "HTML" }, children: ["children"] })
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
 ### `10: formatted`
 
 ```
-React.createElement('div', {dangerouslySetInnerHTML: {__html: 'HTML'}});
+React.createElement(
+  'Invalid',
+  {dangerouslySetInnerHTML: {__html: 'HTML'}, children: ['children']},
+);
 
 ```
 
 ### `11`
-
-```
-✔ No known problems!
-
-```
-
-### `11: formatted`
-
-```
-React.createElement('Valid', {dangerouslySetInnerHTML: {__html: 'HTML'}});
-
-```
-
-### `12`
-
-```
-✔ No known problems!
-
-```
-
-### `12: formatted`
-
-```
-React.createElement('div', {}, 'children');
-
-```
-
-### `13`
-
-```
-✔ No known problems!
-
-```
-
-### `13: formatted`
-
-```
-React.createElement('div', {}, ['children']);
-
-```
-
-### `14`
-
-```
-✔ No known problems!
-
-```
-
-### `14: formatted`
-
-```
-React.createElement('Valid', {}, 'children');
-
-```
-
-### `15`
-
-```
-✔ No known problems!
-
-```
-
-### `15: formatted`
-
-```
-React.createElement('Valid', {}, ['children']);
-
-```
-
-### `1: formatted`
-
-```
-<Invalid dangerouslySetInnerHTML={{__html: 'HTML'}}>children</Invalid>;
-
-```
-
-### `2`
-
-```
-
- unknown:1 lint/noDangerWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Only set one of children or props.dangerouslySetInnerHTML.
-
-    React.createElement("div", { dangerouslySetInnerHTML: { __html: "HTML" } }, "children")
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `2: formatted`
-
-```
-React.createElement(
-  'div',
-  {dangerouslySetInnerHTML: {__html: 'HTML'}},
-  'children',
-);
-
-```
-
-### `3`
-
-```
-
- unknown:1 lint/noDangerWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Only set one of children or props.dangerouslySetInnerHTML.
-
-    React.createElement("div", { dangerouslySetInnerHTML: { __html: "HTML" } }, ["children"])
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `3: formatted`
-
-```
-React.createElement(
-  'div',
-  {dangerouslySetInnerHTML: {__html: 'HTML'}},
-  ['children'],
-);
-
-```
-
-### `4`
 
 ```
 
@@ -209,7 +89,7 @@ React.createElement(
 
 ```
 
-### `4: formatted`
+### `11: formatted`
 
 ```
 React.createElement(
@@ -220,7 +100,7 @@ React.createElement(
 
 ```
 
-### `5`
+### `12`
 
 ```
 
@@ -237,7 +117,7 @@ React.createElement(
 
 ```
 
-### `5: formatted`
+### `12: formatted`
 
 ```
 React.createElement(
@@ -248,58 +128,470 @@ React.createElement(
 
 ```
 
-### `6`
+### `13`
 
 ```
 ✔ No known problems!
 
 ```
 
-### `6: formatted`
+### `13: formatted`
 
 ```
 <div dangerouslySetInnerHTML={{__html: 'HTML'}} />;
 
 ```
 
-### `7`
+### `14`
 
 ```
 ✔ No known problems!
 
 ```
 
-### `7: formatted`
-
-```
-<Valid dangerouslySetInnerHTML={{__html: 'HTML'}} />;
-
-```
-
-### `8`
-
-```
-✔ No known problems!
-
-```
-
-### `8: formatted`
+### `14: formatted`
 
 ```
 <div>children</div>;
 
 ```
 
-### `9`
+### `15`
 
 ```
 ✔ No known problems!
 
 ```
 
-### `9: formatted`
+### `15: formatted`
+
+```
+<div children={'children'} />;
+
+```
+
+### `16`
+
+```
+✔ No known problems!
+
+```
+
+### `16: formatted`
+
+```
+<div children={['children']} />;
+
+```
+
+### `17`
+
+```
+✔ No known problems!
+
+```
+
+### `17: formatted`
+
+```
+<Valid dangerouslySetInnerHTML={{__html: 'HTML'}} />;
+
+```
+
+### `18`
+
+```
+✔ No known problems!
+
+```
+
+### `18: formatted`
 
 ```
 <Valid>children</Valid>;
+
+```
+
+### `19`
+
+```
+✔ No known problems!
+
+```
+
+### `19: formatted`
+
+```
+<Valid children={'children'} />;
+
+```
+
+### `1: formatted`
+
+```
+<div dangerouslySetInnerHTML={{__html: 'HTML'}} children={'children'} />;
+
+```
+
+### `2`
+
+```
+
+ unknown:1 lint/noDangerWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Only set one of children or props.dangerouslySetInnerHTML.
+
+    <div dangerouslySetInnerHTML={{ __html: "HTML" }} children={["children"]} />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `20`
+
+```
+✔ No known problems!
+
+```
+
+### `20: formatted`
+
+```
+<Valid children={['children']} />;
+
+```
+
+### `21`
+
+```
+✔ No known problems!
+
+```
+
+### `21: formatted`
+
+```
+React.createElement('div', {dangerouslySetInnerHTML: {__html: 'HTML'}});
+
+```
+
+### `22`
+
+```
+✔ No known problems!
+
+```
+
+### `22: formatted`
+
+```
+React.createElement('div', {}, 'children');
+
+```
+
+### `23`
+
+```
+✔ No known problems!
+
+```
+
+### `23: formatted`
+
+```
+React.createElement('div', {}, ['children']);
+
+```
+
+### `24`
+
+```
+✔ No known problems!
+
+```
+
+### `24: formatted`
+
+```
+React.createElement('div', {children: 'children'});
+
+```
+
+### `25`
+
+```
+✔ No known problems!
+
+```
+
+### `25: formatted`
+
+```
+React.createElement('div', {children: ['children']});
+
+```
+
+### `26`
+
+```
+✔ No known problems!
+
+```
+
+### `26: formatted`
+
+```
+React.createElement('Valid', {dangerouslySetInnerHTML: {__html: 'HTML'}});
+
+```
+
+### `27`
+
+```
+✔ No known problems!
+
+```
+
+### `27: formatted`
+
+```
+React.createElement('Valid', {}, 'children');
+
+```
+
+### `28`
+
+```
+✔ No known problems!
+
+```
+
+### `28: formatted`
+
+```
+React.createElement('Valid', {}, ['children']);
+
+```
+
+### `29`
+
+```
+✔ No known problems!
+
+```
+
+### `29: formatted`
+
+```
+React.createElement('Valid', {children: 'children'});
+
+```
+
+### `2: formatted`
+
+```
+<div dangerouslySetInnerHTML={{__html: 'HTML'}} children={['children']} />;
+
+```
+
+### `3`
+
+```
+
+ unknown:1 lint/noDangerWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Only set one of children or props.dangerouslySetInnerHTML.
+
+    <Invalid dangerouslySetInnerHTML={{ __html: "HTML" }}>children</Invalid>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `30`
+
+```
+✔ No known problems!
+
+```
+
+### `30: formatted`
+
+```
+React.createElement('Valid', {children: ['children']});
+
+```
+
+### `3: formatted`
+
+```
+<Invalid dangerouslySetInnerHTML={{__html: 'HTML'}}>children</Invalid>;
+
+```
+
+### `4`
+
+```
+
+ unknown:1 lint/noDangerWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Only set one of children or props.dangerouslySetInnerHTML.
+
+    <Invalid dangerouslySetInnerHTML={{ __html: "HTML" }} children={"children"}/>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `4: formatted`
+
+```
+<Invalid dangerouslySetInnerHTML={{__html: 'HTML'}} children={'children'} />;
+
+```
+
+### `5`
+
+```
+
+ unknown:1 lint/noDangerWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Only set one of children or props.dangerouslySetInnerHTML.
+
+    React.createElement("div", { dangerouslySetInnerHTML: { __html: "HTML" } }, "children")
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `5: formatted`
+
+```
+React.createElement(
+  'div',
+  {dangerouslySetInnerHTML: {__html: 'HTML'}},
+  'children',
+);
+
+```
+
+### `6`
+
+```
+
+ unknown:1 lint/noDangerWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Only set one of children or props.dangerouslySetInnerHTML.
+
+    React.createElement("div", { dangerouslySetInnerHTML: { __html: "HTML" } }, ["children"])
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `6: formatted`
+
+```
+React.createElement(
+  'div',
+  {dangerouslySetInnerHTML: {__html: 'HTML'}},
+  ['children'],
+);
+
+```
+
+### `7`
+
+```
+
+ unknown:1 lint/noDangerWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Only set one of children or props.dangerouslySetInnerHTML.
+
+    React.createElement("div", { dangerouslySetInnerHTML: { __html: "HTML" }, children: "children" })
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `7: formatted`
+
+```
+React.createElement(
+  'div',
+  {dangerouslySetInnerHTML: {__html: 'HTML'}, children: 'children'},
+);
+
+```
+
+### `8`
+
+```
+
+ unknown:1 lint/noDangerWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Only set one of children or props.dangerouslySetInnerHTML.
+
+    React.createElement("div", { dangerouslySetInnerHTML: { __html: "HTML" }, children: ["children"] })
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `8: formatted`
+
+```
+React.createElement(
+  'div',
+  {dangerouslySetInnerHTML: {__html: 'HTML'}, children: ['children']},
+);
+
+```
+
+### `9`
+
+```
+
+ unknown:1 lint/noDangerWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Only set one of children or props.dangerouslySetInnerHTML.
+
+    React.createElement("Invalid", { dangerouslySetInnerHTML: { __html: "HTML" }, children: "children" })
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `9: formatted`
+
+```
+React.createElement(
+  'Invalid',
+  {dangerouslySetInnerHTML: {__html: 'HTML'}, children: 'children'},
+);
 
 ```
