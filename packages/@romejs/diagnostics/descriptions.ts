@@ -325,6 +325,10 @@ export const descriptions = createMessages({
       category: 'lint/stylePropObject',
       message: '<emphasis>style</emphasis> property value must be an object.',
     },
+    NO_DANGER_WITH_CHILDREN: {
+      category: 'lint/noDangerWithChildren',
+      message: 'Only set one of <emphasis>children</emphasis> or <emphasis>props.dangerouslySetInnerHTML</emphasis>.',
+    },
     PENDING_FIXES: (
       relativeFilename: string,
       original: string,
