@@ -18,7 +18,7 @@ import {
   ProjectConfigObjects,
   ProjectConfigTarget,
 } from './types';
-import {parsePathPattern} from '@romejs/path-match';
+import {parsePathPatternsFile} from '@romejs/path-match';
 import {
   arrayOfPatterns,
   arrayOfStrings,
@@ -28,10 +28,8 @@ import {
 } from './utils';
 import {ConsumeJSONResult, consumeJSONExtra} from '@romejs/codec-json';
 import {AbsoluteFilePath, AbsoluteFilePathSet} from '@romejs/path';
-import {ob1Add, ob1Coerce1, ob1Inc, ob1Number0} from '@romejs/ob1';
 import {existsSync, lstatSync, readFileTextSync, readdirSync} from '@romejs/fs';
 import crypto = require('crypto');
-
 import {ROME_CONFIG_PACKAGE_JSON_FIELD} from './constants';
 import {parseSemverRange} from '@romejs/codec-semver';
 import {descriptions} from '@romejs/diagnostics';
@@ -92,28 +90,11 @@ export function loadCompleteProjectConfig(
 
     if (existsSync(possiblePath)) {
       const file = readFileTextSync(possiblePath);
-      const lines: Array<string> = file.split('\n');
-
-      let index = ob1Number0;
 
       consumer.handleThrownDiagnostics(() => {
-        const patterns = lines.map((line, i) => {
-          const pattern = parsePathPattern({
-            input: line,
-            path: possiblePath,
-            offsetPosition: {
-              index,
-              line: ob1Coerce1(i),
-              column: ob1Number0,
-            },
-          });
-
-          index = ob1Add(index, line.length);
-
-          // Newline char
-          index = ob1Inc(index);
-
-          return pattern;
+        const patterns = parsePathPatternsFile({
+          input: file,
+          path: possiblePath,
         });
 
         // TODO: Maybe these are useful in other places?

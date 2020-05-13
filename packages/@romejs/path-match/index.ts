@@ -6,7 +6,7 @@
  */
 
 import {PathPatternNode} from './types';
-import {parsePattern} from './parse';
+import {parsePattern, parsePatternsFile} from './parse';
 import match from './match';
 import {AbsoluteFilePath, PathSegments} from '@romejs/path';
 
@@ -14,7 +14,10 @@ export type PathPatterns = Array<PathPatternNode>;
 
 export type PathPattern = PathPatternNode;
 
-export {parsePattern as parsePathPattern};
+export {
+  parsePattern as parsePathPattern,
+  parsePatternsFile as parsePathPatternsFile,
+};
 
 export {stringifyPathPattern} from './stringify';
 
