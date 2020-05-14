@@ -292,6 +292,10 @@ export const descriptions = createMessages({
   },
   // @romejs/js-compiler
   LINT: {
+    PREFER_ES6_CLASS: {
+      category: 'lint/preferES6Class',
+      message: 'ES6 components are preferred to ES5 components',
+    },
     IMPORT_DEFAULT_BASENAME: (prev: string, basename: string) => ({
       category: 'lint/importDefaultBasename',
       message: markup`When importing the default, use the basename <emphasis>${basename}</emphasis>`,

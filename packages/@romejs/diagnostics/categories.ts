@@ -136,6 +136,7 @@ type LintDiagnosticCategory =
   | 'lint/noUnsafeFinally'
   | 'lint/noVar'
   | 'lint/preferBlockStatements'
+  | 'lint/preferES6Class'
   | 'lint/preferFunctionDeclarations'
   | 'lint/preferTemplate'
   | 'lint/preferWhile'
