@@ -16,6 +16,7 @@ import {
 } from '@romejs/consume';
 import {naturalCompare, toCamelCase, toKebabCase} from '@romejs/string-utils';
 import {createUnknownFilePath} from '@romejs/path';
+import {dedent} from '@romejs/string-utils';
 import {Dict} from '@romejs/typescript-helpers';
 import {markup} from '@romejs/string-markup';
 import {descriptions} from '@romejs/diagnostics';
@@ -668,69 +669,69 @@ export default class Parser<T> {
     }
 
     for (let [cmd, flags] of cmdFlagMap.entries()) {
-      commandFuncs += `__rome_${cmd}()
-{
-    cmds="";
-    local_flags="${flags}"
-}
-
-`;
+      commandFuncs += dedent`__rome_${cmd}()
+        {
+            cmds="";
+            local_flags="${flags}"
+        }
+        
+      `;
     }
 
-    let romeFunc = `__rome()
-{
-    cmds="${romeCmds}"
-    local_flags="";
-}
+    let romeFunc = dedent`__rome()
+      {
+          cmds="${romeCmds}"
+          local_flags="";
+      }
+      
+    `;
 
-`;
+    return dedent`#!/usr/bin/env bash
+      global_flags="${globalFlags}"
 
-    return `#!/usr/bin/env bash
-global_flags="${globalFlags}"
-
-# initial state
-cmds=""
-local_flags=""
-
-__is_flag()
-{
-    case $1 in
-        -*) echo "true"
-    esac
-}
-
-__rome_gen_completions()
-{
-    local suggestions func flags index
-   
-    index="$(($\{#COMP_WORDS[@]} - 1))"
-
-    flags="$global_flags $local_flags"
-
-    func="_"
-
-    for ((i=0; i < index; i++))
-    do
-        if [[ ! $(__is_flag $\{COMP_WORDS[$i]}) ]]; then
-            func="$\{func}_$\{COMP_WORDS[$i]}"
-        fi
-    done
-    
-    $func 2> /dev/null
-
-    if [[ $(__is_flag $\{COMP_WORDS[$index]}) ]]; then
-        suggestions=$flags 
-    else
-        suggestions=$cmds
-    fi
-
-    COMPREPLY=($(compgen -W "$\{suggestions}" -- "$\{COMP_WORDS[$index]}"))
-}
-
-${commandFuncs}
-${romeFunc}
-complete -F __rome_gen_completions rome
-`;
+      # initial state
+      cmds=""
+      local_flags=""
+      
+      __is_flag()
+      {
+          case $1 in
+              -*) echo "true"
+          esac
+      }
+      
+      __rome_gen_completions()
+      {
+          local suggestions func flags index
+         
+          index="$(($\{#COMP_WORDS[@]} - 1))"
+      
+          flags="$global_flags $local_flags"
+      
+          func="_"
+      
+          for ((i=0; i < index; i++))
+          do
+              if [[ ! $(__is_flag $\{COMP_WORDS[$i]}) ]]; then
+                  func="$\{func}_$\{COMP_WORDS[$i]}"
+              fi
+          done
+          
+          $func 2> /dev/null
+      
+          if [[ $(__is_flag $\{COMP_WORDS[$index]}) ]]; then
+              suggestions=$flags 
+          else
+              suggestions=$cmds
+          fi
+      
+          COMPREPLY=($(compgen -W "$\{suggestions}" -- "$\{COMP_WORDS[$index]}"))
+      }
+      
+      ${commandFuncs}
+      ${romeFunc}
+      complete -F __rome_gen_completions rome
+    `;
   }
 
   async showHelp(command: undefined | AnyCommandOptions = this.ranCommand) {
