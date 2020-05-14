@@ -18,6 +18,7 @@ import importDefaultBasename from './regular/importDefaultBasename';
 import inconsiderateLanguage from './regular/inconsiderateLanguage';
 import jsxKey from './react/jsxKey';
 import jsxNoCommentText from './react/jsxNoCommentText';
+import jsxNoDuplicateProps from './react/jsxNoDuplicateProps';
 import negationElse from './regular/negationElse';
 import noArguments from './regular/noArguments';
 import noAsyncPromiseExecutor from './regular/noAsyncPromiseExecutor';
@@ -77,6 +78,7 @@ export const lintTransforms = [
   inconsiderateLanguage,
   jsxKey,
   jsxNoCommentText,
+  jsxNoDuplicateProps,
   negationElse,
   noArguments,
   noAsyncPromiseExecutor,

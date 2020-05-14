@@ -330,6 +330,10 @@ export const descriptions = createMessages({
       category: 'lint/noDangerWithChildren',
       message: 'Only set one of <emphasis>children</emphasis> or <emphasis>props.dangerouslySetInnerHTML</emphasis>.',
     },
+    JSX_NO_DUPLICATE_PROPS: {
+      category: 'lint/jsxNoDuplicateProps',
+      message: 'Do not pass duplicate props on JSX elements.',
+    },
     PENDING_FIXES: (
       relativeFilename: string,
       original: string,
