@@ -18,6 +18,8 @@ import {
 } from '@romejs/js-compiler';
 import {Consumer} from '@romejs/consume';
 import {commandCategories} from '@romejs/core/common/commands';
+import {createUnknownFilePath} from '@romejs/path';
+import {LINTABLE_EXTENSIONS} from '@romejs/core/common/file-handlers';
 
 type Flags = {
   decisions: Array<string>;
@@ -70,6 +72,19 @@ export default createMasterCommand<Flags>({
       const client = await req.getVCSClient();
       const target = flags.changed === '' ? client.trunkBranch : flags.changed;
       args = await client.getModifiedFiles(target);
+
+      // Only include lintable files
+      args = args.filter((arg) => {
+        const path = createUnknownFilePath(arg);
+
+        for (const ext of LINTABLE_EXTENSIONS) {
+          if (path.hasEndExtension(ext)) {
+            return true;
+          }
+        }
+
+        return false;
+      });
 
       if (args.length === 0) {
         reporter.warn(`No files changed from <emphasis>${target}</emphasis>`);

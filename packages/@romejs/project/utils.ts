@@ -9,7 +9,7 @@ import {Consumer} from '@romejs/consume';
 import {PathPatterns, parsePathPattern} from '@romejs/path-match';
 import {AbsoluteFilePath, AbsoluteFilePathSet} from '@romejs/path';
 import {ProjectConfigMeta, ProjectConfigMetaHard} from './types';
-import {ROME_CONFIG_FILENAMES, ROME_CONFIG_FOLDER} from './constants';
+import {ROME_CONFIG_FILENAMES} from './constants';
 
 export function assertHardMeta(meta: ProjectConfigMeta): ProjectConfigMetaHard {
   const {configPath, projectFolder: folder, consumer} = meta;
@@ -85,7 +85,6 @@ export function getParentConfigDependencies(
 
     for (const configFilename of ROME_CONFIG_FILENAMES) {
       deps.add(folder.append(configFilename));
-      deps.add(folder.append(ROME_CONFIG_FOLDER).append(configFilename));
     }
   }
 

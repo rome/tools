@@ -19,7 +19,8 @@ import {ProjectDefinition} from '@romejs/project';
 import DependencyOrderer, {DependencyOrder} from './DependencyOrderer';
 import {WorkerAnalyzeDependencyResult} from '../../common/bridges/WorkerBridge';
 import {AbsoluteFilePath, AbsoluteFilePathMap} from '@romejs/path';
-import {ExtensionHandler, getFileHandler} from '../../common/fileHandlers';
+import {getFileHandler} from '../../common/file-handlers/index';
+import {ExtensionHandler} from '../../common/file-handlers/types';
 import {
   AnalyzeDependency,
   AnalyzeDependencyName,

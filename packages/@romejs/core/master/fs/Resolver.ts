@@ -20,7 +20,7 @@ import {
   createRelativeFilePath,
 } from '@romejs/path';
 import {DiagnosticAdvice, DiagnosticLocation} from '@romejs/diagnostics';
-import {IMPLICIT_JS_EXTENSIONS} from '../../common/fileHandlers';
+import {IMPLICIT_JS_EXTENSIONS} from '../../common/file-handlers/javascript';
 import {writeFile} from '@romejs/fs';
 import https = require('https');
 

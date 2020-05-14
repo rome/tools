@@ -7,7 +7,7 @@
 
 export * from './common/constants';
 
-export {getFileHandler} from './common/fileHandlers';
+export {getFileHandler} from './common/file-handlers/index';
 
 // API
 export {default as Client} from './client/Client';

@@ -35,10 +35,10 @@ import {
   FileReference,
   convertTransportFileReference,
 } from '../common/types/files';
-import {getFileHandlerAssert} from '../common/fileHandlers';
+import {getFileHandlerAssert} from '../common/file-handlers/index';
 import {TransformProjectDefinition} from '@romejs/js-compiler';
 
-export type ParseResult = {
+export type ParseJSResult = {
   ast: Program;
   project: TransformProjectDefinition;
   path: AbsoluteFilePath;
@@ -100,7 +100,7 @@ export default class Worker {
 
   partialManifests: Map<number, WorkerPartialManifest>;
   projects: Map<number, TransformProjectDefinition>;
-  astCache: AbsoluteFilePathMap<ParseResult>;
+  astCache: AbsoluteFilePathMap<ParseJSResult>;
   moduleSignatureCache: UnknownFilePathMap<ModuleSignature>;
   buffers: AbsoluteFilePathMap<string>;
 
@@ -325,7 +325,7 @@ export default class Worker {
   async parseJS(
     ref: FileReference,
     options: WorkerParseOptions,
-  ): Promise<ParseResult> {
+  ): Promise<ParseJSResult> {
     const path = createAbsoluteFilePath(ref.real);
 
     const {project: projectId, uid} = ref;
@@ -371,7 +371,7 @@ export default class Worker {
     if (cacheEnabled) {
       // Update the lastAccessed of the ast cache and return it, it will be evicted on
       // any file change
-      const cachedResult: undefined | ParseResult = this.astCache.get(path);
+      const cachedResult: undefined | ParseJSResult = this.astCache.get(path);
       if (cachedResult !== undefined) {
         let useCached = true;
 
@@ -432,7 +432,7 @@ export default class Worker {
       );
     }
 
-    const res: ParseResult = {
+    const res: ParseJSResult = {
       ast,
       lastAccessed: Date.now(),
       sourceText,

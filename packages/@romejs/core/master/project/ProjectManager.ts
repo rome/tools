@@ -13,7 +13,6 @@ import {
   ProjectConfigMeta,
   ProjectDefinition,
   ROME_CONFIG_FILENAMES,
-  ROME_CONFIG_FOLDER,
   ROME_CONFIG_PACKAGE_JSON_FIELD,
   ROME_CONFIG_WARN_FILENAMES,
   assertHardMeta,
@@ -47,9 +46,9 @@ import {
 import {FileReference, JSONFileReference} from '../../common/types/files';
 import {
   GetFileHandlerResult,
-  IMPLICIT_JS_EXTENSIONS,
   getFileHandler,
-} from '../../common/fileHandlers';
+} from '../../common/file-handlers/index';
+import {IMPLICIT_JS_EXTENSIONS} from '../../common/file-handlers/javascript';
 import {createDirectory, readFileText} from '@romejs/fs';
 import {Consumer} from '@romejs/consume';
 import {consumeJSON} from '@romejs/codec-json';
@@ -855,17 +854,6 @@ export default class ProjectManager {
         const hasProject = await this.master.memoryFs.existsHard(configPath);
         if (hasProject) {
           return this.queueAddProject(dir, configPath);
-        }
-
-        // Check a .config folder
-        const configPathNested = dir.append(ROME_CONFIG_FOLDER).append(
-          configFilename,
-        );
-        const hasProjectNested = await this.master.memoryFs.existsHard(
-          configPathNested,
-        );
-        if (hasProjectNested) {
-          return this.queueAddProject(dir, configPathNested);
         }
       }
 
