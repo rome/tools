@@ -330,6 +330,10 @@ export const descriptions = createMessages({
       category: 'lint/noDangerWithChildren',
       message: 'Only set one of <emphasis>children</emphasis> or <emphasis>props.dangerouslySetInnerHTML</emphasis>.',
     },
+    NO_FIND_DOM_NODE: {
+      category: 'lint/noFindDOMNode',
+      message: 'Do not use findDOMNode',
+    },
     PENDING_FIXES: (
       relativeFilename: string,
       original: string,

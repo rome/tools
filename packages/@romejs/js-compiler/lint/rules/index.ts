@@ -37,6 +37,7 @@ import noDuplicateKeys from './regular/noDuplicateKeys';
 import noEmptyCharacterClass from './regular/noEmptyCharacterClass';
 import noExplicitAny from './regular/noExplicitAny';
 import noExtraBooleanCast from './regular/noExtraBooleanCast';
+import noFindDOMNode from './react/noFindDOMNode';
 import noFunctionAssign from './regular/noFunctionAssign';
 import noImportAssign from './regular/noImportAssign';
 import noLabelVar from './regular/noLabelVar';
@@ -96,6 +97,7 @@ export const lintTransforms = [
   noEmptyCharacterClass,
   noExplicitAny,
   noExtraBooleanCast,
+  noFindDOMNode,
   noFunctionAssign,
   noImportAssign,
   noLabelVar,

@@ -123,6 +123,7 @@ type LintDiagnosticCategory =
   | 'lint/noEmptyCharacterClass'
   | 'lint/noExplicitAny'
   | 'lint/noExtraBooleanCast'
+  | 'lint/noFindDOMNode'
   | 'lint/noFunctionAssign'
   | 'lint/noImportAssign'
   | 'lint/noLabelVar'
