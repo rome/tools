@@ -21,7 +21,6 @@ import {
   toKebabCase,
 } from '@romejs/string-utils';
 import {createUnknownFilePath} from '@romejs/path';
-
 import {Dict} from '@romejs/typescript-helpers';
 import {markup} from '@romejs/string-markup';
 import {descriptions} from '@romejs/diagnostics';
@@ -376,6 +375,8 @@ export default class Parser<T> {
       }
     }
 
+    // i could add a flag for dev-rome itself
+    // i could take the input command name from the flag
     const generateAutocomplete: undefined | SupportedAutocompleteShells = consumer.get(
       'generateAutocomplete',
       {
@@ -605,6 +606,7 @@ export default class Parser<T> {
 
     // Execute all command defineFlags. Only one is usually ran when the arguments match the command name.
     // But to generate autocomplete we want all the flags to be declared for all commands.
+
     const flags = this.getFlagsConsumer();
     for (const command of this.commands.values()) {
       // capture() will cause diagnostics to be suppressed
@@ -612,21 +614,23 @@ export default class Parser<T> {
       await this.defineCommandFlags(command, consumer);
     }
 
+    const prg = process.env.ROME_DEV ? 'dev-rome' : 'rome';
+
     switch (shell) {
       case 'bash': {
-        reporter.logAllNoMarkup(this.genBashCompletions());
+        reporter.logAllNoMarkup(this.genBashCompletions(prg));
         break;
       }
       case 'fish': {
-        reporter.logAllNoMarkup(this.genFishCompletions());
+        reporter.logAllNoMarkup(this.genFishCompletions(prg));
         break;
       }
     }
   }
 
-  genFishCompletions(): string {
+  genFishCompletions(prg: string): string {
     let script = '';
-    const scriptPre = 'complete -c rome';
+    const scriptPre = `complete -c ${prg}`;
 
     // add rome
     script += `${scriptPre} -f\n`;
@@ -648,7 +652,7 @@ export default class Parser<T> {
     return script;
   }
 
-  genBashCompletions(): string {
+  genBashCompletions(prg: string): string {
     let romeCmds = '';
     let commandFuncs = '';
     let globalFlags = '';
@@ -674,24 +678,25 @@ export default class Parser<T> {
     }
 
     for (let [cmd, flags] of cmdFlagMap.entries()) {
-      commandFuncs += dedent`__rome_${cmd}()
-        {
-            cmds="";
-            local_flags="${flags}"
-        }
-        
+      commandFuncs += `
+      __${prg}_${cmd}()
+      {
+        cmds="";
+        local_flags="${flags}"
+      }
       `;
     }
 
-    let romeFunc = dedent`__rome()
+    let romeFunc = `
+      __${prg}()
       {
           cmds="${romeCmds}"
           local_flags="";
       }
-      
     `;
 
-    return dedent`#!/usr/bin/env bash
+    let mainScript = `
+      #!/usr/bin/env bash
       global_flags="${globalFlags}"
 
       # initial state
@@ -700,42 +705,46 @@ export default class Parser<T> {
       
       __is_flag()
       {
-          case $1 in
-              -*) echo "true"
-          esac
+        case $1 in
+          -*) echo "true"
+        esac
       }
       
-      __rome_gen_completions()
+      __${prg}_gen_completions()
       {
-          local suggestions func flags index
+        local suggestions func flags index
          
-          index="$(($\{#COMP_WORDS[@]} - 1))"
+        index="$((\${#COMP_WORDS[@]} - 1))"
       
-          flags="$global_flags $local_flags"
+        flags="$global_flags $local_flags"
       
-          func="_"
+        func="_"
       
-          for ((i=0; i < index; i++))
-          do
-              if [[ ! $(__is_flag $\{COMP_WORDS[$i]}) ]]; then
-                  func="$\{func}_$\{COMP_WORDS[$i]}"
-              fi
-          done
-          
-          $func 2> /dev/null
-      
-          if [[ $(__is_flag $\{COMP_WORDS[$index]}) ]]; then
-              suggestions=$flags 
-          else
-              suggestions=$cmds
+        for ((i=0; i < index; i++))
+        do
+          leaf=$(echo \${COMP_WORDS[$i]} | grep -o '[^/]*$')
+          if [[ ! $(__is_flag $leaf) ]]; then
+            func="\${func}_\${leaf}"
           fi
+        done
+          
+        $func 2> /dev/null
       
-          COMPREPLY=($(compgen -W "$\{suggestions}" -- "$\{COMP_WORDS[$index]}"))
+        if [[ $(__is_flag \${COMP_WORDS[$index]}) ]]; then
+          suggestions=$flags 
+        else
+          suggestions=$cmds
+        fi
+
+        COMPREPLY=($(compgen -W "$suggestions" -- "\${COMP_WORDS[$index]}"))
       }
-      
+    `;
+
+    return dedent`
+      ${mainScript}
       ${commandFuncs}
       ${romeFunc}
-      complete -F __rome_gen_completions rome
+      complete -F __${prg}_gen_completions ${prg}
     `;
   }
 

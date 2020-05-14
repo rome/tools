@@ -1,0 +1,106 @@
+#!/usr/bin/env bash
+global_flags="--version --generateAutocomplete "
+
+# initial state
+cmds=""
+local_flags=""
+
+__is_flag()
+{
+  case $1 in
+    -*) echo "true"
+  esac
+}
+
+__dev-rome_gen_completions()
+{
+  local suggestions func flags index
+   
+  index="$((${#COMP_WORDS[@]} - 1))"
+
+  flags="$global_flags $local_flags"
+
+  func="_"
+
+  for ((i=0; i < index; i++))
+  do
+    leaf=$(echo ${COMP_WORDS[$i]} | grep -o '[^/]*$')
+    if [[ ! $(__is_flag $leaf) ]]; then
+      func="${func}_${leaf}"
+    fi
+  done
+    
+  $func 2> /dev/null
+
+  if [[ $(__is_flag ${COMP_WORDS[$index]}) ]]; then
+    suggestions=$flags 
+  else
+    suggestions=$cmds
+  fi
+
+  COMPREPLY=($(compgen -W "$suggestions" -- "${COMP_WORDS[$index]}"))
+}
+    
+
+__dev-rome_init()
+{
+  cmds="";
+  local_flags="--defaults"
+}
+
+__dev-rome_test()
+{
+  cmds="";
+  local_flags="--coverage --showAllCoverage --updateSnapshots --freezeSnapshots --focusAllowed --syncTests"
+}
+
+__dev-rome_lint()
+{
+  cmds="";
+  local_flags="--save --formatOnly --changed"
+}
+
+__dev-rome_bundle()
+{
+  cmds="";
+  local_flags="--quiet"
+}
+
+__dev-rome_parse()
+{
+  cmds="";
+  local_flags="--allowDiagnostics --compact --sourceType"
+}
+
+__dev-rome_analyzeDependencies()
+{
+  cmds="";
+  local_flags="--compact --focusSource"
+}
+
+__dev-rome_compile()
+{
+  cmds="";
+  local_flags="--bundle"
+}
+
+__dev-rome_ci()
+{
+  cmds="";
+  local_flags="--fix"
+}
+
+__dev-rome_format()
+{
+  cmds="";
+  local_flags="--allowDiagnostics"
+}
+
+
+__dev-rome()
+{
+    cmds="init start develop stop run restart status lsp test lint config bundle parse analyzeDependencies resolve compile publish ci format _evict _moduleSignature _noop rage logs "
+    local_flags="";
+}
+    
+complete -F __dev-rome_gen_completions dev-rome
