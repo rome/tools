@@ -7,7 +7,7 @@
 
 import {JSONParserOptions, JSONValue, PathToComments, Tokens} from './types';
 import {createJSONParser} from './parse';
-import {Consumer, consume} from '@romejs/consume';
+import {Consumer, consume, consumeUnknown} from '@romejs/consume';
 import {stringifyRootConsumer} from './stringify';
 import {TokenValues} from '@romejs/parser-core';
 
@@ -56,11 +56,15 @@ export function tokenizeJSON(
   return createJSONParser(opts).tokenizeAll();
 }
 
-export function stringifyJSON(
+export function stringifyRJSONFromConsumer(
   opts: {
     consumer: Consumer;
     comments: PathToComments;
   },
 ): string {
   return stringifyRootConsumer(opts.consumer, opts.comments);
+}
+
+export function stringifyRJSON(value: unknown): string {
+  return stringifyRootConsumer(consumeUnknown(value, 'parse/json'), new Map());
 }

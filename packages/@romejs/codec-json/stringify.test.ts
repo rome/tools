@@ -6,7 +6,7 @@
  */
 
 import '@romejs/core';
-import {consumeJSONExtra, stringifyJSON} from '@romejs/codec-json';
+import {consumeJSONExtra, stringifyRJSONFromConsumer} from '@romejs/codec-json';
 import {test} from 'rome';
 import {ParserOptions} from '@romejs/parser-core';
 import {createUnknownFilePath} from '@romejs/path';
@@ -22,11 +22,11 @@ function consumeExtJSON(opts: ParserOptions) {
 test(
   'arrays',
   (t) => {
-    t.is(stringifyJSON(consumeExtJSON({input: '[]'})), '[]');
-    t.is(stringifyJSON(consumeExtJSON({input: '[1]'})), '[1]');
-    t.is(stringifyJSON(consumeExtJSON({input: '[1,]'})), '[1]');
+    t.is(stringifyRJSONFromConsumer(consumeExtJSON({input: '[]'})), '[]');
+    t.is(stringifyRJSONFromConsumer(consumeExtJSON({input: '[1]'})), '[1]');
+    t.is(stringifyRJSONFromConsumer(consumeExtJSON({input: '[1,]'})), '[1]');
     t.is(
-      stringifyJSON(consumeExtJSON({input: '[1, 2, 3]'})),
+      stringifyRJSONFromConsumer(consumeExtJSON({input: '[1, 2, 3]'})),
       '[\n  1\n  2\n  3\n]',
     );
   },
@@ -35,24 +35,31 @@ test(
 test(
   'booleans',
   (t) => {
-    t.is(stringifyJSON(consumeExtJSON({input: 'true'})), 'true');
-    t.is(stringifyJSON(consumeExtJSON({input: 'false'})), 'false');
+    t.is(stringifyRJSONFromConsumer(consumeExtJSON({input: 'true'})), 'true');
+    t.is(stringifyRJSONFromConsumer(consumeExtJSON({input: 'false'})), 'false');
   },
 );
 
 test(
   'numbers',
   (t) => {
-    t.is(stringifyJSON(consumeExtJSON({input: '1'})), '1');
-    t.is(stringifyJSON(consumeExtJSON({input: '12'})), '12');
-    t.is(stringifyJSON(consumeExtJSON({input: '123'})), '123');
-    t.is(stringifyJSON(consumeExtJSON({input: '123.45'})), '123.45');
+    t.is(stringifyRJSONFromConsumer(consumeExtJSON({input: '1'})), '1');
+    t.is(stringifyRJSONFromConsumer(consumeExtJSON({input: '12'})), '12');
+    t.is(stringifyRJSONFromConsumer(consumeExtJSON({input: '123'})), '123');
     t.is(
-      stringifyJSON(consumeExtJSON({input: '1.2341234123412341e+27'})),
+      stringifyRJSONFromConsumer(consumeExtJSON({input: '123.45'})),
+      '123.45',
+    );
+    t.is(
+      stringifyRJSONFromConsumer(
+        consumeExtJSON({input: '1.2341234123412341e+27'}),
+      ),
       '1.2341234123412341e+27',
     );
     t.is(
-      stringifyJSON(consumeExtJSON({input: '1.2341234123412341E+27'})),
+      stringifyRJSONFromConsumer(
+        consumeExtJSON({input: '1.2341234123412341E+27'}),
+      ),
       '1.2341234123412341e+27',
     );
   },
@@ -61,30 +68,38 @@ test(
 test(
   'null',
   (t) => {
-    t.is(stringifyJSON(consumeExtJSON({input: 'null'})), 'null');
+    t.is(stringifyRJSONFromConsumer(consumeExtJSON({input: 'null'})), 'null');
 
     const funcToNull = consumeExtJSON({input: '1'});
     funcToNull.consumer.setValue(() => {});
-    t.is(stringifyJSON(funcToNull), 'null');
+    t.is(stringifyRJSONFromConsumer(funcToNull), 'null');
 
     const undefinedToNull = consumeExtJSON({input: '1'});
     undefinedToNull.consumer.setValue(undefined);
-    t.is(stringifyJSON(undefinedToNull), 'null');
+    t.is(stringifyRJSONFromConsumer(undefinedToNull), 'null');
 
     const NaNToNull = consumeExtJSON({input: '1'});
     NaNToNull.consumer.setValue(NaN);
-    t.is(stringifyJSON(NaNToNull), 'NaN');
+    t.is(stringifyRJSONFromConsumer(NaNToNull), 'NaN');
   },
 );
 
 test(
   'objects',
   (t) => {
-    t.is(stringifyJSON(consumeExtJSON({input: '{}'})), '{}');
-    t.is(stringifyJSON(consumeExtJSON({input: '{"foo":"bar"}'})), 'foo: "bar"');
-    t.is(stringifyJSON(consumeExtJSON({input: '{"foo":"bar",}'})), 'foo: "bar"');
+    t.is(stringifyRJSONFromConsumer(consumeExtJSON({input: '{}'})), '{}');
     t.is(
-      stringifyJSON(consumeExtJSON({input: '{"foo":"bar", "bar": "foo"}'})),
+      stringifyRJSONFromConsumer(consumeExtJSON({input: '{"foo":"bar"}'})),
+      'foo: "bar"',
+    );
+    t.is(
+      stringifyRJSONFromConsumer(consumeExtJSON({input: '{"foo":"bar",}'})),
+      'foo: "bar"',
+    );
+    t.is(
+      stringifyRJSONFromConsumer(
+        consumeExtJSON({input: '{"foo":"bar", "bar": "foo"}'}),
+      ),
       'bar: "foo"\nfoo: "bar"',
     );
 
@@ -93,7 +108,7 @@ test(
     ret.consumer.get('foo').setValue('bar');
     ret.consumer.get('func').setValue(function() {});
     ret.consumer.get('undef').setValue(undefined);
-    t.is(stringifyJSON(ret), 'foo: "bar"');
+    t.is(stringifyRJSONFromConsumer(ret), 'foo: "bar"');
   },
 );
 
@@ -116,21 +131,27 @@ test(
   'complex',
   (t) => {
     const consumer = consumeExtJSON({input: complexTest});
-    t.is(stringifyJSON(consumer), complexTest);
+    t.is(stringifyRJSONFromConsumer(consumer), complexTest);
   },
 );
 
 test(
   'comments',
   (t) => {
-    t.is(stringifyJSON(consumeExtJSON({input: '// foo\ntrue'})), '// foo\ntrue');
-    t.is(stringifyJSON(consumeExtJSON({input: 'true\n// foo'})), '// foo\ntrue');
+    t.is(
+      stringifyRJSONFromConsumer(consumeExtJSON({input: '// foo\ntrue'})),
+      '// foo\ntrue',
+    );
+    t.is(
+      stringifyRJSONFromConsumer(consumeExtJSON({input: 'true\n// foo'})),
+      '// foo\ntrue',
+    );
 
     //# Comments - loose
 
     // comments at end of object
     t.is(
-      stringifyJSON(
+      stringifyRJSONFromConsumer(
         consumeExtJSON({
           input: `{
     "foo": "bar",
@@ -142,7 +163,7 @@ test(
     );
     // comments at end of array
     t.is(
-      stringifyJSON(
+      stringifyRJSONFromConsumer(
         consumeExtJSON({
           input: `[
     "foobar",
@@ -154,7 +175,7 @@ test(
     );
     // comments in empty array
     t.is(
-      stringifyJSON(
+      stringifyRJSONFromConsumer(
         consumeExtJSON({
           input: `[
     // inner comment
@@ -165,7 +186,7 @@ test(
     );
     // comments in empty object
     t.is(
-      stringifyJSON(
+      stringifyRJSONFromConsumer(
         consumeExtJSON({
           input: `{
     // inner comment
@@ -179,7 +200,7 @@ test(
 
     // before property
     t.is(
-      stringifyJSON(
+      stringifyRJSONFromConsumer(
         consumeExtJSON({
           input: `{
     /* bar */
@@ -191,7 +212,7 @@ test(
     );
     // before value
     t.is(
-      stringifyJSON(
+      stringifyRJSONFromConsumer(
         consumeExtJSON({
           input: `{
     "foo": /* bar */ "bar",
@@ -202,7 +223,7 @@ test(
     );
     // after value
     t.is(
-      stringifyJSON(
+      stringifyRJSONFromConsumer(
         consumeExtJSON({
           input: `{
     "foo": "bar" /* bar */,
@@ -216,7 +237,7 @@ test(
 
     // before element
     t.is(
-      stringifyJSON(
+      stringifyRJSONFromConsumer(
         consumeExtJSON({
           input: `[
     /* bar */
@@ -228,7 +249,7 @@ test(
     );
     // after value
     t.is(
-      stringifyJSON(
+      stringifyRJSONFromConsumer(
         consumeExtJSON({
           input: `[
     "foo" /* bar */,
@@ -248,7 +269,7 @@ test(
       const foo: Dict<unknown> = {};
       foo.bar = foo;
       ret.consumer.get('foo').setValue(foo);
-      stringifyJSON(ret);
+      stringifyRJSONFromConsumer(ret);
     });
   },
 );

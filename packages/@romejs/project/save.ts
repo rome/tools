@@ -8,7 +8,7 @@
 import {ProjectConfigMeta, ProjectConfigMetaHard} from './types';
 import {Consumer} from '@romejs/consume';
 import {readFileText, writeFile} from '@romejs/fs';
-import {consumeJSONExtra, stringifyJSON} from '@romejs/codec-json';
+import {consumeJSONExtra, stringifyRJSONFromConsumer} from '@romejs/codec-json';
 import {normalizeProjectConfig} from './load';
 import {DiagnosticsError, catchDiagnosticsSync} from '@romejs/diagnostics';
 import {assertHardMeta} from './utils';
@@ -42,7 +42,7 @@ export async function modifyProjectConfig(
   // Stringify the config
   let stringified: string;
   if (res.hasExtensions) {
-    stringified = stringifyJSON(res);
+    stringified = stringifyRJSONFromConsumer(res);
   } else {
     stringified = JSON.stringify(consumer.asUnknown(), null, '  ');
   }

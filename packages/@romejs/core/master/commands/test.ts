@@ -12,7 +12,7 @@ import {commandCategories} from '../../common/commands';
 import {createMasterCommand} from '../commands';
 import TestMasterRunner from '../testing/TestMasterRunner';
 import Bundler from '../bundler/Bundler';
-import {JS_EXTENSIONS} from '../../common/fileHandlers';
+import {JS_EXTENSIONS} from '../../common/file-handlers/javascript';
 import {TestMasterRunnerOptions, TestSources} from '../testing/types';
 
 type Flags = Omit<TestMasterRunnerOptions, 'verboseDiagnostics'>;

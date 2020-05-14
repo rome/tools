@@ -25,10 +25,8 @@ import {
 } from '../common/bridges/WorkerBridge';
 import Logger from '../common/utils/Logger';
 import * as jsAnalysis from '@romejs/js-analysis';
-import {
-  ExtensionLintResult,
-  getFileHandlerAssert,
-} from '../common/fileHandlers';
+import {ExtensionLintResult} from '../common/file-handlers/types';
+import {getFileHandlerAssert} from '../common/file-handlers/index';
 import {
   AnalyzeDependencyResult,
   UNKNOWN_ANALYZE_DEPENDENCIES_RESULT,

@@ -6,7 +6,7 @@
  */
 
 import {Master, MasterRequest} from '@romejs/core';
-import {LINTABLE_EXTENSIONS} from '@romejs/core/common/fileHandlers';
+import {LINTABLE_EXTENSIONS} from '@romejs/core/common/file-handlers/index';
 import {
   DiagnosticSuppressions,
   Diagnostics,

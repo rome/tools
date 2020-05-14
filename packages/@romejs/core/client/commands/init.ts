@@ -12,30 +12,23 @@ import {Dict} from '@romejs/typescript-helpers';
 import {exists, writeFile} from '@romejs/fs';
 import {VERSION} from '../../common/constants';
 import {Consumer} from '@romejs/consume';
-
-type Flags = {
-  defaults: boolean;
-};
+import {stringifyRJSON} from '@romejs/codec-json';
 
 export default createLocalCommand({
   category: commandCategories.PROJECT_MANAGEMENT,
   description: 'create a project config',
   usage: '',
   examples: [],
-  defineFlags(consumer: Consumer): Flags {
-    return {
-      defaults: consumer.get('defaults').asBoolean(false),
-    };
+  defineFlags(consumer: Consumer) {
+    return {};
   },
-  async callback(req: ClientRequest, flags: Flags) {
+  async callback(req: ClientRequest) {
     const {reporter} = req.client;
 
-    const config: Dict<unknown> = {};
-
-    const configPath = req.client.flags.cwd.append('rome.json');
+    const configPath = req.client.flags.cwd.append('rome.rjson');
     if (await exists(configPath)) {
       reporter.error(
-        `<filelink target="${configPath.join()}" emphasis>rome.json</filelink> file already exists`,
+        `<filelink target="${configPath.join()}" emphasis>rome.rjson</filelink> file already exists`,
       );
       reporter.info(
         'Use <command>rome config</command> to update an existing config',
@@ -43,30 +36,16 @@ export default createLocalCommand({
       return false;
     }
 
-    reporter.heading('Welcome to Rome!');
+    const config: Dict<unknown> = {
+      version: `^${VERSION}`,
+    };
+    await writeConfig();
 
-    if (flags.defaults === false) {
-      const useDefaults = await reporter.radioConfirm(
-        'Use recommended settings?',
-      );
-      if (useDefaults) {
-        flags = {defaults: true};
-      }
+    async function writeConfig() {
+      await writeFile(configPath, stringifyRJSON(config));
     }
 
-    const name = await reporter.question(
-      'Project name',
-      {
-        yes: flags.defaults,
-      },
-    );
-    if (name !== '') {
-      config.name = name;
-    }
-
-    config.version = `^${VERSION}`;
-
-    await writeFile(configPath, `${JSON.stringify(config, null, '  ')}\n`);
+    // Run lint, capture diagnostics
 
     reporter.success(
       `Created config <filelink emphasis target="${configPath.join()}" />`,

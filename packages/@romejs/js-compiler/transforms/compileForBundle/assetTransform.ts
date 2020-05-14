@@ -7,7 +7,7 @@
 
 import {Path} from '@romejs/js-compiler';
 import {getOptions} from './_utils';
-import {ASSET_EXPORT_TEMPORARY_VALUE} from '@romejs/core/common/fileHandlers';
+import {ASSET_EXPORT_TEMPORARY_VALUE} from '@romejs/core/common/file-handlers/index';
 
 export default {
   name: 'asset',

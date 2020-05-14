@@ -32,7 +32,7 @@ import {
   AbsoluteFilePathSet,
 } from '@romejs/path';
 import {exists, lstat, readFileText, readdir, watch} from '@romejs/fs';
-import {getFileHandler} from '../../common/fileHandlers';
+import {getFileHandler} from '../../common/file-handlers/index';
 import {markup} from '@romejs/string-markup';
 import crypto = require('crypto');
 import fs = require('fs');
