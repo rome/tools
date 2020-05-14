@@ -14,9 +14,14 @@ import {
   Consumer,
   consume,
 } from '@romejs/consume';
-import {naturalCompare, toCamelCase, toKebabCase} from '@romejs/string-utils';
+import {
+  dedent,
+  naturalCompare,
+  toCamelCase,
+  toKebabCase,
+} from '@romejs/string-utils';
 import {createUnknownFilePath} from '@romejs/path';
-import {dedent} from '@romejs/string-utils';
+
 import {Dict} from '@romejs/typescript-helpers';
 import {markup} from '@romejs/string-markup';
 import {descriptions} from '@romejs/diagnostics';
