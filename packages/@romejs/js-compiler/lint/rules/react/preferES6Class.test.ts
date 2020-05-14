@@ -9,7 +9,7 @@ import {test} from 'rome';
 import {testLintMultiple} from '../testHelpers';
 
 test(
-  'prefer e s6 class',
+  'prefer ES6 class',
   async (t) => {
     await testLintMultiple(
       t,
