@@ -9,6 +9,10 @@ import {markupToPlainTextString} from '@romejs/string-markup';
 import highlightCode, {AnsiHighlightOptions} from './highlightCode';
 import {NEWLINE} from '@romejs/js-parser-utils';
 
+export function normalizeTabs(str: string): string {
+  return str.replace(/\t/g, '  ');
+}
+
 export function showInvisibles(str: string): string {
   let ret = '';
   for (const cha of str) {
@@ -61,8 +65,25 @@ export function splitLines(src: string): Array<string> {
   return src.replace(/\t/g, ' ').split(NEWLINE);
 }
 
-export function toLines(opts: AnsiHighlightOptions): Array<string> {
-  const highlighted = highlightCode(opts);
-  const lines = splitLines(highlighted);
-  return lines;
+export type ToLines = {
+  length: number;
+  raw: Array<string>;
+  highlighted: Array<string>;
+};
+
+export function toLines(opts: AnsiHighlightOptions): ToLines {
+  const raw = splitLines(opts.input);
+  const highlighted = splitLines(highlightCode(opts));
+
+  if (raw.length !== highlighted.length) {
+    throw new Error(
+      `raw and highlighted line count mismatch ${raw.length} !== ${highlighted.length}`,
+    );
+  }
+
+  return {
+    length: raw.length,
+    raw,
+    highlighted,
+  };
 }

@@ -27,7 +27,7 @@ import {
   markup,
   markupToPlainTextString,
 } from '@romejs/string-markup';
-import {toLines} from './utils';
+import {ToLines, toLines} from './utils';
 import printAdvice from './printAdvice';
 import {default as successBanner} from './banners/success.json';
 import {default as errorBanner} from './banners/error.json';
@@ -116,7 +116,7 @@ type FileDependency = ChangeFileDependency | ReferenceFileDependency;
 
 export type DiagnosticsPrinterFileSources = UnknownFilePathMap<{
   sourceText: string;
-  lines: Array<string>;
+  lines: ToLines;
 }>;
 
 export type DiagnosticsPrinterFileMtimes = UnknownFilePathMap<number>;

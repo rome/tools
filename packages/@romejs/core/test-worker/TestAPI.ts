@@ -10,7 +10,6 @@ import {
   DiagnosticAdvice,
   createBlessedDiagnosticMessage,
   createSingleDiagnosticError,
-  deriveDiagnosticFromError,
   deriveDiagnosticFromErrorStructure,
   descriptions,
   getErrorStackAdvice,
@@ -608,7 +607,7 @@ export default class TestAPI implements TestHelper {
 
       if (status === 'UPDATE' && this.options.freezeSnapshots) {
         await this.emitDiagnostic(
-          deriveDiagnosticFromError(
+          deriveDiagnosticFromErrorStructure(
             callError,
             {
               description: descriptions.SNAPSHOTS.INLINE_FROZEN,
@@ -619,7 +618,7 @@ export default class TestAPI implements TestHelper {
 
       if (status === 'NO_MATCH') {
         await this.emitDiagnostic(
-          deriveDiagnosticFromError(
+          deriveDiagnosticFromErrorStructure(
             callError,
             {
               description: {
@@ -698,7 +697,7 @@ export default class TestAPI implements TestHelper {
       if (existingSnapshot === undefined) {
         if (this.options.freezeSnapshots) {
           await this.emitDiagnostic(
-            deriveDiagnosticFromError(
+            deriveDiagnosticFromErrorStructure(
               callError,
               {
                 description: descriptions.SNAPSHOTS.FROZEN,
@@ -748,7 +747,7 @@ export default class TestAPI implements TestHelper {
         });
 
         await this.emitDiagnostic(
-          deriveDiagnosticFromError(
+          deriveDiagnosticFromErrorStructure(
             callError,
             {
               description: {
