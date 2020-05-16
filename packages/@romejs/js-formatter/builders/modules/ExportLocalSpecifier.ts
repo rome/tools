@@ -10,20 +10,20 @@ import {Token, concat, space} from '../../tokens';
 import {ExportExternalSpecifier, ExportLocalSpecifier} from '@romejs/js-ast';
 
 export default function ExportLocalSpecifier(
-  builder: Builder,
-  node: ExportExternalSpecifier | ExportLocalSpecifier,
+	builder: Builder,
+	node: ExportExternalSpecifier | ExportLocalSpecifier,
 ): Token {
-  const tokens = [builder.tokenize(node.local, node)];
+	const tokens = [builder.tokenize(node.local, node)];
 
-  if (node.local.name === node.exported.name) {
-    return concat(tokens);
-  } else {
-    return concat([
-      concat(tokens),
-      space,
-      'as',
-      space,
-      builder.tokenize(node.exported, node),
-    ]);
-  }
+	if (node.local.name === node.exported.name) {
+		return concat(tokens);
+	} else {
+		return concat([
+			concat(tokens),
+			space,
+			'as',
+			space,
+			builder.tokenize(node.exported, node),
+		]);
+	}
 }

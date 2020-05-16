@@ -10,36 +10,36 @@ import {testLintMultiple} from '../testHelpers';
 import {dedent} from '@romejs/string-utils';
 
 test(
-  'empty blocks',
-  async (t) => {
-    await testLintMultiple(
-      t,
-      [
-        // VALID
-        dedent`
+	'empty blocks',
+	async (t) => {
+		await testLintMultiple(
+			t,
+			[
+				// VALID
+				dedent`
           if (foo) foo;
         `,
-        dedent`
+				dedent`
           if (foo) {
             foo;
           }
         `,
-        dedent`
+				dedent`
           if (foo) {
             // empty
           }
         `,
-        // INVALID
-        dedent`
+				// INVALID
+				dedent`
           if (foo) {}
         `,
-        dedent`
+				dedent`
           if (foo) {
             // foo;
           } else {}
         `,
-      ],
-      {category: 'lint/emptyBlocks'},
-    );
-  },
+			],
+			{category: 'lint/emptyBlocks'},
+		);
+	},
 );

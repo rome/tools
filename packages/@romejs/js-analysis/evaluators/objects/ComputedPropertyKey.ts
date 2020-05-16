@@ -7,13 +7,13 @@
 
 import {Scope} from '../../scopes';
 import {
-  AnyNode,
-  ComputedPropertyKey,
-  computedPropertyKey,
+	AnyNode,
+	ComputedPropertyKey,
+	computedPropertyKey,
 } from '@romejs/js-ast';
 
 export default function ComputedPropertyKey(node: AnyNode, scope: Scope) {
-  node = computedPropertyKey.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = computedPropertyKey.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

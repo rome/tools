@@ -12,11 +12,11 @@ import ObjectExpression from '../objects/ObjectExpression';
 import {printPatternMeta} from '../utils';
 
 export default function BindingObjectPattern(
-  builder: Builder,
-  node: BindingObjectPattern,
+	builder: Builder,
+	node: BindingObjectPattern,
 ): Token {
-  return concat([
-    ObjectExpression(builder, node),
-    printPatternMeta(builder, node, node.meta),
-  ]);
+	return concat([
+		ObjectExpression(builder, node),
+		printPatternMeta(builder, node, node.meta),
+	]);
 }

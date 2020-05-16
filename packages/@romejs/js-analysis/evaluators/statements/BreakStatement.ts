@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, BreakStatement, breakStatement} from '@romejs/js-ast';
 
 export default function BreakStatement(node: AnyNode, scope: Scope) {
-  node = breakStatement.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = breakStatement.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

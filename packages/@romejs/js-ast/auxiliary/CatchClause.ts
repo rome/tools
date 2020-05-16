@@ -9,20 +9,20 @@ import {AnyBindingPattern, BlockStatement, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type CatchClause = JSNodeBase & {
-  type: 'CatchClause';
-  param?: AnyBindingPattern;
-  body: BlockStatement;
+	type: 'CatchClause';
+	param?: AnyBindingPattern;
+	body: BlockStatement;
 };
 
 export const catchClause = createBuilder<CatchClause>(
-  'CatchClause',
-  {
-    bindingKeys: {
-      param: true,
-    },
-    visitorKeys: {
-      param: true,
-      body: true,
-    },
-  },
+	'CatchClause',
+	{
+		bindingKeys: {
+			param: true,
+		},
+		visitorKeys: {
+			param: true,
+			body: true,
+		},
+	},
 );

@@ -10,19 +10,19 @@ import {TemplateLiteral} from '@romejs/js-ast';
 import {Token, concat} from '../../tokens';
 
 export default function TemplateLiteral(
-  builder: Builder,
-  node: TemplateLiteral,
+	builder: Builder,
+	node: TemplateLiteral,
 ): Token {
-  const tokens: Array<Token> = [];
-  const quasis = node.quasis;
+	const tokens: Array<Token> = [];
+	const quasis = node.quasis;
 
-  for (let i = 0; i < quasis.length; i++) {
-    tokens.push(builder.tokenize(quasis[i], node));
+	for (let i = 0; i < quasis.length; i++) {
+		tokens.push(builder.tokenize(quasis[i], node));
 
-    if (i + 1 < quasis.length) {
-      tokens.push(builder.tokenize(node.expressions[i], node));
-    }
-  }
+		if (i + 1 < quasis.length) {
+			tokens.push(builder.tokenize(node.expressions[i], node));
+		}
+	}
 
-  return concat(tokens);
+	return concat(tokens);
 }

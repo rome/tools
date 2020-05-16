@@ -7,20 +7,20 @@
 
 import {Scope} from '../../scopes';
 import {
-  AnyNode,
-  IntersectionTypeAnnotation,
-  intersectionTypeAnnotation,
+	AnyNode,
+	IntersectionTypeAnnotation,
+	intersectionTypeAnnotation,
 } from '@romejs/js-ast';
 import IntersectionT from '../../types/IntersectionT';
 
 export default function IntersectionTypeAnnotation(node: AnyNode, scope: Scope) {
-  node = intersectionTypeAnnotation.assert(node);
+	node = intersectionTypeAnnotation.assert(node);
 
-  return new IntersectionT(
-    scope,
-    node,
-    node.types.map((type) => {
-      return scope.evaluate(type);
-    }),
-  );
+	return new IntersectionT(
+		scope,
+		node,
+		node.types.map((type) => {
+			return scope.evaluate(type);
+		}),
+	);
 }

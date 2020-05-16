@@ -10,6 +10,6 @@ import {AnyNode, StringLiteral, stringLiteral} from '@romejs/js-ast';
 import StringLiteralT from '../../types/StringLiteralT';
 
 export default function StringLiteral(node: AnyNode, scope: Scope) {
-  node = stringLiteral.assert(node);
-  return new StringLiteralT(scope, node, node.value);
+	node = stringLiteral.assert(node);
+	return new StringLiteralT(scope, node, node.value);
 }

@@ -10,15 +10,15 @@ import {Builder} from '@romejs/js-formatter';
 import {Token, concat, space} from '../../tokens';
 
 export default function TSExportAssignment(
-  builder: Builder,
-  node: TSExportAssignment,
+	builder: Builder,
+	node: TSExportAssignment,
 ): Token {
-  return concat([
-    'export',
-    space,
-    '=',
-    space,
-    builder.tokenize(node.expression, node),
-    ';',
-  ]);
+	return concat([
+		'export',
+		space,
+		'=',
+		space,
+		builder.tokenize(node.expression, node),
+		';',
+	]);
 }

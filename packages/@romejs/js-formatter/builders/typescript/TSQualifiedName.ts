@@ -10,12 +10,12 @@ import {Builder} from '@romejs/js-formatter';
 import {Token, concat} from '../../tokens';
 
 export default function TSQualifiedName(
-  builder: Builder,
-  node: TSQualifiedName,
+	builder: Builder,
+	node: TSQualifiedName,
 ): Token {
-  return concat([
-    builder.tokenize(node.left, node),
-    '.',
-    builder.tokenize(node.right, node),
-  ]);
+	return concat([
+		builder.tokenize(node.left, node),
+		'.',
+		builder.tokenize(node.right, node),
+	]);
 }

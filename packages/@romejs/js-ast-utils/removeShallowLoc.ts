@@ -8,8 +8,8 @@
 import {AnyNode} from '@romejs/js-ast';
 
 export default function removeShallowLoc<T extends AnyNode>(node: T): T {
-  return {
-    ...node,
-    loc: undefined,
-  };
+	return {
+		...node,
+		loc: undefined,
+	};
 }

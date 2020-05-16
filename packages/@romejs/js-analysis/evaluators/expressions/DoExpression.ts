@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, DoExpression, doExpression} from '@romejs/js-ast';
 
 export default function DoExpression(node: AnyNode, scope: Scope) {
-  node = doExpression.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = doExpression.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

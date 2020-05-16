@@ -11,9 +11,9 @@ import {AnyNode, LogicalExpression} from '@romejs/js-ast';
 import BinaryExpression from './BinaryExpression';
 
 export default function LogicalExpression(
-  builder: Builder,
-  node: LogicalExpression,
-  parent: AnyNode,
+	builder: Builder,
+	node: LogicalExpression,
+	parent: AnyNode,
 ): Token {
-  return BinaryExpression(builder, node, parent);
+	return BinaryExpression(builder, node, parent);
 }

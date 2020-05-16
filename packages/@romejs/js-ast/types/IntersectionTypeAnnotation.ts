@@ -9,16 +9,16 @@ import {AnyFlowPrimary, AnyTSPrimary, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type IntersectionTypeAnnotation = JSNodeBase & {
-  type: 'IntersectionTypeAnnotation';
-  types: Array<AnyFlowPrimary | AnyTSPrimary>;
+	type: 'IntersectionTypeAnnotation';
+	types: Array<AnyFlowPrimary | AnyTSPrimary>;
 };
 
 export const intersectionTypeAnnotation = createBuilder<IntersectionTypeAnnotation>(
-  'IntersectionTypeAnnotation',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      types: true,
-    },
-  },
+	'IntersectionTypeAnnotation',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			types: true,
+		},
+	},
 );

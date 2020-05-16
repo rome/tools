@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, ThrowStatement, throwStatement} from '@romejs/js-ast';
 
 export default function ThrowStatement(node: AnyNode, scope: Scope) {
-  node = throwStatement.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = throwStatement.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

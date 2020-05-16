@@ -7,13 +7,13 @@
 
 import {Scope} from '../../scopes';
 import {
-  AnyNode,
-  TSSignatureDeclarationMeta,
-  tsSignatureDeclarationMeta,
+	AnyNode,
+	TSSignatureDeclarationMeta,
+	tsSignatureDeclarationMeta,
 } from '@romejs/js-ast';
 
 export default function TSSignatureDeclarationMeta(node: AnyNode, scope: Scope) {
-  node = tsSignatureDeclarationMeta.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = tsSignatureDeclarationMeta.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

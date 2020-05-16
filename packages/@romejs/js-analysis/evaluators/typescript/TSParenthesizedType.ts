@@ -7,13 +7,13 @@
 
 import {Scope} from '../../scopes';
 import {
-  AnyNode,
-  TSParenthesizedType,
-  tsParenthesizedType,
+	AnyNode,
+	TSParenthesizedType,
+	tsParenthesizedType,
 } from '@romejs/js-ast';
 
 export default function TSParenthesizedType(node: AnyNode, scope: Scope) {
-  node = tsParenthesizedType.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = tsParenthesizedType.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

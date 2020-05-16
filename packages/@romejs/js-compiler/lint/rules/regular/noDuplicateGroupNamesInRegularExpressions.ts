@@ -11,29 +11,29 @@ import {descriptions} from '@romejs/diagnostics';
 import {DiagnosticsDuplicateHelper} from '../../../lib/DiagnosticsDuplicateHelper';
 
 export default {
-  name: 'noDuplicateGroupNamesInRegularExpressions',
-  enter(path: Path): AnyNode {
-    const {context, node} = path;
+	name: 'noDuplicateGroupNamesInRegularExpressions',
+	enter(path: Path): AnyNode {
+		const {context, node} = path;
 
-    if (node.type === 'RegExpSubExpression') {
-      const duplicates = new DiagnosticsDuplicateHelper(
-        context,
-        descriptions.LINT.DUPLICATE_REGEX_GROUP_NAME,
-      );
+		if (node.type === 'RegExpSubExpression') {
+			const duplicates = new DiagnosticsDuplicateHelper(
+				context,
+				descriptions.LINT.DUPLICATE_REGEX_GROUP_NAME,
+			);
 
-      for (const bodyItem of node.body) {
-        if (bodyItem.type === 'RegExpGroupCapture') {
-          const groupName = bodyItem.name;
+			for (const bodyItem of node.body) {
+				if (bodyItem.type === 'RegExpGroupCapture') {
+					const groupName = bodyItem.name;
 
-          if (groupName !== undefined) {
-            duplicates.addLocation(groupName, bodyItem.loc);
-          }
-        }
-      }
+					if (groupName !== undefined) {
+						duplicates.addLocation(groupName, bodyItem.loc);
+					}
+				}
+			}
 
-      duplicates.process();
-    }
+			duplicates.process();
+		}
 
-    return node;
-  },
+		return node;
+	},
 };

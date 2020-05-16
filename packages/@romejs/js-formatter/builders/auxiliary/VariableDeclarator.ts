@@ -11,18 +11,18 @@ import {Token, concat, space} from '../../tokens';
 import {printAssignment} from '../utils';
 
 export default function VariableDeclarator(
-  builder: Builder,
-  node: VariableDeclarator,
+	builder: Builder,
+	node: VariableDeclarator,
 ): Token {
-  if (node.init) {
-    return printAssignment(
-      builder,
-      node,
-      node.id,
-      concat([space, '=']),
-      node.init,
-    );
-  } else {
-    return builder.tokenize(node.id, node);
-  }
+	if (node.init) {
+		return printAssignment(
+			builder,
+			node,
+			node.id,
+			concat([space, '=']),
+			node.init,
+		);
+	} else {
+		return builder.tokenize(node.id, node);
+	}
 }

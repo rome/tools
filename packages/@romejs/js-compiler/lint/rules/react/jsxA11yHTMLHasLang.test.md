@@ -10,10 +10,10 @@
 
  unknown:1 lint/jsxA11yHTMLHasLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ html elements must have a lang prop.
+	✖ html elements must have a lang prop.
 
-    <html></html>
-    ^^^^^^^^^^^^^
+	  <html></html>
+	  ^^^^^^^^^^^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -34,10 +34,10 @@
 
  unknown:1 lint/jsxA11yHTMLHasLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ html elements must have a lang prop.
+	✖ html elements must have a lang prop.
 
-    <html {...props}></html>
-    ^^^^^^^^^^^^^^^^^^^^^^^^
+	  <html {...props}></html>
+	  ^^^^^^^^^^^^^^^^^^^^^^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -72,10 +72,10 @@
 
  unknown:1 lint/jsxA11yHTMLHasLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ html elements must have a lang prop.
+	✖ html elements must have a lang prop.
 
-    <html lang=""></html>
-    ^^^^^^^^^^^^^^^^^^^^^
+	  <html lang=""></html>
+	  ^^^^^^^^^^^^^^^^^^^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -96,10 +96,10 @@
 
  unknown:1 lint/jsxA11yHTMLHasLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ html elements must have a lang prop.
+	✖ html elements must have a lang prop.
 
-    <html lang={""}></html>
-    ^^^^^^^^^^^^^^^^^^^^^^^
+	  <html lang={""}></html>
+	  ^^^^^^^^^^^^^^^^^^^^^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -120,10 +120,10 @@
 
  unknown:1 lint/jsxA11yHTMLHasLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ html elements must have a lang prop.
+	✖ html elements must have a lang prop.
 
-    <html lang={``}></html>
-    ^^^^^^^^^^^^^^^^^^^^^^^
+	  <html lang={undefined}></html>
+	  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -134,7 +134,7 @@
 ### `4: formatted`
 
 ```
-<html lang={``}></html>;
+<html lang={undefined}></html>;
 
 ```
 
@@ -144,10 +144,10 @@
 
  unknown:1 lint/jsxA11yHTMLHasLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ html elements must have a lang prop.
+	✖ html elements must have a lang prop.
 
-    <html lang={undefined}></html>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+	  <html lang={false}></html>
+	  ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -158,7 +158,7 @@
 ### `5: formatted`
 
 ```
-<html lang={undefined}></html>;
+<html lang={false}></html>;
 
 ```
 
@@ -168,10 +168,10 @@
 
  unknown:1 lint/jsxA11yHTMLHasLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ html elements must have a lang prop.
+	✖ html elements must have a lang prop.
 
-    <html lang={false}></html>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+	  <html lang={true}></html>
+	  ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -182,7 +182,7 @@
 ### `6: formatted`
 
 ```
-<html lang={false}></html>;
+<html lang={true}></html>;
 
 ```
 
@@ -192,10 +192,10 @@
 
  unknown:1 lint/jsxA11yHTMLHasLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ html elements must have a lang prop.
+	✖ html elements must have a lang prop.
 
-    <html lang={true}></html>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^
+	  <html lang={42}></html>
+	  ^^^^^^^^^^^^^^^^^^^^^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -206,31 +206,21 @@
 ### `7: formatted`
 
 ```
-<html lang={true}></html>;
+<html lang={42}></html>;
 
 ```
 
 ### `8`
 
 ```
-
- unknown:1 lint/jsxA11yHTMLHasLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ html elements must have a lang prop.
-
-    <html lang={42}></html>
-    ^^^^^^^^^^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
+✔ No known problems!
 
 ```
 
 ### `8: formatted`
 
 ```
-<html lang={42}></html>;
+<html lang="en"></html>;
 
 ```
 
@@ -244,6 +234,6 @@
 ### `9: formatted`
 
 ```
-<html lang="en"></html>;
+<html lang={language}></html>;
 
 ```

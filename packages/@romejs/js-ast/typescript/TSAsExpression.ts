@@ -9,15 +9,15 @@ import {AnyExpression, AnyTSPrimary, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type TSAsExpression = JSNodeBase & {
-  type: 'TSAsExpression';
-  typeAnnotation: AnyTSPrimary;
-  expression: AnyExpression;
+	type: 'TSAsExpression';
+	typeAnnotation: AnyTSPrimary;
+	expression: AnyExpression;
 };
 
 export const tsAsExpression = createBuilder<TSAsExpression>(
-  'TSAsExpression',
-  {
-    bindingKeys: {},
-    visitorKeys: {expression: true, typeAnnotation: true},
-  },
+	'TSAsExpression',
+	{
+		bindingKeys: {},
+		visitorKeys: {expression: true, typeAnnotation: true},
+	},
 );

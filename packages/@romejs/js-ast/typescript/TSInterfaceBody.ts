@@ -9,16 +9,16 @@ import {AnyTSTypeElement, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type TSInterfaceBody = JSNodeBase & {
-  type: 'TSInterfaceBody';
-  body: Array<AnyTSTypeElement>;
+	type: 'TSInterfaceBody';
+	body: Array<AnyTSTypeElement>;
 };
 
 export const tsInterfaceBody = createBuilder<TSInterfaceBody>(
-  'TSInterfaceBody',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      body: true,
-    },
-  },
+	'TSInterfaceBody',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			body: true,
+		},
+	},
 );

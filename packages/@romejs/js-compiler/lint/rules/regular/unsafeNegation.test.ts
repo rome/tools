@@ -9,8 +9,8 @@ import {test} from 'rome';
 import {testLint} from '../testHelpers';
 
 test(
-  'unsafe negation',
-  async (t) => {
-    await testLint(t, `!1 in [1,2]`, {category: 'lint/unsafeNegation'});
-  },
+	'unsafe negation',
+	async (t) => {
+		await testLint(t, `!1 in [1,2]`, {category: 'lint/unsafeNegation'});
+	},
 );

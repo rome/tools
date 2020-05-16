@@ -10,14 +10,14 @@ import {AnyNode} from '@romejs/js-ast';
 import {descriptions} from '@romejs/diagnostics';
 
 export default {
-  name: 'noCommaOperator',
-  enter(path: Path): AnyNode {
-    const {node} = path;
+	name: 'noCommaOperator',
+	enter(path: Path): AnyNode {
+		const {node} = path;
 
-    if (node.type === 'SequenceExpression') {
-      path.context.addNodeDiagnostic(node, descriptions.LINT.NO_COMMA_OPERATOR);
-    }
+		if (node.type === 'SequenceExpression') {
+			path.context.addNodeDiagnostic(node, descriptions.LINT.NO_COMMA_OPERATOR);
+		}
 
-    return node;
-  },
+		return node;
+	},
 };

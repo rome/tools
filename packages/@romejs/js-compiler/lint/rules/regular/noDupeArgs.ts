@@ -11,27 +11,24 @@ import {getBindingIdentifiers} from '@romejs/js-ast-utils';
 import {descriptions} from '@romejs/diagnostics';
 
 export default {
-  name: 'noDupeArgs',
-  enter(path: Path): AnyNode {
-    const {node, context} = path;
+	name: 'noDupeArgs',
+	enter(path: Path): AnyNode {
+		const {node, context} = path;
 
-    if (node.type === 'FunctionHead') {
-      const uniqueIdentifiers = new Set();
+		if (node.type === 'FunctionHead') {
+			const uniqueIdentifiers = new Set();
 
-      for (const param of node.params) {
-        for (const {name} of getBindingIdentifiers(param)) {
-          if (uniqueIdentifiers.has(name)) {
-            context.addNodeDiagnostic(
-              param,
-              descriptions.LINT.NO_DUPE_ARGS(name),
-            );
-          }
+			for (const param of node.params) {
+				for (const {name} of getBindingIdentifiers(param)) {
+					if (uniqueIdentifiers.has(name)) {
+						context.addNodeDiagnostic(param, descriptions.LINT.NO_DUPE_ARGS(name));
+					}
 
-          uniqueIdentifiers.add(name);
-        }
-      }
-    }
+					uniqueIdentifiers.add(name);
+				}
+			}
+		}
 
-    return node;
-  },
+		return node;
+	},
 };

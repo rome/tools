@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, TSIndexSignature, tsIndexSignature} from '@romejs/js-ast';
 
 export default function TSIndexSignature(node: AnyNode, scope: Scope) {
-  node = tsIndexSignature.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = tsIndexSignature.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

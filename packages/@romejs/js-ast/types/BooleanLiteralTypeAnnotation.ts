@@ -9,14 +9,14 @@ import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type BooleanLiteralTypeAnnotation = JSNodeBase & {
-  type: 'BooleanLiteralTypeAnnotation';
-  value: boolean;
+	type: 'BooleanLiteralTypeAnnotation';
+	value: boolean;
 };
 
 export const booleanLiteralTypeAnnotation = createBuilder<BooleanLiteralTypeAnnotation>(
-  'BooleanLiteralTypeAnnotation',
-  {
-    bindingKeys: {},
-    visitorKeys: {},
-  },
+	'BooleanLiteralTypeAnnotation',
+	{
+		bindingKeys: {},
+		visitorKeys: {},
+	},
 );

@@ -6,12 +6,12 @@
  */
 
 import {
-  AnyNode,
-  RegExpNonDigitCharacter,
-  regExpNonDigitCharacter,
+	AnyNode,
+	RegExpNonDigitCharacter,
+	regExpNonDigitCharacter,
 } from '@romejs/js-ast';
 
 export default function RegExpNonDigitCharacter(node: AnyNode) {
-  node = regExpNonDigitCharacter.assert(node);
-  throw new Error('unimplemented');
+	node = regExpNonDigitCharacter.assert(node);
+	throw new Error('unimplemented');
 }

@@ -10,16 +10,16 @@ import {commandCategories} from '../../common/commands';
 import {createMasterCommand} from '../commands';
 
 export default createMasterCommand({
-  category: commandCategories.PROJECT_MANAGEMENT,
-  description: 'TODO',
-  usage: '',
-  examples: [],
-  defineFlags() {
-    return {};
-  },
-  async callback(req: MasterRequest): Promise<void> {
-    req.expectArgumentLength(1);
+	category: commandCategories.PROJECT_MANAGEMENT,
+	description: 'TODO',
+	usage: '',
+	examples: [],
+	defineFlags() {
+		return {};
+	},
+	async callback(req: MasterRequest): Promise<void> {
+		req.expectArgumentLength(1);
 
-    // TODO
-  },
+		// TODO
+	},
 });

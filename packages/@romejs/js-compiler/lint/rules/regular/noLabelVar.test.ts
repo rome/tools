@@ -10,24 +10,24 @@ import {testLint} from '../testHelpers';
 import {dedent} from '@romejs/string-utils';
 
 test(
-  'no label var',
-  async (t) => {
-    await testLint(
-      t,
-      dedent`
+	'no label var',
+	async (t) => {
+		await testLint(
+			t,
+			dedent`
         const x = 'test';
         x: const y = 'test';
       `,
-      {category: 'lint/noLabelVar'},
-    );
+			{category: 'lint/noLabelVar'},
+		);
 
-    await testLint(
-      t,
-      dedent`
+		await testLint(
+			t,
+			dedent`
         const x = 'test';
         z: const y = 'test';
       `,
-      {category: 'lint/noLabelVar'},
-    );
-  },
+			{category: 'lint/noLabelVar'},
+		);
+	},
 );

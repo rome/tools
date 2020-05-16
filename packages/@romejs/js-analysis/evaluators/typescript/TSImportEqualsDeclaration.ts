@@ -6,12 +6,12 @@
  */
 
 import {
-  AnyNode,
-  TSImportEqualsDeclaration,
-  tsImportEqualsDeclaration,
+	AnyNode,
+	TSImportEqualsDeclaration,
+	tsImportEqualsDeclaration,
 } from '@romejs/js-ast';
 
 export default function TSImportEqualsDeclaration(node: AnyNode) {
-  node = tsImportEqualsDeclaration.assert(node);
-  throw new Error('unimplemented');
+	node = tsImportEqualsDeclaration.assert(node);
+	throw new Error('unimplemented');
 }

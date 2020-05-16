@@ -8,86 +8,84 @@
 import {AnyComment, AnyNode} from '@romejs/js-ast';
 import {getLinesBetween} from '../node';
 import {
-  Token,
-  comment,
-  concat,
-  hardline,
-  ifBreak,
-  join,
-  lineSuffix,
-  space,
+	Token,
+	comment,
+	concat,
+	hardline,
+	ifBreak,
+	join,
+	lineSuffix,
+	space,
 } from '../tokens';
 
 export function hasInnerComments(node: AnyNode): boolean {
-  return node.innerComments !== undefined && node.innerComments.length > 0;
+	return node.innerComments !== undefined && node.innerComments.length > 0;
 }
 
 export function printComment(node: AnyComment): Token {
-  switch (node.type) {
-    case 'CommentBlock': {
-      const lines = node.value.split('\n');
-      if (lines.every((line) => line.trimStart().charAt(0) === '*')) {
-        return comment(
-          concat([
-            '/*',
-            join(
-              hardline,
-              lines.map((line, index) =>
-                index === 0
-                  ? line.trimEnd()
-                  : ` ${index < lines.length - 1
-                      ? line.trim()
-                      : line.trimStart()}`
-              ),
-            ),
-            '*/',
-          ]),
-        );
-      } else {
-        return comment(`/*${node.value}*/`);
-      }
-    }
+	switch (node.type) {
+		case 'CommentBlock': {
+			const lines = node.value.split('\n');
+			if (lines.every((line) => line.trimStart().charAt(0) === '*')) {
+				return comment(
+					concat([
+						'/*',
+						join(
+							hardline,
+							lines.map((line, index) =>
+								index === 0
+									? line.trimEnd()
+									: ` ${index < lines.length - 1 ? line.trim() : line.trimStart()}`
+							),
+						),
+						'*/',
+					]),
+				);
+			} else {
+				return comment(`/*${node.value}*/`);
+			}
+		}
 
-    case 'CommentLine': {
-      return comment(`//${node.value.trimEnd()}`);
-    }
-  }
+		case 'CommentLine': {
+			return comment(`//${node.value.trimEnd()}`);
+		}
+	}
 }
 
 function printCommentSeparator(left: AnyNode, right: AnyNode): Token {
-  const linesBetween = getLinesBetween(left, right);
-  return linesBetween === 0
-    ? space
-    : linesBetween === 1
-      ? hardline
-      : concat([hardline, hardline]);
+	const linesBetween = getLinesBetween(left, right);
+	return linesBetween === 0
+		? space
+		: linesBetween === 1
+			? hardline
+			: concat([hardline, hardline]);
 }
 
 export function printLeadingComment(node: AnyComment, next: AnyNode): Token {
-  const comment = printComment(node);
-  if (node.type === 'CommentLine') {
-    return concat([comment, hardline]);
-  } else {
-    return concat([comment, printCommentSeparator(node, next)]);
-  }
+	const comment = printComment(node);
+	if (node.type === 'CommentLine') {
+		return concat([comment, hardline]);
+	} else {
+		return concat([comment, printCommentSeparator(node, next)]);
+	}
 }
 
 export function printTrailingComment(node: AnyComment, previous: AnyNode): Token {
-  const comment = printComment(node);
-  const linesBetween = getLinesBetween(previous, node);
+	const comment = printComment(node);
+	const linesBetween = getLinesBetween(previous, node);
 
-  if (linesBetween >= 1) {
-    return lineSuffix(
-      concat([linesBetween > 1 ? hardline : '', hardline, comment]),
-    );
-  } else {
-    if (node.type === 'CommentBlock') {
-      return ifBreak(
-        lineSuffix(concat([space, comment])),
-        concat([space, comment]),
-      );
-    } else {
-      return lineSuffix(concat([space, comment]));
-    }
-  }
+	if (linesBetween >= 1) {
+		return lineSuffix(
+			concat([linesBetween > 1 ? hardline : '', hardline, comment]),
+		);
+	} else {
+		if (node.type === 'CommentBlock') {
+			return ifBreak(
+				lineSuffix(concat([space, comment])),
+				concat([space, comment]),
+			);
+		} else {
+			return lineSuffix(concat([space, comment]));
+		}
+	}
 }

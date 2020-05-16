@@ -10,21 +10,21 @@ import {Builder} from '@romejs/js-formatter';
 import {Token, concat, space} from '../../tokens';
 
 export default function TSDeclareFunction(
-  builder: Builder,
-  node: TSDeclareFunction,
+	builder: Builder,
+	node: TSDeclareFunction,
 ): Token {
-  let tokens: Array<Token> = [];
+	let tokens: Array<Token> = [];
 
-  if (node.declare) {
-    tokens.push('declare', space);
-  }
+	if (node.declare) {
+		tokens.push('declare', space);
+	}
 
-  return concat([
-    concat(tokens),
-    'function',
-    space,
-    builder.tokenize(node.id, node),
-    builder.tokenize(node.head, node),
-    ';',
-  ]);
+	return concat([
+		concat(tokens),
+		'function',
+		space,
+		builder.tokenize(node.id, node),
+		builder.tokenize(node.head, node),
+		';',
+	]);
 }

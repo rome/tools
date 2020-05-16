@@ -10,16 +10,16 @@ import {StaticMemberProperty} from '@romejs/js-ast';
 import {Token, concat} from '../../tokens';
 
 export default function StaticMemberProperty(
-  builder: Builder,
-  node: StaticMemberProperty,
+	builder: Builder,
+	node: StaticMemberProperty,
 ): Token {
-  const tokens: Array<Token> = [];
+	const tokens: Array<Token> = [];
 
-  if (node.optional) {
-    tokens.push('?');
-  }
+	if (node.optional) {
+		tokens.push('?');
+	}
 
-  tokens.push('.', builder.tokenize(node.value, node));
+	tokens.push('.', builder.tokenize(node.value, node));
 
-  return concat(tokens);
+	return concat(tokens);
 }

@@ -6,28 +6,28 @@
  */
 
 import {
-  BindingIdentifier,
-  JSNodeBase,
-  StringLiteral,
-  TSModuleBlock,
+	BindingIdentifier,
+	JSNodeBase,
+	StringLiteral,
+	TSModuleBlock,
 } from '../index';
 import {createBuilder} from '../utils';
 
 export type TSModuleDeclaration = JSNodeBase & {
-  type: 'TSModuleDeclaration';
-  id: BindingIdentifier | StringLiteral;
-  global?: boolean;
-  body?: TSModuleBlock | TSModuleDeclaration;
-  declare?: boolean;
+	type: 'TSModuleDeclaration';
+	id: BindingIdentifier | StringLiteral;
+	global?: boolean;
+	body?: TSModuleBlock | TSModuleDeclaration;
+	declare?: boolean;
 };
 
 export const tsModuleDeclaration = createBuilder<TSModuleDeclaration>(
-  'TSModuleDeclaration',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      id: true,
-      body: true,
-    },
-  },
+	'TSModuleDeclaration',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			id: true,
+			body: true,
+		},
+	},
 );

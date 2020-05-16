@@ -9,18 +9,18 @@ import {JSNodeBase, JSXIdentifier} from '../index';
 import {createBuilder} from '../utils';
 
 export type JSXNamespacedName = JSNodeBase & {
-  type: 'JSXNamespacedName';
-  namespace: JSXIdentifier;
-  name: JSXIdentifier;
+	type: 'JSXNamespacedName';
+	namespace: JSXIdentifier;
+	name: JSXIdentifier;
 };
 
 export const jsxNamespacedName = createBuilder<JSXNamespacedName>(
-  'JSXNamespacedName',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      namespace: true,
-      name: true,
-    },
-  },
+	'JSXNamespacedName',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			namespace: true,
+			name: true,
+		},
+	},
 );

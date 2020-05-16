@@ -9,10 +9,10 @@ import Scope from '../Scope';
 import {AnyNode, ClassDeclaration, ClassExpression} from '@romejs/js-ast';
 
 export default {
-  creator: true,
-  build(node: ClassExpression | ClassDeclaration, parent: AnyNode, scope: Scope) {
-    const newScope = scope.fork('class', node);
-    newScope.evaluate(node.meta.typeParameters);
-    return newScope;
-  },
+	creator: true,
+	build(node: ClassExpression | ClassDeclaration, parent: AnyNode, scope: Scope) {
+		const newScope = scope.fork('class', node);
+		newScope.evaluate(node.meta.typeParameters);
+		return newScope;
+	},
 };

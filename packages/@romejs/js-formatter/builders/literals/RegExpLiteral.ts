@@ -10,39 +10,39 @@ import {Token, concat} from '../../tokens';
 import {RegExpLiteral} from '@romejs/js-ast';
 
 export default function RegExpLiteral(
-  builder: Builder,
-  node: RegExpLiteral,
+	builder: Builder,
+	node: RegExpLiteral,
 ): Token {
-  const flags: Array<string> = [];
+	const flags: Array<string> = [];
 
-  if (node.global === true) {
-    flags.push('g');
-  }
+	if (node.global === true) {
+		flags.push('g');
+	}
 
-  if (node.multiline === true) {
-    flags.push('m');
-  }
+	if (node.multiline === true) {
+		flags.push('m');
+	}
 
-  if (node.sticky === true) {
-    flags.push('y');
-  }
+	if (node.sticky === true) {
+		flags.push('y');
+	}
 
-  if (node.insensitive === true) {
-    flags.push('i');
-  }
+	if (node.insensitive === true) {
+		flags.push('i');
+	}
 
-  if (node.noDotNewline === true) {
-    flags.push('s');
-  }
+	if (node.noDotNewline === true) {
+		flags.push('s');
+	}
 
-  if (node.unicode === true) {
-    flags.push('u');
-  }
+	if (node.unicode === true) {
+		flags.push('u');
+	}
 
-  return concat([
-    '/',
-    builder.tokenize(node.expression, node),
-    '/',
-    flags.join(''),
-  ]);
+	return concat([
+		'/',
+		builder.tokenize(node.expression, node),
+		'/',
+		flags.join(''),
+	]);
 }

@@ -6,18 +6,18 @@
  */
 
 import {
-  AnyNode,
-  TSAsExpression,
-  TSNonNullExpression,
-  TSTypeAssertion,
+	AnyNode,
+	TSAsExpression,
+	TSNonNullExpression,
+	TSTypeAssertion,
 } from '@romejs/js-ast';
 
 export default function isTypeExpressionWrapperNode(
-  node: AnyNode,
+	node: AnyNode,
 ): node is TSAsExpression | TSTypeAssertion | TSNonNullExpression {
-  return (
-    node.type === 'TSAsExpression' ||
-    node.type === 'TSTypeAssertion' ||
-    node.type === 'TSNonNullExpression'
-  );
+	return (
+		node.type === 'TSAsExpression' ||
+		node.type === 'TSTypeAssertion' ||
+		node.type === 'TSNonNullExpression'
+	);
 }

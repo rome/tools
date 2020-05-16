@@ -10,13 +10,13 @@ import {Builder} from '@romejs/js-formatter';
 import {Token, concat, hardline, indent} from '../../tokens';
 
 export default function TSModuleBlock(
-  builder: Builder,
-  node: TSModuleBlock,
+	builder: Builder,
+	node: TSModuleBlock,
 ): Token {
-  return concat([
-    '{',
-    indent(concat([hardline, builder.tokenizeStatementList(node.body, node)])),
-    hardline,
-    '}',
-  ]);
+	return concat([
+		'{',
+		indent(concat([hardline, builder.tokenizeStatementList(node.body, node)])),
+		hardline,
+		'}',
+	]);
 }

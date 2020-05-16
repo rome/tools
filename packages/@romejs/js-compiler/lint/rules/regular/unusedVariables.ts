@@ -13,152 +13,150 @@ import {ArgumentsBinding} from '@romejs/js-compiler/scope/bindings';
 import {descriptions} from '@romejs/diagnostics';
 
 type State = {
-  usedBindings: Dict<boolean>;
-  scope: undefined | Scope;
+	usedBindings: Dict<boolean>;
+	scope: undefined | Scope;
 };
 
 const initialState: State = {
-  usedBindings: {},
-  scope: undefined,
+	usedBindings: {},
+	scope: undefined,
 };
 
 const provider = createHook<State, undefined, AnyNode>({
-  name: 'unusedVariablesProvider',
-  initialState,
-  call(path: Path, state: State) {
-    const {node} = path;
-    if (
-      node.type !== 'ReferenceIdentifier' &&
-      node.type !== 'JSXReferenceIdentifier'
-    ) {
-      throw new Error('Expected only Identifier to be dispatched');
-    }
+	name: 'unusedVariablesProvider',
+	initialState,
+	call(path: Path, state: State) {
+		const {node} = path;
+		if (
+			node.type !== 'ReferenceIdentifier' &&
+			node.type !== 'JSXReferenceIdentifier'
+		) {
+			throw new Error('Expected only Identifier to be dispatched');
+		}
 
-    const binding = path.scope.getBindingFromPath(path);
+		const binding = path.scope.getBindingFromPath(path);
 
-    // Check if this binding belongs to the scope we're tracking
-    if (binding === undefined || binding.scope !== state.scope) {
-      return {
-        bubble: true,
-        value: node,
-        state,
-      };
-    }
+		// Check if this binding belongs to the scope we're tracking
+		if (binding === undefined || binding.scope !== state.scope) {
+			return {
+				bubble: true,
+				value: node,
+				state,
+			};
+		}
 
-    // Mark this binding as used
-    return {
-      value: node,
-      state: {
-        ...state,
-        usedBindings: {
-          ...state.usedBindings,
-          [node.name]: true,
-        },
-      },
-    };
-  },
-  exit(path, state) {
-    for (const name in state.usedBindings) {
-      const used = state.usedBindings[name];
-      const binding = path.scope.getBinding(name);
+		// Mark this binding as used
+		return {
+			value: node,
+			state: {
+				...state,
+				usedBindings: {
+					...state.usedBindings,
+					[node.name]: true,
+				},
+			},
+		};
+	},
+	exit(path, state) {
+		for (const name in state.usedBindings) {
+			const used = state.usedBindings[name];
+			const binding = path.scope.getBinding(name);
 
-      if (used === false && binding !== undefined) {
-        path.context.addNodeDiagnostic(
-          binding.node,
-          descriptions.LINT.UNUSED_VARIABLES(binding.kind, name),
-        );
-      }
-    }
+			if (used === false && binding !== undefined) {
+				path.context.addNodeDiagnostic(
+					binding.node,
+					descriptions.LINT.UNUSED_VARIABLES(binding.kind, name),
+				);
+			}
+		}
 
-    return path.node;
-  },
+		return path.node;
+	},
 });
 
 export default {
-  name: 'unusedVariables',
-  enter(path: Path): AnyNode {
-    const {node, scope} = path;
+	name: 'unusedVariables',
+	enter(path: Path): AnyNode {
+		const {node, scope} = path;
 
-    if (scope.node === node) {
-      let hasBindings = false;
-      const usedBindings: Dict<boolean> = {};
+		if (scope.node === node) {
+			let hasBindings = false;
+			const usedBindings: Dict<boolean> = {};
 
-      // Get all the non-exported bindings in this file and mark them as unused
-      for (const [name, binding] of scope.getOwnBindings()) {
-        if (binding instanceof ArgumentsBinding) {
-          continue;
-        }
+			// Get all the non-exported bindings in this file and mark them as unused
+			for (const [name, binding] of scope.getOwnBindings()) {
+				if (binding instanceof ArgumentsBinding) {
+					continue;
+				}
 
-        if (binding.isExported) {
-          continue;
-        }
+				if (binding.isExported) {
+					continue;
+				}
 
-        hasBindings = true;
-        usedBindings[name] = false;
-      }
+				hasBindings = true;
+				usedBindings[name] = false;
+			}
 
-      if (!hasBindings) {
-        return node;
-      }
+			if (!hasBindings) {
+				return node;
+			}
 
-      // For functions, consider all parameters except the last to be used
-      if (
-        node.type === 'FunctionDeclaration' ||
-        node.type === 'FunctionExpression' ||
-        node.type === 'ObjectMethod' ||
-        node.type === 'ClassMethod' ||
-        node.type === 'ArrowFunctionExpression'
-      ) {
-        for (const {name} of getBindingIdentifiers(
-          node.head.params.slice(0, -1),
-        )) {
-          usedBindings[name] = true;
-        }
+			// For functions, consider all parameters except the last to be used
+			if (
+				node.type === 'FunctionDeclaration' ||
+				node.type === 'FunctionExpression' ||
+				node.type === 'ObjectMethod' ||
+				node.type === 'ClassMethod' ||
+				node.type === 'ArrowFunctionExpression'
+			) {
+				for (const {name} of getBindingIdentifiers(node.head.params.slice(0, -1))) {
+					usedBindings[name] = true;
+				}
 
-        // For functions that have a single throw statement in the body, consider all their arguments
-        // to be used as this is typically an interface definition
-        const {body: block} = node;
-        if (
-          block.type === 'BlockStatement' &&
-          block.body.length === 1 &&
-          block.body[0].type === 'ThrowStatement'
-        ) {
-          for (const {name} of getBindingIdentifiers(node.head.params)) {
-            usedBindings[name] = true;
-          }
-        }
-      }
+				// For functions that have a single throw statement in the body, consider all their arguments
+				// to be used as this is typically an interface definition
+				const {body: block} = node;
+				if (
+					block.type === 'BlockStatement' &&
+					block.body.length === 1 &&
+					block.body[0].type === 'ThrowStatement'
+				) {
+					for (const {name} of getBindingIdentifiers(node.head.params)) {
+						usedBindings[name] = true;
+					}
+				}
+			}
 
-      if (
-        node.type === 'CatchClause' &&
-        node.param &&
-        node.param.type === 'BindingIdentifier'
-      ) {
-        // Mark error param as used as they are required
-        usedBindings[node.param.name] = true;
-      }
+			if (
+				node.type === 'CatchClause' &&
+				node.param &&
+				node.param.type === 'BindingIdentifier'
+			) {
+				// Mark error param as used as they are required
+				usedBindings[node.param.name] = true;
+			}
 
-      // For a named function expression, don't consider the id to be unused
-      if (node.type === 'FunctionExpression' && node.id !== undefined) {
-        usedBindings[node.id.name] = true;
-      }
+			// For a named function expression, don't consider the id to be unused
+			if (node.type === 'FunctionExpression' && node.id !== undefined) {
+				usedBindings[node.id.name] = true;
+			}
 
-      return path.provideHook(
-        provider,
-        {
-          usedBindings,
-          scope,
-        },
-      );
-    }
+			return path.provideHook(
+				provider,
+				{
+					usedBindings,
+					scope,
+				},
+			);
+		}
 
-    if (
-      node.type === 'JSXReferenceIdentifier' ||
-      node.type === 'ReferenceIdentifier'
-    ) {
-      return path.callHook(provider, undefined, node);
-    }
+		if (
+			node.type === 'JSXReferenceIdentifier' ||
+			node.type === 'ReferenceIdentifier'
+		) {
+			return path.callHook(provider, undefined, node);
+		}
 
-    return node;
-  },
+		return node;
+	},
 };

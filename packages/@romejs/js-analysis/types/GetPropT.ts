@@ -19,128 +19,128 @@ import ObjT from './ObjT';
 import E from './errors/E';
 
 export default class GetPropT extends T {
-  constructor(
-    scope: Scope,
-    originNode: undefined | AnyNode,
-    object: T,
-    property: T,
-  ) {
-    super(scope, originNode);
-    this.object = object;
-    this.property = property;
-  }
+	constructor(
+		scope: Scope,
+		originNode: undefined | AnyNode,
+		object: T,
+		property: T,
+	) {
+		super(scope, originNode);
+		this.object = object;
+		this.property = property;
+	}
 
-  static type = 'GetPropT';
+	static type = 'GetPropT';
 
-  object: T;
-  property: T;
+	object: T;
+	property: T;
 
-  serialize(addType: SerialTypeFactory): HydrateData {
-    return {
-      object: addType(this.object),
-      property: addType(this.property),
-    };
-  }
+	serialize(addType: SerialTypeFactory): HydrateData {
+		return {
+			object: addType(this.object),
+			property: addType(this.property),
+		};
+	}
 
-  static hydrate(
-    scope: Scope,
-    originNode: AnyNode,
-    data: HydrateData,
-    getType: HydrateTypeFactory,
-  ): T {
-    return new GetPropT(
-      scope,
-      originNode,
-      getType(data.object),
-      getType(data.property),
-    );
-  }
+	static hydrate(
+		scope: Scope,
+		originNode: AnyNode,
+		data: HydrateData,
+		getType: HydrateTypeFactory,
+	): T {
+		return new GetPropT(
+			scope,
+			originNode,
+			getType(data.object),
+			getType(data.property),
+		);
+	}
 
-  lookup(
-    object: T,
-    property: T,
-    opts: {
-      topObject?: T;
-      protoKeys?: Array<string>;
-    } = {},
-  ): T {
-    object = this.utils.reduce(object);
-    property = this.utils.reduce(property);
+	lookup(
+		object: T,
+		property: T,
+		opts: {
+			topObject?: T;
+			protoKeys?: Array<string>;
+		} = {},
+	): T {
+		object = this.utils.reduce(object);
+		property = this.utils.reduce(property);
 
-    const thisKeys: Set<string> = new Set();
+		const thisKeys: Set<string> = new Set();
 
-    //
-    const protoKeys = opts.protoKeys === undefined ? [] : opts.protoKeys;
-    const topObject = opts.topObject === undefined ? object : opts.topObject;
+		//
+		const protoKeys = opts.protoKeys === undefined ? [] : opts.protoKeys;
+		const topObject = opts.topObject === undefined ? object : opts.topObject;
 
-    // turn property into string key
-    let key: undefined | string;
-    if (property instanceof StringLiteralT) {
-      key = property.value;
-    }
+		// turn property into string key
+		let key: undefined | string;
+		if (property instanceof StringLiteralT) {
+			key = property.value;
+		}
 
-    // look up on object
-    if (key !== undefined && object instanceof ObjT) {
-      //
-      const indexers: Array<ObjIndexPropT> = [];
-      for (const maybePropRaw of object.props) {
-        const maybeProp = this.utils.reduce(maybePropRaw);
-        if (maybeProp instanceof ObjPropT) {
-          if (maybeProp.key === key) {
-            // TODO collate these in case there's multiple properties of this name
-            return this.utils.reduce(maybeProp.value);
-          } else {
-            thisKeys.add(maybeProp.key);
-          }
-        } else if (maybeProp instanceof ObjIndexPropT) {
-          indexers.push(maybeProp);
-        }
-      }
+		// look up on object
+		if (key !== undefined && object instanceof ObjT) {
+			//
+			const indexers: Array<ObjIndexPropT> = [];
+			for (const maybePropRaw of object.props) {
+				const maybeProp = this.utils.reduce(maybePropRaw);
+				if (maybeProp instanceof ObjPropT) {
+					if (maybeProp.key === key) {
+						// TODO collate these in case there's multiple properties of this name
+						return this.utils.reduce(maybeProp.value);
+					} else {
+						thisKeys.add(maybeProp.key);
+					}
+				} else if (maybeProp instanceof ObjIndexPropT) {
+					indexers.push(maybeProp);
+				}
+			}
 
-      //
-      for (const indexer of indexers) {
-        if (this.utils.isCompatibleWith(indexer.key, property)) {
-          return this.utils.reduce(indexer.value);
-        }
-      }
+			//
+			for (const indexer of indexers) {
+				if (this.utils.isCompatibleWith(indexer.key, property)) {
+					return this.utils.reduce(indexer.value);
+				}
+			}
 
-      //
-      if (object.proto) {
-        return this.lookup(
-          object.proto,
-          property,
-          {
-            topObject,
-            protoKeys: [...protoKeys, ...thisKeys],
-          },
-        );
-      }
-    }
+			//
+			if (object.proto) {
+				return this.lookup(
+					object.proto,
+					property,
+					{
+						topObject,
+						protoKeys: [...protoKeys, ...thisKeys],
+					},
+				);
+			}
+		}
 
-    // property lookups on an `any` return `any`!
-    if (object instanceof AnyT || object instanceof E) {
-      return new AnyT(this.scope, this.originNode);
-    }
+		// property lookups on an `any` return `any`!
+		if (object instanceof AnyT || object instanceof E) {
+			return new AnyT(this.scope, this.originNode);
+		}
 
-    //
-    if (typeof key === 'string') {
-      return new UnknownPropE(
-        this.scope,
-        this.originNode,
-        {
-          object: topObject,
-          property,
-          key,
-          thisKeys: Array.from(thisKeys),
-          protoKeys,
-        },
-      );
-    } else {
-      return new UnknownT(this.scope, this.originNode);
-    }
-  }
+		//
+		if (typeof key === 'string') {
+			return new UnknownPropE(
+				this.scope,
+				this.originNode,
+				{
+					object: topObject,
+					property,
+					key,
+					thisKeys: Array.from(thisKeys),
+					protoKeys,
+				},
+			);
+		} else {
+			return new UnknownT(this.scope, this.originNode);
+		}
+	}
 
-  reduce(): T {
-    return this.lookup(this.object, this.property);
-  }
+	reduce(): T {
+		return this.lookup(this.object, this.property);
+	}
 }

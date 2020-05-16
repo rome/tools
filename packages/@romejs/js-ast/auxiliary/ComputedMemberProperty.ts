@@ -9,21 +9,21 @@ import {AnyExpression, JSNodeBase} from '../index';
 import {createQuickBuilder} from '../utils';
 
 export type ComputedMemberProperty = JSNodeBase & {
-  type: 'ComputedMemberProperty';
-  value: AnyExpression;
-  optional?: boolean;
+	type: 'ComputedMemberProperty';
+	value: AnyExpression;
+	optional?: boolean;
 };
 
 export const computedMemberProperty = createQuickBuilder<
-  ComputedMemberProperty,
-  'value'
+	ComputedMemberProperty,
+	'value'
 >(
-  'ComputedMemberProperty',
-  'value',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      value: true,
-    },
-  },
+	'ComputedMemberProperty',
+	'value',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			value: true,
+		},
+	},
 );

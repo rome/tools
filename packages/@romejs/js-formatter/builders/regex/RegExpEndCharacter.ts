@@ -9,5 +9,5 @@ import {Token} from '../../tokens';
 import {RegExpEndCharacter} from '@romejs/js-ast';
 
 export default function RegExpEndCharacter(): Token {
-  return '$';
+	return '$';
 }

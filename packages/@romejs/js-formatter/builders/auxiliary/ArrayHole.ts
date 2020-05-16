@@ -10,5 +10,5 @@ import {ArrayHole} from '@romejs/js-ast';
 import {Token} from '../../tokens';
 
 export default function ArrayHole(builder: Builder, node: ArrayHole): Token {
-  return builder.tokenizeInnerComments(node, false);
+	return builder.tokenizeInnerComments(node, false);
 }

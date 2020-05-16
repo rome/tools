@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, ClassPrivateMethod, classPrivateMethod} from '@romejs/js-ast';
 
 export default function ClassPrivateMethod(node: AnyNode, scope: Scope) {
-  node = classPrivateMethod.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = classPrivateMethod.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

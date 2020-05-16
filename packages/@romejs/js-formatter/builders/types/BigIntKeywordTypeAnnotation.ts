@@ -8,5 +8,5 @@
 import {Token} from '../../tokens';
 
 export default function BigIntKeywordTypeAnnotation(): Token {
-  return 'bigint';
+	return 'bigint';
 }

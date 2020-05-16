@@ -8,6 +8,6 @@
 import {AnyNode, RegExpAlternation, regExpAlternation} from '@romejs/js-ast';
 
 export default function RegExpAlternation(node: AnyNode) {
-  node = regExpAlternation.assert(node);
-  throw new Error('unimplemented');
+	node = regExpAlternation.assert(node);
+	throw new Error('unimplemented');
 }

@@ -8,5 +8,5 @@
 import {Token} from '../../tokens';
 
 export default function SymbolKeywordTypeAnnotation(): Token {
-  return 'symbol';
+	return 'symbol';
 }

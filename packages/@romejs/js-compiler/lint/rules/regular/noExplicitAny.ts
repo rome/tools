@@ -10,14 +10,14 @@ import {Path} from '@romejs/js-compiler';
 import {descriptions} from '@romejs/diagnostics';
 
 export default {
-  name: 'noExplicitAny',
-  enter(path: Path): AnyNode {
-    const {context, node} = path;
+	name: 'noExplicitAny',
+	enter(path: Path): AnyNode {
+		const {context, node} = path;
 
-    if (node.type === 'AnyKeywordTypeAnnotation') {
-      context.addNodeDiagnostic(node, descriptions.LINT.NO_EXPLICIT_ANY);
-    }
+		if (node.type === 'AnyKeywordTypeAnnotation') {
+			context.addNodeDiagnostic(node, descriptions.LINT.NO_EXPLICIT_ANY);
+		}
 
-    return node;
-  },
+		return node;
+	},
 };

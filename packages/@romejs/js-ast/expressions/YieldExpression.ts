@@ -9,12 +9,12 @@ import {AnyExpression, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type YieldExpression = JSNodeBase & {
-  type: 'YieldExpression';
-  delegate?: boolean;
-  argument?: AnyExpression;
+	type: 'YieldExpression';
+	delegate?: boolean;
+	argument?: AnyExpression;
 };
 
 export const yieldExpression = createBuilder<YieldExpression>(
-  'YieldExpression',
-  {bindingKeys: {}, visitorKeys: {argument: true}},
+	'YieldExpression',
+	{bindingKeys: {}, visitorKeys: {argument: true}},
 );

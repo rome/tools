@@ -9,18 +9,18 @@ import {AnyAssignmentPattern, AnyObjectPropertyKey, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type AssignmentObjectPatternProperty = JSNodeBase & {
-  type: 'AssignmentObjectPatternProperty';
-  key: AnyObjectPropertyKey;
-  value: AnyAssignmentPattern;
+	type: 'AssignmentObjectPatternProperty';
+	key: AnyObjectPropertyKey;
+	value: AnyAssignmentPattern;
 };
 
 export const assignmentObjectPatternProperty = createBuilder<AssignmentObjectPatternProperty>(
-  'AssignmentObjectPatternProperty',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      key: true,
-      value: true,
-    },
-  },
+	'AssignmentObjectPatternProperty',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			key: true,
+			value: true,
+		},
+	},
 );

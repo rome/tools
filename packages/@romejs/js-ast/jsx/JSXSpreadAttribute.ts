@@ -9,16 +9,16 @@ import {AnyExpression, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type JSXSpreadAttribute = JSNodeBase & {
-  type: 'JSXSpreadAttribute';
-  argument: AnyExpression;
+	type: 'JSXSpreadAttribute';
+	argument: AnyExpression;
 };
 
 export const jsxSpreadAttribute = createBuilder<JSXSpreadAttribute>(
-  'JSXSpreadAttribute',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      argument: true,
-    },
-  },
+	'JSXSpreadAttribute',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			argument: true,
+		},
+	},
 );

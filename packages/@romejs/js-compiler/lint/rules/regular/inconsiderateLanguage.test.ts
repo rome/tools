@@ -9,19 +9,19 @@ import {test} from 'rome';
 import {testLintMultiple} from '../testHelpers';
 
 test(
-  'inconsiderate language',
-  async (t) => {
-    await testLintMultiple(
-      t,
-      [
-        '// the blacklist',
-        '/* the\nblacklist */',
-        'blacklist;',
-        'BLACKLIST;',
-        'someBlacklist;',
-        'SOME_BLACKLIST;',
-      ],
-      {category: 'lint/inconsiderateLanguage'},
-    );
-  },
+	'inconsiderate language',
+	async (t) => {
+		await testLintMultiple(
+			t,
+			[
+				'// the blacklist',
+				'/* the\nblacklist */',
+				'blacklist;',
+				'BLACKLIST;',
+				'someBlacklist;',
+				'SOME_BLACKLIST;',
+			],
+			{category: 'lint/inconsiderateLanguage'},
+		);
+	},
 );

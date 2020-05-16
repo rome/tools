@@ -11,8 +11,8 @@ import {BindingObjectPatternProperty} from '@romejs/js-ast';
 import ObjectProperty from '../objects/ObjectProperty';
 
 export default function BindingObjectPatternProperty(
-  builder: Builder,
-  node: BindingObjectPatternProperty,
+	builder: Builder,
+	node: BindingObjectPatternProperty,
 ): Token {
-  return ObjectProperty(builder, node);
+	return ObjectProperty(builder, node);
 }

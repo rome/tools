@@ -7,20 +7,20 @@
 
 import {FunctionScope, Scope} from '../../scopes';
 import {
-  AnyNode,
-  ArrowFunctionExpression,
-  arrowFunctionExpression,
+	AnyNode,
+	ArrowFunctionExpression,
+	arrowFunctionExpression,
 } from '@romejs/js-ast';
 import executeFunction from '../../utils/executeFunction';
 
 export default function ArrowFunctionExpression(node: AnyNode, scope: Scope) {
-  node = arrowFunctionExpression.assert(node);
+	node = arrowFunctionExpression.assert(node);
 
-  let thisContext;
-  const funcScope = scope.findOptional(FunctionScope);
-  if (funcScope !== undefined) {
-    thisContext = funcScope.meta.thisContext;
-  }
+	let thisContext;
+	const funcScope = scope.findOptional(FunctionScope);
+	if (funcScope !== undefined) {
+		thisContext = funcScope.meta.thisContext;
+	}
 
-  return executeFunction(node, scope, true, thisContext);
+	return executeFunction(node, scope, true, thisContext);
 }

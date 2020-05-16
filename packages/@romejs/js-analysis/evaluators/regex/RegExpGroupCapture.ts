@@ -8,6 +8,6 @@
 import {AnyNode, RegExpGroupCapture, regExpGroupCapture} from '@romejs/js-ast';
 
 export default function RegExpGroupCapture(node: AnyNode) {
-  node = regExpGroupCapture.assert(node);
-  throw new Error('unimplemented');
+	node = regExpGroupCapture.assert(node);
+	throw new Error('unimplemented');
 }

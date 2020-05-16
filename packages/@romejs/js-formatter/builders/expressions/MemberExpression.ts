@@ -10,11 +10,11 @@ import {Token, concat} from '../../tokens';
 import {MemberExpression} from '@romejs/js-ast';
 
 export default function MemberExpression(
-  builder: Builder,
-  node: MemberExpression,
+	builder: Builder,
+	node: MemberExpression,
 ): Token {
-  return concat([
-    builder.tokenize(node.object, node),
-    builder.tokenize(node.property, node),
-  ]);
+	return concat([
+		builder.tokenize(node.object, node),
+		builder.tokenize(node.property, node),
+	]);
 }

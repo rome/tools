@@ -6,29 +6,29 @@
  */
 
 import {
-  AnyObjectPropertyKey,
-  AnyTSPrimary,
-  JSNodeBase,
-  TSSignatureDeclarationMeta,
+	AnyObjectPropertyKey,
+	AnyTSPrimary,
+	JSNodeBase,
+	TSSignatureDeclarationMeta,
 } from '../index';
 import {createBuilder} from '../utils';
 
 export type TSMethodSignature = JSNodeBase & {
-  key: AnyObjectPropertyKey;
-  type: 'TSMethodSignature';
-  optional?: boolean;
-  meta: TSSignatureDeclarationMeta;
-  returnType?: AnyTSPrimary;
+	key: AnyObjectPropertyKey;
+	type: 'TSMethodSignature';
+	optional?: boolean;
+	meta: TSSignatureDeclarationMeta;
+	returnType?: AnyTSPrimary;
 };
 
 export const tsMethodSignature = createBuilder<TSMethodSignature>(
-  'TSMethodSignature',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      key: true,
-      meta: true,
-      returnType: true,
-    },
-  },
+	'TSMethodSignature',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			key: true,
+			meta: true,
+			returnType: true,
+		},
+	},
 );

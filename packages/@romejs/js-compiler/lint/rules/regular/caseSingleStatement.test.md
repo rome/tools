@@ -15,9 +15,9 @@
 
 ```
 switch (foo) {
-  case true:
-  case false:
-    return 'yes';
+	case true:
+	case false:
+		return 'yes';
 }
 
 ```
@@ -33,9 +33,9 @@ switch (foo) {
 
 ```
 switch (foo) {
-  case true: {
-    // empty
-  }
+	case true: {
+		// empty
+	}
 }
 
 ```
@@ -51,7 +51,7 @@ switch (foo) {
 
 ```
 switch (foo) {
-  case true:
+	case true:
 }
 
 ```
@@ -62,23 +62,24 @@ switch (foo) {
 
  unknown:3:12 lint/caseSingleStatement FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ A switch case should only have a single statement. If you want more then wrap it in a block.
+	✖ A switch case should only have a single statement. If you want more then wrap it in a block.
 
-    1 │ switch (foo) {
-    2 │   case true:
-  > 3 │   case false:
-  > 4 │     let foo = '';
-  > 5 │     foo;
-      │ ^^^^^^^^
-    6 │ }
+		1 │ switch (foo) {
+		2 │   case true:
+	> 3 │   case false:
+	> 4 │     let foo = '';
+	> 5 │     foo;
+	   │ ^^^^^^^^
+		6 │ }
 
-  ℹ Recommended fix
+	ℹ Recommended fix
 
-      │ - :⏎  
-    1 │ + case false: {
-    2 │ +   let foo = '';
-    3 │ -   ··foo;
-    4 │ + }
+	    │ - :⏎··  
+	  1 │ + case false: {
+	  2 │ + ↹let foo = '';
+	    │ - ····foo;
+	  3 │ + ↹foo;
+	  4 │ + }
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -90,11 +91,11 @@ switch (foo) {
 
 ```
 switch (foo) {
-  case true:
-  case false: {
-    let foo = '';
-    foo;
-  }
+	case true:
+	case false: {
+		let foo = '';
+		foo;
+	}
 }
 
 ```

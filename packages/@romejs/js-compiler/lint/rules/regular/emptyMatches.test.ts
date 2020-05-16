@@ -9,19 +9,19 @@ import {test} from 'rome';
 import {testLintMultiple} from '../testHelpers';
 
 test(
-  'empty matches; may match infinitely',
-  async (t) => {
-    await testLintMultiple(
-      t,
-      [
-        // infinite match possible
-        'let a = /a*/',
-        'let b = /a*(abc)?[1,2,3]*/',
-        // valid regexes
-        'let a = /a*(abc)+[1,2,3]?/',
-        'let b = /a+(abc)*/',
-      ],
-      {category: 'lint/emptyMatches'},
-    );
-  },
+	'empty matches; may match infinitely',
+	async (t) => {
+		await testLintMultiple(
+			t,
+			[
+				// infinite match possible
+				'let a = /a*/',
+				'let b = /a*(abc)?[1,2,3]*/',
+				// valid regexes
+				'let a = /a*(abc)+[1,2,3]?/',
+				'let b = /a+(abc)*/',
+			],
+			{category: 'lint/emptyMatches'},
+		);
+	},
 );

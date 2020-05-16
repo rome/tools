@@ -11,47 +11,44 @@ import AnyT from '../../types/AnyT';
 import ObjPropT from '../../types/ObjPropT';
 
 export default function ClassProperty(node: AnyNode, scope: Scope) {
-  node = classProperty.assert(node);
+	node = classProperty.assert(node);
 
-  if (node.key.type === 'ComputedPropertyKey') {
-    // TODO
-    return undefined;
-  }
+	if (node.key.type === 'ComputedPropertyKey') {
+		// TODO
+		return undefined;
+	}
 
-  const classScope = scope.find(ClassScope);
-  const funcScope = new ThisScope(
-    {parentScope: scope},
-    classScope.meta.instance,
-  );
+	const classScope = scope.find(ClassScope);
+	const funcScope = new ThisScope({parentScope: scope}, classScope.meta.instance);
 
-  let annotatedType;
-  let inferredType;
+	let annotatedType;
+	let inferredType;
 
-  if (node.typeAnnotation) {
-    annotatedType = funcScope.evaluate(node.typeAnnotation);
-  }
+	if (node.typeAnnotation) {
+		annotatedType = funcScope.evaluate(node.typeAnnotation);
+	}
 
-  if (node.value) {
-    inferredType = funcScope.evaluate(node.value);
+	if (node.value) {
+		inferredType = funcScope.evaluate(node.value);
 
-    if (annotatedType !== undefined) {
-      inferredType.shouldMatch(annotatedType);
-    }
-  }
+		if (annotatedType !== undefined) {
+			inferredType.shouldMatch(annotatedType);
+		}
+	}
 
-  if (annotatedType === undefined && inferredType === undefined) {
-    // TODO what do we do here?
-    inferredType = new AnyT(scope, node);
-  }
+	if (annotatedType === undefined && inferredType === undefined) {
+		// TODO what do we do here?
+		inferredType = new AnyT(scope, node);
+	}
 
-  const actualValue = annotatedType === undefined ? inferredType : annotatedType;
-  if (actualValue === undefined) {
-    throw new Error('Expected actual value');
-  }
+	const actualValue = annotatedType === undefined ? inferredType : annotatedType;
+	if (actualValue === undefined) {
+		throw new Error('Expected actual value');
+	}
 
-  if (node.key.value.type !== 'Identifier') {
-    throw new Error('Expected only an identifier key');
-  }
+	if (node.key.value.type !== 'Identifier') {
+		throw new Error('Expected only an identifier key');
+	}
 
-  return new ObjPropT(scope, node, node.key.value.name, actualValue);
+	return new ObjPropT(scope, node, node.key.value.name, actualValue);
 }

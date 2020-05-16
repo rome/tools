@@ -9,14 +9,14 @@ import {AnyTargetAssignmentPattern, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type TSAssignmentNonNullExpression = JSNodeBase & {
-  type: 'TSAssignmentNonNullExpression';
-  expression: AnyTargetAssignmentPattern;
+	type: 'TSAssignmentNonNullExpression';
+	expression: AnyTargetAssignmentPattern;
 };
 
 export const tsAssignmentNonNullExpression = createBuilder<TSAssignmentNonNullExpression>(
-  'TSAssignmentNonNullExpression',
-  {
-    bindingKeys: {},
-    visitorKeys: {expression: true},
-  },
+	'TSAssignmentNonNullExpression',
+	{
+		bindingKeys: {},
+		visitorKeys: {expression: true},
+	},
 );

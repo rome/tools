@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, YieldExpression, yieldExpression} from '@romejs/js-ast';
 
 export default function YieldExpression(node: AnyNode, scope: Scope) {
-  node = yieldExpression.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = yieldExpression.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

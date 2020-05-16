@@ -8,5 +8,5 @@
 import {Token} from '../../tokens';
 
 export default function RegExpNonWhiteSpaceCharacter(): Token {
-  return '\\S';
+	return '\\S';
 }

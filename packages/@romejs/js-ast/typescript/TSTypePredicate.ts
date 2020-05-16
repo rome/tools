@@ -9,19 +9,19 @@ import {AnyPrimaryType, Identifier, JSNodeBase, TSThisType} from '../index';
 import {createBuilder} from '../utils';
 
 export type TSTypePredicate = JSNodeBase & {
-  type: 'TSTypePredicate';
-  asserts: boolean;
-  parameterName: Identifier | TSThisType;
-  typeAnnotation?: AnyPrimaryType;
+	type: 'TSTypePredicate';
+	asserts: boolean;
+	parameterName: Identifier | TSThisType;
+	typeAnnotation?: AnyPrimaryType;
 };
 
 export const tsTypePredicate = createBuilder<TSTypePredicate>(
-  'TSTypePredicate',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      parameterName: true,
-      typeAnnotation: true,
-    },
-  },
+	'TSTypePredicate',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			parameterName: true,
+			typeAnnotation: true,
+		},
+	},
 );

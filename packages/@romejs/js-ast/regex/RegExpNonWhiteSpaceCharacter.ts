@@ -9,13 +9,13 @@ import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type RegExpNonWhiteSpaceCharacter = JSNodeBase & {
-  type: 'RegExpNonWhiteSpaceCharacter';
+	type: 'RegExpNonWhiteSpaceCharacter';
 };
 
 export const regExpNonWhiteSpaceCharacter = createBuilder<RegExpNonWhiteSpaceCharacter>(
-  'RegExpNonWhiteSpaceCharacter',
-  {
-    bindingKeys: {},
-    visitorKeys: {},
-  },
+	'RegExpNonWhiteSpaceCharacter',
+	{
+		bindingKeys: {},
+		visitorKeys: {},
+	},
 );

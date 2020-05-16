@@ -10,15 +10,15 @@ import {testLint} from '../testHelpers';
 import {dedent} from '@romejs/string-utils';
 
 test(
-  'no template curly in string',
-  async (t) => {
-    await testLint(
-      t,
-      dedent`
+	'no template curly in string',
+	async (t) => {
+		await testLint(
+			t,
+			dedent`
         const user = "Faustina";
         const helloUser = "Hello, \${user}!";
       `,
-      {category: 'lint/noTemplateCurlyInString'},
-    );
-  },
+			{category: 'lint/noTemplateCurlyInString'},
+		);
+	},
 );

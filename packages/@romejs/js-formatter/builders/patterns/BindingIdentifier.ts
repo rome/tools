@@ -12,16 +12,16 @@ import Identifier from '../auxiliary/Identifier';
 import {printPatternMeta} from '../utils';
 
 export default function BindingIdentifier(
-  builder: Builder,
-  node: BindingIdentifier,
+	builder: Builder,
+	node: BindingIdentifier,
 ): Token {
-  if (node.name[0] === '*') {
-    // Internal name
-    return '';
-  }
+	if (node.name[0] === '*') {
+		// Internal name
+		return '';
+	}
 
-  return concat([
-    Identifier(builder, node),
-    printPatternMeta(builder, node, node.meta),
-  ]);
+	return concat([
+		Identifier(builder, node),
+		printPatternMeta(builder, node, node.meta),
+	]);
 }

@@ -9,19 +9,19 @@ import {JSNodeBase, PatternMeta} from '../index';
 import {createQuickBuilder} from '../utils';
 
 export type BindingIdentifier = JSNodeBase & {
-  type: 'BindingIdentifier';
-  name: string;
-  definite?: boolean;
-  meta?: PatternMeta;
+	type: 'BindingIdentifier';
+	name: string;
+	definite?: boolean;
+	meta?: PatternMeta;
 };
 
 export const bindingIdentifier = createQuickBuilder<BindingIdentifier, 'name'>(
-  'BindingIdentifier',
-  'name',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      meta: true,
-    },
-  },
+	'BindingIdentifier',
+	'name',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			meta: true,
+		},
+	},
 );

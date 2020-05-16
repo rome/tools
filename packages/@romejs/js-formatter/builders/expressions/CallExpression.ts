@@ -6,80 +6,75 @@
  */
 
 import {
-  CallExpression,
-  NewExpression,
-  OptionalCallExpression,
+	CallExpression,
+	NewExpression,
+	OptionalCallExpression,
 } from '@romejs/js-ast';
 import {isFunctionNode} from '@romejs/js-ast-utils';
 import Builder from '../../Builder';
 import {
-  Token,
-  concat,
-  group,
-  hardline,
-  ifBreak,
-  indent,
-  softline,
+	Token,
+	concat,
+	group,
+	hardline,
+	ifBreak,
+	indent,
+	softline,
 } from '../../tokens';
 import {printCommaList} from '../utils';
 import {hasInnerComments} from '../comments';
 
 type AnyCallableExpression =
-  | CallExpression
-  | OptionalCallExpression
-  | NewExpression;
+	 | CallExpression
+	| OptionalCallExpression
+	| NewExpression;
 
 export default function CallExpression(
-  builder: Builder,
-  node: AnyCallableExpression,
+	builder: Builder,
+	node: AnyCallableExpression,
 ): Token {
-  const tokens: Array<Token> = [builder.tokenize(node.callee, node)];
+	const tokens: Array<Token> = [builder.tokenize(node.callee, node)];
 
-  if (node.type === 'OptionalCallExpression') {
-    tokens.push('?.');
-  }
+	if (node.type === 'OptionalCallExpression') {
+		tokens.push('?.');
+	}
 
-  if (node.typeArguments) {
-    tokens.push(builder.tokenize(node.typeArguments, node));
-  }
+	if (node.typeArguments) {
+		tokens.push(builder.tokenize(node.typeArguments, node));
+	}
 
-  tokens.push(printArguments(builder, node));
+	tokens.push(printArguments(builder, node));
 
-  return concat(tokens);
+	return concat(tokens);
 }
 
 function printArguments(builder: Builder, node: AnyCallableExpression): Token {
-  if (node.arguments.length === 0) {
-    if (hasInnerComments(node)) {
-      return concat([
-        '(',
-        builder.tokenizeInnerComments(node, true),
-        hardline,
-        ')',
-      ]);
-    } else {
-      return '()';
-    }
-  }
+	if (node.arguments.length === 0) {
+		if (hasInnerComments(node)) {
+			return concat(['(', builder.tokenizeInnerComments(node, true), hardline, ')']);
+		} else {
+			return '()';
+		}
+	}
 
-  if (node.arguments.length === 1) {
-    const argument = node.arguments[0];
-    if (
-      argument.type === 'ArrayExpression' ||
-      argument.type === 'ObjectExpression' ||
-      isFunctionNode(argument)
-    ) {
-      return concat(['(', builder.tokenize(argument, node), ')']);
-    }
-  }
+	if (node.arguments.length === 1) {
+		const argument = node.arguments[0];
+		if (
+			argument.type === 'ArrayExpression' ||
+			argument.type === 'ObjectExpression' ||
+			isFunctionNode(argument)
+		) {
+			return concat(['(', builder.tokenize(argument, node), ')']);
+		}
+	}
 
-  return group(
-    concat([
-      '(',
-      indent(concat([softline, printCommaList(builder, node.arguments, node)])),
-      ifBreak(','),
-      softline,
-      ')',
-    ]),
-  );
+	return group(
+		concat([
+			'(',
+			indent(concat([softline, printCommaList(builder, node.arguments, node)])),
+			ifBreak(','),
+			softline,
+			')',
+		]),
+	);
 }

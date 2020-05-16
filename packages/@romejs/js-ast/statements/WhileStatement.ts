@@ -9,18 +9,18 @@ import {AnyExpression, AnyStatement, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type WhileStatement = JSNodeBase & {
-  type: 'WhileStatement';
-  test: AnyExpression;
-  body: AnyStatement;
+	type: 'WhileStatement';
+	test: AnyExpression;
+	body: AnyStatement;
 };
 
 export const whileStatement = createBuilder<WhileStatement>(
-  'WhileStatement',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      test: true,
-      body: true,
-    },
-  },
+	'WhileStatement',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			test: true,
+			body: true,
+		},
+	},
 );

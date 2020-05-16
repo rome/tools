@@ -11,9 +11,9 @@ const path = require('path');
 const fs = require('fs');
 
 const {
-  formatterFolder,
-  analysisFolder,
-  astFolder,
+	formatterFolder,
+	analysisFolder,
+	astFolder,
 } = require('../_constants.cjs');
 
 const {write, getBuilderName} = require('../_utils.cjs');
@@ -21,8 +21,8 @@ const {write, getBuilderName} = require('../_utils.cjs');
 const nodeType = process.argv[2];
 const category = process.argv[3];
 if (nodeType === undefined || category === undefined) {
-  console.error('node scripts/ast/add.cjs [node-type] [category]');
-  process.exit(1);
+	console.error('node scripts/ast/add.cjs [node-type] [category]');
+	process.exit(1);
 }
 
 const builderName = getBuilderName(nodeType);
@@ -49,8 +49,8 @@ export const ${builderName} = createBuilder<${nodeType}>('${nodeType}', {
 `;
 const fileLoc = path.join(astFolder, category, `${nodeType}.ts`);
 if (fs.existsSync(fileLoc, 'utf8')) {
-  console.log('Already have', nodeType);
-  process.exit();
+	console.log('Already have', nodeType);
+	process.exit();
 }
 write(fileLoc, file);
 

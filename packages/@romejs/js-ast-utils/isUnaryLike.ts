@@ -8,17 +8,17 @@
 import {AnyNode} from '@romejs/js-ast';
 
 export default function isUnaryLike(node: undefined | AnyNode): boolean {
-  if (node === undefined) {
-    return false;
-  }
+	if (node === undefined) {
+		return false;
+	}
 
-  switch (node.type) {
-    case 'UnaryExpression':
-    case 'SpreadElement':
-    case 'SpreadProperty':
-      return true;
+	switch (node.type) {
+		case 'UnaryExpression':
+		case 'SpreadElement':
+		case 'SpreadProperty':
+			return true;
 
-    default:
-      return false;
-  }
+		default:
+			return false;
+	}
 }

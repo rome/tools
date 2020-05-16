@@ -9,13 +9,13 @@ import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type RegExpNonWordCharacter = JSNodeBase & {
-  type: 'RegExpNonWordCharacter';
+	type: 'RegExpNonWordCharacter';
 };
 
 export const regExpNonWordCharacter = createBuilder<RegExpNonWordCharacter>(
-  'RegExpNonWordCharacter',
-  {
-    bindingKeys: {},
-    visitorKeys: {},
-  },
+	'RegExpNonWordCharacter',
+	{
+		bindingKeys: {},
+		visitorKeys: {},
+	},
 );

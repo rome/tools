@@ -6,28 +6,28 @@
  */
 
 import {
-  AssignmentIdentifier,
-  AssignmentObjectPatternProperty,
-  JSNodeBase,
-  PatternMeta,
+	AssignmentIdentifier,
+	AssignmentObjectPatternProperty,
+	JSNodeBase,
+	PatternMeta,
 } from '../index';
 import {createBuilder} from '../utils';
 
 export type AssignmentObjectPattern = JSNodeBase & {
-  type: 'AssignmentObjectPattern';
-  meta?: PatternMeta;
-  properties: Array<AssignmentObjectPatternProperty>;
-  rest: undefined | AssignmentIdentifier;
+	type: 'AssignmentObjectPattern';
+	meta?: PatternMeta;
+	properties: Array<AssignmentObjectPatternProperty>;
+	rest: undefined | AssignmentIdentifier;
 };
 
 export const assignmentObjectPattern = createBuilder<AssignmentObjectPattern>(
-  'AssignmentObjectPattern',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      properties: true,
-      rest: true,
-      meta: true,
-    },
-  },
+	'AssignmentObjectPattern',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			properties: true,
+			rest: true,
+			meta: true,
+		},
+	},
 );

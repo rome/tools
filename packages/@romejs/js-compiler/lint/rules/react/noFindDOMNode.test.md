@@ -10,10 +10,10 @@
 
  unknown:1 lint/noFindDOMNode ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Do not use findDOMNode
+	✖ Do not use findDOMNode
 
-    findDOMNode(this).scrollIntoView()
-    ^^^^^^^^^^^^^^^^^
+	  findDOMNode(this).scrollIntoView()
+	  ^^^^^^^^^^^^^^^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -34,10 +34,10 @@ findDOMNode(this).scrollIntoView();
 
  unknown:1:9 lint/noFindDOMNode ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Do not use findDOMNode
+	✖ Do not use findDOMNode
 
-    ReactDOM.findDOMNode(this).scrollIntoView()
-             ^^^^^^^^^^^
+	  ReactDOM.findDOMNode(this).scrollIntoView()
+	           ^^^^^^^^^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

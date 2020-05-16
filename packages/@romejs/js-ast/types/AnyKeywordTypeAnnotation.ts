@@ -9,13 +9,13 @@ import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type AnyKeywordTypeAnnotation = JSNodeBase & {
-  type: 'AnyKeywordTypeAnnotation';
+	type: 'AnyKeywordTypeAnnotation';
 };
 
 export const anyKeywordTypeAnnotation = createBuilder<AnyKeywordTypeAnnotation>(
-  'AnyKeywordTypeAnnotation',
-  {
-    bindingKeys: {},
-    visitorKeys: {},
-  },
+	'AnyKeywordTypeAnnotation',
+	{
+		bindingKeys: {},
+		visitorKeys: {},
+	},
 );

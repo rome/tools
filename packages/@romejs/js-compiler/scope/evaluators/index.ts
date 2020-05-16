@@ -30,10 +30,10 @@ import FunctionHead from './FunctionHead';
 import {AnyNode} from '@romejs/js-ast';
 
 type ScopeEvaluator = {
-  creator: boolean;
+	creator: boolean;
 
-  // rome-ignore lint/noExplicitAny
-  build: (node: any, parent: AnyNode, scope: Scope) => void | Scope;
+	// rome-ignore lint/noExplicitAny
+	build: (node: any, parent: AnyNode, scope: Scope) => void | Scope;
 };
 
 const evaluators: Map<string, ScopeEvaluator> = new Map();

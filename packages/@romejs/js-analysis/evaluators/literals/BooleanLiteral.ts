@@ -10,6 +10,6 @@ import {AnyNode, BooleanLiteral, booleanLiteral} from '@romejs/js-ast';
 import BooleanLiteralT from '../../types/BooleanLiteralT';
 
 export default function BooleanLiteral(node: AnyNode, scope: Scope) {
-  node = booleanLiteral.assert(node);
-  return new BooleanLiteralT(scope, node, node.value);
+	node = booleanLiteral.assert(node);
+	return new BooleanLiteralT(scope, node, node.value);
 }

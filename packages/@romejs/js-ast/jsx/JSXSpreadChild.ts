@@ -9,16 +9,16 @@ import {AnyExpression, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type JSXSpreadChild = JSNodeBase & {
-  type: 'JSXSpreadChild';
-  expression: AnyExpression;
+	type: 'JSXSpreadChild';
+	expression: AnyExpression;
 };
 
 export const jsxSpreadChild = createBuilder<JSXSpreadChild>(
-  'JSXSpreadChild',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      expression: true,
-    },
-  },
+	'JSXSpreadChild',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			expression: true,
+		},
+	},
 );

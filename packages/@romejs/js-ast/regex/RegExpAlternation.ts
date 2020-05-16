@@ -9,18 +9,18 @@ import {AnyRegExpExpression, JSNodeBase, RegExpSubExpression} from '../index';
 import {createBuilder} from '../utils';
 
 export type RegExpAlternation = JSNodeBase & {
-  type: 'RegExpAlternation';
-  left: AnyRegExpExpression;
-  right: RegExpSubExpression;
+	type: 'RegExpAlternation';
+	left: AnyRegExpExpression;
+	right: RegExpSubExpression;
 };
 
 export const regExpAlternation = createBuilder<RegExpAlternation>(
-  'RegExpAlternation',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      left: true,
-      right: true,
-    },
-  },
+	'RegExpAlternation',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			left: true,
+			right: true,
+		},
+	},
 );

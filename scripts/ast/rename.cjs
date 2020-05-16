@@ -13,37 +13,37 @@ const fs = require('fs');
 const fromType = process.argv[2];
 const toType = process.argv[3];
 if (fromType === undefined || toType === undefined) {
-  console.error('node rename-ast-type.js [from] [to]');
-  process.exit(1);
+	console.error('node rename-ast-type.js [from] [to]');
+	process.exit(1);
 }
 
 function rename(src, dest) {
-  fs.mkdirSync(path.dirname(dest), {recursive: true});
-  console.log(
-    path.relative(process.cwd(), src),
-    '->',
-    path.relative(process.cwd(), dest),
-  );
-  fs.renameSync(src, dest);
+	fs.mkdirSync(path.dirname(dest), {recursive: true});
+	console.log(
+		path.relative(process.cwd(), src),
+		'->',
+		path.relative(process.cwd(), dest),
+	);
+	fs.renameSync(src, dest);
 }
 
 const {
-  formatterFolder,
-  analysisFolder,
-  astFolder,
+	formatterFolder,
+	analysisFolder,
+	astFolder,
 } = require('../_constants.cjs');
 
 rename(
-  path.join(formatterFolder, `${fromType}.ts`),
-  path.join(formatterFolder, `${toType}ts`),
+	path.join(formatterFolder, `${fromType}.ts`),
+	path.join(formatterFolder, `${toType}ts`),
 );
 rename(
-  path.join(analysisFolder, `${fromType}ts`),
-  path.join(analysisFolder, `${toType}ts`),
+	path.join(analysisFolder, `${fromType}ts`),
+	path.join(analysisFolder, `${toType}ts`),
 );
 rename(
-  path.join(astFolder, `${fromType}.ts`),
-  path.join(astFolder, `${toType}.ts`),
+	path.join(astFolder, `${fromType}.ts`),
+	path.join(astFolder, `${toType}.ts`),
 );
 
 require('./update.cjs');

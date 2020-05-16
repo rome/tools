@@ -10,16 +10,16 @@ import {Builder} from '@romejs/js-formatter';
 import {Token, concat, space} from '../../tokens';
 
 export default function TSCallSignatureDeclaration(
-  builder: Builder,
-  node: TSCallSignatureDeclaration,
+	builder: Builder,
+	node: TSCallSignatureDeclaration,
 ): Token {
-  const tokens: Array<Token> = [builder.tokenize(node.meta, node)];
+	const tokens: Array<Token> = [builder.tokenize(node.meta, node)];
 
-  if (node.typeAnnotation) {
-    tokens.push(':', space, builder.tokenize(node.typeAnnotation, node));
-  }
+	if (node.typeAnnotation) {
+		tokens.push(':', space, builder.tokenize(node.typeAnnotation, node));
+	}
 
-  tokens.push(';');
+	tokens.push(';');
 
-  return concat(tokens);
+	return concat(tokens);
 }

@@ -15,42 +15,42 @@ import {Consumer} from '@romejs/consume';
 import {stringifyRJSON} from '@romejs/codec-json';
 
 export default createLocalCommand({
-  category: commandCategories.PROJECT_MANAGEMENT,
-  description: 'create a project config',
-  usage: '',
-  examples: [],
-  defineFlags(consumer: Consumer) {
-    return {};
-  },
-  async callback(req: ClientRequest) {
-    const {reporter} = req.client;
+	category: commandCategories.PROJECT_MANAGEMENT,
+	description: 'create a project config',
+	usage: '',
+	examples: [],
+	defineFlags(consumer: Consumer) {
+		return {};
+	},
+	async callback(req: ClientRequest) {
+		const {reporter} = req.client;
 
-    const configPath = req.client.flags.cwd.append('rome.rjson');
-    if (await exists(configPath)) {
-      reporter.error(
-        `<filelink target="${configPath.join()}" emphasis>rome.rjson</filelink> file already exists`,
-      );
-      reporter.info(
-        'Use <command>rome config</command> to update an existing config',
-      );
-      return false;
-    }
+		const configPath = req.client.flags.cwd.append('rome.rjson');
+		if (await exists(configPath)) {
+			reporter.error(
+				`<filelink target="${configPath.join()}" emphasis>rome.rjson</filelink> file already exists`,
+			);
+			reporter.info(
+				'Use <command>rome config</command> to update an existing config',
+			);
+			return false;
+		}
 
-    const config: Dict<unknown> = {
-      version: `^${VERSION}`,
-    };
-    await writeConfig();
+		const config: Dict<unknown> = {
+			version: `^${VERSION}`,
+		};
+		await writeConfig();
 
-    async function writeConfig() {
-      await writeFile(configPath, stringifyRJSON(config));
-    }
+		async function writeConfig() {
+			await writeFile(configPath, stringifyRJSON(config));
+		}
 
-    // Run lint, capture diagnostics
+		// Run lint, capture diagnostics
 
-    reporter.success(
-      `Created config <filelink emphasis target="${configPath.join()}" />`,
-    );
+		reporter.success(
+			`Created config <filelink emphasis target="${configPath.join()}" />`,
+		);
 
-    return true;
-  },
+		return true;
+	},
 });

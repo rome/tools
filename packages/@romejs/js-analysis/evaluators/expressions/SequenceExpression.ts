@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, SequenceExpression, sequenceExpression} from '@romejs/js-ast';
 
 export default function SequenceExpression(node: AnyNode, scope: Scope) {
-  node = sequenceExpression.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = sequenceExpression.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

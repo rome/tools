@@ -11,8 +11,8 @@ import {ClassExpression} from '@romejs/js-ast';
 import ClassDeclaration from './ClassDeclaration';
 
 export default function ClassExpression(
-  builder: Builder,
-  node: ClassExpression,
+	builder: Builder,
+	node: ClassExpression,
 ): Token {
-  return ClassDeclaration(builder, node);
+	return ClassDeclaration(builder, node);
 }

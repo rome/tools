@@ -9,22 +9,22 @@ import {Token, concat, space} from '../../tokens';
 import {printConditionalExpression} from '../expressions/ConditionalExpression';
 
 export default function TSConditionalType(
-  builder: Builder,
-  node: TSConditionalType,
-  parent: AnyNode,
+	builder: Builder,
+	node: TSConditionalType,
+	parent: AnyNode,
 ): Token {
-  return printConditionalExpression(
-    concat([
-      builder.tokenize(node.checkType, node),
-      space,
-      'extends',
-      space,
-      builder.tokenize(node.extendsType, node),
-    ]),
-    builder.tokenize(node.trueType, node),
-    builder.tokenize(node.falseType, node),
-    parent,
-    node.trueType,
-    node.falseType,
-  );
+	return printConditionalExpression(
+		concat([
+			builder.tokenize(node.checkType, node),
+			space,
+			'extends',
+			space,
+			builder.tokenize(node.extendsType, node),
+		]),
+		builder.tokenize(node.trueType, node),
+		builder.tokenize(node.falseType, node),
+		parent,
+		node.trueType,
+		node.falseType,
+	);
 }

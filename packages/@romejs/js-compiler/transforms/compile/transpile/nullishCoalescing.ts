@@ -9,15 +9,15 @@ import {Path} from '@romejs/js-compiler';
 import {template} from '@romejs/js-ast-utils';
 
 export default {
-  name: 'nullishCoalescing',
-  enter(path: Path) {
-    const {node} = path;
+	name: 'nullishCoalescing',
+	enter(path: Path) {
+		const {node} = path;
 
-    if (node.type === 'LogicalExpression' && node.operator === '??') {
-      // TODO assign `node.left` to a variable and use it as a reference
-      return template.expression`${node.left} == null ? ${node.right} : ${node.left}`;
-    }
+		if (node.type === 'LogicalExpression' && node.operator === '??') {
+			// TODO assign `node.left` to a variable and use it as a reference
+			return template.expression`${node.left} == null ? ${node.right} : ${node.left}`;
+		}
 
-    return node;
-  },
+		return node;
+	},
 };

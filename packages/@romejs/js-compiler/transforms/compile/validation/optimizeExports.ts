@@ -7,73 +7,73 @@
 
 import {ImportBinding, Path} from '@romejs/js-compiler';
 import {
-  AnyNode,
-  ExportExternalDeclaration,
-  ExportLocalDeclaration,
-  exportExternalDeclaration,
-  exportExternalSpecifier,
-  exportLocalDeclaration,
-  identifier,
-  stringLiteral,
+	AnyNode,
+	ExportExternalDeclaration,
+	ExportLocalDeclaration,
+	exportExternalDeclaration,
+	exportExternalSpecifier,
+	exportLocalDeclaration,
+	identifier,
+	stringLiteral,
 } from '@romejs/js-ast';
 
 export default {
-  name: 'optimizeExports',
-  enter(
-    path: Path,
-  ): AnyNode | Array<ExportExternalDeclaration | ExportLocalDeclaration> {
-    const {node} = path;
+	name: 'optimizeExports',
+	enter(
+		path: Path,
+	): AnyNode | Array<ExportExternalDeclaration | ExportLocalDeclaration> {
+		const {node} = path;
 
-    // turn `import {a} from 'b'; export {a}`; to `export {a} from 'b';`';
-    if (
-      node.type === 'ExportLocalDeclaration' &&
-      node.exportKind === 'value' &&
-      node.declaration === undefined &&
-      node.specifiers !== undefined
-    ) {
-      const nodes: Array<ExportExternalDeclaration | ExportLocalDeclaration> = [];
-      const specifiers = [];
+		// turn `import {a} from 'b'; export {a}`; to `export {a} from 'b';`';
+		if (
+			node.type === 'ExportLocalDeclaration' &&
+			node.exportKind === 'value' &&
+			node.declaration === undefined &&
+			node.specifiers !== undefined
+		) {
+			const nodes: Array<ExportExternalDeclaration | ExportLocalDeclaration> = [];
+			const specifiers = [];
 
-      for (const specifier of node.specifiers) {
-        if (specifier.type === 'ExportLocalSpecifier') {
-          const binding = path.scope.getBinding(specifier.local.name);
-          if (
-            binding !== undefined &&
-            binding instanceof ImportBinding &&
-            binding.meta.type === 'name'
-          ) {
-            nodes.push(
-              exportExternalDeclaration.create({
-                namedSpecifiers: [
-                  exportExternalSpecifier.create({
-                    local: identifier.quick(binding.meta.imported),
-                    exported: specifier.exported,
-                    loc: specifier.loc,
-                  }),
-                ],
-                source: stringLiteral.quick(binding.meta.source),
-              }),
-            );
-          } else {
-            specifiers.push(specifier);
-          }
-        } else {
-          // TODO ???
-          specifiers.push(specifier);
-        }
-      }
+			for (const specifier of node.specifiers) {
+				if (specifier.type === 'ExportLocalSpecifier') {
+					const binding = path.scope.getBinding(specifier.local.name);
+					if (
+						binding !== undefined &&
+						binding instanceof ImportBinding &&
+						binding.meta.type === 'name'
+					) {
+						nodes.push(
+							exportExternalDeclaration.create({
+								namedSpecifiers: [
+									exportExternalSpecifier.create({
+										local: identifier.quick(binding.meta.imported),
+										exported: specifier.exported,
+										loc: specifier.loc,
+									}),
+								],
+								source: stringLiteral.quick(binding.meta.source),
+							}),
+						);
+					} else {
+						specifiers.push(specifier);
+					}
+				} else {
+					// TODO ???
+					specifiers.push(specifier);
+				}
+			}
 
-      if (specifiers.length === node.specifiers.length && nodes.length === 0) {
-        return node;
-      }
+			if (specifiers.length === node.specifiers.length && nodes.length === 0) {
+				return node;
+			}
 
-      if (specifiers.length !== 0) {
-        nodes.push(exportLocalDeclaration.create({specifiers}));
-      }
+			if (specifiers.length !== 0) {
+				nodes.push(exportLocalDeclaration.create({specifiers}));
+			}
 
-      return nodes;
-    }
+			return nodes;
+		}
 
-    return node;
-  },
+		return node;
+	},
 };

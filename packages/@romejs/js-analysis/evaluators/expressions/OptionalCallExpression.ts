@@ -7,13 +7,13 @@
 
 import {Scope} from '../../scopes';
 import {
-  AnyNode,
-  OptionalCallExpression,
-  optionalCallExpression,
+	AnyNode,
+	OptionalCallExpression,
+	optionalCallExpression,
 } from '@romejs/js-ast';
 
 export default function OptionalCallExpression(node: AnyNode, scope: Scope) {
-  node = optionalCallExpression.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = optionalCallExpression.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

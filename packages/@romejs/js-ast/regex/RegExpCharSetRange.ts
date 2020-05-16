@@ -9,18 +9,18 @@ import {AnyRegExpEscapedCharacter, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type RegExpCharSetRange = JSNodeBase & {
-  type: 'RegExpCharSetRange';
-  start: AnyRegExpEscapedCharacter;
-  end: AnyRegExpEscapedCharacter;
+	type: 'RegExpCharSetRange';
+	start: AnyRegExpEscapedCharacter;
+	end: AnyRegExpEscapedCharacter;
 };
 
 export const regExpCharSetRange = createBuilder<RegExpCharSetRange>(
-  'RegExpCharSetRange',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      start: true,
-      end: true,
-    },
-  },
+	'RegExpCharSetRange',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			start: true,
+			end: true,
+		},
+	},
 );

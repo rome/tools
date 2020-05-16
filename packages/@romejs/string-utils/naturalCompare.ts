@@ -34,74 +34,74 @@
 import {isDigit} from '@romejs/string-charcodes';
 
 export function naturalCompare(
-  a: string,
-  b: string,
-  insensitive: boolean = true,
+	a: string,
+	b: string,
+	insensitive: boolean = true,
 ): number {
-  if (insensitive) {
-    a = a.toLowerCase();
-    b = b.toLowerCase();
-  }
+	if (insensitive) {
+		a = a.toLowerCase();
+		b = b.toLowerCase();
+	}
 
-  const lengthA = a.length;
-  const lengthB = b.length;
+	const lengthA = a.length;
+	const lengthB = b.length;
 
-  let aIndex: number = 0;
-  let bIndex: number = 0;
+	let aIndex: number = 0;
+	let bIndex: number = 0;
 
-  while (aIndex < lengthA && bIndex < lengthB) {
-    let charCodeA = a.charCodeAt(aIndex);
-    let charCodeB = b.charCodeAt(bIndex);
+	while (aIndex < lengthA && bIndex < lengthB) {
+		let charCodeA = a.charCodeAt(aIndex);
+		let charCodeB = b.charCodeAt(bIndex);
 
-    if (isDigit(charCodeA)) {
-      if (!isDigit(charCodeB)) {
-        return charCodeA - charCodeB;
-      }
+		if (isDigit(charCodeA)) {
+			if (!isDigit(charCodeB)) {
+				return charCodeA - charCodeB;
+			}
 
-      let numStartA = aIndex;
-      let numStartB = bIndex;
+			let numStartA = aIndex;
+			let numStartB = bIndex;
 
-      while (charCodeA === 48 && ++numStartA < lengthA) {
-        charCodeA = a.charCodeAt(numStartA);
-      }
-      while (charCodeB === 48 && ++numStartB < lengthB) {
-        charCodeB = b.charCodeAt(numStartB);
-      }
+			while (charCodeA === 48 && ++numStartA < lengthA) {
+				charCodeA = a.charCodeAt(numStartA);
+			}
+			while (charCodeB === 48 && ++numStartB < lengthB) {
+				charCodeB = b.charCodeAt(numStartB);
+			}
 
-      let numEndA = numStartA;
-      let numEndB = numStartB;
+			let numEndA = numStartA;
+			let numEndB = numStartB;
 
-      while (numEndA < lengthA && isDigit(a.charCodeAt(numEndA))) {
-        ++numEndA;
-      }
-      while (numEndB < lengthB && isDigit(b.charCodeAt(numEndB))) {
-        ++numEndB;
-      }
+			while (numEndA < lengthA && isDigit(a.charCodeAt(numEndA))) {
+				++numEndA;
+			}
+			while (numEndB < lengthB && isDigit(b.charCodeAt(numEndB))) {
+				++numEndB;
+			}
 
-      let difference = numEndA - numStartA - numEndB + numStartB; // numA length - numB length
-      if (difference) {
-        return difference;
-      }
+			let difference = numEndA - numStartA - numEndB + numStartB; // numA length - numB length
+			if (difference) {
+				return difference;
+			}
 
-      while (numStartA < numEndA) {
-        difference = a.charCodeAt(numStartA++) - b.charCodeAt(numStartB++);
-        if (difference) {
-          return difference;
-        }
-      }
+			while (numStartA < numEndA) {
+				difference = a.charCodeAt(numStartA++) - b.charCodeAt(numStartB++);
+				if (difference) {
+					return difference;
+				}
+			}
 
-      aIndex = numEndA;
-      bIndex = numEndB;
-      continue;
-    }
+			aIndex = numEndA;
+			bIndex = numEndB;
+			continue;
+		}
 
-    if (charCodeA !== charCodeB) {
-      return charCodeA - charCodeB;
-    }
+		if (charCodeA !== charCodeB) {
+			return charCodeA - charCodeB;
+		}
 
-    ++aIndex;
-    ++bIndex;
-  }
+		++aIndex;
+		++bIndex;
+	}
 
-  return lengthA - lengthB;
+	return lengthA - lengthB;
 }

@@ -10,12 +10,12 @@ import {Token, concat} from '../../tokens';
 import {RegExpCharSetRange} from '@romejs/js-ast';
 
 export default function RegExpCharSetRange(
-  builder: Builder,
-  node: RegExpCharSetRange,
+	builder: Builder,
+	node: RegExpCharSetRange,
 ): Token {
-  return concat([
-    builder.tokenize(node.start, node),
-    '-',
-    builder.tokenize(node.end, node),
-  ]);
+	return concat([
+		builder.tokenize(node.start, node),
+		'-',
+		builder.tokenize(node.end, node),
+	]);
 }

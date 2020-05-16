@@ -10,37 +10,37 @@ import {dedent} from '@romejs/string-utils';
 import {testLintMultiple} from '../testHelpers';
 
 test(
-  'prefer block statements',
-  async (t) => {
-    await testLintMultiple(
-      t,
-      [
-        `if (x) x;`,
-        dedent`
+	'prefer block statements',
+	async (t) => {
+		await testLintMultiple(
+			t,
+			[
+				`if (x) x;`,
+				dedent`
           if (x) {
             x;
           } else y;
         `,
-        dedent`
+				dedent`
           if (x) {
             x
           } else if (y) y;
         `,
-      ],
-      {category: 'lint/preferBlockStatements'},
-    );
+			],
+			{category: 'lint/preferBlockStatements'},
+		);
 
-    await testLintMultiple(
-      t,
-      [
-        `for (;;);`,
-        `for (p in obj);`,
-        `for (x of xs);`,
-        `do; while (x);`,
-        `while (x);`,
-        `with (x);`,
-      ],
-      {category: 'lint/preferBlockStatements'},
-    );
-  },
+		await testLintMultiple(
+			t,
+			[
+				`for (;;);`,
+				`for (p in obj);`,
+				`for (x of xs);`,
+				`do; while (x);`,
+				`while (x);`,
+				`with (x);`,
+			],
+			{category: 'lint/preferBlockStatements'},
+		);
+	},
 );

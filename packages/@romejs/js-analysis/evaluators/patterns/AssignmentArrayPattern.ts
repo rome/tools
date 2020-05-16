@@ -7,13 +7,13 @@
 
 import {Scope} from '../../scopes';
 import {
-  AnyNode,
-  AssignmentArrayPattern,
-  assignmentArrayPattern,
+	AnyNode,
+	AssignmentArrayPattern,
+	assignmentArrayPattern,
 } from '@romejs/js-ast';
 
 export default function AssignmentArrayPattern(node: AnyNode, scope: Scope) {
-  node = assignmentArrayPattern.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = assignmentArrayPattern.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

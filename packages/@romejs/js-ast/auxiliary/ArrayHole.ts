@@ -9,13 +9,13 @@ import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type ArrayHole = JSNodeBase & {
-  type: 'ArrayHole';
+	type: 'ArrayHole';
 };
 
 export const arrayHole = createBuilder<ArrayHole>(
-  'ArrayHole',
-  {
-    bindingKeys: {},
-    visitorKeys: {},
-  },
+	'ArrayHole',
+	{
+		bindingKeys: {},
+		visitorKeys: {},
+	},
 );

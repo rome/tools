@@ -10,10 +10,10 @@
 
  unknown:1 lint/jsxA11yImgRedundantAlt ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ img element alt descriptions must not contain "image", "picture", or "photo"
+	✖ img element alt descriptions must not contain "image", "picture", or "photo"
 
-    <img src="src" alt="photo" />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+	  <img src="src" alt="photo" />
+	  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -34,10 +34,10 @@
 
  unknown:1 lint/jsxA11yImgRedundantAlt ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ img element alt descriptions must not contain "image", "picture", or "photo"
+	✖ img element alt descriptions must not contain "image", "picture", or "photo"
 
-    <img src="src" alt="picture" />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+	  <img src="src" alt="picture" />
+	  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -58,10 +58,10 @@
 
  unknown:1 lint/jsxA11yImgRedundantAlt ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ img element alt descriptions must not contain "image", "picture", or "photo"
+	✖ img element alt descriptions must not contain "image", "picture", or "photo"
 
-    <img src="src" alt="image" />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+	  <img src="src" alt="image" />
+	  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -82,10 +82,10 @@
 
  unknown:1 lint/jsxA11yImgRedundantAlt ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ img element alt descriptions must not contain "image", "picture", or "photo"
+	✖ img element alt descriptions must not contain "image", "picture", or "photo"
 
-    <img src="src" alt="Photo" />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+	  <img src="src" alt="Photo" />
+	  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -106,10 +106,10 @@
 
  unknown:1 lint/jsxA11yImgRedundantAlt ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ img element alt descriptions must not contain "image", "picture", or "photo"
+	✖ img element alt descriptions must not contain "image", "picture", or "photo"
 
-    <img src="src" alt="Picture" />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+	  <img src="src" alt="Picture" />
+	  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -130,10 +130,10 @@
 
  unknown:1 lint/jsxA11yImgRedundantAlt ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ img element alt descriptions must not contain "image", "picture", or "photo"
+	✖ img element alt descriptions must not contain "image", "picture", or "photo"
 
-    <img src="src" alt="Image" />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+	  <img src="src" alt="Image" />
+	  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

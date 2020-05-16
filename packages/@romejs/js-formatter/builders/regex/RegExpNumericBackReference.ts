@@ -10,8 +10,8 @@ import {Token} from '../../tokens';
 import {RegExpNumericBackReference} from '@romejs/js-ast';
 
 export default function RegExpNumericBackReference(
-  builder: Builder,
-  node: RegExpNumericBackReference,
+	builder: Builder,
+	node: RegExpNumericBackReference,
 ): Token {
-  return `\\${node.value}`;
+	return `\\${node.value}`;
 }

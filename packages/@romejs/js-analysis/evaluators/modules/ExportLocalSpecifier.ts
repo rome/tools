@@ -7,13 +7,13 @@
 
 import {Scope} from '../../scopes';
 import {
-  AnyNode,
-  ExportLocalSpecifier,
-  exportLocalSpecifier,
+	AnyNode,
+	ExportLocalSpecifier,
+	exportLocalSpecifier,
 } from '@romejs/js-ast';
 
 export default function ExportLocalSpecifier(node: AnyNode, scope: Scope) {
-  node = exportLocalSpecifier.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = exportLocalSpecifier.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

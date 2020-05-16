@@ -6,12 +6,12 @@
 */
 
 import {
-  AnyNode,
-  RegExpNamedBackReference,
-  regExpNamedBackReference,
+	AnyNode,
+	RegExpNamedBackReference,
+	regExpNamedBackReference,
 } from '@romejs/js-ast';
 
 export default function RegExpNamedBackReference(node: AnyNode) {
-  node = regExpNamedBackReference.assert(node);
-  throw new Error('unimplemented');
+	node = regExpNamedBackReference.assert(node);
+	throw new Error('unimplemented');
 }

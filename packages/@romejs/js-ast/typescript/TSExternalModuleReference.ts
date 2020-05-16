@@ -9,14 +9,14 @@ import {JSNodeBase, StringLiteral} from '../index';
 import {createBuilder} from '../utils';
 
 export type TSExternalModuleReference = JSNodeBase & {
-  type: 'TSExternalModuleReference';
-  expression: StringLiteral;
+	type: 'TSExternalModuleReference';
+	expression: StringLiteral;
 };
 
 export const tsExternalModuleReference = createBuilder<TSExternalModuleReference>(
-  'TSExternalModuleReference',
-  {
-    bindingKeys: {},
-    visitorKeys: {expression: true},
-  },
+	'TSExternalModuleReference',
+	{
+		bindingKeys: {},
+		visitorKeys: {expression: true},
+	},
 );

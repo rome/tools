@@ -10,27 +10,27 @@ import {AbsoluteFilePath} from '@romejs/path';
 import {DiagnosticsProcessor} from '@romejs/diagnostics';
 
 export type DiagnosticsPrinterFlags = {
-  grep: string;
-  fieri: boolean;
-  inverseGrep: boolean;
-  verboseDiagnostics: boolean;
-  maxDiagnostics: number;
-  showAllDiagnostics: boolean;
+	grep: string;
+	fieri: boolean;
+	inverseGrep: boolean;
+	verboseDiagnostics: boolean;
+	maxDiagnostics: number;
+	showAllDiagnostics: boolean;
 };
 
 export type DiagnosticsFileReader = (
-  path: AbsoluteFilePath,
+	path: AbsoluteFilePath,
 ) => undefined | DiagnosticsFileReaderStats;
 
 export type DiagnosticsFileReaderStats = {
-  content: string;
-  mtime: number;
+	content: string;
+	mtime: number;
 };
 
 export type DiagnosticsPrinterOptions = {
-  processor?: DiagnosticsProcessor;
-  reporter: Reporter;
-  cwd?: AbsoluteFilePath;
-  flags?: DiagnosticsPrinterFlags;
-  readFile?: DiagnosticsFileReader;
+	processor?: DiagnosticsProcessor;
+	reporter: Reporter;
+	cwd?: AbsoluteFilePath;
+	flags?: DiagnosticsPrinterFlags;
+	readFile?: DiagnosticsFileReader;
 };

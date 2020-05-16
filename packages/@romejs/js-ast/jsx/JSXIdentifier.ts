@@ -9,15 +9,15 @@ import {JSNodeBase} from '../index';
 import {createQuickBuilder} from '../utils';
 
 export type JSXIdentifier = JSNodeBase & {
-  type: 'JSXIdentifier';
-  name: string;
+	type: 'JSXIdentifier';
+	name: string;
 };
 
 export const jsxIdentifier = createQuickBuilder<JSXIdentifier, 'name'>(
-  'JSXIdentifier',
-  'name',
-  {
-    bindingKeys: {},
-    visitorKeys: {},
-  },
+	'JSXIdentifier',
+	'name',
+	{
+		bindingKeys: {},
+		visitorKeys: {},
+	},
 );

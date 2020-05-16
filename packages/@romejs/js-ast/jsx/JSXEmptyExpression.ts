@@ -9,13 +9,13 @@ import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type JSXEmptyExpression = JSNodeBase & {
-  type: 'JSXEmptyExpression';
+	type: 'JSXEmptyExpression';
 };
 
 export const jsxEmptyExpression = createBuilder<JSXEmptyExpression>(
-  'JSXEmptyExpression',
-  {
-    bindingKeys: {},
-    visitorKeys: {},
-  },
+	'JSXEmptyExpression',
+	{
+		bindingKeys: {},
+		visitorKeys: {},
+	},
 );

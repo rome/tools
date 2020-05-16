@@ -10,28 +10,28 @@ import {Token, concat, space} from '../../tokens';
 import {ClassPropertyMeta} from '@romejs/js-ast';
 
 export default function ClassPropertyMeta(
-  builder: Builder,
-  node: ClassPropertyMeta,
+	builder: Builder,
+	node: ClassPropertyMeta,
 ): Token {
-  const tokens: Array<Token> = [];
+	const tokens: Array<Token> = [];
 
-  if (!builder.options.typeAnnotations) {
-    if (node.accessibility) {
-      tokens.push(node.accessibility);
-    }
+	if (!builder.options.typeAnnotations) {
+		if (node.accessibility) {
+			tokens.push(node.accessibility);
+		}
 
-    if (node.readonly) {
-      tokens.push('readonly', space);
-    }
+		if (node.readonly) {
+			tokens.push('readonly', space);
+		}
 
-    if (node.abstract) {
-      tokens.push('abstract', space);
-    }
-  }
+		if (node.abstract) {
+			tokens.push('abstract', space);
+		}
+	}
 
-  if (node.static) {
-    tokens.push('static', space);
-  }
+	if (node.static) {
+		tokens.push('static', space);
+	}
 
-  return concat(tokens);
+	return concat(tokens);
 }

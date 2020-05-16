@@ -9,13 +9,13 @@ import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type EmptyStatement = JSNodeBase & {
-  type: 'EmptyStatement';
+	type: 'EmptyStatement';
 };
 
 export const emptyStatement = createBuilder<EmptyStatement>(
-  'EmptyStatement',
-  {
-    bindingKeys: {},
-    visitorKeys: {},
-  },
+	'EmptyStatement',
+	{
+		bindingKeys: {},
+		visitorKeys: {},
+	},
 );

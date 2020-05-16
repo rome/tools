@@ -66,18 +66,18 @@ null != foo;
 
  unknown:1 lint/doubleEquals FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Use === instead of ==
+	✖ Use === instead of ==
 
-    foo == bar
-    ^^^^^^^^^^
+	  foo == bar
+	  ^^^^^^^^^^
 
-  ℹ == is only allowed when comparing against null
+	ℹ == is only allowed when comparing against null
 
-  Suggested fix: Use ===
+	Suggested fix: Use ===
 
-  + foo === bar
+	+ foo === bar
 
-  ℹ This may be unsafe if you are relying on type coercion
+	ℹ This may be unsafe if you are relying on type coercion
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

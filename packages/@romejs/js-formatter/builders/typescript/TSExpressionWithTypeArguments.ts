@@ -10,11 +10,11 @@ import {Builder} from '@romejs/js-formatter';
 import {Token, concat} from '../../tokens';
 
 export default function TSExpressionWithTypeArguments(
-  builder: Builder,
-  node: TSExpressionWithTypeArguments,
+	builder: Builder,
+	node: TSExpressionWithTypeArguments,
 ): Token {
-  return concat([
-    builder.tokenize(node.expression, node),
-    builder.tokenize(node.typeParameters, node),
-  ]);
+	return concat([
+		builder.tokenize(node.expression, node),
+		builder.tokenize(node.typeParameters, node),
+	]);
 }

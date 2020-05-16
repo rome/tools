@@ -13,137 +13,137 @@ import {AbsoluteFilePath, RelativeFilePath, UnknownFilePath} from '.';
 // The API here attempts to match what is expected from the native classes, however we may deviate from it
 // to avoid the usage of getters and generator/symbol indirection for iteration.
 class FilePathMap<FilePath extends UnknownFilePath, Value> {
-  constructor(entries?: Array<[FilePath, Value]>) {
-    this.joinedToValue = new Map();
-    this.joinedToPath = new Map();
-    this.size = 0;
+	constructor(entries?: Array<[FilePath, Value]>) {
+		this.joinedToValue = new Map();
+		this.joinedToPath = new Map();
+		this.size = 0;
 
-    if (entries !== undefined) {
-      for (const [key, value] of entries) {
-        this.set(key, value);
-      }
-    }
-  }
+		if (entries !== undefined) {
+			for (const [key, value] of entries) {
+				this.set(key, value);
+			}
+		}
+	}
 
-  joinedToValue: Map<string, Value>;
-  joinedToPath: Map<string, FilePath>;
-  size: number;
+	joinedToValue: Map<string, Value>;
+	joinedToPath: Map<string, FilePath>;
+	size: number;
 
-  _updateSize() {
-    this.size = this.joinedToValue.size;
-  }
+	_updateSize() {
+		this.size = this.joinedToValue.size;
+	}
 
-  *[Symbol.iterator](): Iterator<[FilePath, Value]> {
-    for (const [joined, value] of this.joinedToValue) {
-      const path = this.joinedToPath.get(joined)!;
-      yield [path, value];
-    }
-  }
+	*[Symbol.iterator](): Iterator<[FilePath, Value]> {
+		for (const [joined, value] of this.joinedToValue) {
+			const path = this.joinedToPath.get(joined)!;
+			yield [path, value];
+		}
+	}
 
-  clear() {
-    this.joinedToValue.clear();
-    this.joinedToPath.clear();
-    this._updateSize();
-  }
+	clear() {
+		this.joinedToValue.clear();
+		this.joinedToPath.clear();
+		this._updateSize();
+	}
 
-  keys(): Iterable<FilePath> {
-    return this.joinedToPath.values();
-  }
+	keys(): Iterable<FilePath> {
+		return this.joinedToPath.values();
+	}
 
-  values(): Iterable<Value> {
-    return this.joinedToValue.values();
-  }
+	values(): Iterable<Value> {
+		return this.joinedToValue.values();
+	}
 
-  delete(path: FilePath) {
-    const joined = path.getUnique().join();
-    this.joinedToValue.delete(joined);
-    this.joinedToPath.delete(joined);
-    this._updateSize();
-  }
+	delete(path: FilePath) {
+		const joined = path.getUnique().join();
+		this.joinedToValue.delete(joined);
+		this.joinedToPath.delete(joined);
+		this._updateSize();
+	}
 
-  has(path: FilePath): boolean {
-    return this.joinedToValue.has(path.getUnique().join());
-  }
+	has(path: FilePath): boolean {
+		return this.joinedToValue.has(path.getUnique().join());
+	}
 
-  get(path: FilePath): undefined | Value {
-    return this.joinedToValue.get(path.getUnique().join());
-  }
+	get(path: FilePath): undefined | Value {
+		return this.joinedToValue.get(path.getUnique().join());
+	}
 
-  set(path: FilePath, value: Value) {
-    const uniq = (path.getUnique() as FilePath);
-    const joined = uniq.join();
-    this.joinedToValue.set(joined, value);
-    this.joinedToPath.set(joined, uniq);
-    this._updateSize();
-  }
+	set(path: FilePath, value: Value) {
+		const uniq = (path.getUnique() as FilePath);
+		const joined = uniq.join();
+		this.joinedToValue.set(joined, value);
+		this.joinedToPath.set(joined, uniq);
+		this._updateSize();
+	}
 }
 
 class FilePathSet<FilePath extends UnknownFilePath> {
-  constructor(entries?: Array<FilePath>) {
-    this.map = new FilePathMap();
-    this.size = 0;
+	constructor(entries?: Array<FilePath>) {
+		this.map = new FilePathMap();
+		this.size = 0;
 
-    if (entries !== undefined) {
-      for (const path of entries) {
-        this.add(path);
-      }
-    }
-  }
+		if (entries !== undefined) {
+			for (const path of entries) {
+				this.add(path);
+			}
+		}
+	}
 
-  map: FilePathMap<FilePath, void>;
-  size: number;
+	map: FilePathMap<FilePath, void>;
+	size: number;
 
-  _updateSize() {
-    this.size = this.map.size;
-  }
+	_updateSize() {
+		this.size = this.map.size;
+	}
 
-  [Symbol.iterator](): Iterator<FilePath> {
-    return this.map.keys()[Symbol.iterator]();
-  }
+	[Symbol.iterator](): Iterator<FilePath> {
+		return this.map.keys()[Symbol.iterator]();
+	}
 
-  has(path: FilePath) {
-    return this.map.has(path);
-  }
+	has(path: FilePath) {
+		return this.map.has(path);
+	}
 
-  add(path: FilePath) {
-    this.map.set(path);
-    this._updateSize();
-  }
+	add(path: FilePath) {
+		this.map.set(path);
+		this._updateSize();
+	}
 
-  delete(path: FilePath) {
-    this.map.delete(path);
-    this._updateSize();
-  }
+	delete(path: FilePath) {
+		this.map.delete(path);
+		this._updateSize();
+	}
 
-  clear() {
-    this.map.clear();
-    this._updateSize();
-  }
+	clear() {
+		this.map.clear();
+		this._updateSize();
+	}
 }
 
 export class AbsoluteFilePathMap<Value>
-  extends FilePathMap<AbsoluteFilePath, Value> {
-  type: 'absolute' = 'absolute';
+	extends FilePathMap<AbsoluteFilePath, Value> {
+	type: 'absolute' = 'absolute';
 }
 
 export class RelativeFilePathMap<Value>
-  extends FilePathMap<RelativeFilePath, Value> {
-  type: 'relative' = 'relative';
+	extends FilePathMap<RelativeFilePath, Value> {
+	type: 'relative' = 'relative';
 }
 
 export class UnknownFilePathMap<Value>
-  extends FilePathMap<UnknownFilePath, Value> {
-  type: 'unknown' = 'unknown';
+	extends FilePathMap<UnknownFilePath, Value> {
+	type: 'unknown' = 'unknown';
 }
 
 export class AbsoluteFilePathSet extends FilePathSet<AbsoluteFilePath> {
-  type: 'absolute' = 'absolute';
+	type: 'absolute' = 'absolute';
 }
 
 export class RelativeFilePathSet extends FilePathSet<RelativeFilePath> {
-  type: 'relative' = 'relative';
+	type: 'relative' = 'relative';
 }
 
 export class UnknownFilePathSet extends FilePathSet<UnknownFilePath> {
-  type: 'unknown' = 'unknown';
+	type: 'unknown' = 'unknown';
 }

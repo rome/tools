@@ -7,13 +7,13 @@
 
 import {Scope} from '../../scopes';
 import {
-  AnyNode,
-  StringLiteralTypeAnnotation,
-  stringLiteralTypeAnnotation,
+	AnyNode,
+	StringLiteralTypeAnnotation,
+	stringLiteralTypeAnnotation,
 } from '@romejs/js-ast';
 
 export default function StringLiteralTypeAnnotation(node: AnyNode, scope: Scope) {
-  node = stringLiteralTypeAnnotation.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = stringLiteralTypeAnnotation.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

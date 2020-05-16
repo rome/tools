@@ -6,26 +6,26 @@
  */
 
 import {
-  Identifier,
-  JSNodeBase,
-  NumericLiteral,
-  PrivateName,
-  StringLiteral,
+	Identifier,
+	JSNodeBase,
+	NumericLiteral,
+	PrivateName,
+	StringLiteral,
 } from '../index';
 import {createQuickBuilder} from '../utils';
 
 export type StaticPropertyKey = JSNodeBase & {
-  type: 'StaticPropertyKey';
-  value: Identifier | PrivateName | StringLiteral | NumericLiteral;
+	type: 'StaticPropertyKey';
+	value: Identifier | PrivateName | StringLiteral | NumericLiteral;
 };
 
 export const staticPropertyKey = createQuickBuilder<StaticPropertyKey, 'value'>(
-  'StaticPropertyKey',
-  'value',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      value: true,
-    },
-  },
+	'StaticPropertyKey',
+	'value',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			value: true,
+		},
+	},
 );

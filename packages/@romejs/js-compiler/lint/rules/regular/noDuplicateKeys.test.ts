@@ -10,18 +10,18 @@ import {testLint} from '../testHelpers';
 import {dedent} from '@romejs/string-utils';
 
 test(
-  'no duplicate keys',
-  async (t) => {
-    await testLint(
-      t,
-      dedent`
+	'no duplicate keys',
+	async (t) => {
+		await testLint(
+			t,
+			dedent`
         const foo = {
           test: true,
           test2: true,
           test: false,
         };
       `,
-      {category: 'lint/noDuplicateKeys'},
-    );
-  },
+			{category: 'lint/noDuplicateKeys'},
+		);
+	},
 );

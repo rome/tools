@@ -11,8 +11,8 @@ import {AssignmentObjectPattern} from '@romejs/js-ast';
 import ObjectExpression from '../objects/ObjectExpression';
 
 export default function AssignmentObjectPattern(
-  builder: Builder,
-  node: AssignmentObjectPattern,
+	builder: Builder,
+	node: AssignmentObjectPattern,
 ): Token {
-  return ObjectExpression(builder, node);
+	return ObjectExpression(builder, node);
 }

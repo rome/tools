@@ -11,8 +11,8 @@ import {Token} from '../../tokens';
 import BindingAssignmentPattern from './BindingAssignmentPattern';
 
 export default function AssignmentAssignmentPattern(
-  builder: Builder,
-  node: AssignmentAssignmentPattern,
+	builder: Builder,
+	node: AssignmentAssignmentPattern,
 ): Token {
-  return BindingAssignmentPattern(builder, node);
+	return BindingAssignmentPattern(builder, node);
 }

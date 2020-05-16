@@ -11,14 +11,14 @@ import ExhaustiveT from '../../types/ExhaustiveT';
 import StringT from '../../types/StringT';
 
 export default function TemplateLiteral(node: AnyNode, scope: Scope) {
-  node = templateLiteral.assert(node);
-  for (const expr of node.expressions) {
-    new ExhaustiveT(
-      scope,
-      expr,
-      scope.evaluate(expr),
-      new StringT(scope, undefined),
-    );
-  }
-  return new StringT(scope, node);
+	node = templateLiteral.assert(node);
+	for (const expr of node.expressions) {
+		new ExhaustiveT(
+			scope,
+			expr,
+			scope.evaluate(expr),
+			new StringT(scope, undefined),
+		);
+	}
+	return new StringT(scope, node);
 }

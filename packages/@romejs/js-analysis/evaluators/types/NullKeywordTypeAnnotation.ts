@@ -7,13 +7,13 @@
 
 import {Scope} from '../../scopes';
 import {
-  AnyNode,
-  NullKeywordTypeAnnotation,
-  nullKeywordTypeAnnotation,
+	AnyNode,
+	NullKeywordTypeAnnotation,
+	nullKeywordTypeAnnotation,
 } from '@romejs/js-ast';
 import NullT from '../../types/NullT';
 
 export default function NullKeywordTypeAnnotation(node: AnyNode, scope: Scope) {
-  node = nullKeywordTypeAnnotation.assert(node);
-  return new NullT(scope, node);
+	node = nullKeywordTypeAnnotation.assert(node);
+	return new NullT(scope, node);
 }

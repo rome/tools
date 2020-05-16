@@ -7,13 +7,13 @@
 
 import {Scope} from '../../scopes';
 import {
-  AnyKeywordTypeAnnotation,
-  AnyNode,
-  anyKeywordTypeAnnotation,
+	AnyKeywordTypeAnnotation,
+	AnyNode,
+	anyKeywordTypeAnnotation,
 } from '@romejs/js-ast';
 import AnyT from '../../types/AnyT';
 
 export default function AnyKeywordTypeAnnotation(node: AnyNode, scope: Scope) {
-  node = anyKeywordTypeAnnotation.assert(node);
-  return new AnyT(scope, node);
+	node = anyKeywordTypeAnnotation.assert(node);
+	return new AnyT(scope, node);
 }

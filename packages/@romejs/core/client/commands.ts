@@ -21,16 +21,16 @@ import {SharedCommand} from '../common/commands';
 import {MasterQueryResponse} from '../common/bridges/MasterBridge';
 
 export type LocalCommand<Flags extends Dict<unknown>> = SharedCommand<Flags> & {
-  callback: (
-    req: ClientRequest,
-    commandFlags: Flags,
-  ) => Promise<boolean | MasterQueryResponse>;
+	callback: (
+		req: ClientRequest,
+		commandFlags: Flags,
+	) => Promise<boolean | MasterQueryResponse>;
 };
 
 export function createLocalCommand<Flags extends Dict<unknown>>(
-  cmd: LocalCommand<Flags>,
+	cmd: LocalCommand<Flags>,
 ): LocalCommand<Flags> {
-  return cmd;
+	return cmd;
 }
 
 // rome-ignore lint/noExplicitAny

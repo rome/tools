@@ -9,14 +9,14 @@ import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type BigIntLiteral = JSNodeBase & {
-  type: 'BigIntLiteral';
-  value: string;
+	type: 'BigIntLiteral';
+	value: string;
 };
 
 export const bigIntLiteral = createBuilder<BigIntLiteral>(
-  'BigIntLiteral',
-  {
-    bindingKeys: {},
-    visitorKeys: {},
-  },
+	'BigIntLiteral',
+	{
+		bindingKeys: {},
+		visitorKeys: {},
+	},
 );

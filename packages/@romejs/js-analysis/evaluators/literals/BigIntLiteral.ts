@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, BigIntLiteral, bigIntLiteral} from '@romejs/js-ast';
 
 export default function BigIntLiteral(node: AnyNode, scope: Scope) {
-  node = bigIntLiteral.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = bigIntLiteral.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

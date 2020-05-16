@@ -10,24 +10,24 @@ import {Builder} from '@romejs/js-formatter';
 import {Token, concat, space} from '../../tokens';
 
 export default function TSIndexSignature(
-  builder: Builder,
-  node: TSIndexSignature,
+	builder: Builder,
+	node: TSIndexSignature,
 ): Token {
-  const tokens: Array<Token> = [];
+	const tokens: Array<Token> = [];
 
-  if (node.readonly) {
-    tokens.push('readonly');
-    tokens.push(space);
-  }
+	if (node.readonly) {
+		tokens.push('readonly');
+		tokens.push(space);
+	}
 
-  return concat([
-    concat(tokens),
-    '[',
-    builder.tokenize(node.key, node),
-    ']',
-    ':',
-    space,
-    builder.tokenize(node.typeAnnotation, node),
-    ';',
-  ]);
+	return concat([
+		concat(tokens),
+		'[',
+		builder.tokenize(node.key, node),
+		']',
+		':',
+		space,
+		builder.tokenize(node.typeAnnotation, node),
+		';',
+	]);
 }

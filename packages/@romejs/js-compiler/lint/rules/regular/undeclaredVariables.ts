@@ -11,62 +11,62 @@ import {AnyNode} from '@romejs/js-ast';
 import {descriptions} from '@romejs/diagnostics';
 
 const NODE_VARIABLES = [
-  'require',
-  '__dirname',
-  '__filename',
-  'module',
-  'exports',
+	'require',
+	'__dirname',
+	'__filename',
+	'module',
+	'exports',
 ];
 
 const BROWSER_VARIABLES = [
-  'fetch',
-  'document',
-  'window',
-  'Worker',
-  'cancelAnimationFrame',
-  'requestAnimationFrame',
-  'WebSocket',
-  'alert',
-  'Blob',
-  'navigator',
-  'Element',
-  'Text',
-  'Document',
-  'performance',
+	'fetch',
+	'document',
+	'window',
+	'Worker',
+	'cancelAnimationFrame',
+	'requestAnimationFrame',
+	'WebSocket',
+	'alert',
+	'Blob',
+	'navigator',
+	'Element',
+	'Text',
+	'Document',
+	'performance',
 ];
 
 export default {
-  name: 'undeclaredVariables',
-  enter(path: Path): AnyNode {
-    const {node, scope} = path;
+	name: 'undeclaredVariables',
+	enter(path: Path): AnyNode {
+		const {node, scope} = path;
 
-    if (
-      (node.type === 'ReferenceIdentifier' ||
-      node.type === 'JSXReferenceIdentifier') &&
-      !isInTypeAnnotation(path)
-    ) {
-      const {name} = node;
-      const binding = scope.getBinding(name);
+		if (
+			(node.type === 'ReferenceIdentifier' ||
+			node.type === 'JSXReferenceIdentifier') &&
+			!isInTypeAnnotation(path)
+		) {
+			const {name} = node;
+			const binding = scope.getBinding(name);
 
-      const isDefined =
-        binding !== undefined ||
-        scope.getRootScope().isGlobal(name) ||
-        BROWSER_VARIABLES.includes(name) ||
-        NODE_VARIABLES.includes(name);
+			const isDefined =
+				binding !== undefined ||
+				scope.getRootScope().isGlobal(name) ||
+				BROWSER_VARIABLES.includes(name) ||
+				NODE_VARIABLES.includes(name);
 
-      if (!isDefined) {
-        path.context.addNodeDiagnostic(
-          node,
-          descriptions.LINT.UNDECLARED_VARIABLES(name),
-          {
-            meta: {
-              identifierName: name,
-            },
-          },
-        );
-      }
-    }
+			if (!isDefined) {
+				path.context.addNodeDiagnostic(
+					node,
+					descriptions.LINT.UNDECLARED_VARIABLES(name),
+					{
+						meta: {
+							identifierName: name,
+						},
+					},
+				);
+			}
+		}
 
-    return node;
-  },
+		return node;
+	},
 };

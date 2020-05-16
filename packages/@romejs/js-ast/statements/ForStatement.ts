@@ -6,30 +6,30 @@
  */
 
 import {
-  AnyExpression,
-  AnyStatement,
-  JSNodeBase,
-  VariableDeclaration,
+	AnyExpression,
+	AnyStatement,
+	JSNodeBase,
+	VariableDeclaration,
 } from '../index';
 import {createBuilder} from '../utils';
 
 export type ForStatement = JSNodeBase & {
-  type: 'ForStatement';
-  init?: VariableDeclaration | AnyExpression;
-  test?: AnyExpression;
-  update?: AnyExpression;
-  body: AnyStatement;
+	type: 'ForStatement';
+	init?: VariableDeclaration | AnyExpression;
+	test?: AnyExpression;
+	update?: AnyExpression;
+	body: AnyStatement;
 };
 
 export const forStatement = createBuilder<ForStatement>(
-  'ForStatement',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      init: true,
-      test: true,
-      update: true,
-      body: true,
-    },
-  },
+	'ForStatement',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			init: true,
+			test: true,
+			update: true,
+			body: true,
+		},
+	},
 );

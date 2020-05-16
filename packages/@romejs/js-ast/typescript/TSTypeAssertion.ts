@@ -9,18 +9,18 @@ import {AnyExpression, AnyTSPrimary, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type TSTypeAssertion = JSNodeBase & {
-  type: 'TSTypeAssertion';
-  expression: AnyExpression;
-  typeAnnotation: AnyTSPrimary;
+	type: 'TSTypeAssertion';
+	expression: AnyExpression;
+	typeAnnotation: AnyTSPrimary;
 };
 
 export const tsTypeAssertion = createBuilder<TSTypeAssertion>(
-  'TSTypeAssertion',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      expression: true,
-      typeAnnotation: true,
-    },
-  },
+	'TSTypeAssertion',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			expression: true,
+			typeAnnotation: true,
+		},
+	},
 );

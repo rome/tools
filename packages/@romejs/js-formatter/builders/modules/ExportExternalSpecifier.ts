@@ -11,8 +11,8 @@ import {ExportExternalSpecifier} from '@romejs/js-ast';
 import ExportLocalSpecifier from './ExportLocalSpecifier';
 
 export default function ExportExternalSpecifier(
-  builder: Builder,
-  node: ExportExternalSpecifier,
+	builder: Builder,
+	node: ExportExternalSpecifier,
 ): Token {
-  return ExportLocalSpecifier(builder, node);
+	return ExportLocalSpecifier(builder, node);
 }

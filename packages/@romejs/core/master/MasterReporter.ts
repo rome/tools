@@ -6,31 +6,31 @@
  */
 
 import {
-  Reporter,
-  ReporterProgress,
-  ReporterProgressOptions,
-  mergeProgresses,
+	Reporter,
+	ReporterProgress,
+	ReporterProgressOptions,
+	mergeProgresses,
 } from '@romejs/cli-reporter';
 import Master from './Master';
 
 export default class MasterReporter extends Reporter {
-  constructor(master: Master) {
-    super({
-      wrapperFactory: master.wrapFatal.bind(master),
-    });
-    this.master = master;
-  }
+	constructor(master: Master) {
+		super({
+			wrapperFactory: master.wrapFatal.bind(master),
+		});
+		this.master = master;
+	}
 
-  master: Master;
+	master: Master;
 
-  // This is so all progress bars are also shown on an LSP client, alongside connected CLIs
-  progress(opts?: ReporterProgressOptions): ReporterProgress {
-    const progresses: Array<ReporterProgress> = [this.progressLocal(opts)];
+	// This is so all progress bars are also shown on an LSP client, alongside connected CLIs
+	progress(opts?: ReporterProgressOptions): ReporterProgress {
+		const progresses: Array<ReporterProgress> = [this.progressLocal(opts)];
 
-    for (const server of this.master.connectedLSPServers) {
-      progresses.push(server.createProgress(opts));
-    }
+		for (const server of this.master.connectedLSPServers) {
+			progresses.push(server.createProgress(opts));
+		}
 
-    return mergeProgresses(progresses);
-  }
+		return mergeProgresses(progresses);
+	}
 }

@@ -9,23 +9,23 @@ import {test} from 'rome';
 import {testLintMultiple} from '../testHelpers';
 
 test(
-  'no import assign',
-  async (t) => {
-    await testLintMultiple(
-      t,
-      [
-        'import x from "y";\nx=1;',
-        'import x from "y";\n[x]=1;',
-        'import x from "y";\n({x}=1);',
-        'import x from "y";\nx++',
-        'import x from "y";\n[...x]=1;',
-        'import x from "y";\n({...x}=1);',
-        'import x from "y";\nfor (x in y);',
-        'import x from "y";\nx+=1',
-        'import * as x from "y";\nx=1;',
-        'import {x} from "y";\nx=1;',
-      ],
-      {category: 'lint/noImportAssign'},
-    );
-  },
+	'no import assign',
+	async (t) => {
+		await testLintMultiple(
+			t,
+			[
+				'import x from "y";\nx=1;',
+				'import x from "y";\n[x]=1;',
+				'import x from "y";\n({x}=1);',
+				'import x from "y";\nx++',
+				'import x from "y";\n[...x]=1;',
+				'import x from "y";\n({...x}=1);',
+				'import x from "y";\nfor (x in y);',
+				'import x from "y";\nx+=1',
+				'import * as x from "y";\nx=1;',
+				'import {x} from "y";\nx=1;',
+			],
+			{category: 'lint/noImportAssign'},
+		);
+	},
 );

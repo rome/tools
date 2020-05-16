@@ -10,12 +10,12 @@ import {Token, concat} from '../../tokens';
 import {JSXNamespacedName} from '@romejs/js-ast';
 
 export default function JSXNamespacedName(
-  builder: Builder,
-  node: JSXNamespacedName,
+	builder: Builder,
+	node: JSXNamespacedName,
 ): Token {
-  return concat([
-    builder.tokenize(node.namespace, node),
-    ':',
-    builder.tokenize(node.name, node),
-  ]);
+	return concat([
+		builder.tokenize(node.namespace, node),
+		':',
+		builder.tokenize(node.name, node),
+	]);
 }

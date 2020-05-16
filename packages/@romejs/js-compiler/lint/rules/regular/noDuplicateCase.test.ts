@@ -10,11 +10,11 @@ import {testLint} from '../testHelpers';
 import {dedent} from '@romejs/string-utils';
 
 test(
-  'no duplicated switch cases allowed',
-  async (t) => {
-    await testLint(
-      t,
-      dedent`
+	'no duplicated switch cases allowed',
+	async (t) => {
+		await testLint(
+			t,
+			dedent`
         const expr = 'a';
         switch (expr) {
           case 'a':
@@ -31,7 +31,7 @@ test(
             break;
         }
       `,
-      {category: 'lint/noDuplicateCase'},
-    );
-  },
+			{category: 'lint/noDuplicateCase'},
+		);
+	},
 );

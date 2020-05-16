@@ -7,31 +7,31 @@
 
 import {AbsoluteVersionNode, RangeNode, UserRange, UserVersion} from './types';
 import {
-  SemverParserOptions,
-  parseSemverRange,
-  parseSemverVersion,
+	SemverParserOptions,
+	parseSemverRange,
+	parseSemverVersion,
 } from './parse';
 
 export function normalizeUserVersion(
-  ver: UserVersion,
-  opts?: SemverParserOptions,
+	ver: UserVersion,
+	opts?: SemverParserOptions,
 ): AbsoluteVersionNode {
-  if (typeof ver === 'string') {
-    return parseSemverVersion({...opts, input: ver});
-  } else if (ver.type === 'AbsoluteVersion') {
-    return ver;
-  } else {
-    throw new Error(`Not a valid version: ${ver.type}`);
-  }
+	if (typeof ver === 'string') {
+		return parseSemverVersion({...opts, input: ver});
+	} else if (ver.type === 'AbsoluteVersion') {
+		return ver;
+	} else {
+		throw new Error(`Not a valid version: ${ver.type}`);
+	}
 }
 
 export function normalizeUserRange(
-  range: UserRange,
-  opts?: SemverParserOptions,
+	range: UserRange,
+	opts?: SemverParserOptions,
 ): RangeNode {
-  if (typeof range === 'string') {
-    return parseSemverRange({...opts, input: range});
-  } else {
-    return range;
-  }
+	if (typeof range === 'string') {
+		return parseSemverRange({...opts, input: range});
+	} else {
+		return range;
+	}
 }

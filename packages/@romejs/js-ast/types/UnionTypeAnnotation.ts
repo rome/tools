@@ -9,16 +9,16 @@ import {AnyFlowPrimary, AnyTSPrimary, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type UnionTypeAnnotation = JSNodeBase & {
-  type: 'UnionTypeAnnotation';
-  types: Array<AnyFlowPrimary | AnyTSPrimary>;
+	type: 'UnionTypeAnnotation';
+	types: Array<AnyFlowPrimary | AnyTSPrimary>;
 };
 
 export const unionTypeAnnotation = createBuilder<UnionTypeAnnotation>(
-  'UnionTypeAnnotation',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      types: true,
-    },
-  },
+	'UnionTypeAnnotation',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			types: true,
+		},
+	},
 );

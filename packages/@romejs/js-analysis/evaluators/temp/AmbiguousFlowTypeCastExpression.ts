@@ -6,12 +6,12 @@
  */
 
 import {
-  AmbiguousFlowTypeCastExpression,
-  AnyNode,
-  ambiguousFlowTypeCastExpression,
+	AmbiguousFlowTypeCastExpression,
+	AnyNode,
+	ambiguousFlowTypeCastExpression,
 } from '@romejs/js-ast';
 
 export default function AmbiguousFlowTypeCastExpression(node: AnyNode) {
-  node = ambiguousFlowTypeCastExpression.assert(node);
-  throw new Error('unimplemented');
+	node = ambiguousFlowTypeCastExpression.assert(node);
+	throw new Error('unimplemented');
 }

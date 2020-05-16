@@ -9,20 +9,20 @@ import {AnyExpression, AnyTargetBindingPattern, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type VariableDeclarator = JSNodeBase & {
-  type: 'VariableDeclarator';
-  id: AnyTargetBindingPattern;
-  init?: AnyExpression;
+	type: 'VariableDeclarator';
+	id: AnyTargetBindingPattern;
+	init?: AnyExpression;
 };
 
 export const variableDeclarator = createBuilder<VariableDeclarator>(
-  'VariableDeclarator',
-  {
-    bindingKeys: {
-      id: true,
-    },
-    visitorKeys: {
-      id: true,
-      init: true,
-    },
-  },
+	'VariableDeclarator',
+	{
+		bindingKeys: {
+			id: true,
+		},
+		visitorKeys: {
+			id: true,
+			init: true,
+		},
+	},
 );

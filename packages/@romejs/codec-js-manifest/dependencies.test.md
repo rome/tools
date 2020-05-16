@@ -8,11 +8,11 @@
 
 ```javascript
 npm {
-  name: Object {
-    org: undefined
-    packageName: 'foo'
-  }
-  range: undefined
+	name: Object {
+		org: undefined
+		packageName: 'foo'
+	}
+	range: undefined
 }
 ```
 
@@ -20,11 +20,11 @@ npm {
 
 ```javascript
 npm {
-  name: Object {
-    org: undefined
-    packageName: '@foo/bar'
-  }
-  range: undefined
+	name: Object {
+		org: undefined
+		packageName: '@foo/bar'
+	}
+	range: undefined
 }
 ```
 
@@ -32,30 +32,30 @@ npm {
 
 ```javascript
 npm {
-  name: Object {
-    org: undefined
-    packageName: 'foo'
-  }
-  range: AbsoluteVersion {
-    build: Array []
-    major: 1
-    minor: 0
-    patch: 0
-    prerelease: Array []
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 4
-        index: 4
-        line: 1
-      }
-      start: Object {
-        column: 0
-        index: 0
-        line: 1
-      }
-    }
-  }
+	name: Object {
+		org: undefined
+		packageName: 'foo'
+	}
+	range: AbsoluteVersion {
+		build: Array []
+		major: 1
+		minor: 0
+		patch: 0
+		prerelease: Array []
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 4
+				index: 4
+				line: 1
+			}
+			start: Object {
+				column: 0
+				index: 0
+				line: 1
+			}
+		}
+	}
 }
 ```
 
@@ -63,29 +63,29 @@ npm {
 
 ```javascript
 npm {
-  name: Object {
-    org: undefined
-    packageName: '@foo/bar'
-  }
-  range: AbsoluteVersion {
-    build: Array []
-    major: 1
-    minor: 0
-    patch: 0
-    prerelease: Array []
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 4
-        index: 4
-        line: 1
-      }
-      start: Object {
-        column: 0
-        index: 0
-        line: 1
-      }
-    }
-  }
+	name: Object {
+		org: undefined
+		packageName: '@foo/bar'
+	}
+	range: AbsoluteVersion {
+		build: Array []
+		major: 1
+		minor: 0
+		patch: 0
+		prerelease: Array []
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 4
+				index: 4
+				line: 1
+			}
+			start: Object {
+				column: 0
+				index: 0
+				line: 1
+			}
+		}
+	}
 }
 ```

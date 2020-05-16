@@ -9,13 +9,13 @@ import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type BooleanKeywordTypeAnnotation = JSNodeBase & {
-  type: 'BooleanKeywordTypeAnnotation';
+	type: 'BooleanKeywordTypeAnnotation';
 };
 
 export const booleanKeywordTypeAnnotation = createBuilder<BooleanKeywordTypeAnnotation>(
-  'BooleanKeywordTypeAnnotation',
-  {
-    bindingKeys: {},
-    visitorKeys: {},
-  },
+	'BooleanKeywordTypeAnnotation',
+	{
+		bindingKeys: {},
+		visitorKeys: {},
+	},
 );

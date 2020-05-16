@@ -10,26 +10,26 @@ import {test} from 'rome';
 import {testLintMultiple} from '../testHelpers';
 
 test(
-  'require a title attribute on <iframe> JSX elements',
-  async (t) => {
-    await testLintMultiple(
-      t,
-      [
-        // INVALID
-        '<iframe />',
-        '<iframe {...props} />',
-        '<iframe title="" />',
-        '<iframe title={""} />',
-        '<iframe title={``} />',
-        '<iframe title={undefined} />',
-        '<iframe title={false} />',
-        '<iframe title={true} />',
-        '<iframe title={42} />',
-        // VALID
-        '<iframe title="title" />',
-        '<iframe title={title} >',
-      ],
-      {category: 'lint/jsxA11yIframeHasTitle'},
-    );
-  },
+	'require a title attribute on <iframe> JSX elements',
+	async (t) => {
+		await testLintMultiple(
+			t,
+			[
+				// INVALID
+				'<iframe />',
+				'<iframe {...props} />',
+				'<iframe title="" />',
+				'<iframe title={""} />',
+				'<iframe title={``} />',
+				'<iframe title={undefined} />',
+				'<iframe title={false} />',
+				'<iframe title={true} />',
+				'<iframe title={42} />',
+				// VALID
+				'<iframe title="title" />',
+				'<iframe title={title} >',
+			],
+			{category: 'lint/jsxA11yIframeHasTitle'},
+		);
+	},
 );

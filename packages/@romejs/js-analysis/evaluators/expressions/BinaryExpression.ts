@@ -14,77 +14,77 @@ import RefineTypeofT from '../../types/RefineTypeofT';
 import BinaryOpT from '../../types/BinaryOpT';
 
 function maybeRefine(
-  node: AnyNode,
-  left: AnyNode,
-  right: AnyNode,
-  scope: Scope,
+	node: AnyNode,
+	left: AnyNode,
+	right: AnyNode,
+	scope: Scope,
 ): boolean {
-  const evaluator: Evaluator = scope.evaluator;
+	const evaluator: Evaluator = scope.evaluator;
 
-  if (left.type === 'Identifier') {
-    scope.addBinding(left.name, evaluator.getTypeFromEvaluatedNode(right));
-    return true;
-  }
+	if (left.type === 'Identifier') {
+		scope.addBinding(left.name, evaluator.getTypeFromEvaluatedNode(right));
+		return true;
+	}
 
-  if (
-    left.type === 'UnaryExpression' &&
-    left.operator === 'typeof' &&
-    left.argument.type === 'ReferenceIdentifier'
-  ) {
-    const name = left.argument.name;
-    const binding = scope.getBinding(name);
-    if (binding !== undefined) {
-      const type = new RefineTypeofT(
-        scope,
-        node,
-        evaluator.getTypeFromEvaluatedNode(right),
-        binding,
-      );
-      scope.addBinding(name, type);
-      return true;
-    }
-  }
+	if (
+		left.type === 'UnaryExpression' &&
+		left.operator === 'typeof' &&
+		left.argument.type === 'ReferenceIdentifier'
+	) {
+		const name = left.argument.name;
+		const binding = scope.getBinding(name);
+		if (binding !== undefined) {
+			const type = new RefineTypeofT(
+				scope,
+				node,
+				evaluator.getTypeFromEvaluatedNode(right),
+				binding,
+			);
+			scope.addBinding(name, type);
+			return true;
+		}
+	}
 
-  return false;
+	return false;
 }
 
 export default function BinaryExpression(node: AnyNode, scope: Scope) {
-  node = binaryExpression.assert(node);
+	node = binaryExpression.assert(node);
 
-  const left = scope.evaluate(node.left);
-  const right = scope.evaluate(node.right);
+	const left = scope.evaluate(node.left);
+	const right = scope.evaluate(node.right);
 
-  // Enforce that the left and right sides of these operators are numbers
-  switch (node.operator) {
-    case '<<':
-    case '>>':
-    case '>>>':
-    case '-':
-    case '*':
-    case '/':
-    case '%':
-    case '**':
-    case '|':
-    case '^':
-    case '&':
-    case '<':
-    case '<=':
-    case '>':
-    case '>=': {
-      const num = new NumericT(scope, undefined);
-      new ExhaustiveT(scope, node, left, num);
-      new ExhaustiveT(scope, node, right, num);
-      break;
-    }
-  }
+	// Enforce that the left and right sides of these operators are numbers
+	switch (node.operator) {
+		case '<<':
+		case '>>':
+		case '>>>':
+		case '-':
+		case '*':
+		case '/':
+		case '%':
+		case '**':
+		case '|':
+		case '^':
+		case '&':
+		case '<':
+		case '<=':
+		case '>':
+		case '>=': {
+			const num = new NumericT(scope, undefined);
+			new ExhaustiveT(scope, node, left, num);
+			new ExhaustiveT(scope, node, right, num);
+			break;
+		}
+	}
 
-  // Refinements
-  let refinedScope = scope;
-  if (node.operator === '===') {
-    refinedScope = scope.refine();
-    maybeRefine(node, node.left, node.right, refinedScope) ||
-    maybeRefine(node, node.right, node.left, refinedScope);
-  }
+	// Refinements
+	let refinedScope = scope;
+	if (node.operator === '===') {
+		refinedScope = scope.refine();
+		maybeRefine(node, node.left, node.right, refinedScope) ||
+		maybeRefine(node, node.right, node.left, refinedScope);
+	}
 
-  return new BinaryOpT(refinedScope, node, left, node.operator, right);
+	return new BinaryOpT(refinedScope, node, left, node.operator, right);
 }

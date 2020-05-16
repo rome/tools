@@ -8,5 +8,5 @@
 import {Token} from '../../tokens';
 
 export default function InterpreterDirective(): Token {
-  throw new Error('unimplemented');
+	throw new Error('unimplemented');
 }

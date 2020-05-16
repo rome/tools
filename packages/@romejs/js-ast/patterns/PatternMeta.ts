@@ -9,21 +9,21 @@ import {AnyPrimaryType, JSNodeBase} from '../index';
 import {createQuickBuilder} from '../utils';
 
 export type PatternMeta = JSNodeBase & {
-  type: 'PatternMeta';
-  typeAnnotation?: AnyPrimaryType;
-  optional?: boolean;
-  accessibility?: string;
-  definite?: boolean;
-  readonly?: boolean;
+	type: 'PatternMeta';
+	typeAnnotation?: AnyPrimaryType;
+	optional?: boolean;
+	accessibility?: string;
+	definite?: boolean;
+	readonly?: boolean;
 };
 
 export const patternMeta = createQuickBuilder<PatternMeta, 'typeAnnotation'>(
-  'PatternMeta',
-  'typeAnnotation',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      typeAnnotation: true,
-    },
-  },
+	'PatternMeta',
+	'typeAnnotation',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			typeAnnotation: true,
+		},
+	},
 );

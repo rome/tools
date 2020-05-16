@@ -8,24 +8,24 @@
 import {PathPatternNode, PatternPartNode, PatternSegmentNode} from './types';
 
 export function stringifyPathPattern(
-  node: PathPatternNode | PatternPartNode | PatternSegmentNode,
+	node: PathPatternNode | PatternPartNode | PatternSegmentNode,
 ): string {
-  switch (node.type) {
-    case 'PathPattern':
-      return node.segments.map((segment) => stringifyPathPattern(segment)).join(
-        '/',
-      );
+	switch (node.type) {
+		case 'PathPattern':
+			return node.segments.map((segment) => stringifyPathPattern(segment)).join(
+				'/',
+			);
 
-    case 'Segment':
-      return node.parts.map((part) => stringifyPathPattern(part)).join('');
+		case 'Segment':
+			return node.parts.map((part) => stringifyPathPattern(part)).join('');
 
-    case 'WildcardSegment':
-      return '**';
+		case 'WildcardSegment':
+			return '**';
 
-    case 'Wildcard':
-      return '*';
+		case 'Wildcard':
+			return '*';
 
-    case 'Word':
-      return node.value;
-  }
+		case 'Word':
+			return node.value;
+	}
 }

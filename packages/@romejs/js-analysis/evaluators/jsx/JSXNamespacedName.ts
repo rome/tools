@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, JSXNamespacedName, jsxNamespacedName} from '@romejs/js-ast';
 
 export default function JSXNamespacedName(node: AnyNode, scope: Scope) {
-  node = jsxNamespacedName.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = jsxNamespacedName.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

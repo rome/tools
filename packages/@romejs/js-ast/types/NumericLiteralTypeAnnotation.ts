@@ -9,15 +9,15 @@ import {JSNodeBase, NumericLiteral} from '../index';
 import {createBuilder} from '../utils';
 
 export type NumericLiteralTypeAnnotation = JSNodeBase & {
-  type: 'NumericLiteralTypeAnnotation';
-  value: number;
-  format?: NumericLiteral['format'];
+	type: 'NumericLiteralTypeAnnotation';
+	value: number;
+	format?: NumericLiteral['format'];
 };
 
 export const numericLiteralTypeAnnotation = createBuilder<NumericLiteralTypeAnnotation>(
-  'NumericLiteralTypeAnnotation',
-  {
-    bindingKeys: {},
-    visitorKeys: {},
-  },
+	'NumericLiteralTypeAnnotation',
+	{
+		bindingKeys: {},
+		visitorKeys: {},
+	},
 );

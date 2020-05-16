@@ -10,19 +10,19 @@ import {TypeBinding} from '@romejs/js-compiler';
 import {AnyNode, TypeAliasTypeAnnotation} from '@romejs/js-ast';
 
 export default {
-  creator: false,
-  build(node: TypeAliasTypeAnnotation, parent: AnyNode, scope: Scope) {
-    scope.evaluate(node.typeParameters);
-    scope.addBinding(
-      new TypeBinding(
-        {
-          node: node.id,
-          name: node.id.name,
-          scope,
-        },
-        node,
-        'typealias',
-      ),
-    );
-  },
+	creator: false,
+	build(node: TypeAliasTypeAnnotation, parent: AnyNode, scope: Scope) {
+		scope.evaluate(node.typeParameters);
+		scope.addBinding(
+			new TypeBinding(
+				{
+					node: node.id,
+					name: node.id.name,
+					scope,
+				},
+				node,
+				'typealias',
+			),
+		);
+	},
 };

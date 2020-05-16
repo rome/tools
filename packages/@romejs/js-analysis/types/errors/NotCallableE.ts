@@ -12,18 +12,18 @@ import T from '../T';
 import {descriptions} from '@romejs/diagnostics';
 
 export default class NotCallableE extends E {
-  constructor(scope: Scope, originNode: undefined | AnyNode, callee: T) {
-    super(scope, originNode);
-    this.callee = callee;
-  }
+	constructor(scope: Scope, originNode: undefined | AnyNode, callee: T) {
+		super(scope, originNode);
+		this.callee = callee;
+	}
 
-  static type = 'NotCallableE';
-  callee: T;
+	static type = 'NotCallableE';
+	callee: T;
 
-  getError(): ErrorDefinition {
-    return {
-      description: descriptions.TYPE_CHECK.NOT_CALLABLE,
-      lowerTarget: this.callee,
-    };
-  }
+	getError(): ErrorDefinition {
+		return {
+			description: descriptions.TYPE_CHECK.NOT_CALLABLE,
+			lowerTarget: this.callee,
+		};
+	}
 }

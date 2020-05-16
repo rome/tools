@@ -6,75 +6,74 @@
  */
 
 import {
-  AnyArrayPattern,
-  ArrayExpression,
-  AssignmentArrayPattern,
-  BindingArrayPattern,
+	AnyArrayPattern,
+	ArrayExpression,
+	AssignmentArrayPattern,
+	BindingArrayPattern,
 } from '@romejs/js-ast';
 import Builder from '../../Builder';
 import {
-  Token,
-  concat,
-  group,
-  ifBreak,
-  indent,
-  join,
-  lineOrSpace,
-  softline,
+	Token,
+	concat,
+	group,
+	ifBreak,
+	indent,
+	join,
+	lineOrSpace,
+	softline,
 } from '../../tokens';
 import {hasInnerComments} from '../comments';
 
 export default function ArrayExpression(
-  builder: Builder,
-  node: ArrayExpression | BindingArrayPattern | AssignmentArrayPattern,
+	builder: Builder,
+	node: ArrayExpression | BindingArrayPattern | AssignmentArrayPattern,
 ): Token {
-  const hasContents = node.elements.length > 0;
-  const hasRest =
-    (node.type === 'BindingArrayPattern' ||
-    node.type === 'AssignmentArrayPattern') &&
-    node.rest !== undefined;
+	const hasContents = node.elements.length > 0;
+	const hasRest =
+		(node.type === 'BindingArrayPattern' || node.type === 'AssignmentArrayPattern') &&
+		node.rest !== undefined;
 
-  if (!hasContents && !hasRest) {
-    if (hasInnerComments(node)) {
-      return group(
-        concat(['[', builder.tokenizeInnerComments(node, true), softline, ']']),
-      );
-    } else {
-      return '[]';
-    }
-  }
+	if (!hasContents && !hasRest) {
+		if (hasInnerComments(node)) {
+			return group(
+				concat(['[', builder.tokenizeInnerComments(node, true), softline, ']']),
+			);
+		} else {
+			return '[]';
+		}
+	}
 
-  const tokens: Array<Token> = [];
+	const tokens: Array<Token> = [];
 
-  if (hasContents) {
-    const elements: Array<Token> = [];
+	if (hasContents) {
+		const elements: Array<Token> = [];
 
-    for (let i = 0; i < node.elements.length; i++) {
-      const element = node.elements[i];
-      const printed = builder.tokenize(element, node);
+		for (let i = 0; i < node.elements.length; i++) {
+			const element = node.elements[i];
+			const printed = builder.tokenize(element, node);
 
-      if (i > 0 && builder.getLinesBetween(node.elements[i - 1], element) > 1) {
-        elements.push(concat([softline, printed]));
-      } else {
-        elements.push(printed);
-      }
-    }
+			if (i > 0 && builder.getLinesBetween(node.elements[i - 1], element) > 1) {
+				elements.push(concat([softline, printed]));
+			} else {
+				elements.push(printed);
+			}
+		}
 
-    tokens.push(join(concat([',', lineOrSpace]), elements));
+		tokens.push(join(concat([',', lineOrSpace]), elements));
 
-    if (hasRest) {
-      tokens.push(',', lineOrSpace);
-    } else {
-      // Add trailing comma
-      tokens.push(ifBreak(','));
-    }
-  }
+		if (hasRest) {
+			tokens.push(',', lineOrSpace);
+		} else {
+			// Add trailing comma
+			tokens.push(ifBreak(','));
+		}
+	}
 
-  if (hasRest) {
-    tokens.push('...', builder.tokenize((node as AnyArrayPattern).rest, node));
-  }
+	if (hasRest) {
+		tokens.push('...', builder.tokenize((node as AnyArrayPattern).rest, node));
+	}
 
-  return group(
-    concat(['[', indent(concat([softline, concat(tokens)])), softline, ']']),
-  );
+	return group(
+		concat(['[', indent(concat([softline, concat(tokens)])), softline, ']']),
+	);
 }

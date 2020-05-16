@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, StaticPropertyKey, staticPropertyKey} from '@romejs/js-ast';
 
 export default function StaticPropertyKey(node: AnyNode, scope: Scope) {
-  node = staticPropertyKey.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = staticPropertyKey.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

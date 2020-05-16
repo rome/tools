@@ -9,34 +9,34 @@ import {AnyAssignmentPattern, AnyExpression, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type AssignmentExpression = JSNodeBase & {
-  type: 'AssignmentExpression';
-  operator: AssignmentOperator;
-  left: AnyAssignmentPattern;
-  right: AnyExpression;
+	type: 'AssignmentExpression';
+	operator: AssignmentOperator;
+	left: AnyAssignmentPattern;
+	right: AnyExpression;
 };
 
 export type AssignmentOperator =
-  | '='
-  | '+='
-  | '-='
-  | '*='
-  | '/='
-  | '%='
-  | '<<='
-  | '>>='
-  | '>>>='
-  | '|='
-  | '^='
-  | '&='
-  | '??=';
+	 | '='
+	| '+='
+	| '-='
+	| '*='
+	| '/='
+	| '%='
+	| '<<='
+	| '>>='
+	| '>>>='
+	| '|='
+	| '^='
+	| '&='
+	| '??=';
 
 export const assignmentExpression = createBuilder<AssignmentExpression>(
-  'AssignmentExpression',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      left: true,
-      right: true,
-    },
-  },
+	'AssignmentExpression',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			left: true,
+			right: true,
+		},
+	},
 );

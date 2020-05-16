@@ -9,16 +9,16 @@ import {AnyStatement, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type TSModuleBlock = JSNodeBase & {
-  type: 'TSModuleBlock';
-  body: Array<AnyStatement>;
+	type: 'TSModuleBlock';
+	body: Array<AnyStatement>;
 };
 
 export const tsModuleBlock = createBuilder<TSModuleBlock>(
-  'TSModuleBlock',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      body: true,
-    },
-  },
+	'TSModuleBlock',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			body: true,
+		},
+	},
 );

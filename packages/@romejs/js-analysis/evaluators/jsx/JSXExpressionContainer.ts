@@ -7,13 +7,13 @@
 
 import {Scope} from '../../scopes';
 import {
-  AnyNode,
-  JSXExpressionContainer,
-  jsxExpressionContainer,
+	AnyNode,
+	JSXExpressionContainer,
+	jsxExpressionContainer,
 } from '@romejs/js-ast';
 
 export default function JSXExpressionContainer(node: AnyNode, scope: Scope) {
-  node = jsxExpressionContainer.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = jsxExpressionContainer.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

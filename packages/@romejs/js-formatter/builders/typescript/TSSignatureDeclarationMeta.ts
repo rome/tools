@@ -11,11 +11,11 @@ import {TSSignatureDeclarationMeta} from '@romejs/js-ast';
 import {printBindingPatternParams} from '../utils';
 
 export default function TSSignatureDeclarationMeta(
-  builder: Builder,
-  node: TSSignatureDeclarationMeta,
+	builder: Builder,
+	node: TSSignatureDeclarationMeta,
 ): Token {
-  return concat([
-    builder.tokenize(node.typeParameters, node),
-    printBindingPatternParams(builder, node, node.parameters, node.rest),
-  ]);
+	return concat([
+		builder.tokenize(node.typeParameters, node),
+		printBindingPatternParams(builder, node, node.parameters, node.rest),
+	]);
 }

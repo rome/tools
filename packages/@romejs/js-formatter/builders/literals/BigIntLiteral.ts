@@ -10,8 +10,8 @@ import Builder from '../../Builder';
 import {Token} from '../../tokens';
 
 export default function BigIntLiteral(
-  builder: Builder,
-  node: BigIntLiteral,
+	builder: Builder,
+	node: BigIntLiteral,
 ): Token {
-  return `${node.value}n`;
+	return `${node.value}n`;
 }

@@ -11,21 +11,19 @@ import ObjPropT from '../../types/ObjPropT';
 import executeFunction from '../../utils/executeFunction';
 
 export default function ClassMethod(node: AnyNode, scope: Scope) {
-  node = classMethod.assert(node);
-  if (node.key.type === 'ComputedPropertyKey' === true) {
-    // TODO
-    return undefined;
-  }
+	node = classMethod.assert(node);
+	if (node.key.type === 'ComputedPropertyKey' === true) {
+		// TODO
+		return undefined;
+	}
 
-  const classScope = scope.find(ClassScope);
-  const thisContext =
-    node.meta.static === true
-      ? classScope.meta.static
-      : classScope.meta.instance;
-  const func = executeFunction(node, scope, false, thisContext);
+	const classScope = scope.find(ClassScope);
+	const thisContext =
+		node.meta.static === true ? classScope.meta.static : classScope.meta.instance;
+	const func = executeFunction(node, scope, false, thisContext);
 
-  if (node.key.value.type !== 'Identifier') {
-    throw new Error('Expected only an identifier key');
-  }
-  return new ObjPropT(scope, node, node.key.value.name, func);
+	if (node.key.value.type !== 'Identifier') {
+		throw new Error('Expected only an identifier key');
+	}
+	return new ObjPropT(scope, node, node.key.value.name, func);
 }

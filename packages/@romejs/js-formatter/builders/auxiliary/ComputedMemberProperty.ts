@@ -10,16 +10,16 @@ import {Token, concat} from '../../tokens';
 import {ComputedMemberProperty} from '@romejs/js-ast';
 
 export default function ComputedMemberProperty(
-  builder: Builder,
-  node: ComputedMemberProperty,
+	builder: Builder,
+	node: ComputedMemberProperty,
 ): Token {
-  const tokens: Array<Token> = [];
+	const tokens: Array<Token> = [];
 
-  if (node.optional) {
-    tokens.push('?.');
-  }
+	if (node.optional) {
+		tokens.push('?.');
+	}
 
-  tokens.push('[', builder.tokenize(node.value, node), ']');
+	tokens.push('[', builder.tokenize(node.value, node), ']');
 
-  return concat(tokens);
+	return concat(tokens);
 }

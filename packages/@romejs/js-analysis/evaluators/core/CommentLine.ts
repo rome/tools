@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, CommentLine, commentLine} from '@romejs/js-ast';
 
 export default function CommentLine(node: AnyNode, scope: Scope) {
-  node = commentLine.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = commentLine.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

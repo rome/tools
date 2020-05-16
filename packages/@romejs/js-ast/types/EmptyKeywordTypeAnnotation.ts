@@ -9,13 +9,13 @@ import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type EmptyKeywordTypeAnnotation = JSNodeBase & {
-  type: 'EmptyKeywordTypeAnnotation';
+	type: 'EmptyKeywordTypeAnnotation';
 };
 
 export const emptyKeywordTypeAnnotation = createBuilder<EmptyKeywordTypeAnnotation>(
-  'EmptyKeywordTypeAnnotation',
-  {
-    bindingKeys: {},
-    visitorKeys: {},
-  },
+	'EmptyKeywordTypeAnnotation',
+	{
+		bindingKeys: {},
+		visitorKeys: {},
+	},
 );

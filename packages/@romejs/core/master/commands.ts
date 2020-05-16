@@ -35,18 +35,18 @@ import {JSONPropertyValue} from '@romejs/codec-json';
 import {SharedCommand} from '../common/commands';
 
 export type MasterCommand<Flags extends Dict<unknown>> = SharedCommand<Flags> & {
-  overrideClientFlags?: Partial<ClientFlags>;
-  overrideRequestFlags?: Partial<ClientRequestFlags>;
-  callback: (
-    req: MasterRequest,
-    commandFlags: Flags,
-  ) => undefined | Promise<JSONPropertyValue>;
+	overrideClientFlags?: Partial<ClientFlags>;
+	overrideRequestFlags?: Partial<ClientRequestFlags>;
+	callback: (
+		req: MasterRequest,
+		commandFlags: Flags,
+	) => undefined | Promise<JSONPropertyValue>;
 };
 
 export function createMasterCommand<Flags extends Dict<unknown>>(
-  cmd: MasterCommand<Flags>,
+	cmd: MasterCommand<Flags>,
 ): MasterCommand<Flags> {
-  return cmd;
+	return cmd;
 }
 
 // rome-ignore lint/noExplicitAny

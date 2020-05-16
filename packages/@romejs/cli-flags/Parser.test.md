@@ -10,17 +10,17 @@
 
  Usage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  $ test [flags]
+	$ test [flags]
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-                           --help Show this help screen
+	--generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
+	                         --help Show this help screen
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ℹ To view help for a specific command run
-  $ test command_name --help
+	ℹ To view help for a specific command run
+	$ test command_name --help
 
 
 ```
@@ -31,12 +31,12 @@
 
  argv:1:7 flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Incorrect cased flag name at fooBar
+	✖ Incorrect cased flag name at fooBar
 
-    $ test --fooBar 
-           ^^^^^^^^
+	  $ test --fooBar 
+	         ^^^^^^^^
 
-  ℹ Use foo-bar instead
+	ℹ Use foo-bar instead
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -52,17 +52,17 @@
 
  Usage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  $ test [flags]
+	$ test [flags]
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-                           --help Show this help screen
+	--generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
+	                         --help Show this help screen
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ℹ To view help for a specific command run
-  $ test command_name --help
+	ℹ To view help for a specific command run
+	$ test command_name --help
 
 
 ```
@@ -73,10 +73,10 @@
 
  argv:1:7 flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Shorthand flags are not supported at f
+	✖ Shorthand flags are not supported at f
 
-    $ test -f 
-           ^^
+	  $ test -f 
+	         ^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -98,18 +98,18 @@ Object {name: 'sebastian'}
 
  Usage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  $ test [flags]
+	$ test [flags]
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-                           --help Show this help screen
-                   --name <input> no description found
+	--generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
+	                         --help Show this help screen
+	                 --name <input> no description found
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ℹ To view help for a specific command run
-  $ test command_name --help
+	ℹ To view help for a specific command run
+	$ test command_name --help
 
 
 ```
@@ -134,18 +134,18 @@ Object {name: 'sebastian'}
 
  Usage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  $ test [flags]
+	$ test [flags]
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-                           --help Show this help screen
-                   --name <input> the name of the coolest person in the world
+	--generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
+	                         --help Show this help screen
+	                 --name <input> the name of the coolest person in the world
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ℹ To view help for a specific command run
-  $ test command_name --help
+	ℹ To view help for a specific command run
+	$ test command_name --help
 
 
 ```
@@ -170,18 +170,18 @@ Object {run: false}
 
  Usage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  $ test [flags]
+	$ test [flags]
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-                           --help Show this help screen
-                            --run no description found
+	--generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
+	                         --help Show this help screen
+	                          --run no description found
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ℹ To view help for a specific command run
-  $ test command_name --help
+	ℹ To view help for a specific command run
+	$ test command_name --help
 
 
 ```
@@ -206,18 +206,18 @@ Object {run: true}
 
  Usage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  $ test [flags]
+	$ test [flags]
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-                           --help Show this help screen
-                            --run no description found
+	--generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
+	                         --help Show this help screen
+	                          --run no description found
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ℹ To view help for a specific command run
-  $ test command_name --help
+	ℹ To view help for a specific command run
+	$ test command_name --help
 
 
 ```
@@ -242,18 +242,18 @@ Object {run: true}
 
  Usage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  $ test [flags]
+	$ test [flags]
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-                           --help Show this help screen
-                            --run no description found
+	--generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
+	                         --help Show this help screen
+	                          --run no description found
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ℹ To view help for a specific command run
-  $ test command_name --help
+	ℹ To view help for a specific command run
+	$ test command_name --help
 
 
 ```
@@ -278,18 +278,18 @@ Object {name: 'sebastian'}
 
  Usage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  $ test [flags]
+	$ test [flags]
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-                           --help Show this help screen
-                   --name <input> no description found
+	--generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
+	                         --help Show this help screen
+	                 --name <input> no description found
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ℹ To view help for a specific command run
-  $ test command_name --help
+	ℹ To view help for a specific command run
+	$ test command_name --help
 
 
 ```
@@ -314,18 +314,18 @@ Object {name: undefined}
 
  Usage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  $ test [flags]
+	$ test [flags]
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-                           --help Show this help screen
-                   --name <input> no description found
+	--generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
+	                         --help Show this help screen
+	                 --name <input> no description found
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ℹ To view help for a specific command run
-  $ test command_name --help
+	ℹ To view help for a specific command run
+	$ test command_name --help
 
 
 ```
@@ -350,18 +350,18 @@ Object {run: true}
 
  Usage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  $ test [flags]
+	$ test [flags]
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-                           --help Show this help screen
-                            --run no description found
+	--generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
+	                         --help Show this help screen
+	                          --run no description found
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ℹ To view help for a specific command run
-  $ test command_name --help
+	ℹ To view help for a specific command run
+	$ test command_name --help
 
 
 ```
@@ -386,18 +386,18 @@ Object {run: true}
 
  Usage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  $ test [flags]
+	$ test [flags]
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-                           --help Show this help screen
-                            --run no description found
+	--generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
+	                         --help Show this help screen
+	                          --run no description found
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ℹ To view help for a specific command run
-  $ test command_name --help
+	ℹ To view help for a specific command run
+	$ test command_name --help
 
 
 ```
@@ -422,18 +422,18 @@ Object {name: 'sebastian'}
 
  Usage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  $ test [flags]
+	$ test [flags]
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-                           --help Show this help screen
-                   --name <input> no description found
+	--generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
+	                         --help Show this help screen
+	                 --name <input> no description found
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ℹ To view help for a specific command run
-  $ test command_name --help
+	ℹ To view help for a specific command run
+	$ test command_name --help
 
 
 ```
@@ -452,18 +452,18 @@ Object {name: 'sebastian'}
 
  Usage ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  $ test [flags]
+	$ test [flags]
 
  Global Flags ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  --generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
-                           --help Show this help screen
-                   --name <input> no description found
+	--generate-autocomplete <shell> Generate a shell autocomplete (values: fish|bash)
+	                         --help Show this help screen
+	                 --name <input> no description found
 
  Commands ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ℹ To view help for a specific command run
-  $ test command_name --help
+	ℹ To view help for a specific command run
+	$ test command_name --help
 
 
 ```
@@ -474,10 +474,10 @@ Object {name: 'sebastian'}
 
  argv:1:6 flags/invalid ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Expected a string at name
+	✖ Expected a string at name
 
-    $ test 
-          ^
+	  $ test 
+	        ^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

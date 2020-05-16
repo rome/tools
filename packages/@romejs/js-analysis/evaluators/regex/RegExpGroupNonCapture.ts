@@ -6,12 +6,12 @@
  */
 
 import {
-  AnyNode,
-  RegExpGroupNonCapture,
-  regExpGroupNonCapture,
+	AnyNode,
+	RegExpGroupNonCapture,
+	regExpGroupNonCapture,
 } from '@romejs/js-ast';
 
 export default function RegExpGroupNonCapture(node: AnyNode) {
-  node = regExpGroupNonCapture.assert(node);
-  throw new Error('unimplemented');
+	node = regExpGroupNonCapture.assert(node);
+	throw new Error('unimplemented');
 }

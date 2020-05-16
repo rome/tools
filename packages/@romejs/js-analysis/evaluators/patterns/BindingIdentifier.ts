@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, BindingIdentifier, bindingIdentifier} from '@romejs/js-ast';
 
 export default function BindingIdentifier(node: AnyNode, scope: Scope) {
-  node = bindingIdentifier.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = bindingIdentifier.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

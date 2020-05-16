@@ -7,13 +7,13 @@
 
 import {Scope} from '../../scopes';
 import {
-  AnyNode,
-  TSPropertySignature,
-  tsPropertySignature,
+	AnyNode,
+	TSPropertySignature,
+	tsPropertySignature,
 } from '@romejs/js-ast';
 
 export default function TSPropertySignature(node: AnyNode, scope: Scope) {
-  node = tsPropertySignature.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = tsPropertySignature.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

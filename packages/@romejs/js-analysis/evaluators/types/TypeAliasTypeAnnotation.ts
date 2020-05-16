@@ -7,20 +7,20 @@
 
 import {Scope} from '../../scopes';
 import {
-  AnyNode,
-  TypeAliasTypeAnnotation,
-  typeAliasTypeAnnotation,
+	AnyNode,
+	TypeAliasTypeAnnotation,
+	typeAliasTypeAnnotation,
 } from '@romejs/js-ast';
 
 export default function TypeAliasTypeAnnotation(node: AnyNode, scope: Scope) {
-  node = typeAliasTypeAnnotation.assert(node);
+	node = typeAliasTypeAnnotation.assert(node);
 
-  const typeScope = scope.fork();
-  if (node.typeParameters) {
-    typeScope.evaluate(node.typeParameters);
-  }
+	const typeScope = scope.fork();
+	if (node.typeParameters) {
+		typeScope.evaluate(node.typeParameters);
+	}
 
-  const right = typeScope.evaluate(node.right);
-  scope.addBinding(node.id.name, right);
-  return right;
+	const right = typeScope.evaluate(node.right);
+	scope.addBinding(node.id.name, right);
+	return right;
 }

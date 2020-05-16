@@ -9,21 +9,21 @@ import {Identifier, JSNodeBase, PrivateName} from '../index';
 import {createQuickBuilder} from '../utils';
 
 export type StaticMemberProperty = JSNodeBase & {
-  type: 'StaticMemberProperty';
-  value: Identifier | PrivateName;
-  optional?: boolean;
+	type: 'StaticMemberProperty';
+	value: Identifier | PrivateName;
+	optional?: boolean;
 };
 
 export const staticMemberProperty = createQuickBuilder<
-  StaticMemberProperty,
-  'value'
+	StaticMemberProperty,
+	'value'
 >(
-  'StaticMemberProperty',
-  'value',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      value: true,
-    },
-  },
+	'StaticMemberProperty',
+	'value',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			value: true,
+		},
+	},
 );

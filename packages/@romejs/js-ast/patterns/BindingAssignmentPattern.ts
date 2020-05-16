@@ -6,30 +6,30 @@
  */
 
 import {
-  AnyExpression,
-  AnyTargetBindingPattern,
-  JSNodeBase,
-  PatternMeta,
+	AnyExpression,
+	AnyTargetBindingPattern,
+	JSNodeBase,
+	PatternMeta,
 } from '../index';
 import {createBuilder} from '../utils';
 
 export type BindingAssignmentPattern = JSNodeBase & {
-  type: 'BindingAssignmentPattern';
-  left: AnyTargetBindingPattern;
-  right: AnyExpression;
-  meta?: PatternMeta;
+	type: 'BindingAssignmentPattern';
+	left: AnyTargetBindingPattern;
+	right: AnyExpression;
+	meta?: PatternMeta;
 };
 
 export const bindingAssignmentPattern = createBuilder<BindingAssignmentPattern>(
-  'BindingAssignmentPattern',
-  {
-    bindingKeys: {
-      left: true,
-    },
-    visitorKeys: {
-      left: true,
-      right: true,
-      meta: true,
-    },
-  },
+	'BindingAssignmentPattern',
+	{
+		bindingKeys: {
+			left: true,
+		},
+		visitorKeys: {
+			left: true,
+			right: true,
+			meta: true,
+		},
+	},
 );

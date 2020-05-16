@@ -6,5 +6,5 @@
  */
 
 export function removeCarriageReturn(str: string): string {
-  return str.replace(/\r/g, '');
+	return str.replace(/\r/g, '');
 }

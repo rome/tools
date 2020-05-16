@@ -9,17 +9,17 @@ import {AnyExpression, JSNodeBase} from '../index';
 import {createQuickBuilder} from '../utils';
 
 export type ReturnStatement = JSNodeBase & {
-  type: 'ReturnStatement';
-  argument?: AnyExpression;
+	type: 'ReturnStatement';
+	argument?: AnyExpression;
 };
 
 export const returnStatement = createQuickBuilder<ReturnStatement, 'argument'>(
-  'ReturnStatement',
-  'argument',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      argument: true,
-    },
-  },
+	'ReturnStatement',
+	'argument',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			argument: true,
+		},
+	},
 );

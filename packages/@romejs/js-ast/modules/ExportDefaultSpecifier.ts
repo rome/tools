@@ -9,16 +9,16 @@ import {Identifier, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type ExportDefaultSpecifier = JSNodeBase & {
-  type: 'ExportDefaultSpecifier';
-  exported: Identifier;
+	type: 'ExportDefaultSpecifier';
+	exported: Identifier;
 };
 
 export const exportDefaultSpecifier = createBuilder<ExportDefaultSpecifier>(
-  'ExportDefaultSpecifier',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      exported: true,
-    },
-  },
+	'ExportDefaultSpecifier',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			exported: true,
+		},
+	},
 );

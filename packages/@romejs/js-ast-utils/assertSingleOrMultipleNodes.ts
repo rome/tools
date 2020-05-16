@@ -9,13 +9,13 @@ import {TransformExitResult} from '@romejs/js-compiler';
 import {AnyNode} from '@romejs/js-ast';
 
 export default function assertSingleOrMultipleNodes(
-  result: TransformExitResult,
+	result: TransformExitResult,
 ): AnyNode | Array<AnyNode> {
-  if (result === undefined) {
-    throw new Error('Expected node or node list but got null');
-  } else if (typeof result === 'symbol') {
-    throw new Error('No symbols expected here');
-  } else {
-    return result;
-  }
+	if (result === undefined) {
+		throw new Error('Expected node or node list but got null');
+	} else if (typeof result === 'symbol') {
+		throw new Error('No symbols expected here');
+	} else {
+		return result;
+	}
 }

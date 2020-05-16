@@ -11,8 +11,8 @@ import {printMethod} from '../utils';
 import {ObjectMethod} from '@romejs/js-ast';
 
 export default function ObjectMethod(
-  builder: Builder,
-  node: ObjectMethod,
+	builder: Builder,
+	node: ObjectMethod,
 ): Token {
-  return printMethod(builder, node);
+	return printMethod(builder, node);
 }

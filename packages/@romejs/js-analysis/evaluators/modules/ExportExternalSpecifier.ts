@@ -6,12 +6,12 @@
  */
 
 import {
-  AnyNode,
-  ExportExternalSpecifier,
-  exportExternalSpecifier,
+	AnyNode,
+	ExportExternalSpecifier,
+	exportExternalSpecifier,
 } from '@romejs/js-ast';
 
 export default function ExportExternalSpecifier(node: AnyNode) {
-  node = exportExternalSpecifier.assert(node);
-  throw new Error('unimplemented');
+	node = exportExternalSpecifier.assert(node);
+	throw new Error('unimplemented');
 }

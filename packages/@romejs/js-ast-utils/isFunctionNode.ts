@@ -8,11 +8,11 @@
 import {AnyFunction, AnyNode} from '@romejs/js-ast';
 
 export default function isFunctionNode(node: AnyNode): node is AnyFunction {
-  return (
-    node.type === 'FunctionDeclaration' ||
-    node.type === 'FunctionExpression' ||
-    node.type === 'ObjectMethod' ||
-    node.type === 'ArrowFunctionExpression' ||
-    node.type === 'ClassMethod'
-  );
+	return (
+		node.type === 'FunctionDeclaration' ||
+		node.type === 'FunctionExpression' ||
+		node.type === 'ObjectMethod' ||
+		node.type === 'ArrowFunctionExpression' ||
+		node.type === 'ClassMethod'
+	);
 }

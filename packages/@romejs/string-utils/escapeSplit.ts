@@ -9,28 +9,28 @@ import {isEscaped} from './isEscaped';
 import {ob1Coerce0} from '@romejs/ob1';
 
 export function escapeSplit(input: string, splitChar: string): Array<string> {
-  const parts: Array<string> = [];
-  const unescapeRegex = new RegExp(`\\\\${splitChar}`, 'g');
+	const parts: Array<string> = [];
+	const unescapeRegex = new RegExp(`\\\\${splitChar}`, 'g');
 
-  let buff = '';
+	let buff = '';
 
-  function push() {
-    buff = buff.replace(unescapeRegex, splitChar);
-    parts.push(buff);
-    buff = '';
-  }
+	function push() {
+		buff = buff.replace(unescapeRegex, splitChar);
+		parts.push(buff);
+		buff = '';
+	}
 
-  for (let i = 0; i < input.length; i++) {
-    let char = input[i];
+	for (let i = 0; i < input.length; i++) {
+		let char = input[i];
 
-    if (!isEscaped(ob1Coerce0(i), input) && char === splitChar) {
-      push();
-    } else {
-      buff += char;
-    }
-  }
+		if (!isEscaped(ob1Coerce0(i), input) && char === splitChar) {
+			push();
+		} else {
+			buff += char;
+		}
+	}
 
-  push();
+	push();
 
-  return parts;
+	return parts;
 }

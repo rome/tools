@@ -11,15 +11,15 @@ import {Token, concat, space} from '../../tokens';
 import {printClause} from '../utils';
 
 export default function WithStatement(
-  builder: Builder,
-  node: WithStatement,
+	builder: Builder,
+	node: WithStatement,
 ): Token {
-  return concat([
-    'with',
-    space,
-    '(',
-    builder.tokenize(node.object, node),
-    ')',
-    printClause(builder, node.body, node),
-  ]);
+	return concat([
+		'with',
+		space,
+		'(',
+		builder.tokenize(node.object, node),
+		')',
+		printClause(builder, node.body, node),
+	]);
 }

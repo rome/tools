@@ -9,13 +9,13 @@ import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type NeverKeywordTypeAnnotation = JSNodeBase & {
-  type: 'NeverKeywordTypeAnnotation';
+	type: 'NeverKeywordTypeAnnotation';
 };
 
 export const neverKeywordTypeAnnotation = createBuilder<NeverKeywordTypeAnnotation>(
-  'NeverKeywordTypeAnnotation',
-  {
-    bindingKeys: {},
-    visitorKeys: {},
-  },
+	'NeverKeywordTypeAnnotation',
+	{
+		bindingKeys: {},
+		visitorKeys: {},
+	},
 );

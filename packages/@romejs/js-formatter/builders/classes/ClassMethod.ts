@@ -11,11 +11,11 @@ import {ClassMethod} from '@romejs/js-ast';
 import {printMethod} from '../utils';
 
 export default function ClassMethod(builder: Builder, node: ClassMethod): Token {
-  const printed = printMethod(builder, node);
+	const printed = printMethod(builder, node);
 
-  if (node.meta.static === true) {
-    return concat(['static', space, printed]);
-  } else {
-    return printed;
-  }
+	if (node.meta.static === true) {
+		return concat(['static', space, printed]);
+	} else {
+		return printed;
+	}
 }

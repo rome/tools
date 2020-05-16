@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, SwitchStatement, switchStatement} from '@romejs/js-ast';
 
 export default function SwitchStatement(node: AnyNode, scope: Scope) {
-  node = switchStatement.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = switchStatement.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

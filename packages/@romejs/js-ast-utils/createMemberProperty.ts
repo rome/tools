@@ -6,21 +6,21 @@
  */
 
 import {
-  ComputedMemberProperty,
-  StaticMemberProperty,
-  computedMemberProperty,
-  identifier,
-  staticMemberProperty,
-  stringLiteral,
+	ComputedMemberProperty,
+	StaticMemberProperty,
+	computedMemberProperty,
+	identifier,
+	staticMemberProperty,
+	stringLiteral,
 } from '@romejs/js-ast';
 import isValidIdentifierName from './isValidIdentifierName';
 
 export default function createMemberProperty(
-  name: string,
+	name: string,
 ): StaticMemberProperty | ComputedMemberProperty {
-  if (isValidIdentifierName(name)) {
-    return staticMemberProperty.quick(identifier.quick(name));
-  } else {
-    return computedMemberProperty.quick(stringLiteral.quick(name));
-  }
+	if (isValidIdentifierName(name)) {
+		return staticMemberProperty.quick(identifier.quick(name));
+	} else {
+		return computedMemberProperty.quick(stringLiteral.quick(name));
+	}
 }

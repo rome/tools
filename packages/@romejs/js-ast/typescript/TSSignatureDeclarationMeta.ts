@@ -6,32 +6,32 @@
  */
 
 import {
-  AnyTargetBindingPattern,
-  BindingArrayPattern,
-  BindingIdentifier,
-  BindingObjectPattern,
-  JSNodeBase,
-  TSTypeParameterDeclaration,
+	AnyTargetBindingPattern,
+	BindingArrayPattern,
+	BindingIdentifier,
+	BindingObjectPattern,
+	JSNodeBase,
+	TSTypeParameterDeclaration,
 } from '../index';
 import {createBuilder} from '../utils';
 
 export type TSSignatureDeclarationMeta = JSNodeBase & {
-  type: 'TSSignatureDeclarationMeta';
-  parameters: Array<
-    BindingIdentifier | BindingObjectPattern | BindingArrayPattern
-  >;
-  rest: undefined | AnyTargetBindingPattern;
-  typeParameters: undefined | TSTypeParameterDeclaration;
+	type: 'TSSignatureDeclarationMeta';
+	parameters: Array<
+		BindingIdentifier | BindingObjectPattern | BindingArrayPattern
+	>;
+	rest: undefined | AnyTargetBindingPattern;
+	typeParameters: undefined | TSTypeParameterDeclaration;
 };
 
 export const tsSignatureDeclarationMeta = createBuilder<TSSignatureDeclarationMeta>(
-  'TSSignatureDeclarationMeta',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      parameters: true,
-      rest: true,
-      typeParameters: true,
-    },
-  },
+	'TSSignatureDeclarationMeta',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			parameters: true,
+			rest: true,
+			typeParameters: true,
+		},
+	},
 );

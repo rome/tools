@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, TSTypeLiteral, tsTypeLiteral} from '@romejs/js-ast';
 
 export default function TSTypeLiteral(node: AnyNode, scope: Scope) {
-  node = tsTypeLiteral.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = tsTypeLiteral.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

@@ -7,21 +7,21 @@
 
 import {Scope} from '../../scopes';
 import {
-  AnyNode,
-  ExportDefaultDeclaration,
-  exportDefaultDeclaration,
+	AnyNode,
+	ExportDefaultDeclaration,
+	exportDefaultDeclaration,
 } from '@romejs/js-ast';
 import Hub from '../../Hub';
 
 export default function ExportDefaultDeclaration(
-  node: AnyNode,
-  scope: Scope,
-  {evaluator}: Hub,
+	node: AnyNode,
+	scope: Scope,
+	{evaluator}: Hub,
 ) {
-  node = exportDefaultDeclaration.assert(node);
+	node = exportDefaultDeclaration.assert(node);
 
-  const decl = node.declaration;
-  const declType = scope.evaluate(decl);
-  evaluator.addExport('default', declType);
-  return declType;
+	const decl = node.declaration;
+	const declType = scope.evaluate(decl);
+	evaluator.addExport('default', declType);
+	return declType;
 }

@@ -7,13 +7,13 @@
 
 import {Scope} from '../../scopes';
 import {
-  AnyNode,
-  TSNonNullExpression,
-  tsNonNullExpression,
+	AnyNode,
+	TSNonNullExpression,
+	tsNonNullExpression,
 } from '@romejs/js-ast';
 
 export default function TSNonNullExpression(node: AnyNode, scope: Scope) {
-  node = tsNonNullExpression.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = tsNonNullExpression.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, JSXElement, jsxElement} from '@romejs/js-ast';
 
 export default function JSXElement(node: AnyNode, scope: Scope) {
-  node = jsxElement.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = jsxElement.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

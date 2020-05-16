@@ -10,14 +10,14 @@ import {Builder} from '@romejs/js-formatter';
 import {Token, concat} from '../../tokens';
 
 export default function TSNonNullExpression(
-  builder: Builder,
-  node: TSNonNullExpression,
+	builder: Builder,
+	node: TSNonNullExpression,
 ): Token {
-  const expr = builder.tokenize(node.expression, node);
+	const expr = builder.tokenize(node.expression, node);
 
-  if (builder.options.typeAnnotations) {
-    return concat([expr, '!']);
-  } else {
-    return expr;
-  }
+	if (builder.options.typeAnnotations) {
+		return concat([expr, '!']);
+	} else {
+		return expr;
+	}
 }

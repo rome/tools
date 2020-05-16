@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, DoWhileStatement, doWhileStatement} from '@romejs/js-ast';
 
 export default function DoWhileStatement(node: AnyNode, scope: Scope) {
-  node = doWhileStatement.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = doWhileStatement.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

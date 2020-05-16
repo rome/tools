@@ -9,14 +9,14 @@ import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type StringLiteralTypeAnnotation = JSNodeBase & {
-  type: 'StringLiteralTypeAnnotation';
-  value: string;
+	type: 'StringLiteralTypeAnnotation';
+	value: string;
 };
 
 export const stringLiteralTypeAnnotation = createBuilder<StringLiteralTypeAnnotation>(
-  'StringLiteralTypeAnnotation',
-  {
-    bindingKeys: {},
-    visitorKeys: {},
-  },
+	'StringLiteralTypeAnnotation',
+	{
+		bindingKeys: {},
+		visitorKeys: {},
+	},
 );

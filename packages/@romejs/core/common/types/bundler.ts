@@ -11,9 +11,9 @@ import {AbsoluteFilePath} from '@romejs/path';
 import {ResolverOptions} from '../../master/fs/Resolver';
 
 export type BundlerConfig = {
-  inlineSourceMap: boolean;
-  cwd: AbsoluteFilePath;
-  resolver: ResolverOptions;
+	inlineSourceMap: boolean;
+	cwd: AbsoluteFilePath;
+	resolver: ResolverOptions;
 };
 
 export type BundlerMode = 'modern' | 'legacy';
@@ -21,41 +21,41 @@ export type BundlerMode = 'modern' | 'legacy';
 export const BUNDLER_MODES: Array<BundlerMode> = ['modern', 'legacy'];
 
 export type BundleRequestResult = {
-  cached: boolean;
-  diagnostics: Diagnostics;
-  content: string;
-  sourceMap: SourceMapGenerator;
-  assets: Map<string, Buffer>;
+	cached: boolean;
+	diagnostics: Diagnostics;
+	content: string;
+	sourceMap: SourceMapGenerator;
+	assets: Map<string, Buffer>;
 };
 
 export type BundleBuddyStats = Array<BundleBuddyGraphNode>;
 
 export type BundleBuddyGraphNode = {
-  source: string;
-  target: string | undefined;
+	source: string;
+	target: string | undefined;
 };
 
 export type BundlerFiles = Map<
-  string,
-  {
-    kind: 'asset' | 'entry' | 'sourcemap' | 'stats' | 'manifest' | 'file';
-    content: () => string | Buffer;
-  }
+	string,
+	{
+		kind: 'asset' | 'entry' | 'sourcemap' | 'stats' | 'manifest' | 'file';
+		content: () => string | Buffer;
+	}
 >;
 
 export type BundleResultBundle = {
-  sourceMap: {
-    path: string;
-    map: SourceMapGenerator;
-  };
-  js: {
-    path: string;
-    content: string;
-  };
+	sourceMap: {
+		path: string;
+		map: SourceMapGenerator;
+	};
+	js: {
+		path: string;
+		content: string;
+	};
 };
 
 export type BundleResult = {
-  files: BundlerFiles;
-  bundles: Array<BundleResultBundle>;
-  entry: BundleResultBundle;
+	files: BundlerFiles;
+	bundles: Array<BundleResultBundle>;
+	entry: BundleResultBundle;
 };

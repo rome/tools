@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, WhileStatement, whileStatement} from '@romejs/js-ast';
 
 export default function WhileStatement(node: AnyNode, scope: Scope) {
-  node = whileStatement.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = whileStatement.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

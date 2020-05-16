@@ -10,5 +10,5 @@ import {AnyNode} from '@romejs/js-ast';
 import IfStatement from '../statements/IfStatement';
 
 export default function ConditionalExpression(node: AnyNode, scope: Scope) {
-  return IfStatement(node, scope);
+	return IfStatement(node, scope);
 }

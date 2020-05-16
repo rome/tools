@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, WithStatement, withStatement} from '@romejs/js-ast';
 
 export default function WithStatement(node: AnyNode, scope: Scope) {
-  node = withStatement.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = withStatement.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

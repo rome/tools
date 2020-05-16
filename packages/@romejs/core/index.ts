@@ -39,7 +39,7 @@ export {default as WorkerBridge} from './common/bridges/WorkerBridge';
 export {default as MasterBridge} from './common/bridges/MasterBridge';
 export {default as WebBridge} from './common/bridges/WebBridge';
 export {
-  MasterQueryRequest,
-  MasterQueryResponse,
+	MasterQueryRequest,
+	MasterQueryResponse,
 } from './common/bridges/MasterBridge';
 export {default as TestWorkerBridge} from './common/bridges/TestWorkerBridge';

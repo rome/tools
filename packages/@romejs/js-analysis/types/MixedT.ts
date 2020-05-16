@@ -11,21 +11,21 @@ import {Scope} from '../scopes';
 import T from './T';
 
 export default class MixedT extends T {
-  static type = 'MixedT';
+	static type = 'MixedT';
 
-  serialize(): HydrateData {
-    return {};
-  }
+	serialize(): HydrateData {
+		return {};
+	}
 
-  static hydrate(scope: Scope, originNode: undefined | AnyNode): T {
-    return new MixedT(scope, originNode);
-  }
+	static hydrate(scope: Scope, originNode: undefined | AnyNode): T {
+		return new MixedT(scope, originNode);
+	}
 
-  compatibleWith(): boolean {
-    return false;
-  }
+	compatibleWith(): boolean {
+		return false;
+	}
 
-  humanize(): string {
-    return 'mixed';
-  }
+	humanize(): string {
+		return 'mixed';
+	}
 }

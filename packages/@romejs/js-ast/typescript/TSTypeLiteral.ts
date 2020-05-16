@@ -9,16 +9,16 @@ import {AnyTSTypeElement, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type TSTypeLiteral = JSNodeBase & {
-  type: 'TSTypeLiteral';
-  members: Array<AnyTSTypeElement>;
+	type: 'TSTypeLiteral';
+	members: Array<AnyTSTypeElement>;
 };
 
 export const tsTypeLiteral = createBuilder<TSTypeLiteral>(
-  'TSTypeLiteral',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      members: true,
-    },
-  },
+	'TSTypeLiteral',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			members: true,
+		},
+	},
 );

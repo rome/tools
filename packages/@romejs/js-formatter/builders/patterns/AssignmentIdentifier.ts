@@ -11,8 +11,8 @@ import {AssignmentIdentifier} from '@romejs/js-ast';
 import Identifier from '../auxiliary/Identifier';
 
 export default function AssignmentIdentifier(
-  builder: Builder,
-  node: AssignmentIdentifier,
+	builder: Builder,
+	node: AssignmentIdentifier,
 ): Token {
-  return Identifier(builder, node);
+	return Identifier(builder, node);
 }

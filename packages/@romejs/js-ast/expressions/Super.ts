@@ -9,13 +9,13 @@ import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type Super = JSNodeBase & {
-  type: 'Super';
+	type: 'Super';
 };
 
 export const _super = createBuilder<Super>(
-  'Super',
-  {
-    bindingKeys: {},
-    visitorKeys: {},
-  },
+	'Super',
+	{
+		bindingKeys: {},
+		visitorKeys: {},
+	},
 );

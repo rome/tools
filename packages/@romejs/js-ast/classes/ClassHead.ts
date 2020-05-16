@@ -6,35 +6,35 @@
  */
 
 import {
-  AnyClassMember,
-  AnyExpression,
-  JSNodeBase,
-  TSExpressionWithTypeArguments,
-  TSTypeParameterDeclaration,
-  TSTypeParameterInstantiation,
+	AnyClassMember,
+	AnyExpression,
+	JSNodeBase,
+	TSExpressionWithTypeArguments,
+	TSTypeParameterDeclaration,
+	TSTypeParameterInstantiation,
 } from '../index';
 import {createQuickBuilder} from '../utils';
 
 export type ClassHead = JSNodeBase & {
-  type: 'ClassHead';
-  superClass?: AnyExpression;
-  body: Array<AnyClassMember>;
-  typeParameters?: TSTypeParameterDeclaration;
-  superTypeParameters?: TSTypeParameterInstantiation;
-  implements?: undefined | Array<TSExpressionWithTypeArguments>;
+	type: 'ClassHead';
+	superClass?: AnyExpression;
+	body: Array<AnyClassMember>;
+	typeParameters?: TSTypeParameterDeclaration;
+	superTypeParameters?: TSTypeParameterInstantiation;
+	implements?: undefined | Array<TSExpressionWithTypeArguments>;
 };
 
 export const classHead = createQuickBuilder<ClassHead, 'body'>(
-  'ClassHead',
-  'body',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      superClass: true,
-      body: true,
-      typeParameters: true,
-      superTypeParameters: true,
-      implements: true,
-    },
-  },
+	'ClassHead',
+	'body',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			superClass: true,
+			body: true,
+			typeParameters: true,
+			superTypeParameters: true,
+			implements: true,
+		},
+	},
 );

@@ -8,5 +8,5 @@
 import {Token} from '../../tokens';
 
 export default function ThisExpression(): Token {
-  return 'this';
+	return 'this';
 }

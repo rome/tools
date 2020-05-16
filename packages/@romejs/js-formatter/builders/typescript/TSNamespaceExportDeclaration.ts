@@ -10,17 +10,17 @@ import {Builder} from '@romejs/js-formatter';
 import {Token, concat, space} from '../../tokens';
 
 export default function TSNamespaceExportDeclaration(
-  builder: Builder,
-  node: TSNamespaceExportDeclaration,
+	builder: Builder,
+	node: TSNamespaceExportDeclaration,
 ): Token {
-  return concat([
-    'export',
-    space,
-    'as',
-    space,
-    'namespace',
-    space,
-    builder.tokenize(node.id, node),
-    ';',
-  ]);
+	return concat([
+		'export',
+		space,
+		'as',
+		space,
+		'namespace',
+		space,
+		builder.tokenize(node.id, node),
+		';',
+	]);
 }

@@ -9,16 +9,16 @@ import {AnyExpression, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type ImportCall = JSNodeBase & {
-  type: 'ImportCall';
-  argument: AnyExpression;
+	type: 'ImportCall';
+	argument: AnyExpression;
 };
 
 export const importCall = createBuilder<ImportCall>(
-  'ImportCall',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      argument: true,
-    },
-  },
+	'ImportCall',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			argument: true,
+		},
+	},
 );

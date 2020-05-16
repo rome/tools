@@ -15,8 +15,8 @@ const fs = require('fs');
 const ruleName = process.argv[2];
 const category = process.argv[3];
 if (ruleName === undefined || category === undefined) {
-  console.error('node scripts/lint/add.cjs [ruleName] [category]');
-  process.exit(1);
+	console.error('node scripts/lint/add.cjs [ruleName] [category]');
+	process.exit(1);
 }
 
 const spacedName = ruleName.replace(/([A-Z+])/g, ' $1').trim().toLowerCase();
@@ -27,8 +27,8 @@ const ruleLoc = path.join(lintRulesFolder, category, `${ruleName}.ts`);
 const testLoc = path.join(lintRulesFolder, category, `${ruleName}.test.ts`);
 
 write(
-  ruleLoc,
-  `/**
+	ruleLoc,
+	`/**
 * Copyright (c) Facebook, Inc. and its affiliates.
 *
 * This source code is licensed under the MIT license found in the
@@ -57,8 +57,8 @@ export default {
 );
 
 write(
-  testLoc,
-  `/**
+	testLoc,
+	`/**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
@@ -89,8 +89,8 @@ test(
 // Add description
 let descriptions = fs.readFileSync(descriptionsFile, 'utf8');
 descriptions = descriptions.replace(
-  'LINT: {',
-  `LINT: {\n    ${descriptionKey}: {
+	'LINT: {',
+	`LINT: {\n    ${descriptionKey}: {
       category: '${categoryName}',
       message: 'INSERT MESSAGE HERE',
     },`,

@@ -7,16 +7,16 @@
 
 import {Scope} from '../../scopes';
 import {
-  AnyNode,
-  TemplateLiteralTypeAnnotation,
-  templateLiteralTypeAnnotation,
+	AnyNode,
+	TemplateLiteralTypeAnnotation,
+	templateLiteralTypeAnnotation,
 } from '@romejs/js-ast';
 
 export default function TemplateLiteralTypeAnnotation(
-  node: AnyNode,
-  scope: Scope,
+	node: AnyNode,
+	scope: Scope,
 ) {
-  node = templateLiteralTypeAnnotation.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = templateLiteralTypeAnnotation.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

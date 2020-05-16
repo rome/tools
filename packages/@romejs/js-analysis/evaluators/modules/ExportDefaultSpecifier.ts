@@ -7,13 +7,13 @@
 
 import {Scope} from '../../scopes';
 import {
-  AnyNode,
-  ExportDefaultSpecifier,
-  exportDefaultSpecifier,
+	AnyNode,
+	ExportDefaultSpecifier,
+	exportDefaultSpecifier,
 } from '@romejs/js-ast';
 
 export default function ExportDefaultSpecifier(node: AnyNode, scope: Scope) {
-  node = exportDefaultSpecifier.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = exportDefaultSpecifier.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

@@ -8,5 +8,5 @@
 import {Token} from '../../tokens';
 
 export default function RegExpWordBoundaryCharacter(): Token {
-  return '\\b';
+	return '\\b';
 }

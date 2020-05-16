@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, VariableDeclarator, variableDeclarator} from '@romejs/js-ast';
 
 export default function VariableDeclarator(node: AnyNode, scope: Scope) {
-  node = variableDeclarator.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = variableDeclarator.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

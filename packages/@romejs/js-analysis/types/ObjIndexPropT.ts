@@ -12,39 +12,39 @@ import {HumanBuilder} from '../Utils';
 import {Scope} from '../scopes';
 
 export default class ObjIndexPropT extends T {
-  constructor(scope: Scope, originNode: undefined | AnyNode, key: T, value: T) {
-    super(scope, originNode);
-    this.key = key;
-    this.value = value;
-  }
+	constructor(scope: Scope, originNode: undefined | AnyNode, key: T, value: T) {
+		super(scope, originNode);
+		this.key = key;
+		this.value = value;
+	}
 
-  static type = 'ObjIndexPropT';
+	static type = 'ObjIndexPropT';
 
-  key: T;
-  value: T;
+	key: T;
+	value: T;
 
-  serialize(addType: SerialTypeFactory): HydrateData {
-    return {
-      key: addType(this.key),
-      value: addType(this.value),
-    };
-  }
+	serialize(addType: SerialTypeFactory): HydrateData {
+		return {
+			key: addType(this.key),
+			value: addType(this.value),
+		};
+	}
 
-  static hydrate(
-    scope: Scope,
-    originNode: AnyNode,
-    data: HydrateData,
-    getType: HydrateTypeFactory,
-  ): T {
-    return new ObjIndexPropT(
-      scope,
-      originNode,
-      getType(data.key),
-      getType(data.value),
-    );
-  }
+	static hydrate(
+		scope: Scope,
+		originNode: AnyNode,
+		data: HydrateData,
+		getType: HydrateTypeFactory,
+	): T {
+		return new ObjIndexPropT(
+			scope,
+			originNode,
+			getType(data.key),
+			getType(data.value),
+		);
+	}
 
-  humanize(builder: HumanBuilder): string {
-    return `[${builder.humanize(this.key)}]: ${builder.humanize(this.value)}`;
-  }
+	humanize(builder: HumanBuilder): string {
+		return `[${builder.humanize(this.key)}]: ${builder.humanize(this.value)}`;
+	}
 }

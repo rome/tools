@@ -10,8 +10,8 @@ import {Token, concat} from '../../tokens';
 import {SpreadProperty} from '@romejs/js-ast';
 
 export default function SpreadProperty(
-  builder: Builder,
-  node: SpreadProperty,
+	builder: Builder,
+	node: SpreadProperty,
 ): Token {
-  return concat(['...', builder.tokenize(node.argument, node)]);
+	return concat(['...', builder.tokenize(node.argument, node)]);
 }

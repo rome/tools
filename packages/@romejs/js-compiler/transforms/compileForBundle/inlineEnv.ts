@@ -10,22 +10,22 @@ import {doesNodeMatchPattern} from '@romejs/js-ast-utils';
 import {stringLiteral} from '@romejs/js-ast';
 
 export default {
-  name: 'inlineEnv',
-  enter(path: Path) {
-    const {node} = path;
+	name: 'inlineEnv',
+	enter(path: Path) {
+		const {node} = path;
 
-    if (
-      node.type === 'MemberExpression' &&
-      node.property.value.type === 'Identifier' &&
-      node.property.value.name === 'NODE_ENV' &&
-      !path.scope.hasBinding('process') &&
-      doesNodeMatchPattern(node, 'process.env.NODE_ENV')
-    ) {
-      return stringLiteral.create({
-        value: 'development',
-      });
-    }
+		if (
+			node.type === 'MemberExpression' &&
+			node.property.value.type === 'Identifier' &&
+			node.property.value.name === 'NODE_ENV' &&
+			!path.scope.hasBinding('process') &&
+			doesNodeMatchPattern(node, 'process.env.NODE_ENV')
+		) {
+			return stringLiteral.create({
+				value: 'development',
+			});
+		}
 
-    return node;
-  },
+		return node;
+	},
 };

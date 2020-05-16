@@ -6,29 +6,29 @@
  */
 
 import {
-  AnyExpression,
-  AnyStatement,
-  AnyTargetAssignmentPattern,
-  JSNodeBase,
-  VariableDeclaration,
+	AnyExpression,
+	AnyStatement,
+	AnyTargetAssignmentPattern,
+	JSNodeBase,
+	VariableDeclaration,
 } from '../index';
 import {createBuilder} from '../utils';
 
 export type ForInStatement = JSNodeBase & {
-  type: 'ForInStatement';
-  left: VariableDeclaration | AnyTargetAssignmentPattern;
-  right: AnyExpression;
-  body: AnyStatement;
+	type: 'ForInStatement';
+	left: VariableDeclaration | AnyTargetAssignmentPattern;
+	right: AnyExpression;
+	body: AnyStatement;
 };
 
 export const forInStatement = createBuilder<ForInStatement>(
-  'ForInStatement',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      left: true,
-      right: true,
-      body: true,
-    },
-  },
+	'ForInStatement',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			left: true,
+			right: true,
+			body: true,
+		},
+	},
 );

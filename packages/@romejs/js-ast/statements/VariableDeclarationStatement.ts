@@ -10,23 +10,23 @@ import {createQuickBuilder} from '../utils';
 import {VariableDeclaration} from '../auxiliary/VariableDeclaration';
 
 export type VariableDeclarationStatement = JSNodeBase & {
-  type: 'VariableDeclarationStatement';
-  declaration: VariableDeclaration;
-  declare?: boolean;
+	type: 'VariableDeclarationStatement';
+	declaration: VariableDeclaration;
+	declare?: boolean;
 };
 
 export const variableDeclarationStatement = createQuickBuilder<
-  VariableDeclarationStatement,
-  'declaration'
+	VariableDeclarationStatement,
+	'declaration'
 >(
-  'VariableDeclarationStatement',
-  'declaration',
-  {
-    bindingKeys: {
-      declaration: true,
-    },
-    visitorKeys: {
-      declaration: true,
-    },
-  },
+	'VariableDeclarationStatement',
+	'declaration',
+	{
+		bindingKeys: {
+			declaration: true,
+		},
+		visitorKeys: {
+			declaration: true,
+		},
+	},
 );

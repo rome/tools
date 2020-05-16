@@ -9,14 +9,14 @@ import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type JSXReferenceIdentifier = JSNodeBase & {
-  type: 'JSXReferenceIdentifier';
-  name: string;
+	type: 'JSXReferenceIdentifier';
+	name: string;
 };
 
 export const jsxReferenceIdentifier = createBuilder<JSXReferenceIdentifier>(
-  'JSXReferenceIdentifier',
-  {
-    bindingKeys: {},
-    visitorKeys: {},
-  },
+	'JSXReferenceIdentifier',
+	{
+		bindingKeys: {},
+		visitorKeys: {},
+	},
 );
