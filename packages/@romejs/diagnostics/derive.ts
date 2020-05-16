@@ -224,11 +224,17 @@ export function getErrorStackAdvice(
     if (cleanStack.startsWith(removeMessage)) {
       cleanStack = cleanStack.slice(removeMessage.length);
     }
+    cleanStack = cleanStack.trim();
 
     advice.push({
       type: 'log',
-      category: 'error',
-      text: escapeMarkup(cleanStack),
+      category: 'warn',
+      text: 'Raw stack trace is being displayed as we did not receive any frames',
+    });
+
+    advice.push({
+      type: 'list',
+      list: cleanStack.split('\n').map((line) => escapeMarkup(line.trim())),
     });
   } else {
     const adviceFrames = frames.map((frame) => {

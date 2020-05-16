@@ -98,7 +98,6 @@ Program {
                     }
                   }
                 }
-                variance: undefined
                 loc: Object {
                   filename: 'input.js'
                   end: Object {
@@ -173,7 +172,6 @@ Program {
                 async: false
                 generator: false
                 hasHoistedVars: false
-                predicate: undefined
                 rest: undefined
                 returnType: undefined
                 thisType: undefined
@@ -240,7 +238,6 @@ Program {
                                 }
                               }
                             }
-                            variance: undefined
                             loc: Object {
                               filename: 'input.js'
                               end: Object {
@@ -340,7 +337,6 @@ Program {
                                 }
                               }
                             }
-                            variance: undefined
                             loc: Object {
                               filename: 'input.js'
                               end: Object {

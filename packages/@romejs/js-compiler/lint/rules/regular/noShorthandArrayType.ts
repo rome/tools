@@ -8,8 +8,6 @@
 import {Path} from '@romejs/js-compiler';
 import {TransformExitResult} from '@romejs/js-compiler/types';
 import {
-  flowGenericTypeAnnotation,
-  flowTypeParameterInstantiation,
   referenceIdentifier,
   tsTypeParameterInstantiation,
   tsTypeReference,
@@ -28,21 +26,6 @@ export default {
           fixed: tsTypeReference.create({
             typeName: referenceIdentifier.quick('Array'),
             typeParameters: tsTypeParameterInstantiation.create({
-              params: [node.elementType],
-            }),
-          }),
-        },
-        descriptions.LINT.NO_SHORTHAND_ARRAY_TYPE,
-      );
-    }
-
-    if (node.type === 'FlowArrayTypeAnnotation') {
-      return context.addFixableDiagnostic(
-        {
-          old: node,
-          fixed: flowGenericTypeAnnotation.create({
-            id: referenceIdentifier.quick('Array'),
-            typeParameters: flowTypeParameterInstantiation.create({
               params: [node.elementType],
             }),
           }),

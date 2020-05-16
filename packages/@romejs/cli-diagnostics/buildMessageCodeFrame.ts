@@ -14,7 +14,12 @@ import {
   MAX_CODE_FRAME_LINES,
 } from './constants';
 import {Position} from '@romejs/parser-core';
-import {cleanEquivalentString, joinNoBreak} from './utils';
+import {
+  ToLines,
+  cleanEquivalentString,
+  joinNoBreak,
+  normalizeTabs,
+} from './utils';
 import {
   Number0,
   ob1Coerce0,
@@ -28,14 +33,65 @@ import {
 } from '@romejs/ob1';
 import {markupToPlainTextString} from '@romejs/string-markup';
 
+function createPointer(
+  markerMessage: string,
+  line: string,
+  markerStart: Number0,
+  markerEnd: Number0,
+): undefined | string {
+  let result = '';
+
+  let markerSize = ob1Get0(ob1Sub(markerEnd, markerStart));
+
+  // If the range contains tabs then increase the marker size
+  for (let i = ob1Get0(markerStart); i < ob1Get0(markerEnd); i++) {
+    const char = line[i];
+    if (char === '\t') {
+      markerSize++;
+    }
+  }
+
+  const pointerLength: number = Math.max(markerSize, 1);
+
+  // Skip the pointer if it's pointing at the last character
+  let skipPointer = pointerLength === 1 && ob1Get0(markerEnd) >= line.length;
+
+  if (!skipPointer) {
+    // Add indentation, handling hard tabs as two soft spaces
+    for (let i = 0; i < ob1Get0(markerStart); i++) {
+      const char = line[i];
+      if (char === '\t') {
+        // normalizeTabs will be called on this line and this replacement made
+        result += '  ';
+      } else {
+        result += ' ';
+      }
+    }
+
+    // Add pointer
+    result += `<error><emphasis>${'^'.repeat(pointerLength)}</emphasis></error>`;
+  }
+
+  // Add marker
+  if (markerMessage !== '') {
+    result += ` ${markerMessage}`;
+  }
+
+  if (result === '') {
+    return undefined;
+  } else {
+    return result;
+  }
+}
+
 export default function buildMessageCodeFrame(
   sourceText: string,
-  allLines: Array<string>,
+  allLines: ToLines,
   start: undefined | Position,
   end: undefined | Position,
   markerMessage: string,
 ): string {
-  if (start === undefined || end === undefined) {
+  if (allLines.length === 0 || start === undefined || end === undefined) {
     if (markerMessage === '') {
       return '';
     } else {
@@ -44,12 +100,7 @@ export default function buildMessageCodeFrame(
   }
 
   const startLineIndex = ob1Coerce1To0(start.line);
-
   let endLineIndex = ob1Coerce1To0(end.line);
-  let endLineCol = end.column;
-
-  let markerOffset = end.column;
-  let markerSize: Number0 = ob1Number0;
 
   // Increase the amount of lines we should show for "context"
   let contextStartIndex = ob1Coerce0(
@@ -62,55 +113,63 @@ export default function buildMessageCodeFrame(
     ),
   );
 
+  let maxVisibleLineNo = 0;
+
   let formattedLines: Array<
     | {
+        pointer: undefined | string;
         gutter: string;
         line: string;
-        lineIndex: Number0;
       }
     | undefined
   > = [];
   for (let i = contextStartIndex; i <= contextEndIndex; i = ob1Inc(i)) {
-    let line: undefined | string = allLines[ob1Get0(i)];
-    if (line === undefined) {
+    let rawLine: undefined | string = allLines.raw[ob1Get0(i)];
+    let highlightLine: undefined | string = allLines.highlighted[ob1Get0(i)];
+    if (highlightLine === undefined || rawLine === undefined) {
       continue;
     }
 
     // Ensure that the frame doesn't start with whitespace
     if (
-      line.trim() === '' &&
+      rawLine.trim() === '' &&
       formattedLines.length === 0 &&
       i !== startLineIndex
     ) {
       continue;
     }
 
+    let pointer: undefined | string;
+
     // If this is within the highlighted line range
     const shouldHighlight: boolean = i >= startLineIndex && i <= endLineIndex;
 
     if (shouldHighlight) {
-      // Range to highlight
-      let startCol = ob1Number0;
-      let endCol = ob1Coerce0(line.length);
-
-      // First line in selection
-      if (i === startLineIndex) {
-        startCol = start.column;
-      }
-
-      // Last line in selection
-      if (i === endLineIndex) {
-        endCol = endLineCol;
-
-        // Sometimes the end will be the same as the start if we just want to make a single place
-
-        // and not perform highlighting
-        if (endCol > startCol) {
-          markerSize = ob1Sub(endCol, startCol);
-          markerOffset = ob1Sub(markerOffset, markerSize);
-        }
+      if (i === startLineIndex && i === endLineIndex) {
+        // Only line in the selection
+        pointer = createPointer(
+          markerMessage,
+          rawLine,
+          start.column,
+          end.column,
+        );
+      } else if (i === startLineIndex) {
+        // First line in selection
+        pointer = createPointer(
+          '',
+          rawLine,
+          start.column,
+          // line could be highlighted
+          ob1Coerce0(rawLine.length),
+        );
+      } else if (i === endLineIndex) {
+        // Last line in selection
+        pointer = createPointer(markerMessage, rawLine, ob1Number0, end.column);
       }
     }
+
+    // Replace hard tabs with two spaces
+    highlightLine = normalizeTabs(highlightLine);
 
     const lineNo = ob1Coerce0To1(i);
     let gutter = `${String(lineNo)}${GUTTER}`;
@@ -122,10 +181,12 @@ export default function buildMessageCodeFrame(
     }
 
     formattedLines.push({
+      pointer,
       gutter,
-      line,
-      lineIndex: i,
+      line: highlightLine,
     });
+
+    maxVisibleLineNo = ob1Get0(i) + 1;
   }
 
   // If we have too many lines in our selection, then collapse them to an ellipsis
@@ -159,17 +220,12 @@ export default function buildMessageCodeFrame(
     }
   }
 
-  // Don't output a gutter if there's only a single line
-  const noGutter = allLines.length === 1;
-
   // Calculate max size of gutter, this is the maximum visible line plus the futter length plus the frame indent
   const lastLine = formattedLines[formattedLines.length - 1];
   if (lastLine === undefined) {
     throw new Error('Expected there to be a last line');
   }
 
-  // Calculate the max width of the gutter based on the line count
-  const maxVisibleLineNo = ob1Get0(lastLine.lineIndex) + 1;
   const maxGutterLength =
     String(maxVisibleLineNo).length + GUTTER.length + CODE_FRAME_INDENT.length;
 
@@ -184,27 +240,22 @@ export default function buildMessageCodeFrame(
     }
   }
 
-  const pointerLength: number = Math.max(ob1Get0(markerSize), 1);
-  const pointer: string = `<error><emphasis>${'^'.repeat(pointerLength)}</emphasis></error>`;
-  const pointerIndent: string = ' '.repeat(ob1Get0(markerOffset));
-  const paddedMarkerMessage = markerMessage === '' ? '' : ` ${markerMessage}`;
-
-  // If the marker is just pointing to the first character and we have no message, no point showing it
-  const noMarkerLine =
-    ob1Get0(markerOffset) === 0 && pointerLength === 1 && markerMessage === '';
-
   // Output no gutter with a soft indent if this is true
-  if (noGutter) {
-    const result = [...allLines];
-    if (!noMarkerLine) {
-      result.push(`${pointerIndent}${pointer}${paddedMarkerMessage}`);
+  if (formattedLines.length === 1) {
+    const selection = formattedLines[0];
+    if (selection === undefined) {
+      throw new Error(
+        'Expected a selection? undefined is only valid here as an omitted line signifier',
+      );
     }
-    return joinNoBreak(result.map((line) => `${CODE_FRAME_INDENT}${line}`));
-  }
 
-  // Build marker
-  const markerGutterIndent: string = ' '.repeat(maxGutterLength - GUTTER.length);
-  const markerLine: string = `${markerGutterIndent}<emphasis>${GUTTER}</emphasis>${pointerIndent}${pointer}${paddedMarkerMessage}`;
+    const result = [`${CODE_FRAME_INDENT}${selection.line}`];
+    if (selection.pointer !== undefined) {
+      result.push(`${CODE_FRAME_INDENT}${selection.pointer}`);
+    }
+
+    return joinNoBreak(result);
+  }
 
   // Build up the line we display when source lines are omitted
   const omittedLine =
@@ -219,18 +270,17 @@ export default function buildMessageCodeFrame(
       continue;
     }
 
-    const {gutter, line, lineIndex} = selection;
+    const {pointer, gutter, line} = selection;
 
-    if (noGutter) {
-      result.push(line);
-    } else {
+    result.push(
+      `<pad align="right" width="${maxGutterLength}"><emphasis>${gutter}</emphasis></pad>` +
+      line,
+    );
+
+    if (pointer !== undefined) {
       result.push(
-        `<pad align="right" width="${maxGutterLength}"><emphasis>${gutter}</emphasis></pad>` +
-        line,
+        `<pad align="right" width="${maxGutterLength}"><emphasis>${GUTTER}</emphasis></pad>${pointer}`,
       );
-    }
-    if (lineIndex === endLineIndex && !noMarkerLine) {
-      result.push(markerLine);
     }
   }
 

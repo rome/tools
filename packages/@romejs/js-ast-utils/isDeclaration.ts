@@ -21,22 +21,9 @@ export default function isDeclaration(
     case 'ExportDefaultDeclaration':
     case 'ExportLocalDeclaration':
     case 'ImportDeclaration':
-    case 'FlowDeclareClass':
-    case 'FlowDeclareFunction':
-    case 'FlowDeclareInterface':
-    case 'FlowDeclareModule':
-    case 'FlowDeclareModuleExports':
-    case 'FlowDeclareOpaqueType':
-    case 'FlowDeclareVariable':
-    case 'FlowInterfaceDeclaration':
-    case 'FlowOpaqueType':
     case 'TypeAliasTypeAnnotation':
     case 'VariableDeclarationStatement':
     case 'ExportExternalDeclaration':
-    case 'FlowDeclareExportAll':
-    case 'FlowDeclareExportDefault':
-    case 'FlowDeclareExportNamed':
-    case 'FlowInterface':
     case 'TSDeclareFunction':
     case 'TSEnumDeclaration':
     case 'TSExportAssignment':

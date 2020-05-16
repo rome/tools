@@ -1,5 +1,0 @@
-{
-  "sourceType": "module",
-  "syntax": ["jsx", "flow"],
-  "throws": "Spread operator cannot appear in class or interface definitions"
-}

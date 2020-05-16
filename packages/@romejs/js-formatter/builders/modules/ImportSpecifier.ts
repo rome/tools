@@ -15,10 +15,6 @@ export default function ImportSpecifier(
 ): Token {
   const tokens: Array<Token> = [];
 
-  if (node.local.importKind === 'type' || node.local.importKind === 'typeof') {
-    tokens.push(node.local.importKind, space);
-  }
-
   tokens.push(builder.tokenize(node.imported, node));
 
   if (node.local.name.name !== node.imported.name) {

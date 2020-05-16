@@ -36,7 +36,6 @@ import {
   DoWhileStatement,
   EmptyStatement,
   ExpressionStatement,
-  FlowTypeParameterDeclaration,
   ForInStatement,
   ForOfStatement,
   ForStatement,
@@ -69,7 +68,7 @@ import {
   ParseImportResult,
   checkLVal,
   checkYieldAwaitInDefaultParams,
-  maybeParseTypeParameters,
+  maybeParseTSTypeParameters,
   parseBindingIdentifier,
   parseBindingListNonEmpty,
   parseClassDeclaration,
@@ -80,10 +79,10 @@ import {
   parseImport,
   parseMaybeAssign,
   parseParenExpression,
-  parsePrimaryTypeAnnotation,
   parseTSEnumDeclaration,
+  parseTSTypeAnnotation,
+  parseTSTypeExpressionStatement,
   parseTargetBindingPattern,
-  parseTypeExpressionStatement,
   toTargetAssignmentPattern,
 } from './index';
 import {ob1Add, ob1Get0, ob1Inc, ob1Number0} from '@romejs/ob1';
@@ -1067,7 +1066,7 @@ export function parseExpressionStatement(
   start: Position,
   expr: AnyExpression,
 ): AnyStatement {
-  const node = parseTypeExpressionStatement(parser, start, expr);
+  const node = parseTSTypeExpressionStatement(parser, start, expr);
   if (node !== undefined) {
     return node;
   }
@@ -1374,7 +1373,7 @@ export function parseVarHead(
   }
 
   if (parser.match(tt.colon)) {
-    const typeAnnotation = parsePrimaryTypeAnnotation(parser);
+    const typeAnnotation = parseTSTypeAnnotation(parser, true);
 
     return parser.finishNode(
       start,
@@ -1624,16 +1623,13 @@ export function parseFunctionParams(
   kind?: string,
   allowTSModifiers?: boolean,
 ): {
-  typeParameters:
-    | undefined
-    | TSTypeParameterDeclaration
-    | FlowTypeParameterDeclaration;
+  typeParameters: undefined | TSTypeParameterDeclaration;
   params: Array<AnyBindingPattern>;
   rest: undefined | AnyTargetBindingPattern;
 } {
   let typeParameters = undefined;
   if (parser.isRelational('<')) {
-    typeParameters = maybeParseTypeParameters(parser);
+    typeParameters = maybeParseTSTypeParameters(parser);
 
     if (typeParameters !== undefined && (kind === 'get' || kind === 'set')) {
       parser.addDiagnostic({

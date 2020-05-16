@@ -5,12 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyExpression, FlowVariance, JSNodeBase} from '../index';
+import {AnyExpression, JSNodeBase} from '../index';
 import {createQuickBuilder} from '../utils';
 
 export type ComputedPropertyKey = JSNodeBase & {
   type: 'ComputedPropertyKey';
-  variance?: FlowVariance;
   value: AnyExpression;
 };
 
@@ -23,7 +22,6 @@ export const computedPropertyKey = createQuickBuilder<
   {
     bindingKeys: {},
     visitorKeys: {
-      variance: true,
       value: true,
     },
   },

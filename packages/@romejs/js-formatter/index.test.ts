@@ -32,7 +32,7 @@ const promise = createFixtureTests(async (fixture, t) => {
   const syntax: Array<ConstProgramSyntax> = options.get('syntax').asArray(true).map((
     item,
   ) => {
-    return item.asStringSet(['jsx', 'ts', 'flow']);
+    return item.asStringSet(['jsx', 'ts']);
   });
 
   const format = options.get('format').asStringSetOrVoid(['pretty', 'compact']);

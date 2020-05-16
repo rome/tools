@@ -21,4 +21,4 @@ export type ConstTSModifier =
 
 export type ConstTSAccessibility = 'public' | 'protected' | 'private';
 
-export type ConstProgramSyntax = 'ts' | 'jsx' | 'flow';
+export type ConstProgramSyntax = 'ts' | 'jsx';

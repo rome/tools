@@ -29,17 +29,9 @@ export default function FunctionHead(
 
   let printedReturnType: Token = '';
   if (builder.options.typeAnnotations) {
-    if (node.returnType || node.predicate) {
+    if (node.returnType) {
       const tokens: Array<Token> = [':'];
-
-      if (node.returnType) {
-        tokens.push(space, builder.tokenize(node.returnType, node));
-      }
-
-      if (node.predicate) {
-        tokens.push(space, builder.tokenize(node.predicate, node));
-      }
-
+      tokens.push(space, builder.tokenize(node.returnType, node));
       printedReturnType = concat(tokens);
     }
   }

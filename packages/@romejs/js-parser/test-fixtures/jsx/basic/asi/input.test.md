@@ -17,7 +17,7 @@ Program {
   sourceType: 'script'
   syntax: Array [
     'jsx'
-    'flow'
+    'ts'
   ]
   loc: Object {
     filename: 'input.js'
@@ -69,7 +69,6 @@ Program {
         generator: false
         hasHoistedVars: false
         params: Array []
-        predicate: undefined
         rest: undefined
         returnType: undefined
         thisType: undefined

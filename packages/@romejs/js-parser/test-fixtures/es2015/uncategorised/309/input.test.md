@@ -168,7 +168,6 @@ Program {
                         }
                       }
                     }
-                    variance: undefined
                     loc: Object {
                       filename: 'input.js'
                       end: Object {
@@ -250,7 +249,6 @@ Program {
                                 }
                               }
                             }
-                            variance: undefined
                             loc: Object {
                               filename: 'input.js'
                               end: Object {

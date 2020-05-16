@@ -78,7 +78,6 @@ Program {
         head: FunctionHead {
           async: false
           hasHoistedVars: false
-          predicate: undefined
           rest: undefined
           returnType: undefined
           thisType: undefined
@@ -145,7 +144,6 @@ Program {
                           }
                         }
                       }
-                      variance: undefined
                       loc: Object {
                         filename: 'input.js'
                         end: Object {
@@ -228,7 +226,6 @@ Program {
                           }
                         }
                       }
-                      variance: undefined
                       loc: Object {
                         filename: 'input.js'
                         end: Object {

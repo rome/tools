@@ -78,7 +78,7 @@ function buildStackString(err: Error): string {
       parts.push('new');
     }
 
-    let name = '<anonymous';
+    let name = '<anonymous>';
     if (functionName !== undefined) {
       name = functionName;
     }

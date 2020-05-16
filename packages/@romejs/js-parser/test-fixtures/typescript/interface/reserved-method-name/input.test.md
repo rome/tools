@@ -97,7 +97,6 @@ Program {
                   }
                 }
               }
-              variance: undefined
               loc: Object {
                 filename: 'input.ts'
                 end: Object {

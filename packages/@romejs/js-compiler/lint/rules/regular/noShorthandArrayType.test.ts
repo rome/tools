@@ -21,15 +21,5 @@ test(
       `,
       {category: 'lint/noShorthandArrayType', syntax: ['ts']},
     );
-
-    // Flow
-    await testLint(
-      t,
-      dedent`
-        let valid: Array<foo>;
-        let invalid: bar[];
-      `,
-      {category: 'lint/noShorthandArrayType', syntax: ['flow']},
-    );
   },
 );

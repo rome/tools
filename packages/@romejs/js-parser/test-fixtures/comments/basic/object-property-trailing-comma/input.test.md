@@ -177,7 +177,6 @@ Program {
                         }
                       }
                     }
-                    variance: undefined
                     loc: Object {
                       filename: 'input.js'
                       end: Object {
@@ -243,7 +242,6 @@ Program {
                       }
                     }
                     leadingComments: undefined
-                    variance: undefined
                     loc: Object {
                       filename: 'input.js'
                       end: Object {
@@ -310,7 +308,6 @@ Program {
                       }
                     }
                     leadingComments: undefined
-                    variance: undefined
                     loc: Object {
                       filename: 'input.js'
                       end: Object {

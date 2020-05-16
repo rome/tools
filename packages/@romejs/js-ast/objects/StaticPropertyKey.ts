@@ -6,7 +6,6 @@
  */
 
 import {
-  FlowVariance,
   Identifier,
   JSNodeBase,
   NumericLiteral,
@@ -17,7 +16,6 @@ import {createQuickBuilder} from '../utils';
 
 export type StaticPropertyKey = JSNodeBase & {
   type: 'StaticPropertyKey';
-  variance?: FlowVariance;
   value: Identifier | PrivateName | StringLiteral | NumericLiteral;
 };
 
@@ -27,7 +25,6 @@ export const staticPropertyKey = createQuickBuilder<StaticPropertyKey, 'value'>(
   {
     bindingKeys: {},
     visitorKeys: {
-      variance: true,
       value: true,
     },
   },
