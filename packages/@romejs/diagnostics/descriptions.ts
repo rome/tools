@@ -402,6 +402,10 @@ export const descriptions = createMessages({
       category: 'lint/reactInJsxScope',
       message: markup`<emphasis>"React"</emphasis> must be in scope when using JSX`,
     },
+    REACT_JSX_A11Y_IMG_REDUNDANT_ALT: {
+      category: 'lint/jsxA11yImgRedundantAlt',
+      message: markup`<emphasis>img</emphasis> element alt descriptions must not contain "image", "picture", or "photo"`,
+    },
     REACT_JSX_VOID_DOM_ELEMENTS_NO_CHILDREN: (
       element: string,
       properties: Array<string>,
