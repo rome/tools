@@ -11,11 +11,17 @@ import {Path} from '@romejs/js-compiler';
 import {doesNodeMatchPattern} from '@romejs/js-ast-utils';
 
 function hasFindMemberProperty(node: AnyNode) {
-  return node.type === 'StaticMemberProperty' && doesNodeMatchPattern(node.value, 'findDOMNode')
+  return (
+    node.type === 'StaticMemberProperty' &&
+    doesNodeMatchPattern(node.value, 'findDOMNode')
+  );
 }
 
 function hasFindCallExpression(node: AnyNode) {
-  return node.type ==='CallExpression' && doesNodeMatchPattern(node.callee, 'findDOMNode')
+  return (
+    node.type === 'CallExpression' &&
+    doesNodeMatchPattern(node.callee, 'findDOMNode')
+  );
 }
 
 export default {
