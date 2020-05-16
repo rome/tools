@@ -9,18 +9,18 @@ import {AnyExpression, AnyStatement, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type WithStatement = JSNodeBase & {
-  type: 'WithStatement';
-  object: AnyExpression;
-  body: AnyStatement;
+	type: 'WithStatement';
+	object: AnyExpression;
+	body: AnyStatement;
 };
 
 export const withStatement = createBuilder<WithStatement>(
-  'WithStatement',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      object: true,
-      body: true,
-    },
-  },
+	'WithStatement',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			object: true,
+			body: true,
+		},
+	},
 );

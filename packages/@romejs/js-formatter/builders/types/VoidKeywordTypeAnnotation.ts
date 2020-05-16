@@ -8,5 +8,5 @@
 import {Token} from '../../tokens';
 
 export default function VoidKeywordTypeAnnotation(): Token {
-  return 'void';
+	return 'void';
 }

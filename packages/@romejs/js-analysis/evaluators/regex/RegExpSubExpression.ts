@@ -6,12 +6,12 @@
  */
 
 import {
-  AnyNode,
-  RegExpSubExpression,
-  regExpSubExpression,
+	AnyNode,
+	RegExpSubExpression,
+	regExpSubExpression,
 } from '@romejs/js-ast';
 
 export default function RegExpSubExpression(node: AnyNode) {
-  node = regExpSubExpression.assert(node);
-  throw new Error('unimplemented');
+	node = regExpSubExpression.assert(node);
+	throw new Error('unimplemented');
 }

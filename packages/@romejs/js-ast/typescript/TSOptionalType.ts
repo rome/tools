@@ -9,16 +9,16 @@ import {AnyTSPrimary, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type TSOptionalType = JSNodeBase & {
-  type: 'TSOptionalType';
-  typeAnnotation: AnyTSPrimary;
+	type: 'TSOptionalType';
+	typeAnnotation: AnyTSPrimary;
 };
 
 export const tsOptionalType = createBuilder<TSOptionalType>(
-  'TSOptionalType',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      typeAnnotation: true,
-    },
-  },
+	'TSOptionalType',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			typeAnnotation: true,
+		},
+	},
 );

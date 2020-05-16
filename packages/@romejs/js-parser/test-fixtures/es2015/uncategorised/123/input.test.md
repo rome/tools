@@ -6,305 +6,305 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 51
-      index: 51
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  directives: Array [
-    Directive {
-      value: 'use strict'
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 13
-          index: 13
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-    }
-  ]
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'super() is only valid inside a class constructor of a subclass'}
-        advice: Array [
-          log {
-            category: 'info'
-            text: 'Maybe a typo in the method name (\'constructor\') or not extending another class?'
-          }
-        ]
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 45
-          index: 45
-          line: 1
-        }
-        start: Object {
-          column: 40
-          index: 40
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 51
-          index: 51
-          line: 1
-        }
-        start: Object {
-          column: 14
-          index: 14
-          line: 1
-        }
-      }
-      expression: ClassExpression {
-        id: BindingIdentifier {
-          name: 'A'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'A'
-            end: Object {
-              column: 22
-              index: 22
-              line: 1
-            }
-            start: Object {
-              column: 21
-              index: 21
-              line: 1
-            }
-          }
-        }
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 50
-            index: 50
-            line: 1
-          }
-          start: Object {
-            column: 15
-            index: 15
-            line: 1
-          }
-        }
-        meta: ClassHead {
-          implements: undefined
-          superClass: undefined
-          superTypeParameters: undefined
-          typeParameters: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 50
-              index: 50
-              line: 1
-            }
-            start: Object {
-              column: 15
-              index: 15
-              line: 1
-            }
-          }
-          body: Array [
-            ClassMethod {
-              kind: 'constructor'
-              key: StaticPropertyKey {
-                value: Identifier {
-                  name: 'constructor'
-                  loc: Object {
-                    filename: 'input.js'
-                    identifierName: 'constructor'
-                    end: Object {
-                      column: 35
-                      index: 35
-                      line: 1
-                    }
-                    start: Object {
-                      column: 24
-                      index: 24
-                      line: 1
-                    }
-                  }
-                }
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 35
-                    index: 35
-                    line: 1
-                  }
-                  start: Object {
-                    column: 24
-                    index: 24
-                    line: 1
-                  }
-                }
-              }
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 49
-                  index: 49
-                  line: 1
-                }
-                start: Object {
-                  column: 24
-                  index: 24
-                  line: 1
-                }
-              }
-              head: FunctionHead {
-                async: false
-                generator: false
-                hasHoistedVars: false
-                params: Array []
-                rest: undefined
-                returnType: undefined
-                thisType: undefined
-                typeParameters: undefined
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 37
-                    index: 37
-                    line: 1
-                  }
-                  start: Object {
-                    column: 35
-                    index: 35
-                    line: 1
-                  }
-                }
-              }
-              meta: ClassPropertyMeta {
-                abstract: false
-                accessibility: undefined
-                optional: false
-                readonly: false
-                static: false
-                typeAnnotation: undefined
-                start: Object {
-                  column: 24
-                  index: 24
-                  line: 1
-                }
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 35
-                    index: 35
-                    line: 1
-                  }
-                  start: Object {
-                    column: 24
-                    index: 24
-                    line: 1
-                  }
-                }
-              }
-              body: BlockStatement {
-                directives: Array []
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 49
-                    index: 49
-                    line: 1
-                  }
-                  start: Object {
-                    column: 38
-                    index: 38
-                    line: 1
-                  }
-                }
-                body: Array [
-                  ExpressionStatement {
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 47
-                        index: 47
-                        line: 1
-                      }
-                      start: Object {
-                        column: 40
-                        index: 40
-                        line: 1
-                      }
-                    }
-                    expression: CallExpression {
-                      arguments: Array []
-                      loc: Object {
-                        filename: 'input.js'
-                        end: Object {
-                          column: 47
-                          index: 47
-                          line: 1
-                        }
-                        start: Object {
-                          column: 40
-                          index: 40
-                          line: 1
-                        }
-                      }
-                      callee: Super {
-                        loc: Object {
-                          filename: 'input.js'
-                          end: Object {
-                            column: 45
-                            index: 45
-                            line: 1
-                          }
-                          start: Object {
-                            column: 40
-                            index: 40
-                            line: 1
-                          }
-                        }
-                      }
-                    }
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 51
+			index: 51
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	directives: Array [
+		Directive {
+			value: 'use strict'
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 13
+					index: 13
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+		}
+	]
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: 'js-parser'}]
+			description: Object {
+				category: 'parse/js'
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'super() is only valid inside a class constructor of a subclass'}
+				advice: Array [
+					log {
+						category: 'info'
+						text: 'Maybe a typo in the method name (\'constructor\') or not extending another class?'
+					}
+				]
+			}
+			location: Object {
+				filename: 'input.js'
+				mtime: undefined
+				sourceType: 'script'
+				end: Object {
+					column: 45
+					index: 45
+					line: 1
+				}
+				start: Object {
+					column: 40
+					index: 40
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		ExpressionStatement {
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 51
+					index: 51
+					line: 1
+				}
+				start: Object {
+					column: 14
+					index: 14
+					line: 1
+				}
+			}
+			expression: ClassExpression {
+				id: BindingIdentifier {
+					name: 'A'
+					loc: Object {
+						filename: 'input.js'
+						identifierName: 'A'
+						end: Object {
+							column: 22
+							index: 22
+							line: 1
+						}
+						start: Object {
+							column: 21
+							index: 21
+							line: 1
+						}
+					}
+				}
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 50
+						index: 50
+						line: 1
+					}
+					start: Object {
+						column: 15
+						index: 15
+						line: 1
+					}
+				}
+				meta: ClassHead {
+					implements: undefined
+					superClass: undefined
+					superTypeParameters: undefined
+					typeParameters: undefined
+					loc: Object {
+						filename: 'input.js'
+						end: Object {
+							column: 50
+							index: 50
+							line: 1
+						}
+						start: Object {
+							column: 15
+							index: 15
+							line: 1
+						}
+					}
+					body: Array [
+						ClassMethod {
+							kind: 'constructor'
+							key: StaticPropertyKey {
+								value: Identifier {
+									name: 'constructor'
+									loc: Object {
+										filename: 'input.js'
+										identifierName: 'constructor'
+										end: Object {
+											column: 35
+											index: 35
+											line: 1
+										}
+										start: Object {
+											column: 24
+											index: 24
+											line: 1
+										}
+									}
+								}
+								loc: Object {
+									filename: 'input.js'
+									end: Object {
+										column: 35
+										index: 35
+										line: 1
+									}
+									start: Object {
+										column: 24
+										index: 24
+										line: 1
+									}
+								}
+							}
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 49
+									index: 49
+									line: 1
+								}
+								start: Object {
+									column: 24
+									index: 24
+									line: 1
+								}
+							}
+							head: FunctionHead {
+								async: false
+								generator: false
+								hasHoistedVars: false
+								params: Array []
+								rest: undefined
+								returnType: undefined
+								thisType: undefined
+								typeParameters: undefined
+								loc: Object {
+									filename: 'input.js'
+									end: Object {
+										column: 37
+										index: 37
+										line: 1
+									}
+									start: Object {
+										column: 35
+										index: 35
+										line: 1
+									}
+								}
+							}
+							meta: ClassPropertyMeta {
+								abstract: false
+								accessibility: undefined
+								optional: false
+								readonly: false
+								static: false
+								typeAnnotation: undefined
+								start: Object {
+									column: 24
+									index: 24
+									line: 1
+								}
+								loc: Object {
+									filename: 'input.js'
+									end: Object {
+										column: 35
+										index: 35
+										line: 1
+									}
+									start: Object {
+										column: 24
+										index: 24
+										line: 1
+									}
+								}
+							}
+							body: BlockStatement {
+								directives: Array []
+								loc: Object {
+									filename: 'input.js'
+									end: Object {
+										column: 49
+										index: 49
+										line: 1
+									}
+									start: Object {
+										column: 38
+										index: 38
+										line: 1
+									}
+								}
+								body: Array [
+									ExpressionStatement {
+										loc: Object {
+											filename: 'input.js'
+											end: Object {
+												column: 47
+												index: 47
+												line: 1
+											}
+											start: Object {
+												column: 40
+												index: 40
+												line: 1
+											}
+										}
+										expression: CallExpression {
+											arguments: Array []
+											loc: Object {
+												filename: 'input.js'
+												end: Object {
+													column: 47
+													index: 47
+													line: 1
+												}
+												start: Object {
+													column: 40
+													index: 40
+													line: 1
+												}
+											}
+											callee: Super {
+												loc: Object {
+													filename: 'input.js'
+													end: Object {
+														column: 45
+														index: 45
+														line: 1
+													}
+													start: Object {
+														column: 40
+														index: 40
+														line: 1
+													}
+												}
+											}
+										}
+									}
+								]
+							}
+						}
+					]
+				}
+			}
+		}
+	]
 }
 ```

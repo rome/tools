@@ -6,81 +6,81 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 36
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 35
-          index: 35
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: TemplateLiteral {
-        expressions: Array []
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 35
-            index: 35
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        quasis: Array [
-          TemplateElement {
-            cooked: '\\u{000042}\\u0042\\x42\\u0\\A\\0'
-            raw: '\\\\u{000042}\\\\u0042\\\\x42\\\\u0\\\\A\\\\0'
-            tail: true
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 34
-                index: 34
-                line: 1
-              }
-              start: Object {
-                column: 1
-                index: 1
-                line: 1
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 0
+			index: 36
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		ExpressionStatement {
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 35
+					index: 35
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: TemplateLiteral {
+				expressions: Array []
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 35
+						index: 35
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				quasis: Array [
+					TemplateElement {
+						cooked: '\\u{000042}\\u0042\\x42\\u0\\A\\0'
+						raw: '\\\\u{000042}\\\\u0042\\\\x42\\\\u0\\\\A\\\\0'
+						tail: true
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 34
+								index: 34
+								line: 1
+							}
+							start: Object {
+								column: 1
+								index: 1
+								line: 1
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

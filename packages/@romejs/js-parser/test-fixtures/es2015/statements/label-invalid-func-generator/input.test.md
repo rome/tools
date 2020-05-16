@@ -6,158 +6,158 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 24
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Generators can only be declared at the top level or inside a block'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 23
-          index: 23
-          line: 1
-        }
-        start: Object {
-          column: 5
-          index: 5
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    LabeledStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 23
-          index: 23
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      label: Identifier {
-        name: 'foo'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'foo'
-          end: Object {
-            column: 3
-            index: 3
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-      }
-      body: FunctionDeclaration {
-        id: BindingIdentifier {
-          name: 'bar'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'bar'
-            end: Object {
-              column: 18
-              index: 18
-              line: 1
-            }
-            start: Object {
-              column: 15
-              index: 15
-              line: 1
-            }
-          }
-        }
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 23
-            index: 23
-            line: 1
-          }
-          start: Object {
-            column: 5
-            index: 5
-            line: 1
-          }
-        }
-        body: BlockStatement {
-          body: Array []
-          directives: Array []
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 23
-              index: 23
-              line: 1
-            }
-            start: Object {
-              column: 21
-              index: 21
-              line: 1
-            }
-          }
-        }
-        head: FunctionHead {
-          async: false
-          generator: true
-          hasHoistedVars: false
-          params: Array []
-          rest: undefined
-          returnType: undefined
-          thisType: undefined
-          typeParameters: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 20
-              index: 20
-              line: 1
-            }
-            start: Object {
-              column: 18
-              index: 18
-              line: 1
-            }
-          }
-        }
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 0
+			index: 24
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: 'js-parser'}]
+			description: Object {
+				advice: Array []
+				category: 'parse/js'
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Generators can only be declared at the top level or inside a block'}
+			}
+			location: Object {
+				filename: 'input.js'
+				mtime: undefined
+				sourceType: 'script'
+				end: Object {
+					column: 23
+					index: 23
+					line: 1
+				}
+				start: Object {
+					column: 5
+					index: 5
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		LabeledStatement {
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 23
+					index: 23
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			label: Identifier {
+				name: 'foo'
+				loc: Object {
+					filename: 'input.js'
+					identifierName: 'foo'
+					end: Object {
+						column: 3
+						index: 3
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+			}
+			body: FunctionDeclaration {
+				id: BindingIdentifier {
+					name: 'bar'
+					loc: Object {
+						filename: 'input.js'
+						identifierName: 'bar'
+						end: Object {
+							column: 18
+							index: 18
+							line: 1
+						}
+						start: Object {
+							column: 15
+							index: 15
+							line: 1
+						}
+					}
+				}
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 23
+						index: 23
+						line: 1
+					}
+					start: Object {
+						column: 5
+						index: 5
+						line: 1
+					}
+				}
+				body: BlockStatement {
+					body: Array []
+					directives: Array []
+					loc: Object {
+						filename: 'input.js'
+						end: Object {
+							column: 23
+							index: 23
+							line: 1
+						}
+						start: Object {
+							column: 21
+							index: 21
+							line: 1
+						}
+					}
+				}
+				head: FunctionHead {
+					async: false
+					generator: true
+					hasHoistedVars: false
+					params: Array []
+					rest: undefined
+					returnType: undefined
+					thisType: undefined
+					typeParameters: undefined
+					loc: Object {
+						filename: 'input.js'
+						end: Object {
+							column: 20
+							index: 20
+							line: 1
+						}
+						start: Object {
+							column: 18
+							index: 18
+							line: 1
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

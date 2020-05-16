@@ -6,155 +6,155 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: true
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 16
-      index: 16
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Invalid left-hand side in arrow function parameters'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 7
-          index: 7
-          line: 1
-        }
-        start: Object {
-          column: 6
-          index: 6
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 16
-          index: 16
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: ArrowFunctionExpression {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 16
-            index: 16
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        body: BlockStatement {
-          body: Array []
-          directives: Array []
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 16
-              index: 16
-              line: 1
-            }
-            start: Object {
-              column: 14
-              index: 14
-              line: 1
-            }
-          }
-        }
-        head: FunctionHead {
-          async: false
-          hasHoistedVars: false
-          params: Array []
-          returnType: undefined
-          thisType: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 13
-              index: 13
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-          rest: BindingArrayPattern {
-            rest: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 9
-                index: 9
-                line: 1
-              }
-              start: Object {
-                column: 4
-                index: 4
-                line: 1
-              }
-            }
-            elements: Array [
-              BindingIdentifier {
-                name: 'INVALID_PLACEHOLDER'
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 13
-                    index: 13
-                    line: 1
-                  }
-                  start: Object {
-                    column: 14
-                    index: 14
-                    line: 1
-                  }
-                }
-              }
-            ]
-          }
-        }
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: true
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 16
+			index: 16
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: 'js-parser'}]
+			description: Object {
+				advice: Array []
+				category: 'parse/js'
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Invalid left-hand side in arrow function parameters'}
+			}
+			location: Object {
+				filename: 'input.js'
+				mtime: undefined
+				sourceType: 'script'
+				end: Object {
+					column: 7
+					index: 7
+					line: 1
+				}
+				start: Object {
+					column: 6
+					index: 6
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		ExpressionStatement {
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 16
+					index: 16
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: ArrowFunctionExpression {
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 16
+						index: 16
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				body: BlockStatement {
+					body: Array []
+					directives: Array []
+					loc: Object {
+						filename: 'input.js'
+						end: Object {
+							column: 16
+							index: 16
+							line: 1
+						}
+						start: Object {
+							column: 14
+							index: 14
+							line: 1
+						}
+					}
+				}
+				head: FunctionHead {
+					async: false
+					hasHoistedVars: false
+					params: Array []
+					returnType: undefined
+					thisType: undefined
+					loc: Object {
+						filename: 'input.js'
+						end: Object {
+							column: 13
+							index: 13
+							line: 1
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+					rest: BindingArrayPattern {
+						rest: undefined
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 9
+								index: 9
+								line: 1
+							}
+							start: Object {
+								column: 4
+								index: 4
+								line: 1
+							}
+						}
+						elements: Array [
+							BindingIdentifier {
+								name: 'INVALID_PLACEHOLDER'
+								loc: Object {
+									filename: 'input.js'
+									end: Object {
+										column: 13
+										index: 13
+										line: 1
+									}
+									start: Object {
+										column: 14
+										index: 14
+										line: 1
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
 }
 ```

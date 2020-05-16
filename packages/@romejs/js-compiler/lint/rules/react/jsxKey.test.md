@@ -82,7 +82,7 @@ const a = [1, 2].map((x) => <div>{x}</div>);
 
 ```
 const a = [1, 2].map((x) => {
-  return <div>{x}</div>;
+	return <div>{x}</div>;
 });
 
 ```
@@ -110,7 +110,7 @@ const a = [1, 2].map((x) => {
 
 ```
 const a = [1, 2].map(function(x) {
-  return <div>{x}</div>;
+	return <div>{x}</div>;
 });
 
 ```
@@ -154,7 +154,7 @@ const a = [1, 2].map((x) => <div key={x}>{x}</div>);
 
 ```
 const a = [1, 2].map((x) => {
-  return <div key={x}>{x}</div>;
+	return <div key={x}>{x}</div>;
 });
 
 ```
@@ -170,7 +170,7 @@ const a = [1, 2].map((x) => {
 
 ```
 const a = [1, 2].map(function(x) {
-  return <div key={x}>{x}</div>;
+	return <div key={x}>{x}</div>;
 });
 
 ```

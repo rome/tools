@@ -47,8 +47,8 @@ UNICODE_MISTAKES.set('\uff0c', ['Fullwidth Comma', ',']);
 UNICODE_MISTAKES.set('\u037e', ['Greek Question Mark', ';']);
 UNICODE_MISTAKES.set('\uff1b', ['Fullwidth Semicolon', ';']);
 UNICODE_MISTAKES.set(
-  '\ufe14',
-  ['Presentation Form For Vertical Semicolon', ';'],
+	'\ufe14',
+	['Presentation Form For Vertical Semicolon', ';'],
 );
 
 UNICODE_MISTAKES.set('\u0903', ['Devanagari Sign Visarga', ':']);
@@ -59,8 +59,8 @@ UNICODE_MISTAKES.set('\u0703', ['Syriac Supralinear Colon', ':']);
 UNICODE_MISTAKES.set('\u0704', ['Syriac Sublinear Colon', ':']);
 UNICODE_MISTAKES.set('\u16ec', ['Runic Multiple Punctuation', ':']);
 UNICODE_MISTAKES.set(
-  '\ufe30',
-  ['Presentation Form For Vertical Two Dot Leader', ':'],
+	'\ufe30',
+	['Presentation Form For Vertical Two Dot Leader', ':'],
 );
 UNICODE_MISTAKES.set('\u1803', ['Mongolian Full Stop', ':']);
 UNICODE_MISTAKES.set('\u1809', ['Mongolian Manchu Full Stop', ':']);
@@ -77,8 +77,8 @@ UNICODE_MISTAKES.set('\uff01', ['Fullwidth Exclamation Mark', '!']);
 UNICODE_MISTAKES.set('\u01c3', ['Latin Letter Retroflex Click', '!']);
 UNICODE_MISTAKES.set('\u2d51', ['Tifinagh Letter Tuareg Yang', '!']);
 UNICODE_MISTAKES.set(
-  '\ufe15',
-  ['Presentation Form For Vertical Exclamation Mark', '!'],
+	'\ufe15',
+	['Presentation Form For Vertical Exclamation Mark', '!'],
 );
 
 UNICODE_MISTAKES.set('\u0294', ['Latin Letter Glottal Stop', '?']);
@@ -88,13 +88,13 @@ UNICODE_MISTAKES.set('\u13ae', ['Cherokee Letter He', '?']);
 UNICODE_MISTAKES.set('\ua6eb', ['Bamum Letter Ntuu', '?']);
 UNICODE_MISTAKES.set('\uff1f', ['Fullwidth Question Mark', '?']);
 UNICODE_MISTAKES.set(
-  '\ufe16',
-  ['Presentation Form For Vertical Question Mark', '?'],
+	'\ufe16',
+	['Presentation Form For Vertical Question Mark', '?'],
 );
 
 UNICODE_MISTAKES.set(
-  '\u{1d16d}',
-  ['Musical Symbol Combining Augmentation Dot', '.'],
+	'\u{1d16d}',
+	['Musical Symbol Combining Augmentation Dot', '.'],
 );
 UNICODE_MISTAKES.set('\u2024', ['One Dot Leader', '.']);
 UNICODE_MISTAKES.set('\u0701', ['Syriac Supralinear Full Stop', '.']);
@@ -121,8 +121,8 @@ UNICODE_MISTAKES.set('\u1427', ['Canadian Syllabics Final Middle Dot', '.']);
 UNICODE_MISTAKES.set('\uff0e', ['Fullwidth Full Stop', '.']);
 UNICODE_MISTAKES.set('\u3002', ['Ideographic Full Stop', '.']);
 UNICODE_MISTAKES.set(
-  '\ufe12',
-  ['Presentation Form For Vertical Ideographic Full Stop', '.'],
+	'\ufe12',
+	['Presentation Form For Vertical Ideographic Full Stop', '.'],
 );
 
 UNICODE_MISTAKES.set('\u055d', ['Armenian Comma', "'"]);
@@ -174,22 +174,22 @@ UNICODE_MISTAKES.set('\u05f4', ['Hebrew Punctuation Gershayim', '"']);
 UNICODE_MISTAKES.set('\u02dd', ['Double Acute Accent', '"']);
 UNICODE_MISTAKES.set('\u02ba', ['Modifier Letter Double Prime', '"']);
 UNICODE_MISTAKES.set(
-  '\u02f6',
-  ['Modifier Letter Middle Double Acute Accent', '"'],
+	'\u02f6',
+	['Modifier Letter Middle Double Acute Accent', '"'],
 );
 UNICODE_MISTAKES.set(
-  '\u02f5',
-  ['Modifier Letter Middle Double Grave Accent', '"'],
+	'\u02f5',
+	['Modifier Letter Middle Double Grave Accent', '"'],
 );
 UNICODE_MISTAKES.set('\u02ee', ['Modifier Letter Double Apostrophe', '"']);
 UNICODE_MISTAKES.set('\u05f2', ['Hebrew Ligature Yiddish Double Yod', '"']);
 UNICODE_MISTAKES.set(
-  '\u275e',
-  ['Heavy Double Comma Quotation Mark Ornament', '"'],
+	'\u275e',
+	['Heavy Double Comma Quotation Mark Ornament', '"'],
 );
 UNICODE_MISTAKES.set(
-  '\u275d',
-  ['Heavy Double Turned Comma Quotation Mark Ornament', '"'],
+	'\u275d',
+	['Heavy Double Turned Comma Quotation Mark Ornament', '"'],
 );
 
 UNICODE_MISTAKES.set('\uff08', ['Fullwidth Left Parenthesis', '(']);
@@ -202,8 +202,8 @@ UNICODE_MISTAKES.set('\ufd3f', ['Ornate Right Parenthesis', ')']);
 
 UNICODE_MISTAKES.set('\uff3b', ['Fullwidth Left Square Bracket', '[']);
 UNICODE_MISTAKES.set(
-  '\u2772',
-  ['Light Left Tortoise Shell Bracket Ornament', '['],
+	'\u2772',
+	['Light Left Tortoise Shell Bracket Ornament', '['],
 );
 UNICODE_MISTAKES.set('\u300c', ['Left Corner Bracket', '[']);
 UNICODE_MISTAKES.set('\u300e', ['Left White Corner Bracket', '[']);
@@ -215,8 +215,8 @@ UNICODE_MISTAKES.set('\u301a', ['Left White Square Bracket', '[']);
 
 UNICODE_MISTAKES.set('\uff3d', ['Fullwidth Right Square Bracket', ']']);
 UNICODE_MISTAKES.set(
-  '\u2773',
-  ['Light Right Tortoise Shell Bracket Ornament', ']'],
+	'\u2773',
+	['Light Right Tortoise Shell Bracket Ornament', ']'],
 );
 UNICODE_MISTAKES.set('\u300d', ['Right Corner Bracket', ']']);
 UNICODE_MISTAKES.set('\u300f', ['Right White Corner Bracket', ']']);
@@ -244,14 +244,14 @@ UNICODE_MISTAKES.set('\u2041', ['Caret Insertion Point', '/']);
 UNICODE_MISTAKES.set('\u2215', ['Division Slash', '/']);
 UNICODE_MISTAKES.set('\u2044', ['Fraction Slash', '/']);
 UNICODE_MISTAKES.set(
-  '\u2571',
-  ['Box Drawings Light Diagonal Upper Right To Lower Left', '/'],
+	'\u2571',
+	['Box Drawings Light Diagonal Upper Right To Lower Left', '/'],
 );
 UNICODE_MISTAKES.set('\u27cb', ['Mathematical Rising Diagonal', '/']);
 UNICODE_MISTAKES.set('\u29f8', ['Big Solidus', '/']);
 UNICODE_MISTAKES.set(
-  '\u{1d23a}',
-  ['Greek Instrumental Notation Symbol-47', '/'],
+	'\u{1d23a}',
+	['Greek Instrumental Notation Symbol-47', '/'],
 );
 UNICODE_MISTAKES.set('\u31d3', ['CJK Stroke Sp', '/']);
 UNICODE_MISTAKES.set('\u3033', ['Vertical Kana Repeat Mark Upper Half', '/']);
@@ -285,20 +285,20 @@ UNICODE_MISTAKES.set('\ufb29', ['Hebrew Letter Alternative Plus Sign', '+']);
 UNICODE_MISTAKES.set('\uff0b', ['Fullwidth Plus Sign', '+']);
 
 UNICODE_MISTAKES.set(
-  '\u2039',
-  ['Single Left-Pointing Angle Quotation Mark', '<'],
+	'\u2039',
+	['Single Left-Pointing Angle Quotation Mark', '<'],
 );
 UNICODE_MISTAKES.set(
-  '\u276e',
-  ['Heavy Left-Pointing Angle Quotation Mark Ornament', '<'],
+	'\u276e',
+	['Heavy Left-Pointing Angle Quotation Mark Ornament', '<'],
 );
 UNICODE_MISTAKES.set('\u02c2', ['Modifier Letter Left Arrowhead', '<']);
 UNICODE_MISTAKES.set('\u{1d236}', ['Greek Instrumental Symbol-40', '<']);
 UNICODE_MISTAKES.set('\u1438', ['Canadian Syllabics Pa', '<']);
 UNICODE_MISTAKES.set('\u16b2', ['Runic Letter Kauna', '<']);
 UNICODE_MISTAKES.set(
-  '\u276c',
-  ['Medium Left-Pointing Angle Bracket Ornament', '<'],
+	'\u276c',
+	['Medium Left-Pointing Angle Bracket Ornament', '<'],
 );
 UNICODE_MISTAKES.set('\u27e8', ['Mathematical Left Angle Bracket', '<']);
 UNICODE_MISTAKES.set('\u2329', ['Left-Pointing Angle Bracket', '<']);
@@ -316,20 +316,20 @@ UNICODE_MISTAKES.set('\ua4ff', ['Lisu Punctuation Full Stop', '=']);
 UNICODE_MISTAKES.set('\uff1d', ['Fullwidth Equals Sign', '=']);
 
 UNICODE_MISTAKES.set(
-  '\u203a',
-  ['Single Right-Pointing Angle Quotation Mark', '>'],
+	'\u203a',
+	['Single Right-Pointing Angle Quotation Mark', '>'],
 );
 UNICODE_MISTAKES.set(
-  '\u276f',
-  ['Heavy Right-Pointing Angle Quotation Mark Ornament', '>'],
+	'\u276f',
+	['Heavy Right-Pointing Angle Quotation Mark Ornament', '>'],
 );
 UNICODE_MISTAKES.set('\u02c3', ['Modifier Letter Right Arrowhead', '>']);
 UNICODE_MISTAKES.set('\u{1d237}', ['Greek Instrumental Symbol-42', '>']);
 UNICODE_MISTAKES.set('\u1433', ['Canadian Syllabics Po', '>']);
 UNICODE_MISTAKES.set('\u{16f3f}', ['Miao Letter Archaic Zza', '>']);
 UNICODE_MISTAKES.set(
-  '\u276d',
-  ['Medium Right-Pointing Angle Bracket Ornament', '>'],
+	'\u276d',
+	['Medium Right-Pointing Angle Bracket Ornament', '>'],
 );
 UNICODE_MISTAKES.set('\u27e9', ['Mathematical Right Angle Bracket', '>']);
 UNICODE_MISTAKES.set('\u232a', ['Right-Pointing Angle Bracket', '>']);

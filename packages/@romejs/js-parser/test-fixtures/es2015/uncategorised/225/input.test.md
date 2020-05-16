@@ -6,150 +6,150 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 7
-      index: 10
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Expected a semicolon or a line terminator'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 5
-          index: 8
-          line: 2
-        }
-        start: Object {
-          column: 6
-          index: 9
-          line: 2
-        }
-      }
-    }
-  ]
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 1
-          index: 1
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: ReferenceIdentifier {
-        name: 'x'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'x'
-          end: Object {
-            column: 1
-            index: 1
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-      }
-    }
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 5
-          index: 8
-          line: 2
-        }
-        start: Object {
-          column: 1
-          index: 4
-          line: 2
-        }
-      }
-      expression: ReferenceIdentifier {
-        name: 'isnt'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'isnt'
-          end: Object {
-            column: 5
-            index: 8
-            line: 2
-          }
-          start: Object {
-            column: 1
-            index: 4
-            line: 2
-          }
-        }
-      }
-    }
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 7
-          index: 10
-          line: 2
-        }
-        start: Object {
-          column: 6
-          index: 9
-          line: 2
-        }
-      }
-      expression: ReferenceIdentifier {
-        name: 'y'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'y'
-          end: Object {
-            column: 7
-            index: 10
-            line: 2
-          }
-          start: Object {
-            column: 6
-            index: 9
-            line: 2
-          }
-        }
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 7
+			index: 10
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: 'js-parser'}]
+			description: Object {
+				advice: Array []
+				category: 'parse/js'
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Expected a semicolon or a line terminator'}
+			}
+			location: Object {
+				filename: 'input.js'
+				mtime: undefined
+				sourceType: 'script'
+				end: Object {
+					column: 5
+					index: 8
+					line: 2
+				}
+				start: Object {
+					column: 6
+					index: 9
+					line: 2
+				}
+			}
+		}
+	]
+	body: Array [
+		ExpressionStatement {
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 1
+					index: 1
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: ReferenceIdentifier {
+				name: 'x'
+				loc: Object {
+					filename: 'input.js'
+					identifierName: 'x'
+					end: Object {
+						column: 1
+						index: 1
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+			}
+		}
+		ExpressionStatement {
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 5
+					index: 8
+					line: 2
+				}
+				start: Object {
+					column: 1
+					index: 4
+					line: 2
+				}
+			}
+			expression: ReferenceIdentifier {
+				name: 'isnt'
+				loc: Object {
+					filename: 'input.js'
+					identifierName: 'isnt'
+					end: Object {
+						column: 5
+						index: 8
+						line: 2
+					}
+					start: Object {
+						column: 1
+						index: 4
+						line: 2
+					}
+				}
+			}
+		}
+		ExpressionStatement {
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 7
+					index: 10
+					line: 2
+				}
+				start: Object {
+					column: 6
+					index: 9
+					line: 2
+				}
+			}
+			expression: ReferenceIdentifier {
+				name: 'y'
+				loc: Object {
+					filename: 'input.js'
+					identifierName: 'y'
+					end: Object {
+						column: 7
+						index: 10
+						line: 2
+					}
+					start: Object {
+						column: 6
+						index: 9
+						line: 2
+					}
+				}
+			}
+		}
+	]
 }
 ```

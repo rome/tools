@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, TSOptionalType, tsOptionalType} from '@romejs/js-ast';
 
 export default function TSOptionalType(node: AnyNode, scope: Scope) {
-  node = tsOptionalType.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = tsOptionalType.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

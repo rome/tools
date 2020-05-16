@@ -12,30 +12,30 @@ import OpenT from './OpenT';
 import {AnyNode} from '@romejs/js-ast';
 
 export default class OpenIntrinsicT extends OpenT {
-  constructor(scope: Scope, originNode: undefined | AnyNode, name: string) {
-    super(scope, originNode);
-    this.name = name;
-  }
+	constructor(scope: Scope, originNode: undefined | AnyNode, name: string) {
+		super(scope, originNode);
+		this.name = name;
+	}
 
-  static type = 'OpenIntrinsicT';
+	static type = 'OpenIntrinsicT';
 
-  name: string;
+	name: string;
 
-  serialize(): HydrateData {
-    return {
-      name: this.name,
-    };
-  }
+	serialize(): HydrateData {
+		return {
+			name: this.name,
+		};
+	}
 
-  static hydrate(
-    scope: Scope,
-    originNode: undefined | AnyNode,
-    data: HydrateData,
-  ): T {
-    return scope.intrinsics.get(String(data.name));
-  }
+	static hydrate(
+		scope: Scope,
+		originNode: undefined | AnyNode,
+		data: HydrateData,
+	): T {
+		return scope.intrinsics.get(String(data.name));
+	}
 
-  humanize(): string {
-    return 'open intrinsic';
-  }
+	humanize(): string {
+		return 'open intrinsic';
+	}
 }

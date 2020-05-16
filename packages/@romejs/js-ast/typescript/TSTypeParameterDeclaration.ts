@@ -9,16 +9,16 @@ import {JSNodeBase, TSTypeParameter} from '../index';
 import {createBuilder} from '../utils';
 
 export type TSTypeParameterDeclaration = JSNodeBase & {
-  type: 'TSTypeParameterDeclaration';
-  params: Array<TSTypeParameter>;
+	type: 'TSTypeParameterDeclaration';
+	params: Array<TSTypeParameter>;
 };
 
 export const tsTypeParameterDeclaration = createBuilder<TSTypeParameterDeclaration>(
-  'TSTypeParameterDeclaration',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      params: true,
-    },
-  },
+	'TSTypeParameterDeclaration',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			params: true,
+		},
+	},
 );

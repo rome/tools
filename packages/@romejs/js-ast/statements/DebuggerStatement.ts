@@ -9,13 +9,13 @@ import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type DebuggerStatement = JSNodeBase & {
-  type: 'DebuggerStatement';
+	type: 'DebuggerStatement';
 };
 
 export const debuggerStatement = createBuilder<DebuggerStatement>(
-  'DebuggerStatement',
-  {
-    bindingKeys: {},
-    visitorKeys: {},
-  },
+	'DebuggerStatement',
+	{
+		bindingKeys: {},
+		visitorKeys: {},
+	},
 );

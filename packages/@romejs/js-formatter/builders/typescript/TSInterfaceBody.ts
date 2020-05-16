@@ -11,8 +11,8 @@ import {Token} from '../../tokens';
 import {printTSBraced} from '../utils';
 
 export default function TSInterfaceBody(
-  builder: Builder,
-  node: TSInterfaceBody,
+	builder: Builder,
+	node: TSInterfaceBody,
 ): Token {
-  return printTSBraced(builder, node, node.body);
+	return printTSBraced(builder, node, node.body);
 }

@@ -9,8 +9,8 @@ import {test} from 'rome';
 import {testLint} from '../testHelpers';
 
 test(
-  'undeclared variable',
-  async (t) => {
-    await testLint(t, 'foobar;', {category: 'lint/undeclaredVariables'});
-  },
+	'undeclared variable',
+	async (t) => {
+		await testLint(t, 'foobar;', {category: 'lint/undeclaredVariables'});
+	},
 );

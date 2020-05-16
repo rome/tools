@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, TSAsExpression, tsAsExpression} from '@romejs/js-ast';
 
 export default function TSAsExpression(node: AnyNode, scope: Scope) {
-  node = tsAsExpression.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = tsAsExpression.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

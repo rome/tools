@@ -9,20 +9,20 @@ import {AnyExpression, AnyStatement, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type IfStatement = JSNodeBase & {
-  type: 'IfStatement';
-  test: AnyExpression;
-  consequent: AnyStatement;
-  alternate?: AnyStatement;
+	type: 'IfStatement';
+	test: AnyExpression;
+	consequent: AnyStatement;
+	alternate?: AnyStatement;
 };
 
 export const ifStatement = createBuilder<IfStatement>(
-  'IfStatement',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      test: true,
-      consequent: true,
-      alternate: true,
-    },
-  },
+	'IfStatement',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			test: true,
+			consequent: true,
+			alternate: true,
+		},
+	},
 );

@@ -6,144 +6,144 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 17
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 16
-          index: 16
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: CallExpression {
-        arguments: Array []
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 16
-            index: 16
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        callee: MemberExpression {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 14
-              index: 14
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-          property: StaticMemberProperty {
-            value: Identifier {
-              name: 'bar'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'bar'
-                end: Object {
-                  column: 14
-                  index: 14
-                  line: 1
-                }
-                start: Object {
-                  column: 11
-                  index: 11
-                  line: 1
-                }
-              }
-            }
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'bar'
-              end: Object {
-                column: 14
-                index: 14
-                line: 1
-              }
-              start: Object {
-                column: 11
-                index: 11
-                line: 1
-              }
-            }
-          }
-          object: NewExpression {
-            arguments: Array []
-            optional: undefined
-            typeArguments: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 9
-                index: 9
-                line: 1
-              }
-              start: Object {
-                column: 2
-                index: 2
-                line: 1
-              }
-            }
-            callee: ReferenceIdentifier {
-              name: 'foo'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'foo'
-                end: Object {
-                  column: 9
-                  index: 9
-                  line: 1
-                }
-                start: Object {
-                  column: 6
-                  index: 6
-                  line: 1
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 0
+			index: 17
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		ExpressionStatement {
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 16
+					index: 16
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: CallExpression {
+				arguments: Array []
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 16
+						index: 16
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				callee: MemberExpression {
+					loc: Object {
+						filename: 'input.js'
+						end: Object {
+							column: 14
+							index: 14
+							line: 1
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+					property: StaticMemberProperty {
+						value: Identifier {
+							name: 'bar'
+							loc: Object {
+								filename: 'input.js'
+								identifierName: 'bar'
+								end: Object {
+									column: 14
+									index: 14
+									line: 1
+								}
+								start: Object {
+									column: 11
+									index: 11
+									line: 1
+								}
+							}
+						}
+						loc: Object {
+							filename: 'input.js'
+							identifierName: 'bar'
+							end: Object {
+								column: 14
+								index: 14
+								line: 1
+							}
+							start: Object {
+								column: 11
+								index: 11
+								line: 1
+							}
+						}
+					}
+					object: NewExpression {
+						arguments: Array []
+						optional: undefined
+						typeArguments: undefined
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 9
+								index: 9
+								line: 1
+							}
+							start: Object {
+								column: 2
+								index: 2
+								line: 1
+							}
+						}
+						callee: ReferenceIdentifier {
+							name: 'foo'
+							loc: Object {
+								filename: 'input.js'
+								identifierName: 'foo'
+								end: Object {
+									column: 9
+									index: 9
+									line: 1
+								}
+								start: Object {
+									column: 6
+									index: 6
+									line: 1
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

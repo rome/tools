@@ -11,9 +11,9 @@ import {AnyNode, Directive} from '@romejs/js-ast';
 import StringLiteral from '../literals/StringLiteral';
 
 export default function Directive(
-  builder: Builder,
-  node: Directive,
-  parent: AnyNode,
+	builder: Builder,
+	node: Directive,
+	parent: AnyNode,
 ): Token {
-  return concat([StringLiteral(builder, node, parent), ';']);
+	return concat([StringLiteral(builder, node, parent), ';']);
 }

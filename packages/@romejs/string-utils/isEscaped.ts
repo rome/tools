@@ -7,11 +7,11 @@
 
 import {Number0, ob1Dec, ob1Get0} from '@romejs/ob1';
 export function isEscaped(index: Number0, input: string): boolean {
-  const prevChar = input[ob1Get0(index) - 1];
+	const prevChar = input[ob1Get0(index) - 1];
 
-  if (prevChar === '\\') {
-    return !isEscaped(ob1Dec(index), input);
-  } else {
-    return false;
-  }
+	if (prevChar === '\\') {
+		return !isEscaped(ob1Dec(index), input);
+	} else {
+		return false;
+	}
 }

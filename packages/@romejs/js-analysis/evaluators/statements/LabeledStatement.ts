@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, LabeledStatement, labeledStatement} from '@romejs/js-ast';
 
 export default function LabeledStatement(node: AnyNode, scope: Scope) {
-  node = labeledStatement.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = labeledStatement.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

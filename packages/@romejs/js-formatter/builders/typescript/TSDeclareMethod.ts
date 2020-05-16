@@ -11,12 +11,12 @@ import {Token, concat} from '../../tokens';
 import {printMethod} from '../utils';
 
 export default function TSDeclareMethod(
-  builder: Builder,
-  node: TSDeclareMethod,
+	builder: Builder,
+	node: TSDeclareMethod,
 ): Token {
-  return concat([
-    builder.tokenize(node.meta, node),
-    builder.tokenize(node.key, node),
-    printMethod(builder, node),
-  ]);
+	return concat([
+		builder.tokenize(node.meta, node),
+		builder.tokenize(node.key, node),
+		printMethod(builder, node),
+	]);
 }

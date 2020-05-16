@@ -7,13 +7,13 @@
 
 import {Scope} from '../../scopes';
 import {
-  AnyNode,
-  ImportNamespaceSpecifier,
-  importNamespaceSpecifier,
+	AnyNode,
+	ImportNamespaceSpecifier,
+	importNamespaceSpecifier,
 } from '@romejs/js-ast';
 
 export default function ImportNamespaceSpecifier(node: AnyNode, scope: Scope) {
-  node = importNamespaceSpecifier.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = importNamespaceSpecifier.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

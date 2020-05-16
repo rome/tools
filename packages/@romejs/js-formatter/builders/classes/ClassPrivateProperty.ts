@@ -10,26 +10,26 @@ import {ClassPrivateProperty} from '@romejs/js-ast';
 import {Token, concat, group, space} from '../../tokens';
 
 export default function ClassPrivateProperty(
-  builder: Builder,
-  node: ClassPrivateProperty,
+	builder: Builder,
+	node: ClassPrivateProperty,
 ): Token {
-  const tokens: Array<Token> = [
-    builder.tokenize(node.meta, node),
-    builder.tokenize(node.key, node),
-  ];
+	const tokens: Array<Token> = [
+		builder.tokenize(node.meta, node),
+		builder.tokenize(node.key, node),
+	];
 
-  if (builder.options.typeAnnotations && node.typeAnnotation) {
-    tokens.push(':', space, builder.tokenize(node.typeAnnotation, node));
-  }
+	if (builder.options.typeAnnotations && node.typeAnnotation) {
+		tokens.push(':', space, builder.tokenize(node.typeAnnotation, node));
+	}
 
-  if (node.value) {
-    tokens.push(space);
-    tokens.push('=');
-    tokens.push(space);
-    tokens.push(builder.tokenize(node.value, node));
-  }
+	if (node.value) {
+		tokens.push(space);
+		tokens.push('=');
+		tokens.push(space);
+		tokens.push(builder.tokenize(node.value, node));
+	}
 
-  tokens.push(';');
+	tokens.push(';');
 
-  return group(concat(tokens));
+	return group(concat(tokens));
 }

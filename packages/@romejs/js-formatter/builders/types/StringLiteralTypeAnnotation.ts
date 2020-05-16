@@ -11,9 +11,9 @@ import {AnyNode, StringLiteralTypeAnnotation} from '@romejs/js-ast';
 import StringLiteral from '../literals/StringLiteral';
 
 export default function StringLiteralTypeAnnotation(
-  builder: Builder,
-  node: StringLiteralTypeAnnotation,
-  parent: AnyNode,
+	builder: Builder,
+	node: StringLiteralTypeAnnotation,
+	parent: AnyNode,
 ): Token {
-  return StringLiteral(builder, node, parent);
+	return StringLiteral(builder, node, parent);
 }

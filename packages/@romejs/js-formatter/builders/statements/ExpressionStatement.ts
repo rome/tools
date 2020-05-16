@@ -10,8 +10,8 @@ import {Token, concat} from '../../tokens';
 import {ExpressionStatement} from '@romejs/js-ast';
 
 export default function ExpressionStatement(
-  builder: Builder,
-  node: ExpressionStatement,
+	builder: Builder,
+	node: ExpressionStatement,
 ): Token {
-  return concat([builder.tokenize(node.expression, node), ';']);
+	return concat([builder.tokenize(node.expression, node), ';']);
 }

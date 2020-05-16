@@ -9,19 +9,19 @@ import {AnyRegExpBodyItem, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type RegExpQuantified = JSNodeBase & {
-  type: 'RegExpQuantified';
-  target: AnyRegExpBodyItem;
-  lazy?: boolean;
-  min: number;
-  max?: number;
+	type: 'RegExpQuantified';
+	target: AnyRegExpBodyItem;
+	lazy?: boolean;
+	min: number;
+	max?: number;
 };
 
 export const regExpQuantified = createBuilder<RegExpQuantified>(
-  'RegExpQuantified',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      target: true,
-    },
-  },
+	'RegExpQuantified',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			target: true,
+		},
+	},
 );

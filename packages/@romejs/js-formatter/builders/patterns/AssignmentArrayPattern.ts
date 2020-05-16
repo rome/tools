@@ -11,8 +11,8 @@ import {AssignmentArrayPattern} from '@romejs/js-ast';
 import ArrayExpression from '../expressions/ArrayExpression';
 
 export default function AssignmentArrayPattern(
-  builder: Builder,
-  node: AssignmentArrayPattern,
+	builder: Builder,
+	node: AssignmentArrayPattern,
 ): Token {
-  return ArrayExpression(builder, node);
+	return ArrayExpression(builder, node);
 }

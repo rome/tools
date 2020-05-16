@@ -13,33 +13,33 @@ import VoidT from '../../types/VoidT';
 import TypeofT from '../../types/TypeofT';
 
 export default function UnaryExpression(node: AnyNode, scope: Scope) {
-  node = unaryExpression.assert(node);
-  const argType = scope.evaluate(node.argument);
+	node = unaryExpression.assert(node);
+	const argType = scope.evaluate(node.argument);
 
-  switch (node.operator) {
-    case // booleans
-    'delete':
-    case '!':
-      return new BooleanT(scope, node);
+	switch (node.operator) {
+		case // booleans
+		'delete':
+		case '!':
+			return new BooleanT(scope, node);
 
-    // numbers
-    case '+':
-    case '-':
-    case '~':
-      return new NumericT(scope, node);
+		// numbers
+		case '+':
+		case '-':
+		case '~':
+			return new NumericT(scope, node);
 
-    // strings
-    case 'typeof':
-      return new TypeofT(scope, node, argType);
+		// strings
+		case 'typeof':
+			return new TypeofT(scope, node, argType);
 
-    // void
-    case 'void':
-      return new VoidT(scope, node);
+		// void
+		case 'void':
+			return new VoidT(scope, node);
 
-    // empty!
-    case 'throw':
-      break;
-  }
+		// empty!
+		case 'throw':
+			break;
+	}
 
-  return undefined;
+	return undefined;
 }

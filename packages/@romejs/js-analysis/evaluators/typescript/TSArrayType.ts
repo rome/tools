@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, TSArrayType, tsArrayType} from '@romejs/js-ast';
 
 export default function TSArrayType(node: AnyNode, scope: Scope) {
-  node = tsArrayType.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = tsArrayType.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

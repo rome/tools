@@ -10,13 +10,13 @@ import {Builder} from '@romejs/js-formatter';
 import {Token, concat} from '../../tokens';
 
 export default function TSIndexedAccessType(
-  builder: Builder,
-  node: TSIndexedAccessType,
+	builder: Builder,
+	node: TSIndexedAccessType,
 ): Token {
-  return concat([
-    builder.tokenize(node.objectType, node),
-    '[',
-    builder.tokenize(node.indexType, node),
-    ']',
-  ]);
+	return concat([
+		builder.tokenize(node.objectType, node),
+		'[',
+		builder.tokenize(node.indexType, node),
+		']',
+	]);
 }

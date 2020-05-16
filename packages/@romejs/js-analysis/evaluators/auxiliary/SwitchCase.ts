@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, SwitchCase, switchCase} from '@romejs/js-ast';
 
 export default function SwitchCase(node: AnyNode, scope: Scope) {
-  node = switchCase.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = switchCase.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

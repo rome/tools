@@ -7,13 +7,13 @@
 
 import {Scope} from '../../scopes';
 import {
-  AnyNode,
-  InterpreterDirective,
-  interpreterDirective,
+	AnyNode,
+	InterpreterDirective,
+	interpreterDirective,
 } from '@romejs/js-ast';
 
 export default function InterpreterDirective(node: AnyNode, scope: Scope) {
-  node = interpreterDirective.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = interpreterDirective.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

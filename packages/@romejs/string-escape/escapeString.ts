@@ -41,143 +41,143 @@ import {isDigit} from '@romejs/parser-core';
 const PRINTABLE_ASCII = /[ !#-&\(-\[\]-_a-~]/;
 
 function escapeChar(
-  char: string,
-  ignoreWhitespaceEscapes: boolean,
+	char: string,
+	ignoreWhitespaceEscapes: boolean,
 ): undefined | string {
-  switch (char) {
-    case '"':
-      return '\\"';
+	switch (char) {
+		case '"':
+			return '\\"';
 
-    case "'":
-      return "\\'";
+		case "'":
+			return "\\'";
 
-    case '\b':
-      return '\\b';
+		case '\b':
+			return '\\b';
 
-    case '\f':
-      return '\\f';
+		case '\f':
+			return '\\f';
 
-    case '\\':
-      return '\\\\';
-  }
+		case '\\':
+			return '\\\\';
+	}
 
-  if (ignoreWhitespaceEscapes) {
-    return undefined;
-  }
+	if (ignoreWhitespaceEscapes) {
+		return undefined;
+	}
 
-  switch (char) {
-    case '\n':
-      return '\\n';
+	switch (char) {
+		case '\n':
+			return '\\n';
 
-    case '\r':
-      return '\\r';
+		case '\r':
+			return '\\r';
 
-    case '\t':
-      return '\\t';
-  }
+		case '\t':
+			return '\\t';
+	}
 
-  return undefined;
+	return undefined;
 }
 
 type QuoteChar = '' | '"' | "'" | '`';
 
 type EscapeStringOptions = {
-  quote?: QuoteChar;
-  json?: boolean;
-  ignoreWhitespaceEscapes?: boolean;
-  unicodeOnly?: boolean;
+	quote?: QuoteChar;
+	json?: boolean;
+	ignoreWhitespaceEscapes?: boolean;
+	unicodeOnly?: boolean;
 };
 
 export default function escapeString(
-  str: string,
-  opts: EscapeStringOptions = {},
+	str: string,
+	opts: EscapeStringOptions = {},
 ): string {
-  let index = -1;
-  let result = '';
+	let index = -1;
+	let result = '';
 
-  const {
-    ignoreWhitespaceEscapes = false,
-    quote = '',
-    json = false,
-    unicodeOnly = false,
-  } = opts;
+	const {
+		ignoreWhitespaceEscapes = false,
+		quote = '',
+		json = false,
+		unicodeOnly = false,
+	} = opts;
 
-  // Loop over each code unit in the string and escape it
-  while (++index < str.length) {
-    const char = str[index];
+	// Loop over each code unit in the string and escape it
+	while (++index < str.length) {
+		const char = str[index];
 
-    // Handle surrogate pairs in non-JSON mode
-    if (!json) {
-      const charCode = str.charCodeAt(index);
-      const isHighSurrogate = charCode >= 55_296 && charCode <= 56_319;
-      const hasNextCodePoint = str.length > index + 1;
-      const isSurrogatePairStart = isHighSurrogate && hasNextCodePoint;
+		// Handle surrogate pairs in non-JSON mode
+		if (!json) {
+			const charCode = str.charCodeAt(index);
+			const isHighSurrogate = charCode >= 55_296 && charCode <= 56_319;
+			const hasNextCodePoint = str.length > index + 1;
+			const isSurrogatePairStart = isHighSurrogate && hasNextCodePoint;
 
-      if (isSurrogatePairStart) {
-        const nextCharCode = str.charCodeAt(index + 1);
-        const isLowSurrogate = nextCharCode >= 56_320 && nextCharCode <= 57_343;
-        if (isLowSurrogate) {
-          // https://mathiasbynens.be/notes/javascript-encoding#surrogate-formulae
-          const codePoint =
-            (charCode - 55_296) * 1_024 + nextCharCode - 56_320 + 65_536;
-          const hex = codePoint.toString(16);
-          result += `\\u{${hex}}`;
-          index++;
-          continue;
-        }
-      }
-    }
+			if (isSurrogatePairStart) {
+				const nextCharCode = str.charCodeAt(index + 1);
+				const isLowSurrogate = nextCharCode >= 56_320 && nextCharCode <= 57_343;
+				if (isLowSurrogate) {
+					// https://mathiasbynens.be/notes/javascript-encoding#surrogate-formulae
+					const codePoint =
+						(charCode - 55_296) * 1_024 + nextCharCode - 56_320 + 65_536;
+					const hex = codePoint.toString(16);
+					result += `\\u{${hex}}`;
+					index++;
+					continue;
+				}
+			}
+		}
 
-    //
-    if (PRINTABLE_ASCII.test(char)) {
-      // It’s a printable ASCII character that is not `"`, `'` or `\`,
-      // so don’t escape it.
-      result += char;
-      continue;
-    }
+		//
+		if (PRINTABLE_ASCII.test(char)) {
+			// It’s a printable ASCII character that is not `"`, `'` or `\`,
+			// so don’t escape it.
+			result += char;
+			continue;
+		}
 
-    // Escape double quotes
-    if (char === DOUBLE_QUOTE) {
-      result += quote === char ? '\\"' : char;
-      continue;
-    }
+		// Escape double quotes
+		if (char === DOUBLE_QUOTE) {
+			result += quote === char ? '\\"' : char;
+			continue;
+		}
 
-    // Escape single quotes
-    if (char === SINGLE_QUOTE) {
-      result += quote === char ? "\\'" : char;
-      continue;
-    }
+		// Escape single quotes
+		if (char === SINGLE_QUOTE) {
+			result += quote === char ? "\\'" : char;
+			continue;
+		}
 
-    // Escape back tick
-    if (char === TICK_QUOTE) {
-      result += quote === char ? '\\`' : char;
-      continue;
-    }
+		// Escape back tick
+		if (char === TICK_QUOTE) {
+			result += quote === char ? '\\`' : char;
+			continue;
+		}
 
-    // Null escape
-    if (char === '\0' && !json && !isDigit(str[index + 1])) {
-      result += '\\0';
-      continue;
-    }
+		// Null escape
+		if (char === '\0' && !json && !isDigit(str[index + 1])) {
+			result += '\\0';
+			continue;
+		}
 
-    // Simple escapes
-    if (!unicodeOnly) {
-      const replacement = escapeChar(char, ignoreWhitespaceEscapes);
-      if (replacement !== undefined) {
-        result += replacement;
-        continue;
-      }
-    }
+		// Simple escapes
+		if (!unicodeOnly) {
+			const replacement = escapeChar(char, ignoreWhitespaceEscapes);
+			if (replacement !== undefined) {
+				result += replacement;
+				continue;
+			}
+		}
 
-    // Unicode escape
-    const hex = char.charCodeAt(0).toString(16);
-    const isLonghand = json || hex.length > 2;
-    const modifier = isLonghand ? 'u' : 'x';
-    const code = `0000${hex}`.slice(isLonghand ? -4 : -2);
-    const escaped = `\\${modifier}${code}`;
-    result += escaped;
-    continue;
-  }
+		// Unicode escape
+		const hex = char.charCodeAt(0).toString(16);
+		const isLonghand = json || hex.length > 2;
+		const modifier = isLonghand ? 'u' : 'x';
+		const code = `0000${hex}`.slice(isLonghand ? -4 : -2);
+		const escaped = `\\${modifier}${code}`;
+		result += escaped;
+		continue;
+	}
 
-  return `${quote}${result}${quote}`;
+	return `${quote}${result}${quote}`;
 }

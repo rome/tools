@@ -8,5 +8,5 @@
 import {Token} from '../../tokens';
 
 export default function NeverKeywordTypeAnnotation(): Token {
-  return 'never';
+	return 'never';
 }

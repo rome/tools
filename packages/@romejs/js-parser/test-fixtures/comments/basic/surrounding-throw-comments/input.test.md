@@ -6,173 +6,173 @@
 
 ```javascript
 Program {
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 64
-      line: 6
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  comments: Array [
-    CommentBlock {
-      id: '0'
-      value: ' before '
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 16
-          index: 31
-          line: 2
-        }
-        start: Object {
-          column: 4
-          index: 19
-          line: 2
-        }
-      }
-    }
-    CommentBlock {
-      id: '1'
-      value: ' after '
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 15
-          index: 61
-          line: 4
-        }
-        start: Object {
-          column: 4
-          index: 50
-          line: 4
-        }
-      }
-    }
-  ]
-  body: Array [
-    FunctionDeclaration {
-      id: BindingIdentifier {
-        name: 'a'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'a'
-          end: Object {
-            column: 10
-            index: 10
-            line: 1
-          }
-          start: Object {
-            column: 9
-            index: 9
-            line: 1
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 1
-          index: 63
-          line: 5
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      head: FunctionHead {
-        async: false
-        generator: false
-        hasHoistedVars: false
-        params: Array []
-        rest: undefined
-        returnType: undefined
-        thisType: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 12
-            index: 12
-            line: 1
-          }
-          start: Object {
-            column: 10
-            index: 10
-            line: 1
-          }
-        }
-      }
-      body: BlockStatement {
-        directives: Array []
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 1
-            index: 63
-            line: 5
-          }
-          start: Object {
-            column: 13
-            index: 13
-            line: 1
-          }
-        }
-        body: Array [
-          ThrowStatement {
-            leadingComments: Array ['0']
-            trailingComments: Array ['1']
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 13
-                index: 45
-                line: 3
-              }
-              start: Object {
-                column: 4
-                index: 36
-                line: 3
-              }
-            }
-            argument: NumericLiteral {
-              value: 55
-              format: undefined
-              leadingComments: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 12
-                  index: 44
-                  line: 3
-                }
-                start: Object {
-                  column: 10
-                  index: 42
-                  line: 3
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 0
+			index: 64
+			line: 6
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	comments: Array [
+		CommentBlock {
+			id: '0'
+			value: ' before '
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 16
+					index: 31
+					line: 2
+				}
+				start: Object {
+					column: 4
+					index: 19
+					line: 2
+				}
+			}
+		}
+		CommentBlock {
+			id: '1'
+			value: ' after '
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 15
+					index: 61
+					line: 4
+				}
+				start: Object {
+					column: 4
+					index: 50
+					line: 4
+				}
+			}
+		}
+	]
+	body: Array [
+		FunctionDeclaration {
+			id: BindingIdentifier {
+				name: 'a'
+				loc: Object {
+					filename: 'input.js'
+					identifierName: 'a'
+					end: Object {
+						column: 10
+						index: 10
+						line: 1
+					}
+					start: Object {
+						column: 9
+						index: 9
+						line: 1
+					}
+				}
+			}
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 1
+					index: 63
+					line: 5
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			head: FunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: Array []
+				rest: undefined
+				returnType: undefined
+				thisType: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 12
+						index: 12
+						line: 1
+					}
+					start: Object {
+						column: 10
+						index: 10
+						line: 1
+					}
+				}
+			}
+			body: BlockStatement {
+				directives: Array []
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 1
+						index: 63
+						line: 5
+					}
+					start: Object {
+						column: 13
+						index: 13
+						line: 1
+					}
+				}
+				body: Array [
+					ThrowStatement {
+						leadingComments: Array ['0']
+						trailingComments: Array ['1']
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 13
+								index: 45
+								line: 3
+							}
+							start: Object {
+								column: 4
+								index: 36
+								line: 3
+							}
+						}
+						argument: NumericLiteral {
+							value: 55
+							format: undefined
+							leadingComments: undefined
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 12
+									index: 44
+									line: 3
+								}
+								start: Object {
+									column: 10
+									index: 42
+									line: 3
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

@@ -11,30 +11,30 @@ import {Token, concat, space} from '../../tokens';
 import {printCommaList} from '../utils';
 
 export default function TSInterfaceDeclaration(
-  builder: Builder,
-  node: TSInterfaceDeclaration,
+	builder: Builder,
+	node: TSInterfaceDeclaration,
 ): Token {
-  const tokens: Array<Token> = [];
+	const tokens: Array<Token> = [];
 
-  if (node.declare) {
-    tokens.push('declare', space);
-  }
+	if (node.declare) {
+		tokens.push('declare', space);
+	}
 
-  tokens.push(
-    'interface',
-    space,
-    builder.tokenize(node.id, node),
-    builder.tokenize(node.typeParameters, node),
-  );
+	tokens.push(
+		'interface',
+		space,
+		builder.tokenize(node.id, node),
+		builder.tokenize(node.typeParameters, node),
+	);
 
-  if (node.extends) {
-    tokens.push(
-      space,
-      'extends',
-      space,
-      printCommaList(builder, node.extends, node),
-    );
-  }
+	if (node.extends) {
+		tokens.push(
+			space,
+			'extends',
+			space,
+			printCommaList(builder, node.extends, node),
+		);
+	}
 
-  return concat([concat(tokens), space, builder.tokenize(node.body, node)]);
+	return concat([concat(tokens), space, builder.tokenize(node.body, node)]);
 }

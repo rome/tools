@@ -11,8 +11,8 @@ import {AnyNode} from '@romejs/js-ast';
 import T from '../types/T';
 
 const evaluators: Map<
-  string,
-  (node: AnyNode, scope: Scope, hub: Hub) => void | undefined | T
+	string,
+	(node: AnyNode, scope: Scope, hub: Hub) => void | undefined | T
 > = new Map();
 export default evaluators;
 
@@ -20,8 +20,8 @@ export default evaluators;
 
 import AmbiguousFlowTypeCastExpression from './temp/AmbiguousFlowTypeCastExpression';
 evaluators.set(
-  'AmbiguousFlowTypeCastExpression',
-  AmbiguousFlowTypeCastExpression,
+	'AmbiguousFlowTypeCastExpression',
+	AmbiguousFlowTypeCastExpression,
 );
 
 import AnyKeywordTypeAnnotation from './types/AnyKeywordTypeAnnotation';
@@ -53,8 +53,8 @@ evaluators.set('AssignmentObjectPattern', AssignmentObjectPattern);
 
 import AssignmentObjectPatternProperty from './patterns/AssignmentObjectPatternProperty';
 evaluators.set(
-  'AssignmentObjectPatternProperty',
-  AssignmentObjectPatternProperty,
+	'AssignmentObjectPatternProperty',
+	AssignmentObjectPatternProperty,
 );
 
 import AwaitExpression from './expressions/AwaitExpression';
@@ -497,8 +497,8 @@ evaluators.set('TSConstructorType', TSConstructorType);
 
 import TSConstructSignatureDeclaration from './typescript/TSConstructSignatureDeclaration';
 evaluators.set(
-  'TSConstructSignatureDeclaration',
-  TSConstructSignatureDeclaration,
+	'TSConstructSignatureDeclaration',
+	TSConstructSignatureDeclaration,
 );
 
 import TSDeclareFunction from './typescript/TSDeclareFunction';

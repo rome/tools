@@ -12,14 +12,14 @@ const fs = require('fs');
 
 const filename = process.argv[2];
 if (filename === undefined) {
-  console.error('node remove-ast-type.js [category]/[nodeType]');
-  process.exit(1);
+	console.error('node remove-ast-type.js [category]/[nodeType]');
+	process.exit(1);
 }
 
 const {
-  formatterFolder,
-  analysisFolder,
-  astFolder,
+	formatterFolder,
+	analysisFolder,
+	astFolder,
 } = require('../_constants.cjs');
 
 fs.unlinkSync(path.join(formatterFolder, `${filename}.ts`));

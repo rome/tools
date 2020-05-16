@@ -7,13 +7,13 @@
 
 import {Scope} from '../../scopes';
 import {
-  AnyNode,
-  BindingObjectPattern,
-  bindingObjectPattern,
+	AnyNode,
+	BindingObjectPattern,
+	bindingObjectPattern,
 } from '@romejs/js-ast';
 
 export default function BindingObjectPattern(node: AnyNode, scope: Scope) {
-  node = bindingObjectPattern.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = bindingObjectPattern.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

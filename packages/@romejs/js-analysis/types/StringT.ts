@@ -13,34 +13,34 @@ import ObjT from './ObjT';
 import T from './T';
 
 export default class StringT extends ObjT {
-  constructor(scope: Scope, originNode: undefined | AnyNode) {
-    super(
-      scope,
-      originNode,
-      {
-        props: [],
-        proto: scope.intrinsics.StringPrototype,
-        calls: [],
-      },
-    );
-  }
+	constructor(scope: Scope, originNode: undefined | AnyNode) {
+		super(
+			scope,
+			originNode,
+			{
+				props: [],
+				proto: scope.intrinsics.StringPrototype,
+				calls: [],
+			},
+		);
+	}
 
-  static type = 'StringT';
+	static type = 'StringT';
 
-  serialize(): HydrateData {
-    return {};
-  }
+	serialize(): HydrateData {
+		return {};
+	}
 
-  static hydrate(scope: Scope, originNode: undefined | AnyNode): T {
-    return new StringT(scope, originNode);
-  }
+	static hydrate(scope: Scope, originNode: undefined | AnyNode): T {
+		return new StringT(scope, originNode);
+	}
 
-  humanize(): string {
-    return 'string';
-  }
+	humanize(): string {
+		return 'string';
+	}
 
-  compatibleWith(type: T) {
-    // a string literal can flow into a generic string
-    return type instanceof StringT || type instanceof StringLiteralT;
-  }
+	compatibleWith(type: T) {
+		// a string literal can flow into a generic string
+		return type instanceof StringT || type instanceof StringLiteralT;
+	}
 }

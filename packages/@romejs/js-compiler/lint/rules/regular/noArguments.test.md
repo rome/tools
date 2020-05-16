@@ -27,7 +27,7 @@
 
 ```
 function f() {
-  console.log(arguments);
+	console.log(arguments);
 }
 
 ```
@@ -55,7 +55,7 @@ function f() {
 
 ```
 (function() {
-  console.log(arguments);
+	console.log(arguments);
 })();
 
 ```
@@ -85,9 +85,9 @@ function f() {
 
 ```
 class C {
-  fn() {
-    console.log(arguments);
-  }
+	fn() {
+		console.log(arguments);
+	}
 }
 
 ```
@@ -117,9 +117,9 @@ class C {
 
 ```
 const o = {
-  fn() {
-    console.log(arguments);
-  },
+	fn() {
+		console.log(arguments);
+	},
 };
 
 ```

@@ -6,104 +6,104 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.ts'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array ['ts']
-  loc: Object {
-    filename: 'input.ts'
-    end: Object {
-      column: 0
-      index: 26
-      line: 3
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'extends list cannot be empty'}
-      }
-      location: Object {
-        filename: 'input.ts'
-        mtime: undefined
-        sourceType: 'module'
-        end: Object {
-          column: 22
-          index: 22
-          line: 1
-        }
-        start: Object {
-          column: 22
-          index: 22
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    TSInterfaceDeclaration {
-      id: BindingIdentifier {
-        name: 'foo'
-        loc: Object {
-          filename: 'input.ts'
-          identifierName: 'foo'
-          end: Object {
-            column: 13
-            index: 13
-            line: 1
-          }
-          start: Object {
-            column: 10
-            index: 10
-            line: 1
-          }
-        }
-      }
-      extends: Array []
-      typeParameters: undefined
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 1
-          index: 25
-          line: 2
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      body: TSInterfaceBody {
-        body: Array []
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 1
-            index: 25
-            line: 2
-          }
-          start: Object {
-            column: 22
-            index: 22
-            line: 1
-          }
-        }
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: 'input.ts'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'module'
+	syntax: Array ['ts']
+	loc: Object {
+		filename: 'input.ts'
+		end: Object {
+			column: 0
+			index: 26
+			line: 3
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: 'js-parser'}]
+			description: Object {
+				advice: Array []
+				category: 'parse/js'
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'extends list cannot be empty'}
+			}
+			location: Object {
+				filename: 'input.ts'
+				mtime: undefined
+				sourceType: 'module'
+				end: Object {
+					column: 22
+					index: 22
+					line: 1
+				}
+				start: Object {
+					column: 22
+					index: 22
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		TSInterfaceDeclaration {
+			id: BindingIdentifier {
+				name: 'foo'
+				loc: Object {
+					filename: 'input.ts'
+					identifierName: 'foo'
+					end: Object {
+						column: 13
+						index: 13
+						line: 1
+					}
+					start: Object {
+						column: 10
+						index: 10
+						line: 1
+					}
+				}
+			}
+			extends: Array []
+			typeParameters: undefined
+			loc: Object {
+				filename: 'input.ts'
+				end: Object {
+					column: 1
+					index: 25
+					line: 2
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			body: TSInterfaceBody {
+				body: Array []
+				loc: Object {
+					filename: 'input.ts'
+					end: Object {
+						column: 1
+						index: 25
+						line: 2
+					}
+					start: Object {
+						column: 22
+						index: 22
+						line: 1
+					}
+				}
+			}
+		}
+	]
 }
 ```

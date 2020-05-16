@@ -9,19 +9,19 @@ import {Path} from '@romejs/js-compiler';
 import {AnyNode, referenceIdentifier} from '@romejs/js-ast';
 
 export default {
-  name: 'asyncImport',
-  enter(path: Path): AnyNode {
-    const {node} = path;
+	name: 'asyncImport',
+	enter(path: Path): AnyNode {
+		const {node} = path;
 
-    if (node.type === 'CallExpression' && node.callee.type === 'ImportCall') {
-      return {
-        ...node,
-        callee: referenceIdentifier.create({
-          name: 'require',
-        }),
-      };
-    }
+		if (node.type === 'CallExpression' && node.callee.type === 'ImportCall') {
+			return {
+				...node,
+				callee: referenceIdentifier.create({
+					name: 'require',
+				}),
+			};
+		}
 
-    return node;
-  },
+		return node;
+	},
 };

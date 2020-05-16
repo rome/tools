@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, ContinueStatement, continueStatement} from '@romejs/js-ast';
 
 export default function ContinueStatement(node: AnyNode, scope: Scope) {
-  node = continueStatement.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = continueStatement.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

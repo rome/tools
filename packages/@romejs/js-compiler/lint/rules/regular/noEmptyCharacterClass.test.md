@@ -128,7 +128,7 @@ foo;
 ```
 let foo = '';
 if (foo.match(/^abc/)) {
-  foo;
+	foo;
 }
 
 ```

@@ -6,246 +6,246 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 42
-      line: 3
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'module'
-        end: Object {
-          column: 24
-          index: 40
-          line: 2
-        }
-        start: Object {
-          column: 7
-          index: 23
-          line: 2
-        }
-      }
-      description: Object {
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: '`foo` has already been exported. Exported identifiers must be unique.'}
-        advice: Array [
-          log {
-            category: 'info'
-            text: 'Defined already here'
-          }
-          frame {
-            location: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 12
-                index: 12
-                line: 1
-              }
-              start: Object {
-                column: 9
-                index: 9
-                line: 1
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
-  body: Array [
-    ExportLocalDeclaration {
-      declaration: undefined
-      exportKind: 'value'
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 15
-          index: 15
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      specifiers: Array [
-        ExportLocalSpecifier {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 12
-              index: 12
-              line: 1
-            }
-            start: Object {
-              column: 9
-              index: 9
-              line: 1
-            }
-          }
-          exported: Identifier {
-            name: 'foo'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'foo'
-              end: Object {
-                column: 12
-                index: 12
-                line: 1
-              }
-              start: Object {
-                column: 9
-                index: 9
-                line: 1
-              }
-            }
-          }
-          local: ReferenceIdentifier {
-            name: 'foo'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'foo'
-              end: Object {
-                column: 12
-                index: 12
-                line: 1
-              }
-              start: Object {
-                column: 9
-                index: 9
-                line: 1
-              }
-            }
-          }
-        }
-      ]
-    }
-    ExportLocalDeclaration {
-      exportKind: 'value'
-      specifiers: undefined
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 24
-          index: 40
-          line: 2
-        }
-        start: Object {
-          column: 0
-          index: 16
-          line: 2
-        }
-      }
-      declaration: FunctionDeclaration {
-        id: BindingIdentifier {
-          name: 'foo'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'foo'
-            end: Object {
-              column: 19
-              index: 35
-              line: 2
-            }
-            start: Object {
-              column: 16
-              index: 32
-              line: 2
-            }
-          }
-        }
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 24
-            index: 40
-            line: 2
-          }
-          start: Object {
-            column: 7
-            index: 23
-            line: 2
-          }
-        }
-        body: BlockStatement {
-          body: Array []
-          directives: Array []
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 24
-              index: 40
-              line: 2
-            }
-            start: Object {
-              column: 22
-              index: 38
-              line: 2
-            }
-          }
-        }
-        head: FunctionHead {
-          async: false
-          generator: false
-          hasHoistedVars: false
-          params: Array []
-          rest: undefined
-          returnType: undefined
-          thisType: undefined
-          typeParameters: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 21
-              index: 37
-              line: 2
-            }
-            start: Object {
-              column: 19
-              index: 35
-              line: 2
-            }
-          }
-        }
-      }
-    }
-    EmptyStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 25
-          index: 41
-          line: 2
-        }
-        start: Object {
-          column: 24
-          index: 40
-          line: 2
-        }
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'module'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 0
+			index: 42
+			line: 3
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: 'js-parser'}]
+			location: Object {
+				filename: 'input.js'
+				mtime: undefined
+				sourceType: 'module'
+				end: Object {
+					column: 24
+					index: 40
+					line: 2
+				}
+				start: Object {
+					column: 7
+					index: 23
+					line: 2
+				}
+			}
+			description: Object {
+				category: 'parse/js'
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: '`foo` has already been exported. Exported identifiers must be unique.'}
+				advice: Array [
+					log {
+						category: 'info'
+						text: 'Defined already here'
+					}
+					frame {
+						location: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 12
+								index: 12
+								line: 1
+							}
+							start: Object {
+								column: 9
+								index: 9
+								line: 1
+							}
+						}
+					}
+				]
+			}
+		}
+	]
+	body: Array [
+		ExportLocalDeclaration {
+			declaration: undefined
+			exportKind: 'value'
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 15
+					index: 15
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			specifiers: Array [
+				ExportLocalSpecifier {
+					loc: Object {
+						filename: 'input.js'
+						end: Object {
+							column: 12
+							index: 12
+							line: 1
+						}
+						start: Object {
+							column: 9
+							index: 9
+							line: 1
+						}
+					}
+					exported: Identifier {
+						name: 'foo'
+						loc: Object {
+							filename: 'input.js'
+							identifierName: 'foo'
+							end: Object {
+								column: 12
+								index: 12
+								line: 1
+							}
+							start: Object {
+								column: 9
+								index: 9
+								line: 1
+							}
+						}
+					}
+					local: ReferenceIdentifier {
+						name: 'foo'
+						loc: Object {
+							filename: 'input.js'
+							identifierName: 'foo'
+							end: Object {
+								column: 12
+								index: 12
+								line: 1
+							}
+							start: Object {
+								column: 9
+								index: 9
+								line: 1
+							}
+						}
+					}
+				}
+			]
+		}
+		ExportLocalDeclaration {
+			exportKind: 'value'
+			specifiers: undefined
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 24
+					index: 40
+					line: 2
+				}
+				start: Object {
+					column: 0
+					index: 16
+					line: 2
+				}
+			}
+			declaration: FunctionDeclaration {
+				id: BindingIdentifier {
+					name: 'foo'
+					loc: Object {
+						filename: 'input.js'
+						identifierName: 'foo'
+						end: Object {
+							column: 19
+							index: 35
+							line: 2
+						}
+						start: Object {
+							column: 16
+							index: 32
+							line: 2
+						}
+					}
+				}
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 24
+						index: 40
+						line: 2
+					}
+					start: Object {
+						column: 7
+						index: 23
+						line: 2
+					}
+				}
+				body: BlockStatement {
+					body: Array []
+					directives: Array []
+					loc: Object {
+						filename: 'input.js'
+						end: Object {
+							column: 24
+							index: 40
+							line: 2
+						}
+						start: Object {
+							column: 22
+							index: 38
+							line: 2
+						}
+					}
+				}
+				head: FunctionHead {
+					async: false
+					generator: false
+					hasHoistedVars: false
+					params: Array []
+					rest: undefined
+					returnType: undefined
+					thisType: undefined
+					typeParameters: undefined
+					loc: Object {
+						filename: 'input.js'
+						end: Object {
+							column: 21
+							index: 37
+							line: 2
+						}
+						start: Object {
+							column: 19
+							index: 35
+							line: 2
+						}
+					}
+				}
+			}
+		}
+		EmptyStatement {
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 25
+					index: 41
+					line: 2
+				}
+				start: Object {
+					column: 24
+					index: 40
+					line: 2
+				}
+			}
+		}
+	]
 }
 ```

@@ -7,13 +7,13 @@
 
 import {Scope} from '../../scopes';
 import {
-  AnyNode,
-  JSXReferenceIdentifier,
-  jsxReferenceIdentifier,
+	AnyNode,
+	JSXReferenceIdentifier,
+	jsxReferenceIdentifier,
 } from '@romejs/js-ast';
 
 export default function JSXReferenceIdentifier(node: AnyNode, scope: Scope) {
-  node = jsxReferenceIdentifier.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = jsxReferenceIdentifier.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

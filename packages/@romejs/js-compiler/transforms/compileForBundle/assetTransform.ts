@@ -10,26 +10,26 @@ import {getOptions} from './_utils';
 import {ASSET_EXPORT_TEMPORARY_VALUE} from '@romejs/core/common/file-handlers/index';
 
 export default {
-  name: 'asset',
-  enter(path: Path) {
-    const {node} = path;
-    const options = getOptions(path.context);
+	name: 'asset',
+	enter(path: Path) {
+		const {node} = path;
+		const options = getOptions(path.context);
 
-    if (
-      node.type === 'ExportDefaultDeclaration' &&
-      node.declaration.type === 'StringLiteral' &&
-      node.declaration.value === ASSET_EXPORT_TEMPORARY_VALUE &&
-      options.assetPath !== undefined
-    ) {
-      return {
-        ...node,
-        declaration: {
-          ...node.declaration,
-          value: options.moduleId,
-        },
-      };
-    }
+		if (
+			node.type === 'ExportDefaultDeclaration' &&
+			node.declaration.type === 'StringLiteral' &&
+			node.declaration.value === ASSET_EXPORT_TEMPORARY_VALUE &&
+			options.assetPath !== undefined
+		) {
+			return {
+				...node,
+				declaration: {
+					...node.declaration,
+					value: options.moduleId,
+				},
+			};
+		}
 
-    return node;
-  },
+		return node;
+	},
 };

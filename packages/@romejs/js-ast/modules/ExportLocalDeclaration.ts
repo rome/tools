@@ -6,47 +6,47 @@
  */
 
 import {
-  ClassDeclaration,
-  ConstExportModuleKind,
-  ExportLocalSpecifier,
-  FunctionDeclaration,
-  JSNodeBase,
-  TSDeclareFunction,
-  TSEnumDeclaration,
-  TSInterfaceDeclaration,
-  TSModuleDeclaration,
-  TypeAliasTypeAnnotation,
-  VariableDeclarationStatement,
+	ClassDeclaration,
+	ConstExportModuleKind,
+	ExportLocalSpecifier,
+	FunctionDeclaration,
+	JSNodeBase,
+	TSDeclareFunction,
+	TSEnumDeclaration,
+	TSInterfaceDeclaration,
+	TSModuleDeclaration,
+	TypeAliasTypeAnnotation,
+	VariableDeclarationStatement,
 } from '../index';
 import {createBuilder} from '../utils';
 
 export type ExportLocalDeclaration = JSNodeBase & {
-  type: 'ExportLocalDeclaration';
-  declaration?:
-    | undefined
-    | VariableDeclarationStatement
-    | FunctionDeclaration
-    | ClassDeclaration
-    | TSModuleDeclaration
-    | TSEnumDeclaration
-    | TypeAliasTypeAnnotation
-    | TSInterfaceDeclaration
-    | TSDeclareFunction
-    | TypeAliasTypeAnnotation;
-  specifiers?: Array<ExportLocalSpecifier>;
-  exportKind?: ConstExportModuleKind;
-  declare?: boolean;
+	type: 'ExportLocalDeclaration';
+	declaration?:
+		 | undefined
+		| VariableDeclarationStatement
+		| FunctionDeclaration
+		| ClassDeclaration
+		| TSModuleDeclaration
+		| TSEnumDeclaration
+		| TypeAliasTypeAnnotation
+		| TSInterfaceDeclaration
+		| TSDeclareFunction
+		| TypeAliasTypeAnnotation;
+	specifiers?: Array<ExportLocalSpecifier>;
+	exportKind?: ConstExportModuleKind;
+	declare?: boolean;
 };
 
 export const exportLocalDeclaration = createBuilder<ExportLocalDeclaration>(
-  'ExportLocalDeclaration',
-  {
-    bindingKeys: {
-      declaration: true,
-    },
-    visitorKeys: {
-      declaration: true,
-      specifiers: true,
-    },
-  },
+	'ExportLocalDeclaration',
+	{
+		bindingKeys: {
+			declaration: true,
+		},
+		visitorKeys: {
+			declaration: true,
+			specifiers: true,
+		},
+	},
 );

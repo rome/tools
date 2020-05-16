@@ -11,88 +11,88 @@ import {descriptions} from '@romejs/diagnostics';
 import {commentInjector} from '../../../transforms/defaultHooks';
 
 export default {
-  name: 'preferBlockStatements',
-  enter(path: Path): TransformExitResult {
-    const {context, node} = path;
+	name: 'preferBlockStatements',
+	enter(path: Path): TransformExitResult {
+		const {context, node} = path;
 
-    if (node.type === 'IfStatement') {
-      let shouldFix = false;
-      let consequent = node.consequent;
-      let alternate = node.alternate;
+		if (node.type === 'IfStatement') {
+			let shouldFix = false;
+			let consequent = node.consequent;
+			let alternate = node.alternate;
 
-      if (node.consequent.type !== 'BlockStatement') {
-        consequent = blockStatement.quick([node.consequent]);
-        shouldFix = true;
-      }
+			if (node.consequent.type !== 'BlockStatement') {
+				consequent = blockStatement.quick([node.consequent]);
+				shouldFix = true;
+			}
 
-      if (
-        node.alternate !== undefined &&
-        node.alternate.type !== 'BlockStatement' &&
-        node.alternate.type !== 'IfStatement'
-      ) {
-        alternate = blockStatement.quick([node.alternate]);
-        shouldFix = true;
-      }
+			if (
+				node.alternate !== undefined &&
+				node.alternate.type !== 'BlockStatement' &&
+				node.alternate.type !== 'IfStatement'
+			) {
+				alternate = blockStatement.quick([node.alternate]);
+				shouldFix = true;
+			}
 
-      if (shouldFix) {
-        return context.addFixableDiagnostic(
-          {
-            old: node,
-            fixed: {
-              ...node,
-              consequent,
-              alternate,
-            },
-          },
-          descriptions.LINT.PREFER_BLOCK_STATEMENT,
-        );
-      }
-    } else if (
-      node.type === 'ForStatement' ||
-      node.type === 'ForInStatement' ||
-      node.type === 'ForOfStatement' ||
-      node.type === 'DoWhileStatement' ||
-      node.type === 'WhileStatement' ||
-      node.type === 'WithStatement'
-    ) {
-      if (node.body.type === 'EmptyStatement') {
-        const id = path.callHook(
-          commentInjector,
-          {
-            type: 'CommentLine',
-            value: ' empty',
-          },
-        );
+			if (shouldFix) {
+				return context.addFixableDiagnostic(
+					{
+						old: node,
+						fixed: {
+							...node,
+							consequent,
+							alternate,
+						},
+					},
+					descriptions.LINT.PREFER_BLOCK_STATEMENT,
+				);
+			}
+		} else if (
+			node.type === 'ForStatement' ||
+			node.type === 'ForInStatement' ||
+			node.type === 'ForOfStatement' ||
+			node.type === 'DoWhileStatement' ||
+			node.type === 'WhileStatement' ||
+			node.type === 'WithStatement'
+		) {
+			if (node.body.type === 'EmptyStatement') {
+				const id = path.callHook(
+					commentInjector,
+					{
+						type: 'CommentLine',
+						value: ' empty',
+					},
+				);
 
-        return context.addFixableDiagnostic(
-          {
-            old: node,
-            fixed: {
-              ...node,
-              body: blockStatement.create({
-                innerComments: [id],
-                body: [],
-              }),
-            },
-          },
-          descriptions.LINT.PREFER_BLOCK_STATEMENT,
-        );
-      }
+				return context.addFixableDiagnostic(
+					{
+						old: node,
+						fixed: {
+							...node,
+							body: blockStatement.create({
+								innerComments: [id],
+								body: [],
+							}),
+						},
+					},
+					descriptions.LINT.PREFER_BLOCK_STATEMENT,
+				);
+			}
 
-      if (node.body.type !== 'BlockStatement') {
-        return context.addFixableDiagnostic(
-          {
-            old: node,
-            fixed: {
-              ...node,
-              body: blockStatement.quick([node.body]),
-            },
-          },
-          descriptions.LINT.PREFER_BLOCK_STATEMENT,
-        );
-      }
-    }
+			if (node.body.type !== 'BlockStatement') {
+				return context.addFixableDiagnostic(
+					{
+						old: node,
+						fixed: {
+							...node,
+							body: blockStatement.quick([node.body]),
+						},
+					},
+					descriptions.LINT.PREFER_BLOCK_STATEMENT,
+				);
+			}
+		}
 
-    return node;
-  },
+		return node;
+	},
 };

@@ -10,16 +10,16 @@ import {Token, concat, space} from '../../tokens';
 import {UnaryExpression} from '@romejs/js-ast';
 
 export default function UnaryExpression(
-  builder: Builder,
-  node: UnaryExpression,
+	builder: Builder,
+	node: UnaryExpression,
 ): Token {
-  if (
-    node.operator === 'void' ||
-    node.operator === 'delete' ||
-    node.operator === 'typeof'
-  ) {
-    return concat([node.operator, space, builder.tokenize(node.argument, node)]);
-  } else {
-    return concat([node.operator, builder.tokenize(node.argument, node)]);
-  }
+	if (
+		node.operator === 'void' ||
+		node.operator === 'delete' ||
+		node.operator === 'typeof'
+	) {
+		return concat([node.operator, space, builder.tokenize(node.argument, node)]);
+	} else {
+		return concat([node.operator, builder.tokenize(node.argument, node)]);
+	}
 }

@@ -147,7 +147,7 @@ greet();
 
 ```
 function greet(param: Array<any>): string {
-  return param;
+	return param;
 }
 greet();
 
@@ -181,7 +181,7 @@ greet();
 
 ```
 function greet(param: Array<any>): Array<any> {
-  return param;
+	return param;
 }
 greet();
 
@@ -251,7 +251,7 @@ greet();
 
 ```
 function greet(param: Array<string>): string {
-  return param;
+	return param;
 }
 greet();
 
@@ -268,7 +268,7 @@ greet();
 
 ```
 function greet(param: Array<string>): Array<string> {
-  return param;
+	return param;
 }
 greet();
 

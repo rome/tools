@@ -6,9 +6,9 @@
  */
 
 export function removeSuffix(value: string, suffix: string): string {
-  if (value.endsWith(suffix)) {
-    return value.slice(0, -suffix.length);
-  } else {
-    return value;
-  }
+	if (value.endsWith(suffix)) {
+		return value.slice(0, -suffix.length);
+	} else {
+		return value;
+	}
 }

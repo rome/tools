@@ -15,24 +15,24 @@ const fs = require('fs');
 let defs = [];
 
 for (const category of fs.readdirSync(lintRulesFolder)) {
-  const loc = path.join(lintRulesFolder, category);
+	const loc = path.join(lintRulesFolder, category);
 
-  if (fs.statSync(loc).isFile()) {
-    continue;
-  }
+	if (fs.statSync(loc).isFile()) {
+		continue;
+	}
 
-  for (const filename of fs.readdirSync(loc)) {
-    if (filename.endsWith('.ts') && !filename.endsWith('.test.ts')) {
-      defs.push({
-        basename: path.basename(filename, path.extname(filename)),
-        category,
-      });
-    }
-  }
+	for (const filename of fs.readdirSync(loc)) {
+		if (filename.endsWith('.ts') && !filename.endsWith('.test.ts')) {
+			defs.push({
+				basename: path.basename(filename, path.extname(filename)),
+				category,
+			});
+		}
+	}
 }
 
 defs = defs.sort((a, b) => {
-  return a.basename.localeCompare(b.basename);
+	return a.basename.localeCompare(b.basename);
 });
 
 // Generate rules index
@@ -41,13 +41,13 @@ const indexLoc = path.join(lintRulesFolder, 'index.ts');
 let index = readGeneratedFile(indexLoc);
 
 for (const {basename, category} of defs) {
-  index += `import ${basename} from './${category}/${basename}';\n`;
+	index += `import ${basename} from './${category}/${basename}';\n`;
 }
 
 index += '\n';
 index += 'export const lintTransforms = [\n';
 for (const {basename} of defs) {
-  index += `  ${basename},\n`;
+	index += `	${basename},\n`;
 }
 index += '];\n';
 
@@ -57,7 +57,7 @@ write(indexLoc, index);
 let categories = readGeneratedFile(categoriesFile);
 categories += 'type LintDiagnosticCategory =';
 for (const {basename} of defs) {
-  categories += `\n  | 'lint/${basename}'`;
+	categories += `\n	| 'lint/${basename}'`;
 }
 categories += ';\n';
 write(categoriesFile, categories);

@@ -6,182 +6,182 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: true
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 26
-      line: 3
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Not a valid assignment target'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 10
-          index: 17
-          line: 2
-        }
-        start: Object {
-          column: 5
-          index: 12
-          line: 2
-        }
-      }
-    }
-  ]
-  body: Array [
-    VariableDeclarationStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 6
-          index: 6
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      declaration: VariableDeclaration {
-        kind: 'var'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 6
-            index: 6
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        declarations: Array [
-          VariableDeclarator {
-            id: BindingIdentifier {
-              name: 'a'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'a'
-                end: Object {
-                  column: 5
-                  index: 5
-                  line: 1
-                }
-                start: Object {
-                  column: 4
-                  index: 4
-                  line: 1
-                }
-              }
-            }
-            init: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 5
-                index: 5
-                line: 1
-              }
-              start: Object {
-                column: 4
-                index: 4
-                line: 1
-              }
-            }
-          }
-        ]
-      }
-    }
-    ForInStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 18
-          index: 25
-          line: 2
-        }
-        start: Object {
-          column: 0
-          index: 7
-          line: 2
-        }
-      }
-      body: EmptyStatement {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 18
-            index: 25
-            line: 2
-          }
-          start: Object {
-            column: 17
-            index: 24
-            line: 2
-          }
-        }
-      }
-      left: AssignmentIdentifier {
-        name: 'X'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 10
-            index: 17
-            line: 2
-          }
-          start: Object {
-            column: 5
-            index: 12
-            line: 2
-          }
-        }
-      }
-      right: ObjectExpression {
-        properties: Array []
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 16
-            index: 23
-            line: 2
-          }
-          start: Object {
-            column: 14
-            index: 21
-            line: 2
-          }
-        }
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: true
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 0
+			index: 26
+			line: 3
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: 'js-parser'}]
+			description: Object {
+				advice: Array []
+				category: 'parse/js'
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Not a valid assignment target'}
+			}
+			location: Object {
+				filename: 'input.js'
+				mtime: undefined
+				sourceType: 'script'
+				end: Object {
+					column: 10
+					index: 17
+					line: 2
+				}
+				start: Object {
+					column: 5
+					index: 12
+					line: 2
+				}
+			}
+		}
+	]
+	body: Array [
+		VariableDeclarationStatement {
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 6
+					index: 6
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			declaration: VariableDeclaration {
+				kind: 'var'
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 6
+						index: 6
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				declarations: Array [
+					VariableDeclarator {
+						id: BindingIdentifier {
+							name: 'a'
+							loc: Object {
+								filename: 'input.js'
+								identifierName: 'a'
+								end: Object {
+									column: 5
+									index: 5
+									line: 1
+								}
+								start: Object {
+									column: 4
+									index: 4
+									line: 1
+								}
+							}
+						}
+						init: undefined
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 5
+								index: 5
+								line: 1
+							}
+							start: Object {
+								column: 4
+								index: 4
+								line: 1
+							}
+						}
+					}
+				]
+			}
+		}
+		ForInStatement {
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 18
+					index: 25
+					line: 2
+				}
+				start: Object {
+					column: 0
+					index: 7
+					line: 2
+				}
+			}
+			body: EmptyStatement {
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 18
+						index: 25
+						line: 2
+					}
+					start: Object {
+						column: 17
+						index: 24
+						line: 2
+					}
+				}
+			}
+			left: AssignmentIdentifier {
+				name: 'X'
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 10
+						index: 17
+						line: 2
+					}
+					start: Object {
+						column: 5
+						index: 12
+						line: 2
+					}
+				}
+			}
+			right: ObjectExpression {
+				properties: Array []
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 16
+						index: 23
+						line: 2
+					}
+					start: Object {
+						column: 14
+						index: 21
+						line: 2
+					}
+				}
+			}
+		}
+	]
 }
 ```

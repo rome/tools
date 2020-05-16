@@ -6,166 +6,166 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: true
-  directives: Array []
-  filename: 'input.ts'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array ['ts']
-  loc: Object {
-    filename: 'input.ts'
-    end: Object {
-      column: 15
-      index: 15
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unknown TS non array type start'}
-      }
-      location: Object {
-        filename: 'input.ts'
-        mtime: undefined
-        sourceType: 'module'
-        end: Object {
-          column: 8
-          index: 8
-          line: 1
-        }
-        start: Object {
-          column: 9
-          index: 9
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    VariableDeclarationStatement {
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 15
-          index: 15
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      declaration: VariableDeclaration {
-        kind: 'const'
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 15
-            index: 15
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        declarations: Array [
-          VariableDeclarator {
-            id: BindingIdentifier {
-              name: 'b'
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 14
-                  index: 14
-                  line: 1
-                }
-                start: Object {
-                  column: 6
-                  index: 6
-                  line: 1
-                }
-              }
-              meta: PatternMeta {
-                definite: undefined
-                loc: Object {
-                  filename: 'input.ts'
-                  end: Object {
-                    column: 14
-                    index: 14
-                    line: 1
-                  }
-                  start: Object {
-                    column: 6
-                    index: 6
-                    line: 1
-                  }
-                }
-                typeAnnotation: TSTypeReference {
-                  loc: Object {
-                    filename: 'input.ts'
-                    end: Object {
-                      column: 14
-                      index: 14
-                      line: 1
-                    }
-                    start: Object {
-                      column: 14
-                      index: 14
-                      line: 1
-                    }
-                  }
-                  typeName: ReferenceIdentifier {
-                    name: 'INVALID_PLACEHOLDER'
-                    loc: Object {
-                      filename: 'input.ts'
-                      end: Object {
-                        column: 14
-                        index: 14
-                        line: 1
-                      }
-                      start: Object {
-                        column: 14
-                        index: 14
-                        line: 1
-                      }
-                    }
-                  }
-                }
-              }
-            }
-            init: undefined
-            loc: Object {
-              filename: 'input.ts'
-              end: Object {
-                column: 14
-                index: 14
-                line: 1
-              }
-              start: Object {
-                column: 6
-                index: 6
-                line: 1
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: true
+	directives: Array []
+	filename: 'input.ts'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'module'
+	syntax: Array ['ts']
+	loc: Object {
+		filename: 'input.ts'
+		end: Object {
+			column: 15
+			index: 15
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: 'js-parser'}]
+			description: Object {
+				advice: Array []
+				category: 'parse/js'
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unknown TS non array type start'}
+			}
+			location: Object {
+				filename: 'input.ts'
+				mtime: undefined
+				sourceType: 'module'
+				end: Object {
+					column: 8
+					index: 8
+					line: 1
+				}
+				start: Object {
+					column: 9
+					index: 9
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		VariableDeclarationStatement {
+			loc: Object {
+				filename: 'input.ts'
+				end: Object {
+					column: 15
+					index: 15
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			declaration: VariableDeclaration {
+				kind: 'const'
+				loc: Object {
+					filename: 'input.ts'
+					end: Object {
+						column: 15
+						index: 15
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				declarations: Array [
+					VariableDeclarator {
+						id: BindingIdentifier {
+							name: 'b'
+							loc: Object {
+								filename: 'input.ts'
+								end: Object {
+									column: 14
+									index: 14
+									line: 1
+								}
+								start: Object {
+									column: 6
+									index: 6
+									line: 1
+								}
+							}
+							meta: PatternMeta {
+								definite: undefined
+								loc: Object {
+									filename: 'input.ts'
+									end: Object {
+										column: 14
+										index: 14
+										line: 1
+									}
+									start: Object {
+										column: 6
+										index: 6
+										line: 1
+									}
+								}
+								typeAnnotation: TSTypeReference {
+									loc: Object {
+										filename: 'input.ts'
+										end: Object {
+											column: 14
+											index: 14
+											line: 1
+										}
+										start: Object {
+											column: 14
+											index: 14
+											line: 1
+										}
+									}
+									typeName: ReferenceIdentifier {
+										name: 'INVALID_PLACEHOLDER'
+										loc: Object {
+											filename: 'input.ts'
+											end: Object {
+												column: 14
+												index: 14
+												line: 1
+											}
+											start: Object {
+												column: 14
+												index: 14
+												line: 1
+											}
+										}
+									}
+								}
+							}
+						}
+						init: undefined
+						loc: Object {
+							filename: 'input.ts'
+							end: Object {
+								column: 14
+								index: 14
+								line: 1
+							}
+							start: Object {
+								column: 6
+								index: 6
+								line: 1
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

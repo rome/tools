@@ -10,12 +10,12 @@ import {Builder} from '@romejs/js-formatter';
 import {Token, concat, space} from '../../tokens';
 
 export default function TSTypeOperator(
-  builder: Builder,
-  node: TSTypeOperator,
+	builder: Builder,
+	node: TSTypeOperator,
 ): Token {
-  return concat([
-    node.operator,
-    space,
-    builder.tokenize(node.typeAnnotation, node),
-  ]);
+	return concat([
+		node.operator,
+		space,
+		builder.tokenize(node.typeAnnotation, node),
+	]);
 }

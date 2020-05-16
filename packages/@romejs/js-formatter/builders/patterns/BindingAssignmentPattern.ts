@@ -6,21 +6,21 @@
  */
 
 import {
-  AssignmentAssignmentPattern,
-  BindingAssignmentPattern,
+	AssignmentAssignmentPattern,
+	BindingAssignmentPattern,
 } from '@romejs/js-ast';
 import Builder from '../../Builder';
 import {Token, concat, space} from '../../tokens';
 
 export default function BindingAssignmentPattern(
-  builder: Builder,
-  node: AssignmentAssignmentPattern | BindingAssignmentPattern,
+	builder: Builder,
+	node: AssignmentAssignmentPattern | BindingAssignmentPattern,
 ): Token {
-  return concat([
-    builder.tokenize(node.left, node),
-    space,
-    '=',
-    space,
-    builder.tokenize(node.right, node),
-  ]);
+	return concat([
+		builder.tokenize(node.left, node),
+		space,
+		'=',
+		space,
+		builder.tokenize(node.right, node),
+	]);
 }

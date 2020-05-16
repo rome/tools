@@ -10,8 +10,8 @@ import {Token} from '../../tokens';
 import {JSXIdentifier} from '@romejs/js-ast';
 
 export default function JSXIdentifier(
-  builder: Builder,
-  node: JSXIdentifier,
+	builder: Builder,
+	node: JSXIdentifier,
 ): Token {
-  return node.name;
+	return node.name;
 }

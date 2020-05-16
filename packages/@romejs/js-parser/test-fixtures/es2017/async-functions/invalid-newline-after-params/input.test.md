@@ -6,168 +6,168 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: true
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 16
-      line: 3
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unknown start to an statement expression'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 9
-          index: 9
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 10
-          line: 2
-        }
-      }
-    }
-  ]
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 9
-          index: 9
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: CallExpression {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 9
-            index: 9
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        callee: ReferenceIdentifier {
-          name: 'async'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'async'
-            end: Object {
-              column: 5
-              index: 5
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
-        arguments: Array [
-          ReferenceIdentifier {
-            name: 'x'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'x'
-              end: Object {
-                column: 8
-                index: 8
-                line: 1
-              }
-              start: Object {
-                column: 7
-                index: 7
-                line: 1
-              }
-            }
-          }
-        ]
-      }
-    }
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 2
-          index: 12
-          line: 2
-        }
-        start: Object {
-          column: 0
-          index: 10
-          line: 2
-        }
-      }
-      expression: ReferenceIdentifier {
-        name: 'INVALID_PLACEHOLDER'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 2
-            index: 12
-            line: 2
-          }
-          start: Object {
-            column: 0
-            index: 10
-            line: 2
-          }
-        }
-      }
-    }
-    BlockStatement {
-      body: Array []
-      directives: Array []
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 5
-          index: 15
-          line: 2
-        }
-        start: Object {
-          column: 3
-          index: 13
-          line: 2
-        }
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: true
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 0
+			index: 16
+			line: 3
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: 'js-parser'}]
+			description: Object {
+				advice: Array []
+				category: 'parse/js'
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unknown start to an statement expression'}
+			}
+			location: Object {
+				filename: 'input.js'
+				mtime: undefined
+				sourceType: 'script'
+				end: Object {
+					column: 9
+					index: 9
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 10
+					line: 2
+				}
+			}
+		}
+	]
+	body: Array [
+		ExpressionStatement {
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 9
+					index: 9
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: CallExpression {
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 9
+						index: 9
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				callee: ReferenceIdentifier {
+					name: 'async'
+					loc: Object {
+						filename: 'input.js'
+						identifierName: 'async'
+						end: Object {
+							column: 5
+							index: 5
+							line: 1
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+				}
+				arguments: Array [
+					ReferenceIdentifier {
+						name: 'x'
+						loc: Object {
+							filename: 'input.js'
+							identifierName: 'x'
+							end: Object {
+								column: 8
+								index: 8
+								line: 1
+							}
+							start: Object {
+								column: 7
+								index: 7
+								line: 1
+							}
+						}
+					}
+				]
+			}
+		}
+		ExpressionStatement {
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 2
+					index: 12
+					line: 2
+				}
+				start: Object {
+					column: 0
+					index: 10
+					line: 2
+				}
+			}
+			expression: ReferenceIdentifier {
+				name: 'INVALID_PLACEHOLDER'
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 2
+						index: 12
+						line: 2
+					}
+					start: Object {
+						column: 0
+						index: 10
+						line: 2
+					}
+				}
+			}
+		}
+		BlockStatement {
+			body: Array []
+			directives: Array []
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 5
+					index: 15
+					line: 2
+				}
+				start: Object {
+					column: 3
+					index: 13
+					line: 2
+				}
+			}
+		}
+	]
 }
 ```

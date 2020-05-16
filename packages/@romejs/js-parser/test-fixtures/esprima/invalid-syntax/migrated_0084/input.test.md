@@ -6,170 +6,170 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 6
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 1
-          index: 1
-          line: 1
-        }
-        start: Object {
-          column: 1
-          index: 1
-          line: 1
-        }
-      }
-      description: Object {
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unclosed object'}
-        advice: Array [
-          log {
-            category: 'info'
-            text: 'We expected to find the closing character <emphasis>}</emphasis> here'
-          }
-          frame {
-            location: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 0
-                index: 6
-                line: 2
-              }
-              start: Object {
-                column: 0
-                index: 6
-                line: 2
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 5
-          index: 5
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: ObjectExpression {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 5
-            index: 5
-            line: 1
-          }
-          start: Object {
-            column: 1
-            index: 1
-            line: 1
-          }
-        }
-        properties: Array [
-          ObjectProperty {
-            key: StaticPropertyKey {
-              value: Identifier {
-                name: 'get'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'get'
-                  end: Object {
-                    column: 5
-                    index: 5
-                    line: 1
-                  }
-                  start: Object {
-                    column: 2
-                    index: 2
-                    line: 1
-                  }
-                }
-              }
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 5
-                  index: 5
-                  line: 1
-                }
-                start: Object {
-                  column: 2
-                  index: 2
-                  line: 1
-                }
-              }
-            }
-            value: ReferenceIdentifier {
-              name: 'get'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'get'
-                end: Object {
-                  column: 5
-                  index: 5
-                  line: 1
-                }
-                start: Object {
-                  column: 2
-                  index: 2
-                  line: 1
-                }
-              }
-            }
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 5
-                index: 5
-                line: 1
-              }
-              start: Object {
-                column: 2
-                index: 2
-                line: 1
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 0
+			index: 6
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: 'js-parser'}]
+			location: Object {
+				filename: 'input.js'
+				mtime: undefined
+				sourceType: 'script'
+				end: Object {
+					column: 1
+					index: 1
+					line: 1
+				}
+				start: Object {
+					column: 1
+					index: 1
+					line: 1
+				}
+			}
+			description: Object {
+				category: 'parse/js'
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unclosed object'}
+				advice: Array [
+					log {
+						category: 'info'
+						text: 'We expected to find the closing character <emphasis>}</emphasis> here'
+					}
+					frame {
+						location: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 0
+								index: 6
+								line: 2
+							}
+							start: Object {
+								column: 0
+								index: 6
+								line: 2
+							}
+						}
+					}
+				]
+			}
+		}
+	]
+	body: Array [
+		ExpressionStatement {
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 5
+					index: 5
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: ObjectExpression {
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 5
+						index: 5
+						line: 1
+					}
+					start: Object {
+						column: 1
+						index: 1
+						line: 1
+					}
+				}
+				properties: Array [
+					ObjectProperty {
+						key: StaticPropertyKey {
+							value: Identifier {
+								name: 'get'
+								loc: Object {
+									filename: 'input.js'
+									identifierName: 'get'
+									end: Object {
+										column: 5
+										index: 5
+										line: 1
+									}
+									start: Object {
+										column: 2
+										index: 2
+										line: 1
+									}
+								}
+							}
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 5
+									index: 5
+									line: 1
+								}
+								start: Object {
+									column: 2
+									index: 2
+									line: 1
+								}
+							}
+						}
+						value: ReferenceIdentifier {
+							name: 'get'
+							loc: Object {
+								filename: 'input.js'
+								identifierName: 'get'
+								end: Object {
+									column: 5
+									index: 5
+									line: 1
+								}
+								start: Object {
+									column: 2
+									index: 2
+									line: 1
+								}
+							}
+						}
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 5
+								index: 5
+								line: 1
+							}
+							start: Object {
+								column: 2
+								index: 2
+								line: 1
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

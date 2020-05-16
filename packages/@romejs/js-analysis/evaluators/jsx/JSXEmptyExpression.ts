@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, JSXEmptyExpression, jsxEmptyExpression} from '@romejs/js-ast';
 
 export default function JSXEmptyExpression(node: AnyNode, scope: Scope) {
-  node = jsxEmptyExpression.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = jsxEmptyExpression.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

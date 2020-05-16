@@ -13,29 +13,29 @@ import {descriptions} from '@romejs/diagnostics';
 const RESTRICTED_GLOBALS = ['event', 'error'];
 
 export default {
-  name: 'restrictedGlobal',
-  enter(path: Path): AnyNode {
-    const {node, scope} = path;
+	name: 'restrictedGlobal',
+	enter(path: Path): AnyNode {
+		const {node, scope} = path;
 
-    if (
-      (node.type === 'ReferenceIdentifier' ||
-      node.type === 'JSXReferenceIdentifier') &&
-      !isInTypeAnnotation(path)
-    ) {
-      const {name} = node;
-      const binding = scope.getBinding(name);
+		if (
+			(node.type === 'ReferenceIdentifier' ||
+			node.type === 'JSXReferenceIdentifier') &&
+			!isInTypeAnnotation(path)
+		) {
+			const {name} = node;
+			const binding = scope.getBinding(name);
 
-      const isDefined = binding !== undefined;
-      const isAGlobal = scope.getRootScope().isGlobal(name);
+			const isDefined = binding !== undefined;
+			const isAGlobal = scope.getRootScope().isGlobal(name);
 
-      if (!isDefined && isAGlobal && RESTRICTED_GLOBALS.includes(name)) {
-        path.context.addNodeDiagnostic(
-          node,
-          descriptions.LINT.RESTRICTED_GLOBALS(name),
-        );
-      }
-    }
+			if (!isDefined && isAGlobal && RESTRICTED_GLOBALS.includes(name)) {
+				path.context.addNodeDiagnostic(
+					node,
+					descriptions.LINT.RESTRICTED_GLOBALS(name),
+				);
+			}
+		}
 
-    return node;
-  },
+		return node;
+	},
 };

@@ -10,33 +10,33 @@ import {createLocalCommand} from '../commands';
 import ClientRequest from '../ClientRequest';
 
 export default createLocalCommand({
-  category: commandCategories.PROCESS_MANAGEMENT,
-  description: 'stop a running daemon if one exists',
-  usage: '',
-  examples: [],
-  defineFlags() {
-    return {};
-  },
-  async callback(req: ClientRequest) {
-    // We might want to use `terminateWhenIdle` here combined with a timeout instead of forcing it to die straight away
-    const {reporter} = req.client;
-    const bridge = await req.client.tryConnectToExistingDaemon();
-    if (bridge) {
-      const stop = await req.client.query(
-        {
-          commandName: 'stop',
-        },
-        'master',
-      );
-      if (stop.type === 'ERROR' && stop.fatal) {
-        reporter.success('Stopped server.');
-      } else {
-        reporter.error('Failed to stop server.');
-        return false;
-      }
-    } else {
-      reporter.warn('No running server to stop.');
-    }
-    return true;
-  },
+	category: commandCategories.PROCESS_MANAGEMENT,
+	description: 'stop a running daemon if one exists',
+	usage: '',
+	examples: [],
+	defineFlags() {
+		return {};
+	},
+	async callback(req: ClientRequest) {
+		// We might want to use `terminateWhenIdle` here combined with a timeout instead of forcing it to die straight away
+		const {reporter} = req.client;
+		const bridge = await req.client.tryConnectToExistingDaemon();
+		if (bridge) {
+			const stop = await req.client.query(
+				{
+					commandName: 'stop',
+				},
+				'master',
+			);
+			if (stop.type === 'ERROR' && stop.fatal) {
+				reporter.success('Stopped server.');
+			} else {
+				reporter.error('Failed to stop server.');
+				return false;
+			}
+		} else {
+			reporter.warn('No running server to stop.');
+		}
+		return true;
+	},
 });

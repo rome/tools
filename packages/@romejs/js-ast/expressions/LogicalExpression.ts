@@ -9,21 +9,21 @@ import {AnyExpression, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type LogicalExpression = JSNodeBase & {
-  type: 'LogicalExpression';
-  operator: LogicalOperator;
-  left: AnyExpression;
-  right: AnyExpression;
+	type: 'LogicalExpression';
+	operator: LogicalOperator;
+	left: AnyExpression;
+	right: AnyExpression;
 };
 
 export type LogicalOperator = '||' | '&&' | '??';
 
 export const logicalExpression = createBuilder<LogicalExpression>(
-  'LogicalExpression',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      left: true,
-      right: true,
-    },
-  },
+	'LogicalExpression',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			left: true,
+			right: true,
+		},
+	},
 );

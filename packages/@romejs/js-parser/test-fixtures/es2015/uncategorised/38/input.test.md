@@ -6,263 +6,263 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: true
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 29
-      index: 29
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Parenthesized expression didnt contain anything'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 20
-          index: 20
-          line: 1
-        }
-        start: Object {
-          column: 20
-          index: 20
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 21
-          index: 21
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: CallExpression {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 21
-            index: 21
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        arguments: Array [
-          UnaryExpression {
-            operator: 'typeof'
-            prefix: true
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 21
-                index: 21
-                line: 1
-              }
-              start: Object {
-                column: 12
-                index: 12
-                line: 1
-              }
-            }
-            argument: ReferenceIdentifier {
-              name: 'INVALID_PLACEHOLDER'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 20
-                  index: 20
-                  line: 1
-                }
-                start: Object {
-                  column: 20
-                  index: 20
-                  line: 1
-                }
-              }
-            }
-          }
-        ]
-        callee: MemberExpression {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 11
-              index: 11
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-          object: ReferenceIdentifier {
-            name: 'console'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'console'
-              end: Object {
-                column: 7
-                index: 7
-                line: 1
-              }
-              start: Object {
-                column: 0
-                index: 0
-                line: 1
-              }
-            }
-          }
-          property: StaticMemberProperty {
-            value: Identifier {
-              name: 'log'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'log'
-                end: Object {
-                  column: 11
-                  index: 11
-                  line: 1
-                }
-                start: Object {
-                  column: 8
-                  index: 8
-                  line: 1
-                }
-              }
-            }
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'log'
-              end: Object {
-                column: 11
-                index: 11
-                line: 1
-              }
-              start: Object {
-                column: 8
-                index: 8
-                line: 1
-              }
-            }
-          }
-        }
-      }
-    }
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 24
-          index: 24
-          line: 1
-        }
-        start: Object {
-          column: 22
-          index: 22
-          line: 1
-        }
-      }
-      expression: ReferenceIdentifier {
-        name: 'INVALID_PLACEHOLDER'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 24
-            index: 24
-            line: 1
-          }
-          start: Object {
-            column: 22
-            index: 22
-            line: 1
-          }
-        }
-      }
-    }
-    BlockStatement {
-      body: Array []
-      directives: Array []
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 27
-          index: 27
-          line: 1
-        }
-        start: Object {
-          column: 25
-          index: 25
-          line: 1
-        }
-      }
-    }
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 29
-          index: 29
-          line: 1
-        }
-        start: Object {
-          column: 27
-          index: 27
-          line: 1
-        }
-      }
-      expression: ReferenceIdentifier {
-        name: 'INVALID_PLACEHOLDER'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 28
-            index: 28
-            line: 1
-          }
-          start: Object {
-            column: 27
-            index: 27
-            line: 1
-          }
-        }
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: true
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 29
+			index: 29
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: 'js-parser'}]
+			description: Object {
+				advice: Array []
+				category: 'parse/js'
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Parenthesized expression didnt contain anything'}
+			}
+			location: Object {
+				filename: 'input.js'
+				mtime: undefined
+				sourceType: 'script'
+				end: Object {
+					column: 20
+					index: 20
+					line: 1
+				}
+				start: Object {
+					column: 20
+					index: 20
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		ExpressionStatement {
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 21
+					index: 21
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: CallExpression {
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 21
+						index: 21
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				arguments: Array [
+					UnaryExpression {
+						operator: 'typeof'
+						prefix: true
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 21
+								index: 21
+								line: 1
+							}
+							start: Object {
+								column: 12
+								index: 12
+								line: 1
+							}
+						}
+						argument: ReferenceIdentifier {
+							name: 'INVALID_PLACEHOLDER'
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 20
+									index: 20
+									line: 1
+								}
+								start: Object {
+									column: 20
+									index: 20
+									line: 1
+								}
+							}
+						}
+					}
+				]
+				callee: MemberExpression {
+					loc: Object {
+						filename: 'input.js'
+						end: Object {
+							column: 11
+							index: 11
+							line: 1
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+					object: ReferenceIdentifier {
+						name: 'console'
+						loc: Object {
+							filename: 'input.js'
+							identifierName: 'console'
+							end: Object {
+								column: 7
+								index: 7
+								line: 1
+							}
+							start: Object {
+								column: 0
+								index: 0
+								line: 1
+							}
+						}
+					}
+					property: StaticMemberProperty {
+						value: Identifier {
+							name: 'log'
+							loc: Object {
+								filename: 'input.js'
+								identifierName: 'log'
+								end: Object {
+									column: 11
+									index: 11
+									line: 1
+								}
+								start: Object {
+									column: 8
+									index: 8
+									line: 1
+								}
+							}
+						}
+						loc: Object {
+							filename: 'input.js'
+							identifierName: 'log'
+							end: Object {
+								column: 11
+								index: 11
+								line: 1
+							}
+							start: Object {
+								column: 8
+								index: 8
+								line: 1
+							}
+						}
+					}
+				}
+			}
+		}
+		ExpressionStatement {
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 24
+					index: 24
+					line: 1
+				}
+				start: Object {
+					column: 22
+					index: 22
+					line: 1
+				}
+			}
+			expression: ReferenceIdentifier {
+				name: 'INVALID_PLACEHOLDER'
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 24
+						index: 24
+						line: 1
+					}
+					start: Object {
+						column: 22
+						index: 22
+						line: 1
+					}
+				}
+			}
+		}
+		BlockStatement {
+			body: Array []
+			directives: Array []
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 27
+					index: 27
+					line: 1
+				}
+				start: Object {
+					column: 25
+					index: 25
+					line: 1
+				}
+			}
+		}
+		ExpressionStatement {
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 29
+					index: 29
+					line: 1
+				}
+				start: Object {
+					column: 27
+					index: 27
+					line: 1
+				}
+			}
+			expression: ReferenceIdentifier {
+				name: 'INVALID_PLACEHOLDER'
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 28
+						index: 28
+						line: 1
+					}
+					start: Object {
+						column: 27
+						index: 27
+						line: 1
+					}
+				}
+			}
+		}
+	]
 }
 ```

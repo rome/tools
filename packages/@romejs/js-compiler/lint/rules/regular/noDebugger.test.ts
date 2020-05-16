@@ -10,23 +10,23 @@ import {testLint} from '../testHelpers';
 import {dedent} from '@romejs/string-utils';
 
 test(
-  'no debugger',
-  async (t) => {
-    await testLint(
-      t,
-      dedent`
+	'no debugger',
+	async (t) => {
+		await testLint(
+			t,
+			dedent`
         const test = { debugger: 1 };
         test.debugger;
       `,
-      {category: 'lint/noDebugger'},
-    );
+			{category: 'lint/noDebugger'},
+		);
 
-    await testLint(
-      t,
-      dedent`
+		await testLint(
+			t,
+			dedent`
         debugger;
       `,
-      {category: 'lint/noDebugger'},
-    );
-  },
+			{category: 'lint/noDebugger'},
+		);
+	},
 );

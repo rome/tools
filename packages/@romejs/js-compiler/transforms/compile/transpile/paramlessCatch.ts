@@ -9,19 +9,19 @@ import {Path} from '@romejs/js-compiler';
 import {AnyNode, bindingIdentifier} from '@romejs/js-ast';
 
 export default {
-  name: 'paramlessCatch',
-  enter(path: Path): AnyNode {
-    const {node} = path;
+	name: 'paramlessCatch',
+	enter(path: Path): AnyNode {
+		const {node} = path;
 
-    if (node.type === 'CatchClause' && node.param === undefined) {
-      return {
-        ...node,
-        param: bindingIdentifier.create({
-          name: path.scope.generateUid(),
-        }),
-      };
-    }
+		if (node.type === 'CatchClause' && node.param === undefined) {
+			return {
+				...node,
+				param: bindingIdentifier.create({
+					name: path.scope.generateUid(),
+				}),
+			};
+		}
 
-    return node;
-  },
+		return node;
+	},
 };

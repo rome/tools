@@ -9,13 +9,13 @@ import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type RegExpWordBoundaryCharacter = JSNodeBase & {
-  type: 'RegExpWordBoundaryCharacter';
+	type: 'RegExpWordBoundaryCharacter';
 };
 
 export const regExpWordBoundaryCharacter = createBuilder<RegExpWordBoundaryCharacter>(
-  'RegExpWordBoundaryCharacter',
-  {
-    bindingKeys: {},
-    visitorKeys: {},
-  },
+	'RegExpWordBoundaryCharacter',
+	{
+		bindingKeys: {},
+		visitorKeys: {},
+	},
 );

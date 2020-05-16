@@ -8,18 +8,18 @@
 import {Reporter, ReporterOptions} from '@romejs/cli-reporter';
 
 export default class Logger extends Reporter {
-  constructor(name: string, isEnabled: () => boolean, opts: ReporterOptions) {
-    super({
-      verbose: true,
-      ...opts,
-    });
-    this._loggerName = name;
-    this.isEnabled = isEnabled;
-  }
+	constructor(name: string, isEnabled: () => boolean, opts: ReporterOptions) {
+		super({
+			verbose: true,
+			...opts,
+		});
+		this._loggerName = name;
+		this.isEnabled = isEnabled;
+	}
 
-  _loggerName: string;
+	_loggerName: string;
 
-  getMessagePrefix() {
-    return `<dim>[${this._loggerName} ${process.pid}]</dim> `;
-  }
+	getMessagePrefix() {
+		return `<dim>[${this._loggerName} ${process.pid}]</dim> `;
+	}
 }

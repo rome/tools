@@ -9,16 +9,16 @@ import {Identifier, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type BreakStatement = JSNodeBase & {
-  type: 'BreakStatement';
-  label?: Identifier;
+	type: 'BreakStatement';
+	label?: Identifier;
 };
 
 export const breakStatement = createBuilder<BreakStatement>(
-  'BreakStatement',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      label: true,
-    },
-  },
+	'BreakStatement',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			label: true,
+		},
+	},
 );

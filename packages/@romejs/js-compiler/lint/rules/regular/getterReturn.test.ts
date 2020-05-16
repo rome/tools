@@ -10,35 +10,35 @@ import {testLint} from '../testHelpers';
 import {dedent} from '@romejs/string-utils';
 
 test(
-  'getter return',
-  async (t) => {
-    await testLint(
-      t,
-      dedent`
+	'getter return',
+	async (t) => {
+		await testLint(
+			t,
+			dedent`
         class p {
           get name() {
             console.log('hello');
           }
         }
       `,
-      {category: 'lint/getterReturn'},
-    );
+			{category: 'lint/getterReturn'},
+		);
 
-    await testLint(
-      t,
-      dedent`
+		await testLint(
+			t,
+			dedent`
         let p = {
           get name() {
             console.log('hello');
           },
         };
       `,
-      {category: 'lint/getterReturn'},
-    );
+			{category: 'lint/getterReturn'},
+		);
 
-    await testLint(
-      t,
-      dedent`
+		await testLint(
+			t,
+			dedent`
         let p = {};
         Object.defineProperty(p, {
           get: function () {
@@ -46,7 +46,7 @@ test(
           },
         });
       `,
-      {category: 'lint/getterReturn'},
-    );
-  },
+			{category: 'lint/getterReturn'},
+		);
+	},
 );

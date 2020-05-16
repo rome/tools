@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, MockParent, mockParent} from '@romejs/js-ast';
 
 export default function MockParent(node: AnyNode, scope: Scope) {
-  node = mockParent.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = mockParent.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

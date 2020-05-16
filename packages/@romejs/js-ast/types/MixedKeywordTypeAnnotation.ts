@@ -9,13 +9,13 @@ import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type MixedKeywordTypeAnnotation = JSNodeBase & {
-  type: 'MixedKeywordTypeAnnotation';
+	type: 'MixedKeywordTypeAnnotation';
 };
 
 export const mixedKeywordTypeAnnotation = createBuilder<MixedKeywordTypeAnnotation>(
-  'MixedKeywordTypeAnnotation',
-  {
-    bindingKeys: {},
-    visitorKeys: {},
-  },
+	'MixedKeywordTypeAnnotation',
+	{
+		bindingKeys: {},
+		visitorKeys: {},
+	},
 );

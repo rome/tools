@@ -9,9 +9,9 @@ import {Path} from '@romejs/js-compiler';
 import {AnyNode} from '@romejs/js-ast';
 
 export default {
-  name: 'propertyLiterals',
-  enter(path: Path): AnyNode {
-    const {node} = path;
-    return node;
-  },
+	name: 'propertyLiterals',
+	enter(path: Path): AnyNode {
+		const {node} = path;
+		return node;
+	},
 };

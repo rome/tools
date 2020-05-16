@@ -11,20 +11,20 @@ import {createBuilder} from '../utils';
 export type TSMappedTypeBoolean = undefined | boolean | '+' | '-';
 
 export type TSMappedType = JSNodeBase & {
-  type: 'TSMappedType';
-  typeParameter: TSTypeParameter;
-  typeAnnotation?: AnyTSPrimary;
-  optional?: TSMappedTypeBoolean;
-  readonly?: TSMappedTypeBoolean;
+	type: 'TSMappedType';
+	typeParameter: TSTypeParameter;
+	typeAnnotation?: AnyTSPrimary;
+	optional?: TSMappedTypeBoolean;
+	readonly?: TSMappedTypeBoolean;
 };
 
 export const tsMappedType = createBuilder<TSMappedType>(
-  'TSMappedType',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      typeParameter: true,
-      typeAnnotation: true,
-    },
-  },
+	'TSMappedType',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			typeParameter: true,
+			typeAnnotation: true,
+		},
+	},
 );

@@ -9,20 +9,20 @@ import {AnyExpression, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type UpdateExpression = JSNodeBase & {
-  type: 'UpdateExpression';
-  operator: UpdateOperator;
-  argument: AnyExpression;
-  prefix?: boolean;
+	type: 'UpdateExpression';
+	operator: UpdateOperator;
+	argument: AnyExpression;
+	prefix?: boolean;
 };
 
 export type UpdateOperator = '++' | '--';
 
 export const updateExpression = createBuilder<UpdateExpression>(
-  'UpdateExpression',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      argument: true,
-    },
-  },
+	'UpdateExpression',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			argument: true,
+		},
+	},
 );

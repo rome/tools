@@ -8,18 +8,18 @@
 export * from './parse';
 
 export {
-  MarkupFormatFilenameHumanizer,
-  MarkupFormatFilenameNormalizer,
-  MarkupFormatGridOptions,
-  MarkupFormatNormalizeOptions,
-  MarkupFormatOptions,
+	MarkupFormatFilenameHumanizer,
+	MarkupFormatFilenameNormalizer,
+	MarkupFormatGridOptions,
+	MarkupFormatNormalizeOptions,
+	MarkupFormatOptions,
 } from './types';
 
 export {
-  markupToAnsi,
-  markupToPlainText,
-  markupToPlainTextString,
-  normalizeMarkup,
+	markupToAnsi,
+	markupToPlainText,
+	markupToPlainTextString,
+	normalizeMarkup,
 } from './format';
 
 export * from './escape';

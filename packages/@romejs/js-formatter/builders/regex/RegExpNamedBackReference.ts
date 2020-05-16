@@ -10,8 +10,8 @@ import {Token, concat} from '../../tokens';
 import {RegExpNamedBackReference} from '@romejs/js-ast';
 
 export default function RegExpNamedBackReference(
-  builder: Builder,
-  node: RegExpNamedBackReference,
+	builder: Builder,
+	node: RegExpNamedBackReference,
 ): Token {
-  return concat(['\\k', '<', node.name, '>']);
+	return concat(['\\k', '<', node.name, '>']);
 }

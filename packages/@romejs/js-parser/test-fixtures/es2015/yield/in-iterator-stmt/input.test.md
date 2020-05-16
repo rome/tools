@@ -6,235 +6,235 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: true
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 47
-      line: 4
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Invalid left-hand side in for-in statement'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 15
-          index: 31
-          line: 2
-        }
-        start: Object {
-          column: 7
-          index: 23
-          line: 2
-        }
-      }
-    }
-  ]
-  body: Array [
-    FunctionDeclaration {
-      id: BindingIdentifier {
-        name: 'g'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'g'
-          end: Object {
-            column: 11
-            index: 11
-            line: 1
-          }
-          start: Object {
-            column: 10
-            index: 10
-            line: 1
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 1
-          index: 46
-          line: 3
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      head: FunctionHead {
-        async: false
-        generator: true
-        hasHoistedVars: false
-        params: Array []
-        rest: undefined
-        returnType: undefined
-        thisType: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 13
-            index: 13
-            line: 1
-          }
-          start: Object {
-            column: 11
-            index: 11
-            line: 1
-          }
-        }
-      }
-      body: BlockStatement {
-        directives: Array []
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 1
-            index: 46
-            line: 3
-          }
-          start: Object {
-            column: 14
-            index: 14
-            line: 1
-          }
-        }
-        body: Array [
-          ForInStatement {
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 22
-                index: 38
-                line: 2
-              }
-              start: Object {
-                column: 2
-                index: 18
-                line: 2
-              }
-            }
-            body: EmptyStatement {
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 22
-                  index: 38
-                  line: 2
-                }
-                start: Object {
-                  column: 21
-                  index: 37
-                  line: 2
-                }
-              }
-            }
-            left: AssignmentIdentifier {
-              name: 'INVALID_PLACEHOLDER'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 15
-                  index: 31
-                  line: 2
-                }
-                start: Object {
-                  column: 16
-                  index: 32
-                  line: 2
-                }
-              }
-            }
-            right: ObjectExpression {
-              properties: Array []
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 21
-                  index: 37
-                  line: 2
-                }
-                start: Object {
-                  column: 19
-                  index: 35
-                  line: 2
-                }
-              }
-            }
-          }
-          EmptyStatement {
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 24
-                index: 40
-                line: 2
-              }
-              start: Object {
-                column: 23
-                index: 39
-                line: 2
-              }
-            }
-          }
-          ExpressionStatement {
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 28
-                index: 44
-                line: 2
-              }
-              start: Object {
-                column: 25
-                index: 41
-                line: 2
-              }
-            }
-            expression: ReferenceIdentifier {
-              name: 'INVALID_PLACEHOLDER'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 26
-                  index: 42
-                  line: 2
-                }
-                start: Object {
-                  column: 25
-                  index: 41
-                  line: 2
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: true
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 0
+			index: 47
+			line: 4
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: 'js-parser'}]
+			description: Object {
+				advice: Array []
+				category: 'parse/js'
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Invalid left-hand side in for-in statement'}
+			}
+			location: Object {
+				filename: 'input.js'
+				mtime: undefined
+				sourceType: 'script'
+				end: Object {
+					column: 15
+					index: 31
+					line: 2
+				}
+				start: Object {
+					column: 7
+					index: 23
+					line: 2
+				}
+			}
+		}
+	]
+	body: Array [
+		FunctionDeclaration {
+			id: BindingIdentifier {
+				name: 'g'
+				loc: Object {
+					filename: 'input.js'
+					identifierName: 'g'
+					end: Object {
+						column: 11
+						index: 11
+						line: 1
+					}
+					start: Object {
+						column: 10
+						index: 10
+						line: 1
+					}
+				}
+			}
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 1
+					index: 46
+					line: 3
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			head: FunctionHead {
+				async: false
+				generator: true
+				hasHoistedVars: false
+				params: Array []
+				rest: undefined
+				returnType: undefined
+				thisType: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 13
+						index: 13
+						line: 1
+					}
+					start: Object {
+						column: 11
+						index: 11
+						line: 1
+					}
+				}
+			}
+			body: BlockStatement {
+				directives: Array []
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 1
+						index: 46
+						line: 3
+					}
+					start: Object {
+						column: 14
+						index: 14
+						line: 1
+					}
+				}
+				body: Array [
+					ForInStatement {
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 22
+								index: 38
+								line: 2
+							}
+							start: Object {
+								column: 2
+								index: 18
+								line: 2
+							}
+						}
+						body: EmptyStatement {
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 22
+									index: 38
+									line: 2
+								}
+								start: Object {
+									column: 21
+									index: 37
+									line: 2
+								}
+							}
+						}
+						left: AssignmentIdentifier {
+							name: 'INVALID_PLACEHOLDER'
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 15
+									index: 31
+									line: 2
+								}
+								start: Object {
+									column: 16
+									index: 32
+									line: 2
+								}
+							}
+						}
+						right: ObjectExpression {
+							properties: Array []
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 21
+									index: 37
+									line: 2
+								}
+								start: Object {
+									column: 19
+									index: 35
+									line: 2
+								}
+							}
+						}
+					}
+					EmptyStatement {
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 24
+								index: 40
+								line: 2
+							}
+							start: Object {
+								column: 23
+								index: 39
+								line: 2
+							}
+						}
+					}
+					ExpressionStatement {
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 28
+								index: 44
+								line: 2
+							}
+							start: Object {
+								column: 25
+								index: 41
+								line: 2
+							}
+						}
+						expression: ReferenceIdentifier {
+							name: 'INVALID_PLACEHOLDER'
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 26
+									index: 42
+									line: 2
+								}
+								start: Object {
+									column: 25
+									index: 41
+									line: 2
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

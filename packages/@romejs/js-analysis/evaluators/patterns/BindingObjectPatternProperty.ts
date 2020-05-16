@@ -6,12 +6,12 @@
  */
 
 import {
-  AnyNode,
-  BindingObjectPatternProperty,
-  bindingObjectPatternProperty,
+	AnyNode,
+	BindingObjectPatternProperty,
+	bindingObjectPatternProperty,
 } from '@romejs/js-ast';
 
 export default function BindingObjectPatternProperty(node: AnyNode) {
-  node = bindingObjectPatternProperty.assert(node);
-  throw new Error('unimplemented');
+	node = bindingObjectPatternProperty.assert(node);
+	throw new Error('unimplemented');
 }

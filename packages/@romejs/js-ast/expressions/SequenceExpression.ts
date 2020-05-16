@@ -9,11 +9,11 @@ import {AnyExpression, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type SequenceExpression = JSNodeBase & {
-  type: 'SequenceExpression';
-  expressions: Array<AnyExpression>;
+	type: 'SequenceExpression';
+	expressions: Array<AnyExpression>;
 };
 
 export const sequenceExpression = createBuilder<SequenceExpression>(
-  'SequenceExpression',
-  {bindingKeys: {}, visitorKeys: {expressions: true}},
+	'SequenceExpression',
+	{bindingKeys: {}, visitorKeys: {expressions: true}},
 );

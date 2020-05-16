@@ -8,6 +8,6 @@
 import {AnyNode, RegExpEndCharacter, regExpEndCharacter} from '@romejs/js-ast';
 
 export default function RegExpEndCharacter(node: AnyNode) {
-  node = regExpEndCharacter.assert(node);
-  throw new Error('unimplemented');
+	node = regExpEndCharacter.assert(node);
+	throw new Error('unimplemented');
 }

@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, TSMethodSignature, tsMethodSignature} from '@romejs/js-ast';
 
 export default function TSMethodSignature(node: AnyNode, scope: Scope) {
-  node = tsMethodSignature.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = tsMethodSignature.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

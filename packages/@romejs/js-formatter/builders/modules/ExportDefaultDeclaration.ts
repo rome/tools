@@ -11,14 +11,14 @@ import {Token, concat, space} from '../../tokens';
 import {printExportDeclaration} from './ExportLocalDeclaration';
 
 export default function ExportDefaultDeclaration(
-  builder: Builder,
-  node: ExportDefaultDeclaration,
+	builder: Builder,
+	node: ExportDefaultDeclaration,
 ): Token {
-  return concat([
-    'export',
-    space,
-    'default',
-    space,
-    printExportDeclaration(builder, node),
-  ]);
+	return concat([
+		'export',
+		space,
+		'default',
+		space,
+		printExportDeclaration(builder, node),
+	]);
 }

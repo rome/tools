@@ -10,17 +10,17 @@ import {AnyNode, assignmentExpression} from '@romejs/js-ast';
 import SideEffectT from '../../types/SideEffectT';
 
 export default function AssignmentExpression(node: AnyNode, scope: Scope) {
-  node = assignmentExpression.assert(node);
+	node = assignmentExpression.assert(node);
 
-  const {left, right, operator} = node;
+	const {left, right, operator} = node;
 
-  if (operator === '=') {
-    const rightType = scope.evaluate(right);
-    const leftType = scope.evaluate(left);
-    leftType.shouldMatch(rightType);
-    return new SideEffectT(scope, node, rightType);
-  } else {
-    // TODO!
-    return undefined;
-  }
+	if (operator === '=') {
+		const rightType = scope.evaluate(right);
+		const leftType = scope.evaluate(left);
+		leftType.shouldMatch(rightType);
+		return new SideEffectT(scope, node, rightType);
+	} else {
+		// TODO!
+		return undefined;
+	}
 }

@@ -7,13 +7,13 @@
 
 import {Scope} from '../../scopes';
 import {
-  AnyNode,
-  ExpressionStatement,
-  expressionStatement,
+	AnyNode,
+	ExpressionStatement,
+	expressionStatement,
 } from '@romejs/js-ast';
 
 export default function ExpressionStatement(node: AnyNode, scope: Scope) {
-  node = expressionStatement.assert(node);
+	node = expressionStatement.assert(node);
 
-  return scope.evaluate(node.expression);
+	return scope.evaluate(node.expression);
 }

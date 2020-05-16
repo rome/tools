@@ -10,6 +10,6 @@ import {AnyNode, NewExpression, newExpression} from '@romejs/js-ast';
 import InstanceT from '../../types/InstanceT';
 
 export default function NewExpression(node: AnyNode, scope: Scope) {
-  node = newExpression.assert(node);
-  return new InstanceT(scope, node, scope.evaluate(node.callee), []);
+	node = newExpression.assert(node);
+	return new InstanceT(scope, node, scope.evaluate(node.callee), []);
 }

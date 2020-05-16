@@ -8,5 +8,5 @@
 import {Token} from '../../tokens';
 
 export default function MixedKeywordTypeAnnotation(): Token {
-  return 'mixed';
+	return 'mixed';
 }

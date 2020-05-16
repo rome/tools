@@ -8,12 +8,12 @@
 import {AnyNode, AnyVariableIdentifier} from '@romejs/js-ast';
 
 export default function isVariableIdentifier(
-  node: AnyNode,
+	node: AnyNode,
 ): node is AnyVariableIdentifier {
-  return (
-    node.type === 'BindingIdentifier' ||
-    node.type === 'AssignmentIdentifier' ||
-    node.type === 'ReferenceIdentifier' ||
-    node.type === 'JSXReferenceIdentifier'
-  );
+	return (
+		node.type === 'BindingIdentifier' ||
+		node.type === 'AssignmentIdentifier' ||
+		node.type === 'ReferenceIdentifier' ||
+		node.type === 'JSXReferenceIdentifier'
+	);
 }

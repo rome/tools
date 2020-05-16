@@ -10,6 +10,6 @@ import {AnyNode, NumericLiteral, numericLiteral} from '@romejs/js-ast';
 import NumericLiteralT from '../../types/NumericLiteralT';
 
 export default function NumericLiteral(node: AnyNode, scope: Scope) {
-  node = numericLiteral.assert(node);
-  return new NumericLiteralT(scope, node, node.value);
+	node = numericLiteral.assert(node);
+	return new NumericLiteralT(scope, node, node.value);
 }

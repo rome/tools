@@ -9,14 +9,14 @@ import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type JSXText = JSNodeBase & {
-  type: 'JSXText';
-  value: string;
+	type: 'JSXText';
+	value: string;
 };
 
 export const jsxText = createBuilder<JSXText>(
-  'JSXText',
-  {
-    bindingKeys: {},
-    visitorKeys: {},
-  },
+	'JSXText',
+	{
+		bindingKeys: {},
+		visitorKeys: {},
+	},
 );

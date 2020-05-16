@@ -6,131 +6,131 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array [
-    'jsx'
-    'ts'
-  ]
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 63
-      line: 4
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 17
-          index: 62
-          line: 3
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: JSXElement {
-        name: JSXIdentifier {
-          name: 'path'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 5
-              index: 5
-              line: 1
-            }
-            start: Object {
-              column: 1
-              index: 1
-              line: 1
-            }
-          }
-        }
-        children: Array []
-        selfClosing: true
-        typeArguments: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 17
-            index: 62
-            line: 3
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        attributes: Array [
-          JSXAttribute {
-            name: JSXIdentifier {
-              name: 'd'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 7
-                  index: 7
-                  line: 1
-                }
-                start: Object {
-                  column: 6
-                  index: 6
-                  line: 1
-                }
-              }
-            }
-            value: StringLiteral {
-              value: 'M230 80\n\t\tA 45 45, 0, 1, 0, 275 125\n    L 275 80 Z'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 15
-                  index: 60
-                  line: 3
-                }
-                start: Object {
-                  column: 8
-                  index: 8
-                  line: 1
-                }
-              }
-            }
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 15
-                index: 60
-                line: 3
-              }
-              start: Object {
-                column: 6
-                index: 6
-                line: 1
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array [
+		'jsx'
+		'ts'
+	]
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 0
+			index: 63
+			line: 4
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		ExpressionStatement {
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 17
+					index: 62
+					line: 3
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSXElement {
+				name: JSXIdentifier {
+					name: 'path'
+					loc: Object {
+						filename: 'input.js'
+						end: Object {
+							column: 5
+							index: 5
+							line: 1
+						}
+						start: Object {
+							column: 1
+							index: 1
+							line: 1
+						}
+					}
+				}
+				children: Array []
+				selfClosing: true
+				typeArguments: undefined
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 17
+						index: 62
+						line: 3
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				attributes: Array [
+					JSXAttribute {
+						name: JSXIdentifier {
+							name: 'd'
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 7
+									index: 7
+									line: 1
+								}
+								start: Object {
+									column: 6
+									index: 6
+									line: 1
+								}
+							}
+						}
+						value: StringLiteral {
+							value: 'M230 80\n\t\tA 45 45, 0, 1, 0, 275 125\n    L 275 80 Z'
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 15
+									index: 60
+									line: 3
+								}
+								start: Object {
+									column: 8
+									index: 8
+									line: 1
+								}
+							}
+						}
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 15
+								index: 60
+								line: 3
+							}
+							start: Object {
+								column: 6
+								index: 6
+								line: 1
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

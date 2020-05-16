@@ -6,233 +6,233 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 26
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ForOfStatement {
-      await: false
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 25
-          index: 25
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      body: BlockStatement {
-        body: Array []
-        directives: Array []
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 25
-            index: 25
-            line: 1
-          }
-          start: Object {
-            column: 23
-            index: 23
-            line: 1
-          }
-        }
-      }
-      right: RegExpLiteral {
-        global: false
-        insensitive: false
-        multiline: false
-        noDotNewline: false
-        sticky: false
-        unicode: false
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 21
-            index: 21
-            line: 1
-          }
-          start: Object {
-            column: 18
-            index: 18
-            line: 1
-          }
-        }
-        expression: RegExpSubExpression {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 20
-              index: 20
-              line: 1
-            }
-            start: Object {
-              column: 19
-              index: 19
-              line: 1
-            }
-          }
-          body: Array [
-            RegExpCharacter {
-              value: 'b'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 20
-                  index: 20
-                  line: 1
-                }
-                start: Object {
-                  column: 19
-                  index: 19
-                  line: 1
-                }
-              }
-            }
-          ]
-        }
-      }
-      left: VariableDeclaration {
-        kind: 'const'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 14
-            index: 14
-            line: 1
-          }
-          start: Object {
-            column: 5
-            index: 5
-            line: 1
-          }
-        }
-        declarations: Array [
-          VariableDeclarator {
-            id: BindingObjectPattern {
-              rest: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 14
-                  index: 14
-                  line: 1
-                }
-                start: Object {
-                  column: 11
-                  index: 11
-                  line: 1
-                }
-              }
-              properties: Array [
-                BindingObjectPatternProperty {
-                  key: StaticPropertyKey {
-                    value: Identifier {
-                      name: 'a'
-                      loc: Object {
-                        filename: 'input.js'
-                        identifierName: 'a'
-                        end: Object {
-                          column: 13
-                          index: 13
-                          line: 1
-                        }
-                        start: Object {
-                          column: 12
-                          index: 12
-                          line: 1
-                        }
-                      }
-                    }
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 13
-                        index: 13
-                        line: 1
-                      }
-                      start: Object {
-                        column: 12
-                        index: 12
-                        line: 1
-                      }
-                    }
-                  }
-                  value: BindingIdentifier {
-                    name: 'a'
-                    loc: Object {
-                      filename: 'input.js'
-                      identifierName: 'a'
-                      end: Object {
-                        column: 13
-                        index: 13
-                        line: 1
-                      }
-                      start: Object {
-                        column: 12
-                        index: 12
-                        line: 1
-                      }
-                    }
-                  }
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 13
-                      index: 13
-                      line: 1
-                    }
-                    start: Object {
-                      column: 12
-                      index: 12
-                      line: 1
-                    }
-                  }
-                }
-              ]
-            }
-            init: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 14
-                index: 14
-                line: 1
-              }
-              start: Object {
-                column: 11
-                index: 11
-                line: 1
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 0
+			index: 26
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		ForOfStatement {
+			await: false
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 25
+					index: 25
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			body: BlockStatement {
+				body: Array []
+				directives: Array []
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 25
+						index: 25
+						line: 1
+					}
+					start: Object {
+						column: 23
+						index: 23
+						line: 1
+					}
+				}
+			}
+			right: RegExpLiteral {
+				global: false
+				insensitive: false
+				multiline: false
+				noDotNewline: false
+				sticky: false
+				unicode: false
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 21
+						index: 21
+						line: 1
+					}
+					start: Object {
+						column: 18
+						index: 18
+						line: 1
+					}
+				}
+				expression: RegExpSubExpression {
+					loc: Object {
+						filename: 'input.js'
+						end: Object {
+							column: 20
+							index: 20
+							line: 1
+						}
+						start: Object {
+							column: 19
+							index: 19
+							line: 1
+						}
+					}
+					body: Array [
+						RegExpCharacter {
+							value: 'b'
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 20
+									index: 20
+									line: 1
+								}
+								start: Object {
+									column: 19
+									index: 19
+									line: 1
+								}
+							}
+						}
+					]
+				}
+			}
+			left: VariableDeclaration {
+				kind: 'const'
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 14
+						index: 14
+						line: 1
+					}
+					start: Object {
+						column: 5
+						index: 5
+						line: 1
+					}
+				}
+				declarations: Array [
+					VariableDeclarator {
+						id: BindingObjectPattern {
+							rest: undefined
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 14
+									index: 14
+									line: 1
+								}
+								start: Object {
+									column: 11
+									index: 11
+									line: 1
+								}
+							}
+							properties: Array [
+								BindingObjectPatternProperty {
+									key: StaticPropertyKey {
+										value: Identifier {
+											name: 'a'
+											loc: Object {
+												filename: 'input.js'
+												identifierName: 'a'
+												end: Object {
+													column: 13
+													index: 13
+													line: 1
+												}
+												start: Object {
+													column: 12
+													index: 12
+													line: 1
+												}
+											}
+										}
+										loc: Object {
+											filename: 'input.js'
+											end: Object {
+												column: 13
+												index: 13
+												line: 1
+											}
+											start: Object {
+												column: 12
+												index: 12
+												line: 1
+											}
+										}
+									}
+									value: BindingIdentifier {
+										name: 'a'
+										loc: Object {
+											filename: 'input.js'
+											identifierName: 'a'
+											end: Object {
+												column: 13
+												index: 13
+												line: 1
+											}
+											start: Object {
+												column: 12
+												index: 12
+												line: 1
+											}
+										}
+									}
+									loc: Object {
+										filename: 'input.js'
+										end: Object {
+											column: 13
+											index: 13
+											line: 1
+										}
+										start: Object {
+											column: 12
+											index: 12
+											line: 1
+										}
+									}
+								}
+							]
+						}
+						init: undefined
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 14
+								index: 14
+								line: 1
+							}
+							start: Object {
+								column: 11
+								index: 11
+								line: 1
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

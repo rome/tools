@@ -10,11 +10,11 @@ import {Builder} from '@romejs/js-formatter';
 import {Token, concat} from '../../tokens';
 
 export default function TSTypeReference(
-  builder: Builder,
-  node: TSTypeReference,
+	builder: Builder,
+	node: TSTypeReference,
 ): Token {
-  return concat([
-    builder.tokenize(node.typeName, node),
-    builder.tokenize(node.typeParameters, node),
-  ]);
+	return concat([
+		builder.tokenize(node.typeName, node),
+		builder.tokenize(node.typeParameters, node),
+	]);
 }

@@ -9,18 +9,18 @@ import {AnyPrimaryType, JSNodeBase, TSSignatureDeclarationMeta} from '../index';
 import {createBuilder} from '../utils';
 
 export type TSFunctionType = JSNodeBase & {
-  type: 'TSFunctionType';
-  meta: TSSignatureDeclarationMeta;
-  typeAnnotation: AnyPrimaryType;
+	type: 'TSFunctionType';
+	meta: TSSignatureDeclarationMeta;
+	typeAnnotation: AnyPrimaryType;
 };
 
 export const tsFunctionType = createBuilder<TSFunctionType>(
-  'TSFunctionType',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      meta: true,
-      typeAnnotation: true,
-    },
-  },
+	'TSFunctionType',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			meta: true,
+			typeAnnotation: true,
+		},
+	},
 );

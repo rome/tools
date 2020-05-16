@@ -10,14 +10,14 @@ import {Token, concat, space} from '../../tokens';
 import {TSAssignmentTypeAssertion} from '@romejs/js-ast';
 
 export default function TSAssignmentTypeAssertion(
-  builder: Builder,
-  node: TSAssignmentTypeAssertion,
+	builder: Builder,
+	node: TSAssignmentTypeAssertion,
 ): Token {
-  return concat([
-    '<',
-    builder.tokenize(node.typeAnnotation, node),
-    '>',
-    space,
-    builder.tokenize(node.expression, node),
-  ]);
+	return concat([
+		'<',
+		builder.tokenize(node.typeAnnotation, node),
+		'>',
+		space,
+		builder.tokenize(node.expression, node),
+	]);
 }

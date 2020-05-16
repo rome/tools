@@ -9,43 +9,43 @@ import {AnyExpression, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type BinaryExpression = JSNodeBase & {
-  type: 'BinaryExpression';
-  operator: BinaryOperator;
-  left: AnyExpression;
-  right: AnyExpression;
+	type: 'BinaryExpression';
+	operator: BinaryOperator;
+	left: AnyExpression;
+	right: AnyExpression;
 };
 
 export type BinaryOperator =
-  | '=='
-  | '!='
-  | '==='
-  | '**'
-  | '!=='
-  | '<'
-  | '<='
-  | '>'
-  | '>='
-  | '<<'
-  | '>>'
-  | '>>>'
-  | '+'
-  | '-'
-  | '*'
-  | '/'
-  | '%'
-  | '|'
-  | '^'
-  | '&'
-  | 'in'
-  | 'instanceof';
+	 | '=='
+	| '!='
+	| '==='
+	| '**'
+	| '!=='
+	| '<'
+	| '<='
+	| '>'
+	| '>='
+	| '<<'
+	| '>>'
+	| '>>>'
+	| '+'
+	| '-'
+	| '*'
+	| '/'
+	| '%'
+	| '|'
+	| '^'
+	| '&'
+	| 'in'
+	| 'instanceof';
 
 export const binaryExpression = createBuilder<BinaryExpression>(
-  'BinaryExpression',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      left: true,
-      right: true,
-    },
-  },
+	'BinaryExpression',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			left: true,
+			right: true,
+		},
+	},
 );

@@ -9,18 +9,18 @@ import {ConstTSAccessibility, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type ClassPropertyMeta = JSNodeBase & {
-  type: 'ClassPropertyMeta';
-  static?: boolean;
-  accessibility?: ConstTSAccessibility;
-  optional?: boolean;
-  readonly?: boolean;
-  abstract?: boolean;
+	type: 'ClassPropertyMeta';
+	static?: boolean;
+	accessibility?: ConstTSAccessibility;
+	optional?: boolean;
+	readonly?: boolean;
+	abstract?: boolean;
 };
 
 export const classPropertyMeta = createBuilder<ClassPropertyMeta>(
-  'ClassPropertyMeta',
-  {
-    bindingKeys: {},
-    visitorKeys: {},
-  },
+	'ClassPropertyMeta',
+	{
+		bindingKeys: {},
+		visitorKeys: {},
+	},
 );

@@ -10,46 +10,46 @@ import {Builder} from '@romejs/js-formatter';
 import {Token, concat, group, indent, softline, space} from '../../tokens';
 
 export default function TSMappedType(
-  builder: Builder,
-  node: TSMappedType,
+	builder: Builder,
+	node: TSMappedType,
 ): Token {
-  const tokens: Array<Token> = [];
+	const tokens: Array<Token> = [];
 
-  if (node.readonly) {
-    tokens.push(tokenIfPlusMinus(builder, node.readonly), 'readonly', space);
-  }
+	if (node.readonly) {
+		tokens.push(tokenIfPlusMinus(builder, node.readonly), 'readonly', space);
+	}
 
-  const {typeParameter} = node;
-  tokens.push(
-    '[',
-    typeParameter.name,
-    space,
-    'in',
-    space,
-    builder.tokenize(typeParameter.constraint, typeParameter),
-    ']',
-  );
+	const {typeParameter} = node;
+	tokens.push(
+		'[',
+		typeParameter.name,
+		space,
+		'in',
+		space,
+		builder.tokenize(typeParameter.constraint, typeParameter),
+		']',
+	);
 
-  if (node.optional) {
-    tokens.push(tokenIfPlusMinus(builder, node.optional), '?');
-  }
+	if (node.optional) {
+		tokens.push(tokenIfPlusMinus(builder, node.optional), '?');
+	}
 
-  if (node.typeAnnotation) {
-    tokens.push(':', space, builder.tokenize(node.typeAnnotation, node));
-  }
+	if (node.typeAnnotation) {
+		tokens.push(':', space, builder.tokenize(node.typeAnnotation, node));
+	}
 
-  return group(
-    concat(['{', indent(concat([softline, concat(tokens)])), softline, '}']),
-  );
+	return group(
+		concat(['{', indent(concat([softline, concat(tokens)])), softline, '}']),
+	);
 }
 
 function tokenIfPlusMinus(builder: Builder, token: string | true): Token {
-  switch (token) {
-    case '+':
-    case '-':
-      return token;
+	switch (token) {
+		case '+':
+		case '-':
+			return token;
 
-    default:
-      return '';
-  }
+		default:
+			return '';
+	}
 }

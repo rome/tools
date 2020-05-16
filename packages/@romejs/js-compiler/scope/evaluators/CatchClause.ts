@@ -11,23 +11,23 @@ import {getBindingIdentifiers} from '@romejs/js-ast-utils';
 import {AnyNode, CatchClause} from '@romejs/js-ast';
 
 export default {
-  creator: true,
-  build(node: CatchClause, parent: AnyNode, scope: Scope) {
-    const newScope = scope.fork('block', node);
-    if (node.param !== undefined) {
-      for (const id of getBindingIdentifiers(node.param)) {
-        newScope.addBinding(
-          new LetBinding(
-            {
-              node: id,
-              name: id.name,
-              scope: newScope,
-            },
-            'catch',
-          ),
-        );
-      }
-    }
-    return newScope;
-  },
+	creator: true,
+	build(node: CatchClause, parent: AnyNode, scope: Scope) {
+		const newScope = scope.fork('block', node);
+		if (node.param !== undefined) {
+			for (const id of getBindingIdentifiers(node.param)) {
+				newScope.addBinding(
+					new LetBinding(
+						{
+							node: id,
+							name: id.name,
+							scope: newScope,
+						},
+						'catch',
+					),
+				);
+			}
+		}
+		return newScope;
+	},
 };

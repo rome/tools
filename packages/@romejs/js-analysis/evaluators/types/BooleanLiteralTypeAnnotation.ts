@@ -7,16 +7,16 @@
 
 import {Scope} from '../../scopes';
 import {
-  AnyNode,
-  BooleanLiteralTypeAnnotation,
-  booleanLiteralTypeAnnotation,
+	AnyNode,
+	BooleanLiteralTypeAnnotation,
+	booleanLiteralTypeAnnotation,
 } from '@romejs/js-ast';
 
 export default function BooleanLiteralTypeAnnotation(
-  node: AnyNode,
-  scope: Scope,
+	node: AnyNode,
+	scope: Scope,
 ) {
-  node = booleanLiteralTypeAnnotation.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = booleanLiteralTypeAnnotation.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

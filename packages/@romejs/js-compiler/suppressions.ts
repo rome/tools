@@ -7,11 +7,11 @@
 
 import {AnyComment, AnyNode, Program} from '@romejs/js-ast';
 import {
-  DiagnosticLocation,
-  DiagnosticSuppression,
-  DiagnosticSuppressions,
-  Diagnostics,
-  descriptions,
+	DiagnosticLocation,
+	DiagnosticSuppression,
+	DiagnosticSuppressions,
+	Diagnostics,
+	descriptions,
 } from '@romejs/diagnostics';
 import CompilerContext from './lib/CompilerContext';
 import Path from './lib/Path';
@@ -19,158 +19,154 @@ import Path from './lib/Path';
 export const SUPPRESSION_START = 'rome-ignore';
 
 type ExtractedSuppressions = {
-  suppressions: DiagnosticSuppressions;
-  diagnostics: Diagnostics;
+	suppressions: DiagnosticSuppressions;
+	diagnostics: Diagnostics;
 };
 
 type NodeToComment = Map<AnyComment, AnyNode>;
 
 function extractSuppressionsFromComment(
-  context: CompilerContext,
-  comment: AnyComment,
-  nodeToComment: NodeToComment,
+	context: CompilerContext,
+	comment: AnyComment,
+	nodeToComment: NodeToComment,
 ): undefined | ExtractedSuppressions {
-  const commentLocation = comment.loc;
-  if (commentLocation === undefined) {
-    return undefined;
-  }
+	const commentLocation = comment.loc;
+	if (commentLocation === undefined) {
+		return undefined;
+	}
 
-  const suppressedCategories: Set<string> = new Set();
-  const diagnostics: Diagnostics = [];
-  const suppressions: DiagnosticSuppressions = [];
+	const suppressedCategories: Set<string> = new Set();
+	const diagnostics: Diagnostics = [];
+	const suppressions: DiagnosticSuppressions = [];
 
-  const lines = comment.value.split('\n');
-  const cleanLines = lines.map((line) => {
-    // Trim line and remove leading star
-    return line.trim().replace(/\*[\s]/, '');
-  });
+	const lines = comment.value.split('\n');
+	const cleanLines = lines.map((line) => {
+		// Trim line and remove leading star
+		return line.trim().replace(/\*[\s]/, '');
+	});
 
-  for (const line of cleanLines) {
-    if (!line.startsWith(SUPPRESSION_START)) {
-      continue;
-    }
+	for (const line of cleanLines) {
+		if (!line.startsWith(SUPPRESSION_START)) {
+			continue;
+		}
 
-    const nextNode = nodeToComment.get(comment);
-    if (nextNode === undefined || nextNode.loc === undefined) {
-      diagnostics.push({
-        description: descriptions.SUPPRESSIONS.MISSING_TARGET,
-        location: commentLocation,
-      });
-      continue;
-    }
+		const nextNode = nodeToComment.get(comment);
+		if (nextNode === undefined || nextNode.loc === undefined) {
+			diagnostics.push({
+				description: descriptions.SUPPRESSIONS.MISSING_TARGET,
+				location: commentLocation,
+			});
+			continue;
+		}
 
-    const startLine = nextNode.loc.start.line;
-    const endLine = nextNode.loc.end.line;
+		const startLine = nextNode.loc.start.line;
+		const endLine = nextNode.loc.end.line;
 
-    const lineWithoutPrefix = line.slice(SUPPRESSION_START.length);
-    if (lineWithoutPrefix[0] !== ' ') {
-      diagnostics.push({
-        description: descriptions.SUPPRESSIONS.MISSING_SPACE,
-        location: commentLocation,
-      });
-      continue;
-    }
+		const lineWithoutPrefix = line.slice(SUPPRESSION_START.length);
+		if (lineWithoutPrefix[0] !== ' ') {
+			diagnostics.push({
+				description: descriptions.SUPPRESSIONS.MISSING_SPACE,
+				location: commentLocation,
+			});
+			continue;
+		}
 
-    const categories = lineWithoutPrefix.trim().split(' ');
-    const cleanCategories = categories.map((category) => category.trim());
+		const categories = lineWithoutPrefix.trim().split(' ');
+		const cleanCategories = categories.map((category) => category.trim());
 
-    for (let category of cleanCategories) {
-      if (category === '') {
-        continue;
-      }
+		for (let category of cleanCategories) {
+			if (category === '') {
+				continue;
+			}
 
-      // If a category ends with a colon then all the things that follow it are an explanation
-      let shouldBreak = false;
-      if (category[category.length - 1] === ':') {
-        shouldBreak = true;
-        category = category.slice(-1);
-      }
+			// If a category ends with a colon then all the things that follow it are an explanation
+			let shouldBreak = false;
+			if (category[category.length - 1] === ':') {
+				shouldBreak = true;
+				category = category.slice(-1);
+			}
 
-      if (suppressedCategories.has(category)) {
-        diagnostics.push({
-          description: descriptions.SUPPRESSIONS.DUPLICATE(category),
-          location: commentLocation,
-        });
-      } else {
-        suppressedCategories.add(category);
+			if (suppressedCategories.has(category)) {
+				diagnostics.push({
+					description: descriptions.SUPPRESSIONS.DUPLICATE(category),
+					location: commentLocation,
+				});
+			} else {
+				suppressedCategories.add(category);
 
-        suppressions.push({
-          filename: context.filename,
-          category,
-          commentLocation,
-          startLine,
-          endLine,
-        });
-      }
+				suppressions.push({
+					filename: context.filename,
+					category,
+					commentLocation,
+					startLine,
+					endLine,
+				});
+			}
 
-      if (shouldBreak) {
-        break;
-      }
-    }
-  }
+			if (shouldBreak) {
+				break;
+			}
+		}
+	}
 
-  if (suppressions.length === 0 && diagnostics.length === 0) {
-    return undefined;
-  } else {
-    return {diagnostics, suppressions};
-  }
+	if (suppressions.length === 0 && diagnostics.length === 0) {
+		return undefined;
+	} else {
+		return {diagnostics, suppressions};
+	}
 }
 
 export function extractSuppressionsFromProgram(
-  context: CompilerContext,
-  ast: Program,
+	context: CompilerContext,
+	ast: Program,
 ): ExtractedSuppressions {
-  const {comments} = ast;
+	const {comments} = ast;
 
-  let diagnostics: Diagnostics = [];
-  let suppressions: DiagnosticSuppressions = [];
+	let diagnostics: Diagnostics = [];
+	let suppressions: DiagnosticSuppressions = [];
 
-  const nodeToComment: NodeToComment = new Map();
-  context.reduce(
-    ast,
-    {
-      name: 'extractSuppressions',
-      enter(path: Path): AnyNode {
-        const {node} = path;
+	const nodeToComment: NodeToComment = new Map();
+	context.reduce(
+		ast,
+		{
+			name: 'extractSuppressions',
+			enter(path: Path): AnyNode {
+				const {node} = path;
 
-        for (const comment of context.comments.getCommentsFromIds(
-          node.leadingComments,
-        )) {
-          nodeToComment.set(comment, node);
-        }
+				for (const comment of context.comments.getCommentsFromIds(
+					node.leadingComments,
+				)) {
+					nodeToComment.set(comment, node);
+				}
 
-        return node;
-      },
-    },
-    {
-      noScopeCreation: true,
-    },
-  );
+				return node;
+			},
+		},
+		{
+			noScopeCreation: true,
+		},
+	);
 
-  for (const comment of comments) {
-    const result = extractSuppressionsFromComment(
-      context,
-      comment,
-      nodeToComment,
-    );
-    if (result !== undefined) {
-      diagnostics = diagnostics.concat(result.diagnostics);
-      suppressions = suppressions.concat(result.suppressions);
-    }
-  }
+	for (const comment of comments) {
+		const result = extractSuppressionsFromComment(context, comment, nodeToComment);
+		if (result !== undefined) {
+			diagnostics = diagnostics.concat(result.diagnostics);
+			suppressions = suppressions.concat(result.suppressions);
+		}
+	}
 
-  return {suppressions, diagnostics};
+	return {suppressions, diagnostics};
 }
 
 export function matchesSuppression(
-  {filename, start, end}: DiagnosticLocation,
-  suppression: DiagnosticSuppression,
+	{filename, start, end}: DiagnosticLocation,
+	suppression: DiagnosticSuppression,
 ): boolean {
-  return (
-    filename === suppression.filename &&
-    start !== undefined &&
-    end !== undefined &&
-    start.line >= suppression.startLine &&
-    end.line <= suppression.endLine
-  );
+	return (
+		filename === suppression.filename &&
+		start !== undefined &&
+		end !== undefined &&
+		start.line >= suppression.startLine &&
+		end.line <= suppression.endLine
+	);
 }

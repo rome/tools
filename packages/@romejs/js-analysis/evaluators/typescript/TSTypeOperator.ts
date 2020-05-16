@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, TSTypeOperator, tsTypeOperator} from '@romejs/js-ast';
 
 export default function TSTypeOperator(node: AnyNode, scope: Scope) {
-  node = tsTypeOperator.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = tsTypeOperator.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

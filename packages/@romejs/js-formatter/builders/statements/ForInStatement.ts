@@ -11,21 +11,21 @@ import {Token, concat, group, space} from '../../tokens';
 import {printClause} from '../utils';
 
 export default function ForInStatement(
-  builder: Builder,
-  node: ForInStatement,
+	builder: Builder,
+	node: ForInStatement,
 ): Token {
-  return group(
-    concat([
-      'for',
-      space,
-      '(',
-      builder.tokenize(node.left, node),
-      space,
-      'in',
-      space,
-      builder.tokenize(node.right, node),
-      ')',
-      printClause(builder, node.body, node),
-    ]),
-  );
+	return group(
+		concat([
+			'for',
+			space,
+			'(',
+			builder.tokenize(node.left, node),
+			space,
+			'in',
+			space,
+			builder.tokenize(node.right, node),
+			')',
+			printClause(builder, node.body, node),
+		]),
+	);
 }

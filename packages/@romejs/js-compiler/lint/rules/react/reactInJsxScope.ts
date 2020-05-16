@@ -10,18 +10,18 @@ import {Path} from '@romejs/js-compiler';
 import {descriptions} from '@romejs/diagnostics';
 
 export default {
-  name: 'reactInJsxScope',
-  enter(path: Path): AnyNode {
-    const {node, scope, context} = path;
+	name: 'reactInJsxScope',
+	enter(path: Path): AnyNode {
+		const {node, scope, context} = path;
 
-    if (node.type === 'JSXElement') {
-      const reactIsInScope = scope.getBinding('React') !== undefined;
+		if (node.type === 'JSXElement') {
+			const reactIsInScope = scope.getBinding('React') !== undefined;
 
-      if (!reactIsInScope) {
-        context.addNodeDiagnostic(node, descriptions.LINT.REACT_IN_JSX_SCOPE);
-      }
-    }
+			if (!reactIsInScope) {
+				context.addNodeDiagnostic(node, descriptions.LINT.REACT_IN_JSX_SCOPE);
+			}
+		}
 
-    return node;
-  },
+		return node;
+	},
 };

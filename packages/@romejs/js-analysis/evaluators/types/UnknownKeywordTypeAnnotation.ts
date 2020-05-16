@@ -7,16 +7,16 @@
 
 import {Scope} from '../../scopes';
 import {
-  AnyNode,
-  UnknownKeywordTypeAnnotation,
-  unknownKeywordTypeAnnotation,
+	AnyNode,
+	UnknownKeywordTypeAnnotation,
+	unknownKeywordTypeAnnotation,
 } from '@romejs/js-ast';
 
 export default function UnknownKeywordTypeAnnotation(
-  node: AnyNode,
-  scope: Scope,
+	node: AnyNode,
+	scope: Scope,
 ) {
-  node = unknownKeywordTypeAnnotation.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = unknownKeywordTypeAnnotation.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

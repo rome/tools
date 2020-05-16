@@ -10,16 +10,16 @@ import {Token, concat} from '../../tokens';
 import {RegExpGroupCapture} from '@romejs/js-ast';
 
 export default function RegExpGroupCapture(
-  builder: Builder,
-  node: RegExpGroupCapture,
+	builder: Builder,
+	node: RegExpGroupCapture,
 ): Token {
-  const tokens: Array<Token> = ['('];
+	const tokens: Array<Token> = ['('];
 
-  if (node.name !== undefined) {
-    tokens.push('?<');
-    tokens.push(node.name);
-    tokens.push('>');
-  }
+	if (node.name !== undefined) {
+		tokens.push('?<');
+		tokens.push(node.name);
+		tokens.push('>');
+	}
 
-  return concat([concat(tokens), builder.tokenize(node.expression, node), ')']);
+	return concat([concat(tokens), builder.tokenize(node.expression, node), ')']);
 }

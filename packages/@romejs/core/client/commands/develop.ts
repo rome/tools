@@ -10,29 +10,29 @@ import {createLocalCommand} from '../commands';
 import ClientRequest from '../ClientRequest';
 
 export default createLocalCommand({
-  category: commandCategories.PROCESS_MANAGEMENT,
-  description: 'TODO',
-  usage: '',
-  examples: [],
-  defineFlags() {
-    return {};
-  },
-  async callback(req: ClientRequest) {
-    const existingServer = await req.client.tryConnectToExistingDaemon();
-    const hasExistingServer = existingServer !== undefined;
+	category: commandCategories.PROCESS_MANAGEMENT,
+	description: 'TODO',
+	usage: '',
+	examples: [],
+	defineFlags() {
+		return {};
+	},
+	async callback(req: ClientRequest) {
+		const existingServer = await req.client.tryConnectToExistingDaemon();
+		const hasExistingServer = existingServer !== undefined;
 
-    if (!hasExistingServer) {
-      await req.client.forceStartDaemon();
-    }
+		if (!hasExistingServer) {
+			await req.client.forceStartDaemon();
+		}
 
-    await req.client.query(
-      {
-        ...req.query,
-        terminateWhenIdle: true,
-      },
-      'master',
-    );
+		await req.client.query(
+			{
+				...req.query,
+				terminateWhenIdle: true,
+			},
+			'master',
+		);
 
-    return true;
-  },
+		return true;
+	},
 });

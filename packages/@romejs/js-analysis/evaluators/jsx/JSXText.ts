@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, JSXText, jsxText} from '@romejs/js-ast';
 
 export default function JSXText(node: AnyNode, scope: Scope) {
-  node = jsxText.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = jsxText.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

@@ -10,8 +10,8 @@ import {Token, concat} from '../../tokens';
 import {TSAssignmentNonNullExpression} from '@romejs/js-ast';
 
 export default function TSAssignmentNonNullExpression(
-  builder: Builder,
-  node: TSAssignmentNonNullExpression,
+	builder: Builder,
+	node: TSAssignmentNonNullExpression,
 ): Token {
-  return concat([builder.tokenize(node.expression, node), '!']);
+	return concat([builder.tokenize(node.expression, node), '!']);
 }

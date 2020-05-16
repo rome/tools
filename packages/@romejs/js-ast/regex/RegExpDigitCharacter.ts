@@ -9,13 +9,13 @@ import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type RegExpDigitCharacter = JSNodeBase & {
-  type: 'RegExpDigitCharacter';
+	type: 'RegExpDigitCharacter';
 };
 
 export const regExpDigitCharacter = createBuilder<RegExpDigitCharacter>(
-  'RegExpDigitCharacter',
-  {
-    bindingKeys: {},
-    visitorKeys: {},
-  },
+	'RegExpDigitCharacter',
+	{
+		bindingKeys: {},
+		visitorKeys: {},
+	},
 );

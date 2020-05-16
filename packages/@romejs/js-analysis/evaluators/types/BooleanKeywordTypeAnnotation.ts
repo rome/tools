@@ -7,16 +7,16 @@
 
 import {Scope} from '../../scopes';
 import {
-  AnyNode,
-  BooleanKeywordTypeAnnotation,
-  booleanKeywordTypeAnnotation,
+	AnyNode,
+	BooleanKeywordTypeAnnotation,
+	booleanKeywordTypeAnnotation,
 } from '@romejs/js-ast';
 import BooleanT from '../../types/BooleanT';
 
 export default function BooleanKeywordTypeAnnotation(
-  node: AnyNode,
-  scope: Scope,
+	node: AnyNode,
+	scope: Scope,
 ) {
-  node = booleanKeywordTypeAnnotation.assert(node);
-  return new BooleanT(scope, node);
+	node = booleanKeywordTypeAnnotation.assert(node);
+	return new BooleanT(scope, node);
 }

@@ -6,30 +6,30 @@
  */
 
 import {
-  AnyExpression,
-  JSNodeBase,
-  SpreadElement,
-  Super,
-  TSTypeParameterInstantiation,
+	AnyExpression,
+	JSNodeBase,
+	SpreadElement,
+	Super,
+	TSTypeParameterInstantiation,
 } from '../index';
 import {createBuilder} from '../utils';
 
 export type NewExpression = JSNodeBase & {
-  type: 'NewExpression';
-  callee: AnyExpression | Super;
-  arguments: Array<AnyExpression | SpreadElement>;
-  typeArguments?: undefined | TSTypeParameterInstantiation;
-  optional?: boolean;
+	type: 'NewExpression';
+	callee: AnyExpression | Super;
+	arguments: Array<AnyExpression | SpreadElement>;
+	typeArguments?: undefined | TSTypeParameterInstantiation;
+	optional?: boolean;
 };
 
 export const newExpression = createBuilder<NewExpression>(
-  'NewExpression',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      callee: true,
-      arguments: true,
-      typeArguments: true,
-    },
-  },
+	'NewExpression',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			callee: true,
+			arguments: true,
+			typeArguments: true,
+		},
+	},
 );

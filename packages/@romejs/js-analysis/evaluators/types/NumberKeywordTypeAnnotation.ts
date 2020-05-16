@@ -7,13 +7,13 @@
 
 import {Scope} from '../../scopes';
 import {
-  AnyNode,
-  NumberKeywordTypeAnnotation,
-  numberKeywordTypeAnnotation,
+	AnyNode,
+	NumberKeywordTypeAnnotation,
+	numberKeywordTypeAnnotation,
 } from '@romejs/js-ast';
 import NumericT from '../../types/NumericT';
 
 export default function NumberKeywordTypeAnnotation(node: AnyNode, scope: Scope) {
-  node = numberKeywordTypeAnnotation.assert(node);
-  return new NumericT(scope, node);
+	node = numberKeywordTypeAnnotation.assert(node);
+	return new NumericT(scope, node);
 }

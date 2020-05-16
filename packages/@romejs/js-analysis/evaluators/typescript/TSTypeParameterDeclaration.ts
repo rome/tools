@@ -6,12 +6,12 @@
  */
 
 import {
-  AnyNode,
-  TSTypeParameterDeclaration,
-  tsTypeParameterDeclaration,
+	AnyNode,
+	TSTypeParameterDeclaration,
+	tsTypeParameterDeclaration,
 } from '@romejs/js-ast';
 
 export default function TSTypeParameterDeclaration(node: AnyNode) {
-  node = tsTypeParameterDeclaration.assert(node);
-  throw new Error('unimplemented');
+	node = tsTypeParameterDeclaration.assert(node);
+	throw new Error('unimplemented');
 }

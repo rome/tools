@@ -9,16 +9,16 @@ import {AnyExpression, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type AwaitExpression = JSNodeBase & {
-  type: 'AwaitExpression';
-  argument?: AnyExpression;
+	type: 'AwaitExpression';
+	argument?: AnyExpression;
 };
 
 export const awaitExpression = createBuilder<AwaitExpression>(
-  'AwaitExpression',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      argument: true,
-    },
-  },
+	'AwaitExpression',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			argument: true,
+		},
+	},
 );

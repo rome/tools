@@ -9,21 +9,21 @@ import {Path} from '@romejs/js-compiler';
 import {descriptions} from '@romejs/diagnostics';
 
 export default {
-  name: 'noTemplateCurlyInString',
-  enter(path: Path) {
-    const {node, context} = path;
+	name: 'noTemplateCurlyInString',
+	enter(path: Path) {
+		const {node, context} = path;
 
-    if (node.type === 'StringLiteral') {
-      const regex = /\$\{[^}]+\}/u;
+		if (node.type === 'StringLiteral') {
+			const regex = /\$\{[^}]+\}/u;
 
-      if (regex.test(node.value)) {
-        context.addNodeDiagnostic(
-          node,
-          descriptions.LINT.NO_TEMPLATE_CURLY_IN_STRING,
-        );
-      }
-    }
+			if (regex.test(node.value)) {
+				context.addNodeDiagnostic(
+					node,
+					descriptions.LINT.NO_TEMPLATE_CURLY_IN_STRING,
+				);
+			}
+		}
 
-    return node;
-  },
+		return node;
+	},
 };

@@ -20,16 +20,16 @@ import {ob1Number0, ob1Number1Neg1} from '@romejs/ob1';
  * position.
  */
 function generatedPositionAfter(mappingA: Mapping, mappingB: Mapping): boolean {
-  // Optimized for most common case
-  const lineA = mappingA.generated.line;
-  const lineB = mappingB.generated.line;
-  const columnA = mappingA.generated.column;
-  const columnB = mappingB.generated.column;
-  return (
-    lineB > lineA ||
-    (lineB === lineA && columnB >= columnA) ||
-    compareByGeneratedPositionsInflated(mappingA, mappingB) <= 0
-  );
+	// Optimized for most common case
+	const lineA = mappingA.generated.line;
+	const lineB = mappingB.generated.line;
+	const columnA = mappingA.generated.column;
+	const columnB = mappingB.generated.column;
+	return (
+		lineB > lineA ||
+		(lineB === lineA && columnB >= columnA) ||
+		compareByGeneratedPositionsInflated(mappingA, mappingB) <= 0
+	);
 }
 
 /**
@@ -38,38 +38,38 @@ function generatedPositionAfter(mappingA: Mapping, mappingB: Mapping): boolean {
  * case for a large speedup in case of mappings being added in order.
  */
 export default class MappingList {
-  constructor() {
-    this.array = [];
-    this.sorted = true;
-    this.last = {
-      generated: {index: ob1Number0, line: ob1Number1Neg1, column: ob1Number0},
-      // TODO: original: undefined
-      original: {line: ob1Number1Neg1, column: ob1Number0},
-      source: undefined,
-      name: undefined,
-    };
-  }
+	constructor() {
+		this.array = [];
+		this.sorted = true;
+		this.last = {
+			generated: {index: ob1Number0, line: ob1Number1Neg1, column: ob1Number0},
+			// TODO: original: undefined
+			original: {line: ob1Number1Neg1, column: ob1Number0},
+			source: undefined,
+			name: undefined,
+		};
+	}
 
-  array: Array<Mapping>;
-  sorted: boolean;
+	array: Array<Mapping>;
+	sorted: boolean;
 
-  // Serves as infimum
-  last: Mapping;
+	// Serves as infimum
+	last: Mapping;
 
-  /**
+	/**
    * Add the given source mapping.
    */
-  add(mapping: Mapping) {
-    if (generatedPositionAfter(this.last, mapping)) {
-      this.last = mapping;
-      this.array.push(mapping);
-    } else {
-      this.sorted = false;
-      this.array.push(mapping);
-    }
-  }
+	add(mapping: Mapping) {
+		if (generatedPositionAfter(this.last, mapping)) {
+			this.last = mapping;
+			this.array.push(mapping);
+		} else {
+			this.sorted = false;
+			this.array.push(mapping);
+		}
+	}
 
-  /**
+	/**
    * Returns the flat, sorted array of mappings. The mappings are sorted by
    * generated position.
    *
@@ -78,11 +78,11 @@ export default class MappingList {
    * an immutable borrow. If you want to take ownership, you must make your own
    * copy.
    */
-  toArray(): Array<Mapping> {
-    if (this.sorted === false) {
-      this.array.sort(compareByGeneratedPositionsInflated);
-      this.sorted = true;
-    }
-    return this.array;
-  }
+	toArray(): Array<Mapping> {
+		if (this.sorted === false) {
+			this.array.sort(compareByGeneratedPositionsInflated);
+			this.sorted = true;
+		}
+		return this.array;
+	}
 }

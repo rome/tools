@@ -11,24 +11,24 @@ import {getCompletionRecords} from '@romejs/js-ast-utils';
 import {descriptions} from '@romejs/diagnostics';
 
 export default {
-  name: 'getterReturn',
-  enter(path: Path): AnyNode {
-    const {node} = path;
+	name: 'getterReturn',
+	enter(path: Path): AnyNode {
+		const {node} = path;
 
-    if (
-      (node.type === 'ClassMethod' || node.type === 'ObjectMethod') &&
-      node.kind === 'get'
-    ) {
-      for (const record of getCompletionRecords(node.body)) {
-        if (record.type === 'INVALID') {
-          path.context.addNodeDiagnostic(
-            record.node,
-            descriptions.LINT.GETTER_RETURN(record.description),
-          );
-        }
-      }
-    }
+		if (
+			(node.type === 'ClassMethod' || node.type === 'ObjectMethod') &&
+			node.kind === 'get'
+		) {
+			for (const record of getCompletionRecords(node.body)) {
+				if (record.type === 'INVALID') {
+					path.context.addNodeDiagnostic(
+						record.node,
+						descriptions.LINT.GETTER_RETURN(record.description),
+					);
+				}
+			}
+		}
 
-    return node;
-  },
+		return node;
+	},
 };

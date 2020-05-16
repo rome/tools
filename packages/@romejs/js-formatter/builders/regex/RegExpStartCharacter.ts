@@ -8,5 +8,5 @@
 import {Token} from '../../tokens';
 
 export default function RegExpStartCharacter(): Token {
-  return '^';
+	return '^';
 }

@@ -9,13 +9,13 @@ import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type ThisExpression = JSNodeBase & {
-  type: 'ThisExpression';
+	type: 'ThisExpression';
 };
 
 export const thisExpression = createBuilder<ThisExpression>(
-  'ThisExpression',
-  {
-    bindingKeys: {},
-    visitorKeys: {},
-  },
+	'ThisExpression',
+	{
+		bindingKeys: {},
+		visitorKeys: {},
+	},
 );

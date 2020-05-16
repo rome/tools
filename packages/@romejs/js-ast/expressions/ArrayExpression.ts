@@ -9,17 +9,17 @@ import {AnyExpression, ArrayHole, JSNodeBase, SpreadElement} from '../index';
 import {createQuickBuilder} from '../utils';
 
 export type ArrayExpression = JSNodeBase & {
-  type: 'ArrayExpression';
-  elements: Array<ArrayHole | AnyExpression | SpreadElement>;
+	type: 'ArrayExpression';
+	elements: Array<ArrayHole | AnyExpression | SpreadElement>;
 };
 
 export const arrayExpression = createQuickBuilder<ArrayExpression, 'elements'>(
-  'ArrayExpression',
-  'elements',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      elements: true,
-    },
-  },
+	'ArrayExpression',
+	'elements',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			elements: true,
+		},
+	},
 );

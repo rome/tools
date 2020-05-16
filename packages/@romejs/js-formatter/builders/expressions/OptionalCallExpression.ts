@@ -11,8 +11,8 @@ import {OptionalCallExpression} from '@romejs/js-ast';
 import CallExpression from './CallExpression';
 
 export default function OptionalCallExpression(
-  builder: Builder,
-  node: OptionalCallExpression,
+	builder: Builder,
+	node: OptionalCallExpression,
 ): Token {
-  return CallExpression(builder, node);
+	return CallExpression(builder, node);
 }

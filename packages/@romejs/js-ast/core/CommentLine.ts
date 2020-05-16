@@ -9,15 +9,15 @@ import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type CommentLine = JSNodeBase & {
-  type: 'CommentLine';
-  value: string;
-  id: string;
+	type: 'CommentLine';
+	value: string;
+	id: string;
 };
 
 export const commentLine = createBuilder<CommentLine>(
-  'CommentLine',
-  {
-    bindingKeys: {},
-    visitorKeys: {},
-  },
+	'CommentLine',
+	{
+		bindingKeys: {},
+		visitorKeys: {},
+	},
 );

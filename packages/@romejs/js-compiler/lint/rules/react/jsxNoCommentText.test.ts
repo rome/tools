@@ -9,19 +9,19 @@ import {test} from 'rome';
 import {testLintMultiple} from '../testHelpers';
 
 test(
-  'jsx no comment textnodes',
-  async (t) => {
-    await testLintMultiple(
-      t,
-      [
-        // INVALID
-        'const a = <div>// comment</div>',
-        'const a = <div>/* comment */</div>',
-        // VALID
-        'const a = <div>{/* comment */}</div>',
-        'const a = <div className={"cls" /* comment */}></div>',
-      ],
-      {category: 'lint/jsxNoCommentText'},
-    );
-  },
+	'jsx no comment textnodes',
+	async (t) => {
+		await testLintMultiple(
+			t,
+			[
+				// INVALID
+				'const a = <div>// comment</div>',
+				'const a = <div>/* comment */</div>',
+				// VALID
+				'const a = <div>{/* comment */}</div>',
+				'const a = <div className={"cls" /* comment */}></div>',
+			],
+			{category: 'lint/jsxNoCommentText'},
+		);
+	},
 );

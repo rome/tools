@@ -10,8 +10,8 @@ import {Token, concat, space} from '../../tokens';
 import {ExportNamespaceSpecifier} from '@romejs/js-ast';
 
 export default function ExportNamespaceSpecifier(
-  builder: Builder,
-  node: ExportNamespaceSpecifier,
+	builder: Builder,
+	node: ExportNamespaceSpecifier,
 ): Token {
-  return concat(['*', space, 'as', space, builder.tokenize(node.exported, node)]);
+	return concat(['*', space, 'as', space, builder.tokenize(node.exported, node)]);
 }

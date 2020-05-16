@@ -10,16 +10,16 @@ import {FunctionBinding} from '@romejs/js-compiler';
 import {AnyNode, FunctionDeclaration} from '@romejs/js-ast';
 
 export default {
-  creator: false,
-  build(node: FunctionDeclaration, parent: AnyNode, scope: Scope) {
-    if (node.id !== undefined) {
-      scope.addBinding(
-        new FunctionBinding({
-          node: node.id,
-          name: node.id.name,
-          scope,
-        }),
-      );
-    }
-  },
+	creator: false,
+	build(node: FunctionDeclaration, parent: AnyNode, scope: Scope) {
+		if (node.id !== undefined) {
+			scope.addBinding(
+				new FunctionBinding({
+					node: node.id,
+					name: node.id.name,
+					scope,
+				}),
+			);
+		}
+	},
 };

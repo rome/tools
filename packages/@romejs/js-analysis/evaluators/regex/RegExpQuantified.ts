@@ -8,6 +8,6 @@
 import {AnyNode, RegExpQuantified, regExpQuantified} from '@romejs/js-ast';
 
 export default function RegExpQuantified(node: AnyNode) {
-  node = regExpQuantified.assert(node);
-  throw new Error('unimplemented');
+	node = regExpQuantified.assert(node);
+	throw new Error('unimplemented');
 }

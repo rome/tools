@@ -122,8 +122,8 @@
 
   ✖ html elements must have a lang prop.
 
-    <html lang={``}></html>
-    ^^^^^^^^^^^^^^^^^^^^^^^
+    <html lang={undefined}></html>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -134,35 +134,11 @@
 ### `4: formatted`
 
 ```
-<html lang={``}></html>;
-
-```
-
-### `5`
-
-```
-
- unknown:1 lint/jsxA11yHTMLHasLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ html elements must have a lang prop.
-
-    <html lang={undefined}></html>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `5: formatted`
-
-```
 <html lang={undefined}></html>;
 
 ```
 
-### `6`
+### `5`
 
 ```
 
@@ -179,14 +155,14 @@
 
 ```
 
-### `6: formatted`
+### `5: formatted`
 
 ```
 <html lang={false}></html>;
 
 ```
 
-### `7`
+### `6`
 
 ```
 
@@ -203,14 +179,14 @@
 
 ```
 
-### `7: formatted`
+### `6: formatted`
 
 ```
 <html lang={true}></html>;
 
 ```
 
-### `8`
+### `7`
 
 ```
 
@@ -227,10 +203,24 @@
 
 ```
 
-### `8: formatted`
+### `7: formatted`
 
 ```
 <html lang={42}></html>;
+
+```
+
+### `8`
+
+```
+✔ No known problems!
+
+```
+
+### `8: formatted`
+
+```
+<html lang="en"></html>;
 
 ```
 
@@ -244,6 +234,6 @@
 ### `9: formatted`
 
 ```
-<html lang="en"></html>;
+<html lang={language}></html>;
 
 ```

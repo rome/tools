@@ -10,23 +10,23 @@ import {blockStatement} from '@romejs/js-ast';
 import {descriptions} from '@romejs/diagnostics';
 
 export default {
-  name: 'caseSingleStatement',
-  enter(path: Path): TransformExitResult {
-    const {node, context} = path;
+	name: 'caseSingleStatement',
+	enter(path: Path): TransformExitResult {
+		const {node, context} = path;
 
-    if (node.type === 'SwitchCase' && node.consequent.length > 1) {
-      return context.addFixableDiagnostic(
-        {
-          old: node,
-          fixed: {
-            ...node,
-            consequent: [blockStatement.quick(node.consequent)],
-          },
-        },
-        descriptions.LINT.CASE_SINGLE_STATEMENT,
-      );
-    }
+		if (node.type === 'SwitchCase' && node.consequent.length > 1) {
+			return context.addFixableDiagnostic(
+				{
+					old: node,
+					fixed: {
+						...node,
+						consequent: [blockStatement.quick(node.consequent)],
+					},
+				},
+				descriptions.LINT.CASE_SINGLE_STATEMENT,
+			);
+		}
 
-    return node;
-  },
+		return node;
+	},
 };

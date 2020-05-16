@@ -11,47 +11,47 @@ import ObjPropT from '../../types/ObjPropT';
 import ObjT from '../../types/ObjT';
 
 export default function ObjectExpression(node: AnyNode, scope: Scope) {
-  node = objectExpression.assert(node);
-  const props = [];
+	node = objectExpression.assert(node);
+	const props = [];
 
-  for (const prop of node.properties) {
-    if (prop.type === 'SpreadProperty') {
-      // TODO
-    } else if (prop.type === 'ObjectProperty') {
-      if (prop.key.type === 'ComputedPropertyKey') {
-        // TODO
-      } else {
-        const {
-          key: {value: key},
-          value,
-        } = prop;
+	for (const prop of node.properties) {
+		if (prop.type === 'SpreadProperty') {
+			// TODO
+		} else if (prop.type === 'ObjectProperty') {
+			if (prop.key.type === 'ComputedPropertyKey') {
+				// TODO
+			} else {
+				const {
+					key: {value: key},
+					value,
+				} = prop;
 
-        let keyStr;
-        if (key.type === 'Identifier') {
-          keyStr = key.name;
-        } else {
-          // TODO
-          continue;
-        }
+				let keyStr;
+				if (key.type === 'Identifier') {
+					keyStr = key.name;
+				} else {
+					// TODO
+					continue;
+				}
 
-        if (keyStr === undefined) {
-          throw new Error('Expected keyStr');
-        }
+				if (keyStr === undefined) {
+					throw new Error('Expected keyStr');
+				}
 
-        props.push(new ObjPropT(scope, prop, keyStr, scope.evaluate(value)));
-      }
-    } else {
-      // TODO
-    }
-  }
+				props.push(new ObjPropT(scope, prop, keyStr, scope.evaluate(value)));
+			}
+		} else {
+			// TODO
+		}
+	}
 
-  return new ObjT(
-    scope,
-    node,
-    {
-      calls: [],
-      props,
-      proto: scope.intrinsics.ObjectPrototype,
-    },
-  );
+	return new ObjT(
+		scope,
+		node,
+		{
+			calls: [],
+			props,
+			proto: scope.intrinsics.ObjectPrototype,
+		},
+	);
 }

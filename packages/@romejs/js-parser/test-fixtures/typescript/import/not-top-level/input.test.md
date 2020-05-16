@@ -6,162 +6,162 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.ts'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array ['ts']
-  loc: Object {
-    filename: 'input.ts'
-    end: Object {
-      column: 0
-      index: 51
-      line: 4
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    TSModuleDeclaration {
-      id: StringLiteral {
-        value: 'm'
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 18
-            index: 18
-            line: 1
-          }
-          start: Object {
-            column: 15
-            index: 15
-            line: 1
-          }
-        }
-      }
-      declare: true
-      global: undefined
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 1
-          index: 50
-          line: 3
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      body: TSModuleBlock {
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 1
-            index: 50
-            line: 3
-          }
-          start: Object {
-            column: 19
-            index: 19
-            line: 1
-          }
-        }
-        body: Array [
-          ImportDeclaration {
-            defaultSpecifier: undefined
-            importKind: undefined
-            namedSpecifiers: Array []
-            loc: Object {
-              filename: 'input.ts'
-              end: Object {
-                column: 27
-                index: 48
-                line: 2
-              }
-              start: Object {
-                column: 4
-                index: 25
-                line: 2
-              }
-            }
-            source: StringLiteral {
-              value: 'a'
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 26
-                  index: 47
-                  line: 2
-                }
-                start: Object {
-                  column: 23
-                  index: 44
-                  line: 2
-                }
-              }
-            }
-            namespaceSpecifier: ImportNamespaceSpecifier {
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 17
-                  index: 38
-                  line: 2
-                }
-                start: Object {
-                  column: 4
-                  index: 25
-                  line: 2
-                }
-              }
-              local: ImportSpecifierLocal {
-                name: BindingIdentifier {
-                  name: 'a'
-                  loc: Object {
-                    filename: 'input.ts'
-                    identifierName: 'a'
-                    end: Object {
-                      column: 17
-                      index: 38
-                      line: 2
-                    }
-                    start: Object {
-                      column: 16
-                      index: 37
-                      line: 2
-                    }
-                  }
-                }
-                importKind: undefined
-                loc: Object {
-                  filename: 'input.ts'
-                  end: Object {
-                    column: 17
-                    index: 38
-                    line: 2
-                  }
-                  start: Object {
-                    column: 16
-                    index: 37
-                    line: 2
-                  }
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: 'input.ts'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'module'
+	syntax: Array ['ts']
+	loc: Object {
+		filename: 'input.ts'
+		end: Object {
+			column: 0
+			index: 51
+			line: 4
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		TSModuleDeclaration {
+			id: StringLiteral {
+				value: 'm'
+				loc: Object {
+					filename: 'input.ts'
+					end: Object {
+						column: 18
+						index: 18
+						line: 1
+					}
+					start: Object {
+						column: 15
+						index: 15
+						line: 1
+					}
+				}
+			}
+			declare: true
+			global: undefined
+			loc: Object {
+				filename: 'input.ts'
+				end: Object {
+					column: 1
+					index: 50
+					line: 3
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			body: TSModuleBlock {
+				loc: Object {
+					filename: 'input.ts'
+					end: Object {
+						column: 1
+						index: 50
+						line: 3
+					}
+					start: Object {
+						column: 19
+						index: 19
+						line: 1
+					}
+				}
+				body: Array [
+					ImportDeclaration {
+						defaultSpecifier: undefined
+						importKind: undefined
+						namedSpecifiers: Array []
+						loc: Object {
+							filename: 'input.ts'
+							end: Object {
+								column: 27
+								index: 48
+								line: 2
+							}
+							start: Object {
+								column: 4
+								index: 25
+								line: 2
+							}
+						}
+						source: StringLiteral {
+							value: 'a'
+							loc: Object {
+								filename: 'input.ts'
+								end: Object {
+									column: 26
+									index: 47
+									line: 2
+								}
+								start: Object {
+									column: 23
+									index: 44
+									line: 2
+								}
+							}
+						}
+						namespaceSpecifier: ImportNamespaceSpecifier {
+							loc: Object {
+								filename: 'input.ts'
+								end: Object {
+									column: 17
+									index: 38
+									line: 2
+								}
+								start: Object {
+									column: 4
+									index: 25
+									line: 2
+								}
+							}
+							local: ImportSpecifierLocal {
+								name: BindingIdentifier {
+									name: 'a'
+									loc: Object {
+										filename: 'input.ts'
+										identifierName: 'a'
+										end: Object {
+											column: 17
+											index: 38
+											line: 2
+										}
+										start: Object {
+											column: 16
+											index: 37
+											line: 2
+										}
+									}
+								}
+								importKind: undefined
+								loc: Object {
+									filename: 'input.ts'
+									end: Object {
+										column: 17
+										index: 38
+										line: 2
+									}
+									start: Object {
+										column: 16
+										index: 37
+										line: 2
+									}
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

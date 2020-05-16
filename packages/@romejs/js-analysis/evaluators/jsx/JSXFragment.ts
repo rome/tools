@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, JSXFragment, jsxFragment} from '@romejs/js-ast';
 
 export default function JSXFragment(node: AnyNode, scope: Scope) {
-  node = jsxFragment.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = jsxFragment.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

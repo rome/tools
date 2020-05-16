@@ -10,22 +10,18 @@ import {Token, concat, space} from '../../tokens';
 import {TryStatement} from '@romejs/js-ast';
 
 export default function TryStatement(
-  builder: Builder,
-  node: TryStatement,
+	builder: Builder,
+	node: TryStatement,
 ): Token {
-  const tokens: Array<Token> = [
-    'try',
-    space,
-    builder.tokenize(node.block, node),
-  ];
+	const tokens: Array<Token> = ['try', space, builder.tokenize(node.block, node)];
 
-  if (node.handler) {
-    tokens.push(space, builder.tokenize(node.handler, node));
-  }
+	if (node.handler) {
+		tokens.push(space, builder.tokenize(node.handler, node));
+	}
 
-  if (node.finalizer) {
-    tokens.push(space, 'finally', space, builder.tokenize(node.finalizer, node));
-  }
+	if (node.finalizer) {
+		tokens.push(space, 'finally', space, builder.tokenize(node.finalizer, node));
+	}
 
-  return concat(tokens);
+	return concat(tokens);
 }

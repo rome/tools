@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, DebuggerStatement, debuggerStatement} from '@romejs/js-ast';
 
 export default function DebuggerStatement(node: AnyNode, scope: Scope) {
-  node = debuggerStatement.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = debuggerStatement.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

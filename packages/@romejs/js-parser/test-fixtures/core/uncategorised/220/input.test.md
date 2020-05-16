@@ -6,210 +6,210 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: true
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 27
-      index: 27
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    VariableDeclarationStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 27
-          index: 27
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      declaration: VariableDeclaration {
-        kind: 'var'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 27
-            index: 27
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        declarations: Array [
-          VariableDeclarator {
-            id: BindingIdentifier {
-              name: 'x'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'x'
-                end: Object {
-                  column: 5
-                  index: 5
-                  line: 1
-                }
-                start: Object {
-                  column: 4
-                  index: 4
-                  line: 1
-                }
-              }
-            }
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 10
-                index: 10
-                line: 1
-              }
-              start: Object {
-                column: 4
-                index: 4
-                line: 1
-              }
-            }
-            init: NumericLiteral {
-              value: 14
-              format: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 10
-                  index: 10
-                  line: 1
-                }
-                start: Object {
-                  column: 8
-                  index: 8
-                  line: 1
-                }
-              }
-            }
-          }
-          VariableDeclarator {
-            id: BindingIdentifier {
-              name: 'y'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'y'
-                end: Object {
-                  column: 13
-                  index: 13
-                  line: 1
-                }
-                start: Object {
-                  column: 12
-                  index: 12
-                  line: 1
-                }
-              }
-            }
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 17
-                index: 17
-                line: 1
-              }
-              start: Object {
-                column: 12
-                index: 12
-                line: 1
-              }
-            }
-            init: NumericLiteral {
-              value: 3
-              format: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 17
-                  index: 17
-                  line: 1
-                }
-                start: Object {
-                  column: 16
-                  index: 16
-                  line: 1
-                }
-              }
-            }
-          }
-          VariableDeclarator {
-            id: BindingIdentifier {
-              name: 'z'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'z'
-                end: Object {
-                  column: 20
-                  index: 20
-                  line: 1
-                }
-                start: Object {
-                  column: 19
-                  index: 19
-                  line: 1
-                }
-              }
-            }
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 27
-                index: 27
-                line: 1
-              }
-              start: Object {
-                column: 19
-                index: 19
-                line: 1
-              }
-            }
-            init: NumericLiteral {
-              value: 1_977
-              format: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 27
-                  index: 27
-                  line: 1
-                }
-                start: Object {
-                  column: 23
-                  index: 23
-                  line: 1
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: true
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 27
+			index: 27
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		VariableDeclarationStatement {
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 27
+					index: 27
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			declaration: VariableDeclaration {
+				kind: 'var'
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 27
+						index: 27
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				declarations: Array [
+					VariableDeclarator {
+						id: BindingIdentifier {
+							name: 'x'
+							loc: Object {
+								filename: 'input.js'
+								identifierName: 'x'
+								end: Object {
+									column: 5
+									index: 5
+									line: 1
+								}
+								start: Object {
+									column: 4
+									index: 4
+									line: 1
+								}
+							}
+						}
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 10
+								index: 10
+								line: 1
+							}
+							start: Object {
+								column: 4
+								index: 4
+								line: 1
+							}
+						}
+						init: NumericLiteral {
+							value: 14
+							format: undefined
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 10
+									index: 10
+									line: 1
+								}
+								start: Object {
+									column: 8
+									index: 8
+									line: 1
+								}
+							}
+						}
+					}
+					VariableDeclarator {
+						id: BindingIdentifier {
+							name: 'y'
+							loc: Object {
+								filename: 'input.js'
+								identifierName: 'y'
+								end: Object {
+									column: 13
+									index: 13
+									line: 1
+								}
+								start: Object {
+									column: 12
+									index: 12
+									line: 1
+								}
+							}
+						}
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 17
+								index: 17
+								line: 1
+							}
+							start: Object {
+								column: 12
+								index: 12
+								line: 1
+							}
+						}
+						init: NumericLiteral {
+							value: 3
+							format: undefined
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 17
+									index: 17
+									line: 1
+								}
+								start: Object {
+									column: 16
+									index: 16
+									line: 1
+								}
+							}
+						}
+					}
+					VariableDeclarator {
+						id: BindingIdentifier {
+							name: 'z'
+							loc: Object {
+								filename: 'input.js'
+								identifierName: 'z'
+								end: Object {
+									column: 20
+									index: 20
+									line: 1
+								}
+								start: Object {
+									column: 19
+									index: 19
+									line: 1
+								}
+							}
+						}
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 27
+								index: 27
+								line: 1
+							}
+							start: Object {
+								column: 19
+								index: 19
+								line: 1
+							}
+						}
+						init: NumericLiteral {
+							value: 1_977
+							format: undefined
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 27
+									index: 27
+									line: 1
+								}
+								start: Object {
+									column: 23
+									index: 23
+									line: 1
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

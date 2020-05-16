@@ -10,18 +10,18 @@ import {Token, concat} from '../../tokens';
 import {RegExpCharSet} from '@romejs/js-ast';
 
 export default function RegExpCharSet(
-  builder: Builder,
-  node: RegExpCharSet,
+	builder: Builder,
+	node: RegExpCharSet,
 ): Token {
-  const tokens: Array<Token> = ['['];
+	const tokens: Array<Token> = ['['];
 
-  if (node.invert) {
-    tokens.push('^');
-  }
+	if (node.invert) {
+		tokens.push('^');
+	}
 
-  return concat([
-    concat(tokens),
-    concat(node.body.map((item) => builder.tokenize(item, node))),
-    ']',
-  ]);
+	return concat([
+		concat(tokens),
+		concat(node.body.map((item) => builder.tokenize(item, node))),
+		']',
+	]);
 }

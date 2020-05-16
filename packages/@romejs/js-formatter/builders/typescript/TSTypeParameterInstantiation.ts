@@ -11,8 +11,8 @@ import {Token} from '../../tokens';
 import TSTypeParameterDeclaration from './TSTypeParameterDeclaration';
 
 export default function TSTypeParameterInstantiation(
-  builder: Builder,
-  node: TSTypeParameterInstantiation,
+	builder: Builder,
+	node: TSTypeParameterInstantiation,
 ): Token {
-  return TSTypeParameterDeclaration(builder, node);
+	return TSTypeParameterDeclaration(builder, node);
 }

@@ -6,124 +6,124 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 25
-      line: 3
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    IfStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 7
-          index: 24
-          line: 2
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      alternate: EmptyStatement {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 7
-            index: 24
-            line: 2
-          }
-          start: Object {
-            column: 6
-            index: 23
-            line: 2
-          }
-        }
-      }
-      test: BooleanLiteral {
-        value: true
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 8
-            index: 8
-            line: 1
-          }
-          start: Object {
-            column: 4
-            index: 4
-            line: 1
-          }
-        }
-      }
-      consequent: ExpressionStatement {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 1
-            index: 18
-            line: 2
-          }
-          start: Object {
-            column: 10
-            index: 10
-            line: 1
-          }
-        }
-        expression: CallExpression {
-          arguments: Array []
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 16
-              index: 16
-              line: 1
-            }
-            start: Object {
-              column: 10
-              index: 10
-              line: 1
-            }
-          }
-          callee: ReferenceIdentifier {
-            name: 'that'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'that'
-              end: Object {
-                column: 14
-                index: 14
-                line: 1
-              }
-              start: Object {
-                column: 10
-                index: 10
-                line: 1
-              }
-            }
-          }
-        }
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 0
+			index: 25
+			line: 3
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		IfStatement {
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 7
+					index: 24
+					line: 2
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			alternate: EmptyStatement {
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 7
+						index: 24
+						line: 2
+					}
+					start: Object {
+						column: 6
+						index: 23
+						line: 2
+					}
+				}
+			}
+			test: BooleanLiteral {
+				value: true
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 8
+						index: 8
+						line: 1
+					}
+					start: Object {
+						column: 4
+						index: 4
+						line: 1
+					}
+				}
+			}
+			consequent: ExpressionStatement {
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 1
+						index: 18
+						line: 2
+					}
+					start: Object {
+						column: 10
+						index: 10
+						line: 1
+					}
+				}
+				expression: CallExpression {
+					arguments: Array []
+					loc: Object {
+						filename: 'input.js'
+						end: Object {
+							column: 16
+							index: 16
+							line: 1
+						}
+						start: Object {
+							column: 10
+							index: 10
+							line: 1
+						}
+					}
+					callee: ReferenceIdentifier {
+						name: 'that'
+						loc: Object {
+							filename: 'input.js'
+							identifierName: 'that'
+							end: Object {
+								column: 14
+								index: 14
+								line: 1
+							}
+							start: Object {
+								column: 10
+								index: 10
+								line: 1
+							}
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

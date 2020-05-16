@@ -8,5 +8,5 @@
 import {Token} from '../../tokens';
 
 export default function RegExpNonWordCharacter(): Token {
-  return '\\W';
+	return '\\W';
 }

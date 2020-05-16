@@ -10,46 +10,46 @@ import {AnyNode} from '@romejs/js-ast';
 import doesNodeMatchPattern from './doesNodeMatchPattern';
 
 export default function getRequireSource(
-  node: undefined | AnyNode,
-  scope: Scope,
-  allowStaticMember: boolean = false,
+	node: undefined | AnyNode,
+	scope: Scope,
+	allowStaticMember: boolean = false,
 ): undefined | string {
-  if (node === undefined) {
-    return undefined;
-  }
+	if (node === undefined) {
+		return undefined;
+	}
 
-  if (
-    allowStaticMember &&
-    node.type === 'MemberExpression' &&
-    node.property.type === 'StaticMemberProperty'
-  ) {
-    node = node.object;
-  }
+	if (
+		allowStaticMember &&
+		node.type === 'MemberExpression' &&
+		node.property.type === 'StaticMemberProperty'
+	) {
+		node = node.object;
+	}
 
-  if (node.type !== 'CallExpression') {
-    return undefined;
-  }
+	if (node.type !== 'CallExpression') {
+		return undefined;
+	}
 
-  const {arguments: args, callee} = node;
+	const {arguments: args, callee} = node;
 
-  const [firstArg] = args;
-  if (args.length !== 1 || firstArg.type !== 'StringLiteral') {
-    return undefined;
-  }
+	const [firstArg] = args;
+	if (args.length !== 1 || firstArg.type !== 'StringLiteral') {
+		return undefined;
+	}
 
-  const validRequireCallee =
-    callee.type === 'ReferenceIdentifier' &&
-    callee.name === 'require' &&
-    scope.getBinding('require') === undefined;
+	const validRequireCallee =
+		callee.type === 'ReferenceIdentifier' &&
+		callee.name === 'require' &&
+		scope.getBinding('require') === undefined;
 
-  const validRomeRequreCallee =
-    (doesNodeMatchPattern(callee, 'Rome.requireDefault') ||
-    doesNodeMatchPattern(callee, 'Rome.requireNamespace')) &&
-    scope.getBinding('Rome') === undefined;
+	const validRomeRequreCallee =
+		(doesNodeMatchPattern(callee, 'Rome.requireDefault') ||
+		doesNodeMatchPattern(callee, 'Rome.requireNamespace')) &&
+		scope.getBinding('Rome') === undefined;
 
-  if (validRequireCallee || validRomeRequreCallee) {
-    return firstArg.value;
-  }
+	if (validRequireCallee || validRomeRequreCallee) {
+		return firstArg.value;
+	}
 
-  return undefined;
+	return undefined;
 }

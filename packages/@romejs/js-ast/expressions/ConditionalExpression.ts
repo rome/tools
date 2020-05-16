@@ -9,20 +9,20 @@ import {AnyExpression, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type ConditionalExpression = JSNodeBase & {
-  type: 'ConditionalExpression';
-  test: AnyExpression;
-  alternate: AnyExpression;
-  consequent: AnyExpression;
+	type: 'ConditionalExpression';
+	test: AnyExpression;
+	alternate: AnyExpression;
+	consequent: AnyExpression;
 };
 
 export const conditionalExpression = createBuilder<ConditionalExpression>(
-  'ConditionalExpression',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      test: true,
-      consequent: true,
-      alternate: true,
-    },
-  },
+	'ConditionalExpression',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			test: true,
+			consequent: true,
+			alternate: true,
+		},
+	},
 );

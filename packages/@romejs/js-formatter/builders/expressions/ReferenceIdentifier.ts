@@ -11,8 +11,8 @@ import {ReferenceIdentifier} from '@romejs/js-ast';
 import Identifier from '../auxiliary/Identifier';
 
 export default function ReferenceIdentifier(
-  builder: Builder,
-  node: ReferenceIdentifier,
+	builder: Builder,
+	node: ReferenceIdentifier,
 ): Token {
-  return Identifier(builder, node);
+	return Identifier(builder, node);
 }

@@ -8,5 +8,5 @@
 import {Token} from '../../tokens';
 
 export default function RegExpNonDigitCharacter(): Token {
-  return '\\D';
+	return '\\D';
 }

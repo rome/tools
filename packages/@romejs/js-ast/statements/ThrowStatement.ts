@@ -9,16 +9,16 @@ import {AnyExpression, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type ThrowStatement = JSNodeBase & {
-  type: 'ThrowStatement';
-  argument: AnyExpression;
+	type: 'ThrowStatement';
+	argument: AnyExpression;
 };
 
 export const throwStatement = createBuilder<ThrowStatement>(
-  'ThrowStatement',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      argument: true,
-    },
-  },
+	'ThrowStatement',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			argument: true,
+		},
+	},
 );

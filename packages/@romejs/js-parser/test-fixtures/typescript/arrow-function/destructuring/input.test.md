@@ -6,309 +6,309 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: true
-  directives: Array []
-  filename: 'input.ts'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array ['ts']
-  loc: Object {
-    filename: 'input.ts'
-    end: Object {
-      column: 0
-      index: 18
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unexpected token, expected ,'}
-      }
-      location: Object {
-        filename: 'input.ts'
-        mtime: undefined
-        sourceType: 'module'
-        end: Object {
-          column: 6
-          index: 6
-          line: 1
-        }
-        start: Object {
-          column: 5
-          index: 5
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 8
-          index: 8
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: AssignmentExpression {
-        operator: '='
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 8
-            index: 8
-            line: 1
-          }
-          start: Object {
-            column: 1
-            index: 1
-            line: 1
-          }
-        }
-        right: NumericLiteral {
-          value: 0
-          format: undefined
-          loc: Object {
-            filename: 'input.ts'
-            end: Object {
-              column: 8
-              index: 8
-              line: 1
-            }
-            start: Object {
-              column: 7
-              index: 7
-              line: 1
-            }
-          }
-        }
-        left: AssignmentObjectPattern {
-          rest: undefined
-          loc: Object {
-            filename: 'input.ts'
-            end: Object {
-              column: 4
-              index: 4
-              line: 1
-            }
-            start: Object {
-              column: 1
-              index: 1
-              line: 1
-            }
-          }
-          properties: Array [
-            AssignmentObjectPatternProperty {
-              key: StaticPropertyKey {
-                value: Identifier {
-                  name: 'a'
-                  loc: Object {
-                    filename: 'input.ts'
-                    identifierName: 'a'
-                    end: Object {
-                      column: 4
-                      index: 4
-                      line: 1
-                    }
-                    start: Object {
-                      column: 3
-                      index: 3
-                      line: 1
-                    }
-                  }
-                }
-                loc: Object {
-                  filename: 'input.ts'
-                  end: Object {
-                    column: 4
-                    index: 4
-                    line: 1
-                  }
-                  start: Object {
-                    column: 3
-                    index: 3
-                    line: 1
-                  }
-                }
-              }
-              value: AssignmentIdentifier {
-                name: 'a'
-                loc: Object {
-                  filename: 'input.ts'
-                  identifierName: 'a'
-                  end: Object {
-                    column: 4
-                    index: 4
-                    line: 1
-                  }
-                  start: Object {
-                    column: 3
-                    index: 3
-                    line: 1
-                  }
-                }
-              }
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 4
-                  index: 4
-                  line: 1
-                }
-                start: Object {
-                  column: 3
-                  index: 3
-                  line: 1
-                }
-              }
-            }
-          ]
-        }
-      }
-    }
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 10
-          index: 10
-          line: 1
-        }
-        start: Object {
-          column: 9
-          index: 9
-          line: 1
-        }
-      }
-      expression: ReferenceIdentifier {
-        name: 'INVALID_PLACEHOLDER'
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 10
-            index: 10
-            line: 1
-          }
-          start: Object {
-            column: 9
-            index: 9
-            line: 1
-          }
-        }
-      }
-    }
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 11
-          index: 11
-          line: 1
-        }
-        start: Object {
-          column: 10
-          index: 10
-          line: 1
-        }
-      }
-      expression: ReferenceIdentifier {
-        name: 'INVALID_PLACEHOLDER'
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 11
-            index: 11
-            line: 1
-          }
-          start: Object {
-            column: 10
-            index: 10
-            line: 1
-          }
-        }
-      }
-    }
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 14
-          index: 14
-          line: 1
-        }
-        start: Object {
-          column: 12
-          index: 12
-          line: 1
-        }
-      }
-      expression: ReferenceIdentifier {
-        name: 'INVALID_PLACEHOLDER'
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 14
-            index: 14
-            line: 1
-          }
-          start: Object {
-            column: 12
-            index: 12
-            line: 1
-          }
-        }
-      }
-    }
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 17
-          index: 17
-          line: 1
-        }
-        start: Object {
-          column: 15
-          index: 15
-          line: 1
-        }
-      }
-      expression: NumericLiteral {
-        value: 0
-        format: undefined
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 16
-            index: 16
-            line: 1
-          }
-          start: Object {
-            column: 15
-            index: 15
-            line: 1
-          }
-        }
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: true
+	directives: Array []
+	filename: 'input.ts'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'module'
+	syntax: Array ['ts']
+	loc: Object {
+		filename: 'input.ts'
+		end: Object {
+			column: 0
+			index: 18
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: 'js-parser'}]
+			description: Object {
+				advice: Array []
+				category: 'parse/js'
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unexpected token, expected ,'}
+			}
+			location: Object {
+				filename: 'input.ts'
+				mtime: undefined
+				sourceType: 'module'
+				end: Object {
+					column: 6
+					index: 6
+					line: 1
+				}
+				start: Object {
+					column: 5
+					index: 5
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		ExpressionStatement {
+			loc: Object {
+				filename: 'input.ts'
+				end: Object {
+					column: 8
+					index: 8
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: AssignmentExpression {
+				operator: '='
+				loc: Object {
+					filename: 'input.ts'
+					end: Object {
+						column: 8
+						index: 8
+						line: 1
+					}
+					start: Object {
+						column: 1
+						index: 1
+						line: 1
+					}
+				}
+				right: NumericLiteral {
+					value: 0
+					format: undefined
+					loc: Object {
+						filename: 'input.ts'
+						end: Object {
+							column: 8
+							index: 8
+							line: 1
+						}
+						start: Object {
+							column: 7
+							index: 7
+							line: 1
+						}
+					}
+				}
+				left: AssignmentObjectPattern {
+					rest: undefined
+					loc: Object {
+						filename: 'input.ts'
+						end: Object {
+							column: 4
+							index: 4
+							line: 1
+						}
+						start: Object {
+							column: 1
+							index: 1
+							line: 1
+						}
+					}
+					properties: Array [
+						AssignmentObjectPatternProperty {
+							key: StaticPropertyKey {
+								value: Identifier {
+									name: 'a'
+									loc: Object {
+										filename: 'input.ts'
+										identifierName: 'a'
+										end: Object {
+											column: 4
+											index: 4
+											line: 1
+										}
+										start: Object {
+											column: 3
+											index: 3
+											line: 1
+										}
+									}
+								}
+								loc: Object {
+									filename: 'input.ts'
+									end: Object {
+										column: 4
+										index: 4
+										line: 1
+									}
+									start: Object {
+										column: 3
+										index: 3
+										line: 1
+									}
+								}
+							}
+							value: AssignmentIdentifier {
+								name: 'a'
+								loc: Object {
+									filename: 'input.ts'
+									identifierName: 'a'
+									end: Object {
+										column: 4
+										index: 4
+										line: 1
+									}
+									start: Object {
+										column: 3
+										index: 3
+										line: 1
+									}
+								}
+							}
+							loc: Object {
+								filename: 'input.ts'
+								end: Object {
+									column: 4
+									index: 4
+									line: 1
+								}
+								start: Object {
+									column: 3
+									index: 3
+									line: 1
+								}
+							}
+						}
+					]
+				}
+			}
+		}
+		ExpressionStatement {
+			loc: Object {
+				filename: 'input.ts'
+				end: Object {
+					column: 10
+					index: 10
+					line: 1
+				}
+				start: Object {
+					column: 9
+					index: 9
+					line: 1
+				}
+			}
+			expression: ReferenceIdentifier {
+				name: 'INVALID_PLACEHOLDER'
+				loc: Object {
+					filename: 'input.ts'
+					end: Object {
+						column: 10
+						index: 10
+						line: 1
+					}
+					start: Object {
+						column: 9
+						index: 9
+						line: 1
+					}
+				}
+			}
+		}
+		ExpressionStatement {
+			loc: Object {
+				filename: 'input.ts'
+				end: Object {
+					column: 11
+					index: 11
+					line: 1
+				}
+				start: Object {
+					column: 10
+					index: 10
+					line: 1
+				}
+			}
+			expression: ReferenceIdentifier {
+				name: 'INVALID_PLACEHOLDER'
+				loc: Object {
+					filename: 'input.ts'
+					end: Object {
+						column: 11
+						index: 11
+						line: 1
+					}
+					start: Object {
+						column: 10
+						index: 10
+						line: 1
+					}
+				}
+			}
+		}
+		ExpressionStatement {
+			loc: Object {
+				filename: 'input.ts'
+				end: Object {
+					column: 14
+					index: 14
+					line: 1
+				}
+				start: Object {
+					column: 12
+					index: 12
+					line: 1
+				}
+			}
+			expression: ReferenceIdentifier {
+				name: 'INVALID_PLACEHOLDER'
+				loc: Object {
+					filename: 'input.ts'
+					end: Object {
+						column: 14
+						index: 14
+						line: 1
+					}
+					start: Object {
+						column: 12
+						index: 12
+						line: 1
+					}
+				}
+			}
+		}
+		ExpressionStatement {
+			loc: Object {
+				filename: 'input.ts'
+				end: Object {
+					column: 17
+					index: 17
+					line: 1
+				}
+				start: Object {
+					column: 15
+					index: 15
+					line: 1
+				}
+			}
+			expression: NumericLiteral {
+				value: 0
+				format: undefined
+				loc: Object {
+					filename: 'input.ts'
+					end: Object {
+						column: 16
+						index: 16
+						line: 1
+					}
+					start: Object {
+						column: 15
+						index: 15
+						line: 1
+					}
+				}
+			}
+		}
+	]
 }
 ```

@@ -8,5 +8,5 @@
 import {Token} from '../../tokens';
 
 export default function EmptyKeywordTypeAnnotation(): Token {
-  return 'empty';
+	return 'empty';
 }

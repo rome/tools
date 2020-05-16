@@ -9,22 +9,22 @@ import {BindingIdentifier, JSNodeBase, TSEnumMember} from '../index';
 import {createBuilder} from '../utils';
 
 export type TSEnumDeclaration = JSNodeBase & {
-  type: 'TSEnumDeclaration';
-  id: BindingIdentifier;
-  const?: boolean;
-  members: Array<TSEnumMember>;
-  declare?: boolean;
+	type: 'TSEnumDeclaration';
+	id: BindingIdentifier;
+	const?: boolean;
+	members: Array<TSEnumMember>;
+	declare?: boolean;
 };
 
 export const tsEnumDeclaration = createBuilder<TSEnumDeclaration>(
-  'TSEnumDeclaration',
-  {
-    bindingKeys: {
-      id: true,
-    },
-    visitorKeys: {
-      id: true,
-      members: true,
-    },
-  },
+	'TSEnumDeclaration',
+	{
+		bindingKeys: {
+			id: true,
+		},
+		visitorKeys: {
+			id: true,
+			members: true,
+		},
+	},
 );

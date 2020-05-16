@@ -11,27 +11,27 @@ import {Token, concat, group, space} from '../../tokens';
 import {printModuleSpecifiers} from './ImportDeclaration';
 
 export default function ExportExternalDeclaration(
-  builder: Builder,
-  node: ExportExternalDeclaration,
+	builder: Builder,
+	node: ExportExternalDeclaration,
 ): Token {
-  const tokens: Array<Token> = ['export', space];
+	const tokens: Array<Token> = ['export', space];
 
-  if (node.exportKind === 'type') {
-    if (!builder.options.typeAnnotations) {
-      return '';
-    }
+	if (node.exportKind === 'type') {
+		if (!builder.options.typeAnnotations) {
+			return '';
+		}
 
-    tokens.push('type', space);
-  }
+		tokens.push('type', space);
+	}
 
-  tokens.push(
-    printModuleSpecifiers(builder, node),
-    space,
-    'from',
-    space,
-    builder.tokenize(node.source, node),
-    ';',
-  );
+	tokens.push(
+		printModuleSpecifiers(builder, node),
+		space,
+		'from',
+		space,
+		builder.tokenize(node.source, node),
+		';',
+	);
 
-  return group(concat(tokens));
+	return group(concat(tokens));
 }

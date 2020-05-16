@@ -10,15 +10,15 @@ import {AnyNode, TemplateElement, templateLiteral} from '@romejs/js-ast';
 import {Token} from '../../tokens';
 
 export default function TemplateElement(
-  builder: Builder,
-  node: TemplateElement,
-  parent: AnyNode,
+	builder: Builder,
+	node: TemplateElement,
+	parent: AnyNode,
 ): Token {
-  parent = templateLiteral.assert(parent);
+	parent = templateLiteral.assert(parent);
 
-  const isFirst = parent.quasis[0] === node;
-  const isLast = parent.quasis[parent.quasis.length - 1] === node;
+	const isFirst = parent.quasis[0] === node;
+	const isLast = parent.quasis[parent.quasis.length - 1] === node;
 
-  const value = (isFirst ? '`' : '}') + node.raw + (isLast ? '`' : '${');
-  return value;
+	const value = (isFirst ? '`' : '}') + node.raw + (isLast ? '`' : '${');
+	return value;
 }

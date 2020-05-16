@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, TSMappedType, tsMappedType} from '@romejs/js-ast';
 
 export default function TSMappedType(node: AnyNode, scope: Scope) {
-  node = tsMappedType.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = tsMappedType.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

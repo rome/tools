@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, JSXIdentifier, jsxIdentifier} from '@romejs/js-ast';
 
 export default function JSXIdentifier(node: AnyNode, scope: Scope) {
-  node = jsxIdentifier.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = jsxIdentifier.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

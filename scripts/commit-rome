@@ -22,8 +22,8 @@ execNode([path.join(__dirname, 'build-release'), TEMP_DIR]);
 const VENDOR_ROME = path.join(root, 'scripts/vendor/rome.cjs');
 fs.copyFileSync(path.join(TEMP_DIR, 'bin/rome/index.js'), VENDOR_ROME);
 fs.copyFileSync(
-  path.join(TEMP_DIR, 'bin/rome/index.js.map'),
-  `${VENDOR_ROME}.map`,
+	path.join(TEMP_DIR, 'bin/rome/index.js.map'),
+	`${VENDOR_ROME}.map`,
 );
 
 unlink(TEMP_DIR);

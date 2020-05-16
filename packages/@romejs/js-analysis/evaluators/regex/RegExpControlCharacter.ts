@@ -6,12 +6,12 @@
  */
 
 import {
-  AnyNode,
-  RegExpControlCharacter,
-  regExpControlCharacter,
+	AnyNode,
+	RegExpControlCharacter,
+	regExpControlCharacter,
 } from '@romejs/js-ast';
 
 export default function RegExpControlCharacter(node: AnyNode) {
-  node = regExpControlCharacter.assert(node);
-  throw new Error('unimplemented');
+	node = regExpControlCharacter.assert(node);
+	throw new Error('unimplemented');
 }

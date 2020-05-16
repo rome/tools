@@ -11,8 +11,8 @@ import {Token} from '../../tokens';
 import {printTSBraced} from '../utils';
 
 export default function TSTypeLiteral(
-  builder: Builder,
-  node: TSTypeLiteral,
+	builder: Builder,
+	node: TSTypeLiteral,
 ): Token {
-  return printTSBraced(builder, node, node.members);
+	return printTSBraced(builder, node, node.members);
 }

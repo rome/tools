@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, TSEnumMember, tsEnumMember} from '@romejs/js-ast';
 
 export default function TSEnumMember(node: AnyNode, scope: Scope) {
-  node = tsEnumMember.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = tsEnumMember.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

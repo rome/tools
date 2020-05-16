@@ -63,7 +63,7 @@ function foo() {}
 
 ```
 const foo = () => {
-  this;
+	this;
 };
 
 ```
@@ -89,9 +89,9 @@ const foo = () => {
 
 ```
 function foo() {
-  function bar() {
-    this;
-  }
+	function bar() {
+		this;
+	}
 }
 
 ```

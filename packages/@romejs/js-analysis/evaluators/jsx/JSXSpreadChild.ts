@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, JSXSpreadChild, jsxSpreadChild} from '@romejs/js-ast';
 
 export default function JSXSpreadChild(node: AnyNode, scope: Scope) {
-  node = jsxSpreadChild.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = jsxSpreadChild.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

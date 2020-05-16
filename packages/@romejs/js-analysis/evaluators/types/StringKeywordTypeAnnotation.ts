@@ -7,13 +7,13 @@
 
 import {Scope} from '../../scopes';
 import {
-  AnyNode,
-  StringKeywordTypeAnnotation,
-  stringKeywordTypeAnnotation,
+	AnyNode,
+	StringKeywordTypeAnnotation,
+	stringKeywordTypeAnnotation,
 } from '@romejs/js-ast';
 import StringT from '../../types/StringT';
 
 export default function StringKeywordTypeAnnotation(node: AnyNode, scope: Scope) {
-  node = stringKeywordTypeAnnotation.assert(node);
-  return new StringT(scope, node);
+	node = stringKeywordTypeAnnotation.assert(node);
+	return new StringT(scope, node);
 }

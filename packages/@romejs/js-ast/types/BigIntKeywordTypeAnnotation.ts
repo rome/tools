@@ -9,13 +9,13 @@ import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type BigIntKeywordTypeAnnotation = JSNodeBase & {
-  type: 'BigIntKeywordTypeAnnotation';
+	type: 'BigIntKeywordTypeAnnotation';
 };
 
 export const bigIntKeywordTypeAnnotation = createBuilder<BigIntKeywordTypeAnnotation>(
-  'BigIntKeywordTypeAnnotation',
-  {
-    bindingKeys: {},
-    visitorKeys: {},
-  },
+	'BigIntKeywordTypeAnnotation',
+	{
+		bindingKeys: {},
+		visitorKeys: {},
+	},
 );

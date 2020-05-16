@@ -6,237 +6,237 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 34
-      line: 4
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'new.target can only be used in functions or class properties'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 12
-          index: 30
-          line: 2
-        }
-        start: Object {
-          column: 2
-          index: 20
-          line: 2
-        }
-      }
-    }
-  ]
-  body: Array [
-    VariableDeclarationStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 1
-          index: 33
-          line: 3
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      declaration: VariableDeclaration {
-        kind: 'const'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 1
-            index: 33
-            line: 3
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        declarations: Array [
-          VariableDeclarator {
-            id: BindingIdentifier {
-              name: 'A'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'A'
-                end: Object {
-                  column: 7
-                  index: 7
-                  line: 1
-                }
-                start: Object {
-                  column: 6
-                  index: 6
-                  line: 1
-                }
-              }
-            }
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 1
-                index: 33
-                line: 3
-              }
-              start: Object {
-                column: 6
-                index: 6
-                line: 1
-              }
-            }
-            init: ArrowFunctionExpression {
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 1
-                  index: 33
-                  line: 3
-                }
-                start: Object {
-                  column: 10
-                  index: 10
-                  line: 1
-                }
-              }
-              head: FunctionHead {
-                async: false
-                hasHoistedVars: false
-                params: Array []
-                rest: undefined
-                returnType: undefined
-                thisType: undefined
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 15
-                    index: 15
-                    line: 1
-                  }
-                  start: Object {
-                    column: 10
-                    index: 10
-                    line: 1
-                  }
-                }
-              }
-              body: BlockStatement {
-                directives: Array []
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 1
-                    index: 33
-                    line: 3
-                  }
-                  start: Object {
-                    column: 16
-                    index: 16
-                    line: 1
-                  }
-                }
-                body: Array [
-                  ExpressionStatement {
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 13
-                        index: 31
-                        line: 2
-                      }
-                      start: Object {
-                        column: 2
-                        index: 20
-                        line: 2
-                      }
-                    }
-                    expression: MetaProperty {
-                      loc: Object {
-                        filename: 'input.js'
-                        end: Object {
-                          column: 12
-                          index: 30
-                          line: 2
-                        }
-                        start: Object {
-                          column: 2
-                          index: 20
-                          line: 2
-                        }
-                      }
-                      meta: Identifier {
-                        name: 'new'
-                        loc: Object {
-                          filename: 'input.js'
-                          identifierName: 'new'
-                          end: Object {
-                            column: 5
-                            index: 23
-                            line: 2
-                          }
-                          start: Object {
-                            column: 2
-                            index: 20
-                            line: 2
-                          }
-                        }
-                      }
-                      property: Identifier {
-                        name: 'target'
-                        loc: Object {
-                          filename: 'input.js'
-                          identifierName: 'target'
-                          end: Object {
-                            column: 12
-                            index: 30
-                            line: 2
-                          }
-                          start: Object {
-                            column: 6
-                            index: 24
-                            line: 2
-                          }
-                        }
-                      }
-                    }
-                  }
-                ]
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 0
+			index: 34
+			line: 4
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: 'js-parser'}]
+			description: Object {
+				advice: Array []
+				category: 'parse/js'
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'new.target can only be used in functions or class properties'}
+			}
+			location: Object {
+				filename: 'input.js'
+				mtime: undefined
+				sourceType: 'script'
+				end: Object {
+					column: 12
+					index: 30
+					line: 2
+				}
+				start: Object {
+					column: 2
+					index: 20
+					line: 2
+				}
+			}
+		}
+	]
+	body: Array [
+		VariableDeclarationStatement {
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 1
+					index: 33
+					line: 3
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			declaration: VariableDeclaration {
+				kind: 'const'
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 1
+						index: 33
+						line: 3
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				declarations: Array [
+					VariableDeclarator {
+						id: BindingIdentifier {
+							name: 'A'
+							loc: Object {
+								filename: 'input.js'
+								identifierName: 'A'
+								end: Object {
+									column: 7
+									index: 7
+									line: 1
+								}
+								start: Object {
+									column: 6
+									index: 6
+									line: 1
+								}
+							}
+						}
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 1
+								index: 33
+								line: 3
+							}
+							start: Object {
+								column: 6
+								index: 6
+								line: 1
+							}
+						}
+						init: ArrowFunctionExpression {
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 1
+									index: 33
+									line: 3
+								}
+								start: Object {
+									column: 10
+									index: 10
+									line: 1
+								}
+							}
+							head: FunctionHead {
+								async: false
+								hasHoistedVars: false
+								params: Array []
+								rest: undefined
+								returnType: undefined
+								thisType: undefined
+								loc: Object {
+									filename: 'input.js'
+									end: Object {
+										column: 15
+										index: 15
+										line: 1
+									}
+									start: Object {
+										column: 10
+										index: 10
+										line: 1
+									}
+								}
+							}
+							body: BlockStatement {
+								directives: Array []
+								loc: Object {
+									filename: 'input.js'
+									end: Object {
+										column: 1
+										index: 33
+										line: 3
+									}
+									start: Object {
+										column: 16
+										index: 16
+										line: 1
+									}
+								}
+								body: Array [
+									ExpressionStatement {
+										loc: Object {
+											filename: 'input.js'
+											end: Object {
+												column: 13
+												index: 31
+												line: 2
+											}
+											start: Object {
+												column: 2
+												index: 20
+												line: 2
+											}
+										}
+										expression: MetaProperty {
+											loc: Object {
+												filename: 'input.js'
+												end: Object {
+													column: 12
+													index: 30
+													line: 2
+												}
+												start: Object {
+													column: 2
+													index: 20
+													line: 2
+												}
+											}
+											meta: Identifier {
+												name: 'new'
+												loc: Object {
+													filename: 'input.js'
+													identifierName: 'new'
+													end: Object {
+														column: 5
+														index: 23
+														line: 2
+													}
+													start: Object {
+														column: 2
+														index: 20
+														line: 2
+													}
+												}
+											}
+											property: Identifier {
+												name: 'target'
+												loc: Object {
+													filename: 'input.js'
+													identifierName: 'target'
+													end: Object {
+														column: 12
+														index: 30
+														line: 2
+													}
+													start: Object {
+														column: 6
+														index: 24
+														line: 2
+													}
+												}
+											}
+										}
+									}
+								]
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

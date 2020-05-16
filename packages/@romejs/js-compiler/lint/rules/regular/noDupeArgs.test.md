@@ -27,7 +27,7 @@
 
 ```
 function hello(a, a) {
-  //
+	//
 }
 
 ```

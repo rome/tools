@@ -10,14 +10,14 @@ import {Token, concat} from '../../tokens';
 import {JSXAttribute} from '@romejs/js-ast';
 
 export default function JSXAttribute(
-  builder: Builder,
-  node: JSXAttribute,
+	builder: Builder,
+	node: JSXAttribute,
 ): Token {
-  const tokens: Array<Token> = [builder.tokenize(node.name, node)];
+	const tokens: Array<Token> = [builder.tokenize(node.name, node)];
 
-  if (node.value) {
-    return concat([concat(tokens), '=', builder.tokenize(node.value, node)]);
-  } else {
-    return concat(tokens);
-  }
+	if (node.value) {
+		return concat([concat(tokens), '=', builder.tokenize(node.value, node)]);
+	} else {
+		return concat(tokens);
+	}
 }

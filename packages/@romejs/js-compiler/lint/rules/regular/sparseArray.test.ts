@@ -9,8 +9,8 @@ import {test} from 'rome';
 import {testLint} from '../testHelpers';
 
 test(
-  'sparse array',
-  async (t) => {
-    await testLint(t, `[1,,2]`, {category: 'lint/sparseArray'});
-  },
+	'sparse array',
+	async (t) => {
+		await testLint(t, `[1,,2]`, {category: 'lint/sparseArray'});
+	},
 );

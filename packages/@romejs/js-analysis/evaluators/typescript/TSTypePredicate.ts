@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, TSTypePredicate, tsTypePredicate} from '@romejs/js-ast';
 
 export default function TSTypePredicate(node: AnyNode, scope: Scope) {
-  node = tsTypePredicate.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = tsTypePredicate.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

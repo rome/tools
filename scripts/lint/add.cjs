@@ -15,8 +15,8 @@ const fs = require('fs');
 const ruleName = process.argv[2];
 const category = process.argv[3];
 if (ruleName === undefined || category === undefined) {
-  console.error('node scripts/lint/add.cjs [ruleName] [category]');
-  process.exit(1);
+	console.error('node scripts/lint/add.cjs [ruleName] [category]');
+	process.exit(1);
 }
 
 const spacedName = ruleName.replace(/([A-Z+])/g, ' $1').trim().toLowerCase();
@@ -27,8 +27,8 @@ const ruleLoc = path.join(lintRulesFolder, category, `${ruleName}.ts`);
 const testLoc = path.join(lintRulesFolder, category, `${ruleName}.test.ts`);
 
 write(
-  ruleLoc,
-  `/**
+	ruleLoc,
+	`/**
 * Copyright (c) Facebook, Inc. and its affiliates.
 *
 * This source code is licensed under the MIT license found in the
@@ -41,24 +41,24 @@ import {descriptions} from '@romejs/diagnostics';
 export default {
  name: '${ruleName}',
  enter(path: Path): TransformExitResult {
-   const {node} = path;
+	 const {node} = path;
 
-   if (false) {
-      path.context.addNodeDiagnostic(
-        node,
-        descriptions.LINT.${descriptionKey},
-      );
-   }
+	 if (false) {
+			path.context.addNodeDiagnostic(
+				node,
+				descriptions.LINT.${descriptionKey},
+			);
+	 }
 
-   return node;
+	 return node;
  },
 };
 `,
 );
 
 write(
-  testLoc,
-  `/**
+	testLoc,
+	`/**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
@@ -69,19 +69,19 @@ import {test} from 'rome';
 import {testLintMultiple} from '../testHelpers';
 
 test(
-  '${spacedName}',
-  async (t) => {
-    await testLintMultiple(
-      t,
-      [
-        // INVALID
-        '',
-        // VALID
-        '',
-      ],
-      {category: '${categoryName}'},
-    );
-  },
+	'${spacedName}',
+	async (t) => {
+		await testLintMultiple(
+			t,
+			[
+				// INVALID
+				'',
+				// VALID
+				'',
+			],
+			{category: '${categoryName}'},
+		);
+	},
 );
 `,
 );
@@ -89,11 +89,11 @@ test(
 // Add description
 let descriptions = fs.readFileSync(descriptionsFile, 'utf8');
 descriptions = descriptions.replace(
-  'LINT: {',
-  `LINT: {\n    ${descriptionKey}: {
-      category: '${categoryName}',
-      message: 'INSERT MESSAGE HERE',
-    },`,
+	'LINT: {',
+	`LINT: {\n		${descriptionKey}: {
+			category: '${categoryName}',
+			message: 'INSERT MESSAGE HERE',
+		},`,
 );
 write(descriptionsFile, descriptions);
 

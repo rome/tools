@@ -8,6 +8,6 @@
 import {AnyNode, RegExpAnyCharacter, regExpAnyCharacter} from '@romejs/js-ast';
 
 export default function RegExpAnyCharacter(node: AnyNode) {
-  node = regExpAnyCharacter.assert(node);
-  throw new Error('unimplemented');
+	node = regExpAnyCharacter.assert(node);
+	throw new Error('unimplemented');
 }

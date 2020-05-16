@@ -10,25 +10,25 @@ import {Builder} from '@romejs/js-formatter';
 import {Token, concat, group, space} from '../../tokens';
 
 export default function TSImportEqualsDeclaration(
-  builder: Builder,
-  node: TSImportEqualsDeclaration,
+	builder: Builder,
+	node: TSImportEqualsDeclaration,
 ): Token {
-  const tokens: Array<Token> = [];
-  if (node.isExport) {
-    tokens.push('export');
-    tokens.push(space);
-  }
+	const tokens: Array<Token> = [];
+	if (node.isExport) {
+		tokens.push('export');
+		tokens.push(space);
+	}
 
-  tokens.push(
-    'import',
-    space,
-    builder.tokenize(node.id, node),
-    space,
-    '=',
-    space,
-    builder.tokenize(node.moduleReference, node),
-    ';',
-  );
+	tokens.push(
+		'import',
+		space,
+		builder.tokenize(node.id, node),
+		space,
+		'=',
+		space,
+		builder.tokenize(node.moduleReference, node),
+		';',
+	);
 
-  return group(concat(tokens));
+	return group(concat(tokens));
 }

@@ -6,12 +6,12 @@
  */
 
 import {
-  AnyNode,
-  TSExternalModuleReference,
-  tsExternalModuleReference,
+	AnyNode,
+	TSExternalModuleReference,
+	tsExternalModuleReference,
 } from '@romejs/js-ast';
 
 export default function TSExternalModuleReference(node: AnyNode) {
-  node = tsExternalModuleReference.assert(node);
-  throw new Error('unimplemented');
+	node = tsExternalModuleReference.assert(node);
+	throw new Error('unimplemented');
 }

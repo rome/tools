@@ -11,21 +11,21 @@ import {Scope} from '../scopes';
 import T from './T';
 
 export default class UnknownT extends T {
-  static type = 'UnknownT';
+	static type = 'UnknownT';
 
-  serialize(): HydrateData {
-    return {};
-  }
+	serialize(): HydrateData {
+		return {};
+	}
 
-  static hydrate(scope: Scope, originNode: undefined | AnyNode): T {
-    return new UnknownT(scope, originNode);
-  }
+	static hydrate(scope: Scope, originNode: undefined | AnyNode): T {
+		return new UnknownT(scope, originNode);
+	}
 
-  humanize(): string {
-    return 'unknown';
-  }
+	humanize(): string {
+		return 'unknown';
+	}
 
-  compatibleWith(): boolean {
-    return false;
-  }
+	compatibleWith(): boolean {
+		return false;
+	}
 }

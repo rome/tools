@@ -8,52 +8,47 @@
 import {TSTupleType} from '@romejs/js-ast';
 import {Builder} from '@romejs/js-formatter';
 import {
-  Token,
-  concat,
-  group,
-  hardline,
-  ifBreak,
-  indent,
-  join,
-  lineOrSpace,
-  softline,
+	Token,
+	concat,
+	group,
+	hardline,
+	ifBreak,
+	indent,
+	join,
+	lineOrSpace,
+	softline,
 } from '../../tokens';
 import {hasInnerComments} from '../comments';
 
 export default function TSTupleType(builder: Builder, node: TSTupleType): Token {
-  if (node.elementTypes.length === 0 && node.rest === undefined) {
-    if (hasInnerComments(node)) {
-      return concat([
-        '[',
-        builder.tokenizeInnerComments(node, true),
-        hardline,
-        ']',
-      ]);
-    } else {
-      return '[]';
-    }
-  }
+	if (node.elementTypes.length === 0 && node.rest === undefined) {
+		if (hasInnerComments(node)) {
+			return concat(['[', builder.tokenizeInnerComments(node, true), hardline, ']']);
+		} else {
+			return '[]';
+		}
+	}
 
-  const parts: Array<Token> = [];
+	const parts: Array<Token> = [];
 
-  for (const elementType of node.elementTypes) {
-    parts.push(builder.tokenize(elementType, node));
-  }
+	for (const elementType of node.elementTypes) {
+		parts.push(builder.tokenize(elementType, node));
+	}
 
-  if (node.rest !== undefined) {
-    parts.push(concat(['...', builder.tokenize(node.rest, node)]));
-  }
+	if (node.rest !== undefined) {
+		parts.push(concat(['...', builder.tokenize(node.rest, node)]));
+	}
 
-  const tokens: Array<Token> = [
-    '[',
-    indent(concat([softline, join(concat([',', lineOrSpace]), parts)])),
-  ];
+	const tokens: Array<Token> = [
+		'[',
+		indent(concat([softline, join(concat([',', lineOrSpace]), parts)])),
+	];
 
-  if (node.rest === undefined) {
-    tokens.push(ifBreak(','));
-  }
+	if (node.rest === undefined) {
+		tokens.push(ifBreak(','));
+	}
 
-  tokens.push(softline, ']');
+	tokens.push(softline, ']');
 
-  return group(concat(tokens));
+	return group(concat(tokens));
 }

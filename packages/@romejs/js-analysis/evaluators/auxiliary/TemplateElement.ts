@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, TemplateElement, templateElement} from '@romejs/js-ast';
 
 export default function TemplateElement(node: AnyNode, scope: Scope) {
-  node = templateElement.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = templateElement.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

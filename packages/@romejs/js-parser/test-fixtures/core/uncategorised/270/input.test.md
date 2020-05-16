@@ -6,196 +6,196 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 56
-      index: 56
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    SwitchStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 56
-          index: 56
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      discriminant: ReferenceIdentifier {
-        name: 'answer'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'answer'
-          end: Object {
-            column: 14
-            index: 14
-            line: 1
-          }
-          start: Object {
-            column: 8
-            index: 8
-            line: 1
-          }
-        }
-      }
-      cases: Array [
-        SwitchCase {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 39
-              index: 39
-              line: 1
-            }
-            start: Object {
-              column: 25
-              index: 25
-              line: 1
-            }
-          }
-          test: NumericLiteral {
-            value: 42
-            format: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 25
-                index: 25
-                line: 1
-              }
-              start: Object {
-                column: 23
-                index: 23
-                line: 1
-              }
-            }
-          }
-          consequent: Array [
-            ExpressionStatement {
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 32
-                  index: 32
-                  line: 1
-                }
-                start: Object {
-                  column: 27
-                  index: 27
-                  line: 1
-                }
-              }
-              expression: CallExpression {
-                arguments: Array []
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 31
-                    index: 31
-                    line: 1
-                  }
-                  start: Object {
-                    column: 27
-                    index: 27
-                    line: 1
-                  }
-                }
-                callee: ReferenceIdentifier {
-                  name: 'hi'
-                  loc: Object {
-                    filename: 'input.js'
-                    identifierName: 'hi'
-                    end: Object {
-                      column: 29
-                      index: 29
-                      line: 1
-                    }
-                    start: Object {
-                      column: 27
-                      index: 27
-                      line: 1
-                    }
-                  }
-                }
-              }
-            }
-            BreakStatement {
-              label: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 39
-                  index: 39
-                  line: 1
-                }
-                start: Object {
-                  column: 33
-                  index: 33
-                  line: 1
-                }
-              }
-            }
-          ]
-        }
-        SwitchCase {
-          test: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 54
-              index: 54
-              line: 1
-            }
-            start: Object {
-              column: 47
-              index: 47
-              line: 1
-            }
-          }
-          consequent: Array [
-            BreakStatement {
-              label: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 54
-                  index: 54
-                  line: 1
-                }
-                start: Object {
-                  column: 49
-                  index: 49
-                  line: 1
-                }
-              }
-            }
-          ]
-        }
-      ]
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 56
+			index: 56
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		SwitchStatement {
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 56
+					index: 56
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			discriminant: ReferenceIdentifier {
+				name: 'answer'
+				loc: Object {
+					filename: 'input.js'
+					identifierName: 'answer'
+					end: Object {
+						column: 14
+						index: 14
+						line: 1
+					}
+					start: Object {
+						column: 8
+						index: 8
+						line: 1
+					}
+				}
+			}
+			cases: Array [
+				SwitchCase {
+					loc: Object {
+						filename: 'input.js'
+						end: Object {
+							column: 39
+							index: 39
+							line: 1
+						}
+						start: Object {
+							column: 25
+							index: 25
+							line: 1
+						}
+					}
+					test: NumericLiteral {
+						value: 42
+						format: undefined
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 25
+								index: 25
+								line: 1
+							}
+							start: Object {
+								column: 23
+								index: 23
+								line: 1
+							}
+						}
+					}
+					consequent: Array [
+						ExpressionStatement {
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 32
+									index: 32
+									line: 1
+								}
+								start: Object {
+									column: 27
+									index: 27
+									line: 1
+								}
+							}
+							expression: CallExpression {
+								arguments: Array []
+								loc: Object {
+									filename: 'input.js'
+									end: Object {
+										column: 31
+										index: 31
+										line: 1
+									}
+									start: Object {
+										column: 27
+										index: 27
+										line: 1
+									}
+								}
+								callee: ReferenceIdentifier {
+									name: 'hi'
+									loc: Object {
+										filename: 'input.js'
+										identifierName: 'hi'
+										end: Object {
+											column: 29
+											index: 29
+											line: 1
+										}
+										start: Object {
+											column: 27
+											index: 27
+											line: 1
+										}
+									}
+								}
+							}
+						}
+						BreakStatement {
+							label: undefined
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 39
+									index: 39
+									line: 1
+								}
+								start: Object {
+									column: 33
+									index: 33
+									line: 1
+								}
+							}
+						}
+					]
+				}
+				SwitchCase {
+					test: undefined
+					loc: Object {
+						filename: 'input.js'
+						end: Object {
+							column: 54
+							index: 54
+							line: 1
+						}
+						start: Object {
+							column: 47
+							index: 47
+							line: 1
+						}
+					}
+					consequent: Array [
+						BreakStatement {
+							label: undefined
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 54
+									index: 54
+									line: 1
+								}
+								start: Object {
+									column: 49
+									index: 49
+									line: 1
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+	]
 }
 ```

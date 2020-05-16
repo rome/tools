@@ -10,11 +10,11 @@ import {testLint} from '../testHelpers';
 import {dedent} from '@romejs/string-utils';
 
 test(
-  'disallow unsafe usage of break, continue, throw and return',
-  async (t) => {
-    await testLint(
-      t,
-      dedent`
+	'disallow unsafe usage of break, continue, throw and return',
+	async (t) => {
+		await testLint(
+			t,
+			dedent`
         function greet1() {
           try {
             throw new Error("Try")
@@ -25,12 +25,12 @@ test(
           }
         }
       `,
-      {category: 'lint/noUnsafeFinally'},
-    );
+			{category: 'lint/noUnsafeFinally'},
+		);
 
-    await testLint(
-      t,
-      dedent`
+		await testLint(
+			t,
+			dedent`
         function greet2() {
           try {
             throw new Error("Try")
@@ -41,12 +41,12 @@ test(
           }
         }
       `,
-      {category: 'lint/noUnsafeFinally'},
-    );
+			{category: 'lint/noUnsafeFinally'},
+		);
 
-    await testLint(
-      t,
-      dedent`
+		await testLint(
+			t,
+			dedent`
         function greet3() {
           try {
             throw new Error("Try")
@@ -57,12 +57,12 @@ test(
           }
         }
       `,
-      {category: 'lint/noUnsafeFinally'},
-    );
+			{category: 'lint/noUnsafeFinally'},
+		);
 
-    await testLint(
-      t,
-      dedent`
+		await testLint(
+			t,
+			dedent`
         function greet4() {
           try {
             throw new Error("Try")
@@ -73,7 +73,7 @@ test(
           }
         }
       `,
-      {category: 'lint/noUnsafeFinally'},
-    );
-  },
+			{category: 'lint/noUnsafeFinally'},
+		);
+	},
 );

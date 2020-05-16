@@ -10,22 +10,22 @@ import {createBuilder} from '../utils';
 import {BlockStatement} from '../statements/BlockStatement';
 
 export type FunctionExpression = JSNodeBase & {
-  type: 'FunctionExpression';
-  id?: BindingIdentifier;
-  head: FunctionHead;
-  body: BlockStatement;
+	type: 'FunctionExpression';
+	id?: BindingIdentifier;
+	head: FunctionHead;
+	body: BlockStatement;
 };
 
 export const functionExpression = createBuilder<FunctionExpression>(
-  'FunctionExpression',
-  {
-    bindingKeys: {
-      id: true,
-    },
-    visitorKeys: {
-      head: true,
-      id: true,
-      body: true,
-    },
-  },
+	'FunctionExpression',
+	{
+		bindingKeys: {
+			id: true,
+		},
+		visitorKeys: {
+			head: true,
+			id: true,
+			body: true,
+		},
+	},
 );

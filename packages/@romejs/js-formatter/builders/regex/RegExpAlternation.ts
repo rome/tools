@@ -10,12 +10,12 @@ import {Token, concat} from '../../tokens';
 import {RegExpAlternation} from '@romejs/js-ast';
 
 export default function RegExpAlternation(
-  builder: Builder,
-  node: RegExpAlternation,
+	builder: Builder,
+	node: RegExpAlternation,
 ): Token {
-  return concat([
-    builder.tokenize(node.left, node),
-    '|',
-    builder.tokenize(node.right, node),
-  ]);
+	return concat([
+		builder.tokenize(node.left, node),
+		'|',
+		builder.tokenize(node.right, node),
+	]);
 }

@@ -9,11 +9,11 @@ import {AnyExpression, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type TSExportAssignment = JSNodeBase & {
-  type: 'TSExportAssignment';
-  expression: AnyExpression;
+	type: 'TSExportAssignment';
+	expression: AnyExpression;
 };
 
 export const tsExportAssignment = createBuilder<TSExportAssignment>(
-  'TSExportAssignment',
-  {bindingKeys: {}, visitorKeys: {expression: true}},
+	'TSExportAssignment',
+	{bindingKeys: {}, visitorKeys: {expression: true}},
 );

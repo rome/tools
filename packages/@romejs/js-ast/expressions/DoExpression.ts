@@ -9,16 +9,16 @@ import {BlockStatement, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type DoExpression = JSNodeBase & {
-  type: 'DoExpression';
-  body: BlockStatement;
+	type: 'DoExpression';
+	body: BlockStatement;
 };
 
 export const doExpression = createBuilder<DoExpression>(
-  'DoExpression',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      body: true,
-    },
-  },
+	'DoExpression',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			body: true,
+		},
+	},
 );

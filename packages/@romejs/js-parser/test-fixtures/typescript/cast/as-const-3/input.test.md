@@ -6,252 +6,252 @@
 
 ```javascript
 Program {
-  corrupt: false
-  directives: Array []
-  filename: 'input.ts'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array ['ts']
-  loc: Object {
-    filename: 'input.ts'
-    end: Object {
-      column: 42
-      index: 42
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  comments: Array [
-    CommentLine {
-      id: '0'
-      value: ' Error'
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 42
-          index: 42
-          line: 1
-        }
-        start: Object {
-          column: 34
-          index: 34
-          line: 1
-        }
-      }
-    }
-  ]
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Only literal values are allowed as a constant type'}
-      }
-      location: Object {
-        filename: 'input.ts'
-        mtime: undefined
-        sourceType: 'module'
-        end: Object {
-          column: 21
-          index: 21
-          line: 1
-        }
-        start: Object {
-          column: 9
-          index: 9
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    VariableDeclarationStatement {
-      trailingComments: Array ['0']
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 32
-          index: 32
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      declaration: VariableDeclaration {
-        kind: 'let'
-        trailingComments: undefined
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 32
-            index: 32
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        declarations: Array [
-          VariableDeclarator {
-            id: BindingIdentifier {
-              name: 'e'
-              loc: Object {
-                filename: 'input.ts'
-                identifierName: 'e'
-                end: Object {
-                  column: 5
-                  index: 5
-                  line: 1
-                }
-                start: Object {
-                  column: 4
-                  index: 4
-                  line: 1
-                }
-              }
-            }
-            loc: Object {
-              filename: 'input.ts'
-              end: Object {
-                column: 31
-                index: 31
-                line: 1
-              }
-              start: Object {
-                column: 4
-                index: 4
-                line: 1
-              }
-            }
-            init: TSAsExpression {
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 31
-                  index: 31
-                  line: 1
-                }
-                start: Object {
-                  column: 8
-                  index: 8
-                  line: 1
-                }
-              }
-              typeAnnotation: TSTypeReference {
-                typeParameters: undefined
-                loc: Object {
-                  filename: 'input.ts'
-                  end: Object {
-                    column: 31
-                    index: 31
-                    line: 1
-                  }
-                  start: Object {
-                    column: 26
-                    index: 26
-                    line: 1
-                  }
-                }
-                typeName: ReferenceIdentifier {
-                  name: 'const'
-                  loc: Object {
-                    filename: 'input.ts'
-                    identifierName: 'const'
-                    end: Object {
-                      column: 31
-                      index: 31
-                      line: 1
-                    }
-                    start: Object {
-                      column: 26
-                      index: 26
-                      line: 1
-                    }
-                  }
-                }
-              }
-              expression: ConditionalExpression {
-                loc: Object {
-                  filename: 'input.ts'
-                  end: Object {
-                    column: 21
-                    index: 21
-                    line: 1
-                  }
-                  start: Object {
-                    column: 9
-                    index: 9
-                    line: 1
-                  }
-                }
-                test: BooleanLiteral {
-                  value: true
-                  loc: Object {
-                    filename: 'input.ts'
-                    end: Object {
-                      column: 13
-                      index: 13
-                      line: 1
-                    }
-                    start: Object {
-                      column: 9
-                      index: 9
-                      line: 1
-                    }
-                  }
-                }
-                alternate: NumericLiteral {
-                  value: 0
-                  format: undefined
-                  loc: Object {
-                    filename: 'input.ts'
-                    end: Object {
-                      column: 21
-                      index: 21
-                      line: 1
-                    }
-                    start: Object {
-                      column: 20
-                      index: 20
-                      line: 1
-                    }
-                  }
-                }
-                consequent: NumericLiteral {
-                  value: 1
-                  format: undefined
-                  loc: Object {
-                    filename: 'input.ts'
-                    end: Object {
-                      column: 17
-                      index: 17
-                      line: 1
-                    }
-                    start: Object {
-                      column: 16
-                      index: 16
-                      line: 1
-                    }
-                  }
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+	corrupt: false
+	directives: Array []
+	filename: 'input.ts'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'module'
+	syntax: Array ['ts']
+	loc: Object {
+		filename: 'input.ts'
+		end: Object {
+			column: 42
+			index: 42
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	comments: Array [
+		CommentLine {
+			id: '0'
+			value: ' Error'
+			loc: Object {
+				filename: 'input.ts'
+				end: Object {
+					column: 42
+					index: 42
+					line: 1
+				}
+				start: Object {
+					column: 34
+					index: 34
+					line: 1
+				}
+			}
+		}
+	]
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: 'js-parser'}]
+			description: Object {
+				advice: Array []
+				category: 'parse/js'
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Only literal values are allowed as a constant type'}
+			}
+			location: Object {
+				filename: 'input.ts'
+				mtime: undefined
+				sourceType: 'module'
+				end: Object {
+					column: 21
+					index: 21
+					line: 1
+				}
+				start: Object {
+					column: 9
+					index: 9
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		VariableDeclarationStatement {
+			trailingComments: Array ['0']
+			loc: Object {
+				filename: 'input.ts'
+				end: Object {
+					column: 32
+					index: 32
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			declaration: VariableDeclaration {
+				kind: 'let'
+				trailingComments: undefined
+				loc: Object {
+					filename: 'input.ts'
+					end: Object {
+						column: 32
+						index: 32
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				declarations: Array [
+					VariableDeclarator {
+						id: BindingIdentifier {
+							name: 'e'
+							loc: Object {
+								filename: 'input.ts'
+								identifierName: 'e'
+								end: Object {
+									column: 5
+									index: 5
+									line: 1
+								}
+								start: Object {
+									column: 4
+									index: 4
+									line: 1
+								}
+							}
+						}
+						loc: Object {
+							filename: 'input.ts'
+							end: Object {
+								column: 31
+								index: 31
+								line: 1
+							}
+							start: Object {
+								column: 4
+								index: 4
+								line: 1
+							}
+						}
+						init: TSAsExpression {
+							loc: Object {
+								filename: 'input.ts'
+								end: Object {
+									column: 31
+									index: 31
+									line: 1
+								}
+								start: Object {
+									column: 8
+									index: 8
+									line: 1
+								}
+							}
+							typeAnnotation: TSTypeReference {
+								typeParameters: undefined
+								loc: Object {
+									filename: 'input.ts'
+									end: Object {
+										column: 31
+										index: 31
+										line: 1
+									}
+									start: Object {
+										column: 26
+										index: 26
+										line: 1
+									}
+								}
+								typeName: ReferenceIdentifier {
+									name: 'const'
+									loc: Object {
+										filename: 'input.ts'
+										identifierName: 'const'
+										end: Object {
+											column: 31
+											index: 31
+											line: 1
+										}
+										start: Object {
+											column: 26
+											index: 26
+											line: 1
+										}
+									}
+								}
+							}
+							expression: ConditionalExpression {
+								loc: Object {
+									filename: 'input.ts'
+									end: Object {
+										column: 21
+										index: 21
+										line: 1
+									}
+									start: Object {
+										column: 9
+										index: 9
+										line: 1
+									}
+								}
+								test: BooleanLiteral {
+									value: true
+									loc: Object {
+										filename: 'input.ts'
+										end: Object {
+											column: 13
+											index: 13
+											line: 1
+										}
+										start: Object {
+											column: 9
+											index: 9
+											line: 1
+										}
+									}
+								}
+								alternate: NumericLiteral {
+									value: 0
+									format: undefined
+									loc: Object {
+										filename: 'input.ts'
+										end: Object {
+											column: 21
+											index: 21
+											line: 1
+										}
+										start: Object {
+											column: 20
+											index: 20
+											line: 1
+										}
+									}
+								}
+								consequent: NumericLiteral {
+									value: 1
+									format: undefined
+									loc: Object {
+										filename: 'input.ts'
+										end: Object {
+											column: 17
+											index: 17
+											line: 1
+										}
+										start: Object {
+											column: 16
+											index: 16
+											line: 1
+										}
+									}
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

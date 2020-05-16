@@ -13,34 +13,34 @@ import ObjT from './ObjT';
 import T from './T';
 
 export default class NumericT extends ObjT {
-  constructor(scope: Scope, originNode: undefined | AnyNode) {
-    super(
-      scope,
-      originNode,
-      {
-        props: [],
-        proto: scope.intrinsics.NumberPrototype,
-        calls: [],
-      },
-    );
-  }
+	constructor(scope: Scope, originNode: undefined | AnyNode) {
+		super(
+			scope,
+			originNode,
+			{
+				props: [],
+				proto: scope.intrinsics.NumberPrototype,
+				calls: [],
+			},
+		);
+	}
 
-  static type = 'NumericT';
+	static type = 'NumericT';
 
-  serialize(): HydrateData {
-    return {};
-  }
+	serialize(): HydrateData {
+		return {};
+	}
 
-  static hydrate(scope: Scope, originNode: undefined | AnyNode): T {
-    return new NumericT(scope, originNode);
-  }
+	static hydrate(scope: Scope, originNode: undefined | AnyNode): T {
+		return new NumericT(scope, originNode);
+	}
 
-  humanize(): string {
-    return 'number';
-  }
+	humanize(): string {
+		return 'number';
+	}
 
-  compatibleWith(type: T): boolean {
-    // a numeric literal can flow into a generic number
-    return type instanceof NumericT || type instanceof NumericLiteralT;
-  }
+	compatibleWith(type: T): boolean {
+		// a numeric literal can flow into a generic number
+		return type instanceof NumericT || type instanceof NumericLiteralT;
+	}
 }

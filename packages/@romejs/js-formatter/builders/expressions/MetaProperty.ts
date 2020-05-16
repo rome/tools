@@ -10,12 +10,12 @@ import {Token, concat} from '../../tokens';
 import {MetaProperty} from '@romejs/js-ast';
 
 export default function MetaProperty(
-  builder: Builder,
-  node: MetaProperty,
+	builder: Builder,
+	node: MetaProperty,
 ): Token {
-  return concat([
-    builder.tokenize(node.meta, node),
-    '.',
-    builder.tokenize(node.property, node),
-  ]);
+	return concat([
+		builder.tokenize(node.meta, node),
+		'.',
+		builder.tokenize(node.property, node),
+	]);
 }

@@ -9,20 +9,20 @@ import {Identifier, ImportSpecifierLocal, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type ImportSpecifier = JSNodeBase & {
-  type: 'ImportSpecifier';
-  imported: Identifier;
-  local: ImportSpecifierLocal;
+	type: 'ImportSpecifier';
+	imported: Identifier;
+	local: ImportSpecifierLocal;
 };
 
 export const importSpecifier = createBuilder<ImportSpecifier>(
-  'ImportSpecifier',
-  {
-    bindingKeys: {
-      local: true,
-    },
-    visitorKeys: {
-      imported: true,
-      local: true,
-    },
-  },
+	'ImportSpecifier',
+	{
+		bindingKeys: {
+			local: true,
+		},
+		visitorKeys: {
+			imported: true,
+			local: true,
+		},
+	},
 );

@@ -9,13 +9,13 @@ import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type TSThisType = JSNodeBase & {
-  type: 'TSThisType';
+	type: 'TSThisType';
 };
 
 export const tsThisType = createBuilder<TSThisType>(
-  'TSThisType',
-  {
-    bindingKeys: {},
-    visitorKeys: {},
-  },
+	'TSThisType',
+	{
+		bindingKeys: {},
+		visitorKeys: {},
+	},
 );

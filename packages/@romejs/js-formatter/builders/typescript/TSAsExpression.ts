@@ -10,18 +10,18 @@ import {Builder} from '@romejs/js-formatter';
 import {Token, concat, space} from '../../tokens';
 
 export default function TSAsExpression(
-  builder: Builder,
-  node: TSAsExpression,
+	builder: Builder,
+	node: TSAsExpression,
 ): Token {
-  if (builder.options.typeAnnotations) {
-    return concat([
-      builder.tokenize(node.expression, node),
-      space,
-      'as',
-      space,
-      builder.tokenize(node.typeAnnotation, node),
-    ]);
-  } else {
-    return builder.tokenize(node.expression, node);
-  }
+	if (builder.options.typeAnnotations) {
+		return concat([
+			builder.tokenize(node.expression, node),
+			space,
+			'as',
+			space,
+			builder.tokenize(node.typeAnnotation, node),
+		]);
+	} else {
+		return builder.tokenize(node.expression, node);
+	}
 }

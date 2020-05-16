@@ -8,6 +8,6 @@
 import {AnyNode, RegExpCharSetRange, regExpCharSetRange} from '@romejs/js-ast';
 
 export default function RegExpCharSetRange(node: AnyNode) {
-  node = regExpCharSetRange.assert(node);
-  throw new Error('unimplemented');
+	node = regExpCharSetRange.assert(node);
+	throw new Error('unimplemented');
 }

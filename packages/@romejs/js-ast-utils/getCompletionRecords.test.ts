@@ -11,44 +11,44 @@ import {parseJS} from '@romejs/js-parser';
 import {functionDeclaration} from '@romejs/js-ast';
 
 function helper(input: string) {
-  return getCompletionRecords(
-    functionDeclaration.assert(
-      parseJS({
-        path: 'unknown',
-        input: `function foo(){${input}}`,
-      }).body[0],
-    ).body,
-  );
+	return getCompletionRecords(
+		functionDeclaration.assert(
+			parseJS({
+				path: 'unknown',
+				input: `function foo(){${input}}`,
+			}).body[0],
+		).body,
+	);
 }
 
 test(
-  'invalid',
-  async (t) => {
-    t.snapshot(helper(`{}`));
-    t.snapshot(helper(`'foobar';`));
-    t.snapshot(helper(`if (bar) {'foobar';}`));
-    t.snapshot(helper(`if (bar) {'foobar';} else {}`));
-    t.snapshot(helper(`switch (foo) {}`));
-    t.snapshot(helper(`switch (foo) {case 'bar': {}}`));
-    t.snapshot(helper(`switch (foo) {default: {}}`));
-  },
+	'invalid',
+	async (t) => {
+		t.snapshot(helper(`{}`));
+		t.snapshot(helper(`'foobar';`));
+		t.snapshot(helper(`if (bar) {'foobar';}`));
+		t.snapshot(helper(`if (bar) {'foobar';} else {}`));
+		t.snapshot(helper(`switch (foo) {}`));
+		t.snapshot(helper(`switch (foo) {case 'bar': {}}`));
+		t.snapshot(helper(`switch (foo) {default: {}}`));
+	},
 );
 
 test(
-  'completions',
-  async (t) => {
-    t.snapshot(helper(`return false;`));
-    t.snapshot(helper(`return; invalid;`));
-    t.snapshot(helper(`if (bar) {return false;}`));
-    t.snapshot(helper(`if (bar) {return false;} else {return true;}`));
-    t.snapshot(helper(`switch (foo) {default: {return false;}}`));
-    t.snapshot(helper(`switch (foo) {default: {return false;}}`));
-  },
+	'completions',
+	async (t) => {
+		t.snapshot(helper(`return false;`));
+		t.snapshot(helper(`return; invalid;`));
+		t.snapshot(helper(`if (bar) {return false;}`));
+		t.snapshot(helper(`if (bar) {return false;} else {return true;}`));
+		t.snapshot(helper(`switch (foo) {default: {return false;}}`));
+		t.snapshot(helper(`switch (foo) {default: {return false;}}`));
+	},
 );
 
 test(
-  'mix',
-  async (t) => {
-    t.snapshot(helper(`switch (foo) {default: {if (true) {return false;}}}`));
-  },
+	'mix',
+	async (t) => {
+		t.snapshot(helper(`switch (foo) {default: {if (true) {return false;}}}`));
+	},
 );

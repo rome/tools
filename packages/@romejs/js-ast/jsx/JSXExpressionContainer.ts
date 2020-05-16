@@ -9,16 +9,16 @@ import {AnyExpression, JSNodeBase, JSXEmptyExpression} from '../index';
 import {createBuilder} from '../utils';
 
 export type JSXExpressionContainer = JSNodeBase & {
-  type: 'JSXExpressionContainer';
-  expression: AnyExpression | JSXEmptyExpression;
+	type: 'JSXExpressionContainer';
+	expression: AnyExpression | JSXEmptyExpression;
 };
 
 export const jsxExpressionContainer = createBuilder<JSXExpressionContainer>(
-  'JSXExpressionContainer',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      expression: true,
-    },
-  },
+	'JSXExpressionContainer',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			expression: true,
+		},
+	},
 );

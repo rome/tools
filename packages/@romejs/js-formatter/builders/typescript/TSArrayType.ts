@@ -10,5 +10,5 @@ import {Builder} from '@romejs/js-formatter';
 import {Token, concat} from '../../tokens';
 
 export default function TSArrayType(builder: Builder, node: TSArrayType): Token {
-  return concat([builder.tokenize(node.elementType, node), '[]']);
+	return concat([builder.tokenize(node.elementType, node), '[]']);
 }

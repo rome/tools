@@ -6,12 +6,12 @@
  */
 
 import {
-  AnyNode,
-  TSNamespaceExportDeclaration,
-  tsNamespaceExportDeclaration,
+	AnyNode,
+	TSNamespaceExportDeclaration,
+	tsNamespaceExportDeclaration,
 } from '@romejs/js-ast';
 
 export default function TSNamespaceExportDeclaration(node: AnyNode) {
-  node = tsNamespaceExportDeclaration.assert(node);
-  throw new Error('unimplemented');
+	node = tsNamespaceExportDeclaration.assert(node);
+	throw new Error('unimplemented');
 }

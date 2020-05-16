@@ -6,281 +6,281 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 59
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  directives: Array [
-    Directive {
-      value: 'use strict'
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 13
-          index: 13
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-    }
-  ]
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'yield is a reserved word'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 51
-          index: 51
-          line: 1
-        }
-        start: Object {
-          column: 46
-          index: 46
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    FunctionDeclaration {
-      id: BindingIdentifier {
-        name: 'g'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'g'
-          end: Object {
-            column: 25
-            index: 25
-            line: 1
-          }
-          start: Object {
-            column: 24
-            index: 24
-            line: 1
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 58
-          index: 58
-          line: 1
-        }
-        start: Object {
-          column: 14
-          index: 14
-          line: 1
-        }
-      }
-      head: FunctionHead {
-        async: false
-        generator: true
-        hasHoistedVars: true
-        params: Array []
-        rest: undefined
-        returnType: undefined
-        thisType: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 27
-            index: 27
-            line: 1
-          }
-          start: Object {
-            column: 25
-            index: 25
-            line: 1
-          }
-        }
-      }
-      body: BlockStatement {
-        directives: Array []
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 58
-            index: 58
-            line: 1
-          }
-          start: Object {
-            column: 27
-            index: 27
-            line: 1
-          }
-        }
-        body: Array [
-          VariableDeclarationStatement {
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 56
-                index: 56
-                line: 1
-              }
-              start: Object {
-                column: 29
-                index: 29
-                line: 1
-              }
-            }
-            declaration: VariableDeclaration {
-              kind: 'var'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 56
-                  index: 56
-                  line: 1
-                }
-                start: Object {
-                  column: 29
-                  index: 29
-                  line: 1
-                }
-              }
-              declarations: Array [
-                VariableDeclarator {
-                  id: BindingIdentifier {
-                    name: 'y'
-                    loc: Object {
-                      filename: 'input.js'
-                      identifierName: 'y'
-                      end: Object {
-                        column: 34
-                        index: 34
-                        line: 1
-                      }
-                      start: Object {
-                        column: 33
-                        index: 33
-                        line: 1
-                      }
-                    }
-                  }
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 55
-                      index: 55
-                      line: 1
-                    }
-                    start: Object {
-                      column: 33
-                      index: 33
-                      line: 1
-                    }
-                  }
-                  init: FunctionExpression {
-                    id: BindingIdentifier {
-                      name: 'yield'
-                      loc: Object {
-                        filename: 'input.js'
-                        identifierName: 'yield'
-                        end: Object {
-                          column: 51
-                          index: 51
-                          line: 1
-                        }
-                        start: Object {
-                          column: 46
-                          index: 46
-                          line: 1
-                        }
-                      }
-                    }
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 55
-                        index: 55
-                        line: 1
-                      }
-                      start: Object {
-                        column: 37
-                        index: 37
-                        line: 1
-                      }
-                    }
-                    body: BlockStatement {
-                      body: Array []
-                      directives: Array []
-                      loc: Object {
-                        filename: 'input.js'
-                        end: Object {
-                          column: 55
-                          index: 55
-                          line: 1
-                        }
-                        start: Object {
-                          column: 53
-                          index: 53
-                          line: 1
-                        }
-                      }
-                    }
-                    head: FunctionHead {
-                      async: false
-                      generator: false
-                      hasHoistedVars: false
-                      params: Array []
-                      rest: undefined
-                      returnType: undefined
-                      thisType: undefined
-                      typeParameters: undefined
-                      loc: Object {
-                        filename: 'input.js'
-                        end: Object {
-                          column: 53
-                          index: 53
-                          line: 1
-                        }
-                        start: Object {
-                          column: 51
-                          index: 51
-                          line: 1
-                        }
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 0
+			index: 59
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	directives: Array [
+		Directive {
+			value: 'use strict'
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 13
+					index: 13
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+		}
+	]
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: 'js-parser'}]
+			description: Object {
+				advice: Array []
+				category: 'parse/js'
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'yield is a reserved word'}
+			}
+			location: Object {
+				filename: 'input.js'
+				mtime: undefined
+				sourceType: 'script'
+				end: Object {
+					column: 51
+					index: 51
+					line: 1
+				}
+				start: Object {
+					column: 46
+					index: 46
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		FunctionDeclaration {
+			id: BindingIdentifier {
+				name: 'g'
+				loc: Object {
+					filename: 'input.js'
+					identifierName: 'g'
+					end: Object {
+						column: 25
+						index: 25
+						line: 1
+					}
+					start: Object {
+						column: 24
+						index: 24
+						line: 1
+					}
+				}
+			}
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 58
+					index: 58
+					line: 1
+				}
+				start: Object {
+					column: 14
+					index: 14
+					line: 1
+				}
+			}
+			head: FunctionHead {
+				async: false
+				generator: true
+				hasHoistedVars: true
+				params: Array []
+				rest: undefined
+				returnType: undefined
+				thisType: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 27
+						index: 27
+						line: 1
+					}
+					start: Object {
+						column: 25
+						index: 25
+						line: 1
+					}
+				}
+			}
+			body: BlockStatement {
+				directives: Array []
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 58
+						index: 58
+						line: 1
+					}
+					start: Object {
+						column: 27
+						index: 27
+						line: 1
+					}
+				}
+				body: Array [
+					VariableDeclarationStatement {
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 56
+								index: 56
+								line: 1
+							}
+							start: Object {
+								column: 29
+								index: 29
+								line: 1
+							}
+						}
+						declaration: VariableDeclaration {
+							kind: 'var'
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 56
+									index: 56
+									line: 1
+								}
+								start: Object {
+									column: 29
+									index: 29
+									line: 1
+								}
+							}
+							declarations: Array [
+								VariableDeclarator {
+									id: BindingIdentifier {
+										name: 'y'
+										loc: Object {
+											filename: 'input.js'
+											identifierName: 'y'
+											end: Object {
+												column: 34
+												index: 34
+												line: 1
+											}
+											start: Object {
+												column: 33
+												index: 33
+												line: 1
+											}
+										}
+									}
+									loc: Object {
+										filename: 'input.js'
+										end: Object {
+											column: 55
+											index: 55
+											line: 1
+										}
+										start: Object {
+											column: 33
+											index: 33
+											line: 1
+										}
+									}
+									init: FunctionExpression {
+										id: BindingIdentifier {
+											name: 'yield'
+											loc: Object {
+												filename: 'input.js'
+												identifierName: 'yield'
+												end: Object {
+													column: 51
+													index: 51
+													line: 1
+												}
+												start: Object {
+													column: 46
+													index: 46
+													line: 1
+												}
+											}
+										}
+										loc: Object {
+											filename: 'input.js'
+											end: Object {
+												column: 55
+												index: 55
+												line: 1
+											}
+											start: Object {
+												column: 37
+												index: 37
+												line: 1
+											}
+										}
+										body: BlockStatement {
+											body: Array []
+											directives: Array []
+											loc: Object {
+												filename: 'input.js'
+												end: Object {
+													column: 55
+													index: 55
+													line: 1
+												}
+												start: Object {
+													column: 53
+													index: 53
+													line: 1
+												}
+											}
+										}
+										head: FunctionHead {
+											async: false
+											generator: false
+											hasHoistedVars: false
+											params: Array []
+											rest: undefined
+											returnType: undefined
+											thisType: undefined
+											typeParameters: undefined
+											loc: Object {
+												filename: 'input.js'
+												end: Object {
+													column: 53
+													index: 53
+													line: 1
+												}
+												start: Object {
+													column: 51
+													index: 51
+													line: 1
+												}
+											}
+										}
+									}
+								}
+							]
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

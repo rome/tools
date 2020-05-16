@@ -6,200 +6,200 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: true
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 21
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unexpected keyword const'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 16
-          index: 16
-          line: 1
-        }
-        start: Object {
-          column: 11
-          index: 11
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    VariableDeclarationStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 20
-          index: 20
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      declaration: VariableDeclaration {
-        kind: 'var'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 20
-            index: 20
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        declarations: Array [
-          VariableDeclarator {
-            id: BindingIdentifier {
-              name: 'x'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'x'
-                end: Object {
-                  column: 5
-                  index: 5
-                  line: 1
-                }
-                start: Object {
-                  column: 4
-                  index: 4
-                  line: 1
-                }
-              }
-            }
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 19
-                index: 19
-                line: 1
-              }
-              start: Object {
-                column: 4
-                index: 4
-                line: 1
-              }
-            }
-            init: ObjectExpression {
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 18
-                  index: 18
-                  line: 1
-                }
-                start: Object {
-                  column: 9
-                  index: 9
-                  line: 1
-                }
-              }
-              properties: Array [
-                ObjectProperty {
-                  key: StaticPropertyKey {
-                    value: Identifier {
-                      name: 'const'
-                      loc: Object {
-                        filename: 'input.js'
-                        identifierName: 'const'
-                        end: Object {
-                          column: 16
-                          index: 16
-                          line: 1
-                        }
-                        start: Object {
-                          column: 11
-                          index: 11
-                          line: 1
-                        }
-                      }
-                    }
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 16
-                        index: 16
-                        line: 1
-                      }
-                      start: Object {
-                        column: 11
-                        index: 11
-                        line: 1
-                      }
-                    }
-                  }
-                  value: ReferenceIdentifier {
-                    name: 'const'
-                    loc: Object {
-                      filename: 'input.js'
-                      identifierName: 'const'
-                      end: Object {
-                        column: 16
-                        index: 16
-                        line: 1
-                      }
-                      start: Object {
-                        column: 11
-                        index: 11
-                        line: 1
-                      }
-                    }
-                  }
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 16
-                      index: 16
-                      line: 1
-                    }
-                    start: Object {
-                      column: 11
-                      index: 11
-                      line: 1
-                    }
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: true
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 0
+			index: 21
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: 'js-parser'}]
+			description: Object {
+				advice: Array []
+				category: 'parse/js'
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unexpected keyword const'}
+			}
+			location: Object {
+				filename: 'input.js'
+				mtime: undefined
+				sourceType: 'script'
+				end: Object {
+					column: 16
+					index: 16
+					line: 1
+				}
+				start: Object {
+					column: 11
+					index: 11
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		VariableDeclarationStatement {
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 20
+					index: 20
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			declaration: VariableDeclaration {
+				kind: 'var'
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 20
+						index: 20
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				declarations: Array [
+					VariableDeclarator {
+						id: BindingIdentifier {
+							name: 'x'
+							loc: Object {
+								filename: 'input.js'
+								identifierName: 'x'
+								end: Object {
+									column: 5
+									index: 5
+									line: 1
+								}
+								start: Object {
+									column: 4
+									index: 4
+									line: 1
+								}
+							}
+						}
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 19
+								index: 19
+								line: 1
+							}
+							start: Object {
+								column: 4
+								index: 4
+								line: 1
+							}
+						}
+						init: ObjectExpression {
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 18
+									index: 18
+									line: 1
+								}
+								start: Object {
+									column: 9
+									index: 9
+									line: 1
+								}
+							}
+							properties: Array [
+								ObjectProperty {
+									key: StaticPropertyKey {
+										value: Identifier {
+											name: 'const'
+											loc: Object {
+												filename: 'input.js'
+												identifierName: 'const'
+												end: Object {
+													column: 16
+													index: 16
+													line: 1
+												}
+												start: Object {
+													column: 11
+													index: 11
+													line: 1
+												}
+											}
+										}
+										loc: Object {
+											filename: 'input.js'
+											end: Object {
+												column: 16
+												index: 16
+												line: 1
+											}
+											start: Object {
+												column: 11
+												index: 11
+												line: 1
+											}
+										}
+									}
+									value: ReferenceIdentifier {
+										name: 'const'
+										loc: Object {
+											filename: 'input.js'
+											identifierName: 'const'
+											end: Object {
+												column: 16
+												index: 16
+												line: 1
+											}
+											start: Object {
+												column: 11
+												index: 11
+												line: 1
+											}
+										}
+									}
+									loc: Object {
+										filename: 'input.js'
+										end: Object {
+											column: 16
+											index: 16
+											line: 1
+										}
+										start: Object {
+											column: 11
+											index: 11
+											line: 1
+										}
+									}
+								}
+							]
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

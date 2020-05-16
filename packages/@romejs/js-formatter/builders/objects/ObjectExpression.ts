@@ -6,79 +6,79 @@
  */
 
 import {
-  AnyNode,
-  AssignmentObjectPattern,
-  BindingObjectPattern,
-  ObjectExpression,
+	AnyNode,
+	AssignmentObjectPattern,
+	BindingObjectPattern,
+	ObjectExpression,
 } from '@romejs/js-ast';
 import Builder from '../../Builder';
 import {
-  Token,
-  concat,
-  group,
-  ifBreak,
-  indent,
-  join,
-  lineOrSpace,
-  softline,
+	Token,
+	concat,
+	group,
+	ifBreak,
+	indent,
+	join,
+	lineOrSpace,
+	softline,
 } from '../../tokens';
 import {hasInnerComments} from '../comments';
 
 export default function ObjectExpression(
-  builder: Builder,
-  node: ObjectExpression | AssignmentObjectPattern | BindingObjectPattern,
+	builder: Builder,
+	node: ObjectExpression | AssignmentObjectPattern | BindingObjectPattern,
 ): Token {
-  if (hasInnerComments(node)) {
-    return group(
-      concat(['{', builder.tokenizeInnerComments(node, true), softline, '}']),
-    );
-  }
+	if (hasInnerComments(node)) {
+		return group(
+			concat(['{', builder.tokenizeInnerComments(node, true), softline, '}']),
+		);
+	}
 
-  const tokens: Array<Token> = [];
-  const props: Array<AnyNode> = node.properties;
+	const tokens: Array<Token> = [];
+	const props: Array<AnyNode> = node.properties;
 
-  tokens.push(
-    join(
-      concat([',', lineOrSpace]),
-      props.map((prop, index) => {
-        const printed = builder.tokenize(prop, node);
-        if (index > 0 && builder.getLinesBetween(props[index - 1], prop) > 1) {
-          return concat([softline, printed]);
-        } else {
-          return printed;
-        }
-      }),
-    ),
-  );
+	tokens.push(
+		join(
+			concat([',', lineOrSpace]),
+			props.map((prop, index) => {
+				const printed = builder.tokenize(prop, node);
+				if (index > 0 && builder.getLinesBetween(props[index - 1], prop) > 1) {
+					return concat([softline, printed]);
+				} else {
+					return printed;
+				}
+			}),
+		),
+	);
 
-  if (
-    (node.type === 'BindingObjectPattern' ||
-    node.type === 'AssignmentObjectPattern') &&
-    node.rest !== undefined
-  ) {
-    if (props.length > 0) {
-      tokens.push(',', lineOrSpace);
-      if (builder.getLinesBetween(props[props.length - 1], node.rest) > 1) {
-        tokens.push(softline);
-      }
-    }
+	if (
+		(node.type === 'BindingObjectPattern' ||
+		node.type === 'AssignmentObjectPattern') &&
+		node.rest !== undefined
+	) {
+		if (props.length > 0) {
+			tokens.push(',', lineOrSpace);
+			if (builder.getLinesBetween(props[props.length - 1], node.rest) > 1) {
+				tokens.push(softline);
+			}
+		}
 
-    tokens.push('...', builder.tokenize(node.rest, node));
-  } else if (props.length > 0) {
-    // Add trailing comma
-    tokens.push(ifBreak(','));
-  }
+		tokens.push('...', builder.tokenize(node.rest, node));
+	} else if (props.length > 0) {
+		// Add trailing comma
+		tokens.push(ifBreak(','));
+	}
 
-  // If the first property is not one the same line as the opening brace,
-  // the object is printed on multiple lines.
-  const shouldBreak =
-    node.loc !== undefined &&
-    props.length > 0 &&
-    props[0].loc !== undefined &&
-    props[0].loc.start.line !== node.loc.start.line;
+	// If the first property is not one the same line as the opening brace,
+	// the object is printed on multiple lines.
+	const shouldBreak =
+		node.loc !== undefined &&
+		props.length > 0 &&
+		props[0].loc !== undefined &&
+		props[0].loc.start.line !== node.loc.start.line;
 
-  return group(
-    concat(['{', indent(concat([softline, concat(tokens)])), softline, '}']),
-    shouldBreak,
-  );
+	return group(
+		concat(['{', indent(concat([softline, concat(tokens)])), softline, '}']),
+		shouldBreak,
+	);
 }

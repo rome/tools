@@ -6,31 +6,31 @@
  */
 
 import {
-  AbsoluteFilePath,
-  RelativeFilePath,
-  createAbsoluteFilePath,
-  createRelativeFilePath,
+	AbsoluteFilePath,
+	RelativeFilePath,
+	createAbsoluteFilePath,
+	createRelativeFilePath,
 } from '@romejs/path';
 export type FileReference = {
-  project: number;
-  manifest: undefined | number;
-  uid: string;
-  relative: RelativeFilePath;
-  real: AbsoluteFilePath;
-  remote: boolean;
+	project: number;
+	manifest: undefined | number;
+	uid: string;
+	relative: RelativeFilePath;
+	real: AbsoluteFilePath;
+	remote: boolean;
 };
 
 export type JSONFileReference = Omit<FileReference, 'real' | 'relative'> & {
-  real: string;
-  relative: string;
+	real: string;
+	relative: string;
 };
 
 export function convertTransportFileReference(
-  ref: JSONFileReference,
+	ref: JSONFileReference,
 ): FileReference {
-  return {
-    ...ref,
-    relative: createRelativeFilePath(ref.relative),
-    real: createAbsoluteFilePath(ref.real),
-  };
+	return {
+		...ref,
+		relative: createRelativeFilePath(ref.relative),
+		real: createAbsoluteFilePath(ref.real),
+	};
 }

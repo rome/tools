@@ -8,5 +8,5 @@
 import {Token} from '../../tokens';
 
 export default function AnyKeywordTypeAnnotation(): Token {
-  return 'any';
+	return 'any';
 }

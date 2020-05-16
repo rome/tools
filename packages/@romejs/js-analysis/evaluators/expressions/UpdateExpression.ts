@@ -11,8 +11,8 @@ import NumericT from '../../types/NumericT';
 import ExhaustiveT from '../../types/ExhaustiveT';
 
 export default function UpdateExpression(node: AnyNode, scope: Scope) {
-  node = updateExpression.assert(node);
-  const type = new NumericT(scope, node);
-  new ExhaustiveT(scope, node.argument, scope.evaluate(node.argument), type);
-  return type;
+	node = updateExpression.assert(node);
+	const type = new NumericT(scope, node);
+	new ExhaustiveT(scope, node.argument, scope.evaluate(node.argument), type);
+	return type;
 }

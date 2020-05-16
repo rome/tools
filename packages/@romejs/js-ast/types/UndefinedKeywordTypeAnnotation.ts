@@ -9,10 +9,10 @@ import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type UndefinedKeywordTypeAnnotation = JSNodeBase & {
-  type: 'UndefinedKeywordTypeAnnotation';
+	type: 'UndefinedKeywordTypeAnnotation';
 };
 
 export const undefinedKeywordTypeAnnotation = createBuilder<UndefinedKeywordTypeAnnotation>(
-  'UndefinedKeywordTypeAnnotation',
-  {bindingKeys: {}, visitorKeys: {}},
+	'UndefinedKeywordTypeAnnotation',
+	{bindingKeys: {}, visitorKeys: {}},
 );

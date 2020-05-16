@@ -9,18 +9,18 @@ import {AnyPrimaryType, JSNodeBase, TSSignatureDeclarationMeta} from '../index';
 import {createBuilder} from '../utils';
 
 export type TSConstructorType = JSNodeBase & {
-  type: 'TSConstructorType';
-  meta: TSSignatureDeclarationMeta;
-  typeAnnotation: AnyPrimaryType;
+	type: 'TSConstructorType';
+	meta: TSSignatureDeclarationMeta;
+	typeAnnotation: AnyPrimaryType;
 };
 
 export const tsConstructorType = createBuilder<TSConstructorType>(
-  'TSConstructorType',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      meta: true,
-      typeAnnotation: true,
-    },
-  },
+	'TSConstructorType',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			meta: true,
+			typeAnnotation: true,
+		},
+	},
 );

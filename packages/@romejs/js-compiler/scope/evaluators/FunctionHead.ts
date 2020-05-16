@@ -11,59 +11,59 @@ import {ArgumentsBinding, LetBinding} from '../bindings';
 import {getBindingIdentifiers} from '@romejs/js-ast-utils';
 
 export default {
-  creator: true,
-  build(node: FunctionHead, parent: AnyNode, parentScope: Scope) {
-    // We already evaluated ourselves
-    if (parentScope.node === node) {
-      return parentScope;
-    }
+	creator: true,
+	build(node: FunctionHead, parent: AnyNode, parentScope: Scope) {
+		// We already evaluated ourselves
+		if (parentScope.node === node) {
+			return parentScope;
+		}
 
-    const scope = parentScope.fork('function', parent);
+		const scope = parentScope.fork('function', parent);
 
-    if (parent.type === 'FunctionExpression') {
-      const {id} = parent;
-      if (id !== undefined) {
-        scope.addBinding(
-          new LetBinding({
-            node: id,
-            name: id.name,
-            scope,
-          }),
-        );
-      }
-    }
+		if (parent.type === 'FunctionExpression') {
+			const {id} = parent;
+			if (id !== undefined) {
+				scope.addBinding(
+					new LetBinding({
+						node: id,
+						name: id.name,
+						scope,
+					}),
+				);
+			}
+		}
 
-    // Add type parameters
-    scope.evaluate(node.typeParameters, node);
+		// Add type parameters
+		scope.evaluate(node.typeParameters, node);
 
-    const params =
-      node.rest === undefined ? node.params : [...node.params, node.rest];
+		const params =
+			node.rest === undefined ? node.params : [...node.params, node.rest];
 
-    // Add parameters
-    for (const param of params) {
-      for (const id of getBindingIdentifiers(param)) {
-        scope.addBinding(
-          new LetBinding({
-            node: id,
-            name: id.name,
-            scope,
-            kind: 'parameter',
-          }),
-        );
-      }
-    }
+		// Add parameters
+		for (const param of params) {
+			for (const id of getBindingIdentifiers(param)) {
+				scope.addBinding(
+					new LetBinding({
+						node: id,
+						name: id.name,
+						scope,
+						kind: 'parameter',
+					}),
+				);
+			}
+		}
 
-    // Add `arguments` binding
-    if (parent.type !== 'ArrowFunctionExpression') {
-      scope.addBinding(
-        new ArgumentsBinding({
-          name: 'arguments',
-          node,
-          scope,
-        }),
-      );
-    }
+		// Add `arguments` binding
+		if (parent.type !== 'ArrowFunctionExpression') {
+			scope.addBinding(
+				new ArgumentsBinding({
+					name: 'arguments',
+					node,
+					scope,
+				}),
+			);
+		}
 
-    return scope;
-  },
+		return scope;
+	},
 };

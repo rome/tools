@@ -7,13 +7,13 @@
 
 import {Scope} from '../../scopes';
 import {
-  AnyNode,
-  VoidKeywordTypeAnnotation,
-  voidKeywordTypeAnnotation,
+	AnyNode,
+	VoidKeywordTypeAnnotation,
+	voidKeywordTypeAnnotation,
 } from '@romejs/js-ast';
 import VoidT from '../../types/VoidT';
 
 export default function VoidKeywordTypeAnnotation(node: AnyNode, scope: Scope) {
-  node = voidKeywordTypeAnnotation.assert(node);
-  return new VoidT(scope, node);
+	node = voidKeywordTypeAnnotation.assert(node);
+	return new VoidT(scope, node);
 }

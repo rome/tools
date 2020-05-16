@@ -14,41 +14,41 @@ import {ConstProgramSyntax, ConstSourceType} from '@romejs/js-ast';
 import {AnalyzeDependencyResult} from '../types/analyzeDependencies';
 
 export type ExtensionLintInfo = ExtensionHandlerMethodInfo & {
-  options: WorkerLintOptions;
+	options: WorkerLintOptions;
 };
 
 export type ExtensionLintResult = {
-  sourceText: string;
-  diagnostics: Diagnostics;
-  formatted: string;
-  suppressions: DiagnosticSuppressions;
+	sourceText: string;
+	diagnostics: Diagnostics;
+	formatted: string;
+	suppressions: DiagnosticSuppressions;
 };
 
 export type ExtensionHandlerMethodInfo = {
-  parseOptions: WorkerParseOptions;
-  file: FileReference;
-  project: compiler.TransformProjectDefinition;
-  worker: Worker;
+	parseOptions: WorkerParseOptions;
+	file: FileReference;
+	project: compiler.TransformProjectDefinition;
+	worker: Worker;
 };
 
 export type PartialExtensionHandler = {
-  sourceType?: ConstSourceType;
-  syntax?: Array<ConstProgramSyntax>;
-  isAsset?: boolean;
-  canHaveScale?: boolean;
-  lint?: (info: ExtensionLintInfo) => Promise<ExtensionLintResult>;
-  format?: (info: ExtensionHandlerMethodInfo) => Promise<ExtensionLintResult>;
-  toJavaScript?: (
-    opts: ExtensionHandlerMethodInfo,
-  ) => Promise<{
-    generated: boolean;
-    sourceText: string;
-  }>;
-  analyzeDependencies?: (
-    opts: ExtensionHandlerMethodInfo,
-  ) => Promise<AnalyzeDependencyResult>;
+	sourceType?: ConstSourceType;
+	syntax?: Array<ConstProgramSyntax>;
+	isAsset?: boolean;
+	canHaveScale?: boolean;
+	lint?: (info: ExtensionLintInfo) => Promise<ExtensionLintResult>;
+	format?: (info: ExtensionHandlerMethodInfo) => Promise<ExtensionLintResult>;
+	toJavaScript?: (
+		opts: ExtensionHandlerMethodInfo,
+	) => Promise<{
+		generated: boolean;
+		sourceText: string;
+	}>;
+	analyzeDependencies?: (
+		opts: ExtensionHandlerMethodInfo,
+	) => Promise<AnalyzeDependencyResult>;
 };
 
 export type ExtensionHandler = PartialExtensionHandler & {
-  ext: string;
+	ext: string;
 };

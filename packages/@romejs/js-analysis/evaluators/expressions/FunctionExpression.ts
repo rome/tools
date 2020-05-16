@@ -10,6 +10,6 @@ import {AnyNode, FunctionExpression, functionExpression} from '@romejs/js-ast';
 import executeFunction from '../../utils/executeFunction';
 
 export default function FunctionExpression(node: AnyNode, scope: Scope) {
-  node = functionExpression.assert(node);
-  return executeFunction(node, scope, true);
+	node = functionExpression.assert(node);
+	return executeFunction(node, scope, true);
 }

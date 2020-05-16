@@ -8,9 +8,9 @@
 import {isPlainObject} from '@romejs/typescript-helpers';
 
 export default function isNodeLike(node: unknown): boolean {
-  if (node == null) {
-    return false;
-  } else {
-    return isPlainObject(node) && typeof node.type === 'string';
-  }
+	if (node == null) {
+		return false;
+	} else {
+		return isPlainObject(node) && typeof node.type === 'string';
+	}
 }

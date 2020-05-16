@@ -7,13 +7,13 @@
 
 import {Scope} from '../../scopes';
 import {
-  AnyNode,
-  MixedKeywordTypeAnnotation,
-  mixedKeywordTypeAnnotation,
+	AnyNode,
+	MixedKeywordTypeAnnotation,
+	mixedKeywordTypeAnnotation,
 } from '@romejs/js-ast';
 import MixedT from '../../types/MixedT';
 
 export default function MixedKeywordTypeAnnotation(node: AnyNode, scope: Scope) {
-  node = mixedKeywordTypeAnnotation.assert(node);
-  return new MixedT(scope, node);
+	node = mixedKeywordTypeAnnotation.assert(node);
+	return new MixedT(scope, node);
 }

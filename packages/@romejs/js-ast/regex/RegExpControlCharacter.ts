@@ -9,13 +9,13 @@ import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type RegExpControlCharacter = JSNodeBase & {
-  type: 'RegExpControlCharacter';
+	type: 'RegExpControlCharacter';
 };
 
 export const regExpControlCharacter = createBuilder<RegExpControlCharacter>(
-  'RegExpControlCharacter',
-  {
-    bindingKeys: {},
-    visitorKeys: {},
-  },
+	'RegExpControlCharacter',
+	{
+		bindingKeys: {},
+		visitorKeys: {},
+	},
 );

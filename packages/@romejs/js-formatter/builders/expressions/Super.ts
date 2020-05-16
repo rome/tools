@@ -8,5 +8,5 @@
 import {Token} from '../../tokens';
 
 export default function Super(): Token {
-  return 'super';
+	return 'super';
 }

@@ -9,18 +9,18 @@ import {AnyTSModuleReference, BindingIdentifier, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type TSImportEqualsDeclaration = JSNodeBase & {
-  type: 'TSImportEqualsDeclaration';
-  id: BindingIdentifier;
-  moduleReference: AnyTSModuleReference;
-  isExport?: boolean;
+	type: 'TSImportEqualsDeclaration';
+	id: BindingIdentifier;
+	moduleReference: AnyTSModuleReference;
+	isExport?: boolean;
 };
 
 export const tsImportEqualsDeclaration = createBuilder<TSImportEqualsDeclaration>(
-  'TSImportEqualsDeclaration',
-  {
-    bindingKeys: {
-      id: true,
-    },
-    visitorKeys: {id: true, moduleReference: true},
-  },
+	'TSImportEqualsDeclaration',
+	{
+		bindingKeys: {
+			id: true,
+		},
+		visitorKeys: {id: true, moduleReference: true},
+	},
 );

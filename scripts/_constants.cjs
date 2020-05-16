@@ -12,30 +12,30 @@ exports.devFolder = path.join(os.tmpdir(), 'rome-dev');
 exports.root = path.join(__dirname, '..');
 exports.packages = path.join(exports.root, 'packages', '@romejs');
 exports.formatterFolder = path.join(
-  exports.packages,
-  'js-formatter',
-  'builders',
+	exports.packages,
+	'js-formatter',
+	'builders',
 );
 exports.analysisFolder = path.join(
-  exports.packages,
-  'js-analysis',
-  'evaluators',
+	exports.packages,
+	'js-analysis',
+	'evaluators',
 );
 exports.lintRulesFolder = path.join(
-  exports.packages,
-  'js-compiler',
-  'lint',
-  'rules',
+	exports.packages,
+	'js-compiler',
+	'lint',
+	'rules',
 );
 exports.categoriesFile = path.join(
-  exports.packages,
-  'diagnostics',
-  'categories.ts',
+	exports.packages,
+	'diagnostics',
+	'categories.ts',
 );
 exports.descriptionsFile = path.join(
-  exports.packages,
-  'diagnostics',
-  'descriptions.ts',
+	exports.packages,
+	'diagnostics',
+	'descriptions.ts',
 );
 exports.astFolder = path.join(exports.packages, 'js-ast');
 exports.argv = process.argv.slice(2);

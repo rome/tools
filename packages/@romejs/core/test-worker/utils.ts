@@ -8,9 +8,9 @@
 import prettyFormat from '@romejs/pretty-format';
 
 export function format(value: unknown): string {
-  if (typeof value === 'string') {
-    return value;
-  } else {
-    return prettyFormat(value);
-  }
+	if (typeof value === 'string') {
+		return value;
+	} else {
+		return prettyFormat(value);
+	}
 }

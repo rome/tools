@@ -6,256 +6,256 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.ts'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array ['ts']
-  loc: Object {
-    filename: 'input.ts'
-    end: Object {
-      column: 0
-      index: 42
-      line: 4
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'A parameter property may not be declared using a binding pattern.'}
-      }
-      location: Object {
-        filename: 'input.ts'
-        mtime: undefined
-        sourceType: 'module'
-        end: Object {
-          column: 16
-          index: 26
-          line: 2
-        }
-        start: Object {
-          column: 16
-          index: 26
-          line: 2
-        }
-      }
-    }
-  ]
-  body: Array [
-    ClassDeclaration {
-      id: BindingIdentifier {
-        name: 'C'
-        loc: Object {
-          filename: 'input.ts'
-          identifierName: 'C'
-          end: Object {
-            column: 7
-            index: 7
-            line: 1
-          }
-          start: Object {
-            column: 6
-            index: 6
-            line: 1
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 1
-          index: 41
-          line: 3
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      meta: ClassHead {
-        implements: undefined
-        superClass: undefined
-        superTypeParameters: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 1
-            index: 41
-            line: 3
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        body: Array [
-          ClassMethod {
-            kind: 'constructor'
-            key: StaticPropertyKey {
-              value: Identifier {
-                name: 'constructor'
-                loc: Object {
-                  filename: 'input.ts'
-                  identifierName: 'constructor'
-                  end: Object {
-                    column: 15
-                    index: 25
-                    line: 2
-                  }
-                  start: Object {
-                    column: 4
-                    index: 14
-                    line: 2
-                  }
-                }
-              }
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 15
-                  index: 25
-                  line: 2
-                }
-                start: Object {
-                  column: 4
-                  index: 14
-                  line: 2
-                }
-              }
-            }
-            loc: Object {
-              filename: 'input.ts'
-              end: Object {
-                column: 29
-                index: 39
-                line: 2
-              }
-              start: Object {
-                column: 4
-                index: 14
-                line: 2
-              }
-            }
-            body: BlockStatement {
-              body: Array []
-              directives: Array []
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 29
-                  index: 39
-                  line: 2
-                }
-                start: Object {
-                  column: 27
-                  index: 37
-                  line: 2
-                }
-              }
-            }
-            meta: ClassPropertyMeta {
-              abstract: false
-              accessibility: undefined
-              optional: false
-              readonly: false
-              static: false
-              typeAnnotation: undefined
-              start: Object {
-                column: 4
-                index: 14
-                line: 2
-              }
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 15
-                  index: 25
-                  line: 2
-                }
-                start: Object {
-                  column: 4
-                  index: 14
-                  line: 2
-                }
-              }
-            }
-            head: FunctionHead {
-              async: false
-              generator: false
-              hasHoistedVars: false
-              rest: undefined
-              returnType: undefined
-              thisType: undefined
-              typeParameters: undefined
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 26
-                  index: 36
-                  line: 2
-                }
-                start: Object {
-                  column: 15
-                  index: 25
-                  line: 2
-                }
-              }
-              params: Array [
-                BindingArrayPattern {
-                  elements: Array []
-                  rest: undefined
-                  loc: Object {
-                    filename: 'input.ts'
-                    end: Object {
-                      column: 25
-                      index: 35
-                      line: 2
-                    }
-                    start: Object {
-                      column: 16
-                      index: 26
-                      line: 2
-                    }
-                  }
-                  meta: PatternMeta {
-                    accessibility: 'public'
-                    readonly: false
-                    loc: Object {
-                      filename: 'input.ts'
-                      end: Object {
-                        column: 25
-                        index: 35
-                        line: 2
-                      }
-                      start: Object {
-                        column: 16
-                        index: 26
-                        line: 2
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: 'input.ts'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'module'
+	syntax: Array ['ts']
+	loc: Object {
+		filename: 'input.ts'
+		end: Object {
+			column: 0
+			index: 42
+			line: 4
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: 'js-parser'}]
+			description: Object {
+				advice: Array []
+				category: 'parse/js'
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'A parameter property may not be declared using a binding pattern.'}
+			}
+			location: Object {
+				filename: 'input.ts'
+				mtime: undefined
+				sourceType: 'module'
+				end: Object {
+					column: 16
+					index: 26
+					line: 2
+				}
+				start: Object {
+					column: 16
+					index: 26
+					line: 2
+				}
+			}
+		}
+	]
+	body: Array [
+		ClassDeclaration {
+			id: BindingIdentifier {
+				name: 'C'
+				loc: Object {
+					filename: 'input.ts'
+					identifierName: 'C'
+					end: Object {
+						column: 7
+						index: 7
+						line: 1
+					}
+					start: Object {
+						column: 6
+						index: 6
+						line: 1
+					}
+				}
+			}
+			loc: Object {
+				filename: 'input.ts'
+				end: Object {
+					column: 1
+					index: 41
+					line: 3
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			meta: ClassHead {
+				implements: undefined
+				superClass: undefined
+				superTypeParameters: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: 'input.ts'
+					end: Object {
+						column: 1
+						index: 41
+						line: 3
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				body: Array [
+					ClassMethod {
+						kind: 'constructor'
+						key: StaticPropertyKey {
+							value: Identifier {
+								name: 'constructor'
+								loc: Object {
+									filename: 'input.ts'
+									identifierName: 'constructor'
+									end: Object {
+										column: 15
+										index: 25
+										line: 2
+									}
+									start: Object {
+										column: 4
+										index: 14
+										line: 2
+									}
+								}
+							}
+							loc: Object {
+								filename: 'input.ts'
+								end: Object {
+									column: 15
+									index: 25
+									line: 2
+								}
+								start: Object {
+									column: 4
+									index: 14
+									line: 2
+								}
+							}
+						}
+						loc: Object {
+							filename: 'input.ts'
+							end: Object {
+								column: 29
+								index: 39
+								line: 2
+							}
+							start: Object {
+								column: 4
+								index: 14
+								line: 2
+							}
+						}
+						body: BlockStatement {
+							body: Array []
+							directives: Array []
+							loc: Object {
+								filename: 'input.ts'
+								end: Object {
+									column: 29
+									index: 39
+									line: 2
+								}
+								start: Object {
+									column: 27
+									index: 37
+									line: 2
+								}
+							}
+						}
+						meta: ClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							start: Object {
+								column: 4
+								index: 14
+								line: 2
+							}
+							loc: Object {
+								filename: 'input.ts'
+								end: Object {
+									column: 15
+									index: 25
+									line: 2
+								}
+								start: Object {
+									column: 4
+									index: 14
+									line: 2
+								}
+							}
+						}
+						head: FunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							rest: undefined
+							returnType: undefined
+							thisType: undefined
+							typeParameters: undefined
+							loc: Object {
+								filename: 'input.ts'
+								end: Object {
+									column: 26
+									index: 36
+									line: 2
+								}
+								start: Object {
+									column: 15
+									index: 25
+									line: 2
+								}
+							}
+							params: Array [
+								BindingArrayPattern {
+									elements: Array []
+									rest: undefined
+									loc: Object {
+										filename: 'input.ts'
+										end: Object {
+											column: 25
+											index: 35
+											line: 2
+										}
+										start: Object {
+											column: 16
+											index: 26
+											line: 2
+										}
+									}
+									meta: PatternMeta {
+										accessibility: 'public'
+										readonly: false
+										loc: Object {
+											filename: 'input.ts'
+											end: Object {
+												column: 25
+												index: 35
+												line: 2
+											}
+											start: Object {
+												column: 16
+												index: 26
+												line: 2
+											}
+										}
+									}
+								}
+							]
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

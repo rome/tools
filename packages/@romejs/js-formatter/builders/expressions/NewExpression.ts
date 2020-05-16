@@ -11,8 +11,8 @@ import {NewExpression} from '@romejs/js-ast';
 import CallExpression from './CallExpression';
 
 export default function NewExpression(
-  builder: Builder,
-  node: NewExpression,
+	builder: Builder,
+	node: NewExpression,
 ): Token {
-  return concat(['new', space, CallExpression(builder, node)]);
+	return concat(['new', space, CallExpression(builder, node)]);
 }

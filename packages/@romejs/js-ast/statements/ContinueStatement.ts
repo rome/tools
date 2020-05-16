@@ -9,16 +9,16 @@ import {Identifier, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type ContinueStatement = JSNodeBase & {
-  type: 'ContinueStatement';
-  label?: Identifier;
+	type: 'ContinueStatement';
+	label?: Identifier;
 };
 
 export const continueStatement = createBuilder<ContinueStatement>(
-  'ContinueStatement',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      label: true,
-    },
-  },
+	'ContinueStatement',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			label: true,
+		},
+	},
 );

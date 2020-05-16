@@ -6,12 +6,12 @@
  */
 
 import {
-  AnyNode,
-  UndefinedKeywordTypeAnnotation,
-  undefinedKeywordTypeAnnotation,
+	AnyNode,
+	UndefinedKeywordTypeAnnotation,
+	undefinedKeywordTypeAnnotation,
 } from '@romejs/js-ast';
 
 export default function UndefinedKeywordTypeAnnotation(node: AnyNode) {
-  node = undefinedKeywordTypeAnnotation.assert(node);
-  throw new Error('unimplemented');
+	node = undefinedKeywordTypeAnnotation.assert(node);
+	throw new Error('unimplemented');
 }

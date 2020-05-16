@@ -8,5 +8,5 @@
 import {Token} from '../../tokens';
 
 export default function UndefinedKeywordTypeAnnotation(): Token {
-  return 'undefined';
+	return 'undefined';
 }

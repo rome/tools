@@ -10,8 +10,8 @@ import {Token} from '../../tokens';
 import {BooleanLiteralTypeAnnotation} from '@romejs/js-ast';
 
 export default function BooleanLiteralTypeAnnotation(
-  builder: Builder,
-  node: BooleanLiteralTypeAnnotation,
+	builder: Builder,
+	node: BooleanLiteralTypeAnnotation,
 ): Token {
-  return node.value ? 'true' : 'false';
+	return node.value ? 'true' : 'false';
 }

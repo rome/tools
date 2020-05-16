@@ -6,33 +6,33 @@
  */
 
 import {
-  BlockStatement,
-  ClassMethodKind,
-  ClassPropertyMeta,
-  FunctionHead,
-  JSNodeBase,
-  PrivateName,
+	BlockStatement,
+	ClassMethodKind,
+	ClassPropertyMeta,
+	FunctionHead,
+	JSNodeBase,
+	PrivateName,
 } from '../index';
 import {createBuilder} from '../utils';
 
 export type ClassPrivateMethod = JSNodeBase & {
-  type: 'ClassPrivateMethod';
-  kind: ClassMethodKind;
-  key: PrivateName;
-  head: FunctionHead;
-  body: BlockStatement;
-  meta: ClassPropertyMeta;
+	type: 'ClassPrivateMethod';
+	kind: ClassMethodKind;
+	key: PrivateName;
+	head: FunctionHead;
+	body: BlockStatement;
+	meta: ClassPropertyMeta;
 };
 
 export const classPrivateMethod = createBuilder<ClassPrivateMethod>(
-  'ClassPrivateMethod',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      key: true,
-      meta: true,
-      head: true,
-      body: true,
-    },
-  },
+	'ClassPrivateMethod',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			key: true,
+			meta: true,
+			head: true,
+			body: true,
+		},
+	},
 );

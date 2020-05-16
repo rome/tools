@@ -1,3689 +1,3689 @@
 #!/usr/bin/env node
 
 (function(global) {
-  'use strict';
-  // project-rome/@romejs/ob1/index.ts
+	'use strict';
+	// project-rome/@romejs/ob1/index.ts
 function ___R$project$rome$$romejs$ob1$index_ts$add(a, b) {
-    // @ts-ignore
-    return a + b;
-  }
+		// @ts-ignore
+		return a + b;
+	}
 
-  function ___R$project$rome$$romejs$ob1$index_ts$sub(a, b) {
-    // @ts-ignore
-    return a - b;
-  }
+	function ___R$project$rome$$romejs$ob1$index_ts$sub(a, b) {
+		// @ts-ignore
+		return a - b;
+	}
 
-  function ___R$project$rome$$romejs$ob1$index_ts$get0(x) {
-    // @ts-ignore
-    return x;
-  }
+	function ___R$project$rome$$romejs$ob1$index_ts$get0(x) {
+		// @ts-ignore
+		return x;
+	}
 
-  function ___R$project$rome$$romejs$ob1$index_ts$get1(x) {
-    // @ts-ignore
-    return x;
-  }
+	function ___R$project$rome$$romejs$ob1$index_ts$get1(x) {
+		// @ts-ignore
+		return x;
+	}
 
-  function ___R$project$rome$$romejs$ob1$index_ts$coerce0(x) {
-    return (x);
-  }
+	function ___R$project$rome$$romejs$ob1$index_ts$coerce0(x) {
+		return (x);
+	}
 
-  const ___R$project$rome$$romejs$ob1$index_ts$number0 = ___R$project$rome$$romejs$ob1$index_ts$coerce0(0);
-  const ___R$project$rome$$romejs$ob1$index_ts$number0Neg1 = ___R$project$rome$$romejs$ob1$index_ts$coerce0(-1);
+	const ___R$project$rome$$romejs$ob1$index_ts$number0 = ___R$project$rome$$romejs$ob1$index_ts$coerce0(0);
+	const ___R$project$rome$$romejs$ob1$index_ts$number0Neg1 = ___R$project$rome$$romejs$ob1$index_ts$coerce0(-1);
 
-  function ___R$project$rome$$romejs$ob1$index_ts$coerce1(x) {
-    return (x);
-  }
+	function ___R$project$rome$$romejs$ob1$index_ts$coerce1(x) {
+		return (x);
+	}
 
-  const ___R$project$rome$$romejs$ob1$index_ts$number1 = ___R$project$rome$$romejs$ob1$index_ts$coerce1(1);
-  const ___R$project$rome$$romejs$ob1$index_ts$number1Neg1 = ___R$project$rome$$romejs$ob1$index_ts$coerce1(-1);
+	const ___R$project$rome$$romejs$ob1$index_ts$number1 = ___R$project$rome$$romejs$ob1$index_ts$coerce1(1);
+	const ___R$project$rome$$romejs$ob1$index_ts$number1Neg1 = ___R$project$rome$$romejs$ob1$index_ts$coerce1(-1);
 
-  function ___R$project$rome$$romejs$ob1$index_ts$coerce0to1(x) {
-    // @ts-ignore
-    return (x + 1);
-  }
+	function ___R$project$rome$$romejs$ob1$index_ts$coerce0to1(x) {
+		// @ts-ignore
+		return (x + 1);
+	}
 
-  function ___R$project$rome$$romejs$ob1$index_ts$coerce1to0(x) {
-    // @ts-ignore
-    return (x - 1);
-  }
+	function ___R$project$rome$$romejs$ob1$index_ts$coerce1to0(x) {
+		// @ts-ignore
+		return (x - 1);
+	}
 
-  function ___R$project$rome$$romejs$ob1$index_ts$inc(x) {
-    // @ts-ignore
-    return x + 1;
-  }
+	function ___R$project$rome$$romejs$ob1$index_ts$inc(x) {
+		// @ts-ignore
+		return x + 1;
+	}
 
-  function ___R$project$rome$$romejs$ob1$index_ts$dec(x) {
-    // @ts-ignore
-    return x - 1;
-  }
+	function ___R$project$rome$$romejs$ob1$index_ts$dec(x) {
+		// @ts-ignore
+		return x - 1;
+	}
 
-  // project-rome/@romejs/parser-core/types.ts
+	// project-rome/@romejs/parser-core/types.ts
 const ___R$project$rome$$romejs$parser$core$types_ts = {
-    get UNKNOWN_POSITION() {
-      return (
-        ___R$project$rome$$romejs$parser$core$types_ts$UNKNOWN_POSITION
-      );
-    },
-  };
+		get UNKNOWN_POSITION() {
+			return (
+				___R$project$rome$$romejs$parser$core$types_ts$UNKNOWN_POSITION
+			);
+		},
+	};
 
-  const ___R$project$rome$$romejs$parser$core$types_ts$UNKNOWN_POSITION = {
-    index: ___R$project$rome$$romejs$ob1$index_ts$number0Neg1,
-    line: ___R$project$rome$$romejs$ob1$index_ts$coerce1(-1),
-    column: ___R$project$rome$$romejs$ob1$index_ts$number0Neg1,
-  };
+	const ___R$project$rome$$romejs$parser$core$types_ts$UNKNOWN_POSITION = {
+		index: ___R$project$rome$$romejs$ob1$index_ts$number0Neg1,
+		line: ___R$project$rome$$romejs$ob1$index_ts$coerce1(-1),
+		column: ___R$project$rome$$romejs$ob1$index_ts$number0Neg1,
+	};
 
-  // project-rome/@romejs/path/collections.ts
+	// project-rome/@romejs/path/collections.ts
 const ___R$project$rome$$romejs$path$collections_ts = {
-    get AbsoluteFilePathMap() {
-      return (
-        ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathMap
-      );
-    },
+		get AbsoluteFilePathMap() {
+			return (
+				___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathMap
+			);
+		},
 
-    get RelativeFilePathMap() {
-      return (
-        ___R$project$rome$$romejs$path$collections_ts$RelativeFilePathMap
-      );
-    },
+		get RelativeFilePathMap() {
+			return (
+				___R$project$rome$$romejs$path$collections_ts$RelativeFilePathMap
+			);
+		},
 
-    get UnknownFilePathMap() {
-      return (
-        ___R$project$rome$$romejs$path$collections_ts$UnknownFilePathMap
-      );
-    },
+		get UnknownFilePathMap() {
+			return (
+				___R$project$rome$$romejs$path$collections_ts$UnknownFilePathMap
+			);
+		},
 
-    get AbsoluteFilePathSet() {
-      return (
-        ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathSet
-      );
-    },
+		get AbsoluteFilePathSet() {
+			return (
+				___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathSet
+			);
+		},
 
-    get RelativeFilePathSet() {
-      return (
-        ___R$project$rome$$romejs$path$collections_ts$RelativeFilePathSet
-      );
-    },
+		get RelativeFilePathSet() {
+			return (
+				___R$project$rome$$romejs$path$collections_ts$RelativeFilePathSet
+			);
+		},
 
-    get UnknownFilePathSet() {
-      return (
-        ___R$project$rome$$romejs$path$collections_ts$UnknownFilePathSet
-      );
-    },
-  };
-  // Sometimes we don't want to have to deal with what a FilePath serializes into
-  // For those purposes we have these wrappers around Map and Set. Here we can add some custom logic
-  // to speed up the usage of FilePaths in these scenarios.
-  // The API here attempts to match what is expected from the native classes, however we may deviate from it
-  // to avoid the usage of getters and generator/symbol indirection for iteration.
-  class ___R$$priv$project$rome$$romejs$path$collections_ts$FilePathMap {
-    constructor(entries) {
-      this.joinedToValue = new Map();
-      this.joinedToPath = new Map();
-      this.size = 0;
+		get UnknownFilePathSet() {
+			return (
+				___R$project$rome$$romejs$path$collections_ts$UnknownFilePathSet
+			);
+		},
+	};
+	// Sometimes we don't want to have to deal with what a FilePath serializes into
+	// For those purposes we have these wrappers around Map and Set. Here we can add some custom logic
+	// to speed up the usage of FilePaths in these scenarios.
+	// The API here attempts to match what is expected from the native classes, however we may deviate from it
+	// to avoid the usage of getters and generator/symbol indirection for iteration.
+	class ___R$$priv$project$rome$$romejs$path$collections_ts$FilePathMap {
+		constructor(entries) {
+			this.joinedToValue = new Map();
+			this.joinedToPath = new Map();
+			this.size = 0;
 
-      if (entries !== undefined) {
-        for (const [key, value] of entries) {
-          this.set(key, value);
-        }
-      }
-    }
+			if (entries !== undefined) {
+				for (const [key, value] of entries) {
+					this.set(key, value);
+				}
+			}
+		}
 
-    _updateSize() {
-      this.size = this.joinedToValue.size;
-    }
+		_updateSize() {
+			this.size = this.joinedToValue.size;
+		}
 
-    *[Symbol.iterator]() {
-      for (const [joined, value] of this.joinedToValue) {
-        const path = this.joinedToPath.get(joined);
-        if (path === undefined) {
-          throw new Error('Impossible');
-        }
+		*[Symbol.iterator]() {
+			for (const [joined, value] of this.joinedToValue) {
+				const path = this.joinedToPath.get(joined);
+				if (path === undefined) {
+					throw new Error('Impossible');
+				}
 
-        yield [path, value];
-      }
-    }
+				yield [path, value];
+			}
+		}
 
-    clear() {
-      this.joinedToValue.clear();
-      this.joinedToPath.clear();
-      this._updateSize();
-    }
+		clear() {
+			this.joinedToValue.clear();
+			this.joinedToPath.clear();
+			this._updateSize();
+		}
 
-    keys() {
-      return this.joinedToPath.values();
-    }
+		keys() {
+			return this.joinedToPath.values();
+		}
 
-    values() {
-      return this.joinedToValue.values();
-    }
+		values() {
+			return this.joinedToValue.values();
+		}
 
-    delete(path) {
-      const joined = path.getUnique().join();
-      this.joinedToValue.delete(joined);
-      this.joinedToPath.delete(joined);
-      this._updateSize();
-    }
+		delete(path) {
+			const joined = path.getUnique().join();
+			this.joinedToValue.delete(joined);
+			this.joinedToPath.delete(joined);
+			this._updateSize();
+		}
 
-    has(path) {
-      return this.joinedToValue.has(path.getUnique().join());
-    }
+		has(path) {
+			return this.joinedToValue.has(path.getUnique().join());
+		}
 
-    get(path) {
-      return this.joinedToValue.get(path.getUnique().join());
-    }
+		get(path) {
+			return this.joinedToValue.get(path.getUnique().join());
+		}
 
-    set(path, value) {
-      const uniq = (path.getUnique());
-      const joined = uniq.join();
-      this.joinedToValue.set(joined, value);
-      this.joinedToPath.set(joined, uniq);
-      this._updateSize();
-    }
-  }
+		set(path, value) {
+			const uniq = (path.getUnique());
+			const joined = uniq.join();
+			this.joinedToValue.set(joined, value);
+			this.joinedToPath.set(joined, uniq);
+			this._updateSize();
+		}
+	}
 
-  class ___R$$priv$project$rome$$romejs$path$collections_ts$FilePathSet {
-    constructor(entries) {
-      this.map = new ___R$$priv$project$rome$$romejs$path$collections_ts$FilePathMap();
-      this.size = 0;
+	class ___R$$priv$project$rome$$romejs$path$collections_ts$FilePathSet {
+		constructor(entries) {
+			this.map = new ___R$$priv$project$rome$$romejs$path$collections_ts$FilePathMap();
+			this.size = 0;
 
-      if (entries !== undefined) {
-        for (const path of entries) {
-          this.add(path);
-        }
-      }
-    }
+			if (entries !== undefined) {
+				for (const path of entries) {
+					this.add(path);
+				}
+			}
+		}
 
-    _updateSize() {
-      this.size = this.map.size;
-    }
+		_updateSize() {
+			this.size = this.map.size;
+		}
 
-    [Symbol.iterator]() {
-      return this.map.keys()[Symbol.iterator]();
-    }
+		[Symbol.iterator]() {
+			return this.map.keys()[Symbol.iterator]();
+		}
 
-    has(path) {
-      return this.map.has(path);
-    }
+		has(path) {
+			return this.map.has(path);
+		}
 
-    add(path) {
-      this.map.set(path);
-      this._updateSize();
-    }
+		add(path) {
+			this.map.set(path);
+			this._updateSize();
+		}
 
-    delete(path) {
-      this.map.delete(path);
-      this._updateSize();
-    }
+		delete(path) {
+			this.map.delete(path);
+			this._updateSize();
+		}
 
-    clear() {
-      this.map.clear();
-      this._updateSize();
-    }
-  }
+		clear() {
+			this.map.clear();
+			this._updateSize();
+		}
+	}
 
-  class ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathMap extends ___R$$priv$project$rome$$romejs$path$collections_ts$FilePathMap {
-    constructor(...args) {
-      super(
-        ...args,
-      );
-      this.type =
-        'absolute';
-    }
-  }
+	class ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathMap extends ___R$$priv$project$rome$$romejs$path$collections_ts$FilePathMap {
+		constructor(...args) {
+			super(
+				...args,
+			);
+			this.type =
+				'absolute';
+		}
+	}
 
-  class ___R$project$rome$$romejs$path$collections_ts$RelativeFilePathMap extends ___R$$priv$project$rome$$romejs$path$collections_ts$FilePathMap {
-    constructor(...args) {
-      super(
-        ...args,
-      );
-      this.type =
-        'relative';
-    }
-  }
+	class ___R$project$rome$$romejs$path$collections_ts$RelativeFilePathMap extends ___R$$priv$project$rome$$romejs$path$collections_ts$FilePathMap {
+		constructor(...args) {
+			super(
+				...args,
+			);
+			this.type =
+				'relative';
+		}
+	}
 
-  class ___R$project$rome$$romejs$path$collections_ts$UnknownFilePathMap extends ___R$$priv$project$rome$$romejs$path$collections_ts$FilePathMap {
-    constructor(...args) {
-      super(
-        ...args,
-      );
-      this.type =
-        'unknown';
-    }
-  }
+	class ___R$project$rome$$romejs$path$collections_ts$UnknownFilePathMap extends ___R$$priv$project$rome$$romejs$path$collections_ts$FilePathMap {
+		constructor(...args) {
+			super(
+				...args,
+			);
+			this.type =
+				'unknown';
+		}
+	}
 
-  class ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathSet extends ___R$$priv$project$rome$$romejs$path$collections_ts$FilePathSet {
-    constructor(...args) {
-      super(
-        ...args,
-      );
-      this.type =
-        'absolute';
-    }
-  }
+	class ___R$project$rome$$romejs$path$collections_ts$AbsoluteFilePathSet extends ___R$$priv$project$rome$$romejs$path$collections_ts$FilePathSet {
+		constructor(...args) {
+			super(
+				...args,
+			);
+			this.type =
+				'absolute';
+		}
+	}
 
-  class ___R$project$rome$$romejs$path$collections_ts$RelativeFilePathSet extends ___R$$priv$project$rome$$romejs$path$collections_ts$FilePathSet {
-    constructor(...args) {
-      super(
-        ...args,
-      );
-      this.type =
-        'relative';
-    }
-  }
+	class ___R$project$rome$$romejs$path$collections_ts$RelativeFilePathSet extends ___R$$priv$project$rome$$romejs$path$collections_ts$FilePathSet {
+		constructor(...args) {
+			super(
+				...args,
+			);
+			this.type =
+				'relative';
+		}
+	}
 
-  class ___R$project$rome$$romejs$path$collections_ts$UnknownFilePathSet extends ___R$$priv$project$rome$$romejs$path$collections_ts$FilePathSet {
-    constructor(...args) {
-      super(
-        ...args,
-      );
-      this.type =
-        'unknown';
-    }
-  }
+	class ___R$project$rome$$romejs$path$collections_ts$UnknownFilePathSet extends ___R$$priv$project$rome$$romejs$path$collections_ts$FilePathSet {
+		constructor(...args) {
+			super(
+				...args,
+			);
+			this.type =
+				'unknown';
+		}
+	}
 
-  // project-rome/@romejs/path/index.ts
+	// project-rome/@romejs/path/index.ts
 const ___R$$priv$project$rome$$romejs$path$index_ts$os = require(
-    'os',
-  );
-
-  function ___R$$priv$project$rome$$romejs$path$index_ts$toFilePath(pathOrString) {
-    if (typeof pathOrString === 'string') {
-      return ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(pathOrString);
-    } else {
-      return pathOrString;
-    }
-  }
-
-  class ___R$$priv$project$rome$$romejs$path$index_ts$BaseFilePath {
-    constructor(parsed, opts) {
-      if (parsed.segments.length === 0) {
-        throw new Error('Cannot construct a FilePath with zero segments');
-      }
-
-      this.segments = parsed.segments;
-      this.absoluteTarget = parsed.absoluteTarget;
-      this.absoluteType = parsed.absoluteType;
-
-      // Memoized
-      this.memoizedUnique = undefined;
-      this.memoizedParent = opts.parent;
-      this.memoizedFilename = opts.filename;
-      this.memoizedExtension = opts.ext;
-      this.memoizedChildren = new Map();
-    }
-
-    getParsed() {
-      return (
-        {
-          segments: this.segments,
-          absoluteTarget: this.absoluteTarget,
-          absoluteType: this.absoluteType,
-        }
-      );
-    }
-
-    // These methods ensure the correct return classes
-    _assert() {
-      throw new Error('Unimplemented');
-    }
-
-    _fork(parsed, opts) {
-      throw new Error('Unimplemented');
-    }
-
-    addExtension(ext, clearExt = false) {
-      const newBasename = clearExt
-        ? this.getExtensionlessBasename() : this.getBasename();
-      const newExt = clearExt ? ext : this.memoizedExtension + ext;
-      const segments = this.getParentSegments(false).concat(newBasename + ext);
-
-      return (
-        this._fork(
-          Object.assign(
-            {
-            },
-            this.getParsed(),
-            {
-              segments,
-            },
-          ),
-          {
-            ext: newExt,
-            parent: this.memoizedParent,
-          },
-        )
-      );
-    }
-
-    changeBasename(newBasename) {
-      const segments = this.getParentSegments(false).concat(newBasename);
-      return (
-        this._fork(
-          Object.assign(
-            {
-            },
-            this.getParsed(),
-            {
-              segments,
-            },
-          ),
-          {
-            parent: this.memoizedParent,
-          },
-        )
-      );
-    }
-
-    getBasename() {
-      const {segments} = this;
-      const offset = this.isExplicitFolder() ? 2 : 1;
-      return segments[segments.length - offset] || '';
-    }
-
-    getExtensionlessBasename() {
-      const basename = this.getBasename();
-      const ext = this.getExtensions();
-
-      if (ext === '') {
-        return basename;
-      } else {
-        return basename.slice(0, -ext.length);
-      }
-    }
-
-    getParent() {
-      if (this.memoizedParent !== undefined) {
-        return this.memoizedParent;
-      }
-
-      const parent = this._fork(
-        Object.assign(
-          {
-          },
-          this.getParsed(),
-          {
-            segments: this.getParentSegments(),
-          },
-        ),
-        {},
-      );
-      this.memoizedParent = parent;
-      return parent;
-    }
-
-    getParentSegments(explicit = true) {
-      // Should we throw an error?
-      if (this.isRoot()) {
-        return this.segments;
-      }
-
-      const segments = this.getSegments().slice(0, -1);
-      // Always make this an explicit folder
-      if (explicit && segments.length > 0 && segments[0] !== '') {
-        segments.push('');
-      }
-      return segments;
-    }
-
-    toExplicitRelative() {
-      const relative = this.assertRelative();
-      if (relative.isExplicitRelative()) {
-        return relative;
-      } else {
-        return ___R$project$rome$$romejs$path$index_ts$createRelativeFilePath('.').append(relative);
-      }
-    }
-
-    assertRelative() {
-      if (this.isAbsolute()) {
-        throw new Error('Expected relative file path but got: ' +
-        this.join());
-      } else {
-        return (
-          new ___R$project$rome$$romejs$path$index_ts$RelativeFilePath(
-            this.getParsed(),
-            {
-              ext: this.memoizedExtension,
-              filename: this.memoizedFilename,
-            },
-          )
-        );
-      }
-    }
-
-    assertAbsolute() {
-      if (this.isAbsolute()) {
-        return (
-          new ___R$project$rome$$romejs$path$index_ts$AbsoluteFilePath(
-            this.getParsed(),
-            {
-              ext: this.memoizedExtension,
-              filename: this.memoizedFilename,
-            },
-          )
-        );
-      } else {
-        throw new Error('Expected absolute file path but got: ' +
-        this.join());
-      }
-    }
-
-    assertURL() {
-      if (this.isURL()) {
-        return (
-          new ___R$project$rome$$romejs$path$index_ts$URLFilePath(
-            this.getParsed(),
-            {
-              ext: this.memoizedExtension,
-              filename: this.memoizedFilename,
-            },
-          )
-        );
-      } else {
-        throw new Error('Expected URL file path but got: ' +
-        this.join());
-      }
-    }
-
-    isRoot() {
-      if (this.segments.length === 1) {
-        return true;
-      }
-
-      if (this.segments.length === 2) {
-        // Explicit folder reference
-        return this.segments[1] === '';
-      }
-
-      if (this.segments.length === 3) {
-        return this.absoluteType === 'windows-unc';
-      }
-
-      return false;
-    }
-
-    isWindows() {
-      return (
-        this.absoluteType === 'windows-drive' ||
-        this.absoluteType ===
-        'windows-unc'
-      );
-    }
-
-    isPosix() {
-      return !this.isWindows();
-    }
-
-    isURL() {
-      return this.absoluteType === 'url';
-    }
-
-    isAbsolute() {
-      return this.absoluteTarget !== undefined && this.absoluteType !== 'url';
-    }
-
-    isRelative() {
-      return !this.isAbsolute();
-    }
-
-    isRelativeTo(otherRaw) {
-      const other = ___R$$priv$project$rome$$romejs$path$index_ts$toFilePath(otherRaw);
-      const otherSegments = other.getSegments();
-      const ourSegments = this.getSegments();
-
-      // We can't be relative to a path with more segments than us
-      if (otherSegments.length > ourSegments.length) {
-        return false;
-      }
-
-      // Check that we start with the same segments as the other
-      for (let i = 0;
-      i < otherSegments.length;
-      i++) {
-        if (otherSegments[i] !== ourSegments[i]) {
-          return false;
-        }
-      }
-
-      return true;
-    }
-
-    isImplicitRelative() {
-      return !this.isExplicitRelative() && !this.isAbsolute() && !this.isURL();
-    }
-
-    isExplicitRelative() {
-      const [firstSeg] = this.segments;
-      return !this.isURL() && (firstSeg === '.' || firstSeg === '..');
-    }
-
-    isExplicitFolder() {
-      const {segments} = this;
-      return segments[segments.length - 1] === '';
-    }
-
-    hasEndExtension(ext) {
-      return this.getExtensions().endsWith('.' +
-      ext);
-    }
-
-    hasExtension(ext) {
-      return this.hasEndExtension(ext) || this.getExtensions().includes('.' +
-      ext +
-      '.');
-    }
-
-    getExtensions() {
-      if (this.memoizedExtension === undefined) {
-        const ext = ___R$$priv$project$rome$$romejs$path$index_ts$getExtension(this.getBasename());
-        this.memoizedExtension = ext;
-        return ext;
-      } else {
-        return this.memoizedExtension;
-      }
-    }
-
-    hasExtensions() {
-      return this.getExtensions() !== '';
-    }
-
-    getSegments() {
-      let {segments} = this;
-
-      if (!this.isRoot()) {
-        if (this.isExplicitFolder()) {
-          segments = segments.slice(0, -1);
-        }
-
-        if (segments[0] === '.') {
-          segments = segments.slice(1);
-        }
-      }
-
-      return segments;
-    }
-
-    getRawSegments() {
-      return this.segments;
-    }
-
-    getUnique() {
-      if (this.memoizedUnique !== undefined) {
-        return this.memoizedUnique;
-      }
-
-      let segments;
-
-      if (!this.isRoot()) {
-        if (this.isExplicitFolder()) {
-          segments = this.getSegments();
-
-          if (this.isExplicitRelative()) {
-            segments = segments.slice(1);
-          }
-        } else if (this.isExplicitRelative()) {
-          segments = this.getRawSegments().slice(1);
-        }
-      }
-
-      if (segments === undefined) {
-        return this._assert();
-      } else {
-        const path = this._fork(___R$$priv$project$rome$$romejs$path$index_ts$parsePathSegments(segments), {});
-        this.memoizedUnique = path;
-        return path;
-      }
-    }
-
-    // Support some bad string coercion. Such as serialization in CLI flags.
-    toString() {
-      return this.join();
-    }
-
-    join() {
-      if (this.memoizedFilename !== undefined) {
-        return this.memoizedFilename;
-      }
-
-      const {segments} = this;
-
-      let filename;
-      if (this.isWindows()) {
-        filename = segments.join('\\');
-      } else {
-        filename = segments.join('/');
-      }
-      this.memoizedFilename = filename;
-      return filename;
-    }
-
-    // This does some weird optimizations to avoid materializing complete filenames
-
-    // Might not be relevant... TODO benchmark this or something lol
-    equal(other) {
-      // Quick check if we've materalized the filename on both instances
-      if (this.memoizedFilename !== undefined &&
-        other.memoizedFilename !==
-        undefined) {
-        return this.memoizedFilename === other.memoizedFilename;
-      }
-
-      const a = this.getSegments();
-      const b = other.getSegments();
-
-      // Quick check
-      if (a.length !== b.length) {
-        return false;
-      }
-
-      for (let i = 0;
-      i < a.length;
-      i++) {
-        if (a[i] !== b[i]) {
-          return false;
-        }
-      }
-
-      return true;
-    }
-
-    format(cwd) {
-      const filename = this.join();
-      const names = [];
-      names.push(filename);
-
-      // Get a path relative to HOME
-      if (this.isRelativeTo(___R$project$rome$$romejs$path$index_ts$HOME_PATH)) {
-        // Path starts with the home directory, so let's trim it off
-        const relativeToHome = ___R$project$rome$$romejs$path$index_ts$HOME_PATH.relative(this._assert());
-
-        // Add tilde and push it as a possible name
-
-        // We construct this manually to get around the segment normalization which would explode ~
-        names.push(
-          new ___R$project$rome$$romejs$path$index_ts$RelativeFilePath(
-            {
-              segments: ['~', ...relativeToHome.getSegments()],
-              absoluteType: 'posix',
-              absoluteTarget: undefined,
-            },
-            {},
-          ).join(),
-        );
-      }
-
-      // Get a path relative to the cwd
-      if (cwd !== undefined) {
-        names.push(cwd.relative(filename).join());
-      }
-
-      // Get the shortest name
-      const human = names.sort((a, b) => a.length - b.length)[0];
-      if (human === '') {
-        return './';
-      } else {
-        return human;
-      }
-    }
-
-    append(raw) {
-      // Check if we have a memoized instance
-      if (typeof raw === 'string') {
-        const cached = this.memoizedChildren.get(raw);
-        if (cached !== undefined) {
-          return cached;
-        }
-      }
-
-      const items = Array.isArray(raw) ? raw : [raw];
-
-      if (items.length === 0) {
-        return this._assert();
-      }
-
-      let segments = this.getSegments();
-
-      for (const item of items) {
-        segments = segments.concat(___R$$priv$project$rome$$romejs$path$index_ts$toFilePath(item).getSegments());
-      }
-
-      const parsed = ___R$$priv$project$rome$$romejs$path$index_ts$parsePathSegments(segments);
-      const child = this._fork(parsed, {});
-
-      // Set memoized child if possible
-      if (typeof raw === 'string') {
-        this.memoizedChildren.set(raw, child);
-      }
-
-      return child;
-    }
-  }
-
-  class ___R$project$rome$$romejs$path$index_ts$RelativeFilePath extends ___R$$priv$project$rome$$romejs$path$index_ts$BaseFilePath {
-    constructor(...args) {
-      super(
-        ...args,
-      );
-      this.type =
-        'relative';
-    }
-
-    _assert() {
-      return this;
-    }
-
-    _fork(parsed, opts) {
-      return new ___R$project$rome$$romejs$path$index_ts$RelativeFilePath(parsed, opts);
-    }
-
-    assertRelative() {
-      return this;
-    }
-  }
-
-  class ___R$project$rome$$romejs$path$index_ts$AbsoluteFilePath extends ___R$$priv$project$rome$$romejs$path$index_ts$BaseFilePath {
-    constructor(...args) {
-      super(
-        ...args,
-      );
-      this.type =
-        'absolute';
-    }
-
-    _assert() {
-      return this;
-    }
-
-    _fork(parsed, opts) {
-      return new ___R$project$rome$$romejs$path$index_ts$AbsoluteFilePath(parsed, opts);
-    }
-
-    assertAbsolute() {
-      return this;
-    }
-
-    getChain() {
-      if (this.chain !== undefined) {
-        return this.chain;
-      }
-
-      const paths = [];
-      this.chain = paths;
-
-      // We use getParent here so we can reuse as much memoized information as possible
-      let target = this;
-      while (true) {
-        paths.push(target);
-        if (target.isRoot()) {
-          break;
-        } else {
-          target = target.getParent();
-        }
-      }
-
-      return paths;
-    }
-
-    resolveMaybeUrl(otherRaw) {
-      const other = ___R$$priv$project$rome$$romejs$path$index_ts$toFilePath(otherRaw);
-      if (other.isURL()) {
-        return other.assertURL();
-      } else {
-        return this.resolve(other);
-      }
-    }
-
-    resolve(otherRaw) {
-      const other = ___R$$priv$project$rome$$romejs$path$index_ts$toFilePath(otherRaw);
-      if (other.isAbsolute()) {
-        return other.assertAbsolute();
-      }
-
-      return (
-        new ___R$project$rome$$romejs$path$index_ts$AbsoluteFilePath(
-          ___R$$priv$project$rome$$romejs$path$index_ts$parsePathSegments(
-            [
-              ...this.getSegments(),
-              ...other.getSegments(),
-            ],
-          ),
-          {},
-        )
-      );
-    }
-
-    relative(otherRaw) {
-      const other = this.resolve(___R$$priv$project$rome$$romejs$path$index_ts$toFilePath(otherRaw));
-
-      if (other.equal(this)) {
-        return ___R$project$rome$$romejs$path$index_ts$createRelativeFilePath('.');
-      }
-
-      const absolute = this.getSegments().slice();
-      const relative = other.getSegments().slice();
-
-      // Impossible to relativize two absolute paths with different roots
-      if (absolute[0] !== relative[0]) {
-        return other;
-      }
-
-      // Remove common starting segments
-      while (absolute[0] === relative[0]) {
-        absolute.shift();
-        relative.shift();
-      }
-
-      let finalSegments = [];
-      for (let i = 0;
-      i < absolute.length;
-      i++) {
-        finalSegments.push('..');
-      }
-      finalSegments = finalSegments.concat(relative);
-
-      return ___R$$priv$project$rome$$romejs$path$index_ts$createUnknownFilePathFromSegments(___R$$priv$project$rome$$romejs$path$index_ts$parsePathSegments(finalSegments));
-    }
-  }
-
-  class ___R$project$rome$$romejs$path$index_ts$URLFilePath extends ___R$$priv$project$rome$$romejs$path$index_ts$BaseFilePath {
-    constructor(...args) {
-      super(
-        ...args,
-      );
-      this.type =
-        'url';
-    }
-
-    _assert() {
-      return this;
-    }
-
-    _fork(parsed, opts) {
-      return new ___R$project$rome$$romejs$path$index_ts$URLFilePath(parsed, opts);
-    }
-
-    assertURL() {
-      return this;
-    }
-
-    isURL() {
-      return true;
-    }
-
-    getDomain() {
-      return this.segments[2];
-    }
-
-    getProtocol() {
-      const {absoluteTarget} = this;
-      if (absoluteTarget === undefined) {
-        throw new Error('Expected a URLFilePath to always have an absoluteTarget');
-      }
-      return absoluteTarget;
-    }
-
-    resolve(path) {
-      if (path.isURL()) {
-        return path.assertURL();
-      } else if (path.isAbsolute()) {
-        // Get the segments that include the protocol and domain
-        const domainSegments = this.getSegments().slice(0, 3);
-        const finalSegments = [...domainSegments, ...path.getSegments()];
-        return new ___R$project$rome$$romejs$path$index_ts$URLFilePath(___R$$priv$project$rome$$romejs$path$index_ts$parsePathSegments(finalSegments), {});
-      } else {
-        return this.append(path);
-      }
-    }
-  }
-
-  const ___R$project$rome$$romejs$path$index_ts$HOME_PATH = ___R$project$rome$$romejs$path$index_ts$createAbsoluteFilePath(___R$$priv$project$rome$$romejs$path$index_ts$os.userInfo().homedir);
-  const ___R$project$rome$$romejs$path$index_ts$TEMP_PATH = ___R$project$rome$$romejs$path$index_ts$createAbsoluteFilePath(___R$$priv$project$rome$$romejs$path$index_ts$os.tmpdir());
-  const ___R$project$rome$$romejs$path$index_ts$CWD_PATH = ___R$project$rome$$romejs$path$index_ts$createAbsoluteFilePath(process.cwd());
-
-  function ___R$$priv$project$rome$$romejs$path$index_ts$getExtension(basename) {
-    const match = basename.match(/\.(.*?)$/);
-    if (match == null) {
-      return '';
-    } else {
-      return match[0];
-    }
-  }
-
-  function ___R$$priv$project$rome$$romejs$path$index_ts$isWindowsDrive(first) {
-    return first.length === 2 && first[1] === ':' && /[A-Z]/i.test(first[0]);
-  }
-
-  function ___R$$priv$project$rome$$romejs$path$index_ts$parsePathSegments(segments) {
-    if (segments.length === 0) {
-      throw new Error('Cannot construct a FilePath with zero segments');
-    }
-
-    let absoluteType = 'posix';
-    let absoluteTarget;
-    let firstSeg = segments[0];
-
-    // Detect URL
-    if (!___R$$priv$project$rome$$romejs$path$index_ts$isWindowsDrive(firstSeg) && firstSeg[firstSeg.length - 1] === ':' &&
-      segments[1] === '') {
-      absoluteTarget = firstSeg.slice(0, -1);
-
-      switch (absoluteTarget) {
-        case 'file':
-          // Automatically normalize a file scheme into an absolute path
-          return (
-            ___R$$priv$project$rome$$romejs$path$index_ts$parsePathSegments(
-              segments.slice(2).map(
-                (
-                  segment,
-                ) =>
-                  decodeURIComponent(segment),
-              ),
-            )
-          );
-
-        default:
-          const absoluteSegments = segments.slice(0, 3);
-          return (
-            {
-              segments: ___R$$priv$project$rome$$romejs$path$index_ts$normalizeSegments(
-                segments,
-                absoluteSegments.length,
-                absoluteSegments,
-              ),
-              absoluteType: 'url',
-              absoluteTarget,
-            }
-          );
-      }
-    }
-
-    // Explode home directory
-    if (firstSeg === '~') {
-      segments = [...___R$project$rome$$romejs$path$index_ts$HOME_PATH.getSegments()];
-      firstSeg = segments[0];
-    }
-
-    let segmentOffset = 0;
-
-    // We first extract the "absolute" portion of a path, this includes any Windows drive letters, UNC hostnames etc
-    const absoluteSegments = [];
-    if (firstSeg === '') {
-      // POSIX path
-      absoluteSegments.push('');
-      absoluteTarget = 'posix';
-      segmentOffset++;
-
-      // Windows UNC
-      if (segments[1] === '' && segments.length >= 3 && segments[2] !== '') {
-        const name = segments[2];
-        segmentOffset += 2;
-        absoluteSegments.push('');
-        absoluteSegments.push(name);
-        absoluteType = 'windows-unc';
-        absoluteTarget = 'unc:' +
-        name;
-      }
-    } else if (___R$$priv$project$rome$$romejs$path$index_ts$isWindowsDrive(firstSeg)) {
-      const drive = firstSeg.toUpperCase();
-      absoluteSegments.push(drive);
-      absoluteType = 'windows-drive';
-      absoluteTarget = 'drive:' +
-      drive;
-      segmentOffset++;
-    }
-
-    const pathSegments = ___R$$priv$project$rome$$romejs$path$index_ts$normalizeSegments(
-      segments,
-      segmentOffset,
-      absoluteSegments,
-    );
-    return (
-      {
-        segments: pathSegments,
-        absoluteType,
-        absoluteTarget,
-      }
-    );
-  }
-
-  function ___R$$priv$project$rome$$romejs$path$index_ts$normalizeSegments(
-    segments,
-    offset,
-    absoluteSegments,
-  ) {
-    const relativeSegments = [];
-    for (let i = offset;
-    i < segments.length;
-    i++) {
-      let seg = segments[i];
-
-      // Only allow a dot part in the first position, otherwise it's a noop
-      if (seg === '.' &&
-        (segments[1] === '..' || i > 0 ||
-        absoluteSegments.length > 0)) {
-        continue;
-      }
-
-      // Ignore empty segments
-      if (seg === '') {
-        continue;
-      }
-
-      // Remove the previous segment, as long as it's not also ..
-      if (seg === '..' && relativeSegments.length > 0 &&
-        relativeSegments[relativeSegments.length - 1] !== '..') {
-        relativeSegments.pop();
-        continue;
-      }
-
-      relativeSegments.push(seg);
-    }
-
-    const finalSegments = [...absoluteSegments, ...relativeSegments];
-
-    // Retain explicit folder
-    if (segments[segments.length - 1] === '' &&
-      finalSegments[finalSegments.length - 1] !== '' &&
-      relativeSegments.length !== 0) {
-      finalSegments.push('');
-    }
-
-    return finalSegments;
-  }
-
-  function ___R$$priv$project$rome$$romejs$path$index_ts$createUnknownFilePathFromSegments(parsed) {
-    const path = new ___R$$priv$project$rome$$romejs$path$index_ts$BaseFilePath(parsed, {});
-
-    if (path.isAbsolute()) {
-      return path.assertAbsolute();
-    } else {
-      return path.assertRelative();
-    }
-  }
-
-  function ___R$project$rome$$romejs$path$index_ts$createFilePathFromSegments(
-    segments,
-  ) {
-    const parsed = ___R$$priv$project$rome$$romejs$path$index_ts$parsePathSegments(segments);
-    return ___R$$priv$project$rome$$romejs$path$index_ts$createUnknownFilePathFromSegments(parsed);
-  }
-
-  function ___R$project$rome$$romejs$path$index_ts$toJoinedFilePath(filename) {
-    if (typeof filename === 'string') {
-      return filename;
-    } else {
-      return ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(filename).join();
-    }
-  }
-
-  function ___R$project$rome$$romejs$path$index_ts$createRelativeFilePath(filename) {
-    return ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(filename).assertRelative();
-  }
-
-  function ___R$project$rome$$romejs$path$index_ts$createURLFilePath(filename) {
-    return ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(filename).assertURL();
-  }
-
-  function ___R$project$rome$$romejs$path$index_ts$createAbsoluteFilePath(filename) {
-    return ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(filename).assertAbsolute();
-  }
-
-  function ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(filename) {
-    // Allows using the create methods above to be used in places where strings are more ergonomic (eg. in third-party code)
-    if (filename instanceof ___R$$priv$project$rome$$romejs$path$index_ts$BaseFilePath) {
-      return filename;
-    }
-
-    // Might be better to do a manual loop to detect escaped slashes or some other weirdness
-    const segments = filename.split(/[\\\/]/g);
-    const parsed = ___R$$priv$project$rome$$romejs$path$index_ts$parsePathSegments(segments);
-    return ___R$$priv$project$rome$$romejs$path$index_ts$createUnknownFilePathFromSegments(parsed);
-  }
-
-  function ___R$project$rome$$romejs$path$index_ts$maybeCreateURLFilePath(
-    filename,
-  ) {
-    if (filename !== undefined) {
-      return ___R$project$rome$$romejs$path$index_ts$createURLFilePath(filename);
-    }
-  }
-
-  function ___R$project$rome$$romejs$path$index_ts$maybeCreateRelativeFilePath(
-    filename,
-  ) {
-    if (filename !== undefined) {
-      return ___R$project$rome$$romejs$path$index_ts$createRelativeFilePath(filename);
-    }
-  }
-
-  function ___R$project$rome$$romejs$path$index_ts$maybeCreateAbsoluteFilePath(
-    filename,
-  ) {
-    if (filename !== undefined) {
-      return ___R$project$rome$$romejs$path$index_ts$createAbsoluteFilePath(filename);
-    }
-  }
-
-  function ___R$project$rome$$romejs$path$index_ts$maybeCreateUnknownFilePath(
-    filename,
-  ) {
-    if (filename !== undefined) {
-      return ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(filename);
-    }
-  }
-
-  // project-rome/@romejs/parser-core/index.ts
+		'os',
+	);
+
+	function ___R$$priv$project$rome$$romejs$path$index_ts$toFilePath(pathOrString) {
+		if (typeof pathOrString === 'string') {
+			return ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(pathOrString);
+		} else {
+			return pathOrString;
+		}
+	}
+
+	class ___R$$priv$project$rome$$romejs$path$index_ts$BaseFilePath {
+		constructor(parsed, opts) {
+			if (parsed.segments.length === 0) {
+				throw new Error('Cannot construct a FilePath with zero segments');
+			}
+
+			this.segments = parsed.segments;
+			this.absoluteTarget = parsed.absoluteTarget;
+			this.absoluteType = parsed.absoluteType;
+
+			// Memoized
+			this.memoizedUnique = undefined;
+			this.memoizedParent = opts.parent;
+			this.memoizedFilename = opts.filename;
+			this.memoizedExtension = opts.ext;
+			this.memoizedChildren = new Map();
+		}
+
+		getParsed() {
+			return (
+				{
+					segments: this.segments,
+					absoluteTarget: this.absoluteTarget,
+					absoluteType: this.absoluteType,
+				}
+			);
+		}
+
+		// These methods ensure the correct return classes
+		_assert() {
+			throw new Error('Unimplemented');
+		}
+
+		_fork(parsed, opts) {
+			throw new Error('Unimplemented');
+		}
+
+		addExtension(ext, clearExt = false) {
+			const newBasename = clearExt
+				? this.getExtensionlessBasename() : this.getBasename();
+			const newExt = clearExt ? ext : this.memoizedExtension + ext;
+			const segments = this.getParentSegments(false).concat(newBasename + ext);
+
+			return (
+				this._fork(
+					Object.assign(
+						{
+						},
+						this.getParsed(),
+						{
+							segments,
+						},
+					),
+					{
+						ext: newExt,
+						parent: this.memoizedParent,
+					},
+				)
+			);
+		}
+
+		changeBasename(newBasename) {
+			const segments = this.getParentSegments(false).concat(newBasename);
+			return (
+				this._fork(
+					Object.assign(
+						{
+						},
+						this.getParsed(),
+						{
+							segments,
+						},
+					),
+					{
+						parent: this.memoizedParent,
+					},
+				)
+			);
+		}
+
+		getBasename() {
+			const {segments} = this;
+			const offset = this.isExplicitFolder() ? 2 : 1;
+			return segments[segments.length - offset] || '';
+		}
+
+		getExtensionlessBasename() {
+			const basename = this.getBasename();
+			const ext = this.getExtensions();
+
+			if (ext === '') {
+				return basename;
+			} else {
+				return basename.slice(0, -ext.length);
+			}
+		}
+
+		getParent() {
+			if (this.memoizedParent !== undefined) {
+				return this.memoizedParent;
+			}
+
+			const parent = this._fork(
+				Object.assign(
+					{
+					},
+					this.getParsed(),
+					{
+						segments: this.getParentSegments(),
+					},
+				),
+				{},
+			);
+			this.memoizedParent = parent;
+			return parent;
+		}
+
+		getParentSegments(explicit = true) {
+			// Should we throw an error?
+			if (this.isRoot()) {
+				return this.segments;
+			}
+
+			const segments = this.getSegments().slice(0, -1);
+			// Always make this an explicit folder
+			if (explicit && segments.length > 0 && segments[0] !== '') {
+				segments.push('');
+			}
+			return segments;
+		}
+
+		toExplicitRelative() {
+			const relative = this.assertRelative();
+			if (relative.isExplicitRelative()) {
+				return relative;
+			} else {
+				return ___R$project$rome$$romejs$path$index_ts$createRelativeFilePath('.').append(relative);
+			}
+		}
+
+		assertRelative() {
+			if (this.isAbsolute()) {
+				throw new Error('Expected relative file path but got: ' +
+				this.join());
+			} else {
+				return (
+					new ___R$project$rome$$romejs$path$index_ts$RelativeFilePath(
+						this.getParsed(),
+						{
+							ext: this.memoizedExtension,
+							filename: this.memoizedFilename,
+						},
+					)
+				);
+			}
+		}
+
+		assertAbsolute() {
+			if (this.isAbsolute()) {
+				return (
+					new ___R$project$rome$$romejs$path$index_ts$AbsoluteFilePath(
+						this.getParsed(),
+						{
+							ext: this.memoizedExtension,
+							filename: this.memoizedFilename,
+						},
+					)
+				);
+			} else {
+				throw new Error('Expected absolute file path but got: ' +
+				this.join());
+			}
+		}
+
+		assertURL() {
+			if (this.isURL()) {
+				return (
+					new ___R$project$rome$$romejs$path$index_ts$URLFilePath(
+						this.getParsed(),
+						{
+							ext: this.memoizedExtension,
+							filename: this.memoizedFilename,
+						},
+					)
+				);
+			} else {
+				throw new Error('Expected URL file path but got: ' +
+				this.join());
+			}
+		}
+
+		isRoot() {
+			if (this.segments.length === 1) {
+				return true;
+			}
+
+			if (this.segments.length === 2) {
+				// Explicit folder reference
+				return this.segments[1] === '';
+			}
+
+			if (this.segments.length === 3) {
+				return this.absoluteType === 'windows-unc';
+			}
+
+			return false;
+		}
+
+		isWindows() {
+			return (
+				this.absoluteType === 'windows-drive' ||
+				this.absoluteType ===
+				'windows-unc'
+			);
+		}
+
+		isPosix() {
+			return !this.isWindows();
+		}
+
+		isURL() {
+			return this.absoluteType === 'url';
+		}
+
+		isAbsolute() {
+			return this.absoluteTarget !== undefined && this.absoluteType !== 'url';
+		}
+
+		isRelative() {
+			return !this.isAbsolute();
+		}
+
+		isRelativeTo(otherRaw) {
+			const other = ___R$$priv$project$rome$$romejs$path$index_ts$toFilePath(otherRaw);
+			const otherSegments = other.getSegments();
+			const ourSegments = this.getSegments();
+
+			// We can't be relative to a path with more segments than us
+			if (otherSegments.length > ourSegments.length) {
+				return false;
+			}
+
+			// Check that we start with the same segments as the other
+			for (let i = 0;
+			i < otherSegments.length;
+			i++) {
+				if (otherSegments[i] !== ourSegments[i]) {
+					return false;
+				}
+			}
+
+			return true;
+		}
+
+		isImplicitRelative() {
+			return !this.isExplicitRelative() && !this.isAbsolute() && !this.isURL();
+		}
+
+		isExplicitRelative() {
+			const [firstSeg] = this.segments;
+			return !this.isURL() && (firstSeg === '.' || firstSeg === '..');
+		}
+
+		isExplicitFolder() {
+			const {segments} = this;
+			return segments[segments.length - 1] === '';
+		}
+
+		hasEndExtension(ext) {
+			return this.getExtensions().endsWith('.' +
+			ext);
+		}
+
+		hasExtension(ext) {
+			return this.hasEndExtension(ext) || this.getExtensions().includes('.' +
+			ext +
+			'.');
+		}
+
+		getExtensions() {
+			if (this.memoizedExtension === undefined) {
+				const ext = ___R$$priv$project$rome$$romejs$path$index_ts$getExtension(this.getBasename());
+				this.memoizedExtension = ext;
+				return ext;
+			} else {
+				return this.memoizedExtension;
+			}
+		}
+
+		hasExtensions() {
+			return this.getExtensions() !== '';
+		}
+
+		getSegments() {
+			let {segments} = this;
+
+			if (!this.isRoot()) {
+				if (this.isExplicitFolder()) {
+					segments = segments.slice(0, -1);
+				}
+
+				if (segments[0] === '.') {
+					segments = segments.slice(1);
+				}
+			}
+
+			return segments;
+		}
+
+		getRawSegments() {
+			return this.segments;
+		}
+
+		getUnique() {
+			if (this.memoizedUnique !== undefined) {
+				return this.memoizedUnique;
+			}
+
+			let segments;
+
+			if (!this.isRoot()) {
+				if (this.isExplicitFolder()) {
+					segments = this.getSegments();
+
+					if (this.isExplicitRelative()) {
+						segments = segments.slice(1);
+					}
+				} else if (this.isExplicitRelative()) {
+					segments = this.getRawSegments().slice(1);
+				}
+			}
+
+			if (segments === undefined) {
+				return this._assert();
+			} else {
+				const path = this._fork(___R$$priv$project$rome$$romejs$path$index_ts$parsePathSegments(segments), {});
+				this.memoizedUnique = path;
+				return path;
+			}
+		}
+
+		// Support some bad string coercion. Such as serialization in CLI flags.
+		toString() {
+			return this.join();
+		}
+
+		join() {
+			if (this.memoizedFilename !== undefined) {
+				return this.memoizedFilename;
+			}
+
+			const {segments} = this;
+
+			let filename;
+			if (this.isWindows()) {
+				filename = segments.join('\\');
+			} else {
+				filename = segments.join('/');
+			}
+			this.memoizedFilename = filename;
+			return filename;
+		}
+
+		// This does some weird optimizations to avoid materializing complete filenames
+
+		// Might not be relevant... TODO benchmark this or something lol
+		equal(other) {
+			// Quick check if we've materalized the filename on both instances
+			if (this.memoizedFilename !== undefined &&
+				other.memoizedFilename !==
+				undefined) {
+				return this.memoizedFilename === other.memoizedFilename;
+			}
+
+			const a = this.getSegments();
+			const b = other.getSegments();
+
+			// Quick check
+			if (a.length !== b.length) {
+				return false;
+			}
+
+			for (let i = 0;
+			i < a.length;
+			i++) {
+				if (a[i] !== b[i]) {
+					return false;
+				}
+			}
+
+			return true;
+		}
+
+		format(cwd) {
+			const filename = this.join();
+			const names = [];
+			names.push(filename);
+
+			// Get a path relative to HOME
+			if (this.isRelativeTo(___R$project$rome$$romejs$path$index_ts$HOME_PATH)) {
+				// Path starts with the home directory, so let's trim it off
+				const relativeToHome = ___R$project$rome$$romejs$path$index_ts$HOME_PATH.relative(this._assert());
+
+				// Add tilde and push it as a possible name
+
+				// We construct this manually to get around the segment normalization which would explode ~
+				names.push(
+					new ___R$project$rome$$romejs$path$index_ts$RelativeFilePath(
+						{
+							segments: ['~', ...relativeToHome.getSegments()],
+							absoluteType: 'posix',
+							absoluteTarget: undefined,
+						},
+						{},
+					).join(),
+				);
+			}
+
+			// Get a path relative to the cwd
+			if (cwd !== undefined) {
+				names.push(cwd.relative(filename).join());
+			}
+
+			// Get the shortest name
+			const human = names.sort((a, b) => a.length - b.length)[0];
+			if (human === '') {
+				return './';
+			} else {
+				return human;
+			}
+		}
+
+		append(raw) {
+			// Check if we have a memoized instance
+			if (typeof raw === 'string') {
+				const cached = this.memoizedChildren.get(raw);
+				if (cached !== undefined) {
+					return cached;
+				}
+			}
+
+			const items = Array.isArray(raw) ? raw : [raw];
+
+			if (items.length === 0) {
+				return this._assert();
+			}
+
+			let segments = this.getSegments();
+
+			for (const item of items) {
+				segments = segments.concat(___R$$priv$project$rome$$romejs$path$index_ts$toFilePath(item).getSegments());
+			}
+
+			const parsed = ___R$$priv$project$rome$$romejs$path$index_ts$parsePathSegments(segments);
+			const child = this._fork(parsed, {});
+
+			// Set memoized child if possible
+			if (typeof raw === 'string') {
+				this.memoizedChildren.set(raw, child);
+			}
+
+			return child;
+		}
+	}
+
+	class ___R$project$rome$$romejs$path$index_ts$RelativeFilePath extends ___R$$priv$project$rome$$romejs$path$index_ts$BaseFilePath {
+		constructor(...args) {
+			super(
+				...args,
+			);
+			this.type =
+				'relative';
+		}
+
+		_assert() {
+			return this;
+		}
+
+		_fork(parsed, opts) {
+			return new ___R$project$rome$$romejs$path$index_ts$RelativeFilePath(parsed, opts);
+		}
+
+		assertRelative() {
+			return this;
+		}
+	}
+
+	class ___R$project$rome$$romejs$path$index_ts$AbsoluteFilePath extends ___R$$priv$project$rome$$romejs$path$index_ts$BaseFilePath {
+		constructor(...args) {
+			super(
+				...args,
+			);
+			this.type =
+				'absolute';
+		}
+
+		_assert() {
+			return this;
+		}
+
+		_fork(parsed, opts) {
+			return new ___R$project$rome$$romejs$path$index_ts$AbsoluteFilePath(parsed, opts);
+		}
+
+		assertAbsolute() {
+			return this;
+		}
+
+		getChain() {
+			if (this.chain !== undefined) {
+				return this.chain;
+			}
+
+			const paths = [];
+			this.chain = paths;
+
+			// We use getParent here so we can reuse as much memoized information as possible
+			let target = this;
+			while (true) {
+				paths.push(target);
+				if (target.isRoot()) {
+					break;
+				} else {
+					target = target.getParent();
+				}
+			}
+
+			return paths;
+		}
+
+		resolveMaybeUrl(otherRaw) {
+			const other = ___R$$priv$project$rome$$romejs$path$index_ts$toFilePath(otherRaw);
+			if (other.isURL()) {
+				return other.assertURL();
+			} else {
+				return this.resolve(other);
+			}
+		}
+
+		resolve(otherRaw) {
+			const other = ___R$$priv$project$rome$$romejs$path$index_ts$toFilePath(otherRaw);
+			if (other.isAbsolute()) {
+				return other.assertAbsolute();
+			}
+
+			return (
+				new ___R$project$rome$$romejs$path$index_ts$AbsoluteFilePath(
+					___R$$priv$project$rome$$romejs$path$index_ts$parsePathSegments(
+						[
+							...this.getSegments(),
+							...other.getSegments(),
+						],
+					),
+					{},
+				)
+			);
+		}
+
+		relative(otherRaw) {
+			const other = this.resolve(___R$$priv$project$rome$$romejs$path$index_ts$toFilePath(otherRaw));
+
+			if (other.equal(this)) {
+				return ___R$project$rome$$romejs$path$index_ts$createRelativeFilePath('.');
+			}
+
+			const absolute = this.getSegments().slice();
+			const relative = other.getSegments().slice();
+
+			// Impossible to relativize two absolute paths with different roots
+			if (absolute[0] !== relative[0]) {
+				return other;
+			}
+
+			// Remove common starting segments
+			while (absolute[0] === relative[0]) {
+				absolute.shift();
+				relative.shift();
+			}
+
+			let finalSegments = [];
+			for (let i = 0;
+			i < absolute.length;
+			i++) {
+				finalSegments.push('..');
+			}
+			finalSegments = finalSegments.concat(relative);
+
+			return ___R$$priv$project$rome$$romejs$path$index_ts$createUnknownFilePathFromSegments(___R$$priv$project$rome$$romejs$path$index_ts$parsePathSegments(finalSegments));
+		}
+	}
+
+	class ___R$project$rome$$romejs$path$index_ts$URLFilePath extends ___R$$priv$project$rome$$romejs$path$index_ts$BaseFilePath {
+		constructor(...args) {
+			super(
+				...args,
+			);
+			this.type =
+				'url';
+		}
+
+		_assert() {
+			return this;
+		}
+
+		_fork(parsed, opts) {
+			return new ___R$project$rome$$romejs$path$index_ts$URLFilePath(parsed, opts);
+		}
+
+		assertURL() {
+			return this;
+		}
+
+		isURL() {
+			return true;
+		}
+
+		getDomain() {
+			return this.segments[2];
+		}
+
+		getProtocol() {
+			const {absoluteTarget} = this;
+			if (absoluteTarget === undefined) {
+				throw new Error('Expected a URLFilePath to always have an absoluteTarget');
+			}
+			return absoluteTarget;
+		}
+
+		resolve(path) {
+			if (path.isURL()) {
+				return path.assertURL();
+			} else if (path.isAbsolute()) {
+				// Get the segments that include the protocol and domain
+				const domainSegments = this.getSegments().slice(0, 3);
+				const finalSegments = [...domainSegments, ...path.getSegments()];
+				return new ___R$project$rome$$romejs$path$index_ts$URLFilePath(___R$$priv$project$rome$$romejs$path$index_ts$parsePathSegments(finalSegments), {});
+			} else {
+				return this.append(path);
+			}
+		}
+	}
+
+	const ___R$project$rome$$romejs$path$index_ts$HOME_PATH = ___R$project$rome$$romejs$path$index_ts$createAbsoluteFilePath(___R$$priv$project$rome$$romejs$path$index_ts$os.userInfo().homedir);
+	const ___R$project$rome$$romejs$path$index_ts$TEMP_PATH = ___R$project$rome$$romejs$path$index_ts$createAbsoluteFilePath(___R$$priv$project$rome$$romejs$path$index_ts$os.tmpdir());
+	const ___R$project$rome$$romejs$path$index_ts$CWD_PATH = ___R$project$rome$$romejs$path$index_ts$createAbsoluteFilePath(process.cwd());
+
+	function ___R$$priv$project$rome$$romejs$path$index_ts$getExtension(basename) {
+		const match = basename.match(/\.(.*?)$/);
+		if (match == null) {
+			return '';
+		} else {
+			return match[0];
+		}
+	}
+
+	function ___R$$priv$project$rome$$romejs$path$index_ts$isWindowsDrive(first) {
+		return first.length === 2 && first[1] === ':' && /[A-Z]/i.test(first[0]);
+	}
+
+	function ___R$$priv$project$rome$$romejs$path$index_ts$parsePathSegments(segments) {
+		if (segments.length === 0) {
+			throw new Error('Cannot construct a FilePath with zero segments');
+		}
+
+		let absoluteType = 'posix';
+		let absoluteTarget;
+		let firstSeg = segments[0];
+
+		// Detect URL
+		if (!___R$$priv$project$rome$$romejs$path$index_ts$isWindowsDrive(firstSeg) && firstSeg[firstSeg.length - 1] === ':' &&
+			segments[1] === '') {
+			absoluteTarget = firstSeg.slice(0, -1);
+
+			switch (absoluteTarget) {
+				case 'file':
+					// Automatically normalize a file scheme into an absolute path
+					return (
+						___R$$priv$project$rome$$romejs$path$index_ts$parsePathSegments(
+							segments.slice(2).map(
+								(
+									segment,
+								) =>
+									decodeURIComponent(segment),
+							),
+						)
+					);
+
+				default:
+					const absoluteSegments = segments.slice(0, 3);
+					return (
+						{
+							segments: ___R$$priv$project$rome$$romejs$path$index_ts$normalizeSegments(
+								segments,
+								absoluteSegments.length,
+								absoluteSegments,
+							),
+							absoluteType: 'url',
+							absoluteTarget,
+						}
+					);
+			}
+		}
+
+		// Explode home directory
+		if (firstSeg === '~') {
+			segments = [...___R$project$rome$$romejs$path$index_ts$HOME_PATH.getSegments()];
+			firstSeg = segments[0];
+		}
+
+		let segmentOffset = 0;
+
+		// We first extract the "absolute" portion of a path, this includes any Windows drive letters, UNC hostnames etc
+		const absoluteSegments = [];
+		if (firstSeg === '') {
+			// POSIX path
+			absoluteSegments.push('');
+			absoluteTarget = 'posix';
+			segmentOffset++;
+
+			// Windows UNC
+			if (segments[1] === '' && segments.length >= 3 && segments[2] !== '') {
+				const name = segments[2];
+				segmentOffset += 2;
+				absoluteSegments.push('');
+				absoluteSegments.push(name);
+				absoluteType = 'windows-unc';
+				absoluteTarget = 'unc:' +
+				name;
+			}
+		} else if (___R$$priv$project$rome$$romejs$path$index_ts$isWindowsDrive(firstSeg)) {
+			const drive = firstSeg.toUpperCase();
+			absoluteSegments.push(drive);
+			absoluteType = 'windows-drive';
+			absoluteTarget = 'drive:' +
+			drive;
+			segmentOffset++;
+		}
+
+		const pathSegments = ___R$$priv$project$rome$$romejs$path$index_ts$normalizeSegments(
+			segments,
+			segmentOffset,
+			absoluteSegments,
+		);
+		return (
+			{
+				segments: pathSegments,
+				absoluteType,
+				absoluteTarget,
+			}
+		);
+	}
+
+	function ___R$$priv$project$rome$$romejs$path$index_ts$normalizeSegments(
+		segments,
+		offset,
+		absoluteSegments,
+	) {
+		const relativeSegments = [];
+		for (let i = offset;
+		i < segments.length;
+		i++) {
+			let seg = segments[i];
+
+			// Only allow a dot part in the first position, otherwise it's a noop
+			if (seg === '.' &&
+				(segments[1] === '..' || i > 0 ||
+				absoluteSegments.length > 0)) {
+				continue;
+			}
+
+			// Ignore empty segments
+			if (seg === '') {
+				continue;
+			}
+
+			// Remove the previous segment, as long as it's not also ..
+			if (seg === '..' && relativeSegments.length > 0 &&
+				relativeSegments[relativeSegments.length - 1] !== '..') {
+				relativeSegments.pop();
+				continue;
+			}
+
+			relativeSegments.push(seg);
+		}
+
+		const finalSegments = [...absoluteSegments, ...relativeSegments];
+
+		// Retain explicit folder
+		if (segments[segments.length - 1] === '' &&
+			finalSegments[finalSegments.length - 1] !== '' &&
+			relativeSegments.length !== 0) {
+			finalSegments.push('');
+		}
+
+		return finalSegments;
+	}
+
+	function ___R$$priv$project$rome$$romejs$path$index_ts$createUnknownFilePathFromSegments(parsed) {
+		const path = new ___R$$priv$project$rome$$romejs$path$index_ts$BaseFilePath(parsed, {});
+
+		if (path.isAbsolute()) {
+			return path.assertAbsolute();
+		} else {
+			return path.assertRelative();
+		}
+	}
+
+	function ___R$project$rome$$romejs$path$index_ts$createFilePathFromSegments(
+		segments,
+	) {
+		const parsed = ___R$$priv$project$rome$$romejs$path$index_ts$parsePathSegments(segments);
+		return ___R$$priv$project$rome$$romejs$path$index_ts$createUnknownFilePathFromSegments(parsed);
+	}
+
+	function ___R$project$rome$$romejs$path$index_ts$toJoinedFilePath(filename) {
+		if (typeof filename === 'string') {
+			return filename;
+		} else {
+			return ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(filename).join();
+		}
+	}
+
+	function ___R$project$rome$$romejs$path$index_ts$createRelativeFilePath(filename) {
+		return ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(filename).assertRelative();
+	}
+
+	function ___R$project$rome$$romejs$path$index_ts$createURLFilePath(filename) {
+		return ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(filename).assertURL();
+	}
+
+	function ___R$project$rome$$romejs$path$index_ts$createAbsoluteFilePath(filename) {
+		return ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(filename).assertAbsolute();
+	}
+
+	function ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(filename) {
+		// Allows using the create methods above to be used in places where strings are more ergonomic (eg. in third-party code)
+		if (filename instanceof ___R$$priv$project$rome$$romejs$path$index_ts$BaseFilePath) {
+			return filename;
+		}
+
+		// Might be better to do a manual loop to detect escaped slashes or some other weirdness
+		const segments = filename.split(/[\\\/]/g);
+		const parsed = ___R$$priv$project$rome$$romejs$path$index_ts$parsePathSegments(segments);
+		return ___R$$priv$project$rome$$romejs$path$index_ts$createUnknownFilePathFromSegments(parsed);
+	}
+
+	function ___R$project$rome$$romejs$path$index_ts$maybeCreateURLFilePath(
+		filename,
+	) {
+		if (filename !== undefined) {
+			return ___R$project$rome$$romejs$path$index_ts$createURLFilePath(filename);
+		}
+	}
+
+	function ___R$project$rome$$romejs$path$index_ts$maybeCreateRelativeFilePath(
+		filename,
+	) {
+		if (filename !== undefined) {
+			return ___R$project$rome$$romejs$path$index_ts$createRelativeFilePath(filename);
+		}
+	}
+
+	function ___R$project$rome$$romejs$path$index_ts$maybeCreateAbsoluteFilePath(
+		filename,
+	) {
+		if (filename !== undefined) {
+			return ___R$project$rome$$romejs$path$index_ts$createAbsoluteFilePath(filename);
+		}
+	}
+
+	function ___R$project$rome$$romejs$path$index_ts$maybeCreateUnknownFilePath(
+		filename,
+	) {
+		if (filename !== undefined) {
+			return ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(filename);
+		}
+	}
+
+	// project-rome/@romejs/parser-core/index.ts
 function ___R$project$rome$$romejs$parser$core$index_ts$tryParseWithOptionalOffsetPosition(
-    parserOpts,
-    opts,
-  ) {
-    try {
-      return opts.parse(parserOpts);
-    } catch (err) {
-      const diagnostics = ___R$project$rome$$romejs$diagnostics$errors_ts$getDiagnosticsFromError(err);
-      if (diagnostics === undefined) {
-        throw err;
-      } else {
-        opts.parse(
-          Object.assign(
-            {
-            },
-            parserOpts,
-            {
-              offsetPosition: opts.getOffsetPosition(),
-            },
-          ),
-        );
-        throw new Error('Expected error');
-      }
-    }
-  }
-
-  const ___R$$priv$project$rome$$romejs$parser$core$index_ts$SOF_TOKEN = {
-    type: 'SOF',
-    start: ___R$project$rome$$romejs$ob1$index_ts$number0,
-    end: ___R$project$rome$$romejs$ob1$index_ts$number0,
-  };
-
-  class ___R$project$rome$$romejs$parser$core$index_ts$ParserCore {
-    constructor(opts, diagnosticCategory, initialState) {
-      const {path, mtime, input, offsetPosition} = opts;
-
-      // Input information
-      this.path = path === undefined ? undefined : ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(path);
-      this.filename = this.path === undefined ? undefined : this.path.join();
-      this.mtime = mtime;
-      this.input = input === undefined ? '' : input;
-      this.length = ___R$project$rome$$romejs$ob1$index_ts$coerce0(this.input.length);
-
-      this.eofToken =
-        {
-          type: 'EOF',
-          start: ___R$project$rome$$romejs$ob1$index_ts$coerce0(this.input.length),
-          end: ___R$project$rome$$romejs$ob1$index_ts$coerce0(this.input.length),
-        };
-
-      // Parser/tokenizer state
-      this.offsetPosition = offsetPosition;
-      this.diagnosticCategory = diagnosticCategory;
-      this.tokenizing = false;
-      this.currLine = offsetPosition === undefined ? ___R$project$rome$$romejs$ob1$index_ts$number1 : offsetPosition.line;
-      this.currColumn =
-        offsetPosition === undefined
-          ? ___R$project$rome$$romejs$ob1$index_ts$number0 : offsetPosition.column;
-      this.offsetIndex =
-        offsetPosition === undefined
-          ? ___R$project$rome$$romejs$ob1$index_ts$number0 : offsetPosition.index;
-      this.startLine = this.currLine;
-      this.startColumn = this.currColumn;
-      this.nextTokenIndex = ___R$project$rome$$romejs$ob1$index_ts$number0;
-      this.currentToken = ___R$$priv$project$rome$$romejs$parser$core$index_ts$SOF_TOKEN;
-      this.prevToken = ___R$$priv$project$rome$$romejs$parser$core$index_ts$SOF_TOKEN;
-      this.state = initialState;
-      this.ignoreWhitespaceTokens = false;
-
-      this.latestPosition =
-        {
-          index: ___R$project$rome$$romejs$ob1$index_ts$number0, // TODO this.offsetIndex
-          line: this.currLine,
-          column: this.currColumn,
-        };
-      this.cachedPositions = new Map();
-    }
-
-    getPathAssert() {
-      const {path} = this;
-      if (path === undefined) {
-        throw new Error('Path expected but none was passed to this Parser');
-      } else {
-        return path;
-      }
-    }
-
-    getFilenameAssert() {
-      const {filename} = this;
-      if (filename === undefined) {
-        throw new Error('Filename expected but none was passed to this Parser');
-      } else {
-        return filename;
-      }
-    }
-
-    // Run the tokenizer over all tokens
-    tokenizeAll() {
-      const tokens = [];
-      try {
-        while (!this.matchToken('EOF')) {
-          tokens.push(this.getToken());
-          this.nextToken();
-        }
-      } catch (err) {
-        const diagnostics = ___R$project$rome$$romejs$diagnostics$errors_ts$getDiagnosticsFromError(err);
-        if (diagnostics === undefined) {
-          throw err;
-        } else {
-          tokens.push(
-            {
-              type: 'Invalid',
-              start: this.nextTokenIndex,
-              end: this.length,
-            },
-          );
-        }
-      }
-      return tokens;
-    }
-
-    // Tokenize method that must be implemented by subclasses
-    tokenize(index, input) {
-      throw new Error('Unimplemented');
-    }
-
-    // Alternate tokenize method to allow that allows the use of state
-    tokenizeWithState(
-      index,
-      input,
-      state,
-    ) {
-      const token = this.tokenize(index, input);
-      if (token !== undefined) {
-        return {token, state};
-      }
-    }
-
-    _tokenizeWithState(
-      index,
-      input,
-      state,
-    ) {
-      if (this.ignoreWhitespaceTokens) {
-        switch (input[___R$project$rome$$romejs$ob1$index_ts$get0(index)]) {
-          case ' ':
-          case '\t':
-          case '\r':
-          case '\n':
-            return this.lookahead(___R$project$rome$$romejs$ob1$index_ts$inc(index));
-        }
-      }
-
-      return this.tokenizeWithState(index, input, state);
-    }
-
-    // Get the current token
-    getToken() {
-      const {currentToken} = this;
-      if (currentToken === ___R$$priv$project$rome$$romejs$parser$core$index_ts$SOF_TOKEN) {
-        return this.nextToken();
-      } else {
-        return currentToken;
-      }
-    }
-
-    getPrevToken() {
-      return this.prevToken;
-    }
-
-    save() {
-      return (
-        {
-          nextTokenIndex: this.nextTokenIndex,
-          currentToken: this.currentToken,
-          prevToken: this.prevToken,
-          state: this.state,
-        }
-      );
-    }
-
-    restore(snapshot) {
-      this.nextTokenIndex = snapshot.nextTokenIndex;
-      this.currentToken = snapshot.currentToken;
-      this.prevToken = snapshot.prevToken;
-      this.state = snapshot.state;
-    }
-
-    // Advance to the next token, returning the new one
-    nextToken() {
-      if (this.isEOF(this.nextTokenIndex)) {
-        this.currentToken = this.eofToken;
-        return this.eofToken;
-      }
-
-      if (this.tokenizing) {
-        throw new Error('Can\'t call nextToken while tokenizing');
-      }
-
-      const prevToken = this.currentToken;
-      const {token: nextToken, state} = this.lookahead();
-
-      if (nextToken.end === prevToken.end) {
-        throw (
-          new Error(
-            'tokenize() returned a token with the same position as the last - Previous token: ' +
-            JSON.stringify(
-              prevToken,
-            ) +
-            '; Next token: ' +
-            JSON.stringify(nextToken) +
-            '; Input: ' +
-            this.input.slice(
-              0,
-              100,
-            ),
-          )
-        );
-      }
-
-      const {line, column} = this.getPositionFromIndex(nextToken.start);
-      this.currLine = line;
-      this.currColumn = column;
-
-      this.nextTokenIndex = nextToken.end;
-      this.prevToken = prevToken;
-      this.currentToken = nextToken;
-      this.state = state;
-      return nextToken;
-    }
-
-    // Get the position of the current token
-    getPosition() {
-      const index = this.currentToken.start;
-
-      const cached = this.cachedPositions.get(index);
-      if (cached !== undefined) {
-        return cached;
-      }
-
-      const pos = {
-        index: this.addOffset(index),
-        line: this.currLine,
-        column: this.currColumn,
-      };
-      this.cachedPositions.set(index, pos);
-      return pos;
-    }
-
-    // Get the end position of the current token
-    getLastEndPosition() {
-      return this.getPositionFromIndex(this.prevToken.end);
-    }
-
-    // Return the token that's after this current token without advancing to it
-    lookaheadToken(index) {
-      return this.lookahead(index).token;
-    }
-
-    // Return the token and state that's after the current token without advancing to it
-    lookahead(
-      index = this.nextTokenIndex,
-    ) {
-      if (this.isEOF(index)) {
-        return {token: this.eofToken, state: this.state};
-      }
-
-      // Set the next token index, in the case of a lookahead we'll set it back later
-      const prevNextTokenIndex = this.nextTokenIndex;
-      this.nextTokenIndex = index;
-
-      // Indicate that we're currently tokenizing to catch some weird recursive tokenizing errors
-      const wasTokenizing = this.tokenizing;
-      this.tokenizing = true;
-
-      // Tokenize and do some validation
-      const nextToken = this._tokenizeWithState(index, this.input, this.state);
-      if (nextToken === undefined) {
-        throw (
-          this.unexpected(
-            {
-              start: this.getPositionFromIndex(index),
-            },
-          )
-        );
-      }
-
-      // Reset to old values
-      this.tokenizing = wasTokenizing;
-      this.nextTokenIndex = prevNextTokenIndex;
-
-      return nextToken;
-    }
-
-    addOffset(index) {
-      return ___R$project$rome$$romejs$ob1$index_ts$add(index, this.offsetIndex);
-    }
-
-    removeOffset(index) {
-      return ___R$project$rome$$romejs$ob1$index_ts$sub(index, this.offsetIndex);
-    }
-
-    getPositionFromIndex(index) {
-      const cached = this.cachedPositions.get(index);
-      if (cached !== undefined) {
-        return cached;
-      }
-
-      let line = ___R$project$rome$$romejs$ob1$index_ts$number1;
-      let column = ___R$project$rome$$romejs$ob1$index_ts$number0;
-      let indexSearchOffset = 0;
-
-      const indexWithOffset = this.addOffset(index);
-
-      // Reuse existing line information if possible
-      const {latestPosition} = this;
-      const currPosition = this.getPosition();
-      if (currPosition.index > latestPosition.index &&
-        currPosition.index <
-        indexWithOffset) {
-        line = currPosition.line;
-        column = currPosition.column;
-        indexSearchOffset = ___R$project$rome$$romejs$ob1$index_ts$get0(this.removeOffset(currPosition.index));
-      } else if (latestPosition.index < indexWithOffset) {
-        line = latestPosition.line;
-        column = latestPosition.column;
-        indexSearchOffset = ___R$project$rome$$romejs$ob1$index_ts$get0(this.removeOffset(latestPosition.index));
-      }
-
-      // Read the rest of the input until we hit the index
-      for (let i = indexSearchOffset;
-      i < ___R$project$rome$$romejs$ob1$index_ts$get0(index);
-      i++) {
-        const char = this.input[i];
-
-        if (char === '\n') {
-          line = ___R$project$rome$$romejs$ob1$index_ts$inc(line);
-          column = ___R$project$rome$$romejs$ob1$index_ts$number0;
-        } else {
-          column = ___R$project$rome$$romejs$ob1$index_ts$inc(column);
-        }
-      }
-
-      const pos = {
-        index: indexWithOffset,
-        line,
-        column,
-      };
-
-      if (latestPosition === undefined || pos.index > latestPosition.index) {
-        this.latestPosition = pos;
-      }
-
-      this.cachedPositions.set(index, pos);
-      return pos;
-    }
-
-    createDiagnostic(opts = {}) {
-      const {currentToken} = this;
-      let {description: metadata, start, end, loc, token} = opts;
-
-      // Allow passing in a TokenBase
-      if (token !== undefined) {
-        start = this.getPositionFromIndex(token.start);
-        end = this.getPositionFromIndex(token.end);
-      }
-
-      // Allow passing in a SourceLocation as an easy way to point to a particular node
-      if (loc !== undefined) {
-        start = loc.start;
-        end = loc.end;
-      }
-
-      // When both properties are omitted then we will default to the current token range
-      if (start === undefined && end === undefined) {
-        end = this.getLastEndPosition();
-      }
-
-      if (start === undefined) {
-        start = this.getPosition();
-      }
-
-      if (end === undefined) {
-        end = start;
-      }
-
-      // Sometimes the end position may be empty as it hasn't been filled yet
-      if (end.index === ___R$project$rome$$romejs$ob1$index_ts$number0) {
-        end = start;
-      }
-
-      // Normalize message, we need to be defensive here because it could have been called while tokenizing the first token
-      if (metadata === undefined) {
-        let message;
-        if (currentToken !== undefined && start !== undefined &&
-          start.index ===
-          currentToken.start) {
-          message =
-            ___R$project$rome$$romejs$diagnostics$descriptions_ts$createBlessedDiagnosticMessage(
-              'Unexpected ' +
-              currentToken.type,
-            );
-        } else {
-          if (this.isEOF(start.index)) {
-            message = ___R$project$rome$$romejs$diagnostics$descriptions_ts$createBlessedDiagnosticMessage('Unexpected end of file');
-          } else {
-            const char = this.input[___R$project$rome$$romejs$ob1$index_ts$get0(start.index)];
-            message =
-              ___R$project$rome$$romejs$diagnostics$descriptions_ts$createBlessedDiagnosticMessage(
-                'Unexpected character <emphasis>' +
-                ___R$project$rome$$romejs$string$markup$escape_ts$escapeMarkup(char) +
-                '</emphasis>',
-              );
-          }
-        }
-        metadata = {message};
-      }
-
-      const metadataWithCategory = Object.assign(
-        {
-        },
-        metadata,
-        {
-          category: metadata.category === undefined
-            ? this.diagnosticCategory : metadata.category,
-        },
-      );
-
-      return (
-        {
-          description: metadataWithCategory,
-          location: {
-            sourceText: this.path === undefined ? this.input : undefined,
-            mtime: this.mtime,
-            start,
-            end,
-            filename: this.filename,
-          },
-        }
-      );
-    }
-
-    // Return an error to indicate a parser error, this must be thrown at the callsite for refinement
-    unexpected(opts = {}) {
-      throw ___R$project$rome$$romejs$diagnostics$errors_ts$createSingleDiagnosticError(this.createDiagnostic(opts));
-    }
-
-    //# Token utility methods
-    assertNoSpace() {
-      if (this.currentToken.start !== this.prevToken.end) {
-        throw (
-          this.unexpected(
-            {
-              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.PARSER_CORE.EXPECTED_SPACE,
-            },
-          )
-        );
-      }
-    }
-
-    // If the current token is the specified type then return the next token, otherwise return null
-    eatToken(type) {
-      if (this.matchToken(type)) {
-        return this.nextToken();
-      }
-    }
-
-    didEatToken(type) {
-      return this.eatToken(type) !== undefined;
-    }
-
-    // Check if we're at the end of the input
-    isEOF(index) {
-      return ___R$project$rome$$romejs$ob1$index_ts$get0(index) >= this.input.length;
-    }
-
-    // Check if the current token matches the input type
-    matchToken(type) {
-      return this.getToken().type === type;
-    }
-
-    // Get the current token and assert that it's of the specified type, the token stream will also be advanced
-    expectToken(type, _metadata) {
-      const token = this.getToken();
-      if (token.type === type) {
-        this.nextToken();
-        // @ts-ignore
-        return token;
-      } else {
-        throw (
-          this.unexpected(
-            {
-              description: _metadata === undefined
-                ? ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.PARSER_CORE.EXPECTED_TOKEN(token.type, (type)) : _metadata,
-            },
-          )
-        );
-      }
-    }
-
-    // Read from the input starting at the specified index, until the callback returns false
-    readInputFrom(index, callback) {
-      const {input} = this;
-      let value = '';
-
-      while (true) {
-        if (___R$project$rome$$romejs$ob1$index_ts$get0(index) >= input.length) {
-          return [value, index, true];
-        }
-
-        if (callback === undefined || callback(input[___R$project$rome$$romejs$ob1$index_ts$get0(index)], index, input)) {
-          value += input[___R$project$rome$$romejs$ob1$index_ts$get0(index)];
-          index = ___R$project$rome$$romejs$ob1$index_ts$inc(index);
-        } else {
-          break;
-        }
-      }
-
-      return [value, index, false];
-    }
-
-    // Get the string between the specified range
-    getRawInput(start, end) {
-      return this.input.slice(___R$project$rome$$romejs$ob1$index_ts$get0(start), ___R$project$rome$$romejs$ob1$index_ts$get0(end));
-    }
-
-    //# Utility methods to make it easy to construct nodes or tokens
-    getLoc(node) {
-      if (node === undefined || node.loc === undefined) {
-        throw new Error('Tried to fetch node loc start but none found');
-      } else {
-        return node.loc;
-      }
-    }
-
-    finishToken(type, end = ___R$project$rome$$romejs$ob1$index_ts$inc(this.nextTokenIndex)) {
-      return (
-        {
-          type,
-          start: this.nextTokenIndex,
-          end,
-        }
-      );
-    }
-
-    finishValueToken(type, value, end = ___R$project$rome$$romejs$ob1$index_ts$inc(this.nextTokenIndex)) {
-      return (
-        {
-          type,
-          value,
-          start: this.nextTokenIndex,
-          end,
-        }
-      );
-    }
-
-    finishComplexToken(type, data, end = ___R$project$rome$$romejs$ob1$index_ts$inc(this.nextTokenIndex)) {
-      return (
-        Object.assign(
-          {
-            type,
-          },
-          data,
-          {
-            start: this.nextTokenIndex,
-            end,
-          },
-        )
-      );
-    }
-
-    finishLocFromToken(token) {
-      return (
-        this.finishLocAt(
-          this.getPositionFromIndex(token.start),
-          this.getPositionFromIndex(token.end),
-        )
-      );
-    }
-
-    finishLoc(start) {
-      return this.finishLocAt(start, this.getLastEndPosition());
-    }
-
-    finishLocAt(start, end) {
-      return (
-        {
-          filename: this.filename,
-          start,
-          end,
-        }
-      );
-    }
-
-    finalize() {
-      if (!this.eatToken('EOF')) {
-        throw (
-          this.unexpected(
-            {
-              description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.PARSER_CORE.EXPECTED_EOF,
-            },
-          )
-        );
-      }
-    }
-  }
-
-  class ___R$project$rome$$romejs$parser$core$index_ts$ParserWithRequiredPath extends ___R$project$rome$$romejs$parser$core$index_ts$ParserCore {
-    constructor(opts, diagnosticCategory, initialState) {
-      super(opts, diagnosticCategory, initialState);
-      this.filename = this.getFilenameAssert();
-      this.path = this.getPathAssert();
-    }
-  }
-
-  function ___R$project$rome$$romejs$parser$core$index_ts$isDigit(char) {
-    return char !== undefined && /[0-9]/.test(char);
-  }
-
-  function ___R$project$rome$$romejs$parser$core$index_ts$isAlpha(char) {
-    return char !== undefined && /[A-Za-z]/.test(char);
-  }
-
-  function ___R$project$rome$$romejs$parser$core$index_ts$isHexDigit(char) {
-    return char !== undefined && /[0-9A-Fa-f]/.test(char);
-  }
-
-  function ___R$project$rome$$romejs$parser$core$index_ts$isESIdentifierChar(char) {
-    return char !== undefined && /[A-F0-9a-z_$]/.test(char);
-  }
-
-  function ___R$project$rome$$romejs$parser$core$index_ts$isESIdentifierStart(char) {
-    return char !== undefined && /[A-Fa-z_$]/.test(char);
-  }
-
-  function ___R$project$rome$$romejs$parser$core$index_ts$isEscaped(index, input) {
-    const prevChar = input[___R$project$rome$$romejs$ob1$index_ts$get0(index) - 1];
-    const prevPrevChar = input[___R$project$rome$$romejs$ob1$index_ts$get0(index) - 2];
-    const isEscaped = prevChar === '\\' && prevPrevChar !== '\\';
-    return isEscaped;
-  }
-
-  function ___R$project$rome$$romejs$parser$core$index_ts$readUntilLineBreak(char) {
-    return char !== '\n';
-  }
-
-  function ___R$project$rome$$romejs$parser$core$index_ts$createParser(
-    callback,
-  ) {
-    let klass;
-
-    return (
-      (...args) => {
-        if (klass === undefined) {
-          klass = callback(___R$project$rome$$romejs$parser$core$index_ts$ParserCore, ___R$project$rome$$romejs$parser$core$index_ts$ParserWithRequiredPath);
-        }
-
-        return new klass(...args);
-      }
-    );
-  }
-
-  function ___R$project$rome$$romejs$parser$core$index_ts$extractSourceLocationRangeFromNodes(
-    nodes,
-  ) {
-    if (nodes.length === 0) {
-      return undefined;
-    }
-
-    let filename = undefined;
-    let start = undefined;
-    let end = undefined;
-
-    for (const node of nodes) {
-      const {loc} = node;
-      if (loc === undefined) {
-        continue;
-      }
-
-      if (start === undefined || loc.start.index < start.index) {
-        start = loc.start;
-      }
-
-      if (end === undefined || loc.end.index > end.index) {
-        end = loc.end;
-      }
-
-      if (filename === undefined) {
-        filename = loc.filename;
-      } else if (filename !== loc.filename) {
-        throw (
-          new Error(
-            'Mixed filenames in node, expected ' +
-            filename +
-            ' but got ' +
-            loc.filename,
-          )
-        );
-      }
-    }
-
-    if (start === undefined || end === undefined) {
-      return undefined;
-    }
-
-    return (
-      {
-        filename,
-        start,
-        end,
-      }
-    );
-  }
-
-  // project-rome/@romejs/string-markup/parse.ts
+		parserOpts,
+		opts,
+	) {
+		try {
+			return opts.parse(parserOpts);
+		} catch (err) {
+			const diagnostics = ___R$project$rome$$romejs$diagnostics$errors_ts$getDiagnosticsFromError(err);
+			if (diagnostics === undefined) {
+				throw err;
+			} else {
+				opts.parse(
+					Object.assign(
+						{
+						},
+						parserOpts,
+						{
+							offsetPosition: opts.getOffsetPosition(),
+						},
+					),
+				);
+				throw new Error('Expected error');
+			}
+		}
+	}
+
+	const ___R$$priv$project$rome$$romejs$parser$core$index_ts$SOF_TOKEN = {
+		type: 'SOF',
+		start: ___R$project$rome$$romejs$ob1$index_ts$number0,
+		end: ___R$project$rome$$romejs$ob1$index_ts$number0,
+	};
+
+	class ___R$project$rome$$romejs$parser$core$index_ts$ParserCore {
+		constructor(opts, diagnosticCategory, initialState) {
+			const {path, mtime, input, offsetPosition} = opts;
+
+			// Input information
+			this.path = path === undefined ? undefined : ___R$project$rome$$romejs$path$index_ts$createUnknownFilePath(path);
+			this.filename = this.path === undefined ? undefined : this.path.join();
+			this.mtime = mtime;
+			this.input = input === undefined ? '' : input;
+			this.length = ___R$project$rome$$romejs$ob1$index_ts$coerce0(this.input.length);
+
+			this.eofToken =
+				{
+					type: 'EOF',
+					start: ___R$project$rome$$romejs$ob1$index_ts$coerce0(this.input.length),
+					end: ___R$project$rome$$romejs$ob1$index_ts$coerce0(this.input.length),
+				};
+
+			// Parser/tokenizer state
+			this.offsetPosition = offsetPosition;
+			this.diagnosticCategory = diagnosticCategory;
+			this.tokenizing = false;
+			this.currLine = offsetPosition === undefined ? ___R$project$rome$$romejs$ob1$index_ts$number1 : offsetPosition.line;
+			this.currColumn =
+				offsetPosition === undefined
+					? ___R$project$rome$$romejs$ob1$index_ts$number0 : offsetPosition.column;
+			this.offsetIndex =
+				offsetPosition === undefined
+					? ___R$project$rome$$romejs$ob1$index_ts$number0 : offsetPosition.index;
+			this.startLine = this.currLine;
+			this.startColumn = this.currColumn;
+			this.nextTokenIndex = ___R$project$rome$$romejs$ob1$index_ts$number0;
+			this.currentToken = ___R$$priv$project$rome$$romejs$parser$core$index_ts$SOF_TOKEN;
+			this.prevToken = ___R$$priv$project$rome$$romejs$parser$core$index_ts$SOF_TOKEN;
+			this.state = initialState;
+			this.ignoreWhitespaceTokens = false;
+
+			this.latestPosition =
+				{
+					index: ___R$project$rome$$romejs$ob1$index_ts$number0, // TODO this.offsetIndex
+					line: this.currLine,
+					column: this.currColumn,
+				};
+			this.cachedPositions = new Map();
+		}
+
+		getPathAssert() {
+			const {path} = this;
+			if (path === undefined) {
+				throw new Error('Path expected but none was passed to this Parser');
+			} else {
+				return path;
+			}
+		}
+
+		getFilenameAssert() {
+			const {filename} = this;
+			if (filename === undefined) {
+				throw new Error('Filename expected but none was passed to this Parser');
+			} else {
+				return filename;
+			}
+		}
+
+		// Run the tokenizer over all tokens
+		tokenizeAll() {
+			const tokens = [];
+			try {
+				while (!this.matchToken('EOF')) {
+					tokens.push(this.getToken());
+					this.nextToken();
+				}
+			} catch (err) {
+				const diagnostics = ___R$project$rome$$romejs$diagnostics$errors_ts$getDiagnosticsFromError(err);
+				if (diagnostics === undefined) {
+					throw err;
+				} else {
+					tokens.push(
+						{
+							type: 'Invalid',
+							start: this.nextTokenIndex,
+							end: this.length,
+						},
+					);
+				}
+			}
+			return tokens;
+		}
+
+		// Tokenize method that must be implemented by subclasses
+		tokenize(index, input) {
+			throw new Error('Unimplemented');
+		}
+
+		// Alternate tokenize method to allow that allows the use of state
+		tokenizeWithState(
+			index,
+			input,
+			state,
+		) {
+			const token = this.tokenize(index, input);
+			if (token !== undefined) {
+				return {token, state};
+			}
+		}
+
+		_tokenizeWithState(
+			index,
+			input,
+			state,
+		) {
+			if (this.ignoreWhitespaceTokens) {
+				switch (input[___R$project$rome$$romejs$ob1$index_ts$get0(index)]) {
+					case ' ':
+					case '\t':
+					case '\r':
+					case '\n':
+						return this.lookahead(___R$project$rome$$romejs$ob1$index_ts$inc(index));
+				}
+			}
+
+			return this.tokenizeWithState(index, input, state);
+		}
+
+		// Get the current token
+		getToken() {
+			const {currentToken} = this;
+			if (currentToken === ___R$$priv$project$rome$$romejs$parser$core$index_ts$SOF_TOKEN) {
+				return this.nextToken();
+			} else {
+				return currentToken;
+			}
+		}
+
+		getPrevToken() {
+			return this.prevToken;
+		}
+
+		save() {
+			return (
+				{
+					nextTokenIndex: this.nextTokenIndex,
+					currentToken: this.currentToken,
+					prevToken: this.prevToken,
+					state: this.state,
+				}
+			);
+		}
+
+		restore(snapshot) {
+			this.nextTokenIndex = snapshot.nextTokenIndex;
+			this.currentToken = snapshot.currentToken;
+			this.prevToken = snapshot.prevToken;
+			this.state = snapshot.state;
+		}
+
+		// Advance to the next token, returning the new one
+		nextToken() {
+			if (this.isEOF(this.nextTokenIndex)) {
+				this.currentToken = this.eofToken;
+				return this.eofToken;
+			}
+
+			if (this.tokenizing) {
+				throw new Error('Can\'t call nextToken while tokenizing');
+			}
+
+			const prevToken = this.currentToken;
+			const {token: nextToken, state} = this.lookahead();
+
+			if (nextToken.end === prevToken.end) {
+				throw (
+					new Error(
+						'tokenize() returned a token with the same position as the last - Previous token: ' +
+						JSON.stringify(
+							prevToken,
+						) +
+						'; Next token: ' +
+						JSON.stringify(nextToken) +
+						'; Input: ' +
+						this.input.slice(
+							0,
+							100,
+						),
+					)
+				);
+			}
+
+			const {line, column} = this.getPositionFromIndex(nextToken.start);
+			this.currLine = line;
+			this.currColumn = column;
+
+			this.nextTokenIndex = nextToken.end;
+			this.prevToken = prevToken;
+			this.currentToken = nextToken;
+			this.state = state;
+			return nextToken;
+		}
+
+		// Get the position of the current token
+		getPosition() {
+			const index = this.currentToken.start;
+
+			const cached = this.cachedPositions.get(index);
+			if (cached !== undefined) {
+				return cached;
+			}
+
+			const pos = {
+				index: this.addOffset(index),
+				line: this.currLine,
+				column: this.currColumn,
+			};
+			this.cachedPositions.set(index, pos);
+			return pos;
+		}
+
+		// Get the end position of the current token
+		getLastEndPosition() {
+			return this.getPositionFromIndex(this.prevToken.end);
+		}
+
+		// Return the token that's after this current token without advancing to it
+		lookaheadToken(index) {
+			return this.lookahead(index).token;
+		}
+
+		// Return the token and state that's after the current token without advancing to it
+		lookahead(
+			index = this.nextTokenIndex,
+		) {
+			if (this.isEOF(index)) {
+				return {token: this.eofToken, state: this.state};
+			}
+
+			// Set the next token index, in the case of a lookahead we'll set it back later
+			const prevNextTokenIndex = this.nextTokenIndex;
+			this.nextTokenIndex = index;
+
+			// Indicate that we're currently tokenizing to catch some weird recursive tokenizing errors
+			const wasTokenizing = this.tokenizing;
+			this.tokenizing = true;
+
+			// Tokenize and do some validation
+			const nextToken = this._tokenizeWithState(index, this.input, this.state);
+			if (nextToken === undefined) {
+				throw (
+					this.unexpected(
+						{
+							start: this.getPositionFromIndex(index),
+						},
+					)
+				);
+			}
+
+			// Reset to old values
+			this.tokenizing = wasTokenizing;
+			this.nextTokenIndex = prevNextTokenIndex;
+
+			return nextToken;
+		}
+
+		addOffset(index) {
+			return ___R$project$rome$$romejs$ob1$index_ts$add(index, this.offsetIndex);
+		}
+
+		removeOffset(index) {
+			return ___R$project$rome$$romejs$ob1$index_ts$sub(index, this.offsetIndex);
+		}
+
+		getPositionFromIndex(index) {
+			const cached = this.cachedPositions.get(index);
+			if (cached !== undefined) {
+				return cached;
+			}
+
+			let line = ___R$project$rome$$romejs$ob1$index_ts$number1;
+			let column = ___R$project$rome$$romejs$ob1$index_ts$number0;
+			let indexSearchOffset = 0;
+
+			const indexWithOffset = this.addOffset(index);
+
+			// Reuse existing line information if possible
+			const {latestPosition} = this;
+			const currPosition = this.getPosition();
+			if (currPosition.index > latestPosition.index &&
+				currPosition.index <
+				indexWithOffset) {
+				line = currPosition.line;
+				column = currPosition.column;
+				indexSearchOffset = ___R$project$rome$$romejs$ob1$index_ts$get0(this.removeOffset(currPosition.index));
+			} else if (latestPosition.index < indexWithOffset) {
+				line = latestPosition.line;
+				column = latestPosition.column;
+				indexSearchOffset = ___R$project$rome$$romejs$ob1$index_ts$get0(this.removeOffset(latestPosition.index));
+			}
+
+			// Read the rest of the input until we hit the index
+			for (let i = indexSearchOffset;
+			i < ___R$project$rome$$romejs$ob1$index_ts$get0(index);
+			i++) {
+				const char = this.input[i];
+
+				if (char === '\n') {
+					line = ___R$project$rome$$romejs$ob1$index_ts$inc(line);
+					column = ___R$project$rome$$romejs$ob1$index_ts$number0;
+				} else {
+					column = ___R$project$rome$$romejs$ob1$index_ts$inc(column);
+				}
+			}
+
+			const pos = {
+				index: indexWithOffset,
+				line,
+				column,
+			};
+
+			if (latestPosition === undefined || pos.index > latestPosition.index) {
+				this.latestPosition = pos;
+			}
+
+			this.cachedPositions.set(index, pos);
+			return pos;
+		}
+
+		createDiagnostic(opts = {}) {
+			const {currentToken} = this;
+			let {description: metadata, start, end, loc, token} = opts;
+
+			// Allow passing in a TokenBase
+			if (token !== undefined) {
+				start = this.getPositionFromIndex(token.start);
+				end = this.getPositionFromIndex(token.end);
+			}
+
+			// Allow passing in a SourceLocation as an easy way to point to a particular node
+			if (loc !== undefined) {
+				start = loc.start;
+				end = loc.end;
+			}
+
+			// When both properties are omitted then we will default to the current token range
+			if (start === undefined && end === undefined) {
+				end = this.getLastEndPosition();
+			}
+
+			if (start === undefined) {
+				start = this.getPosition();
+			}
+
+			if (end === undefined) {
+				end = start;
+			}
+
+			// Sometimes the end position may be empty as it hasn't been filled yet
+			if (end.index === ___R$project$rome$$romejs$ob1$index_ts$number0) {
+				end = start;
+			}
+
+			// Normalize message, we need to be defensive here because it could have been called while tokenizing the first token
+			if (metadata === undefined) {
+				let message;
+				if (currentToken !== undefined && start !== undefined &&
+					start.index ===
+					currentToken.start) {
+					message =
+						___R$project$rome$$romejs$diagnostics$descriptions_ts$createBlessedDiagnosticMessage(
+							'Unexpected ' +
+							currentToken.type,
+						);
+				} else {
+					if (this.isEOF(start.index)) {
+						message = ___R$project$rome$$romejs$diagnostics$descriptions_ts$createBlessedDiagnosticMessage('Unexpected end of file');
+					} else {
+						const char = this.input[___R$project$rome$$romejs$ob1$index_ts$get0(start.index)];
+						message =
+							___R$project$rome$$romejs$diagnostics$descriptions_ts$createBlessedDiagnosticMessage(
+								'Unexpected character <emphasis>' +
+								___R$project$rome$$romejs$string$markup$escape_ts$escapeMarkup(char) +
+								'</emphasis>',
+							);
+					}
+				}
+				metadata = {message};
+			}
+
+			const metadataWithCategory = Object.assign(
+				{
+				},
+				metadata,
+				{
+					category: metadata.category === undefined
+						? this.diagnosticCategory : metadata.category,
+				},
+			);
+
+			return (
+				{
+					description: metadataWithCategory,
+					location: {
+						sourceText: this.path === undefined ? this.input : undefined,
+						mtime: this.mtime,
+						start,
+						end,
+						filename: this.filename,
+					},
+				}
+			);
+		}
+
+		// Return an error to indicate a parser error, this must be thrown at the callsite for refinement
+		unexpected(opts = {}) {
+			throw ___R$project$rome$$romejs$diagnostics$errors_ts$createSingleDiagnosticError(this.createDiagnostic(opts));
+		}
+
+		//# Token utility methods
+		assertNoSpace() {
+			if (this.currentToken.start !== this.prevToken.end) {
+				throw (
+					this.unexpected(
+						{
+							description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.PARSER_CORE.EXPECTED_SPACE,
+						},
+					)
+				);
+			}
+		}
+
+		// If the current token is the specified type then return the next token, otherwise return null
+		eatToken(type) {
+			if (this.matchToken(type)) {
+				return this.nextToken();
+			}
+		}
+
+		didEatToken(type) {
+			return this.eatToken(type) !== undefined;
+		}
+
+		// Check if we're at the end of the input
+		isEOF(index) {
+			return ___R$project$rome$$romejs$ob1$index_ts$get0(index) >= this.input.length;
+		}
+
+		// Check if the current token matches the input type
+		matchToken(type) {
+			return this.getToken().type === type;
+		}
+
+		// Get the current token and assert that it's of the specified type, the token stream will also be advanced
+		expectToken(type, _metadata) {
+			const token = this.getToken();
+			if (token.type === type) {
+				this.nextToken();
+				// @ts-ignore
+				return token;
+			} else {
+				throw (
+					this.unexpected(
+						{
+							description: _metadata === undefined
+								? ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.PARSER_CORE.EXPECTED_TOKEN(token.type, (type)) : _metadata,
+						},
+					)
+				);
+			}
+		}
+
+		// Read from the input starting at the specified index, until the callback returns false
+		readInputFrom(index, callback) {
+			const {input} = this;
+			let value = '';
+
+			while (true) {
+				if (___R$project$rome$$romejs$ob1$index_ts$get0(index) >= input.length) {
+					return [value, index, true];
+				}
+
+				if (callback === undefined || callback(input[___R$project$rome$$romejs$ob1$index_ts$get0(index)], index, input)) {
+					value += input[___R$project$rome$$romejs$ob1$index_ts$get0(index)];
+					index = ___R$project$rome$$romejs$ob1$index_ts$inc(index);
+				} else {
+					break;
+				}
+			}
+
+			return [value, index, false];
+		}
+
+		// Get the string between the specified range
+		getRawInput(start, end) {
+			return this.input.slice(___R$project$rome$$romejs$ob1$index_ts$get0(start), ___R$project$rome$$romejs$ob1$index_ts$get0(end));
+		}
+
+		//# Utility methods to make it easy to construct nodes or tokens
+		getLoc(node) {
+			if (node === undefined || node.loc === undefined) {
+				throw new Error('Tried to fetch node loc start but none found');
+			} else {
+				return node.loc;
+			}
+		}
+
+		finishToken(type, end = ___R$project$rome$$romejs$ob1$index_ts$inc(this.nextTokenIndex)) {
+			return (
+				{
+					type,
+					start: this.nextTokenIndex,
+					end,
+				}
+			);
+		}
+
+		finishValueToken(type, value, end = ___R$project$rome$$romejs$ob1$index_ts$inc(this.nextTokenIndex)) {
+			return (
+				{
+					type,
+					value,
+					start: this.nextTokenIndex,
+					end,
+				}
+			);
+		}
+
+		finishComplexToken(type, data, end = ___R$project$rome$$romejs$ob1$index_ts$inc(this.nextTokenIndex)) {
+			return (
+				Object.assign(
+					{
+						type,
+					},
+					data,
+					{
+						start: this.nextTokenIndex,
+						end,
+					},
+				)
+			);
+		}
+
+		finishLocFromToken(token) {
+			return (
+				this.finishLocAt(
+					this.getPositionFromIndex(token.start),
+					this.getPositionFromIndex(token.end),
+				)
+			);
+		}
+
+		finishLoc(start) {
+			return this.finishLocAt(start, this.getLastEndPosition());
+		}
+
+		finishLocAt(start, end) {
+			return (
+				{
+					filename: this.filename,
+					start,
+					end,
+				}
+			);
+		}
+
+		finalize() {
+			if (!this.eatToken('EOF')) {
+				throw (
+					this.unexpected(
+						{
+							description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.PARSER_CORE.EXPECTED_EOF,
+						},
+					)
+				);
+			}
+		}
+	}
+
+	class ___R$project$rome$$romejs$parser$core$index_ts$ParserWithRequiredPath extends ___R$project$rome$$romejs$parser$core$index_ts$ParserCore {
+		constructor(opts, diagnosticCategory, initialState) {
+			super(opts, diagnosticCategory, initialState);
+			this.filename = this.getFilenameAssert();
+			this.path = this.getPathAssert();
+		}
+	}
+
+	function ___R$project$rome$$romejs$parser$core$index_ts$isDigit(char) {
+		return char !== undefined && /[0-9]/.test(char);
+	}
+
+	function ___R$project$rome$$romejs$parser$core$index_ts$isAlpha(char) {
+		return char !== undefined && /[A-Za-z]/.test(char);
+	}
+
+	function ___R$project$rome$$romejs$parser$core$index_ts$isHexDigit(char) {
+		return char !== undefined && /[0-9A-Fa-f]/.test(char);
+	}
+
+	function ___R$project$rome$$romejs$parser$core$index_ts$isESIdentifierChar(char) {
+		return char !== undefined && /[A-F0-9a-z_$]/.test(char);
+	}
+
+	function ___R$project$rome$$romejs$parser$core$index_ts$isESIdentifierStart(char) {
+		return char !== undefined && /[A-Fa-z_$]/.test(char);
+	}
+
+	function ___R$project$rome$$romejs$parser$core$index_ts$isEscaped(index, input) {
+		const prevChar = input[___R$project$rome$$romejs$ob1$index_ts$get0(index) - 1];
+		const prevPrevChar = input[___R$project$rome$$romejs$ob1$index_ts$get0(index) - 2];
+		const isEscaped = prevChar === '\\' && prevPrevChar !== '\\';
+		return isEscaped;
+	}
+
+	function ___R$project$rome$$romejs$parser$core$index_ts$readUntilLineBreak(char) {
+		return char !== '\n';
+	}
+
+	function ___R$project$rome$$romejs$parser$core$index_ts$createParser(
+		callback,
+	) {
+		let klass;
+
+		return (
+			(...args) => {
+				if (klass === undefined) {
+					klass = callback(___R$project$rome$$romejs$parser$core$index_ts$ParserCore, ___R$project$rome$$romejs$parser$core$index_ts$ParserWithRequiredPath);
+				}
+
+				return new klass(...args);
+			}
+		);
+	}
+
+	function ___R$project$rome$$romejs$parser$core$index_ts$extractSourceLocationRangeFromNodes(
+		nodes,
+	) {
+		if (nodes.length === 0) {
+			return undefined;
+		}
+
+		let filename = undefined;
+		let start = undefined;
+		let end = undefined;
+
+		for (const node of nodes) {
+			const {loc} = node;
+			if (loc === undefined) {
+				continue;
+			}
+
+			if (start === undefined || loc.start.index < start.index) {
+				start = loc.start;
+			}
+
+			if (end === undefined || loc.end.index > end.index) {
+				end = loc.end;
+			}
+
+			if (filename === undefined) {
+				filename = loc.filename;
+			} else if (filename !== loc.filename) {
+				throw (
+					new Error(
+						'Mixed filenames in node, expected ' +
+						filename +
+						' but got ' +
+						loc.filename,
+					)
+				);
+			}
+		}
+
+		if (start === undefined || end === undefined) {
+			return undefined;
+		}
+
+		return (
+			{
+				filename,
+				start,
+				end,
+			}
+		);
+	}
+
+	// project-rome/@romejs/string-markup/parse.ts
 const ___R$project$rome$$romejs$string$markup$parse_ts = {
-    isTagChar: ___R$project$rome$$romejs$string$markup$parse_ts$isTagChar,
-    parseMarkup: ___R$project$rome$$romejs$string$markup$parse_ts$parseMarkup,
-  };
-  const ___R$$priv$project$rome$$romejs$string$markup$parse_ts$globalAttributes = ['emphasis', 'dim'];
+		isTagChar: ___R$project$rome$$romejs$string$markup$parse_ts$isTagChar,
+		parseMarkup: ___R$project$rome$$romejs$string$markup$parse_ts$parseMarkup,
+	};
+	const ___R$$priv$project$rome$$romejs$string$markup$parse_ts$globalAttributes = ['emphasis', 'dim'];
 
-  const ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags = new Map();
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('emphasis', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('number', ['approx', 'pluralSuffix', 'singularSuffix']);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('grammarNumber', ['plural', 'singular', 'none']);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('hyperlink', ['target']);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('filelink', ['target', 'column', 'line']);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('inverse', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('dim', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('filesize', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('duration', ['approx']);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('italic', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('underline', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('strike', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('black', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('brightBlack', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('red', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('brightRed', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('green', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('brightGreen', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('yellow', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('brightYellow', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('blue', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('brightBlue', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('magenta', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('brightMagenta', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('cyan', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('brightCyan', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('white', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('brightWhite', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('bgBlack', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('bgBrightBlack', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('bgRed', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('bgBrightRed', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('bgGreen', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('bgBrightGreen', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('bgYellow', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('bgBrightYellow', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('bgBlue', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('bgBrightBlue', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('bgMagenta', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('bgBrightMagenta', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('bgCyan', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('bgBrightCyan', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('bgWhite', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('bgBrightWhite', []);
-  ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('command', []);
+	const ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags = new Map();
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('emphasis', []);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('number', ['approx', 'pluralSuffix', 'singularSuffix']);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('grammarNumber', ['plural', 'singular', 'none']);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('hyperlink', ['target']);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('filelink', ['target', 'column', 'line']);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('inverse', []);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('dim', []);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('filesize', []);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('duration', ['approx']);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('italic', []);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('underline', []);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('strike', []);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('black', []);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('brightBlack', []);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('red', []);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('brightRed', []);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('green', []);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('brightGreen', []);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('yellow', []);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('brightYellow', []);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('blue', []);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('brightBlue', []);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('magenta', []);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('brightMagenta', []);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('cyan', []);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('brightCyan', []);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('white', []);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('brightWhite', []);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('bgBlack', []);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('bgBrightBlack', []);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('bgRed', []);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('bgBrightRed', []);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('bgGreen', []);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('bgBrightGreen', []);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('bgYellow', []);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('bgBrightYellow', []);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('bgBlue', []);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('bgBrightBlue', []);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('bgMagenta', []);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('bgBrightMagenta', []);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('bgCyan', []);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('bgBrightCyan', []);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('bgWhite', []);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('bgBrightWhite', []);
+	___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.set('command', []);
 
-  //
-  function ___R$$priv$project$rome$$romejs$string$markup$parse_ts$isStringValueChar(char, index, input) {
-    if (char === '"' && !___R$project$rome$$romejs$parser$core$index_ts$isEscaped(index, input)) {
-      return false;
-    }
+	//
+	function ___R$$priv$project$rome$$romejs$string$markup$parse_ts$isStringValueChar(char, index, input) {
+		if (char === '"' && !___R$project$rome$$romejs$parser$core$index_ts$isEscaped(index, input)) {
+			return false;
+		}
 
-    return true;
-  }
+		return true;
+	}
 
-  function ___R$$priv$project$rome$$romejs$string$markup$parse_ts$isTextChar(char, index, input) {
-    return !___R$project$rome$$romejs$string$markup$parse_ts$isTagChar(index, input);
-  }
+	function ___R$$priv$project$rome$$romejs$string$markup$parse_ts$isTextChar(char, index, input) {
+		return !___R$project$rome$$romejs$string$markup$parse_ts$isTagChar(index, input);
+	}
 
-  function ___R$project$rome$$romejs$string$markup$parse_ts$isTagChar(index, input) {
-    const i = ___R$project$rome$$romejs$ob1$index_ts$get0(index);
-    return (
-      input[i] === '<' && !___R$project$rome$$romejs$parser$core$index_ts$isEscaped(index, input) &&
-        (___R$project$rome$$romejs$parser$core$index_ts$isAlpha(input[i + 1]) || input[i + 1] === '/')
-    );
-  }
+	function ___R$project$rome$$romejs$string$markup$parse_ts$isTagChar(index, input) {
+		const i = ___R$project$rome$$romejs$ob1$index_ts$get0(index);
+		return (
+			input[i] === '<' && !___R$project$rome$$romejs$parser$core$index_ts$isEscaped(index, input) &&
+				(___R$project$rome$$romejs$parser$core$index_ts$isAlpha(input[i + 1]) || input[i + 1] === '/')
+		);
+	}
 
-  const ___R$$priv$project$rome$$romejs$string$markup$parse_ts$createStringMarkupParser = ___R$project$rome$$romejs$parser$core$index_ts$createParser(
-    (
-      ParserCore,
-    ) =>
-      class StringMarkupParser extends ParserCore {
-        constructor(opts) {
-          super(opts, 'parse/stringMarkup', {inTagHead: false});
-        }
+	const ___R$$priv$project$rome$$romejs$string$markup$parse_ts$createStringMarkupParser = ___R$project$rome$$romejs$parser$core$index_ts$createParser(
+		(
+			ParserCore,
+		) =>
+			class StringMarkupParser extends ParserCore {
+				constructor(opts) {
+					super(opts, 'parse/stringMarkup', {inTagHead: false});
+				}
 
-        tokenizeWithState(
-          index,
-          input,
-          state,
-        ) {
-          const escaped = ___R$project$rome$$romejs$parser$core$index_ts$isEscaped(index, input);
-          const char = input[___R$project$rome$$romejs$ob1$index_ts$get0(index)];
+				tokenizeWithState(
+					index,
+					input,
+					state,
+				) {
+					const escaped = ___R$project$rome$$romejs$parser$core$index_ts$isEscaped(index, input);
+					const char = input[___R$project$rome$$romejs$ob1$index_ts$get0(index)];
 
-          if (!escaped && state.inTagHead) {
-            if (char === ' ') {
-              return this.lookahead(___R$project$rome$$romejs$ob1$index_ts$inc(index));
-            }
+					if (!escaped && state.inTagHead) {
+						if (char === ' ') {
+							return this.lookahead(___R$project$rome$$romejs$ob1$index_ts$inc(index));
+						}
 
-            if (char === '=') {
-              return (
-                {
-                  state,
-                  token: this.finishToken('Equals'),
-                }
-              );
-            }
+						if (char === '=') {
+							return (
+								{
+									state,
+									token: this.finishToken('Equals'),
+								}
+							);
+						}
 
-            if (char === '/') {
-              return (
-                {
-                  state,
-                  token: this.finishToken('Slash'),
-                }
-              );
-            }
+						if (char === '/') {
+							return (
+								{
+									state,
+									token: this.finishToken('Slash'),
+								}
+							);
+						}
 
-            if (___R$project$rome$$romejs$parser$core$index_ts$isAlpha(char)) {
-              const [value, end] = this.readInputFrom(index, ___R$project$rome$$romejs$parser$core$index_ts$isAlpha);
-              return (
-                {
-                  state,
-                  token: this.finishValueToken('Word', value, end),
-                }
-              );
-            }
+						if (___R$project$rome$$romejs$parser$core$index_ts$isAlpha(char)) {
+							const [value, end] = this.readInputFrom(index, ___R$project$rome$$romejs$parser$core$index_ts$isAlpha);
+							return (
+								{
+									state,
+									token: this.finishValueToken('Word', value, end),
+								}
+							);
+						}
 
-            if (char === '"') {
-              const [value, stringValueEnd, unclosed] = this.readInputFrom(
-                ___R$project$rome$$romejs$ob1$index_ts$inc(index),
-                ___R$$priv$project$rome$$romejs$string$markup$parse_ts$isStringValueChar,
-              );
+						if (char === '"') {
+							const [value, stringValueEnd, unclosed] = this.readInputFrom(
+								___R$project$rome$$romejs$ob1$index_ts$inc(index),
+								___R$$priv$project$rome$$romejs$string$markup$parse_ts$isStringValueChar,
+							);
 
-              if (unclosed) {
-                throw (
-                  this.unexpected(
-                    {
-                      description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.STRING_MARKUP.UNCLOSED_STRING,
-                      start: this.getPositionFromIndex(stringValueEnd),
-                    },
-                  )
-                );
-              }
+							if (unclosed) {
+								throw (
+									this.unexpected(
+										{
+											description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.STRING_MARKUP.UNCLOSED_STRING,
+											start: this.getPositionFromIndex(stringValueEnd),
+										},
+									)
+								);
+							}
 
-              const end = ___R$project$rome$$romejs$ob1$index_ts$add(stringValueEnd, 1);
-              return (
-                {
-                  state,
-                  token: this.finishValueToken('String', value, end),
-                }
-              );
-            }
+							const end = ___R$project$rome$$romejs$ob1$index_ts$add(stringValueEnd, 1);
+							return (
+								{
+									state,
+									token: this.finishValueToken('String', value, end),
+								}
+							);
+						}
 
-            if (char === '>') {
-              return (
-                {
-                  state: {
-                    inTagHead: false,
-                  },
-                  token: this.finishToken('Greater'),
-                }
-              );
-            }
-          }
+						if (char === '>') {
+							return (
+								{
+									state: {
+										inTagHead: false,
+									},
+									token: this.finishToken('Greater'),
+								}
+							);
+						}
+					}
 
-          if (___R$project$rome$$romejs$string$markup$parse_ts$isTagChar(index, input)) {
-            return (
-              {
-                state: {
-                  inTagHead: true,
-                },
-                token: this.finishToken('Less'),
-              }
-            );
-          }
+					if (___R$project$rome$$romejs$string$markup$parse_ts$isTagChar(index, input)) {
+						return (
+							{
+								state: {
+									inTagHead: true,
+								},
+								token: this.finishToken('Less'),
+							}
+						);
+					}
 
-          // Keep eating text until we hit a <
-          const [value, end] = this.readInputFrom(index, ___R$$priv$project$rome$$romejs$string$markup$parse_ts$isTextChar);
-          return (
-            {
-              state,
-              token: {
-                type: 'Text',
-                value: ___R$$priv$project$rome$$romejs$string$markup$parse_ts$normalizeTextValue(value),
-                start: index,
-                end,
-              },
-            }
-          );
-        }
+					// Keep eating text until we hit a <
+					const [value, end] = this.readInputFrom(index, ___R$$priv$project$rome$$romejs$string$markup$parse_ts$isTextChar);
+					return (
+						{
+							state,
+							token: {
+								type: 'Text',
+								value: ___R$$priv$project$rome$$romejs$string$markup$parse_ts$normalizeTextValue(value),
+								start: index,
+								end,
+							},
+						}
+					);
+				}
 
-        atTagEnd() {
-          return this.matchToken('Less') && this.lookahead().token.type === 'Slash';
-        }
+				atTagEnd() {
+					return this.matchToken('Less') && this.lookahead().token.type === 'Slash';
+				}
 
-        parseTag() {
-          const nameToken = this.expectToken('Word');
-          const rawName = nameToken.value;
+				parseTag() {
+					const nameToken = this.expectToken('Word');
+					const rawName = nameToken.value;
 
-          const allowedAttributes = ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.get(rawName);
-          if (allowedAttributes === undefined) {
-            throw (
-              this.unexpected(
-                {
-                  description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.STRING_MARKUP.UNKNOWN_TAG_NAME(rawName),
-                  start: this.getPositionFromIndex(nameToken.start),
-                },
-              )
-            );
-          }
+					const allowedAttributes = ___R$$priv$project$rome$$romejs$string$markup$parse_ts$tags.get(rawName);
+					if (allowedAttributes === undefined) {
+						throw (
+							this.unexpected(
+								{
+									description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.STRING_MARKUP.UNKNOWN_TAG_NAME(rawName),
+									start: this.getPositionFromIndex(nameToken.start),
+								},
+							)
+						);
+					}
 
-          // rome-suppress lint/noExplicitAny
-          const tagName = (rawName);
-          const attributes = new Map();
-          const children = [];
-          let selfClosing = false;
+					// rome-suppress lint/noExplicitAny
+					const tagName = (rawName);
+					const attributes = new Map();
+					const children = [];
+					let selfClosing = false;
 
-          // Parse attributes
-          while (!this.matchToken('EOF') && !this.matchToken('Greater')) {
-            const keyToken = this.getToken();
+					// Parse attributes
+					while (!this.matchToken('EOF') && !this.matchToken('Greater')) {
+						const keyToken = this.getToken();
 
-            let key;
-            if (keyToken.type === 'Word') {
-              key = keyToken.value;
+						let key;
+						if (keyToken.type === 'Word') {
+							key = keyToken.value;
 
-              if (!allowedAttributes.includes(key) && !___R$$priv$project$rome$$romejs$string$markup$parse_ts$globalAttributes.includes(key)) {
-                throw (
-                  this.unexpected(
-                    {
-                      description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.STRING_MARKUP.INVALID_ATTRIBUTE_NAME_FOR_TAG(
-                        tagName,
-                        key,
-                      ),
-                    },
-                  )
-                );
-              }
+							if (!allowedAttributes.includes(key) && !___R$$priv$project$rome$$romejs$string$markup$parse_ts$globalAttributes.includes(key)) {
+								throw (
+									this.unexpected(
+										{
+											description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.STRING_MARKUP.INVALID_ATTRIBUTE_NAME_FOR_TAG(
+												tagName,
+												key,
+											),
+										},
+									)
+								);
+							}
 
-              this.nextToken();
+							this.nextToken();
 
-              // Shorthand properties
-              if (this.matchToken('Word') || this.matchToken('Slash') ||
-              this.matchToken('Greater')) {
-                attributes.set(key, 'true');
-                continue;
-              }
+							// Shorthand properties
+							if (this.matchToken('Word') || this.matchToken('Slash') ||
+							this.matchToken('Greater')) {
+								attributes.set(key, 'true');
+								continue;
+							}
 
-              this.expectToken('Equals');
+							this.expectToken('Equals');
 
-              const valueToken = this.expectToken('String');
-              if (valueToken.type !== 'String') {
-                throw new Error('Expected String');
-              }
-              const value = valueToken.value;
+							const valueToken = this.expectToken('String');
+							if (valueToken.type !== 'String') {
+								throw new Error('Expected String');
+							}
+							const value = valueToken.value;
 
-              attributes.set(key, value);
-            } else if (keyToken.type === 'Slash') {
-              this.nextToken();
-              selfClosing = true;
-            } else {
-              throw (
-                this.unexpected(
-                  {
-                    description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.STRING_MARKUP.EXPECTED_ATTRIBUTE_NAME,
-                  },
-                )
-              );
-            }
-          }
+							attributes.set(key, value);
+						} else if (keyToken.type === 'Slash') {
+							this.nextToken();
+							selfClosing = true;
+						} else {
+							throw (
+								this.unexpected(
+									{
+										description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.STRING_MARKUP.EXPECTED_ATTRIBUTE_NAME,
+									},
+								)
+							);
+						}
+					}
 
-          this.expectToken('Greater');
+					this.expectToken('Greater');
 
-          // Verify closing tag
-          if (!selfClosing) {
-            while ( // Build children
-            !this.matchToken('EOF') && !this.atTagEnd()) {
-              children.push(this.parseChild());
-            }
+					// Verify closing tag
+					if (!selfClosing) {
+						while ( // Build children
+						!this.matchToken('EOF') && !this.atTagEnd()) {
+							children.push(this.parseChild());
+						}
 
-            if (this.matchToken('EOF')) {
-              throw (
-                this.unexpected(
-                  {
-                    description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.STRING_MARKUP.UNCLOSED_TAG(tagName),
-                  },
-                )
-              );
-            } else {
-              this.expectToken('Less');
-              this.expectToken('Slash');
+						if (this.matchToken('EOF')) {
+							throw (
+								this.unexpected(
+									{
+										description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.STRING_MARKUP.UNCLOSED_TAG(tagName),
+									},
+								)
+							);
+						} else {
+							this.expectToken('Less');
+							this.expectToken('Slash');
 
-              const name = this.getToken();
-              if (name.type === 'Word') {
-                if (name.value !== tagName) {
-                  throw (
-                    this.unexpected(
-                      {
-                        description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.STRING_MARKUP.INCORRECT_CLOSING_TAG_NAME(
-                          tagName,
-                          name.value,
-                        ),
-                      },
-                    )
-                  );
-                }
+							const name = this.getToken();
+							if (name.type === 'Word') {
+								if (name.value !== tagName) {
+									throw (
+										this.unexpected(
+											{
+												description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.STRING_MARKUP.INCORRECT_CLOSING_TAG_NAME(
+													tagName,
+													name.value,
+												),
+											},
+										)
+									);
+								}
 
-                this.nextToken();
-              } else {
-                throw (
-                  this.unexpected(
-                    {
-                      description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.STRING_MARKUP.EXPECTED_CLOSING_TAG_NAME,
-                    },
-                  )
-                );
-              }
+								this.nextToken();
+							} else {
+								throw (
+									this.unexpected(
+										{
+											description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.STRING_MARKUP.EXPECTED_CLOSING_TAG_NAME,
+										},
+									)
+								);
+							}
 
-              this.expectToken('Greater');
-            }
-          }
+							this.expectToken('Greater');
+						}
+					}
 
-          return (
-            {
-              type: 'Tag',
-              attributes,
-              name: tagName,
-              children,
-            }
-          );
-        }
+					return (
+						{
+							type: 'Tag',
+							attributes,
+							name: tagName,
+							children,
+						}
+					);
+				}
 
-        parseChild() {
-          const token = this.getToken();
-          this.nextToken();
+				parseChild() {
+					const token = this.getToken();
+					this.nextToken();
 
-          if (token.type === 'Text') {
-            return (
-              {
-                type: 'Text',
-                value: token.value,
-              }
-            );
-          } else if (token.type === 'Less') {
-            return this.parseTag();
-          } else {
-            throw (
-              this.unexpected(
-                {
-                  description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.STRING_MARKUP.UNKNOWN_START,
-                },
-              )
-            );
-          }
-        }
+					if (token.type === 'Text') {
+						return (
+							{
+								type: 'Text',
+								value: token.value,
+							}
+						);
+					} else if (token.type === 'Less') {
+						return this.parseTag();
+					} else {
+						throw (
+							this.unexpected(
+								{
+									description: ___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.STRING_MARKUP.UNKNOWN_START,
+								},
+							)
+						);
+					}
+				}
 
-        parse() {
-          const children = [];
-          while (!this.matchToken('EOF')) {
-            children.push(this.parseChild());
-          }
-          return children;
-        }
-      },
-  );
+				parse() {
+					const children = [];
+					while (!this.matchToken('EOF')) {
+						children.push(this.parseChild());
+					}
+					return children;
+				}
+			},
+	);
 
-  function ___R$project$rome$$romejs$string$markup$parse_ts$parseMarkup(input) {
-    try {
-      return ___R$$priv$project$rome$$romejs$string$markup$parse_ts$createStringMarkupParser({input}).parse();
-    } catch (err) {
-      throw err;
-    }
-  }
+	function ___R$project$rome$$romejs$string$markup$parse_ts$parseMarkup(input) {
+		try {
+			return ___R$$priv$project$rome$$romejs$string$markup$parse_ts$createStringMarkupParser({input}).parse();
+		} catch (err) {
+			throw err;
+		}
+	}
 
-  function ___R$$priv$project$rome$$romejs$string$markup$parse_ts$normalizeTextValue(str) {
-    return str.replace(/\\<([a-zA-Z\/])/g, '<$1');
-  }
+	function ___R$$priv$project$rome$$romejs$string$markup$parse_ts$normalizeTextValue(str) {
+		return str.replace(/\\<([a-zA-Z\/])/g, '<$1');
+	}
 
-  // project-rome/@romejs/string-utils/orderBySimilarity.ts
+	// project-rome/@romejs/string-utils/orderBySimilarity.ts
 const ___R$project$rome$$romejs$string$utils$orderBySimilarity_ts = {
-    compareTwoStrings: ___R$project$rome$$romejs$string$utils$orderBySimilarity_ts$compareTwoStrings,
-    orderBySimilarity: ___R$project$rome$$romejs$string$utils$orderBySimilarity_ts$orderBySimilarity,
-  };
-  /**
+		compareTwoStrings: ___R$project$rome$$romejs$string$utils$orderBySimilarity_ts$compareTwoStrings,
+		orderBySimilarity: ___R$project$rome$$romejs$string$utils$orderBySimilarity_ts$orderBySimilarity,
+	};
+	/**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
 
-  function ___R$$priv$project$rome$$romejs$string$utils$orderBySimilarity_ts$getMap(
-    map,
-    key,
-    defaultValue,
-  ) {
-    const existing = map.get(key);
+	function ___R$$priv$project$rome$$romejs$string$utils$orderBySimilarity_ts$getMap(
+		map,
+		key,
+		defaultValue,
+	) {
+		const existing = map.get(key);
 
-    if (existing === undefined) {
-      if (defaultValue === undefined) {
-        throw new Error('Key didn\'t exist and no defaultValue passed');
-      }
+		if (existing === undefined) {
+			if (defaultValue === undefined) {
+				throw new Error('Key didn\'t exist and no defaultValue passed');
+			}
 
-      map.set(key, defaultValue);
-      return defaultValue;
-    } else {
-      return existing;
-    }
-  }
+			map.set(key, defaultValue);
+			return defaultValue;
+		} else {
+			return existing;
+		}
+	}
 
-  /**
+	/**
  * Forked from the project https://github.com/aceakash/string-similarity by Akash K, licensed under ISC
  */
-  function ___R$project$rome$$romejs$string$utils$orderBySimilarity_ts$compareTwoStrings(aStr, bStr) {
-    const a = aStr.replace(/\s+/g, '');
-    const b = bStr.replace(/\s+/g, '');
+	function ___R$project$rome$$romejs$string$utils$orderBySimilarity_ts$compareTwoStrings(aStr, bStr) {
+		const a = aStr.replace(/\s+/g, '');
+		const b = bStr.replace(/\s+/g, '');
 
-    // If both are empty strings
-    if (!a.length && !b.length) {
-      return 1;
-    }
+		// If both are empty strings
+		if (!a.length && !b.length) {
+			return 1;
+		}
 
-    // If only one is empty string
-    if (!a.length || !b.length) {
-      return 0;
-    }
+		// If only one is empty string
+		if (!a.length || !b.length) {
+			return 0;
+		}
 
-    // Identical
-    if (a === b) {
-      return 1;
-    }
+		// Identical
+		if (a === b) {
+			return 1;
+		}
 
-    // Both are 1-letter strings
-    if (a.length === 1 && b.length === 1) {
-      return 0;
-    }
+		// Both are 1-letter strings
+		if (a.length === 1 && b.length === 1) {
+			return 0;
+		}
 
-    // If either is a 1-letter string
-    if (a.length < 2 || b.length < 2) {
-      return 0;
-    }
+		// If either is a 1-letter string
+		if (a.length < 2 || b.length < 2) {
+			return 0;
+		}
 
-    let firstBigrams = new Map();
-    for (let i = 0;
-    i < a.length - 1;
-    i++) {
-      const bigram = a.substring(i, i + 2);
+		let firstBigrams = new Map();
+		for (let i = 0;
+		i < a.length - 1;
+		i++) {
+			const bigram = a.substring(i, i + 2);
 
-      const count = firstBigrams.has(bigram) ? ___R$$priv$project$rome$$romejs$string$utils$orderBySimilarity_ts$getMap(firstBigrams, bigram) + 1 : 1;
-      if (count === undefined) {
-        throw new Error('Already used has() above');
-      }
+			const count = firstBigrams.has(bigram) ? ___R$$priv$project$rome$$romejs$string$utils$orderBySimilarity_ts$getMap(firstBigrams, bigram) + 1 : 1;
+			if (count === undefined) {
+				throw new Error('Already used has() above');
+			}
 
-      firstBigrams.set(bigram, count);
-    }
+			firstBigrams.set(bigram, count);
+		}
 
-    let intersectionSize = 0;
-    for (let i = 0;
-    i < b.length - 1;
-    i++) {
-      const bigram = b.substring(i, i + 2);
+		let intersectionSize = 0;
+		for (let i = 0;
+		i < b.length - 1;
+		i++) {
+			const bigram = b.substring(i, i + 2);
 
-      const count = ___R$$priv$project$rome$$romejs$string$utils$orderBySimilarity_ts$getMap(firstBigrams, bigram, 0);
-      if (count === undefined) {
-        throw new Error('Already used has() above');
-      }
+			const count = ___R$$priv$project$rome$$romejs$string$utils$orderBySimilarity_ts$getMap(firstBigrams, bigram, 0);
+			if (count === undefined) {
+				throw new Error('Already used has() above');
+			}
 
-      if (count > 0) {
-        firstBigrams.set(bigram, count - 1);
-        intersectionSize++;
-      }
-    }
+			if (count > 0) {
+				firstBigrams.set(bigram, count - 1);
+				intersectionSize++;
+			}
+		}
 
-    return 2 * intersectionSize / (a.length + b.length - 2);
-  }
+		return 2 * intersectionSize / (a.length + b.length - 2);
+	}
 
-  function ___R$project$rome$$romejs$string$utils$orderBySimilarity_ts$orderBySimilarity(
-    compareStr,
-    targets,
-    {minRating, formatItem, ignoreCase = false} = {},
-  ) {
-    if (targets.length === 0) {
-      return [];
-    }
+	function ___R$project$rome$$romejs$string$utils$orderBySimilarity_ts$orderBySimilarity(
+		compareStr,
+		targets,
+		{minRating, formatItem, ignoreCase = false} = {},
+	) {
+		if (targets.length === 0) {
+			return [];
+		}
 
-    // Calculate the rating for each target string
-    const ratings = Array.from(
-      targets,
-      (target) => {
-        let compareTarget = target;
-        if (formatItem !== undefined) {
-          compareTarget = formatItem(target);
-        }
+		// Calculate the rating for each target string
+		const ratings = Array.from(
+			targets,
+			(target) => {
+				let compareTarget = target;
+				if (formatItem !== undefined) {
+					compareTarget = formatItem(target);
+				}
 
-        if (ignoreCase) {
-          return (
-            {
-              target,
-              rating: ___R$project$rome$$romejs$string$utils$orderBySimilarity_ts$compareTwoStrings(
-                compareStr.toLowerCase(),
-                compareTarget.toLowerCase(),
-              ),
-            }
-          );
-        }
+				if (ignoreCase) {
+					return (
+						{
+							target,
+							rating: ___R$project$rome$$romejs$string$utils$orderBySimilarity_ts$compareTwoStrings(
+								compareStr.toLowerCase(),
+								compareTarget.toLowerCase(),
+							),
+						}
+					);
+				}
 
-        return (
-          {
-            target,
-            rating: ___R$project$rome$$romejs$string$utils$orderBySimilarity_ts$compareTwoStrings(compareStr, compareTarget),
-          }
-        );
-      },
-    );
+				return (
+					{
+						target,
+						rating: ___R$project$rome$$romejs$string$utils$orderBySimilarity_ts$compareTwoStrings(compareStr, compareTarget),
+					}
+				);
+			},
+		);
 
-    // Sort ratings, with the highest at the beginning
-    const sortedRatings = ratings.sort(
-      (a, b) => {
-        return b.rating - a.rating;
-      },
-    ).filter(
-      (item) => minRating === undefined || item.rating >= minRating,
-    );
+		// Sort ratings, with the highest at the beginning
+		const sortedRatings = ratings.sort(
+			(a, b) => {
+				return b.rating - a.rating;
+			},
+		).filter(
+			(item) => minRating === undefined || item.rating >= minRating,
+		);
 
-    return sortedRatings;
-  }
+		return sortedRatings;
+	}
 
-  // project-rome/@romejs/string-charcodes/index.ts
+	// project-rome/@romejs/string-charcodes/index.ts
 const ___R$project$rome$$romejs$string$charcodes$index_ts = {
-    get backSpace() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$backSpace
-      );
-    },
-
-    get tab() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$tab
-      );
-    },
-
-    get lineFeed() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$lineFeed
-      );
-    },
-
-    get carriageReturn() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$carriageReturn
-      );
-    },
-
-    get shiftOut() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$shiftOut
-      );
-    },
-
-    get space() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$space
-      );
-    },
-
-    get exclamationMark() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$exclamationMark
-      );
-    },
-
-    get quotationMark() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$quotationMark
-      );
-    },
-
-    get numberSign() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$numberSign
-      );
-    },
-
-    get dollarSign() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$dollarSign
-      );
-    },
-
-    get percentSign() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$percentSign
-      );
-    },
-
-    get ampersand() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$ampersand
-      );
-    },
-
-    get apostrophe() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$apostrophe
-      );
-    },
-
-    get leftParenthesis() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$leftParenthesis
-      );
-    },
-
-    get rightParenthesis() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$rightParenthesis
-      );
-    },
-
-    get asterisk() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$asterisk
-      );
-    },
-
-    get plusSign() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$plusSign
-      );
-    },
-
-    get comma() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$comma
-      );
-    },
-
-    get dash() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$dash
-      );
-    },
-
-    get dot() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$dot
-      );
-    },
-
-    get slash() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$slash
-      );
-    },
-
-    get digit0() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$digit0
-      );
-    },
-
-    get digit1() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$digit1
-      );
-    },
-
-    get digit2() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$digit2
-      );
-    },
-
-    get digit3() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$digit3
-      );
-    },
-
-    get digit4() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$digit4
-      );
-    },
-
-    get digit5() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$digit5
-      );
-    },
-
-    get digit6() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$digit6
-      );
-    },
-
-    get digit7() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$digit7
-      );
-    },
-
-    get digit8() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$digit8
-      );
-    },
-
-    get digit9() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$digit9
-      );
-    },
-
-    get colon() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$colon
-      );
-    },
-
-    get semicolon() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$semicolon
-      );
-    },
-
-    get lessThan() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$lessThan
-      );
-    },
-
-    get equalsTo() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$equalsTo
-      );
-    },
-
-    get greaterThan() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$greaterThan
-      );
-    },
-
-    get questionMark() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$questionMark
-      );
-    },
-
-    get atSign() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$atSign
-      );
-    },
-
-    get uppercaseA() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseA
-      );
-    },
-
-    get uppercaseB() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseB
-      );
-    },
-
-    get uppercaseC() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseC
-      );
-    },
-
-    get uppercaseD() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseD
-      );
-    },
-
-    get uppercaseE() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseE
-      );
-    },
-
-    get uppercaseF() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseF
-      );
-    },
-
-    get uppercaseG() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseG
-      );
-    },
-
-    get uppercaseH() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseH
-      );
-    },
-
-    get uppercaseI() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseI
-      );
-    },
-
-    get uppercaseJ() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseJ
-      );
-    },
-
-    get uppercaseK() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseK
-      );
-    },
-
-    get uppercaseL() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseL
-      );
-    },
-
-    get uppercaseM() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseM
-      );
-    },
-
-    get uppercaseN() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseN
-      );
-    },
-
-    get uppercaseO() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseO
-      );
-    },
-
-    get uppercaseP() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseP
-      );
-    },
-
-    get uppercaseQ() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseQ
-      );
-    },
-
-    get uppercaseR() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseR
-      );
-    },
-
-    get uppercaseS() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseS
-      );
-    },
-
-    get uppercaseT() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseT
-      );
-    },
-
-    get uppercaseU() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseU
-      );
-    },
-
-    get uppercaseV() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseV
-      );
-    },
-
-    get uppercaseW() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseW
-      );
-    },
-
-    get uppercaseX() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseX
-      );
-    },
-
-    get uppercaseY() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseY
-      );
-    },
-
-    get uppercaseZ() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseZ
-      );
-    },
-
-    get leftSquareBracket() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$leftSquareBracket
-      );
-    },
-
-    get backslash() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$backslash
-      );
-    },
-
-    get rightSquareBracket() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$rightSquareBracket
-      );
-    },
-
-    get caret() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$caret
-      );
-    },
-
-    get underscore() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$underscore
-      );
-    },
-
-    get graveAccent() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$graveAccent
-      );
-    },
-
-    get lowercaseA() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseA
-      );
-    },
-
-    get lowercaseB() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseB
-      );
-    },
-
-    get lowercaseC() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseC
-      );
-    },
-
-    get lowercaseD() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseD
-      );
-    },
-
-    get lowercaseE() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseE
-      );
-    },
-
-    get lowercaseF() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseF
-      );
-    },
-
-    get lowercaseG() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseG
-      );
-    },
-
-    get lowercaseH() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseH
-      );
-    },
-
-    get lowercaseI() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseI
-      );
-    },
-
-    get lowercaseJ() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseJ
-      );
-    },
-
-    get lowercaseK() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseK
-      );
-    },
-
-    get lowercaseL() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseL
-      );
-    },
-
-    get lowercaseM() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseM
-      );
-    },
-
-    get lowercaseN() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseN
-      );
-    },
-
-    get lowercaseO() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseO
-      );
-    },
-
-    get lowercaseP() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseP
-      );
-    },
-
-    get lowercaseQ() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseQ
-      );
-    },
-
-    get lowercaseR() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseR
-      );
-    },
-
-    get lowercaseS() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseS
-      );
-    },
-
-    get lowercaseT() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseT
-      );
-    },
-
-    get lowercaseU() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseU
-      );
-    },
-
-    get lowercaseV() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseV
-      );
-    },
-
-    get lowercaseW() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseW
-      );
-    },
-
-    get lowercaseX() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseX
-      );
-    },
-
-    get lowercaseY() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseY
-      );
-    },
-
-    get lowercaseZ() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseZ
-      );
-    },
-
-    get leftCurlyBrace() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$leftCurlyBrace
-      );
-    },
-
-    get verticalBar() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$verticalBar
-      );
-    },
-
-    get rightCurlyBrace() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$rightCurlyBrace
-      );
-    },
-
-    get tilde() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$tilde
-      );
-    },
-
-    get nonBreakingSpace() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$nonBreakingSpace
-      );
-    },
-
-    get oghamSpaceMark() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$oghamSpaceMark
-      );
-    },
-
-    get lineSeparator() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$lineSeparator
-      );
-    },
-
-    get paragraphSeparator() {
-      return (
-        ___R$project$rome$$romejs$string$charcodes$index_ts$paragraphSeparator
-      );
-    },
-
-    isDigit: ___R$project$rome$$romejs$string$charcodes$index_ts$isDigit,
-  };
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$backSpace = 8;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$tab = 9;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$lineFeed = 10;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$carriageReturn = 13;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$shiftOut = 14;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$space = 32;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$exclamationMark = 33;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$quotationMark = 34;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$numberSign = 35;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$dollarSign = 36;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$percentSign = 37;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$ampersand = 38;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$apostrophe = 39;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$leftParenthesis = 40;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$rightParenthesis = 41;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$asterisk = 42;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$plusSign = 43;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$comma = 44;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$dash = 45;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$dot = 46;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$slash = 47;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$digit0 = 48;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$digit1 = 49;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$digit2 = 50;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$digit3 = 51;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$digit4 = 52;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$digit5 = 53;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$digit6 = 54;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$digit7 = 55;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$digit8 = 56;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$digit9 = 57;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$colon = 58;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$semicolon = 59;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$lessThan = 60;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$equalsTo = 61;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$greaterThan = 62;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$questionMark = 63;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$atSign = 64;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseA = 65;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseB = 66;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseC = 67;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseD = 68;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseE = 69;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseF = 70;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseG = 71;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseH = 72;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseI = 73;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseJ = 74;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseK = 75;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseL = 76;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseM = 77;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseN = 78;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseO = 79;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseP = 80;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseQ = 81;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseR = 82;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseS = 83;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseT = 84;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseU = 85;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseV = 86;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseW = 87;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseX = 88;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseY = 89;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseZ = 90;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$leftSquareBracket = 91;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$backslash = 92;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$rightSquareBracket = 93;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$caret = 94;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$underscore = 95;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$graveAccent = 96;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseA = 97;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseB = 98;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseC = 99;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseD = 100;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseE = 101;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseF = 102;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseG = 103;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseH = 104;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseI = 105;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseJ = 106;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseK = 107;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseL = 108;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseM = 109;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseN = 110;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseO = 111;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseP = 112;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseQ = 113;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseR = 114;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseS = 115;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseT = 116;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseU = 117;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseV = 118;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseW = 119;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseX = 120;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseY = 121;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseZ = 122;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$leftCurlyBrace = 123;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$verticalBar = 124;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$rightCurlyBrace = 125;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$tilde = 126;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$nonBreakingSpace = 160;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$oghamSpaceMark = 5760;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$lineSeparator = 8232;
-  const ___R$project$rome$$romejs$string$charcodes$index_ts$paragraphSeparator = 8233;
-
-  function ___R$project$rome$$romejs$string$charcodes$index_ts$isDigit(code) {
-    return code >= ___R$project$rome$$romejs$string$charcodes$index_ts$digit0 && code <= ___R$project$rome$$romejs$string$charcodes$index_ts$digit9;
-  }
-
-  // project-rome/@romejs/string-utils/naturalCompare.ts
+		get backSpace() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$backSpace
+			);
+		},
+
+		get tab() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$tab
+			);
+		},
+
+		get lineFeed() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$lineFeed
+			);
+		},
+
+		get carriageReturn() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$carriageReturn
+			);
+		},
+
+		get shiftOut() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$shiftOut
+			);
+		},
+
+		get space() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$space
+			);
+		},
+
+		get exclamationMark() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$exclamationMark
+			);
+		},
+
+		get quotationMark() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$quotationMark
+			);
+		},
+
+		get numberSign() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$numberSign
+			);
+		},
+
+		get dollarSign() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$dollarSign
+			);
+		},
+
+		get percentSign() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$percentSign
+			);
+		},
+
+		get ampersand() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$ampersand
+			);
+		},
+
+		get apostrophe() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$apostrophe
+			);
+		},
+
+		get leftParenthesis() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$leftParenthesis
+			);
+		},
+
+		get rightParenthesis() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$rightParenthesis
+			);
+		},
+
+		get asterisk() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$asterisk
+			);
+		},
+
+		get plusSign() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$plusSign
+			);
+		},
+
+		get comma() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$comma
+			);
+		},
+
+		get dash() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$dash
+			);
+		},
+
+		get dot() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$dot
+			);
+		},
+
+		get slash() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$slash
+			);
+		},
+
+		get digit0() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$digit0
+			);
+		},
+
+		get digit1() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$digit1
+			);
+		},
+
+		get digit2() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$digit2
+			);
+		},
+
+		get digit3() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$digit3
+			);
+		},
+
+		get digit4() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$digit4
+			);
+		},
+
+		get digit5() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$digit5
+			);
+		},
+
+		get digit6() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$digit6
+			);
+		},
+
+		get digit7() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$digit7
+			);
+		},
+
+		get digit8() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$digit8
+			);
+		},
+
+		get digit9() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$digit9
+			);
+		},
+
+		get colon() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$colon
+			);
+		},
+
+		get semicolon() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$semicolon
+			);
+		},
+
+		get lessThan() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$lessThan
+			);
+		},
+
+		get equalsTo() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$equalsTo
+			);
+		},
+
+		get greaterThan() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$greaterThan
+			);
+		},
+
+		get questionMark() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$questionMark
+			);
+		},
+
+		get atSign() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$atSign
+			);
+		},
+
+		get uppercaseA() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseA
+			);
+		},
+
+		get uppercaseB() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseB
+			);
+		},
+
+		get uppercaseC() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseC
+			);
+		},
+
+		get uppercaseD() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseD
+			);
+		},
+
+		get uppercaseE() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseE
+			);
+		},
+
+		get uppercaseF() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseF
+			);
+		},
+
+		get uppercaseG() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseG
+			);
+		},
+
+		get uppercaseH() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseH
+			);
+		},
+
+		get uppercaseI() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseI
+			);
+		},
+
+		get uppercaseJ() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseJ
+			);
+		},
+
+		get uppercaseK() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseK
+			);
+		},
+
+		get uppercaseL() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseL
+			);
+		},
+
+		get uppercaseM() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseM
+			);
+		},
+
+		get uppercaseN() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseN
+			);
+		},
+
+		get uppercaseO() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseO
+			);
+		},
+
+		get uppercaseP() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseP
+			);
+		},
+
+		get uppercaseQ() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseQ
+			);
+		},
+
+		get uppercaseR() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseR
+			);
+		},
+
+		get uppercaseS() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseS
+			);
+		},
+
+		get uppercaseT() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseT
+			);
+		},
+
+		get uppercaseU() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseU
+			);
+		},
+
+		get uppercaseV() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseV
+			);
+		},
+
+		get uppercaseW() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseW
+			);
+		},
+
+		get uppercaseX() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseX
+			);
+		},
+
+		get uppercaseY() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseY
+			);
+		},
+
+		get uppercaseZ() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseZ
+			);
+		},
+
+		get leftSquareBracket() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$leftSquareBracket
+			);
+		},
+
+		get backslash() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$backslash
+			);
+		},
+
+		get rightSquareBracket() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$rightSquareBracket
+			);
+		},
+
+		get caret() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$caret
+			);
+		},
+
+		get underscore() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$underscore
+			);
+		},
+
+		get graveAccent() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$graveAccent
+			);
+		},
+
+		get lowercaseA() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseA
+			);
+		},
+
+		get lowercaseB() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseB
+			);
+		},
+
+		get lowercaseC() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseC
+			);
+		},
+
+		get lowercaseD() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseD
+			);
+		},
+
+		get lowercaseE() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseE
+			);
+		},
+
+		get lowercaseF() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseF
+			);
+		},
+
+		get lowercaseG() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseG
+			);
+		},
+
+		get lowercaseH() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseH
+			);
+		},
+
+		get lowercaseI() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseI
+			);
+		},
+
+		get lowercaseJ() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseJ
+			);
+		},
+
+		get lowercaseK() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseK
+			);
+		},
+
+		get lowercaseL() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseL
+			);
+		},
+
+		get lowercaseM() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseM
+			);
+		},
+
+		get lowercaseN() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseN
+			);
+		},
+
+		get lowercaseO() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseO
+			);
+		},
+
+		get lowercaseP() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseP
+			);
+		},
+
+		get lowercaseQ() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseQ
+			);
+		},
+
+		get lowercaseR() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseR
+			);
+		},
+
+		get lowercaseS() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseS
+			);
+		},
+
+		get lowercaseT() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseT
+			);
+		},
+
+		get lowercaseU() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseU
+			);
+		},
+
+		get lowercaseV() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseV
+			);
+		},
+
+		get lowercaseW() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseW
+			);
+		},
+
+		get lowercaseX() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseX
+			);
+		},
+
+		get lowercaseY() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseY
+			);
+		},
+
+		get lowercaseZ() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseZ
+			);
+		},
+
+		get leftCurlyBrace() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$leftCurlyBrace
+			);
+		},
+
+		get verticalBar() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$verticalBar
+			);
+		},
+
+		get rightCurlyBrace() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$rightCurlyBrace
+			);
+		},
+
+		get tilde() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$tilde
+			);
+		},
+
+		get nonBreakingSpace() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$nonBreakingSpace
+			);
+		},
+
+		get oghamSpaceMark() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$oghamSpaceMark
+			);
+		},
+
+		get lineSeparator() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$lineSeparator
+			);
+		},
+
+		get paragraphSeparator() {
+			return (
+				___R$project$rome$$romejs$string$charcodes$index_ts$paragraphSeparator
+			);
+		},
+
+		isDigit: ___R$project$rome$$romejs$string$charcodes$index_ts$isDigit,
+	};
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$backSpace = 8;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$tab = 9;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$lineFeed = 10;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$carriageReturn = 13;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$shiftOut = 14;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$space = 32;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$exclamationMark = 33;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$quotationMark = 34;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$numberSign = 35;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$dollarSign = 36;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$percentSign = 37;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$ampersand = 38;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$apostrophe = 39;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$leftParenthesis = 40;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$rightParenthesis = 41;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$asterisk = 42;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$plusSign = 43;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$comma = 44;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$dash = 45;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$dot = 46;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$slash = 47;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$digit0 = 48;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$digit1 = 49;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$digit2 = 50;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$digit3 = 51;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$digit4 = 52;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$digit5 = 53;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$digit6 = 54;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$digit7 = 55;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$digit8 = 56;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$digit9 = 57;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$colon = 58;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$semicolon = 59;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$lessThan = 60;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$equalsTo = 61;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$greaterThan = 62;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$questionMark = 63;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$atSign = 64;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseA = 65;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseB = 66;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseC = 67;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseD = 68;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseE = 69;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseF = 70;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseG = 71;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseH = 72;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseI = 73;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseJ = 74;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseK = 75;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseL = 76;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseM = 77;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseN = 78;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseO = 79;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseP = 80;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseQ = 81;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseR = 82;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseS = 83;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseT = 84;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseU = 85;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseV = 86;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseW = 87;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseX = 88;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseY = 89;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$uppercaseZ = 90;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$leftSquareBracket = 91;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$backslash = 92;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$rightSquareBracket = 93;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$caret = 94;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$underscore = 95;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$graveAccent = 96;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseA = 97;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseB = 98;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseC = 99;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseD = 100;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseE = 101;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseF = 102;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseG = 103;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseH = 104;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseI = 105;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseJ = 106;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseK = 107;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseL = 108;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseM = 109;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseN = 110;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseO = 111;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseP = 112;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseQ = 113;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseR = 114;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseS = 115;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseT = 116;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseU = 117;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseV = 118;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseW = 119;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseX = 120;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseY = 121;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$lowercaseZ = 122;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$leftCurlyBrace = 123;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$verticalBar = 124;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$rightCurlyBrace = 125;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$tilde = 126;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$nonBreakingSpace = 160;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$oghamSpaceMark = 5760;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$lineSeparator = 8232;
+	const ___R$project$rome$$romejs$string$charcodes$index_ts$paragraphSeparator = 8233;
+
+	function ___R$project$rome$$romejs$string$charcodes$index_ts$isDigit(code) {
+		return code >= ___R$project$rome$$romejs$string$charcodes$index_ts$digit0 && code <= ___R$project$rome$$romejs$string$charcodes$index_ts$digit9;
+	}
+
+	// project-rome/@romejs/string-utils/naturalCompare.ts
 const ___R$project$rome$$romejs$string$utils$naturalCompare_ts = {
-    naturalCompare: ___R$project$rome$$romejs$string$utils$naturalCompare_ts$naturalCompare,
-  };
-  function ___R$project$rome$$romejs$string$utils$naturalCompare_ts$naturalCompare(
-    a,
-    b,
-    insensitive = true,
-  ) {
-    if (insensitive) {
-      a = a.toLowerCase();
-      b = b.toLowerCase();
-    }
+		naturalCompare: ___R$project$rome$$romejs$string$utils$naturalCompare_ts$naturalCompare,
+	};
+	function ___R$project$rome$$romejs$string$utils$naturalCompare_ts$naturalCompare(
+		a,
+		b,
+		insensitive = true,
+	) {
+		if (insensitive) {
+			a = a.toLowerCase();
+			b = b.toLowerCase();
+		}
 
-    const lengthA = a.length;
-    const lengthB = b.length;
+		const lengthA = a.length;
+		const lengthB = b.length;
 
-    let aIndex = 0;
-    let bIndex = 0;
+		let aIndex = 0;
+		let bIndex = 0;
 
-    while (aIndex < lengthA && bIndex < lengthB) {
-      let charCodeA = a.charCodeAt(aIndex);
-      let charCodeB = b.charCodeAt(bIndex);
+		while (aIndex < lengthA && bIndex < lengthB) {
+			let charCodeA = a.charCodeAt(aIndex);
+			let charCodeB = b.charCodeAt(bIndex);
 
-      if (___R$project$rome$$romejs$string$charcodes$index_ts$isDigit(charCodeA)) {
-        if (!___R$project$rome$$romejs$string$charcodes$index_ts$isDigit(charCodeB)) {
-          return charCodeA - charCodeB;
-        }
+			if (___R$project$rome$$romejs$string$charcodes$index_ts$isDigit(charCodeA)) {
+				if (!___R$project$rome$$romejs$string$charcodes$index_ts$isDigit(charCodeB)) {
+					return charCodeA - charCodeB;
+				}
 
-        let numStartA = aIndex;
-        let numStartB = bIndex;
+				let numStartA = aIndex;
+				let numStartB = bIndex;
 
-        while (charCodeA === 48 && ++numStartA < lengthA) {
-          charCodeA = a.charCodeAt(numStartA);
-        }
-        while (charCodeB === 48 && ++numStartB < lengthB) {
-          charCodeB = b.charCodeAt(numStartB);
-        }
+				while (charCodeA === 48 && ++numStartA < lengthA) {
+					charCodeA = a.charCodeAt(numStartA);
+				}
+				while (charCodeB === 48 && ++numStartB < lengthB) {
+					charCodeB = b.charCodeAt(numStartB);
+				}
 
-        let numEndA = numStartA;
-        let numEndB = numStartB;
+				let numEndA = numStartA;
+				let numEndB = numStartB;
 
-        while (numEndA < lengthA && ___R$project$rome$$romejs$string$charcodes$index_ts$isDigit(a.charCodeAt(numEndA))) {
-          ++numEndA;
-        }
-        while (numEndB < lengthB && ___R$project$rome$$romejs$string$charcodes$index_ts$isDigit(b.charCodeAt(numEndB))) {
-          ++numEndB;
-        }
+				while (numEndA < lengthA && ___R$project$rome$$romejs$string$charcodes$index_ts$isDigit(a.charCodeAt(numEndA))) {
+					++numEndA;
+				}
+				while (numEndB < lengthB && ___R$project$rome$$romejs$string$charcodes$index_ts$isDigit(b.charCodeAt(numEndB))) {
+					++numEndB;
+				}
 
-        let difference = numEndA - numStartA - numEndB + numStartB; // numA length - numB length
-        if (difference) {
-          return difference;
-        }
+				let difference = numEndA - numStartA - numEndB + numStartB; // numA length - numB length
+				if (difference) {
+					return difference;
+				}
 
-        while (numStartA < numEndA) {
-          difference = a.charCodeAt(numStartA++) - b.charCodeAt(numStartB++);
-          if (difference) {
-            return difference;
-          }
-        }
+				while (numStartA < numEndA) {
+					difference = a.charCodeAt(numStartA++) - b.charCodeAt(numStartB++);
+					if (difference) {
+						return difference;
+					}
+				}
 
-        aIndex = numEndA;
-        bIndex = numEndB;
-        continue;
-      }
+				aIndex = numEndA;
+				bIndex = numEndB;
+				continue;
+			}
 
-      if (charCodeA !== charCodeB) {
-        return charCodeA - charCodeB;
-      }
+			if (charCodeA !== charCodeB) {
+				return charCodeA - charCodeB;
+			}
 
-      ++aIndex;
-      ++bIndex;
-    }
+			++aIndex;
+			++bIndex;
+		}
 
-    return lengthA - lengthB;
-  }
+		return lengthA - lengthB;
+	}
 
-  // project-rome/@romejs/string-utils/humanizeNumber.ts
+	// project-rome/@romejs/string-utils/humanizeNumber.ts
 const ___R$project$rome$$romejs$string$utils$humanizeNumber_ts = {
-    humanizeNumber: ___R$project$rome$$romejs$string$utils$humanizeNumber_ts$humanizeNumber,
-  };
-  /**
+		humanizeNumber: ___R$project$rome$$romejs$string$utils$humanizeNumber_ts$humanizeNumber,
+	};
+	/**
  * Copyright (c) Facebook, Inc. and its affiliates.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
 
-  const ___R$$priv$project$rome$$romejs$string$utils$humanizeNumber_ts$SCIENTIFIC_NOTATION = /e/i;
+	const ___R$$priv$project$rome$$romejs$string$utils$humanizeNumber_ts$SCIENTIFIC_NOTATION = /e/i;
 
-  function ___R$project$rome$$romejs$string$utils$humanizeNumber_ts$humanizeNumber(num, sep = '_') {
-    let str = String(num);
+	function ___R$project$rome$$romejs$string$utils$humanizeNumber_ts$humanizeNumber(num, sep = '_') {
+		let str = String(num);
 
-    if (num < 1000) {
-      return str;
-    }
+		if (num < 1000) {
+			return str;
+		}
 
-    if (___R$$priv$project$rome$$romejs$string$utils$humanizeNumber_ts$SCIENTIFIC_NOTATION.test(str)) {
-      return str;
-    }
+		if (___R$$priv$project$rome$$romejs$string$utils$humanizeNumber_ts$SCIENTIFIC_NOTATION.test(str)) {
+			return str;
+		}
 
-    const decimals = str.split('.');
+		const decimals = str.split('.');
 
-    let intChars = String(decimals.shift()).split('');
-    let intParts = [];
+		let intChars = String(decimals.shift()).split('');
+		let intParts = [];
 
-    while (intChars.length > 0) {
-      const part = intChars.slice(-3).join('');
-      intParts.unshift(part);
+		while (intChars.length > 0) {
+			const part = intChars.slice(-3).join('');
+			intParts.unshift(part);
 
-      intChars = intChars.slice(0, -3);
-    }
+			intChars = intChars.slice(0, -3);
+		}
 
-    return [intParts.join(sep), ...decimals].join('.');
-  }
+		return [intParts.join(sep), ...decimals].join('.');
+	}
 
-  // project-rome/@romejs/string-utils/humanizeFileSize.ts
+	// project-rome/@romejs/string-utils/humanizeFileSize.ts
 const ___R$project$rome$$romejs$string$utils$humanizeFileSize_ts = {
-    humanizeFileSize: ___R$project$rome$$romejs$string$utils$humanizeFileSize_ts$humanizeFileSize,
-  };
-  const ___R$$priv$project$rome$$romejs$string$utils$humanizeFileSize_ts$UNITS = ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+		humanizeFileSize: ___R$project$rome$$romejs$string$utils$humanizeFileSize_ts$humanizeFileSize,
+	};
+	const ___R$$priv$project$rome$$romejs$string$utils$humanizeFileSize_ts$UNITS = ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
 
-  function ___R$project$rome$$romejs$string$utils$humanizeFileSize_ts$humanizeFileSize(bytes) {
-    const exponent = Math.min(Math.floor(Math.log10(bytes) / 3), ___R$$priv$project$rome$$romejs$string$utils$humanizeFileSize_ts$UNITS.length - 1);
-    const specific = Number((bytes / Math.pow(1000, exponent)).toPrecision(3));
-    const unit = ___R$$priv$project$rome$$romejs$string$utils$humanizeFileSize_ts$UNITS[exponent];
-    return ___R$project$rome$$romejs$string$utils$humanizeNumber_ts$humanizeNumber(specific) + unit;
-  }
+	function ___R$project$rome$$romejs$string$utils$humanizeFileSize_ts$humanizeFileSize(bytes) {
+		const exponent = Math.min(Math.floor(Math.log10(bytes) / 3), ___R$$priv$project$rome$$romejs$string$utils$humanizeFileSize_ts$UNITS.length - 1);
+		const specific = Number((bytes / Math.pow(1000, exponent)).toPrecision(3));
+		const unit = ___R$$priv$project$rome$$romejs$string$utils$humanizeFileSize_ts$UNITS[exponent];
+		return ___R$project$rome$$romejs$string$utils$humanizeNumber_ts$humanizeNumber(specific) + unit;
+	}
 
-  // project-rome/@romejs/string-utils/humanizeTime.ts
+	// project-rome/@romejs/string-utils/humanizeTime.ts
 const ___R$project$rome$$romejs$string$utils$humanizeTime_ts = {
-    humanizeTime: ___R$project$rome$$romejs$string$utils$humanizeTime_ts$humanizeTime,
-  };
-  function ___R$project$rome$$romejs$string$utils$humanizeTime_ts$humanizeTime(
-    ms,
-    allowMilliseconds = false,
-  ) {
-    const s = Math.floor(ms / 1000);
-    const m = Math.floor(s / 60);
-    const h = Math.floor(m / 60);
+		humanizeTime: ___R$project$rome$$romejs$string$utils$humanizeTime_ts$humanizeTime,
+	};
+	function ___R$project$rome$$romejs$string$utils$humanizeTime_ts$humanizeTime(
+		ms,
+		allowMilliseconds = false,
+	) {
+		const s = Math.floor(ms / 1000);
+		const m = Math.floor(s / 60);
+		const h = Math.floor(m / 60);
 
-    if (h === 0 && m === 0 && s === 0) {
-      if (allowMilliseconds) {
-        return ms +
-        'ms';
-      } else {
-        return (ms / 1000).toFixed(2) +
-        's';
-      }
-    }
+		if (h === 0 && m === 0 && s === 0) {
+			if (allowMilliseconds) {
+				return ms +
+				'ms';
+			} else {
+				return (ms / 1000).toFixed(2) +
+				's';
+			}
+		}
 
-    let buf = '';
-    if (h > 0) {
-      buf += String(h) +
-      'h';
-    }
-    if (m > 0) {
-      buf += String(m % 60) +
-      'm';
-    }
-    buf += String(s % 60) +
-    's';
-    return buf;
-  }
+		let buf = '';
+		if (h > 0) {
+			buf += String(h) +
+			'h';
+		}
+		if (m > 0) {
+			buf += String(m % 60) +
+			'm';
+		}
+		buf += String(s % 60) +
+		's';
+		return buf;
+	}
 
-  // project-rome/@romejs/string-utils/removeSuffix.ts
+	// project-rome/@romejs/string-utils/removeSuffix.ts
 const ___R$project$rome$$romejs$string$utils$removeSuffix_ts = {
-    removeSuffix: ___R$project$rome$$romejs$string$utils$removeSuffix_ts$removeSuffix,
-  };
-  function ___R$project$rome$$romejs$string$utils$removeSuffix_ts$removeSuffix(value, suffix) {
-    if (value.endsWith(suffix)) {
-      return value.slice(0, -suffix.length);
-    } else {
-      return value;
-    }
-  }
+		removeSuffix: ___R$project$rome$$romejs$string$utils$removeSuffix_ts$removeSuffix,
+	};
+	function ___R$project$rome$$romejs$string$utils$removeSuffix_ts$removeSuffix(value, suffix) {
+		if (value.endsWith(suffix)) {
+			return value.slice(0, -suffix.length);
+		} else {
+			return value;
+		}
+	}
 
-  // project-rome/@romejs/string-utils/removePrefix.ts
+	// project-rome/@romejs/string-utils/removePrefix.ts
 const ___R$project$rome$$romejs$string$utils$removePrefix_ts = {
-    removePrefix: ___R$project$rome$$romejs$string$utils$removePrefix_ts$removePrefix,
-  };
-  function ___R$project$rome$$romejs$string$utils$removePrefix_ts$removePrefix(value, prefix) {
-    if (value.startsWith(prefix)) {
-      return value.slice(prefix.length);
-    } else {
-      return value;
-    }
-  }
+		removePrefix: ___R$project$rome$$romejs$string$utils$removePrefix_ts$removePrefix,
+	};
+	function ___R$project$rome$$romejs$string$utils$removePrefix_ts$removePrefix(value, prefix) {
+		if (value.startsWith(prefix)) {
+			return value.slice(prefix.length);
+		} else {
+			return value;
+		}
+	}
 
-  // project-rome/@romejs/string-utils/findClosestStringMatch.ts
+	// project-rome/@romejs/string-utils/findClosestStringMatch.ts
 const ___R$project$rome$$romejs$string$utils$findClosestStringMatch_ts = {
-    findClosestStringMatch: ___R$project$rome$$romejs$string$utils$findClosestStringMatch_ts$findClosestStringMatch,
-  };
-  function ___R$project$rome$$romejs$string$utils$findClosestStringMatch_ts$findClosestStringMatch(
-    name,
-    matches,
-    minRating = 0.8,
-  ) {
-    if (matches.length === 0) {
-      return undefined;
-    }
+		findClosestStringMatch: ___R$project$rome$$romejs$string$utils$findClosestStringMatch_ts$findClosestStringMatch,
+	};
+	function ___R$project$rome$$romejs$string$utils$findClosestStringMatch_ts$findClosestStringMatch(
+		name,
+		matches,
+		minRating = 0.8,
+	) {
+		if (matches.length === 0) {
+			return undefined;
+		}
 
-    if (matches.length === 1) {
-      return matches[0];
-    }
+		if (matches.length === 1) {
+			return matches[0];
+		}
 
-    const ratings = ___R$project$rome$$romejs$string$utils$orderBySimilarity_ts$orderBySimilarity(name, matches);
-    const bestMatch = ratings[0];
+		const ratings = ___R$project$rome$$romejs$string$utils$orderBySimilarity_ts$orderBySimilarity(name, matches);
+		const bestMatch = ratings[0];
 
-    if (bestMatch.rating >= minRating) {
-      return bestMatch.target;
-    } else {
-      return undefined;
-    }
-  }
+		if (bestMatch.rating >= minRating) {
+			return bestMatch.target;
+		} else {
+			return undefined;
+		}
+	}
 
-  // project-rome/@romejs/string-utils/orderByNatural.ts
+	// project-rome/@romejs/string-utils/orderByNatural.ts
 const ___R$project$rome$$romejs$string$utils$orderByNatural_ts = {
-    orderByNatural: ___R$project$rome$$romejs$string$utils$orderByNatural_ts$orderByNatural,
-  };
-  function ___R$project$rome$$romejs$string$utils$orderByNatural_ts$orderByNatural(
-    strs,
-    insensitive = true,
-  ) {
-    return strs.sort((a, b) => ___R$project$rome$$romejs$string$utils$naturalCompare_ts$naturalCompare(a, b, insensitive));
-  }
+		orderByNatural: ___R$project$rome$$romejs$string$utils$orderByNatural_ts$orderByNatural,
+	};
+	function ___R$project$rome$$romejs$string$utils$orderByNatural_ts$orderByNatural(
+		strs,
+		insensitive = true,
+	) {
+		return strs.sort((a, b) => ___R$project$rome$$romejs$string$utils$naturalCompare_ts$naturalCompare(a, b, insensitive));
+	}
 
-  // project-rome/@romejs/string-utils/toKebabCase.ts
+	// project-rome/@romejs/string-utils/toKebabCase.ts
 const ___R$project$rome$$romejs$string$utils$toKebabCase_ts = {
-    toKebabCase: ___R$project$rome$$romejs$string$utils$toKebabCase_ts$toKebabCase,
-  };
-  function ___R$project$rome$$romejs$string$utils$toKebabCase_ts$toKebabCase(str) {
-    return (
-      str.replace(/([a-z])([A-Z])/g, '$1-$2').replace(/[\s_]+/g, '-').toLowerCase()
-    );
-  }
+		toKebabCase: ___R$project$rome$$romejs$string$utils$toKebabCase_ts$toKebabCase,
+	};
+	function ___R$project$rome$$romejs$string$utils$toKebabCase_ts$toKebabCase(str) {
+		return (
+			str.replace(/([a-z])([A-Z])/g, '$1-$2').replace(/[\s_]+/g, '-').toLowerCase()
+		);
+	}
 
-  // project-rome/@romejs/string-utils/toCamelCase.ts
+	// project-rome/@romejs/string-utils/toCamelCase.ts
 const ___R$project$rome$$romejs$string$utils$toCamelCase_ts = {
-    toCamelCase: ___R$project$rome$$romejs$string$utils$toCamelCase_ts$toCamelCase,
-  };
-  function ___R$project$rome$$romejs$string$utils$toCamelCase_ts$toCamelCase(str, forceCapitalize) {
-    // Rest of the code expects at least 1 character
-    if (str.length === 0) {
-      return str;
-    }
+		toCamelCase: ___R$project$rome$$romejs$string$utils$toCamelCase_ts$toCamelCase,
+	};
+	function ___R$project$rome$$romejs$string$utils$toCamelCase_ts$toCamelCase(str, forceCapitalize) {
+		// Rest of the code expects at least 1 character
+		if (str.length === 0) {
+			return str;
+		}
 
-    // Prepend uppercase letters with a space
-    str = str.replace(/([A-Z+])/g, ' $1');
+		// Prepend uppercase letters with a space
+		str = str.replace(/([A-Z+])/g, ' $1');
 
-    // We no longer care about the casing
-    str = str.toLowerCase();
+		// We no longer care about the casing
+		str = str.toLowerCase();
 
-    // Capitalize all characters after a symbol or space
-    str = str.replace(/[_.\- ]+(\w|$)/g, (_, p1) => p1.toUpperCase());
+		// Capitalize all characters after a symbol or space
+		str = str.replace(/[_.\- ]+(\w|$)/g, (_, p1) => p1.toUpperCase());
 
-    // Capitalize characters after a number
-    str = str.replace(/\d+(\w|$)/g, (m) => m.toUpperCase());
+		// Capitalize characters after a number
+		str = str.replace(/\d+(\w|$)/g, (m) => m.toUpperCase());
 
-    // Force capitalize if necessary
-    if (forceCapitalize) {
-      str = str[0].toUpperCase() + str.slice(1);
-    }
+		// Force capitalize if necessary
+		if (forceCapitalize) {
+			str = str[0].toUpperCase() + str.slice(1);
+		}
 
-    return str;
-  }
+		return str;
+	}
 
-  // project-rome/@romejs/string-utils/index.ts
+	// project-rome/@romejs/string-utils/index.ts
 
 
-  // project-rome/@romejs/string-ansi/regex.ts
+	// project-rome/@romejs/string-ansi/regex.ts
 const ___R$project$rome$$romejs$string$ansi$regex_ts = {
-    get pattern() {
-      return (
-        ___R$project$rome$$romejs$string$ansi$regex_ts$pattern
-      );
-    },
+		get pattern() {
+			return (
+				___R$project$rome$$romejs$string$ansi$regex_ts$pattern
+			);
+		},
 
-    get regex() {
-      return (
-        ___R$project$rome$$romejs$string$ansi$regex_ts$regex
-      );
-    },
+		get regex() {
+			return (
+				___R$project$rome$$romejs$string$ansi$regex_ts$regex
+			);
+		},
 
-    get colorRegex() {
-      return (
-        ___R$project$rome$$romejs$string$ansi$regex_ts$colorRegex
-      );
-    },
-  };
-  const ___R$project$rome$$romejs$string$ansi$regex_ts$pattern = [
-    '[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:[a-zA-Z\\d]*(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)',
-    '(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-ntqry=><~]))',
-  ].join(
-    '|',
-  );
+		get colorRegex() {
+			return (
+				___R$project$rome$$romejs$string$ansi$regex_ts$colorRegex
+			);
+		},
+	};
+	const ___R$project$rome$$romejs$string$ansi$regex_ts$pattern = [
+		'[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:[a-zA-Z\\d]*(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)',
+		'(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-ntqry=><~]))',
+	].join(
+		'|',
+	);
 
-  const ___R$project$rome$$romejs$string$ansi$regex_ts$regex = new RegExp(___R$project$rome$$romejs$string$ansi$regex_ts$pattern, 'g');
+	const ___R$project$rome$$romejs$string$ansi$regex_ts$regex = new RegExp(___R$project$rome$$romejs$string$ansi$regex_ts$pattern, 'g');
 
-  const ___R$project$rome$$romejs$string$ansi$regex_ts$colorRegex = /u001b\[[3-9][0-9]m/g;
+	const ___R$project$rome$$romejs$string$ansi$regex_ts$colorRegex = /u001b\[[3-9][0-9]m/g;
 
-  // project-rome/@romejs/string-ansi/format.ts
+	// project-rome/@romejs/string-ansi/format.ts
 const ___R$project$rome$$romejs$string$ansi$format_ts = {
-    get formatAnsi() {
-      return (
-        ___R$project$rome$$romejs$string$ansi$format_ts$formatAnsi
-      );
-    },
+		get formatAnsi() {
+			return (
+				___R$project$rome$$romejs$string$ansi$format_ts$formatAnsi
+			);
+		},
 
-    stripAnsi: ___R$project$rome$$romejs$string$ansi$format_ts$stripAnsi,
-    hasAnsiColor: ___R$project$rome$$romejs$string$ansi$format_ts$hasAnsiColor,
-    hasAnsi: ___R$project$rome$$romejs$string$ansi$format_ts$hasAnsi,
-  };
-  function ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(num) {
-    return '\x1b[' +
-    String(num) +
-    'm';
-  }
+		stripAnsi: ___R$project$rome$$romejs$string$ansi$format_ts$stripAnsi,
+		hasAnsiColor: ___R$project$rome$$romejs$string$ansi$format_ts$hasAnsiColor,
+		hasAnsi: ___R$project$rome$$romejs$string$ansi$format_ts$hasAnsi,
+	};
+	function ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(num) {
+		return '\x1b[' +
+		String(num) +
+		'm';
+	}
 
-  const ___R$project$rome$$romejs$string$ansi$format_ts$formatAnsi = {
-    reset(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(0) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(0);
-    },
+	const ___R$project$rome$$romejs$string$ansi$format_ts$formatAnsi = {
+		reset(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(0) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(0);
+		},
 
-    fileHyperlink(name, filename) {
-      let href = 'file://';
-      const {HOSTNAME} = process.env;
-      if (HOSTNAME != null) {
-        href += HOSTNAME +
-        '/';
-      }
-      href += filename;
-      return ___R$project$rome$$romejs$string$ansi$format_ts$formatAnsi.hyperlink(name, href);
-    },
+		fileHyperlink(name, filename) {
+			let href = 'file://';
+			const {HOSTNAME} = process.env;
+			if (HOSTNAME != null) {
+				href += HOSTNAME +
+				'/';
+			}
+			href += filename;
+			return ___R$project$rome$$romejs$string$ansi$format_ts$formatAnsi.hyperlink(name, href);
+		},
 
-    hyperlink(name, href) {
-      return '\x1b]8;;' +
-      href +
-      '\x07' +
-      name +
-      '\x1b]8;;\x07';
-    },
+		hyperlink(name, href) {
+			return '\x1b]8;;' +
+			href +
+			'\x07' +
+			name +
+			'\x1b]8;;\x07';
+		},
 
-    rgb(str, color) {
-      return (
-        '\x1b[38;2;' +
-        String(color.r) +
-        ';' +
-        String(color.g) +
-        ';' +
-        String(color.b) +
-        'm' +
-        str +
-        ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(39)
-      );
-    },
+		rgb(str, color) {
+			return (
+				'\x1b[38;2;' +
+				String(color.r) +
+				';' +
+				String(color.g) +
+				';' +
+				String(color.b) +
+				'm' +
+				str +
+				___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(39)
+			);
+		},
 
-    bgRgb(str, color) {
-      return (
-        '\x1b[48;2;' +
-        String(color.r) +
-        ';' +
-        String(color.g) +
-        ';' +
-        String(color.b) +
-        'm' +
-        str +
-        ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(49)
-      );
-    },
+		bgRgb(str, color) {
+			return (
+				'\x1b[48;2;' +
+				String(color.r) +
+				';' +
+				String(color.g) +
+				';' +
+				String(color.b) +
+				'm' +
+				str +
+				___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(49)
+			);
+		},
 
-    bold(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(1) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(22);
-    },
+		bold(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(1) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(22);
+		},
 
-    dim(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(2) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(22);
-    },
+		dim(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(2) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(22);
+		},
 
-    italic(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(3) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(23);
-    },
+		italic(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(3) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(23);
+		},
 
-    underline(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(4) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(24);
-    },
+		underline(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(4) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(24);
+		},
 
-    inverse(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(7) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(27);
-    },
+		inverse(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(7) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(27);
+		},
 
-    hidden(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(8) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(28);
-    },
+		hidden(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(8) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(28);
+		},
 
-    strikethrough(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(9) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(29);
-    },
+		strikethrough(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(9) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(29);
+		},
 
-    black(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(30) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(39);
-    },
+		black(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(30) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(39);
+		},
 
-    brightBlack(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(90) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(39);
-    },
+		brightBlack(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(90) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(39);
+		},
 
-    red(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(31) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(39);
-    },
+		red(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(31) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(39);
+		},
 
-    brightRed(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(91) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(39);
-    },
+		brightRed(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(91) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(39);
+		},
 
-    green(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(32) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(39);
-    },
+		green(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(32) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(39);
+		},
 
-    brightGreen(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(92) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(39);
-    },
+		brightGreen(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(92) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(39);
+		},
 
-    yellow(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(33) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(39);
-    },
+		yellow(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(33) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(39);
+		},
 
-    brightYellow(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(93) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(39);
-    },
+		brightYellow(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(93) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(39);
+		},
 
-    blue(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(34) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(39);
-    },
+		blue(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(34) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(39);
+		},
 
-    brightBlue(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(94) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(39);
-    },
+		brightBlue(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(94) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(39);
+		},
 
-    magenta(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(35) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(39);
-    },
+		magenta(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(35) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(39);
+		},
 
-    brightMagenta(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(95) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(39);
-    },
+		brightMagenta(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(95) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(39);
+		},
 
-    cyan(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(36) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(39);
-    },
+		cyan(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(36) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(39);
+		},
 
-    brightCyan(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(96) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(39);
-    },
+		brightCyan(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(96) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(39);
+		},
 
-    white(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(37) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(39);
-    },
+		white(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(37) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(39);
+		},
 
-    brightWhite(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(97) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(39);
-    },
+		brightWhite(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(97) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(39);
+		},
 
-    bgBlack(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(40) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(49);
-    },
+		bgBlack(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(40) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(49);
+		},
 
-    bgBrightBlack(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(100) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(49);
-    },
+		bgBrightBlack(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(100) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(49);
+		},
 
-    bgRed(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(41) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(49);
-    },
+		bgRed(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(41) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(49);
+		},
 
-    bgBrightRed(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(101) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(49);
-    },
+		bgBrightRed(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(101) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(49);
+		},
 
-    bgGreen(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(42) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(49);
-    },
+		bgGreen(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(42) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(49);
+		},
 
-    bgBrightGreen(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(102) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(49);
-    },
+		bgBrightGreen(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(102) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(49);
+		},
 
-    bgYellow(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(43) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(49);
-    },
+		bgYellow(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(43) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(49);
+		},
 
-    bgBrightYellow(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(103) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(49);
-    },
+		bgBrightYellow(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(103) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(49);
+		},
 
-    bgBlue(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(44) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(49);
-    },
+		bgBlue(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(44) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(49);
+		},
 
-    bgBrightBlue(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(104) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(49);
-    },
+		bgBrightBlue(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(104) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(49);
+		},
 
-    bgMagenta(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(45) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(49);
-    },
+		bgMagenta(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(45) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(49);
+		},
 
-    bgBrightMagenta(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(105) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(49);
-    },
+		bgBrightMagenta(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(105) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(49);
+		},
 
-    bgCyan(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(46) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(49);
-    },
+		bgCyan(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(46) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(49);
+		},
 
-    bgBrightCyan(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(106) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(49);
-    },
+		bgBrightCyan(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(106) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(49);
+		},
 
-    bgWhite(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(47) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(49);
-    },
+		bgWhite(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(47) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(49);
+		},
 
-    bgBrightWhite(str) {
-      return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(107) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(49);
-    },
-  };
+		bgBrightWhite(str) {
+			return ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(107) + str + ___R$$priv$project$rome$$romejs$string$ansi$format_ts$createEscape(49);
+		},
+	};
 
-  function ___R$project$rome$$romejs$string$ansi$format_ts$stripAnsi(str) {
-    return str.replace(___R$project$rome$$romejs$string$ansi$regex_ts$regex, '');
-  }
+	function ___R$project$rome$$romejs$string$ansi$format_ts$stripAnsi(str) {
+		return str.replace(___R$project$rome$$romejs$string$ansi$regex_ts$regex, '');
+	}
 
-  function ___R$project$rome$$romejs$string$ansi$format_ts$hasAnsiColor(str) {
-    return ___R$project$rome$$romejs$string$ansi$regex_ts$colorRegex.test(str);
-  }
+	function ___R$project$rome$$romejs$string$ansi$format_ts$hasAnsiColor(str) {
+		return ___R$project$rome$$romejs$string$ansi$regex_ts$colorRegex.test(str);
+	}
 
-  function ___R$project$rome$$romejs$string$ansi$format_ts$hasAnsi(str) {
+	function ___R$project$rome$$romejs$string$ansi$format_ts$hasAnsi(str) {
     return ___R$project$rome$$romejs$string$ansi$regex_ts$regex.test(str);
   }
 

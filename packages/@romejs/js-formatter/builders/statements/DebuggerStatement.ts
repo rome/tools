@@ -8,5 +8,5 @@
 import {Token, concat} from '../../tokens';
 
 export default function DebuggerStatement(): Token {
-  return concat(['debugger', ';']);
+	return concat(['debugger', ';']);
 }

@@ -6,198 +6,198 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 23
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ForOfStatement {
-      await: false
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 22
-          index: 22
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      body: EmptyStatement {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 22
-            index: 22
-            line: 1
-          }
-          start: Object {
-            column: 21
-            index: 21
-            line: 1
-          }
-        }
-      }
-      right: ReferenceIdentifier {
-        name: 'r'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'r'
-          end: Object {
-            column: 20
-            index: 20
-            line: 1
-          }
-          start: Object {
-            column: 19
-            index: 19
-            line: 1
-          }
-        }
-      }
-      left: VariableDeclaration {
-        kind: 'let'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 15
-            index: 15
-            line: 1
-          }
-          start: Object {
-            column: 5
-            index: 5
-            line: 1
-          }
-        }
-        declarations: Array [
-          VariableDeclarator {
-            id: BindingArrayPattern {
-              rest: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 15
-                  index: 15
-                  line: 1
-                }
-                start: Object {
-                  column: 9
-                  index: 9
-                  line: 1
-                }
-              }
-              elements: Array [
-                BindingIdentifier {
-                  name: 'p'
-                  loc: Object {
-                    filename: 'input.js'
-                    identifierName: 'p'
-                    end: Object {
-                      column: 11
-                      index: 11
-                      line: 1
-                    }
-                    start: Object {
-                      column: 10
-                      index: 10
-                      line: 1
-                    }
-                  }
-                  meta: PatternMeta {
-                    optional: undefined
-                    typeAnnotation: undefined
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 11
-                        index: 11
-                        line: 1
-                      }
-                      start: Object {
-                        column: 10
-                        index: 10
-                        line: 1
-                      }
-                    }
-                  }
-                }
-                BindingIdentifier {
-                  name: 'q'
-                  loc: Object {
-                    filename: 'input.js'
-                    identifierName: 'q'
-                    end: Object {
-                      column: 14
-                      index: 14
-                      line: 1
-                    }
-                    start: Object {
-                      column: 13
-                      index: 13
-                      line: 1
-                    }
-                  }
-                  meta: PatternMeta {
-                    optional: undefined
-                    typeAnnotation: undefined
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 14
-                        index: 14
-                        line: 1
-                      }
-                      start: Object {
-                        column: 13
-                        index: 13
-                        line: 1
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-            init: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 15
-                index: 15
-                line: 1
-              }
-              start: Object {
-                column: 9
-                index: 9
-                line: 1
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 0
+			index: 23
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		ForOfStatement {
+			await: false
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 22
+					index: 22
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			body: EmptyStatement {
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 22
+						index: 22
+						line: 1
+					}
+					start: Object {
+						column: 21
+						index: 21
+						line: 1
+					}
+				}
+			}
+			right: ReferenceIdentifier {
+				name: 'r'
+				loc: Object {
+					filename: 'input.js'
+					identifierName: 'r'
+					end: Object {
+						column: 20
+						index: 20
+						line: 1
+					}
+					start: Object {
+						column: 19
+						index: 19
+						line: 1
+					}
+				}
+			}
+			left: VariableDeclaration {
+				kind: 'let'
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 15
+						index: 15
+						line: 1
+					}
+					start: Object {
+						column: 5
+						index: 5
+						line: 1
+					}
+				}
+				declarations: Array [
+					VariableDeclarator {
+						id: BindingArrayPattern {
+							rest: undefined
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 15
+									index: 15
+									line: 1
+								}
+								start: Object {
+									column: 9
+									index: 9
+									line: 1
+								}
+							}
+							elements: Array [
+								BindingIdentifier {
+									name: 'p'
+									loc: Object {
+										filename: 'input.js'
+										identifierName: 'p'
+										end: Object {
+											column: 11
+											index: 11
+											line: 1
+										}
+										start: Object {
+											column: 10
+											index: 10
+											line: 1
+										}
+									}
+									meta: PatternMeta {
+										optional: undefined
+										typeAnnotation: undefined
+										loc: Object {
+											filename: 'input.js'
+											end: Object {
+												column: 11
+												index: 11
+												line: 1
+											}
+											start: Object {
+												column: 10
+												index: 10
+												line: 1
+											}
+										}
+									}
+								}
+								BindingIdentifier {
+									name: 'q'
+									loc: Object {
+										filename: 'input.js'
+										identifierName: 'q'
+										end: Object {
+											column: 14
+											index: 14
+											line: 1
+										}
+										start: Object {
+											column: 13
+											index: 13
+											line: 1
+										}
+									}
+									meta: PatternMeta {
+										optional: undefined
+										typeAnnotation: undefined
+										loc: Object {
+											filename: 'input.js'
+											end: Object {
+												column: 14
+												index: 14
+												line: 1
+											}
+											start: Object {
+												column: 13
+												index: 13
+												line: 1
+											}
+										}
+									}
+								}
+							]
+						}
+						init: undefined
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 15
+								index: 15
+								line: 1
+							}
+							start: Object {
+								column: 9
+								index: 9
+								line: 1
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

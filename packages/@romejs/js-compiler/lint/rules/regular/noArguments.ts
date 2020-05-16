@@ -10,17 +10,17 @@ import {Path} from '@romejs/js-compiler';
 import {descriptions} from '@romejs/diagnostics';
 
 export default {
-  name: 'noArguments',
-  enter(path: Path): AnyNode {
-    const {node, scope} = path;
+	name: 'noArguments',
+	enter(path: Path): AnyNode {
+		const {node, scope} = path;
 
-    if (node.type === 'ReferenceIdentifier' && node.name === 'arguments') {
-      const args = scope.getBinding('arguments');
-      if (args && args.kind === 'arguments') {
-        path.context.addNodeDiagnostic(node, descriptions.LINT.NO_ARGUMENTS);
-      }
-    }
+		if (node.type === 'ReferenceIdentifier' && node.name === 'arguments') {
+			const args = scope.getBinding('arguments');
+			if (args && args.kind === 'arguments') {
+				path.context.addNodeDiagnostic(node, descriptions.LINT.NO_ARGUMENTS);
+			}
+		}
 
-    return node;
-  },
+		return node;
+	},
 };

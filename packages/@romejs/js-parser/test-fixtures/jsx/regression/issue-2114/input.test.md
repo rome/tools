@@ -6,131 +6,131 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array [
-    'jsx'
-    'ts'
-  ]
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 52
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 51
-          index: 51
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: JSXElement {
-        name: JSXIdentifier {
-          name: 'div'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 4
-              index: 4
-              line: 1
-            }
-            start: Object {
-              column: 1
-              index: 1
-              line: 1
-            }
-          }
-        }
-        children: Array []
-        selfClosing: false
-        typeArguments: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 50
-            index: 50
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        attributes: Array [
-          JSXAttribute {
-            name: JSXIdentifier {
-              name: 'pattern'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 12
-                  index: 12
-                  line: 1
-                }
-                start: Object {
-                  column: 5
-                  index: 5
-                  line: 1
-                }
-              }
-            }
-            value: StringLiteral {
-              value: '^([\\w\\.\\-]+\\s)*[\\w\\.\\-]+\\s?$'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 43
-                  index: 43
-                  line: 1
-                }
-                start: Object {
-                  column: 13
-                  index: 13
-                  line: 1
-                }
-              }
-            }
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 43
-                index: 43
-                line: 1
-              }
-              start: Object {
-                column: 5
-                index: 5
-                line: 1
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array [
+		'jsx'
+		'ts'
+	]
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 0
+			index: 52
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		ExpressionStatement {
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 51
+					index: 51
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSXElement {
+				name: JSXIdentifier {
+					name: 'div'
+					loc: Object {
+						filename: 'input.js'
+						end: Object {
+							column: 4
+							index: 4
+							line: 1
+						}
+						start: Object {
+							column: 1
+							index: 1
+							line: 1
+						}
+					}
+				}
+				children: Array []
+				selfClosing: false
+				typeArguments: undefined
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 50
+						index: 50
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				attributes: Array [
+					JSXAttribute {
+						name: JSXIdentifier {
+							name: 'pattern'
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 12
+									index: 12
+									line: 1
+								}
+								start: Object {
+									column: 5
+									index: 5
+									line: 1
+								}
+							}
+						}
+						value: StringLiteral {
+							value: '^([\\w\\.\\-]+\\s)*[\\w\\.\\-]+\\s?$'
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 43
+									index: 43
+									line: 1
+								}
+								start: Object {
+									column: 13
+									index: 13
+									line: 1
+								}
+							}
+						}
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 43
+								index: 43
+								line: 1
+							}
+							start: Object {
+								column: 5
+								index: 5
+								line: 1
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

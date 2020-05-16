@@ -9,17 +9,17 @@ import {test} from 'rome';
 import {testLintMultiple} from '../testHelpers';
 
 test(
-  'no danger',
-  async (t) => {
-    await testLintMultiple(
-      t,
-      [
-        // INVALID
-        '<div dangerouslySetInnerHTML={{ __html: "Hello World" }}></div>;',
-        // VALID
-        '<div>Hello World</div>;',
-      ],
-      {category: 'lint/noDanger'},
-    );
-  },
+	'no danger',
+	async (t) => {
+		await testLintMultiple(
+			t,
+			[
+				// INVALID
+				'<div dangerouslySetInnerHTML={{ __html: "Hello World" }}></div>;',
+				// VALID
+				'<div>Hello World</div>;',
+			],
+			{category: 'lint/noDanger'},
+		);
+	},
 );

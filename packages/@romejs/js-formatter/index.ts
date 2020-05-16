@@ -12,41 +12,40 @@ import {PrinterOutput, printTokenToString} from './Printer';
 export {Builder};
 
 export type FormatterOptions = {
-  typeAnnotations?: boolean;
-  format?: 'pretty' | 'compact';
-  indent?: number;
-  comments?: Array<AnyComment>;
-  sourceMaps?: boolean;
-  sourceText?: string;
+	typeAnnotations?: boolean;
+	format?: 'pretty' | 'compact';
+	indent?: number;
+	comments?: Array<AnyComment>;
+	sourceMaps?: boolean;
+	sourceText?: string;
 };
 
 export function formatJS(
-  ast: AnyNode,
-  {
-    format = 'pretty',
-    typeAnnotations = true,
-    sourceMaps = false,
-    comments,
-    indent = 0,
-  }: FormatterOptions = {},
+	ast: AnyNode,
+	{
+		format = 'pretty',
+		typeAnnotations = true,
+		sourceMaps = false,
+		comments,
+		indent = 0,
+	}: FormatterOptions = {},
 ): PrinterOutput {
-  const builder = new Builder(
-    {
-      format,
-      sourceMaps,
-      typeAnnotations,
-    },
-    ast.type === 'Program' ? ast.comments : comments,
-  );
-  const token = builder.tokenize(ast, MOCK_PARENT);
-  const formatted = printTokenToString(
-    token,
-    {
-      indentWidth: 2,
-      printWidth: format === 'pretty' ? 80 : Infinity,
-      rootIndent: indent,
-    },
-  );
+	const builder = new Builder(
+		{
+			format,
+			sourceMaps,
+			typeAnnotations,
+		},
+		ast.type === 'Program' ? ast.comments : comments,
+	);
+	const token = builder.tokenize(ast, MOCK_PARENT);
+	const formatted = printTokenToString(
+		token,
+		{
+			printWidth: format === 'pretty' ? 80 : Infinity,
+			rootIndent: indent,
+		},
+	);
 
-  return formatted;
+	return formatted;
 }

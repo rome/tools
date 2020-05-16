@@ -12,21 +12,21 @@ import VoidT from './VoidT';
 import T from './T';
 
 export default class EmptyT extends T {
-  static type = 'EmptyT';
+	static type = 'EmptyT';
 
-  serialize(): HydrateData {
-    return {};
-  }
+	serialize(): HydrateData {
+		return {};
+	}
 
-  static hydrate(scope: Scope, originNode: undefined | AnyNode): T {
-    return new EmptyT(scope, originNode);
-  }
+	static hydrate(scope: Scope, originNode: undefined | AnyNode): T {
+		return new EmptyT(scope, originNode);
+	}
 
-  humanize(): string {
-    return 'empty';
-  }
+	humanize(): string {
+		return 'empty';
+	}
 
-  compatibleWith(otherType: T): boolean {
-    return otherType instanceof EmptyT || otherType instanceof VoidT;
-  }
+	compatibleWith(otherType: T): boolean {
+		return otherType instanceof EmptyT || otherType instanceof VoidT;
+	}
 }

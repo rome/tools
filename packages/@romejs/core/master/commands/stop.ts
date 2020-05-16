@@ -10,14 +10,14 @@ import {commandCategories} from '../../common/commands';
 import {createMasterCommand} from '../commands';
 
 export default createMasterCommand({
-  category: commandCategories.PROCESS_MANAGEMENT,
-  description: 'stop daemon',
-  usage: '',
-  examples: [],
-  defineFlags() {
-    return {};
-  },
-  async callback({master}: MasterRequest) {
-    master.end();
-  },
+	category: commandCategories.PROCESS_MANAGEMENT,
+	description: 'stop daemon',
+	usage: '',
+	examples: [],
+	defineFlags() {
+		return {};
+	},
+	async callback({master}: MasterRequest) {
+		master.end();
+	},
 });

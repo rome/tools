@@ -10,8 +10,8 @@ import {Token} from '../../tokens';
 import {NumericLiteralTypeAnnotation} from '@romejs/js-ast';
 
 export default function NumericLiteralTypeAnnotation(
-  builder: Builder,
-  node: NumericLiteralTypeAnnotation,
+	builder: Builder,
+	node: NumericLiteralTypeAnnotation,
 ): Token {
-  return String(node.value);
+	return String(node.value);
 }

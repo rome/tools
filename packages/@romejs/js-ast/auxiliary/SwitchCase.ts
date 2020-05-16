@@ -9,18 +9,18 @@ import {AnyExpression, AnyStatement, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type SwitchCase = JSNodeBase & {
-  type: 'SwitchCase';
-  test?: AnyExpression;
-  consequent: Array<AnyStatement>;
+	type: 'SwitchCase';
+	test?: AnyExpression;
+	consequent: Array<AnyStatement>;
 };
 
 export const switchCase = createBuilder<SwitchCase>(
-  'SwitchCase',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      test: true,
-      consequent: true,
-    },
-  },
+	'SwitchCase',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			test: true,
+			consequent: true,
+		},
+	},
 );

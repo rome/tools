@@ -43,18 +43,18 @@
  */
 
 const intToCharMap = Array.from(
-  'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/',
+	'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/',
 );
 
 /**
  * Encode an integer in the range of 0 to 63 to a single base 64 digit.
  */
 export function encode(number: number): string {
-  if (0 <= number && number < intToCharMap.length) {
-    return intToCharMap[number];
-  } else {
-    throw new TypeError(`Must be between 0 and 63: ${number}`);
-  }
+	if (0 <= number && number < intToCharMap.length) {
+		return intToCharMap[number];
+	} else {
+		throw new TypeError(`Must be between 0 and 63: ${number}`);
+	}
 }
 
 // A single base 64 digit can contain 6 bits of data. For the base 64 variable
@@ -86,7 +86,7 @@ const VLQ_CONTINUATION_BIT = VLQ_BASE;
  *   2 becomes 4 (100 binary), -2 becomes 5 (101 binary)
  */
 function toVLQSigned(aValue: number): number {
-  return aValue < 0 ? (-aValue << 1) + 1 : (aValue << 1) + 0;
+	return aValue < 0 ? (-aValue << 1) + 1 : (aValue << 1) + 0;
 }
 
 /**
@@ -97,30 +97,30 @@ function toVLQSigned(aValue: number): number {
  */
 // eslint-disable-next-line no-unused-vars
 function fromVLQSigned(value: number): number {
-  const isNegative = (value & 1) === 1;
-  const shifted = value >> 1;
-  return isNegative ? -shifted : shifted;
+	const isNegative = (value & 1) === 1;
+	const shifted = value >> 1;
+	return isNegative ? -shifted : shifted;
 }
 
 /**
  * Returns the base 64 VLQ encoded value.
  */
 export function encodeVLQ(value: number): string {
-  let encoded: string = '';
-  let vlq = toVLQSigned(value);
+	let encoded: string = '';
+	let vlq = toVLQSigned(value);
 
-  do {
-    let digit: number = vlq & VLQ_BASE_MASK;
-    vlq >>>= VLQ_BASE_SHIFT;
-    if (vlq > 0) {
-      // There are still more digits in this value, so we must make sure the
-      // continuation bit is marked.
-      digit |= VLQ_CONTINUATION_BIT;
-    }
-    encoded += encode(digit);
-  } while (vlq > 0);
+	do {
+		let digit: number = vlq & VLQ_BASE_MASK;
+		vlq >>>= VLQ_BASE_SHIFT;
+		if (vlq > 0) {
+			// There are still more digits in this value, so we must make sure the
+			// continuation bit is marked.
+			digit |= VLQ_CONTINUATION_BIT;
+		}
+		encoded += encode(digit);
+	} while (vlq > 0);
 
-  return encoded;
+	return encoded;
 }
 
 /**
@@ -128,67 +128,67 @@ export function encodeVLQ(value: number): string {
  * failure.
  */
 export function decode(charCode: number): number {
-  const uppercaseA = 65; // 'A'
-  const uppercaseZ = 90; // 'Z'
-  const lowercaseA = 97; // 'a'
-  const lowercaseZ = 122; // 'z'
-  const zero = 48; // '0'
-  const nine = 57; // '9'
-  const plus = 43; // '+'
-  const slash = 47; // '/'
-  const lowercaseOffset = 26;
-  const numberOffset = 52;
+	const uppercaseA = 65; // 'A'
+	const uppercaseZ = 90; // 'Z'
+	const lowercaseA = 97; // 'a'
+	const lowercaseZ = 122; // 'z'
+	const zero = 48; // '0'
+	const nine = 57; // '9'
+	const plus = 43; // '+'
+	const slash = 47; // '/'
+	const lowercaseOffset = 26;
+	const numberOffset = 52;
 
-  // 0 - 25: ABCDEFGHIJKLMNOPQRSTUVWXYZ
-  if (uppercaseA <= charCode && charCode <= uppercaseZ) {
-    return charCode - uppercaseA;
-  }
+	// 0 - 25: ABCDEFGHIJKLMNOPQRSTUVWXYZ
+	if (uppercaseA <= charCode && charCode <= uppercaseZ) {
+		return charCode - uppercaseA;
+	}
 
-  // 26 - 51: abcdefghijklmnopqrstuvwxyz
-  if (lowercaseA <= charCode && charCode <= lowercaseZ) {
-    return charCode - lowercaseA + lowercaseOffset;
-  }
+	// 26 - 51: abcdefghijklmnopqrstuvwxyz
+	if (lowercaseA <= charCode && charCode <= lowercaseZ) {
+		return charCode - lowercaseA + lowercaseOffset;
+	}
 
-  // 52 - 61: 0123456789
-  if (zero <= charCode && charCode <= nine) {
-    return charCode - zero + numberOffset;
-  }
+	// 52 - 61: 0123456789
+	if (zero <= charCode && charCode <= nine) {
+		return charCode - zero + numberOffset;
+	}
 
-  // 62: +
-  if (charCode === plus) {
-    return 62;
-  }
+	// 62: +
+	if (charCode === plus) {
+		return 62;
+	}
 
-  // 63: /
-  if (charCode === slash) {
-    return 63;
-  }
+	// 63: /
+	if (charCode === slash) {
+		return 63;
+	}
 
-  // Invalid base64 digit.
-  return -1;
+	// Invalid base64 digit.
+	return -1;
 }
 
 export function decodeVLQ(aStr: string, aIndex: number): [number, number] {
-  let strLen = aStr.length;
-  let result = 0;
-  let shift = 0;
-  let continuation = false;
+	let strLen = aStr.length;
+	let result = 0;
+	let shift = 0;
+	let continuation = false;
 
-  do {
-    if (aIndex >= strLen) {
-      throw new Error('Expected more digits in base 64 VLQ value.');
-    }
+	do {
+		if (aIndex >= strLen) {
+			throw new Error('Expected more digits in base 64 VLQ value.');
+		}
 
-    let digit = decode(aStr.charCodeAt(aIndex++));
-    if (digit === -1) {
-      throw new Error(`Invalid base64 digit: ${aStr.charAt(aIndex - 1)}`);
-    }
+		let digit = decode(aStr.charCodeAt(aIndex++));
+		if (digit === -1) {
+			throw new Error(`Invalid base64 digit: ${aStr.charAt(aIndex - 1)}`);
+		}
 
-    continuation = !!(digit & VLQ_CONTINUATION_BIT);
-    digit &= VLQ_BASE_MASK;
-    result = result + (digit << shift);
-    shift += VLQ_BASE_SHIFT;
-  } while (continuation);
+		continuation = !!(digit & VLQ_CONTINUATION_BIT);
+		digit &= VLQ_BASE_MASK;
+		result = result + (digit << shift);
+		shift += VLQ_BASE_SHIFT;
+	} while (continuation);
 
-  return [fromVLQSigned(result), aIndex];
+	return [fromVLQSigned(result), aIndex];
 }

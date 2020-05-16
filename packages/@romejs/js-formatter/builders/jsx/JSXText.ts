@@ -11,5 +11,5 @@ import {JSXText} from '@romejs/js-ast';
 import {escapeXHTMLEntities} from '@romejs/js-parser';
 
 export default function JSXText(builder: Builder, node: JSXText): Token {
-  return escapeXHTMLEntities(node.value);
+	return escapeXHTMLEntities(node.value);
 }

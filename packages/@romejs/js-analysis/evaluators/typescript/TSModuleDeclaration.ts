@@ -7,13 +7,13 @@
 
 import {Scope} from '../../scopes';
 import {
-  AnyNode,
-  TSModuleDeclaration,
-  tsModuleDeclaration,
+	AnyNode,
+	TSModuleDeclaration,
+	tsModuleDeclaration,
 } from '@romejs/js-ast';
 
 export default function TSModuleDeclaration(node: AnyNode, scope: Scope) {
-  node = tsModuleDeclaration.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = tsModuleDeclaration.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

@@ -9,20 +9,20 @@ import {descriptions} from '@romejs/diagnostics';
 import {Path, REDUCE_REMOVE, TransformExitResult} from '@romejs/js-compiler';
 
 export default {
-  name: 'noDebugger',
-  enter(path: Path): TransformExitResult {
-    const {node} = path;
+	name: 'noDebugger',
+	enter(path: Path): TransformExitResult {
+		const {node} = path;
 
-    if (node.type === 'DebuggerStatement') {
-      return path.context.addFixableDiagnostic(
-        {
-          old: node,
-          fixed: REDUCE_REMOVE,
-        },
-        descriptions.LINT.NO_DEBUGGER,
-      );
-    }
+		if (node.type === 'DebuggerStatement') {
+			return path.context.addFixableDiagnostic(
+				{
+					old: node,
+					fixed: REDUCE_REMOVE,
+				},
+				descriptions.LINT.NO_DEBUGGER,
+			);
+		}
 
-    return node;
-  },
+		return node;
+	},
 };

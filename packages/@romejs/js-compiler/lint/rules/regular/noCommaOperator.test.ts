@@ -9,15 +9,15 @@ import {test} from 'rome';
 import {testLintMultiple} from '../testHelpers';
 
 test(
-  'no comma operator',
-  async (t) => {
-    await testLintMultiple(
-      t,
-      [
-        // INVALID
-        '(0, 1, 2)',
-      ],
-      {category: 'lint/noCommaOperator'},
-    );
-  },
+	'no comma operator',
+	async (t) => {
+		await testLintMultiple(
+			t,
+			[
+				// INVALID
+				'(0, 1, 2)',
+			],
+			{category: 'lint/noCommaOperator'},
+		);
+	},
 );

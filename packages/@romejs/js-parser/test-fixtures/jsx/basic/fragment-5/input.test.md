@@ -6,222 +6,222 @@
 
 ```javascript
 Program {
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array [
-    'jsx'
-    'ts'
-  ]
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 63
-      line: 8
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  comments: Array [
-    CommentLine {
-      id: '0'
-      value: ' comment1'
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 11
-          index: 13
-          line: 2
-        }
-        start: Object {
-          column: 0
-          index: 2
-          line: 2
-        }
-      }
-    }
-    CommentBlock {
-      id: '1'
-      value: ' comment2 '
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 14
-          index: 28
-          line: 3
-        }
-        start: Object {
-          column: 0
-          index: 14
-          line: 3
-        }
-      }
-    }
-  ]
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 3
-          index: 62
-          line: 7
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: JSXFragment {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 3
-            index: 62
-            line: 7
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        children: Array [
-          JSXText {
-            value: '\n  '
-            leadingComments: Array [
-              '0'
-              '1'
-            ]
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 2
-                index: 33
-                line: 5
-              }
-              start: Object {
-                column: 1
-                index: 30
-                line: 4
-              }
-            }
-          }
-          JSXElement {
-            name: JSXIdentifier {
-              name: 'div'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 6
-                  index: 37
-                  line: 5
-                }
-                start: Object {
-                  column: 3
-                  index: 34
-                  line: 5
-                }
-              }
-            }
-            attributes: Array []
-            children: Array []
-            selfClosing: false
-            typeArguments: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 13
-                index: 44
-                line: 5
-              }
-              start: Object {
-                column: 2
-                index: 33
-                line: 5
-              }
-            }
-          }
-          JSXText {
-            value: '\n  '
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 2
-                index: 47
-                line: 6
-              }
-              start: Object {
-                column: 13
-                index: 44
-                line: 5
-              }
-            }
-          }
-          JSXElement {
-            name: JSXIdentifier {
-              name: 'div'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 6
-                  index: 51
-                  line: 6
-                }
-                start: Object {
-                  column: 3
-                  index: 48
-                  line: 6
-                }
-              }
-            }
-            attributes: Array []
-            children: Array []
-            selfClosing: false
-            typeArguments: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 13
-                index: 58
-                line: 6
-              }
-              start: Object {
-                column: 2
-                index: 47
-                line: 6
-              }
-            }
-          }
-          JSXText {
-            value: '\n'
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 0
-                index: 59
-                line: 7
-              }
-              start: Object {
-                column: 13
-                index: 58
-                line: 6
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array [
+		'jsx'
+		'ts'
+	]
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 0
+			index: 63
+			line: 8
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	comments: Array [
+		CommentLine {
+			id: '0'
+			value: ' comment1'
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 11
+					index: 13
+					line: 2
+				}
+				start: Object {
+					column: 0
+					index: 2
+					line: 2
+				}
+			}
+		}
+		CommentBlock {
+			id: '1'
+			value: ' comment2 '
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 14
+					index: 28
+					line: 3
+				}
+				start: Object {
+					column: 0
+					index: 14
+					line: 3
+				}
+			}
+		}
+	]
+	body: Array [
+		ExpressionStatement {
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 3
+					index: 62
+					line: 7
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSXFragment {
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 3
+						index: 62
+						line: 7
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				children: Array [
+					JSXText {
+						value: '\n  '
+						leadingComments: Array [
+							'0'
+							'1'
+						]
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 2
+								index: 33
+								line: 5
+							}
+							start: Object {
+								column: 1
+								index: 30
+								line: 4
+							}
+						}
+					}
+					JSXElement {
+						name: JSXIdentifier {
+							name: 'div'
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 6
+									index: 37
+									line: 5
+								}
+								start: Object {
+									column: 3
+									index: 34
+									line: 5
+								}
+							}
+						}
+						attributes: Array []
+						children: Array []
+						selfClosing: false
+						typeArguments: undefined
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 13
+								index: 44
+								line: 5
+							}
+							start: Object {
+								column: 2
+								index: 33
+								line: 5
+							}
+						}
+					}
+					JSXText {
+						value: '\n  '
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 2
+								index: 47
+								line: 6
+							}
+							start: Object {
+								column: 13
+								index: 44
+								line: 5
+							}
+						}
+					}
+					JSXElement {
+						name: JSXIdentifier {
+							name: 'div'
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 6
+									index: 51
+									line: 6
+								}
+								start: Object {
+									column: 3
+									index: 48
+									line: 6
+								}
+							}
+						}
+						attributes: Array []
+						children: Array []
+						selfClosing: false
+						typeArguments: undefined
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 13
+								index: 58
+								line: 6
+							}
+							start: Object {
+								column: 2
+								index: 47
+								line: 6
+							}
+						}
+					}
+					JSXText {
+						value: '\n'
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 0
+								index: 59
+								line: 7
+							}
+							start: Object {
+								column: 13
+								index: 58
+								line: 6
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

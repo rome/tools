@@ -10,22 +10,22 @@ import {createBuilder} from '../utils';
 import {ClassPropertyMeta} from './ClassPropertyMeta';
 
 export type ClassPrivateProperty = JSNodeBase & {
-  type: 'ClassPrivateProperty';
-  key: PrivateName;
-  meta: ClassPropertyMeta;
-  value: undefined | AnyExpression;
-  typeAnnotation?: AnyPrimaryType;
+	type: 'ClassPrivateProperty';
+	key: PrivateName;
+	meta: ClassPropertyMeta;
+	value: undefined | AnyExpression;
+	typeAnnotation?: AnyPrimaryType;
 };
 
 export const classPrivateProperty = createBuilder<ClassPrivateProperty>(
-  'ClassPrivateProperty',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      key: true,
-      meta: true,
-      value: true,
-      typeAnnotation: true,
-    },
-  },
+	'ClassPrivateProperty',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			key: true,
+			meta: true,
+			value: true,
+			typeAnnotation: true,
+		},
+	},
 );

@@ -9,22 +9,22 @@ import {JSNodeBase, RegExpAlternation, RegExpSubExpression} from '../index';
 import {createBuilder} from '../utils';
 
 export type RegExpLiteral = JSNodeBase & {
-  type: 'RegExpLiteral';
-  expression: RegExpSubExpression | RegExpAlternation;
-  global?: boolean;
-  multiline?: boolean;
-  sticky?: boolean;
-  insensitive?: boolean;
-  noDotNewline?: boolean;
-  unicode?: boolean;
+	type: 'RegExpLiteral';
+	expression: RegExpSubExpression | RegExpAlternation;
+	global?: boolean;
+	multiline?: boolean;
+	sticky?: boolean;
+	insensitive?: boolean;
+	noDotNewline?: boolean;
+	unicode?: boolean;
 };
 
 export const regExpLiteral = createBuilder<RegExpLiteral>(
-  'RegExpLiteral',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      expression: true,
-    },
-  },
+	'RegExpLiteral',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			expression: true,
+		},
+	},
 );

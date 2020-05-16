@@ -9,16 +9,16 @@ import {AnyExpression, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type ExpressionStatement = JSNodeBase & {
-  type: 'ExpressionStatement';
-  expression: AnyExpression;
+	type: 'ExpressionStatement';
+	expression: AnyExpression;
 };
 
 export const expressionStatement = createBuilder<ExpressionStatement>(
-  'ExpressionStatement',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      expression: true,
-    },
-  },
+	'ExpressionStatement',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			expression: true,
+		},
+	},
 );

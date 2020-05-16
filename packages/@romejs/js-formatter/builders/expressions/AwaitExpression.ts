@@ -10,8 +10,8 @@ import {Token, concat, space} from '../../tokens';
 import {AwaitExpression} from '@romejs/js-ast';
 
 export default function AwaitExpression(
-  builder: Builder,
-  node: AwaitExpression,
+	builder: Builder,
+	node: AwaitExpression,
 ): Token {
-  return concat(['await', space, builder.tokenize(node.argument, node)]);
+	return concat(['await', space, builder.tokenize(node.argument, node)]);
 }

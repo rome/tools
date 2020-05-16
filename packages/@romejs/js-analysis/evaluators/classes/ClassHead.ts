@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, ClassHead, classHead} from '@romejs/js-ast';
 
 export default function ClassHead(node: AnyNode, scope: Scope) {
-  node = classHead.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = classHead.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

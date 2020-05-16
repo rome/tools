@@ -8,21 +8,21 @@
 import {AnyNode} from '@romejs/js-ast';
 
 export default function isTypeNode(node: AnyNode): boolean {
-  if (
-    node.type.startsWith('Flow') ||
-    node.type.startsWith('TS') ||
-    node.type.endsWith('TypeAnnotation')
-  ) {
-    return true;
-  } else if (node.type === 'ImportDeclaration') {
-    return node.importKind === 'type' || node.importKind === 'typeof';
-  } else if (
-    node.type === 'ExportDefaultDeclaration' ||
-    node.type === 'ExportLocalDeclaration' ||
-    node.type === 'ExportAllDeclaration'
-  ) {
-    return node.exportKind === 'type';
-  } else {
-    return false;
-  }
+	if (
+		node.type.startsWith('Flow') ||
+		node.type.startsWith('TS') ||
+		node.type.endsWith('TypeAnnotation')
+	) {
+		return true;
+	} else if (node.type === 'ImportDeclaration') {
+		return node.importKind === 'type' || node.importKind === 'typeof';
+	} else if (
+		node.type === 'ExportDefaultDeclaration' ||
+		node.type === 'ExportLocalDeclaration' ||
+		node.type === 'ExportAllDeclaration'
+	) {
+		return node.exportKind === 'type';
+	} else {
+		return false;
+	}
 }

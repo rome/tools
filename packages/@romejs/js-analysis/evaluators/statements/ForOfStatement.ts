@@ -9,7 +9,7 @@ import {Scope} from '../../scopes';
 import {AnyNode, ForOfStatement, forOfStatement} from '@romejs/js-ast';
 
 export default function ForOfStatement(node: AnyNode, scope: Scope) {
-  node = forOfStatement.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = forOfStatement.assert(node);
+	scope;
+	throw new Error('unimplemented');
 }

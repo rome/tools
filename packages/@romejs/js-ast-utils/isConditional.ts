@@ -8,18 +8,18 @@
 import {AnyNode, ConditionalExpression, IfStatement} from '@romejs/js-ast';
 
 export default function isConditional(
-  node: undefined | AnyNode,
+	node: undefined | AnyNode,
 ): node is ConditionalExpression | IfStatement {
-  if (node === undefined) {
-    return false;
-  }
+	if (node === undefined) {
+		return false;
+	}
 
-  switch (node.type) {
-    case 'ConditionalExpression':
-    case 'IfStatement':
-      return true;
+	switch (node.type) {
+		case 'ConditionalExpression':
+		case 'IfStatement':
+			return true;
 
-    default:
-      return false;
-  }
+		default:
+			return false;
+	}
 }

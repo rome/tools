@@ -12,11 +12,11 @@ import ArrayExpression from '../expressions/ArrayExpression';
 import {printPatternMeta} from '../utils';
 
 export default function BindingArrayPattern(
-  builder: Builder,
-  node: BindingArrayPattern,
+	builder: Builder,
+	node: BindingArrayPattern,
 ): Token {
-  return concat([
-    ArrayExpression(builder, node),
-    printPatternMeta(builder, node, node.meta),
-  ]);
+	return concat([
+		ArrayExpression(builder, node),
+		printPatternMeta(builder, node, node.meta),
+	]);
 }

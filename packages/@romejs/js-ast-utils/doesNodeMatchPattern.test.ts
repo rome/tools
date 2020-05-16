@@ -10,36 +10,33 @@ import doesNodeMatchPattern from './doesNodeMatchPattern';
 import template from './template';
 
 test(
-  'doesNodeMatchPattern',
-  (t) => {
-    t.inlineSnapshot(
-      doesNodeMatchPattern(template.expression`foo`, 'foo'),
-      true,
-    );
+	'doesNodeMatchPattern',
+	(t) => {
+		t.inlineSnapshot(doesNodeMatchPattern(template.expression`foo`, 'foo'), true);
 
-    t.inlineSnapshot(
-      doesNodeMatchPattern(template.expression`this.foo`, 'this.foo'),
-      true,
-    );
+		t.inlineSnapshot(
+			doesNodeMatchPattern(template.expression`this.foo`, 'this.foo'),
+			true,
+		);
 
-    t.inlineSnapshot(
-      doesNodeMatchPattern(template.expression`exports.foo`, 'exports.**'),
-      true,
-    );
+		t.inlineSnapshot(
+			doesNodeMatchPattern(template.expression`exports.foo`, 'exports.**'),
+			true,
+		);
 
-    t.inlineSnapshot(
-      doesNodeMatchPattern(template.expression`this.foo.bar`, 'this.foo.*'),
-      true,
-    );
+		t.inlineSnapshot(
+			doesNodeMatchPattern(template.expression`this.foo.bar`, 'this.foo.*'),
+			true,
+		);
 
-    t.inlineSnapshot(
-      doesNodeMatchPattern(template.expression`this.foo.bar.yes`, 'this.foo.*'),
-      false,
-    );
+		t.inlineSnapshot(
+			doesNodeMatchPattern(template.expression`this.foo.bar.yes`, 'this.foo.*'),
+			false,
+		);
 
-    t.inlineSnapshot(
-      doesNodeMatchPattern(template.expression`this.foo.bar.yes`, 'this.foo.**'),
-      true,
-    );
-  },
+		t.inlineSnapshot(
+			doesNodeMatchPattern(template.expression`this.foo.bar.yes`, 'this.foo.**'),
+			true,
+		);
+	},
 );

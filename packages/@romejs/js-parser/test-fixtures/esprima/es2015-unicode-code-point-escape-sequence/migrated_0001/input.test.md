@@ -6,46 +6,46 @@
 
 ```javascript
 Program {
-  body: Array []
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 31
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  directives: Array [
-    Directive {
-      value: '\\\\u{20BB7}\\\\u{91CE}\\\\u{5BB6}'
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 30
-          index: 30
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-    }
-  ]
+	body: Array []
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 0
+			index: 31
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	directives: Array [
+		Directive {
+			value: '\\\\u{20BB7}\\\\u{91CE}\\\\u{5BB6}'
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 30
+					index: 30
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+		}
+	]
 }
 ```

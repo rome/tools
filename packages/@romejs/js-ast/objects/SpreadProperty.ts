@@ -9,16 +9,16 @@ import {AnyExpression, JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type SpreadProperty = JSNodeBase & {
-  type: 'SpreadProperty';
-  argument: AnyExpression;
+	type: 'SpreadProperty';
+	argument: AnyExpression;
 };
 
 export const spreadProperty = createBuilder<SpreadProperty>(
-  'SpreadProperty',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      argument: true,
-    },
-  },
+	'SpreadProperty',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			argument: true,
+		},
+	},
 );

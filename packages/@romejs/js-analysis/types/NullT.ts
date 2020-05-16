@@ -11,17 +11,17 @@ import {Scope} from '../scopes';
 import T from './T';
 
 export default class NullT extends T {
-  static type = 'NullT';
+	static type = 'NullT';
 
-  serialize(): HydrateData {
-    return {};
-  }
+	serialize(): HydrateData {
+		return {};
+	}
 
-  static hydrate(scope: Scope, originNode: undefined | AnyNode): T {
-    return new NullT(scope, originNode);
-  }
+	static hydrate(scope: Scope, originNode: undefined | AnyNode): T {
+		return new NullT(scope, originNode);
+	}
 
-  humanize(): string {
-    return 'null';
-  }
+	humanize(): string {
+		return 'null';
+	}
 }

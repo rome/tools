@@ -6,27 +6,27 @@
  */
 
 import {
-  AnyExpression,
-  ComputedMemberProperty,
-  JSNodeBase,
-  StaticMemberProperty,
-  Super,
+	AnyExpression,
+	ComputedMemberProperty,
+	JSNodeBase,
+	StaticMemberProperty,
+	Super,
 } from '../index';
 import {createBuilder} from '../utils';
 
 export type MemberExpression = JSNodeBase & {
-  type: 'MemberExpression';
-  object: AnyExpression | Super;
-  property: StaticMemberProperty | ComputedMemberProperty;
+	type: 'MemberExpression';
+	object: AnyExpression | Super;
+	property: StaticMemberProperty | ComputedMemberProperty;
 };
 
 export const memberExpression = createBuilder<MemberExpression>(
-  'MemberExpression',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      object: true,
-      property: true,
-    },
-  },
+	'MemberExpression',
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			object: true,
+			property: true,
+		},
+	},
 );
