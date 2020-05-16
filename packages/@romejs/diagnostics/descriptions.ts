@@ -406,6 +406,10 @@ export const descriptions = createMessages({
       category: 'lint/jsxA11yHTMLHasLang',
       message: `<emphasis>html</emphasis> elements must have a <emphasis>lang prop</emphasis>.`,
     },
+    REACT_JSX_A11Y_IMG_REDUNDANT_ALT: {
+      category: 'lint/jsxA11yImgRedundantAlt',
+      message: `<emphasis>img</emphasis> element alt descriptions must not contain "image", "picture", or "photo"`,
+    },
     REACT_JSX_VOID_DOM_ELEMENTS_NO_CHILDREN: (
       element: string,
       properties: Array<string>,
