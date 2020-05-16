@@ -20,24 +20,27 @@
 }
 
 .heroBannerBackground {
-  background-blend-mode: color;
-  background-color: rgba(255, 255, 255, 0.9);
-  background-image: url('/img/rome-logo.png');
-  background-size: 45%;
-  background-repeat: no-repeat;
+  background: rgb(255,255,255);
+  background-image: url('/img/pattern-white.png'), radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(241, 241, 239, 0.7) 100%);
+  background-repeat: repeat;
   background-position: center;
+  background-size: 15%, 100%;
 }
 
 :global(html[data-theme='dark']) .heroBannerBackground {
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: var(--ifm-color-primary-2);
+  background-image: url('/img/pattern-black.png'), radial-gradient(circle, rgba(39,39,42,1) 0%, rgba(24,24,24,0.5) 100%);
+  background-size: 15%, 100%;
 }
 
 .heroBannerTitle {
   font-size: 3.5rem;
+  font-family: 'Libre Baskerville', serif;
 }
 
 .heroBannerSubtitle {
   font-size: 1.5rem;
+  font-family: var(--ifm-font-family-base);
   font-weight: var(--ifm-font-weight-semibold);
   margin-bottom: var(--ifm-paragraph-margin-bottom);
   line-height: var(--ifm-line-height-base);
@@ -70,7 +73,7 @@
 /* Callout */
 
 .calloutPrimary {
-  background-color: #c12127;
+  background-color: var(--ifm-color-primary-darker);
 }
 
 .calloutTagline {
@@ -107,6 +110,7 @@
 
 .featureTitle {
   font-size: 2.5rem;
+  font-family: 'Libre Baskerville', serif;
 }
 
 .featureDescription {
