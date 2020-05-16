@@ -404,7 +404,7 @@ export const descriptions = createMessages({
     },
     REACT_JSX_A11Y_HTML_HAS_LANG: {
       category: 'lint/jsxA11yHTMLHasLang',
-      message: markup`<emphasis>html</emphasis> elements must have a <emphasis>lang prop</emphasis>.`,
+      message: `<emphasis>html</emphasis> elements must have a <emphasis>lang prop</emphasis>.`,
     },
     REACT_JSX_VOID_DOM_ELEMENTS_NO_CHILDREN: (
       element: string,
