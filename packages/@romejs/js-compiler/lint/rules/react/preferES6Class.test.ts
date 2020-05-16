@@ -35,8 +35,33 @@ test(
             return <div>Hello {this.props.name}</div>;
           }
         });`,
+        `var Hello = createClass({
+          render: function() {
+            return <div>Hello {this.props.name}</div>;
+          }
+        });`,
+        `createClass({
+          render: function() {
+            return <div>Hello {this.props.name}</div>;
+          }
+        });`,
+        `const Hello = createClass({
+          render: function() {
+            return <div>Hello {this.props.name}</div>;
+          }
+        });`,
+        `let Hello = createClass({
+          render: function() {
+            return <div>Hello {this.props.name}</div>;
+          }
+        });`,
         // VALID
         `class Hello extends React.Component {
+          render() {
+            return <div>Hello {this.props.name}</div>;
+          }
+        }`,
+        `class Hello extends Component {
           render() {
             return <div>Hello {this.props.name}</div>;
           }

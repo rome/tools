@@ -135,14 +135,160 @@ let Hello = createReactClass({
 ### `4`
 
 ```
-✔ No known problems!
+
+ unknown:1:12 lint/preferES6Class ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ ES6 components are preferred to ES5 components
+
+  > 1 │ var Hello = createClass({
+  > 2 │           render: function() {
+  > 3 │             return <div>Hello {this.props.name}</div>;
+  > 4 │           }
+  > 5 │         });
+      │ ^^^^^^^^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
 ### `4: formatted`
 
 ```
+var Hello = createClass({
+  render: function() {
+    return <div>Hello {this.props.name}</div>;
+  },
+});
+
+```
+
+### `5`
+
+```
+
+ unknown:1 lint/preferES6Class ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ ES6 components are preferred to ES5 components
+
+  > 1 │ createClass({
+  > 2 │           render: function() {
+  > 3 │             return <div>Hello {this.props.name}</div>;
+  > 4 │           }
+  > 5 │         });
+      │ ^^^^^^^^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `5: formatted`
+
+```
+createClass({
+  render: function() {
+    return <div>Hello {this.props.name}</div>;
+  },
+});
+
+```
+
+### `6`
+
+```
+
+ unknown:1:14 lint/preferES6Class ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ ES6 components are preferred to ES5 components
+
+  > 1 │ const Hello = createClass({
+  > 2 │           render: function() {
+  > 3 │             return <div>Hello {this.props.name}</div>;
+  > 4 │           }
+  > 5 │         });
+      │ ^^^^^^^^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `6: formatted`
+
+```
+const Hello = createClass({
+  render: function() {
+    return <div>Hello {this.props.name}</div>;
+  },
+});
+
+```
+
+### `7`
+
+```
+
+ unknown:1:12 lint/preferES6Class ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ ES6 components are preferred to ES5 components
+
+  > 1 │ let Hello = createClass({
+  > 2 │           render: function() {
+  > 3 │             return <div>Hello {this.props.name}</div>;
+  > 4 │           }
+  > 5 │         });
+      │ ^^^^^^^^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `7: formatted`
+
+```
+let Hello = createClass({
+  render: function() {
+    return <div>Hello {this.props.name}</div>;
+  },
+});
+
+```
+
+### `8`
+
+```
+✔ No known problems!
+
+```
+
+### `8: formatted`
+
+```
 class Hello extends React.Component {
+  render() {
+    return <div>Hello {this.props.name}</div>;
+  }
+}
+
+```
+
+### `9`
+
+```
+✔ No known problems!
+
+```
+
+### `9: formatted`
+
+```
+class Hello extends Component {
   render() {
     return <div>Hello {this.props.name}</div>;
   }
