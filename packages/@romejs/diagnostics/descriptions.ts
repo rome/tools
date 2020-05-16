@@ -419,6 +419,10 @@ export const descriptions = createMessages({
       category: 'lint/jsxNoCommentText',
       message: 'Comments inside children should be placed in braces',
     },
+    REACT_JSX_A11Y_IFRAME_HAS_TITLE: {
+      category: 'lint/jsxA11yIframeHasTitle',
+      message: `<emphasis>iframe</emphasis> elements should have a <emphasis>title prop</emphasis>.`,
+    },
     REACT_JSX_KEY: (origin: string) => ({
       category: 'lint/jsxKey',
       message: markup`Missing the "key" prop for element in ${origin}`,
