@@ -29,6 +29,7 @@ import noChildrenProp from './react/noChildrenProp';
 import noCommaOperator from './regular/noCommaOperator';
 import noCompareNegZero from './regular/noCompareNegZero';
 import noCondAssign from './regular/noCondAssign';
+import noDanger from './react/noDanger';
 import noDangerWithChildren from './react/noDangerWithChildren';
 import noDebugger from './regular/noDebugger';
 import noDelete from './regular/noDelete';
@@ -92,6 +93,7 @@ export const lintTransforms = [
   noCommaOperator,
   noCompareNegZero,
   noCondAssign,
+  noDanger,
   noDangerWithChildren,
   noDebugger,
   noDelete,
