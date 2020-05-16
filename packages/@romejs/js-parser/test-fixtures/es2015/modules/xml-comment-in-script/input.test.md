@@ -6,82 +6,82 @@
 
 ```javascript
 Program {
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 12
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  comments: Array [
-    CommentLine {
-      id: '0'
-      value: 'bar'
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 11
-          index: 11
-          line: 1
-        }
-        start: Object {
-          column: 4
-          index: 4
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    ExpressionStatement {
-      trailingComments: Array ['0']
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 3
-          index: 3
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: ReferenceIdentifier {
-        name: 'foo'
-        trailingComments: undefined
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'foo'
-          end: Object {
-            column: 3
-            index: 3
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-      }
-    }
-  ]
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 0
+			index: 12
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	comments: Array [
+		CommentLine {
+			id: '0'
+			value: 'bar'
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 11
+					index: 11
+					line: 1
+				}
+				start: Object {
+					column: 4
+					index: 4
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		ExpressionStatement {
+			trailingComments: Array ['0']
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 3
+					index: 3
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: ReferenceIdentifier {
+				name: 'foo'
+				trailingComments: undefined
+				loc: Object {
+					filename: 'input.js'
+					identifierName: 'foo'
+					end: Object {
+						column: 3
+						index: 3
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+			}
+		}
+	]
 }
 ```

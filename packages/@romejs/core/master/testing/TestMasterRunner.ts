@@ -31,7 +31,6 @@ import {
 	ErrorFrame,
 	InspectorClient,
 	InspectorClientCloseError,
-	sourceMapManager,
 	urlToFilename,
 } from '@romejs/v8';
 import fork from '../../common/utils/fork';
@@ -57,6 +56,7 @@ import {
 	TestWorkerFileResult,
 } from '@romejs/core/test-worker/TestWorkerRunner';
 import {FileReference} from '@romejs/core/common/types/files';
+import {SourceMapConsumerCollection} from '@romejs/codec-source-map';
 
 class BridgeDiagnosticsError extends DiagnosticsError {
 	constructor(diag: Diagnostic, bridge: Bridge) {
@@ -144,6 +144,7 @@ export default class TestMasterRunner {
 			}),
 		);
 		this.printer.processor.addDiagnostics(opts.addDiagnostics);
+		this.sourceMaps = this.printer.processor.sourceMaps;
 
 		// Add source maps
 		for (const [filename, {code, sourceMap}] of opts.sources) {
@@ -154,6 +155,7 @@ export default class TestMasterRunner {
 	}
 
 	coverageCollector: CoverageCollector;
+	sourceMaps: SourceMapConsumerCollection;
 	options: TestMasterRunnerOptions;
 	request: MasterRequest;
 	reporter: Reporter;
@@ -201,15 +203,15 @@ export default class TestMasterRunner {
 
 			// Resolve source maps. These will originally be pointed to the compiled source.
 			inlineSnapshotUpdates = inlineSnapshotUpdates.map((update) => {
-				const resolved = sourceMapManager.resolveLocation(
+				const resolved = this.sourceMaps.assertApproxOriginalPositionFor(
 					filename,
 					update.line,
 					update.column,
 				);
 
-				if (resolved.filename !== filename && resolved.filename !== ref.uid) {
+				if (resolved.source !== filename && resolved.source !== ref.uid) {
 					throw new Error(
-						`Inline snapshot update resolved to ${resolved.filename} when it should be ${filename}`,
+						`Inline snapshot update resolved to ${resolved.source} when it should be ${filename}`,
 					);
 				}
 
@@ -540,7 +542,7 @@ export default class TestMasterRunner {
 		for (const callFrame of callFrames) {
 			const loc = callFrame.get('location');
 
-			const resolved = sourceMapManager.resolveLocation(
+			const resolved = this.sourceMaps.assertApproxOriginalPositionFor(
 				urlToFilename(callFrame.get('url').asString()),
 				ob1Coerce0To1(loc.get('lineNumber').asZeroIndexedNumber()),
 				loc.get('columnNumber').asZeroIndexedNumber(),
@@ -555,7 +557,7 @@ export default class TestMasterRunner {
 				typeName: undefined,
 				functionName: name,
 				methodName: undefined,
-				filename: resolved.filename,
+				filename: resolved.source,
 				lineNumber: resolved.line,
 				columnNumber: resolved.column,
 				isTopLevel: false,

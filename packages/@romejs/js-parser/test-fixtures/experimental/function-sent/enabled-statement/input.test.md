@@ -6,167 +6,167 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 37
-      line: 4
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    FunctionDeclaration {
-      id: BindingIdentifier {
-        name: 'foo'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'foo'
-          end: Object {
-            column: 13
-            index: 13
-            line: 1
-          }
-          start: Object {
-            column: 10
-            index: 10
-            line: 1
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 1
-          index: 36
-          line: 3
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      head: FunctionHead {
-        async: false
-        generator: true
-        hasHoistedVars: false
-        params: Array []
-        rest: undefined
-        returnType: undefined
-        thisType: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 15
-            index: 15
-            line: 1
-          }
-          start: Object {
-            column: 13
-            index: 13
-            line: 1
-          }
-        }
-      }
-      body: BlockStatement {
-        directives: Array []
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 1
-            index: 36
-            line: 3
-          }
-          start: Object {
-            column: 16
-            index: 16
-            line: 1
-          }
-        }
-        body: Array [
-          ExpressionStatement {
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 16
-                index: 34
-                line: 2
-              }
-              start: Object {
-                column: 2
-                index: 20
-                line: 2
-              }
-            }
-            expression: MetaProperty {
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 15
-                  index: 33
-                  line: 2
-                }
-                start: Object {
-                  column: 2
-                  index: 20
-                  line: 2
-                }
-              }
-              meta: Identifier {
-                name: 'function'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'function'
-                  end: Object {
-                    column: 10
-                    index: 28
-                    line: 2
-                  }
-                  start: Object {
-                    column: 2
-                    index: 20
-                    line: 2
-                  }
-                }
-              }
-              property: Identifier {
-                name: 'sent'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'sent'
-                  end: Object {
-                    column: 15
-                    index: 33
-                    line: 2
-                  }
-                  start: Object {
-                    column: 11
-                    index: 29
-                    line: 2
-                  }
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 0
+			index: 37
+			line: 4
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		FunctionDeclaration {
+			id: BindingIdentifier {
+				name: 'foo'
+				loc: Object {
+					filename: 'input.js'
+					identifierName: 'foo'
+					end: Object {
+						column: 13
+						index: 13
+						line: 1
+					}
+					start: Object {
+						column: 10
+						index: 10
+						line: 1
+					}
+				}
+			}
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 1
+					index: 36
+					line: 3
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			head: FunctionHead {
+				async: false
+				generator: true
+				hasHoistedVars: false
+				params: Array []
+				rest: undefined
+				returnType: undefined
+				thisType: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 15
+						index: 15
+						line: 1
+					}
+					start: Object {
+						column: 13
+						index: 13
+						line: 1
+					}
+				}
+			}
+			body: BlockStatement {
+				directives: Array []
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 1
+						index: 36
+						line: 3
+					}
+					start: Object {
+						column: 16
+						index: 16
+						line: 1
+					}
+				}
+				body: Array [
+					ExpressionStatement {
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 16
+								index: 34
+								line: 2
+							}
+							start: Object {
+								column: 2
+								index: 20
+								line: 2
+							}
+						}
+						expression: MetaProperty {
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 15
+									index: 33
+									line: 2
+								}
+								start: Object {
+									column: 2
+									index: 20
+									line: 2
+								}
+							}
+							meta: Identifier {
+								name: 'function'
+								loc: Object {
+									filename: 'input.js'
+									identifierName: 'function'
+									end: Object {
+										column: 10
+										index: 28
+										line: 2
+									}
+									start: Object {
+										column: 2
+										index: 20
+										line: 2
+									}
+								}
+							}
+							property: Identifier {
+								name: 'sent'
+								loc: Object {
+									filename: 'input.js'
+									identifierName: 'sent'
+									end: Object {
+										column: 15
+										index: 33
+										line: 2
+									}
+									start: Object {
+										column: 11
+										index: 29
+										line: 2
+									}
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

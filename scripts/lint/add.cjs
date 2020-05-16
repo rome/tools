@@ -41,16 +41,16 @@ import {descriptions} from '@romejs/diagnostics';
 export default {
  name: '${ruleName}',
  enter(path: Path): TransformExitResult {
-   const {node} = path;
+	 const {node} = path;
 
-   if (false) {
-      path.context.addNodeDiagnostic(
-        node,
-        descriptions.LINT.${descriptionKey},
-      );
-   }
+	 if (false) {
+			path.context.addNodeDiagnostic(
+				node,
+				descriptions.LINT.${descriptionKey},
+			);
+	 }
 
-   return node;
+	 return node;
  },
 };
 `,
@@ -69,19 +69,19 @@ import {test} from 'rome';
 import {testLintMultiple} from '../testHelpers';
 
 test(
-  '${spacedName}',
-  async (t) => {
-    await testLintMultiple(
-      t,
-      [
-        // INVALID
-        '',
-        // VALID
-        '',
-      ],
-      {category: '${categoryName}'},
-    );
-  },
+	'${spacedName}',
+	async (t) => {
+		await testLintMultiple(
+			t,
+			[
+				// INVALID
+				'',
+				// VALID
+				'',
+			],
+			{category: '${categoryName}'},
+		);
+	},
 );
 `,
 );
@@ -90,10 +90,10 @@ test(
 let descriptions = fs.readFileSync(descriptionsFile, 'utf8');
 descriptions = descriptions.replace(
 	'LINT: {',
-	`LINT: {\n    ${descriptionKey}: {
-      category: '${categoryName}',
-      message: 'INSERT MESSAGE HERE',
-    },`,
+	`LINT: {\n		${descriptionKey}: {
+			category: '${categoryName}',
+			message: 'INSERT MESSAGE HERE',
+		},`,
 );
 write(descriptionsFile, descriptions);
 

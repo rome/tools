@@ -16,27 +16,27 @@ const {exec} = require('./_utils.cjs');
 const https = require('https');
 
 function spawnSync(argv, cwd) {
-  const res = child.spawnSync(
-    'npm',
-    ['--no-git-tag-version', 'version', ...argv],
-    {
-      cwd,
-    },
-  );
+	const res = child.spawnSync(
+		'npm',
+		['--no-git-tag-version', 'version', ...argv],
+		{
+			cwd,
+		},
+	);
 
-  if (res.status !== 0) {
-    console.error(res.stderr.toString());
-    process.exit(1);
-  }
+	if (res.status !== 0) {
+		console.error(res.stderr.toString());
+		process.exit(1);
+	}
 
-  return res.stdout.toString();
+	return res.stdout.toString();
 }
 
 // Ensure git isn't dirty
 const gitRes = child.spawnSync('git', ['diff', '--exit-code']);
 if (gitRes.status === 1) {
-  console.error('Uncommitted changes');
-  process.exit(1);
+	console.error('Uncommitted changes');
+	process.exit(1);
 }
 
 // Update root
@@ -45,17 +45,17 @@ console.log('New version', version);
 
 // Check this isn't an already published version
 https.get(`https://registry.npmjs.org/rome/${version}`, (res) => {
-  if (res.statusCode !== 404) {
-    console.error('This version already exists');
-    process.exit(1);
-  }
+	if (res.statusCode !== 404) {
+		console.error('This version already exists');
+		process.exit(1);
+	}
 
-  // Update rome package
-  spawnSync([version], path.join(root, 'packages', 'rome'));
+	// Update rome package
+	spawnSync([version], path.join(root, 'packages', 'rome'));
 
-  // Create commit and tag
-  exec('git', ['commit', '-am', `Release v${version}`]);
-  exec('git', ['tag', `v${version}`]);
-  exec('git', ['push']);
-  exec('git', ['push', 'origin', `v${version}`]);
+	// Create commit and tag
+	exec('git', ['commit', '-am', `Release v${version}`]);
+	exec('git', ['tag', `v${version}`]);
+	exec('git', ['push']);
+	exec('git', ['push', 'origin', `v${version}`]);
 });

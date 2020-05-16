@@ -27,7 +27,7 @@
 
 ```
 if (Boolean(foo)) {
-  return foo;
+	return foo;
 }
 
 ```
@@ -55,7 +55,7 @@ if (Boolean(foo)) {
 
 ```
 while (!!foo) {
-  return foo;
+	return foo;
 }
 
 ```
@@ -84,7 +84,7 @@ while (!!foo) {
 ```
 let x = 1;
 do {
-  1 + 1;
+	1 + 1;
 } while (Boolean(x));
 
 ```
@@ -112,7 +112,7 @@ do {
 
 ```
 while (!!foo) {
-  return 1 + 1;
+	return 1 + 1;
 }
 
 ```

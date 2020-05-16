@@ -10,15 +10,15 @@
 
  unknown:2:23 lint/reactInJsxScope ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-	✖ React must be in scope when using JSX
+  ✖ React must be in scope when using JSX
 
-		1 │ export function HelloWorldComponent() {
-	> 2 │                 return <div>
-	   │                        ^^^^^
-	> 3 │                     Hello World!!!
-	> 4 │                 </div>;
-	   │ ^^^^^^^^^^^^^^^^^^^^^^
-		5 │             }
+    1 │ export function HelloWorldComponent() {
+  > 2 │                 return <div>
+      │                        ^^^^^
+  > 3 │                     Hello World!!!
+  > 4 │                 </div>;
+      │ ^^^^^^^^^^^^^^^^^^^^^^
+    5 │             }
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

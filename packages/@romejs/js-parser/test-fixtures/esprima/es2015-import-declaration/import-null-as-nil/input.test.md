@@ -6,131 +6,131 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 34
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ImportDeclaration {
-      defaultSpecifier: undefined
-      importKind: undefined
-      namespaceSpecifier: undefined
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 33
-          index: 33
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      source: StringLiteral {
-        value: 'bar'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 33
-            index: 33
-            line: 1
-          }
-          start: Object {
-            column: 28
-            index: 28
-            line: 1
-          }
-        }
-      }
-      namedSpecifiers: Array [
-        ImportSpecifier {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 20
-              index: 20
-              line: 1
-            }
-            start: Object {
-              column: 9
-              index: 9
-              line: 1
-            }
-          }
-          imported: Identifier {
-            name: 'null'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'null'
-              end: Object {
-                column: 13
-                index: 13
-                line: 1
-              }
-              start: Object {
-                column: 9
-                index: 9
-                line: 1
-              }
-            }
-          }
-          local: ImportSpecifierLocal {
-            name: BindingIdentifier {
-              name: 'nil'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'nil'
-                end: Object {
-                  column: 20
-                  index: 20
-                  line: 1
-                }
-                start: Object {
-                  column: 17
-                  index: 17
-                  line: 1
-                }
-              }
-            }
-            importKind: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 20
-                index: 20
-                line: 1
-              }
-              start: Object {
-                column: 9
-                index: 9
-                line: 1
-              }
-            }
-          }
-        }
-      ]
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'module'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 0
+			index: 34
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		ImportDeclaration {
+			defaultSpecifier: undefined
+			importKind: undefined
+			namespaceSpecifier: undefined
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 33
+					index: 33
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			source: StringLiteral {
+				value: 'bar'
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 33
+						index: 33
+						line: 1
+					}
+					start: Object {
+						column: 28
+						index: 28
+						line: 1
+					}
+				}
+			}
+			namedSpecifiers: Array [
+				ImportSpecifier {
+					loc: Object {
+						filename: 'input.js'
+						end: Object {
+							column: 20
+							index: 20
+							line: 1
+						}
+						start: Object {
+							column: 9
+							index: 9
+							line: 1
+						}
+					}
+					imported: Identifier {
+						name: 'null'
+						loc: Object {
+							filename: 'input.js'
+							identifierName: 'null'
+							end: Object {
+								column: 13
+								index: 13
+								line: 1
+							}
+							start: Object {
+								column: 9
+								index: 9
+								line: 1
+							}
+						}
+					}
+					local: ImportSpecifierLocal {
+						name: BindingIdentifier {
+							name: 'nil'
+							loc: Object {
+								filename: 'input.js'
+								identifierName: 'nil'
+								end: Object {
+									column: 20
+									index: 20
+									line: 1
+								}
+								start: Object {
+									column: 17
+									index: 17
+									line: 1
+								}
+							}
+						}
+						importKind: undefined
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 20
+								index: 20
+								line: 1
+							}
+							start: Object {
+								column: 9
+								index: 9
+								line: 1
+							}
+						}
+					}
+				}
+			]
+		}
+	]
 }
 ```

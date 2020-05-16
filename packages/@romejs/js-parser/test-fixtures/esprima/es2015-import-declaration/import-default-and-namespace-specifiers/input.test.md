@@ -6,159 +6,159 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 33
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ImportDeclaration {
-      importKind: undefined
-      namedSpecifiers: Array []
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 32
-          index: 32
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      source: StringLiteral {
-        value: 'foo'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 31
-            index: 31
-            line: 1
-          }
-          start: Object {
-            column: 26
-            index: 26
-            line: 1
-          }
-        }
-      }
-      defaultSpecifier: ImportDefaultSpecifier {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 10
-            index: 10
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        local: ImportSpecifierLocal {
-          name: BindingIdentifier {
-            name: 'foo'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'foo'
-              end: Object {
-                column: 10
-                index: 10
-                line: 1
-              }
-              start: Object {
-                column: 7
-                index: 7
-                line: 1
-              }
-            }
-          }
-          importKind: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 10
-              index: 10
-              line: 1
-            }
-            start: Object {
-              column: 7
-              index: 7
-              line: 1
-            }
-          }
-        }
-      }
-      namespaceSpecifier: ImportNamespaceSpecifier {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 20
-            index: 20
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        local: ImportSpecifierLocal {
-          name: BindingIdentifier {
-            name: 'bar'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'bar'
-              end: Object {
-                column: 20
-                index: 20
-                line: 1
-              }
-              start: Object {
-                column: 17
-                index: 17
-                line: 1
-              }
-            }
-          }
-          importKind: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 20
-              index: 20
-              line: 1
-            }
-            start: Object {
-              column: 17
-              index: 17
-              line: 1
-            }
-          }
-        }
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'module'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 0
+			index: 33
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		ImportDeclaration {
+			importKind: undefined
+			namedSpecifiers: Array []
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 32
+					index: 32
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			source: StringLiteral {
+				value: 'foo'
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 31
+						index: 31
+						line: 1
+					}
+					start: Object {
+						column: 26
+						index: 26
+						line: 1
+					}
+				}
+			}
+			defaultSpecifier: ImportDefaultSpecifier {
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 10
+						index: 10
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				local: ImportSpecifierLocal {
+					name: BindingIdentifier {
+						name: 'foo'
+						loc: Object {
+							filename: 'input.js'
+							identifierName: 'foo'
+							end: Object {
+								column: 10
+								index: 10
+								line: 1
+							}
+							start: Object {
+								column: 7
+								index: 7
+								line: 1
+							}
+						}
+					}
+					importKind: undefined
+					loc: Object {
+						filename: 'input.js'
+						end: Object {
+							column: 10
+							index: 10
+							line: 1
+						}
+						start: Object {
+							column: 7
+							index: 7
+							line: 1
+						}
+					}
+				}
+			}
+			namespaceSpecifier: ImportNamespaceSpecifier {
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 20
+						index: 20
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				local: ImportSpecifierLocal {
+					name: BindingIdentifier {
+						name: 'bar'
+						loc: Object {
+							filename: 'input.js'
+							identifierName: 'bar'
+							end: Object {
+								column: 20
+								index: 20
+								line: 1
+							}
+							start: Object {
+								column: 17
+								index: 17
+								line: 1
+							}
+						}
+					}
+					importKind: undefined
+					loc: Object {
+						filename: 'input.js'
+						end: Object {
+							column: 20
+							index: 20
+							line: 1
+						}
+						start: Object {
+							column: 17
+							index: 17
+							line: 1
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

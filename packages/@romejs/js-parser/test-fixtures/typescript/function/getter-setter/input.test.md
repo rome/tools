@@ -6,501 +6,501 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.ts'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array ['ts']
-  loc: Object {
-    filename: 'input.ts'
-    end: Object {
-      column: 2
-      index: 78
-      line: 6
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    VariableDeclarationStatement {
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 2
-          index: 35
-          line: 3
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      declaration: VariableDeclaration {
-        kind: 'const'
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 2
-            index: 35
-            line: 3
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        declarations: Array [
-          VariableDeclarator {
-            id: BindingIdentifier {
-              name: 'g'
-              loc: Object {
-                filename: 'input.ts'
-                identifierName: 'g'
-                end: Object {
-                  column: 7
-                  index: 7
-                  line: 1
-                }
-                start: Object {
-                  column: 6
-                  index: 6
-                  line: 1
-                }
-              }
-            }
-            loc: Object {
-              filename: 'input.ts'
-              end: Object {
-                column: 1
-                index: 34
-                line: 3
-              }
-              start: Object {
-                column: 6
-                index: 6
-                line: 1
-              }
-            }
-            init: ObjectExpression {
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 1
-                  index: 34
-                  line: 3
-                }
-                start: Object {
-                  column: 10
-                  index: 10
-                  line: 1
-                }
-              }
-              properties: Array [
-                ObjectMethod {
-                  kind: 'get'
-                  key: StaticPropertyKey {
-                    value: Identifier {
-                      name: 'm'
-                      loc: Object {
-                        filename: 'input.ts'
-                        identifierName: 'm'
-                        end: Object {
-                          column: 7
-                          index: 19
-                          line: 2
-                        }
-                        start: Object {
-                          column: 6
-                          index: 18
-                          line: 2
-                        }
-                      }
-                    }
-                    loc: Object {
-                      filename: 'input.ts'
-                      end: Object {
-                        column: 7
-                        index: 19
-                        line: 2
-                      }
-                      start: Object {
-                        column: 6
-                        index: 18
-                        line: 2
-                      }
-                    }
-                  }
-                  loc: Object {
-                    filename: 'input.ts'
-                    end: Object {
-                      column: 20
-                      index: 32
-                      line: 2
-                    }
-                    start: Object {
-                      column: 2
-                      index: 14
-                      line: 2
-                    }
-                  }
-                  body: BlockStatement {
-                    body: Array []
-                    directives: Array []
-                    loc: Object {
-                      filename: 'input.ts'
-                      end: Object {
-                        column: 20
-                        index: 32
-                        line: 2
-                      }
-                      start: Object {
-                        column: 18
-                        index: 30
-                        line: 2
-                      }
-                    }
-                  }
-                  head: FunctionHead {
-                    async: false
-                    generator: false
-                    hasHoistedVars: false
-                    params: Array []
-                    rest: undefined
-                    returnType: undefined
-                    typeParameters: undefined
-                    loc: Object {
-                      filename: 'input.ts'
-                      end: Object {
-                        column: 17
-                        index: 29
-                        line: 2
-                      }
-                      start: Object {
-                        column: 7
-                        index: 19
-                        line: 2
-                      }
-                    }
-                    thisType: BindingIdentifier {
-                      name: 'this'
-                      loc: Object {
-                        filename: 'input.ts'
-                        identifierName: 'this'
-                        end: Object {
-                          column: 12
-                          index: 24
-                          line: 2
-                        }
-                        start: Object {
-                          column: 8
-                          index: 20
-                          line: 2
-                        }
-                      }
-                      meta: PatternMeta {
-                        optional: undefined
-                        loc: Object {
-                          filename: 'input.ts'
-                          end: Object {
-                            column: 16
-                            index: 28
-                            line: 2
-                          }
-                          start: Object {
-                            column: 8
-                            index: 20
-                            line: 2
-                          }
-                        }
-                        typeAnnotation: TSTypeLiteral {
-                          members: Array []
-                          loc: Object {
-                            filename: 'input.ts'
-                            end: Object {
-                              column: 16
-                              index: 28
-                              line: 2
-                            }
-                            start: Object {
-                              column: 14
-                              index: 26
-                              line: 2
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-    VariableDeclarationStatement {
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 2
-          index: 78
-          line: 6
-        }
-        start: Object {
-          column: 0
-          index: 36
-          line: 4
-        }
-      }
-      declaration: VariableDeclaration {
-        kind: 'const'
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 2
-            index: 78
-            line: 6
-          }
-          start: Object {
-            column: 0
-            index: 36
-            line: 4
-          }
-        }
-        declarations: Array [
-          VariableDeclarator {
-            id: BindingIdentifier {
-              name: 's'
-              loc: Object {
-                filename: 'input.ts'
-                identifierName: 's'
-                end: Object {
-                  column: 7
-                  index: 43
-                  line: 4
-                }
-                start: Object {
-                  column: 6
-                  index: 42
-                  line: 4
-                }
-              }
-            }
-            loc: Object {
-              filename: 'input.ts'
-              end: Object {
-                column: 1
-                index: 77
-                line: 6
-              }
-              start: Object {
-                column: 6
-                index: 42
-                line: 4
-              }
-            }
-            init: ObjectExpression {
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 1
-                  index: 77
-                  line: 6
-                }
-                start: Object {
-                  column: 10
-                  index: 46
-                  line: 4
-                }
-              }
-              properties: Array [
-                ObjectMethod {
-                  kind: 'set'
-                  key: StaticPropertyKey {
-                    value: Identifier {
-                      name: 'm'
-                      loc: Object {
-                        filename: 'input.ts'
-                        identifierName: 'm'
-                        end: Object {
-                          column: 7
-                          index: 55
-                          line: 5
-                        }
-                        start: Object {
-                          column: 6
-                          index: 54
-                          line: 5
-                        }
-                      }
-                    }
-                    loc: Object {
-                      filename: 'input.ts'
-                      end: Object {
-                        column: 7
-                        index: 55
-                        line: 5
-                      }
-                      start: Object {
-                        column: 6
-                        index: 54
-                        line: 5
-                      }
-                    }
-                  }
-                  loc: Object {
-                    filename: 'input.ts'
-                    end: Object {
-                      column: 27
-                      index: 75
-                      line: 5
-                    }
-                    start: Object {
-                      column: 2
-                      index: 50
-                      line: 5
-                    }
-                  }
-                  body: BlockStatement {
-                    body: Array []
-                    directives: Array []
-                    loc: Object {
-                      filename: 'input.ts'
-                      end: Object {
-                        column: 27
-                        index: 75
-                        line: 5
-                      }
-                      start: Object {
-                        column: 25
-                        index: 73
-                        line: 5
-                      }
-                    }
-                  }
-                  head: FunctionHead {
-                    async: false
-                    generator: false
-                    hasHoistedVars: false
-                    rest: undefined
-                    returnType: undefined
-                    typeParameters: undefined
-                    loc: Object {
-                      filename: 'input.ts'
-                      end: Object {
-                        column: 24
-                        index: 72
-                        line: 5
-                      }
-                      start: Object {
-                        column: 7
-                        index: 55
-                        line: 5
-                      }
-                    }
-                    params: Array [
-                      BindingIdentifier {
-                        name: 'value'
-                        loc: Object {
-                          filename: 'input.ts'
-                          identifierName: 'value'
-                          end: Object {
-                            column: 23
-                            index: 71
-                            line: 5
-                          }
-                          start: Object {
-                            column: 18
-                            index: 66
-                            line: 5
-                          }
-                        }
-                        meta: PatternMeta {
-                          optional: undefined
-                          typeAnnotation: undefined
-                          loc: Object {
-                            filename: 'input.ts'
-                            end: Object {
-                              column: 23
-                              index: 71
-                              line: 5
-                            }
-                            start: Object {
-                              column: 18
-                              index: 66
-                              line: 5
-                            }
-                          }
-                        }
-                      }
-                    ]
-                    thisType: BindingIdentifier {
-                      name: 'this'
-                      loc: Object {
-                        filename: 'input.ts'
-                        identifierName: 'this'
-                        end: Object {
-                          column: 12
-                          index: 60
-                          line: 5
-                        }
-                        start: Object {
-                          column: 8
-                          index: 56
-                          line: 5
-                        }
-                      }
-                      meta: PatternMeta {
-                        optional: undefined
-                        loc: Object {
-                          filename: 'input.ts'
-                          end: Object {
-                            column: 16
-                            index: 64
-                            line: 5
-                          }
-                          start: Object {
-                            column: 8
-                            index: 56
-                            line: 5
-                          }
-                        }
-                        typeAnnotation: TSTypeLiteral {
-                          members: Array []
-                          loc: Object {
-                            filename: 'input.ts'
-                            end: Object {
-                              column: 16
-                              index: 64
-                              line: 5
-                            }
-                            start: Object {
-                              column: 14
-                              index: 62
-                              line: 5
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: 'input.ts'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'module'
+	syntax: Array ['ts']
+	loc: Object {
+		filename: 'input.ts'
+		end: Object {
+			column: 2
+			index: 78
+			line: 6
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		VariableDeclarationStatement {
+			loc: Object {
+				filename: 'input.ts'
+				end: Object {
+					column: 2
+					index: 35
+					line: 3
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			declaration: VariableDeclaration {
+				kind: 'const'
+				loc: Object {
+					filename: 'input.ts'
+					end: Object {
+						column: 2
+						index: 35
+						line: 3
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				declarations: Array [
+					VariableDeclarator {
+						id: BindingIdentifier {
+							name: 'g'
+							loc: Object {
+								filename: 'input.ts'
+								identifierName: 'g'
+								end: Object {
+									column: 7
+									index: 7
+									line: 1
+								}
+								start: Object {
+									column: 6
+									index: 6
+									line: 1
+								}
+							}
+						}
+						loc: Object {
+							filename: 'input.ts'
+							end: Object {
+								column: 1
+								index: 34
+								line: 3
+							}
+							start: Object {
+								column: 6
+								index: 6
+								line: 1
+							}
+						}
+						init: ObjectExpression {
+							loc: Object {
+								filename: 'input.ts'
+								end: Object {
+									column: 1
+									index: 34
+									line: 3
+								}
+								start: Object {
+									column: 10
+									index: 10
+									line: 1
+								}
+							}
+							properties: Array [
+								ObjectMethod {
+									kind: 'get'
+									key: StaticPropertyKey {
+										value: Identifier {
+											name: 'm'
+											loc: Object {
+												filename: 'input.ts'
+												identifierName: 'm'
+												end: Object {
+													column: 7
+													index: 19
+													line: 2
+												}
+												start: Object {
+													column: 6
+													index: 18
+													line: 2
+												}
+											}
+										}
+										loc: Object {
+											filename: 'input.ts'
+											end: Object {
+												column: 7
+												index: 19
+												line: 2
+											}
+											start: Object {
+												column: 6
+												index: 18
+												line: 2
+											}
+										}
+									}
+									loc: Object {
+										filename: 'input.ts'
+										end: Object {
+											column: 20
+											index: 32
+											line: 2
+										}
+										start: Object {
+											column: 2
+											index: 14
+											line: 2
+										}
+									}
+									body: BlockStatement {
+										body: Array []
+										directives: Array []
+										loc: Object {
+											filename: 'input.ts'
+											end: Object {
+												column: 20
+												index: 32
+												line: 2
+											}
+											start: Object {
+												column: 18
+												index: 30
+												line: 2
+											}
+										}
+									}
+									head: FunctionHead {
+										async: false
+										generator: false
+										hasHoistedVars: false
+										params: Array []
+										rest: undefined
+										returnType: undefined
+										typeParameters: undefined
+										loc: Object {
+											filename: 'input.ts'
+											end: Object {
+												column: 17
+												index: 29
+												line: 2
+											}
+											start: Object {
+												column: 7
+												index: 19
+												line: 2
+											}
+										}
+										thisType: BindingIdentifier {
+											name: 'this'
+											loc: Object {
+												filename: 'input.ts'
+												identifierName: 'this'
+												end: Object {
+													column: 12
+													index: 24
+													line: 2
+												}
+												start: Object {
+													column: 8
+													index: 20
+													line: 2
+												}
+											}
+											meta: PatternMeta {
+												optional: undefined
+												loc: Object {
+													filename: 'input.ts'
+													end: Object {
+														column: 16
+														index: 28
+														line: 2
+													}
+													start: Object {
+														column: 8
+														index: 20
+														line: 2
+													}
+												}
+												typeAnnotation: TSTypeLiteral {
+													members: Array []
+													loc: Object {
+														filename: 'input.ts'
+														end: Object {
+															column: 16
+															index: 28
+															line: 2
+														}
+														start: Object {
+															column: 14
+															index: 26
+															line: 2
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							]
+						}
+					}
+				]
+			}
+		}
+		VariableDeclarationStatement {
+			loc: Object {
+				filename: 'input.ts'
+				end: Object {
+					column: 2
+					index: 78
+					line: 6
+				}
+				start: Object {
+					column: 0
+					index: 36
+					line: 4
+				}
+			}
+			declaration: VariableDeclaration {
+				kind: 'const'
+				loc: Object {
+					filename: 'input.ts'
+					end: Object {
+						column: 2
+						index: 78
+						line: 6
+					}
+					start: Object {
+						column: 0
+						index: 36
+						line: 4
+					}
+				}
+				declarations: Array [
+					VariableDeclarator {
+						id: BindingIdentifier {
+							name: 's'
+							loc: Object {
+								filename: 'input.ts'
+								identifierName: 's'
+								end: Object {
+									column: 7
+									index: 43
+									line: 4
+								}
+								start: Object {
+									column: 6
+									index: 42
+									line: 4
+								}
+							}
+						}
+						loc: Object {
+							filename: 'input.ts'
+							end: Object {
+								column: 1
+								index: 77
+								line: 6
+							}
+							start: Object {
+								column: 6
+								index: 42
+								line: 4
+							}
+						}
+						init: ObjectExpression {
+							loc: Object {
+								filename: 'input.ts'
+								end: Object {
+									column: 1
+									index: 77
+									line: 6
+								}
+								start: Object {
+									column: 10
+									index: 46
+									line: 4
+								}
+							}
+							properties: Array [
+								ObjectMethod {
+									kind: 'set'
+									key: StaticPropertyKey {
+										value: Identifier {
+											name: 'm'
+											loc: Object {
+												filename: 'input.ts'
+												identifierName: 'm'
+												end: Object {
+													column: 7
+													index: 55
+													line: 5
+												}
+												start: Object {
+													column: 6
+													index: 54
+													line: 5
+												}
+											}
+										}
+										loc: Object {
+											filename: 'input.ts'
+											end: Object {
+												column: 7
+												index: 55
+												line: 5
+											}
+											start: Object {
+												column: 6
+												index: 54
+												line: 5
+											}
+										}
+									}
+									loc: Object {
+										filename: 'input.ts'
+										end: Object {
+											column: 27
+											index: 75
+											line: 5
+										}
+										start: Object {
+											column: 2
+											index: 50
+											line: 5
+										}
+									}
+									body: BlockStatement {
+										body: Array []
+										directives: Array []
+										loc: Object {
+											filename: 'input.ts'
+											end: Object {
+												column: 27
+												index: 75
+												line: 5
+											}
+											start: Object {
+												column: 25
+												index: 73
+												line: 5
+											}
+										}
+									}
+									head: FunctionHead {
+										async: false
+										generator: false
+										hasHoistedVars: false
+										rest: undefined
+										returnType: undefined
+										typeParameters: undefined
+										loc: Object {
+											filename: 'input.ts'
+											end: Object {
+												column: 24
+												index: 72
+												line: 5
+											}
+											start: Object {
+												column: 7
+												index: 55
+												line: 5
+											}
+										}
+										params: Array [
+											BindingIdentifier {
+												name: 'value'
+												loc: Object {
+													filename: 'input.ts'
+													identifierName: 'value'
+													end: Object {
+														column: 23
+														index: 71
+														line: 5
+													}
+													start: Object {
+														column: 18
+														index: 66
+														line: 5
+													}
+												}
+												meta: PatternMeta {
+													optional: undefined
+													typeAnnotation: undefined
+													loc: Object {
+														filename: 'input.ts'
+														end: Object {
+															column: 23
+															index: 71
+															line: 5
+														}
+														start: Object {
+															column: 18
+															index: 66
+															line: 5
+														}
+													}
+												}
+											}
+										]
+										thisType: BindingIdentifier {
+											name: 'this'
+											loc: Object {
+												filename: 'input.ts'
+												identifierName: 'this'
+												end: Object {
+													column: 12
+													index: 60
+													line: 5
+												}
+												start: Object {
+													column: 8
+													index: 56
+													line: 5
+												}
+											}
+											meta: PatternMeta {
+												optional: undefined
+												loc: Object {
+													filename: 'input.ts'
+													end: Object {
+														column: 16
+														index: 64
+														line: 5
+													}
+													start: Object {
+														column: 8
+														index: 56
+														line: 5
+													}
+												}
+												typeAnnotation: TSTypeLiteral {
+													members: Array []
+													loc: Object {
+														filename: 'input.ts'
+														end: Object {
+															column: 16
+															index: 64
+															line: 5
+														}
+														start: Object {
+															column: 14
+															index: 62
+															line: 5
+														}
+													}
+												}
+											}
+										}
+									}
+								}
+							]
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

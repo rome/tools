@@ -18,11 +18,11 @@
   ℹ Recommended fix
 
     1 │ - if (!true) {consequ
-    2 │ + ··alternate;
+    2 │ + ↹alternate;
       │ - } else {alt
     3 │ + } else {
       │ - ernate;
-    4 │ + ··consequent;
+    4 │ + ↹consequent;
     5 │ + }
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -35,9 +35,9 @@
 
 ```
 if (true) {
-  alternate;
+	alternate;
 } else {
-  consequent;
+	consequent;
 }
 
 ```
@@ -82,7 +82,7 @@ true ? alternate : consequent;
 
 ```
 if (!true) {
-  consequent;
+	consequent;
 }
 
 ```

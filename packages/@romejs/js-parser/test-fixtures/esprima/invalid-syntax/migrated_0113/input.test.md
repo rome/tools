@@ -6,118 +6,118 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: true
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 6
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unexpected token, expected ('}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 3
-          index: 3
-          line: 1
-        }
-        start: Object {
-          column: 2
-          index: 2
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    IfStatement {
-      alternate: undefined
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 5
-          index: 5
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      test: ReferenceIdentifier {
-        name: 'INVALID_PLACEHOLDER'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 3
-            index: 3
-            line: 1
-          }
-          start: Object {
-            column: 2
-            index: 2
-            line: 1
-          }
-        }
-      }
-      consequent: ExpressionStatement {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 5
-            index: 5
-            line: 1
-          }
-          start: Object {
-            column: 3
-            index: 3
-            line: 1
-          }
-        }
-        expression: ReferenceIdentifier {
-          name: 'a'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'a'
-            end: Object {
-              column: 4
-              index: 4
-              line: 1
-            }
-            start: Object {
-              column: 3
-              index: 3
-              line: 1
-            }
-          }
-        }
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: true
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 0
+			index: 6
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: 'js-parser'}]
+			description: Object {
+				advice: Array []
+				category: 'parse/js'
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unexpected token, expected ('}
+			}
+			location: Object {
+				filename: 'input.js'
+				mtime: undefined
+				sourceType: 'script'
+				end: Object {
+					column: 3
+					index: 3
+					line: 1
+				}
+				start: Object {
+					column: 2
+					index: 2
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		IfStatement {
+			alternate: undefined
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 5
+					index: 5
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			test: ReferenceIdentifier {
+				name: 'INVALID_PLACEHOLDER'
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 3
+						index: 3
+						line: 1
+					}
+					start: Object {
+						column: 2
+						index: 2
+						line: 1
+					}
+				}
+			}
+			consequent: ExpressionStatement {
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 5
+						index: 5
+						line: 1
+					}
+					start: Object {
+						column: 3
+						index: 3
+						line: 1
+					}
+				}
+				expression: ReferenceIdentifier {
+					name: 'a'
+					loc: Object {
+						filename: 'input.js'
+						identifierName: 'a'
+						end: Object {
+							column: 4
+							index: 4
+							line: 1
+						}
+						start: Object {
+							column: 3
+							index: 3
+							line: 1
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

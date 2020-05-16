@@ -66,8 +66,8 @@
 
 ```
 React.createElement(
-  'Invalid',
-  {dangerouslySetInnerHTML: {__html: 'HTML'}, children: ['children']},
+	'Invalid',
+	{dangerouslySetInnerHTML: {__html: 'HTML'}, children: ['children']},
 );
 
 ```
@@ -93,9 +93,9 @@ React.createElement(
 
 ```
 React.createElement(
-  'Invalid',
-  {dangerouslySetInnerHTML: {__html: 'HTML'}},
-  'children',
+	'Invalid',
+	{dangerouslySetInnerHTML: {__html: 'HTML'}},
+	'children',
 );
 
 ```
@@ -121,9 +121,9 @@ React.createElement(
 
 ```
 React.createElement(
-  'Invalid',
-  {dangerouslySetInnerHTML: {__html: 'HTML'}},
-  ['children'],
+	'Invalid',
+	{dangerouslySetInnerHTML: {__html: 'HTML'}},
+	['children'],
 );
 
 ```
@@ -480,9 +480,9 @@ React.createElement('Valid', {children: ['children']});
 
 ```
 React.createElement(
-  'div',
-  {dangerouslySetInnerHTML: {__html: 'HTML'}},
-  'children',
+	'div',
+	{dangerouslySetInnerHTML: {__html: 'HTML'}},
+	'children',
 );
 
 ```
@@ -508,9 +508,9 @@ React.createElement(
 
 ```
 React.createElement(
-  'div',
-  {dangerouslySetInnerHTML: {__html: 'HTML'}},
-  ['children'],
+	'div',
+	{dangerouslySetInnerHTML: {__html: 'HTML'}},
+	['children'],
 );
 
 ```
@@ -536,8 +536,8 @@ React.createElement(
 
 ```
 React.createElement(
-  'div',
-  {dangerouslySetInnerHTML: {__html: 'HTML'}, children: 'children'},
+	'div',
+	{dangerouslySetInnerHTML: {__html: 'HTML'}, children: 'children'},
 );
 
 ```
@@ -563,8 +563,8 @@ React.createElement(
 
 ```
 React.createElement(
-  'div',
-  {dangerouslySetInnerHTML: {__html: 'HTML'}, children: ['children']},
+	'div',
+	{dangerouslySetInnerHTML: {__html: 'HTML'}, children: ['children']},
 );
 
 ```
@@ -590,8 +590,8 @@ React.createElement(
 
 ```
 React.createElement(
-  'Invalid',
-  {dangerouslySetInnerHTML: {__html: 'HTML'}, children: 'children'},
+	'Invalid',
+	{dangerouslySetInnerHTML: {__html: 'HTML'}, children: 'children'},
 );
 
 ```

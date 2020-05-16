@@ -53,6 +53,16 @@ export default class SourceMapConsumer {
 		);
 	}
 
+	static fromJSONLazy(
+		file: string,
+		getSourceMap: () => SourceMap,
+	): SourceMapConsumer {
+		return new SourceMapConsumer(
+			file,
+			() => SourceMapConsumer.parseMappings(getSourceMap()),
+		);
+	}
+
 	static parseMappings(sourceMap: SourceMap): ParsedMappings {
 		const rawStr: string = sourceMap.mappings;
 		const map: ParsedMappings = new Map();
@@ -209,6 +219,7 @@ export default class SourceMapConsumer {
 		}
 
 		return {
+			found: true,
 			source,
 			line: mapping.original.line,
 			column: mapping.original.column,

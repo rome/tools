@@ -6,243 +6,243 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 60
-      line: 7
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'The rest element has to be the last element when destructuring'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 13
-          index: 40
-          line: 3
-        }
-        start: Object {
-          column: 13
-          index: 40
-          line: 3
-        }
-      }
-    }
-  ]
-  body: Array [
-    FunctionDeclaration {
-      id: BindingIdentifier {
-        name: 'foo'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'foo'
-          end: Object {
-            column: 12
-            index: 12
-            line: 1
-          }
-          start: Object {
-            column: 9
-            index: 9
-            line: 1
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 1
-          index: 58
-          line: 6
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      body: BlockStatement {
-        body: Array []
-        directives: Array []
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 1
-            index: 58
-            line: 6
-          }
-          start: Object {
-            column: 2
-            index: 55
-            line: 5
-          }
-        }
-      }
-      head: FunctionHead {
-        async: false
-        generator: false
-        hasHoistedVars: false
-        returnType: undefined
-        thisType: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 1
-            index: 54
-            line: 5
-          }
-          start: Object {
-            column: 13
-            index: 13
-            line: 1
-          }
-        }
-        rest: BindingIdentifier {
-          name: 'second'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'second'
-            end: Object {
-              column: 13
-              index: 40
-              line: 3
-            }
-            start: Object {
-              column: 7
-              index: 34
-              line: 3
-            }
-          }
-          meta: PatternMeta {
-            optional: undefined
-            typeAnnotation: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 13
-                index: 40
-                line: 3
-              }
-              start: Object {
-                column: 7
-                index: 34
-                line: 3
-              }
-            }
-          }
-        }
-        params: Array [
-          BindingIdentifier {
-            name: 'first'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'first'
-              end: Object {
-                column: 9
-                index: 25
-                line: 2
-              }
-              start: Object {
-                column: 4
-                index: 20
-                line: 2
-              }
-            }
-            meta: PatternMeta {
-              optional: undefined
-              typeAnnotation: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 9
-                  index: 25
-                  line: 2
-                }
-                start: Object {
-                  column: 4
-                  index: 20
-                  line: 2
-                }
-              }
-            }
-          }
-          BindingIdentifier {
-            name: 'third'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'third'
-              end: Object {
-                column: 9
-                index: 51
-                line: 4
-              }
-              start: Object {
-                column: 4
-                index: 46
-                line: 4
-              }
-            }
-            meta: PatternMeta {
-              optional: undefined
-              typeAnnotation: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 9
-                  index: 51
-                  line: 4
-                }
-                start: Object {
-                  column: 4
-                  index: 46
-                  line: 4
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-    EmptyStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 2
-          index: 59
-          line: 6
-        }
-        start: Object {
-          column: 1
-          index: 58
-          line: 6
-        }
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 0
+			index: 60
+			line: 7
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: 'js-parser'}]
+			description: Object {
+				advice: Array []
+				category: 'parse/js'
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'The rest element has to be the last element when destructuring'}
+			}
+			location: Object {
+				filename: 'input.js'
+				mtime: undefined
+				sourceType: 'script'
+				end: Object {
+					column: 13
+					index: 40
+					line: 3
+				}
+				start: Object {
+					column: 13
+					index: 40
+					line: 3
+				}
+			}
+		}
+	]
+	body: Array [
+		FunctionDeclaration {
+			id: BindingIdentifier {
+				name: 'foo'
+				loc: Object {
+					filename: 'input.js'
+					identifierName: 'foo'
+					end: Object {
+						column: 12
+						index: 12
+						line: 1
+					}
+					start: Object {
+						column: 9
+						index: 9
+						line: 1
+					}
+				}
+			}
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 1
+					index: 58
+					line: 6
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			body: BlockStatement {
+				body: Array []
+				directives: Array []
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 1
+						index: 58
+						line: 6
+					}
+					start: Object {
+						column: 2
+						index: 55
+						line: 5
+					}
+				}
+			}
+			head: FunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				returnType: undefined
+				thisType: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 1
+						index: 54
+						line: 5
+					}
+					start: Object {
+						column: 13
+						index: 13
+						line: 1
+					}
+				}
+				rest: BindingIdentifier {
+					name: 'second'
+					loc: Object {
+						filename: 'input.js'
+						identifierName: 'second'
+						end: Object {
+							column: 13
+							index: 40
+							line: 3
+						}
+						start: Object {
+							column: 7
+							index: 34
+							line: 3
+						}
+					}
+					meta: PatternMeta {
+						optional: undefined
+						typeAnnotation: undefined
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 13
+								index: 40
+								line: 3
+							}
+							start: Object {
+								column: 7
+								index: 34
+								line: 3
+							}
+						}
+					}
+				}
+				params: Array [
+					BindingIdentifier {
+						name: 'first'
+						loc: Object {
+							filename: 'input.js'
+							identifierName: 'first'
+							end: Object {
+								column: 9
+								index: 25
+								line: 2
+							}
+							start: Object {
+								column: 4
+								index: 20
+								line: 2
+							}
+						}
+						meta: PatternMeta {
+							optional: undefined
+							typeAnnotation: undefined
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 9
+									index: 25
+									line: 2
+								}
+								start: Object {
+									column: 4
+									index: 20
+									line: 2
+								}
+							}
+						}
+					}
+					BindingIdentifier {
+						name: 'third'
+						loc: Object {
+							filename: 'input.js'
+							identifierName: 'third'
+							end: Object {
+								column: 9
+								index: 51
+								line: 4
+							}
+							start: Object {
+								column: 4
+								index: 46
+								line: 4
+							}
+						}
+						meta: PatternMeta {
+							optional: undefined
+							typeAnnotation: undefined
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 9
+									index: 51
+									line: 4
+								}
+								start: Object {
+									column: 4
+									index: 46
+									line: 4
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+		EmptyStatement {
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 2
+					index: 59
+					line: 6
+				}
+				start: Object {
+					column: 1
+					index: 58
+					line: 6
+				}
+			}
+		}
+	]
 }
 ```

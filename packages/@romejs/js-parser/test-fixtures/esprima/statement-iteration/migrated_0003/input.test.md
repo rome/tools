@@ -6,127 +6,127 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 31
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    BlockStatement {
-      directives: Array []
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 30
-          index: 30
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      body: Array [
-        DoWhileStatement {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 22
-              index: 22
-              line: 1
-            }
-            start: Object {
-              column: 2
-              index: 2
-              line: 1
-            }
-          }
-          test: BooleanLiteral {
-            value: false
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 21
-                index: 21
-                line: 1
-              }
-              start: Object {
-                column: 16
-                index: 16
-                line: 1
-              }
-            }
-          }
-          body: BlockStatement {
-            body: Array []
-            directives: Array []
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 8
-                index: 8
-                line: 1
-              }
-              start: Object {
-                column: 5
-                index: 5
-                line: 1
-              }
-            }
-          }
-        }
-        ExpressionStatement {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 28
-              index: 28
-              line: 1
-            }
-            start: Object {
-              column: 23
-              index: 23
-              line: 1
-            }
-          }
-          expression: BooleanLiteral {
-            value: false
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 28
-                index: 28
-                line: 1
-              }
-              start: Object {
-                column: 23
-                index: 23
-                line: 1
-              }
-            }
-          }
-        }
-      ]
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 0
+			index: 31
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		BlockStatement {
+			directives: Array []
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 30
+					index: 30
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			body: Array [
+				DoWhileStatement {
+					loc: Object {
+						filename: 'input.js'
+						end: Object {
+							column: 22
+							index: 22
+							line: 1
+						}
+						start: Object {
+							column: 2
+							index: 2
+							line: 1
+						}
+					}
+					test: BooleanLiteral {
+						value: false
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 21
+								index: 21
+								line: 1
+							}
+							start: Object {
+								column: 16
+								index: 16
+								line: 1
+							}
+						}
+					}
+					body: BlockStatement {
+						body: Array []
+						directives: Array []
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 8
+								index: 8
+								line: 1
+							}
+							start: Object {
+								column: 5
+								index: 5
+								line: 1
+							}
+						}
+					}
+				}
+				ExpressionStatement {
+					loc: Object {
+						filename: 'input.js'
+						end: Object {
+							column: 28
+							index: 28
+							line: 1
+						}
+						start: Object {
+							column: 23
+							index: 23
+							line: 1
+						}
+					}
+					expression: BooleanLiteral {
+						value: false
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 28
+								index: 28
+								line: 1
+							}
+							start: Object {
+								column: 23
+								index: 23
+								line: 1
+							}
+						}
+					}
+				}
+			]
+		}
+	]
 }
 ```

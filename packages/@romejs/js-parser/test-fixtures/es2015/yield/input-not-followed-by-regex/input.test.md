@@ -6,204 +6,204 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 35
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    FunctionDeclaration {
-      id: BindingIdentifier {
-        name: 'f2'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'f2'
-          end: Object {
-            column: 12
-            index: 12
-            line: 1
-          }
-          start: Object {
-            column: 10
-            index: 10
-            line: 1
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 34
-          index: 34
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      head: FunctionHead {
-        async: false
-        generator: true
-        hasHoistedVars: false
-        params: Array []
-        rest: undefined
-        returnType: undefined
-        thisType: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 14
-            index: 14
-            line: 1
-          }
-          start: Object {
-            column: 12
-            index: 12
-            line: 1
-          }
-        }
-      }
-      body: BlockStatement {
-        directives: Array []
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 34
-            index: 34
-            line: 1
-          }
-          start: Object {
-            column: 15
-            index: 15
-            line: 1
-          }
-        }
-        body: Array [
-          ExpressionStatement {
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 32
-                index: 32
-                line: 1
-              }
-              start: Object {
-                column: 17
-                index: 17
-                line: 1
-              }
-            }
-            expression: ArrowFunctionExpression {
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 32
-                  index: 32
-                  line: 1
-                }
-                start: Object {
-                  column: 17
-                  index: 17
-                  line: 1
-                }
-              }
-              head: FunctionHead {
-                async: false
-                hasHoistedVars: false
-                params: Array []
-                rest: undefined
-                returnType: undefined
-                thisType: undefined
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 22
-                    index: 22
-                    line: 1
-                  }
-                  start: Object {
-                    column: 17
-                    index: 17
-                    line: 1
-                  }
-                }
-              }
-              body: BinaryExpression {
-                operator: '/'
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 32
-                    index: 32
-                    line: 1
-                  }
-                  start: Object {
-                    column: 23
-                    index: 23
-                    line: 1
-                  }
-                }
-                left: ReferenceIdentifier {
-                  name: 'yield'
-                  loc: Object {
-                    filename: 'input.js'
-                    identifierName: 'yield'
-                    end: Object {
-                      column: 28
-                      index: 28
-                      line: 1
-                    }
-                    start: Object {
-                      column: 23
-                      index: 23
-                      line: 1
-                    }
-                  }
-                }
-                right: NumericLiteral {
-                  value: 1
-                  format: undefined
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 32
-                      index: 32
-                      line: 1
-                    }
-                    start: Object {
-                      column: 31
-                      index: 31
-                      line: 1
-                    }
-                  }
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 0
+			index: 35
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		FunctionDeclaration {
+			id: BindingIdentifier {
+				name: 'f2'
+				loc: Object {
+					filename: 'input.js'
+					identifierName: 'f2'
+					end: Object {
+						column: 12
+						index: 12
+						line: 1
+					}
+					start: Object {
+						column: 10
+						index: 10
+						line: 1
+					}
+				}
+			}
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 34
+					index: 34
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			head: FunctionHead {
+				async: false
+				generator: true
+				hasHoistedVars: false
+				params: Array []
+				rest: undefined
+				returnType: undefined
+				thisType: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 14
+						index: 14
+						line: 1
+					}
+					start: Object {
+						column: 12
+						index: 12
+						line: 1
+					}
+				}
+			}
+			body: BlockStatement {
+				directives: Array []
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 34
+						index: 34
+						line: 1
+					}
+					start: Object {
+						column: 15
+						index: 15
+						line: 1
+					}
+				}
+				body: Array [
+					ExpressionStatement {
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 32
+								index: 32
+								line: 1
+							}
+							start: Object {
+								column: 17
+								index: 17
+								line: 1
+							}
+						}
+						expression: ArrowFunctionExpression {
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 32
+									index: 32
+									line: 1
+								}
+								start: Object {
+									column: 17
+									index: 17
+									line: 1
+								}
+							}
+							head: FunctionHead {
+								async: false
+								hasHoistedVars: false
+								params: Array []
+								rest: undefined
+								returnType: undefined
+								thisType: undefined
+								loc: Object {
+									filename: 'input.js'
+									end: Object {
+										column: 22
+										index: 22
+										line: 1
+									}
+									start: Object {
+										column: 17
+										index: 17
+										line: 1
+									}
+								}
+							}
+							body: BinaryExpression {
+								operator: '/'
+								loc: Object {
+									filename: 'input.js'
+									end: Object {
+										column: 32
+										index: 32
+										line: 1
+									}
+									start: Object {
+										column: 23
+										index: 23
+										line: 1
+									}
+								}
+								left: ReferenceIdentifier {
+									name: 'yield'
+									loc: Object {
+										filename: 'input.js'
+										identifierName: 'yield'
+										end: Object {
+											column: 28
+											index: 28
+											line: 1
+										}
+										start: Object {
+											column: 23
+											index: 23
+											line: 1
+										}
+									}
+								}
+								right: NumericLiteral {
+									value: 1
+									format: undefined
+									loc: Object {
+										filename: 'input.js'
+										end: Object {
+											column: 32
+											index: 32
+											line: 1
+										}
+										start: Object {
+											column: 31
+											index: 31
+											line: 1
+										}
+									}
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

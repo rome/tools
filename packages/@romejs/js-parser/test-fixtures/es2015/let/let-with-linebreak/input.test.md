@@ -6,96 +6,96 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 11
-      line: 3
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    VariableDeclarationStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 6
-          index: 10
-          line: 2
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      declaration: VariableDeclaration {
-        kind: 'let'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 6
-            index: 10
-            line: 2
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        declarations: Array [
-          VariableDeclarator {
-            id: BindingIdentifier {
-              name: 'a'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'a'
-                end: Object {
-                  column: 5
-                  index: 9
-                  line: 2
-                }
-                start: Object {
-                  column: 4
-                  index: 8
-                  line: 2
-                }
-              }
-            }
-            init: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 5
-                index: 9
-                line: 2
-              }
-              start: Object {
-                column: 4
-                index: 8
-                line: 2
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 0
+			index: 11
+			line: 3
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		VariableDeclarationStatement {
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 6
+					index: 10
+					line: 2
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			declaration: VariableDeclaration {
+				kind: 'let'
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 6
+						index: 10
+						line: 2
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				declarations: Array [
+					VariableDeclarator {
+						id: BindingIdentifier {
+							name: 'a'
+							loc: Object {
+								filename: 'input.js'
+								identifierName: 'a'
+								end: Object {
+									column: 5
+									index: 9
+									line: 2
+								}
+								start: Object {
+									column: 4
+									index: 8
+									line: 2
+								}
+							}
+						}
+						init: undefined
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 5
+								index: 9
+								line: 2
+							}
+							start: Object {
+								column: 4
+								index: 8
+								line: 2
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

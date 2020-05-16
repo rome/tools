@@ -16,7 +16,7 @@
 ```
 try {
 } catch (e) {
-  three = 2 + 1;
+	three = 2 + 1;
 }
 
 ```
@@ -33,7 +33,7 @@ try {
 ```
 try {
 } catch ({e}) {
-  this.something = 2;
+	this.something = 2;
 }
 
 ```
@@ -49,10 +49,10 @@ try {
 
 ```
 function foo() {
-  try {
-  } catch (e) {
-    return false;
-  }
+	try {
+	} catch (e) {
+		return false;
+	}
 }
 
 ```
@@ -79,8 +79,8 @@ function foo() {
 ```
 try {
 } catch (e) {
-  e;
-  e = 10;
+	e;
+	e = 10;
 }
 
 ```
@@ -107,8 +107,8 @@ try {
 ```
 try {
 } catch (ex) {
-  console.log('test');
-  ex = 10;
+	console.log('test');
+	ex = 10;
 }
 
 ```
@@ -135,7 +135,7 @@ try {
 ```
 try {
 } catch (ex) {
-  [ex, test] = [];
+	[ex, test] = [];
 }
 
 ```
@@ -169,8 +169,8 @@ try {
 ```
 try {
 } catch ({message, name}) {
-  message = 'test';
-  name = 10;
+	message = 'test';
+	name = 10;
 }
 
 ```
@@ -197,7 +197,7 @@ try {
 ```
 try {
 } catch (ex) {
-  ({x: ex = 0} = {});
+	({x: ex = 0} = {});
 }
 
 ```
@@ -224,8 +224,8 @@ try {
 ```
 try {
 } catch (ex) {
-  let a;
-  ({x: a = ex = 0} = {});
+	let a;
+	({x: a = ex = 0} = {});
 }
 
 ```

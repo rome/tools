@@ -107,7 +107,7 @@ export default async function executeMain(
 
 	// Execute the script if there was no syntax error
 	if (sourceMap !== undefined) {
-		sourceMapManager.addSourceMap(filename, () => sourceMap);
+		sourceMapManager.add(filename, sourceMap);
 	}
 	await script.runInContext(context);
 	return {syntaxError: undefined};

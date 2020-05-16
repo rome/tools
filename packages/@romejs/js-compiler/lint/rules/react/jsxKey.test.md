@@ -10,17 +10,17 @@
 
  unknown:1:11 lint/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-	✖ Missing the "key" prop for element in array
+  ✖ Missing the "key" prop for element in array
 
-	  const a = [<div />, <div />]
-	             ^^^^^^^
+    const a = [<div />, <div />]
+               ^^^^^^^
 
  unknown:1:20 lint/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-	✖ Missing the "key" prop for element in array
+  ✖ Missing the "key" prop for element in array
 
-	  const a = [<div />, <div />]
-	                      ^^^^^^^
+    const a = [<div />, <div />]
+                        ^^^^^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -41,10 +41,10 @@ const a = [<div />, <div />];
 
  unknown:1:26 lint/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-	✖ Missing the "key" prop for element in iterator
+  ✖ Missing the "key" prop for element in iterator
 
-	  const a = [1, 2].map(x => <div>{x}</div>);
-	                            ^^^^^^^^^^^^^^
+    const a = [1, 2].map(x => <div>{x}</div>);
+                              ^^^^^^^^^^^^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -65,12 +65,12 @@ const a = [1, 2].map((x) => <div>{x}</div>);
 
  unknown:2:9 lint/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-	✖ Missing the "key" prop for element in iterator
+  ✖ Missing the "key" prop for element in iterator
 
-		1 │ const a = [1, 2].map(x => {
-	> 2 │   return <div>{x}</div>;
-	   │          ^^^^^^^^^^^^^^
-		3 │ });
+    1 │ const a = [1, 2].map(x => {
+  > 2 │   return <div>{x}</div>;
+      │          ^^^^^^^^^^^^^^
+    3 │ });
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -93,12 +93,12 @@ const a = [1, 2].map((x) => {
 
  unknown:2:9 lint/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-	✖ Missing the "key" prop for element in iterator
+  ✖ Missing the "key" prop for element in iterator
 
-		1 │ const a = [1, 2].map(function(x) {
-	> 2 │   return <div>{x}</div>;
-	   │          ^^^^^^^^^^^^^^
-		3 │ });
+    1 │ const a = [1, 2].map(function(x) {
+  > 2 │   return <div>{x}</div>;
+      │          ^^^^^^^^^^^^^^
+    3 │ });
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

@@ -6,112 +6,112 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 35
-      line: 10
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    TryStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 1
-          index: 34
-          line: 9
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      block: BlockStatement {
-        body: Array []
-        directives: Array []
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 1
-            index: 8
-            line: 3
-          }
-          start: Object {
-            column: 4
-            index: 4
-            line: 1
-          }
-        }
-      }
-      finalizer: BlockStatement {
-        body: Array []
-        directives: Array []
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 1
-            index: 34
-            line: 9
-          }
-          start: Object {
-            column: 8
-            index: 28
-            line: 7
-          }
-        }
-      }
-      handler: CatchClause {
-        param: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 1
-            index: 19
-            line: 6
-          }
-          start: Object {
-            column: 0
-            index: 9
-            line: 4
-          }
-        }
-        body: BlockStatement {
-          body: Array []
-          directives: Array []
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 1
-              index: 19
-              line: 6
-            }
-            start: Object {
-              column: 6
-              index: 15
-              line: 4
-            }
-          }
-        }
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 0
+			index: 35
+			line: 10
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		TryStatement {
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 1
+					index: 34
+					line: 9
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			block: BlockStatement {
+				body: Array []
+				directives: Array []
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 1
+						index: 8
+						line: 3
+					}
+					start: Object {
+						column: 4
+						index: 4
+						line: 1
+					}
+				}
+			}
+			finalizer: BlockStatement {
+				body: Array []
+				directives: Array []
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 1
+						index: 34
+						line: 9
+					}
+					start: Object {
+						column: 8
+						index: 28
+						line: 7
+					}
+				}
+			}
+			handler: CatchClause {
+				param: undefined
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 1
+						index: 19
+						line: 6
+					}
+					start: Object {
+						column: 0
+						index: 9
+						line: 4
+					}
+				}
+				body: BlockStatement {
+					body: Array []
+					directives: Array []
+					loc: Object {
+						filename: 'input.js'
+						end: Object {
+							column: 1
+							index: 19
+							line: 6
+						}
+						start: Object {
+							column: 6
+							index: 15
+							line: 4
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

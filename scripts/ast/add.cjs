@@ -39,12 +39,12 @@ import {JSNodeBase} from '../index';
 import {createBuilder} from '../utils';
 
 export type ${nodeType} = JSNodeBase & {
-  type: '${nodeType}';
+	type: '${nodeType}';
 };
 
 export const ${builderName} = createBuilder<${nodeType}>('${nodeType}', {
-  bindingKeys: {},
-  visitorKeys: {},
+	bindingKeys: {},
+	visitorKeys: {},
 });
 `;
 const fileLoc = path.join(astFolder, category, `${nodeType}.ts`);
@@ -68,7 +68,7 @@ import {AnyNode, ${nodeType}} from '@romejs/js-ast';
 import {Token} from '../../tokens';
 
 export default function ${nodeType}(builder: Builder, node: ${nodeType}): Token {
-  throw new Error('unimplemented');
+	throw new Error('unimplemented');
 }
 `;
 write(builderDefFile, builderContent);
@@ -85,8 +85,8 @@ const analysisContent = `/**
 import {AnyNode, ${nodeType}, ${builderName}} from '@romejs/js-ast';
 
 export default function ${nodeType}(node: AnyNode) {
-  node = ${builderName}.assert(node);
-  throw new Error('unimplemented');
+	node = ${builderName}.assert(node);
+	throw new Error('unimplemented');
 }
  `;
 write(analysisDefFile, analysisContent);

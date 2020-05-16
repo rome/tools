@@ -6,7 +6,7 @@
  */
 
 import {Profile, TraceEvent} from './types';
-import * as sourceMapManager from './sourceMapManager';
+import sourceMapManager from './sourceMapManager';
 import {urlToFilename} from './utils';
 import {ob1Coerce0, ob1Coerce0To1, ob1Coerce1To0, ob1Get0} from '@romejs/ob1';
 
@@ -32,14 +32,10 @@ export default class Trace {
 		// Nothing else should be relying on this so it doesn't really matter
 		for (const node of profile.cpuProfile.nodes) {
 			const {callFrame} = node;
-			const filename = urlToFilename(callFrame.url);
-			const sourceMap = sourceMapManager.getSourceMap(filename);
-			if (sourceMap === undefined) {
-				continue;
-			}
 
 			// Call frame line numbers are 0-index while Rome is 1-indexed
-			const resolved = sourceMap.approxOriginalPositionFor(
+			const resolved = sourceMapManager.approxOriginalPositionFor(
+				urlToFilename(callFrame.url),
 				ob1Coerce0To1(ob1Coerce0(callFrame.lineNumber)),
 				ob1Coerce0(callFrame.columnNumber),
 			);

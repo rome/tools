@@ -17,15 +17,15 @@ buildTrunk();
 
 console.log(inverse('Compiling Extension'));
 execNode([
-  path.join('node_modules', '.bin', 'tsc'),
-  '--build',
-  extensionFolder,
+	path.join('node_modules', '.bin', 'tsc'),
+	'--build',
+	extensionFolder,
 ]);
 
 console.log(inverse('Running VSCode'));
 exec('code', [
-  '--extensionDevelopmentPath',
-  extensionFolder,
-  '--disable-extensions',
-  ...argv,
+	'--extensionDevelopmentPath',
+	extensionFolder,
+	'--disable-extensions',
+	...argv,
 ]);

@@ -29,13 +29,13 @@
 
 ```
 function greet1() {
-  try {
-    throw new Error('Try');
-  } catch (err) {
-    throw err;
-  } finally {
-    return 1;
-  }
+	try {
+		throw new Error('Try');
+	} catch (err) {
+		throw err;
+	} finally {
+		return 1;
+	}
 }
 
 ```
@@ -65,13 +65,13 @@ function greet1() {
 
 ```
 function greet2() {
-  try {
-    throw new Error('Try');
-  } catch (err) {
-    throw err;
-  } finally {
-    break;
-  }
+	try {
+		throw new Error('Try');
+	} catch (err) {
+		throw err;
+	} finally {
+		break;
+	}
 }
 
 ```
@@ -101,13 +101,13 @@ function greet2() {
 
 ```
 function greet3() {
-  try {
-    throw new Error('Try');
-  } catch (err) {
-    throw err;
-  } finally {
-    continue;
-  }
+	try {
+		throw new Error('Try');
+	} catch (err) {
+		throw err;
+	} finally {
+		continue;
+	}
 }
 
 ```
@@ -137,13 +137,13 @@ function greet3() {
 
 ```
 function greet4() {
-  try {
-    throw new Error('Try');
-  } catch (err) {
-    throw err;
-  } finally {
-    throw new Error('Finally');
-  }
+	try {
+		throw new Error('Try');
+	} catch (err) {
+		throw err;
+	} finally {
+		throw new Error('Finally');
+	}
 }
 
 ```

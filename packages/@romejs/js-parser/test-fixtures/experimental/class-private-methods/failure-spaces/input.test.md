@@ -6,270 +6,270 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 61
-      line: 6
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unexpected space between # and identifier'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 3
-          index: 18
-          line: 2
-        }
-        start: Object {
-          column: 3
-          index: 18
-          line: 2
-        }
-      }
-    }
-  ]
-  body: Array [
-    ClassDeclaration {
-      id: BindingIdentifier {
-        name: 'Spaces'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'Spaces'
-          end: Object {
-            column: 12
-            index: 12
-            line: 1
-          }
-          start: Object {
-            column: 6
-            index: 6
-            line: 1
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 1
-          index: 60
-          line: 5
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      meta: ClassHead {
-        implements: undefined
-        superClass: undefined
-        superTypeParameters: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 1
-            index: 60
-            line: 5
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        body: Array [
-          ClassPrivateMethod {
-            kind: 'method'
-            key: PrivateName {
-              id: Identifier {
-                name: 'wrongSpaces'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'wrongSpaces'
-                  end: Object {
-                    column: 16
-                    index: 31
-                    line: 2
-                  }
-                  start: Object {
-                    column: 5
-                    index: 20
-                    line: 2
-                  }
-                }
-              }
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 16
-                  index: 31
-                  line: 2
-                }
-                start: Object {
-                  column: 2
-                  index: 17
-                  line: 2
-                }
-              }
-            }
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 3
-                index: 58
-                line: 4
-              }
-              start: Object {
-                column: 2
-                index: 17
-                line: 2
-              }
-            }
-            head: FunctionHead {
-              async: false
-              generator: false
-              hasHoistedVars: false
-              params: Array []
-              rest: undefined
-              returnType: undefined
-              thisType: undefined
-              typeParameters: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 18
-                  index: 33
-                  line: 2
-                }
-                start: Object {
-                  column: 16
-                  index: 31
-                  line: 2
-                }
-              }
-            }
-            meta: ClassPropertyMeta {
-              abstract: false
-              accessibility: undefined
-              optional: false
-              readonly: false
-              static: false
-              typeAnnotation: undefined
-              start: Object {
-                column: 2
-                index: 17
-                line: 2
-              }
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 16
-                  index: 31
-                  line: 2
-                }
-                start: Object {
-                  column: 2
-                  index: 17
-                  line: 2
-                }
-              }
-            }
-            body: BlockStatement {
-              directives: Array []
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 3
-                  index: 58
-                  line: 4
-                }
-                start: Object {
-                  column: 19
-                  index: 34
-                  line: 2
-                }
-              }
-              body: Array [
-                ReturnStatement {
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 18
-                      index: 54
-                      line: 3
-                    }
-                    start: Object {
-                      column: 4
-                      index: 40
-                      line: 3
-                    }
-                  }
-                  argument: CallExpression {
-                    arguments: Array []
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 17
-                        index: 53
-                        line: 3
-                      }
-                      start: Object {
-                        column: 11
-                        index: 47
-                        line: 3
-                      }
-                    }
-                    callee: ReferenceIdentifier {
-                      name: 'fail'
-                      loc: Object {
-                        filename: 'input.js'
-                        identifierName: 'fail'
-                        end: Object {
-                          column: 15
-                          index: 51
-                          line: 3
-                        }
-                        start: Object {
-                          column: 11
-                          index: 47
-                          line: 3
-                        }
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 0
+			index: 61
+			line: 6
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: 'js-parser'}]
+			description: Object {
+				advice: Array []
+				category: 'parse/js'
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unexpected space between # and identifier'}
+			}
+			location: Object {
+				filename: 'input.js'
+				mtime: undefined
+				sourceType: 'script'
+				end: Object {
+					column: 3
+					index: 18
+					line: 2
+				}
+				start: Object {
+					column: 3
+					index: 18
+					line: 2
+				}
+			}
+		}
+	]
+	body: Array [
+		ClassDeclaration {
+			id: BindingIdentifier {
+				name: 'Spaces'
+				loc: Object {
+					filename: 'input.js'
+					identifierName: 'Spaces'
+					end: Object {
+						column: 12
+						index: 12
+						line: 1
+					}
+					start: Object {
+						column: 6
+						index: 6
+						line: 1
+					}
+				}
+			}
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 1
+					index: 60
+					line: 5
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			meta: ClassHead {
+				implements: undefined
+				superClass: undefined
+				superTypeParameters: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 1
+						index: 60
+						line: 5
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				body: Array [
+					ClassPrivateMethod {
+						kind: 'method'
+						key: PrivateName {
+							id: Identifier {
+								name: 'wrongSpaces'
+								loc: Object {
+									filename: 'input.js'
+									identifierName: 'wrongSpaces'
+									end: Object {
+										column: 16
+										index: 31
+										line: 2
+									}
+									start: Object {
+										column: 5
+										index: 20
+										line: 2
+									}
+								}
+							}
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 16
+									index: 31
+									line: 2
+								}
+								start: Object {
+									column: 2
+									index: 17
+									line: 2
+								}
+							}
+						}
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 3
+								index: 58
+								line: 4
+							}
+							start: Object {
+								column: 2
+								index: 17
+								line: 2
+							}
+						}
+						head: FunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: Array []
+							rest: undefined
+							returnType: undefined
+							thisType: undefined
+							typeParameters: undefined
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 18
+									index: 33
+									line: 2
+								}
+								start: Object {
+									column: 16
+									index: 31
+									line: 2
+								}
+							}
+						}
+						meta: ClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							start: Object {
+								column: 2
+								index: 17
+								line: 2
+							}
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 16
+									index: 31
+									line: 2
+								}
+								start: Object {
+									column: 2
+									index: 17
+									line: 2
+								}
+							}
+						}
+						body: BlockStatement {
+							directives: Array []
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 3
+									index: 58
+									line: 4
+								}
+								start: Object {
+									column: 19
+									index: 34
+									line: 2
+								}
+							}
+							body: Array [
+								ReturnStatement {
+									loc: Object {
+										filename: 'input.js'
+										end: Object {
+											column: 18
+											index: 54
+											line: 3
+										}
+										start: Object {
+											column: 4
+											index: 40
+											line: 3
+										}
+									}
+									argument: CallExpression {
+										arguments: Array []
+										loc: Object {
+											filename: 'input.js'
+											end: Object {
+												column: 17
+												index: 53
+												line: 3
+											}
+											start: Object {
+												column: 11
+												index: 47
+												line: 3
+											}
+										}
+										callee: ReferenceIdentifier {
+											name: 'fail'
+											loc: Object {
+												filename: 'input.js'
+												identifierName: 'fail'
+												end: Object {
+													column: 15
+													index: 51
+													line: 3
+												}
+												start: Object {
+													column: 11
+													index: 47
+													line: 3
+												}
+											}
+										}
+									}
+								}
+							]
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

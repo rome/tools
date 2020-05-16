@@ -6,203 +6,203 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: true
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 8
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unterminated regular expression'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 5
-          index: 5
-          line: 1
-        }
-        start: Object {
-          column: 5
-          index: 5
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 0
-          index: 8
-          line: 2
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: BinaryExpression {
-        operator: '/'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 0
-            index: 8
-            line: 2
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        right: ReferenceIdentifier {
-          name: 'INVALID_PLACEHOLDER'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 0
-              index: 8
-              line: 2
-            }
-            start: Object {
-              column: 0
-              index: 8
-              line: 2
-            }
-          }
-        }
-        left: RegExpLiteral {
-          global: false
-          insensitive: false
-          multiline: false
-          noDotNewline: false
-          sticky: false
-          unicode: false
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 6
-              index: 6
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-          expression: RegExpSubExpression {
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 5
-                index: 5
-                line: 1
-              }
-              start: Object {
-                column: 1
-                index: 1
-                line: 1
-              }
-            }
-            body: Array [
-              RegExpCharacter {
-                value: 't'
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 2
-                    index: 2
-                    line: 1
-                  }
-                  start: Object {
-                    column: 1
-                    index: 1
-                    line: 1
-                  }
-                }
-              }
-              RegExpCharacter {
-                value: 'e'
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 3
-                    index: 3
-                    line: 1
-                  }
-                  start: Object {
-                    column: 2
-                    index: 2
-                    line: 1
-                  }
-                }
-              }
-              RegExpCharacter {
-                value: 's'
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 4
-                    index: 4
-                    line: 1
-                  }
-                  start: Object {
-                    column: 3
-                    index: 3
-                    line: 1
-                  }
-                }
-              }
-              RegExpCharacter {
-                value: 't'
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 5
-                    index: 5
-                    line: 1
-                  }
-                  start: Object {
-                    column: 4
-                    index: 4
-                    line: 1
-                  }
-                }
-              }
-            ]
-          }
-        }
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: true
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 0
+			index: 8
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: 'js-parser'}]
+			description: Object {
+				advice: Array []
+				category: 'parse/js'
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unterminated regular expression'}
+			}
+			location: Object {
+				filename: 'input.js'
+				mtime: undefined
+				sourceType: 'script'
+				end: Object {
+					column: 5
+					index: 5
+					line: 1
+				}
+				start: Object {
+					column: 5
+					index: 5
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		ExpressionStatement {
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 0
+					index: 8
+					line: 2
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: BinaryExpression {
+				operator: '/'
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 0
+						index: 8
+						line: 2
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				right: ReferenceIdentifier {
+					name: 'INVALID_PLACEHOLDER'
+					loc: Object {
+						filename: 'input.js'
+						end: Object {
+							column: 0
+							index: 8
+							line: 2
+						}
+						start: Object {
+							column: 0
+							index: 8
+							line: 2
+						}
+					}
+				}
+				left: RegExpLiteral {
+					global: false
+					insensitive: false
+					multiline: false
+					noDotNewline: false
+					sticky: false
+					unicode: false
+					loc: Object {
+						filename: 'input.js'
+						end: Object {
+							column: 6
+							index: 6
+							line: 1
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+					expression: RegExpSubExpression {
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 5
+								index: 5
+								line: 1
+							}
+							start: Object {
+								column: 1
+								index: 1
+								line: 1
+							}
+						}
+						body: Array [
+							RegExpCharacter {
+								value: 't'
+								loc: Object {
+									filename: 'input.js'
+									end: Object {
+										column: 2
+										index: 2
+										line: 1
+									}
+									start: Object {
+										column: 1
+										index: 1
+										line: 1
+									}
+								}
+							}
+							RegExpCharacter {
+								value: 'e'
+								loc: Object {
+									filename: 'input.js'
+									end: Object {
+										column: 3
+										index: 3
+										line: 1
+									}
+									start: Object {
+										column: 2
+										index: 2
+										line: 1
+									}
+								}
+							}
+							RegExpCharacter {
+								value: 's'
+								loc: Object {
+									filename: 'input.js'
+									end: Object {
+										column: 4
+										index: 4
+										line: 1
+									}
+									start: Object {
+										column: 3
+										index: 3
+										line: 1
+									}
+								}
+							}
+							RegExpCharacter {
+								value: 't'
+								loc: Object {
+									filename: 'input.js'
+									end: Object {
+										column: 5
+										index: 5
+										line: 1
+									}
+									start: Object {
+										column: 4
+										index: 4
+										line: 1
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
 }
 ```

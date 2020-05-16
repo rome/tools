@@ -13,59 +13,59 @@ import {Dict} from '@romejs/typescript-helpers';
 test(
 	'strings',
 	(t) => {
-		t.is(prettyFormat('yes'), "'yes'");
+		t.inlineSnapshot(prettyFormat('yes'), "'yes'");
 	},
 );
 
 test(
 	'numbers',
 	(t) => {
-		t.is(prettyFormat(NaN), 'NaN');
-		t.is(prettyFormat(Infinity), 'Infinity');
-		t.is(prettyFormat(-Infinity), '-Infinity');
-		t.is(prettyFormat(-0), '-0');
-		t.is(prettyFormat(1), '1');
-		t.is(prettyFormat(10), '10');
-		t.is(prettyFormat(100), '100');
-		t.is(prettyFormat(1_000), '1_000');
-		t.is(prettyFormat(10_000), '10_000');
-		t.is(prettyFormat(100_000), '100_000');
-		t.is(prettyFormat(1_000_000), '1_000_000');
-		t.is(prettyFormat(10_000_000), '10_000_000');
-		t.is(prettyFormat(100_000_000), '100_000_000');
-		t.is(prettyFormat(1_000_000_000), '1_000_000_000');
+		t.inlineSnapshot(prettyFormat(NaN), 'NaN');
+		t.inlineSnapshot(prettyFormat(Infinity), 'Infinity');
+		t.inlineSnapshot(prettyFormat(-Infinity), '-Infinity');
+		t.inlineSnapshot(prettyFormat(-0), '-0');
+		t.inlineSnapshot(prettyFormat(1), '1');
+		t.inlineSnapshot(prettyFormat(10), '10');
+		t.inlineSnapshot(prettyFormat(100), '100');
+		t.inlineSnapshot(prettyFormat(1_000), '1_000');
+		t.inlineSnapshot(prettyFormat(10_000), '10_000');
+		t.inlineSnapshot(prettyFormat(100_000), '100_000');
+		t.inlineSnapshot(prettyFormat(1_000_000), '1_000_000');
+		t.inlineSnapshot(prettyFormat(10_000_000), '10_000_000');
+		t.inlineSnapshot(prettyFormat(100_000_000), '100_000_000');
+		t.inlineSnapshot(prettyFormat(1_000_000_000), '1_000_000_000');
 	},
 );
 
 test(
 	'booleans',
 	(t) => {
-		t.is(prettyFormat(true), 'true');
-		t.is(prettyFormat(false), 'false');
+		t.inlineSnapshot(prettyFormat(true), 'true');
+		t.inlineSnapshot(prettyFormat(false), 'false');
 	},
 );
 
 test(
 	'null',
 	(t) => {
-		t.is(prettyFormat(null), 'null');
+		t.inlineSnapshot(prettyFormat(null), 'null');
 	},
 );
 
 test(
 	'undefined',
 	(t) => {
-		t.is(prettyFormat(undefined), 'undefined');
+		t.inlineSnapshot(prettyFormat(undefined), 'undefined');
 	},
 );
 
 test(
 	'arrays',
 	(t) => {
-		t.is(prettyFormat([1, 2]), `Array [\n  1\n  2\n]`);
-		t.is(
+		t.inlineSnapshot(prettyFormat([1, 2]), 'Array [\n\t1\n\t2\n]');
+		t.inlineSnapshot(
 			prettyFormat([1, [2, 3, [4, 5]]]),
-			'Array [\n  1\n  Array [\n    2\n    3\n    Array [\n      4\n      5\n    ]\n  ]\n]',
+			'Array [\n\t1\n\tArray [\n\t\t2\n\t\t3\n\t\tArray [\n\t\t\t4\n\t\t\t5\n\t\t]\n\t]\n]',
 		);
 	},
 );
@@ -73,30 +73,33 @@ test(
 test(
 	'regexps',
 	(t) => {
-		t.is(prettyFormat(/foo/g), '/foo/g');
+		t.inlineSnapshot(prettyFormat(/foo/g), '/foo/g');
 	},
 );
 
 test(
 	'symbols',
 	(t) => {
-		t.is(prettyFormat(Symbol()), 'Symbol()');
-		t.is(prettyFormat(Symbol('test')), 'Symbol(test)');
+		t.inlineSnapshot(prettyFormat(Symbol()), 'Symbol()');
+		t.inlineSnapshot(prettyFormat(Symbol('test')), 'Symbol(test)');
 	},
 );
 
 test(
 	'objects',
 	(t) => {
-		t.is(prettyFormat({}), 'Object {}');
-		t.is(prettyFormat({foo: 'bar'}), "Object {foo: 'bar'}");
-		t.is(prettyFormat({'foo||{}': 'bar'}), "Object {'foo||{}': 'bar'}");
-		t.is(
+		t.inlineSnapshot(prettyFormat({}), 'Object {}');
+		t.inlineSnapshot(prettyFormat({foo: 'bar'}), "Object {foo: 'bar'}");
+		t.inlineSnapshot(
+			prettyFormat({'foo||{}': 'bar'}),
+			"Object {'foo||{}': 'bar'}",
+		);
+		t.inlineSnapshot(
 			prettyFormat({
 				[Symbol('foo')]: 'bar',
 				[Symbol.iterator]: 'foo',
 			}),
-			"Object {\n  Symbol(foo): 'bar'\n  Symbol(Symbol.iterator): 'foo'\n}",
+			"Object {\n\tSymbol(foo): 'bar'\n\tSymbol(Symbol.iterator): 'foo'\n}",
 		);
 	},
 );
@@ -104,10 +107,10 @@ test(
 test(
 	'iterables',
 	(t) => {
-		t.is(prettyFormat(new Set([1, 2, 3])), 'Set [\n  1\n  2\n  3\n]');
-		t.is(
+		t.inlineSnapshot(prettyFormat(new Set([1, 2, 3])), 'Set [\n\t1\n\t2\n\t3\n]');
+		t.inlineSnapshot(
 			prettyFormat(new Map([['a', 1], ['b', 2], ['c', 3]])),
-			'Map [\n  a => 1\n  b => 2\n  c => 3\n]',
+			'Map [\n\ta => 1\n\tb => 2\n\tc => 3\n]',
 		);
 	},
 );
@@ -115,19 +118,22 @@ test(
 test(
 	'functions',
 	(t) => {
-		t.is(prettyFormat(function() {}), 'Function anonymous');
-		t.is(prettyFormat(function named() {}), 'Function named');
+		t.inlineSnapshot(prettyFormat(function() {}), 'Function anonymous');
+		t.inlineSnapshot(prettyFormat(function named() {}), 'Function named');
 
 		function withProps() {}
 
 		withProps.foo = function withPropsFoo() {};
 		withProps.bar = 'yes';
-		t.is(
+		t.inlineSnapshot(
 			prettyFormat(withProps),
-			"Function withProps {\n  bar: 'yes'\n  foo: Function withPropsFoo\n}",
+			"Function withProps {\n\tbar: 'yes'\n\tfoo: Function withPropsFoo\n}",
 		);
 
-		t.is(prettyFormat(String.prototype.indexOf), 'NativeFunction indexOf');
+		t.inlineSnapshot(
+			prettyFormat(String.prototype.indexOf),
+			'NativeFunction indexOf',
+		);
 	},
 );
 
@@ -136,22 +142,22 @@ test(
 	(t) => {
 		// Parallel ref
 		const parallel = {};
-		t.is(
+		t.inlineSnapshot(
 			prettyFormat({foo: parallel, bar: parallel}),
-			`Object {\n  bar: Object {}\n  foo: Object {}\n}`,
+			'Object {\n\tbar: Object {}\n\tfoo: Object {}\n}',
 		);
 
 		// Circular ref
 		const circular: Dict<unknown> = {};
 		circular.obj = circular;
-		t.is(prettyFormat(circular), 'Object {obj: Circular Object 0}');
+		t.inlineSnapshot(prettyFormat(circular), 'Object {obj: Circular Object 0}');
 
 		// Circular deep top ref
 		const circularDeepTop: Dict<unknown> = {};
 		circularDeepTop.foo = {
 			bar: circularDeepTop,
 		};
-		t.is(
+		t.inlineSnapshot(
 			prettyFormat(circularDeepTop),
 			'Object {foo: Object {bar: Circular Object 0}}',
 		);
@@ -159,7 +165,7 @@ test(
 		// circular deep ref
 		const circularDeep: Dict<Dict<unknown>> = {foo: {}};
 		circularDeep.foo.bar = circularDeep.foo;
-		t.is(
+		t.inlineSnapshot(
 			prettyFormat(circularDeep),
 			'Object {foo: Object {bar: Circular Object 1}}',
 		);

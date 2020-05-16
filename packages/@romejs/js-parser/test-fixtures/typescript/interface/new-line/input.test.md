@@ -6,111 +6,111 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.ts'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array ['ts']
-  loc: Object {
-    filename: 'input.ts'
-    end: Object {
-      column: 0
-      index: 15
-      line: 4
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 9
-          index: 9
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: ReferenceIdentifier {
-        name: 'interface'
-        loc: Object {
-          filename: 'input.ts'
-          identifierName: 'interface'
-          end: Object {
-            column: 9
-            index: 9
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-      }
-    }
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 1
-          index: 11
-          line: 2
-        }
-        start: Object {
-          column: 0
-          index: 10
-          line: 2
-        }
-      }
-      expression: ReferenceIdentifier {
-        name: 'F'
-        loc: Object {
-          filename: 'input.ts'
-          identifierName: 'F'
-          end: Object {
-            column: 1
-            index: 11
-            line: 2
-          }
-          start: Object {
-            column: 0
-            index: 10
-            line: 2
-          }
-        }
-      }
-    }
-    BlockStatement {
-      body: Array []
-      directives: Array []
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 2
-          index: 14
-          line: 3
-        }
-        start: Object {
-          column: 0
-          index: 12
-          line: 3
-        }
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: 'input.ts'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'module'
+	syntax: Array ['ts']
+	loc: Object {
+		filename: 'input.ts'
+		end: Object {
+			column: 0
+			index: 15
+			line: 4
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		ExpressionStatement {
+			loc: Object {
+				filename: 'input.ts'
+				end: Object {
+					column: 9
+					index: 9
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: ReferenceIdentifier {
+				name: 'interface'
+				loc: Object {
+					filename: 'input.ts'
+					identifierName: 'interface'
+					end: Object {
+						column: 9
+						index: 9
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+			}
+		}
+		ExpressionStatement {
+			loc: Object {
+				filename: 'input.ts'
+				end: Object {
+					column: 1
+					index: 11
+					line: 2
+				}
+				start: Object {
+					column: 0
+					index: 10
+					line: 2
+				}
+			}
+			expression: ReferenceIdentifier {
+				name: 'F'
+				loc: Object {
+					filename: 'input.ts'
+					identifierName: 'F'
+					end: Object {
+						column: 1
+						index: 11
+						line: 2
+					}
+					start: Object {
+						column: 0
+						index: 10
+						line: 2
+					}
+				}
+			}
+		}
+		BlockStatement {
+			body: Array []
+			directives: Array []
+			loc: Object {
+				filename: 'input.ts'
+				end: Object {
+					column: 2
+					index: 14
+					line: 3
+				}
+				start: Object {
+					column: 0
+					index: 12
+					line: 3
+				}
+			}
+		}
+	]
 }
 ```

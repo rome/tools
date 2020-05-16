@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import * as sourceMapManager from './sourceMapManager';
-export {sourceMapManager};
+import sourceMapManager, {initErrorHooks} from './sourceMapManager';
+export {initErrorHooks, sourceMapManager};
 
 export * from './errors';
 

@@ -7,7 +7,7 @@
 
 import {catchDiagnostics} from '@romejs/diagnostics';
 import {printDiagnostics} from '@romejs/cli-diagnostics';
-import {getErrorStructure, sourceMapManager} from '@romejs/v8';
+import {getErrorStructure, initErrorHooks, sourceMapManager} from '@romejs/v8';
 import {Reporter} from '@romejs/cli-reporter';
 import {BIN, MAP, VERSION} from '@romejs/core';
 import cli from '../cli';
@@ -36,10 +36,13 @@ async function main(): Promise<void> {
 	}
 }
 
-sourceMapManager.init();
-sourceMapManager.addSourceMap(
+initErrorHooks();
+sourceMapManager.add(
 	BIN.join(),
-	() => SourceMapConsumer.fromJSON(JSON.parse(readFileTextSync(MAP))),
+	SourceMapConsumer.fromJSONLazy(
+		BIN.join(),
+		() => JSON.parse(readFileTextSync(MAP)),
+	),
 );
 
 catchDiagnostics(main).then(({diagnostics}) => {

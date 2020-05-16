@@ -47,7 +47,7 @@ for (const {basename, category} of defs) {
 index += '\n';
 index += 'export const lintTransforms = [\n';
 for (const {basename} of defs) {
-	index += `  ${basename},\n`;
+	index += `	${basename},\n`;
 }
 index += '];\n';
 
@@ -57,7 +57,7 @@ write(indexLoc, index);
 let categories = readGeneratedFile(categoriesFile);
 categories += 'type LintDiagnosticCategory =';
 for (const {basename} of defs) {
-	categories += `\n  | 'lint/${basename}'`;
+	categories += `\n	| 'lint/${basename}'`;
 }
 categories += ';\n';
 write(categoriesFile, categories);

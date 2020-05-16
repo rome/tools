@@ -855,7 +855,7 @@ export default class MasterRequest {
 							{
 								type: 'log',
 								category: 'info',
-								text: markup`Error occurred while requesting ${method} for <filelink emphasis target="${ref.uid}" />`,
+								text: markup`Error occurred while requesting <emphasis>${method}</emphasis> for <filelink emphasis target="${ref.uid}" />`,
 							},
 						],
 					},

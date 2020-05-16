@@ -6,247 +6,247 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 53
-      line: 4
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Illegal \'use strict\' directive in function with non-simple parameter list'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 15
-          index: 50
-          line: 2
-        }
-        start: Object {
-          column: 2
-          index: 37
-          line: 2
-        }
-      }
-    }
-  ]
-  body: Array [
-    FunctionDeclaration {
-      id: BindingIdentifier {
-        name: 'a'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'a'
-          end: Object {
-            column: 10
-            index: 10
-            line: 1
-          }
-          start: Object {
-            column: 9
-            index: 9
-            line: 1
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 1
-          index: 52
-          line: 3
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      body: BlockStatement {
-        body: Array []
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 1
-            index: 52
-            line: 3
-          }
-          start: Object {
-            column: 33
-            index: 33
-            line: 1
-          }
-        }
-        directives: Array [
-          Directive {
-            value: 'use strict'
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 15
-                index: 50
-                line: 2
-              }
-              start: Object {
-                column: 2
-                index: 37
-                line: 2
-              }
-            }
-          }
-        ]
-      }
-      head: FunctionHead {
-        async: false
-        generator: false
-        hasHoistedVars: false
-        rest: undefined
-        returnType: undefined
-        thisType: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 32
-            index: 32
-            line: 1
-          }
-          start: Object {
-            column: 10
-            index: 10
-            line: 1
-          }
-        }
-        params: Array [
-          BindingArrayPattern {
-            rest: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 31
-                index: 31
-                line: 1
-              }
-              start: Object {
-                column: 11
-                index: 11
-                line: 1
-              }
-            }
-            meta: PatternMeta {
-              optional: undefined
-              typeAnnotation: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 31
-                  index: 31
-                  line: 1
-                }
-                start: Object {
-                  column: 11
-                  index: 11
-                  line: 1
-                }
-              }
-            }
-            elements: Array [
-              BindingIdentifier {
-                name: 'option1'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'option1'
-                  end: Object {
-                    column: 20
-                    index: 20
-                    line: 1
-                  }
-                  start: Object {
-                    column: 13
-                    index: 13
-                    line: 1
-                  }
-                }
-                meta: PatternMeta {
-                  optional: undefined
-                  typeAnnotation: undefined
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 20
-                      index: 20
-                      line: 1
-                    }
-                    start: Object {
-                      column: 13
-                      index: 13
-                      line: 1
-                    }
-                  }
-                }
-              }
-              BindingIdentifier {
-                name: 'option2'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'option2'
-                  end: Object {
-                    column: 29
-                    index: 29
-                    line: 1
-                  }
-                  start: Object {
-                    column: 22
-                    index: 22
-                    line: 1
-                  }
-                }
-                meta: PatternMeta {
-                  optional: undefined
-                  typeAnnotation: undefined
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 29
-                      index: 29
-                      line: 1
-                    }
-                    start: Object {
-                      column: 22
-                      index: 22
-                      line: 1
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        ]
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 0
+			index: 53
+			line: 4
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: 'js-parser'}]
+			description: Object {
+				advice: Array []
+				category: 'parse/js'
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Illegal \'use strict\' directive in function with non-simple parameter list'}
+			}
+			location: Object {
+				filename: 'input.js'
+				mtime: undefined
+				sourceType: 'script'
+				end: Object {
+					column: 15
+					index: 50
+					line: 2
+				}
+				start: Object {
+					column: 2
+					index: 37
+					line: 2
+				}
+			}
+		}
+	]
+	body: Array [
+		FunctionDeclaration {
+			id: BindingIdentifier {
+				name: 'a'
+				loc: Object {
+					filename: 'input.js'
+					identifierName: 'a'
+					end: Object {
+						column: 10
+						index: 10
+						line: 1
+					}
+					start: Object {
+						column: 9
+						index: 9
+						line: 1
+					}
+				}
+			}
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 1
+					index: 52
+					line: 3
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			body: BlockStatement {
+				body: Array []
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 1
+						index: 52
+						line: 3
+					}
+					start: Object {
+						column: 33
+						index: 33
+						line: 1
+					}
+				}
+				directives: Array [
+					Directive {
+						value: 'use strict'
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 15
+								index: 50
+								line: 2
+							}
+							start: Object {
+								column: 2
+								index: 37
+								line: 2
+							}
+						}
+					}
+				]
+			}
+			head: FunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				rest: undefined
+				returnType: undefined
+				thisType: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 32
+						index: 32
+						line: 1
+					}
+					start: Object {
+						column: 10
+						index: 10
+						line: 1
+					}
+				}
+				params: Array [
+					BindingArrayPattern {
+						rest: undefined
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 31
+								index: 31
+								line: 1
+							}
+							start: Object {
+								column: 11
+								index: 11
+								line: 1
+							}
+						}
+						meta: PatternMeta {
+							optional: undefined
+							typeAnnotation: undefined
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 31
+									index: 31
+									line: 1
+								}
+								start: Object {
+									column: 11
+									index: 11
+									line: 1
+								}
+							}
+						}
+						elements: Array [
+							BindingIdentifier {
+								name: 'option1'
+								loc: Object {
+									filename: 'input.js'
+									identifierName: 'option1'
+									end: Object {
+										column: 20
+										index: 20
+										line: 1
+									}
+									start: Object {
+										column: 13
+										index: 13
+										line: 1
+									}
+								}
+								meta: PatternMeta {
+									optional: undefined
+									typeAnnotation: undefined
+									loc: Object {
+										filename: 'input.js'
+										end: Object {
+											column: 20
+											index: 20
+											line: 1
+										}
+										start: Object {
+											column: 13
+											index: 13
+											line: 1
+										}
+									}
+								}
+							}
+							BindingIdentifier {
+								name: 'option2'
+								loc: Object {
+									filename: 'input.js'
+									identifierName: 'option2'
+									end: Object {
+										column: 29
+										index: 29
+										line: 1
+									}
+									start: Object {
+										column: 22
+										index: 22
+										line: 1
+									}
+								}
+								meta: PatternMeta {
+									optional: undefined
+									typeAnnotation: undefined
+									loc: Object {
+										filename: 'input.js'
+										end: Object {
+											column: 29
+											index: 29
+											line: 1
+										}
+										start: Object {
+											column: 22
+											index: 22
+											line: 1
+										}
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		}
+	]
 }
 ```

@@ -6,127 +6,127 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.ts'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array ['ts']
-  loc: Object {
-    filename: 'input.ts'
-    end: Object {
-      column: 0
-      index: 40
-      line: 5
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    TSModuleDeclaration {
-      id: BindingIdentifier {
-        name: 'A'
-        loc: Object {
-          filename: 'input.ts'
-          identifierName: 'A'
-          end: Object {
-            column: 11
-            index: 11
-            line: 1
-          }
-          start: Object {
-            column: 10
-            index: 10
-            line: 1
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 1
-          index: 39
-          line: 4
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      body: TSModuleBlock {
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 1
-            index: 39
-            line: 4
-          }
-          start: Object {
-            column: 12
-            index: 12
-            line: 1
-          }
-        }
-        body: Array [
-          TSModuleDeclaration {
-            id: BindingIdentifier {
-              name: 'B'
-              loc: Object {
-                filename: 'input.ts'
-                identifierName: 'B'
-                end: Object {
-                  column: 15
-                  index: 29
-                  line: 2
-                }
-                start: Object {
-                  column: 14
-                  index: 28
-                  line: 2
-                }
-              }
-            }
-            loc: Object {
-              filename: 'input.ts'
-              end: Object {
-                column: 5
-                index: 37
-                line: 3
-              }
-              start: Object {
-                column: 4
-                index: 18
-                line: 2
-              }
-            }
-            body: TSModuleBlock {
-              body: Array []
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 5
-                  index: 37
-                  line: 3
-                }
-                start: Object {
-                  column: 16
-                  index: 30
-                  line: 2
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: 'input.ts'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'module'
+	syntax: Array ['ts']
+	loc: Object {
+		filename: 'input.ts'
+		end: Object {
+			column: 0
+			index: 40
+			line: 5
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		TSModuleDeclaration {
+			id: BindingIdentifier {
+				name: 'A'
+				loc: Object {
+					filename: 'input.ts'
+					identifierName: 'A'
+					end: Object {
+						column: 11
+						index: 11
+						line: 1
+					}
+					start: Object {
+						column: 10
+						index: 10
+						line: 1
+					}
+				}
+			}
+			loc: Object {
+				filename: 'input.ts'
+				end: Object {
+					column: 1
+					index: 39
+					line: 4
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			body: TSModuleBlock {
+				loc: Object {
+					filename: 'input.ts'
+					end: Object {
+						column: 1
+						index: 39
+						line: 4
+					}
+					start: Object {
+						column: 12
+						index: 12
+						line: 1
+					}
+				}
+				body: Array [
+					TSModuleDeclaration {
+						id: BindingIdentifier {
+							name: 'B'
+							loc: Object {
+								filename: 'input.ts'
+								identifierName: 'B'
+								end: Object {
+									column: 15
+									index: 29
+									line: 2
+								}
+								start: Object {
+									column: 14
+									index: 28
+									line: 2
+								}
+							}
+						}
+						loc: Object {
+							filename: 'input.ts'
+							end: Object {
+								column: 5
+								index: 37
+								line: 3
+							}
+							start: Object {
+								column: 4
+								index: 18
+								line: 2
+							}
+						}
+						body: TSModuleBlock {
+							body: Array []
+							loc: Object {
+								filename: 'input.ts'
+								end: Object {
+									column: 5
+									index: 37
+									line: 3
+								}
+								start: Object {
+									column: 16
+									index: 30
+									line: 2
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

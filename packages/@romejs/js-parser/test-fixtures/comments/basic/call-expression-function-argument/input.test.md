@@ -6,257 +6,257 @@
 
 ```javascript
 Program {
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 52
-      line: 7
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  comments: Array [
-    CommentLine {
-      id: '0'
-      value: ' one'
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 8
-          index: 39
-          line: 3
-        }
-        start: Object {
-          column: 2
-          index: 33
-          line: 3
-        }
-      }
-    }
-    CommentLine {
-      id: '1'
-      value: ' two'
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 6
-          index: 48
-          line: 5
-        }
-        start: Object {
-          column: 0
-          index: 42
-          line: 5
-        }
-      }
-    }
-  ]
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 2
-          index: 51
-          line: 6
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: CallExpression {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 1
-            index: 50
-            line: 6
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        callee: ReferenceIdentifier {
-          name: 'test'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'test'
-            end: Object {
-              column: 4
-              index: 4
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
-        arguments: Array [
-          FunctionExpression {
-            id: undefined
-            trailingComments: Array ['1']
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 1
-                index: 41
-                line: 4
-              }
-              start: Object {
-                column: 5
-                index: 5
-                line: 1
-              }
-            }
-            head: FunctionHead {
-              async: false
-              generator: false
-              hasHoistedVars: true
-              params: Array []
-              rest: undefined
-              returnType: undefined
-              thisType: undefined
-              typeParameters: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 15
-                  index: 15
-                  line: 1
-                }
-                start: Object {
-                  column: 13
-                  index: 13
-                  line: 1
-                }
-              }
-            }
-            body: BlockStatement {
-              directives: Array []
-              trailingComments: Array ['1']
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 1
-                  index: 41
-                  line: 4
-                }
-                start: Object {
-                  column: 16
-                  index: 16
-                  line: 1
-                }
-              }
-              body: Array [
-                VariableDeclarationStatement {
-                  trailingComments: Array ['0']
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 12
-                      index: 30
-                      line: 2
-                    }
-                    start: Object {
-                      column: 2
-                      index: 20
-                      line: 2
-                    }
-                  }
-                  declaration: VariableDeclaration {
-                    kind: 'var'
-                    trailingComments: undefined
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 12
-                        index: 30
-                        line: 2
-                      }
-                      start: Object {
-                        column: 2
-                        index: 20
-                        line: 2
-                      }
-                    }
-                    declarations: Array [
-                      VariableDeclarator {
-                        id: BindingIdentifier {
-                          name: 'a'
-                          loc: Object {
-                            filename: 'input.js'
-                            identifierName: 'a'
-                            end: Object {
-                              column: 7
-                              index: 25
-                              line: 2
-                            }
-                            start: Object {
-                              column: 6
-                              index: 24
-                              line: 2
-                            }
-                          }
-                        }
-                        loc: Object {
-                          filename: 'input.js'
-                          end: Object {
-                            column: 11
-                            index: 29
-                            line: 2
-                          }
-                          start: Object {
-                            column: 6
-                            index: 24
-                            line: 2
-                          }
-                        }
-                        init: NumericLiteral {
-                          value: 1
-                          format: undefined
-                          loc: Object {
-                            filename: 'input.js'
-                            end: Object {
-                              column: 11
-                              index: 29
-                              line: 2
-                            }
-                            start: Object {
-                              column: 10
-                              index: 28
-                              line: 2
-                            }
-                          }
-                        }
-                      }
-                    ]
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 0
+			index: 52
+			line: 7
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	comments: Array [
+		CommentLine {
+			id: '0'
+			value: ' one'
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 8
+					index: 39
+					line: 3
+				}
+				start: Object {
+					column: 2
+					index: 33
+					line: 3
+				}
+			}
+		}
+		CommentLine {
+			id: '1'
+			value: ' two'
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 6
+					index: 48
+					line: 5
+				}
+				start: Object {
+					column: 0
+					index: 42
+					line: 5
+				}
+			}
+		}
+	]
+	body: Array [
+		ExpressionStatement {
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 2
+					index: 51
+					line: 6
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: CallExpression {
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 1
+						index: 50
+						line: 6
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				callee: ReferenceIdentifier {
+					name: 'test'
+					loc: Object {
+						filename: 'input.js'
+						identifierName: 'test'
+						end: Object {
+							column: 4
+							index: 4
+							line: 1
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+				}
+				arguments: Array [
+					FunctionExpression {
+						id: undefined
+						trailingComments: Array ['1']
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 1
+								index: 41
+								line: 4
+							}
+							start: Object {
+								column: 5
+								index: 5
+								line: 1
+							}
+						}
+						head: FunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: true
+							params: Array []
+							rest: undefined
+							returnType: undefined
+							thisType: undefined
+							typeParameters: undefined
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 15
+									index: 15
+									line: 1
+								}
+								start: Object {
+									column: 13
+									index: 13
+									line: 1
+								}
+							}
+						}
+						body: BlockStatement {
+							directives: Array []
+							trailingComments: Array ['1']
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 1
+									index: 41
+									line: 4
+								}
+								start: Object {
+									column: 16
+									index: 16
+									line: 1
+								}
+							}
+							body: Array [
+								VariableDeclarationStatement {
+									trailingComments: Array ['0']
+									loc: Object {
+										filename: 'input.js'
+										end: Object {
+											column: 12
+											index: 30
+											line: 2
+										}
+										start: Object {
+											column: 2
+											index: 20
+											line: 2
+										}
+									}
+									declaration: VariableDeclaration {
+										kind: 'var'
+										trailingComments: undefined
+										loc: Object {
+											filename: 'input.js'
+											end: Object {
+												column: 12
+												index: 30
+												line: 2
+											}
+											start: Object {
+												column: 2
+												index: 20
+												line: 2
+											}
+										}
+										declarations: Array [
+											VariableDeclarator {
+												id: BindingIdentifier {
+													name: 'a'
+													loc: Object {
+														filename: 'input.js'
+														identifierName: 'a'
+														end: Object {
+															column: 7
+															index: 25
+															line: 2
+														}
+														start: Object {
+															column: 6
+															index: 24
+															line: 2
+														}
+													}
+												}
+												loc: Object {
+													filename: 'input.js'
+													end: Object {
+														column: 11
+														index: 29
+														line: 2
+													}
+													start: Object {
+														column: 6
+														index: 24
+														line: 2
+													}
+												}
+												init: NumericLiteral {
+													value: 1
+													format: undefined
+													loc: Object {
+														filename: 'input.js'
+														end: Object {
+															column: 11
+															index: 29
+															line: 2
+														}
+														start: Object {
+															column: 10
+															index: 28
+															line: 2
+														}
+													}
+												}
+											}
+										]
+									}
+								}
+							]
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

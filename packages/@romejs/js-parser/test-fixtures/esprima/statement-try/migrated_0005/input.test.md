@@ -6,228 +6,228 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 39
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    TryStatement {
-      finalizer: undefined
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 38
-          index: 38
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      block: BlockStatement {
-        directives: Array []
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 17
-            index: 17
-            line: 1
-          }
-          start: Object {
-            column: 4
-            index: 4
-            line: 1
-          }
-        }
-        body: Array [
-          ExpressionStatement {
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 15
-                index: 15
-                line: 1
-              }
-              start: Object {
-                column: 6
-                index: 6
-                line: 1
-              }
-            }
-            expression: CallExpression {
-              arguments: Array []
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 14
-                  index: 14
-                  line: 1
-                }
-                start: Object {
-                  column: 6
-                  index: 6
-                  line: 1
-                }
-              }
-              callee: ReferenceIdentifier {
-                name: 'doThat'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'doThat'
-                  end: Object {
-                    column: 12
-                    index: 12
-                    line: 1
-                  }
-                  start: Object {
-                    column: 6
-                    index: 6
-                    line: 1
-                  }
-                }
-              }
-            }
-          }
-        ]
-      }
-      handler: CatchClause {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 38
-            index: 38
-            line: 1
-          }
-          start: Object {
-            column: 18
-            index: 18
-            line: 1
-          }
-        }
-        param: BindingIdentifier {
-          name: 'e'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'e'
-            end: Object {
-              column: 26
-              index: 26
-              line: 1
-            }
-            start: Object {
-              column: 25
-              index: 25
-              line: 1
-            }
-          }
-        }
-        body: BlockStatement {
-          directives: Array []
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 38
-              index: 38
-              line: 1
-            }
-            start: Object {
-              column: 28
-              index: 28
-              line: 1
-            }
-          }
-          body: Array [
-            ExpressionStatement {
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 36
-                  index: 36
-                  line: 1
-                }
-                start: Object {
-                  column: 30
-                  index: 30
-                  line: 1
-                }
-              }
-              expression: CallExpression {
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 36
-                    index: 36
-                    line: 1
-                  }
-                  start: Object {
-                    column: 30
-                    index: 30
-                    line: 1
-                  }
-                }
-                callee: ReferenceIdentifier {
-                  name: 'say'
-                  loc: Object {
-                    filename: 'input.js'
-                    identifierName: 'say'
-                    end: Object {
-                      column: 33
-                      index: 33
-                      line: 1
-                    }
-                    start: Object {
-                      column: 30
-                      index: 30
-                      line: 1
-                    }
-                  }
-                }
-                arguments: Array [
-                  ReferenceIdentifier {
-                    name: 'e'
-                    loc: Object {
-                      filename: 'input.js'
-                      identifierName: 'e'
-                      end: Object {
-                        column: 35
-                        index: 35
-                        line: 1
-                      }
-                      start: Object {
-                        column: 34
-                        index: 34
-                        line: 1
-                      }
-                    }
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 0
+			index: 39
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		TryStatement {
+			finalizer: undefined
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 38
+					index: 38
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			block: BlockStatement {
+				directives: Array []
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 17
+						index: 17
+						line: 1
+					}
+					start: Object {
+						column: 4
+						index: 4
+						line: 1
+					}
+				}
+				body: Array [
+					ExpressionStatement {
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 15
+								index: 15
+								line: 1
+							}
+							start: Object {
+								column: 6
+								index: 6
+								line: 1
+							}
+						}
+						expression: CallExpression {
+							arguments: Array []
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 14
+									index: 14
+									line: 1
+								}
+								start: Object {
+									column: 6
+									index: 6
+									line: 1
+								}
+							}
+							callee: ReferenceIdentifier {
+								name: 'doThat'
+								loc: Object {
+									filename: 'input.js'
+									identifierName: 'doThat'
+									end: Object {
+										column: 12
+										index: 12
+										line: 1
+									}
+									start: Object {
+										column: 6
+										index: 6
+										line: 1
+									}
+								}
+							}
+						}
+					}
+				]
+			}
+			handler: CatchClause {
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 38
+						index: 38
+						line: 1
+					}
+					start: Object {
+						column: 18
+						index: 18
+						line: 1
+					}
+				}
+				param: BindingIdentifier {
+					name: 'e'
+					loc: Object {
+						filename: 'input.js'
+						identifierName: 'e'
+						end: Object {
+							column: 26
+							index: 26
+							line: 1
+						}
+						start: Object {
+							column: 25
+							index: 25
+							line: 1
+						}
+					}
+				}
+				body: BlockStatement {
+					directives: Array []
+					loc: Object {
+						filename: 'input.js'
+						end: Object {
+							column: 38
+							index: 38
+							line: 1
+						}
+						start: Object {
+							column: 28
+							index: 28
+							line: 1
+						}
+					}
+					body: Array [
+						ExpressionStatement {
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 36
+									index: 36
+									line: 1
+								}
+								start: Object {
+									column: 30
+									index: 30
+									line: 1
+								}
+							}
+							expression: CallExpression {
+								loc: Object {
+									filename: 'input.js'
+									end: Object {
+										column: 36
+										index: 36
+										line: 1
+									}
+									start: Object {
+										column: 30
+										index: 30
+										line: 1
+									}
+								}
+								callee: ReferenceIdentifier {
+									name: 'say'
+									loc: Object {
+										filename: 'input.js'
+										identifierName: 'say'
+										end: Object {
+											column: 33
+											index: 33
+											line: 1
+										}
+										start: Object {
+											column: 30
+											index: 30
+											line: 1
+										}
+									}
+								}
+								arguments: Array [
+									ReferenceIdentifier {
+										name: 'e'
+										loc: Object {
+											filename: 'input.js'
+											identifierName: 'e'
+											end: Object {
+												column: 35
+												index: 35
+												line: 1
+											}
+											start: Object {
+												column: 34
+												index: 34
+												line: 1
+											}
+										}
+									}
+								]
+							}
+						}
+					]
+				}
+			}
+		}
+	]
 }
 ```

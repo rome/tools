@@ -15,7 +15,7 @@
 
 ```
 if (foo) {
-  foo;
+	foo;
 }
 
 ```
@@ -31,7 +31,7 @@ if (foo) {
 
 ```
 if (foo) {
-  foo;
+	foo;
 }
 
 ```
@@ -47,7 +47,7 @@ if (foo) {
 
 ```
 if (foo) {
-  // empty
+	// empty
 }
 
 ```
@@ -100,7 +100,7 @@ if (foo) {
 
 ```
 if (foo) {
-  // foo;
+	// foo;
 } else {
 }
 

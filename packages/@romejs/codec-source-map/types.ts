@@ -31,6 +31,7 @@ export type Mapping = Omit<ParsedMapping, 'generated'> & {
 export type ParsedMappings = Map<string, Mapping | ParsedMapping>;
 
 export type ResolvedLocation = {
+	found: boolean;
 	source: string;
 	line: Number1;
 	column: Number0;

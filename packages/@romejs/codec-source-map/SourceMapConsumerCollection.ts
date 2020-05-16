@@ -32,6 +32,51 @@ export default class SourceMapConsumerCollection {
 		return this.maps.get(file);
 	}
 
+	normalizeResolved(
+		source: string,
+		line: Number1,
+		column: Number0,
+		loc: undefined | ResolvedLocation,
+	): ResolvedLocation {
+		if (loc === undefined) {
+			return {
+				found: false,
+				source,
+				line,
+				column,
+				name: undefined,
+			};
+		} else {
+			return loc;
+		}
+	}
+
+	assertApproxOriginalPositionFor(
+		file: string,
+		line: Number1,
+		column: Number0,
+	): ResolvedLocation {
+		return this.normalizeResolved(
+			file,
+			line,
+			column,
+			this.approxOriginalPositionFor(file, line, column),
+		);
+	}
+
+	assertExactOriginalPositionFor(
+		file: string,
+		line: Number1,
+		column: Number0,
+	): ResolvedLocation {
+		return this.normalizeResolved(
+			file,
+			line,
+			column,
+			this.exactOriginalPositionFor(file, line, column),
+		);
+	}
+
 	approxOriginalPositionFor(
 		file: string,
 		line: Number1,

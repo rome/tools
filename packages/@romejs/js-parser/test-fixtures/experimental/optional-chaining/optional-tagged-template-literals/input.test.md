@@ -6,187 +6,187 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 9
-      index: 9
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Tagged Template Literals are not allowed in optionalChain'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 4
-          index: 4
-          line: 1
-        }
-        start: Object {
-          column: 4
-          index: 4
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 9
-          index: 9
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: TaggedTemplateExpression {
-        typeArguments: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 9
-            index: 9
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        quasi: TemplateLiteral {
-          expressions: Array []
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 9
-              index: 9
-              line: 1
-            }
-            start: Object {
-              column: 4
-              index: 4
-              line: 1
-            }
-          }
-          quasis: Array [
-            TemplateElement {
-              cooked: 'foo'
-              raw: 'foo'
-              tail: true
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 8
-                  index: 8
-                  line: 1
-                }
-                start: Object {
-                  column: 5
-                  index: 5
-                  line: 1
-                }
-              }
-            }
-          ]
-        }
-        tag: MemberExpression {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 4
-              index: 4
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-          object: ReferenceIdentifier {
-            name: 'a'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'a'
-              end: Object {
-                column: 1
-                index: 1
-                line: 1
-              }
-              start: Object {
-                column: 0
-                index: 0
-                line: 1
-              }
-            }
-          }
-          property: StaticMemberProperty {
-            value: Identifier {
-              name: 'b'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'b'
-                end: Object {
-                  column: 4
-                  index: 4
-                  line: 1
-                }
-                start: Object {
-                  column: 3
-                  index: 3
-                  line: 1
-                }
-              }
-            }
-            optional: true
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'b'
-              end: Object {
-                column: 4
-                index: 4
-                line: 1
-              }
-              start: Object {
-                column: 3
-                index: 3
-                line: 1
-              }
-            }
-          }
-        }
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 9
+			index: 9
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: 'js-parser'}]
+			description: Object {
+				advice: Array []
+				category: 'parse/js'
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Tagged Template Literals are not allowed in optionalChain'}
+			}
+			location: Object {
+				filename: 'input.js'
+				mtime: undefined
+				sourceType: 'script'
+				end: Object {
+					column: 4
+					index: 4
+					line: 1
+				}
+				start: Object {
+					column: 4
+					index: 4
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		ExpressionStatement {
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 9
+					index: 9
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: TaggedTemplateExpression {
+				typeArguments: undefined
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 9
+						index: 9
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				quasi: TemplateLiteral {
+					expressions: Array []
+					loc: Object {
+						filename: 'input.js'
+						end: Object {
+							column: 9
+							index: 9
+							line: 1
+						}
+						start: Object {
+							column: 4
+							index: 4
+							line: 1
+						}
+					}
+					quasis: Array [
+						TemplateElement {
+							cooked: 'foo'
+							raw: 'foo'
+							tail: true
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 8
+									index: 8
+									line: 1
+								}
+								start: Object {
+									column: 5
+									index: 5
+									line: 1
+								}
+							}
+						}
+					]
+				}
+				tag: MemberExpression {
+					loc: Object {
+						filename: 'input.js'
+						end: Object {
+							column: 4
+							index: 4
+							line: 1
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+					object: ReferenceIdentifier {
+						name: 'a'
+						loc: Object {
+							filename: 'input.js'
+							identifierName: 'a'
+							end: Object {
+								column: 1
+								index: 1
+								line: 1
+							}
+							start: Object {
+								column: 0
+								index: 0
+								line: 1
+							}
+						}
+					}
+					property: StaticMemberProperty {
+						value: Identifier {
+							name: 'b'
+							loc: Object {
+								filename: 'input.js'
+								identifierName: 'b'
+								end: Object {
+									column: 4
+									index: 4
+									line: 1
+								}
+								start: Object {
+									column: 3
+									index: 3
+									line: 1
+								}
+							}
+						}
+						optional: true
+						loc: Object {
+							filename: 'input.js'
+							identifierName: 'b'
+							end: Object {
+								column: 4
+								index: 4
+								line: 1
+							}
+							start: Object {
+								column: 3
+								index: 3
+								line: 1
+							}
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

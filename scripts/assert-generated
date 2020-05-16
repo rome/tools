@@ -22,10 +22,10 @@ execDev(['lint', ...writtenFiles, '--save']);
 
 // Check that `git status` is fine
 const out = child_process
-  .spawnSync('git', ['ls-files', '-m'])
-  .stdout.toString();
+	.spawnSync('git', ['ls-files', '-m'])
+	.stdout.toString();
 if (out !== '') {
-  console.error('Modified files:');
-  console.error(out);
-  process.exit(1);
+	console.error('Modified files:');
+	console.error(out);
+	process.exit(1);
 }

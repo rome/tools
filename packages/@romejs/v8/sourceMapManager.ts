@@ -5,24 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {SourceMapConsumer} from '@romejs/codec-source-map';
+import {SourceMapConsumerCollection} from '@romejs/codec-source-map';
 import {ErrorFrame} from '@romejs/v8';
-import {Number0, Number1, ob1Coerce1, ob1Coerce1To0} from '@romejs/ob1';
+import {ob1Coerce1, ob1Coerce1To0} from '@romejs/ob1';
 import {ERROR_FRAMES_PROP, getErrorStructure} from './errors';
 
-type ResolvedLocation = {
-	found: boolean;
-	filename: string;
-	line: Number1;
-	column: Number0;
-	name: undefined | string;
-};
-
 let inited: boolean = false;
-const maps: Map<string, SourceMapConsumer> = new Map();
-
-// In case we want to defer the reading of a source map completely (parsing is always deferred)
-const factories: Map<string, () => SourceMapConsumer> = new Map();
 
 function prepareStackTrace(err: Error, frames: Array<NodeJS.CallSite>) {
 	try {
@@ -33,7 +21,7 @@ function prepareStackTrace(err: Error, frames: Array<NodeJS.CallSite>) {
 	}
 }
 
-export function init() {
+export function initErrorHooks() {
 	if (!inited) {
 		inited = true;
 		Error.prepareStackTrace = prepareStackTrace;
@@ -156,7 +144,7 @@ function addErrorFrames(
 			frame.lineNumber !== undefined &&
 			frame.columnNumber !== undefined
 		) {
-			const {found, line, column, filename, name} = resolveLocation(
+			const {found, line, column, source, name} = sourceMaps.assertApproxOriginalPositionFor(
 				frame.filename,
 				frame.lineNumber,
 				frame.columnNumber,
@@ -169,7 +157,7 @@ function addErrorFrames(
 				resolvedLocation: found,
 				lineNumber: line,
 				columnNumber: column,
-				filename,
+				filename: source,
 			};
 		} else {
 			return frame;
@@ -179,81 +167,5 @@ function addErrorFrames(
 	err[ERROR_FRAMES_PROP] = builtFrames;
 }
 
-export function resolveLocation(
-	filename: string,
-	line: Number1,
-	column: Number0,
-): ResolvedLocation {
-	const map = getSourceMap(filename);
-	if (map === undefined) {
-		return {
-			found: true,
-			filename,
-			line,
-			column,
-			name: undefined,
-		};
-	}
-
-	const resolved = map.approxOriginalPositionFor(line, column);
-	if (resolved === undefined) {
-		return {
-			found: false,
-			filename,
-			line,
-			column,
-			name: undefined,
-		};
-	}
-
-	return {
-		found: true,
-		filename: resolved.source,
-		line: resolved.line,
-		column: resolved.column,
-		name: resolved.name,
-	};
-}
-
-// Add a source map factory. We jump through some hoops to return a function to remove the source map.
-// We make sure not to remove the source map if it's been subsequently added by another call.
-export function addSourceMap(
-	filename: string,
-	factory: () => SourceMapConsumer,
-): () => void {
-	init();
-
-	let map: undefined | SourceMapConsumer;
-	function factoryCapture() {
-		map = factory();
-		return map;
-	}
-
-	factories.set(filename, factoryCapture);
-
-	return () => {
-		if (factories.get(filename) === factoryCapture) {
-			factories.delete(filename);
-		}
-
-		if (maps.get(filename) === map) {
-			maps.delete(filename);
-		}
-	};
-}
-
-export function getSourceMap(filename: string): undefined | SourceMapConsumer {
-	if (maps.has(filename)) {
-		return maps.get(filename);
-	}
-
-	const factory = factories.get(filename);
-	if (factory !== undefined) {
-		factories.delete(filename);
-		const map = factory();
-		maps.set(filename, map);
-		return map;
-	}
-
-	return undefined;
-}
+const sourceMaps = new SourceMapConsumerCollection();
+export default sourceMaps;

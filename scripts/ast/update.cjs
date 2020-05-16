@@ -118,28 +118,28 @@ readIndexFile(
 	unionsLoc,
 	[
 		/*{
-    iterator(def) {
-      if (def.category === 'typescript') {
-        return `\n  | n.${def.nodeType}`;
-      }
-    },
-    wrapCallback(buff) {
-      return `export type AnyTS = ${buff};`;
-    },
-  },
-  {
-    iterator(def) {
-      if (def.category === 'flow') {
-        return `\n  | n.${def.nodeType}`;
-      }
-    },
-    wrapCallback(buff) {
-      return `export type AnyFlow = ${buff};`;
-    },
-  },*/
+		iterator(def) {
+			if (def.category === 'typescript') {
+				return `\n	| n.${def.nodeType}`;
+			}
+		},
+		wrapCallback(buff) {
+			return `export type AnyTS = ${buff};`;
+		},
+	},
+	{
+		iterator(def) {
+			if (def.category === 'flow') {
+				return `\n	| n.${def.nodeType}`;
+			}
+		},
+		wrapCallback(buff) {
+			return `export type AnyFlow = ${buff};`;
+		},
+	},*/
 		{
 			iterator(def) {
-				return `\n  | n.${def.nodeType}`;
+				return `\n	| n.${def.nodeType}`;
 			},
 			wrapCallback(buff) {
 				return `export type AnyNode = ${buff};`;

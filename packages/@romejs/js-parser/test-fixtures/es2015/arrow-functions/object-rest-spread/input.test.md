@@ -6,247 +6,247 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: true
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 45
-      line: 4
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    VariableDeclarationStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 2
-          index: 44
-          line: 3
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      declaration: VariableDeclaration {
-        kind: 'var'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 2
-            index: 44
-            line: 3
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        declarations: Array [
-          VariableDeclarator {
-            id: BindingIdentifier {
-              name: 'foo'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'foo'
-                end: Object {
-                  column: 7
-                  index: 7
-                  line: 1
-                }
-                start: Object {
-                  column: 4
-                  index: 4
-                  line: 1
-                }
-              }
-            }
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 1
-                index: 43
-                line: 3
-              }
-              start: Object {
-                column: 4
-                index: 4
-                line: 1
-              }
-            }
-            init: ArrowFunctionExpression {
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 1
-                  index: 43
-                  line: 3
-                }
-                start: Object {
-                  column: 10
-                  index: 10
-                  line: 1
-                }
-              }
-              body: BlockStatement {
-                body: Array []
-                directives: Array []
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 1
-                    index: 43
-                    line: 3
-                  }
-                  start: Object {
-                    column: 37
-                    index: 37
-                    line: 1
-                  }
-                }
-              }
-              head: FunctionHead {
-                async: false
-                hasHoistedVars: false
-                rest: undefined
-                returnType: undefined
-                thisType: undefined
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 36
-                    index: 36
-                    line: 1
-                  }
-                  start: Object {
-                    column: 10
-                    index: 10
-                    line: 1
-                  }
-                }
-                params: Array [
-                  BindingObjectPattern {
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 31
-                        index: 31
-                        line: 1
-                      }
-                      start: Object {
-                        column: 12
-                        index: 12
-                        line: 1
-                      }
-                    }
-                    rest: BindingIdentifier {
-                      name: 'other'
-                      loc: Object {
-                        filename: 'input.js'
-                        identifierName: 'other'
-                        end: Object {
-                          column: 29
-                          index: 29
-                          line: 1
-                        }
-                        start: Object {
-                          column: 24
-                          index: 24
-                          line: 1
-                        }
-                      }
-                    }
-                    properties: Array [
-                      BindingObjectPatternProperty {
-                        key: StaticPropertyKey {
-                          value: Identifier {
-                            name: 'title'
-                            loc: Object {
-                              filename: 'input.js'
-                              identifierName: 'title'
-                              end: Object {
-                                column: 19
-                                index: 19
-                                line: 1
-                              }
-                              start: Object {
-                                column: 14
-                                index: 14
-                                line: 1
-                              }
-                            }
-                          }
-                          loc: Object {
-                            filename: 'input.js'
-                            end: Object {
-                              column: 19
-                              index: 19
-                              line: 1
-                            }
-                            start: Object {
-                              column: 14
-                              index: 14
-                              line: 1
-                            }
-                          }
-                        }
-                        value: BindingIdentifier {
-                          name: 'title'
-                          loc: Object {
-                            filename: 'input.js'
-                            identifierName: 'title'
-                            end: Object {
-                              column: 19
-                              index: 19
-                              line: 1
-                            }
-                            start: Object {
-                              column: 14
-                              index: 14
-                              line: 1
-                            }
-                          }
-                        }
-                        loc: Object {
-                          filename: 'input.js'
-                          end: Object {
-                            column: 19
-                            index: 19
-                            line: 1
-                          }
-                          start: Object {
-                            column: 14
-                            index: 14
-                            line: 1
-                          }
-                        }
-                      }
-                    ]
-                  }
-                ]
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: true
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 0
+			index: 45
+			line: 4
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		VariableDeclarationStatement {
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 2
+					index: 44
+					line: 3
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			declaration: VariableDeclaration {
+				kind: 'var'
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 2
+						index: 44
+						line: 3
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				declarations: Array [
+					VariableDeclarator {
+						id: BindingIdentifier {
+							name: 'foo'
+							loc: Object {
+								filename: 'input.js'
+								identifierName: 'foo'
+								end: Object {
+									column: 7
+									index: 7
+									line: 1
+								}
+								start: Object {
+									column: 4
+									index: 4
+									line: 1
+								}
+							}
+						}
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 1
+								index: 43
+								line: 3
+							}
+							start: Object {
+								column: 4
+								index: 4
+								line: 1
+							}
+						}
+						init: ArrowFunctionExpression {
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 1
+									index: 43
+									line: 3
+								}
+								start: Object {
+									column: 10
+									index: 10
+									line: 1
+								}
+							}
+							body: BlockStatement {
+								body: Array []
+								directives: Array []
+								loc: Object {
+									filename: 'input.js'
+									end: Object {
+										column: 1
+										index: 43
+										line: 3
+									}
+									start: Object {
+										column: 37
+										index: 37
+										line: 1
+									}
+								}
+							}
+							head: FunctionHead {
+								async: false
+								hasHoistedVars: false
+								rest: undefined
+								returnType: undefined
+								thisType: undefined
+								loc: Object {
+									filename: 'input.js'
+									end: Object {
+										column: 36
+										index: 36
+										line: 1
+									}
+									start: Object {
+										column: 10
+										index: 10
+										line: 1
+									}
+								}
+								params: Array [
+									BindingObjectPattern {
+										loc: Object {
+											filename: 'input.js'
+											end: Object {
+												column: 31
+												index: 31
+												line: 1
+											}
+											start: Object {
+												column: 12
+												index: 12
+												line: 1
+											}
+										}
+										rest: BindingIdentifier {
+											name: 'other'
+											loc: Object {
+												filename: 'input.js'
+												identifierName: 'other'
+												end: Object {
+													column: 29
+													index: 29
+													line: 1
+												}
+												start: Object {
+													column: 24
+													index: 24
+													line: 1
+												}
+											}
+										}
+										properties: Array [
+											BindingObjectPatternProperty {
+												key: StaticPropertyKey {
+													value: Identifier {
+														name: 'title'
+														loc: Object {
+															filename: 'input.js'
+															identifierName: 'title'
+															end: Object {
+																column: 19
+																index: 19
+																line: 1
+															}
+															start: Object {
+																column: 14
+																index: 14
+																line: 1
+															}
+														}
+													}
+													loc: Object {
+														filename: 'input.js'
+														end: Object {
+															column: 19
+															index: 19
+															line: 1
+														}
+														start: Object {
+															column: 14
+															index: 14
+															line: 1
+														}
+													}
+												}
+												value: BindingIdentifier {
+													name: 'title'
+													loc: Object {
+														filename: 'input.js'
+														identifierName: 'title'
+														end: Object {
+															column: 19
+															index: 19
+															line: 1
+														}
+														start: Object {
+															column: 14
+															index: 14
+															line: 1
+														}
+													}
+												}
+												loc: Object {
+													filename: 'input.js'
+													end: Object {
+														column: 19
+														index: 19
+														line: 1
+													}
+													start: Object {
+														column: 14
+														index: 14
+														line: 1
+													}
+												}
+											}
+										]
+									}
+								]
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

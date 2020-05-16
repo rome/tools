@@ -15,7 +15,7 @@
 
 ```
 function foo() {
-  var foo = bar;
+	var foo = bar;
 }
 
 ```
@@ -98,7 +98,7 @@ function foo() {}
 
 ```
 function foo() {
-  [foo] = bar;
+	[foo] = bar;
 }
 
 ```
@@ -124,8 +124,8 @@ function foo() {
 
 ```
 (function() {
-  ({x: foo = 0} = bar);
-  function foo() {}
+	({x: foo = 0} = bar);
+	function foo() {}
 })();
 
 ```
@@ -134,7 +134,7 @@ function foo() {
 
 ```
 function foo(foo) {
-  foo = bar;
+	foo = bar;
 }
 
 ```
@@ -160,8 +160,8 @@ function foo(foo) {
 
 ```
 function foo() {
-  var foo;
-  foo = bar;
+	var foo;
+	foo = bar;
 }
 
 ```
@@ -207,7 +207,7 @@ foo = bar;
 
 ```
 var foo = function() {
-  foo = bar;
+	foo = bar;
 };
 
 ```
@@ -224,7 +224,7 @@ var foo = function() {
 ```
 import bar from 'bar';
 function foo() {
-  var foo = bar;
+	var foo = bar;
 }
 
 ```
@@ -275,7 +275,7 @@ foo = bar;
 
 ```
 function foo() {
-  foo = bar;
+	foo = bar;
 }
 
 ```

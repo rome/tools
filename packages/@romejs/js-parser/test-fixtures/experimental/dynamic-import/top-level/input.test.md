@@ -6,423 +6,423 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 113
-      line: 7
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 21
-          index: 21
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: ImportCall {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 20
-            index: 20
-            line: 1
-          }
-          start: Object {
-            column: 6
-            index: 6
-            line: 1
-          }
-        }
-        argument: StringLiteral {
-          value: 'testing.js'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 19
-              index: 19
-              line: 1
-            }
-            start: Object {
-              column: 7
-              index: 7
-              line: 1
-            }
-          }
-        }
-      }
-    }
-    VariableDeclarationStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 21
-          index: 44
-          line: 3
-        }
-        start: Object {
-          column: 0
-          index: 23
-          line: 3
-        }
-      }
-      declaration: VariableDeclaration {
-        kind: 'const'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 21
-            index: 44
-            line: 3
-          }
-          start: Object {
-            column: 0
-            index: 23
-            line: 3
-          }
-        }
-        declarations: Array [
-          VariableDeclarator {
-            id: BindingIdentifier {
-              name: 'test'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'test'
-                end: Object {
-                  column: 10
-                  index: 33
-                  line: 3
-                }
-                start: Object {
-                  column: 6
-                  index: 29
-                  line: 3
-                }
-              }
-            }
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 20
-                index: 43
-                line: 3
-              }
-              start: Object {
-                column: 6
-                index: 29
-                line: 3
-              }
-            }
-            init: StringLiteral {
-              value: 'hello'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 20
-                  index: 43
-                  line: 3
-                }
-                start: Object {
-                  column: 13
-                  index: 36
-                  line: 3
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 29
-          index: 74
-          line: 4
-        }
-        start: Object {
-          column: 0
-          index: 45
-          line: 4
-        }
-      }
-      expression: ImportCall {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 28
-            index: 73
-            line: 4
-          }
-          start: Object {
-            column: 6
-            index: 51
-            line: 4
-          }
-        }
-        argument: TemplateLiteral {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 27
-              index: 72
-              line: 4
-            }
-            start: Object {
-              column: 7
-              index: 52
-              line: 4
-            }
-          }
-          expressions: Array [
-            ReferenceIdentifier {
-              name: 'test'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'test'
-                end: Object {
-                  column: 22
-                  index: 67
-                  line: 4
-                }
-                start: Object {
-                  column: 18
-                  index: 63
-                  line: 4
-                }
-              }
-            }
-          ]
-          quasis: Array [
-            TemplateElement {
-              cooked: 'testing/'
-              raw: 'testing/'
-              tail: false
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 16
-                  index: 61
-                  line: 4
-                }
-                start: Object {
-                  column: 8
-                  index: 53
-                  line: 4
-                }
-              }
-            }
-            TemplateElement {
-              cooked: '.js'
-              raw: '.js'
-              tail: true
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 26
-                  index: 71
-                  line: 4
-                }
-                start: Object {
-                  column: 23
-                  index: 68
-                  line: 4
-                }
-              }
-            }
-          ]
-        }
-      }
-    }
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 36
-          index: 112
-          line: 6
-        }
-        start: Object {
-          column: 0
-          index: 76
-          line: 6
-        }
-      }
-      expression: CallExpression {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 35
-            index: 111
-            line: 6
-          }
-          start: Object {
-            column: 0
-            index: 76
-            line: 6
-          }
-        }
-        arguments: Array [
-          ArrowFunctionExpression {
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 34
-                index: 110
-                line: 6
-              }
-              start: Object {
-                column: 26
-                index: 102
-                line: 6
-              }
-            }
-            body: BlockStatement {
-              body: Array []
-              directives: Array []
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 34
-                  index: 110
-                  line: 6
-                }
-                start: Object {
-                  column: 32
-                  index: 108
-                  line: 6
-                }
-              }
-            }
-            head: FunctionHead {
-              async: false
-              hasHoistedVars: false
-              params: Array []
-              rest: undefined
-              returnType: undefined
-              thisType: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 31
-                  index: 107
-                  line: 6
-                }
-                start: Object {
-                  column: 26
-                  index: 102
-                  line: 6
-                }
-              }
-            }
-          }
-        ]
-        callee: MemberExpression {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 25
-              index: 101
-              line: 6
-            }
-            start: Object {
-              column: 0
-              index: 76
-              line: 6
-            }
-          }
-          object: ImportCall {
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 20
-                index: 96
-                line: 6
-              }
-              start: Object {
-                column: 6
-                index: 82
-                line: 6
-              }
-            }
-            argument: StringLiteral {
-              value: 'testing.js'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 19
-                  index: 95
-                  line: 6
-                }
-                start: Object {
-                  column: 7
-                  index: 83
-                  line: 6
-                }
-              }
-            }
-          }
-          property: StaticMemberProperty {
-            value: Identifier {
-              name: 'then'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'then'
-                end: Object {
-                  column: 25
-                  index: 101
-                  line: 6
-                }
-                start: Object {
-                  column: 21
-                  index: 97
-                  line: 6
-                }
-              }
-            }
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'then'
-              end: Object {
-                column: 25
-                index: 101
-                line: 6
-              }
-              start: Object {
-                column: 21
-                index: 97
-                line: 6
-              }
-            }
-          }
-        }
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 0
+			index: 113
+			line: 7
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		ExpressionStatement {
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 21
+					index: 21
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: ImportCall {
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 20
+						index: 20
+						line: 1
+					}
+					start: Object {
+						column: 6
+						index: 6
+						line: 1
+					}
+				}
+				argument: StringLiteral {
+					value: 'testing.js'
+					loc: Object {
+						filename: 'input.js'
+						end: Object {
+							column: 19
+							index: 19
+							line: 1
+						}
+						start: Object {
+							column: 7
+							index: 7
+							line: 1
+						}
+					}
+				}
+			}
+		}
+		VariableDeclarationStatement {
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 21
+					index: 44
+					line: 3
+				}
+				start: Object {
+					column: 0
+					index: 23
+					line: 3
+				}
+			}
+			declaration: VariableDeclaration {
+				kind: 'const'
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 21
+						index: 44
+						line: 3
+					}
+					start: Object {
+						column: 0
+						index: 23
+						line: 3
+					}
+				}
+				declarations: Array [
+					VariableDeclarator {
+						id: BindingIdentifier {
+							name: 'test'
+							loc: Object {
+								filename: 'input.js'
+								identifierName: 'test'
+								end: Object {
+									column: 10
+									index: 33
+									line: 3
+								}
+								start: Object {
+									column: 6
+									index: 29
+									line: 3
+								}
+							}
+						}
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 20
+								index: 43
+								line: 3
+							}
+							start: Object {
+								column: 6
+								index: 29
+								line: 3
+							}
+						}
+						init: StringLiteral {
+							value: 'hello'
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 20
+									index: 43
+									line: 3
+								}
+								start: Object {
+									column: 13
+									index: 36
+									line: 3
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+		ExpressionStatement {
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 29
+					index: 74
+					line: 4
+				}
+				start: Object {
+					column: 0
+					index: 45
+					line: 4
+				}
+			}
+			expression: ImportCall {
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 28
+						index: 73
+						line: 4
+					}
+					start: Object {
+						column: 6
+						index: 51
+						line: 4
+					}
+				}
+				argument: TemplateLiteral {
+					loc: Object {
+						filename: 'input.js'
+						end: Object {
+							column: 27
+							index: 72
+							line: 4
+						}
+						start: Object {
+							column: 7
+							index: 52
+							line: 4
+						}
+					}
+					expressions: Array [
+						ReferenceIdentifier {
+							name: 'test'
+							loc: Object {
+								filename: 'input.js'
+								identifierName: 'test'
+								end: Object {
+									column: 22
+									index: 67
+									line: 4
+								}
+								start: Object {
+									column: 18
+									index: 63
+									line: 4
+								}
+							}
+						}
+					]
+					quasis: Array [
+						TemplateElement {
+							cooked: 'testing/'
+							raw: 'testing/'
+							tail: false
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 16
+									index: 61
+									line: 4
+								}
+								start: Object {
+									column: 8
+									index: 53
+									line: 4
+								}
+							}
+						}
+						TemplateElement {
+							cooked: '.js'
+							raw: '.js'
+							tail: true
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 26
+									index: 71
+									line: 4
+								}
+								start: Object {
+									column: 23
+									index: 68
+									line: 4
+								}
+							}
+						}
+					]
+				}
+			}
+		}
+		ExpressionStatement {
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 36
+					index: 112
+					line: 6
+				}
+				start: Object {
+					column: 0
+					index: 76
+					line: 6
+				}
+			}
+			expression: CallExpression {
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 35
+						index: 111
+						line: 6
+					}
+					start: Object {
+						column: 0
+						index: 76
+						line: 6
+					}
+				}
+				arguments: Array [
+					ArrowFunctionExpression {
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 34
+								index: 110
+								line: 6
+							}
+							start: Object {
+								column: 26
+								index: 102
+								line: 6
+							}
+						}
+						body: BlockStatement {
+							body: Array []
+							directives: Array []
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 34
+									index: 110
+									line: 6
+								}
+								start: Object {
+									column: 32
+									index: 108
+									line: 6
+								}
+							}
+						}
+						head: FunctionHead {
+							async: false
+							hasHoistedVars: false
+							params: Array []
+							rest: undefined
+							returnType: undefined
+							thisType: undefined
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 31
+									index: 107
+									line: 6
+								}
+								start: Object {
+									column: 26
+									index: 102
+									line: 6
+								}
+							}
+						}
+					}
+				]
+				callee: MemberExpression {
+					loc: Object {
+						filename: 'input.js'
+						end: Object {
+							column: 25
+							index: 101
+							line: 6
+						}
+						start: Object {
+							column: 0
+							index: 76
+							line: 6
+						}
+					}
+					object: ImportCall {
+						loc: Object {
+							filename: 'input.js'
+							end: Object {
+								column: 20
+								index: 96
+								line: 6
+							}
+							start: Object {
+								column: 6
+								index: 82
+								line: 6
+							}
+						}
+						argument: StringLiteral {
+							value: 'testing.js'
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 19
+									index: 95
+									line: 6
+								}
+								start: Object {
+									column: 7
+									index: 83
+									line: 6
+								}
+							}
+						}
+					}
+					property: StaticMemberProperty {
+						value: Identifier {
+							name: 'then'
+							loc: Object {
+								filename: 'input.js'
+								identifierName: 'then'
+								end: Object {
+									column: 25
+									index: 101
+									line: 6
+								}
+								start: Object {
+									column: 21
+									index: 97
+									line: 6
+								}
+							}
+						}
+						loc: Object {
+							filename: 'input.js'
+							identifierName: 'then'
+							end: Object {
+								column: 25
+								index: 101
+								line: 6
+							}
+							start: Object {
+								column: 21
+								index: 97
+								line: 6
+							}
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

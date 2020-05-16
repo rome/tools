@@ -6,143 +6,143 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 45
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    LabeledStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 44
-          index: 44
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      label: Identifier {
-        name: '__proto__'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: '__proto__'
-          end: Object {
-            column: 9
-            index: 9
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-      }
-      body: WhileStatement {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 44
-            index: 44
-            line: 1
-          }
-          start: Object {
-            column: 11
-            index: 11
-            line: 1
-          }
-        }
-        test: BooleanLiteral {
-          value: true
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 22
-              index: 22
-              line: 1
-            }
-            start: Object {
-              column: 18
-              index: 18
-              line: 1
-            }
-          }
-        }
-        body: BlockStatement {
-          directives: Array []
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 44
-              index: 44
-              line: 1
-            }
-            start: Object {
-              column: 24
-              index: 24
-              line: 1
-            }
-          }
-          body: Array [
-            BreakStatement {
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 42
-                  index: 42
-                  line: 1
-                }
-                start: Object {
-                  column: 26
-                  index: 26
-                  line: 1
-                }
-              }
-              label: Identifier {
-                name: '__proto__'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: '__proto__'
-                  end: Object {
-                    column: 41
-                    index: 41
-                    line: 1
-                  }
-                  start: Object {
-                    column: 32
-                    index: 32
-                    line: 1
-                  }
-                }
-              }
-            }
-          ]
-        }
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: 'input.js'
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: 'script'
+	syntax: Array []
+	loc: Object {
+		filename: 'input.js'
+		end: Object {
+			column: 0
+			index: 45
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		LabeledStatement {
+			loc: Object {
+				filename: 'input.js'
+				end: Object {
+					column: 44
+					index: 44
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			label: Identifier {
+				name: '__proto__'
+				loc: Object {
+					filename: 'input.js'
+					identifierName: '__proto__'
+					end: Object {
+						column: 9
+						index: 9
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+			}
+			body: WhileStatement {
+				loc: Object {
+					filename: 'input.js'
+					end: Object {
+						column: 44
+						index: 44
+						line: 1
+					}
+					start: Object {
+						column: 11
+						index: 11
+						line: 1
+					}
+				}
+				test: BooleanLiteral {
+					value: true
+					loc: Object {
+						filename: 'input.js'
+						end: Object {
+							column: 22
+							index: 22
+							line: 1
+						}
+						start: Object {
+							column: 18
+							index: 18
+							line: 1
+						}
+					}
+				}
+				body: BlockStatement {
+					directives: Array []
+					loc: Object {
+						filename: 'input.js'
+						end: Object {
+							column: 44
+							index: 44
+							line: 1
+						}
+						start: Object {
+							column: 24
+							index: 24
+							line: 1
+						}
+					}
+					body: Array [
+						BreakStatement {
+							loc: Object {
+								filename: 'input.js'
+								end: Object {
+									column: 42
+									index: 42
+									line: 1
+								}
+								start: Object {
+									column: 26
+									index: 26
+									line: 1
+								}
+							}
+							label: Identifier {
+								name: '__proto__'
+								loc: Object {
+									filename: 'input.js'
+									identifierName: '__proto__'
+									end: Object {
+										column: 41
+										index: 41
+										line: 1
+									}
+									start: Object {
+										column: 32
+										index: 32
+										line: 1
+									}
+								}
+							}
+						}
+					]
+				}
+			}
+		}
+	]
 }
 ```
