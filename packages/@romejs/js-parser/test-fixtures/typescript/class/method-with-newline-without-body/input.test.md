@@ -100,7 +100,6 @@ Program {
                   }
                 }
               }
-              variance: undefined
               loc: Object {
                 filename: 'input.ts'
                 end: Object {
@@ -134,7 +133,6 @@ Program {
               generator: false
               hasHoistedVars: false
               params: Array []
-              predicate: undefined
               rest: undefined
               returnType: undefined
               thisType: undefined
@@ -200,7 +198,6 @@ Program {
                   }
                 }
               }
-              variance: undefined
               loc: Object {
                 filename: 'input.ts'
                 end: Object {
@@ -234,7 +231,6 @@ Program {
               generator: false
               hasHoistedVars: false
               params: Array []
-              predicate: undefined
               rest: undefined
               returnType: undefined
               thisType: undefined

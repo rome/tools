@@ -103,7 +103,6 @@ Program {
                   }
                 }
               }
-              variance: undefined
               loc: Object {
                 filename: 'input.js'
                 end: Object {
@@ -168,7 +167,6 @@ Program {
               async: true
               generator: false
               hasHoistedVars: false
-              predicate: undefined
               rest: undefined
               returnType: undefined
               thisType: undefined

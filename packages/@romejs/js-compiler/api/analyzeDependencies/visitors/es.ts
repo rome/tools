@@ -54,9 +54,7 @@ export default {
 
     // Local bindings exports:
     // export const foo
-
     // export function foo() {}
-
     // export {};
     if (node.type === 'ExportLocalDeclaration') {
       const valueType = getAnalyzeExportValueType(scope, node.declaration);
@@ -244,9 +242,7 @@ export default {
           break;
         }
 
-        const kind: ConstImportModuleKind = getImportKind(
-          specifier.local.importKind || node.importKind,
-        );
+        const kind: ConstImportModuleKind = getImportKind(node.importKind);
         specifierKinds.push(kind);
 
         if (specifier.type === 'ImportDefaultSpecifier') {

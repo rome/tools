@@ -7,7 +7,6 @@
 
 import {
   AnyNode,
-  FlowTypeCastExpression,
   TSAsExpression,
   TSNonNullExpression,
   TSTypeAssertion,
@@ -15,13 +14,8 @@ import {
 
 export default function isTypeExpressionWrapperNode(
   node: AnyNode,
-): node is
-  | FlowTypeCastExpression
-  | TSAsExpression
-  | TSTypeAssertion
-  | TSNonNullExpression {
+): node is TSAsExpression | TSTypeAssertion | TSNonNullExpression {
   return (
-    node.type === 'FlowTypeCastExpression' ||
     node.type === 'TSAsExpression' ||
     node.type === 'TSTypeAssertion' ||
     node.type === 'TSNonNullExpression'

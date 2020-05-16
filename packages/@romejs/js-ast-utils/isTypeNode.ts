@@ -22,10 +22,6 @@ export default function isTypeNode(node: AnyNode): boolean {
     node.type === 'ExportAllDeclaration'
   ) {
     return node.exportKind === 'type';
-  } else if (node.type === 'ImportSpecifier') {
-    return (
-      node.local.importKind === 'type' || node.local.importKind === 'typeof'
-    );
   } else {
     return false;
   }

@@ -82,7 +82,6 @@ Program {
         async: false
         generator: true
         hasHoistedVars: false
-        predicate: undefined
         rest: undefined
         returnType: undefined
         thisType: undefined

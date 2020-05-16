@@ -9,8 +9,6 @@ import {
   ClassDeclaration,
   ConstExportModuleKind,
   ExportLocalSpecifier,
-  FlowInterfaceDeclaration,
-  FlowOpaqueType,
   FunctionDeclaration,
   JSNodeBase,
   TSDeclareFunction,
@@ -31,11 +29,9 @@ export type ExportLocalDeclaration = JSNodeBase & {
     | ClassDeclaration
     | TSModuleDeclaration
     | TSEnumDeclaration
-    | FlowInterfaceDeclaration
     | TypeAliasTypeAnnotation
     | TSInterfaceDeclaration
     | TSDeclareFunction
-    | FlowOpaqueType
     | TypeAliasTypeAnnotation;
   specifiers?: Array<ExportLocalSpecifier>;
   exportKind?: ConstExportModuleKind;

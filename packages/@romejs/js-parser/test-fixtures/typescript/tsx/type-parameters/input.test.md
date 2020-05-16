@@ -86,7 +86,6 @@ Program {
         generator: false
         hasHoistedVars: false
         params: Array []
-        predicate: undefined
         rest: undefined
         thisType: undefined
         typeParameters: undefined

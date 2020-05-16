@@ -79,7 +79,6 @@ Program {
           async: false
           hasHoistedVars: false
           params: Array []
-          predicate: undefined
           returnType: undefined
           thisType: undefined
           loc: Object {

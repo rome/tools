@@ -1,4 +1,6 @@
 {
   "sourceType": "script",
-  "syntax": ["jsx", "flow"]
+  "syntax": [
+    "jsx"
+  ]
 }

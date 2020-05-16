@@ -7,8 +7,8 @@
 
 import {
   AnyExpression,
-  AnyTypeArguments,
   JSNodeBase,
+  TSTypeParameterInstantiation,
   TemplateLiteral,
 } from '../index';
 import {createBuilder} from '../utils';
@@ -17,7 +17,7 @@ export type TaggedTemplateExpression = JSNodeBase & {
   type: 'TaggedTemplateExpression';
   tag: AnyExpression;
   quasi: TemplateLiteral;
-  typeArguments?: AnyTypeArguments;
+  typeArguments?: TSTypeParameterInstantiation;
 };
 
 export const taggedTemplateExpression = createBuilder<TaggedTemplateExpression>(

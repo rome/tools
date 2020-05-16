@@ -23,14 +23,6 @@ export type AnyTSFunctionOrConstructorType =
   | n.TSFunctionType
   | n.TSConstructorType;
 
-export type AnyTypeParameter =
-  | n.TSTypeParameterDeclaration
-  | n.FlowTypeParameterDeclaration;
-
-export type AnyTypeArguments =
-  | n.FlowTypeParameterInstantiation
-  | n.TSTypeParameterInstantiation;
-
 export type ObjectProperties = Array<
   n.ObjectProperty | n.ObjectMethod | n.SpreadProperty
 >;
@@ -74,21 +66,6 @@ export type AnyLiteral =
   | n.NullLiteral;
 
 export type AnyClass = n.ClassDeclaration | n.ClassExpression;
-
-export type AnyFlowPredicate = n.FlowInferredPredicate | n.FlowDeclaredPredicate;
-
-export type AnyFlowDeclare =
-  | n.FlowDeclareClass
-  | n.FlowDeclareFunction
-  | n.FlowDeclareVariable
-  | n.FlowDeclareModuleExports
-  | n.FlowDeclareModule
-  | n.FlowDeclareOpaqueType
-  | n.FlowDeclareInterface
-  | n.FlowDeclareExportDefault
-  | n.FlowDeclareExportNamed
-  | n.FlowDeclareExportAll
-  | n.TypeAliasTypeAnnotation;
 
 export type AnyAuxiliary =
   | AnyClassMember
@@ -189,7 +166,6 @@ export type AnyExpression =
   | n.TemplateLiteral
   | n.TaggedTemplateExpression
   | n.MetaProperty
-  | n.FlowTypeCastExpression
   | n.TSNonNullExpression
   | n.TSAsExpression
   | n.TSTypeAssertion;
@@ -267,12 +243,6 @@ export type AnyDeclaration =
   | n.ExportExternalDeclaration
   | n.ExportAllDeclaration
   | n.TypeAliasTypeAnnotation
-  | n.FlowDeclareVariable
-  | n.FlowDeclareOpaqueType
-  | n.FlowOpaqueType
-  | n.FlowInterfaceDeclaration
-  | n.FlowInterface
-  | n.FlowInterfaceDeclaration
   | n.TSEnumDeclaration
   | n.TypeAliasTypeAnnotation
   | n.TSInterfaceDeclaration
@@ -280,28 +250,16 @@ export type AnyDeclaration =
   | n.TSExportAssignment
   | n.TSImportEqualsDeclaration
   | n.TSDeclareFunction
-  | n.TSModuleDeclaration
-  | AnyFlowDeclare;
+  | n.TSModuleDeclaration;
 
 export type AnyFlowPrimary =
-  | n.FlowFunctionTypeAnnotation
-  | n.FlowTupleTypeAnnotation
-  | n.FlowObjectTypeAnnotation
-  | n.FlowTypeofTypeAnnotation
-  | n.IntersectionTypeAnnotation
-  | n.FlowInterfaceTypeAnnotation
-  | n.UnionTypeAnnotation
-  | n.FlowNullableTypeAnnotation
   | n.IntersectionTypeAnnotation
   | n.UnionTypeAnnotation
-  | n.FlowArrayTypeAnnotation
   | n.IntersectionTypeAnnotation
-  | n.FlowNullableTypeAnnotation
+  | n.UnionTypeAnnotation
+  | n.IntersectionTypeAnnotation
   | n.UnionTypeAnnotation
   | n.NullKeywordTypeAnnotation
-  | n.FlowThisTypeAnnotation
-  | n.FlowExistsTypeAnnotation
-  | n.FlowGenericTypeAnnotation
   | AnyLiteralTypeAnnotation
   | AnyFlowKeywordTypeAnnotation;
 
@@ -456,46 +414,6 @@ export type AnyNode =
   | n.ExportLocalSpecifier
   | n.ExportNamespaceSpecifier
   | n.ExpressionStatement
-  | n.FlowArrayTypeAnnotation
-  | n.FlowClassImplements
-  | n.FlowDeclareClass
-  | n.FlowDeclaredPredicate
-  | n.FlowDeclareExportAll
-  | n.FlowDeclareExportDefault
-  | n.FlowDeclareExportNamed
-  | n.FlowDeclareFunction
-  | n.FlowDeclareInterface
-  | n.FlowDeclareModule
-  | n.FlowDeclareModuleExports
-  | n.FlowDeclareOpaqueType
-  | n.FlowDeclareVariable
-  | n.FlowExistsTypeAnnotation
-  | n.FlowFunctionTypeAnnotation
-  | n.FlowFunctionTypeParam
-  | n.FlowGenericTypeAnnotation
-  | n.FlowInferredPredicate
-  | n.FlowInterface
-  | n.FlowInterfaceDeclaration
-  | n.FlowInterfaceExtends
-  | n.FlowInterfaceTypeAnnotation
-  | n.FlowNullableTypeAnnotation
-  | n.FlowNumericLiteral
-  | n.FlowObjectTypeAnnotation
-  | n.FlowObjectTypeCallProperty
-  | n.FlowObjectTypeIndexer
-  | n.FlowObjectTypeInternalSlot
-  | n.FlowObjectTypeProperty
-  | n.FlowObjectTypeSpreadProperty
-  | n.FlowOpaqueType
-  | n.FlowQualifiedTypeIdentifier
-  | n.FlowThisTypeAnnotation
-  | n.FlowTupleTypeAnnotation
-  | n.FlowTypeCastExpression
-  | n.FlowTypeofTypeAnnotation
-  | n.FlowTypeParameter
-  | n.FlowTypeParameterDeclaration
-  | n.FlowTypeParameterInstantiation
-  | n.FlowVariance
   | n.ForInStatement
   | n.ForOfStatement
   | n.ForStatement

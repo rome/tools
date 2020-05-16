@@ -7,16 +7,16 @@
 
 import {
   AnyPrimaryType,
-  AnyTypeParameter,
   BindingIdentifier,
   JSNodeBase,
+  TSTypeParameterDeclaration,
 } from '../index';
 import {createBuilder} from '../utils';
 
 export type TypeAliasTypeAnnotation = JSNodeBase & {
   type: 'TypeAliasTypeAnnotation';
   id: BindingIdentifier;
-  typeParameters?: AnyTypeParameter;
+  typeParameters?: TSTypeParameterDeclaration;
   right: AnyPrimaryType;
   declare?: boolean | undefined;
 };

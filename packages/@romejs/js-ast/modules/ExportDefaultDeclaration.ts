@@ -8,7 +8,6 @@
 import {
   AnyExpression,
   ClassDeclaration,
-  FlowDeclareOpaqueType,
   FunctionDeclaration,
   JSNodeBase,
   TSInterfaceDeclaration,
@@ -21,7 +20,6 @@ export type ExportDefaultDeclaration = JSNodeBase & {
   declaration:
     | FunctionDeclaration
     | ClassDeclaration
-    | FlowDeclareOpaqueType
     | TSInterfaceDeclaration
     | TSDeclareFunction
     | AnyExpression;

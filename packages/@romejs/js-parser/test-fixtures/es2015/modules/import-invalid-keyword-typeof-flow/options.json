@@ -1,4 +1,0 @@
-{
-  "syntax": ["flow"],
-  "throws": "Unexpected keyword 'typeof'"
-}

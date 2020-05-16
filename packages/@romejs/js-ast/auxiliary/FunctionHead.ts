@@ -6,13 +6,12 @@
  */
 
 import {
-  AnyFlowPredicate,
   AnyParamBindingPattern,
   AnyPrimaryType,
   AnyTargetBindingPattern,
-  AnyTypeParameter,
   BindingIdentifier,
   JSNodeBase,
+  TSTypeParameterDeclaration,
 } from '../index';
 import {createQuickBuilder} from '../utils';
 
@@ -24,9 +23,8 @@ export type FunctionHead = JSNodeBase & {
   hasHoistedVars?: boolean;
   generator?: boolean;
   async?: boolean;
-  typeParameters?: AnyTypeParameter;
+  typeParameters?: TSTypeParameterDeclaration;
   returnType?: AnyPrimaryType;
-  predicate?: AnyFlowPredicate;
 };
 
 export const functionHead = createQuickBuilder<FunctionHead, 'params'>(
@@ -43,7 +41,6 @@ export const functionHead = createQuickBuilder<FunctionHead, 'params'>(
       rest: true,
       returnType: true,
       typeParameters: true,
-      predicate: true,
     },
   },
 );

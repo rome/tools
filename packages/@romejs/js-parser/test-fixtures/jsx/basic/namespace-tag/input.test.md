@@ -17,7 +17,7 @@ Program {
   sourceType: 'script'
   syntax: Array [
     'jsx'
-    'flow'
+    'ts'
   ]
   loc: Object {
     filename: 'input.js'

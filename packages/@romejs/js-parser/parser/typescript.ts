@@ -27,26 +27,28 @@ import {
   parseReferenceIdentifier,
   parseStringLiteral,
   parseTemplate,
-  parseTypeExpressionStatement,
-  parseTypeLiteralAnnotation,
   parseVarStatement,
   toBindingIdentifier,
   toReferenceIdentifier,
 } from './index';
 import {
+  AmbiguousFlowTypeCastExpression,
   AnyExpression,
+  AnyLiteralTypeAnnotation,
   AnyNode,
   AnyTSEntityName,
   AnyTSKeywordTypeAnnotation,
   AnyTSModuleReference,
   AnyTSPrimary,
   AnyTSTypeElement,
+  AnyTargetAssignmentPattern,
   AnyTargetBindingPattern,
   ClassDeclaration,
   ConstTSAccessibility,
   ConstTSModifier,
   FunctionDeclaration,
   Identifier,
+  PatternMeta,
   StringLiteral,
   TSCallSignatureDeclaration,
   TSConstructSignatureDeclaration,
@@ -91,6 +93,8 @@ import {
   VariableDeclarationStatement,
 } from '@romejs/js-ast';
 import {descriptions} from '@romejs/diagnostics';
+import {NumberTokenValue} from '../tokenizer';
+import {toTargetAssignmentPattern} from './lval';
 
 type ParsingContext =
   | 'EnumMembers'
@@ -211,6 +215,17 @@ function tsIsListTerminator(parser: JSParser, kind: ParsingContext): boolean {
   }
 
   throw new Error('Unreachable');
+}
+
+function addTSDiagnostic(parser: JSParser, label: string, start: Position) {
+  if (parser.isSyntaxEnabled('ts')) {
+    return;
+  }
+
+  parser.addDiagnostic({
+    start,
+    description: descriptions.JS_PARSER.TS_REQUIRED(label),
+  });
 }
 
 function parseTSList<T>(
@@ -415,6 +430,52 @@ function parseTSTypeQuery(parser: JSParser): TSTypeQuery {
       exprName,
     },
   );
+}
+
+export function ambiguousTypeCastToParameter(
+  parser: JSParser,
+  node: AmbiguousFlowTypeCastExpression,
+): AnyTargetAssignmentPattern {
+  const start = parser.getPosition();
+  const expr = toTargetAssignmentPattern(parser, node.expression, 'parameter');
+
+  const meta: PatternMeta = parser.finishNode(
+    start,
+    {
+      type: 'PatternMeta',
+      optional: node.optional,
+      typeAnnotation: node.typeAnnotation,
+    },
+  );
+
+  return parser.finishNode(
+    start,
+    {
+      ...expr,
+      // @ts-ignore
+      meta,
+    },
+  );
+}
+
+export function maybeParseTSTypeParameters(
+  parser: JSParser,
+): undefined | TSTypeParameterDeclaration {
+  if (parser.isRelational('<')) {
+    return parseTSTypeParameters(parser);
+  } else {
+    return undefined;
+  }
+}
+
+export function maybeParseTSTypeArguments(
+  parser: JSParser,
+): undefined | TSTypeParameterInstantiation {
+  if (parser.isRelational('<')) {
+    return parseTSTypeArguments(parser);
+  } else {
+    return undefined;
+  }
 }
 
 function parseTSTypeParameter(parser: JSParser): TSTypeParameter {
@@ -1090,7 +1151,7 @@ function parseTSNonArrayType(parser: JSParser): AnyTSPrimary {
     case tt._true:
     case tt._false:
     case tt.plusMin:
-      return parseTypeLiteralAnnotation(parser);
+      return parseTSTypeLiteralAnnotation(parser);
 
     case tt._this: {
       const thisKeyword = parseTSThisTypeNode(parser);
@@ -1139,6 +1200,120 @@ function parseTSNonArrayType(parser: JSParser): AnyTSPrimary {
       ),
     },
   );
+}
+
+function parseTSTypeLiteralAnnotation(
+  parser: JSParser,
+): AnyLiteralTypeAnnotation {
+  const start = parser.getPosition();
+
+  switch (parser.state.tokenType) {
+    case tt.string: {
+      const value = String(parser.state.tokenValue);
+      parser.next();
+      return parser.finishNode(
+        start,
+        {
+          type: 'StringLiteralTypeAnnotation',
+          value,
+        },
+      );
+    }
+
+    case tt.num: {
+      const {tokenValue} = parser.state;
+      if (!(tokenValue instanceof NumberTokenValue)) {
+        throw new Error('Expected NumberTokenValue');
+      }
+
+      const {value, format} = tokenValue;
+      parser.next();
+      return parser.finishNode(
+        start,
+        {
+          type: 'NumericLiteralTypeAnnotation',
+          value,
+          format,
+        },
+      );
+    }
+
+    case tt._true:
+    case tt._false: {
+      const value = parser.match(tt._true);
+      parser.next();
+      return parser.finishNode(
+        start,
+        {
+          type: 'BooleanLiteralTypeAnnotation',
+          value,
+        },
+      );
+    }
+
+    case tt.plusMin: {
+      const {tokenValue} = parser.state;
+      if (tokenValue === '-') {
+        parser.next();
+
+        if (!parser.match(tt.num)) {
+          parser.addDiagnostic({
+            description: descriptions.JS_PARSER.TYPE_NUMERIC_LITERAL_EXPECTED,
+          });
+          parser.next();
+          return parser.finishNode(
+            start,
+            {
+              type: 'NumericLiteralTypeAnnotation',
+              value: 0,
+            },
+          );
+        }
+
+        const {tokenValue} = parser.state;
+        if (!(tokenValue instanceof NumberTokenValue)) {
+          throw new Error('Expected NumberTokenValue');
+        }
+
+        const {value, format} = tokenValue;
+        parser.next();
+        return parser.finishNode(
+          start,
+          {
+            type: 'NumericLiteralTypeAnnotation',
+            value: -value,
+            format,
+          },
+        );
+      } else {
+        parser.addDiagnostic({
+          description: descriptions.JS_PARSER.TYPE_NUMERIC_LITERAL_PLUS,
+        });
+        parser.next();
+
+        if (!parser.match(tt.num)) {
+          parser.addDiagnostic({
+            description: descriptions.JS_PARSER.TYPE_NUMERIC_LITERAL_EXPECTED,
+          });
+          parser.next();
+          return parser.finishNode(
+            start,
+            {
+              type: 'NumericLiteralTypeAnnotation',
+              value: 0,
+            },
+          );
+        }
+
+        return parseTSTypeLiteralAnnotation(parser);
+      }
+    }
+
+    default:
+      throw new Error(
+        'Caller should have already validated the range of token types',
+      );
+  }
 }
 
 function parseTSArrayTypeOrHigher(parser: JSParser): AnyTSPrimary {
@@ -1634,7 +1809,7 @@ export function parseTSInterfaceDeclaration(
   );
 }
 
-export function parseTSTypeAliasTypeAnnotation(
+export function parseTSTypeAlias(
   parser: JSParser,
   start: Position,
 ): TypeAliasTypeAnnotation {
@@ -1997,7 +2172,7 @@ export function parseTSDeclare(parser: JSParser, start: Position): TSDeclareNode
         };
       } else if (isTSDeclarationStart(parser)) {
         const id = parseReferenceIdentifier(parser);
-        const decl = parseTypeExpressionStatement(parser, start, id);
+        const decl = parseTSTypeExpressionStatement(parser, start, id);
 
         if (decl === undefined) {
           throw new Error('Should have returned a node');
@@ -2014,7 +2189,7 @@ export function parseTSDeclare(parser: JSParser, start: Position): TSDeclareNode
           decl.type !== 'TSModuleDeclaration'
         ) {
           throw new Error(
-            'Encountered a non-TS declare node when calling parseTypeExpressionStatement',
+            'Encountered a non-TS declare node when calling parseTSTypeExpressionStatement',
           );
         }
 
@@ -2049,6 +2224,114 @@ export function parseTSDeclare(parser: JSParser, start: Position): TSDeclareNode
       ],
     },
   };
+}
+
+export function parseTSTypeExpressionStatement(
+  parser: JSParser,
+  start: Position,
+  expr: AnyExpression,
+):
+  | undefined
+  | TSDeclareNode
+  | TypeAliasTypeAnnotation
+  | TypeAliasTypeAnnotation
+  | TSInterfaceDeclaration {
+  // TODO TypeScript does not like parser.isLineTerminator()
+  if (expr.type !== 'ReferenceIdentifier') {
+    return undefined;
+  }
+
+  if (parser.hasPrecedingLineBreak()) {
+    return undefined;
+  }
+
+  switch (expr.name) {
+    case 'declare':
+      if (
+        parser.match(tt._class) ||
+        parser.match(tt.name) ||
+        parser.match(tt._function) ||
+        parser.match(tt._const) ||
+        parser.match(tt._var) ||
+        parser.match(tt._export)
+      ) {
+        return parseTSDeclare(parser, start);
+      } else {
+        break;
+      }
+
+    case 'interface': {
+      parser.addDiagnosticFilter({
+        message: 'interface is a reserved word',
+        start,
+      });
+
+      return parseTSInterfaceDeclaration(parser, start);
+    }
+
+    case 'type':
+      // TODO perform some lookahead to make sure we want to do this
+      return parseTSTypeAlias(parser, start);
+
+    case 'abstract':
+      if (parser.match(tt._class)) {
+        addTSDiagnostic(parser, 'abstract class', start);
+        return parseTSAbstractClass(parser, start);
+      } else {
+        break;
+      }
+
+    case 'enum': {
+      if (parser.match(tt.name)) {
+        addTSDiagnostic(parser, 'enum declaration', start);
+        return parseTSEnumDeclaration(parser, start, /* isConst */ false);
+      } else {
+        break;
+      }
+    }
+
+    case 'module':
+      if (parser.match(tt.string)) {
+        addTSDiagnostic(parser, 'ambient external module declaration', start);
+        return parseTSAmbientExternalModuleDeclaration(parser, start);
+      } else if (parser.match(tt.name) && !parser.isLineTerminator()) {
+        addTSDiagnostic(parser, 'module or namespace declaration', start);
+        return parseTSModuleOrNamespaceDeclaration(parser, start);
+      } else {
+        break;
+      }
+
+    case 'namespace': {
+      if (!parser.match(tt.name)) {
+        return undefined;
+      }
+
+      addTSDiagnostic(parser, 'module or namespace declaration', start);
+      return parseTSModuleOrNamespaceDeclaration(parser, start);
+    }
+
+    // TODO abstract this into typescript.js
+    case 'global':
+      // `global { }` (with no `declare`) may appear inside an ambient module declaration.
+      // Would like to use parseTSAmbientExternalModuleDeclaration here, but already ran past 'global'.
+      if (parser.match(tt.braceL)) {
+        addTSDiagnostic(parser, 'module declaration', start);
+        const global = true;
+        const id = toBindingIdentifier(parser, expr);
+        const body = parseTSModuleBlock(parser);
+        return parser.finishNode(
+          start,
+          {
+            type: 'TSModuleDeclaration',
+            global,
+            id,
+            body,
+          },
+        );
+      }
+  }
+
+  return undefined;
 }
 
 export function parseTSAbstractClass(

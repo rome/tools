@@ -13,8 +13,6 @@ import {
   ClassExpression,
   ConditionalExpression,
   DoExpression,
-  FlowFunctionTypeAnnotation,
-  FlowNullableTypeAnnotation,
   LogicalExpression,
   MemberExpression,
   ObjectExpression,
@@ -59,13 +57,6 @@ parens.set('TSAsExpression', () => true);
 parens.set('TSAssignmentAsExpression', () => true);
 
 parens.set('TSTypeAssertion', () => true);
-
-parens.set(
-  'FlowNullableTypeAnnotation',
-  (node: FlowNullableTypeAnnotation, parent: AnyNode): boolean => {
-    return parent.type === 'FlowArrayTypeAnnotation';
-  },
-);
 
 parens.set(
   'MemberExpression',
@@ -347,8 +338,6 @@ function needsParenUnionTypeAnnotation(
   parent: AnyNode,
 ) {
   return (
-    parent.type === 'FlowArrayTypeAnnotation' ||
-    parent.type === 'FlowNullableTypeAnnotation' ||
     parent.type === 'IntersectionTypeAnnotation' ||
     parent.type === 'UnionTypeAnnotation' ||
     parent.type === 'TSArrayType' ||
@@ -363,42 +352,6 @@ parens.set(
   'TSInferType',
   (node: TSInferType, parent: AnyNode): boolean => {
     return parent.type === 'TSArrayType' || parent.type === 'TSOptionalType';
-  },
-);
-
-parens.set(
-  'FlowFunctionTypeAnnotation',
-  (
-    node: FlowFunctionTypeAnnotation,
-    parent: AnyNode,
-    printStack: Array<AnyNode>,
-  ) => {
-    // Check if we are the return type of an arrow
-    for (const printNode of printStack) {
-      if (
-        printNode.type === 'ArrowFunctionExpression' &&
-        printNode.head.returnType === node
-      ) {
-        return true;
-      }
-    }
-
-    // ((a: () => A) => (a: A) => A)
-    if (
-      node.returnType !== undefined &&
-      node.returnType.type === 'FlowFunctionTypeAnnotation'
-    ) {
-      return true;
-    }
-
-    return (
-      // (() => A) | (() => B)
-      parent.type === 'UnionTypeAnnotation' ||
-      // (() => A) & (() => B)
-      parent.type === 'IntersectionTypeAnnotation' ||
-      // (() => A)[]
-      parent.type === 'FlowArrayTypeAnnotation'
-    );
   },
 );
 

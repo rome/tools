@@ -36,7 +36,7 @@ export default {
 
     for (const bodyNode of node.body) {
       if (bodyNode.type === 'ImportDeclaration') {
-        if (bodyNode.importKind === 'type') {
+        if (bodyNode.importKind === 'type' || bodyNode.importKind === 'typeof') {
           continue;
         }
 
@@ -54,10 +54,6 @@ export default {
           topBody.push(template.statement`Rome.requireNamespace(${source});`);
         } else {
           for (const specifier of specifiers) {
-            if (specifier.local.importKind === 'type') {
-              continue;
-            }
-
             if (specifier.type === 'ImportSpecifier') {
               topBody.push(
                 template.statement`const ${specifier.local.name} = Rome.requireNamespace(${source}).${specifier.imported};`,
@@ -123,11 +119,9 @@ export default {
           if (
             declaration.type === 'TSModuleDeclaration' ||
             declaration.type === 'TSEnumDeclaration' ||
-            declaration.type === 'FlowInterfaceDeclaration' ||
             declaration.type === 'TypeAliasTypeAnnotation' ||
             declaration.type === 'TSInterfaceDeclaration' ||
-            declaration.type === 'TSDeclareFunction' ||
-            declaration.type === 'FlowOpaqueType'
+            declaration.type === 'TSDeclareFunction'
           ) {
             bottomBody.push(declaration);
             continue;
@@ -211,7 +205,6 @@ export default {
 
         // Handle type declarations (these have no runtime ordering implications)
         if (
-          declaration.type === 'FlowDeclareOpaqueType' ||
           declaration.type === 'TSInterfaceDeclaration' ||
           declaration.type === 'TSDeclareFunction'
         ) {

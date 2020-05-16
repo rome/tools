@@ -6,7 +6,6 @@
  */
 
 import {
-  AnyTypeArguments,
   JSNodeBase,
   JSXAttribute,
   JSXExpressionContainer,
@@ -18,6 +17,7 @@ import {
   JSXSpreadAttribute,
   JSXSpreadChild,
   JSXText,
+  TSTypeParameterInstantiation,
 } from '../index';
 import {createBuilder} from '../utils';
 
@@ -28,7 +28,7 @@ export type JSXElement = JSNodeBase & {
     | JSXIdentifier
     | JSXNamespacedName
     | JSXMemberExpression;
-  typeArguments?: AnyTypeArguments;
+  typeArguments?: TSTypeParameterInstantiation;
   attributes: Array<JSXSpreadAttribute | JSXAttribute>;
   selfClosing: boolean;
   children: Array<

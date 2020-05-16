@@ -36,22 +36,16 @@ import {
 import {getBindingIdentifiers} from '@romejs/js-ast-utils';
 import {
   checkLVal,
-  checkReservedType,
   checkReservedWord,
-  hasTypeImportKind,
   isAsyncFunctionDeclarationStart,
   isLetStart,
-  isMaybeDefaultImport,
   isTSAbstractClass,
   isTSDeclarationStart,
   parseBindingIdentifier,
   parseExportDefaultClassDeclaration,
   parseExportDefaultFunctionDeclaration,
   parseExpressionAtom,
-  parseFlowOpaqueType,
-  parseFlowRestrictedIdentifier,
   parseIdentifier,
-  parseInterface,
   parseMaybeAssign,
   parseReferenceIdentifier,
   parseStatement,
@@ -60,11 +54,12 @@ import {
   parseTSExportDefaultAbstractClass,
   parseTSImportEqualsDeclaration,
   parseTSInterfaceDeclaration,
-  parseTypeAlias,
+  parseTSTypeAlias,
   toBindingIdentifier,
   toIdentifier,
 } from './index';
 import {descriptions} from '@romejs/diagnostics';
+import {State} from '../tokenizer/state';
 
 export type ParseExportResult =
   | AnyStatement
@@ -224,11 +219,9 @@ export function parseExport(
       declaration.type !== 'FunctionDeclaration' &&
       declaration.type !== 'TSModuleDeclaration' &&
       declaration.type !== 'TSEnumDeclaration' &&
-      declaration.type !== 'FlowInterfaceDeclaration' &&
       declaration.type !== 'TypeAliasTypeAnnotation' &&
       declaration.type !== 'TSInterfaceDeclaration' &&
-      declaration.type !== 'TSDeclareFunction' &&
-      declaration.type !== 'FlowOpaqueType'
+      declaration.type !== 'TSDeclareFunction'
     ) {
       parser.addDiagnostic({
         loc: declaration.loc,
@@ -371,19 +364,9 @@ function parseExportDeclaration(
       // export type Foo = Bar;
       return {
         exportKind: 'type',
-        declaration: parseTypeAlias(parser, start),
+        declaration: parseTSTypeAlias(parser, start),
       };
     }
-  }
-
-  if (parser.isContextual('opaque')) {
-    const declarationNode = parser.getPosition();
-    parser.next();
-    // export opaque type Foo = Bar;
-    return {
-      exportKind: 'type',
-      declaration: parseFlowOpaqueType(parser, declarationNode, false),
-    };
   }
 
   if (parser.isContextual('interface')) {
@@ -391,7 +374,7 @@ function parseExportDeclaration(
     parser.next();
     return {
       exportKind: 'type',
-      declaration: parseInterface(parser, declarationNode),
+      declaration: parseTSInterfaceDeclaration(parser, declarationNode),
     };
   }
 
@@ -795,7 +778,6 @@ export function parseImport(
   );
 }
 
-// eslint-disable-next-line no-unused-vars
 function shouldParseDefaultImport(
   parser: JSParser,
   kind: undefined | ConstImportModuleKind,
@@ -807,6 +789,19 @@ function shouldParseDefaultImport(
   }
 }
 
+export function isMaybeDefaultImport(state: State): boolean {
+  return (
+    (state.tokenType === tt.name || !!state.tokenType.keyword) &&
+    state.tokenValue !== 'from'
+  );
+}
+
+export function hasTypeImportKind(
+  kind: undefined | ConstImportModuleKind,
+): boolean {
+  return kind === 'type' || kind === 'typeof';
+}
+
 function parseImportSpecifierLocal(
   parser: JSParser,
   importKind: undefined | ConstImportModuleKind,
@@ -814,9 +809,7 @@ function parseImportSpecifierLocal(
 ): ImportSpecifierLocal {
   const start = parser.getPosition();
 
-  const local = hasTypeImportKind(importKind)
-    ? parseFlowRestrictedIdentifier(parser, true)
-    : parseBindingIdentifier(parser);
+  const local = parseBindingIdentifier(parser);
 
   checkLVal(parser, local, true, undefined, contextDescription);
 
@@ -1026,10 +1019,6 @@ function parseImportSpecifier(
   }
 
   const loc = parser.finishLoc(start);
-
-  if (nodeIsTypeImport || specifierIsTypeImport) {
-    checkReservedType(parser, local.name, loc);
-  }
 
   if (isBinding && !nodeIsTypeImport && !specifierIsTypeImport) {
     checkReservedWord(parser, local.name, loc, true, true);
