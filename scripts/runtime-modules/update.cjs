@@ -38,7 +38,7 @@ for (const packageName of fs.readdirSync(runtimeModules)) {
 	runtimeIndexFile += `modules.set('${packageName}', new Map(${JSON.stringify(
 		files,
 		null,
-		'	',
+		'\t',
 	)}));\n`;
 }
 

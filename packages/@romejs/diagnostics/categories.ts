@@ -115,6 +115,7 @@ type LintDiagnosticCategory =
 	| 'lint/noCommaOperator'
 	| 'lint/noCompareNegZero'
 	| 'lint/noCondAssign'
+	| 'lint/noDanger'
 	| 'lint/noDangerWithChildren'
 	| 'lint/noDebugger'
 	| 'lint/noDelete'

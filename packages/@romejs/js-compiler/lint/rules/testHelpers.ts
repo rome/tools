@@ -33,7 +33,7 @@ export async function testLintMultiple(
 export async function testLint(
 	t: TestHelper,
 	input: string,
-	{syntax = [], category, sourceType = 'module'}: TestLintOptions,
+	{syntax = ['jsx', 'ts'], category, sourceType = 'module'}: TestLintOptions,
 ) {
 	t.addToAdvice({
 		type: 'log',

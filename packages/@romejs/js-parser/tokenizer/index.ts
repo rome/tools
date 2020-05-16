@@ -186,7 +186,7 @@ export function setStrict(parser: JSParser, isStrict: boolean): void {
 	nextToken(parser);
 }
 
-export function getCurContext(parser: JSParser): TokContext {
+export function getCurContext(parser: JSParser): undefined | TokContext {
 	return parser.state.context[parser.state.context.length - 1];
 }
 
@@ -208,7 +208,7 @@ export function nextToken(parser: JSParser): void {
 		return undefined;
 	}
 
-	if (curContext.override) {
+	if (curContext !== undefined && curContext.override) {
 		curContext.override(parser);
 	} else {
 		readToken(parser, fullCharCodeAtPos(parser));
