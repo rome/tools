@@ -19,7 +19,7 @@ function jsxImgRedundantAlt(node: AnyNode) {
       attribute.name.name === 'alt' &&
       attribute.value &&
       attribute.value.type === 'StringLiteral' &&
-      /(image)|(picture)|(photo)/.test(attribute.value.value)
+      /(image)|(picture)|(photo)/i.test(attribute.value.value)
     )
   );
 }

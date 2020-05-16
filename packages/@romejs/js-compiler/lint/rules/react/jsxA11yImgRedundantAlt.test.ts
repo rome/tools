@@ -19,6 +19,9 @@ test(
         '<img src="src" alt="photo" />',
         '<img src="src" alt="picture" />',
         '<img src="src" alt="image" />',
+        '<img src="src" alt="Photo" />',
+        '<img src="src" alt="Picture" />',
+        '<img src="src" alt="Image" />',
         // VALID
         '<img src="src" alt="alt" />',
         '<img src="src" alt={photo} />',

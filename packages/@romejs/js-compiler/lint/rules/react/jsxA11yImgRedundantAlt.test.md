@@ -79,41 +79,99 @@
 ### `3`
 
 ```
-✔ No known problems!
+
+ unknown:1 lint/jsxA11yImgRedundantAlt ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ img element alt descriptions must not contain "image", "picture", or "photo"
+
+    <img src="src" alt="Photo" />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
 ### `3: formatted`
 
 ```
-<img src="src" alt="alt" />;
+<img src="src" alt="Photo" />;
 
 ```
 
 ### `4`
 
 ```
-✔ No known problems!
+
+ unknown:1 lint/jsxA11yImgRedundantAlt ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ img element alt descriptions must not contain "image", "picture", or "photo"
+
+    <img src="src" alt="Picture" />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
 ### `4: formatted`
 
 ```
-<img src="src" alt={photo} />;
+<img src="src" alt="Picture" />;
 
 ```
 
 ### `5`
 
 ```
-✔ No known problems!
+
+ unknown:1 lint/jsxA11yImgRedundantAlt ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ img element alt descriptions must not contain "image", "picture", or "photo"
+
+    <img src="src" alt="Image" />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
 ### `5: formatted`
 
 ```
-<img src="src" alt={`alt with ${photo}`} />;
+<img src="src" alt="Image" />;
+
+```
+
+### `6`
+
+```
+✔ No known problems!
+
+```
+
+### `6: formatted`
+
+```
+<img src="src" alt="alt" />;
+
+```
+
+### `7`
+
+```
+✔ No known problems!
+
+```
+
+### `7: formatted`
+
+```
+<img src="src" alt={photo} />;
 
 ```
