@@ -102,6 +102,7 @@ type LintDiagnosticCategory =
   | 'lint/getterReturn'
   | 'lint/importDefaultBasename'
   | 'lint/inconsiderateLanguage'
+  | 'lint/jsxA11yIframeHasTitle'
   | 'lint/jsxKey'
   | 'lint/jsxNoCommentText'
   | 'lint/negationElse'
