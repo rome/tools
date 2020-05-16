@@ -421,7 +421,7 @@ export const descriptions = createMessages({
     },
     REACT_JSX_A11Y_IFRAME_HAS_TITLE: {
       category: 'lint/jsxA11yIframeHasTitle',
-      message: markup`<emphasis>iframe</emphasis> elements should have a <emphasis>title prop</emphasis>.`,
+      message: `<emphasis>iframe</emphasis> elements should have a <emphasis>title prop</emphasis>.`,
     },
     REACT_JSX_KEY: (origin: string) => ({
       category: 'lint/jsxKey',
