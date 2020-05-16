@@ -613,16 +613,16 @@ export default class Parser<T> {
       const {consumer} = flags.capture();
       await this.defineCommandFlags(command, consumer);
     }
-
-    const prg = process.env.ROME_DEV === '1' ? 'dev-rome' : 'rome';
+    
+    const { programName } = this.opts;
 
     switch (shell) {
       case 'bash': {
-        reporter.logAllNoMarkup(this.genBashCompletions(prg));
+        reporter.logAllNoMarkup(this.genBashCompletions(programName));
         break;
       }
       case 'fish': {
-        reporter.logAllNoMarkup(this.genFishCompletions(prg));
+        reporter.logAllNoMarkup(this.genFishCompletions(programName));
         break;
       }
     }
