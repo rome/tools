@@ -14,7 +14,12 @@ import {
   Consumer,
   consume,
 } from '@romejs/consume';
-import {naturalCompare, toCamelCase, toKebabCase} from '@romejs/string-utils';
+import {
+  dedent,
+  naturalCompare,
+  toCamelCase,
+  toKebabCase,
+} from '@romejs/string-utils';
 import {createUnknownFilePath} from '@romejs/path';
 import {Dict} from '@romejs/typescript-helpers';
 import {markup} from '@romejs/string-markup';
@@ -370,6 +375,8 @@ export default class Parser<T> {
       }
     }
 
+    // i could add a flag for dev-rome itself
+    // i could take the input command name from the flag
     const generateAutocomplete: undefined | SupportedAutocompleteShells = consumer.get(
       'generateAutocomplete',
       {
@@ -599,30 +606,146 @@ export default class Parser<T> {
 
     // Execute all command defineFlags. Only one is usually ran when the arguments match the command name.
     // But to generate autocomplete we want all the flags to be declared for all commands.
+
     const flags = this.getFlagsConsumer();
     for (const command of this.commands.values()) {
       // capture() will cause diagnostics to be suppressed
       const {consumer} = flags.capture();
       await this.defineCommandFlags(command, consumer);
     }
-
-    // this.declaredFlags contains flag information, ignore the keys as they will have command suffixes
-    // utilize `command` for the owned command and `name` for the actual flag name
-
-    // this.commands contains command information
-
-    // reporter.logAllNoMarkup to output to stdout
-    reporter;
+    
+    const { programName } = this.opts;
 
     switch (shell) {
-      case 'bash':
-        // TODO
+      case 'bash': {
+        reporter.logAllNoMarkup(this.genBashCompletions(programName));
         break;
-
-      case 'fish':
-        // TODO
+      }
+      case 'fish': {
+        reporter.logAllNoMarkup(this.genFishCompletions(programName));
         break;
+      }
     }
+  }
+
+  genFishCompletions(prg: string): string {
+    let script = '';
+    const scriptPre = `complete -c ${prg}`;
+
+    // add rome
+    script += `${scriptPre} -f\n`;
+
+    // add command completions
+    for (let [subcmd, meta] of this.commands.entries()) {
+      script += `${scriptPre} -n '__fish_use_subcommand' -a '${subcmd}' -d '${meta.description}'\n`;
+    }
+
+    // add flag completions
+    for (let meta of this.declaredFlags.values()) {
+      const subcmdCond =
+        meta.command === undefined
+          ? ''
+          : `-n '__fish_seen_subcommand_from ${meta.command}'`;
+      script += `${scriptPre} ${subcmdCond} -l '${meta.name}'\n`;
+    }
+
+    return script;
+  }
+
+  genBashCompletions(prg: string): string {
+    let romeCmds = '';
+    let commandFuncs = '';
+    let globalFlags = '';
+    let cmdFlagMap = new Map();
+
+    for (let subcmd of this.commands.keys()) {
+      romeCmds += `${subcmd} `;
+    }
+
+    for (let meta of this.declaredFlags.values()) {
+      if (meta.command === undefined) {
+        globalFlags += `--${meta.name} `;
+      } else {
+        if (cmdFlagMap.has(meta.command)) {
+          cmdFlagMap.set(
+            meta.command,
+            `${cmdFlagMap.get(meta.command)} --${meta.name}`,
+          );
+        } else {
+          cmdFlagMap.set(meta.command, `--${meta.name}`);
+        }
+      }
+    }
+
+    for (let [cmd, flags] of cmdFlagMap.entries()) {
+      commandFuncs += `
+      __${prg}_${cmd}()
+      {
+        cmds="";
+        local_flags="${flags}"
+      }
+      `;
+    }
+
+    let romeFunc = `
+      __${prg}()
+      {
+          cmds="${romeCmds}"
+          local_flags="";
+      }
+    `;
+
+    let mainScript = `
+      #!/usr/bin/env bash
+      global_flags="${globalFlags}"
+
+      # initial state
+      cmds=""
+      local_flags=""
+      
+      __is_flag()
+      {
+        case $1 in
+          -*) echo "true"
+        esac
+      }
+      
+      __${prg}_gen_completions()
+      {
+        local suggestions func flags index
+         
+        index="$((\${#COMP_WORDS[@]} - 1))"
+      
+        flags="$global_flags $local_flags"
+      
+        func="_"
+      
+        for ((i=0; i < index; i++))
+        do
+          leaf=$(echo \${COMP_WORDS[$i]} | grep -o '[^/]*$')
+          if [[ ! $(__is_flag $leaf) ]]; then
+            func="\${func}_\${leaf}"
+          fi
+        done
+          
+        $func 2> /dev/null
+      
+        if [[ $(__is_flag \${COMP_WORDS[$index]}) ]]; then
+          suggestions=$flags 
+        else
+          suggestions=$cmds
+        fi
+
+        COMPREPLY=($(compgen -W "$suggestions" -- "\${COMP_WORDS[$index]}"))
+      }
+    `;
+
+    return dedent`
+      ${mainScript}
+      ${commandFuncs}
+      ${romeFunc}
+      complete -F __${prg}_gen_completions ${prg}
+    `;
   }
 
   async showHelp(command: undefined | AnyCommandOptions = this.ranCommand) {

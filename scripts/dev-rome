@@ -12,4 +12,5 @@ require('./_setup.cjs');
 const {argv} = require('./_constants.cjs');
 const {execDev} = require('./_utils.cjs');
 
+process.env.ROME_DEV = '1';
 execDev(argv);

@@ -48,7 +48,7 @@ type CLIFlags = {
 export default async function cli() {
   setProcessTitle('cli');
   const p = parseCLIFlagsFromProcess({
-    programName: 'rome',
+    programName: process.env.ROME_DEV === '1' ? 'dev-rome' : 'rome',
     usage: '[command] [flags]',
     version: VERSION,
     defineFlags(
