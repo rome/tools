@@ -11,7 +11,7 @@ import {
   GUTTER,
   MAX_PATCH_LINES,
 } from './constants';
-import {joinNoBreak, showInvisibles} from './utils';
+import {joinNoBreak, normalizeTabs, showInvisibles} from './utils';
 import {Diffs, diffConstants, groupDiffByLines} from '@romejs/string-diff';
 import {escapeMarkup, markup, markupTag} from '@romejs/string-markup';
 import {DiagnosticAdviceDiff} from '@romejs/diagnostics';
@@ -24,7 +24,7 @@ function formatDiffLine(diffs: Diffs) {
       return markupTag('success', escapeMarkup(showInvisibles(text)));
     } else {
       // type === diffConstants.EQUAL
-      return escapeMarkup(text);
+      return escapeMarkup(normalizeTabs(text));
     }
   }).join('');
 }

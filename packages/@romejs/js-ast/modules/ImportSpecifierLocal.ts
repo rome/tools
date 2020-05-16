@@ -5,13 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {BindingIdentifier, ConstImportModuleKind, JSNodeBase} from '../index';
+import {BindingIdentifier, JSNodeBase} from '../index';
 import {createQuickBuilder} from '../utils';
 
 export type ImportSpecifierLocal = JSNodeBase & {
   type: 'ImportSpecifierLocal';
   name: BindingIdentifier;
-  importKind?: ConstImportModuleKind;
 };
 
 export const importSpecifierLocal = createQuickBuilder<

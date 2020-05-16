@@ -78,7 +78,6 @@ Program {
         head: FunctionHead {
           async: false
           hasHoistedVars: false
-          predicate: undefined
           returnType: undefined
           thisType: undefined
           loc: Object {

@@ -103,6 +103,8 @@ type LintDiagnosticCategory =
   | 'lint/importDefaultBasename'
   | 'lint/inconsiderateLanguage'
   | 'lint/jsxA11yImgRedundantAlt'
+  | 'lint/jsxA11yIframeHasTitle'
+  | 'lint/jsxA11yHTMLHasLang'
   | 'lint/jsxKey'
   | 'lint/jsxNoCommentText'
   | 'lint/negationElse'

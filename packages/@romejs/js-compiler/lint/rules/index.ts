@@ -17,6 +17,8 @@ import getterReturn from './regular/getterReturn';
 import importDefaultBasename from './regular/importDefaultBasename';
 import inconsiderateLanguage from './regular/inconsiderateLanguage';
 import jsxA11YImgRedundantAlt from './react/jsxA11yImgRedundantAlt';
+import jsxA11YIframeHasTitle from './react/jsxA11yIframeHasTitle';
+import jsxA11YHTMLHasLang from './react/jsxA11yHTMLHasLang';
 import jsxKey from './react/jsxKey';
 import jsxNoCommentText from './react/jsxNoCommentText';
 import negationElse from './regular/negationElse';
@@ -77,6 +79,8 @@ export const lintTransforms = [
   importDefaultBasename,
   inconsiderateLanguage,
   jsxA11YImgRedundantAlt,
+  jsxA11YIframeHasTitle,
+  jsxA11YHTMLHasLang,
   jsxKey,
   jsxNoCommentText,
   negationElse,

@@ -1,3 +1,6 @@
 {
-  "syntax": ["jsx", "flow"]
+  "syntax": [
+    "jsx",
+    "ts"
+  ]
 }

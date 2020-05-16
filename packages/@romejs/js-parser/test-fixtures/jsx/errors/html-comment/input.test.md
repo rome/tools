@@ -17,10 +17,7 @@ Program {
   sourceType: 'script'
   trailingComments: Array []
   innerComments: Array ['0']
-  syntax: Array [
-    'jsx'
-    'flow'
-  ]
+  syntax: Array ['jsx']
   loc: Object {
     filename: 'input.js'
     end: Object {

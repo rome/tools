@@ -21,7 +21,7 @@ import {
   diagnosticLocationToMarkupFilelink,
 } from '@romejs/diagnostics';
 import {Position} from '@romejs/parser-core';
-import {showInvisibles, toLines} from './utils';
+import {ToLines, showInvisibles, toLines} from './utils';
 import buildPatchCodeFrame from './buildPatchCodeFrame';
 import buildMessageCodeFrame from './buildMessageCodeFrame';
 import {escapeMarkup, markupTag} from '@romejs/string-markup';
@@ -289,7 +289,11 @@ function printFrame(
     cleanMarker = markupTag('emphasis', cleanMessage(marker));
   }
 
-  let lines: Array<string> = [];
+  let lines: ToLines = {
+    length: 0,
+    raw: [],
+    highlighted: [],
+  };
   if (sourceText !== undefined) {
     lines = toLines({
       path,
@@ -307,7 +311,11 @@ function printFrame(
     path.isAbsolute() &&
     opts.missingFileSources.has(path.assertAbsolute())
   ) {
-    lines = ['<dim>File does not exist</dim>'];
+    lines = {
+      length: 1,
+      raw: ['File does not exist'],
+      highlighted: ['<dim>File does not exist</dim>'],
+    };
   }
 
   if (sourceText === undefined) {

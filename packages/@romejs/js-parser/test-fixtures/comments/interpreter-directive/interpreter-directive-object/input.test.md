@@ -134,7 +134,6 @@ Program {
                       }
                     }
                     leadingComments: undefined
-                    variance: undefined
                     loc: Object {
                       filename: 'input.js'
                       end: Object {

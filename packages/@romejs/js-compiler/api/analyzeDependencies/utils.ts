@@ -11,7 +11,6 @@ import {
   ConstExportModuleKind,
   ConstImportModuleKind,
   ConstProgramSyntax,
-  FlowTypeParameter,
   ReferenceIdentifier,
 } from '@romejs/js-ast';
 import {SourceLocation} from '@romejs/parser-core';
@@ -59,7 +58,7 @@ export function getExportKind(
 export function maybeTypeBinding(
   kind: ConstExportModuleKind,
   scope: Scope,
-  id: BindingIdentifier | FlowTypeParameter | ReferenceIdentifier,
+  id: BindingIdentifier | ReferenceIdentifier,
 ): ConstExportModuleKind {
   const binding = scope.getBinding(id.name);
   if (kind === 'value' && binding instanceof TypeBinding) {

@@ -27,13 +27,12 @@ import {
   AmbiguousFlowTypeCastExpression,
   AnyBindingPattern,
   AnyExpression,
-  AnyFlowPredicate,
   AnyNode,
   AnyObjectMember,
   AnyObjectPropertyKey,
   AnyPrimaryType,
+  AnyTSPrimary,
   AnyTargetBindingPattern,
-  AnyTypeArguments,
   ArrayExpression,
   ArrayHole,
   ArrowFunctionExpression,
@@ -54,7 +53,6 @@ import {
   ClassPrivateMethod,
   ComputedPropertyKey,
   DoExpression,
-  FlowFunctionTypeAnnotation,
   FunctionExpression,
   FunctionHead,
   Identifier,
@@ -82,6 +80,7 @@ import {
   TSAsExpression,
   TSDeclareFunction,
   TSDeclareMethod,
+  TSTypeParameterInstantiation,
   TaggedTemplateExpression,
   TemplateElement,
   TemplateLiteral,
@@ -91,29 +90,25 @@ import {
   UpdateOperator,
   YieldExpression,
 } from '@romejs/js-ast';
-import {TypeAnnotationAndPredicate} from './type-systems';
 import {types as tc} from '../tokenizer/context';
 import {
   ToReferencedItem,
   checkCommaAfterRestFromSpread,
   checkLVal,
   filterSpread,
-  isTypeSystemEnabled,
-  maybeParseTypeParameters,
-  parseAsyncArrowWithFlowTypeParameters,
+  maybeParseTSTypeParameters,
   parseBlock,
   parseClassExpression,
-  parseFlowVariance,
   parseFunctionExpression,
   parseFunctionParams,
   parseJSXElement,
   parseMaybeDefault,
-  parsePrimaryTypeAnnotation,
   parseSpread,
+  parseTSTypeAnnotation,
+  parseTSTypeArguments,
   parseTSTypeAssertion,
-  parseTypeAnnotationAndPredicate,
-  parseTypeCallArguments,
-  parseTypeParameters,
+  parseTSTypeOrTypePredicateAnnotation,
+  parseTSTypeParameters,
   raiseRestNotLast,
   toAssignmentPattern,
   toFunctionParamsBindingList,
@@ -244,7 +239,7 @@ export function parseMaybeAssign<T extends AnyNode = AnyExpression>(
   if (parser.isRelational('<')) {
     branches.add(() => {
       const start = parser.getPosition();
-      const typeParameters = parseTypeParameters(parser);
+      const typeParameters = parseTSTypeParameters(parser);
       const arrowExpression = forwardNoArrowParamsConversionAt(
         parser,
         start,
@@ -855,7 +850,7 @@ export function parseSubscripts(
     parser.isRelational('<')
   ) {
     const branch = parser.createBranch<AnyExpression>();
-    branch.add(() => parseAsyncArrowWithFlowTypeParameters(parser, startPos));
+    branch.add(() => parseAsyncArrowWithTypeParameters(parser, startPos));
     branch.add(() =>
       parseExpressionSubscriptsRecursively(
         parser,
@@ -875,6 +870,40 @@ export function parseSubscripts(
     noCalls,
     maybeAsyncArrow,
   );
+}
+
+export function parseAsyncArrowWithTypeParameters(
+  parser: JSParser,
+  startPos: Position,
+): undefined | ArrowFunctionExpression {
+  const {params, rest, typeParameters} = parseFunctionParams(parser);
+
+  const {returnType, valid} = parseArrowHead(parser);
+  if (!valid) {
+    parser.addDiagnostic({
+      description: descriptions.JS_PARSER.INVALID_ASYNC_ARROW_WITH_TYPE_PARAMS,
+    });
+    return undefined;
+  }
+
+  const func = parseArrowExpression(
+    parser,
+    startPos,
+    {
+      bindingList: params,
+      rest,
+    },
+    /* isAsync */ true,
+  );
+
+  return {
+    ...func,
+    head: {
+      ...func.head,
+      returnType,
+      typeParameters,
+    },
+  };
 }
 
 function parseExpressionSubscriptsRecursively(
@@ -945,7 +974,7 @@ export function parseExpressionSubscript(
       }
 
       const callee = base;
-      const typeArguments = parseTypeCallArguments(parser);
+      const typeArguments = parseTSTypeArguments(parser);
       const openContext = parser.expectOpening(
         tt.parenL,
         tt.parenR,
@@ -1079,9 +1108,9 @@ export function parseExpressionSubscript(
   }
 
   // Supports: foo<Foo>(); and foo<Foo>``;
-  if (parser.isRelational('<') && isTypeSystemEnabled(parser)) {
+  if (parser.isRelational('<') && parser.isSyntaxEnabled('ts')) {
     const possibleCallExpression = parser.tryBranch(() => {
-      const typeArguments = parseTypeCallArguments(parser);
+      const typeArguments = parseTSTypeArguments(parser);
 
       if (!noCalls && parser.match(tt.parenL)) {
         const argsStart = parser.getPosition();
@@ -1196,7 +1225,7 @@ export function parseTaggedTemplateExpression(
   startPos: Position,
   tag: AnyExpression,
   state: ParseSubscriptState,
-  typeArguments?: AnyTypeArguments,
+  typeArguments?: TSTypeParameterInstantiation,
 ): TaggedTemplateExpression {
   if (state.optionalChainMember) {
     parser.addDiagnostic({
@@ -1371,7 +1400,7 @@ export function parseAsyncArrowFromCallExpression(
   if (parser.match(tt.colon)) {
     const oldNoAnonFunctionType = parser.state.noAnonFunctionType;
     parser.state.noAnonFunctionType = true;
-    returnType = parsePrimaryTypeAnnotation(parser);
+    returnType = parseTSTypeAnnotation(parser, true);
     parser.state.noAnonFunctionType = oldNoAnonFunctionType;
   }
 
@@ -1845,7 +1874,7 @@ export function parseParenAndDistinguishExpression(
 
   const arrowStart = startPos;
   if (canBeArrow && shouldParseArrow(parser)) {
-    const {valid, returnType, predicate} = parseArrowHead(parser);
+    const {valid, returnType} = parseArrowHead(parser);
 
     if (valid) {
       checkYieldAwaitInDefaultParams(parser);
@@ -1873,7 +1902,6 @@ export function parseParenAndDistinguishExpression(
         ...arrow,
         head: {
           ...arrow.head,
-          predicate,
           returnType,
         },
       };
@@ -1955,17 +1983,16 @@ export function parseArrowHead(
   parser: JSParser,
 ): {
   valid: boolean;
-  predicate: undefined | AnyFlowPredicate;
   returnType: undefined | AnyPrimaryType;
 } {
   if (parser.match(tt.colon)) {
     const oldNoAnonFunctionType = parser.state.noAnonFunctionType;
     parser.state.noAnonFunctionType = true;
 
-    const branch = parser.createBranch<undefined | TypeAnnotationAndPredicate>();
+    const branch = parser.createBranch<undefined | AnyTSPrimary>();
 
     branch.add(() => {
-      const res = parseTypeAnnotationAndPredicate(parser);
+      const res = parseTSTypeOrTypePredicateAnnotation(parser, tt.colon);
 
       if (parser.canInsertSemicolon()) {
         // No semicolon insertion expected
@@ -1980,10 +2007,10 @@ export function parseArrowHead(
     });
 
     if (branch.hasBranch()) {
-      const typeInfo = branch.pick();
+      const returnType = branch.pick();
       parser.state.noAnonFunctionType = oldNoAnonFunctionType;
 
-      if (typeInfo === undefined) {
+      if (returnType === undefined) {
         throw new Error(
           'hasBranchResult call above should have refined this condition',
         );
@@ -1991,21 +2018,18 @@ export function parseArrowHead(
 
       return {
         valid: true,
-        predicate: typeInfo[1],
-        returnType: typeInfo[0],
+        returnType,
       };
     } else {
       parser.state.noAnonFunctionType = oldNoAnonFunctionType;
       return {
         valid: false,
-        predicate: undefined,
         returnType: undefined,
       };
     }
   } else {
     return {
       valid: parser.eat(tt.arrow),
-      predicate: undefined,
       returnType: undefined,
     };
   }
@@ -2023,7 +2047,7 @@ export function parseParenItem(
   }
 
   if (parser.match(tt.colon)) {
-    const typeAnnotation = parsePrimaryTypeAnnotation(parser);
+    const typeAnnotation = parseTSTypeAnnotation(parser, true);
     return parser.finishNode(
       startPos,
       {
@@ -2100,8 +2124,8 @@ export function parseNew(parser: JSParser): NewExpression | MetaProperty {
   }
 
   let typeArguments = undefined;
-  if (isTypeSystemEnabled(parser) && parser.isRelational('<')) {
-    typeArguments = parser.tryBranch(parseTypeCallArguments);
+  if (parser.isSyntaxEnabled('ts') && parser.isRelational('<')) {
+    typeArguments = parser.tryBranch(parseTSTypeArguments);
   }
 
   let args: Array<AnyExpression | SpreadElement> = [];
@@ -2498,7 +2522,6 @@ export function isGetterOrSetterMethod(
 export function checkGetterSetterParamCount(
   parser: JSParser,
   method:
-    | FlowFunctionTypeAnnotation
     | ObjectMethod
     | ClassMethod
     | ClassPrivateMethod
@@ -2506,8 +2529,7 @@ export function checkGetterSetterParamCount(
     | TSDeclareMethod,
   kind: string,
 ): void {
-  const head =
-    method.type === 'FlowFunctionTypeAnnotation' ? method : method.head;
+  const head = method.head;
 
   if (kind === 'get') {
     if (head.rest !== undefined || head.params.length !== 0) {
@@ -2746,15 +2768,8 @@ export function parseObjectPropertyValue(
     escapePosition,
   }: ParseObjectPropValueOpts,
 ): undefined | ObjectMethod | ObjectProperty | BindingObjectPatternProperty {
-  if (key.variance !== undefined) {
-    parser.addDiagnostic({
-      loc: key.variance.loc,
-      description: descriptions.JS_PARSER.ILLEGAL_VARIANCE,
-    });
-  }
-
   // parse type parameters for object method shorthand
-  let typeParameters = maybeParseTypeParameters(parser);
+  let typeParameters = maybeParseTSTypeParameters(parser);
   if (typeParameters !== undefined && !parser.match(tt.parenL)) {
     parser.unexpectedToken();
   }
@@ -2810,7 +2825,6 @@ export function parseObjectPropertyKey(
   parser: JSParser,
 ): StaticPropertyKey | ComputedPropertyKey {
   const start = parser.getPosition();
-  const variance = parseFlowVariance(parser);
 
   if (parser.match(tt.bracketL)) {
     const openContext = parser.expectOpening(
@@ -2826,7 +2840,6 @@ export function parseObjectPropertyKey(
       {
         type: 'ComputedPropertyKey',
         value,
-        variance,
       },
     );
   } else {
@@ -2849,7 +2862,6 @@ export function parseObjectPropertyKey(
       {
         type: 'StaticPropertyKey',
         value,
-        variance,
       },
     );
   }
@@ -3091,11 +3103,10 @@ export function parseFunctionBodyAndFinish(
   body: undefined | ParseFunctionBodyReturn['body'];
 } {
   let returnType = undefined;
-  let predicate;
 
   // For arrow functions, `parseArrow` handles the return type itself.
   if (!opts.isArrowFunction && parser.match(tt.colon)) {
-    [returnType, predicate] = parseTypeAnnotationAndPredicate(parser);
+    returnType = parseTSTypeOrTypePredicateAnnotation(parser, tt.colon);
   }
 
   const headEnd = parser.getLastEndPosition();
@@ -3111,7 +3122,6 @@ export function parseFunctionBodyAndFinish(
         async: opts.isAsync,
         hasHoistedVars: false,
         returnType,
-        predicate,
       },
     ),
   );

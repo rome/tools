@@ -66,7 +66,6 @@ Program {
         generator: true
         hasHoistedVars: false
         params: Array []
-        predicate: undefined
         rest: undefined
         returnType: undefined
         thisType: undefined
@@ -132,7 +131,6 @@ Program {
               head: FunctionHead {
                 async: false
                 hasHoistedVars: false
-                predicate: undefined
                 rest: undefined
                 returnType: undefined
                 thisType: undefined

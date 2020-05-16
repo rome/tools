@@ -31,7 +31,6 @@
       "ignore": [
         "build",
         "coverage",
-        "flow-typed",
         "node_modules",
         "core/static",
         "resources",
