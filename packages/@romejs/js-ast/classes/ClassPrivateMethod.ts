@@ -33,7 +33,6 @@ export const classPrivateMethod = createBuilder<ClassPrivateMethod>(
       meta: true,
       head: true,
       body: true,
-      variance: true,
     },
   },
 );

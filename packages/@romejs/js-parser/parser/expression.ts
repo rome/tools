@@ -2768,13 +2768,6 @@ export function parseObjectPropertyValue(
     escapePosition,
   }: ParseObjectPropValueOpts,
 ): undefined | ObjectMethod | ObjectProperty | BindingObjectPatternProperty {
-  if (key.variance !== undefined) {
-    parser.addDiagnostic({
-      loc: key.variance.loc,
-      description: descriptions.JS_PARSER.ILLEGAL_VARIANCE,
-    });
-  }
-
   // parse type parameters for object method shorthand
   let typeParameters = maybeParseTSTypeParameters(parser);
   if (typeParameters !== undefined && !parser.match(tt.parenL)) {

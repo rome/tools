@@ -7,7 +7,6 @@
 
 import {
   AnyExpression,
-  FlowTypeParameterInstantiation,
   JSNodeBase,
   SpreadElement,
   Super,
@@ -19,10 +18,7 @@ export type NewExpression = JSNodeBase & {
   type: 'NewExpression';
   callee: AnyExpression | Super;
   arguments: Array<AnyExpression | SpreadElement>;
-  typeArguments?:
-    | undefined
-    | FlowTypeParameterInstantiation
-    | TSTypeParameterInstantiation;
+  typeArguments?: undefined | TSTypeParameterInstantiation;
   optional?: boolean;
 };
 

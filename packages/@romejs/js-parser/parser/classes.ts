@@ -679,13 +679,6 @@ function parseClassMethod(
 ): ClassMethod | TSDeclareMethod {
   const {start, key, meta, kind, isGenerator, isAsync, isConstructor} = opts;
 
-  if (key.variance !== undefined) {
-    parser.addDiagnostic({
-      loc: key.variance.loc,
-      description: descriptions.JS_PARSER.ILLEGAL_VARIANCE,
-    });
-  }
-
   const typeParameters = maybeParseTSTypeParameters(parser);
 
   const {head, body} = parseMethod(

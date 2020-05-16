@@ -60,9 +60,5 @@ export default function IntersectionTypeAnnotation(
 }
 
 function isObjectType(node: AnyNode): boolean {
-  return (
-    node.type === 'FlowObjectTypeAnnotation' ||
-    node.type === 'TSMappedType' ||
-    node.type === 'TSTypeLiteral'
-  );
+  return node.type === 'TSMappedType' || node.type === 'TSTypeLiteral';
 }
