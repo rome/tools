@@ -31,7 +31,6 @@ import {
   BindingObjectPattern,
   BindingObjectPatternProperty,
   ConstTSAccessibility,
-  FlowTypeCastExpression,
   ReferenceIdentifier,
   SpreadElement,
   SpreadProperty,
@@ -40,20 +39,19 @@ import {JSParser, OpeningContext} from '../parser';
 import {
   ambiguousTypeCastToParameter,
   hasTSModifier,
-  parseMaybeAssign,
-  parseObjectPattern,
-  parsePrimaryTypeAnnotation,
-  parseTSAccessModifier,
-} from './index';
-import {descriptions} from '@romejs/diagnostics';
-import {ob1Get0} from '@romejs/ob1';
-import {
   parseArrayHole,
   parseBindingIdentifier,
+  parseMaybeAssign,
+  parseObjectPattern,
+  parseTSAccessModifier,
+  parseTSTypeAnnotation,
   toAssignmentIdentifier,
   toBindingIdentifier,
   toReferenceIdentifier,
-} from './expression';
+} from './index';
+import {descriptions} from '@romejs/diagnostics';
+import {ob1Get0} from '@romejs/ob1';
+
 const VALID_REST_ARGUMENT_TYPES = ['Identifier', 'MemberExpression'];
 
 type ToAssignmentPatternNode =
@@ -565,7 +563,7 @@ export function toReferencedList(
 ): Array<SpreadElement | AnyExpression> {
   for (let i = 0; i < exprList.length; i++) {
     const expr = exprList[i];
-    exprList[i] = toReferencedItem(
+    exprList[i] = normalizeReferencedItem(
       parser,
       expr,
       exprList.length > 1,
@@ -585,7 +583,7 @@ export function toReferencedListOptional(
   for (let i = 0; i < exprList.length; i++) {
     const expr = exprList[i];
     if (expr.type !== 'ArrayHole') {
-      exprList[i] = toReferencedItem(
+      exprList[i] = normalizeReferencedItem(
         parser,
         expr,
         exprList.length > 1,
@@ -603,7 +601,7 @@ export type ToReferencedItem =
   | SpreadElement
   | AnyExpression;
 
-export function toReferencedItem(
+export function normalizeReferencedItem(
   parser: JSParser,
   expr: ToReferencedItem,
   multiple?: boolean,
@@ -613,12 +611,10 @@ export function toReferencedItem(
     return expr;
   }
 
-  if (parser.isSyntaxEnabled('ts')) {
-    parser.addDiagnostic({
-      loc: expr.loc,
-      description: descriptions.JS_PARSER.FLOW_TYPE_CAST_IN_TS,
-    });
-  }
+  parser.addDiagnostic({
+    loc: expr.loc,
+    description: descriptions.JS_PARSER.FLOW_TYPE_CAST_IN_TS,
+  });
 
   if (!parser.isParenthesized(expr) && (multiple || !isParenthesizedExpr)) {
     parser.addDiagnostic({
@@ -650,13 +646,7 @@ export function toReferencedItem(
     );
   }
 
-  const node: FlowTypeCastExpression = {
-    type: 'FlowTypeCastExpression',
-    loc: expr.loc,
-    typeAnnotation,
-    expression,
-  };
-  return node;
+  return expression;
 }
 
 export function filterSpread<T extends AnyNode>(
@@ -925,7 +915,7 @@ export function parseBindingListItemTypes(
   }
 
   if (parser.match(tt.colon)) {
-    typeAnnotation = parsePrimaryTypeAnnotation(parser);
+    typeAnnotation = parseTSTypeAnnotation(parser, true);
   }
 
   return parser.finalizeNode({
@@ -1023,13 +1013,6 @@ export function checkLVal(
   }
 
   switch (expr.type) {
-    case 'FlowTypeCastExpression':
-      // Allow 'typecasts' to appear on the left of assignment expressions,
-      // because it may be in an arrow function.
-      // e.g. `const f = (foo: number = 0) => foo;`
-      // This will be validated later
-      return undefined;
-
     case 'TSAsExpression':
     case 'TSNonNullExpression':
     case 'TSTypeAssertion': {

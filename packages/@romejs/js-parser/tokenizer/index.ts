@@ -318,22 +318,6 @@ function pushComment(
     });
   }
 
-  // TODO maybe make sure this is at the head?
-  // We should enable flow syntax when there's a comment with @\flow
-  // We also handle @\noflow here as it's sometimes in files that have type annotations
-  if (opts.text.includes('@flow') || opts.text.includes('@noflow')) {
-    if (parser.syntax.has('ts')) {
-      parser.addDiagnostic({
-        description: descriptions.JS_PARSER.FLOW_ANNOTATION_WITH_TYPESCRIPT_ENABLED,
-      });
-    } else {
-      parser.syntax.add('flow');
-
-      // Let's also implicitly allow JSX
-      parser.syntax.add('jsx');
-    }
-  }
-
   // We should enable jsx syntax when there's a comment with @\jsx
   if (opts.text.includes('@jsx')) {
     parser.syntax.add('jsx');

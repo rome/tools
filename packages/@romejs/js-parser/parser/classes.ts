@@ -9,7 +9,6 @@ import {
   AnyClassMember,
   AnyExpression,
   AnyObjectPropertyKey,
-  AnyTypeArguments,
   BindingIdentifier,
   ClassDeclaration,
   ClassExpression,
@@ -21,14 +20,12 @@ import {
   ClassProperty,
   ClassPropertyMeta,
   ConstTSAccessibility,
-  FlowClassImplements,
-  FlowTypeParameterDeclaration,
-  FlowVariance,
   PrivateName,
   StaticPropertyKey,
   TSDeclareMethod,
   TSExpressionWithTypeArguments,
   TSTypeParameterDeclaration,
+  TSTypeParameterInstantiation,
 } from '@romejs/js-ast';
 import {Position, SourceLocation} from '@romejs/parser-core';
 import {JSParser} from '../parser';
@@ -36,17 +33,17 @@ import {types as tt} from '../tokenizer/types';
 import {
   checkGetterSetterParamCount,
   hasTSModifier,
-  maybeParseTypeArguments,
-  maybeParseTypeParameters,
-  parseClassImplements,
+  maybeParseTSTypeArguments,
+  maybeParseTSTypeParameters,
   parseExpressionWithPossibleSubscripts,
   parseIdentifier,
   parseMaybeAssign,
   parseMethod,
   parseObjectPropertyKey,
-  parsePrimaryTypeAnnotation,
   parseTSAccessModifier,
+  parseTSHeritageClause,
   parseTSModifier,
+  parseTSTypeAnnotation,
   tryTSParseIndexSignature,
 } from './index';
 import {ob1Dec, ob1Inc} from '@romejs/ob1';
@@ -376,7 +373,6 @@ function parseClassMemberWithIsStatic(
         {
           start,
           key: key.value,
-          variance: undefined,
           meta,
           isGenerator: true,
           isAsync: false,
@@ -423,7 +419,6 @@ function parseClassMemberWithIsStatic(
           isGenerator: false,
           isAsync: false,
           kind: 'method',
-          variance: undefined,
         },
       );
     }
@@ -493,7 +488,6 @@ function parseClassMemberWithIsStatic(
           isGenerator,
           isAsync: true,
           kind: 'method',
-          variance: undefined,
         },
       );
     } else {
@@ -547,7 +541,6 @@ function parseClassMemberWithIsStatic(
           isGenerator: false,
           isAsync: false,
           kind,
-          variance: undefined,
         },
       );
       checkGetterSetterParamCount(parser, method, method.kind);
@@ -609,7 +602,7 @@ function parseClassPropertyMeta(
 } {
   let typeAnnotation;
   if (parser.match(tt.colon)) {
-    typeAnnotation = parsePrimaryTypeAnnotation(parser);
+    typeAnnotation = parseTSTypeAnnotation(parser, true);
   }
 
   const key = parseObjectPropertyKey(parser);
@@ -693,7 +686,7 @@ function parseClassMethod(
     });
   }
 
-  const typeParameters = maybeParseTypeParameters(parser);
+  const typeParameters = maybeParseTSTypeParameters(parser);
 
   const {head, body} = parseMethod(
     parser,
@@ -749,19 +742,11 @@ function parseClassPrivateMethod(
     isGenerator: boolean;
     isAsync: boolean;
     kind: ClassMethodKind;
-    variance: undefined | FlowVariance;
   },
 ): ClassPrivateMethod {
-  const {start, key, variance, meta, isGenerator, isAsync, kind} = opts;
+  const {start, key, meta, isGenerator, isAsync, kind} = opts;
 
-  if (variance !== undefined) {
-    parser.addDiagnostic({
-      loc: variance.loc,
-      description: descriptions.JS_PARSER.ILLEGAL_VARIANCE,
-    });
-  }
-
-  const typeParameters = maybeParseTypeParameters(parser);
+  const typeParameters = maybeParseTSTypeParameters(parser);
   const method = parseMethod(
     parser,
     {
@@ -787,7 +772,6 @@ function parseClassPrivateMethod(
       key,
       kind,
       type: 'ClassPrivateMethod',
-      variance,
       head: {
         ...method.head,
         typeParameters,
@@ -806,7 +790,7 @@ function parseClassPrivateProperty(
 
   let typeAnnotation;
   if (parser.match(tt.colon)) {
-    typeAnnotation = parsePrimaryTypeAnnotation(parser);
+    typeAnnotation = parseTSTypeAnnotation(parser, true);
   }
 
   const value: undefined | AnyExpression = parser.eat(tt.eq)
@@ -842,7 +826,7 @@ function parseClassProperty(
 
   let typeAnnotation;
   if (parser.match(tt.colon)) {
-    typeAnnotation = parsePrimaryTypeAnnotation(parser);
+    typeAnnotation = parseTSTypeAnnotation(parser, true);
   }
 
   parser.pushScope('CLASS_PROPERTY', true);
@@ -880,10 +864,7 @@ function parseClassId(
   optionalId: boolean,
 ): {
   id: undefined | BindingIdentifier;
-  typeParameters:
-    | undefined
-    | TSTypeParameterDeclaration
-    | FlowTypeParameterDeclaration;
+  typeParameters: undefined | TSTypeParameterDeclaration;
 } {
   let idAllowed = true;
 
@@ -907,7 +888,7 @@ function parseClassId(
     }
   }
 
-  const typeParameters = maybeParseTypeParameters(parser, true);
+  const typeParameters = maybeParseTSTypeParameters(parser);
   return {id, typeParameters};
 }
 
@@ -915,7 +896,7 @@ function parseClassSuper(
   parser: JSParser,
 ): {
   superClass: undefined | AnyExpression;
-  superTypeParameters: undefined | AnyTypeArguments;
+  superTypeParameters: undefined | TSTypeParameterInstantiation;
   implemented: ClassHead['implements'];
 } {
   let superClass = parser.eat(tt._extends)
@@ -924,15 +905,13 @@ function parseClassSuper(
   let superTypeParameters;
 
   if (superClass !== undefined) {
-    superTypeParameters = maybeParseTypeArguments(parser);
+    superTypeParameters = maybeParseTSTypeArguments(parser);
   }
 
-  let implemented:
-    | undefined
-    | Array<FlowClassImplements | TSExpressionWithTypeArguments>;
+  let implemented: undefined | Array<TSExpressionWithTypeArguments>;
   if (parser.isContextual('implements')) {
     parser.next();
-    implemented = parseClassImplements(parser);
+    implemented = parseTSHeritageClause(parser, 'implements');
   }
 
   return {superClass, superTypeParameters, implemented};

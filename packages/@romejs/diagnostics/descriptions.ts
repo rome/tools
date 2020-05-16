@@ -1118,7 +1118,6 @@ export const descriptions = createMessages({
   },
   // @romejs/js-parser
   JS_PARSER: {
-    FLOW_ANNOTATION_WITH_TYPESCRIPT_ENABLED: 'Cannot have a @flow annotation comment when TypeScript syntax has been enabled',
     UNTERMINATED_BLOCK_COMMENT: 'Unterminated comment',
     UNTERMINATED_JSX_STRING: 'Unterminated string constant',
     INVALID_UNICODE_ESCAPE: 'Invalid Unicode escape',
@@ -1159,6 +1158,7 @@ export const descriptions = createMessages({
     EMPTY_PARENTHESIZED_EXPRESSION: 'Parenthesized expression didnt contain anything',
     AWAIT_IN_ASYNC_PARAMS: 'await is not allowed in async function parameters',
     YIELD_IN_GENERATOR_PARAMS: 'yield is not allowed in generator parameters',
+    FLOW_TYPE_CAST_IN_TS: "Flow type cast expressions aren't allowed in TypeScript",
     PARENTHESIZED_FUNCTION_PARAMS: "Function parameters can't be parenthesized",
     NEW_WITH_TYPESCRIPT_TYPE_ARGUMENTS_NO_PARENS: 'In TypeScript, a new expression with type arguments must have parens',
     INVALID_TEMPLATE_ESCAPE: 'Invalid escape sequence in template',
@@ -1217,27 +1217,9 @@ export const descriptions = createMessages({
     TYPE_CAST_WITHOUT_ANNOTATION: 'Type cast expression has no type annotation. Did you mean for this to be a function parameter?',
     TYPE_CAST_CANNOT_BE_OPTIONAL: 'Type cast expressions cannot be optional. Did you mean for this to be a function parameter?',
     TYPE_CAST_EXPECTED_PARENS: 'The type cast expression is expected to be wrapped with parentheses',
-    FLOW_SPACE_BETWEEN_PERCENT_CHECKS: 'Spaces between \xb4%\xb4 and \xb4checks\xb4 are not allowed here.',
-    FLOW_BAD_UNDERSCORE_NAME: '`_` is only allowed as a type argument to call or new',
-    FLOW_UNINFERRABLE_PREDICATE_ON_FUNCTION: 'Predicate function declarations need to declare a predicate expression',
-    FLOW_DECLARE_MODULE_IN_DECLARE_MODULE: '`declare module` cannot be used inside another `declare module`',
-    FLOW_UNKNOWN_DECLARATION_START: 'Unknown start to Flow declaration',
-    FLOW_IMPORT_KINDLESS_IN_DECLARE_MODULE: 'Imports within a `declare module` body must always be `import type` or `import typeof`',
-    FLOW_MIXED_DECLARE_EXPORTS: 'Found both `declare module.exports` and `declare export` in the same module. Modules can only have 1 since they are either an ES module or they are a CommonJS module',
-    FLOW_DUPLICATE_DECLARE_MODULE_EXPORTS: 'Duplicate `declare module.exports` statement',
-    FLOW_DISALLOW_DEFAULT_TYPE_PARAMETER: 'Default type parameters arent allowed here',
-    FLOW_DISALLOWED_SPREAD: 'Spread operator cannot appear in class or interface definitions',
-    FLOW_DEFAULT_TYPE_PARAMETER_REQUIRED: 'Type parameter declaration needs a default, since a preceding type parameter declaration has a default.',
-    FLOW_INEXACT_SYNTAX_NOT_ALLOWED: 'Explicit inexact syntax is only allowed inside inexact objects',
-    FLOW_INEXACT_CANNOT_APPEAR_IN_EXPLICIT_EXACT: 'Explicit inexact syntax cannot appear inside an explicit exact object type',
-    FLOW_INEXACT_MUST_BE_AT_END: 'Explicit inexact syntax must appear at the end of an inexact object',
-    FLOW_TYPE_CAST_IN_TS: "Flow type cast expressions aren't allowed in TypeScript",
+    INVALID_ASYNC_ARROW_WITH_TYPE_PARAMS: 'Invalid async arrow with type parameters',
     TYPE_NUMERIC_LITERAL_PLUS: 'Numeric literal type annotations cannot stand with a +, omit it instead',
     TYPE_NUMERIC_LITERAL_EXPECTED: `Unexpected token, expected "number"`,
-    FLOW_INVALID_ASYNC_ARROW_WITH_TYPE_PARAMS: 'Invalid async arrow with type parameters',
-    FLOW_UNKNOWN_PRIMARY_START: 'Unknown flow primarty type start',
-    FLOW_UNKNOWN_DECLARE_EXPORT_START: 'No valid start for Flow declare export declaration found',
-    FLOW_DECLARE_MODULE_INVALID_CHILD: 'Only declares and type imports are allowed inside declare module',
     JSX_INVALID_ATTRIBUTE_VALUE: 'JSX attribute value should be either an expression or a quoted JSX text',
     JSX_UNCLOSED_SELF_CLOSING_TAG: 'Unclosed JSX element open',
     JSX_UNCLOSED_CLOSING_TAG: 'Unclosed JSX element close',
@@ -1391,22 +1373,6 @@ export const descriptions = createMessages({
       message: 'Unclosed JSX element',
       advice: buildJSXOpeningAdvice(name, openingLoc),
     }),
-    FLOW_RESERVED_TYPE: (word: string) => ({
-      message: `Cannot overwrite primitive type ${word}`,
-    }),
-    FLOW_DECLARE_EXPORT_UNSUPPORTED: (label: string, suggestion: string) => ({
-      message: `\`declare export ${label}\` is not supported. Use \`${suggestion}\` instead`,
-    }),
-    FLOW_REQUIRED: (label: string) => ({
-      message: `A ${label} is only valid inside of a Flow file`,
-      advice: [
-        {
-          type: 'log',
-          category: 'info',
-          text: 'To enable <emphasis>Flow</emphasis> support, add a <emphasis>@flow</emphasis> comment annotation to the top of the file',
-        },
-      ],
-    }),
     TS_REQUIRED: (label: string) => ({
       message: `A ${label} is only valid inside of a TypeScript file`,
       advice: [
@@ -1414,21 +1380,6 @@ export const descriptions = createMessages({
           type: 'log',
           category: 'info',
           text: 'To enable <emphasis>TypeScript</emphasis> support, the file extension should end in <emphasis>.ts</emphasis> or <emphasis>.tsx</emphasis>',
-        },
-      ],
-    }),
-    FLOW_OR_TEST_REQUIRED: (label: string) => ({
-      message: `A ${label} is only valid inside of a TypeScript or Flow file`,
-      advice: [
-        {
-          type: 'log',
-          category: 'info',
-          text: 'Did you mean <emphasis>TypeScript</emphasis>? Change the file extension to <emphasis>.ts</emphasis> or <emphasis>.tsx</emphasis>',
-        },
-        {
-          type: 'log',
-          category: 'info',
-          text: 'Did you mean <emphasis>Flow</emphasis>? Add a <emphasis>@flow</emphasis> comment annotation to the top of the file',
         },
       ],
     }),
