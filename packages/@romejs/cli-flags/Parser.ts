@@ -614,7 +614,7 @@ export default class Parser<T> {
       await this.defineCommandFlags(command, consumer);
     }
 
-    const prg = process.env.ROME_DEV ? 'dev-rome' : 'rome';
+    const prg = process.env.ROME_DEV === '1' ? 'dev-rome' : 'rome';
 
     switch (shell) {
       case 'bash': {
