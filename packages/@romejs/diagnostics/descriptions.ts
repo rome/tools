@@ -404,7 +404,7 @@ export const descriptions = createMessages({
     },
     REACT_JSX_A11Y_IMG_REDUNDANT_ALT: {
       category: 'lint/jsxA11yImgRedundantAlt',
-      message: markup`<emphasis>img</emphasis> element alt descriptions must not contain "image", "picture", or "photo"`,
+      message: `<emphasis>img</emphasis> element alt descriptions must not contain "image", "picture", or "photo"`,
     },
     REACT_JSX_VOID_DOM_ELEMENTS_NO_CHILDREN: (
       element: string,
