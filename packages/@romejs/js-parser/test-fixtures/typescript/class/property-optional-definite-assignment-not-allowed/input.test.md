@@ -123,7 +123,6 @@ Program {
                   }
                 }
               }
-              variance: undefined
               loc: Object {
                 filename: 'input.ts'
                 end: Object {
@@ -200,7 +199,6 @@ Program {
                   }
                 }
               }
-              variance: undefined
               loc: Object {
                 filename: 'input.ts'
                 end: Object {

@@ -400,7 +400,7 @@ export const descriptions = createMessages({
     },
     REACT_IN_JSX_SCOPE: {
       category: 'lint/reactInJsxScope',
-      message: markup`<emphasis>"React"</emphasis> must be in scope when using JSX`,
+      message: `<emphasis>React</emphasis> must be in scope when using JSX`,
     },
     REACT_JSX_VOID_DOM_ELEMENTS_NO_CHILDREN: (
       element: string,

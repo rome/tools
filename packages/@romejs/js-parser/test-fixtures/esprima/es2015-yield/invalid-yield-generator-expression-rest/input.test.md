@@ -104,7 +104,6 @@ Program {
           async: false
           generator: true
           hasHoistedVars: false
-          predicate: undefined
           returnType: undefined
           thisType: undefined
           typeParameters: undefined

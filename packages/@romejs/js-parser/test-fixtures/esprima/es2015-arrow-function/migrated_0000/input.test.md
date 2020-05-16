@@ -78,7 +78,6 @@ Program {
           async: false
           hasHoistedVars: false
           params: Array []
-          predicate: undefined
           rest: undefined
           returnType: undefined
           thisType: undefined

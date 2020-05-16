@@ -146,7 +146,6 @@ Program {
                       }
                     }
                   }
-                  variance: undefined
                   loc: Object {
                     filename: 'input.js'
                     end: Object {

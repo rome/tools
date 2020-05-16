@@ -82,7 +82,6 @@ Program {
         async: false
         generator: false
         hasHoistedVars: false
-        predicate: undefined
         rest: undefined
         thisType: undefined
         typeParameters: undefined
@@ -235,7 +234,6 @@ Program {
           async: false
           generator: false
           hasHoistedVars: false
-          predicate: undefined
           rest: undefined
           thisType: undefined
           typeParameters: undefined
