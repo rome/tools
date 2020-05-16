@@ -53,6 +53,25 @@ test(
           }
         }
         `,
+        `
+        class Hello extends Component {
+          componentDidUpdate() {
+            this.setState({
+              name: 'John'
+            });
+          }
+        }
+        `,
+        `
+        class Hello extends Component {
+          componentDidUpdate() {
+            foo();
+            this.setState({
+              name: 'John'
+            });
+          }
+        }
+        `,
         // VALID
         `
         var Hello = createReactClass({
@@ -67,6 +86,17 @@ test(
         `,
         `
         class Hello extends React.Component {
+          componentDidUpdate() {
+            if (condition) {
+              this.setState({
+                name: 'John'
+              });
+            }
+          }
+        }
+        `,
+        `
+        class Hello extends Component {
           componentDidUpdate() {
             if (condition) {
               this.setState({

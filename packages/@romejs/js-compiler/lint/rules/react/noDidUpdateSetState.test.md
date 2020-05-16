@@ -159,11 +159,87 @@ class Hello extends React.Component {
 ### `4`
 
 ```
-✔ No known problems!
+
+ unknown:2:8 lint/noDidUpdateSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Avoid use setState in ComponentDidUpdate
+
+  > 2 │         class Hello extends Component {
+  > 3 │           componentDidUpdate() {
+  > 4 │             this.setState({
+  > 5 │               name: 'John'
+  > 6 │             });
+  > 7 │           }
+  > 8 │         }
+      │ ^^^^^^^^^
+    9 │         
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
 ### `4: formatted`
+
+```
+class Hello extends Component {
+  componentDidUpdate() {
+    this.setState({
+      name: 'John',
+    });
+  }
+}
+
+```
+
+### `5`
+
+```
+
+ unknown:2:8 lint/noDidUpdateSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Avoid use setState in ComponentDidUpdate
+
+   > 2 │         class Hello extends Component {
+   > 3 │           componentDidUpdate() {
+   > 4 │             foo();
+   > 5 │             this.setState({
+   > 6 │               name: 'John'
+   > 7 │             });
+   > 8 │           }
+   > 9 │         }
+       │ ^^^^^^^^^
+    10 │         
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `5: formatted`
+
+```
+class Hello extends Component {
+  componentDidUpdate() {
+    foo();
+    this.setState({
+      name: 'John',
+    });
+  }
+}
+
+```
+
+### `6`
+
+```
+✔ No known problems!
+
+```
+
+### `6: formatted`
 
 ```
 var Hello = createReactClass({
@@ -178,14 +254,14 @@ var Hello = createReactClass({
 
 ```
 
-### `5`
+### `7`
 
 ```
 ✔ No known problems!
 
 ```
 
-### `5: formatted`
+### `7: formatted`
 
 ```
 class Hello extends React.Component {
@@ -200,14 +276,36 @@ class Hello extends React.Component {
 
 ```
 
-### `6`
+### `8`
 
 ```
 ✔ No known problems!
 
 ```
 
-### `6: formatted`
+### `8: formatted`
+
+```
+class Hello extends Component {
+  componentDidUpdate() {
+    if (condition) {
+      this.setState({
+        name: 'John',
+      });
+    }
+  }
+}
+
+```
+
+### `9`
+
+```
+✔ No known problems!
+
+```
+
+### `9: formatted`
 
 ```
 var Hello = createReactClass({
