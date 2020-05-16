@@ -425,6 +425,10 @@ export const descriptions = createMessages({
 			category: "lint/jsxNoCommentText",
 			message: "Comments inside children should be placed in braces",
 		},
+		REACT_JSX_NO_TARGET_BLANK: {
+			category: "lint/jsxA11yNoTargetBlank",
+			message: `Using <emphasis>target="_blank"</emphasis> without <emphasis>rel="noreferrer"</emphasis> is a security risk.`,
+		},
 		REACT_JSX_A11Y_IFRAME_HAS_TITLE: {
 			category: "lint/jsxA11yIframeHasTitle",
 			message: `<emphasis>iframe</emphasis> elements should have a <emphasis>title prop</emphasis>.`,

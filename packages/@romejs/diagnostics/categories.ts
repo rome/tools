@@ -105,6 +105,7 @@ type LintDiagnosticCategory =
 	| "lint/jsxA11yHTMLHasLang"
 	| "lint/jsxA11yIframeHasTitle"
 	| "lint/jsxA11yImgRedundantAlt"
+	| "lint/jsxA11yNoTargetBlank"
 	| "lint/jsxKey"
 	| "lint/jsxNoCommentText"
 	| "lint/negationElse"
