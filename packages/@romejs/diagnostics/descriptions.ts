@@ -170,6 +170,7 @@ function buildJSXOpeningAdvice(
 }
 
 export const descriptions = createMessages({
+<<<<<<< HEAD
 	FLAGS: {
 		UNSUPPORTED_SHORTHANDS: `Shorthand flags are not supported`,
 		INCORRECT_CASED_FLAG: (flag: string) => ({
@@ -663,6 +664,485 @@ export const descriptions = createMessages({
 			},
 		) => {
 			let adviceMessage = "";
+=======
+  FLAGS: {
+    UNSUPPORTED_SHORTHANDS: `Shorthand flags are not supported`,
+    INCORRECT_CASED_FLAG: (flag: string) => ({
+      message: `Incorrect cased flag name`,
+      advice: [
+        {
+          type: 'log',
+          category: 'info',
+          text: markup`Use <emphasis>${toKebabCase(flag)}</emphasis> instead`,
+        },
+      ],
+    }),
+    INCORRECT_ARG_COUNT: (excessive: boolean, message: string) => ({
+      message: excessive ? 'Too many arguments' : 'Missing arguments',
+      advice: [
+        {
+          type: 'log',
+          category: 'info',
+          text: message,
+        },
+      ],
+    }),
+    DISALLOWED_REVIEW_FLAG: (key: string) => ({
+      message: `Flag <emphasis>${key}</emphasis> is not allowed with <emphasis>review</emphasis>`,
+    }),
+    DISALLOWED_REQUEST_FLAG: (key: string) => ({
+      message: `This command does not support the <emphasis>${key}</emphasis> flag`,
+    }),
+    UNKNOWN_ACTION: (action: string) => ({
+      message: `Unknown action ${action}`,
+    }),
+    NO_FILES_FOUND: (noun: undefined | string) => ({
+      message: noun === undefined
+        ? 'No files found'
+        : `No files to ${noun} found`,
+    }),
+  },
+  // @romejs/parser-core
+  PARSER_CORE: {
+    EXPECTED_SPACE: 'Expected no space between',
+    EXPECTED_EOF: 'Expected end of file',
+    UNEXPECTED_EOF: 'Unexpected end of file',
+    UNEXPECTED: (type: string) => ({
+      message: markup`Unexpected ${type}`,
+    }),
+    UNEXPECTED_CHARACTER: (char: string) => ({
+      message: markup`Unexpected character <emphasis>${char}</emphasis>`,
+    }),
+    EXPECTED_TOKEN: (got: string, expected: string) => {
+      return {
+        message: markup`Expected token ${expected} but got ${got}`,
+      };
+    },
+  },
+  // @romejs/codec-js-regexp
+  REGEX_PARSER: {
+    INVALID_CAPTURE_GROUP_MODIFIER: 'Invalid capture group modifier',
+    UNCLOSED_GROUP: 'Unclosed group',
+    UNOPENED_GROUP: 'Unopened group',
+    INVALID_QUANTIFIER_TARGET: 'Invalid target for quantifier',
+    UNKNOWN_REGEX_PART: 'Unknown regex part',
+    REVERSED_CHAR_SET_RANGE: 'Range values reversed. Start char code is greater than end char code',
+    UNCLOSED_CHAR_SET: 'Unclosed character set',
+    DUPLICATE_FLAG: 'Duplicate regular expression flag',
+    INVALID_FLAG: 'Invalid regular expression flag',
+    REVERSED_QUANTIFIER_RANGE: 'Quantifier minimum is greater than maximum',
+    NO_TARGET_QUANTIFIER: 'Nothing to repeat',
+    INVALID_NAMED_CAPTURE: 'Invalid named capture referenced',
+    UNCLOSED_NAMED_CAPTURE: 'Unclosed named capture',
+  },
+  // @romejs/codec-json
+  JSON: {
+    SINGLE_QUOTE_USAGE: 'You can only use double quoted strings',
+    TRAILING_COMMA_VALUE: 'Trailing comma is only allowed after a value',
+    UNCLOSED_STRING: 'Unclosed string',
+    UNCLOSED_BLOCK_COMMENT: 'Unclosed block comment',
+    MISTAKEN_ARRAY_IDENTITY: 'Trying to use an array element as an object property. Did you mean to make an object?',
+    REDUNDANT_COMMA: 'Redundant comma',
+    EMPTY_INPUT_IN_JSON: 'Empty input',
+    PROPERTY_KEY_UNQUOTED_IN_JSON: 'Property keys must be quoted in JSON',
+    IMPLICIT_OBJECT_IN_JSON: 'Objects must be wrapped in curly braces in JSON',
+    COMMENTS_IN_JSON: "Comments aren't allowed in JSON",
+    TRAILING_COMMA_IN_JSON: "Trailing commas aren't allowed in JSON",
+    REGEX_IN_JSON: "Regular expressions aren't allowed in JSON",
+    UNKNOWN_WORD_IN_JSON: (word: string) => ({
+      message: markup`${word} isn't a valid JSON word`,
+    }),
+    STRING_NEWLINES_IN_JSON: "Newlines aren't allowed in JSON, you insert a newline by escaping it like this \"\\n\"",
+    UNDEFINED_IN_JSON: "undefined isn't allowed in JSON, you could use null instead",
+    BIGINT_IN_JSON: "Bigints aren't allowed in JSON",
+    NUMERIC_SEPARATORS_IN_JSON: 'Numeric separators are not allowed in JSON',
+  },
+  // @romejs/codec-semver
+  SEMVER: {
+    MISSING_MINOR_VERSION: 'A minor number is required for a version',
+    MISSING_PATCH_VERSION: 'A patch number is required for a version',
+    EXCESSIVE_VERSION_PARTS: 'Too many parts for version',
+    INVALID_QUANTIFIER_PART: 'Invalid version qualifier part',
+    WILDCARD_IN_VERSION: "Wildcard aren't allowed in a hard version",
+    INVALID_VERSION_NUMBER: "This isn't a valid version part, expected a number",
+    INVALID_RANGE: 'A semver range can only be defined with versions',
+    BARE_PIPE_WITHOUT_LOOSE: 'Bare pipes are only allowed in loose mode',
+    UNEXPECTED_WORD: (word: string) => ({
+      message: markup`Unexpected word <emphasis>${word}</emphasis>`,
+    }),
+    UNKNOWN_START: 'Unknown start of atom',
+    EXPECTED_VERSION: 'Unexpected value for version',
+  },
+  V8: {
+    SYNTAX_ERROR: (message: string) => ({message, category: 'v8/syntaxError'}),
+  },
+  // @romejs/core/master/commands/lint.ts
+  LINT_COMMAND: {
+    INVALID_DECISION_ACTION: (action: string) => ({
+      message: markup`<emphasis>${action}</emphasis> is not a valid decision action`,
+    }),
+    INVALID_DECISION_PART_COUNT: (i: number) => ({
+      message: `Segment ${i} contains an invalid number of decision parts`,
+    }),
+  },
+  // @romejs/js-compiler
+  LINT: {
+    NO_DID_UPDATE_SET_STATE: {
+      category: 'lint/noDidUpdateSetState',
+      message: 'Avoid use setState in ComponentDidUpdate',
+    },
+    IMPORT_DEFAULT_BASENAME: (prev: string, basename: string) => ({
+      category: 'lint/importDefaultBasename',
+      message: markup`When importing the default, use the basename <emphasis>${basename}</emphasis>`,
+      advice: [
+        {
+          type: 'log',
+          category: 'info',
+          text: 'If you really meant this then use this instead',
+        },
+        {
+          type: 'code',
+          code: markup`import {default as ${prev}}`,
+        },
+      ],
+    }),
+    NO_COMMA_OPERATOR: {
+      category: 'lint/noCommaOperator',
+      message: 'Avoid usage of the comma operator. It can lead to easy mistakes and ambiguous code.',
+      advice: [
+        {
+          type: 'log',
+          category: 'info',
+          text: 'If you want multiple expressions then break it up.',
+        },
+      ],
+    },
+    NEGATION_ELSE: {
+      category: 'lint/negationElse',
+      message: 'Invert the blocks when you have a negation test',
+    },
+    STYLE_PROP_OBJECT: {
+      category: 'lint/stylePropObject',
+      message: '<emphasis>style</emphasis> property value must be an object.',
+    },
+    NO_DANGER_WITH_CHILDREN: {
+      category: 'lint/noDangerWithChildren',
+      message: 'Only set one of <emphasis>children</emphasis> or <emphasis>props.dangerouslySetInnerHTML</emphasis>.',
+    },
+    PENDING_FIXES: (
+      relativeFilename: string,
+      original: string,
+      formatted: string,
+    ) => ({
+      category: 'lint/pendingFixes',
+      message: 'Pending formatting and recommended autofixes',
+      advice: [
+        {
+          type: 'diff',
+          diff: stringDiff(original, formatted),
+        },
+        ({
+          type: 'action',
+          command: 'lint',
+          shortcut: 'f',
+          instruction: 'To apply fixes and formatting run',
+          noun: 'Apply fixes and format',
+          args: [relativeFilename],
+          commandFlags: {
+            save: true,
+          },
+        } as DiagnosticAdviceAction),
+        ({
+          type: 'action',
+          hidden: true,
+          command: 'lint',
+          shortcut: 'o',
+          instruction: 'To format this file without any fixes run',
+          noun: 'Only format',
+          args: [relativeFilename],
+          commandFlags: {
+            format: true,
+          },
+        } as DiagnosticAdviceAction),
+      ],
+    }),
+    DUPLICATE_IMPORT_SOURCE: (seenLocation: DiagnosticLocation) => ({
+      category: 'lint/duplicateImportSource',
+      message: 'This module has already been imported',
+      advice: [
+        {
+          type: 'log',
+          category: 'info',
+          text: 'Previously imported here',
+        },
+        {
+          type: 'frame',
+          location: seenLocation,
+        },
+      ],
+    }),
+    NO_CHILDREN_PROP: {
+      category: 'lint/noChildrenProp',
+      message: 'children should not be passed as a prop',
+    },
+    PREFER_BLOCK_STATEMENT: {
+      category: 'lint/preferBlockStatements',
+      message: 'Block statements are preferred in this position',
+    },
+    PREFER_TEMPLATE: {
+      category: 'lint/preferTemplate',
+      message: 'Template literals are preferred over string concatenation',
+    },
+    PREFER_WHILE: {
+      category: 'lint/preferWhile',
+      message: 'A while loop should be used over a for loop',
+    },
+    REACT_IN_JSX_SCOPE: {
+      category: 'lint/reactInJsxScope',
+      message: markup`<emphasis>"React"</emphasis> must be in scope when using JSX`,
+    },
+    REACT_JSX_VOID_DOM_ELEMENTS_NO_CHILDREN: (
+      element: string,
+      properties: Array<string>,
+    ) => ({
+      category: 'lint/voidDomElementsNoChildren',
+      message: markup`<emphasis>${element}</emphasis> is a void element tag and must not have <emphasis>${orJoin(
+        properties,
+      )}</emphasis>.`,
+    }),
+    REACT_JSX_NO_COMMENT_TEXT: {
+      category: 'lint/jsxNoCommentText',
+      message: 'Comments inside children should be placed in braces',
+    },
+    REACT_JSX_KEY: (origin: string) => ({
+      category: 'lint/jsxKey',
+      message: markup`Missing the "key" prop for element in ${origin}`,
+    }),
+    UNSAFE_NEGATION: {
+      category: 'lint/unsafeNegation',
+      message: 'Unsafe usage of negation operator in left side of binary expression',
+    },
+    UNUSED_VARIABLES: (kind: string, name: string) => ({
+      category: 'lint/unusedVariables',
+      message: markup`Unused ${kind} <emphasis>${name}</emphasis>`,
+    }),
+    UNDECLARED_VARIABLES: (name: string) => ({
+      category: 'lint/undeclaredVariables',
+      message: markup`Undeclared variable <emphasis>${name}</emphasis>`,
+    }),
+    VARIABLE_CAMEL_CASE: (name: string, camelCaseName: string) => ({
+      category: 'lint/camelCase',
+      message: markup`Variable <emphasis>${name}</emphasis> should be camel cased as <emphasis>${camelCaseName}</emphasis>`,
+    }),
+    IDENTIFIER_CAMEL_CASE: (name: string, camelCaseName: string) => ({
+      category: 'lint/camelCase',
+      message: markup`Identifier <emphasis>${name}</emphasis> should be camel cased as <emphasis>${camelCaseName}</emphasis>`,
+    }),
+    CASE_SINGLE_STATEMENT: {
+      category: 'lint/caseSingleStatement',
+      message: 'A switch case should only have a single statement. If you want more then wrap it in a block.',
+    },
+    INCONSIDERATE_LANGUAGE: (
+      description: string,
+      word: string,
+      suggestion: string,
+    ) => ({
+      category: 'lint/inconsiderateLanguage',
+      message: description,
+      advice: [
+        {
+          type: 'log',
+          category: 'info',
+          text: markup`Instead of <emphasis>${word}</emphasis> use <emphasis>${suggestion}</emphasis>`,
+        },
+      ],
+    }),
+    DOUBLE_EQUALS: {
+      category: 'lint/doubleEquals',
+      message: 'Use === instead of ==',
+      advice: [
+        {
+          type: 'log',
+          category: 'info',
+          text: '== is only allowed when comparing against null',
+        },
+      ],
+    },
+    EMPTY_MATCHES: {
+      category: 'lint/emptyMatches',
+      message: 'The expression can return empty matches, and may match infinitely in some use cases',
+    },
+    NEGATE_DOUBLE_EQUALS: {
+      category: 'lint/doubleEquals',
+      message: 'Use !== instead of !=',
+      advice: [
+        {
+          type: 'log',
+          category: 'info',
+          text: '!= is only allowed when comparing against null',
+        },
+      ],
+    },
+    NO_CATCH_ASSIGN: {
+      category: 'lint/noCatchAssign',
+      message: "Don't reassign catch parameters",
+    },
+    SPARSE_ARRAY: {
+      category: 'lint/sparseArray',
+      message: 'Your array contains an empty slot',
+    },
+    SINGLE_VAR_DECLARATOR: {
+      category: 'lint/singleVarDeclarator',
+      message: 'Declare each variable separately',
+    },
+    PREFER_FUNCTION_DECLARATIONS: {
+      category: 'lint/preferFunctionDeclarations',
+      message: 'Use a function declaration instead of a const function',
+    },
+    NO_VAR: {
+      category: 'lint/noVar',
+      message: 'Variable declarations using `var` are disallowed, use `let` or `const` instead.',
+    },
+    NO_SHORTHAND_ARRAY_TYPE: {
+      category: 'lint/noShorthandArrayType',
+      message: escapeMarkup('Use Array<T> instead of shorthand T[]'),
+    },
+    NO_UNSAFE_FINALLY: (type: string) => ({
+      category: 'lint/noUnsafeFinally',
+      message: markup`Unsafe usage of ${type}.`,
+    }),
+    NO_TEMPLATE_CURLY_IN_STRING: {
+      category: 'lint/noTemplateCurlyInString',
+      message: `Unexpected template string expression.`,
+    },
+    NO_SHADOW_RESTRICTED_NAMES: (name: string) => ({
+      category: 'lint/noShadowRestrictedNames',
+      message: markup`Shadowing of global property <emphasis>${name}</emphasis>`,
+      advice: [
+        {
+          type: 'log',
+          category: 'info',
+          text: "Consider renaming this variable. It's easy to confuse the origin of variables when they're named after a known global.",
+        },
+      ],
+    }),
+    NO_MULTIPLE_SPACES_IN_REGEX_LITERAL: (count: number) => ({
+      category: 'lint/noMultipleSpacesInRegularExpressionLiterals',
+      message: 'Unclear multiple spaces in regular expression',
+      advice: [
+        {
+          type: 'log',
+          category: 'info',
+          text: `It's hard to visually count the amount of spaces, it's clearer if you use a quantifier instead. eg / {${String(
+            count,
+          )}}/`,
+        },
+      ],
+    }),
+    NO_LABEL_VAR: {
+      category: 'lint/noLabelVar',
+      message: 'Labels should not be variable names',
+    },
+    NO_IMPORT_ASSIGN: (name: string) => ({
+      category: 'lint/noImportAssign',
+      message: markup`<emphasis>${name}</emphasis> is read-only`,
+    }),
+    NO_EXTRA_BOOLEAN_CAST: {
+      category: 'lint/noExtraBooleanCast',
+      message: `Redundant double negation.`,
+    },
+    NO_FUNCTION_ASSIGN: {
+      category: 'lint/noFunctionAssign',
+      message: 'Reassignment of function declaration',
+    },
+    NO_EXPLICIT_ANY: {
+      category: 'lint/noExplicitAny',
+      message: 'Unexpected any. Specify a different type.',
+    },
+    NO_EMPTY_CHAR_SET: {
+      category: 'lint/noEmptyCharacterClass',
+      message: 'Empty character classes in regular expressions are not allowed',
+    },
+    NO_DUPLICATE_KEYS: (key: string) => ({
+      category: 'lint/noDuplicateKeys',
+      message: markup`Duplicate key <emphasis>${key}</emphasis>`,
+    }),
+    NO_POSIX_IN_REGULAR_EXPRESSION: {
+      category: 'lint/noPosixInRegularExpression',
+      message: 'POSIX Character Classes and Collating Sequences are not supported in ECMAscript Regular Expressions',
+    },
+    NO_DUPLICATE_CASE: (value: string) => ({
+      category: 'lint/noDuplicateCase',
+      message: markup`Duplicate case <emphasis>${value}</emphasis> not allowed.`,
+    }),
+    NO_DUPE_ARGS: (name: string) => ({
+      category: 'lint/noDupeArgs',
+      message: markup`Duplicate argument <emphasis>${name}</emphasis> in function definition`,
+    }),
+    NO_DELETE: {
+      category: 'lint/noDelete',
+      message: `Unexpected 'delete' operator.`,
+    },
+    NO_DELETE_VARS: {
+      category: 'lint/noDeleteVars',
+      message: 'Variables should not be deleted.',
+    },
+    NO_DEBUGGER: {
+      category: 'lint/noDebugger',
+      message: "Unexpected 'debugger' statement",
+    },
+    NO_COND_ASSIGN: {
+      category: 'lint/noCondAssign',
+      message: 'Cannot assign variable in loop condition',
+    },
+    NO_COMPARE_NEG_ZERO: (op: string) => ({
+      category: 'lint/noCompareNegZero',
+      message: `Do not use the '${op}' operator to compare against -0`,
+      fixable: op === '===',
+    }),
+    NO_ASYNC_PROMISE_EXECUTOR: {
+      category: 'lint/noAsyncPromiseExecutor',
+      message: 'Promise executor functions should not be async.',
+    },
+    GETTER_RETURN: (got: string) => ({
+      category: 'lint/getterReturn',
+      message: `Expected a 'return' at end of a getter method but got ${got}`,
+    }),
+    NO_SETTER_RETURN: {
+      category: 'lint/noSetterReturn',
+      message: `Setter cannot return a value`,
+    },
+    EMPTY_BLOCKS: {
+      category: 'lint/emptyBlocks',
+      message: 'Empty block',
+    },
+    NO_ARGUMENTS: {
+      category: 'lint/noArguments',
+      message: "Use the rest parameters instead of 'arguments'",
+    },
+    DUPLICATE_REGEX_GROUP_NAME: (name: string) => ({
+      category: 'lint/noDuplicateGroupNamesInRegularExpressions',
+      message: `Duplicate group name <emphasis>${name}</emphasis> in regular expression`,
+    }),
+    NO_REFERENCE_TO_NON_EXISTING_GROUP: (name: string) => ({
+      category: 'lint/noReferenceToNonExistingGroup',
+      message: `Reference to non-existent group <emphasis>"${name}"</emphasis>`,
+    }),
+    DEFAULT_EXPORT_SAME_BASENAME: (
+      {
+        defaultName,
+        defaultType,
+        actualFilename,
+        correctFilename,
+      }: {
+        defaultName: string;
+        defaultType: string;
+        actualFilename: string;
+        correctFilename: string;
+      },
+    ) => {
+      let adviceMessage = '';
+>>>>>>> add rule for no setState in componentDidUpdate and tests
 
 			if (defaultName === "*default*") {
 				adviceMessage += "The";
