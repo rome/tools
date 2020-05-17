@@ -10,7 +10,7 @@ export default {
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 
-		const distractingType = DISTRACTING_TYPES.find((name) =>
+		const distractingType = isJSXElement(node) && DISTRACTING_TYPES.find((name) =>
 			isJSXElement(node, name)
 		);
 
