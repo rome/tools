@@ -143,7 +143,7 @@ Program {
 					line: 2
 				}
 			}
-			right: NumberKeywordTypeAnnotation {
+			right: TSNumberKeywordTypeAnnotation {
 				loc: Object {
 					filename: "input.ts"
 					end: Object {

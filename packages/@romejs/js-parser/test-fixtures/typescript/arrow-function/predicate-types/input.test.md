@@ -107,7 +107,7 @@ Program {
 								line: 1
 							}
 						}
-						typeAnnotation: StringKeywordTypeAnnotation {
+						typeAnnotation: TSStringKeywordTypeAnnotation {
 							loc: Object {
 								filename: "input.ts"
 								end: Object {
@@ -171,7 +171,7 @@ Program {
 										line: 1
 									}
 								}
-								typeAnnotation: AnyKeywordTypeAnnotation {
+								typeAnnotation: TSAnyKeywordTypeAnnotation {
 									loc: Object {
 										filename: "input.ts"
 										end: Object {

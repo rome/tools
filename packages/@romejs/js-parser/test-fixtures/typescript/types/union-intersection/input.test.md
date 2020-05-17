@@ -106,7 +106,7 @@ Program {
 										}
 									}
 									types: Array [
-										NumberKeywordTypeAnnotation {
+										TSNumberKeywordTypeAnnotation {
 											loc: Object {
 												filename: "input.ts"
 												end: Object {
@@ -121,7 +121,7 @@ Program {
 												}
 											}
 										}
-										NullKeywordTypeAnnotation {
+										TSNullKeywordTypeAnnotation {
 											loc: Object {
 												filename: "input.ts"
 												end: Object {
@@ -234,7 +234,7 @@ Program {
 										line: 2
 									}
 								}
-								typeAnnotation: IntersectionTypeAnnotation {
+								typeAnnotation: TSIntersectionTypeAnnotation {
 									loc: Object {
 										filename: "input.ts"
 										end: Object {
@@ -249,7 +249,7 @@ Program {
 										}
 									}
 									types: Array [
-										NumberKeywordTypeAnnotation {
+										TSNumberKeywordTypeAnnotation {
 											loc: Object {
 												filename: "input.ts"
 												end: Object {
@@ -264,7 +264,7 @@ Program {
 												}
 											}
 										}
-										StringKeywordTypeAnnotation {
+										TSStringKeywordTypeAnnotation {
 											loc: Object {
 												filename: "input.ts"
 												end: Object {
@@ -377,7 +377,7 @@ Program {
 										}
 									}
 									types: Array [
-										NumberKeywordTypeAnnotation {
+										TSNumberKeywordTypeAnnotation {
 											loc: Object {
 												filename: "input.ts"
 												end: Object {
@@ -392,7 +392,7 @@ Program {
 												}
 											}
 										}
-										IntersectionTypeAnnotation {
+										TSIntersectionTypeAnnotation {
 											loc: Object {
 												filename: "input.ts"
 												end: Object {
@@ -407,7 +407,7 @@ Program {
 												}
 											}
 											types: Array [
-												StringKeywordTypeAnnotation {
+												TSStringKeywordTypeAnnotation {
 													loc: Object {
 														filename: "input.ts"
 														end: Object {
@@ -422,7 +422,7 @@ Program {
 														}
 													}
 												}
-												BooleanKeywordTypeAnnotation {
+												TSBooleanKeywordTypeAnnotation {
 													loc: Object {
 														filename: "input.ts"
 														end: Object {
@@ -537,7 +537,7 @@ Program {
 										}
 									}
 									types: Array [
-										IntersectionTypeAnnotation {
+										TSIntersectionTypeAnnotation {
 											loc: Object {
 												filename: "input.ts"
 												end: Object {
@@ -552,7 +552,7 @@ Program {
 												}
 											}
 											types: Array [
-												NumberKeywordTypeAnnotation {
+												TSNumberKeywordTypeAnnotation {
 													loc: Object {
 														filename: "input.ts"
 														end: Object {
@@ -567,7 +567,7 @@ Program {
 														}
 													}
 												}
-												StringKeywordTypeAnnotation {
+												TSStringKeywordTypeAnnotation {
 													loc: Object {
 														filename: "input.ts"
 														end: Object {
@@ -584,7 +584,7 @@ Program {
 												}
 											]
 										}
-										BooleanKeywordTypeAnnotation {
+										TSBooleanKeywordTypeAnnotation {
 											loc: Object {
 												filename: "input.ts"
 												end: Object {

@@ -14,7 +14,7 @@ export default {
 	enter(path: Path): AnyNode {
 		const {context, node} = path;
 
-		if (node.type === "AnyKeywordTypeAnnotation") {
+		if (node.type === "TSAnyKeywordTypeAnnotation") {
 			context.addNodeDiagnostic(node, descriptions.LINT.NO_EXPLICIT_ANY);
 		}
 

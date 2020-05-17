@@ -204,7 +204,7 @@ Program {
 												line: 2
 											}
 										}
-										constraint: ObjectKeywordTypeAnnotation {
+										constraint: TSObjectKeywordTypeAnnotation {
 											loc: Object {
 												filename: "input.ts"
 												end: Object {
@@ -282,7 +282,7 @@ Program {
 															line: 2
 														}
 													}
-													typeAnnotation: NumberKeywordTypeAnnotation {
+													typeAnnotation: TSNumberKeywordTypeAnnotation {
 														loc: Object {
 															filename: "input.ts"
 															end: Object {

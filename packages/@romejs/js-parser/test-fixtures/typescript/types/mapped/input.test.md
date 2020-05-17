@@ -107,7 +107,7 @@ Program {
 											line: 1
 										}
 									}
-									typeAnnotation: NumberKeywordTypeAnnotation {
+									typeAnnotation: TSNumberKeywordTypeAnnotation {
 										loc: Object {
 											filename: "input.ts"
 											end: Object {
@@ -137,7 +137,7 @@ Program {
 												line: 1
 											}
 										}
-										constraint: StringKeywordTypeAnnotation {
+										constraint: TSStringKeywordTypeAnnotation {
 											loc: Object {
 												filename: "input.ts"
 												end: Object {
@@ -251,7 +251,7 @@ Program {
 											line: 2
 										}
 									}
-									typeAnnotation: NumberKeywordTypeAnnotation {
+									typeAnnotation: TSNumberKeywordTypeAnnotation {
 										loc: Object {
 											filename: "input.ts"
 											end: Object {
@@ -281,7 +281,7 @@ Program {
 												line: 2
 											}
 										}
-										constraint: StringKeywordTypeAnnotation {
+										constraint: TSStringKeywordTypeAnnotation {
 											loc: Object {
 												filename: "input.ts"
 												end: Object {
@@ -395,7 +395,7 @@ Program {
 											line: 3
 										}
 									}
-									typeAnnotation: NumberKeywordTypeAnnotation {
+									typeAnnotation: TSNumberKeywordTypeAnnotation {
 										loc: Object {
 											filename: "input.ts"
 											end: Object {
@@ -425,7 +425,7 @@ Program {
 												line: 3
 											}
 										}
-										constraint: StringKeywordTypeAnnotation {
+										constraint: TSStringKeywordTypeAnnotation {
 											loc: Object {
 												filename: "input.ts"
 												end: Object {
@@ -539,7 +539,7 @@ Program {
 											line: 4
 										}
 									}
-									typeAnnotation: NumberKeywordTypeAnnotation {
+									typeAnnotation: TSNumberKeywordTypeAnnotation {
 										loc: Object {
 											filename: "input.ts"
 											end: Object {
@@ -569,7 +569,7 @@ Program {
 												line: 4
 											}
 										}
-										constraint: StringKeywordTypeAnnotation {
+										constraint: TSStringKeywordTypeAnnotation {
 											loc: Object {
 												filename: "input.ts"
 												end: Object {

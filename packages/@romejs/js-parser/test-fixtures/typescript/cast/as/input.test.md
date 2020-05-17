@@ -174,7 +174,7 @@ Program {
 						line: 2
 					}
 				}
-				typeAnnotation: BooleanKeywordTypeAnnotation {
+				typeAnnotation: TSBooleanKeywordTypeAnnotation {
 					loc: Object {
 						filename: "input.ts"
 						end: Object {
@@ -305,7 +305,7 @@ Program {
 							line: 3
 						}
 					}
-					typeAnnotation: NumberKeywordTypeAnnotation {
+					typeAnnotation: TSNumberKeywordTypeAnnotation {
 						loc: Object {
 							filename: "input.ts"
 							end: Object {
@@ -418,7 +418,7 @@ Program {
 							line: 4
 						}
 					}
-					typeAnnotation: AnyKeywordTypeAnnotation {
+					typeAnnotation: TSAnyKeywordTypeAnnotation {
 						loc: Object {
 							filename: "input.ts"
 							end: Object {

@@ -91,7 +91,7 @@ Program {
 										line: 1
 									}
 								}
-								typeAnnotation: BooleanLiteralTypeAnnotation {
+								typeAnnotation: TSBooleanLiteralTypeAnnotation {
 									value: true
 									loc: Object {
 										filename: "input.ts"
@@ -188,7 +188,7 @@ Program {
 										line: 2
 									}
 								}
-								typeAnnotation: BooleanLiteralTypeAnnotation {
+								typeAnnotation: TSBooleanLiteralTypeAnnotation {
 									value: false
 									loc: Object {
 										filename: "input.ts"

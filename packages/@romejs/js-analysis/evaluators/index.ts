@@ -24,9 +24,6 @@ evaluators.set(
 	AmbiguousFlowTypeCastExpression,
 );
 
-import AnyKeywordTypeAnnotation from "./types/AnyKeywordTypeAnnotation";
-evaluators.set("AnyKeywordTypeAnnotation", AnyKeywordTypeAnnotation);
-
 import ArrayExpression from "./expressions/ArrayExpression";
 evaluators.set("ArrayExpression", ArrayExpression);
 
@@ -60,9 +57,6 @@ evaluators.set(
 import AwaitExpression from "./expressions/AwaitExpression";
 evaluators.set("AwaitExpression", AwaitExpression);
 
-import BigIntKeywordTypeAnnotation from "./types/BigIntKeywordTypeAnnotation";
-evaluators.set("BigIntKeywordTypeAnnotation", BigIntKeywordTypeAnnotation);
-
 import BigIntLiteral from "./literals/BigIntLiteral";
 evaluators.set("BigIntLiteral", BigIntLiteral);
 
@@ -87,14 +81,8 @@ evaluators.set("BindingObjectPatternProperty", BindingObjectPatternProperty);
 import BlockStatement from "./statements/BlockStatement";
 evaluators.set("BlockStatement", BlockStatement);
 
-import BooleanKeywordTypeAnnotation from "./types/BooleanKeywordTypeAnnotation";
-evaluators.set("BooleanKeywordTypeAnnotation", BooleanKeywordTypeAnnotation);
-
 import BooleanLiteral from "./literals/BooleanLiteral";
 evaluators.set("BooleanLiteral", BooleanLiteral);
-
-import BooleanLiteralTypeAnnotation from "./types/BooleanLiteralTypeAnnotation";
-evaluators.set("BooleanLiteralTypeAnnotation", BooleanLiteralTypeAnnotation);
 
 import BreakStatement from "./statements/BreakStatement";
 evaluators.set("BreakStatement", BreakStatement);
@@ -158,9 +146,6 @@ evaluators.set("DoExpression", DoExpression);
 
 import DoWhileStatement from "./statements/DoWhileStatement";
 evaluators.set("DoWhileStatement", DoWhileStatement);
-
-import EmptyKeywordTypeAnnotation from "./types/EmptyKeywordTypeAnnotation";
-evaluators.set("EmptyKeywordTypeAnnotation", EmptyKeywordTypeAnnotation);
 
 import EmptyStatement from "./statements/EmptyStatement";
 evaluators.set("EmptyStatement", EmptyStatement);
@@ -237,9 +222,6 @@ evaluators.set("ImportSpecifierLocal", ImportSpecifierLocal);
 import InterpreterDirective from "./core/InterpreterDirective";
 evaluators.set("InterpreterDirective", InterpreterDirective);
 
-import IntersectionTypeAnnotation from "./types/IntersectionTypeAnnotation";
-evaluators.set("IntersectionTypeAnnotation", IntersectionTypeAnnotation);
-
 import JSXAttribute from "./jsx/JSXAttribute";
 evaluators.set("JSXAttribute", JSXAttribute);
 
@@ -288,38 +270,20 @@ evaluators.set("MemberExpression", MemberExpression);
 import MetaProperty from "./expressions/MetaProperty";
 evaluators.set("MetaProperty", MetaProperty);
 
-import MixedKeywordTypeAnnotation from "./types/MixedKeywordTypeAnnotation";
-evaluators.set("MixedKeywordTypeAnnotation", MixedKeywordTypeAnnotation);
-
 import MockParent from "./temp/MockParent";
 evaluators.set("MockParent", MockParent);
-
-import NeverKeywordTypeAnnotation from "./types/NeverKeywordTypeAnnotation";
-evaluators.set("NeverKeywordTypeAnnotation", NeverKeywordTypeAnnotation);
 
 import NewExpression from "./expressions/NewExpression";
 evaluators.set("NewExpression", NewExpression);
 
-import NullKeywordTypeAnnotation from "./types/NullKeywordTypeAnnotation";
-evaluators.set("NullKeywordTypeAnnotation", NullKeywordTypeAnnotation);
-
 import NullLiteral from "./literals/NullLiteral";
 evaluators.set("NullLiteral", NullLiteral);
-
-import NumberKeywordTypeAnnotation from "./types/NumberKeywordTypeAnnotation";
-evaluators.set("NumberKeywordTypeAnnotation", NumberKeywordTypeAnnotation);
 
 import NumericLiteral from "./literals/NumericLiteral";
 evaluators.set("NumericLiteral", NumericLiteral);
 
-import NumericLiteralTypeAnnotation from "./types/NumericLiteralTypeAnnotation";
-evaluators.set("NumericLiteralTypeAnnotation", NumericLiteralTypeAnnotation);
-
 import ObjectExpression from "./objects/ObjectExpression";
 evaluators.set("ObjectExpression", ObjectExpression);
-
-import ObjectKeywordTypeAnnotation from "./types/ObjectKeywordTypeAnnotation";
-evaluators.set("ObjectKeywordTypeAnnotation", ObjectKeywordTypeAnnotation);
 
 import ObjectMethod from "./objects/ObjectMethod";
 evaluators.set("ObjectMethod", ObjectMethod);
@@ -429,14 +393,8 @@ evaluators.set("StaticMemberProperty", StaticMemberProperty);
 import StaticPropertyKey from "./objects/StaticPropertyKey";
 evaluators.set("StaticPropertyKey", StaticPropertyKey);
 
-import StringKeywordTypeAnnotation from "./types/StringKeywordTypeAnnotation";
-evaluators.set("StringKeywordTypeAnnotation", StringKeywordTypeAnnotation);
-
 import StringLiteral from "./literals/StringLiteral";
 evaluators.set("StringLiteral", StringLiteral);
-
-import StringLiteralTypeAnnotation from "./types/StringLiteralTypeAnnotation";
-evaluators.set("StringLiteralTypeAnnotation", StringLiteralTypeAnnotation);
 
 import Super from "./expressions/Super";
 evaluators.set("Super", Super);
@@ -447,9 +405,6 @@ evaluators.set("SwitchCase", SwitchCase);
 import SwitchStatement from "./statements/SwitchStatement";
 evaluators.set("SwitchStatement", SwitchStatement);
 
-import SymbolKeywordTypeAnnotation from "./types/SymbolKeywordTypeAnnotation";
-evaluators.set("SymbolKeywordTypeAnnotation", SymbolKeywordTypeAnnotation);
-
 import TaggedTemplateExpression from "./expressions/TaggedTemplateExpression";
 evaluators.set("TaggedTemplateExpression", TaggedTemplateExpression);
 
@@ -459,9 +414,6 @@ evaluators.set("TemplateElement", TemplateElement);
 import TemplateLiteral from "./literals/TemplateLiteral";
 evaluators.set("TemplateLiteral", TemplateLiteral);
 
-import TemplateLiteralTypeAnnotation from "./types/TemplateLiteralTypeAnnotation";
-evaluators.set("TemplateLiteralTypeAnnotation", TemplateLiteralTypeAnnotation);
-
 import ThisExpression from "./expressions/ThisExpression";
 evaluators.set("ThisExpression", ThisExpression);
 
@@ -470,6 +422,9 @@ evaluators.set("ThrowStatement", ThrowStatement);
 
 import TryStatement from "./statements/TryStatement";
 evaluators.set("TryStatement", TryStatement);
+
+import TSAnyKeywordTypeAnnotation from "./typescript/TSAnyKeywordTypeAnnotation";
+evaluators.set("TSAnyKeywordTypeAnnotation", TSAnyKeywordTypeAnnotation);
 
 import TSArrayType from "./typescript/TSArrayType";
 evaluators.set("TSArrayType", TSArrayType);
@@ -485,6 +440,15 @@ evaluators.set("TSAssignmentNonNullExpression", TSAssignmentNonNullExpression);
 
 import TSAssignmentTypeAssertion from "./typescript/TSAssignmentTypeAssertion";
 evaluators.set("TSAssignmentTypeAssertion", TSAssignmentTypeAssertion);
+
+import TSBigIntKeywordTypeAnnotation from "./typescript/TSBigIntKeywordTypeAnnotation";
+evaluators.set("TSBigIntKeywordTypeAnnotation", TSBigIntKeywordTypeAnnotation);
+
+import TSBooleanKeywordTypeAnnotation from "./typescript/TSBooleanKeywordTypeAnnotation";
+evaluators.set("TSBooleanKeywordTypeAnnotation", TSBooleanKeywordTypeAnnotation);
+
+import TSBooleanLiteralTypeAnnotation from "./typescript/TSBooleanLiteralTypeAnnotation";
+evaluators.set("TSBooleanLiteralTypeAnnotation", TSBooleanLiteralTypeAnnotation);
 
 import TSCallSignatureDeclaration from "./typescript/TSCallSignatureDeclaration";
 evaluators.set("TSCallSignatureDeclaration", TSCallSignatureDeclaration);
@@ -506,6 +470,9 @@ evaluators.set("TSDeclareFunction", TSDeclareFunction);
 
 import TSDeclareMethod from "./typescript/TSDeclareMethod";
 evaluators.set("TSDeclareMethod", TSDeclareMethod);
+
+import TSEmptyKeywordTypeAnnotation from "./typescript/TSEmptyKeywordTypeAnnotation";
+evaluators.set("TSEmptyKeywordTypeAnnotation", TSEmptyKeywordTypeAnnotation);
 
 import TSEnumDeclaration from "./typescript/TSEnumDeclaration";
 evaluators.set("TSEnumDeclaration", TSEnumDeclaration);
@@ -546,11 +513,17 @@ evaluators.set("TSInterfaceBody", TSInterfaceBody);
 import TSInterfaceDeclaration from "./typescript/TSInterfaceDeclaration";
 evaluators.set("TSInterfaceDeclaration", TSInterfaceDeclaration);
 
+import TSIntersectionTypeAnnotation from "./typescript/TSIntersectionTypeAnnotation";
+evaluators.set("TSIntersectionTypeAnnotation", TSIntersectionTypeAnnotation);
+
 import TSMappedType from "./typescript/TSMappedType";
 evaluators.set("TSMappedType", TSMappedType);
 
 import TSMethodSignature from "./typescript/TSMethodSignature";
 evaluators.set("TSMethodSignature", TSMethodSignature);
+
+import TSMixedKeywordTypeAnnotation from "./typescript/TSMixedKeywordTypeAnnotation";
+evaluators.set("TSMixedKeywordTypeAnnotation", TSMixedKeywordTypeAnnotation);
 
 import TSModuleBlock from "./typescript/TSModuleBlock";
 evaluators.set("TSModuleBlock", TSModuleBlock);
@@ -561,8 +534,23 @@ evaluators.set("TSModuleDeclaration", TSModuleDeclaration);
 import TSNamespaceExportDeclaration from "./typescript/TSNamespaceExportDeclaration";
 evaluators.set("TSNamespaceExportDeclaration", TSNamespaceExportDeclaration);
 
+import TSNeverKeywordTypeAnnotation from "./typescript/TSNeverKeywordTypeAnnotation";
+evaluators.set("TSNeverKeywordTypeAnnotation", TSNeverKeywordTypeAnnotation);
+
 import TSNonNullExpression from "./typescript/TSNonNullExpression";
 evaluators.set("TSNonNullExpression", TSNonNullExpression);
+
+import TSNullKeywordTypeAnnotation from "./typescript/TSNullKeywordTypeAnnotation";
+evaluators.set("TSNullKeywordTypeAnnotation", TSNullKeywordTypeAnnotation);
+
+import TSNumberKeywordTypeAnnotation from "./typescript/TSNumberKeywordTypeAnnotation";
+evaluators.set("TSNumberKeywordTypeAnnotation", TSNumberKeywordTypeAnnotation);
+
+import TSNumericLiteralTypeAnnotation from "./typescript/TSNumericLiteralTypeAnnotation";
+evaluators.set("TSNumericLiteralTypeAnnotation", TSNumericLiteralTypeAnnotation);
+
+import TSObjectKeywordTypeAnnotation from "./typescript/TSObjectKeywordTypeAnnotation";
+evaluators.set("TSObjectKeywordTypeAnnotation", TSObjectKeywordTypeAnnotation);
 
 import TSOptionalType from "./typescript/TSOptionalType";
 evaluators.set("TSOptionalType", TSOptionalType);
@@ -578,6 +566,21 @@ evaluators.set("TSQualifiedName", TSQualifiedName);
 
 import TSSignatureDeclarationMeta from "./typescript/TSSignatureDeclarationMeta";
 evaluators.set("TSSignatureDeclarationMeta", TSSignatureDeclarationMeta);
+
+import TSStringKeywordTypeAnnotation from "./typescript/TSStringKeywordTypeAnnotation";
+evaluators.set("TSStringKeywordTypeAnnotation", TSStringKeywordTypeAnnotation);
+
+import TSStringLiteralTypeAnnotation from "./typescript/TSStringLiteralTypeAnnotation";
+evaluators.set("TSStringLiteralTypeAnnotation", TSStringLiteralTypeAnnotation);
+
+import TSSymbolKeywordTypeAnnotation from "./typescript/TSSymbolKeywordTypeAnnotation";
+evaluators.set("TSSymbolKeywordTypeAnnotation", TSSymbolKeywordTypeAnnotation);
+
+import TSTemplateLiteralTypeAnnotation from "./typescript/TSTemplateLiteralTypeAnnotation";
+evaluators.set(
+	"TSTemplateLiteralTypeAnnotation",
+	TSTemplateLiteralTypeAnnotation,
+);
 
 import TSThisType from "./typescript/TSThisType";
 evaluators.set("TSThisType", TSThisType);
@@ -612,19 +615,19 @@ evaluators.set("TSTypeQuery", TSTypeQuery);
 import TSTypeReference from "./typescript/TSTypeReference";
 evaluators.set("TSTypeReference", TSTypeReference);
 
-import TypeAliasTypeAnnotation from "./types/TypeAliasTypeAnnotation";
+import TypeAliasTypeAnnotation from "./typescript/TypeAliasTypeAnnotation";
 evaluators.set("TypeAliasTypeAnnotation", TypeAliasTypeAnnotation);
 
 import UnaryExpression from "./expressions/UnaryExpression";
 evaluators.set("UnaryExpression", UnaryExpression);
 
-import UndefinedKeywordTypeAnnotation from "./types/UndefinedKeywordTypeAnnotation";
+import UndefinedKeywordTypeAnnotation from "./typescript/UndefinedKeywordTypeAnnotation";
 evaluators.set("UndefinedKeywordTypeAnnotation", UndefinedKeywordTypeAnnotation);
 
-import UnionTypeAnnotation from "./types/UnionTypeAnnotation";
+import UnionTypeAnnotation from "./typescript/UnionTypeAnnotation";
 evaluators.set("UnionTypeAnnotation", UnionTypeAnnotation);
 
-import UnknownKeywordTypeAnnotation from "./types/UnknownKeywordTypeAnnotation";
+import UnknownKeywordTypeAnnotation from "./typescript/UnknownKeywordTypeAnnotation";
 evaluators.set("UnknownKeywordTypeAnnotation", UnknownKeywordTypeAnnotation);
 
 import UpdateExpression from "./expressions/UpdateExpression";
@@ -639,7 +642,7 @@ evaluators.set("VariableDeclarationStatement", VariableDeclarationStatement);
 import VariableDeclarator from "./auxiliary/VariableDeclarator";
 evaluators.set("VariableDeclarator", VariableDeclarator);
 
-import VoidKeywordTypeAnnotation from "./types/VoidKeywordTypeAnnotation";
+import VoidKeywordTypeAnnotation from "./typescript/VoidKeywordTypeAnnotation";
 evaluators.set("VoidKeywordTypeAnnotation", VoidKeywordTypeAnnotation);
 
 import WhileStatement from "./statements/WhileStatement";

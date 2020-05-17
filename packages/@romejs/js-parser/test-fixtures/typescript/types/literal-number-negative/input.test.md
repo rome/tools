@@ -91,7 +91,7 @@ Program {
 										line: 1
 									}
 								}
-								typeAnnotation: NumericLiteralTypeAnnotation {
+								typeAnnotation: TSNumericLiteralTypeAnnotation {
 									value: -1
 									format: undefined
 									loc: Object {

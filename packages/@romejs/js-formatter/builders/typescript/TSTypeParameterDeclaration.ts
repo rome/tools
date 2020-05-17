@@ -20,7 +20,7 @@ export default function TSTypeParameterDeclaration(
 	const params = node.params;
 	const shouldInline =
 		params.length === 1 &&
-		params[0].type !== "IntersectionTypeAnnotation" &&
+		params[0].type !== "TSIntersectionTypeAnnotation" &&
 		params[0].type !== "UnionTypeAnnotation" &&
 		params[0].type !== "TSIndexedAccessType" &&
 		params[0].type !== "TSMappedType";

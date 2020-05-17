@@ -95,7 +95,7 @@ Program {
 						}
 					}
 					params: Array [
-						NumberKeywordTypeAnnotation {
+						TSNumberKeywordTypeAnnotation {
 							loc: Object {
 								filename: "input.tsx"
 								end: Object {
@@ -176,7 +176,7 @@ Program {
 						}
 					}
 					params: Array [
-						NumberKeywordTypeAnnotation {
+						TSNumberKeywordTypeAnnotation {
 							loc: Object {
 								filename: "input.tsx"
 								end: Object {

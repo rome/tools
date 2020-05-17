@@ -280,7 +280,7 @@ Program {
 								line: 4
 							}
 						}
-						typeAnnotation: NumberKeywordTypeAnnotation {
+						typeAnnotation: TSNumberKeywordTypeAnnotation {
 							loc: Object {
 								filename: "input.ts"
 								end: Object {
@@ -386,7 +386,7 @@ Program {
 								line: 5
 							}
 						}
-						typeAnnotation: NumberKeywordTypeAnnotation {
+						typeAnnotation: TSNumberKeywordTypeAnnotation {
 							loc: Object {
 								filename: "input.ts"
 								end: Object {
@@ -552,7 +552,7 @@ Program {
 								line: 7
 							}
 						}
-						typeAnnotation: NumberKeywordTypeAnnotation {
+						typeAnnotation: TSNumberKeywordTypeAnnotation {
 							loc: Object {
 								filename: "input.ts"
 								end: Object {

@@ -107,7 +107,7 @@ Program {
 										}
 									}
 									elementTypes: Array [
-										StringKeywordTypeAnnotation {
+										TSStringKeywordTypeAnnotation {
 											loc: Object {
 												filename: "input.ts"
 												end: Object {
@@ -136,7 +136,7 @@ Program {
 													line: 1
 												}
 											}
-											typeAnnotation: NumberKeywordTypeAnnotation {
+											typeAnnotation: TSNumberKeywordTypeAnnotation {
 												loc: Object {
 													filename: "input.ts"
 													end: Object {
@@ -195,7 +195,7 @@ Program {
 														}
 													}
 													types: Array [
-														StringKeywordTypeAnnotation {
+														TSStringKeywordTypeAnnotation {
 															loc: Object {
 																filename: "input.ts"
 																end: Object {
@@ -210,7 +210,7 @@ Program {
 																}
 															}
 														}
-														NumberKeywordTypeAnnotation {
+														TSNumberKeywordTypeAnnotation {
 															loc: Object {
 																filename: "input.ts"
 																end: Object {

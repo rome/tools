@@ -91,7 +91,7 @@ Program {
 										line: 1
 									}
 								}
-								typeAnnotation: StringLiteralTypeAnnotation {
+								typeAnnotation: TSStringLiteralTypeAnnotation {
 									value: "foo"
 									loc: Object {
 										filename: "input.ts"

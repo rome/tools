@@ -93,7 +93,7 @@ Program {
 							line: 1
 						}
 					}
-					returnType: AnyKeywordTypeAnnotation {
+					returnType: TSAnyKeywordTypeAnnotation {
 						loc: Object {
 							filename: "input.ts"
 							end: Object {
@@ -152,7 +152,7 @@ Program {
 										line: 1
 									}
 								}
-								elementType: AnyKeywordTypeAnnotation {
+								elementType: TSAnyKeywordTypeAnnotation {
 									loc: Object {
 										filename: "input.ts"
 										end: Object {
