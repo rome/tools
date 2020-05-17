@@ -29,7 +29,7 @@ function isShorthand(key: AnyObjectPropertyKey, value: AnyNode): boolean {
 export default function ObjectProperty(
 	builder: Builder,
 	node:
-		 | ObjectProperty
+		| ObjectProperty
 		| AssignmentObjectPatternProperty
 		| BindingObjectPatternProperty,
 ): Token {

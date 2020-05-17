@@ -31,7 +31,7 @@ export default function valueToNode(
 	value: unknown,
 	ancestry: Array<unknown> = [],
 ):
-	 | StringLiteral
+	| StringLiteral
 	| BooleanLiteral
 	| NumericLiteral
 	| ObjectExpression

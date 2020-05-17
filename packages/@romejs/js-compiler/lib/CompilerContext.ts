@@ -83,7 +83,7 @@ type ContextDiagnostic = Omit<Diagnostic, "location" | "description"> & {
 };
 
 type DiagnosticTarget =
-	 | undefined
+	| undefined
 	| {
 			loc?: SourceLocation;
 		}

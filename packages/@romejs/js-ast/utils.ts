@@ -16,7 +16,7 @@ export const visitorKeys: Map<string, Array<string>> = new Map();
 export const nodeNames: Set<string> = new Set();
 
 type JustNodeKeysProp<K, V> = V extends
-	 | NodeBase
+	| NodeBase
 	| Array<NodeBase>
 	| Array<undefined | NodeBase>
 	? K

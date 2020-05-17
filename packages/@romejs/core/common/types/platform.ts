@@ -6,7 +6,7 @@
  */
 
 export type Platform =
-	 | "ios"
+	| "ios"
 	| "android"
 	| "mobile"
 	| "electron"

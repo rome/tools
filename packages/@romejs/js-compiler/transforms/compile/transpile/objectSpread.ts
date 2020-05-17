@@ -39,7 +39,7 @@ function hasSpreadProperty(props: Array<AnyNode>): boolean {
 
 function getRestProperty(
 	node:
-		 | undefined
+		| undefined
 		| VariableDeclarator
 		| VariableDeclarationStatement
 		| VariableDeclaration

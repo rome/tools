@@ -226,7 +226,7 @@ export function isLetStart(parser: JSParser, context?: string): boolean {
 }
 
 type StatementContext =
-	 | undefined
+	| undefined
 	| "if"
 	| "label"
 	| "do"
@@ -730,7 +730,7 @@ export function parseSwitchStatement(
 		// nodes. `cur` is used to keep the node that we are currently
 		// adding statements to.
 		let cur:
-			 | undefined
+			| undefined
 			| {
 					start: Position;
 					test: undefined | AnyExpression;

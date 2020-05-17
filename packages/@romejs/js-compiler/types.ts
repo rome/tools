@@ -34,18 +34,18 @@ export type TransformStageFactories = {
 
 //
 export type Transform =
-	 | TransformVisitor
+	| TransformVisitor
 	| ((context: CompilerContext) => TransformVisitor);
 
 export type Transforms = Array<Transform>;
 
 export type TransformExitResult =
-	 | Array<AnyNode>
+	| Array<AnyNode>
 	| AnyNode
 	| typeof REDUCE_REMOVE;
 
 export type TransformEnterResult =
-	 | TransformExitResult
+	| TransformExitResult
 	| typeof REDUCE_SKIP_SUBTREE;
 
 export type TransformVisitor = {

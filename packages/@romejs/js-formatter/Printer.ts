@@ -240,6 +240,7 @@ function print(token: Token, state: State, options: PrinterOptions): void {
 							write("\n", state);
 
 							// Enqueue the indentation
+							state.pendingSpaces.value = 0;
 							state.pendingTabs.value = state.indent.value;
 						}
 					}
