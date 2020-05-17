@@ -7,14 +7,16 @@
 ### `Input`
 
 ```javascript
-// type Class<T> = new (...args: any)  => T;
-// let d: new(x: number) => void;
+type Class<T> = new (...args: any)  => T;
+let d: new(x: number) => void;
 ```
 
 ### `Output`
 
 ```javascript
-// type Class<T> = new (...args: any)  => T;
-// let d: new(x: number) => void;
+type Class<T> = new (
+	...args: any
+) => T;
+let d: new (x: number) => void;
 
 ```
