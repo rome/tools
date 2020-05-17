@@ -1,12 +1,11 @@
 import {descriptions} from "@romejs/diagnostics";
 import {AnyNode} from "@romejs/js-ast";
 import {Path} from "@romejs/js-compiler";
+import {isJSXElement} from "@romejs/js-ast-utils";
 
 function jsxAnchorHasBlankTarget(node: AnyNode) {
 	return (
-		node.type === "JSXElement" &&
-		node.name.type === "JSXIdentifier" &&
-		node.name.name === "a" &&
+		isJSXElement(node, "a") &&
 		node.attributes.some((attribute) =>
 			attribute.type === "JSXAttribute" &&
 			attribute.name.name === "target" &&
@@ -19,9 +18,7 @@ function jsxAnchorHasBlankTarget(node: AnyNode) {
 
 function jsxAnchorHasNoReferrer(node: AnyNode) {
 	return (
-		node.type === "JSXElement" &&
-		node.name.type === "JSXIdentifier" &&
-		node.name.name === "a" &&
+		isJSXElement(node, "a") &&
 		node.attributes.some((attribute) =>
 			attribute.type === "JSXAttribute" &&
 			attribute.name.name === "rel" &&
@@ -34,9 +31,7 @@ function jsxAnchorHasNoReferrer(node: AnyNode) {
 
 function jsxAnchorHasExternalLink(node: AnyNode) {
 	return (
-		node.type === "JSXElement" &&
-		node.name.type === "JSXIdentifier" &&
-		node.name.name === "a" &&
+		isJSXElement(node, "a") &&
 		node.attributes.some((attribute) =>
 			attribute.type === "JSXAttribute" &&
 			attribute.name.name === "href" &&

@@ -8,19 +8,19 @@
 import {descriptions} from "@romejs/diagnostics";
 import {AnyNode} from "@romejs/js-ast";
 import {Path} from "@romejs/js-compiler";
+import {getJSXAttribute, isJSXElement} from "@romejs/js-ast-utils";
 
 function jsxImgRedundantAlt(node: AnyNode) {
+	if (!isJSXElement(node, "img")) {
+		return false;
+	}
+
+	const attr = getJSXAttribute(node, "alt");
 	return (
-		node.type === "JSXElement" &&
-		node.name.type === "JSXIdentifier" &&
-		node.name.name === "img" &&
-		node.attributes.some((attribute) =>
-			attribute.type === "JSXAttribute" &&
-			attribute.name.name === "alt" &&
-			attribute.value &&
-			attribute.value.type === "StringLiteral" &&
-			/(image)|(picture)|(photo)/i.test(attribute.value.value)
-		)
+		attr !== undefined &&
+		attr.value &&
+		attr.value.type === "StringLiteral" &&
+		/(image)|(picture)|(photo)/i.test(attr.value.value)
 	);
 }
 

@@ -38,3 +38,6 @@ export {default as template} from "./template";
 export {default as valueToNode} from "./valueToNode";
 export {default as createPropertyKey} from "./createPropertyKey";
 export {default as createMemberProperty} from "./createMemberProperty";
+export {default as hasJSXAttribute} from "./hasJSXAttribute";
+export {default as getJSXAttribute} from "./getJSXAttribute";
+export {default as isJSXElement} from "./isJSXElement";
