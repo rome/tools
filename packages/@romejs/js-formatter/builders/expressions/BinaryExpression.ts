@@ -42,7 +42,9 @@ function printBinaryExpression(
 		isBinary(node.left) &&
 		getPrecedence(node.operator) === getPrecedence(node.left.operator)
 	) {
-		parts.push(...printBinaryExpression(builder, node.left, node, shouldNotGroup));
+		parts.push(
+			...printBinaryExpression(builder, node.left, node, shouldNotGroup),
+		);
 	} else {
 		parts.push(builder.tokenize(node.left, node));
 	}

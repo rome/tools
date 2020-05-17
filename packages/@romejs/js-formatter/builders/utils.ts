@@ -127,7 +127,12 @@ export function printBindingPatternParams(
 ): Token {
 	if (params.length === 0 && rest === undefined) {
 		if (hasInnerComments(node)) {
-			return concat(["(", builder.tokenizeInnerComments(node, true), hardline, ")"]);
+			return concat([
+				"(",
+				builder.tokenizeInnerComments(node, true),
+				hardline,
+				")",
+			]);
 		} else {
 			return "()";
 		}
@@ -176,7 +181,10 @@ export function printTSBraced(
 						hardline,
 						members.map((member, index) => {
 							const printed = builder.tokenize(member, node);
-							if (index > 0 && builder.getLinesBetween(members[index - 1], member) > 1) {
+							if (
+								index > 0 &&
+								builder.getLinesBetween(members[index - 1], member) > 1
+							) {
 								return concat([hardline, printed]);
 							} else {
 								return printed;

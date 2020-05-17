@@ -685,7 +685,11 @@ export function toReferencedListDeepOptional(
 	exprList: Array<ArrayHole | ToReferencedItem>,
 	isParenthesizedExpr?: boolean,
 ): Array<ArrayHole | AnyExpression | SpreadElement> {
-	const refList = toReferencedListOptional(parser, exprList, isParenthesizedExpr);
+	const refList = toReferencedListOptional(
+		parser,
+		exprList,
+		isParenthesizedExpr,
+	);
 	toReferencedListDeepItems(parser, refList);
 	return refList;
 }
@@ -1104,7 +1108,13 @@ export function checkLVal(
 		}
 
 		case "BindingAssignmentPattern": {
-			checkLVal(parser, expr.left, isBinding, checkClashes, "assignment pattern");
+			checkLVal(
+				parser,
+				expr.left,
+				isBinding,
+				checkClashes,
+				"assignment pattern",
+			);
 			break;
 		}
 	}

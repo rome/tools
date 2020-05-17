@@ -130,7 +130,8 @@ export default {
 			const declarators = node.declaration.declarations.filter((decl) => {
 				return (
 					decl.id.type === "BindingIdentifier" &&
-					(decl.id.meta === undefined || decl.id.meta.typeAnnotation === undefined) &&
+					(decl.id.meta === undefined ||
+					decl.id.meta.typeAnnotation === undefined) &&
 					decl.init !== undefined &&
 					(decl.init.type === "FunctionExpression" ||
 					decl.init.type === "ArrowFunctionExpression")

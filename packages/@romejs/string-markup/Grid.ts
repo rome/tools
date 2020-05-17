@@ -335,7 +335,11 @@ export default class Grid {
 			let ignoreTrailingSpace = false;
 
 			// Start of a sentence that was caused by line wrapping
-			if (!word.endsWith("\n") && this.cursor.column === ob1Number1 && word !== "") {
+			if (
+				!word.endsWith("\n") &&
+				this.cursor.column === ob1Number1 &&
+				word !== ""
+			) {
 				ignoreTrailingSpace = true;
 			}
 

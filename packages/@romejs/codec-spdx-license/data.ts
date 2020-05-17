@@ -531,7 +531,9 @@ export default {
 			referenceNumber: "331",
 			name: "BSD 3-Clause No Nuclear License 2014",
 			licenseId: "BSD-3-Clause-No-Nuclear-License-2014",
-			seeAlso: ["https://java.net/projects/javaeetutorial/pages/BerkeleyLicense"],
+			seeAlso: [
+				"https://java.net/projects/javaeetutorial/pages/BerkeleyLicense",
+			],
 			isOsiApproved: false,
 		},
 		{
@@ -541,7 +543,9 @@ export default {
 			referenceNumber: "113",
 			name: "BSD 3-Clause No Nuclear Warranty",
 			licenseId: "BSD-3-Clause-No-Nuclear-Warranty",
-			seeAlso: ["https://jogamp.org/git/?p=gluegen.git;a=blob_plain;f=LICENSE.txt"],
+			seeAlso: [
+				"https://jogamp.org/git/?p=gluegen.git;a=blob_plain;f=LICENSE.txt",
+			],
 			isOsiApproved: false,
 		},
 		{
@@ -585,7 +589,9 @@ export default {
 			referenceNumber: "388",
 			name: "BSD Protection License",
 			licenseId: "BSD-Protection",
-			seeAlso: ["https://fedoraproject.org/wiki/Licensing/BSD_Protection_License"],
+			seeAlso: [
+				"https://fedoraproject.org/wiki/Licensing/BSD_Protection_License",
+			],
 			isOsiApproved: false,
 		},
 		{
@@ -1526,7 +1532,9 @@ export default {
 			referenceNumber: "2",
 			name: "FSF Unlimited License",
 			licenseId: "FSFUL",
-			seeAlso: ["https://fedoraproject.org/wiki/Licensing/FSF_Unlimited_License"],
+			seeAlso: [
+				"https://fedoraproject.org/wiki/Licensing/FSF_Unlimited_License",
+			],
 			isOsiApproved: false,
 		},
 		{
@@ -1562,7 +1570,10 @@ export default {
 			referenceNumber: "253",
 			name: "Fair License",
 			licenseId: "Fair",
-			seeAlso: ["http://fairlicense.org/", "https://opensource.org/licenses/Fair"],
+			seeAlso: [
+				"http://fairlicense.org/",
+				"https://opensource.org/licenses/Fair",
+			],
 			isOsiApproved: true,
 		},
 		{
@@ -1935,7 +1946,9 @@ export default {
 			referenceNumber: "367",
 			name: "Giftware License",
 			licenseId: "Giftware",
-			seeAlso: ["http://liballeg.org/license.html#allegro-4-the-giftware-license"],
+			seeAlso: [
+				"http://liballeg.org/license.html#allegro-4-the-giftware-license",
+			],
 			isOsiApproved: false,
 		},
 		{
@@ -2012,7 +2025,9 @@ export default {
 			referenceNumber: "174",
 			name: "ICU License",
 			licenseId: "ICU",
-			seeAlso: ["http://source.icu-project.org/repos/icu/icu/trunk/license.html"],
+			seeAlso: [
+				"http://source.icu-project.org/repos/icu/icu/trunk/license.html",
+			],
 			isOsiApproved: false,
 		},
 		{
@@ -2887,7 +2902,9 @@ export default {
 			referenceNumber: "185",
 			name: "NTP No Attribution",
 			licenseId: "NTP-0",
-			seeAlso: ["https://github.com/tytso/e2fsprogs/blob/master/lib/et/et_name.c"],
+			seeAlso: [
+				"https://github.com/tytso/e2fsprogs/blob/master/lib/et/et_name.c",
+			],
 			isOsiApproved: false,
 		},
 		{
@@ -4616,7 +4633,9 @@ export default {
 			referenceNumber: "246",
 			name: "zlib/libpng License with Acknowledgement",
 			licenseId: "zlib-acknowledgement",
-			seeAlso: ["https://fedoraproject.org/wiki/Licensing/ZlibWithAcknowledgement"],
+			seeAlso: [
+				"https://fedoraproject.org/wiki/Licensing/ZlibWithAcknowledgement",
+			],
 			isOsiApproved: false,
 		},
 	],

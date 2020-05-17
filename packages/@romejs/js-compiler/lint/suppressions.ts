@@ -51,8 +51,13 @@ export function addSuppressions(context: CompilerContext, ast: Program): Program
 
 		// Find existing suppression comment
 		let updateComment: undefined | AnyComment;
-		const lastComment = context.comments.getCommentsFromIds(node.leadingComments).pop();
-		if (lastComment !== undefined && lastComment.value.includes(SUPPRESSION_START)) {
+		const lastComment = context.comments.getCommentsFromIds(
+			node.leadingComments,
+		).pop();
+		if (
+			lastComment !== undefined &&
+			lastComment.value.includes(SUPPRESSION_START)
+		) {
 			updateComment = lastComment;
 		}
 

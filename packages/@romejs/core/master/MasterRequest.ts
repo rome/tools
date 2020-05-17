@@ -225,7 +225,9 @@ export default class MasterRequest {
 		});
 	}
 
-	teardown(res: undefined | MasterQueryResponse): undefined | MasterQueryResponse {
+	teardown(
+		res: undefined | MasterQueryResponse,
+	): undefined | MasterQueryResponse {
 		if (this.toredown) {
 			return;
 		}
@@ -744,7 +746,9 @@ export default class MasterRequest {
 						);
 
 						if (ignoreSource.value !== undefined) {
-							const ignorePointer = ignoreSource.value.getDiagnosticLocation("value");
+							const ignorePointer = ignoreSource.value.getDiagnosticLocation(
+								"value",
+							);
 
 							advice.push({
 								type: "log",

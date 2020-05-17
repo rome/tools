@@ -322,7 +322,13 @@ function printFrame(
 		sourceText = "";
 	}
 
-	const frame = buildMessageCodeFrame(sourceText, lines, start, end, cleanMarker);
+	const frame = buildMessageCodeFrame(
+		sourceText,
+		lines,
+		start,
+		end,
+		cleanMarker,
+	);
 	if (frame.trim() === "") {
 		return DID_NOT_PRINT;
 	}

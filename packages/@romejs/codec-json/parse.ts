@@ -186,7 +186,10 @@ export const createJSONParser = createParser((ParserCore) =>
 			// BlockComment
 			if (char === "/" && nextChar === "*") {
 				const commentValueIndex = ob1Add(index, 2);
-				const [value] = this.readInputFrom(commentValueIndex, isntBlockCommentEnd);
+				const [value] = this.readInputFrom(
+					commentValueIndex,
+					isntBlockCommentEnd,
+				);
 
 				// (comment content start + comment content length + 2 characters for comment end)
 				const endIndex = ob1Add(ob1Add(commentValueIndex, value.length), 2);

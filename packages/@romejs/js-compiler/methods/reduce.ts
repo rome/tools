@@ -277,7 +277,9 @@ export default function reduce(
 				if (newVal !== oldVal && !context.frozen) {
 					// When replacing a key value, we cannot replace it with an array
 					if (Array.isArray(newVal)) {
-						throw new Error(`Cannot replace a key value node with an array of nodes`);
+						throw new Error(
+							`Cannot replace a key value node with an array of nodes`,
+						);
 					}
 
 					// If the node is deleted then use `void` instead

@@ -179,7 +179,8 @@ export function setStrict(parser: JSParser, isStrict: boolean): void {
 	parser.state.index = parser.state.startPos.index;
 	while (parser.state.index < parser.state.lineStartIndex) {
 		parser.state.lineStartIndex = ob1Coerce0(
-			parser.input.lastIndexOf("\n", ob1Get0(parser.state.lineStartIndex) - 2) + 1,
+			parser.input.lastIndexOf("\n", ob1Get0(parser.state.lineStartIndex) - 2) +
+			1,
 		);
 		parser.state.curLine = ob1Inc(parser.state.curLine);
 	}
@@ -399,7 +400,10 @@ export function skipLineComment(parser: JSParser, startSkip: number): AnyComment
 		parser,
 		{
 			block: false,
-			text: parser.getRawInput(ob1Add(startIndex, startSkip), parser.state.index),
+			text: parser.getRawInput(
+				ob1Add(startIndex, startSkip),
+				parser.state.index,
+			),
 			startPos,
 			endPos: parser.getPositionFromState(),
 		},
@@ -711,7 +715,9 @@ function readTokenEqExcl(parser: JSParser, code: number): void {
 		finishOp(
 			parser,
 			tt.equality,
-			parser.input.charCodeAt(getIndex(parser) + 2) === charCodes.equalsTo ? 3 : 2,
+			parser.input.charCodeAt(getIndex(parser) + 2) === charCodes.equalsTo
+				? 3
+				: 2,
 		);
 		return undefined;
 	}
@@ -840,7 +846,10 @@ function getTokenFromCode(parser: JSParser, code: number): void {
 		}
 
 		case charCodes.leftCurlyBrace: {
-			if (parser.input.charCodeAt(getIndex(parser) + 1) === charCodes.verticalBar) {
+			if (
+				parser.input.charCodeAt(getIndex(parser) + 1) ===
+				charCodes.verticalBar
+			) {
 				finishOp(parser, tt.braceBarL, 2);
 			} else {
 				bumpIndex(parser);
@@ -1078,7 +1087,10 @@ export function readRegexp(parser: JSParser): void {
 		rawMods,
 		(metadata, flagPosition) => {
 			parser.addDiagnostic({
-				index: ob1Add(ob1Coerce0(getIndex(parser) - rawMods.length), flagPosition),
+				index: ob1Add(
+					ob1Coerce0(getIndex(parser) - rawMods.length),
+					flagPosition,
+				),
 				description: metadata,
 			});
 		},
@@ -1201,7 +1213,10 @@ function readRadixNumber(
 	}
 
 	if (isBigInt) {
-		const str = parser.getRawInput(start, parser.state.index).replace(/[_n]/g, "");
+		const str = parser.getRawInput(start, parser.state.index).replace(
+			/[_n]/g,
+			"",
+		);
 		finishToken(parser, tt.bigint, str);
 		return undefined;
 	}

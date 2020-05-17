@@ -12,7 +12,10 @@ import template from "./template";
 test(
 	"doesNodeMatchPattern",
 	(t) => {
-		t.inlineSnapshot(doesNodeMatchPattern(template.expression`foo`, "foo"), true);
+		t.inlineSnapshot(
+			doesNodeMatchPattern(template.expression`foo`, "foo"),
+			true,
+		);
 
 		t.inlineSnapshot(
 			doesNodeMatchPattern(template.expression`this.foo`, "this.foo"),

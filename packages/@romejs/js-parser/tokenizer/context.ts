@@ -92,7 +92,9 @@ tt.name.updateContext = function(parser, prevType) {
 
 tt.braceL.updateContext = function(parser, prevType) {
 	parser.state.context.push(
-		isBraceBlock(parser, prevType) ? types.braceStatement : types.braceExpression,
+		isBraceBlock(parser, prevType)
+			? types.braceStatement
+			: types.braceExpression,
 	);
 	parser.state.exprAllowed = true;
 };

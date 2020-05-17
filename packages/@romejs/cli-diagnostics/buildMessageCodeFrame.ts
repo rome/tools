@@ -147,7 +147,12 @@ export default function buildMessageCodeFrame(
 		if (shouldHighlight) {
 			if (i === startLineIndex && i === endLineIndex) {
 				// Only line in the selection
-				pointer = createPointer(markerMessage, rawLine, start.column, end.column);
+				pointer = createPointer(
+					markerMessage,
+					rawLine,
+					start.column,
+					end.column,
+				);
 			} else if (i === startLineIndex) {
 				// First line in selection
 				pointer = createPointer(

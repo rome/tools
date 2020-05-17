@@ -60,7 +60,9 @@ export default class Bundler {
 		return new Bundler(req, req.getBundlerConfigFromFlags());
 	}
 
-	async getResolvedEntry(unresolvedEntry: string): Promise<BundlerEntryResoluton> {
+	async getResolvedEntry(
+		unresolvedEntry: string,
+	): Promise<BundlerEntryResoluton> {
 		const {cwd} = this.config;
 
 		const res = await this.master.resolver.resolveEntryAssert({
@@ -80,7 +82,9 @@ export default class Bundler {
 			source: createUnknownFilePath(unresolvedEntry),
 		});
 		const manifestRoot: undefined | AbsoluteFilePath =
-			manifestRootResolved.type === "FOUND" ? manifestRootResolved.path : undefined;
+			manifestRootResolved.type === "FOUND"
+				? manifestRootResolved.path
+				: undefined;
 		let manifestDef;
 		if (manifestRoot !== undefined) {
 			const def = master.memoryFs.getManifestDefinition(manifestRoot);
@@ -320,9 +324,9 @@ export default class Bundler {
 			const isBinShorthand = typeof binConsumer.asUnknown() === "string";
 
 			for (const [binName, relative] of manifest.bin) {
-				const location = (isBinShorthand ? binConsumer : binConsumer.get(binName)).getDiagnosticLocation(
-					"inner-value",
-				);
+				const location = (isBinShorthand
+					? binConsumer
+					: binConsumer.get(binName)).getDiagnosticLocation("inner-value");
 
 				const absolute = await this.master.resolver.resolveAssert(
 					{

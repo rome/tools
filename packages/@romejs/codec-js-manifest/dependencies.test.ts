@@ -16,10 +16,16 @@ test(
 			parseDependencyPattern(consumeUnknown("npm:foo", "parse/json"), false),
 		);
 		t.snapshot(
-			parseDependencyPattern(consumeUnknown("npm:@foo/bar", "parse/json"), false),
+			parseDependencyPattern(
+				consumeUnknown("npm:@foo/bar", "parse/json"),
+				false,
+			),
 		);
 		t.snapshot(
-			parseDependencyPattern(consumeUnknown("npm:foo@1.0.0", "parse/json"), false),
+			parseDependencyPattern(
+				consumeUnknown("npm:foo@1.0.0", "parse/json"),
+				false,
+			),
 		);
 		t.snapshot(
 			parseDependencyPattern(

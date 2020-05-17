@@ -158,7 +158,9 @@ export function parseExport(
 
 		if (source !== undefined) {
 			if (declaration !== undefined) {
-				throw new Error("When there's a source we don't also expect a declaration");
+				throw new Error(
+					"When there's a source we don't also expect a declaration",
+				);
 			}
 
 			return createExportExternalDeclaration(
@@ -475,7 +477,8 @@ function parseExportFrom(
 function shouldParseExportStar(parser: JSParser): boolean {
 	return (
 		parser.match(tt.star) ||
-		(parser.isContextual("type") && parser.lookaheadState().tokenType === tt.star)
+		(parser.isContextual("type") &&
+		parser.lookaheadState().tokenType === tt.star)
 	);
 }
 
@@ -635,7 +638,13 @@ function checkExport(
 				const {local} = specifier;
 				if (local !== undefined) {
 					// check for keywords used as local names
-					checkReservedWord(parser, local.name, parser.getLoc(local), true, false);
+					checkReservedWord(
+						parser,
+						local.name,
+						parser.getLoc(local),
+						true,
+						false,
+					);
 				}
 			}
 		}

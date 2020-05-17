@@ -66,7 +66,11 @@ export interface TestHelper {
 	not(received: unknown, expected: unknown, message?: string): void;
 	looksLike(received: unknown, expected: unknown, message?: string): void;
 	notLooksLike(received: unknown, expected: unknown, message?: string): void;
-	throws(thrower: SyncThrower, expected?: ExpectedError, message?: string): void;
+	throws(
+		thrower: SyncThrower,
+		expected?: ExpectedError,
+		message?: string,
+	): void;
 	throwsAsync(
 		thrower: AsyncFunc,
 		expected?: ExpectedError,

@@ -75,11 +75,15 @@ test(
 			"123.45",
 		);
 		t.inlineSnapshot(
-			stringifyRJSONFromConsumer(consumeExtJSON({input: "1.2341234123412341e+27"})),
+			stringifyRJSONFromConsumer(
+				consumeExtJSON({input: "1.2341234123412341e+27"}),
+			),
 			"1.2341234123412341e+27",
 		);
 		t.inlineSnapshot(
-			stringifyRJSONFromConsumer(consumeExtJSON({input: "1.2341234123412341E+27"})),
+			stringifyRJSONFromConsumer(
+				consumeExtJSON({input: "1.2341234123412341E+27"}),
+			),
 			"1.2341234123412341e+27",
 		);
 	},

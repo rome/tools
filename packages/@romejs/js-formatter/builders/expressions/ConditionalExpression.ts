@@ -45,7 +45,9 @@ export function printConditionalExpression(
 				lineOrSpace,
 				"?",
 				space,
-				isConditionalExpression(consequentNode) ? consequent : indent(consequent),
+				isConditionalExpression(consequentNode)
+					? consequent
+					: indent(consequent),
 			]),
 		),
 		indent(

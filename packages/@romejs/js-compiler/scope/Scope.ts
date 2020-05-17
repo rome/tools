@@ -288,7 +288,9 @@ export class RootScope extends Scope {
 				if (GLOBAL_COMMENT_COLON.test(name)) {
 					const match = part.match(GLOBAL_COMMENT_COLON);
 					if (match == null) {
-						throw new Error("Used RegExp.test already so know this will always match");
+						throw new Error(
+							"Used RegExp.test already so know this will always match",
+						);
 					}
 
 					// Remove everything after the colon

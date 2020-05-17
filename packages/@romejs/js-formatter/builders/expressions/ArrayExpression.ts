@@ -30,7 +30,8 @@ export default function ArrayExpression(
 ): Token {
 	const hasContents = node.elements.length > 0;
 	const hasRest =
-		(node.type === "BindingArrayPattern" || node.type === "AssignmentArrayPattern") &&
+		(node.type === "BindingArrayPattern" ||
+		node.type === "AssignmentArrayPattern") &&
 		node.rest !== undefined;
 
 	if (!hasContents && !hasRest) {

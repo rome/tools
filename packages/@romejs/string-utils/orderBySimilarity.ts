@@ -60,7 +60,9 @@ export function compareTwoStrings(aStr: string, bStr: string): number {
 	for (let i = 0; i < a.length - 1; i++) {
 		const bigram = a.substring(i, i + 2);
 
-		const count = firstBigrams.has(bigram) ? getMap(firstBigrams, bigram) + 1 : 1;
+		const count = firstBigrams.has(bigram)
+			? getMap(firstBigrams, bigram) + 1
+			: 1;
 		if (count === undefined) {
 			throw new Error("Already used has() above");
 		}

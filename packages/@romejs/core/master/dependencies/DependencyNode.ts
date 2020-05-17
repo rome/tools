@@ -166,7 +166,9 @@ export default class DependencyNode {
 		);
 	}
 
-	getDependencyInfoFromAbsolute(path: AbsoluteFilePath): DependencyNodeDependency {
+	getDependencyInfoFromAbsolute(
+		path: AbsoluteFilePath,
+	): DependencyNodeDependency {
 		const dep = this.absoluteToAnalyzeDependency.get(path);
 		if (dep === undefined) {
 			throw new Error("Expected dependency");
@@ -217,7 +219,9 @@ export default class DependencyNode {
 	}
 
 	// Get a list of all DependencyNodes where exports could be resolved. eg. `export *`
-	getExportedModules(chain: Set<DependencyNode> = new Set()): Set<DependencyNode> {
+	getExportedModules(
+		chain: Set<DependencyNode> = new Set(),
+	): Set<DependencyNode> {
 		if (chain.has(this)) {
 			return new Set();
 		} else {
@@ -225,7 +229,10 @@ export default class DependencyNode {
 		}
 
 		for (const exp of this.analyze.exports) {
-			if (exp.type === "externalAll" && this.relativeToAbsolutePath.has(exp.source)) {
+			if (
+				exp.type === "externalAll" &&
+				this.relativeToAbsolutePath.has(exp.source)
+			) {
 				this.getNodeFromRelativeDependency(exp.source).getExportedModules(chain);
 			}
 		}
@@ -466,7 +473,10 @@ export default class DependencyNode {
 				continue;
 			}
 
-			if (record.type === "local" && (record.name === name || record.name === "*")) {
+			if (
+				record.type === "local" &&
+				(record.name === name || record.name === "*")
+			) {
 				return {
 					type: "FOUND",
 					node: this,

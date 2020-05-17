@@ -52,7 +52,11 @@ export default createMasterCommand({
 		const {compiledCode, diagnostics, suppressions}: WorkerCompileResult = res;
 
 		if (diagnostics.length > 0) {
-			throw new DiagnosticsError("Compile diagnostics", diagnostics, suppressions);
+			throw new DiagnosticsError(
+				"Compile diagnostics",
+				diagnostics,
+				suppressions,
+			);
 		}
 
 		reporter.writeAll(compiledCode);

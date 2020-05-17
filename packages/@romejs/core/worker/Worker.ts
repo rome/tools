@@ -258,7 +258,9 @@ export default class Worker {
       }
     }
     */
-		const resolveGraph = async (key: string): Promise<undefined | ModuleSignature> => {
+		const resolveGraph = async (
+			key: string,
+		): Promise<undefined | ModuleSignature> => {
 			const value = prefetchedModuleSignatures[key];
 			if (value === undefined) {
 				return undefined;
@@ -424,7 +426,10 @@ export default class Worker {
 		// Sometimes we may want to allow the "fixed" AST
 		const allowDiagnostics = options.allowParserDiagnostics === true;
 		if (!allowDiagnostics && ast.diagnostics.length > 0) {
-			throw new DiagnosticsError("AST diagnostics aren't allowed", ast.diagnostics);
+			throw new DiagnosticsError(
+				"AST diagnostics aren't allowed",
+				ast.diagnostics,
+			);
 		}
 
 		const res: ParseJSResult = {

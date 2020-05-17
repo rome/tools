@@ -77,7 +77,9 @@ export function loadCompleteProjectConfig(
 	const config: ProjectConfig = {
 		...DEFAULT_PROJECT_CONFIG,
 		name,
-		root: partial.root === undefined ? DEFAULT_PROJECT_CONFIG.root : partial.root,
+		root: partial.root === undefined
+			? DEFAULT_PROJECT_CONFIG.root
+			: partial.root,
 		...mergePartialConfig(defaultConfig, partial),
 	};
 
@@ -398,7 +400,10 @@ function extendProjectConfig(
 		merged.lint.globals = lintGlobals;
 	}
 
-	const testingIgnore = mergeArrays(extendsObj.tests.ignore, config.tests.ignore);
+	const testingIgnore = mergeArrays(
+		extendsObj.tests.ignore,
+		config.tests.ignore,
+	);
 	if (testingIgnore !== undefined) {
 		merged.tests.ignore = testingIgnore;
 	}
