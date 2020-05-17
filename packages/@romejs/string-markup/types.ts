@@ -63,6 +63,7 @@ export type MarkupTagName =
 	| "table"
 	| "tr"
 	| "td"
+	| "th"
 	| "nobr"
 	| "ol"
 	| "ul"
