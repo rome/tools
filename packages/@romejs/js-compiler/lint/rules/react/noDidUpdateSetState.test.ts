@@ -5,35 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {testLintMultiple} from '../testHelpers';
+import {test} from "rome";
+import {testLintMultiple} from "../testHelpers";
 
 test(
-  'no did update set state',
-  async (t) => {
-    await testLintMultiple(
-      t,
-      [
+	"no this.setState in componentDidUpdate",
+	async (t) => {
+		await testLintMultiple(
+			t,
+			[
         // INVALID
-        `
-        var Hello = createReactClass({
-          componentDidUpdate: function() {
-            this.setState({
-              name: 'John'
-            });
-          }
-        });
-        `,
-        `
-        var Hello = createReactClass({
-          componentDidUpdate: function() {
-            foo();
-            this.setState({
-              name: 'John'
-            });
-          }
-        });
-        `,
         `
         class Hello extends React.Component {
           componentDidUpdate() {
@@ -74,17 +55,6 @@ test(
         `,
         // VALID
         `
-        var Hello = createReactClass({
-          componentDidUpdate: function() {
-            if (condition) {
-              this.setState({
-                name: 'John'
-              });
-            }
-          }
-        });
-        `,
-        `
         class Hello extends React.Component {
           componentDidUpdate() {
             if (condition) {
@@ -95,27 +65,8 @@ test(
           }
         }
         `,
-        `
-        class Hello extends Component {
-          componentDidUpdate() {
-            if (condition) {
-              this.setState({
-                name: 'John'
-              });
-            }
-          }
-        }
-        `,
-        `
-        var Hello = createReactClass({
-          componentDidUpdate: function() {
-            foo();
-          }
-        });
-        `,
-      ],
-      {category: 'lint/noDidUpdateSetState'},
-    );
-  },
+			],
+			{category: "lint/noDidUpdateSetState"},
+		);
+	},
 );
-
