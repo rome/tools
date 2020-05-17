@@ -55,7 +55,7 @@ export type IfBreakToken = {
 };
 
 export type Token =
-	 | string
+	| string
 	| CommentToken
 	| ConcatToken
 	| GroupToken

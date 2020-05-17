@@ -87,7 +87,7 @@ export type WorkerStatus = {
 
 export type PrefetchedModuleSignatures = {
 	[key: string]:
-		 | {
+		| {
 				type: "USE_CACHED";
 				filename: string;
 			}

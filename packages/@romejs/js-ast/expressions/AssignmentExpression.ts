@@ -16,7 +16,7 @@ export type AssignmentExpression = JSNodeBase & {
 };
 
 export type AssignmentOperator =
-	 | "="
+	| "="
 	| "+="
 	| "-="
 	| "*="

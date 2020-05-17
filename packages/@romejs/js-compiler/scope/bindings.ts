@@ -40,7 +40,7 @@ export class Binding {
 }
 
 export type ImportBindingMeta =
-	 | {
+	| {
 			type: "name";
 			imported: string;
 			source: string;
@@ -91,7 +91,7 @@ export class FunctionBinding extends Binding {
 }
 
 export type TypeBindingKind =
-	 | "function"
+	| "function"
 	| "class"
 	| "interface"
 	| "typealias"

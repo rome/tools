@@ -12,7 +12,7 @@ export type RegExpGroupNonCapture = JSNodeBase & {
 	type: "RegExpGroupNonCapture";
 	expression: AnyRegExpExpression;
 	kind?:
-		 | "positive-lookahead"
+		| "positive-lookahead"
 		| "negative-lookahead"
 		| "positive-lookbehind"
 		| "negative-lookbehind";

@@ -45,7 +45,7 @@ export type TestDiagnosticAdviceLog = {
 };
 
 export type TestDiagnosticAdviceItem =
-	 | TestDiagnosticAdviceInspect
+	| TestDiagnosticAdviceInspect
 	| TestDiagnosticAdviceCode
 	| TestDiagnosticAdviceLog
 	| TestDiagnosticAdviceList;
@@ -95,7 +95,7 @@ export type TestName = string | Array<string>;
 declare const __ROME__TEST_OPTIONS__: GlobalTestOptions;
 
 export type GlobalTestOptions =
-	 | undefined
+	| undefined
 	| {
 			dirname?: string;
 			register?: (err: Error, opts: TestOptions, callback: TestCallback) => void;
@@ -170,7 +170,7 @@ function splitArgs(
 }
 
 type TestRegisterFunctionArgs =
-	 | [TestName, TestCallback]
+	| [TestName, TestCallback]
 	| [TestName, NamelessTestOptions, TestCallback];
 
 type TestRegisterFunction = (...args: TestRegisterFunctionArgs) => void;

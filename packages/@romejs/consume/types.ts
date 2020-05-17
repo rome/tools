@@ -20,7 +20,7 @@ export type ConsumeKey = number | string;
 export type ConsumePath = Array<ConsumeKey>;
 
 export type ConsumeSourceLocationRequestTarget =
-	 | "all"
+	| "all"
 	| "key"
 	| "value"
 	| "inner-value";
@@ -63,7 +63,7 @@ export type ConsumePropertyNumberDefinition = ConsumePropertyDefinitionBase & {
 };
 
 export type ConsumePropertyDefinition =
-	 | ConsumePropertyStringDefinition
+	| ConsumePropertyStringDefinition
 	| ConsumePropertyPrimitiveDefinition
 	| ConsumePropertyNumberDefinition;
 

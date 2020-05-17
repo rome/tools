@@ -62,7 +62,7 @@ import {descriptions} from "@romejs/diagnostics";
 import {State} from "../tokenizer/state";
 
 export type ParseExportResult =
-	 | AnyStatement
+	| AnyStatement
 	| ExportAllDeclaration
 	| ExportLocalDeclaration
 	| ExportExternalDeclaration

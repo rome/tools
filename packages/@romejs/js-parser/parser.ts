@@ -61,7 +61,7 @@ export type OpeningContext = {
 };
 
 export type ScopeType =
-	 | "FUNCTION_LOC"
+	| "FUNCTION_LOC"
 	| "NON_ARROW_FUNCTION"
 	| "FUNCTION"
 	| "GENERATOR"

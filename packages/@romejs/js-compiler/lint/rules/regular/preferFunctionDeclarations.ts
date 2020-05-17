@@ -50,7 +50,7 @@ const hook = createHook<State, Arg, ThisExpression>({
 		path: Path,
 		state: State,
 	):
-		 | VariableDeclarationStatement
+		| VariableDeclarationStatement
 		| Array<VariableDeclarationStatement | FunctionDeclaration> {
 		const node = variableDeclarationStatement.assert(path.node);
 

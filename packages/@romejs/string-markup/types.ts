@@ -39,7 +39,7 @@ export type ChildNode = TextNode | TagNode;
 export type Children = Array<ChildNode>;
 
 export type MarkupTagName =
-	 | "hr"
+	| "hr"
 	| "pad"
 	| "grammarNumber"
 	| "command"
