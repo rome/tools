@@ -484,7 +484,7 @@ export default async function cli() {
 		}
 
 		case "DIAGNOSTICS": {
-			process.exit(res.diagnostics.length === 0 ? 0 : 1);
+			process.exit(res.hasDiagnostics ? 1 : 0);
 			break;
 		}
 

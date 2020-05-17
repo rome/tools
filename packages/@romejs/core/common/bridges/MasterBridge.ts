@@ -54,6 +54,7 @@ export type MasterQueryResponseError = {
 
 export type MasterQueryResponseDiagnostics = {
 	type: "DIAGNOSTICS";
+	hasDiagnostics: boolean;
 	diagnostics: Diagnostics;
 };
 

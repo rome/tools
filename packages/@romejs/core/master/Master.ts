@@ -901,6 +901,7 @@ export default class Master {
 			} else {
 				return {
 					type: "DIAGNOSTICS",
+					hasDiagnostics: diagnostics.length > 0,
 					diagnostics,
 				};
 			}
