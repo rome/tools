@@ -62,7 +62,7 @@ import {
 	WithStatement,
 } from "@romejs/js-ast";
 import * as charCodes from "@romejs/string-charcodes";
-import {nextToken, setStrict, skipLineComment, parseInterpreterDirective} from "../tokenizer/index";
+import {nextToken, setStrict, skipInterpreterDirective} from "../tokenizer/index";
 import {
 	ParseExportResult,
 	ParseImportResult,
@@ -136,7 +136,7 @@ export function parsePossibleInterpreterDirective(
 		parser.match(tt.hash) &&
 		parser.input[ob1Get0(parser.state.endPos.index)] === "!"
 	) {
-		const directive = parseInterpreterDirective(parser, 1);
+		const directive = skipInterpreterDirective(parser, 1);
 
 		// Advance to next token
 		parser.next();
