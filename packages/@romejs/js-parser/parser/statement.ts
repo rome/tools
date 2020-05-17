@@ -62,7 +62,7 @@ import {
 	WithStatement,
 } from "@romejs/js-ast";
 import * as charCodes from "@romejs/string-charcodes";
-import {nextToken, setStrict, skipLineComment} from "../tokenizer/index";
+import {nextToken, setStrict, skipLineComment, parseInterpreterDirective} from "../tokenizer/index";
 import {
 	ParseExportResult,
 	ParseImportResult,
@@ -136,18 +136,12 @@ export function parsePossibleInterpreterDirective(
 		parser.match(tt.hash) &&
 		parser.input[ob1Get0(parser.state.endPos.index)] === "!"
 	) {
-		// Parse as a regular comment, we should abstract this logic
-		// TODO this gets pushed to all the comments which is bad
-		const comment = skipLineComment(parser, 2);
+		const directive = parseInterpreterDirective(parser, 1);
 
 		// Advance to next token
 		parser.next();
 
-		return {
-			type: "InterpreterDirective",
-			value: comment.value,
-			loc: comment.loc,
-		};
+		return directive;
 	} else {
 		return undefined;
 	}
