@@ -290,6 +290,10 @@ export const descriptions = createMessages({
 	},
 	// @romejs/js-compiler
 	LINT: {
+		JSX_A11Y_ALT_TEXT: {
+			category: "lint/jsxA11yAltText",
+			message: "<emphasis>img</emphasis>, <emphasis>area</emphasis>, <emphasis>input type='image'</emphasis>, <emphasis>object</emphasis> must have alt text",
+		},
 		NO_DANGER: {
 			category: "lint/noDanger",
 			message: "dangerouslySetInnerHTML should be avoided",
