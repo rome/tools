@@ -6,13 +6,13 @@
  */
 
 import {Token, concat, space} from '../../tokens';
-import { Builder } from '@romejs/js-formatter';
-import { ClassPrivateMethod } from '@romejs/js-ast';
-import { printMethod } from '../utils';
+import {Builder} from '@romejs/js-formatter';
+import {ClassPrivateMethod} from '@romejs/js-ast';
+import {printMethod} from '../utils';
 
 export default function ClassPrivateMethod(
   builder: Builder,
-  node: ClassPrivateMethod
+  node: ClassPrivateMethod,
 ): Token {
   const printed = printMethod(builder, node);
   if (node.meta.static === true) {
