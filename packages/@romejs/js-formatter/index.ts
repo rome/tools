@@ -18,7 +18,7 @@ export type FormatterOptions = {
 	comments?: Array<AnyComment>;
 	sourceMaps?: boolean;
 	sourceText?: string;
-	allowInterpreterDirective?: boolean,
+	allowInterpreterDirective?: boolean;
 };
 
 export function formatJS(
