@@ -24,7 +24,7 @@ import {createBuilder} from "../utils";
 export type JSXElement = JSNodeBase & {
 	type: "JSXElement";
 	name:
-		 | JSXReferenceIdentifier
+		| JSXReferenceIdentifier
 		| JSXIdentifier
 		| JSXNamespacedName
 		| JSXMemberExpression;

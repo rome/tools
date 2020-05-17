@@ -157,7 +157,7 @@ export default class Consumer {
 
 	declareDefinition(
 		partialDef:
-			 | Omit<ConsumePropertyStringDefinition, "objectPath" | "metadata">
+			| Omit<ConsumePropertyStringDefinition, "objectPath" | "metadata">
 			| Omit<ConsumePropertyPrimitiveDefinition, "objectPath" | "metadata">
 			| Omit<ConsumePropertyNumberDefinition, "objectPath" | "metadata">,
 		inputName?: string,

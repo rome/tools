@@ -605,7 +605,7 @@ export function parseExpressionOp(
 	if (prec !== undefined && (!noIn || !parser.match(tt._in))) {
 		if (prec > minPrec) {
 			const operator = (String(parser.state.tokenValue) as
-				 | BinaryOperator
+				| BinaryOperator
 				| LogicalOperator);
 
 			if (
@@ -692,7 +692,7 @@ export function parseMaybeUnary(
 		const start = parser.getPosition();
 		const update = parser.match(tt.incDec);
 		const operator = (String(parser.state.tokenValue) as
-			 | UnaryOperator
+			| UnaryOperator
 			| UpdateOperator);
 		const prefix = true;
 
@@ -1283,7 +1283,7 @@ export function parseCallExpressionArguments(
 ): {
 	args: CallExpression["arguments"];
 	params:
-		 | undefined
+		| undefined
 		| Array<AnyExpression | SpreadElement | AmbiguousFlowTypeCastExpression>;
 } {
 	let callArgs: CallExpression["arguments"] = [];
@@ -1439,7 +1439,7 @@ export function parseNoCallExpr(
 }
 
 type ExpressionContext =
-	 | "await argument"
+	| "await argument"
 	| "export default declaration"
 	| "export from"
 	| "import source"
@@ -2521,7 +2521,7 @@ export function isGetterOrSetterMethod(
 export function checkGetterSetterParamCount(
 	parser: JSParser,
 	method:
-		 | ObjectMethod
+		| ObjectMethod
 		| ClassMethod
 		| ClassPrivateMethod
 		| TSDeclareFunction
@@ -2774,7 +2774,7 @@ export function parseObjectPropertyValue(
 	}
 
 	let node:
-		 | undefined
+		| undefined
 		| ObjectMethod
 		| ObjectProperty
 		| BindingObjectPatternProperty =

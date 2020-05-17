@@ -572,7 +572,7 @@ function readTokenMultModulo(parser: JSParser, code: number): void {
 
 	// '%*'
 	let type:
-		 | typeof tt["star"]
+		| typeof tt["star"]
 		| typeof tt["modulo"]
 		| typeof tt["exponent"]
 		| typeof tt["assign"] = code === charCodes.asterisk ? tt.star : tt.modulo;

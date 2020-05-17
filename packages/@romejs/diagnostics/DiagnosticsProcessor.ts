@@ -25,7 +25,7 @@ import DiagnosticsNormalizer from "./DiagnosticsNormalizer";
 import {MarkupFormatNormalizeOptions} from "@romejs/string-markup";
 
 type UniquePart =
-	 | "filename"
+	| "filename"
 	| "message"
 	| "start.line"
 	| "start.column"

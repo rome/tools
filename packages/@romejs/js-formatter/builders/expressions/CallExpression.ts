@@ -25,7 +25,7 @@ import {printCommaList} from "../utils";
 import {hasInnerComments} from "../comments";
 
 type AnyCallableExpression =
-	 | CallExpression
+	| CallExpression
 	| OptionalCallExpression
 	| NewExpression;
 

@@ -34,7 +34,7 @@ import {Diagnostics, descriptions} from "@romejs/diagnostics";
 import {Number0, ob1Add, ob1Coerce0, ob1Get0} from "@romejs/ob1";
 
 type Operator =
-	 | "^"
+	| "^"
 	| "$"
 	| "."
 	| "["
@@ -78,7 +78,7 @@ type Tokens = BaseTokens & {
 };
 
 type GroupModifiers =
-	 | {
+	| {
 			type: "NON_CAPTURE";
 			kind: RegExpGroupNonCapture["kind"];
 		}
@@ -871,7 +871,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 		}
 
 		parseQuantifier():
-			 | undefined
+			| undefined
 			| {
 					min: number;
 					max?: number;

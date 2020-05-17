@@ -27,109 +27,6 @@ function foo() {
 
 ```
 
-### `10`
-
-```
-
- unknown:1:1 lint/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Reassignment of function declaration
-
-    [foo] = bar; function foo() { };
-     ^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `10: formatted`
-
-```
-[foo] = bar;
-function foo() {}
-
-```
-
-### `11`
-
-```
-
- unknown:1:5 lint/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Reassignment of function declaration
-
-    ({x: foo = 0} = bar); function foo() { };
-         ^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `11: formatted`
-
-```
-({x: foo = 0} = bar);
-function foo() {}
-
-```
-
-### `12`
-
-```
-
- unknown:1:18 lint/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Reassignment of function declaration
-
-    function foo() { [foo] = bar; }
-                      ^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `12: formatted`
-
-```
-function foo() {
-	[foo] = bar;
-}
-
-```
-
-### `13`
-
-```
-
- unknown:1:19 lint/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Reassignment of function declaration
-
-    (function() { ({x: foo = 0} = bar); function foo() { }; })();
-                       ^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `13: formatted`
-
-```
-(function() {
-	({x: foo = 0} = bar);
-	function foo() {}
-})();
-
-```
-
 ### `1: formatted`
 
 ```
@@ -302,5 +199,108 @@ function foo() {
 ```
 foo = bar;
 function foo() {}
+
+```
+
+### `10`
+
+```
+
+ unknown:1:1 lint/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Reassignment of function declaration
+
+    [foo] = bar; function foo() { };
+     ^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `10: formatted`
+
+```
+[foo] = bar;
+function foo() {}
+
+```
+
+### `11`
+
+```
+
+ unknown:1:5 lint/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Reassignment of function declaration
+
+    ({x: foo = 0} = bar); function foo() { };
+         ^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `11: formatted`
+
+```
+({x: foo = 0} = bar);
+function foo() {}
+
+```
+
+### `12`
+
+```
+
+ unknown:1:18 lint/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Reassignment of function declaration
+
+    function foo() { [foo] = bar; }
+                      ^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `12: formatted`
+
+```
+function foo() {
+	[foo] = bar;
+}
+
+```
+
+### `13`
+
+```
+
+ unknown:1:19 lint/noFunctionAssign ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Reassignment of function declaration
+
+    (function() { ({x: foo = 0} = bar); function foo() { }; })();
+                       ^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `13: formatted`
+
+```
+(function() {
+	({x: foo = 0} = bar);
+	function foo() {}
+})();
 
 ```

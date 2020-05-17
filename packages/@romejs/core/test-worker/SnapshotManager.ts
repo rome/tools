@@ -18,6 +18,7 @@ import {createSnapshotParser} from "./SnapshotParser";
 import {ErrorFrame} from "@romejs/v8";
 import {Number0, Number1} from "@romejs/ob1";
 import prettyFormat from "@romejs/pretty-format";
+import {naturalCompare} from '@romejs/string-utils';
 
 function cleanHeading(key: string): string {
 	if (key[0] === "`") {
@@ -238,8 +239,7 @@ export default class SnapshotManager {
 
 			lines.push(`## \`${testName}\``);
 			pushNewline();
-
-			const entryNames = Array.from(entries.keys()).sort();
+			const entryNames = Array.from(entries.keys()).sort(naturalCompare);
 
 			for (const snapshotName of entryNames) {
 				const entry = entries.get(snapshotName)!;

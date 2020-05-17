@@ -24,7 +24,7 @@ Error.stackTraceLimit = Infinity;
 type ScopeBindings = Map<string, Binding>;
 
 export type ScopeKind =
-	 | "root"
+	| "root"
 	| "program"
 	| "function"
 	| "block"

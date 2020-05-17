@@ -55,7 +55,7 @@ import {ob1Get0} from "@romejs/ob1";
 const VALID_REST_ARGUMENT_TYPES = ["Identifier", "MemberExpression"];
 
 type ToAssignmentPatternNode =
-	 | AnyExpression
+	| AnyExpression
 	| AnyAssignmentPattern
 	| AnyTargetBindingPattern
 	| AnyAuxiliary;
@@ -597,7 +597,7 @@ export function toReferencedListOptional(
 }
 
 export type ToReferencedItem =
-	 | AmbiguousFlowTypeCastExpression
+	| AmbiguousFlowTypeCastExpression
 	| SpreadElement
 	| AnyExpression;
 

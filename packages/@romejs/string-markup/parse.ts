@@ -106,7 +106,7 @@ const createStringMarkupParser = createParser((ParserCore) =>
 			input: string,
 			state: State,
 		):
-			 | undefined
+			| undefined
 			| {
 					token: TokenValues<Tokens>;
 					state: State;

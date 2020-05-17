@@ -11,7 +11,7 @@ import {OptionalProps} from "@romejs/typescript-helpers";
 export type AnyTSEntityName = n.ReferenceIdentifier | n.TSQualifiedName;
 
 export type AnyTSTypeElement =
-	 | n.TSCallSignatureDeclaration
+	| n.TSCallSignatureDeclaration
 	| n.TSConstructSignatureDeclaration
 	| n.TSIndexSignature
 	| n.TSPropertySignature
@@ -20,7 +20,7 @@ export type AnyTSTypeElement =
 export type AnyTSModuleReference = AnyTSEntityName | n.TSExternalModuleReference;
 
 export type AnyTSFunctionOrConstructorType =
-	 | n.TSFunctionType
+	| n.TSFunctionType
 	| n.TSConstructorType;
 
 export type ObjectProperties = Array<
@@ -28,14 +28,14 @@ export type ObjectProperties = Array<
 >;
 
 export type AnyFunction =
-	 | n.ArrowFunctionExpression
+	| n.ArrowFunctionExpression
 	| n.FunctionDeclaration
 	| n.FunctionExpression
 	| n.ObjectMethod
 	| n.ClassMethod;
 
 export type AnyVariableIdentifier =
-	 | n.BindingIdentifier
+	| n.BindingIdentifier
 	| n.AssignmentIdentifier
 	| n.ReferenceIdentifier
 	| n.JSXReferenceIdentifier;
@@ -43,7 +43,7 @@ export type AnyVariableIdentifier =
 export type AnyObjectOrClassMember = AnyClassMember | AnyObjectMember;
 
 export type AnyClassMember =
-	 | n.ClassMethod
+	| n.ClassMethod
 	| n.ClassPrivateMethod
 	| n.ClassProperty
 	| n.ClassPrivateProperty
@@ -59,7 +59,7 @@ export type AnyForStatement = AnyForInOfStatement | n.ForStatement;
 export type AnyForInOfStatement = n.ForInStatement | n.ForOfStatement;
 
 export type AnyLiteral =
-	 | n.StringLiteral
+	| n.StringLiteral
 	| n.BooleanLiteral
 	| n.NumericLiteral
 	| n.RegExpLiteral
@@ -68,7 +68,7 @@ export type AnyLiteral =
 export type AnyClass = n.ClassDeclaration | n.ClassExpression;
 
 export type AnyAuxiliary =
-	 | AnyClassMember
+	| AnyClassMember
 	| AnyObjectMember
 	| n.ObjectProperty
 	| n.ObjectMethod
@@ -115,11 +115,11 @@ export type AnyAuxiliary =
 export type AnyComment = n.CommentBlock | n.CommentLine;
 
 export type AnyCommentOptionalId =
-	 | OptionalProps<n.CommentBlock, "id">
+	| OptionalProps<n.CommentBlock, "id">
 	| OptionalProps<n.CommentLine, "id">;
 
 export type AnyIdentifier =
-	 | n.Identifier
+	| n.Identifier
 	| n.JSXIdentifier
 	| n.BindingIdentifier
 	| n.AssignmentIdentifier
@@ -129,7 +129,7 @@ export type AnyIdentifier =
 export type AnyReference = n.ReferenceIdentifier | n.MemberExpression;
 
 export type AnyExpression =
-	 | n.ReferenceIdentifier
+	| n.ReferenceIdentifier
 	| n.JSXElement
 	| n.JSXFragment
 	| n.JSXMemberExpression
@@ -181,7 +181,7 @@ type AnyStatementWithBodyReducer<T> = T extends {
 export type AnyStatementWithBody = AnyStatementWithBodyReducer<AnyStatement>;
 
 export type AnyStatement =
-	 | n.AnyDeclaration
+	| n.AnyDeclaration
 	| n.ExpressionStatement
 	| n.ForStatement
 	| n.ForOfStatement
@@ -202,28 +202,28 @@ export type AnyStatement =
 	| n.TryStatement;
 
 export type AnyBindingPattern =
-	 | n.BindingAssignmentPattern
+	| n.BindingAssignmentPattern
 	| n.BindingIdentifier
 	| n.BindingObjectPattern
 	| n.BindingArrayPattern
 	| n.BindingObjectPatternProperty;
 
 export type AnyParamBindingPattern =
-	 | n.AnyTargetBindingPattern
+	| n.AnyTargetBindingPattern
 	| n.BindingAssignmentPattern;
 
 export type AnyTargetBindingPattern =
-	 | n.BindingIdentifier
+	| n.BindingIdentifier
 	| n.BindingArrayPattern
 	| n.BindingObjectPattern;
 
 export type AnyAssignmentPattern =
-	 | n.AssignmentAssignmentPattern
+	| n.AssignmentAssignmentPattern
 	| n.AssignmentObjectPatternProperty
 	| n.AnyTargetAssignmentPattern;
 
 export type AnyTargetAssignmentPattern =
-	 | n.MemberExpression
+	| n.MemberExpression
 	| n.AssignmentIdentifier
 	| n.AssignmentArrayPattern
 	| n.AssignmentObjectPattern
@@ -234,7 +234,7 @@ export type AnyTargetAssignmentPattern =
 export type AnyArrayPattern = n.AssignmentArrayPattern | n.BindingArrayPattern;
 
 export type AnyDeclaration =
-	 | n.VariableDeclarationStatement
+	| n.VariableDeclarationStatement
 	| n.ClassDeclaration
 	| n.FunctionDeclaration
 	| n.ImportDeclaration
@@ -253,12 +253,12 @@ export type AnyDeclaration =
 	| n.TSModuleDeclaration;
 
 export type AnyLiteralTypeAnnotation =
-	 | n.TSStringLiteralTypeAnnotation
+	| n.TSStringLiteralTypeAnnotation
 	| n.TSBooleanLiteralTypeAnnotation
 	| n.TSNumericLiteralTypeAnnotation;
 
 export type AnyTSKeywordTypeAnnotation =
-	 | n.TSAnyKeywordTypeAnnotation
+	| n.TSAnyKeywordTypeAnnotation
 	| n.TSBooleanKeywordTypeAnnotation
 	| n.TSNumberKeywordTypeAnnotation
 	| n.TSStringKeywordTypeAnnotation
@@ -271,7 +271,7 @@ export type AnyTSKeywordTypeAnnotation =
 	| n.UnknownKeywordTypeAnnotation;
 
 export type AnyTSPrimary =
-	 | n.TSOptionalType
+	| n.TSOptionalType
 	| n.TSTypeLiteral
 	| n.TSTypeReference
 	| n.TSThisType
@@ -295,7 +295,7 @@ export type AnyTSPrimary =
 	| AnyTSKeywordTypeAnnotation;
 
 export type AnyRegExpEscapedCharacter =
-	 | n.RegExpCharacter
+	| n.RegExpCharacter
 	| n.RegExpDigitCharacter
 	| n.RegExpNonDigitCharacter
 	| n.RegExpWordBoundaryCharacter
@@ -309,7 +309,7 @@ export type AnyRegExpEscapedCharacter =
 	| n.RegExpControlCharacter;
 
 export type AnyRegExpBodyItem =
-	 | AnyRegExpEscapedCharacter
+	| AnyRegExpEscapedCharacter
 	| n.RegExpStartCharacter
 	| n.RegExpEndCharacter
 	| n.RegExpAnyCharacter
@@ -335,7 +335,7 @@ export type AnyRegExpExpression = n.RegExpSubExpression | n.RegExpAlternation;
 // EVERYTHING BELOW IS AUTOGENERATED. SEE SCRIPTS FOLDER FOR UPDATE SCRIPTS
 
 export type AnyNode =
-	 | n.AmbiguousFlowTypeCastExpression
+	| n.AmbiguousFlowTypeCastExpression
 	| n.ArrayExpression
 	| n.ArrayHole
 	| n.ArrowFunctionExpression

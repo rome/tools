@@ -24,7 +24,7 @@ function compareImportSpecifiers(a: ImportSpecifier, b: ImportSpecifier): number
 }
 
 function compareExportSpecifiers<T extends
-	 | ExportExternalSpecifier
+	| ExportExternalSpecifier
 	| ExportLocalSpecifier>(a: T, b: T): number {
 	const order = naturalCompare(a.local.name, b.local.name, false);
 	if (order === 0) {

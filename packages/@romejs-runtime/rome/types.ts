@@ -7,7 +7,7 @@
 
 // These are copied from packages/@romejs/codec-json/types.ts
 export type JSONValue =
-	 | null
+	| null
 	| string
 	| number
 	| boolean

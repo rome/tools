@@ -111,14 +111,14 @@ export type ResolverLocalQuery = Omit<ResolverRemoteQuery, "origin"> & {
 };
 
 export type ResolverQuerySource =
-	 | undefined
+	| undefined
 	| {
 			source?: string;
 			location?: DiagnosticLocation;
 		};
 
 type ResolverQueryResponseFoundType =
-	 | "package"
+	| "package"
 	| "mock"
 	| "virtual"
 	| "implicitPlatform"
@@ -162,12 +162,12 @@ const QUERY_RESPONSE_MISSING: ResolverQueryResponseMissing = {
 };
 
 export type ResolverQueryResponseNotFound =
-	 | ResolverQueryResponseMissing
+	| ResolverQueryResponseMissing
 	| ResolverQueryResponseFetchError
 	| ResolverQueryResponseUnsupported;
 
 export type ResolverQueryResponse =
-	 | ResolverQueryResponseFound
+	| ResolverQueryResponseFound
 	| ResolverQueryResponseNotFound;
 
 function shouldReturnQueryResponse(res: ResolverQueryResponse): boolean {

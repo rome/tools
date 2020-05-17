@@ -65,7 +65,7 @@ export type ParserUnexpectedOptions = {
 };
 
 export type TokenValues<Tokens extends TokensShape> =
-	 | Tokens[keyof Tokens]
+	| Tokens[keyof Tokens]
 	| BaseTokens[keyof BaseTokens];
 
 export function tryParseWithOptionalOffsetPosition<
@@ -232,7 +232,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
 		input: string,
 		state: State,
 	):
-		 | undefined
+		| undefined
 		| {
 				token: TokenValues<Tokens>;
 				state: State;
@@ -250,7 +250,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
 		input: string,
 		state: State,
 	):
-		 | undefined
+		| undefined
 		| {
 				token: TokenValues<Tokens>;
 				state: State;
