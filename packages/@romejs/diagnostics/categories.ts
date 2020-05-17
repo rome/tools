@@ -94,6 +94,7 @@ export type DiagnosticCategoryPrefix =
 type LintDiagnosticCategory =
 	 | "lint/camelCase"
 	| "lint/caseSingleStatement"
+	| "lint/confusingLanguage"
 	| "lint/defaultExportSameBasename"
 	| "lint/doubleEquals"
 	| "lint/duplicateImportSource"
@@ -101,7 +102,6 @@ type LintDiagnosticCategory =
 	| "lint/emptyMatches"
 	| "lint/getterReturn"
 	| "lint/importDefaultBasename"
-	| "lint/confusingLanguage"
 	| "lint/jsxA11yHTMLHasLang"
 	| "lint/jsxA11yIframeHasTitle"
 	| "lint/jsxA11yImgRedundantAlt"
