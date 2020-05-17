@@ -379,7 +379,7 @@ function skipBlockComment(parser: JSParser): void {
 	);
 }
 
-export function skipLineComment(parser: JSParser, startSkip: number): AnyComment {
+function parseLineComment(parser: JSParser, startSkip: number): { startPos: Position, endPos: Position, text: string } {
 	const startIndex = parser.state.index;
 	const startPos = parser.getPositionFromState();
 	parser.state.index = ob1Add(parser.state.index, startSkip);
@@ -395,17 +395,25 @@ export function skipLineComment(parser: JSParser, startSkip: number): AnyComment
 			ch = parser.input.charCodeAt(getIndex(parser));
 		}
 	}
+	const endPos = parser.getPositionFromState();
+	const text = parser.getRawInput(ob1Add(startIndex, startSkip), parser.state.index);
 
+	return {
+		startPos,
+		endPos,
+		text,
+	};
+}
+
+export function skipLineComment(parser: JSParser, startSkip: number): AnyComment {
+	const commentLine = parseLineComment(parser, startSkip);
 	return pushComment(
 		parser,
 		{
 			block: false,
-			text: parser.getRawInput(
-				ob1Add(startIndex, startSkip),
-				parser.state.index,
-			),
-			startPos,
-			endPos: parser.getPositionFromState(),
+			text: commentLine.text,
+			startPos: commentLine.startPos,
+			endPos: commentLine.endPos,
 		},
 	);
 }
@@ -414,26 +422,11 @@ export function skipInterpreterDirective(
 	parser: JSParser,
 	startSkip: number,
 ): InterpreterDirective {
-	const startIndex = parser.state.index;
-	const startPos = parser.getPositionFromState();
-	parser.state.index = ob1Add(parser.state.index, startSkip);
-	let ch = parser.input.charCodeAt(getIndex(parser));
-	if (parser.state.index < parser.length) {
-		while (
-			ch !== charCodes.lineFeed &&
-			ch !== charCodes.carriageReturn &&
-			ch !== charCodes.lineSeparator &&
-			ch !== charCodes.paragraphSeparator &&
-			bumpIndex(parser) < parser.length
-		) {
-			ch = parser.input.charCodeAt(getIndex(parser));
-		}
-	}
-	const loc = parser.finishLocAt(startPos, parser.getPositionFromState());
-
+	const commentLine = parseLineComment(parser, startSkip);
+	const loc = parser.finishLocAt(commentLine.startPos, commentLine.endPos);
 	return {
 		type: "InterpreterDirective",
-		value: parser.getRawInput(ob1Add(startIndex, startSkip), parser.state.index),
+		value: commentLine.text,
 		loc,
 	};
 }
