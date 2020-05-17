@@ -385,10 +385,13 @@ function parseExportDeclaration(
 }
 
 function isExportDefaultSpecifier(parser: JSParser): boolean {
+	// export Foo from "mod"
+	// export Foo, {Bar} from "mod"
 	const lookahead = parser.lookaheadState();
 	if (
-		lookahead.tokenType === tt.comma ||
-		(lookahead.tokenType === tt.name && lookahead.tokenValue === "from")
+		parser.match(tt.name) &&
+		(lookahead.tokenType === tt.comma ||
+		(lookahead.tokenType === tt.name && lookahead.tokenValue === "from"))
 	) {
 		return true;
 	}
