@@ -26,113 +26,6 @@ foo;
 
 ```
 
-### `10`
-
-```
-
- unknown:1:20 lint/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Reference to non-existent group "78"
-
-    let foo = /([abc]+)=\78/;foo;
-                        ^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `10: formatted`
-
-```
-let foo = /([abc]+)=\78/;
-foo;
-
-```
-
-### `11`
-
-```
-
- unknown:1:20 lint/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Reference to non-existent group "99"
-
-    let foo = /([abc]+)=\99/;foo;
-                        ^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `11: formatted`
-
-```
-let foo = /([abc]+)=\99/;
-foo;
-
-```
-
-### `12`
-
-```
-
- unknown:1:19 lint/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Reference to non-existent group "19"
-
-    let foo = /(([abc])\19)+=\28/;foo;
-                       ^^^
-
- unknown:1:25 lint/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Reference to non-existent group "28"
-
-    let foo = /(([abc])\19)+=\28/;foo;
-                             ^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 2 problems
-
-```
-
-### `12: formatted`
-
-```
-let foo = /(([abc])\19)+=\28/;
-foo;
-
-```
-
-### `13`
-
-```
-
- unknown:1:20 lint/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Reference to non-existent group "19"
-
-    let foo = /([abc]+)=\199/;foo;
-                        ^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `13: formatted`
-
-```
-let foo = /([abc]+)=\199/;
-foo;
-
-```
-
 ### `1: formatted`
 
 ```
@@ -277,6 +170,113 @@ foo;
 
 ```
 let foo = /([abc]+)=\49/;
+foo;
+
+```
+
+### `10`
+
+```
+
+ unknown:1:20 lint/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Reference to non-existent group "78"
+
+    let foo = /([abc]+)=\78/;foo;
+                        ^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `10: formatted`
+
+```
+let foo = /([abc]+)=\78/;
+foo;
+
+```
+
+### `11`
+
+```
+
+ unknown:1:20 lint/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Reference to non-existent group "99"
+
+    let foo = /([abc]+)=\99/;foo;
+                        ^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `11: formatted`
+
+```
+let foo = /([abc]+)=\99/;
+foo;
+
+```
+
+### `12`
+
+```
+
+ unknown:1:19 lint/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Reference to non-existent group "19"
+
+    let foo = /(([abc])\19)+=\28/;foo;
+                       ^^^
+
+ unknown:1:25 lint/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Reference to non-existent group "28"
+
+    let foo = /(([abc])\19)+=\28/;foo;
+                             ^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 2 problems
+
+```
+
+### `12: formatted`
+
+```
+let foo = /(([abc])\19)+=\28/;
+foo;
+
+```
+
+### `13`
+
+```
+
+ unknown:1:20 lint/noReferenceToNonExistingGroup ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Reference to non-existent group "19"
+
+    let foo = /([abc]+)=\199/;foo;
+                        ^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `13: formatted`
+
+```
+let foo = /([abc]+)=\199/;
 foo;
 
 ```
