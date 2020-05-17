@@ -16,7 +16,7 @@ test(
 
 		t.inlineSnapshot(
 			doesNodeMatchPattern(template.expression`this.foo`, "this.foo"),
-			false,
+			true,
 		);
 
 		t.inlineSnapshot(
@@ -26,7 +26,7 @@ test(
 
 		t.inlineSnapshot(
 			doesNodeMatchPattern(template.expression`this.foo.bar`, "this.foo.*"),
-			false,
+			true,
 		);
 
 		t.inlineSnapshot(
