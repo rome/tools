@@ -290,6 +290,10 @@ export const descriptions = createMessages({
 	},
 	// @romejs/js-compiler
 	LINT: {
+		JSX_A11Y_NO_DISTRACTING_ELEMENTS: (element: string) => ({
+			category: "lint/jsxA11yNoDistractingElements",
+			message: `Do not use ${element} elements as they can create visual accessibility issues and are deprecated.`,
+		}),
 		NO_DANGER: {
 			category: "lint/noDanger",
 			message: "dangerouslySetInnerHTML should be avoided",
