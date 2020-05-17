@@ -8,14 +8,14 @@
 Program {
 	comments: Array []
 	corrupt: false
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 27
 			index: 27
@@ -29,9 +29,9 @@ Program {
 	}
 	directives: Array [
 		Directive {
-			value: 'use strict'
+			value: "use strict"
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -47,16 +47,16 @@ Program {
 	]
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Invalid escape sequence in template'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Invalid escape sequence in template"}
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 23
 					index: 23
@@ -73,7 +73,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 27
 					index: 27
@@ -87,7 +87,7 @@ Program {
 			}
 			expression: TemplateLiteral {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 26
 						index: 26
@@ -101,10 +101,10 @@ Program {
 				}
 				expressions: Array [
 					ReferenceIdentifier {
-						name: 'test'
+						name: "test"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'test'
+							filename: "input.js"
+							identifierName: "test"
 							end: Object {
 								column: 21
 								index: 21
@@ -120,11 +120,11 @@ Program {
 				]
 				quasis: Array [
 					TemplateElement {
-						cooked: ''
-						raw: ''
+						cooked: ""
+						raw: ""
 						tail: false
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 15
 								index: 15
@@ -138,11 +138,11 @@ Program {
 						}
 					}
 					TemplateElement {
-						cooked: '\\02'
-						raw: '\\02'
+						cooked: "\\02"
+						raw: "\\02"
 						tail: true
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 25
 								index: 25

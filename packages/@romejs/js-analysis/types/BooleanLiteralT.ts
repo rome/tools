@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from '@romejs/js-ast';
-import {HydrateData} from '../Evaluator';
-import {Scope} from '../scopes';
-import T from './T';
+import {AnyNode} from "@romejs/js-ast";
+import {HydrateData} from "../Evaluator";
+import {Scope} from "../scopes";
+import T from "./T";
 
 export default class BooleanLiteralT extends T {
 	constructor(scope: Scope, originNode: undefined | AnyNode, value: boolean) {
@@ -16,7 +16,7 @@ export default class BooleanLiteralT extends T {
 		this.value = value;
 	}
 
-	static type = 'BooleanLiteralT';
+	static type = "BooleanLiteralT";
 
 	value: boolean;
 
@@ -34,9 +34,9 @@ export default class BooleanLiteralT extends T {
 
 	humanize(): string {
 		if (this.value === true) {
-			return 'true';
+			return "true";
 		} else {
-			return 'false';
+			return "false";
 		}
 	}
 

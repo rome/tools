@@ -10,17 +10,17 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array [
-		'jsx'
-		'ts'
+		"jsx"
+		"ts"
 	]
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 63
@@ -35,7 +35,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 17
 					index: 62
@@ -49,9 +49,9 @@ Program {
 			}
 			expression: JSXElement {
 				name: JSXIdentifier {
-					name: 'path'
+					name: "path"
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 5
 							index: 5
@@ -68,7 +68,7 @@ Program {
 				selfClosing: true
 				typeArguments: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 17
 						index: 62
@@ -83,9 +83,9 @@ Program {
 				attributes: Array [
 					JSXAttribute {
 						name: JSXIdentifier {
-							name: 'd'
+							name: "d"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 7
 									index: 7
@@ -99,9 +99,9 @@ Program {
 							}
 						}
 						value: StringLiteral {
-							value: 'M230 80\n\t\tA 45 45, 0, 1, 0, 275 125\n    L 275 80 Z'
+							value: "M230 80\n\t\tA 45 45, 0, 1, 0, 275 125\n    L 275 80 Z"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 15
 									index: 60
@@ -115,7 +115,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 15
 								index: 60

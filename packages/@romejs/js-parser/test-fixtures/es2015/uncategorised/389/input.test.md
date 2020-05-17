@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
+	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 17
@@ -30,16 +30,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unexpected token, expected {'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unexpected token, expected {"}
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'module'
+				sourceType: "module"
 				end: Object {
 					column: 10
 					index: 10
@@ -56,9 +56,9 @@ Program {
 	body: Array [
 		ExportLocalDeclaration {
 			declaration: undefined
-			exportKind: 'value'
+			exportKind: "value"
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 16
 					index: 16
@@ -73,7 +73,7 @@ Program {
 			specifiers: Array [
 				ExportLocalSpecifier {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 10
 							index: 10
@@ -86,10 +86,10 @@ Program {
 						}
 					}
 					exported: Identifier {
-						name: 'for'
+						name: "for"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'for'
+							filename: "input.js"
+							identifierName: "for"
 							end: Object {
 								column: 10
 								index: 10
@@ -103,10 +103,10 @@ Program {
 						}
 					}
 					local: ReferenceIdentifier {
-						name: 'for'
+						name: "for"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'for'
+							filename: "input.js"
+							identifierName: "for"
 							end: Object {
 								column: 10
 								index: 10
@@ -122,7 +122,7 @@ Program {
 				}
 				ExportLocalSpecifier {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 12
 							index: 12
@@ -135,10 +135,10 @@ Program {
 						}
 					}
 					exported: Identifier {
-						name: ''
+						name: ""
 						loc: Object {
-							filename: 'input.js'
-							identifierName: ''
+							filename: "input.js"
+							identifierName: ""
 							end: Object {
 								column: 12
 								index: 12
@@ -152,10 +152,10 @@ Program {
 						}
 					}
 					local: ReferenceIdentifier {
-						name: ''
+						name: ""
 						loc: Object {
-							filename: 'input.js'
-							identifierName: ''
+							filename: "input.js"
+							identifierName: ""
 							end: Object {
 								column: 12
 								index: 12
@@ -171,7 +171,7 @@ Program {
 				}
 				ExportLocalSpecifier {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 13
 							index: 13
@@ -184,10 +184,10 @@ Program {
 						}
 					}
 					exported: Identifier {
-						name: ''
+						name: ""
 						loc: Object {
-							filename: 'input.js'
-							identifierName: ''
+							filename: "input.js"
+							identifierName: ""
 							end: Object {
 								column: 13
 								index: 13
@@ -201,10 +201,10 @@ Program {
 						}
 					}
 					local: ReferenceIdentifier {
-						name: ''
+						name: ""
 						loc: Object {
-							filename: 'input.js'
-							identifierName: ''
+							filename: "input.js"
+							identifierName: ""
 							end: Object {
 								column: 13
 								index: 13
@@ -220,7 +220,7 @@ Program {
 				}
 				ExportLocalSpecifier {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 14
 							index: 14
@@ -233,10 +233,10 @@ Program {
 						}
 					}
 					exported: Identifier {
-						name: ''
+						name: ""
 						loc: Object {
-							filename: 'input.js'
-							identifierName: ''
+							filename: "input.js"
+							identifierName: ""
 							end: Object {
 								column: 14
 								index: 14
@@ -250,10 +250,10 @@ Program {
 						}
 					}
 					local: ReferenceIdentifier {
-						name: ''
+						name: ""
 						loc: Object {
-							filename: 'input.js'
-							identifierName: ''
+							filename: "input.js"
+							identifierName: ""
 							end: Object {
 								column: 14
 								index: 14
@@ -269,7 +269,7 @@ Program {
 				}
 				ExportLocalSpecifier {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 15
 							index: 15
@@ -282,10 +282,10 @@ Program {
 						}
 					}
 					exported: Identifier {
-						name: ''
+						name: ""
 						loc: Object {
-							filename: 'input.js'
-							identifierName: ''
+							filename: "input.js"
+							identifierName: ""
 							end: Object {
 								column: 15
 								index: 15
@@ -299,10 +299,10 @@ Program {
 						}
 					}
 					local: ReferenceIdentifier {
-						name: ''
+						name: ""
 						loc: Object {
-							filename: 'input.js'
-							identifierName: ''
+							filename: "input.js"
+							identifierName: ""
 							end: Object {
 								column: 15
 								index: 15
@@ -318,7 +318,7 @@ Program {
 				}
 				ExportLocalSpecifier {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 16
 							index: 16
@@ -331,10 +331,10 @@ Program {
 						}
 					}
 					exported: Identifier {
-						name: ''
+						name: ""
 						loc: Object {
-							filename: 'input.js'
-							identifierName: ''
+							filename: "input.js"
+							identifierName: ""
 							end: Object {
 								column: 16
 								index: 16
@@ -348,10 +348,10 @@ Program {
 						}
 					}
 					local: ReferenceIdentifier {
-						name: ''
+						name: ""
 						loc: Object {
-							filename: 'input.js'
-							identifierName: ''
+							filename: "input.js"
+							identifierName: ""
 							end: Object {
 								column: 16
 								index: 16

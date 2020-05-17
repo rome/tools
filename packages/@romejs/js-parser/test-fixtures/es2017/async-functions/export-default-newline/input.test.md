@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
+	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 39
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExportDefaultDeclaration {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 20
 					index: 20
@@ -45,10 +45,10 @@ Program {
 				}
 			}
 			declaration: ReferenceIdentifier {
-				name: 'async'
+				name: "async"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'async'
+					filename: "input.js"
+					identifierName: "async"
 					end: Object {
 						column: 20
 						index: 20
@@ -64,10 +64,10 @@ Program {
 		}
 		FunctionDeclaration {
 			id: BindingIdentifier {
-				name: 'bar'
+				name: "bar"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'bar'
+					filename: "input.js"
+					identifierName: "bar"
 					end: Object {
 						column: 12
 						index: 33
@@ -81,7 +81,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 17
 					index: 38
@@ -97,7 +97,7 @@ Program {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 17
 						index: 38
@@ -120,7 +120,7 @@ Program {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 14
 						index: 35

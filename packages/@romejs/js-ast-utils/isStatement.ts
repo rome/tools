@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, AnyStatement} from '@romejs/js-ast';
-import isDeclaration from './isDeclaration';
+import {AnyNode, AnyStatement} from "@romejs/js-ast";
+import isDeclaration from "./isDeclaration";
 
 export default function isStatement(
 	node: undefined | AnyNode,
@@ -20,24 +20,24 @@ export default function isStatement(
 	}
 
 	switch (node.type) {
-		case 'BlockStatement':
-		case 'BreakStatement':
-		case 'ContinueStatement':
-		case 'DebuggerStatement':
-		case 'DoWhileStatement':
-		case 'EmptyStatement':
-		case 'ExpressionStatement':
-		case 'ForInStatement':
-		case 'ForStatement':
-		case 'IfStatement':
-		case 'LabeledStatement':
-		case 'ReturnStatement':
-		case 'SwitchStatement':
-		case 'ThrowStatement':
-		case 'TryStatement':
-		case 'WhileStatement':
-		case 'WithStatement':
-		case 'ForOfStatement': {
+		case "BlockStatement":
+		case "BreakStatement":
+		case "ContinueStatement":
+		case "DebuggerStatement":
+		case "DoWhileStatement":
+		case "EmptyStatement":
+		case "ExpressionStatement":
+		case "ForInStatement":
+		case "ForStatement":
+		case "IfStatement":
+		case "LabeledStatement":
+		case "ReturnStatement":
+		case "SwitchStatement":
+		case "ThrowStatement":
+		case "TryStatement":
+		case "WhileStatement":
+		case "WithStatement":
+		case "ForOfStatement": {
 			const statement: AnyStatement = node;
 			statement;
 			return true;

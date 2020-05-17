@@ -11,12 +11,12 @@ import {
 	FunctionDeclaration,
 	JSNodeBase,
 	TSInterfaceDeclaration,
-} from '../index';
-import {createBuilder} from '../utils';
-import {TSDeclareFunction} from '../typescript/TSDeclareFunction';
+} from "../index";
+import {createBuilder} from "../utils";
+import {TSDeclareFunction} from "../typescript/TSDeclareFunction";
 
 export type ExportDefaultDeclaration = JSNodeBase & {
-	type: 'ExportDefaultDeclaration';
+	type: "ExportDefaultDeclaration";
 	declaration:
 		 | FunctionDeclaration
 		| ClassDeclaration
@@ -28,7 +28,7 @@ export type ExportDefaultDeclaration = JSNodeBase & {
 };
 
 export const exportDefaultDeclaration = createBuilder<ExportDefaultDeclaration>(
-	'ExportDefaultDeclaration',
+	"ExportDefaultDeclaration",
 	{
 		bindingKeys: {},
 		visitorKeys: {

@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 45
@@ -30,16 +30,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'The only valid meta property for new is new.target'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "The only valid meta property for new is new.target"}
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 41
 					index: 41
@@ -56,7 +56,7 @@ Program {
 	body: Array [
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 44
 					index: 44
@@ -69,9 +69,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'var'
+				kind: "var"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 44
 						index: 44
@@ -86,10 +86,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'f'
+							name: "f"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'f'
+								filename: "input.js"
+								identifierName: "f"
 								end: Object {
 									column: 5
 									index: 5
@@ -103,7 +103,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 44
 								index: 44
@@ -118,7 +118,7 @@ Program {
 						init: FunctionExpression {
 							id: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 44
 									index: 44
@@ -140,7 +140,7 @@ Program {
 								thisType: undefined
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 18
 										index: 18
@@ -156,7 +156,7 @@ Program {
 							body: BlockStatement {
 								directives: Array []
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 44
 										index: 44
@@ -171,7 +171,7 @@ Program {
 								body: Array [
 									ExpressionStatement {
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 42
 												index: 42
@@ -185,7 +185,7 @@ Program {
 										}
 										expression: MetaProperty {
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 41
 													index: 41
@@ -198,10 +198,10 @@ Program {
 												}
 											}
 											meta: Identifier {
-												name: 'new'
+												name: "new"
 												loc: Object {
-													filename: 'input.js'
-													identifierName: 'new'
+													filename: "input.js"
+													identifierName: "new"
 													end: Object {
 														column: 24
 														index: 24
@@ -215,10 +215,10 @@ Program {
 												}
 											}
 											property: Identifier {
-												name: 'unknown_property'
+												name: "unknown_property"
 												loc: Object {
-													filename: 'input.js'
-													identifierName: 'unknown_property'
+													filename: "input.js"
+													identifierName: "unknown_property"
 													end: Object {
 														column: 41
 														index: 41

@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {FunctionScope, Scope} from '../../scopes';
+import {FunctionScope, Scope} from "../../scopes";
 import {
 	AnyNode,
 	ArrowFunctionExpression,
 	arrowFunctionExpression,
-} from '@romejs/js-ast';
-import executeFunction from '../../utils/executeFunction';
+} from "@romejs/js-ast";
+import executeFunction from "../../utils/executeFunction";
 
 export default function ArrowFunctionExpression(node: AnyNode, scope: Scope) {
 	node = arrowFunctionExpression.assert(node);

@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 20
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		FunctionDeclaration {
 			id: BindingIdentifier {
-				name: 'eval'
+				name: "eval"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'eval'
+					filename: "input.js"
+					identifierName: "eval"
 					end: Object {
 						column: 13
 						index: 13
@@ -49,7 +49,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 19
 					index: 19
@@ -65,7 +65,7 @@ Program {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 19
 						index: 19
@@ -88,7 +88,7 @@ Program {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 15
 						index: 15

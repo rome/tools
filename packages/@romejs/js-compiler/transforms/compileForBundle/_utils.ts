@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {SCOPE_PRIVATE_PREFIX} from '@romejs/js-compiler';
-import {BundleCompileOptions} from '../../types';
-import CompilerContext from '../../lib/CompilerContext';
+import {SCOPE_PRIVATE_PREFIX} from "@romejs/js-compiler";
+import {BundleCompileOptions} from "../../types";
+import CompilerContext from "../../lib/CompilerContext";
 
 export function getOptions(context: CompilerContext): BundleCompileOptions {
 	const opts = context.options.bundle;
 	if (opts === undefined) {
-		throw new Error('No bundle options found');
+		throw new Error("No bundle options found");
 	}
 	return opts;
 }
@@ -24,7 +24,7 @@ export function getPrivateName(name: string, moduleId: string) {
 // This is necessary so we can take our module uids which are paths on the file system into a valid JS identifier name
 export function normalizeModuleId(id: string): string {
 	// TODO probably need more stuff in this
-	return id.replace(/[\\\/@\-]/g, '$').replace(/[\-.]/g, '_');
+	return id.replace(/[\\\/@\-]/g, "$").replace(/[\-.]/g, "_");
 }
 
 export function getPrefixedName(

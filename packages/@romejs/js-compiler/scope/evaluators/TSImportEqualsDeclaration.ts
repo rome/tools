@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Scope from '../Scope';
-import {AnyNode, TSImportEqualsDeclaration} from '@romejs/js-ast';
-import {ImportBinding} from '@romejs/js-compiler';
+import Scope from "../Scope";
+import {AnyNode, TSImportEqualsDeclaration} from "@romejs/js-ast";
+import {ImportBinding} from "@romejs/js-compiler";
 
 export default {
 	creator: false,
 	build(node: TSImportEqualsDeclaration, parent: AnyNode, scope: Scope) {
 		const {moduleReference, id} = node;
 
-		if (moduleReference.type === 'TSExternalModuleReference') {
+		if (moduleReference.type === "TSExternalModuleReference") {
 			scope.addBinding(
 				new ImportBinding(
 					{
@@ -23,8 +23,8 @@ export default {
 						scope,
 					},
 					{
-						type: 'namespace',
-						kind: 'value',
+						type: "namespace",
+						kind: "value",
 						source: moduleReference.expression.value,
 					},
 				),

@@ -9,14 +9,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 37
@@ -30,10 +30,10 @@ Program {
 	}
 	comments: Array [
 		CommentLine {
-			id: '0'
-			value: ' Comment'
+			id: "0"
+			value: " Comment"
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 30
 					index: 30
@@ -50,7 +50,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 5
 					index: 36
@@ -65,7 +65,7 @@ Program {
 			expression: FunctionExpression {
 				id: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 4
 						index: 35
@@ -87,7 +87,7 @@ Program {
 					thisType: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 11
 							index: 11
@@ -103,7 +103,7 @@ Program {
 				body: BlockStatement {
 					directives: Array []
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 4
 							index: 35
@@ -118,9 +118,9 @@ Program {
 					body: Array [
 						ReturnStatement {
 							argument: undefined
-							trailingComments: Array ['0']
+							trailingComments: Array ["0"]
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 19
 									index: 19
@@ -134,9 +134,9 @@ Program {
 							}
 						}
 						ExpressionStatement {
-							leadingComments: Array ['0']
+							leadingComments: Array ["0"]
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 2
 									index: 33
@@ -149,11 +149,11 @@ Program {
 								}
 							}
 							expression: ReferenceIdentifier {
-								name: 'x'
+								name: "x"
 								leadingComments: undefined
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'x'
+									filename: "input.js"
+									identifierName: "x"
 									end: Object {
 										column: 1
 										index: 32

@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 25
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		IfStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 7
 					index: 24
@@ -46,7 +46,7 @@ Program {
 			}
 			alternate: EmptyStatement {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 7
 						index: 24
@@ -62,7 +62,7 @@ Program {
 			test: BooleanLiteral {
 				value: true
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 8
 						index: 8
@@ -77,7 +77,7 @@ Program {
 			}
 			consequent: ExpressionStatement {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 1
 						index: 18
@@ -92,7 +92,7 @@ Program {
 				expression: CallExpression {
 					arguments: Array []
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 16
 							index: 16
@@ -105,10 +105,10 @@ Program {
 						}
 					}
 					callee: ReferenceIdentifier {
-						name: 'that'
+						name: "that"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'that'
+							filename: "input.js"
+							identifierName: "that"
 							end: Object {
 								column: 14
 								index: 14

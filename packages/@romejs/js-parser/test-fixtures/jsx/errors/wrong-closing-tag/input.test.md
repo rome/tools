@@ -9,17 +9,17 @@ Program {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array [
-		'jsx'
-		'ts'
+		"jsx"
+		"ts"
 	]
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 12
@@ -33,11 +33,11 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 4
 					index: 4
@@ -50,16 +50,16 @@ Program {
 				}
 			}
 			description: Object {
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Expected a corresponding JSX closing tag for <emphasis>Foo</emphasis>'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Expected a corresponding JSX closing tag for <emphasis>Foo</emphasis>"}
 				advice: Array [
 					log {
-						category: 'info'
-						text: 'Originated from opening tag of <emphasis>Foo</emphasis>'
+						category: "info"
+						text: "Originated from opening tag of <emphasis>Foo</emphasis>"
 					}
 					frame {
 						location: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 4
 								index: 4
@@ -79,7 +79,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 11
 					index: 11
@@ -93,9 +93,9 @@ Program {
 			}
 			expression: JSXElement {
 				name: JSXReferenceIdentifier {
-					name: 'Foo'
+					name: "Foo"
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 4
 							index: 4
@@ -113,7 +113,7 @@ Program {
 				selfClosing: false
 				typeArguments: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 11
 						index: 11

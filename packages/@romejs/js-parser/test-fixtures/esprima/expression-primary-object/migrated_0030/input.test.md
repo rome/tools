@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 24
 			index: 24
@@ -30,9 +30,9 @@ Program {
 	}
 	directives: Array [
 		Directive {
-			value: 'use strict'
+			value: "use strict"
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -49,7 +49,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 24
 					index: 24
@@ -62,9 +62,9 @@ Program {
 				}
 			}
 			expression: AssignmentExpression {
-				operator: '='
+				operator: "="
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 24
 						index: 24
@@ -77,10 +77,10 @@ Program {
 					}
 				}
 				left: AssignmentIdentifier {
-					name: 'x'
+					name: "x"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'x'
+						filename: "input.js"
+						identifierName: "x"
 						end: Object {
 							column: 14
 							index: 14
@@ -95,7 +95,7 @@ Program {
 				}
 				right: ObjectExpression {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 24
 							index: 24
@@ -111,10 +111,10 @@ Program {
 						ObjectProperty {
 							key: StaticPropertyKey {
 								value: Identifier {
-									name: 'y'
+									name: "y"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'y'
+										filename: "input.js"
+										identifierName: "y"
 										end: Object {
 											column: 17
 											index: 17
@@ -128,7 +128,7 @@ Program {
 									}
 								}
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 17
 										index: 17
@@ -145,7 +145,7 @@ Program {
 								value: 1
 								format: undefined
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 19
 										index: 19
@@ -159,7 +159,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 19
 									index: 19
@@ -175,10 +175,10 @@ Program {
 						ObjectProperty {
 							key: StaticPropertyKey {
 								value: Identifier {
-									name: 'y'
+									name: "y"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'y'
+										filename: "input.js"
+										identifierName: "y"
 										end: Object {
 											column: 21
 											index: 21
@@ -192,7 +192,7 @@ Program {
 									}
 								}
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 21
 										index: 21
@@ -209,7 +209,7 @@ Program {
 								value: 1
 								format: undefined
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 23
 										index: 23
@@ -223,7 +223,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 23
 									index: 23

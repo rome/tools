@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase} from '../index';
-import {createQuickBuilder} from '../utils';
+import {JSNodeBase} from "../index";
+import {createQuickBuilder} from "../utils";
 
 export type JSXIdentifier = JSNodeBase & {
-	type: 'JSXIdentifier';
+	type: "JSXIdentifier";
 	name: string;
 };
 
-export const jsxIdentifier = createQuickBuilder<JSXIdentifier, 'name'>(
-	'JSXIdentifier',
-	'name',
+export const jsxIdentifier = createQuickBuilder<JSXIdentifier, "name">(
+	"JSXIdentifier",
+	"name",
 	{
 		bindingKeys: {},
 		visitorKeys: {},

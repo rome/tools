@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 36
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		ClassDeclaration {
 			id: BindingIdentifier {
-				name: 'C'
+				name: "C"
 				loc: Object {
-					filename: 'input.ts'
-					identifierName: 'C'
+					filename: "input.ts"
+					identifierName: "C"
 					end: Object {
 						column: 7
 						index: 7
@@ -49,7 +49,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 1
 					index: 35
@@ -67,7 +67,7 @@ Program {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 1
 						index: 35
@@ -81,13 +81,13 @@ Program {
 				}
 				body: Array [
 					TSDeclareMethod {
-						kind: 'method'
+						kind: "method"
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'f'
+								name: "f"
 								loc: Object {
-									filename: 'input.ts'
-									identifierName: 'f'
+									filename: "input.ts"
+									identifierName: "f"
 									end: Object {
 										column: 5
 										index: 15
@@ -101,7 +101,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 5
 									index: 15
@@ -116,7 +116,7 @@ Program {
 						}
 						body: undefined
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 8
 								index: 18
@@ -138,7 +138,7 @@ Program {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 7
 									index: 17
@@ -164,7 +164,7 @@ Program {
 								line: 2
 							}
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 5
 									index: 15
@@ -179,13 +179,13 @@ Program {
 						}
 					}
 					TSDeclareMethod {
-						kind: 'method'
+						kind: "method"
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'f'
+								name: "f"
 								loc: Object {
-									filename: 'input.ts'
-									identifierName: 'f'
+									filename: "input.ts"
+									identifierName: "f"
 									end: Object {
 										column: 5
 										index: 24
@@ -199,7 +199,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 5
 									index: 24
@@ -214,7 +214,7 @@ Program {
 						}
 						body: undefined
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 14
 								index: 33
@@ -239,7 +239,7 @@ Program {
 								line: 3
 							}
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 5
 									index: 24
@@ -261,7 +261,7 @@ Program {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 13
 									index: 32
@@ -275,7 +275,7 @@ Program {
 							}
 							returnType: VoidKeywordTypeAnnotation {
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 13
 										index: 32

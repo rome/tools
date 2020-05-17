@@ -5,24 +5,24 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from '@romejs/js-ast';
-import {Path} from '@romejs/js-compiler';
-import {descriptions} from '@romejs/diagnostics';
-import {DiagnosticsDuplicateHelper} from '../../../lib/DiagnosticsDuplicateHelper';
+import {AnyNode} from "@romejs/js-ast";
+import {Path} from "@romejs/js-compiler";
+import {descriptions} from "@romejs/diagnostics";
+import {DiagnosticsDuplicateHelper} from "../../../lib/DiagnosticsDuplicateHelper";
 
 export default {
-	name: 'noDuplicateGroupNamesInRegularExpressions',
+	name: "noDuplicateGroupNamesInRegularExpressions",
 	enter(path: Path): AnyNode {
 		const {context, node} = path;
 
-		if (node.type === 'RegExpSubExpression') {
+		if (node.type === "RegExpSubExpression") {
 			const duplicates = new DiagnosticsDuplicateHelper(
 				context,
 				descriptions.LINT.DUPLICATE_REGEX_GROUP_NAME,
 			);
 
 			for (const bodyItem of node.body) {
-				if (bodyItem.type === 'RegExpGroupCapture') {
+				if (bodyItem.type === "RegExpGroupCapture") {
 					const groupName = bodyItem.name;
 
 					if (groupName !== undefined) {

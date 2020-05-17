@@ -5,23 +5,23 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {commandCategories} from '../../common/commands';
-import {createLocalCommand} from '../commands';
-import ClientRequest from '../ClientRequest';
+import {commandCategories} from "../../common/commands";
+import {createLocalCommand} from "../commands";
+import ClientRequest from "../ClientRequest";
 
 export default createLocalCommand({
-	description: 'connect to an lsp',
+	description: "connect to an lsp",
 	category: commandCategories.PROJECT_MANAGEMENT,
-	usage: '',
+	usage: "",
 	examples: [],
 	// vscode-languageclient adds these on
-	ignoreFlags: ['stdio', 'clientProcessId'],
+	ignoreFlags: ["stdio", "clientProcessId"],
 	defineFlags() {
 		return {};
 	},
 	async callback(req: ClientRequest) {
 		req.client.setFlags({
-			clientName: 'lsp',
+			clientName: "lsp",
 			silent: true,
 		});
 
@@ -38,7 +38,7 @@ export default createLocalCommand({
 		});
 
 		stdin.on(
-			'data',
+			"data",
 			(chunk) => {
 				bridge.lspFromClientBuffer.call(chunk.toString());
 			},
@@ -46,9 +46,9 @@ export default createLocalCommand({
 
 		await req.client.query(
 			{
-				commandName: 'lsp',
+				commandName: "lsp",
 			},
-			'master',
+			"master",
 		);
 
 		return true;

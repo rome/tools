@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type Super = JSNodeBase & {
-	type: 'Super';
+	type: "Super";
 };
 
 export const _super = createBuilder<Super>(
-	'Super',
+	"Super",
 	{
 		bindingKeys: {},
 		visitorKeys: {},

@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 30
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		FunctionDeclaration {
 			id: BindingIdentifier {
-				name: 'hello'
+				name: "hello"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'hello'
+					filename: "input.js"
+					identifierName: "hello"
 					end: Object {
 						column: 14
 						index: 14
@@ -49,7 +49,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 29
 					index: 29
@@ -71,7 +71,7 @@ Program {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 16
 						index: 16
@@ -87,7 +87,7 @@ Program {
 			body: BlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 29
 						index: 29
@@ -102,7 +102,7 @@ Program {
 				body: Array [
 					ExpressionStatement {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 27
 								index: 27
@@ -117,7 +117,7 @@ Program {
 						expression: CallExpression {
 							arguments: Array []
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 26
 									index: 26
@@ -130,10 +130,10 @@ Program {
 								}
 							}
 							callee: ReferenceIdentifier {
-								name: 'sayHi'
+								name: "sayHi"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'sayHi'
+									filename: "input.js"
+									identifierName: "sayHi"
 									end: Object {
 										column: 24
 										index: 24

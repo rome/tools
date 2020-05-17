@@ -5,22 +5,22 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSNamespaceExportDeclaration} from '@romejs/js-ast';
-import {Builder} from '@romejs/js-formatter';
-import {Token, concat, space} from '../../tokens';
+import {TSNamespaceExportDeclaration} from "@romejs/js-ast";
+import {Builder} from "@romejs/js-formatter";
+import {Token, concat, space} from "../../tokens";
 
 export default function TSNamespaceExportDeclaration(
 	builder: Builder,
 	node: TSNamespaceExportDeclaration,
 ): Token {
 	return concat([
-		'export',
+		"export",
 		space,
-		'as',
+		"as",
 		space,
-		'namespace',
+		"namespace",
 		space,
 		builder.tokenize(node.id, node),
-		';',
+		";",
 	]);
 }

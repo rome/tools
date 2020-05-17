@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 23
@@ -30,16 +30,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'A binding pattern parameter cannot be optional in an implementation signature.'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "A binding pattern parameter cannot be optional in an implementation signature."}
 			}
 			location: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				mtime: undefined
-				sourceType: 'module'
+				sourceType: "module"
 				end: Object {
 					column: 13
 					index: 13
@@ -56,10 +56,10 @@ Program {
 	body: Array [
 		FunctionDeclaration {
 			id: BindingIdentifier {
-				name: 'f'
+				name: "f"
 				loc: Object {
-					filename: 'input.ts'
-					identifierName: 'f'
+					filename: "input.ts"
+					identifierName: "f"
 					end: Object {
 						column: 10
 						index: 10
@@ -73,7 +73,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 22
 					index: 22
@@ -89,7 +89,7 @@ Program {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 22
 						index: 22
@@ -111,7 +111,7 @@ Program {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 19
 						index: 19
@@ -128,7 +128,7 @@ Program {
 						elements: Array []
 						rest: undefined
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 13
 								index: 13
@@ -144,7 +144,7 @@ Program {
 							optional: true
 							typeAnnotation: undefined
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 14
 									index: 14
@@ -162,7 +162,7 @@ Program {
 						properties: Array []
 						rest: undefined
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 18
 								index: 18
@@ -178,7 +178,7 @@ Program {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 18
 									index: 18

@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {types as tt} from '../tokenizer/types';
-import {Position, SourceLocation} from '@romejs/parser-core';
-import {JSParser} from '../parser';
+import {types as tt} from "../tokenizer/types";
+import {Position, SourceLocation} from "@romejs/parser-core";
+import {JSParser} from "../parser";
 import {
 	JSXAttribute,
 	JSXElement,
@@ -20,15 +20,15 @@ import {
 	JSXSpreadChild,
 	JSXText,
 	StringLiteral,
-} from '@romejs/js-ast';
+} from "@romejs/js-ast";
 import {
 	parseExpression,
 	parseMaybeAssign,
 	parseStringLiteral,
 	parseTSTypeArguments,
-} from './index';
-import {descriptions} from '@romejs/diagnostics';
-import {isValidIdentifierName} from '@romejs/js-ast-utils';
+} from "./index";
+import {descriptions} from "@romejs/diagnostics";
+import {isValidIdentifierName} from "@romejs/js-ast-utils";
 
 // Indicates whether we should create a JSXIdentifier or a JSXReferenceIdentifier
 function isHTMLTagName(tagName: string): boolean {
@@ -37,21 +37,21 @@ function isHTMLTagName(tagName: string): boolean {
 
 // Transforms JSX element name to string.
 function getQualifiedJSXName(
-	node: undefined | JSXElement['name'] | JSXIdentifier,
+	node: undefined | JSXElement["name"] | JSXIdentifier,
 ): string {
 	if (node === undefined) {
-		return '';
+		return "";
 	}
 
 	switch (node.type) {
-		case 'JSXIdentifier':
-		case 'JSXReferenceIdentifier':
+		case "JSXIdentifier":
+		case "JSXReferenceIdentifier":
 			return node.name;
 
-		case 'JSXNamespacedName':
+		case "JSXNamespacedName":
 			return `${node.namespace.name}:${node.name.name}`;
 
-		case 'JSXMemberExpression':
+		case "JSXMemberExpression":
 			return `${getQualifiedJSXName(node.object)}.${getQualifiedJSXName(
 				node.property,
 			)}`;
@@ -70,14 +70,14 @@ function parseJSXIdentifier(parser: JSParser): JSXIdentifier {
 		parser.addDiagnostic({
 			description: descriptions.JS_PARSER.JSX_UNKNOWN_IDENTIFIER_TOKEN,
 		});
-		name = '';
+		name = "";
 	}
 
 	parser.next();
 	return parser.finishNode(
 		start,
 		{
-			type: 'JSXIdentifier',
+			type: "JSXIdentifier",
 			name,
 		},
 	);
@@ -98,7 +98,7 @@ function parseJSXNamespacedName(
 	return parser.finishNode(
 		start,
 		{
-			type: 'JSXNamespacedName',
+			type: "JSXNamespacedName",
 			name,
 			namespace,
 		},
@@ -107,19 +107,19 @@ function parseJSXNamespacedName(
 
 // Parses element name in any form - namespaced, member
 // or single identifier.
-function parseJSXElementName(parser: JSParser): JSXElement['name'] {
+function parseJSXElementName(parser: JSParser): JSXElement["name"] {
 	const start = parser.getPosition();
 
 	const namespacedName = parseJSXNamespacedName(parser);
 
-	let node: JSXElement['name'];
+	let node: JSXElement["name"];
 	if (
-		namespacedName.type === 'JSXIdentifier' &&
+		namespacedName.type === "JSXIdentifier" &&
 		!isHTMLTagName(namespacedName.name)
 	) {
 		node = {
 			...namespacedName,
-			type: 'JSXReferenceIdentifier',
+			type: "JSXReferenceIdentifier",
 		};
 	} else {
 		node = namespacedName;
@@ -130,7 +130,7 @@ function parseJSXElementName(parser: JSParser): JSXElement['name'] {
 		node = parser.finishNode(
 			start,
 			{
-				type: 'JSXMemberExpression',
+				type: "JSXMemberExpression",
 				object: node,
 				property,
 			},
@@ -148,7 +148,7 @@ function parseJSXAttributeValue(
 	switch (parser.state.tokenType) {
 		case tt.braceL: {
 			node = parseJSXExpressionContainer(parser);
-			if (node.expression.type === 'JSXEmptyExpression') {
+			if (node.expression.type === "JSXEmptyExpression") {
 				parser.addDiagnostic({
 					loc: node.loc,
 					description: descriptions.JS_PARSER.JSX_EMPTY_ATTRIBUTE_VALUE,
@@ -170,8 +170,8 @@ function parseJSXAttributeValue(
 			return parser.finishNode(
 				parser.getPosition(),
 				{
-					type: 'StringLiteral',
-					value: '?',
+					type: "StringLiteral",
+					value: "?",
 				},
 			);
 		}
@@ -185,7 +185,7 @@ function parseJSXEmptyExpression(parser: JSParser): JSXEmptyExpression {
 	return parser.finishNode(
 		parser.state.lastEndPos,
 		{
-			type: 'JSXEmptyExpression',
+			type: "JSXEmptyExpression",
 		},
 	);
 }
@@ -196,16 +196,16 @@ function parseJSXSpreadChild(parser: JSParser): JSXSpreadChild {
 	const openContext = parser.expectOpening(
 		tt.braceL,
 		tt.braceR,
-		'jsx spread child',
+		"jsx spread child",
 	);
 	parser.expect(tt.ellipsis);
-	const expression = parseExpression(parser, 'jsx spread child expression');
+	const expression = parseExpression(parser, "jsx spread child expression");
 	parser.expectClosing(openContext);
 
 	return parser.finishNode(
 		start,
 		{
-			type: 'JSXSpreadChild',
+			type: "JSXSpreadChild",
 			expression,
 		},
 	);
@@ -217,19 +217,19 @@ function parseJSXExpressionContainer(parser: JSParser): JSXExpressionContainer {
 	const openContext = parser.expectOpening(
 		tt.braceL,
 		tt.braceR,
-		'jsx expression container',
+		"jsx expression container",
 	);
 	let expression;
 	if (parser.match(tt.braceR)) {
 		expression = parseJSXEmptyExpression(parser);
 	} else {
-		expression = parseExpression(parser, 'jsx inner expression container');
+		expression = parseExpression(parser, "jsx inner expression container");
 	}
 	parser.expectClosing(openContext);
 	return parser.finishNode(
 		start,
 		{
-			type: 'JSXExpressionContainer',
+			type: "JSXExpressionContainer",
 			expression,
 		},
 	);
@@ -243,15 +243,15 @@ function parseJSXAttribute(parser: JSParser): JSXSpreadAttribute | JSXAttribute 
 		const openContext = parser.expectOpening(
 			tt.braceL,
 			tt.braceR,
-			'jsx attribute spread',
+			"jsx attribute spread",
 		);
 		parser.expect(tt.ellipsis);
-		const argument = parseMaybeAssign(parser, 'jsx attribute spread');
+		const argument = parseMaybeAssign(parser, "jsx attribute spread");
 		parser.expectClosing(openContext);
 		return parser.finishNode(
 			start,
 			{
-				type: 'JSXSpreadAttribute',
+				type: "JSXSpreadAttribute",
 				argument,
 			},
 		);
@@ -262,7 +262,7 @@ function parseJSXAttribute(parser: JSParser): JSXSpreadAttribute | JSXAttribute 
 	return parser.finishNode(
 		start,
 		{
-			type: 'JSXAttribute',
+			type: "JSXAttribute",
 			name,
 			value,
 		},
@@ -270,9 +270,9 @@ function parseJSXAttribute(parser: JSParser): JSXSpreadAttribute | JSXAttribute 
 }
 
 type OpeningElementDef = {
-	name: undefined | JSXElement['name'];
-	typeArguments: JSXElement['typeArguments'];
-	attributes: JSXElement['attributes'];
+	name: undefined | JSXElement["name"];
+	typeArguments: JSXElement["typeArguments"];
+	attributes: JSXElement["attributes"];
 	selfClosing: boolean;
 	loc: SourceLocation;
 };
@@ -301,8 +301,8 @@ function parseJSXOpeningElementAt(
 	const name = parseJSXElementName(parser);
 
 	let typeArguments;
-	if (parser.isRelational('<')) {
-		if (!parser.isSyntaxEnabled('ts')) {
+	if (parser.isRelational("<")) {
+		if (!parser.isSyntaxEnabled("ts")) {
 			parser.addDiagnostic({
 				description: descriptions.JS_PARSER.JSX_ELEM_TYPE_ARGUMENTS_OUTSIDE_TS,
 			});
@@ -339,7 +339,7 @@ function parseJSXOpeningElementAt(
 // Parses JSX closing tag starting after "</".
 function parseJSXClosingElementAt(
 	parser: JSParser,
-): undefined | JSXElement['name'] {
+): undefined | JSXElement["name"] {
 	if (parser.eat(tt.jsxTagEnd)) {
 		return undefined;
 	}
@@ -371,7 +371,7 @@ function parseJSXElementAt(
 	const openingDef = parseJSXOpeningElementAt(parser, start);
 
 	let closingNameLoc: undefined | SourceLocation;
-	let closingName: undefined | JSXElement['name'];
+	let closingName: undefined | JSXElement["name"];
 
 	// Parse children for unclosed elements
 	if (openingDef.selfClosing === false) {
@@ -482,7 +482,7 @@ function parseJSXElementAt(
 		return parser.finishNode(
 			start,
 			{
-				type: 'JSXFragment',
+				type: "JSXFragment",
 				children,
 			},
 		);
@@ -490,7 +490,7 @@ function parseJSXElementAt(
 		return parser.finishNode(
 			start,
 			{
-				type: 'JSXElement',
+				type: "JSXElement",
 				name: openingName,
 				typeArguments: openingDef.typeArguments,
 				attributes: openingDef.attributes,
@@ -502,7 +502,7 @@ function parseJSXElementAt(
 }
 
 function checkAccidentalFragment(parser: JSParser) {
-	if (parser.match(tt.relational) && parser.state.tokenValue === '<') {
+	if (parser.match(tt.relational) && parser.state.tokenValue === "<") {
 		parser.addDiagnostic({
 			description: descriptions.JS_PARSER.UNWRAPPED_ADJACENT_JHX,
 		});
@@ -517,7 +517,7 @@ export function parseJSXText(parser: JSParser): JSXText {
 	return parser.finishNode(
 		start,
 		{
-			type: 'JSXText',
+			type: "JSXText",
 			value,
 		},
 	);
@@ -526,8 +526,8 @@ export function parseJSXText(parser: JSParser): JSXText {
 // Parses entire JSX element from 'current position.
 export function parseJSXElement(parser: JSParser): JSXElement | JSXFragment {
 	// Only necessary here as this is the only JSX entry point
-	if (!parser.isSyntaxEnabled('jsx')) {
-		if (parser.isSyntaxEnabled('ts')) {
+	if (!parser.isSyntaxEnabled("jsx")) {
+		if (parser.isSyntaxEnabled("ts")) {
 			parser.addDiagnostic({
 				description: descriptions.JS_PARSER.JSX_IN_TS_EXTENSION,
 			});

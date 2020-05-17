@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
+	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 20
@@ -30,16 +30,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unknown start to an export default declaration'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unknown start to an export default declaration"}
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'module'
+				sourceType: "module"
 				end: Object {
 					column: 14
 					index: 14
@@ -56,7 +56,7 @@ Program {
 	body: Array [
 		ExportDefaultDeclaration {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 16
 					index: 16
@@ -69,9 +69,9 @@ Program {
 				}
 			}
 			declaration: ReferenceIdentifier {
-				name: 'INVALID_PLACEHOLDER'
+				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 16
 						index: 16
@@ -87,7 +87,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 19
 					index: 19
@@ -103,7 +103,7 @@ Program {
 				value: 42
 				format: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 19
 						index: 19

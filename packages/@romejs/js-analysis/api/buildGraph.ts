@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyStatement, Program} from '@romejs/js-ast';
-import {CheckProvider} from '../types';
-import {ModuleSignatureManager} from '../Evaluator';
-import Hub from '../Hub';
-import {TransformProjectDefinition} from '@romejs/js-compiler';
+import {AnyStatement, Program} from "@romejs/js-ast";
+import {CheckProvider} from "../types";
+import {ModuleSignatureManager} from "../Evaluator";
+import Hub from "../Hub";
+import {TransformProjectDefinition} from "@romejs/js-compiler";
 
 export default async function buildGraph(
 	opts: {

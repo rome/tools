@@ -9,14 +9,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 12
 			index: 24
@@ -30,10 +30,10 @@ Program {
 	}
 	comments: Array [
 		CommentLine {
-			id: '0'
-			value: ' nothing'
+			id: "0"
+			value: " nothing"
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 12
 					index: 24
@@ -49,9 +49,9 @@ Program {
 	]
 	body: Array [
 		ExpressionStatement {
-			trailingComments: Array ['0']
+			trailingComments: Array ["0"]
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 11
 					index: 11
@@ -64,9 +64,9 @@ Program {
 				}
 			}
 			expression: AssignmentExpression {
-				operator: '='
+				operator: "="
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 10
 						index: 10
@@ -79,10 +79,10 @@ Program {
 					}
 				}
 				left: AssignmentIdentifier {
-					name: 'x'
+					name: "x"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'x'
+						filename: "input.js"
+						identifierName: "x"
 						end: Object {
 							column: 1
 							index: 1
@@ -96,9 +96,9 @@ Program {
 					}
 				}
 				right: BinaryExpression {
-					operator: '>'
+					operator: ">"
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 10
 							index: 10
@@ -114,7 +114,7 @@ Program {
 						value: 10
 						format: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 10
 								index: 10
@@ -128,10 +128,10 @@ Program {
 						}
 					}
 					left: UpdateExpression {
-						operator: '--'
+						operator: "--"
 						prefix: false
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 7
 								index: 7
@@ -144,10 +144,10 @@ Program {
 							}
 						}
 						argument: ReferenceIdentifier {
-							name: 'y'
+							name: "y"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'y'
+								filename: "input.js"
+								identifierName: "y"
 								end: Object {
 									column: 5
 									index: 5

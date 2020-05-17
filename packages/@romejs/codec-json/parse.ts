@@ -9,7 +9,7 @@ import {
 	DiagnosticCategory,
 	DiagnosticLocation,
 	descriptions,
-} from '@romejs/diagnostics';
+} from "@romejs/diagnostics";
 import {
 	Comments,
 	JSONObject,
@@ -19,26 +19,26 @@ import {
 	PathComments,
 	PathToComments,
 	Tokens,
-} from './types';
+} from "./types";
 import {
 	ConsumeContext,
 	ConsumePath,
 	ConsumeSourceLocationRequestTarget,
-} from '@romejs/consume';
-import {unescapeString} from '@romejs/string-escape';
+} from "@romejs/consume";
+import {unescapeString} from "@romejs/string-escape";
 import {
 	Position,
 	SourceLocation,
 	createParser,
 	isAlpha,
 	isDigit,
-} from '@romejs/parser-core';
-import {Number0, ob1Add, ob1Get0, ob1Inc, ob1Sub} from '@romejs/ob1';
-import {isEscaped} from '@romejs/string-utils';
+} from "@romejs/parser-core";
+import {Number0, ob1Add, ob1Get0, ob1Inc, ob1Sub} from "@romejs/ob1";
+import {isEscaped} from "@romejs/string-utils";
 
 // Words can't start with a digit
 function isWordStartChar(char: string): boolean {
-	return isAlpha(char) || char === '_' || char === '$';
+	return isAlpha(char) || char === "_" || char === "$";
 }
 
 // But a digit can appear inside of a word
@@ -64,7 +64,7 @@ export function isValidWord(word: string): boolean {
 
 // Check if a character is a part of a string, returning false for a newline or unescaped quote char
 function isStringValueChar(char: string, index: Number0, input: string): boolean {
-	if (char === '\n') {
+	if (char === "\n") {
 		return false;
 	}
 
@@ -79,11 +79,11 @@ function isStringValueChar(char: string, index: Number0, input: string): boolean
 export function toPathKey(parts: Array<string>) {
 	// Right now this could conflict weirdly with properties with dots in them if they cause collisions
 	// We have this method abstracted so we can make changes later if it's necessary (probably not worth it)
-	return parts.join('.');
+	return parts.join(".");
 }
 
 function isntNewline(char: string): boolean {
-	return char !== '\n';
+	return char !== "\n";
 }
 
 function isntBlockCommentEnd(
@@ -92,12 +92,12 @@ function isntBlockCommentEnd(
 	input: string,
 ): boolean {
 	const nextChar = input[ob1Get0(index) + 1];
-	return char !== '*' && nextChar !== '/';
+	return char !== "*" && nextChar !== "/";
 }
 
 // Used for Number token validation, allow underscore as a separatore
 function isNumberChar(char: string): boolean {
-	return isDigit(char) || char === '_';
+	return isDigit(char) || char === "_";
 }
 
 type PathInfo = {
@@ -116,21 +116,21 @@ export const createJSONParser = createParser((ParserCore) =>
 					...opts,
 					retainCarriageReturn: true,
 				},
-				'parse/json',
+				"parse/json",
 			);
 
 			this.options = opts;
 			this.ignoreWhitespaceTokens = true;
 
 			this.hasExtensions =
-				this.path !== undefined && this.path.getBasename().endsWith('.rjson');
+				this.path !== undefined && this.path.getBasename().endsWith(".rjson");
 
 			this.pathKeys = [];
 			this.paths = new Map();
 			this.pathToComments = new Map();
 			this.consumeDiagnosticCategory =
 				opts.consumeDiagnosticCategory === undefined
-					? 'parse/json'
+					? "parse/json"
 					: opts.consumeDiagnosticCategory;
 		}
 
@@ -142,11 +142,11 @@ export const createJSONParser = createParser((ParserCore) =>
 		consumeDiagnosticCategory: DiagnosticCategory;
 
 		getPathInfo(path: ConsumePath): undefined | PathInfo {
-			return this.paths.get(path.join('.'));
+			return this.paths.get(path.join("."));
 		}
 
 		setComments(pathComments: PathComments) {
-			const key = this.pathKeys.join('.');
+			const key = this.pathKeys.join(".");
 
 			const existing = this.pathToComments.get(key);
 			if (existing === undefined) {
@@ -163,7 +163,7 @@ export const createJSONParser = createParser((ParserCore) =>
 		}
 
 		setPath(info: PathInfo) {
-			this.paths.set(this.pathKeys.join('.'), info);
+			this.paths.set(this.pathKeys.join("."), info);
 			this.pathKeys.pop();
 		}
 
@@ -172,19 +172,19 @@ export const createJSONParser = createParser((ParserCore) =>
 			const char = input[ob1Get0(index)];
 
 			// Line comment
-			if (char === '/' && nextChar === '/') {
+			if (char === "/" && nextChar === "/") {
 				const commentValueIndex = ob1Add(index, 2);
 				const [value] = this.readInputFrom(commentValueIndex, isntNewline);
 				// (comment content start + comment content length)
 				return this.finishValueToken(
-					'LineComment',
+					"LineComment",
 					value,
 					ob1Add(commentValueIndex, value.length),
 				);
 			}
 
 			// BlockComment
-			if (char === '/' && nextChar === '*') {
+			if (char === "/" && nextChar === "*") {
 				const commentValueIndex = ob1Add(index, 2);
 				const [value] = this.readInputFrom(commentValueIndex, isntBlockCommentEnd);
 
@@ -193,8 +193,8 @@ export const createJSONParser = createParser((ParserCore) =>
 
 				// Ensure the comment is closed
 				if (
-					this.input[ob1Get0(endIndex) - 2] !== '*' ||
-					this.input[ob1Get0(endIndex) - 1] !== '/'
+					this.input[ob1Get0(endIndex) - 2] !== "*" ||
+					this.input[ob1Get0(endIndex) - 1] !== "/"
 				) {
 					throw this.unexpected({
 						description: descriptions.JSON.UNCLOSED_BLOCK_COMMENT,
@@ -202,7 +202,7 @@ export const createJSONParser = createParser((ParserCore) =>
 					});
 				}
 
-				return this.finishValueToken('BlockComment', value, endIndex);
+				return this.finishValueToken("BlockComment", value, endIndex);
 			}
 
 			// Single character token starters
@@ -223,7 +223,7 @@ export const createJSONParser = createParser((ParserCore) =>
 					for (let strIndex = 0; strIndex < value.length; strIndex++) {
 						const char = value[strIndex];
 
-						if (char === '\n') {
+						if (char === "\n") {
 							throw this.unexpected({
 								description: descriptions.JSON.STRING_NEWLINES_IN_JSON,
 								start: this.getPositionFromIndex(ob1Add(index, strIndex)),
@@ -242,7 +242,7 @@ export const createJSONParser = createParser((ParserCore) =>
 						},
 					);
 
-					return this.finishValueToken('String', unescaped, end);
+					return this.finishValueToken("String", unescaped, end);
 				}
 
 				case "'":
@@ -251,38 +251,38 @@ export const createJSONParser = createParser((ParserCore) =>
 						start: this.getPositionFromIndex(index),
 					});
 
-				case '/':
+				case "/":
 					throw this.unexpected({
 						description: descriptions.JSON.REGEX_IN_JSON,
 						start: this.getPositionFromIndex(index),
 					});
 
-				case ',':
-					return this.finishToken('Comma');
+				case ",":
+					return this.finishToken("Comma");
 
-				case '.':
-					return this.finishToken('Dot');
+				case ".":
+					return this.finishToken("Dot");
 
-				case '-':
-					return this.finishToken('Minus');
+				case "-":
+					return this.finishToken("Minus");
 
-				case '+':
-					return this.finishToken('Plus');
+				case "+":
+					return this.finishToken("Plus");
 
-				case ':':
-					return this.finishToken('Colon');
+				case ":":
+					return this.finishToken("Colon");
 
-				case '{':
-					return this.finishToken('BraceOpen');
+				case "{":
+					return this.finishToken("BraceOpen");
 
-				case '}':
-					return this.finishToken('BraceClose');
+				case "}":
+					return this.finishToken("BraceClose");
 
-				case '[':
-					return this.finishToken('BracketOpen');
+				case "[":
+					return this.finishToken("BracketOpen");
 
-				case ']':
-					return this.finishToken('BracketClose');
+				case "]":
+					return this.finishToken("BracketClose");
 			}
 
 			// Numbers
@@ -292,13 +292,13 @@ export const createJSONParser = createParser((ParserCore) =>
 					this.readInputFrom(index, isNumberChar)[0],
 				);
 				const num = Number(value);
-				return this.finishValueToken('Number', num, ob1Add(index, value.length));
+				return this.finishValueToken("Number", num, ob1Add(index, value.length));
 			}
 
 			// Word - boolean, undefined etc
 			if (isWordStartChar(char)) {
 				const [value] = this.readInputFrom(index, isWordChar);
-				return this.finishValueToken('Word', value, ob1Add(index, value.length));
+				return this.finishValueToken("Word", value, ob1Add(index, value.length));
 			}
 
 			// Unknown character
@@ -315,7 +315,7 @@ export const createJSONParser = createParser((ParserCore) =>
 			let nextLeadingComments;
 
 			do {
-				if (this.matchToken('BraceClose')) {
+				if (this.matchToken("BraceClose")) {
 					break;
 				}
 
@@ -331,7 +331,7 @@ export const createJSONParser = createParser((ParserCore) =>
 				}
 
 				// Throw a meainingful error for redundant commas
-				if (this.matchToken('Comma')) {
+				if (this.matchToken("Comma")) {
 					throw this.unexpected({
 						description: descriptions.JSON.REDUNDANT_COMMA,
 					});
@@ -339,7 +339,7 @@ export const createJSONParser = createParser((ParserCore) =>
 
 				// If there's no property key indicator then delegate any comments we have to object
 				const hasKey = isFirstProp && firstKey !== undefined;
-				if (!hasKey && !this.matchToken('String') && !this.matchToken('Word')) {
+				if (!hasKey && !this.matchToken("String") && !this.matchToken("Word")) {
 					innerComments = [...innerComments, ...leadingComments];
 					break;
 				}
@@ -360,7 +360,7 @@ export const createJSONParser = createParser((ParserCore) =>
 				isFirstProp = false;
 
 				const keyEnd = this.getPosition();
-				this.expectToken('Colon');
+				this.expectToken("Colon");
 
 				// Having comments before the value is a really weird place to put them, but we'll handle it
 
@@ -382,7 +382,7 @@ export const createJSONParser = createParser((ParserCore) =>
 				// If the next token isn't a comma or closing brace then we've just stolen
 
 				// the leading comments of the next property
-				if (!this.matchToken('Comma') && !this.matchToken('BraceClose')) {
+				if (!this.matchToken("Comma") && !this.matchToken("BraceClose")) {
 					nextLeadingComments = trailingValueComments;
 					trailingValueComments = [];
 				}
@@ -405,11 +405,11 @@ export const createJSONParser = createParser((ParserCore) =>
 				});
 
 				// Set the object correctly, accounting for JS weirdness
-				if (key === '__proto__') {
+				if (key === "__proto__") {
 					// Need to use defineProperty to avoid triggering the Object.prototype.__proto__ setter
 					Object.defineProperty(
 						obj,
-						'__proto__',
+						"__proto__",
 						{
 							value,
 							configurable: true,
@@ -429,7 +429,7 @@ export const createJSONParser = createParser((ParserCore) =>
 
 			// If we were passed a first key then this was an implicit object so there's no end token
 			if (firstKey === undefined) {
-				this.expectToken('BraceClose');
+				this.expectToken("BraceClose");
 			}
 
 			this.setComments({
@@ -442,12 +442,12 @@ export const createJSONParser = createParser((ParserCore) =>
 
 		// Remove underscores from 'a string, this is used for numeric separators eg. 100_000
 		removeUnderscores(index: Number0, raw: string): string {
-			let str = '';
+			let str = "";
 
 			for (let i = 0; i < raw.length; i++) {
 				const char = raw[i];
 
-				if (char === '_') {
+				if (char === "_") {
 					// Don't allow separators in JSON
 					if (!this.hasExtensions) {
 						throw this.unexpected({
@@ -469,14 +469,14 @@ export const createJSONParser = createParser((ParserCore) =>
 			while (true) {
 				const token = this.getToken();
 
-				if (token.type === 'LineComment') {
+				if (token.type === "LineComment") {
 					comments.push({
-						type: 'LineComment',
+						type: "LineComment",
 						value: token.value,
 					});
-				} else if (token.type === 'BlockComment') {
+				} else if (token.type === "BlockComment") {
 					comments.push({
-						type: 'BlockComment',
+						type: "BlockComment",
 						value: token.value,
 					});
 				} else {
@@ -497,28 +497,28 @@ export const createJSONParser = createParser((ParserCore) =>
 		}
 
 		parseArray(): Array<JSONValue> {
-			this.expectToken('BracketOpen');
+			this.expectToken("BracketOpen");
 
 			const arr = [];
 			let innerComments: Comments = [];
 			let i = 0;
 
 			do {
-				if (this.matchToken('BracketClose')) {
+				if (this.matchToken("BracketClose")) {
 					break;
 				}
 
 				// Eat all the comments before an element
 				const leadingComments = this.eatComments();
 
-				if (this.matchToken('Comma')) {
+				if (this.matchToken("Comma")) {
 					throw this.unexpected({
 						description: descriptions.JSON.REDUNDANT_COMMA,
 					});
 				}
 
 				// If we're at the end of the array then associate these comments with the array
-				if (this.matchToken('BracketClose')) {
+				if (this.matchToken("BracketClose")) {
 					innerComments = [...innerComments, ...leadingComments];
 					break;
 				}
@@ -549,14 +549,14 @@ export const createJSONParser = createParser((ParserCore) =>
 				});
 
 				// Have a meaningful error message when an object is incorrectly using brackets: ["foo": "bar"]
-				if (this.matchToken('Colon')) {
+				if (this.matchToken("Colon")) {
 					throw this.unexpected({
 						description: descriptions.JSON.MISTAKEN_ARRAY_IDENTITY,
 					});
 				}
 			} while (this.eatPropertySeparator());
 
-			this.expectToken('BracketClose');
+			this.expectToken("BracketClose");
 
 			this.setComments({
 				inner: innerComments,
@@ -573,26 +573,26 @@ export const createJSONParser = createParser((ParserCore) =>
 			// Implicit commas are only allowed in rjson
 			if (this.hasExtensions) {
 				// Eat the token, don't care if we're in RJSON
-				if (token.type === 'Comma') {
+				if (token.type === "Comma") {
 					this.nextToken();
 				}
 
 				// An object or array close is an instant failure
 
 				// Doesn't matter what we're parsing since the subsequent tokens will be validated
-				if (token.type === 'BraceClose' || token.type === 'BracketClose') {
+				if (token.type === "BraceClose" || token.type === "BracketClose") {
 					return false;
 				}
 
 				return true;
 			} else {
-				if (token.type !== 'Comma') {
+				if (token.type !== "Comma") {
 					return false;
 				}
 
 				// Make sure this isn't a trailing comma
 				const lookahead = this.lookaheadToken();
-				if (lookahead.type === 'BraceClose' || lookahead.type === 'BracketClose') {
+				if (lookahead.type === "BraceClose" || lookahead.type === "BracketClose") {
 					throw this.unexpected({
 						description: descriptions.JSON.TRAILING_COMMA_IN_JSON,
 					});
@@ -605,25 +605,25 @@ export const createJSONParser = createParser((ParserCore) =>
 
 		parseWord(isStart: boolean): JSONValue {
 			const start = this.getPosition();
-			const token = this.expectToken('Word');
+			const token = this.expectToken("Word");
 
 			switch (token.value) {
-				case 'true':
+				case "true":
 					return true;
 
-				case 'false':
+				case "false":
 					return false;
 
-				case 'null':
+				case "null":
 					return null;
 
-				case 'undefined':
+				case "undefined":
 					throw this.unexpected({
 						description: descriptions.JSON.UNDEFINED_IN_JSON,
 					});
 			}
 
-			if (isStart && this.matchToken('Colon')) {
+			if (isStart && this.matchToken("Colon")) {
 				if (this.hasExtensions) {
 					return this.parseObject(start, token.value);
 				} else {
@@ -639,47 +639,47 @@ export const createJSONParser = createParser((ParserCore) =>
 		}
 
 		parseNumber(): number {
-			const isNegative = this.eatToken('Minus') !== undefined;
+			const isNegative = this.eatToken("Minus") !== undefined;
 
 			// Get a string of the current number that we'll parse later
-			const token = this.expectToken('Number');
+			const token = this.expectToken("Number");
 			let value: string = String(token.value);
 
 			// Decimals
-			if (this.eatToken('Dot')) {
-				value += '.';
+			if (this.eatToken("Dot")) {
+				value += ".";
 
-				const decimal = this.expectToken('Number');
+				const decimal = this.expectToken("Number");
 				value += String(decimal.value);
 			}
 
 			// Scientific notation
 			const nextToken = this.getToken();
 			if (
-				nextToken.type === 'Word' &&
-				(nextToken.value === 'e' || nextToken.value === 'E')
+				nextToken.type === "Word" &&
+				(nextToken.value === "e" || nextToken.value === "E")
 			) {
-				value += 'e';
+				value += "e";
 
 				// Operator
 				const operator = this.nextToken();
-				if (operator.type === 'Minus') {
-					value += '-';
-				} else if (operator.type === 'Plus') {
-					value += '+';
+				if (operator.type === "Minus") {
+					value += "-";
+				} else if (operator.type === "Plus") {
+					value += "+";
 				} else {
 					throw this.unexpected();
 				}
 
 				// Factor
 				this.nextToken();
-				const factor = this.expectToken('Number');
+				const factor = this.expectToken("Number");
 				value += String(factor.value);
 			}
 
 			// BigInt
 			const nextToken2 = this.getToken();
-			if (nextToken2.type === 'Word' && nextToken2.value === 'n') {
+			if (nextToken2.type === "Word" && nextToken2.value === "n") {
 				throw this.unexpected({
 					description: descriptions.JSON.BIGINT_IN_JSON,
 				});
@@ -697,12 +697,12 @@ export const createJSONParser = createParser((ParserCore) =>
 			const token = this.getToken();
 
 			switch (token.type) {
-				case 'String': {
+				case "String": {
 					this.nextToken();
 					return token.value;
 				}
 
-				case 'Word':
+				case "Word":
 					if (this.hasExtensions) {
 						this.nextToken();
 						return token.value;
@@ -719,9 +719,9 @@ export const createJSONParser = createParser((ParserCore) =>
 
 		parseString(isStart: boolean): string | JSONObject {
 			const start = this.getPosition();
-			const token = this.expectToken('String');
+			const token = this.expectToken("String");
 
-			if (isStart && this.nextToken().type === 'Colon') {
+			if (isStart && this.nextToken().type === "Colon") {
 				if (this.hasExtensions) {
 					return this.parseObject(start, token.value);
 				} else {
@@ -738,20 +738,20 @@ export const createJSONParser = createParser((ParserCore) =>
 			const token = this.getToken();
 
 			switch (token.type) {
-				case 'String':
+				case "String":
 					return this.parseString(isStart);
 
-				case 'Minus':
-				case 'Number':
+				case "Minus":
+				case "Number":
 					return this.parseNumber();
 
-				case 'Word':
+				case "Word":
 					return this.parseWord(isStart);
 
-				case 'BracketOpen':
+				case "BracketOpen":
 					return this.parseArray();
 
-				case 'BraceOpen': {
+				case "BraceOpen": {
 					this.nextToken();
 					return this.parseObject();
 				}
@@ -762,7 +762,7 @@ export const createJSONParser = createParser((ParserCore) =>
 		}
 
 		parseEntry(): JSONValue {
-			if (this.matchToken('EOF')) {
+			if (this.matchToken("EOF")) {
 				if (this.hasExtensions) {
 					// If we're in RJSON mode then an empty input is an implicit object
 					return {};
@@ -862,11 +862,11 @@ export const createJSONParser = createParser((ParserCore) =>
 					let start = info.keyStart;
 					let end = info.valueEnd;
 
-					if (target === 'key') {
+					if (target === "key") {
 						end = info.keyEnd;
 					}
 
-					if (target === 'value' || target === 'inner-value') {
+					if (target === "value" || target === "inner-value") {
 						start = info.valueStart;
 					}
 
@@ -876,11 +876,11 @@ export const createJSONParser = createParser((ParserCore) =>
 						end,
 					};
 
-					if (target === 'inner-value') {
+					if (target === "inner-value") {
 						const originalValue = context.getOriginalValue(keys);
 
 						// Remove quote marks for strings
-						if (typeof originalValue === 'string') {
+						if (typeof originalValue === "string") {
 							loc = {
 								...loc,
 								start: {
@@ -896,7 +896,7 @@ export const createJSONParser = createParser((ParserCore) =>
 					}
 
 					return {
-						language: 'json',
+						language: "json",
 						...loc,
 						mtime: this.mtime,
 						sourceText: undefined,

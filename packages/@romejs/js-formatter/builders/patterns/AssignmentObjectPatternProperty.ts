@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token} from '../../tokens';
-import {AssignmentObjectPatternProperty} from '@romejs/js-ast';
-import ObjectProperty from '../objects/ObjectProperty';
+import Builder from "../../Builder";
+import {Token} from "../../tokens";
+import {AssignmentObjectPatternProperty} from "@romejs/js-ast";
+import ObjectProperty from "../objects/ObjectProperty";
 
 export default function AssignmentObjectPatternProperty(
 	builder: Builder,

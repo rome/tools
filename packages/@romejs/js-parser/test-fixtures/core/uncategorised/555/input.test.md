@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 60
@@ -30,16 +30,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'The rest element has to be the last element when destructuring'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "The rest element has to be the last element when destructuring"}
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 13
 					index: 40
@@ -56,10 +56,10 @@ Program {
 	body: Array [
 		FunctionDeclaration {
 			id: BindingIdentifier {
-				name: 'foo'
+				name: "foo"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'foo'
+					filename: "input.js"
+					identifierName: "foo"
 					end: Object {
 						column: 12
 						index: 12
@@ -73,7 +73,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 1
 					index: 58
@@ -89,7 +89,7 @@ Program {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 1
 						index: 58
@@ -110,7 +110,7 @@ Program {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 1
 						index: 54
@@ -123,10 +123,10 @@ Program {
 					}
 				}
 				rest: BindingIdentifier {
-					name: 'second'
+					name: "second"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'second'
+						filename: "input.js"
+						identifierName: "second"
 						end: Object {
 							column: 13
 							index: 40
@@ -142,7 +142,7 @@ Program {
 						optional: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 13
 								index: 40
@@ -158,10 +158,10 @@ Program {
 				}
 				params: Array [
 					BindingIdentifier {
-						name: 'first'
+						name: "first"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'first'
+							filename: "input.js"
+							identifierName: "first"
 							end: Object {
 								column: 9
 								index: 25
@@ -177,7 +177,7 @@ Program {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 9
 									index: 25
@@ -192,10 +192,10 @@ Program {
 						}
 					}
 					BindingIdentifier {
-						name: 'third'
+						name: "third"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'third'
+							filename: "input.js"
+							identifierName: "third"
 							end: Object {
 								column: 9
 								index: 51
@@ -211,7 +211,7 @@ Program {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 9
 									index: 51
@@ -230,7 +230,7 @@ Program {
 		}
 		EmptyStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 2
 					index: 59

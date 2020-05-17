@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 45
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 44
 					index: 44
@@ -47,7 +47,7 @@ Program {
 			expression: CallExpression {
 				arguments: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 43
 						index: 43
@@ -62,7 +62,7 @@ Program {
 				callee: FunctionExpression {
 					id: undefined
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 41
 							index: 41
@@ -84,7 +84,7 @@ Program {
 						thisType: undefined
 						typeParameters: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 12
 								index: 12
@@ -99,7 +99,7 @@ Program {
 					}
 					body: BlockStatement {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 41
 								index: 41
@@ -113,9 +113,9 @@ Program {
 						}
 						directives: Array [
 							Directive {
-								value: 'use\\nstrict'
+								value: "use\\nstrict"
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 29
 										index: 29
@@ -132,7 +132,7 @@ Program {
 						body: Array [
 							WithStatement {
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 39
 										index: 39
@@ -146,7 +146,7 @@ Program {
 								}
 								body: EmptyStatement {
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 39
 											index: 39
@@ -160,10 +160,10 @@ Program {
 									}
 								}
 								object: ReferenceIdentifier {
-									name: 'i'
+									name: "i"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'i'
+										filename: "input.js"
+										identifierName: "i"
 										end: Object {
 											column: 37
 											index: 37

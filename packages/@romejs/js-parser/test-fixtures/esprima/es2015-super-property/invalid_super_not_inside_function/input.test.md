@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 17
@@ -30,16 +30,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'super is only allowed in object methods and classes'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "super is only allowed in object methods and classes"}
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 7
 					index: 7
@@ -56,7 +56,7 @@ Program {
 	body: Array [
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 16
 					index: 16
@@ -69,9 +69,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'var'
+				kind: "var"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 16
 						index: 16
@@ -86,10 +86,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'x'
+							name: "x"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'x'
+								filename: "input.js"
+								identifierName: "x"
 								end: Object {
 									column: 5
 									index: 5
@@ -103,7 +103,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 15
 								index: 15
@@ -118,7 +118,7 @@ Program {
 						init: CallExpression {
 							arguments: Array []
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 15
 									index: 15
@@ -132,7 +132,7 @@ Program {
 							}
 							callee: Super {
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 13
 										index: 13

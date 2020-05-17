@@ -9,17 +9,17 @@ Program {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array [
-		'jsx'
-		'ts'
+		"jsx"
+		"ts"
 	]
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 15
@@ -33,11 +33,11 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 10
 					index: 10
@@ -50,16 +50,16 @@ Program {
 				}
 			}
 			description: Object {
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Expected a corresponding JSX closing tag for <emphasis>something</emphasis>'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Expected a corresponding JSX closing tag for <emphasis>something</emphasis>"}
 				advice: Array [
 					log {
-						category: 'info'
-						text: 'Originated from opening tag of <emphasis>something</emphasis>'
+						category: "info"
+						text: "Originated from opening tag of <emphasis>something</emphasis>"
 					}
 					frame {
 						location: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 10
 								index: 10
@@ -79,7 +79,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 14
 					index: 14
@@ -93,9 +93,9 @@ Program {
 			}
 			expression: JSXElement {
 				name: JSXIdentifier {
-					name: 'something'
+					name: "something"
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 10
 							index: 10
@@ -113,7 +113,7 @@ Program {
 				selfClosing: false
 				typeArguments: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 14
 						index: 14

@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 19
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 7
 					index: 7
@@ -45,10 +45,10 @@ Program {
 				}
 			}
 			expression: ReferenceIdentifier {
-				name: 'declare'
+				name: "declare"
 				loc: Object {
-					filename: 'input.ts'
-					identifierName: 'declare'
+					filename: "input.ts"
+					identifierName: "declare"
 					end: Object {
 						column: 7
 						index: 7
@@ -64,10 +64,10 @@ Program {
 		}
 		ClassDeclaration {
 			id: BindingIdentifier {
-				name: 'B'
+				name: "B"
 				loc: Object {
-					filename: 'input.ts'
-					identifierName: 'B'
+					filename: "input.ts"
+					identifierName: "B"
 					end: Object {
 						column: 7
 						index: 15
@@ -81,7 +81,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 10
 					index: 18
@@ -100,7 +100,7 @@ Program {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 10
 						index: 18

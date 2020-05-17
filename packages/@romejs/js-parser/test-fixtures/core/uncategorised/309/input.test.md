@@ -9,14 +9,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 18
 			index: 52
@@ -30,10 +30,10 @@ Program {
 	}
 	comments: Array [
 		CommentBlock {
-			id: '0'
-			value: ' Multiline\nComment '
+			id: "0"
+			value: " Multiline\nComment "
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 10
 					index: 44
@@ -50,7 +50,7 @@ Program {
 	body: Array [
 		WhileStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 18
 					index: 52
@@ -65,7 +65,7 @@ Program {
 			test: BooleanLiteral {
 				value: true
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 11
 						index: 11
@@ -81,7 +81,7 @@ Program {
 			body: BlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 18
 						index: 52
@@ -96,9 +96,9 @@ Program {
 				body: Array [
 					BreakStatement {
 						label: undefined
-						trailingComments: Array ['0']
+						trailingComments: Array ["0"]
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 20
 								index: 20
@@ -112,9 +112,9 @@ Program {
 						}
 					}
 					ExpressionStatement {
-						leadingComments: Array ['0']
+						leadingComments: Array ["0"]
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 16
 								index: 50
@@ -127,11 +127,11 @@ Program {
 							}
 						}
 						expression: ReferenceIdentifier {
-							name: 'there'
+							name: "there"
 							leadingComments: undefined
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'there'
+								filename: "input.js"
+								identifierName: "there"
 								end: Object {
 									column: 15
 									index: 49

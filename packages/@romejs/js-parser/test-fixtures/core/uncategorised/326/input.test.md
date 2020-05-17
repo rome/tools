@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 8
 			index: 8
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 8
 					index: 8
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			expression: BinaryExpression {
-				operator: '/'
+				operator: "/"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 8
 						index: 8
@@ -60,10 +60,10 @@ Program {
 					}
 				}
 				right: ReferenceIdentifier {
-					name: 'b'
+					name: "b"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'b'
+						filename: "input.js"
+						identifierName: "b"
 						end: Object {
 							column: 8
 							index: 8
@@ -78,7 +78,7 @@ Program {
 				}
 				left: MemberExpression {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 4
 							index: 4
@@ -91,10 +91,10 @@ Program {
 						}
 					}
 					object: ReferenceIdentifier {
-						name: 'a'
+						name: "a"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'a'
+							filename: "input.js"
+							identifierName: "a"
 							end: Object {
 								column: 1
 								index: 1
@@ -109,10 +109,10 @@ Program {
 					}
 					property: StaticMemberProperty {
 						value: Identifier {
-							name: 'in'
+							name: "in"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'in'
+								filename: "input.js"
+								identifierName: "in"
 								end: Object {
 									column: 4
 									index: 4
@@ -126,8 +126,8 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'in'
+							filename: "input.js"
+							identifierName: "in"
 							end: Object {
 								column: 4
 								index: 4

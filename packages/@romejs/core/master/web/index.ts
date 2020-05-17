@@ -5,26 +5,26 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Master, MasterRequest, WebBridge} from '@romejs/core';
-import Bundler from '../bundler/Bundler';
-import {WebSocketInterface} from '@romejs/codec-websocket';
-import prettyFormat from '@romejs/pretty-format';
-import http = require('http');
+import {Master, MasterRequest, WebBridge} from "@romejs/core";
+import Bundler from "../bundler/Bundler";
+import {WebSocketInterface} from "@romejs/codec-websocket";
+import prettyFormat from "@romejs/pretty-format";
+import http = require("http");
 
-import {escapeMarkup} from '@romejs/string-markup';
-import {Reporter, ReporterStream} from '@romejs/cli-reporter';
+import {escapeMarkup} from "@romejs/string-markup";
+import {Reporter, ReporterStream} from "@romejs/cli-reporter";
 import {
 	MasterQueryRequest,
 	MasterQueryResponse,
-} from '../../common/bridges/MasterBridge';
-import {MasterMarker} from '../Master';
-import {ClientFlagsJSON} from '../../common/types/client';
-import WebRequest, {stripBundleSuffix} from './WebRequest';
-import {BundlerConfig} from '../../common/types/bundler';
-import {AbsoluteFilePath} from '@romejs/path';
-import {PLATFORMS} from '../../common/types/platform';
-import {HmrClientLogMessage, HmrServerMessage} from './hmr';
-import {ConsumableUrl} from '@romejs/codec-url';
+} from "../../common/bridges/MasterBridge";
+import {MasterMarker} from "../Master";
+import {ClientFlagsJSON} from "../../common/types/client";
+import WebRequest, {stripBundleSuffix} from "./WebRequest";
+import {BundlerConfig} from "../../common/types/bundler";
+import {AbsoluteFilePath} from "@romejs/path";
+import {PLATFORMS} from "../../common/types/platform";
+import {HmrClientLogMessage, HmrServerMessage} from "./hmr";
+import {ConsumableUrl} from "@romejs/codec-url";
 
 export type WebMasterTime = {
 	startTime: number;
@@ -81,15 +81,15 @@ export class WebServer {
 				},
 				startTime: Date.now(),
 				endTime: undefined,
-				stdoutAnsi: '',
-				stdoutHTML: '',
+				stdoutAnsi: "",
+				stdoutHTML: "",
 			};
 			this.clientHistory.set(client.id, data);
 			this.refreshRequests();
 
 			const ansiReporterStream: ReporterStream = {
-				type: 'all',
-				format: 'ansi',
+				type: "all",
+				format: "ansi",
 				columns: 100,
 				unicode: true,
 				write(chunk) {
@@ -98,8 +98,8 @@ export class WebServer {
 			};
 
 			const htmlReporterStream: ReporterStream = {
-				type: 'all',
-				format: 'html',
+				type: "all",
+				format: "html",
 				columns: 100,
 				unicode: true,
 				write(chunk) {
@@ -199,34 +199,34 @@ export class WebServer {
 		const {reporter} = this.masterRequest;
 
 		let buf = msg.data.map((arg) => {
-			if (typeof arg === 'string') {
+			if (typeof arg === "string") {
 				return escapeMarkup(arg);
 			} else {
 				return prettyFormat(arg, {markup: true});
 			}
-		}).join(' ');
+		}).join(" ");
 
 		switch (msg.level) {
-			case 'info': {
+			case "info": {
 				reporter.info(buf);
 				break;
 			}
 
-			case 'warn': {
+			case "warn": {
 				reporter.warn(buf);
 				break;
 			}
 
-			case 'log':
-			case 'trace': {
+			case "log":
+			case "trace": {
 				reporter.verboseForce(buf);
 				break;
 			}
 
-			case 'group':
-			case 'groupCollapsed':
-			case 'groupEnd':
-				reporter.logAll('TODO');
+			case "group":
+			case "groupCollapsed":
+			case "groupEnd":
+				reporter.logAll("TODO");
 		}
 	}
 
@@ -261,7 +261,7 @@ export class WebServer {
 
 		const absolute = await this.pathnameToAbsolutePath(pathname);
 		if (absolute === undefined) {
-			throw new Error('Pathname is attempting to escalate out of cwd');
+			throw new Error("Pathname is attempting to escalate out of cwd");
 		}
 
 		const pathPointer = url.path.getDiagnosticLocation();
@@ -273,7 +273,7 @@ export class WebServer {
 			pathPointer === undefined ? undefined : {location: pathPointer},
 		);
 
-		const platform = url.query.get('platform').asStringSetOrVoid(PLATFORMS);
+		const platform = url.query.get("platform").asStringSetOrVoid(PLATFORMS);
 		const cacheKey = JSON.stringify({
 			platform,
 		});

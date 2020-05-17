@@ -9,14 +9,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 69
@@ -30,10 +30,10 @@ Program {
 	}
 	comments: Array [
 		CommentBlock {
-			id: '0'
-			value: ' infinite '
+			id: "0"
+			value: " infinite "
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 29
 					index: 29
@@ -47,10 +47,10 @@ Program {
 			}
 		}
 		CommentBlock {
-			id: '1'
-			value: ' bar '
+			id: "1"
+			value: " bar "
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 56
 					index: 56
@@ -67,10 +67,10 @@ Program {
 	body: Array [
 		FunctionDeclaration {
 			id: BindingIdentifier {
-				name: 'f'
+				name: "f"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'f'
+					filename: "input.js"
+					identifierName: "f"
 					end: Object {
 						column: 10
 						index: 10
@@ -84,7 +84,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 68
 					index: 68
@@ -106,7 +106,7 @@ Program {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 12
 						index: 12
@@ -122,7 +122,7 @@ Program {
 			body: BlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 68
 						index: 68
@@ -136,10 +136,10 @@ Program {
 				}
 				body: Array [
 					WhileStatement {
-						leadingComments: Array ['0']
-						trailingComments: Array ['1']
+						leadingComments: Array ["0"]
+						trailingComments: Array ["1"]
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 46
 								index: 46
@@ -155,7 +155,7 @@ Program {
 							value: true
 							leadingComments: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 41
 									index: 41
@@ -173,7 +173,7 @@ Program {
 							directives: Array []
 							trailingComments: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 46
 									index: 46
@@ -188,9 +188,9 @@ Program {
 						}
 					}
 					VariableDeclarationStatement {
-						leadingComments: Array ['1']
+						leadingComments: Array ["1"]
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 66
 								index: 66
@@ -203,10 +203,10 @@ Program {
 							}
 						}
 						declaration: VariableDeclaration {
-							kind: 'var'
+							kind: "var"
 							leadingComments: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 66
 									index: 66
@@ -221,11 +221,11 @@ Program {
 							declarations: Array [
 								VariableDeclarator {
 									id: BindingIdentifier {
-										name: 'each'
+										name: "each"
 										leadingComments: undefined
 										loc: Object {
-											filename: 'input.js'
-											identifierName: 'each'
+											filename: "input.js"
+											identifierName: "each"
 											end: Object {
 												column: 65
 												index: 65
@@ -241,7 +241,7 @@ Program {
 									init: undefined
 									leadingComments: undefined
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 65
 											index: 65

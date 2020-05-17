@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 87
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 17
 					index: 17
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			expression: AssignmentExpression {
-				operator: '='
+				operator: "="
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -60,10 +60,10 @@ Program {
 					}
 				}
 				left: AssignmentIdentifier {
-					name: 'x'
+					name: "x"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'x'
+						filename: "input.js"
+						identifierName: "x"
 						end: Object {
 							column: 1
 							index: 1
@@ -77,9 +77,9 @@ Program {
 					}
 				}
 				right: BinaryExpression {
-					operator: '/'
+					operator: "/"
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 17
 							index: 17
@@ -92,10 +92,10 @@ Program {
 						}
 					}
 					right: ReferenceIdentifier {
-						name: 'foo'
+						name: "foo"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'foo'
+							filename: "input.js"
+							identifierName: "foo"
 							end: Object {
 								column: 17
 								index: 17
@@ -111,7 +111,7 @@ Program {
 					left: ClassExpression {
 						id: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 11
 								index: 11
@@ -130,7 +130,7 @@ Program {
 							superTypeParameters: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 11
 									index: 11
@@ -149,7 +149,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 10
 					index: 86
@@ -162,9 +162,9 @@ Program {
 				}
 			}
 			expression: AssignmentExpression {
-				operator: '='
+				operator: "="
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 10
 						index: 86
@@ -177,10 +177,10 @@ Program {
 					}
 				}
 				left: AssignmentIdentifier {
-					name: 'x'
+					name: "x"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'x'
+						filename: "input.js"
+						identifierName: "x"
 						end: Object {
 							column: 1
 							index: 20
@@ -194,9 +194,9 @@ Program {
 					}
 				}
 				right: BinaryExpression {
-					operator: '/'
+					operator: "/"
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 10
 							index: 86
@@ -209,9 +209,9 @@ Program {
 						}
 					}
 					left: BinaryExpression {
-						operator: '/'
+						operator: "/"
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 5
 								index: 36
@@ -224,10 +224,10 @@ Program {
 							}
 						}
 						right: ReferenceIdentifier {
-							name: 'foo'
+							name: "foo"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'foo'
+								filename: "input.js"
+								identifierName: "foo"
 								end: Object {
 									column: 5
 									index: 36
@@ -243,7 +243,7 @@ Program {
 						left: ClassExpression {
 							id: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 11
 									index: 30
@@ -262,7 +262,7 @@ Program {
 								superTypeParameters: undefined
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 11
 										index: 30
@@ -279,7 +279,7 @@ Program {
 					}
 					right: CallExpression {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 10
 								index: 86
@@ -293,7 +293,7 @@ Program {
 						}
 						callee: CallExpression {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 19
 									index: 61
@@ -306,10 +306,10 @@ Program {
 								}
 							}
 							callee: ReferenceIdentifier {
-								name: 'g'
+								name: "g"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'g'
+									filename: "input.js"
+									identifierName: "g"
 									end: Object {
 										column: 9
 										index: 40
@@ -324,9 +324,9 @@ Program {
 							}
 							arguments: Array [
 								AssignmentExpression {
-									operator: '='
+									operator: "="
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 18
 											index: 60
@@ -339,10 +339,10 @@ Program {
 										}
 									}
 									left: AssignmentIdentifier {
-										name: 'x'
+										name: "x"
 										loc: Object {
-											filename: 'input.js'
-											identifierName: 'x'
+											filename: "input.js"
+											identifierName: "x"
 											end: Object {
 												column: 2
 												index: 44
@@ -356,9 +356,9 @@ Program {
 										}
 									}
 									right: BinaryExpression {
-										operator: '/'
+										operator: "/"
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 18
 												index: 60
@@ -371,10 +371,10 @@ Program {
 											}
 										}
 										right: ReferenceIdentifier {
-											name: 'foo'
+											name: "foo"
 											loc: Object {
-												filename: 'input.js'
-												identifierName: 'foo'
+												filename: "input.js"
+												identifierName: "foo"
 												end: Object {
 													column: 18
 													index: 60
@@ -390,7 +390,7 @@ Program {
 										left: ClassExpression {
 											id: undefined
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 12
 													index: 54
@@ -409,7 +409,7 @@ Program {
 												superTypeParameters: undefined
 												typeParameters: undefined
 												loc: Object {
-													filename: 'input.js'
+													filename: "input.js"
 													end: Object {
 														column: 12
 														index: 54
@@ -429,9 +429,9 @@ Program {
 						}
 						arguments: Array [
 							AssignmentExpression {
-								operator: '='
+								operator: "="
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 9
 										index: 85
@@ -444,10 +444,10 @@ Program {
 									}
 								}
 								left: AssignmentIdentifier {
-									name: 'x'
+									name: "x"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'x'
+										filename: "input.js"
+										identifierName: "x"
 										end: Object {
 											column: 2
 											index: 65
@@ -461,9 +461,9 @@ Program {
 									}
 								}
 								right: BinaryExpression {
-									operator: '/'
+									operator: "/"
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 9
 											index: 85
@@ -476,10 +476,10 @@ Program {
 										}
 									}
 									right: ReferenceIdentifier {
-										name: 'g'
+										name: "g"
 										loc: Object {
-											filename: 'input.js'
-											identifierName: 'g'
+											filename: "input.js"
+											identifierName: "g"
 											end: Object {
 												column: 9
 												index: 85
@@ -493,9 +493,9 @@ Program {
 										}
 									}
 									left: BinaryExpression {
-										operator: '/'
+										operator: "/"
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 5
 												index: 81
@@ -508,10 +508,10 @@ Program {
 											}
 										}
 										right: ReferenceIdentifier {
-											name: 'foo'
+											name: "foo"
 											loc: Object {
-												filename: 'input.js'
-												identifierName: 'foo'
+												filename: "input.js"
+												identifierName: "foo"
 												end: Object {
 													column: 5
 													index: 81
@@ -527,7 +527,7 @@ Program {
 										left: ClassExpression {
 											id: undefined
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 12
 													index: 75
@@ -546,7 +546,7 @@ Program {
 												superTypeParameters: undefined
 												typeParameters: undefined
 												loc: Object {
-													filename: 'input.js'
+													filename: "input.js"
 													end: Object {
 														column: 12
 														index: 75

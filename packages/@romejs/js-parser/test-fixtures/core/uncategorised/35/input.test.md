@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 24
 			index: 24
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 24
 					index: 24
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			expression: AssignmentExpression {
-				operator: '='
+				operator: "="
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 24
 						index: 24
@@ -60,10 +60,10 @@ Program {
 					}
 				}
 				left: AssignmentIdentifier {
-					name: 'x'
+					name: "x"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'x'
+						filename: "input.js"
+						identifierName: "x"
 						end: Object {
 							column: 1
 							index: 1
@@ -78,7 +78,7 @@ Program {
 				}
 				right: ObjectExpression {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 24
 							index: 24
@@ -92,12 +92,12 @@ Program {
 					}
 					properties: Array [
 						ObjectMethod {
-							kind: 'get'
+							kind: "get"
 							key: StaticPropertyKey {
 								value: StringLiteral {
-									value: 'undef'
+									value: "undef"
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 17
 											index: 17
@@ -111,7 +111,7 @@ Program {
 									}
 								}
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 17
 										index: 17
@@ -125,7 +125,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 22
 									index: 22
@@ -141,7 +141,7 @@ Program {
 								body: Array []
 								directives: Array []
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 22
 										index: 22
@@ -164,7 +164,7 @@ Program {
 								thisType: undefined
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 19
 										index: 19

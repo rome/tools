@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {AnyNode, StringLiteral, stringLiteral} from '@romejs/js-ast';
-import StringLiteralT from '../../types/StringLiteralT';
+import {Scope} from "../../scopes";
+import {AnyNode, StringLiteral, stringLiteral} from "@romejs/js-ast";
+import StringLiteralT from "../../types/StringLiteralT";
 
 export default function StringLiteral(node: AnyNode, scope: Scope) {
 	node = stringLiteral.assert(node);

@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 43
@@ -30,16 +30,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unexpected token, expected ('}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unexpected token, expected ("}
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 11
 					index: 26
@@ -56,10 +56,10 @@ Program {
 	body: Array [
 		FunctionDeclaration {
 			id: BindingIdentifier {
-				name: 'f'
+				name: "f"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'f'
+					filename: "input.js"
+					identifierName: "f"
 					end: Object {
 						column: 10
 						index: 10
@@ -73,7 +73,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 1
 					index: 42
@@ -95,7 +95,7 @@ Program {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 12
 						index: 12
@@ -111,7 +111,7 @@ Program {
 			body: BlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 1
 						index: 42
@@ -126,7 +126,7 @@ Program {
 				body: Array [
 					ForStatement {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 23
 								index: 38
@@ -139,10 +139,10 @@ Program {
 							}
 						}
 						test: ReferenceIdentifier {
-							name: 'x'
+							name: "x"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'x'
+								filename: "input.js"
+								identifierName: "x"
 								end: Object {
 									column: 18
 									index: 33
@@ -156,10 +156,10 @@ Program {
 							}
 						}
 						update: ReferenceIdentifier {
-							name: 'of'
+							name: "of"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'of'
+								filename: "input.js"
+								identifierName: "of"
 								end: Object {
 									column: 21
 									index: 36
@@ -174,7 +174,7 @@ Program {
 						}
 						body: ExpressionStatement {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 23
 									index: 38
@@ -187,10 +187,10 @@ Program {
 								}
 							}
 							expression: ReferenceIdentifier {
-								name: 'y'
+								name: "y"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'y'
+									filename: "input.js"
+									identifierName: "y"
 									end: Object {
 										column: 23
 										index: 38
@@ -206,7 +206,7 @@ Program {
 						}
 						init: CallExpression {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 16
 									index: 31
@@ -219,10 +219,10 @@ Program {
 								}
 							}
 							callee: ReferenceIdentifier {
-								name: 'await'
+								name: "await"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'await'
+									filename: "input.js"
+									identifierName: "await"
 									end: Object {
 										column: 11
 										index: 26
@@ -237,10 +237,10 @@ Program {
 							}
 							arguments: Array [
 								ReferenceIdentifier {
-									name: 'let'
+									name: "let"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'let'
+										filename: "input.js"
+										identifierName: "let"
 										end: Object {
 											column: 16
 											index: 31
@@ -258,7 +258,7 @@ Program {
 					}
 					ExpressionStatement {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 25
 								index: 40
@@ -271,9 +271,9 @@ Program {
 							}
 						}
 						expression: ReferenceIdentifier {
-							name: 'INVALID_PLACEHOLDER'
+							name: "INVALID_PLACEHOLDER"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 24
 									index: 39

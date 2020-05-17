@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 29
 			index: 29
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 29
 					index: 29
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'const'
+				kind: "const"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 29
 						index: 29
@@ -62,10 +62,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'x'
+							name: "x"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'x'
+								filename: "input.js"
+								identifierName: "x"
 								end: Object {
 									column: 7
 									index: 7
@@ -79,7 +79,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 12
 								index: 12
@@ -95,7 +95,7 @@ Program {
 							value: 14
 							format: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 12
 									index: 12
@@ -111,10 +111,10 @@ Program {
 					}
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'y'
+							name: "y"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'y'
+								filename: "input.js"
+								identifierName: "y"
 								end: Object {
 									column: 15
 									index: 15
@@ -128,7 +128,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 19
 								index: 19
@@ -144,7 +144,7 @@ Program {
 							value: 3
 							format: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 19
 									index: 19
@@ -160,10 +160,10 @@ Program {
 					}
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'z'
+							name: "z"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'z'
+								filename: "input.js"
+								identifierName: "z"
 								end: Object {
 									column: 22
 									index: 22
@@ -177,7 +177,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 29
 								index: 29
@@ -193,7 +193,7 @@ Program {
 							value: 1_977
 							format: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 29
 									index: 29

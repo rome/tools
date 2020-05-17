@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 12
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 11
 					index: 11
@@ -46,7 +46,7 @@ Program {
 			}
 			expression: TSTypeAssertion {
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 10
 						index: 10
@@ -60,7 +60,7 @@ Program {
 				}
 				typeAnnotation: NumberKeywordTypeAnnotation {
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 7
 							index: 7
@@ -77,7 +77,7 @@ Program {
 					value: 1
 					format: undefined
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 10
 							index: 10

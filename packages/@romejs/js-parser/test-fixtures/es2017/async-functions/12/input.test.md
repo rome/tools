@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 46
 			index: 46
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		FunctionDeclaration {
 			id: BindingIdentifier {
-				name: 'foo'
+				name: "foo"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'foo'
+					filename: "input.js"
+					identifierName: "foo"
 					end: Object {
 						column: 18
 						index: 18
@@ -49,7 +49,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 46
 					index: 46
@@ -70,7 +70,7 @@ Program {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 27
 						index: 27
@@ -84,10 +84,10 @@ Program {
 				}
 				params: Array [
 					BindingIdentifier {
-						name: 'promise'
+						name: "promise"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'promise'
+							filename: "input.js"
+							identifierName: "promise"
 							end: Object {
 								column: 26
 								index: 26
@@ -103,7 +103,7 @@ Program {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 26
 									index: 26
@@ -122,7 +122,7 @@ Program {
 			body: BlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 46
 						index: 46
@@ -137,7 +137,7 @@ Program {
 				body: Array [
 					ExpressionStatement {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 44
 								index: 44
@@ -151,7 +151,7 @@ Program {
 						}
 						expression: AwaitExpression {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 43
 									index: 43
@@ -164,10 +164,10 @@ Program {
 								}
 							}
 							argument: ReferenceIdentifier {
-								name: 'promise'
+								name: "promise"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'promise'
+									filename: "input.js"
+									identifierName: "promise"
 									end: Object {
 										column: 43
 										index: 43

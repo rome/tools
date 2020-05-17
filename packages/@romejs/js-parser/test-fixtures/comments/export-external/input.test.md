@@ -9,14 +9,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
+	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 41
@@ -30,10 +30,10 @@ Program {
 	}
 	comments: Array [
 		CommentBlock {
-			id: '0'
-			value: ' LEADING '
+			id: "0"
+			value: " LEADING "
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -52,9 +52,9 @@ Program {
 			defaultSpecifier: undefined
 			exportKind: undefined
 			namespaceSpecifier: undefined
-			leadingComments: Array ['0']
+			leadingComments: Array ["0"]
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 26
 					index: 40
@@ -67,9 +67,9 @@ Program {
 				}
 			}
 			source: StringLiteral {
-				value: './bar'
+				value: "./bar"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 25
 						index: 39
@@ -86,7 +86,7 @@ Program {
 				ExportExternalSpecifier {
 					leadingComments: undefined
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 11
 							index: 25
@@ -99,11 +99,11 @@ Program {
 						}
 					}
 					local: Identifier {
-						name: 'FOO'
+						name: "FOO"
 						leadingComments: undefined
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'FOO'
+							filename: "input.js"
+							identifierName: "FOO"
 							end: Object {
 								column: 11
 								index: 25
@@ -117,13 +117,13 @@ Program {
 						}
 					}
 					exported: Identifier {
-						name: 'FOO'
+						name: "FOO"
 						innerComments: undefined
 						leadingComments: undefined
 						trailingComments: undefined
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'FOO'
+							filename: "input.js"
+							identifierName: "FOO"
 							end: Object {
 								column: 11
 								index: 25

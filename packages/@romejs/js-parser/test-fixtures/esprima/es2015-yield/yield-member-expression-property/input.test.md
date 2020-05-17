@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 35
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		FunctionDeclaration {
 			id: BindingIdentifier {
-				name: 'g'
+				name: "g"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'g'
+					filename: "input.js"
+					identifierName: "g"
 					end: Object {
 						column: 11
 						index: 11
@@ -49,7 +49,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 34
 					index: 34
@@ -71,7 +71,7 @@ Program {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -87,7 +87,7 @@ Program {
 			body: BlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 34
 						index: 34
@@ -102,7 +102,7 @@ Program {
 				body: Array [
 					ExpressionStatement {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 32
 								index: 32
@@ -117,7 +117,7 @@ Program {
 						expression: YieldExpression {
 							delegate: false
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 31
 									index: 31
@@ -131,7 +131,7 @@ Program {
 							}
 							argument: MemberExpression {
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 31
 										index: 31
@@ -144,10 +144,10 @@ Program {
 									}
 								}
 								object: ReferenceIdentifier {
-									name: 'obj'
+									name: "obj"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'obj'
+										filename: "input.js"
+										identifierName: "obj"
 										end: Object {
 											column: 25
 											index: 25
@@ -162,10 +162,10 @@ Program {
 								}
 								property: StaticMemberProperty {
 									value: Identifier {
-										name: 'yield'
+										name: "yield"
 										loc: Object {
-											filename: 'input.js'
-											identifierName: 'yield'
+											filename: "input.js"
+											identifierName: "yield"
 											end: Object {
 												column: 31
 												index: 31
@@ -179,8 +179,8 @@ Program {
 										}
 									}
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'yield'
+										filename: "input.js"
+										identifierName: "yield"
 										end: Object {
 											column: 31
 											index: 31

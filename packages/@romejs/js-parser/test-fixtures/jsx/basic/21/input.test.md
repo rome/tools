@@ -10,17 +10,17 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array [
-		'jsx'
-		'ts'
+		"jsx"
+		"ts"
 	]
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 42
@@ -35,7 +35,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 41
 					index: 41
@@ -49,9 +49,9 @@ Program {
 			}
 			expression: JSXElement {
 				name: JSXIdentifier {
-					name: 'div'
+					name: "div"
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 4
 							index: 4
@@ -67,7 +67,7 @@ Program {
 				selfClosing: false
 				typeArguments: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 41
 						index: 41
@@ -82,7 +82,7 @@ Program {
 				attributes: Array [
 					JSXSpreadAttribute {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 11
 								index: 11
@@ -95,10 +95,10 @@ Program {
 							}
 						}
 						argument: ReferenceIdentifier {
-							name: 'c'
+							name: "c"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'c'
+								filename: "input.js"
+								identifierName: "c"
 								end: Object {
 									column: 10
 									index: 10
@@ -115,9 +115,9 @@ Program {
 				]
 				children: Array [
 					JSXText {
-						value: ' '
+						value: " "
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 13
 								index: 13
@@ -132,7 +132,7 @@ Program {
 					}
 					JSXSpreadChild {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 26
 								index: 26
@@ -145,10 +145,10 @@ Program {
 							}
 						}
 						expression: ReferenceIdentifier {
-							name: 'children'
+							name: "children"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'children'
+								filename: "input.js"
+								identifierName: "children"
 								end: Object {
 									column: 25
 									index: 25
@@ -164,7 +164,7 @@ Program {
 					}
 					JSXExpressionContainer {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 29
 								index: 29
@@ -177,10 +177,10 @@ Program {
 							}
 						}
 						expression: ReferenceIdentifier {
-							name: 'a'
+							name: "a"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'a'
+								filename: "input.js"
+								identifierName: "a"
 								end: Object {
 									column: 28
 									index: 28
@@ -196,7 +196,7 @@ Program {
 					}
 					JSXSpreadChild {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 35
 								index: 35
@@ -209,10 +209,10 @@ Program {
 							}
 						}
 						expression: ReferenceIdentifier {
-							name: 'b'
+							name: "b"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'b'
+								filename: "input.js"
+								identifierName: "b"
 								end: Object {
 									column: 34
 									index: 34

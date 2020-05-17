@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../scopes';
-import {HydrateData} from '../Evaluator';
-import {AnyNode} from '@romejs/js-ast';
-import StringLiteralT from './StringLiteralT';
-import ObjT from './ObjT';
-import T from './T';
+import {Scope} from "../scopes";
+import {HydrateData} from "../Evaluator";
+import {AnyNode} from "@romejs/js-ast";
+import StringLiteralT from "./StringLiteralT";
+import ObjT from "./ObjT";
+import T from "./T";
 
 export default class StringT extends ObjT {
 	constructor(scope: Scope, originNode: undefined | AnyNode) {
@@ -25,7 +25,7 @@ export default class StringT extends ObjT {
 		);
 	}
 
-	static type = 'StringT';
+	static type = "StringT";
 
 	serialize(): HydrateData {
 		return {};
@@ -36,7 +36,7 @@ export default class StringT extends ObjT {
 	}
 
 	humanize(): string {
-		return 'string';
+		return "string";
 	}
 
 	compatibleWith(type: T) {

@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyTSPrimary, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {AnyTSPrimary, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type TSParenthesizedType = JSNodeBase & {
-	type: 'TSParenthesizedType';
+	type: "TSParenthesizedType";
 	typeAnnotation: AnyTSPrimary;
 };
 
 export const tsParenthesizedType = createBuilder<TSParenthesizedType>(
-	'TSParenthesizedType',
+	"TSParenthesizedType",
 	{
 		bindingKeys: {},
 		visitorKeys: {

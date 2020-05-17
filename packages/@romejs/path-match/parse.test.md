@@ -8,7 +8,7 @@
 
 ```javascript
 PathPattern {
-	comment: ''
+	comment: ""
 	negate: true
 	root: false
 	loc: Object {
@@ -41,7 +41,7 @@ PathPattern {
 			}
 			parts: Array [
 				Word {
-					value: 'foo'
+					value: "foo"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -66,7 +66,7 @@ PathPattern {
 
 ```javascript
 PathPattern {
-	comment: ''
+	comment: ""
 	negate: false
 	root: false
 	segments: Array []
@@ -90,7 +90,7 @@ PathPattern {
 
 ```javascript
 PathPattern {
-	comment: ''
+	comment: ""
 	negate: false
 	root: false
 	loc: Object {
@@ -123,7 +123,7 @@ PathPattern {
 			}
 			parts: Array [
 				Word {
-					value: 'foo'
+					value: "foo"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -188,7 +188,7 @@ PathPattern {
 			}
 			parts: Array [
 				Word {
-					value: 'bar'
+					value: "bar"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -213,7 +213,7 @@ PathPattern {
 
 ```javascript
 PathPattern {
-	comment: ''
+	comment: ""
 	negate: false
 	root: false
 	loc: Object {
@@ -246,7 +246,7 @@ PathPattern {
 			}
 			parts: Array [
 				Word {
-					value: 'foo'
+					value: "foo"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -294,7 +294,7 @@ PathPattern {
 			}
 			parts: Array [
 				Word {
-					value: 'bar'
+					value: "bar"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -319,7 +319,7 @@ PathPattern {
 
 ```javascript
 PathPattern {
-	comment: ''
+	comment: ""
 	negate: false
 	root: false
 	loc: Object {
@@ -352,7 +352,7 @@ PathPattern {
 			}
 			parts: Array [
 				Word {
-					value: 'foo'
+					value: "foo"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -400,7 +400,7 @@ PathPattern {
 					}
 				}
 				Word {
-					value: 'bar'
+					value: "bar"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -425,7 +425,7 @@ PathPattern {
 
 ```javascript
 PathPattern {
-	comment: ''
+	comment: ""
 	negate: false
 	root: false
 	loc: Object {
@@ -458,7 +458,7 @@ PathPattern {
 			}
 			parts: Array [
 				Word {
-					value: 'foo'
+					value: "foo"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -491,7 +491,7 @@ PathPattern {
 			}
 			parts: Array [
 				Word {
-					value: 'bar'
+					value: "bar"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -531,7 +531,7 @@ PathPattern {
 
 ```javascript
 PathPattern {
-	comment: ''
+	comment: ""
 	negate: false
 	root: false
 	loc: Object {
@@ -564,7 +564,7 @@ PathPattern {
 			}
 			parts: Array [
 				Word {
-					value: 'foo'
+					value: "foo"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -612,7 +612,7 @@ PathPattern {
 					}
 				}
 				Word {
-					value: 'bar'
+					value: "bar"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -652,7 +652,7 @@ PathPattern {
 
 ```javascript
 PathPattern {
-	comment: ''
+	comment: ""
 	negate: false
 	root: false
 	loc: Object {
@@ -685,7 +685,7 @@ PathPattern {
 			}
 			parts: Array [
 				Word {
-					value: 'foo'
+					value: "foo"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -733,7 +733,7 @@ PathPattern {
 					}
 				}
 				Word {
-					value: 'bar'
+					value: "bar"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -764,7 +764,7 @@ PathPattern {
 					}
 				}
 				Word {
-					value: 'foob'
+					value: "foob"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -789,7 +789,7 @@ PathPattern {
 
 ```javascript
 PathPattern {
-	comment: ' foobar'
+	comment: " foobar"
 	negate: false
 	root: false
 	segments: Array []
@@ -813,7 +813,7 @@ PathPattern {
 
 ```javascript
 PathPattern {
-	comment: ' foobar'
+	comment: " foobar"
 	negate: false
 	root: false
 	loc: Object {
@@ -846,7 +846,7 @@ PathPattern {
 			}
 			parts: Array [
 				Word {
-					value: 'foo'
+					value: "foo"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -879,7 +879,7 @@ PathPattern {
 			}
 			parts: Array [
 				Word {
-					value: 'bar '
+					value: "bar "
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -904,7 +904,7 @@ PathPattern {
 
 ```javascript
 PathPattern {
-	comment: ''
+	comment: ""
 	negate: false
 	root: false
 	loc: Object {
@@ -937,7 +937,7 @@ PathPattern {
 			}
 			parts: Array [
 				Word {
-					value: 'foo'
+					value: "foo"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -970,7 +970,7 @@ PathPattern {
 			}
 			parts: Array [
 				Word {
-					value: 'bar\\#foobar'
+					value: "bar\\#foobar"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -995,7 +995,7 @@ PathPattern {
 
 ```javascript
 PathPattern {
-	comment: ''
+	comment: ""
 	negate: false
 	root: false
 	loc: Object {
@@ -1028,7 +1028,7 @@ PathPattern {
 			}
 			parts: Array [
 				Word {
-					value: 'foo'
+					value: "foo"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -1061,7 +1061,7 @@ PathPattern {
 			}
 			parts: Array [
 				Word {
-					value: '\\#foobar'
+					value: "\\#foobar"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -1086,7 +1086,7 @@ PathPattern {
 
 ```javascript
 PathPattern {
-	comment: ''
+	comment: ""
 	negate: false
 	root: true
 	loc: Object {
@@ -1119,7 +1119,7 @@ PathPattern {
 			}
 			parts: Array [
 				Word {
-					value: 'foo'
+					value: "foo"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -1152,7 +1152,7 @@ PathPattern {
 			}
 			parts: Array [
 				Word {
-					value: 'bar'
+					value: "bar"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -1177,7 +1177,7 @@ PathPattern {
 
 ```javascript
 PathPattern {
-	comment: ''
+	comment: ""
 	negate: false
 	root: true
 	loc: Object {
@@ -1210,7 +1210,7 @@ PathPattern {
 			}
 			parts: Array [
 				Word {
-					value: 'foo'
+					value: "foo"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -1243,7 +1243,7 @@ PathPattern {
 			}
 			parts: Array [
 				Word {
-					value: 'bar'
+					value: "bar"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -1268,7 +1268,7 @@ PathPattern {
 
 ```javascript
 PathPattern {
-	comment: ''
+	comment: ""
 	negate: false
 	root: false
 	loc: Object {
@@ -1301,7 +1301,7 @@ PathPattern {
 			}
 			parts: Array [
 				Word {
-					value: 'foo'
+					value: "foo"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -1334,7 +1334,7 @@ PathPattern {
 			}
 			parts: Array [
 				Word {
-					value: 'bar'
+					value: "bar"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -1359,7 +1359,7 @@ PathPattern {
 
 ```javascript
 PathPattern {
-	comment: ''
+	comment: ""
 	negate: false
 	root: false
 	loc: Object {
@@ -1392,7 +1392,7 @@ PathPattern {
 			}
 			parts: Array [
 				Word {
-					value: 'foo'
+					value: "foo"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -1425,7 +1425,7 @@ PathPattern {
 			}
 			parts: Array [
 				Word {
-					value: 'bar'
+					value: "bar"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -1450,7 +1450,7 @@ PathPattern {
 
 ```javascript
 PathPattern {
-	comment: ''
+	comment: ""
 	negate: false
 	root: false
 	loc: Object {
@@ -1498,7 +1498,7 @@ PathPattern {
 					}
 				}
 				Word {
-					value: 'foo'
+					value: "foo"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -1531,7 +1531,7 @@ PathPattern {
 			}
 			parts: Array [
 				Word {
-					value: 'bar'
+					value: "bar"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -1556,7 +1556,7 @@ PathPattern {
 
 ```javascript
 PathPattern {
-	comment: ''
+	comment: ""
 	negate: false
 	root: false
 	loc: Object {
@@ -1589,7 +1589,7 @@ PathPattern {
 			}
 			parts: Array [
 				Word {
-					value: 'hello'
+					value: "hello"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -1622,7 +1622,7 @@ PathPattern {
 			}
 			parts: Array [
 				Word {
-					value: 'world'
+					value: "world"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -1647,7 +1647,7 @@ PathPattern {
 
 ```javascript
 PathPattern {
-	comment: ''
+	comment: ""
 	negate: false
 	root: false
 	loc: Object {
@@ -1680,7 +1680,7 @@ PathPattern {
 			}
 			parts: Array [
 				Word {
-					value: 'foo'
+					value: "foo"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -1713,7 +1713,7 @@ PathPattern {
 			}
 			parts: Array [
 				Word {
-					value: 'bar'
+					value: "bar"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -1738,7 +1738,7 @@ PathPattern {
 
 ```javascript
 PathPattern {
-	comment: ''
+	comment: ""
 	negate: false
 	root: false
 	loc: Object {
@@ -1771,7 +1771,7 @@ PathPattern {
 			}
 			parts: Array [
 				Word {
-					value: 'foo'
+					value: "foo"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -1804,7 +1804,7 @@ PathPattern {
 			}
 			parts: Array [
 				Word {
-					value: 'bar'
+					value: "bar"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -1829,7 +1829,7 @@ PathPattern {
 
 ```javascript
 PathPattern {
-	comment: ''
+	comment: ""
 	negate: false
 	root: false
 	loc: Object {
@@ -1877,7 +1877,7 @@ PathPattern {
 					}
 				}
 				Word {
-					value: 'foo'
+					value: "foo"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -1910,7 +1910,7 @@ PathPattern {
 			}
 			parts: Array [
 				Word {
-					value: 'bar'
+					value: "bar"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -1935,7 +1935,7 @@ PathPattern {
 
 ```javascript
 PathPattern {
-	comment: ''
+	comment: ""
 	negate: false
 	root: false
 	loc: Object {
@@ -1968,7 +1968,7 @@ PathPattern {
 			}
 			parts: Array [
 				Word {
-					value: 'foo'
+					value: "foo"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -1993,7 +1993,7 @@ PathPattern {
 
 ```javascript
 PathPattern {
-	comment: ''
+	comment: ""
 	negate: false
 	root: false
 	loc: Object {
@@ -2026,7 +2026,7 @@ PathPattern {
 			}
 			parts: Array [
 				Word {
-					value: 'foo'
+					value: "foo"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -2051,7 +2051,7 @@ PathPattern {
 
 ```javascript
 PathPattern {
-	comment: ''
+	comment: ""
 	negate: false
 	root: false
 	loc: Object {
@@ -2084,7 +2084,7 @@ PathPattern {
 			}
 			parts: Array [
 				Word {
-					value: 'foo'
+					value: "foo"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -2117,7 +2117,7 @@ PathPattern {
 			}
 			parts: Array [
 				Word {
-					value: 'bar'
+					value: "bar"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -2142,7 +2142,7 @@ PathPattern {
 
 ```javascript
 PathPattern {
-	comment: ''
+	comment: ""
 	negate: false
 	root: false
 	loc: Object {
@@ -2175,7 +2175,7 @@ PathPattern {
 			}
 			parts: Array [
 				Word {
-					value: 'foo'
+					value: "foo"
 					loc: Object {
 						filename: undefined
 						end: Object {
@@ -2208,7 +2208,7 @@ PathPattern {
 			}
 			parts: Array [
 				Word {
-					value: 'bar'
+					value: "bar"
 					loc: Object {
 						filename: undefined
 						end: Object {

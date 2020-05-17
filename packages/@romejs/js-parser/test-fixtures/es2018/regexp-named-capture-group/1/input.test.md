@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 57
 			index: 57
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 57
 					index: 57
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'let'
+				kind: "let"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 57
 						index: 57
@@ -62,10 +62,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 're'
+							name: "re"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 're'
+								filename: "input.js"
+								identifierName: "re"
 								end: Object {
 									column: 6
 									index: 6
@@ -79,7 +79,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 56
 								index: 56
@@ -99,7 +99,7 @@ Program {
 							sticky: false
 							unicode: true
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 56
 									index: 56
@@ -113,7 +113,7 @@ Program {
 							}
 							expression: RegExpSubExpression {
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 53
 										index: 54
@@ -127,9 +127,9 @@ Program {
 								}
 								body: Array [
 									RegExpGroupCapture {
-										name: 'year'
+										name: "year"
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 24
 												index: 24
@@ -143,7 +143,7 @@ Program {
 										}
 										expression: RegExpSubExpression {
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 23
 													index: 23
@@ -161,7 +161,7 @@ Program {
 													max: 4
 													min: 4
 													loc: Object {
-														filename: 'input.js'
+														filename: "input.js"
 														end: Object {
 															column: 23
 															index: 23
@@ -175,7 +175,7 @@ Program {
 													}
 													target: RegExpDigitCharacter {
 														loc: Object {
-															filename: 'input.js'
+															filename: "input.js"
 															end: Object {
 																column: 20
 																index: 20
@@ -193,9 +193,9 @@ Program {
 										}
 									}
 									RegExpCharacter {
-										value: '-'
+										value: "-"
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 25
 												index: 25
@@ -209,9 +209,9 @@ Program {
 										}
 									}
 									RegExpGroupCapture {
-										name: 'month'
+										name: "month"
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 40
 												index: 40
@@ -225,7 +225,7 @@ Program {
 										}
 										expression: RegExpSubExpression {
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 39
 													index: 39
@@ -243,7 +243,7 @@ Program {
 													max: 2
 													min: 2
 													loc: Object {
-														filename: 'input.js'
+														filename: "input.js"
 														end: Object {
 															column: 39
 															index: 39
@@ -257,7 +257,7 @@ Program {
 													}
 													target: RegExpDigitCharacter {
 														loc: Object {
-															filename: 'input.js'
+															filename: "input.js"
 															end: Object {
 																column: 36
 																index: 36
@@ -275,9 +275,9 @@ Program {
 										}
 									}
 									RegExpCharacter {
-										value: '-'
+										value: "-"
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 41
 												index: 41
@@ -291,9 +291,9 @@ Program {
 										}
 									}
 									RegExpGroupCapture {
-										name: 'day'
+										name: "day"
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 53
 												index: 53
@@ -307,7 +307,7 @@ Program {
 										}
 										expression: RegExpSubExpression {
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 53
 													index: 53
@@ -325,7 +325,7 @@ Program {
 													max: 2
 													min: 2
 													loc: Object {
-														filename: 'input.js'
+														filename: "input.js"
 														end: Object {
 															column: 53
 															index: 53
@@ -339,7 +339,7 @@ Program {
 													}
 													target: RegExpDigitCharacter {
 														loc: Object {
-															filename: 'input.js'
+															filename: "input.js"
 															end: Object {
 																column: 50
 																index: 50

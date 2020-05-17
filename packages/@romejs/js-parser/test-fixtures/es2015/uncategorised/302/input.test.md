@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 13
 			index: 13
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -46,7 +46,7 @@ Program {
 			}
 			expression: SequenceExpression {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -61,7 +61,7 @@ Program {
 				expressions: Array [
 					TemplateLiteral {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 8
 								index: 8
@@ -75,10 +75,10 @@ Program {
 						}
 						expressions: Array [
 							ReferenceIdentifier {
-								name: 'x'
+								name: "x"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'x'
+									filename: "input.js"
+									identifierName: "x"
 									end: Object {
 										column: 5
 										index: 5
@@ -94,11 +94,11 @@ Program {
 						]
 						quasis: Array [
 							TemplateElement {
-								cooked: '{'
-								raw: '{'
+								cooked: "{"
+								raw: "{"
 								tail: false
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 2
 										index: 2
@@ -112,11 +112,11 @@ Program {
 								}
 							}
 							TemplateElement {
-								cooked: '}'
-								raw: '}'
+								cooked: "}"
+								raw: "}"
 								tail: true
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 7
 										index: 7
@@ -134,7 +134,7 @@ Program {
 					TemplateLiteral {
 						expressions: Array []
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 13
 								index: 13
@@ -148,11 +148,11 @@ Program {
 						}
 						quasis: Array [
 							TemplateElement {
-								cooked: '}'
-								raw: '}'
+								cooked: "}"
+								raw: "}"
 								tail: true
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 12
 										index: 12

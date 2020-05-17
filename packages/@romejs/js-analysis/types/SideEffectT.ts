@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from '@romejs/js-ast';
-import {Scope} from '../scopes';
-import T from './T';
+import {AnyNode} from "@romejs/js-ast";
+import {Scope} from "../scopes";
+import T from "./T";
 
 export default class SideEffectT extends T {
 	constructor(scope: Scope, originNode: undefined | AnyNode, actualType: T) {
@@ -15,7 +15,7 @@ export default class SideEffectT extends T {
 		this.actualType = actualType;
 	}
 
-	static type = 'SideEffectT';
+	static type = "SideEffectT";
 
 	actualType: T;
 

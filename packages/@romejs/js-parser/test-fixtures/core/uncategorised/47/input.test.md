@@ -9,14 +9,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 21
 			index: 21
@@ -30,10 +30,10 @@ Program {
 	}
 	comments: Array [
 		CommentBlock {
-			id: '0'
-			value: 'The'
+			id: "0"
+			value: "The"
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 10
 					index: 10
@@ -47,10 +47,10 @@ Program {
 			}
 		}
 		CommentBlock {
-			id: '1'
-			value: 'Answer'
+			id: "1"
+			value: "Answer"
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 21
 					index: 21
@@ -67,11 +67,11 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			trailingComments: Array [
-				'0'
-				'1'
+				"0"
+				"1"
 			]
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 2
 					index: 2
@@ -88,7 +88,7 @@ Program {
 				format: undefined
 				trailingComments: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 2
 						index: 2

@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 13
 			index: 13
@@ -30,16 +30,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unexpected token, expected ,'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unexpected token, expected ,"}
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 10
 					index: 10
@@ -56,7 +56,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 12
 					index: 12
@@ -69,9 +69,9 @@ Program {
 				}
 			}
 			expression: AssignmentExpression {
-				operator: '='
+				operator: "="
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 12
 						index: 12
@@ -84,10 +84,10 @@ Program {
 					}
 				}
 				left: AssignmentIdentifier {
-					name: 'obj'
+					name: "obj"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'obj'
+						filename: "input.js"
+						identifierName: "obj"
 						end: Object {
 							column: 3
 							index: 3
@@ -101,9 +101,9 @@ Program {
 					}
 				}
 				right: AssignmentExpression {
-					operator: '='
+					operator: "="
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 12
 							index: 12
@@ -119,7 +119,7 @@ Program {
 						value: 0
 						format: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 12
 								index: 12
@@ -135,7 +135,7 @@ Program {
 					left: AssignmentObjectPattern {
 						rest: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 8
 								index: 8
@@ -151,10 +151,10 @@ Program {
 							AssignmentObjectPatternProperty {
 								key: StaticPropertyKey {
 									value: Identifier {
-										name: 'x'
+										name: "x"
 										loc: Object {
-											filename: 'input.js'
-											identifierName: 'x'
+											filename: "input.js"
+											identifierName: "x"
 											end: Object {
 												column: 8
 												index: 8
@@ -168,7 +168,7 @@ Program {
 										}
 									}
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 8
 											index: 8
@@ -182,10 +182,10 @@ Program {
 									}
 								}
 								value: AssignmentIdentifier {
-									name: 'x'
+									name: "x"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'x'
+										filename: "input.js"
+										identifierName: "x"
 										end: Object {
 											column: 8
 											index: 8
@@ -199,7 +199,7 @@ Program {
 									}
 								}
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 8
 										index: 8
@@ -219,7 +219,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -232,9 +232,9 @@ Program {
 				}
 			}
 			expression: ReferenceIdentifier {
-				name: 'INVALID_PLACEHOLDER'
+				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 13
 						index: 13

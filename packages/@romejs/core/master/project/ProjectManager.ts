@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Master from '../Master';
+import Master from "../Master";
 import {
 	DEFAULT_PROJECT_CONFIG,
 	DEFAULT_PROJECT_CONFIG_META,
@@ -18,22 +18,22 @@ import {
 	assertHardMeta,
 	loadCompleteProjectConfig,
 	serializeJSONProjectConfig,
-} from '@romejs/project';
+} from "@romejs/project";
 import {
 	WorkerPartialManifests,
 	WorkerProjects,
-} from '../../common/bridges/WorkerBridge';
-import {WorkerContainer} from '../WorkerManager';
+} from "../../common/bridges/WorkerBridge";
+import {WorkerContainer} from "../WorkerManager";
 import {
 	DiagnosticLocation,
 	DiagnosticsProcessor,
 	createSingleDiagnosticError,
 	descriptions,
-} from '@romejs/diagnostics';
+} from "@romejs/diagnostics";
 import {
 	ManifestDefinition,
 	manifestNameToString,
-} from '@romejs/codec-js-manifest';
+} from "@romejs/codec-js-manifest";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
@@ -42,34 +42,34 @@ import {
 	UnknownFilePath,
 	UnknownFilePathMap,
 	createAbsoluteFilePath,
-} from '@romejs/path';
-import {FileReference, JSONFileReference} from '../../common/types/files';
+} from "@romejs/path";
+import {FileReference, JSONFileReference} from "../../common/types/files";
 import {
 	GetFileHandlerResult,
 	getFileHandler,
-} from '../../common/file-handlers/index';
-import {IMPLICIT_JS_EXTENSIONS} from '../../common/file-handlers/javascript';
-import {createDirectory, readFileText} from '@romejs/fs';
-import {Consumer} from '@romejs/consume';
-import {consumeJSON} from '@romejs/codec-json';
-import {VCSClient, getVCSClient} from '@romejs/vcs';
+} from "../../common/file-handlers/index";
+import {IMPLICIT_JS_EXTENSIONS} from "../../common/file-handlers/javascript";
+import {createDirectory, readFileText} from "@romejs/fs";
+import {Consumer} from "@romejs/consume";
+import {consumeJSON} from "@romejs/codec-json";
+import {VCSClient, getVCSClient} from "@romejs/vcs";
 
 function cleanUidParts(parts: Array<string>): string {
-	let uid = '';
+	let uid = "";
 
-	let lastPart = '';
+	let lastPart = "";
 	for (const part of parts) {
-		if (uid !== '') {
-			uid += '/';
+		if (uid !== "") {
+			uid += "/";
 		}
 
 		// Prune off any prefix shared with the last part
-		let sharedPrefix = '';
+		let sharedPrefix = "";
 		for (let i = 0; i < part.length && lastPart[i] === part[i]; i++) {
 			sharedPrefix += part[i];
 		}
 
-		const partWithoutExtension = part.split('.')[0];
+		const partWithoutExtension = part.split(".")[0];
 		if (sharedPrefix === partWithoutExtension) {
 			uid += part;
 		} else {
@@ -89,7 +89,7 @@ function cleanRelativeUidPath(relative: UnknownFilePath): undefined | string {
 	const segments = relative.getSegments();
 
 	// Quick deopt if there last segment is not index.
-	if (!segments[segments.length - 1].startsWith('index.')) {
+	if (!segments[segments.length - 1].startsWith("index.")) {
 		return relative.join();
 	}
 
@@ -168,7 +168,7 @@ export default class ProjectManager {
 
 		const vendorProjectConfig: ProjectConfig = {
 			...DEFAULT_PROJECT_CONFIG,
-			name: 'rome-internal-remote',
+			name: "rome-internal-remote",
 		};
 		const defaultVendorPath = vendorProjectConfig.files.vendorPath;
 		await createDirectory(defaultVendorPath, {recursive: true});
@@ -541,7 +541,7 @@ export default class ProjectManager {
 				consumer,
 			} = this.findProjectConfigConsumer(
 				project,
-				(consumer) => consumer.has('vsc') && consumer.get('vsc').get('root'),
+				(consumer) => consumer.has("vsc") && consumer.get("vsc").get("root"),
 			);
 
 			const rootConfigLocation: undefined | DiagnosticLocation =
@@ -671,7 +671,7 @@ export default class ProjectManager {
 						name,
 						existingPackage.path.join(),
 					),
-					location: def.consumer.get('name').getDiagnosticLocation('inner-value'),
+					location: def.consumer.get("name").getDiagnosticLocation("inner-value"),
 				});
 				return;
 			}
@@ -747,7 +747,7 @@ export default class ProjectManager {
 
 		if (location === undefined) {
 			throw new Error(
-				`Couldn't find a project. Checked ${ROME_CONFIG_FILENAMES.join(' or ')} for ${path.join()}`,
+				`Couldn't find a project. Checked ${ROME_CONFIG_FILENAMES.join(" or ")} for ${path.join()}`,
 			);
 		}
 
@@ -761,7 +761,7 @@ export default class ProjectManager {
 	getHandlerWithProject(path: AbsoluteFilePath): GetFileHandlerResult {
 		const project = this.findProjectExisting(path);
 		if (project === undefined) {
-			return {ext: '', handler: undefined};
+			return {ext: "", handler: undefined};
 		} else {
 			return getFileHandler(path, project.config);
 		}
@@ -816,7 +816,7 @@ export default class ProjectManager {
 
 				const project = this.projects.get(cached.projectId);
 				if (project === undefined) {
-					throw new Error('Expected project from project id found in fileToProject');
+					throw new Error("Expected project from project id found in fileToProject");
 				}
 				return project;
 			}
@@ -850,7 +850,7 @@ export default class ProjectManager {
 			}
 
 			// Check for package.json
-			const packagePath = dir.append('package.json');
+			const packagePath = dir.append("package.json");
 			if (await this.master.memoryFs.existsHard(packagePath)) {
 				const input = await readFileText(packagePath);
 				const json = await consumeJSON({input, path: packagePath});
@@ -870,8 +870,8 @@ export default class ProjectManager {
 						path,
 						DiagnosticsProcessor.createImmediateThrower([
 							{
-								category: 'project-manager',
-								message: 'Find project',
+								category: "project-manager",
+								message: "Find project",
 							},
 						]),
 					);

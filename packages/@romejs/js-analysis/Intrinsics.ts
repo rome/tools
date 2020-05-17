@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from './scopes';
-import T from './types/T';
-import OpenIntrinsicT from './types/OpenIntrinsicT';
+import {Scope} from "./scopes";
+import T from "./types/T";
+import OpenIntrinsicT from "./types/OpenIntrinsicT";
 
 export default class Intrinsics {
 	constructor(scope: Scope) {
@@ -15,20 +15,20 @@ export default class Intrinsics {
 
 		this.intrinsicByName = new Map();
 
-		this.NumberPrototype = this.createOpenT('NumberPrototype');
-		this.Number = this.createOpenT('Number');
+		this.NumberPrototype = this.createOpenT("NumberPrototype");
+		this.Number = this.createOpenT("Number");
 
-		this.StringPrototype = this.createOpenT('StringPrototype');
-		this.String = this.createOpenT('String');
+		this.StringPrototype = this.createOpenT("StringPrototype");
+		this.String = this.createOpenT("String");
 
-		this.ObjectPrototype = this.createOpenT('ObjectPrototype');
-		this.Object = this.createOpenT('Object');
+		this.ObjectPrototype = this.createOpenT("ObjectPrototype");
+		this.Object = this.createOpenT("Object");
 
-		this.ArrayPrototype = this.createOpenT('ArrayPrototype');
-		this.Array = this.createOpenT('Array');
+		this.ArrayPrototype = this.createOpenT("ArrayPrototype");
+		this.Array = this.createOpenT("Array");
 
-		this.RegExpPrototype = this.createOpenT('RegExpPrototype');
-		this.RegExp = this.createOpenT('RegExp');
+		this.RegExpPrototype = this.createOpenT("RegExpPrototype");
+		this.RegExp = this.createOpenT("RegExp");
 	}
 
 	scope: Scope;
@@ -64,19 +64,19 @@ export default class Intrinsics {
 	}
 
 	link() {
-		this.String.shouldMatch(this.scope.query(['String']));
-		this.StringPrototype.shouldMatch(this.scope.query(['String', 'prototype']));
+		this.String.shouldMatch(this.scope.query(["String"]));
+		this.StringPrototype.shouldMatch(this.scope.query(["String", "prototype"]));
 
-		this.Object.shouldMatch(this.scope.query(['Object']));
-		this.ObjectPrototype.shouldMatch(this.scope.query(['Object', 'prototype']));
+		this.Object.shouldMatch(this.scope.query(["Object"]));
+		this.ObjectPrototype.shouldMatch(this.scope.query(["Object", "prototype"]));
 
-		this.Array.shouldMatch(this.scope.query(['Array']));
-		this.ArrayPrototype.shouldMatch(this.scope.query(['Array', 'prototype']));
+		this.Array.shouldMatch(this.scope.query(["Array"]));
+		this.ArrayPrototype.shouldMatch(this.scope.query(["Array", "prototype"]));
 
-		this.RegExp.shouldMatch(this.scope.query(['RegExp']));
-		this.RegExpPrototype.shouldMatch(this.scope.query(['RegExp', 'prototype']));
+		this.RegExp.shouldMatch(this.scope.query(["RegExp"]));
+		this.RegExpPrototype.shouldMatch(this.scope.query(["RegExp", "prototype"]));
 
-		this.Number.shouldMatch(this.scope.query(['Number']));
-		this.NumberPrototype.shouldMatch(this.scope.query(['Number', 'prototype']));
+		this.Number.shouldMatch(this.scope.query(["Number"]));
+		this.NumberPrototype.shouldMatch(this.scope.query(["Number", "prototype"]));
 	}
 }

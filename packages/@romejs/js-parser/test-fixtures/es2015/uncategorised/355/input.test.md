@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 30
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		FunctionDeclaration {
 			id: BindingIdentifier {
-				name: 'x'
+				name: "x"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'x'
+					filename: "input.js"
+					identifierName: "x"
 					end: Object {
 						column: 10
 						index: 10
@@ -49,7 +49,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 29
 					index: 29
@@ -65,7 +65,7 @@ Program {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 29
 						index: 29
@@ -87,7 +87,7 @@ Program {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 26
 						index: 26
@@ -103,7 +103,7 @@ Program {
 					BindingObjectPattern {
 						rest: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 25
 								index: 25
@@ -119,7 +119,7 @@ Program {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 25
 									index: 25
@@ -136,10 +136,10 @@ Program {
 							BindingObjectPatternProperty {
 								key: StaticPropertyKey {
 									value: Identifier {
-										name: 'set'
+										name: "set"
 										loc: Object {
-											filename: 'input.js'
-											identifierName: 'set'
+											filename: "input.js"
+											identifierName: "set"
 											end: Object {
 												column: 16
 												index: 16
@@ -153,7 +153,7 @@ Program {
 										}
 									}
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 16
 											index: 16
@@ -168,7 +168,7 @@ Program {
 								}
 								value: BindingAssignmentPattern {
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 23
 											index: 23
@@ -182,7 +182,7 @@ Program {
 									}
 									right: NullLiteral {
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 23
 												index: 23
@@ -196,10 +196,10 @@ Program {
 										}
 									}
 									left: BindingIdentifier {
-										name: 'set'
+										name: "set"
 										loc: Object {
-											filename: 'input.js'
-											identifierName: 'set'
+											filename: "input.js"
+											identifierName: "set"
 											end: Object {
 												column: 16
 												index: 16
@@ -214,7 +214,7 @@ Program {
 									}
 								}
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 23
 										index: 23

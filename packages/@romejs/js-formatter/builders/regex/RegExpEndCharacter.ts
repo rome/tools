@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Token} from '../../tokens';
-import {RegExpEndCharacter} from '@romejs/js-ast';
+import {Token} from "../../tokens";
+import {RegExpEndCharacter} from "@romejs/js-ast";
 
 export default function RegExpEndCharacter(): Token {
-	return '$';
+	return "$";
 }

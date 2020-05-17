@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type DebuggerStatement = JSNodeBase & {
-	type: 'DebuggerStatement';
+	type: "DebuggerStatement";
 };
 
 export const debuggerStatement = createBuilder<DebuggerStatement>(
-	'DebuggerStatement',
+	"DebuggerStatement",
 	{
 		bindingKeys: {},
 		visitorKeys: {},

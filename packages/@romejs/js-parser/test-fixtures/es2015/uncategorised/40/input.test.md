@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 10
 			index: 10
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 10
 					index: 10
@@ -46,7 +46,7 @@ Program {
 			}
 			expression: ArrowFunctionExpression {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 10
 						index: 10
@@ -62,7 +62,7 @@ Program {
 					value: 42
 					format: undefined
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 10
 							index: 10
@@ -81,7 +81,7 @@ Program {
 					rest: undefined
 					thisType: undefined
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 7
 							index: 7
@@ -95,10 +95,10 @@ Program {
 					}
 					params: Array [
 						BindingIdentifier {
-							name: 'eval'
+							name: "eval"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'eval'
+								filename: "input.js"
+								identifierName: "eval"
 								end: Object {
 									column: 4
 									index: 4

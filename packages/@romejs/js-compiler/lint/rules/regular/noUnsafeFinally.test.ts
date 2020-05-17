@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {testLint} from '../testHelpers';
-import {dedent} from '@romejs/string-utils';
+import {test} from "rome";
+import {testLint} from "../testHelpers";
+import {dedent} from "@romejs/string-utils";
 
 test(
-	'disallow unsafe usage of break, continue, throw and return',
+	"disallow unsafe usage of break, continue, throw and return",
 	async (t) => {
 		await testLint(
 			t,
@@ -25,7 +25,7 @@ test(
           }
         }
       `,
-			{category: 'lint/noUnsafeFinally'},
+			{category: "lint/noUnsafeFinally"},
 		);
 
 		await testLint(
@@ -41,7 +41,7 @@ test(
           }
         }
       `,
-			{category: 'lint/noUnsafeFinally'},
+			{category: "lint/noUnsafeFinally"},
 		);
 
 		await testLint(
@@ -57,7 +57,7 @@ test(
           }
         }
       `,
-			{category: 'lint/noUnsafeFinally'},
+			{category: "lint/noUnsafeFinally"},
 		);
 
 		await testLint(
@@ -73,7 +73,7 @@ test(
           }
         }
       `,
-			{category: 'lint/noUnsafeFinally'},
+			{category: "lint/noUnsafeFinally"},
 		);
 	},
 );

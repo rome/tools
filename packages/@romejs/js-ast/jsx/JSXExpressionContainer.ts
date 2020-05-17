@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyExpression, JSNodeBase, JSXEmptyExpression} from '../index';
-import {createBuilder} from '../utils';
+import {AnyExpression, JSNodeBase, JSXEmptyExpression} from "../index";
+import {createBuilder} from "../utils";
 
 export type JSXExpressionContainer = JSNodeBase & {
-	type: 'JSXExpressionContainer';
+	type: "JSXExpressionContainer";
 	expression: AnyExpression | JSXEmptyExpression;
 };
 
 export const jsxExpressionContainer = createBuilder<JSXExpressionContainer>(
-	'JSXExpressionContainer',
+	"JSXExpressionContainer",
 	{
 		bindingKeys: {},
 		visitorKeys: {

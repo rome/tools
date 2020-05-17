@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Reporter, ReporterOptions} from '@romejs/cli-reporter';
+import {Reporter, ReporterOptions} from "@romejs/cli-reporter";
 
 export default class Logger extends Reporter {
 	constructor(name: string, isEnabled: () => boolean, opts: ReporterOptions) {

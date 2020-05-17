@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 48
 			index: 48
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 48
 					index: 48
@@ -46,7 +46,7 @@ Program {
 			}
 			expression: ObjectExpression {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 47
 						index: 47
@@ -60,13 +60,13 @@ Program {
 				}
 				properties: Array [
 					ObjectMethod {
-						kind: 'get'
+						kind: "get"
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: '__proto__'
+								name: "__proto__"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: '__proto__'
+									filename: "input.js"
+									identifierName: "__proto__"
 									end: Object {
 										column: 16
 										index: 16
@@ -80,7 +80,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 16
 									index: 16
@@ -94,7 +94,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 31
 								index: 31
@@ -116,7 +116,7 @@ Program {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 18
 									index: 18
@@ -132,7 +132,7 @@ Program {
 						body: BlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 31
 									index: 31
@@ -147,7 +147,7 @@ Program {
 							body: Array [
 								ReturnStatement {
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 29
 											index: 29
@@ -163,7 +163,7 @@ Program {
 										value: 1
 										format: undefined
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 29
 												index: 29
@@ -183,10 +183,10 @@ Program {
 					ObjectProperty {
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: '__proto__'
+								name: "__proto__"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: '__proto__'
+									filename: "input.js"
+									identifierName: "__proto__"
 									end: Object {
 										column: 42
 										index: 42
@@ -200,7 +200,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 42
 									index: 42
@@ -217,7 +217,7 @@ Program {
 							value: 2
 							format: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 45
 									index: 45
@@ -231,7 +231,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 45
 								index: 45

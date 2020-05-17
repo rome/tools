@@ -14,27 +14,27 @@ import {
 	createParser,
 	isAlpha,
 	isDigit,
-} from '@romejs/parser-core';
-import {getSPDXLicense, licenseNames} from './index';
-import {descriptions} from '@romejs/diagnostics';
-import {Number0, ob1Get0, ob1Inc} from '@romejs/ob1';
+} from "@romejs/parser-core";
+import {getSPDXLicense, licenseNames} from "./index";
+import {descriptions} from "@romejs/diagnostics";
+import {Number0, ob1Get0, ob1Inc} from "@romejs/ob1";
 
 //# Tokens
 type Tokens = BaseTokens & {
-	ParenOpen: SimpleToken<'ParenOpen'>;
-	ParenClose: SimpleToken<'ParenClose'>;
-	Plus: SimpleToken<'Plus'>;
-	And: SimpleToken<'And'>;
-	With: SimpleToken<'With'>;
-	Or: SimpleToken<'Or'>;
-	Word: ValueToken<'Word', string>;
+	ParenOpen: SimpleToken<"ParenOpen">;
+	ParenClose: SimpleToken<"ParenClose">;
+	Plus: SimpleToken<"Plus">;
+	And: SimpleToken<"And">;
+	With: SimpleToken<"With">;
+	Or: SimpleToken<"Or">;
+	Word: ValueToken<"Word", string>;
 };
 
 //# Nodes
 export type ExpressionNode = LicenseNode | AndNode | OrNode;
 
 type AndNode = ComplexNode<
-	'And',
+	"And",
 	{
 		left: ExpressionNode;
 		right: ExpressionNode;
@@ -42,7 +42,7 @@ type AndNode = ComplexNode<
 >;
 
 type OrNode = ComplexNode<
-	'Or',
+	"Or",
 	{
 		left: ExpressionNode;
 		right: ExpressionNode;
@@ -50,7 +50,7 @@ type OrNode = ComplexNode<
 >;
 
 type LicenseNode = ComplexNode<
-	'License',
+	"License",
 	{
 		plus: boolean;
 		id: string;
@@ -59,7 +59,7 @@ type LicenseNode = ComplexNode<
 >;
 
 function isWordChar(char: string) {
-	return isAlpha(char) || isDigit(char) || char === '-' || char === '.';
+	return isAlpha(char) || isDigit(char) || char === "-" || char === ".";
 }
 
 type SPDXLicenseParserOptions = ParserOptions & {
@@ -69,7 +69,7 @@ type SPDXLicenseParserOptions = ParserOptions & {
 const createSPDXLicenseParser = createParser((ParserCore) =>
 	class SPDXLicenseParser extends ParserCore<Tokens, void> {
 		constructor(opts: SPDXLicenseParserOptions) {
-			super(opts, 'parse/spdxLicense');
+			super(opts, "parse/spdxLicense");
 			this.loose = opts.loose === true;
 		}
 
@@ -79,41 +79,41 @@ const createSPDXLicenseParser = createParser((ParserCore) =>
 		tokenize(index: Number0, input: string) {
 			const char = input[ob1Get0(index)];
 
-			if (char === '+') {
-				return this.finishToken('Plus');
+			if (char === "+") {
+				return this.finishToken("Plus");
 			}
 
-			if (char === '(') {
-				return this.finishToken('ParenOpen');
+			if (char === "(") {
+				return this.finishToken("ParenOpen");
 			}
 
-			if (char === ')') {
-				return this.finishToken('ParenClose');
+			if (char === ")") {
+				return this.finishToken("ParenClose");
 			}
 
 			// Skip spaces
-			if (char === ' ') {
+			if (char === " ") {
 				return this.lookaheadToken(ob1Inc(index));
 			}
 
 			if (isWordChar(char)) {
 				const [value, end] = this.readInputFrom(index, isWordChar);
 
-				if (value === 'AND') {
-					return this.finishToken('And', end);
-				} else if (value === 'OR') {
-					return this.finishToken('Or', end);
-				} else if (value === 'WITH') {
-					return this.finishToken('With', end);
+				if (value === "AND") {
+					return this.finishToken("And", end);
+				} else if (value === "OR") {
+					return this.finishToken("Or", end);
+				} else if (value === "WITH") {
+					return this.finishToken("With", end);
 				} else {
-					return this.finishValueToken('Word', value, end);
+					return this.finishValueToken("Word", value, end);
 				}
 			}
 
 			return undefined;
 		}
 
-		parseLicense(token: Tokens['Word']): LicenseNode {
+		parseLicense(token: Tokens["Word"]): LicenseNode {
 			const startPos = this.getPosition();
 			this.nextToken();
 
@@ -125,7 +125,7 @@ const createSPDXLicenseParser = createParser((ParserCore) =>
 			// Sometimes licenses will be specified as "Apache 2.0" but what they actually meant was "Apache-2.0"
 
 			// In loose mode, just make it equivalent, otherwise, complain
-			if (licenseInfo === undefined && nextToken.type === 'Word') {
+			if (licenseInfo === undefined && nextToken.type === "Word") {
 				const possibleCorrectLicense = `${id}-${nextToken.value}`;
 				const possibleLicenseInfo = getSPDXLicense(possibleCorrectLicense);
 
@@ -155,13 +155,13 @@ const createSPDXLicenseParser = createParser((ParserCore) =>
 			}
 
 			// Is this a plus? (wtf is this)
-			const plus = this.eatToken('Plus') !== undefined;
+			const plus = this.eatToken("Plus") !== undefined;
 
 			// Get exception
 			let exception;
-			if (this.eatToken('With')) {
+			if (this.eatToken("With")) {
 				const token = this.getToken();
-				if (token.type === 'Word') {
+				if (token.type === "Word") {
 					exception = token.value;
 					this.nextToken();
 				} else {
@@ -172,7 +172,7 @@ const createSPDXLicenseParser = createParser((ParserCore) =>
 			}
 
 			return {
-				type: 'License',
+				type: "License",
 				loc: this.finishLoc(startPos),
 				id,
 				exception,
@@ -187,30 +187,30 @@ const createSPDXLicenseParser = createParser((ParserCore) =>
 			let value;
 
 			switch (startToken.type) {
-				case 'ParenOpen': {
+				case "ParenOpen": {
 					this.nextToken();
 					value = this.parseExpression();
-					this.expectToken('ParenClose');
+					this.expectToken("ParenClose");
 					break;
 				}
 
-				case 'Word': {
+				case "Word": {
 					value = this.parseLicense(startToken);
 					break;
 				}
 
-				case 'Or':
-				case 'And':
+				case "Or":
+				case "And":
 					throw this.unexpected({
 						description: descriptions.SPDX.OPERATOR_NOT_BETWEEN_EXPRESSION,
 					});
 
-				case 'Plus':
+				case "Plus":
 					throw this.unexpected({
 						description: descriptions.SPDX.PLUS_NOT_AFTER_LICENSE,
 					});
 
-				case 'ParenClose':
+				case "ParenClose":
 					throw this.unexpected({
 						description: descriptions.SPDX.UNOPENED_PAREN,
 					});
@@ -222,20 +222,20 @@ const createSPDXLicenseParser = createParser((ParserCore) =>
 			// Parse and/or
 			const nextToken = this.getToken();
 			switch (nextToken.type) {
-				case 'Or': {
+				case "Or": {
 					this.nextToken();
 					return {
-						type: 'Or',
+						type: "Or",
 						loc: this.finishLoc(startPos),
 						left: value,
 						right: this.parseExpression(),
 					};
 				}
 
-				case 'And': {
+				case "And": {
 					this.nextToken();
 					return {
-						type: 'And',
+						type: "And",
 						loc: this.finishLoc(startPos),
 						left: value,
 						right: this.parseExpression(),

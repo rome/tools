@@ -10,8 +10,8 @@ import {
 	ReporterProgress,
 	ReporterProgressOptions,
 	mergeProgresses,
-} from '@romejs/cli-reporter';
-import Master from './Master';
+} from "@romejs/cli-reporter";
+import Master from "./Master";
 
 export default class MasterReporter extends Reporter {
 	constructor(master: Master) {

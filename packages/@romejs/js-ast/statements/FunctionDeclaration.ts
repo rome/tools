@@ -10,11 +10,11 @@ import {
 	BlockStatement,
 	FunctionHead,
 	JSNodeBase,
-} from '../index';
-import {createBuilder} from '../utils';
+} from "../index";
+import {createBuilder} from "../utils";
 
 export type FunctionDeclaration = JSNodeBase & {
-	type: 'FunctionDeclaration';
+	type: "FunctionDeclaration";
 	id: BindingIdentifier;
 	declare?: boolean;
 	head: FunctionHead;
@@ -22,7 +22,7 @@ export type FunctionDeclaration = JSNodeBase & {
 };
 
 export const functionDeclaration = createBuilder<FunctionDeclaration>(
-	'FunctionDeclaration',
+	"FunctionDeclaration",
 	{
 		bindingKeys: {
 			id: true,

@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 65
@@ -32,9 +32,9 @@ Program {
 	body: Array [
 		TSModuleDeclaration {
 			id: StringLiteral {
-				value: 'm'
+				value: "m"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 18
 						index: 18
@@ -50,7 +50,7 @@ Program {
 			declare: true
 			global: undefined
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 1
 					index: 64
@@ -64,7 +64,7 @@ Program {
 			}
 			body: TSModuleBlock {
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 1
 						index: 64
@@ -79,10 +79,10 @@ Program {
 				body: Array [
 					TSModuleDeclaration {
 						id: BindingIdentifier {
-							name: 'global'
+							name: "global"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'global'
+								filename: "input.ts"
+								identifierName: "global"
 								end: Object {
 									column: 10
 									index: 31
@@ -97,7 +97,7 @@ Program {
 						}
 						global: true
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 5
 								index: 62
@@ -111,7 +111,7 @@ Program {
 						}
 						body: TSModuleBlock {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 5
 									index: 62
@@ -126,7 +126,7 @@ Program {
 							body: Array [
 								VariableDeclarationStatement {
 									loc: Object {
-										filename: 'input.ts'
+										filename: "input.ts"
 										end: Object {
 											column: 22
 											index: 56
@@ -139,9 +139,9 @@ Program {
 										}
 									}
 									declaration: VariableDeclaration {
-										kind: 'var'
+										kind: "var"
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 22
 												index: 56
@@ -156,9 +156,9 @@ Program {
 										declarations: Array [
 											VariableDeclarator {
 												id: BindingIdentifier {
-													name: 'x'
+													name: "x"
 													loc: Object {
-														filename: 'input.ts'
+														filename: "input.ts"
 														end: Object {
 															column: 21
 															index: 55
@@ -173,7 +173,7 @@ Program {
 													meta: PatternMeta {
 														definite: undefined
 														loc: Object {
-															filename: 'input.ts'
+															filename: "input.ts"
 															end: Object {
 																column: 21
 																index: 55
@@ -187,7 +187,7 @@ Program {
 														}
 														typeAnnotation: NumberKeywordTypeAnnotation {
 															loc: Object {
-																filename: 'input.ts'
+																filename: "input.ts"
 																end: Object {
 																	column: 21
 																	index: 55
@@ -204,7 +204,7 @@ Program {
 												}
 												init: undefined
 												loc: Object {
-													filename: 'input.ts'
+													filename: "input.ts"
 													end: Object {
 														column: 21
 														index: 55

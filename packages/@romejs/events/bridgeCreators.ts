@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {WebSocketInterface} from '@romejs/codec-websocket';
-import {BridgeCreatorOptions, BridgeMessage} from './types';
-import {ChildProcess} from 'child_process';
-import prettyFormat from '@romejs/pretty-format';
-import Bridge from './Bridge';
-import {Socket} from 'net';
-import {Class} from '@romejs/typescript-helpers';
+import {WebSocketInterface} from "@romejs/codec-websocket";
+import {BridgeCreatorOptions, BridgeMessage} from "./types";
+import {ChildProcess} from "child_process";
+import prettyFormat from "@romejs/pretty-format";
+import Bridge from "./Bridge";
+import {Socket} from "net";
+import {Class} from "@romejs/typescript-helpers";
 
 const SOCKET_LENGTH = /^(\d+):/;
 
@@ -28,7 +28,7 @@ function stringify(obj: unknown): string {
 			}
 
 			// Primitives
-			if (type === 'string' || type === 'number' || type === 'boolean') {
+			if (type === "string" || type === "number" || type === "boolean") {
 				return value;
 			}
 
@@ -70,16 +70,16 @@ export function createBridgeFromWebSocketInterface<B extends Bridge>(
 	});
 
 	socket.on(
-		'error',
+		"error",
 		(err) => {
 			bridge.endWithError(err);
 		},
 	);
 
 	socket.on(
-		'end',
+		"end",
 		() => {
-			bridge.end('RPC WebSocket died');
+			bridge.end("RPC WebSocket died");
 		},
 	);
 
@@ -107,7 +107,7 @@ export function createBridgeFromBrowserWebSocket<B extends Bridge>(
 	};
 
 	socket.onclose = () => {
-		bridge.end('RPC WebSocket disconnected');
+		bridge.end("RPC WebSocket disconnected");
 	};
 
 	return bridge;
@@ -131,9 +131,9 @@ export function createBridgeFromSocket<B extends Bridge>(
 	});
 
 	// buffer data and parse message on newline
-	let buff = '';
+	let buff = "";
 	let messageLength = 0;
-	socket.setEncoding('utf8');
+	socket.setEncoding("utf8");
 	function checkForPossibleMessage() {
 		// we're awaiting a message and have received it
 		if (messageLength > 0 && buff.length >= messageLength) {
@@ -149,7 +149,7 @@ export function createBridgeFromSocket<B extends Bridge>(
 		}
 
 		// if we aren't waiting for a message and we have a buffer then check for an incoming message
-		if (messageLength === 0 && buff !== '') {
+		if (messageLength === 0 && buff !== "") {
 			// check if we've received the starting info of a message
 			const possibleLength = buff.match(SOCKET_LENGTH);
 			if (possibleLength != null) {
@@ -166,7 +166,7 @@ export function createBridgeFromSocket<B extends Bridge>(
 	}
 
 	socket.on(
-		'data',
+		"data",
 		(chunk) => {
 			buff += chunk;
 			checkForPossibleMessage();
@@ -174,16 +174,16 @@ export function createBridgeFromSocket<B extends Bridge>(
 	);
 
 	socket.on(
-		'error',
+		"error",
 		(err) => {
 			bridge.endWithError(err);
 		},
 	);
 
 	socket.on(
-		'end',
+		"end",
 		() => {
-			bridge.end('Socket disconnected');
+			bridge.end("Socket disconnected");
 		},
 	);
 
@@ -192,11 +192,11 @@ export function createBridgeFromSocket<B extends Bridge>(
 
 export function createBridgeFromLocal<B extends Bridge>(
 	CustomBridge: Class<B>,
-	opts: Omit<BridgeCreatorOptions, 'type'>,
+	opts: Omit<BridgeCreatorOptions, "type">,
 ): B {
 	const bridge = new CustomBridge({
 		...opts,
-		type: 'server&client',
+		type: "server&client",
 		sendMessage: (msg: BridgeMessage) => {
 			bridge.handleMessage(msg);
 		},
@@ -222,14 +222,14 @@ export function createBridgeFromChildProcess<B extends Bridge>(
 	});
 
 	proc.on(
-		'error',
+		"error",
 		(err) => {
 			bridge.endWithError(err);
 		},
 	);
 
 	proc.on(
-		'message',
+		"message",
 		(msg) => {
 			bridge.handleMessage((msg as BridgeMessage));
 		},
@@ -237,9 +237,9 @@ export function createBridgeFromChildProcess<B extends Bridge>(
 
 	// Catch process dying and reject any requests in flight
 	proc.on(
-		'close',
+		"close",
 		() => {
-			bridge.end('RPC child process died');
+			bridge.end("RPC child process died");
 		},
 	);
 
@@ -253,16 +253,16 @@ export function createBridgeFromParentProcess<B extends Bridge>(
 	const bridge = new CustomBridge({
 		...opts,
 		sendMessage: (data: BridgeMessage) => {
-			if (typeof process.send === 'function') {
+			if (typeof process.send === "function") {
 				process.send(data);
 			} else {
-				throw new Error('No process.send found');
+				throw new Error("No process.send found");
 			}
 		},
 	});
 
 	process.on(
-		'message',
+		"message",
 		(data) => {
 			bridge.handleMessage(data);
 		},
@@ -270,9 +270,9 @@ export function createBridgeFromParentProcess<B extends Bridge>(
 
 	// I doubt any of these will have time to dispatch but for consistency sake...
 	process.on(
-		'exit',
+		"exit",
 		() => {
-			bridge.end('RPC self process died');
+			bridge.end("RPC self process died");
 		},
 	);
 

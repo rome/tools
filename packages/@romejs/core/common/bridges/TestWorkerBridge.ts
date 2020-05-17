@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Diagnostic, DiagnosticOrigin} from '@romejs/diagnostics';
-import {TestMasterRunnerOptions} from '../../master/testing/types';
-import {Bridge} from '@romejs/events';
-import {JSONFileReference} from '../types/files';
+import {Diagnostic, DiagnosticOrigin} from "@romejs/diagnostics";
+import {TestMasterRunnerOptions} from "../../master/testing/types";
+import {Bridge} from "@romejs/events";
+import {JSONFileReference} from "../types/files";
 import {
 	FocusedTest,
 	TestWorkerFileResult,
-} from '@romejs/core/test-worker/TestWorkerRunner';
+} from "@romejs/core/test-worker/TestWorkerRunner";
 
 export type TestRef = {
 	filename: string;
@@ -44,26 +44,26 @@ export default class TestWorkerBridge extends Bridge {
 			inspectorUrl: undefined | string;
 		}
 	>({
-		name: 'inspectorDetails',
-		direction: 'server->client',
+		name: "inspectorDetails",
+		direction: "server->client",
 	});
 
 	prepareTest = this.createEvent<
 		TestWorkerPrepareTestOptions,
 		TestWorkerPrepareTestResult
 	>({
-		name: 'prepareTest',
-		direction: 'server->client',
+		name: "prepareTest",
+		direction: "server->client",
 	});
 
 	runTest = this.createEvent<TestWorkerRunTestOptions, TestWorkerFileResult>({
-		name: 'runTest',
-		direction: 'server->client',
+		name: "runTest",
+		direction: "server->client",
 	});
 
 	testsFound = this.createEvent<Array<TestRef>, void>({
-		name: 'onTestFounds',
-		direction: 'server<-client',
+		name: "onTestFounds",
+		direction: "server<-client",
 	});
 
 	testStart = this.createEvent<
@@ -73,8 +73,8 @@ export default class TestWorkerBridge extends Bridge {
 		},
 		void
 	>({
-		name: 'onTestStart',
-		direction: 'server<-client',
+		name: "onTestStart",
+		direction: "server<-client",
 	});
 
 	testDiagnostic = this.createEvent<
@@ -84,8 +84,8 @@ export default class TestWorkerBridge extends Bridge {
 		},
 		void
 	>({
-		name: 'testDiagnostic',
-		direction: 'server<-client',
+		name: "testDiagnostic",
+		direction: "server<-client",
 	});
 
 	testFinish = this.createEvent<
@@ -95,7 +95,7 @@ export default class TestWorkerBridge extends Bridge {
 		},
 		void
 	>({
-		name: 'onTestSuccess',
-		direction: 'server<-client',
+		name: "onTestSuccess",
+		direction: "server<-client",
 	});
 }

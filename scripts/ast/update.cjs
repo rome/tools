@@ -5,18 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-require('../_setup.cjs');
+require("../_setup.cjs");
 
-const path = require('path');
-const fs = require('fs');
+const path = require("path");
+const fs = require("fs");
 
-const {readGeneratedFile, write, getBuilderName} = require('../_utils.cjs');
+const {readGeneratedFile, write, getBuilderName} = require("../_utils.cjs");
 
 const {
 	formatterFolder,
 	analysisFolder,
 	astFolder,
-} = require('../_constants.cjs');
+} = require("../_constants.cjs");
 
 let defs = [];
 
@@ -45,7 +45,7 @@ function readIndexFile(loc, handlers) {
 	let file = readGeneratedFile(loc);
 
 	for (const {iterator, wrapCallback} of handlers) {
-		let buff = '';
+		let buff = "";
 
 		for (const def of defs) {
 			const defBuff = iterator(def);
@@ -61,22 +61,22 @@ function readIndexFile(loc, handlers) {
 		file += buff;
 
 		file = file.trim();
-		file += '\n\n';
+		file += "\n\n";
 	}
 
 	file = file.trim();
-	file += '\n';
+	file += "\n";
 
 	write(loc, file);
 }
 
 // Add to ast index
 readIndexFile(
-	path.join(astFolder, 'index.ts'),
+	path.join(astFolder, "index.ts"),
 	[
 		{
 			iterator({category, nodeType}) {
-				return `export * from './${category}/${nodeType}';\n`;
+				return `export * from "./${category}/${nodeType}";\n`;
 			},
 		},
 	],
@@ -84,13 +84,13 @@ readIndexFile(
 
 // Add to builders
 readIndexFile(
-	path.join(formatterFolder, 'index.ts'),
+	path.join(formatterFolder, "index.ts"),
 	[
 		{
 			iterator({category, nodeType}) {
 				return (
-					`import ${nodeType} from './${category}/${nodeType}';\n` +
-					`builders.set('${nodeType}', ${nodeType});\n\n`
+					`import ${nodeType} from "./${category}/${nodeType}";\n` +
+					`builders.set("${nodeType}", ${nodeType});\n\n`
 				);
 			},
 		},
@@ -99,13 +99,13 @@ readIndexFile(
 
 // Add to analysis
 readIndexFile(
-	path.join(analysisFolder, 'index.ts'),
+	path.join(analysisFolder, "index.ts"),
 	[
 		{
 			iterator({category, nodeType}) {
 				return (
-					`import ${nodeType} from './${category}/${nodeType}';\n` +
-					`evaluators.set('${nodeType}', ${nodeType});\n\n`
+					`import ${nodeType} from "./${category}/${nodeType}";\n` +
+					`evaluators.set("${nodeType}", ${nodeType});\n\n`
 				);
 			},
 		},
@@ -113,13 +113,13 @@ readIndexFile(
 );
 
 // Update unions.ts
-const unionsLoc = path.join(astFolder, 'unions.ts');
+const unionsLoc = path.join(astFolder, "unions.ts");
 readIndexFile(
 	unionsLoc,
 	[
 		/*{
 		iterator(def) {
-			if (def.category === 'typescript') {
+			if (def.category === "typescript") {
 				return `\n	| n.${def.nodeType}`;
 			}
 		},
@@ -129,7 +129,7 @@ readIndexFile(
 	},
 	{
 		iterator(def) {
-			if (def.category === 'flow') {
+			if (def.category === "flow") {
 				return `\n	| n.${def.nodeType}`;
 			}
 		},

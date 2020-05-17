@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
+	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 24
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExportDefaultDeclaration {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 23
 					index: 23
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			declaration: BinaryExpression {
-				operator: '+'
+				operator: "+"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 21
 						index: 21
@@ -63,7 +63,7 @@ Program {
 					value: 1
 					format: undefined
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 17
 							index: 17
@@ -80,7 +80,7 @@ Program {
 					value: 2
 					format: undefined
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 21
 							index: 21

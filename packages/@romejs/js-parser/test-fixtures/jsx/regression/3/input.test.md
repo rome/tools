@@ -10,17 +10,17 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array [
-		'jsx'
-		'ts'
+		"jsx"
+		"ts"
 	]
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 18
 			index: 18
@@ -35,7 +35,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 18
 					index: 18
@@ -49,9 +49,9 @@ Program {
 			}
 			expression: JSXElement {
 				name: JSXIdentifier {
-					name: 'div'
+					name: "div"
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 4
 							index: 4
@@ -68,7 +68,7 @@ Program {
 				selfClosing: false
 				typeArguments: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -83,7 +83,7 @@ Program {
 				children: Array [
 					JSXExpressionContainer {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 12
 								index: 12
@@ -97,7 +97,7 @@ Program {
 						}
 						expression: ObjectExpression {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 10
 									index: 10
@@ -113,10 +113,10 @@ Program {
 								ObjectProperty {
 									key: StaticPropertyKey {
 										value: Identifier {
-											name: 'a'
+											name: "a"
 											loc: Object {
-												filename: 'input.js'
-												identifierName: 'a'
+												filename: "input.js"
+												identifierName: "a"
 												end: Object {
 													column: 9
 													index: 9
@@ -130,7 +130,7 @@ Program {
 											}
 										}
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 9
 												index: 9
@@ -144,10 +144,10 @@ Program {
 										}
 									}
 									value: ReferenceIdentifier {
-										name: 'a'
+										name: "a"
 										loc: Object {
-											filename: 'input.js'
-											identifierName: 'a'
+											filename: "input.js"
+											identifierName: "a"
 											end: Object {
 												column: 9
 												index: 9
@@ -161,7 +161,7 @@ Program {
 										}
 									}
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 9
 											index: 9

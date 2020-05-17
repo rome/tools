@@ -5,18 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyComment, AnyNode} from '@romejs/js-ast';
-import {isTypeExpressionWrapperNode, isTypeNode} from '@romejs/js-ast-utils';
-import CommentsConsumer from '@romejs/js-parser/CommentsConsumer';
+import {AnyComment, AnyNode} from "@romejs/js-ast";
+import {isTypeExpressionWrapperNode, isTypeNode} from "@romejs/js-ast-utils";
+import CommentsConsumer from "@romejs/js-parser/CommentsConsumer";
 import {
 	printComment,
 	printLeadingComment,
 	printTrailingComment,
-} from './builders/comments';
-import builders from './builders/index';
-import * as n from './node/index';
-import {Token, concat, hardline, indent, join, mark} from './tokens';
-import {ob1Get1} from '@romejs/ob1';
+} from "./builders/comments";
+import builders from "./builders/index";
+import * as n from "./node/index";
+import {Token, concat, hardline, indent, join, mark} from "./tokens";
+import {ob1Get1} from "@romejs/ob1";
 
 export type BuilderMethod<T extends AnyNode = AnyNode> = (
 	builder: Builder,
@@ -26,7 +26,7 @@ export type BuilderMethod<T extends AnyNode = AnyNode> = (
 
 export type BuilderOptions = {
 	typeAnnotations: boolean;
-	format?: 'pretty' | 'compact';
+	format?: "pretty" | "compact";
 	sourceMaps?: boolean;
 	sourceText?: string;
 };
@@ -46,7 +46,7 @@ export default class Builder {
 
 	tokenize(node: undefined | AnyNode, parent: AnyNode): Token {
 		if (node === undefined) {
-			return '';
+			return "";
 		}
 
 		if (
@@ -54,7 +54,7 @@ export default class Builder {
 			isTypeNode(node) &&
 			!isTypeExpressionWrapperNode(node)
 		) {
-			return '';
+			return "";
 		}
 
 		const tokenizeNode = builders.get(node.type);
@@ -69,17 +69,17 @@ export default class Builder {
 		const needsParens = n.needsParens(node, parent, this.printStack);
 		this.printStack.pop();
 
-		if (printedNode !== '') {
+		if (printedNode !== "") {
 			if (this.options.sourceMaps && node.loc !== undefined) {
 				printedNode = concat([
-					mark(node.loc, 'start'),
+					mark(node.loc, "start"),
 					printedNode,
-					mark(node.loc, 'end'),
+					mark(node.loc, "end"),
 				]);
 			}
 
 			if (needsParens) {
-				printedNode = concat(['(', printedNode, ')']);
+				printedNode = concat(["(", printedNode, ")"]);
 			}
 		}
 
@@ -89,7 +89,7 @@ export default class Builder {
 	tokenizeComments(node: AnyNode, printed: Token): Token {
 		const tokens = [];
 
-		const leadingComments = this.getComments('leadingComments', node);
+		const leadingComments = this.getComments("leadingComments", node);
 		if (leadingComments !== undefined) {
 			let next = node;
 
@@ -104,7 +104,7 @@ export default class Builder {
 
 		tokens.push(printed);
 
-		const trailingComments = this.getComments('trailingComments', node);
+		const trailingComments = this.getComments("trailingComments", node);
 		if (trailingComments !== undefined) {
 			let previous = node;
 
@@ -120,7 +120,7 @@ export default class Builder {
 
 	tokenizeStatementList(nodes: Array<AnyNode>, parent: AnyNode): Token {
 		if (nodes.length === 0) {
-			return '';
+			return "";
 		}
 
 		const tokens: Array<Token> = [];
@@ -129,7 +129,7 @@ export default class Builder {
 			const isLast = i === nodes.length - 1;
 			const node = nodes[i];
 
-			if (node.type === 'EmptyStatement') {
+			if (node.type === "EmptyStatement") {
 				continue;
 			}
 
@@ -150,9 +150,9 @@ export default class Builder {
 	}
 
 	tokenizeInnerComments(node: AnyNode, shouldIndent: boolean): Token {
-		const innerComments = this.getComments('innerComments', node);
+		const innerComments = this.getComments("innerComments", node);
 		if (innerComments === undefined) {
-			return '';
+			return "";
 		}
 
 		const tokens: Array<Token> = [];
@@ -168,7 +168,7 @@ export default class Builder {
 	}
 
 	getComments(
-		kind: 'leadingComments' | 'trailingComments' | 'innerComments',
+		kind: "leadingComments" | "trailingComments" | "innerComments",
 		node: AnyNode,
 		all: boolean = false,
 	): undefined | Array<AnyComment> {
@@ -214,8 +214,8 @@ export default class Builder {
 		//     /* COMMENT */
 		//     b;
 
-		const aTrailingComments = this.getComments('trailingComments', a, true);
-		const bLeadingComments = this.getComments('leadingComments', b, true);
+		const aTrailingComments = this.getComments("trailingComments", a, true);
+		const bLeadingComments = this.getComments("leadingComments", b, true);
 
 		// Comments must be deduplicated because they are shared between nodes.
 		// Walk them in order to calculate the nodes' boundaries.

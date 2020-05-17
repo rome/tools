@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 14
 			index: 14
@@ -30,16 +30,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Invalid left-hand side in arrow function parameters'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Invalid left-hand side in arrow function parameters"}
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 3
 					index: 3
@@ -56,7 +56,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 14
 					index: 14
@@ -70,7 +70,7 @@ Program {
 			}
 			expression: ArrowFunctionExpression {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 14
 						index: 14
@@ -84,9 +84,9 @@ Program {
 				}
 				body: NumericLiteral {
 					value: 0
-					format: 'octal'
+					format: "octal"
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 14
 							index: 14
@@ -106,7 +106,7 @@ Program {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 11
 							index: 11
@@ -120,9 +120,9 @@ Program {
 					}
 					params: Array [
 						BindingIdentifier {
-							name: 'INVALID_PLACEHOLDER'
+							name: "INVALID_PLACEHOLDER"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 11
 									index: 11
@@ -136,9 +136,9 @@ Program {
 							}
 						}
 						BindingIdentifier {
-							name: 'INVALID_PLACEHOLDER'
+							name: "INVALID_PLACEHOLDER"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 11
 									index: 11

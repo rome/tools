@@ -5,18 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import analyzeDependencies from './analyzeDependencies';
-import {DEFAULT_PROJECT_CONFIG} from '@romejs/project';
-import {test} from 'rome';
-import {parseJS} from '@romejs/js-parser';
-import {ConstSourceType} from '@romejs/js-ast';
-import {createUnknownFilePath} from '@romejs/path';
-import {dedent} from '@romejs/string-utils';
+import analyzeDependencies from "./analyzeDependencies";
+import {DEFAULT_PROJECT_CONFIG} from "@romejs/project";
+import {test} from "rome";
+import {parseJS} from "@romejs/js-parser";
+import {ConstSourceType} from "@romejs/js-ast";
+import {createUnknownFilePath} from "@romejs/path";
+import {dedent} from "@romejs/string-utils";
 
 async function testAnalyzeDeps(input: string, sourceType: ConstSourceType) {
 	return await analyzeDependencies({
 		options: {},
-		ast: parseJS({input, sourceType, path: createUnknownFilePath('unknown')}),
+		ast: parseJS({input, sourceType, path: createUnknownFilePath("unknown")}),
 		sourceText: input,
 		project: {
 			folder: undefined,
@@ -37,28 +37,28 @@ test(
             require('bar');
           }
         `,
-				'module',
+				"module",
 			),
 		);
 	},
 );
 
 test(
-	'ignores require(dynamic) call',
+	"ignores require(dynamic) call",
 	async (t) => {
 		t.snapshot(
 			await testAnalyzeDeps(
 				dedent`
           require(dynamic);
         `,
-				'module',
+				"module",
 			),
 		);
 	},
 );
 
 test(
-	'ignores require() call if shadowed',
+	"ignores require() call if shadowed",
 	async (t) => {
 		t.snapshot(
 			await testAnalyzeDeps(
@@ -73,7 +73,7 @@ test(
             require('yes');
           }
         `,
-				'script',
+				"script",
 			),
 		);
 	},
@@ -91,28 +91,28 @@ test(
             import('./bar');
           }
         `,
-				'module',
+				"module",
 			),
 		);
 	},
 );
 
 test(
-	'discovers local export specifiers',
+	"discovers local export specifiers",
 	async (t) => {
 		t.snapshot(
 			await testAnalyzeDeps(
 				dedent`
           export {foo, bar, yes as no};
         `,
-				'module',
+				"module",
 			),
 		);
 	},
 );
 
 test(
-	'discovers export declarations',
+	"discovers export declarations",
 	async (t) => {
 		t.snapshot(
 			await testAnalyzeDeps(
@@ -121,196 +121,196 @@ test(
           export function foo() {}
           export class Bar {}
         `,
-				'module',
+				"module",
 			),
 		);
 	},
 );
 
 test(
-	'discovers export default',
+	"discovers export default",
 	async (t) => {
 		t.snapshot(
 			await testAnalyzeDeps(
 				dedent`
           export default 'yes';
         `,
-				'module',
+				"module",
 			),
 		);
 	},
 );
 
 test(
-	'discovers export from',
+	"discovers export from",
 	async (t) => {
 		t.snapshot(
 			await testAnalyzeDeps(
 				dedent`
           export {foo, bar, default as no, boo as noo} from 'foobar';
         `,
-				'module',
+				"module",
 			),
 		);
 	},
 );
 
 test(
-	'discovers export star',
+	"discovers export star",
 	async (t) => {
 		t.snapshot(
 			await testAnalyzeDeps(
 				dedent`
           export * from 'foobar';
         `,
-				'module',
+				"module",
 			),
 		);
 	},
 );
 
 test(
-	'discovers import star',
+	"discovers import star",
 	async (t) => {
 		t.snapshot(
 			await testAnalyzeDeps(
 				dedent`
           import * as bar from 'foobar';
         `,
-				'module',
+				"module",
 			),
 		);
 	},
 );
 
 test(
-	'discovers import specifiers',
+	"discovers import specifiers",
 	async (t) => {
 		t.snapshot(
 			await testAnalyzeDeps(
 				dedent`
           import {bar, foo, default as lol, ya as to} from 'foobar';
         `,
-				'module',
+				"module",
 			),
 		);
 	},
 );
 
 test(
-	'discovers import default',
+	"discovers import default",
 	async (t) => {
 		t.snapshot(
 			await testAnalyzeDeps(
 				dedent`
           import bar from 'foobar';
         `,
-				'module',
+				"module",
 			),
 		);
 	},
 );
 
 test(
-	'discovers commonjs exports',
+	"discovers commonjs exports",
 	async (t) => {
 		t.snapshot(
 			await testAnalyzeDeps(
 				dedent`
           exports.yes = function() {};
         `,
-				'script',
+				"script",
 			),
 		);
 	},
 );
 
 test(
-	'discovers commonjs module.exports',
+	"discovers commonjs module.exports",
 	async (t) => {
 		t.snapshot(
 			await testAnalyzeDeps(
 				dedent`
           module.exports = function() {};
         `,
-				'script',
+				"script",
 			),
 		);
 	},
 );
 
 test(
-	'discovers top level await',
+	"discovers top level await",
 	async (t) => {
 		t.snapshot(
 			await testAnalyzeDeps(
 				dedent`
           await foobar();
         `,
-				'module',
+				"module",
 			),
 		);
 	},
 );
 
 test(
-	'correctly identifies a file with es imports as es',
+	"correctly identifies a file with es imports as es",
 	async (t) => {
 		t.snapshot(
 			await testAnalyzeDeps(
 				dedent`
           import 'bar';
         `,
-				'module',
+				"module",
 			),
 		);
 	},
 );
 
 test(
-	'correctly identifies a file with es exports as es',
+	"correctly identifies a file with es exports as es",
 	async (t) => {
 		t.snapshot(
 			await testAnalyzeDeps(
 				dedent`
           export const foo = 'bar';
         `,
-				'module',
+				"module",
 			),
 		);
 	},
 );
 
 test(
-	'correctly identifies a file with cjs exports as cjs',
+	"correctly identifies a file with cjs exports as cjs",
 	async (t) => {
 		t.snapshot(
 			await testAnalyzeDeps(
 				dedent`
           exports.foo = 'bar';
         `,
-				'module',
+				"module",
 			),
 		);
 	},
 );
 
 test(
-	'correctly identifies a file with no imports or exports as unknown',
+	"correctly identifies a file with no imports or exports as unknown",
 	async (t) => {
 		t.snapshot(
 			await testAnalyzeDeps(
 				dedent`
           foo();
         `,
-				'module',
+				"module",
 			),
 		);
 	},
 );
 
 test(
-	'disallow mix of es and cjs exports',
+	"disallow mix of es and cjs exports",
 	async (t) => {
 		t.snapshot(
 			await testAnalyzeDeps(
@@ -318,14 +318,14 @@ test(
           export const foo = 'bar';
           exports.bar = 'foo';
         `,
-				'script',
+				"script",
 			),
 		);
 	},
 );
 
 test(
-	'defines topLevelLocalBindings',
+	"defines topLevelLocalBindings",
 	async (t) => {
 		t.snapshot(
 			await testAnalyzeDeps(
@@ -333,7 +333,7 @@ test(
           import {bar} from 'foo';
           const foo = 'bar';
         `,
-				'module',
+				"module",
 			),
 		);
 	},

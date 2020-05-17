@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 6
@@ -30,16 +30,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unterminated regular expression'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unterminated regular expression"}
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 3
 					index: 3
@@ -56,7 +56,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 0
 					index: 6
@@ -69,9 +69,9 @@ Program {
 				}
 			}
 			expression: BinaryExpression {
-				operator: '/'
+				operator: "/"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 0
 						index: 6
@@ -84,9 +84,9 @@ Program {
 					}
 				}
 				right: ReferenceIdentifier {
-					name: 'INVALID_PLACEHOLDER'
+					name: "INVALID_PLACEHOLDER"
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 0
 							index: 6
@@ -107,7 +107,7 @@ Program {
 					sticky: false
 					unicode: false
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 4
 							index: 4
@@ -121,7 +121,7 @@ Program {
 					}
 					expression: RegExpSubExpression {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 2
 								index: 3
@@ -135,9 +135,9 @@ Program {
 						}
 						body: Array [
 							RegExpCharacter {
-								value: 'a'
+								value: "a"
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 2
 										index: 2
@@ -153,7 +153,7 @@ Program {
 							RegExpCharacter {
 								value: undefined
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 3
 										index: 4

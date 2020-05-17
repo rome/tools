@@ -10,11 +10,11 @@ import {
 	JSNodeBase,
 	StringLiteral,
 	TSModuleBlock,
-} from '../index';
-import {createBuilder} from '../utils';
+} from "../index";
+import {createBuilder} from "../utils";
 
 export type TSModuleDeclaration = JSNodeBase & {
-	type: 'TSModuleDeclaration';
+	type: "TSModuleDeclaration";
 	id: BindingIdentifier | StringLiteral;
 	global?: boolean;
 	body?: TSModuleBlock | TSModuleDeclaration;
@@ -22,7 +22,7 @@ export type TSModuleDeclaration = JSNodeBase & {
 };
 
 export const tsModuleDeclaration = createBuilder<TSModuleDeclaration>(
-	'TSModuleDeclaration',
+	"TSModuleDeclaration",
 	{
 		bindingKeys: {},
 		visitorKeys: {

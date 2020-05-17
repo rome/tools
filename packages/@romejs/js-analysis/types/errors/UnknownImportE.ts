@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {descriptions} from '@romejs/diagnostics';
-import {Scope} from '../../scopes';
-import E, {ErrorDefinition} from './E';
-import {AnyNode} from '@romejs/js-ast';
+import {descriptions} from "@romejs/diagnostics";
+import {Scope} from "../../scopes";
+import E, {ErrorDefinition} from "./E";
+import {AnyNode} from "@romejs/js-ast";
 
 export default class UnknownImportE extends E {
 	constructor(
@@ -26,7 +26,7 @@ export default class UnknownImportE extends E {
 		this.source = opts.source;
 	}
 
-	static type = 'UnknownImportE';
+	static type = "UnknownImportE";
 	importedName: string;
 	source: string;
 	possibleNames: Array<string>;

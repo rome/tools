@@ -43,7 +43,7 @@
  */
 
 const intToCharMap = Array.from(
-	'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/',
+	"ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/",
 );
 
 /**
@@ -106,7 +106,7 @@ function fromVLQSigned(value: number): number {
  * Returns the base 64 VLQ encoded value.
  */
 export function encodeVLQ(value: number): string {
-	let encoded: string = '';
+	let encoded: string = "";
 	let vlq = toVLQSigned(value);
 
 	do {
@@ -176,7 +176,7 @@ export function decodeVLQ(aStr: string, aIndex: number): [number, number] {
 
 	do {
 		if (aIndex >= strLen) {
-			throw new Error('Expected more digits in base 64 VLQ value.');
+			throw new Error("Expected more digits in base 64 VLQ value.");
 		}
 
 		let digit = decode(aStr.charCodeAt(aIndex++));

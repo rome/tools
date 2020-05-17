@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 47
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		FunctionDeclaration {
 			id: BindingIdentifier {
-				name: 'foo'
+				name: "foo"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'foo'
+					filename: "input.js"
+					identifierName: "foo"
 					end: Object {
 						column: 13
 						index: 13
@@ -49,7 +49,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 1
 					index: 46
@@ -71,7 +71,7 @@ Program {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 15
 						index: 15
@@ -87,7 +87,7 @@ Program {
 			body: BlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 1
 						index: 46
@@ -103,7 +103,7 @@ Program {
 					IfStatement {
 						alternate: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 26
 								index: 44
@@ -118,7 +118,7 @@ Program {
 						test: BooleanLiteral {
 							value: true
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 10
 									index: 28
@@ -133,7 +133,7 @@ Program {
 						}
 						consequent: ExpressionStatement {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 26
 									index: 44
@@ -147,7 +147,7 @@ Program {
 							}
 							expression: MetaProperty {
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 25
 										index: 43
@@ -160,10 +160,10 @@ Program {
 									}
 								}
 								meta: Identifier {
-									name: 'function'
+									name: "function"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'function'
+										filename: "input.js"
+										identifierName: "function"
 										end: Object {
 											column: 20
 											index: 38
@@ -177,10 +177,10 @@ Program {
 									}
 								}
 								property: Identifier {
-									name: 'sent'
+									name: "sent"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'sent'
+										filename: "input.js"
+										identifierName: "sent"
 										end: Object {
 											column: 25
 											index: 43

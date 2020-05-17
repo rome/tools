@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 1
 			index: 45
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		FunctionDeclaration {
 			id: BindingIdentifier {
-				name: 'fn'
+				name: "fn"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'fn'
+					filename: "input.js"
+					identifierName: "fn"
 					end: Object {
 						column: 17
 						index: 17
@@ -49,7 +49,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 1
 					index: 45
@@ -71,7 +71,7 @@ Program {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 19
 						index: 19
@@ -87,7 +87,7 @@ Program {
 			body: BlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 1
 						index: 45
@@ -102,7 +102,7 @@ Program {
 				body: Array [
 					ExpressionStatement {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 21
 								index: 43
@@ -116,7 +116,7 @@ Program {
 						}
 						expression: CallExpression {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 20
 									index: 42
@@ -129,10 +129,10 @@ Program {
 								}
 							}
 							callee: ReferenceIdentifier {
-								name: 'async'
+								name: "async"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'async'
+									filename: "input.js"
+									identifierName: "async"
 									end: Object {
 										column: 7
 										index: 29
@@ -147,9 +147,9 @@ Program {
 							}
 							arguments: Array [
 								AssignmentExpression {
-									operator: '='
+									operator: "="
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 19
 											index: 41
@@ -162,10 +162,10 @@ Program {
 										}
 									}
 									left: AssignmentIdentifier {
-										name: 'x'
+										name: "x"
 										loc: Object {
-											filename: 'input.js'
-											identifierName: 'x'
+											filename: "input.js"
+											identifierName: "x"
 											end: Object {
 												column: 9
 												index: 31
@@ -180,7 +180,7 @@ Program {
 									}
 									right: AwaitExpression {
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 19
 												index: 41
@@ -196,7 +196,7 @@ Program {
 											value: 2
 											format: undefined
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 19
 													index: 41

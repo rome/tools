@@ -25,8 +25,8 @@
 ### `0: formatted`
 
 ```
-const x = 'test';
-x: const y = 'test';
+const x = "test";
+x: const y = "test";
 
 ```
 
@@ -40,7 +40,7 @@ x: const y = 'test';
 ### `1: formatted`
 
 ```
-const x = 'test';
-z: const y = 'test';
+const x = "test";
+z: const y = "test";
 
 ```

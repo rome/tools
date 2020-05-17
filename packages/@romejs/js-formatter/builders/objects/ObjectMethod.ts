@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token} from '../../tokens';
-import {printMethod} from '../utils';
-import {ObjectMethod} from '@romejs/js-ast';
+import Builder from "../../Builder";
+import {Token} from "../../tokens";
+import {printMethod} from "../utils";
+import {ObjectMethod} from "@romejs/js-ast";
 
 export default function ObjectMethod(
 	builder: Builder,

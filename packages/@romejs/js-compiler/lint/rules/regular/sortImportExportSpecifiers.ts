@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, TransformExitResult} from '@romejs/js-compiler';
+import {Path, TransformExitResult} from "@romejs/js-compiler";
 import {
 	ExportExternalSpecifier,
 	ExportLocalSpecifier,
 	ImportSpecifier,
-} from '@romejs/js-ast';
-import {descriptions} from '@romejs/diagnostics';
-import {naturalCompare} from '@romejs/string-utils';
+} from "@romejs/js-ast";
+import {descriptions} from "@romejs/diagnostics";
+import {naturalCompare} from "@romejs/string-utils";
 
 function compareImportSpecifiers(a: ImportSpecifier, b: ImportSpecifier): number {
 	const order = naturalCompare(a.local.name.name, b.local.name.name, false);
@@ -45,11 +45,11 @@ function shouldReorder<T>(a: Array<T>, b: Array<T>) {
 }
 
 export default {
-	name: 'sortImportExportSpecifiers',
+	name: "sortImportExportSpecifiers",
 	enter(path: Path): TransformExitResult {
 		const {context, node} = path;
 
-		if (node.type === 'ImportDeclaration') {
+		if (node.type === "ImportDeclaration") {
 			if (node.namedSpecifiers.length > 1) {
 				const specifiers = node.namedSpecifiers;
 				const sortedSpecifiers = specifiers.slice().sort(compareImportSpecifiers);
@@ -63,7 +63,7 @@ export default {
 					);
 				}
 			}
-		} else if (node.type === 'ExportExternalDeclaration') {
+		} else if (node.type === "ExportExternalDeclaration") {
 			if (node.namedSpecifiers.length > 1) {
 				const specifiers = node.namedSpecifiers;
 				const sortedSpecifiers = specifiers.slice().sort(compareExportSpecifiers);
@@ -77,7 +77,7 @@ export default {
 					);
 				}
 			}
-		} else if (node.type === 'ExportLocalDeclaration') {
+		} else if (node.type === "ExportLocalDeclaration") {
 			if (node.specifiers !== undefined && node.specifiers.length > 1) {
 				const specifiers = node.specifiers;
 				const sortedSpecifiers = specifiers.slice().sort(compareExportSpecifiers);

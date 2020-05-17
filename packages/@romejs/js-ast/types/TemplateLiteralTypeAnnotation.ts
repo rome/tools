@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type TemplateLiteralTypeAnnotation = JSNodeBase & {
-	type: 'TemplateLiteralTypeAnnotation';
+	type: "TemplateLiteralTypeAnnotation";
 	value: string;
 };
 
 export const templateLiteralTypeAnnotation = createBuilder<TemplateLiteralTypeAnnotation>(
-	'TemplateLiteralTypeAnnotation',
+	"TemplateLiteralTypeAnnotation",
 	{
 		bindingKeys: {},
 		visitorKeys: {},

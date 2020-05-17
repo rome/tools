@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 27
 			index: 27
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 27
 					index: 27
@@ -47,7 +47,7 @@ Program {
 			expression: FunctionExpression {
 				id: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 26
 						index: 26
@@ -69,7 +69,7 @@ Program {
 					thisType: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 12
 							index: 12
@@ -85,7 +85,7 @@ Program {
 				body: BlockStatement {
 					directives: Array []
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 26
 							index: 26
@@ -100,7 +100,7 @@ Program {
 					body: Array [
 						ExpressionStatement {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 24
 									index: 24
@@ -113,9 +113,9 @@ Program {
 								}
 							}
 							expression: BinaryExpression {
-								operator: '*'
+								operator: "*"
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 24
 										index: 24
@@ -128,10 +128,10 @@ Program {
 									}
 								}
 								left: ReferenceIdentifier {
-									name: 'yield'
+									name: "yield"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'yield'
+										filename: "input.js"
+										identifierName: "yield"
 										end: Object {
 											column: 20
 											index: 20
@@ -148,7 +148,7 @@ Program {
 									value: 10
 									format: undefined
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 24
 											index: 24

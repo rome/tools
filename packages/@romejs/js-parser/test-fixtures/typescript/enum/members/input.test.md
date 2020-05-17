@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 28
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		TSEnumDeclaration {
 			id: BindingIdentifier {
-				name: 'E'
+				name: "E"
 				loc: Object {
-					filename: 'input.ts'
-					identifierName: 'E'
+					filename: "input.ts"
+					identifierName: "E"
 					end: Object {
 						column: 6
 						index: 6
@@ -50,7 +50,7 @@ Program {
 			}
 			const: false
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 1
 					index: 27
@@ -65,10 +65,10 @@ Program {
 			members: Array [
 				TSEnumMember {
 					id: Identifier {
-						name: 'A'
+						name: "A"
 						loc: Object {
-							filename: 'input.ts'
-							identifierName: 'A'
+							filename: "input.ts"
+							identifierName: "A"
 							end: Object {
 								column: 5
 								index: 14
@@ -83,7 +83,7 @@ Program {
 					}
 					initializer: undefined
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 5
 							index: 14
@@ -98,10 +98,10 @@ Program {
 				}
 				TSEnumMember {
 					id: Identifier {
-						name: 'B'
+						name: "B"
 						loc: Object {
-							filename: 'input.ts'
-							identifierName: 'B'
+							filename: "input.ts"
+							identifierName: "B"
 							end: Object {
 								column: 5
 								index: 21
@@ -115,7 +115,7 @@ Program {
 						}
 					}
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 9
 							index: 25
@@ -131,7 +131,7 @@ Program {
 						value: 0
 						format: undefined
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 9
 								index: 25

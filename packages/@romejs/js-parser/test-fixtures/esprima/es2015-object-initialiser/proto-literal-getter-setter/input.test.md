@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 63
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 62
 					index: 62
@@ -46,7 +46,7 @@ Program {
 			}
 			expression: ObjectExpression {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 61
 						index: 61
@@ -62,9 +62,9 @@ Program {
 					ObjectProperty {
 						key: StaticPropertyKey {
 							value: StringLiteral {
-								value: '__proto__'
+								value: "__proto__"
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 14
 										index: 14
@@ -78,7 +78,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 14
 									index: 14
@@ -93,7 +93,7 @@ Program {
 						}
 						value: NullLiteral {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 20
 									index: 20
@@ -107,7 +107,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 20
 								index: 20
@@ -121,13 +121,13 @@ Program {
 						}
 					}
 					ObjectMethod {
-						kind: 'get'
+						kind: "get"
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: '__proto__'
+								name: "__proto__"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: '__proto__'
+									filename: "input.js"
+									identifierName: "__proto__"
 									end: Object {
 										column: 35
 										index: 35
@@ -141,7 +141,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 35
 									index: 35
@@ -155,7 +155,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 39
 								index: 39
@@ -171,7 +171,7 @@ Program {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 39
 									index: 39
@@ -194,7 +194,7 @@ Program {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 37
 									index: 37
@@ -209,13 +209,13 @@ Program {
 						}
 					}
 					ObjectMethod {
-						kind: 'set'
+						kind: "set"
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: '__proto__'
+								name: "__proto__"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: '__proto__'
+									filename: "input.js"
+									identifierName: "__proto__"
 									end: Object {
 										column: 54
 										index: 54
@@ -229,7 +229,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 54
 									index: 54
@@ -243,7 +243,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 59
 								index: 59
@@ -259,7 +259,7 @@ Program {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 59
 									index: 59
@@ -281,7 +281,7 @@ Program {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 57
 									index: 57
@@ -295,10 +295,10 @@ Program {
 							}
 							params: Array [
 								BindingIdentifier {
-									name: 'x'
+									name: "x"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'x'
+										filename: "input.js"
+										identifierName: "x"
 										end: Object {
 											column: 56
 											index: 56
@@ -314,7 +314,7 @@ Program {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 56
 												index: 56

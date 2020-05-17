@@ -16,9 +16,9 @@ import {
 	ReturnStatement,
 	TSDeclareMethod,
 	ThrowStatement,
-} from '@romejs/js-ast';
-import {isBinary} from '@romejs/js-ast-utils';
-import Builder, {BuilderMethod} from '../Builder';
+} from "@romejs/js-ast";
+import {isBinary} from "@romejs/js-ast-utils";
+import Builder, {BuilderMethod} from "../Builder";
 import {
 	Token,
 	concat,
@@ -30,8 +30,8 @@ import {
 	lineOrSpace,
 	softline,
 	space,
-} from '../tokens';
-import {hasInnerComments} from './comments';
+} from "../tokens";
+import {hasInnerComments} from "./comments";
 
 export function buildLabelStatementBuilder(
 	prefix: string,
@@ -43,7 +43,7 @@ export function buildLabelStatementBuilder(
 			tokens.push(space, builder.tokenize(node.label, node));
 		}
 
-		tokens.push(';');
+		tokens.push(";");
 
 		return concat(tokens);
 	};
@@ -59,17 +59,17 @@ export function buildThrowAndReturnStatementBuilder(
 			tokens.push(space);
 
 			if (
-				node.argument.type === 'BinaryExpression' ||
-				node.argument.type === 'LogicalExpression' ||
-				node.argument.type === 'SequenceExpression'
+				node.argument.type === "BinaryExpression" ||
+				node.argument.type === "LogicalExpression" ||
+				node.argument.type === "SequenceExpression"
 			) {
 				tokens.push(
 					group(
 						concat([
-							ifBreak('('),
+							ifBreak("("),
 							indent(concat([softline, builder.tokenize(node.argument, node)])),
 							softline,
-							ifBreak(')'),
+							ifBreak(")"),
 						]),
 					),
 				);
@@ -78,7 +78,7 @@ export function buildThrowAndReturnStatementBuilder(
 			}
 		}
 
-		tokens.push(';');
+		tokens.push(";");
 
 		return concat(tokens);
 	};
@@ -92,21 +92,21 @@ export function printMethod(
 
 	const tokens: Array<Token> = [];
 
-	if (kind === 'method' && node.head.generator === true) {
-		tokens.push('*');
+	if (kind === "method" && node.head.generator === true) {
+		tokens.push("*");
 	}
 
-	if (kind === 'get' || kind === 'set') {
+	if (kind === "get" || kind === "set") {
 		tokens.push(kind);
 		tokens.push(space);
 	}
 
 	if (node.head.async === true) {
-		tokens.push('async');
+		tokens.push("async");
 		tokens.push(space);
 	}
 
-	if (node.type === 'TSDeclareMethod') {
+	if (node.type === "TSDeclareMethod") {
 		return concat([concat(tokens), builder.tokenize(node.head, node)]);
 	}
 
@@ -127,32 +127,32 @@ export function printBindingPatternParams(
 ): Token {
 	if (params.length === 0 && rest === undefined) {
 		if (hasInnerComments(node)) {
-			return concat(['(', builder.tokenizeInnerComments(node, true), hardline, ')']);
+			return concat(["(", builder.tokenizeInnerComments(node, true), hardline, ")"]);
 		} else {
-			return '()';
+			return "()";
 		}
 	}
 
 	const tokens: Array<Token> = [
 		softline,
 		join(
-			concat([',', lineOrSpace]),
+			concat([",", lineOrSpace]),
 			params.map((param) => builder.tokenize(param, node)),
 		),
 	];
 
 	if (rest) {
 		if (params.length > 0) {
-			tokens.push(',', lineOrSpace);
+			tokens.push(",", lineOrSpace);
 		}
-		tokens.push('...', builder.tokenize(rest, node));
+		tokens.push("...", builder.tokenize(rest, node));
 	}
 
 	if (params.length > 0 && !rest) {
-		tokens.push(ifBreak(','));
+		tokens.push(ifBreak(","));
 	}
 
-	return concat(['(', indent(concat(tokens)), softline, ')']);
+	return concat(["(", indent(concat(tokens)), softline, ")"]);
 }
 
 export function printTSBraced(
@@ -162,13 +162,13 @@ export function printTSBraced(
 ): Token {
 	if (members.length === 0) {
 		return group(
-			concat(['{', builder.tokenizeInnerComments(node, true), softline, '}']),
+			concat(["{", builder.tokenizeInnerComments(node, true), softline, "}"]),
 		);
 	}
 
 	return group(
 		concat([
-			'{',
+			"{",
 			indent(
 				concat([
 					hardline,
@@ -186,7 +186,7 @@ export function printTSBraced(
 				]),
 			),
 			hardline,
-			'}',
+			"}",
 		]),
 		true,
 	);
@@ -201,16 +201,16 @@ export function printPatternMeta(
 		const tokens: Array<Token> = [];
 
 		if (meta.optional) {
-			tokens.push('?');
+			tokens.push("?");
 		}
 
 		if (meta.typeAnnotation) {
-			tokens.push(':', space, builder.tokenize(meta.typeAnnotation, node));
+			tokens.push(":", space, builder.tokenize(meta.typeAnnotation, node));
 		}
 
 		return concat(tokens);
 	} else {
-		return '';
+		return "";
 	}
 }
 
@@ -219,11 +219,11 @@ export function printClause(
 	clause: AnyNode,
 	parent: AnyNode,
 ): Token {
-	if (clause.type === 'EmptyStatement') {
-		return ';';
+	if (clause.type === "EmptyStatement") {
+		return ";";
 	}
 
-	if (clause.type === 'BlockStatement') {
+	if (clause.type === "BlockStatement") {
 		return concat([space, builder.tokenize(clause, parent)]);
 	}
 
@@ -236,7 +236,7 @@ export function printCommaList(
 	parent: AnyNode,
 ): Token {
 	return join(
-		concat([',', lineOrSpace]),
+		concat([",", lineOrSpace]),
 		nodes.map((node) => builder.tokenize(node, parent)),
 	);
 }
@@ -249,10 +249,10 @@ export function printAssignment(
 	right: AnyNode,
 ): Token {
 	const canBreak =
-		right.type === 'BinaryExpression' ||
-		right.type === 'LogicalExpression' ||
-		right.type === 'SequenceExpression' ||
-		(right.type === 'ConditionalExpression' && isBinary(right.test));
+		right.type === "BinaryExpression" ||
+		right.type === "LogicalExpression" ||
+		right.type === "SequenceExpression" ||
+		(right.type === "ConditionalExpression" && isBinary(right.test));
 
 	return group(
 		concat([

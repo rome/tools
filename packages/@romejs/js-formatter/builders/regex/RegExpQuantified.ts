@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token, concat} from '../../tokens';
-import {RegExpQuantified} from '@romejs/js-ast';
+import Builder from "../../Builder";
+import {Token, concat} from "../../tokens";
+import {RegExpQuantified} from "@romejs/js-ast";
 
 export default function RegExpQuantified(
 	builder: Builder,
@@ -16,28 +16,28 @@ export default function RegExpQuantified(
 	const tokens: Array<Token> = [builder.tokenize(node.target, node)];
 
 	if (node.min === 0 && node.max === 1) {
-		tokens.push('?');
+		tokens.push("?");
 	} else if (node.min === 0 && node.max === undefined) {
-		tokens.push('*');
+		tokens.push("*");
 	} else if (node.min === 1 && node.max === undefined) {
-		tokens.push('+');
+		tokens.push("+");
 	} else {
-		tokens.push('{');
+		tokens.push("{");
 
 		tokens.push(String(node.min));
 
 		if (node.min !== node.max) {
-			tokens.push(',');
+			tokens.push(",");
 			if (node.max !== undefined) {
 				tokens.push(String(node.max));
 			}
 		}
 
-		tokens.push('}');
+		tokens.push("}");
 	}
 
 	if (node.lazy) {
-		tokens.push('?');
+		tokens.push("?");
 	}
 
 	return concat(tokens);

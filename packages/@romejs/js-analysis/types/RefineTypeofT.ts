@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from '@romejs/js-ast';
-import {Scope} from '../scopes';
-import T from './T';
-import StringLiteralT from './StringLiteralT';
-import BooleanT from './BooleanT';
-import NumericT from './NumericT';
-import StringT from './StringT';
-import VoidT from './VoidT';
+import {AnyNode} from "@romejs/js-ast";
+import {Scope} from "../scopes";
+import T from "./T";
+import StringLiteralT from "./StringLiteralT";
+import BooleanT from "./BooleanT";
+import NumericT from "./NumericT";
+import StringT from "./StringT";
+import VoidT from "./VoidT";
 
 export default class RefineTypeofT extends T {
 	constructor(scope: Scope, node: AnyNode, str: T, fallback: T) {
@@ -21,7 +21,7 @@ export default class RefineTypeofT extends T {
 		this.fallback = fallback;
 	}
 
-	static type = 'RefineTypeofT';
+	static type = "RefineTypeofT";
 	str: T;
 	fallback: T;
 
@@ -33,29 +33,29 @@ export default class RefineTypeofT extends T {
 			let val;
 
 			switch (str.value) {
-				case 'string': {
+				case "string": {
 					val = new StringT(this.scope, undefined);
 					break;
 				}
 
-				case 'number': {
+				case "number": {
 					val = new NumericT(this.scope, undefined);
 					break;
 				}
 
-				case 'undefined': {
+				case "undefined": {
 					val = new VoidT(this.scope, undefined);
 					break;
 				}
 
-				case 'boolean': {
+				case "boolean": {
 					val = new BooleanT(this.scope, undefined);
 					break;
 				}
 
-				case 'symbol':
-				case 'function':
-				case 'object':
+				case "symbol":
+				case "function":
+				case "object":
 					// TODO
 					return utils.reduce(fallback);
 

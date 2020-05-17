@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {dedent} from '@romejs/string-utils';
-import {testLintMultiple} from '../testHelpers';
+import {test} from "rome";
+import {dedent} from "@romejs/string-utils";
+import {testLintMultiple} from "../testHelpers";
 
 test(
-	'prefer block statements',
+	"prefer block statements",
 	async (t) => {
 		await testLintMultiple(
 			t,
@@ -27,7 +27,7 @@ test(
           } else if (y) y;
         `,
 			],
-			{category: 'lint/preferBlockStatements'},
+			{category: "lint/preferBlockStatements"},
 		);
 
 		await testLintMultiple(
@@ -40,7 +40,7 @@ test(
 				`while (x);`,
 				`with (x);`,
 			],
-			{category: 'lint/preferBlockStatements'},
+			{category: "lint/preferBlockStatements"},
 		);
 	},
 );

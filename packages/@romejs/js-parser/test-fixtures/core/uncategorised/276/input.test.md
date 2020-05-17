@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 21
 			index: 21
@@ -33,7 +33,7 @@ Program {
 		TryStatement {
 			finalizer: undefined
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 21
 					index: 21
@@ -49,7 +49,7 @@ Program {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 7
 						index: 7
@@ -64,7 +64,7 @@ Program {
 			}
 			handler: CatchClause {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 21
 						index: 21
@@ -80,7 +80,7 @@ Program {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 21
 							index: 21
@@ -94,10 +94,10 @@ Program {
 					}
 				}
 				param: BindingIdentifier {
-					name: 'e'
+					name: "e"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'e'
+						filename: "input.js"
+						identifierName: "e"
 						end: Object {
 							column: 16
 							index: 16

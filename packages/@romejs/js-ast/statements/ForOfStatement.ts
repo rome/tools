@@ -11,11 +11,11 @@ import {
 	AnyTargetAssignmentPattern,
 	JSNodeBase,
 	VariableDeclaration,
-} from '../index';
-import {createBuilder} from '../utils';
+} from "../index";
+import {createBuilder} from "../utils";
 
 export type ForOfStatement = JSNodeBase & {
-	type: 'ForOfStatement';
+	type: "ForOfStatement";
 	await?: boolean;
 	left: VariableDeclaration | AnyTargetAssignmentPattern;
 	right: AnyExpression;
@@ -23,7 +23,7 @@ export type ForOfStatement = JSNodeBase & {
 };
 
 export const forOfStatement = createBuilder<ForOfStatement>(
-	'ForOfStatement',
+	"ForOfStatement",
 	{
 		bindingKeys: {},
 		visitorKeys: {

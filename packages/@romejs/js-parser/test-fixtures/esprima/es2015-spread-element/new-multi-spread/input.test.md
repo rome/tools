@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 25
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 24
 					index: 24
@@ -48,7 +48,7 @@ Program {
 				optional: undefined
 				typeArguments: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 23
 						index: 23
@@ -61,10 +61,10 @@ Program {
 					}
 				}
 				callee: ReferenceIdentifier {
-					name: 'f'
+					name: "f"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'f'
+						filename: "input.js"
+						identifierName: "f"
 						end: Object {
 							column: 5
 							index: 5
@@ -80,7 +80,7 @@ Program {
 				arguments: Array [
 					SpreadElement {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 10
 								index: 10
@@ -93,10 +93,10 @@ Program {
 							}
 						}
 						argument: ReferenceIdentifier {
-							name: 'x'
+							name: "x"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'x'
+								filename: "input.js"
+								identifierName: "x"
 								end: Object {
 									column: 10
 									index: 10
@@ -112,7 +112,7 @@ Program {
 					}
 					SpreadElement {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 16
 								index: 16
@@ -125,10 +125,10 @@ Program {
 							}
 						}
 						argument: ReferenceIdentifier {
-							name: 'y'
+							name: "y"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'y'
+								filename: "input.js"
+								identifierName: "y"
 								end: Object {
 									column: 16
 									index: 16
@@ -144,7 +144,7 @@ Program {
 					}
 					SpreadElement {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 22
 								index: 22
@@ -157,10 +157,10 @@ Program {
 							}
 						}
 						argument: ReferenceIdentifier {
-							name: 'z'
+							name: "z"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'z'
+								filename: "input.js"
+								identifierName: "z"
 								end: Object {
 									column: 22
 									index: 22

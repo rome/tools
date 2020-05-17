@@ -10,17 +10,17 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.tsx'
+	filename: "input.tsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
+	sourceType: "module"
 	syntax: Array [
-		'jsx'
-		'ts'
+		"jsx"
+		"ts"
 	]
 	loc: Object {
-		filename: 'input.tsx'
+		filename: "input.tsx"
 		end: Object {
 			column: 0
 			index: 31
@@ -35,7 +35,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.tsx'
+				filename: "input.tsx"
 				end: Object {
 					column: 16
 					index: 16
@@ -49,9 +49,9 @@ Program {
 			}
 			expression: JSXElement {
 				name: JSXReferenceIdentifier {
-					name: 'C'
+					name: "C"
 					loc: Object {
-						filename: 'input.tsx'
+						filename: "input.tsx"
 						end: Object {
 							column: 2
 							index: 2
@@ -68,7 +68,7 @@ Program {
 				children: Array []
 				selfClosing: false
 				loc: Object {
-					filename: 'input.tsx'
+					filename: "input.tsx"
 					end: Object {
 						column: 15
 						index: 15
@@ -82,7 +82,7 @@ Program {
 				}
 				typeArguments: TSTypeParameterInstantiation {
 					loc: Object {
-						filename: 'input.tsx'
+						filename: "input.tsx"
 						end: Object {
 							column: 10
 							index: 10
@@ -97,7 +97,7 @@ Program {
 					params: Array [
 						NumberKeywordTypeAnnotation {
 							loc: Object {
-								filename: 'input.tsx'
+								filename: "input.tsx"
 								end: Object {
 									column: 9
 									index: 9
@@ -116,7 +116,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.tsx'
+				filename: "input.tsx"
 				end: Object {
 					column: 13
 					index: 30
@@ -130,9 +130,9 @@ Program {
 			}
 			expression: JSXElement {
 				name: JSXReferenceIdentifier {
-					name: 'C'
+					name: "C"
 					loc: Object {
-						filename: 'input.tsx'
+						filename: "input.tsx"
 						end: Object {
 							column: 2
 							index: 19
@@ -149,7 +149,7 @@ Program {
 				children: Array []
 				selfClosing: true
 				loc: Object {
-					filename: 'input.tsx'
+					filename: "input.tsx"
 					end: Object {
 						column: 12
 						index: 29
@@ -163,7 +163,7 @@ Program {
 				}
 				typeArguments: TSTypeParameterInstantiation {
 					loc: Object {
-						filename: 'input.tsx'
+						filename: "input.tsx"
 						end: Object {
 							column: 10
 							index: 27
@@ -178,7 +178,7 @@ Program {
 					params: Array [
 						NumberKeywordTypeAnnotation {
 							loc: Object {
-								filename: 'input.tsx'
+								filename: "input.tsx"
 								end: Object {
 									column: 9
 									index: 26

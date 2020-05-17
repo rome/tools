@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
+	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 39
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExportDefaultDeclaration {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 38
 					index: 38
@@ -46,7 +46,7 @@ Program {
 			}
 			declaration: ArrowFunctionExpression {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 38
 						index: 38
@@ -66,7 +66,7 @@ Program {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 26
 							index: 26
@@ -81,7 +81,7 @@ Program {
 				}
 				body: AwaitExpression {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 38
 							index: 38
@@ -96,7 +96,7 @@ Program {
 					argument: CallExpression {
 						arguments: Array []
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 38
 								index: 38
@@ -109,10 +109,10 @@ Program {
 							}
 						}
 						callee: ReferenceIdentifier {
-							name: 'foo'
+							name: "foo"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'foo'
+								filename: "input.js"
+								identifierName: "foo"
 								end: Object {
 									column: 36
 									index: 36

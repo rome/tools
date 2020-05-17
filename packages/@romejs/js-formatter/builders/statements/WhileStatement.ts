@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {WhileStatement} from '@romejs/js-ast';
-import Builder from '../../Builder';
-import {Token, concat, group, indent, softline, space} from '../../tokens';
-import {printClause} from '../utils';
+import {WhileStatement} from "@romejs/js-ast";
+import Builder from "../../Builder";
+import {Token, concat, group, indent, softline, space} from "../../tokens";
+import {printClause} from "../utils";
 
 export default function WhileStatement(
 	builder: Builder,
@@ -16,16 +16,16 @@ export default function WhileStatement(
 ): Token {
 	return group(
 		concat([
-			'while',
+			"while",
 			space,
-			'(',
+			"(",
 			group(
 				concat([
 					indent(concat([softline, builder.tokenize(node.test, node)])),
 					softline,
 				]),
 			),
-			')',
+			")",
 			printClause(builder, node.body, node),
 		]),
 	);

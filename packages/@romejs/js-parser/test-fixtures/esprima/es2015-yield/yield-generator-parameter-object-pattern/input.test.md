@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 26
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		FunctionDeclaration {
 			id: BindingIdentifier {
-				name: 'g'
+				name: "g"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'g'
+					filename: "input.js"
+					identifierName: "g"
 					end: Object {
 						column: 11
 						index: 11
@@ -49,7 +49,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 25
 					index: 25
@@ -65,7 +65,7 @@ Program {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 25
 						index: 25
@@ -87,7 +87,7 @@ Program {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 23
 						index: 23
@@ -103,7 +103,7 @@ Program {
 					BindingObjectPattern {
 						rest: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 22
 								index: 22
@@ -119,7 +119,7 @@ Program {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 22
 									index: 22
@@ -136,10 +136,10 @@ Program {
 							BindingObjectPatternProperty {
 								key: StaticPropertyKey {
 									value: Identifier {
-										name: 'yield'
+										name: "yield"
 										loc: Object {
-											filename: 'input.js'
-											identifierName: 'yield'
+											filename: "input.js"
+											identifierName: "yield"
 											end: Object {
 												column: 18
 												index: 18
@@ -153,7 +153,7 @@ Program {
 										}
 									}
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 18
 											index: 18
@@ -167,10 +167,10 @@ Program {
 									}
 								}
 								value: BindingIdentifier {
-									name: 'y'
+									name: "y"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'y'
+										filename: "input.js"
+										identifierName: "y"
 										end: Object {
 											column: 21
 											index: 21
@@ -184,7 +184,7 @@ Program {
 									}
 								}
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 21
 										index: 21

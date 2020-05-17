@@ -58,51 +58,51 @@ export type HmrUpdate = {
 };
 
 export type HmrServerUpdateMessage = {
-	type: 'update';
+	type: "update";
 	body: HmrUpdate;
 };
 
 export type HmrServerErrorMessage = {
-	type: 'error';
+	type: "error";
 	body: FormattedError;
 };
 
 export type HmrClientLogMessage = {
-	type: 'log';
+	type: "log";
 	level:
-		 | 'trace'
-		| 'info'
-		| 'warn'
-		| 'log'
-		| 'group'
-		| 'groupCollapsed'
-		| 'groupEnd'
-		| 'debug';
+		 | "trace"
+		| "info"
+		| "warn"
+		| "log"
+		| "group"
+		| "groupCollapsed"
+		| "groupEnd"
+		| "debug";
 	data: Array<unknown>;
 };
 
 export type HmrClientMessage =
 	 | {
-			type: 'register-entrypoints';
+			type: "register-entrypoints";
 			entryPoints: Array<string>;
 		}
 	| HmrClientLogMessage
 	| {
-			type: 'log-opt-in';
+			type: "log-opt-in";
 		};
 
 export type HmrServerMessage =
 	 | {
-			type: 'bundle-registered';
+			type: "bundle-registered";
 		}
 	| {
-			type: 'update-start';
+			type: "update-start";
 			body: {
 				isInitialUpdate: boolean;
 			};
 		}
 	| {
-			type: 'update-done';
+			type: "update-done";
 		}
 	| HmrServerUpdateMessage
 	| HmrServerErrorMessage;

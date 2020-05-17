@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 2
@@ -33,7 +33,7 @@ Program {
 			body: Array []
 			directives: Array []
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 1
 					index: 1
@@ -49,11 +49,11 @@ Program {
 	]
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 0
 					index: 0
@@ -66,16 +66,16 @@ Program {
 				}
 			}
 			description: Object {
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unclosed block'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unclosed block"}
 				advice: Array [
 					log {
-						category: 'info'
-						text: 'We expected to find the closing character <emphasis>}</emphasis> here'
+						category: "info"
+						text: "We expected to find the closing character <emphasis>}</emphasis> here"
 					}
 					frame {
 						location: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 0
 								index: 2

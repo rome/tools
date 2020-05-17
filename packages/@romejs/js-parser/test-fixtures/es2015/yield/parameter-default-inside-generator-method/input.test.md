@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 27
 			index: 27
@@ -30,16 +30,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'yield is not allowed in generator parameters'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "yield is not allowed in generator parameters"}
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 15
 					index: 15
@@ -56,7 +56,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 27
 					index: 27
@@ -70,7 +70,7 @@ Program {
 			}
 			expression: ObjectExpression {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 26
 						index: 26
@@ -84,13 +84,13 @@ Program {
 				}
 				properties: Array [
 					ObjectMethod {
-						kind: 'method'
+						kind: "method"
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'method'
+								name: "method"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'method'
+									filename: "input.js"
+									identifierName: "method"
 									end: Object {
 										column: 10
 										index: 10
@@ -104,7 +104,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 10
 									index: 10
@@ -118,7 +118,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 24
 								index: 24
@@ -134,7 +134,7 @@ Program {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 24
 									index: 24
@@ -156,7 +156,7 @@ Program {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 21
 									index: 21
@@ -171,7 +171,7 @@ Program {
 							params: Array [
 								BindingAssignmentPattern {
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 20
 											index: 20
@@ -187,7 +187,7 @@ Program {
 										argument: undefined
 										delegate: false
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 20
 												index: 20
@@ -201,10 +201,10 @@ Program {
 										}
 									}
 									left: BindingIdentifier {
-										name: 'x'
+										name: "x"
 										loc: Object {
-											filename: 'input.js'
-											identifierName: 'x'
+											filename: "input.js"
+											identifierName: "x"
 											end: Object {
 												column: 12
 												index: 12
@@ -220,7 +220,7 @@ Program {
 											optional: undefined
 											typeAnnotation: undefined
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 12
 													index: 12

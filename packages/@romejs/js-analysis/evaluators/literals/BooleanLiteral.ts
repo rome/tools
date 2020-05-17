@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {AnyNode, BooleanLiteral, booleanLiteral} from '@romejs/js-ast';
-import BooleanLiteralT from '../../types/BooleanLiteralT';
+import {Scope} from "../../scopes";
+import {AnyNode, BooleanLiteral, booleanLiteral} from "@romejs/js-ast";
+import BooleanLiteralT from "../../types/BooleanLiteralT";
 
 export default function BooleanLiteral(node: AnyNode, scope: Scope) {
 	node = booleanLiteral.assert(node);

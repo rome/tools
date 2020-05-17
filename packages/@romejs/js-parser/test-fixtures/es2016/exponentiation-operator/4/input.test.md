@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 21
 			index: 21
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 21
 					index: 21
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'var'
+				kind: "var"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 21
 						index: 21
@@ -62,10 +62,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'squared'
+							name: "squared"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'squared'
+								filename: "input.js"
+								identifierName: "squared"
 								end: Object {
 									column: 11
 									index: 11
@@ -79,7 +79,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 20
 								index: 20
@@ -92,9 +92,9 @@ Program {
 							}
 						}
 						init: BinaryExpression {
-							operator: '**'
+							operator: "**"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 20
 									index: 20
@@ -110,7 +110,7 @@ Program {
 								value: 2
 								format: undefined
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 15
 										index: 15
@@ -127,7 +127,7 @@ Program {
 								value: 2
 								format: undefined
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 20
 										index: 20

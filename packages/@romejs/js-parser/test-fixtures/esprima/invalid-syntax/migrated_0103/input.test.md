@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 13
@@ -30,16 +30,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unexpected token'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unexpected token"}
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 10
 					index: 10
@@ -56,7 +56,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 12
 					index: 12
@@ -69,9 +69,9 @@ Program {
 				}
 			}
 			expression: AssignmentExpression {
-				operator: '='
+				operator: "="
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 12
 						index: 12
@@ -84,10 +84,10 @@ Program {
 					}
 				}
 				left: AssignmentIdentifier {
-					name: 'p'
+					name: "p"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'p'
+						filename: "input.js"
+						identifierName: "p"
 						end: Object {
 							column: 1
 							index: 1
@@ -101,9 +101,9 @@ Program {
 					}
 				}
 				right: BinaryExpression {
-					operator: '/'
+					operator: "/"
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 12
 							index: 12
@@ -118,7 +118,7 @@ Program {
 					left: ObjectExpression {
 						properties: Array []
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 9
 								index: 9
@@ -132,9 +132,9 @@ Program {
 						}
 					}
 					right: ReferenceIdentifier {
-						name: 'INVALID_PLACEHOLDER'
+						name: "INVALID_PLACEHOLDER"
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 12
 								index: 12

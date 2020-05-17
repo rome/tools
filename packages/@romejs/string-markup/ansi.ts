@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-const ESC = '\x1b[';
+const ESC = "\x1b[";
 
 export const pattern = [
-	'[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:[a-zA-Z\\d]*(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)',
-	'(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-ntqry=><~]))',
-].join('|');
+	"[\\u001B\\u009B][[\\]()#;?]*(?:(?:(?:[a-zA-Z\\d]*(?:;[-a-zA-Z\\d\\/#&.:=?%@~_]*)*)?\\u0007)",
+	"(?:(?:\\d{1,4}(?:;\\d{0,4})*)?[\\dA-PR-TZcf-ntqry=><~]))",
+].join("|");
 
-export const regex = new RegExp(pattern, 'g');
+export const regex = new RegExp(pattern, "g");
 
 function createEscape(num: number): string {
 	return `${ESC}${String(num)}m`;
@@ -182,7 +182,7 @@ export const formatAnsi = {
 };
 
 export function stripAnsi(str: string): string {
-	return str.replace(regex, '');
+	return str.replace(regex, "");
 }
 
 export function hasAnsi(str: string): boolean {
@@ -190,7 +190,7 @@ export function hasAnsi(str: string): boolean {
 }
 
 export const ansiEscapes = {
-	clearScreen: '\x1bc',
+	clearScreen: "\x1bc",
 	eraseLine: `${ESC}2K`,
 	cursorUp(count: number = 1): string {
 		return `${ESC}${count}A`;

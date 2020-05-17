@@ -5,23 +5,23 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ProjectDefinition} from '@romejs/project';
-import {Stats} from './fs/MemoryFileSystem';
-import fork from '../common/utils/fork';
+import {ProjectDefinition} from "@romejs/project";
+import {Stats} from "./fs/MemoryFileSystem";
+import fork from "../common/utils/fork";
 import {
 	MAX_MASTER_BYTES_BEFORE_WORKERS,
 	MAX_WORKER_BYTES_BEFORE_ADD,
-} from '../common/constants';
-import {MAX_WORKER_COUNT, Master, Worker, WorkerBridge} from '@romejs/core';
-import Locker from '../common/utils/Locker';
+} from "../common/constants";
+import {MAX_WORKER_COUNT, Master, Worker, WorkerBridge} from "@romejs/core";
+import Locker from "../common/utils/Locker";
 import {
 	Event,
 	createBridgeFromChildProcess,
 	createBridgeFromLocal,
-} from '@romejs/events';
-import child = require('child_process');
+} from "@romejs/events";
+import child = require("child_process");
 
-import {AbsoluteFilePath} from '@romejs/path';
+import {AbsoluteFilePath} from "@romejs/path";
 
 export type WorkerContainer = {
 	id: number;
@@ -40,7 +40,7 @@ export default class WorkerManager {
 		this.master = master;
 
 		this.workerStartEvent = new Event({
-			name: 'WorkerManager.workerStart',
+			name: "WorkerManager.workerStart",
 			onError: master.onFatalErrorBound,
 		});
 		this.selfWorker = true;
@@ -71,7 +71,7 @@ export default class WorkerManager {
 	getWorkerAssert(id: number): WorkerContainer {
 		const worker = this.workers.get(id);
 		if (worker === undefined) {
-			throw new Error('Expected worker');
+			throw new Error("Expected worker");
 		}
 		return worker;
 	}
@@ -119,7 +119,7 @@ export default class WorkerManager {
 
 		if (smallestWorker === undefined) {
 			// This shouldn't be possible
-			throw new Error('No worker found');
+			throw new Error("No worker found");
 		} else {
 			return smallestWorker;
 		}
@@ -138,7 +138,7 @@ export default class WorkerManager {
 		// Let's use an invariant here for completeness
 		const id = this.getNextWorkerId();
 		if (id !== 0) {
-			throw new Error('Expected master worker id to be 0');
+			throw new Error("Expected master worker id to be 0");
 		}
 
 		const container: WorkerContainer = {
@@ -227,13 +227,13 @@ export default class WorkerManager {
 	): Promise<WorkerContainer> {
 		const start = Date.now();
 
-		const process = fork('worker');
+		const process = fork("worker");
 
 		const bridge = createBridgeFromChildProcess(
 			WorkerBridge,
 			process,
 			{
-				type: 'client',
+				type: "client",
 				onSendMessage: (data) => {
 					this.master.logger.info(
 						`[WorkerManager] Sending worker request to %s:`,
@@ -256,7 +256,7 @@ export default class WorkerManager {
 		this.workers.set(workerId, worker);
 
 		process.once(
-			'error',
+			"error",
 			(err) => {
 				// The process could not be spawned, or
 				// The process could not be killed, or
@@ -267,7 +267,7 @@ export default class WorkerManager {
 		);
 
 		process.once(
-			'exit',
+			"exit",
 			() => {
 				//bridge.end(`Worker ${String(workerId)} died`);
 				this.master.onFatalError(new Error(`Worker ${String(workerId)} died`));

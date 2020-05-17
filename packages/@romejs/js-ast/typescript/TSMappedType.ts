@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyTSPrimary, JSNodeBase, TSTypeParameter} from '../index';
-import {createBuilder} from '../utils';
+import {AnyTSPrimary, JSNodeBase, TSTypeParameter} from "../index";
+import {createBuilder} from "../utils";
 
-export type TSMappedTypeBoolean = undefined | boolean | '+' | '-';
+export type TSMappedTypeBoolean = undefined | boolean | "+" | "-";
 
 export type TSMappedType = JSNodeBase & {
-	type: 'TSMappedType';
+	type: "TSMappedType";
 	typeParameter: TSTypeParameter;
 	typeAnnotation?: AnyTSPrimary;
 	optional?: TSMappedTypeBoolean;
@@ -19,7 +19,7 @@ export type TSMappedType = JSNodeBase & {
 };
 
 export const tsMappedType = createBuilder<TSMappedType>(
-	'TSMappedType',
+	"TSMappedType",
 	{
 		bindingKeys: {},
 		visitorKeys: {

@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import UnknownT from './types/UnknownT';
-import AnyT from './types/AnyT';
-import E from './types/errors/E';
-import Hub from './Hub';
-import T, {TypeCompatibilityReturn} from './types/T';
+import UnknownT from "./types/UnknownT";
+import AnyT from "./types/AnyT";
+import E from "./types/errors/E";
+import Hub from "./Hub";
+import T, {TypeCompatibilityReturn} from "./types/T";
 
 class ReduceRecursionError extends Error {}
 
-const TYPE_COMPATIBLE: TypeCompatibilityReturn = {type: 'compatible'};
+const TYPE_COMPATIBLE: TypeCompatibilityReturn = {type: "compatible"};
 
 const MAX_DEPTH = 100;
 
@@ -54,7 +54,7 @@ export class HumanBuilder {
 		if (this.aliases.has(type)) {
 			const alias = this.aliases.get(type);
 			if (alias === undefined) {
-				throw new Error('Expected alias');
+				throw new Error("Expected alias");
 			}
 			return alias;
 		}
@@ -105,26 +105,26 @@ export default class Utils {
 		this.debug = true;
 
 		const data: Map<string, string> = new Map();
-		data.set('id', String(t.id));
+		data.set("id", String(t.id));
 
 		const {originLoc, originEvaluator} = t;
 		if (originLoc === undefined) {
-			data.set('origin', 'unknown');
+			data.set("origin", "unknown");
 		} else {
 			data.set(
-				'origin',
+				"origin",
 				`${String(originLoc.filename)}:${String(originLoc.start.line)}:${String(
 					originLoc.start.column,
 				)}`,
 			);
 		}
 		if (originEvaluator !== undefined) {
-			data.set('evaluator', originEvaluator);
+			data.set("evaluator", originEvaluator);
 		}
 
 		const dataStr = Array.from(data.keys()).map((key) =>
 			`${key}: ${String(data.get(key))}`
-		).join(', ');
+		).join(", ");
 
 		let info = `${t.getConstructor().type}<`;
 		if (safe === false) {
@@ -147,7 +147,7 @@ export default class Utils {
 	}
 
 	isCompatibleWith(a: T, b: T): boolean {
-		return this.checkCompability(a, b).type === 'compatible';
+		return this.checkCompability(a, b).type === "compatible";
 	}
 
 	checkCompability(a: T, b: T): TypeCompatibilityReturn {
@@ -178,7 +178,7 @@ export default class Utils {
 			lower.compatibilityCache.set(
 				upper,
 				{
-					type: 'incompatible',
+					type: "incompatible",
 					lower,
 					upper,
 				},
@@ -205,9 +205,9 @@ export default class Utils {
 		if (ret === true) {
 			res = TYPE_COMPATIBLE;
 		} else if (ret === false) {
-			res = {type: 'incompatible', lower: a, upper: b};
+			res = {type: "incompatible", lower: a, upper: b};
 		} else if (ret instanceof E) {
-			res = {type: 'incompatible', lower: a, upper: ret};
+			res = {type: "incompatible", lower: a, upper: ret};
 		} else {
 			res = ret;
 		}
@@ -241,7 +241,7 @@ export default class Utils {
 
 		//
 		if (this.reduceStack.size > MAX_DEPTH) {
-			throw new Error('Max depth exceeded when reducing');
+			throw new Error("Max depth exceeded when reducing");
 		}
 
 		this.reduceStack.add(type);
@@ -261,7 +261,7 @@ export default class Utils {
 				);
 			}
 
-			if (reduced.getConstructor().type === 'OpenT') {
+			if (reduced.getConstructor().type === "OpenT") {
 				throw new Error(
 					`The reduce() method for ${this.inspect(type, true)} returned an OpenT. This should never be possible. It likely forgot to return utils.reduce() on it.`,
 				);

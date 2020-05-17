@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 39
@@ -30,16 +30,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'async can\'t contain a unicode escape'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "async can't contain a unicode escape"}
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 10
 					index: 10
@@ -56,10 +56,10 @@ Program {
 	body: Array [
 		ClassDeclaration {
 			id: BindingIdentifier {
-				name: 'X'
+				name: "X"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'X'
+					filename: "input.js"
+					identifierName: "X"
 					end: Object {
 						column: 7
 						index: 7
@@ -73,7 +73,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 38
 					index: 38
@@ -91,7 +91,7 @@ Program {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 38
 						index: 38
@@ -105,13 +105,13 @@ Program {
 				}
 				body: Array [
 					ClassMethod {
-						kind: 'method'
+						kind: "method"
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'x'
+								name: "x"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'x'
+									filename: "input.js"
+									identifierName: "x"
 									end: Object {
 										column: 22
 										index: 22
@@ -125,7 +125,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 22
 									index: 22
@@ -139,7 +139,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 36
 								index: 36
@@ -161,7 +161,7 @@ Program {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 24
 									index: 24
@@ -187,7 +187,7 @@ Program {
 								line: 1
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 22
 									index: 22
@@ -203,7 +203,7 @@ Program {
 						body: BlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 36
 									index: 36
@@ -218,7 +218,7 @@ Program {
 							body: Array [
 								ExpressionStatement {
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 34
 											index: 34
@@ -232,7 +232,7 @@ Program {
 									}
 									expression: AwaitExpression {
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 34
 												index: 34
@@ -245,10 +245,10 @@ Program {
 											}
 										}
 										argument: ReferenceIdentifier {
-											name: 'x'
+											name: "x"
 											loc: Object {
-												filename: 'input.js'
-												identifierName: 'x'
+												filename: "input.js"
+												identifierName: "x"
 												end: Object {
 													column: 34
 													index: 34

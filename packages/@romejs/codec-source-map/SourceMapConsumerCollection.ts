@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import SourceMapConsumer from './SourceMapConsumer';
-import {Number0, Number1} from '@romejs/ob1';
-import {ResolvedLocation} from './types';
+import SourceMapConsumer from "./SourceMapConsumer";
+import {Number0, Number1} from "@romejs/ob1";
+import {ResolvedLocation} from "./types";
 
 export default class SourceMapConsumerCollection {
 	constructor() {

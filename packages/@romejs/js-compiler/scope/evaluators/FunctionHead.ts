@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Scope from '../Scope';
-import {AnyNode, FunctionHead} from '@romejs/js-ast';
-import {ArgumentsBinding, LetBinding} from '../bindings';
-import {getBindingIdentifiers} from '@romejs/js-ast-utils';
+import Scope from "../Scope";
+import {AnyNode, FunctionHead} from "@romejs/js-ast";
+import {ArgumentsBinding, LetBinding} from "../bindings";
+import {getBindingIdentifiers} from "@romejs/js-ast-utils";
 
 export default {
 	creator: true,
@@ -18,9 +18,9 @@ export default {
 			return parentScope;
 		}
 
-		const scope = parentScope.fork('function', parent);
+		const scope = parentScope.fork("function", parent);
 
-		if (parent.type === 'FunctionExpression') {
+		if (parent.type === "FunctionExpression") {
 			const {id} = parent;
 			if (id !== undefined) {
 				scope.addBinding(
@@ -47,17 +47,17 @@ export default {
 						node: id,
 						name: id.name,
 						scope,
-						kind: 'parameter',
+						kind: "parameter",
 					}),
 				);
 			}
 		}
 
 		// Add `arguments` binding
-		if (parent.type !== 'ArrowFunctionExpression') {
+		if (parent.type !== "ArrowFunctionExpression") {
 			scope.addBinding(
 				new ArgumentsBinding({
-					name: 'arguments',
+					name: "arguments",
 					node,
 					scope,
 				}),

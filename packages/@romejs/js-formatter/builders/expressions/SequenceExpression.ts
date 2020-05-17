@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, SequenceExpression} from '@romejs/js-ast';
-import Builder from '../../Builder';
-import {Token, concat, group, indent, join, lineOrSpace} from '../../tokens';
+import {AnyNode, SequenceExpression} from "@romejs/js-ast";
+import Builder from "../../Builder";
+import {Token, concat, group, indent, join, lineOrSpace} from "../../tokens";
 
 export default function SequenceExpression(
 	builder: Builder,
@@ -15,9 +15,9 @@ export default function SequenceExpression(
 	parent: AnyNode,
 ): Token {
 	if (
-		parent.type === 'ExpressionStatement' ||
-		parent.type === 'ForStatement' ||
-		parent.type === 'SequenceExpression'
+		parent.type === "ExpressionStatement" ||
+		parent.type === "ForStatement" ||
+		parent.type === "SequenceExpression"
 	) {
 		// Indent expressions after the first to improve the readability
 		return group(
@@ -26,7 +26,7 @@ export default function SequenceExpression(
 					i === 0
 						? builder.tokenize(expr, node)
 						: concat([
-								',',
+								",",
 								indent(concat([lineOrSpace, builder.tokenize(expr, node)])),
 							])
 				),
@@ -35,7 +35,7 @@ export default function SequenceExpression(
 	} else {
 		return group(
 			join(
-				concat([',', lineOrSpace]),
+				concat([",", lineOrSpace]),
 				node.expressions.map((expr) => builder.tokenize(expr, node)),
 			),
 		);

@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 16
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 15
 					index: 15
@@ -46,7 +46,7 @@ Program {
 			}
 			expression: CallExpression {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 14
 						index: 14
@@ -59,10 +59,10 @@ Program {
 					}
 				}
 				callee: ReferenceIdentifier {
-					name: 'foo'
+					name: "foo"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'foo'
+						filename: "input.js"
+						identifierName: "foo"
 						end: Object {
 							column: 3
 							index: 3
@@ -78,7 +78,7 @@ Program {
 				arguments: Array [
 					ObjectExpression {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 13
 								index: 13
@@ -94,10 +94,10 @@ Program {
 							ObjectProperty {
 								key: StaticPropertyKey {
 									value: Identifier {
-										name: 'async'
+										name: "async"
 										loc: Object {
-											filename: 'input.js'
-											identifierName: 'async'
+											filename: "input.js"
+											identifierName: "async"
 											end: Object {
 												column: 11
 												index: 11
@@ -111,8 +111,8 @@ Program {
 										}
 									}
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'async'
+										filename: "input.js"
+										identifierName: "async"
 										end: Object {
 											column: 11
 											index: 11
@@ -126,10 +126,10 @@ Program {
 									}
 								}
 								value: ReferenceIdentifier {
-									name: 'async'
+									name: "async"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'async'
+										filename: "input.js"
+										identifierName: "async"
 										end: Object {
 											column: 11
 											index: 11
@@ -143,7 +143,7 @@ Program {
 									}
 								}
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 11
 										index: 11

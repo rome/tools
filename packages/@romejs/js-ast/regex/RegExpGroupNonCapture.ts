@@ -5,21 +5,21 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyRegExpExpression, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {AnyRegExpExpression, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type RegExpGroupNonCapture = JSNodeBase & {
-	type: 'RegExpGroupNonCapture';
+	type: "RegExpGroupNonCapture";
 	expression: AnyRegExpExpression;
 	kind?:
-		 | 'positive-lookahead'
-		| 'negative-lookahead'
-		| 'positive-lookbehind'
-		| 'negative-lookbehind';
+		 | "positive-lookahead"
+		| "negative-lookahead"
+		| "positive-lookbehind"
+		| "negative-lookbehind";
 };
 
 export const regExpGroupNonCapture = createBuilder<RegExpGroupNonCapture>(
-	'RegExpGroupNonCapture',
+	"RegExpGroupNonCapture",
 	{
 		bindingKeys: {},
 		visitorKeys: {

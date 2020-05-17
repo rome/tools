@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from '@romejs/js-ast';
-import {HydrateData, HydrateTypeFactory} from '../Evaluator';
-import T, {SerialTypeFactory} from './T';
-import {Scope} from '../scopes';
-import {HumanBuilder} from '../Utils';
+import {AnyNode} from "@romejs/js-ast";
+import {HydrateData, HydrateTypeFactory} from "../Evaluator";
+import T, {SerialTypeFactory} from "./T";
+import {Scope} from "../scopes";
+import {HumanBuilder} from "../Utils";
 
 export default class UnionT extends T {
 	constructor(scope: Scope, originNode: undefined | AnyNode, types: Array<T>) {
@@ -17,7 +17,7 @@ export default class UnionT extends T {
 		this.types = [...new Set(types)];
 	}
 
-	static type = 'UnionT';
+	static type = "UnionT";
 	types: Array<T>;
 
 	serialize(addType: SerialTypeFactory): HydrateData {
@@ -119,6 +119,6 @@ export default class UnionT extends T {
 	}
 
 	humanize(builder: HumanBuilder): string {
-		return this.types.map((type) => builder.humanize(type)).join(' | ');
+		return this.types.map((type) => builder.humanize(type)).join(" | ");
 	}
 }

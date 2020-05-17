@@ -10,18 +10,18 @@ import {
 	AnyTSEntityName,
 	JSNodeBase,
 	TSTypeParameterInstantiation,
-} from '../index';
-import {createBuilder} from '../utils';
+} from "../index";
+import {createBuilder} from "../utils";
 
 export type TSImportType = JSNodeBase & {
-	type: 'TSImportType';
+	type: "TSImportType";
 	argument: AnyExpression;
 	typeParameters?: TSTypeParameterInstantiation;
 	qualifier?: AnyTSEntityName;
 };
 
 export const tsImportType = createBuilder<TSImportType>(
-	'TSImportType',
+	"TSImportType",
 	{
 		bindingKeys: {},
 		visitorKeys: {

@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 1
 			index: 94
@@ -30,21 +30,21 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'super() is only valid inside a class constructor of a subclass'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "super() is only valid inside a class constructor of a subclass"}
 				advice: Array [
 					log {
-						category: 'info'
-						text: 'Maybe a typo in the method name (\'constructor\') or not extending another class?'
+						category: "info"
+						text: "Maybe a typo in the method name ('constructor') or not extending another class?"
 					}
 				]
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 17
 					index: 79
@@ -61,10 +61,10 @@ Program {
 	body: Array [
 		ClassDeclaration {
 			id: BindingIdentifier {
-				name: 'A'
+				name: "A"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'A'
+					filename: "input.js"
+					identifierName: "A"
 					end: Object {
 						column: 7
 						index: 7
@@ -78,7 +78,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 1
 					index: 94
@@ -95,7 +95,7 @@ Program {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 1
 						index: 94
@@ -108,10 +108,10 @@ Program {
 					}
 				}
 				superClass: ReferenceIdentifier {
-					name: 'B'
+					name: "B"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'B'
+						filename: "input.js"
+						identifierName: "B"
 						end: Object {
 							column: 17
 							index: 17
@@ -126,13 +126,13 @@ Program {
 				}
 				body: Array [
 					ClassMethod {
-						kind: 'constructor'
+						kind: "constructor"
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'constructor'
+								name: "constructor"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'constructor'
+									filename: "input.js"
+									identifierName: "constructor"
 									end: Object {
 										column: 13
 										index: 33
@@ -146,7 +146,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 13
 									index: 33
@@ -160,7 +160,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 3
 								index: 92
@@ -182,7 +182,7 @@ Program {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 15
 									index: 35
@@ -208,7 +208,7 @@ Program {
 								line: 2
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 13
 									index: 33
@@ -224,7 +224,7 @@ Program {
 						body: BlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 3
 									index: 92
@@ -239,10 +239,10 @@ Program {
 							body: Array [
 								ClassDeclaration {
 									id: BindingIdentifier {
-										name: 'C'
+										name: "C"
 										loc: Object {
-											filename: 'input.js'
-											identifierName: 'C'
+											filename: "input.js"
+											identifierName: "C"
 											end: Object {
 												column: 11
 												index: 49
@@ -256,7 +256,7 @@ Program {
 										}
 									}
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 5
 											index: 88
@@ -273,7 +273,7 @@ Program {
 										superTypeParameters: undefined
 										typeParameters: undefined
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 5
 												index: 88
@@ -286,10 +286,10 @@ Program {
 											}
 										}
 										superClass: ReferenceIdentifier {
-											name: 'D'
+											name: "D"
 											loc: Object {
-												filename: 'input.js'
-												identifierName: 'D'
+												filename: "input.js"
+												identifierName: "D"
 												end: Object {
 													column: 21
 													index: 59
@@ -306,10 +306,10 @@ Program {
 											ClassProperty {
 												key: StaticPropertyKey {
 													value: Identifier {
-														name: 'foo'
+														name: "foo"
 														loc: Object {
-															filename: 'input.js'
-															identifierName: 'foo'
+															filename: "input.js"
+															identifierName: "foo"
 															end: Object {
 																column: 9
 																index: 71
@@ -323,7 +323,7 @@ Program {
 														}
 													}
 													loc: Object {
-														filename: 'input.js'
+														filename: "input.js"
 														end: Object {
 															column: 9
 															index: 71
@@ -339,7 +339,7 @@ Program {
 												value: CallExpression {
 													arguments: Array []
 													loc: Object {
-														filename: 'input.js'
+														filename: "input.js"
 														end: Object {
 															column: 19
 															index: 81
@@ -353,7 +353,7 @@ Program {
 													}
 													callee: Super {
 														loc: Object {
-															filename: 'input.js'
+															filename: "input.js"
 															end: Object {
 																column: 17
 																index: 79
@@ -370,7 +370,7 @@ Program {
 												definite: undefined
 												typeAnnotation: undefined
 												loc: Object {
-													filename: 'input.js'
+													filename: "input.js"
 													end: Object {
 														column: 20
 														index: 82
@@ -395,7 +395,7 @@ Program {
 														line: 4
 													}
 													loc: Object {
-														filename: 'input.js'
+														filename: "input.js"
 														end: Object {
 															column: 9
 															index: 71

@@ -9,14 +9,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 1_128
@@ -30,10 +30,10 @@ Program {
 	}
 	comments: Array [
 		CommentLine {
-			id: '0'
-			value: ' Copied over from TypeScript\'s test case'
+			id: "0"
+			value: " Copied over from TypeScript's test case"
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 42
 					index: 42
@@ -47,10 +47,10 @@ Program {
 			}
 		}
 		CommentLine {
-			id: '1'
-			value: ' https://github.com/Microsoft/TypeScript/blob/master/tests/baselines/reference/constAssertions.js'
+			id: "1"
+			value: " https://github.com/Microsoft/TypeScript/blob/master/tests/baselines/reference/constAssertions.js"
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 99
 					index: 142
@@ -64,10 +64,10 @@ Program {
 			}
 		}
 		CommentLine {
-			id: '2'
-			value: ' Error'
+			id: "2"
+			value: " Error"
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 61
 					index: 821
@@ -84,11 +84,11 @@ Program {
 	body: Array [
 		VariableDeclarationStatement {
 			leadingComments: Array [
-				'0'
-				'1'
+				"0"
+				"1"
 			]
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 24
 					index: 167
@@ -101,10 +101,10 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'let'
+				kind: "let"
 				leadingComments: undefined
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 24
 						index: 167
@@ -119,11 +119,11 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'v1'
+							name: "v1"
 							leadingComments: undefined
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'v1'
+								filename: "input.ts"
+								identifierName: "v1"
 								end: Object {
 									column: 6
 									index: 149
@@ -138,7 +138,7 @@ Program {
 						}
 						leadingComments: undefined
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 23
 								index: 166
@@ -152,7 +152,7 @@ Program {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 23
 									index: 166
@@ -165,9 +165,9 @@ Program {
 								}
 							}
 							expression: StringLiteral {
-								value: 'abc'
+								value: "abc"
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 14
 										index: 157
@@ -183,7 +183,7 @@ Program {
 							typeAnnotation: TSTypeReference {
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 23
 										index: 166
@@ -196,10 +196,10 @@ Program {
 									}
 								}
 								typeName: ReferenceIdentifier {
-									name: 'const'
+									name: "const"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'const'
+										filename: "input.ts"
+										identifierName: "const"
 										end: Object {
 											column: 23
 											index: 166
@@ -220,7 +220,7 @@ Program {
 		}
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 24
 					index: 192
@@ -233,9 +233,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'let'
+				kind: "let"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 24
 						index: 192
@@ -250,10 +250,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'v2'
+							name: "v2"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'v2'
+								filename: "input.ts"
+								identifierName: "v2"
 								end: Object {
 									column: 6
 									index: 174
@@ -267,7 +267,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 23
 								index: 191
@@ -281,7 +281,7 @@ Program {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 23
 									index: 191
@@ -296,7 +296,7 @@ Program {
 							typeAnnotation: TSTypeReference {
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 23
 										index: 191
@@ -309,10 +309,10 @@ Program {
 									}
 								}
 								typeName: ReferenceIdentifier {
-									name: 'const'
+									name: "const"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'const'
+										filename: "input.ts"
+										identifierName: "const"
 										end: Object {
 											column: 23
 											index: 191
@@ -329,7 +329,7 @@ Program {
 							expression: TemplateLiteral {
 								expressions: Array []
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 14
 										index: 182
@@ -343,11 +343,11 @@ Program {
 								}
 								quasis: Array [
 									TemplateElement {
-										cooked: 'abc'
-										raw: 'abc'
+										cooked: "abc"
+										raw: "abc"
 										tail: true
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 13
 												index: 181
@@ -369,7 +369,7 @@ Program {
 		}
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 21
 					index: 214
@@ -382,9 +382,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'let'
+				kind: "let"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 21
 						index: 214
@@ -399,10 +399,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'v3'
+							name: "v3"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'v3'
+								filename: "input.ts"
+								identifierName: "v3"
 								end: Object {
 									column: 6
 									index: 199
@@ -416,7 +416,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 20
 								index: 213
@@ -430,7 +430,7 @@ Program {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 20
 									index: 213
@@ -446,7 +446,7 @@ Program {
 								value: 10
 								format: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 11
 										index: 204
@@ -462,7 +462,7 @@ Program {
 							typeAnnotation: TSTypeReference {
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 20
 										index: 213
@@ -475,10 +475,10 @@ Program {
 									}
 								}
 								typeName: ReferenceIdentifier {
-									name: 'const'
+									name: "const"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'const'
+										filename: "input.ts"
+										identifierName: "const"
 										end: Object {
 											column: 20
 											index: 213
@@ -499,7 +499,7 @@ Program {
 		}
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 22
 					index: 237
@@ -512,9 +512,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'let'
+				kind: "let"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 22
 						index: 237
@@ -529,10 +529,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'v4'
+							name: "v4"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'v4'
+								filename: "input.ts"
+								identifierName: "v4"
 								end: Object {
 									column: 6
 									index: 221
@@ -546,7 +546,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 21
 								index: 236
@@ -560,7 +560,7 @@ Program {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 21
 									index: 236
@@ -575,7 +575,7 @@ Program {
 							typeAnnotation: TSTypeReference {
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 21
 										index: 236
@@ -588,10 +588,10 @@ Program {
 									}
 								}
 								typeName: ReferenceIdentifier {
-									name: 'const'
+									name: "const"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'const'
+										filename: "input.ts"
+										identifierName: "const"
 										end: Object {
 											column: 21
 											index: 236
@@ -606,10 +606,10 @@ Program {
 								}
 							}
 							expression: UnaryExpression {
-								operator: '-'
+								operator: "-"
 								prefix: true
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 12
 										index: 227
@@ -625,7 +625,7 @@ Program {
 									value: 10
 									format: undefined
 									loc: Object {
-										filename: 'input.ts'
+										filename: "input.ts"
 										end: Object {
 											column: 12
 											index: 227
@@ -646,7 +646,7 @@ Program {
 		}
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 22
 					index: 260
@@ -659,9 +659,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'let'
+				kind: "let"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 22
 						index: 260
@@ -676,10 +676,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'v5'
+							name: "v5"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'v5'
+								filename: "input.ts"
+								identifierName: "v5"
 								end: Object {
 									column: 6
 									index: 244
@@ -693,7 +693,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 21
 								index: 259
@@ -707,7 +707,7 @@ Program {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 21
 									index: 259
@@ -722,7 +722,7 @@ Program {
 							typeAnnotation: TSTypeReference {
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 21
 										index: 259
@@ -735,10 +735,10 @@ Program {
 									}
 								}
 								typeName: ReferenceIdentifier {
-									name: 'const'
+									name: "const"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'const'
+										filename: "input.ts"
+										identifierName: "const"
 										end: Object {
 											column: 21
 											index: 259
@@ -753,10 +753,10 @@ Program {
 								}
 							}
 							expression: UnaryExpression {
-								operator: '+'
+								operator: "+"
 								prefix: true
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 12
 										index: 250
@@ -772,7 +772,7 @@ Program {
 									value: 10
 									format: undefined
 									loc: Object {
-										filename: 'input.ts'
+										filename: "input.ts"
 										end: Object {
 											column: 12
 											index: 250
@@ -793,7 +793,7 @@ Program {
 		}
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 21
 					index: 282
@@ -806,9 +806,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'let'
+				kind: "let"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 21
 						index: 282
@@ -823,10 +823,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'v6'
+							name: "v6"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'v6'
+								filename: "input.ts"
+								identifierName: "v6"
 								end: Object {
 									column: 6
 									index: 267
@@ -840,7 +840,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 20
 								index: 281
@@ -854,7 +854,7 @@ Program {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 20
 									index: 281
@@ -870,7 +870,7 @@ Program {
 								value: 10
 								format: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 11
 										index: 272
@@ -886,7 +886,7 @@ Program {
 							typeAnnotation: TSTypeReference {
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 20
 										index: 281
@@ -899,10 +899,10 @@ Program {
 									}
 								}
 								typeName: ReferenceIdentifier {
-									name: 'const'
+									name: "const"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'const'
+										filename: "input.ts"
+										identifierName: "const"
 										end: Object {
 											column: 20
 											index: 281
@@ -923,7 +923,7 @@ Program {
 		}
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 22
 					index: 305
@@ -936,9 +936,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'let'
+				kind: "let"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 22
 						index: 305
@@ -953,10 +953,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'v7'
+							name: "v7"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'v7'
+								filename: "input.ts"
+								identifierName: "v7"
 								end: Object {
 									column: 6
 									index: 289
@@ -970,7 +970,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 21
 								index: 304
@@ -984,7 +984,7 @@ Program {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 21
 									index: 304
@@ -999,7 +999,7 @@ Program {
 							typeAnnotation: TSTypeReference {
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 21
 										index: 304
@@ -1012,10 +1012,10 @@ Program {
 									}
 								}
 								typeName: ReferenceIdentifier {
-									name: 'const'
+									name: "const"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'const'
+										filename: "input.ts"
+										identifierName: "const"
 										end: Object {
 											column: 21
 											index: 304
@@ -1030,10 +1030,10 @@ Program {
 								}
 							}
 							expression: UnaryExpression {
-								operator: '-'
+								operator: "-"
 								prefix: true
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 12
 										index: 295
@@ -1049,7 +1049,7 @@ Program {
 									value: 10
 									format: undefined
 									loc: Object {
-										filename: 'input.ts'
+										filename: "input.ts"
 										end: Object {
 											column: 12
 											index: 295
@@ -1070,7 +1070,7 @@ Program {
 		}
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 23
 					index: 329
@@ -1083,9 +1083,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'let'
+				kind: "let"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 23
 						index: 329
@@ -1100,10 +1100,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'v8'
+							name: "v8"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'v8'
+								filename: "input.ts"
+								identifierName: "v8"
 								end: Object {
 									column: 6
 									index: 312
@@ -1117,7 +1117,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 22
 								index: 328
@@ -1131,7 +1131,7 @@ Program {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 22
 									index: 328
@@ -1146,7 +1146,7 @@ Program {
 							expression: BooleanLiteral {
 								value: true
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 13
 										index: 319
@@ -1162,7 +1162,7 @@ Program {
 							typeAnnotation: TSTypeReference {
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 22
 										index: 328
@@ -1175,10 +1175,10 @@ Program {
 									}
 								}
 								typeName: ReferenceIdentifier {
-									name: 'const'
+									name: "const"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'const'
+										filename: "input.ts"
+										identifierName: "const"
 										end: Object {
 											column: 22
 											index: 328
@@ -1199,7 +1199,7 @@ Program {
 		}
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 24
 					index: 354
@@ -1212,9 +1212,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'let'
+				kind: "let"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 24
 						index: 354
@@ -1229,10 +1229,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'v9'
+							name: "v9"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'v9'
+								filename: "input.ts"
+								identifierName: "v9"
 								end: Object {
 									column: 6
 									index: 336
@@ -1246,7 +1246,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 23
 								index: 353
@@ -1260,7 +1260,7 @@ Program {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 23
 									index: 353
@@ -1275,7 +1275,7 @@ Program {
 							expression: BooleanLiteral {
 								value: false
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 14
 										index: 344
@@ -1291,7 +1291,7 @@ Program {
 							typeAnnotation: TSTypeReference {
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 23
 										index: 353
@@ -1304,10 +1304,10 @@ Program {
 									}
 								}
 								typeName: ReferenceIdentifier {
-									name: 'const'
+									name: "const"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'const'
+										filename: "input.ts"
+										identifierName: "const"
 										end: Object {
 											column: 23
 											index: 353
@@ -1328,7 +1328,7 @@ Program {
 		}
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 21
 					index: 377
@@ -1341,9 +1341,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'let'
+				kind: "let"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 21
 						index: 377
@@ -1358,10 +1358,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'a1'
+							name: "a1"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'a1'
+								filename: "input.ts"
+								identifierName: "a1"
 								end: Object {
 									column: 6
 									index: 362
@@ -1375,7 +1375,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 20
 								index: 376
@@ -1389,7 +1389,7 @@ Program {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 20
 									index: 376
@@ -1404,7 +1404,7 @@ Program {
 							expression: ArrayExpression {
 								elements: Array []
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 11
 										index: 367
@@ -1420,7 +1420,7 @@ Program {
 							typeAnnotation: TSTypeReference {
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 20
 										index: 376
@@ -1433,10 +1433,10 @@ Program {
 									}
 								}
 								typeName: ReferenceIdentifier {
-									name: 'const'
+									name: "const"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'const'
+										filename: "input.ts"
+										identifierName: "const"
 										end: Object {
 											column: 20
 											index: 376
@@ -1457,7 +1457,7 @@ Program {
 		}
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 28
 					index: 406
@@ -1470,9 +1470,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'let'
+				kind: "let"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 28
 						index: 406
@@ -1487,10 +1487,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'a2'
+							name: "a2"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'a2'
+								filename: "input.ts"
+								identifierName: "a2"
 								end: Object {
 									column: 6
 									index: 384
@@ -1504,7 +1504,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 27
 								index: 405
@@ -1518,7 +1518,7 @@ Program {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 27
 									index: 405
@@ -1533,7 +1533,7 @@ Program {
 							typeAnnotation: TSTypeReference {
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 27
 										index: 405
@@ -1546,10 +1546,10 @@ Program {
 									}
 								}
 								typeName: ReferenceIdentifier {
-									name: 'const'
+									name: "const"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'const'
+										filename: "input.ts"
+										identifierName: "const"
 										end: Object {
 											column: 27
 											index: 405
@@ -1565,7 +1565,7 @@ Program {
 							}
 							expression: ArrayExpression {
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 18
 										index: 396
@@ -1582,7 +1582,7 @@ Program {
 										value: 1
 										format: undefined
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 11
 												index: 389
@@ -1599,7 +1599,7 @@ Program {
 										value: 2
 										format: undefined
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 14
 												index: 392
@@ -1616,7 +1616,7 @@ Program {
 										value: 3
 										format: undefined
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 17
 												index: 395
@@ -1638,7 +1638,7 @@ Program {
 		}
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 38
 					index: 445
@@ -1651,9 +1651,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'let'
+				kind: "let"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 38
 						index: 445
@@ -1668,10 +1668,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'a3'
+							name: "a3"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'a3'
+								filename: "input.ts"
+								identifierName: "a3"
 								end: Object {
 									column: 6
 									index: 413
@@ -1685,7 +1685,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 37
 								index: 444
@@ -1699,7 +1699,7 @@ Program {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 37
 									index: 444
@@ -1714,7 +1714,7 @@ Program {
 							typeAnnotation: TSTypeReference {
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 37
 										index: 444
@@ -1727,10 +1727,10 @@ Program {
 									}
 								}
 								typeName: ReferenceIdentifier {
-									name: 'const'
+									name: "const"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'const'
+										filename: "input.ts"
+										identifierName: "const"
 										end: Object {
 											column: 37
 											index: 444
@@ -1746,7 +1746,7 @@ Program {
 							}
 							expression: ArrayExpression {
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 28
 										index: 435
@@ -1763,7 +1763,7 @@ Program {
 										value: 10
 										format: undefined
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 12
 												index: 419
@@ -1777,9 +1777,9 @@ Program {
 										}
 									}
 									StringLiteral {
-										value: 'hello'
+										value: "hello"
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 21
 												index: 428
@@ -1795,7 +1795,7 @@ Program {
 									BooleanLiteral {
 										value: true
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 27
 												index: 434
@@ -1817,7 +1817,7 @@ Program {
 		}
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 33
 					index: 479
@@ -1830,9 +1830,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'let'
+				kind: "let"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 33
 						index: 479
@@ -1847,10 +1847,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'a4'
+							name: "a4"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'a4'
+								filename: "input.ts"
+								identifierName: "a4"
 								end: Object {
 									column: 6
 									index: 452
@@ -1864,7 +1864,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 32
 								index: 478
@@ -1878,7 +1878,7 @@ Program {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 32
 									index: 478
@@ -1893,7 +1893,7 @@ Program {
 							typeAnnotation: TSTypeReference {
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 32
 										index: 478
@@ -1906,10 +1906,10 @@ Program {
 									}
 								}
 								typeName: ReferenceIdentifier {
-									name: 'const'
+									name: "const"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'const'
+										filename: "input.ts"
+										identifierName: "const"
 										end: Object {
 											column: 32
 											index: 478
@@ -1925,7 +1925,7 @@ Program {
 							}
 							expression: ArrayExpression {
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 23
 										index: 469
@@ -1940,7 +1940,7 @@ Program {
 								elements: Array [
 									SpreadElement {
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 22
 												index: 468
@@ -1954,7 +1954,7 @@ Program {
 										}
 										argument: ArrayExpression {
 											loc: Object {
-												filename: 'input.ts'
+												filename: "input.ts"
 												end: Object {
 													column: 22
 													index: 468
@@ -1971,7 +1971,7 @@ Program {
 													value: 1
 													format: undefined
 													loc: Object {
-														filename: 'input.ts'
+														filename: "input.ts"
 														end: Object {
 															column: 15
 															index: 461
@@ -1988,7 +1988,7 @@ Program {
 													value: 2
 													format: undefined
 													loc: Object {
-														filename: 'input.ts'
+														filename: "input.ts"
 														end: Object {
 															column: 18
 															index: 464
@@ -2005,7 +2005,7 @@ Program {
 													value: 3
 													format: undefined
 													loc: Object {
-														filename: 'input.ts'
+														filename: "input.ts"
 														end: Object {
 															column: 21
 															index: 467
@@ -2030,7 +2030,7 @@ Program {
 		}
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 19
 					index: 499
@@ -2043,9 +2043,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'let'
+				kind: "let"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 19
 						index: 499
@@ -2060,10 +2060,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'a5'
+							name: "a5"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'a5'
+								filename: "input.ts"
+								identifierName: "a5"
 								end: Object {
 									column: 6
 									index: 486
@@ -2077,7 +2077,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 18
 								index: 498
@@ -2091,7 +2091,7 @@ Program {
 						}
 						init: ArrayExpression {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 18
 									index: 498
@@ -2108,7 +2108,7 @@ Program {
 									value: 1
 									format: undefined
 									loc: Object {
-										filename: 'input.ts'
+										filename: "input.ts"
 										end: Object {
 											column: 11
 											index: 491
@@ -2125,7 +2125,7 @@ Program {
 									value: 2
 									format: undefined
 									loc: Object {
-										filename: 'input.ts'
+										filename: "input.ts"
 										end: Object {
 											column: 14
 											index: 494
@@ -2142,7 +2142,7 @@ Program {
 									value: 3
 									format: undefined
 									loc: Object {
-										filename: 'input.ts'
+										filename: "input.ts"
 										end: Object {
 											column: 17
 											index: 497
@@ -2163,7 +2163,7 @@ Program {
 		}
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 26
 					index: 526
@@ -2176,9 +2176,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'let'
+				kind: "let"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 26
 						index: 526
@@ -2193,10 +2193,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'a6'
+							name: "a6"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'a6'
+								filename: "input.ts"
+								identifierName: "a6"
 								end: Object {
 									column: 6
 									index: 506
@@ -2210,7 +2210,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 25
 								index: 525
@@ -2224,7 +2224,7 @@ Program {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 25
 									index: 525
@@ -2239,7 +2239,7 @@ Program {
 							typeAnnotation: TSTypeReference {
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 25
 										index: 525
@@ -2252,10 +2252,10 @@ Program {
 									}
 								}
 								typeName: ReferenceIdentifier {
-									name: 'const'
+									name: "const"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'const'
+										filename: "input.ts"
+										identifierName: "const"
 										end: Object {
 											column: 25
 											index: 525
@@ -2271,7 +2271,7 @@ Program {
 							}
 							expression: ArrayExpression {
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 16
 										index: 516
@@ -2286,7 +2286,7 @@ Program {
 								elements: Array [
 									SpreadElement {
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 15
 												index: 515
@@ -2299,10 +2299,10 @@ Program {
 											}
 										}
 										argument: ReferenceIdentifier {
-											name: 'a5'
+											name: "a5"
 											loc: Object {
-												filename: 'input.ts'
-												identifierName: 'a5'
+												filename: "input.ts"
+												identifierName: "a5"
 												end: Object {
 													column: 15
 													index: 515
@@ -2325,7 +2325,7 @@ Program {
 		}
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 33
 					index: 560
@@ -2338,9 +2338,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'let'
+				kind: "let"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 33
 						index: 560
@@ -2355,10 +2355,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'a8'
+							name: "a8"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'a8'
+								filename: "input.ts"
+								identifierName: "a8"
 								end: Object {
 									column: 6
 									index: 533
@@ -2372,7 +2372,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 32
 								index: 559
@@ -2386,7 +2386,7 @@ Program {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 32
 									index: 559
@@ -2401,7 +2401,7 @@ Program {
 							typeAnnotation: TSTypeReference {
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 32
 										index: 559
@@ -2414,10 +2414,10 @@ Program {
 									}
 								}
 								typeName: ReferenceIdentifier {
-									name: 'const'
+									name: "const"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'const'
+										filename: "input.ts"
+										identifierName: "const"
 										end: Object {
 											column: 32
 											index: 559
@@ -2433,7 +2433,7 @@ Program {
 							}
 							expression: ArrayExpression {
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 23
 										index: 550
@@ -2447,9 +2447,9 @@ Program {
 								}
 								elements: Array [
 									StringLiteral {
-										value: 'abc'
+										value: "abc"
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 15
 												index: 542
@@ -2464,7 +2464,7 @@ Program {
 									}
 									SpreadElement {
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 22
 												index: 549
@@ -2477,10 +2477,10 @@ Program {
 											}
 										}
 										argument: ReferenceIdentifier {
-											name: 'a7'
+											name: "a7"
 											loc: Object {
-												filename: 'input.ts'
-												identifierName: 'a7'
+												filename: "input.ts"
+												identifierName: "a7"
 												end: Object {
 													column: 22
 													index: 549
@@ -2503,7 +2503,7 @@ Program {
 		}
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 35
 					index: 597
@@ -2516,9 +2516,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'let'
+				kind: "let"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 35
 						index: 597
@@ -2533,10 +2533,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'o1'
+							name: "o1"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'o1'
+								filename: "input.ts"
+								identifierName: "o1"
 								end: Object {
 									column: 6
 									index: 568
@@ -2550,7 +2550,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 34
 								index: 596
@@ -2564,7 +2564,7 @@ Program {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 34
 									index: 596
@@ -2579,7 +2579,7 @@ Program {
 							typeAnnotation: TSTypeReference {
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 34
 										index: 596
@@ -2592,10 +2592,10 @@ Program {
 									}
 								}
 								typeName: ReferenceIdentifier {
-									name: 'const'
+									name: "const"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'const'
+										filename: "input.ts"
+										identifierName: "const"
 										end: Object {
 											column: 34
 											index: 596
@@ -2611,7 +2611,7 @@ Program {
 							}
 							expression: ObjectExpression {
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 25
 										index: 587
@@ -2627,10 +2627,10 @@ Program {
 									ObjectProperty {
 										key: StaticPropertyKey {
 											value: Identifier {
-												name: 'x'
+												name: "x"
 												loc: Object {
-													filename: 'input.ts'
-													identifierName: 'x'
+													filename: "input.ts"
+													identifierName: "x"
 													end: Object {
 														column: 12
 														index: 574
@@ -2644,7 +2644,7 @@ Program {
 												}
 											}
 											loc: Object {
-												filename: 'input.ts'
+												filename: "input.ts"
 												end: Object {
 													column: 12
 													index: 574
@@ -2661,7 +2661,7 @@ Program {
 											value: 10
 											format: undefined
 											loc: Object {
-												filename: 'input.ts'
+												filename: "input.ts"
 												end: Object {
 													column: 16
 													index: 578
@@ -2675,7 +2675,7 @@ Program {
 											}
 										}
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 16
 												index: 578
@@ -2691,10 +2691,10 @@ Program {
 									ObjectProperty {
 										key: StaticPropertyKey {
 											value: Identifier {
-												name: 'y'
+												name: "y"
 												loc: Object {
-													filename: 'input.ts'
-													identifierName: 'y'
+													filename: "input.ts"
+													identifierName: "y"
 													end: Object {
 														column: 19
 														index: 581
@@ -2708,7 +2708,7 @@ Program {
 												}
 											}
 											loc: Object {
-												filename: 'input.ts'
+												filename: "input.ts"
 												end: Object {
 													column: 19
 													index: 581
@@ -2725,7 +2725,7 @@ Program {
 											value: 20
 											format: undefined
 											loc: Object {
-												filename: 'input.ts'
+												filename: "input.ts"
 												end: Object {
 													column: 23
 													index: 585
@@ -2739,7 +2739,7 @@ Program {
 											}
 										}
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 23
 												index: 585
@@ -2761,7 +2761,7 @@ Program {
 		}
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 68
 					index: 666
@@ -2774,9 +2774,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'let'
+				kind: "let"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 68
 						index: 666
@@ -2791,10 +2791,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'o2'
+							name: "o2"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'o2'
+								filename: "input.ts"
+								identifierName: "o2"
 								end: Object {
 									column: 6
 									index: 604
@@ -2808,7 +2808,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 67
 								index: 665
@@ -2822,7 +2822,7 @@ Program {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 67
 									index: 665
@@ -2837,7 +2837,7 @@ Program {
 							typeAnnotation: TSTypeReference {
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 67
 										index: 665
@@ -2850,10 +2850,10 @@ Program {
 									}
 								}
 								typeName: ReferenceIdentifier {
-									name: 'const'
+									name: "const"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'const'
+										filename: "input.ts"
+										identifierName: "const"
 										end: Object {
 											column: 67
 											index: 665
@@ -2869,7 +2869,7 @@ Program {
 							}
 							expression: ObjectExpression {
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 58
 										index: 656
@@ -2885,10 +2885,10 @@ Program {
 									ObjectProperty {
 										key: StaticPropertyKey {
 											value: Identifier {
-												name: 'a'
+												name: "a"
 												loc: Object {
-													filename: 'input.ts'
-													identifierName: 'a'
+													filename: "input.ts"
+													identifierName: "a"
 													end: Object {
 														column: 12
 														index: 610
@@ -2902,7 +2902,7 @@ Program {
 												}
 											}
 											loc: Object {
-												filename: 'input.ts'
+												filename: "input.ts"
 												end: Object {
 													column: 12
 													index: 610
@@ -2919,7 +2919,7 @@ Program {
 											value: 1
 											format: undefined
 											loc: Object {
-												filename: 'input.ts'
+												filename: "input.ts"
 												end: Object {
 													column: 15
 													index: 613
@@ -2933,7 +2933,7 @@ Program {
 											}
 										}
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 15
 												index: 613
@@ -2949,9 +2949,9 @@ Program {
 									ObjectProperty {
 										key: StaticPropertyKey {
 											value: StringLiteral {
-												value: 'b'
+												value: "b"
 												loc: Object {
-													filename: 'input.ts'
+													filename: "input.ts"
 													end: Object {
 														column: 20
 														index: 618
@@ -2965,7 +2965,7 @@ Program {
 												}
 											}
 											loc: Object {
-												filename: 'input.ts'
+												filename: "input.ts"
 												end: Object {
 													column: 20
 													index: 618
@@ -2982,7 +2982,7 @@ Program {
 											value: 2
 											format: undefined
 											loc: Object {
-												filename: 'input.ts'
+												filename: "input.ts"
 												end: Object {
 													column: 23
 													index: 621
@@ -2996,7 +2996,7 @@ Program {
 											}
 										}
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 23
 												index: 621
@@ -3012,9 +3012,9 @@ Program {
 									ObjectProperty {
 										key: ComputedPropertyKey {
 											value: StringLiteral {
-												value: 'c'
+												value: "c"
 												loc: Object {
-													filename: 'input.ts'
+													filename: "input.ts"
 													end: Object {
 														column: 29
 														index: 627
@@ -3028,7 +3028,7 @@ Program {
 												}
 											}
 											loc: Object {
-												filename: 'input.ts'
+												filename: "input.ts"
 												end: Object {
 													column: 30
 													index: 628
@@ -3045,7 +3045,7 @@ Program {
 											value: 3
 											format: undefined
 											loc: Object {
-												filename: 'input.ts'
+												filename: "input.ts"
 												end: Object {
 													column: 33
 													index: 631
@@ -3059,7 +3059,7 @@ Program {
 											}
 										}
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 33
 												index: 631
@@ -3073,13 +3073,13 @@ Program {
 										}
 									}
 									ObjectMethod {
-										kind: 'method'
+										kind: "method"
 										key: StaticPropertyKey {
 											value: Identifier {
-												name: 'd'
+												name: "d"
 												loc: Object {
-													filename: 'input.ts'
-													identifierName: 'd'
+													filename: "input.ts"
+													identifierName: "d"
 													end: Object {
 														column: 36
 														index: 634
@@ -3093,7 +3093,7 @@ Program {
 												}
 											}
 											loc: Object {
-												filename: 'input.ts'
+												filename: "input.ts"
 												end: Object {
 													column: 36
 													index: 634
@@ -3107,7 +3107,7 @@ Program {
 											}
 										}
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 41
 												index: 639
@@ -3123,7 +3123,7 @@ Program {
 											body: Array []
 											directives: Array []
 											loc: Object {
-												filename: 'input.ts'
+												filename: "input.ts"
 												end: Object {
 													column: 41
 													index: 639
@@ -3146,7 +3146,7 @@ Program {
 											thisType: undefined
 											typeParameters: undefined
 											loc: Object {
-												filename: 'input.ts'
+												filename: "input.ts"
 												end: Object {
 													column: 38
 													index: 636
@@ -3163,9 +3163,9 @@ Program {
 									ObjectProperty {
 										key: ComputedPropertyKey {
 											value: BinaryExpression {
-												operator: '+'
+												operator: "+"
 												loc: Object {
-													filename: 'input.ts'
+													filename: "input.ts"
 													end: Object {
 														column: 52
 														index: 650
@@ -3178,9 +3178,9 @@ Program {
 													}
 												}
 												left: StringLiteral {
-													value: 'e'
+													value: "e"
 													loc: Object {
-														filename: 'input.ts'
+														filename: "input.ts"
 														end: Object {
 															column: 47
 															index: 645
@@ -3194,9 +3194,9 @@ Program {
 													}
 												}
 												right: StringLiteral {
-													value: ''
+													value: ""
 													loc: Object {
-														filename: 'input.ts'
+														filename: "input.ts"
 														end: Object {
 															column: 52
 															index: 650
@@ -3211,7 +3211,7 @@ Program {
 												}
 											}
 											loc: Object {
-												filename: 'input.ts'
+												filename: "input.ts"
 												end: Object {
 													column: 53
 													index: 651
@@ -3228,7 +3228,7 @@ Program {
 											value: 4
 											format: undefined
 											loc: Object {
-												filename: 'input.ts'
+												filename: "input.ts"
 												end: Object {
 													column: 56
 													index: 654
@@ -3242,7 +3242,7 @@ Program {
 											}
 										}
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 56
 												index: 654
@@ -3264,7 +3264,7 @@ Program {
 		}
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 35
 					index: 702
@@ -3277,9 +3277,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'let'
+				kind: "let"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 35
 						index: 702
@@ -3294,10 +3294,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'o3'
+							name: "o3"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'o3'
+								filename: "input.ts"
+								identifierName: "o3"
 								end: Object {
 									column: 6
 									index: 673
@@ -3311,7 +3311,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 34
 								index: 701
@@ -3325,7 +3325,7 @@ Program {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 34
 									index: 701
@@ -3340,7 +3340,7 @@ Program {
 							typeAnnotation: TSTypeReference {
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 34
 										index: 701
@@ -3353,10 +3353,10 @@ Program {
 									}
 								}
 								typeName: ReferenceIdentifier {
-									name: 'const'
+									name: "const"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'const'
+										filename: "input.ts"
+										identifierName: "const"
 										end: Object {
 											column: 34
 											index: 701
@@ -3372,7 +3372,7 @@ Program {
 							}
 							expression: ObjectExpression {
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 25
 										index: 692
@@ -3387,7 +3387,7 @@ Program {
 								properties: Array [
 									SpreadProperty {
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 16
 												index: 683
@@ -3400,10 +3400,10 @@ Program {
 											}
 										}
 										argument: ReferenceIdentifier {
-											name: 'o1'
+											name: "o1"
 											loc: Object {
-												filename: 'input.ts'
-												identifierName: 'o1'
+												filename: "input.ts"
+												identifierName: "o1"
 												end: Object {
 													column: 16
 													index: 683
@@ -3419,7 +3419,7 @@ Program {
 									}
 									SpreadProperty {
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 23
 												index: 690
@@ -3432,10 +3432,10 @@ Program {
 											}
 										}
 										argument: ReferenceIdentifier {
-											name: 'o2'
+											name: "o2"
 											loc: Object {
-												filename: 'input.ts'
-												identifierName: 'o2'
+												filename: "input.ts"
+												identifierName: "o2"
 												end: Object {
 													column: 23
 													index: 690
@@ -3458,7 +3458,7 @@ Program {
 		}
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 28
 					index: 731
@@ -3471,9 +3471,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'let'
+				kind: "let"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 28
 						index: 731
@@ -3488,10 +3488,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'o5'
+							name: "o5"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'o5'
+								filename: "input.ts"
+								identifierName: "o5"
 								end: Object {
 									column: 6
 									index: 709
@@ -3505,7 +3505,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 27
 								index: 730
@@ -3519,7 +3519,7 @@ Program {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 27
 									index: 730
@@ -3534,7 +3534,7 @@ Program {
 							typeAnnotation: TSTypeReference {
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 27
 										index: 730
@@ -3547,10 +3547,10 @@ Program {
 									}
 								}
 								typeName: ReferenceIdentifier {
-									name: 'const'
+									name: "const"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'const'
+										filename: "input.ts"
+										identifierName: "const"
 										end: Object {
 											column: 27
 											index: 730
@@ -3566,7 +3566,7 @@ Program {
 							}
 							expression: ObjectExpression {
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 18
 										index: 721
@@ -3581,7 +3581,7 @@ Program {
 								properties: Array [
 									SpreadProperty {
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 16
 												index: 719
@@ -3594,10 +3594,10 @@ Program {
 											}
 										}
 										argument: ReferenceIdentifier {
-											name: 'o4'
+											name: "o4"
 											loc: Object {
-												filename: 'input.ts'
-												identifierName: 'o4'
+												filename: "input.ts"
+												identifierName: "o4"
 												end: Object {
 													column: 16
 													index: 719
@@ -3620,7 +3620,7 @@ Program {
 		}
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 27
 					index: 759
@@ -3633,9 +3633,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'let'
+				kind: "let"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 27
 						index: 759
@@ -3650,10 +3650,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'o7'
+							name: "o7"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'o7'
+								filename: "input.ts"
+								identifierName: "o7"
 								end: Object {
 									column: 6
 									index: 738
@@ -3667,7 +3667,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 26
 								index: 758
@@ -3681,7 +3681,7 @@ Program {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 26
 									index: 758
@@ -3696,7 +3696,7 @@ Program {
 							typeAnnotation: TSTypeReference {
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 26
 										index: 758
@@ -3709,10 +3709,10 @@ Program {
 									}
 								}
 								typeName: ReferenceIdentifier {
-									name: 'const'
+									name: "const"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'const'
+										filename: "input.ts"
+										identifierName: "const"
 										end: Object {
 											column: 26
 											index: 758
@@ -3728,7 +3728,7 @@ Program {
 							}
 							expression: ObjectExpression {
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 17
 										index: 749
@@ -3743,7 +3743,7 @@ Program {
 								properties: Array [
 									SpreadProperty {
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 15
 												index: 747
@@ -3756,10 +3756,10 @@ Program {
 											}
 										}
 										argument: ReferenceIdentifier {
-											name: 'd'
+											name: "d"
 											loc: Object {
-												filename: 'input.ts'
-												identifierName: 'd'
+												filename: "input.ts"
+												identifierName: "d"
 												end: Object {
 													column: 15
 													index: 747
@@ -3781,9 +3781,9 @@ Program {
 			}
 		}
 		VariableDeclarationStatement {
-			trailingComments: Array ['2']
+			trailingComments: Array ["2"]
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 51
 					index: 811
@@ -3796,10 +3796,10 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'let'
+				kind: "let"
 				trailingComments: undefined
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 51
 						index: 811
@@ -3814,10 +3814,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'o9'
+							name: "o9"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'o9'
+								filename: "input.ts"
+								identifierName: "o9"
 								end: Object {
 									column: 6
 									index: 766
@@ -3831,7 +3831,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 50
 								index: 810
@@ -3845,7 +3845,7 @@ Program {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 50
 									index: 810
@@ -3860,7 +3860,7 @@ Program {
 							typeAnnotation: TSTypeReference {
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 50
 										index: 810
@@ -3873,10 +3873,10 @@ Program {
 									}
 								}
 								typeName: ReferenceIdentifier {
-									name: 'const'
+									name: "const"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'const'
+										filename: "input.ts"
+										identifierName: "const"
 										end: Object {
 											column: 50
 											index: 810
@@ -3892,7 +3892,7 @@ Program {
 							}
 							expression: ObjectExpression {
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 41
 										index: 801
@@ -3908,10 +3908,10 @@ Program {
 									ObjectProperty {
 										key: StaticPropertyKey {
 											value: Identifier {
-												name: 'x'
+												name: "x"
 												loc: Object {
-													filename: 'input.ts'
-													identifierName: 'x'
+													filename: "input.ts"
+													identifierName: "x"
 													end: Object {
 														column: 12
 														index: 772
@@ -3925,7 +3925,7 @@ Program {
 												}
 											}
 											loc: Object {
-												filename: 'input.ts'
+												filename: "input.ts"
 												end: Object {
 													column: 12
 													index: 772
@@ -3942,7 +3942,7 @@ Program {
 											value: 10
 											format: undefined
 											loc: Object {
-												filename: 'input.ts'
+												filename: "input.ts"
 												end: Object {
 													column: 16
 													index: 776
@@ -3956,7 +3956,7 @@ Program {
 											}
 										}
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 16
 												index: 776
@@ -3970,13 +3970,13 @@ Program {
 										}
 									}
 									ObjectMethod {
-										kind: 'method'
+										kind: "method"
 										key: StaticPropertyKey {
 											value: Identifier {
-												name: 'foo'
+												name: "foo"
 												loc: Object {
-													filename: 'input.ts'
-													identifierName: 'foo'
+													filename: "input.ts"
+													identifierName: "foo"
 													end: Object {
 														column: 21
 														index: 781
@@ -3990,7 +3990,7 @@ Program {
 												}
 											}
 											loc: Object {
-												filename: 'input.ts'
+												filename: "input.ts"
 												end: Object {
 													column: 21
 													index: 781
@@ -4004,7 +4004,7 @@ Program {
 											}
 										}
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 39
 												index: 799
@@ -4026,7 +4026,7 @@ Program {
 											thisType: undefined
 											typeParameters: undefined
 											loc: Object {
-												filename: 'input.ts'
+												filename: "input.ts"
 												end: Object {
 													column: 23
 													index: 783
@@ -4042,7 +4042,7 @@ Program {
 										body: BlockStatement {
 											directives: Array []
 											loc: Object {
-												filename: 'input.ts'
+												filename: "input.ts"
 												end: Object {
 													column: 39
 													index: 799
@@ -4057,7 +4057,7 @@ Program {
 											body: Array [
 												ExpressionStatement {
 													loc: Object {
-														filename: 'input.ts'
+														filename: "input.ts"
 														end: Object {
 															column: 37
 															index: 797
@@ -4070,9 +4070,9 @@ Program {
 														}
 													}
 													expression: AssignmentExpression {
-														operator: '='
+														operator: "="
 														loc: Object {
-															filename: 'input.ts'
+															filename: "input.ts"
 															end: Object {
 																column: 37
 																index: 797
@@ -4088,7 +4088,7 @@ Program {
 															value: 20
 															format: undefined
 															loc: Object {
-																filename: 'input.ts'
+																filename: "input.ts"
 																end: Object {
 																	column: 37
 																	index: 797
@@ -4103,7 +4103,7 @@ Program {
 														}
 														left: MemberExpression {
 															loc: Object {
-																filename: 'input.ts'
+																filename: "input.ts"
 																end: Object {
 																	column: 32
 																	index: 792
@@ -4117,7 +4117,7 @@ Program {
 															}
 															object: ThisExpression {
 																loc: Object {
-																	filename: 'input.ts'
+																	filename: "input.ts"
 																	end: Object {
 																		column: 30
 																		index: 790
@@ -4132,10 +4132,10 @@ Program {
 															}
 															property: StaticMemberProperty {
 																value: Identifier {
-																	name: 'x'
+																	name: "x"
 																	loc: Object {
-																		filename: 'input.ts'
-																		identifierName: 'x'
+																		filename: "input.ts"
+																		identifierName: "x"
 																		end: Object {
 																			column: 32
 																			index: 792
@@ -4149,8 +4149,8 @@ Program {
 																	}
 																}
 																loc: Object {
-																	filename: 'input.ts'
-																	identifierName: 'x'
+																	filename: "input.ts"
+																	identifierName: "x"
 																	end: Object {
 																		column: 32
 																		index: 792
@@ -4177,9 +4177,9 @@ Program {
 			}
 		}
 		VariableDeclarationStatement {
-			leadingComments: Array ['2']
+			leadingComments: Array ["2"]
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 23
 					index: 846
@@ -4192,10 +4192,10 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'let'
+				kind: "let"
 				leadingComments: undefined
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 23
 						index: 846
@@ -4210,11 +4210,11 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'p1'
+							name: "p1"
 							leadingComments: undefined
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'p1'
+								filename: "input.ts"
+								identifierName: "p1"
 								end: Object {
 									column: 6
 									index: 829
@@ -4229,7 +4229,7 @@ Program {
 						}
 						leadingComments: undefined
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 22
 								index: 845
@@ -4243,7 +4243,7 @@ Program {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 22
 									index: 845
@@ -4259,7 +4259,7 @@ Program {
 								value: 10
 								format: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 12
 										index: 835
@@ -4275,7 +4275,7 @@ Program {
 							typeAnnotation: TSTypeReference {
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 22
 										index: 845
@@ -4288,10 +4288,10 @@ Program {
 									}
 								}
 								typeName: ReferenceIdentifier {
-									name: 'const'
+									name: "const"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'const'
+										filename: "input.ts"
+										identifierName: "const"
 										end: Object {
 											column: 22
 											index: 845
@@ -4312,7 +4312,7 @@ Program {
 		}
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 26
 					index: 873
@@ -4325,9 +4325,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'let'
+				kind: "let"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 26
 						index: 873
@@ -4342,10 +4342,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'p2'
+							name: "p2"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'p2'
+								filename: "input.ts"
+								identifierName: "p2"
 								end: Object {
 									column: 6
 									index: 853
@@ -4359,7 +4359,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 25
 								index: 872
@@ -4373,7 +4373,7 @@ Program {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 25
 									index: 872
@@ -4388,7 +4388,7 @@ Program {
 							typeAnnotation: TSTypeReference {
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 25
 										index: 872
@@ -4401,10 +4401,10 @@ Program {
 									}
 								}
 								typeName: ReferenceIdentifier {
-									name: 'const'
+									name: "const"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'const'
+										filename: "input.ts"
+										identifierName: "const"
 										end: Object {
 											column: 25
 											index: 872
@@ -4419,10 +4419,10 @@ Program {
 								}
 							}
 							expression: UnaryExpression {
-								operator: '-'
+								operator: "-"
 								prefix: true
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 14
 										index: 861
@@ -4438,7 +4438,7 @@ Program {
 									value: 10
 									format: undefined
 									loc: Object {
-										filename: 'input.ts'
+										filename: "input.ts"
 										end: Object {
 											column: 14
 											index: 861
@@ -4459,7 +4459,7 @@ Program {
 		}
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 27
 					index: 901
@@ -4472,9 +4472,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'let'
+				kind: "let"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 27
 						index: 901
@@ -4489,10 +4489,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'p3'
+							name: "p3"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'p3'
+								filename: "input.ts"
+								identifierName: "p3"
 								end: Object {
 									column: 6
 									index: 880
@@ -4506,7 +4506,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 26
 								index: 900
@@ -4520,7 +4520,7 @@ Program {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 26
 									index: 900
@@ -4535,7 +4535,7 @@ Program {
 							typeAnnotation: TSTypeReference {
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 26
 										index: 900
@@ -4548,10 +4548,10 @@ Program {
 									}
 								}
 								typeName: ReferenceIdentifier {
-									name: 'const'
+									name: "const"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'const'
+										filename: "input.ts"
+										identifierName: "const"
 										end: Object {
 											column: 26
 											index: 900
@@ -4567,7 +4567,7 @@ Program {
 							}
 							expression: ArrayExpression {
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 16
 										index: 890
@@ -4584,7 +4584,7 @@ Program {
 										value: 10
 										format: undefined
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 14
 												index: 888
@@ -4606,7 +4606,7 @@ Program {
 		}
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 29
 					index: 931
@@ -4619,9 +4619,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'let'
+				kind: "let"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 29
 						index: 931
@@ -4636,10 +4636,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'p4'
+							name: "p4"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'p4'
+								filename: "input.ts"
+								identifierName: "p4"
 								end: Object {
 									column: 6
 									index: 908
@@ -4653,7 +4653,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 28
 								index: 930
@@ -4667,7 +4667,7 @@ Program {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 28
 									index: 930
@@ -4682,7 +4682,7 @@ Program {
 							typeAnnotation: TSTypeReference {
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 28
 										index: 930
@@ -4695,10 +4695,10 @@ Program {
 									}
 								}
 								typeName: ReferenceIdentifier {
-									name: 'const'
+									name: "const"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'const'
+										filename: "input.ts"
+										identifierName: "const"
 										end: Object {
 											column: 28
 											index: 930
@@ -4714,7 +4714,7 @@ Program {
 							}
 							expression: ArrayExpression {
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 19
 										index: 921
@@ -4729,7 +4729,7 @@ Program {
 								elements: Array [
 									ArrayExpression {
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 18
 												index: 920
@@ -4744,7 +4744,7 @@ Program {
 										elements: Array [
 											ArrayExpression {
 												loc: Object {
-													filename: 'input.ts'
+													filename: "input.ts"
 													end: Object {
 														column: 17
 														index: 919
@@ -4759,7 +4759,7 @@ Program {
 												elements: Array [
 													ArrayExpression {
 														loc: Object {
-															filename: 'input.ts'
+															filename: "input.ts"
 															end: Object {
 																column: 16
 																index: 918
@@ -4776,7 +4776,7 @@ Program {
 																value: 10
 																format: undefined
 																loc: Object {
-																	filename: 'input.ts'
+																	filename: "input.ts"
 																	end: Object {
 																		column: 15
 																		index: 917
@@ -4804,7 +4804,7 @@ Program {
 		}
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 62
 					index: 995
@@ -4817,9 +4817,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'let'
+				kind: "let"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 62
 						index: 995
@@ -4834,10 +4834,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'x1'
+							name: "x1"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'x1'
+								filename: "input.ts"
+								identifierName: "x1"
 								end: Object {
 									column: 6
 									index: 939
@@ -4851,7 +4851,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 61
 								index: 994
@@ -4865,7 +4865,7 @@ Program {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 61
 									index: 994
@@ -4880,7 +4880,7 @@ Program {
 							typeAnnotation: TSTypeReference {
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 61
 										index: 994
@@ -4893,10 +4893,10 @@ Program {
 									}
 								}
 								typeName: ReferenceIdentifier {
-									name: 'const'
+									name: "const"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'const'
+										filename: "input.ts"
+										identifierName: "const"
 										end: Object {
 											column: 61
 											index: 994
@@ -4912,7 +4912,7 @@ Program {
 							}
 							expression: ObjectExpression {
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 52
 										index: 985
@@ -4928,10 +4928,10 @@ Program {
 									ObjectProperty {
 										key: StaticPropertyKey {
 											value: Identifier {
-												name: 'x'
+												name: "x"
 												loc: Object {
-													filename: 'input.ts'
-													identifierName: 'x'
+													filename: "input.ts"
+													identifierName: "x"
 													end: Object {
 														column: 12
 														index: 945
@@ -4945,7 +4945,7 @@ Program {
 												}
 											}
 											loc: Object {
-												filename: 'input.ts'
+												filename: "input.ts"
 												end: Object {
 													column: 12
 													index: 945
@@ -4962,7 +4962,7 @@ Program {
 											value: 10
 											format: undefined
 											loc: Object {
-												filename: 'input.ts'
+												filename: "input.ts"
 												end: Object {
 													column: 16
 													index: 949
@@ -4976,7 +4976,7 @@ Program {
 											}
 										}
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 16
 												index: 949
@@ -4992,10 +4992,10 @@ Program {
 									ObjectProperty {
 										key: StaticPropertyKey {
 											value: Identifier {
-												name: 'y'
+												name: "y"
 												loc: Object {
-													filename: 'input.ts'
-													identifierName: 'y'
+													filename: "input.ts"
+													identifierName: "y"
 													end: Object {
 														column: 19
 														index: 952
@@ -5009,7 +5009,7 @@ Program {
 												}
 											}
 											loc: Object {
-												filename: 'input.ts'
+												filename: "input.ts"
 												end: Object {
 													column: 19
 													index: 952
@@ -5024,7 +5024,7 @@ Program {
 										}
 										value: ArrayExpression {
 											loc: Object {
-												filename: 'input.ts'
+												filename: "input.ts"
 												end: Object {
 													column: 29
 													index: 962
@@ -5041,7 +5041,7 @@ Program {
 													value: 20
 													format: undefined
 													loc: Object {
-														filename: 'input.ts'
+														filename: "input.ts"
 														end: Object {
 															column: 24
 															index: 957
@@ -5058,7 +5058,7 @@ Program {
 													value: 30
 													format: undefined
 													loc: Object {
-														filename: 'input.ts'
+														filename: "input.ts"
 														end: Object {
 															column: 28
 															index: 961
@@ -5074,7 +5074,7 @@ Program {
 											]
 										}
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 29
 												index: 962
@@ -5090,10 +5090,10 @@ Program {
 									ObjectProperty {
 										key: StaticPropertyKey {
 											value: Identifier {
-												name: 'z'
+												name: "z"
 												loc: Object {
-													filename: 'input.ts'
-													identifierName: 'z'
+													filename: "input.ts"
+													identifierName: "z"
 													end: Object {
 														column: 32
 														index: 965
@@ -5107,7 +5107,7 @@ Program {
 												}
 											}
 											loc: Object {
-												filename: 'input.ts'
+												filename: "input.ts"
 												end: Object {
 													column: 32
 													index: 965
@@ -5122,7 +5122,7 @@ Program {
 										}
 										value: ObjectExpression {
 											loc: Object {
-												filename: 'input.ts'
+												filename: "input.ts"
 												end: Object {
 													column: 50
 													index: 983
@@ -5138,10 +5138,10 @@ Program {
 												ObjectProperty {
 													key: StaticPropertyKey {
 														value: Identifier {
-															name: 'a'
+															name: "a"
 															loc: Object {
-																filename: 'input.ts'
-																identifierName: 'a'
+																filename: "input.ts"
+																identifierName: "a"
 																end: Object {
 																	column: 37
 																	index: 970
@@ -5155,7 +5155,7 @@ Program {
 															}
 														}
 														loc: Object {
-															filename: 'input.ts'
+															filename: "input.ts"
 															end: Object {
 																column: 37
 																index: 970
@@ -5170,7 +5170,7 @@ Program {
 													}
 													value: ObjectExpression {
 														loc: Object {
-															filename: 'input.ts'
+															filename: "input.ts"
 															end: Object {
 																column: 48
 																index: 981
@@ -5186,10 +5186,10 @@ Program {
 															ObjectProperty {
 																key: StaticPropertyKey {
 																	value: Identifier {
-																		name: 'b'
+																		name: "b"
 																		loc: Object {
-																			filename: 'input.ts'
-																			identifierName: 'b'
+																			filename: "input.ts"
+																			identifierName: "b"
 																			end: Object {
 																				column: 42
 																				index: 975
@@ -5203,7 +5203,7 @@ Program {
 																		}
 																	}
 																	loc: Object {
-																		filename: 'input.ts'
+																		filename: "input.ts"
 																		end: Object {
 																			column: 42
 																			index: 975
@@ -5220,7 +5220,7 @@ Program {
 																	value: 42
 																	format: undefined
 																	loc: Object {
-																		filename: 'input.ts'
+																		filename: "input.ts"
 																		end: Object {
 																			column: 46
 																			index: 979
@@ -5234,7 +5234,7 @@ Program {
 																	}
 																}
 																loc: Object {
-																	filename: 'input.ts'
+																	filename: "input.ts"
 																	end: Object {
 																		column: 46
 																		index: 979
@@ -5250,7 +5250,7 @@ Program {
 														]
 													}
 													loc: Object {
-														filename: 'input.ts'
+														filename: "input.ts"
 														end: Object {
 															column: 48
 															index: 981
@@ -5266,7 +5266,7 @@ Program {
 											]
 										}
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 50
 												index: 983
@@ -5288,7 +5288,7 @@ Program {
 		}
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 20
 					index: 1_017
@@ -5301,9 +5301,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'let'
+				kind: "let"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 20
 						index: 1_017
@@ -5318,10 +5318,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'q1'
+							name: "q1"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'q1'
+								filename: "input.ts"
+								identifierName: "q1"
 								end: Object {
 									column: 6
 									index: 1_003
@@ -5335,7 +5335,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 19
 								index: 1_016
@@ -5349,7 +5349,7 @@ Program {
 						}
 						init: TSTypeAssertion {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 19
 									index: 1_016
@@ -5365,7 +5365,7 @@ Program {
 								value: 10
 								format: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 19
 										index: 1_016
@@ -5381,7 +5381,7 @@ Program {
 							typeAnnotation: TSTypeReference {
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 15
 										index: 1_012
@@ -5394,10 +5394,10 @@ Program {
 									}
 								}
 								typeName: ReferenceIdentifier {
-									name: 'const'
+									name: "const"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'const'
+										filename: "input.ts"
+										identifierName: "const"
 										end: Object {
 											column: 15
 											index: 1_012
@@ -5418,7 +5418,7 @@ Program {
 		}
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 23
 					index: 1_041
@@ -5431,9 +5431,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'let'
+				kind: "let"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 23
 						index: 1_041
@@ -5448,10 +5448,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'q2'
+							name: "q2"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'q2'
+								filename: "input.ts"
+								identifierName: "q2"
 								end: Object {
 									column: 6
 									index: 1_024
@@ -5465,7 +5465,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 22
 								index: 1_040
@@ -5479,7 +5479,7 @@ Program {
 						}
 						init: TSTypeAssertion {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 22
 									index: 1_040
@@ -5492,9 +5492,9 @@ Program {
 								}
 							}
 							expression: StringLiteral {
-								value: 'abc'
+								value: "abc"
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 22
 										index: 1_040
@@ -5510,7 +5510,7 @@ Program {
 							typeAnnotation: TSTypeReference {
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 15
 										index: 1_033
@@ -5523,10 +5523,10 @@ Program {
 									}
 								}
 								typeName: ReferenceIdentifier {
-									name: 'const'
+									name: "const"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'const'
+										filename: "input.ts"
+										identifierName: "const"
 										end: Object {
 											column: 15
 											index: 1_033
@@ -5547,7 +5547,7 @@ Program {
 		}
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 22
 					index: 1_064
@@ -5560,9 +5560,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'let'
+				kind: "let"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 22
 						index: 1_064
@@ -5577,10 +5577,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'q3'
+							name: "q3"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'q3'
+								filename: "input.ts"
+								identifierName: "q3"
 								end: Object {
 									column: 6
 									index: 1_048
@@ -5594,7 +5594,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 21
 								index: 1_063
@@ -5608,7 +5608,7 @@ Program {
 						}
 						init: TSTypeAssertion {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 21
 									index: 1_063
@@ -5623,7 +5623,7 @@ Program {
 							expression: BooleanLiteral {
 								value: true
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 21
 										index: 1_063
@@ -5639,7 +5639,7 @@ Program {
 							typeAnnotation: TSTypeReference {
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 15
 										index: 1_057
@@ -5652,10 +5652,10 @@ Program {
 									}
 								}
 								typeName: ReferenceIdentifier {
-									name: 'const'
+									name: "const"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'const'
+										filename: "input.ts"
+										identifierName: "const"
 										end: Object {
 											column: 15
 											index: 1_057
@@ -5676,7 +5676,7 @@ Program {
 		}
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 27
 					index: 1_092
@@ -5689,9 +5689,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'let'
+				kind: "let"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 27
 						index: 1_092
@@ -5706,10 +5706,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'q4'
+							name: "q4"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'q4'
+								filename: "input.ts"
+								identifierName: "q4"
 								end: Object {
 									column: 6
 									index: 1_071
@@ -5723,7 +5723,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 26
 								index: 1_091
@@ -5737,7 +5737,7 @@ Program {
 						}
 						init: TSTypeAssertion {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 26
 									index: 1_091
@@ -5752,7 +5752,7 @@ Program {
 							typeAnnotation: TSTypeReference {
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 15
 										index: 1_080
@@ -5765,10 +5765,10 @@ Program {
 									}
 								}
 								typeName: ReferenceIdentifier {
-									name: 'const'
+									name: "const"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'const'
+										filename: "input.ts"
+										identifierName: "const"
 										end: Object {
 											column: 15
 											index: 1_080
@@ -5784,7 +5784,7 @@ Program {
 							}
 							expression: ArrayExpression {
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 26
 										index: 1_091
@@ -5801,7 +5801,7 @@ Program {
 										value: 1
 										format: undefined
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 19
 												index: 1_084
@@ -5818,7 +5818,7 @@ Program {
 										value: 2
 										format: undefined
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 22
 												index: 1_087
@@ -5835,7 +5835,7 @@ Program {
 										value: 3
 										format: undefined
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 25
 												index: 1_090
@@ -5857,7 +5857,7 @@ Program {
 		}
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 34
 					index: 1_127
@@ -5870,9 +5870,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'let'
+				kind: "let"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 34
 						index: 1_127
@@ -5887,10 +5887,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'q5'
+							name: "q5"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'q5'
+								filename: "input.ts"
+								identifierName: "q5"
 								end: Object {
 									column: 6
 									index: 1_099
@@ -5904,7 +5904,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 33
 								index: 1_126
@@ -5918,7 +5918,7 @@ Program {
 						}
 						init: TSTypeAssertion {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 33
 									index: 1_126
@@ -5933,7 +5933,7 @@ Program {
 							typeAnnotation: TSTypeReference {
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 15
 										index: 1_108
@@ -5946,10 +5946,10 @@ Program {
 									}
 								}
 								typeName: ReferenceIdentifier {
-									name: 'const'
+									name: "const"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'const'
+										filename: "input.ts"
+										identifierName: "const"
 										end: Object {
 											column: 15
 											index: 1_108
@@ -5965,7 +5965,7 @@ Program {
 							}
 							expression: ObjectExpression {
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 33
 										index: 1_126
@@ -5981,10 +5981,10 @@ Program {
 									ObjectProperty {
 										key: StaticPropertyKey {
 											value: Identifier {
-												name: 'x'
+												name: "x"
 												loc: Object {
-													filename: 'input.ts'
-													identifierName: 'x'
+													filename: "input.ts"
+													identifierName: "x"
 													end: Object {
 														column: 20
 														index: 1_113
@@ -5998,7 +5998,7 @@ Program {
 												}
 											}
 											loc: Object {
-												filename: 'input.ts'
+												filename: "input.ts"
 												end: Object {
 													column: 20
 													index: 1_113
@@ -6015,7 +6015,7 @@ Program {
 											value: 10
 											format: undefined
 											loc: Object {
-												filename: 'input.ts'
+												filename: "input.ts"
 												end: Object {
 													column: 24
 													index: 1_117
@@ -6029,7 +6029,7 @@ Program {
 											}
 										}
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 24
 												index: 1_117
@@ -6045,10 +6045,10 @@ Program {
 									ObjectProperty {
 										key: StaticPropertyKey {
 											value: Identifier {
-												name: 'y'
+												name: "y"
 												loc: Object {
-													filename: 'input.ts'
-													identifierName: 'y'
+													filename: "input.ts"
+													identifierName: "y"
 													end: Object {
 														column: 27
 														index: 1_120
@@ -6062,7 +6062,7 @@ Program {
 												}
 											}
 											loc: Object {
-												filename: 'input.ts'
+												filename: "input.ts"
 												end: Object {
 													column: 27
 													index: 1_120
@@ -6079,7 +6079,7 @@ Program {
 											value: 20
 											format: undefined
 											loc: Object {
-												filename: 'input.ts'
+												filename: "input.ts"
 												end: Object {
 													column: 31
 													index: 1_124
@@ -6093,7 +6093,7 @@ Program {
 											}
 										}
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 31
 												index: 1_124

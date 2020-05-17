@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 31
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		FunctionDeclaration {
 			id: BindingIdentifier {
-				name: 'A'
+				name: "A"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'A'
+					filename: "input.js"
+					identifierName: "A"
 					end: Object {
 						column: 10
 						index: 10
@@ -49,7 +49,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 1
 					index: 30
@@ -71,7 +71,7 @@ Program {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 12
 						index: 12
@@ -87,7 +87,7 @@ Program {
 			body: BlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 1
 						index: 30
@@ -102,7 +102,7 @@ Program {
 				body: Array [
 					ExpressionStatement {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 13
 								index: 28
@@ -116,7 +116,7 @@ Program {
 						}
 						expression: MetaProperty {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 12
 									index: 27
@@ -129,10 +129,10 @@ Program {
 								}
 							}
 							meta: Identifier {
-								name: 'new'
+								name: "new"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'new'
+									filename: "input.js"
+									identifierName: "new"
 									end: Object {
 										column: 5
 										index: 20
@@ -146,10 +146,10 @@ Program {
 								}
 							}
 							property: Identifier {
-								name: 'target'
+								name: "target"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'target'
+									filename: "input.js"
+									identifierName: "target"
 									end: Object {
 										column: 12
 										index: 27

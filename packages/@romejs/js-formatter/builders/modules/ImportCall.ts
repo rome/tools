@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token, concat} from '../../tokens';
-import {ImportCall} from '@romejs/js-ast';
+import Builder from "../../Builder";
+import {Token, concat} from "../../tokens";
+import {ImportCall} from "@romejs/js-ast";
 
 export default function ImportCall(builder: Builder, node: ImportCall): Token {
-	return concat(['import(', builder.tokenize(node.argument, node), ')']);
+	return concat(["import(", builder.tokenize(node.argument, node), ")"]);
 }

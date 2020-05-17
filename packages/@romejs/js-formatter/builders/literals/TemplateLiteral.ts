@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {TemplateLiteral} from '@romejs/js-ast';
-import {Token, concat} from '../../tokens';
+import Builder from "../../Builder";
+import {TemplateLiteral} from "@romejs/js-ast";
+import {Token, concat} from "../../tokens";
 
 export default function TemplateLiteral(
 	builder: Builder,

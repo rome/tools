@@ -5,31 +5,31 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
+import {test} from "rome";
 
-import {testLintMultiple} from '../testHelpers';
+import {testLintMultiple} from "../testHelpers";
 
 test(
-	'require a title attribute on <iframe> JSX elements',
+	"require a title attribute on <iframe> JSX elements",
 	async (t) => {
 		await testLintMultiple(
 			t,
 			[
 				// INVALID
-				'<iframe />',
-				'<iframe {...props} />',
+				"<iframe />",
+				"<iframe {...props} />",
 				'<iframe title="" />',
 				'<iframe title={""} />',
-				'<iframe title={``} />',
-				'<iframe title={undefined} />',
-				'<iframe title={false} />',
-				'<iframe title={true} />',
-				'<iframe title={42} />',
+				"<iframe title={``} />",
+				"<iframe title={undefined} />",
+				"<iframe title={false} />",
+				"<iframe title={true} />",
+				"<iframe title={42} />",
 				// VALID
 				'<iframe title="title" />',
-				'<iframe title={title} >',
+				"<iframe title={title} >",
 			],
-			{category: 'lint/jsxA11yIframeHasTitle'},
+			{category: "lint/jsxA11yIframeHasTitle"},
 		);
 	},
 );

@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 33
 			index: 33
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 33
 					index: 33
@@ -46,7 +46,7 @@ Program {
 			}
 			expression: ObjectExpression {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 32
 						index: 32
@@ -62,10 +62,10 @@ Program {
 					ObjectProperty {
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'f'
+								name: "f"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'f'
+									filename: "input.js"
+									identifierName: "f"
 									end: Object {
 										column: 3
 										index: 3
@@ -79,7 +79,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 3
 									index: 3
@@ -95,7 +95,7 @@ Program {
 						value: FunctionExpression {
 							id: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 31
 									index: 31
@@ -111,7 +111,7 @@ Program {
 								body: Array []
 								directives: Array []
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 31
 										index: 31
@@ -133,7 +133,7 @@ Program {
 								thisType: undefined
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 28
 										index: 28
@@ -148,7 +148,7 @@ Program {
 								params: Array [
 									BindingAssignmentPattern {
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 27
 												index: 27
@@ -162,7 +162,7 @@ Program {
 										}
 										right: ObjectExpression {
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 27
 													index: 27
@@ -178,10 +178,10 @@ Program {
 												ObjectProperty {
 													key: StaticPropertyKey {
 														value: Identifier {
-															name: 'x'
+															name: "x"
 															loc: Object {
-																filename: 'input.js'
-																identifierName: 'x'
+																filename: "input.js"
+																identifierName: "x"
 																end: Object {
 																	column: 22
 																	index: 22
@@ -195,7 +195,7 @@ Program {
 															}
 														}
 														loc: Object {
-															filename: 'input.js'
+															filename: "input.js"
 															end: Object {
 																column: 22
 																index: 22
@@ -212,7 +212,7 @@ Program {
 														value: 10
 														format: undefined
 														loc: Object {
-															filename: 'input.js'
+															filename: "input.js"
 															end: Object {
 																column: 26
 																index: 26
@@ -226,7 +226,7 @@ Program {
 														}
 													}
 													loc: Object {
-														filename: 'input.js'
+														filename: "input.js"
 														end: Object {
 															column: 26
 															index: 26
@@ -244,7 +244,7 @@ Program {
 										left: BindingObjectPattern {
 											rest: undefined
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 17
 													index: 17
@@ -260,7 +260,7 @@ Program {
 												optional: undefined
 												typeAnnotation: undefined
 												loc: Object {
-													filename: 'input.js'
+													filename: "input.js"
 													end: Object {
 														column: 17
 														index: 17
@@ -277,10 +277,10 @@ Program {
 												BindingObjectPatternProperty {
 													key: StaticPropertyKey {
 														value: Identifier {
-															name: 'x'
+															name: "x"
 															loc: Object {
-																filename: 'input.js'
-																identifierName: 'x'
+																filename: "input.js"
+																identifierName: "x"
 																end: Object {
 																	column: 16
 																	index: 16
@@ -294,7 +294,7 @@ Program {
 															}
 														}
 														loc: Object {
-															filename: 'input.js'
+															filename: "input.js"
 															end: Object {
 																column: 16
 																index: 16
@@ -308,10 +308,10 @@ Program {
 														}
 													}
 													value: BindingIdentifier {
-														name: 'x'
+														name: "x"
 														loc: Object {
-															filename: 'input.js'
-															identifierName: 'x'
+															filename: "input.js"
+															identifierName: "x"
 															end: Object {
 																column: 16
 																index: 16
@@ -325,7 +325,7 @@ Program {
 														}
 													}
 													loc: Object {
-														filename: 'input.js'
+														filename: "input.js"
 														end: Object {
 															column: 16
 															index: 16
@@ -345,7 +345,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 31
 								index: 31

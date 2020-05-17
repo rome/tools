@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token, concat} from '../../tokens';
-import {ComputedPropertyKey} from '@romejs/js-ast';
+import Builder from "../../Builder";
+import {Token, concat} from "../../tokens";
+import {ComputedPropertyKey} from "@romejs/js-ast";
 
 export default function ComputedPropertyKey(
 	builder: Builder,
 	node: ComputedPropertyKey,
 ): Token {
-	return concat(['[', builder.tokenize(node.value, node), ']']);
+	return concat(["[", builder.tokenize(node.value, node), "]"]);
 }

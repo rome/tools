@@ -11,21 +11,21 @@ import {
 	FunctionHead,
 	JSNodeBase,
 	StaticPropertyKey,
-} from '../index';
-import {createBuilder} from '../utils';
+} from "../index";
+import {createBuilder} from "../utils";
 
-export type ObjectMethodKind = 'get' | 'set' | 'method';
+export type ObjectMethodKind = "get" | "set" | "method";
 
 export type ObjectMethod = JSNodeBase & {
 	key: ComputedPropertyKey | StaticPropertyKey;
-	type: 'ObjectMethod';
+	type: "ObjectMethod";
 	kind: ObjectMethodKind;
 	head: FunctionHead;
 	body: BlockStatement;
 };
 
 export const objectMethod = createBuilder<ObjectMethod>(
-	'ObjectMethod',
+	"ObjectMethod",
 	{
 		bindingKeys: {},
 		visitorKeys: {

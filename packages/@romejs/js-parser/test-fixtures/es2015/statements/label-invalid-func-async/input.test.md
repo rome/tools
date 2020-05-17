@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 29
@@ -30,16 +30,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Async functions can only be declared at the top level or inside a block'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Async functions can only be declared at the top level or inside a block"}
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 4
 					index: 4
@@ -56,7 +56,7 @@ Program {
 	body: Array [
 		LabeledStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 28
 					index: 28
@@ -69,10 +69,10 @@ Program {
 				}
 			}
 			label: Identifier {
-				name: 'foo'
+				name: "foo"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'foo'
+					filename: "input.js"
+					identifierName: "foo"
 					end: Object {
 						column: 3
 						index: 3
@@ -87,10 +87,10 @@ Program {
 			}
 			body: FunctionDeclaration {
 				id: BindingIdentifier {
-					name: 'bar'
+					name: "bar"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'bar'
+						filename: "input.js"
+						identifierName: "bar"
 						end: Object {
 							column: 23
 							index: 23
@@ -104,7 +104,7 @@ Program {
 					}
 				}
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 28
 						index: 28
@@ -120,7 +120,7 @@ Program {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 28
 							index: 28
@@ -143,7 +143,7 @@ Program {
 					thisType: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 25
 							index: 25

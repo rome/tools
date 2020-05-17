@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Manifest, ManifestDefinition} from '@romejs/codec-js-manifest';
-import Master from '../Master';
-import {PLATFORM_ALIASES, Platform} from '../../common/types/platform';
-import {DEFAULT_PROJECT_CONFIG, ProjectDefinition} from '@romejs/project';
-import {FileReference} from '../../common/types/files';
-import resolverSuggest from './resolverSuggest';
+import {Manifest, ManifestDefinition} from "@romejs/codec-js-manifest";
+import Master from "../Master";
+import {PLATFORM_ALIASES, Platform} from "../../common/types/platform";
+import {DEFAULT_PROJECT_CONFIG, ProjectDefinition} from "@romejs/project";
+import {FileReference} from "../../common/types/files";
+import resolverSuggest from "./resolverSuggest";
 import {
 	AbsoluteFilePath,
 	RelativeFilePath,
@@ -18,21 +18,21 @@ import {
 	UnknownFilePath,
 	createFilePathFromSegments,
 	createRelativeFilePath,
-} from '@romejs/path';
-import {DiagnosticAdvice, DiagnosticLocation} from '@romejs/diagnostics';
-import {IMPLICIT_JS_EXTENSIONS} from '../../common/file-handlers/javascript';
-import {writeFile} from '@romejs/fs';
-import https = require('https');
+} from "@romejs/path";
+import {DiagnosticAdvice, DiagnosticLocation} from "@romejs/diagnostics";
+import {IMPLICIT_JS_EXTENSIONS} from "../../common/file-handlers/javascript";
+import {writeFile} from "@romejs/fs";
+import https = require("https");
 
-import {MOCKS_FOLDER_NAME} from '@romejs/core/common/constants';
-import {Consumer} from '@romejs/consume';
+import {MOCKS_FOLDER_NAME} from "@romejs/core/common/constants";
+import {Consumer} from "@romejs/consume";
 
 function request(
 	url: string,
 ): Promise<
 	| ResolverQueryResponseFetchError
 	| {
-			type: 'DOWNLOADED';
+			type: "DOWNLOADED";
 			content: string;
 		}
 > {
@@ -41,14 +41,14 @@ function request(
 			url,
 			(res) => {
 				if (res.statusCode !== 200) {
-					console.log('non-200 return');
+					console.log("non-200 return");
 					resolve({
-						type: 'FETCH_ERROR',
+						type: "FETCH_ERROR",
 						source: undefined,
 						advice: [
 							{
-								type: 'log',
-								category: 'info',
+								type: "log",
+								category: "info",
 								text: `<hyperlink target="${url}" /> returned a ${res.statusCode} status code`,
 							},
 						],
@@ -56,34 +56,34 @@ function request(
 					return;
 				}
 
-				let data = '';
+				let data = "";
 
 				res.on(
-					'data',
+					"data",
 					(chunk) => {
 						data += chunk;
 					},
 				);
 
 				res.on(
-					'end',
+					"end",
 					() => {
-						resolve({type: 'DOWNLOADED', content: data});
+						resolve({type: "DOWNLOADED", content: data});
 					},
 				);
 			},
 		);
 
 		req.on(
-			'error',
+			"error",
 			(err) => {
 				resolve({
-					type: 'FETCH_ERROR',
+					type: "FETCH_ERROR",
 					source: undefined,
 					advice: [
 						{
-							type: 'log',
-							category: 'info',
+							type: "log",
+							category: "info",
 							text: `<hyperlink target="${url}" /> resulted in the error "${err.message}"`,
 						},
 					],
@@ -93,20 +93,20 @@ function request(
 	});
 }
 
-const NODE_MODULES = 'node_modules';
+const NODE_MODULES = "node_modules";
 
-export type ResolverRemoteQuery = Omit<ResolverOptions, 'origin'> & {
+export type ResolverRemoteQuery = Omit<ResolverOptions, "origin"> & {
 	origin: URLFilePath | AbsoluteFilePath;
 	source: UnknownFilePath;
 	// Allows a resolution to stop at a folder or package boundary
-	requestedType?: 'package' | 'folder';
+	requestedType?: "package" | "folder";
 	// Treat the source as a path (without being explicitly relative), and then a module/package if it fails to resolve
 	entry?: boolean;
 	// Strict disables implicit extensions
 	strict?: boolean;
 };
 
-export type ResolverLocalQuery = Omit<ResolverRemoteQuery, 'origin'> & {
+export type ResolverLocalQuery = Omit<ResolverRemoteQuery, "origin"> & {
 	origin: AbsoluteFilePath;
 };
 
@@ -118,35 +118,35 @@ export type ResolverQuerySource =
 		};
 
 type ResolverQueryResponseFoundType =
-	 | 'package'
-	| 'mock'
-	| 'virtual'
-	| 'implicitPlatform'
-	| 'implicitScale'
-	| 'implicitExtension'
-	| 'implicitIndex';
+	 | "package"
+	| "mock"
+	| "virtual"
+	| "implicitPlatform"
+	| "implicitScale"
+	| "implicitExtension"
+	| "implicitIndex";
 
 export type ResolverQueryResponseFound = {
-	type: 'FOUND';
+	type: "FOUND";
 	types: Array<ResolverQueryResponseFoundType>;
 	path: AbsoluteFilePath;
 	ref: FileReference;
 };
 
 export type ResolverQueryResponseMissing = {
-	type: 'MISSING';
+	type: "MISSING";
 	source: undefined | ResolverQuerySource;
 	advice?: undefined;
 };
 
 export type ResolverQueryResponseUnsupported = {
-	type: 'UNSUPPORTED';
+	type: "UNSUPPORTED";
 	source: undefined | ResolverQuerySource;
 	advice: DiagnosticAdvice;
 };
 
 export type ResolverQueryResponseFetchError = {
-	type: 'FETCH_ERROR';
+	type: "FETCH_ERROR";
 	source: undefined | ResolverQuerySource;
 	advice: DiagnosticAdvice;
 };
@@ -157,7 +157,7 @@ type FilenameVariant = {
 };
 
 const QUERY_RESPONSE_MISSING: ResolverQueryResponseMissing = {
-	type: 'MISSING',
+	type: "MISSING",
 	source: undefined,
 };
 
@@ -171,7 +171,7 @@ export type ResolverQueryResponse =
 	| ResolverQueryResponseNotFound;
 
 function shouldReturnQueryResponse(res: ResolverQueryResponse): boolean {
-	return res.type === 'FOUND' || res.source !== undefined;
+	return res.type === "FOUND" || res.source !== undefined;
 }
 
 export function isPathLike(source: UnknownFilePath): boolean {
@@ -182,7 +182,7 @@ function appendTypeQueryResponse(
 	res: ResolverQueryResponse,
 	types: Array<ResolverQueryResponseFoundType>,
 ): ResolverQueryResponse {
-	if (res.type === 'FOUND') {
+	if (res.type === "FOUND") {
 		return {
 			...res,
 			types: [...res.types, ...types],
@@ -208,11 +208,11 @@ function attachExportAliasIfUnresolved(
 	res: ResolverQueryResponse,
 	alias: ExportAlias,
 ) {
-	if (res.type === 'FOUND') {
+	if (res.type === "FOUND") {
 		return res;
 	}
 
-	const location = alias.key.getDiagnosticLocation('value');
+	const location = alias.key.getDiagnosticLocation("value");
 
 	return {
 		...res,
@@ -236,7 +236,7 @@ function getExportsAlias(
 		platform?: Platform;
 	},
 ): undefined | ExportAlias {
-	if (typeof manifest.exports === 'boolean') {
+	if (typeof manifest.exports === "boolean") {
 		return undefined;
 	}
 
@@ -261,7 +261,7 @@ function getExportsAlias(
 		};
 	}
 
-	const def = aliases.get('default');
+	const def = aliases.get("default");
 	if (def !== undefined) {
 		return {
 			key: def.consumer,
@@ -280,7 +280,7 @@ function getPreferredMainKey(
 ): undefined | ExportAlias {
 	const alias = getExportsAlias({
 		manifest,
-		relative: createRelativeFilePath('.'),
+		relative: createRelativeFilePath("."),
 		platform,
 	});
 	if (alias !== undefined) {
@@ -289,7 +289,7 @@ function getPreferredMainKey(
 
 	if (manifest.main !== undefined) {
 		return {
-			key: consumer.get('main'),
+			key: consumer.get("main"),
 			value: createRelativeFilePath(manifest.main),
 		};
 	}
@@ -346,7 +346,7 @@ export default class Resolver {
 		origQuerySource?: ResolverQuerySource,
 	): Promise<ResolverQueryResponseFound> {
 		const resolved = await this.resolveRemote(query);
-		if (resolved.type === 'FOUND') {
+		if (resolved.type === "FOUND") {
 			return resolved;
 		} else {
 			throw resolverSuggest(this, query, resolved, origQuerySource);
@@ -361,8 +361,8 @@ export default class Resolver {
 			const protocol = sourceURL.getProtocol();
 
 			switch (protocol) {
-				case 'http':
-				case 'https': {
+				case "http":
+				case "https": {
 					let projectConfig = DEFAULT_PROJECT_CONFIG;
 
 					if (origin.isAbsolute()) {
@@ -375,12 +375,12 @@ export default class Resolver {
 					}
 
 					const remotePath = projectConfig.files.vendorPath.append(
-						source.join().replace(/[\/:]/g, '$').replace(/\$+/g, '$'),
+						source.join().replace(/[\/:]/g, "$").replace(/\$+/g, "$"),
 					);
 
 					if (!this.master.memoryFs.exists(remotePath)) {
 						const result = await request(source.join());
-						if (result.type === 'DOWNLOADED') {
+						if (result.type === "DOWNLOADED") {
 							await writeFile(remotePath, result.content);
 						} else {
 							return result;
@@ -388,7 +388,7 @@ export default class Resolver {
 					}
 
 					return {
-						type: 'FOUND',
+						type: "FOUND",
 						types: [],
 						ref: this.master.projectManager.getURLFileReference(remotePath, sourceURL),
 						path: remotePath,
@@ -397,12 +397,12 @@ export default class Resolver {
 
 				default:
 					return {
-						type: 'UNSUPPORTED',
+						type: "UNSUPPORTED",
 						source: undefined,
 						advice: [
 							{
-								type: 'log',
-								category: 'info',
+								type: "log",
+								category: "info",
 								text: `<emphasis>${protocol}</emphasis> is not a supported remote protocol`,
 							},
 						],
@@ -420,7 +420,7 @@ export default class Resolver {
 			} else {
 				// TODO add support for import maps
 				return {
-					type: 'MISSING',
+					type: "MISSING",
 					source: undefined,
 				};
 			}
@@ -442,7 +442,7 @@ export default class Resolver {
 		const resolved = this.resolveModule(query);
 
 		// If we didn't resolve to a module, and we were asked to resolve relative, then do that
-		if (resolved.type === 'MISSING' && query.entry === true) {
+		if (resolved.type === "MISSING" && query.entry === true) {
 			return this.resolvePath(query);
 		}
 
@@ -481,11 +481,11 @@ export default class Resolver {
 		const usesUnknownExtension = !query.strict && handler === undefined;
 
 		// Check with appended `platform`
-		if (platform !== undefined && !callees.includes('implicitPlatform')) {
+		if (platform !== undefined && !callees.includes("implicitPlatform")) {
 			yield* this._getFilenameVariants(
 				query,
 				path.addExtension(`.${platform}`),
-				[...callees, 'implicitPlatform'],
+				[...callees, "implicitPlatform"],
 			);
 
 			// Check if this platform has any subplatforms
@@ -495,19 +495,19 @@ export default class Resolver {
 					yield* this._getFilenameVariants(
 						query,
 						path.addExtension(`.${platform}`, true),
-						[...callees, 'implicitPlatform'],
+						[...callees, "implicitPlatform"],
 					);
 				}
 			}
 		}
 
 		// Check with appended extensions
-		if (usesUnknownExtension && !callees.includes('implicitExtension')) {
+		if (usesUnknownExtension && !callees.includes("implicitExtension")) {
 			for (const ext of IMPLICIT_JS_EXTENSIONS) {
 				yield* this._getFilenameVariants(
 					query,
 					path.addExtension(`.${ext}`),
-					[...callees, 'implicitExtension'],
+					[...callees, "implicitExtension"],
 				);
 			}
 		}
@@ -516,7 +516,7 @@ export default class Resolver {
 		if (
 			handler !== undefined &&
 			handler.canHaveScale === true &&
-			!callees.includes('implicitScale')
+			!callees.includes("implicitScale")
 		) {
 			const scale = query.scale === undefined ? 3 : query.scale;
 			for (let i = scale; i >= 1; i--) {
@@ -525,7 +525,7 @@ export default class Resolver {
 					path.changeBasename(
 						`${path.getExtensionlessBasename()}@${String(i)}x${path.memoizedExtension}`,
 					),
-					[...callees, 'implicitScale'],
+					[...callees, "implicitScale"],
 				);
 			}
 		}
@@ -536,7 +536,7 @@ export default class Resolver {
 		types?: Array<ResolverQueryResponseFoundType>,
 	): ResolverQueryResponse {
 		return {
-			type: 'FOUND',
+			type: "FOUND",
 			types: types === undefined ? [] : types,
 			ref: this.master.projectManager.getFileReference(path),
 			path,
@@ -568,7 +568,7 @@ export default class Resolver {
 		// Check if this is an absolute filename
 		if (memoryFs.isFile(resolvedOrigin)) {
 			// If we're querying a package then we should never return a file
-			if (query.requestedType === 'package') {
+			if (query.requestedType === "package") {
 				return QUERY_RESPONSE_MISSING;
 			}
 
@@ -596,7 +596,7 @@ export default class Resolver {
 
 		// check if this is a folder
 		if (memoryFs.isDirectory(resolvedOrigin)) {
-			if (query.requestedType === 'folder') {
+			if (query.requestedType === "folder") {
 				return this.finishResolverQueryResponse(resolvedOrigin, types);
 			}
 
@@ -604,7 +604,7 @@ export default class Resolver {
 			const manifestDef = memoryFs.getManifestDefinition(resolvedOrigin);
 			if (manifestDef !== undefined) {
 				// If we're resolving a package then don't follow this
-				if (query.requestedType === 'package') {
+				if (query.requestedType === "package") {
 					return this.finishResolverQueryResponse(resolvedOrigin, types);
 				}
 
@@ -621,7 +621,7 @@ export default class Resolver {
 							source: main.value,
 						},
 						true,
-						['package'],
+						["package"],
 					);
 
 					return attachExportAliasIfUnresolved(resolved, main);
@@ -637,7 +637,7 @@ export default class Resolver {
 							source: resolvedOrigin.append(`index.${ext}`),
 						},
 						true,
-						['implicitIndex'],
+						["implicitIndex"],
 					);
 
 					if (shouldReturnQueryResponse(indexResolved)) {
@@ -717,7 +717,7 @@ export default class Resolver {
 						source: manifestDef.folder.append(alias.value),
 					},
 					true,
-					['package'],
+					["package"],
 				);
 				return attachExportAliasIfUnresolved(resolved, alias);
 			}
@@ -730,7 +730,7 @@ export default class Resolver {
 				source: manifestDef.folder.append(moduleNameParts),
 			},
 			true,
-			['package'],
+			["package"],
 		);
 	}
 
@@ -759,7 +759,7 @@ export default class Resolver {
 			});
 
 			if (shouldReturnQueryResponse(resolved)) {
-				return appendTypeQueryResponse(resolved, ['mock']);
+				return appendTypeQueryResponse(resolved, ["mock"]);
 			}
 		}
 
@@ -773,7 +773,7 @@ export default class Resolver {
 		const [moduleName, ...moduleNameParts] = path.getSegments();
 
 		// For scoped modules in the form of `@romejs/bar`, make sure we keep the `/bar` on the module name
-		if (moduleName[0] === '@' && moduleNameParts.length > 0) {
+		if (moduleName[0] === "@" && moduleNameParts.length > 0) {
 			return [`${moduleName}/${moduleNameParts.shift()}`, moduleNameParts];
 		}
 
@@ -809,7 +809,7 @@ export default class Resolver {
 					source: virtualResolved.append(moduleNameParts),
 				},
 				true,
-				['virtual'],
+				["virtual"],
 			);
 		}
 

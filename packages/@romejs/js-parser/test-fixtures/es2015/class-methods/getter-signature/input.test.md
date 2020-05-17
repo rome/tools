@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 1
 			index: 31
@@ -30,16 +30,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'getter should have no parameters'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "getter should have no parameters"}
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 19
 					index: 29
@@ -56,10 +56,10 @@ Program {
 	body: Array [
 		ClassDeclaration {
 			id: BindingIdentifier {
-				name: 'A'
+				name: "A"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'A'
+					filename: "input.js"
+					identifierName: "A"
 					end: Object {
 						column: 7
 						index: 7
@@ -73,7 +73,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 1
 					index: 31
@@ -91,7 +91,7 @@ Program {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 1
 						index: 31
@@ -105,13 +105,13 @@ Program {
 				}
 				body: Array [
 					ClassMethod {
-						kind: 'get'
+						kind: "get"
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'prop'
+								name: "prop"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'prop'
+									filename: "input.js"
+									identifierName: "prop"
 									end: Object {
 										column: 10
 										index: 20
@@ -125,7 +125,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 10
 									index: 20
@@ -139,7 +139,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 19
 								index: 29
@@ -155,7 +155,7 @@ Program {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 19
 									index: 29
@@ -181,7 +181,7 @@ Program {
 								line: 2
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 10
 									index: 20
@@ -203,7 +203,7 @@ Program {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 16
 									index: 26
@@ -217,10 +217,10 @@ Program {
 							}
 							params: Array [
 								BindingIdentifier {
-									name: 'arg'
+									name: "arg"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'arg'
+										filename: "input.js"
+										identifierName: "arg"
 										end: Object {
 											column: 15
 											index: 25
@@ -236,7 +236,7 @@ Program {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 15
 												index: 25

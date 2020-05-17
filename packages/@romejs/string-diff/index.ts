@@ -72,7 +72,7 @@ export function groupDiffByLines(rawDiffs: Diffs): Array<Diffs> {
 		}
 
 		// Get all the lines
-		const parts = text.split('\n');
+		const parts = text.split("\n");
 
 		// Doesn't contain a newline
 		if (parts.length <= 1) {
@@ -84,7 +84,7 @@ export function groupDiffByLines(rawDiffs: Diffs): Array<Diffs> {
 		const [currentLine, ...futureLines] = parts;
 
 		// The first chunk belongs to the current line
-		if (currentLine !== '') {
+		if (currentLine !== "") {
 			line.push([type, currentLine]);
 		}
 
@@ -473,7 +473,7 @@ function halfMatch(text1: string, text2: string): undefined | HalfMatch {
 	}
 
 	if (hm === undefined) {
-		throw new Error('Expected half match');
+		throw new Error("Expected half match");
 	}
 
 	// A half-match was found, sort out the return data.
@@ -516,11 +516,11 @@ function halfMatchI(
 	// Start with a 1/4 length substring at position i as a seed.
 	let seed = longtext.substring(i, i + Math.floor(longtext.length / 4));
 	let j = -1;
-	let bestCommon = '';
-	let bestLongtextA = '';
-	let bestLongtextB = '';
-	let bestShorttextA = '';
-	let bestShorttextB = '';
+	let bestCommon = "";
+	let bestLongtextA = "";
+	let bestLongtextB = "";
+	let bestShorttextA = "";
+	let bestShorttextB = "";
 	while ((j = shorttext.indexOf(seed, j + 1)) !== -1) {
 		let prefixLength = commonPrefix(longtext.substring(i), shorttext.substring(j));
 		let suffixLength = commonSuffix(
@@ -558,12 +558,12 @@ function halfMatchI(
  * @param {boolean} fix_unicode Whether to normalize to a unicode-correct diff
  */
 function cleanupMerge(diffs: Diffs, fixUnicode: boolean) {
-	diffs.push([DIFF_EQUAL, '']); // Add a dummy entry at the end.
+	diffs.push([DIFF_EQUAL, ""]); // Add a dummy entry at the end.
 	let pointer = 0;
 	let countDelete = 0;
 	let countInsert = 0;
-	let textDelete = '';
-	let textInsert = '';
+	let textDelete = "";
+	let textInsert = "";
 	let commonlength;
 	while (pointer < diffs.length) {
 		if (pointer < diffs.length - 1 && !diffs[pointer][1]) {
@@ -688,13 +688,13 @@ function cleanupMerge(diffs: Diffs, fixUnicode: boolean) {
 				}
 				countInsert = 0;
 				countDelete = 0;
-				textDelete = '';
-				textInsert = '';
+				textDelete = "";
+				textInsert = "";
 				break;
 			}
 		}
 	}
-	if (diffs[diffs.length - 1][1] === '') {
+	if (diffs[diffs.length - 1][1] === "") {
 		// Remove the dummy entry at the end.
 		diffs.pop();
 	}

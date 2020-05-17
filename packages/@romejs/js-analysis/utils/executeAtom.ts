@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../scopes';
-import T from '../types/T';
-import {AnyNode} from '@romejs/js-ast';
-import NumericLiteralT from '../types/NumericLiteralT';
-import StringLiteralT from '../types/StringLiteralT';
-import GetPropT from '../types/GetPropT';
+import {Scope} from "../scopes";
+import T from "../types/T";
+import {AnyNode} from "@romejs/js-ast";
+import NumericLiteralT from "../types/NumericLiteralT";
+import StringLiteralT from "../types/StringLiteralT";
+import GetPropT from "../types/GetPropT";
 
 export default function executeAtom(
 	leftNode: AnyNode,
@@ -18,22 +18,22 @@ export default function executeAtom(
 	scope: Scope,
 ) {
 	switch (leftNode.type) {
-		case 'BindingIdentifier': {
+		case "BindingIdentifier": {
 			scope.addBinding(leftNode.name, rightType);
 			break;
 		}
 
-		case 'BindingObjectPattern': {
+		case "BindingObjectPattern": {
 			for (const prop of leftNode.properties) {
 				executeAtom(prop, rightType, scope);
 			}
 			break;
 		}
 
-		case 'BindingObjectPatternProperty': {
+		case "BindingObjectPatternProperty": {
 			const {key} = leftNode;
-			if (key.type === 'ComputedPropertyKey' || key.value.type !== 'Identifier') {
-				throw new Error('unimplemented');
+			if (key.type === "ComputedPropertyKey" || key.value.type !== "Identifier") {
+				throw new Error("unimplemented");
 			}
 
 			const propKey = new StringLiteralT(scope, key, key.value.name);
@@ -42,7 +42,7 @@ export default function executeAtom(
 			break;
 		}
 
-		case 'BindingArrayPattern': {
+		case "BindingArrayPattern": {
 			for (let i = 0; i < leftNode.elements.length; i++) {
 				const elem = leftNode.elements[i];
 				if (elem === undefined) {
@@ -56,7 +56,7 @@ export default function executeAtom(
 			break;
 		}
 
-		case 'BindingAssignmentPattern': {
+		case "BindingAssignmentPattern": {
 			executeAtom(leftNode.left, rightType, scope);
 			break;
 		}

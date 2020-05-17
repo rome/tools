@@ -5,18 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from '@romejs/js-compiler';
-import {AnyNode} from '@romejs/js-ast';
-import {descriptions} from '@romejs/diagnostics';
-import {createUnknownFilePath} from '@romejs/path';
-import {filenameToId} from './defaultExportSameBasename';
+import {Path} from "@romejs/js-compiler";
+import {AnyNode} from "@romejs/js-ast";
+import {descriptions} from "@romejs/diagnostics";
+import {createUnknownFilePath} from "@romejs/path";
+import {filenameToId} from "./defaultExportSameBasename";
 
 export default {
-	name: 'importDefaultBasename',
+	name: "importDefaultBasename",
 	enter(path: Path): AnyNode {
 		const {node} = path;
 
-		if (node.type === 'ImportDeclaration') {
+		if (node.type === "ImportDeclaration") {
 			const {defaultSpecifier} = node;
 			if (defaultSpecifier === undefined) {
 				return node;

@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token, concat, hardline, indent} from '../../tokens';
-import {AnyNode, BlockStatement} from '@romejs/js-ast';
+import Builder from "../../Builder";
+import {Token, concat, hardline, indent} from "../../tokens";
+import {AnyNode, BlockStatement} from "@romejs/js-ast";
 
 export default function BlockStatement(
 	builder: Builder,
@@ -24,23 +24,23 @@ export default function BlockStatement(
 		!hasComments &&
 		!hasContents &&
 		!hasDirectives &&
-		(parent.type === 'ArrowFunctionExpression' ||
-		parent.type === 'ClassMethod' ||
-		parent.type === 'ClassPrivateMethod' ||
-		parent.type === 'DoWhileStatement' ||
-		parent.type === 'ForInStatement' ||
-		parent.type === 'ForOfStatement' ||
-		parent.type === 'ForStatement' ||
-		parent.type === 'FunctionDeclaration' ||
-		parent.type === 'FunctionExpression' ||
-		parent.type === 'ObjectMethod' ||
-		parent.type === 'SwitchStatement' ||
-		parent.type === 'WhileStatement')
+		(parent.type === "ArrowFunctionExpression" ||
+		parent.type === "ClassMethod" ||
+		parent.type === "ClassPrivateMethod" ||
+		parent.type === "DoWhileStatement" ||
+		parent.type === "ForInStatement" ||
+		parent.type === "ForOfStatement" ||
+		parent.type === "ForStatement" ||
+		parent.type === "FunctionDeclaration" ||
+		parent.type === "FunctionExpression" ||
+		parent.type === "ObjectMethod" ||
+		parent.type === "SwitchStatement" ||
+		parent.type === "WhileStatement")
 	) {
-		return '{}';
+		return "{}";
 	}
 
-	const tokens: Array<Token> = ['{'];
+	const tokens: Array<Token> = ["{"];
 
 	if (hasDirectives) {
 		for (const directive of node.directives!) {
@@ -58,7 +58,7 @@ export default function BlockStatement(
 		tokens.push(builder.tokenizeInnerComments(node, true));
 	}
 
-	tokens.push(hardline, '}');
+	tokens.push(hardline, "}");
 
 	return concat(tokens);
 }

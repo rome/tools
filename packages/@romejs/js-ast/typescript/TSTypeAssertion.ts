@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyExpression, AnyTSPrimary, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {AnyExpression, AnyTSPrimary, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type TSTypeAssertion = JSNodeBase & {
-	type: 'TSTypeAssertion';
+	type: "TSTypeAssertion";
 	expression: AnyExpression;
 	typeAnnotation: AnyTSPrimary;
 };
 
 export const tsTypeAssertion = createBuilder<TSTypeAssertion>(
-	'TSTypeAssertion',
+	"TSTypeAssertion",
 	{
 		bindingKeys: {},
 		visitorKeys: {

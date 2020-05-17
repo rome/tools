@@ -30,7 +30,7 @@
 ```
 class p {
 	get name() {
-		console.log('hello');
+		console.log("hello");
 	}
 }
 
@@ -62,7 +62,7 @@ class p {
 ```
 let p = {
 	get name() {
-		console.log('hello');
+		console.log("hello");
 	},
 };
 
@@ -83,7 +83,7 @@ Object.defineProperty(
 	p,
 	{
 		get: function() {
-			console.log('hello');
+			console.log("hello");
 		},
 	},
 );

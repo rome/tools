@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {testLint} from '../testHelpers';
+import {test} from "rome";
+import {testLint} from "../testHelpers";
 
 test(
-	'prefer template',
+	"prefer template",
 	async (t) => {
 		await testLint(
 			t,
 			`const foo = 'bar'; console.log(foo + 'baz')`,
 			{
-				category: 'lint/preferTemplate',
+				category: "lint/preferTemplate",
 			},
 		);
 
@@ -23,7 +23,7 @@ test(
 			t,
 			`console.log((1 * 2) + 'baz')`,
 			{
-				category: 'lint/preferTemplate',
+				category: "lint/preferTemplate",
 			},
 		);
 	},

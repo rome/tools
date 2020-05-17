@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 15
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		TypeAliasTypeAnnotation {
 			id: BindingIdentifier {
-				name: 'T'
+				name: "T"
 				loc: Object {
-					filename: 'input.ts'
-					identifierName: 'T'
+					filename: "input.ts"
+					identifierName: "T"
 					end: Object {
 						column: 6
 						index: 6
@@ -49,7 +49,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 14
 					index: 14
@@ -64,7 +64,7 @@ Program {
 			right: TSTypeReference {
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 13
 						index: 13
@@ -77,10 +77,10 @@ Program {
 					}
 				}
 				typeName: ReferenceIdentifier {
-					name: 'U'
+					name: "U"
 					loc: Object {
-						filename: 'input.ts'
-						identifierName: 'U'
+						filename: "input.ts"
+						identifierName: "U"
 						end: Object {
 							column: 13
 							index: 13
@@ -96,7 +96,7 @@ Program {
 			}
 			typeParameters: TSTypeParameterDeclaration {
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 9
 						index: 9
@@ -110,11 +110,11 @@ Program {
 				}
 				params: Array [
 					TSTypeParameter {
-						name: 'U'
+						name: "U"
 						constraint: undefined
 						default: undefined
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 8
 								index: 8

@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {SourceMapConsumerCollection} from '@romejs/codec-source-map';
-import {ErrorFrame} from '@romejs/v8';
-import {ob1Coerce1, ob1Coerce1To0} from '@romejs/ob1';
-import {ERROR_FRAMES_PROP, getErrorStructure} from './errors';
+import {SourceMapConsumerCollection} from "@romejs/codec-source-map";
+import {ErrorFrame} from "@romejs/v8";
+import {ob1Coerce1, ob1Coerce1To0} from "@romejs/ob1";
+import {ERROR_FRAMES_PROP, getErrorStructure} from "./errors";
 
 let inited: boolean = false;
 
@@ -55,18 +55,18 @@ function buildStackString(err: Error): string {
 		const parts: Array<string> = [];
 
 		if (isAsync) {
-			parts.push('await');
+			parts.push("await");
 		}
 
 		if (isEval) {
-			parts.push('eval');
+			parts.push("eval");
 		}
 
 		if (isConstructor) {
-			parts.push('new');
+			parts.push("new");
 		}
 
-		let name = '<anonymous>';
+		let name = "<anonymous>";
 		if (functionName !== undefined) {
 			name = functionName;
 		}
@@ -80,7 +80,7 @@ function buildStackString(err: Error): string {
 		}
 
 		if (isNative) {
-			parts.push('native');
+			parts.push("native");
 		} else if (
 			filename !== undefined &&
 			lineNumber !== undefined &&
@@ -90,13 +90,13 @@ function buildStackString(err: Error): string {
 		}
 
 		if (resolvedLocation === false) {
-			parts.push('generated source location');
+			parts.push("generated source location");
 		}
 
-		lines.push(`  at ${parts.join(' ')}`);
+		lines.push(`  at ${parts.join(" ")}`);
 	}
 
-	return lines.join('\n');
+	return lines.join("\n");
 }
 
 function noNull<T>(val: null | T): undefined | T {

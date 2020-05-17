@@ -9,14 +9,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 52
@@ -30,10 +30,10 @@ Program {
 	}
 	comments: Array [
 		CommentLine {
-			id: '0'
-			value: ' one'
+			id: "0"
+			value: " one"
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 8
 					index: 39
@@ -47,10 +47,10 @@ Program {
 			}
 		}
 		CommentLine {
-			id: '1'
-			value: ' two'
+			id: "1"
+			value: " two"
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 6
 					index: 48
@@ -67,7 +67,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 2
 					index: 51
@@ -81,7 +81,7 @@ Program {
 			}
 			expression: CallExpression {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 1
 						index: 50
@@ -94,10 +94,10 @@ Program {
 					}
 				}
 				callee: ReferenceIdentifier {
-					name: 'test'
+					name: "test"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'test'
+						filename: "input.js"
+						identifierName: "test"
 						end: Object {
 							column: 4
 							index: 4
@@ -113,9 +113,9 @@ Program {
 				arguments: Array [
 					FunctionExpression {
 						id: undefined
-						trailingComments: Array ['1']
+						trailingComments: Array ["1"]
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 1
 								index: 41
@@ -137,7 +137,7 @@ Program {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 15
 									index: 15
@@ -152,9 +152,9 @@ Program {
 						}
 						body: BlockStatement {
 							directives: Array []
-							trailingComments: Array ['1']
+							trailingComments: Array ["1"]
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 1
 									index: 41
@@ -168,9 +168,9 @@ Program {
 							}
 							body: Array [
 								VariableDeclarationStatement {
-									trailingComments: Array ['0']
+									trailingComments: Array ["0"]
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 12
 											index: 30
@@ -183,10 +183,10 @@ Program {
 										}
 									}
 									declaration: VariableDeclaration {
-										kind: 'var'
+										kind: "var"
 										trailingComments: undefined
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 12
 												index: 30
@@ -201,10 +201,10 @@ Program {
 										declarations: Array [
 											VariableDeclarator {
 												id: BindingIdentifier {
-													name: 'a'
+													name: "a"
 													loc: Object {
-														filename: 'input.js'
-														identifierName: 'a'
+														filename: "input.js"
+														identifierName: "a"
 														end: Object {
 															column: 7
 															index: 25
@@ -218,7 +218,7 @@ Program {
 													}
 												}
 												loc: Object {
-													filename: 'input.js'
+													filename: "input.js"
 													end: Object {
 														column: 11
 														index: 29
@@ -234,7 +234,7 @@ Program {
 													value: 1
 													format: undefined
 													loc: Object {
-														filename: 'input.js'
+														filename: "input.js"
 														end: Object {
 															column: 11
 															index: 29

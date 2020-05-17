@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from '@romejs/js-ast';
-import {Scope} from '../scopes';
-import T from './T';
+import {AnyNode} from "@romejs/js-ast";
+import {Scope} from "../scopes";
+import T from "./T";
 
 export default class BlockT extends T {
 	constructor(scope: Scope, originNode: undefined | AnyNode, body: Array<T>) {
@@ -15,7 +15,7 @@ export default class BlockT extends T {
 		this.body = body;
 	}
 
-	static type = 'BlockT';
+	static type = "BlockT";
 
 	body: Array<T>;
 
@@ -39,6 +39,6 @@ export default class BlockT extends T {
 	}
 
 	humanize(): string {
-		return '{}';
+		return "{}";
 	}
 }

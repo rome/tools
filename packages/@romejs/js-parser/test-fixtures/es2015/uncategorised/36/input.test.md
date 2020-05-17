@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 16
 			index: 16
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 16
 					index: 16
@@ -46,7 +46,7 @@ Program {
 			}
 			expression: ArrowFunctionExpression {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 16
 						index: 16
@@ -62,7 +62,7 @@ Program {
 					value: 42
 					format: undefined
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 16
 							index: 16
@@ -82,7 +82,7 @@ Program {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 13
 							index: 13
@@ -98,7 +98,7 @@ Program {
 						BindingArrayPattern {
 							rest: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 9
 									index: 9
@@ -112,10 +112,10 @@ Program {
 							}
 							elements: Array [
 								BindingIdentifier {
-									name: 'a'
+									name: "a"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'a'
+										filename: "input.js"
+										identifierName: "a"
 										end: Object {
 											column: 3
 											index: 3
@@ -130,7 +130,7 @@ Program {
 								}
 								ArrayHole {
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 4
 											index: 4
@@ -144,10 +144,10 @@ Program {
 									}
 								}
 								BindingIdentifier {
-									name: 'b'
+									name: "b"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'b'
+										filename: "input.js"
+										identifierName: "b"
 										end: Object {
 											column: 8
 											index: 8

@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {WebSocketInterface} from '@romejs/codec-websocket';
-import {JSONValue, consumeJSON} from '@romejs/codec-json';
-import {Consumer} from '@romejs/consume';
+import {WebSocketInterface} from "@romejs/codec-websocket";
+import {JSONValue, consumeJSON} from "@romejs/codec-json";
+import {Consumer} from "@romejs/consume";
 
 type InspectorSubscription = {
 	once: boolean;
@@ -16,7 +16,7 @@ type InspectorSubscription = {
 
 export class InspectorClientCloseError extends Error {
 	constructor() {
-		super('Inspector connection closed');
+		super("Inspector connection closed");
 	}
 }
 
@@ -76,15 +76,15 @@ export default class InspectorClient {
 			});
 
 			// Message reply
-			const id = data.get('id').asNumberOrVoid();
+			const id = data.get("id").asNumberOrVoid();
 			if (id !== undefined) {
 				const handler = this.callbacks.get(id);
 				if (handler !== undefined) {
-					if (data.has('error')) {
-						const errorMessage = data.get('error').get('message').asString();
+					if (data.has("error")) {
+						const errorMessage = data.get("error").get("message").asString();
 						handler.reject(new Error(errorMessage));
 					} else {
-						handler.resolve(data.get('result'));
+						handler.resolve(data.get("result"));
 					}
 					this.callbacks.delete(id);
 				}
@@ -92,13 +92,13 @@ export default class InspectorClient {
 			}
 
 			// Event
-			const method = data.get('method').asStringOrVoid();
+			const method = data.get("method").asStringOrVoid();
 			if (method !== undefined) {
 				const subs = this.subscriptions.get(method);
 				if (subs !== undefined) {
 					for (const sub of subs) {
 						const {callback, once} = sub;
-						callback(data.get('params'));
+						callback(data.get("params"));
 						if (once) {
 							subs.delete(sub);
 						}
@@ -119,7 +119,7 @@ export default class InspectorClient {
 
 	assertAlive() {
 		if (!this.alive) {
-			throw new Error('InspectorClient has no active socket');
+			throw new Error("InspectorClient has no active socket");
 		}
 	}
 

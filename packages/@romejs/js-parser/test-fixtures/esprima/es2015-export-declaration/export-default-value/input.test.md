@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
+	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 20
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExportDefaultDeclaration {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 19
 					index: 19
@@ -45,10 +45,10 @@ Program {
 				}
 			}
 			declaration: ReferenceIdentifier {
-				name: 'foo'
+				name: "foo"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'foo'
+					filename: "input.js"
+					identifierName: "foo"
 					end: Object {
 						column: 18
 						index: 18

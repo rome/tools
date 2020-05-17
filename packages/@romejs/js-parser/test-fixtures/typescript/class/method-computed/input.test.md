@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 75
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		ClassDeclaration {
 			id: BindingIdentifier {
-				name: 'C'
+				name: "C"
 				loc: Object {
-					filename: 'input.ts'
-					identifierName: 'C'
+					filename: "input.ts"
+					identifierName: "C"
 					end: Object {
 						column: 7
 						index: 7
@@ -49,7 +49,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 1
 					index: 74
@@ -67,7 +67,7 @@ Program {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 1
 						index: 74
@@ -81,11 +81,11 @@ Program {
 				}
 				body: Array [
 					TSDeclareMethod {
-						kind: 'method'
+						kind: "method"
 						key: ComputedPropertyKey {
 							value: MemberExpression {
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 20
 										index: 30
@@ -98,10 +98,10 @@ Program {
 									}
 								}
 								object: ReferenceIdentifier {
-									name: 'Symbol'
+									name: "Symbol"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'Symbol'
+										filename: "input.ts"
+										identifierName: "Symbol"
 										end: Object {
 											column: 11
 											index: 21
@@ -116,10 +116,10 @@ Program {
 								}
 								property: StaticMemberProperty {
 									value: Identifier {
-										name: 'iterator'
+										name: "iterator"
 										loc: Object {
-											filename: 'input.ts'
-											identifierName: 'iterator'
+											filename: "input.ts"
+											identifierName: "iterator"
 											end: Object {
 												column: 20
 												index: 30
@@ -133,8 +133,8 @@ Program {
 										}
 									}
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'iterator'
+										filename: "input.ts"
+										identifierName: "iterator"
 										end: Object {
 											column: 20
 											index: 30
@@ -149,7 +149,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 21
 									index: 31
@@ -164,7 +164,7 @@ Program {
 						}
 						body: undefined
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 30
 								index: 40
@@ -189,7 +189,7 @@ Program {
 								line: 2
 							}
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 21
 									index: 31
@@ -211,7 +211,7 @@ Program {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 29
 									index: 39
@@ -225,7 +225,7 @@ Program {
 							}
 							returnType: VoidKeywordTypeAnnotation {
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 29
 										index: 39
@@ -241,11 +241,11 @@ Program {
 						}
 					}
 					TSDeclareMethod {
-						kind: 'method'
+						kind: "method"
 						key: ComputedPropertyKey {
 							value: MemberExpression {
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 20
 										index: 61
@@ -258,10 +258,10 @@ Program {
 									}
 								}
 								object: ReferenceIdentifier {
-									name: 'Symbol'
+									name: "Symbol"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'Symbol'
+										filename: "input.ts"
+										identifierName: "Symbol"
 										end: Object {
 											column: 11
 											index: 52
@@ -276,10 +276,10 @@ Program {
 								}
 								property: StaticMemberProperty {
 									value: Identifier {
-										name: 'iterator'
+										name: "iterator"
 										loc: Object {
-											filename: 'input.ts'
-											identifierName: 'iterator'
+											filename: "input.ts"
+											identifierName: "iterator"
 											end: Object {
 												column: 20
 												index: 61
@@ -293,8 +293,8 @@ Program {
 										}
 									}
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'iterator'
+										filename: "input.ts"
+										identifierName: "iterator"
 										end: Object {
 											column: 20
 											index: 61
@@ -309,7 +309,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 21
 									index: 62
@@ -324,7 +324,7 @@ Program {
 						}
 						body: undefined
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 31
 								index: 72
@@ -349,7 +349,7 @@ Program {
 								line: 3
 							}
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 22
 									index: 63
@@ -371,7 +371,7 @@ Program {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 30
 									index: 71
@@ -385,7 +385,7 @@ Program {
 							}
 							returnType: VoidKeywordTypeAnnotation {
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 30
 										index: 71

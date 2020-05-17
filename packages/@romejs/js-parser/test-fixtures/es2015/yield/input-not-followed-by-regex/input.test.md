@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 35
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		FunctionDeclaration {
 			id: BindingIdentifier {
-				name: 'f2'
+				name: "f2"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'f2'
+					filename: "input.js"
+					identifierName: "f2"
 					end: Object {
 						column: 12
 						index: 12
@@ -49,7 +49,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 34
 					index: 34
@@ -71,7 +71,7 @@ Program {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 14
 						index: 14
@@ -87,7 +87,7 @@ Program {
 			body: BlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 34
 						index: 34
@@ -102,7 +102,7 @@ Program {
 				body: Array [
 					ExpressionStatement {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 32
 								index: 32
@@ -116,7 +116,7 @@ Program {
 						}
 						expression: ArrowFunctionExpression {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 32
 									index: 32
@@ -136,7 +136,7 @@ Program {
 								returnType: undefined
 								thisType: undefined
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 22
 										index: 22
@@ -150,9 +150,9 @@ Program {
 								}
 							}
 							body: BinaryExpression {
-								operator: '/'
+								operator: "/"
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 32
 										index: 32
@@ -165,10 +165,10 @@ Program {
 									}
 								}
 								left: ReferenceIdentifier {
-									name: 'yield'
+									name: "yield"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'yield'
+										filename: "input.js"
+										identifierName: "yield"
 										end: Object {
 											column: 28
 											index: 28
@@ -185,7 +185,7 @@ Program {
 									value: 1
 									format: undefined
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 32
 											index: 32

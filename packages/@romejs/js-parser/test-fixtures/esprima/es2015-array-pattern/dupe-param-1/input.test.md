@@ -8,14 +8,14 @@
 Program {
 	comments: Array []
 	corrupt: false
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 35
@@ -29,9 +29,9 @@ Program {
 	}
 	directives: Array [
 		Directive {
-			value: 'use strict'
+			value: "use strict"
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -47,11 +47,11 @@ Program {
 	]
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 15
 					index: 29
@@ -64,17 +64,17 @@ Program {
 				}
 			}
 			description: Object {
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Argument <emphasis>a</emphasis> name clash in strict mode'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Argument <emphasis>a</emphasis> name clash in strict mode"}
 				advice: Array [
 					log {
-						category: 'info'
-						text: 'Defined already here'
+						category: "info"
+						text: "Defined already here"
 					}
 					frame {
 						location: Object {
-							filename: 'input.js'
-							identifierName: 'a'
+							filename: "input.js"
+							identifierName: "a"
 							end: Object {
 								column: 15
 								index: 29
@@ -94,10 +94,10 @@ Program {
 	body: Array [
 		FunctionDeclaration {
 			id: BindingIdentifier {
-				name: 'a'
+				name: "a"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'a'
+					filename: "input.js"
+					identifierName: "a"
 					end: Object {
 						column: 10
 						index: 24
@@ -111,7 +111,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 20
 					index: 34
@@ -127,7 +127,7 @@ Program {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 20
 						index: 34
@@ -149,7 +149,7 @@ Program {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 17
 						index: 31
@@ -165,7 +165,7 @@ Program {
 					BindingArrayPattern {
 						rest: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 16
 								index: 30
@@ -181,7 +181,7 @@ Program {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 16
 									index: 30
@@ -196,10 +196,10 @@ Program {
 						}
 						elements: Array [
 							BindingIdentifier {
-								name: 'a'
+								name: "a"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'a'
+									filename: "input.js"
+									identifierName: "a"
 									end: Object {
 										column: 13
 										index: 27
@@ -215,7 +215,7 @@ Program {
 									optional: undefined
 									typeAnnotation: undefined
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 13
 											index: 27
@@ -230,10 +230,10 @@ Program {
 								}
 							}
 							BindingIdentifier {
-								name: 'a'
+								name: "a"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'a'
+									filename: "input.js"
+									identifierName: "a"
 									end: Object {
 										column: 15
 										index: 29
@@ -249,7 +249,7 @@ Program {
 									optional: undefined
 									typeAnnotation: undefined
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 15
 											index: 29

@@ -5,18 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyComment, AnyNode, Program} from '@romejs/js-ast';
+import {AnyComment, AnyNode, Program} from "@romejs/js-ast";
 import {
 	DiagnosticLocation,
 	DiagnosticSuppression,
 	DiagnosticSuppressions,
 	Diagnostics,
 	descriptions,
-} from '@romejs/diagnostics';
-import CompilerContext from './lib/CompilerContext';
-import Path from './lib/Path';
+} from "@romejs/diagnostics";
+import CompilerContext from "./lib/CompilerContext";
+import Path from "./lib/Path";
 
-export const SUPPRESSION_START = 'rome-ignore';
+export const SUPPRESSION_START = "rome-ignore";
 
 type ExtractedSuppressions = {
 	suppressions: DiagnosticSuppressions;
@@ -39,10 +39,10 @@ function extractSuppressionsFromComment(
 	const diagnostics: Diagnostics = [];
 	const suppressions: DiagnosticSuppressions = [];
 
-	const lines = comment.value.split('\n');
+	const lines = comment.value.split("\n");
 	const cleanLines = lines.map((line) => {
 		// Trim line and remove leading star
-		return line.trim().replace(/\*[\s]/, '');
+		return line.trim().replace(/\*[\s]/, "");
 	});
 
 	for (const line of cleanLines) {
@@ -63,7 +63,7 @@ function extractSuppressionsFromComment(
 		const endLine = nextNode.loc.end.line;
 
 		const lineWithoutPrefix = line.slice(SUPPRESSION_START.length);
-		if (lineWithoutPrefix[0] !== ' ') {
+		if (lineWithoutPrefix[0] !== " ") {
 			diagnostics.push({
 				description: descriptions.SUPPRESSIONS.MISSING_SPACE,
 				location: commentLocation,
@@ -71,17 +71,17 @@ function extractSuppressionsFromComment(
 			continue;
 		}
 
-		const categories = lineWithoutPrefix.trim().split(' ');
+		const categories = lineWithoutPrefix.trim().split(" ");
 		const cleanCategories = categories.map((category) => category.trim());
 
 		for (let category of cleanCategories) {
-			if (category === '') {
+			if (category === "") {
 				continue;
 			}
 
 			// If a category ends with a colon then all the things that follow it are an explanation
 			let shouldBreak = false;
-			if (category[category.length - 1] === ':') {
+			if (category[category.length - 1] === ":") {
 				shouldBreak = true;
 				category = category.slice(-1);
 			}
@@ -129,7 +129,7 @@ export function extractSuppressionsFromProgram(
 	context.reduce(
 		ast,
 		{
-			name: 'extractSuppressions',
+			name: "extractSuppressions",
 			enter(path: Path): AnyNode {
 				const {node} = path;
 

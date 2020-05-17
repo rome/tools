@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 4
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 3
 					index: 3
@@ -46,7 +46,7 @@ Program {
 			}
 			expression: TSNonNullExpression {
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 2
 						index: 2
@@ -59,10 +59,10 @@ Program {
 					}
 				}
 				expression: ReferenceIdentifier {
-					name: 'x'
+					name: "x"
 					loc: Object {
-						filename: 'input.ts'
-						identifierName: 'x'
+						filename: "input.ts"
+						identifierName: "x"
 						end: Object {
 							column: 1
 							index: 1

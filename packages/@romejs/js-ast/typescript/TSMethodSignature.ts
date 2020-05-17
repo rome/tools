@@ -10,19 +10,19 @@ import {
 	AnyTSPrimary,
 	JSNodeBase,
 	TSSignatureDeclarationMeta,
-} from '../index';
-import {createBuilder} from '../utils';
+} from "../index";
+import {createBuilder} from "../utils";
 
 export type TSMethodSignature = JSNodeBase & {
 	key: AnyObjectPropertyKey;
-	type: 'TSMethodSignature';
+	type: "TSMethodSignature";
 	optional?: boolean;
 	meta: TSSignatureDeclarationMeta;
 	returnType?: AnyTSPrimary;
 };
 
 export const tsMethodSignature = createBuilder<TSMethodSignature>(
-	'TSMethodSignature',
+	"TSMethodSignature",
 	{
 		bindingKeys: {},
 		visitorKeys: {

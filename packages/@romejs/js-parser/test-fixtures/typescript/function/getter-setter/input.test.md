@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 2
 			index: 78
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 2
 					index: 35
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'const'
+				kind: "const"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 2
 						index: 35
@@ -62,10 +62,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'g'
+							name: "g"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'g'
+								filename: "input.ts"
+								identifierName: "g"
 								end: Object {
 									column: 7
 									index: 7
@@ -79,7 +79,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 1
 								index: 34
@@ -93,7 +93,7 @@ Program {
 						}
 						init: ObjectExpression {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 1
 									index: 34
@@ -107,13 +107,13 @@ Program {
 							}
 							properties: Array [
 								ObjectMethod {
-									kind: 'get'
+									kind: "get"
 									key: StaticPropertyKey {
 										value: Identifier {
-											name: 'm'
+											name: "m"
 											loc: Object {
-												filename: 'input.ts'
-												identifierName: 'm'
+												filename: "input.ts"
+												identifierName: "m"
 												end: Object {
 													column: 7
 													index: 19
@@ -127,7 +127,7 @@ Program {
 											}
 										}
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 7
 												index: 19
@@ -141,7 +141,7 @@ Program {
 										}
 									}
 									loc: Object {
-										filename: 'input.ts'
+										filename: "input.ts"
 										end: Object {
 											column: 20
 											index: 32
@@ -157,7 +157,7 @@ Program {
 										body: Array []
 										directives: Array []
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 20
 												index: 32
@@ -179,7 +179,7 @@ Program {
 										returnType: undefined
 										typeParameters: undefined
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 17
 												index: 29
@@ -192,10 +192,10 @@ Program {
 											}
 										}
 										thisType: BindingIdentifier {
-											name: 'this'
+											name: "this"
 											loc: Object {
-												filename: 'input.ts'
-												identifierName: 'this'
+												filename: "input.ts"
+												identifierName: "this"
 												end: Object {
 													column: 12
 													index: 24
@@ -210,7 +210,7 @@ Program {
 											meta: PatternMeta {
 												optional: undefined
 												loc: Object {
-													filename: 'input.ts'
+													filename: "input.ts"
 													end: Object {
 														column: 16
 														index: 28
@@ -225,7 +225,7 @@ Program {
 												typeAnnotation: TSTypeLiteral {
 													members: Array []
 													loc: Object {
-														filename: 'input.ts'
+														filename: "input.ts"
 														end: Object {
 															column: 16
 															index: 28
@@ -250,7 +250,7 @@ Program {
 		}
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 2
 					index: 78
@@ -263,9 +263,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'const'
+				kind: "const"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 2
 						index: 78
@@ -280,10 +280,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 's'
+							name: "s"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 's'
+								filename: "input.ts"
+								identifierName: "s"
 								end: Object {
 									column: 7
 									index: 43
@@ -297,7 +297,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 1
 								index: 77
@@ -311,7 +311,7 @@ Program {
 						}
 						init: ObjectExpression {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 1
 									index: 77
@@ -325,13 +325,13 @@ Program {
 							}
 							properties: Array [
 								ObjectMethod {
-									kind: 'set'
+									kind: "set"
 									key: StaticPropertyKey {
 										value: Identifier {
-											name: 'm'
+											name: "m"
 											loc: Object {
-												filename: 'input.ts'
-												identifierName: 'm'
+												filename: "input.ts"
+												identifierName: "m"
 												end: Object {
 													column: 7
 													index: 55
@@ -345,7 +345,7 @@ Program {
 											}
 										}
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 7
 												index: 55
@@ -359,7 +359,7 @@ Program {
 										}
 									}
 									loc: Object {
-										filename: 'input.ts'
+										filename: "input.ts"
 										end: Object {
 											column: 27
 											index: 75
@@ -375,7 +375,7 @@ Program {
 										body: Array []
 										directives: Array []
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 27
 												index: 75
@@ -396,7 +396,7 @@ Program {
 										returnType: undefined
 										typeParameters: undefined
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 24
 												index: 72
@@ -410,10 +410,10 @@ Program {
 										}
 										params: Array [
 											BindingIdentifier {
-												name: 'value'
+												name: "value"
 												loc: Object {
-													filename: 'input.ts'
-													identifierName: 'value'
+													filename: "input.ts"
+													identifierName: "value"
 													end: Object {
 														column: 23
 														index: 71
@@ -429,7 +429,7 @@ Program {
 													optional: undefined
 													typeAnnotation: undefined
 													loc: Object {
-														filename: 'input.ts'
+														filename: "input.ts"
 														end: Object {
 															column: 23
 															index: 71
@@ -445,10 +445,10 @@ Program {
 											}
 										]
 										thisType: BindingIdentifier {
-											name: 'this'
+											name: "this"
 											loc: Object {
-												filename: 'input.ts'
-												identifierName: 'this'
+												filename: "input.ts"
+												identifierName: "this"
 												end: Object {
 													column: 12
 													index: 60
@@ -463,7 +463,7 @@ Program {
 											meta: PatternMeta {
 												optional: undefined
 												loc: Object {
-													filename: 'input.ts'
+													filename: "input.ts"
 													end: Object {
 														column: 16
 														index: 64
@@ -478,7 +478,7 @@ Program {
 												typeAnnotation: TSTypeLiteral {
 													members: Array []
 													loc: Object {
-														filename: 'input.ts'
+														filename: "input.ts"
 														end: Object {
 															column: 16
 															index: 64

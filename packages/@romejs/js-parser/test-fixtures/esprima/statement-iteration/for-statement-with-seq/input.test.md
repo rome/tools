@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 14
@@ -34,7 +34,7 @@ Program {
 			test: undefined
 			update: undefined
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -48,7 +48,7 @@ Program {
 			}
 			body: EmptyStatement {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -63,7 +63,7 @@ Program {
 			}
 			init: SequenceExpression {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 9
 						index: 9
@@ -77,10 +77,10 @@ Program {
 				}
 				expressions: Array [
 					ReferenceIdentifier {
-						name: 'a'
+						name: "a"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'a'
+							filename: "input.js"
+							identifierName: "a"
 							end: Object {
 								column: 5
 								index: 5
@@ -94,10 +94,10 @@ Program {
 						}
 					}
 					ReferenceIdentifier {
-						name: 'b'
+						name: "b"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'b'
+							filename: "input.js"
+							identifierName: "b"
 							end: Object {
 								column: 7
 								index: 7
@@ -111,10 +111,10 @@ Program {
 						}
 					}
 					ReferenceIdentifier {
-						name: 'c'
+						name: "c"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'c'
+							filename: "input.js"
+							identifierName: "c"
 							end: Object {
 								column: 9
 								index: 9

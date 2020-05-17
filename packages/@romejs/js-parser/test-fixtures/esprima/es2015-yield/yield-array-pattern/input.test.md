@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 14
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			expression: AssignmentExpression {
-				operator: '='
+				operator: "="
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 12
 						index: 12
@@ -60,10 +60,10 @@ Program {
 					}
 				}
 				right: ReferenceIdentifier {
-					name: 'x'
+					name: "x"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'x'
+						filename: "input.js"
+						identifierName: "x"
 						end: Object {
 							column: 12
 							index: 12
@@ -79,7 +79,7 @@ Program {
 				left: AssignmentArrayPattern {
 					rest: undefined
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 8
 							index: 8
@@ -93,10 +93,10 @@ Program {
 					}
 					elements: Array [
 						AssignmentIdentifier {
-							name: 'yield'
+							name: "yield"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'yield'
+								filename: "input.js"
+								identifierName: "yield"
 								end: Object {
 									column: 7
 									index: 7

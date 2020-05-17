@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 1
 			index: 54
@@ -30,16 +30,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: '\'arguments\' is not allowed in class field initializer'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "'arguments' is not allowed in class field initializer"}
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 19
 					index: 47
@@ -56,10 +56,10 @@ Program {
 	body: Array [
 		FunctionDeclaration {
 			id: BindingIdentifier {
-				name: 'fn'
+				name: "fn"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'fn'
+					filename: "input.js"
+					identifierName: "fn"
 					end: Object {
 						column: 11
 						index: 11
@@ -73,7 +73,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 1
 					index: 54
@@ -95,7 +95,7 @@ Program {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -111,7 +111,7 @@ Program {
 			body: BlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 1
 						index: 54
@@ -126,10 +126,10 @@ Program {
 				body: Array [
 					ClassDeclaration {
 						id: BindingIdentifier {
-							name: 'A'
+							name: "A"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'A'
+								filename: "input.js"
+								identifierName: "A"
 								end: Object {
 									column: 9
 									index: 25
@@ -143,7 +143,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 3
 								index: 52
@@ -161,7 +161,7 @@ Program {
 							superTypeParameters: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 3
 									index: 52
@@ -177,10 +177,10 @@ Program {
 								ClassProperty {
 									key: StaticPropertyKey {
 										value: Identifier {
-											name: 'foo'
+											name: "foo"
 											loc: Object {
-												filename: 'input.js'
-												identifierName: 'foo'
+												filename: "input.js"
+												identifierName: "foo"
 												end: Object {
 													column: 7
 													index: 35
@@ -194,7 +194,7 @@ Program {
 											}
 										}
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 7
 												index: 35
@@ -208,10 +208,10 @@ Program {
 										}
 									}
 									value: ReferenceIdentifier {
-										name: 'arguments'
+										name: "arguments"
 										loc: Object {
-											filename: 'input.js'
-											identifierName: 'arguments'
+											filename: "input.js"
+											identifierName: "arguments"
 											end: Object {
 												column: 19
 												index: 47
@@ -227,7 +227,7 @@ Program {
 									definite: undefined
 									typeAnnotation: undefined
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 20
 											index: 48
@@ -252,7 +252,7 @@ Program {
 											line: 3
 										}
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 7
 												index: 35

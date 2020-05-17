@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
+	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 12
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 11
 					index: 11
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			expression: BinaryExpression {
-				operator: '<'
+				operator: "<"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 11
 						index: 11
@@ -60,10 +60,10 @@ Program {
 					}
 				}
 				left: ReferenceIdentifier {
-					name: 'foo'
+					name: "foo"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'foo'
+						filename: "input.js"
+						identifierName: "foo"
 						end: Object {
 							column: 3
 							index: 3
@@ -77,10 +77,10 @@ Program {
 					}
 				}
 				right: UnaryExpression {
-					operator: '!'
+					operator: "!"
 					prefix: true
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 11
 							index: 11
@@ -93,10 +93,10 @@ Program {
 						}
 					}
 					argument: UpdateExpression {
-						operator: '--'
+						operator: "--"
 						prefix: true
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 11
 								index: 11
@@ -109,10 +109,10 @@ Program {
 							}
 						}
 						argument: ReferenceIdentifier {
-							name: 'bar'
+							name: "bar"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'bar'
+								filename: "input.js"
+								identifierName: "bar"
 								end: Object {
 									column: 11
 									index: 11

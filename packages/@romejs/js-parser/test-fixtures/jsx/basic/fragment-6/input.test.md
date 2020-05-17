@@ -10,17 +10,17 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array [
-		'jsx'
-		'ts'
+		"jsx"
+		"ts"
 	]
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 60
@@ -35,7 +35,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 59
 					index: 59
@@ -49,7 +49,7 @@ Program {
 			}
 			expression: JSXFragment {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 59
 						index: 59
@@ -64,9 +64,9 @@ Program {
 				children: Array [
 					JSXElement {
 						name: JSXIdentifier {
-							name: 'div'
+							name: "div"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 6
 									index: 6
@@ -83,7 +83,7 @@ Program {
 						selfClosing: false
 						typeArguments: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 23
 								index: 23
@@ -97,9 +97,9 @@ Program {
 						}
 						children: Array [
 							JSXText {
-								value: 'JSXElement'
+								value: "JSXElement"
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 17
 										index: 17
@@ -115,9 +115,9 @@ Program {
 						]
 					}
 					JSXText {
-						value: 'JSXText'
+						value: "JSXText"
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 30
 								index: 30
@@ -132,7 +132,7 @@ Program {
 					}
 					JSXExpressionContainer {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 56
 								index: 56
@@ -145,9 +145,9 @@ Program {
 							}
 						}
 						expression: StringLiteral {
-							value: 'JSXExpressionContainer'
+							value: "JSXExpressionContainer"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 55
 									index: 55

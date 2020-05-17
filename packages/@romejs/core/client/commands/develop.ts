@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {commandCategories} from '../../common/commands';
-import {createLocalCommand} from '../commands';
-import ClientRequest from '../ClientRequest';
+import {commandCategories} from "../../common/commands";
+import {createLocalCommand} from "../commands";
+import ClientRequest from "../ClientRequest";
 
 export default createLocalCommand({
 	category: commandCategories.PROCESS_MANAGEMENT,
-	description: 'TODO',
-	usage: '',
+	description: "TODO",
+	usage: "",
 	examples: [],
 	defineFlags() {
 		return {};
@@ -30,7 +30,7 @@ export default createLocalCommand({
 				...req.query,
 				terminateWhenIdle: true,
 			},
-			'master',
+			"master",
 		);
 
 		return true;

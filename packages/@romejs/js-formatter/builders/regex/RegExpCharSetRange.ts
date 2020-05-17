@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token, concat} from '../../tokens';
-import {RegExpCharSetRange} from '@romejs/js-ast';
+import Builder from "../../Builder";
+import {Token, concat} from "../../tokens";
+import {RegExpCharSetRange} from "@romejs/js-ast";
 
 export default function RegExpCharSetRange(
 	builder: Builder,
@@ -15,7 +15,7 @@ export default function RegExpCharSetRange(
 ): Token {
 	return concat([
 		builder.tokenize(node.start, node),
-		'-',
+		"-",
 		builder.tokenize(node.end, node),
 	]);
 }

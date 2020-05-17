@@ -222,7 +222,7 @@ var foo = function() {
 ### `6: formatted`
 
 ```
-import bar from 'bar';
+import bar from "bar";
 function foo() {
 	var foo = bar;
 }

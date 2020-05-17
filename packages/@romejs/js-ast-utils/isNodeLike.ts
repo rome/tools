@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {isPlainObject} from '@romejs/typescript-helpers';
+import {isPlainObject} from "@romejs/typescript-helpers";
 
 export default function isNodeLike(node: unknown): boolean {
 	if (node == null) {
 		return false;
 	} else {
-		return isPlainObject(node) && typeof node.type === 'string';
+		return isPlainObject(node) && typeof node.type === "string";
 	}
 }

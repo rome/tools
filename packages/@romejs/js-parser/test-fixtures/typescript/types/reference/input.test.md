@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 10
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 9
 					index: 9
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'let'
+				kind: "let"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 9
 						index: 9
@@ -62,9 +62,9 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'x'
+							name: "x"
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 8
 									index: 8
@@ -79,7 +79,7 @@ Program {
 							meta: PatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 8
 										index: 8
@@ -94,7 +94,7 @@ Program {
 								typeAnnotation: TSTypeReference {
 									typeParameters: undefined
 									loc: Object {
-										filename: 'input.ts'
+										filename: "input.ts"
 										end: Object {
 											column: 8
 											index: 8
@@ -107,10 +107,10 @@ Program {
 										}
 									}
 									typeName: ReferenceIdentifier {
-										name: 'T'
+										name: "T"
 										loc: Object {
-											filename: 'input.ts'
-											identifierName: 'T'
+											filename: "input.ts"
+											identifierName: "T"
 											end: Object {
 												column: 8
 												index: 8
@@ -128,7 +128,7 @@ Program {
 						}
 						init: undefined
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 8
 								index: 8

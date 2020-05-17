@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyExpression, ArrayHole, JSNodeBase, SpreadElement} from '../index';
-import {createQuickBuilder} from '../utils';
+import {AnyExpression, ArrayHole, JSNodeBase, SpreadElement} from "../index";
+import {createQuickBuilder} from "../utils";
 
 export type ArrayExpression = JSNodeBase & {
-	type: 'ArrayExpression';
+	type: "ArrayExpression";
 	elements: Array<ArrayHole | AnyExpression | SpreadElement>;
 };
 
-export const arrayExpression = createQuickBuilder<ArrayExpression, 'elements'>(
-	'ArrayExpression',
-	'elements',
+export const arrayExpression = createQuickBuilder<ArrayExpression, "elements">(
+	"ArrayExpression",
+	"elements",
 	{
 		bindingKeys: {},
 		visitorKeys: {

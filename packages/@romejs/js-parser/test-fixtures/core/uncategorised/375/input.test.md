@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 1
 			index: 1
@@ -31,7 +31,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 1
 					index: 1
@@ -46,7 +46,7 @@ Program {
 			expression: ArrayExpression {
 				elements: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 1
 						index: 1
@@ -63,11 +63,11 @@ Program {
 	]
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 0
 					index: 0
@@ -80,16 +80,16 @@ Program {
 				}
 			}
 			description: Object {
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unclosed array'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unclosed array"}
 				advice: Array [
 					log {
-						category: 'info'
-						text: 'We expected to find the closing character <emphasis>]</emphasis> here'
+						category: "info"
+						text: "We expected to find the closing character <emphasis>]</emphasis> here"
 					}
 					frame {
 						location: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 1
 								index: 1

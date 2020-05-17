@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 86
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		FunctionDeclaration {
 			id: BindingIdentifier {
-				name: 'f'
+				name: "f"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'f'
+					filename: "input.js"
+					identifierName: "f"
 					end: Object {
 						column: 11
 						index: 11
@@ -49,7 +49,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 1
 					index: 85
@@ -71,7 +71,7 @@ Program {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -87,7 +87,7 @@ Program {
 			body: BlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 1
 						index: 85
@@ -102,7 +102,7 @@ Program {
 				body: Array [
 					ExpressionStatement {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 17
 								index: 33
@@ -117,7 +117,7 @@ Program {
 						expression: YieldExpression {
 							delegate: false
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 15
 									index: 31
@@ -131,7 +131,7 @@ Program {
 							}
 							argument: ArrowFunctionExpression {
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 15
 										index: 31
@@ -144,10 +144,10 @@ Program {
 									}
 								}
 								body: ReferenceIdentifier {
-									name: 'a'
+									name: "a"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'a'
+										filename: "input.js"
+										identifierName: "a"
 										end: Object {
 											column: 15
 											index: 31
@@ -166,7 +166,7 @@ Program {
 									rest: undefined
 									thisType: undefined
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 13
 											index: 29
@@ -180,10 +180,10 @@ Program {
 									}
 									params: Array [
 										BindingIdentifier {
-											name: 'a'
+											name: "a"
 											loc: Object {
-												filename: 'input.js'
-												identifierName: 'a'
+												filename: "input.js"
+												identifierName: "a"
 												end: Object {
 													column: 10
 													index: 26
@@ -203,7 +203,7 @@ Program {
 					}
 					ExpressionStatement {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 23
 								index: 57
@@ -218,7 +218,7 @@ Program {
 						expression: YieldExpression {
 							delegate: false
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 21
 									index: 55
@@ -232,7 +232,7 @@ Program {
 							}
 							argument: ArrowFunctionExpression {
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 21
 										index: 55
@@ -245,10 +245,10 @@ Program {
 									}
 								}
 								body: ReferenceIdentifier {
-									name: 'a'
+									name: "a"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'a'
+										filename: "input.js"
+										identifierName: "a"
 										end: Object {
 											column: 21
 											index: 55
@@ -267,7 +267,7 @@ Program {
 									rest: undefined
 									thisType: undefined
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 19
 											index: 53
@@ -281,10 +281,10 @@ Program {
 									}
 									params: Array [
 										BindingIdentifier {
-											name: 'a'
+											name: "a"
 											loc: Object {
-												filename: 'input.js'
-												identifierName: 'a'
+												filename: "input.js"
+												identifierName: "a"
 												end: Object {
 													column: 16
 													index: 50
@@ -304,7 +304,7 @@ Program {
 					}
 					ExpressionStatement {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 25
 								index: 83
@@ -319,7 +319,7 @@ Program {
 						expression: YieldExpression {
 							delegate: false
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 23
 									index: 81
@@ -333,7 +333,7 @@ Program {
 							}
 							argument: ArrowFunctionExpression {
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 23
 										index: 81
@@ -346,10 +346,10 @@ Program {
 									}
 								}
 								body: ReferenceIdentifier {
-									name: 'a'
+									name: "a"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'a'
+										filename: "input.js"
+										identifierName: "a"
 										end: Object {
 											column: 23
 											index: 81
@@ -369,7 +369,7 @@ Program {
 									returnType: undefined
 									thisType: undefined
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 21
 											index: 79
@@ -383,10 +383,10 @@ Program {
 									}
 									params: Array [
 										BindingIdentifier {
-											name: 'a'
+											name: "a"
 											loc: Object {
-												filename: 'input.js'
-												identifierName: 'a'
+												filename: "input.js"
+												identifierName: "a"
 												end: Object {
 													column: 17
 													index: 75

@@ -29,10 +29,10 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-import {JSParser} from '../parser';
-import {SourceLocation} from '@romejs/parser-core';
-import {AnyComment, AnyNode} from '@romejs/js-ast';
-import {Number0} from '@romejs/ob1';
+import {JSParser} from "../parser";
+import {SourceLocation} from "@romejs/parser-core";
+import {AnyComment, AnyNode} from "@romejs/js-ast";
+import {Number0} from "@romejs/ob1";
 
 function last<T>(stack: Array<T>): T {
 	return stack[stack.length - 1];
@@ -45,7 +45,7 @@ function getIds(comments: Array<AnyComment>): Array<string> {
 function getLoc(node: AnyNode): SourceLocation {
 	const {loc} = node;
 	if (loc === undefined) {
-		throw new Error('No loc found');
+		throw new Error("No loc found");
 	}
 	return loc;
 }
@@ -66,7 +66,7 @@ function hasComments(
 
 function setComments(
 	node: AnyNode,
-	key: 'leadingComments' | 'trailingComments',
+	key: "leadingComments" | "trailingComments",
 	comments: Array<AnyComment>,
 ) {
 	let innerEndIndex = -1;
@@ -122,7 +122,7 @@ function adjustCommentsAfterTrailingComma(
 
 	const {commentPreviousNode} = parser.state;
 	if (commentPreviousNode === undefined) {
-		throw new Error('No commentPreviousNode found');
+		throw new Error("No commentPreviousNode found");
 	}
 
 	for (let j = 0; j < parser.state.leadingComments.length; j++) {
@@ -162,7 +162,7 @@ function adjustCommentsAfterTrailingComma(
 }
 
 export function attachComments(parser: JSParser, node: AnyNode) {
-	if (node.type === 'Program' && node.body.length > 0) {
+	if (node.type === "Program" && node.body.length > 0) {
 		return;
 	}
 
@@ -222,41 +222,41 @@ export function attachComments(parser: JSParser, node: AnyNode) {
 	// element
 	if (firstChild) {
 		switch (node.type) {
-			case 'ObjectExpression': {
+			case "ObjectExpression": {
 				adjustCommentsAfterTrailingComma(parser, node, node.properties);
 				break;
 			}
 
-			case 'BindingObjectPattern':
-			case 'AssignmentObjectPattern': {
+			case "BindingObjectPattern":
+			case "AssignmentObjectPattern": {
 				adjustCommentsAfterTrailingComma(parser, node, node.properties, true);
 				break;
 			}
 
-			case 'CallExpression': {
+			case "CallExpression": {
 				adjustCommentsAfterTrailingComma(parser, node, node.arguments);
 				break;
 			}
 
-			case 'ArrayExpression': {
+			case "ArrayExpression": {
 				adjustCommentsAfterTrailingComma(parser, node, node.elements);
 				break;
 			}
 
-			case 'BindingArrayPattern':
-			case 'AssignmentArrayPattern': {
+			case "BindingArrayPattern":
+			case "AssignmentArrayPattern": {
 				adjustCommentsAfterTrailingComma(parser, node, node.elements, true);
 				break;
 			}
 		}
 	} else if (
 		commentPreviousNode !== undefined &&
-		((commentPreviousNode.type === 'ImportSpecifier' &&
-		node.type !== 'ImportSpecifier') ||
-		(commentPreviousNode.type === 'ExportLocalSpecifier' &&
-		node.type !== 'ExportExternalSpecifier') ||
-		(commentPreviousNode.type === 'ExportExternalSpecifier' &&
-		node.type !== 'ExportExternalSpecifier'))
+		((commentPreviousNode.type === "ImportSpecifier" &&
+		node.type !== "ImportSpecifier") ||
+		(commentPreviousNode.type === "ExportLocalSpecifier" &&
+		node.type !== "ExportExternalSpecifier") ||
+		(commentPreviousNode.type === "ExportExternalSpecifier" &&
+		node.type !== "ExportExternalSpecifier"))
 	) {
 		adjustCommentsAfterTrailingComma(
 			parser,
@@ -274,7 +274,7 @@ export function attachComments(parser: JSParser, node: AnyNode) {
 			) {
 				setComments(
 					node,
-					'leadingComments',
+					"leadingComments",
 					parser.comments.getCommentsFromIds(lastChild.leadingComments),
 				);
 				lastChild.leadingComments = undefined;
@@ -289,7 +289,7 @@ export function attachComments(parser: JSParser, node: AnyNode) {
 					) {
 						setComments(
 							node,
-							'leadingComments',
+							"leadingComments",
 							parser.comments.getCommentsFromIds(
 								lastChild.leadingComments.splice(0, i + 1),
 							),
@@ -314,7 +314,7 @@ export function attachComments(parser: JSParser, node: AnyNode) {
 			}
 
 			if (parser.state.leadingComments.length > 0) {
-				setComments(node, 'leadingComments', parser.state.leadingComments);
+				setComments(node, "leadingComments", parser.state.leadingComments);
 				parser.state.leadingComments = [];
 			}
 		} else {
@@ -346,7 +346,7 @@ export function attachComments(parser: JSParser, node: AnyNode) {
 			const leadingComments = parser.state.leadingComments.slice(0, i);
 
 			if (leadingComments.length > 0) {
-				setComments(node, 'leadingComments', leadingComments);
+				setComments(node, "leadingComments", leadingComments);
 			}
 
 			// Similarly, trailing comments are attached later. The variable
@@ -361,7 +361,7 @@ export function attachComments(parser: JSParser, node: AnyNode) {
 	parser.state.commentPreviousNode = node;
 
 	if (trailingComments) {
-		setComments(node, 'trailingComments', trailingComments);
+		setComments(node, "trailingComments", trailingComments);
 	}
 
 	commentStack.push(node);

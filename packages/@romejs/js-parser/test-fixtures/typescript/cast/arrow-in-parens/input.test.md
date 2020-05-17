@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 45
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 44
 					index: 44
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'var'
+				kind: "var"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 44
 						index: 44
@@ -62,10 +62,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'asserted1'
+							name: "asserted1"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'asserted1'
+								filename: "input.ts"
+								identifierName: "asserted1"
 								end: Object {
 									column: 13
 									index: 13
@@ -79,7 +79,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 43
 								index: 43
@@ -93,7 +93,7 @@ Program {
 						}
 						init: ArrowFunctionExpression {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 42
 									index: 42
@@ -107,7 +107,7 @@ Program {
 							}
 							typeParameters: TSTypeParameterDeclaration {
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 21
 										index: 21
@@ -121,11 +121,11 @@ Program {
 								}
 								params: Array [
 									TSTypeParameter {
-										name: 'any'
+										name: "any"
 										constraint: undefined
 										default: undefined
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 20
 												index: 20
@@ -147,7 +147,7 @@ Program {
 								returnType: undefined
 								thisType: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 28
 										index: 28
@@ -161,10 +161,10 @@ Program {
 								}
 								params: Array [
 									BindingIdentifier {
-										name: 'n'
+										name: "n"
 										loc: Object {
-											filename: 'input.ts'
-											identifierName: 'n'
+											filename: "input.ts"
+											identifierName: "n"
 											end: Object {
 												column: 24
 												index: 24
@@ -182,7 +182,7 @@ Program {
 							body: BlockStatement {
 								directives: Array []
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 42
 										index: 42
@@ -197,7 +197,7 @@ Program {
 								body: Array [
 									ReturnStatement {
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 40
 												index: 40
@@ -210,10 +210,10 @@ Program {
 											}
 										}
 										argument: ReferenceIdentifier {
-											name: 'n'
+											name: "n"
 											loc: Object {
-												filename: 'input.ts'
-												identifierName: 'n'
+												filename: "input.ts"
+												identifierName: "n"
 												end: Object {
 													column: 39
 													index: 39

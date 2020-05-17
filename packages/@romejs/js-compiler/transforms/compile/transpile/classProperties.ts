@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {CompilerContext, Path, Scope} from '@romejs/js-compiler';
+import {CompilerContext, Path, Scope} from "@romejs/js-compiler";
 import {
 	AnyExpression,
 	AnyNode,
@@ -28,12 +28,12 @@ import {
 	returnStatement,
 	sequenceExpression,
 	staticPropertyKey,
-} from '@romejs/js-ast';
-import {template} from '@romejs/js-ast-utils';
+} from "@romejs/js-ast";
+import {template} from "@romejs/js-ast-utils";
 
 function hasClassProps(node: ClassDeclaration | ClassExpression): boolean {
 	for (const bodyNode of node.meta.body) {
-		if (bodyNode.type === 'ClassProperty') {
+		if (bodyNode.type === "ClassProperty") {
 			return true;
 		}
 	}
@@ -42,12 +42,12 @@ function hasClassProps(node: ClassDeclaration | ClassExpression): boolean {
 }
 
 function createConstructor(
-	rest: undefined | FunctionHead['rest'],
+	rest: undefined | FunctionHead["rest"],
 	body: Array<AnyStatement>,
 ) {
 	return classMethod.create({
-		kind: 'constructor',
-		key: staticPropertyKey.quick(identifier.quick('constructor')),
+		kind: "constructor",
+		key: staticPropertyKey.quick(identifier.quick("constructor")),
 		meta: classPropertyMeta.create({}),
 		head: functionHead.create({params: [], rest}),
 		body: blockStatement.create({body}),
@@ -63,7 +63,7 @@ function toExpressionStatements(
 }
 
 function isSuperCall(node: AnyNode): node is CallExpression {
-	return node.type === 'CallExpression' && node.callee.type === 'Super';
+	return node.type === "CallExpression" && node.callee.type === "Super";
 }
 
 function transformClass(
@@ -78,22 +78,22 @@ function transformClass(
 	const bodyReplacements: Array<AnyStatement> = [];
 	const constructorAssignments: Array<AnyExpression> = [];
 	const className: string =
-		node.id === undefined ? scope.generateUid('class') : node.id.name;
+		node.id === undefined ? scope.generateUid("class") : node.id.name;
 
 	let _constructor: undefined | ClassMethod = undefined;
 	const filteredClassBody = [];
 	for (const bodyNode of node.meta.body) {
-		if (bodyNode.type === 'ClassMethod' && bodyNode.kind === 'constructor') {
+		if (bodyNode.type === "ClassMethod" && bodyNode.kind === "constructor") {
 			_constructor = bodyNode;
 			continue;
 		}
 
-		if (bodyNode.type === 'ClassProperty') {
+		if (bodyNode.type === "ClassProperty") {
 			if (bodyNode.value === undefined) {
 				continue;
 			}
 
-			if (bodyNode.key.type === 'ComputedPropertyKey') {
+			if (bodyNode.key.type === "ComputedPropertyKey") {
 				if (bodyNode.meta.static === true) {
 					bodyReplacements.push(
 						template.statement`${className}[${bodyNode.key.value}] = ${bodyNode.value};`,
@@ -129,7 +129,7 @@ function transformClass(
 					_constructor,
 					[
 						{
-							name: 'classPropertiesInjector',
+							name: "classPropertiesInjector",
 							enter(path) {
 								const {node} = path;
 
@@ -137,7 +137,7 @@ function transformClass(
 									return node;
 								}
 
-								if (isSuperCall(node) && path.parent.type !== 'ExpressionStatement') {
+								if (isSuperCall(node) && path.parent.type !== "ExpressionStatement") {
 									visited.add(node);
 
 									// TODO retain proper value of super()
@@ -146,7 +146,7 @@ function transformClass(
 									});
 								}
 
-								if (node.type === 'ExpressionStatement' && isSuperCall(node.expression)) {
+								if (node.type === "ExpressionStatement" && isSuperCall(node.expression)) {
 									visited.add(node);
 
 									return ([node, ...toExpressionStatements(constructorAssignments)] as Array<AnyNode>);
@@ -161,7 +161,7 @@ function transformClass(
 			} else {
 				// create new constructor with a super() call and assignments
 				_constructor = createConstructor(
-					bindingIdentifier.quick('args'),
+					bindingIdentifier.quick("args"),
 					[
 						template.statement`super(...args);`,
 						...toExpressionStatements(constructorAssignments),
@@ -216,16 +216,16 @@ function transformClass(
 }
 
 export default {
-	name: 'classProperties',
+	name: "classProperties",
 	enter(path: Path) {
 		const {node, scope, context} = path;
 
 		// correctly replace an export class with the class node then append the declarations
 		if (
-			(node.type === 'ExportLocalDeclaration' ||
-			node.type === 'ExportDefaultDeclaration') &&
+			(node.type === "ExportLocalDeclaration" ||
+			node.type === "ExportDefaultDeclaration") &&
 			node.declaration !== undefined &&
-			node.declaration.type === 'ClassDeclaration' &&
+			node.declaration.type === "ClassDeclaration" &&
 			hasClassProps(node.declaration)
 		) {
 			const {newClass, declarations} = transformClass(
@@ -243,9 +243,9 @@ export default {
 		}
 
 		// turn a class expression into an IIFE that returns a class declaration
-		if (node.type === 'ClassExpression' && hasClassProps(node)) {
+		if (node.type === "ClassExpression" && hasClassProps(node)) {
 			const className =
-				node.id === undefined ? scope.generateUid('class') : node.id.name;
+				node.id === undefined ? scope.generateUid("class") : node.id.name;
 
 			return callExpression.create({
 				callee: arrowFunctionExpression.create({
@@ -254,7 +254,7 @@ export default {
 						body: [
 							{
 								...node,
-								type: 'ClassDeclaration',
+								type: "ClassDeclaration",
 								id: bindingIdentifier.quick(className),
 							},
 							returnStatement.create({
@@ -267,7 +267,7 @@ export default {
 			});
 		}
 
-		if (node.type === 'ClassDeclaration' && hasClassProps(node)) {
+		if (node.type === "ClassDeclaration" && hasClassProps(node)) {
 			const {newClass, declarations} = transformClass(node, scope, context);
 			return ([newClass, ...declarations] as Array<AnyNode>);
 		}

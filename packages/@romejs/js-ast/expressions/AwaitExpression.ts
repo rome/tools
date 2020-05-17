@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyExpression, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {AnyExpression, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type AwaitExpression = JSNodeBase & {
-	type: 'AwaitExpression';
+	type: "AwaitExpression";
 	argument?: AnyExpression;
 };
 
 export const awaitExpression = createBuilder<AwaitExpression>(
-	'AwaitExpression',
+	"AwaitExpression",
 	{
 		bindingKeys: {},
 		visitorKeys: {

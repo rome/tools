@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 18
 			index: 18
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 18
 					index: 18
@@ -46,7 +46,7 @@ Program {
 			}
 			expression: ArrowFunctionExpression {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -64,7 +64,7 @@ Program {
 					rest: undefined
 					thisType: undefined
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 4
 							index: 4
@@ -78,10 +78,10 @@ Program {
 					}
 					params: Array [
 						BindingIdentifier {
-							name: 'e'
+							name: "e"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'e'
+								filename: "input.js"
+								identifierName: "e"
 								end: Object {
 									column: 1
 									index: 1
@@ -99,7 +99,7 @@ Program {
 				body: BlockStatement {
 					directives: Array []
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 18
 							index: 18
@@ -114,7 +114,7 @@ Program {
 					body: Array [
 						LabeledStatement {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 16
 									index: 16
@@ -127,10 +127,10 @@ Program {
 								}
 							}
 							label: Identifier {
-								name: 'label'
+								name: "label"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'label'
+									filename: "input.js"
+									identifierName: "label"
 									end: Object {
 										column: 12
 										index: 12
@@ -145,7 +145,7 @@ Program {
 							}
 							body: ExpressionStatement {
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 16
 										index: 16
@@ -161,7 +161,7 @@ Program {
 									value: 42
 									format: undefined
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 16
 											index: 16

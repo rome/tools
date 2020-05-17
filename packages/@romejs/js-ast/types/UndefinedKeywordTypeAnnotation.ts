@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type UndefinedKeywordTypeAnnotation = JSNodeBase & {
-	type: 'UndefinedKeywordTypeAnnotation';
+	type: "UndefinedKeywordTypeAnnotation";
 };
 
 export const undefinedKeywordTypeAnnotation = createBuilder<UndefinedKeywordTypeAnnotation>(
-	'UndefinedKeywordTypeAnnotation',
+	"UndefinedKeywordTypeAnnotation",
 	{bindingKeys: {}, visitorKeys: {}},
 );

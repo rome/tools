@@ -11,14 +11,14 @@ import {
 	SimpleNode,
 	SimpleToken,
 	ValueToken,
-} from '@romejs/parser-core';
+} from "@romejs/parser-core";
 
 // PARSER
 export type VersionPrereleaseParts = Array<number | string>;
 
 // 1.2, 1, 1.*.2
 export type WildcardVersionNode = ComplexNode<
-	'WildcardVersion',
+	"WildcardVersion",
 	{
 		major: undefined | number;
 		minor: undefined | number;
@@ -30,7 +30,7 @@ export type WildcardVersionNode = ComplexNode<
 
 // 1.2.3
 export type AbsoluteVersionNode = ComplexNode<
-	'AbsoluteVersion',
+	"AbsoluteVersion",
 	{
 		major: number;
 		minor: number;
@@ -44,21 +44,21 @@ export type AbsoluteVersionNode = ComplexNode<
 export type VersionNode = WildcardVersionNode | AbsoluteVersionNode;
 
 // 1.2.x, 1.X, 1.2.*, *
-export type WildcardNode = SimpleNode<'Wildcard'>;
+export type WildcardNode = SimpleNode<"Wildcard">;
 
 // >=1.2.3
 export type ComparatorOperator =
-	 | '<'
-	| '>'
-	| '>='
-	| '<='
-	| '~>'
-	| '^'
-	| '~'
-	| '=';
+	 | "<"
+	| ">"
+	| ">="
+	| "<="
+	| "~>"
+	| "^"
+	| "~"
+	| "=";
 
 export type ComparatorNode = ComplexNode<
-	'Comparator',
+	"Comparator",
 	{
 		operator: ComparatorOperator;
 		version: WildcardNode | VersionNode;
@@ -67,7 +67,7 @@ export type ComparatorNode = ComplexNode<
 
 // 1.2.3 || 4.5.6
 export type LogicalOrNode = ComplexNode<
-	'LogicalOr',
+	"LogicalOr",
 	{
 		left: RangeNode;
 		right: RangeNode;
@@ -76,7 +76,7 @@ export type LogicalOrNode = ComplexNode<
 
 // 1.2.3 4.5.6
 export type LogicalAndNode = ComplexNode<
-	'LogicalAnd',
+	"LogicalAnd",
 	{
 		left: RangeNode;
 		right: RangeNode;
@@ -85,7 +85,7 @@ export type LogicalAndNode = ComplexNode<
 
 // 1.2.3 - 2.3.4
 export type VersionRangeNode = ComplexNode<
-	'VersionRange',
+	"VersionRange",
 	{
 		left: WildcardNode | VersionNode;
 		right: WildcardNode | VersionNode;
@@ -102,16 +102,16 @@ export type RangeNode =
 
 // TOKENS
 export type Tokens = BaseTokens & {
-	Space: SimpleToken<'Space'>;
-	Number: ValueToken<'Number', number>;
-	Word: ValueToken<'Word', string>;
-	Dash: SimpleToken<'Dash'>;
-	RangeDash: SimpleToken<'RangeDash'>;
-	Plus: SimpleToken<'Plus'>;
-	Star: SimpleToken<'Star'>;
-	Operator: ValueToken<'Operator', ComparatorOperator>;
-	Dot: SimpleToken<'Dot'>;
-	Pipe: SimpleToken<'Pipe'>;
+	Space: SimpleToken<"Space">;
+	Number: ValueToken<"Number", number>;
+	Word: ValueToken<"Word", string>;
+	Dash: SimpleToken<"Dash">;
+	RangeDash: SimpleToken<"RangeDash">;
+	Plus: SimpleToken<"Plus">;
+	Star: SimpleToken<"Star">;
+	Operator: ValueToken<"Operator", ComparatorOperator>;
+	Dot: SimpleToken<"Dot">;
+	Pipe: SimpleToken<"Pipe">;
 };
 
 // Types for public API

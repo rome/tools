@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 31
 			index: 31
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		FunctionDeclaration {
 			id: BindingIdentifier {
-				name: 'f'
+				name: "f"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'f'
+					filename: "input.js"
+					identifierName: "f"
 					end: Object {
 						column: 10
 						index: 10
@@ -49,7 +49,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 31
 					index: 31
@@ -64,7 +64,7 @@ Program {
 			body: BlockStatement {
 				body: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 31
 						index: 31
@@ -78,9 +78,9 @@ Program {
 				}
 				directives: Array [
 					Directive {
-						value: 'use strict'
+						value: "use strict"
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 29
 								index: 29
@@ -104,7 +104,7 @@ Program {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -118,10 +118,10 @@ Program {
 				}
 				params: Array [
 					BindingIdentifier {
-						name: 'f'
+						name: "f"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'f'
+							filename: "input.js"
+							identifierName: "f"
 							end: Object {
 								column: 12
 								index: 12
@@ -137,7 +137,7 @@ Program {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 12
 									index: 12

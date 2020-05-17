@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {AnyNode, TSExportAssignment, tsExportAssignment} from '@romejs/js-ast';
+import {Scope} from "../../scopes";
+import {AnyNode, TSExportAssignment, tsExportAssignment} from "@romejs/js-ast";
 
 export default function TSExportAssignment(node: AnyNode, scope: Scope) {
 	node = tsExportAssignment.assert(node);
 	scope;
-	throw new Error('unimplemented');
+	throw new Error("unimplemented");
 }

@@ -9,9 +9,9 @@ import {
 	AnyNode,
 	RegExpGroupNonCapture,
 	regExpGroupNonCapture,
-} from '@romejs/js-ast';
+} from "@romejs/js-ast";
 
 export default function RegExpGroupNonCapture(node: AnyNode) {
 	node = regExpGroupNonCapture.assert(node);
-	throw new Error('unimplemented');
+	throw new Error("unimplemented");
 }

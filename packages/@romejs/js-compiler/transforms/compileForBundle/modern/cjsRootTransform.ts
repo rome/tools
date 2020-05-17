@@ -5,18 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from '@romejs/js-compiler';
-import {getOptions, getPrefixedNamespace, getPrivateName} from '../_utils';
-import {renameBindings} from '@romejs/js-ast-utils';
+import {Path} from "@romejs/js-compiler";
+import {getOptions, getPrefixedNamespace, getPrivateName} from "../_utils";
+import {renameBindings} from "@romejs/js-ast-utils";
 
 export default {
-	name: 'cjsRootTransform',
+	name: "cjsRootTransform",
 	enter(path: Path) {
 		const {node, scope, context} = path;
 
 		const {moduleId} = getOptions(context);
 
-		if (node.type === 'Program') {
+		if (node.type === "Program") {
 			const mappings = new Map();
 
 			// make all variables private
@@ -24,8 +24,8 @@ export default {
 				mappings.set(name, getPrivateName(name, moduleId));
 			}
 
-			if (scope.hasBinding('exports') === false) {
-				mappings.set('exports', getPrefixedNamespace(moduleId));
+			if (scope.hasBinding("exports") === false) {
+				mappings.set("exports", getPrefixedNamespace(moduleId));
 			}
 
 			const newProgram = renameBindings(path, mappings);

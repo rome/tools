@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyExpression, AnyStatement, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {AnyExpression, AnyStatement, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type WithStatement = JSNodeBase & {
-	type: 'WithStatement';
+	type: "WithStatement";
 	object: AnyExpression;
 	body: AnyStatement;
 };
 
 export const withStatement = createBuilder<WithStatement>(
-	'WithStatement',
+	"WithStatement",
 	{
 		bindingKeys: {},
 		visitorKeys: {

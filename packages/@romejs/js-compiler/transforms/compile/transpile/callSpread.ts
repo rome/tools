@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from '@romejs/js-compiler';
-import {template} from '@romejs/js-ast-utils';
-import {bindingInjector} from '../../defaultHooks/index';
+import {Path} from "@romejs/js-compiler";
+import {template} from "@romejs/js-ast-utils";
+import {bindingInjector} from "../../defaultHooks/index";
 import {
 	CallExpression,
 	NullLiteral,
@@ -17,24 +17,24 @@ import {
 	memberExpression,
 	nullLiteral,
 	sequenceExpression,
-} from '@romejs/js-ast';
+} from "@romejs/js-ast";
 
 export default {
-	name: 'callSpread',
+	name: "callSpread",
 	enter(path: Path) {
 		const {node} = path;
 
-		if (node.type === 'CallExpression') {
+		if (node.type === "CallExpression") {
 			let func = node.callee;
 
 			// Impossible to transform a bare super call
-			if (func.type === 'Super') {
+			if (func.type === "Super") {
 				return node;
 			}
 
 			let hasSpread = false;
 			for (const arg of node.arguments) {
-				if (arg.type === 'SpreadElement') {
+				if (arg.type === "SpreadElement") {
 					hasSpread = true;
 					break;
 				}
@@ -43,12 +43,12 @@ export default {
 				let prepend;
 
 				let object: ReferenceIdentifier | NullLiteral;
-				if (func.type === 'MemberExpression') {
+				if (func.type === "MemberExpression") {
 					const injection = path.callHook(bindingInjector, {});
 					object = injection[0];
 
 					prepend = assignmentExpression.create({
-						operator: '=',
+						operator: "=",
 						left: injection[1],
 						right: func.object,
 					});
@@ -62,7 +62,7 @@ export default {
 				}
 
 				let call: CallExpression = {
-					type: 'CallExpression',
+					type: "CallExpression",
 					loc: node.loc,
 					callee: template.expression`${func}.apply`,
 					arguments: [object, arrayExpression.create({elements: node.arguments})],

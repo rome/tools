@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {AnyNode, TSModuleBlock, tsModuleBlock} from '@romejs/js-ast';
+import {Scope} from "../../scopes";
+import {AnyNode, TSModuleBlock, tsModuleBlock} from "@romejs/js-ast";
 
 export default function TSModuleBlock(node: AnyNode, scope: Scope) {
 	node = tsModuleBlock.assert(node);
 	scope;
-	throw new Error('unimplemented');
+	throw new Error("unimplemented");
 }

@@ -9,14 +9,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 31
@@ -30,10 +30,10 @@ Program {
 	}
 	comments: Array [
 		CommentBlock {
-			id: '0'
-			value: ' foo '
+			id: "0"
+			value: " foo "
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 9
 					index: 9
@@ -47,10 +47,10 @@ Program {
 			}
 		}
 		CommentBlock {
-			id: '1'
-			value: ' bar '
+			id: "1"
+			value: " bar "
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 13
 					index: 23
@@ -67,9 +67,9 @@ Program {
 	body: Array [
 		IfStatement {
 			alternate: undefined
-			leadingComments: Array ['0']
+			leadingComments: Array ["0"]
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 20
 					index: 30
@@ -85,7 +85,7 @@ Program {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 20
 						index: 30
@@ -99,11 +99,11 @@ Program {
 				}
 			}
 			test: ReferenceIdentifier {
-				name: 'a'
-				leadingComments: Array ['1']
+				name: "a"
+				leadingComments: Array ["1"]
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'a'
+					filename: "input.js"
+					identifierName: "a"
 					end: Object {
 						column: 16
 						index: 26

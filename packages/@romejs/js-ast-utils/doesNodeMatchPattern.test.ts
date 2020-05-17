@@ -5,37 +5,37 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import doesNodeMatchPattern from './doesNodeMatchPattern';
-import template from './template';
+import {test} from "rome";
+import doesNodeMatchPattern from "./doesNodeMatchPattern";
+import template from "./template";
 
 test(
-	'doesNodeMatchPattern',
+	"doesNodeMatchPattern",
 	(t) => {
-		t.inlineSnapshot(doesNodeMatchPattern(template.expression`foo`, 'foo'), true);
+		t.inlineSnapshot(doesNodeMatchPattern(template.expression`foo`, "foo"), true);
 
 		t.inlineSnapshot(
-			doesNodeMatchPattern(template.expression`this.foo`, 'this.foo'),
+			doesNodeMatchPattern(template.expression`this.foo`, "this.foo"),
 			true,
 		);
 
 		t.inlineSnapshot(
-			doesNodeMatchPattern(template.expression`exports.foo`, 'exports.**'),
+			doesNodeMatchPattern(template.expression`exports.foo`, "exports.**"),
 			true,
 		);
 
 		t.inlineSnapshot(
-			doesNodeMatchPattern(template.expression`this.foo.bar`, 'this.foo.*'),
+			doesNodeMatchPattern(template.expression`this.foo.bar`, "this.foo.*"),
 			true,
 		);
 
 		t.inlineSnapshot(
-			doesNodeMatchPattern(template.expression`this.foo.bar.yes`, 'this.foo.*'),
+			doesNodeMatchPattern(template.expression`this.foo.bar.yes`, "this.foo.*"),
 			false,
 		);
 
 		t.inlineSnapshot(
-			doesNodeMatchPattern(template.expression`this.foo.bar.yes`, 'this.foo.**'),
+			doesNodeMatchPattern(template.expression`this.foo.bar.yes`, "this.foo.**"),
 			true,
 		);
 	},

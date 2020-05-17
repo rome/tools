@@ -5,20 +5,20 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {DiagnosticFilters, Diagnostics} from '@romejs/diagnostics';
-import {ScopeType} from '../parser';
-import {Position, SourceLocation} from '@romejs/parser-core';
-import {TokContext, types as ct} from './context';
-import {TokenTypes, types as tt} from './types';
-import {AnyComment, AnyNode} from '@romejs/js-ast';
-import {Token} from '..';
+import {DiagnosticFilters, Diagnostics} from "@romejs/diagnostics";
+import {ScopeType} from "../parser";
+import {Position, SourceLocation} from "@romejs/parser-core";
+import {TokContext, types as ct} from "./context";
+import {TokenTypes, types as tt} from "./types";
+import {AnyComment, AnyNode} from "@romejs/js-ast";
+import {Token} from "..";
 import {
 	Number0,
 	Number1,
 	ob1Number0,
 	ob1Number0Neg1,
 	ob1Number1,
-} from '@romejs/ob1';
+} from "@romejs/ob1";
 
 type Scopes = {[K in ScopeType]?: Array<unknown>};
 
@@ -123,7 +123,7 @@ export type State = {
 	scopes: Scopes;
 };
 
-export type LabelKind = undefined | 'loop' | 'switch';
+export type LabelKind = undefined | "loop" | "switch";
 
 export type Label = {
 	kind: LabelKind;

@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {SourceLocation} from '@romejs/parser-core';
-import {Program} from '@romejs/js-ast';
-import {HydrateData} from './Evaluator';
-import {Dict} from '@romejs/typescript-helpers';
+import {SourceLocation} from "@romejs/parser-core";
+import {Program} from "@romejs/js-ast";
+import {HydrateData} from "./Evaluator";
+import {Dict} from "@romejs/typescript-helpers";
 
 export type CheckProvider = {
 	libs?: Array<Program>;
@@ -29,12 +29,12 @@ export type ModuleSignatureType = {
 
 export type ModuleSignatureExport =
 	 | {
-			type: 'local';
+			type: "local";
 			name: string;
 			value: string;
 		}
 	| {
-			type: 'all';
+			type: "all";
 			source: string;
 		};
 

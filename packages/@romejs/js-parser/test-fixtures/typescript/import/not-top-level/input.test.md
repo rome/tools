@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 51
@@ -32,9 +32,9 @@ Program {
 	body: Array [
 		TSModuleDeclaration {
 			id: StringLiteral {
-				value: 'm'
+				value: "m"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 18
 						index: 18
@@ -50,7 +50,7 @@ Program {
 			declare: true
 			global: undefined
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 1
 					index: 50
@@ -64,7 +64,7 @@ Program {
 			}
 			body: TSModuleBlock {
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 1
 						index: 50
@@ -82,7 +82,7 @@ Program {
 						importKind: undefined
 						namedSpecifiers: Array []
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 27
 								index: 48
@@ -95,9 +95,9 @@ Program {
 							}
 						}
 						source: StringLiteral {
-							value: 'a'
+							value: "a"
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 26
 									index: 47
@@ -112,7 +112,7 @@ Program {
 						}
 						namespaceSpecifier: ImportNamespaceSpecifier {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 17
 									index: 38
@@ -126,10 +126,10 @@ Program {
 							}
 							local: ImportSpecifierLocal {
 								name: BindingIdentifier {
-									name: 'a'
+									name: "a"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'a'
+										filename: "input.ts"
+										identifierName: "a"
 										end: Object {
 											column: 17
 											index: 38
@@ -144,7 +144,7 @@ Program {
 								}
 								importKind: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 17
 										index: 38

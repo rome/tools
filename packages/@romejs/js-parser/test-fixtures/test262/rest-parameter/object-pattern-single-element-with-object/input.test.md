@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 52
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		FunctionDeclaration {
 			id: BindingIdentifier {
-				name: 'singleElementWithObject'
+				name: "singleElementWithObject"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'singleElementWithObject'
+					filename: "input.js"
+					identifierName: "singleElementWithObject"
 					end: Object {
 						column: 32
 						index: 32
@@ -49,7 +49,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 51
 					index: 51
@@ -65,7 +65,7 @@ Program {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 51
 						index: 51
@@ -87,7 +87,7 @@ Program {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 48
 						index: 48
@@ -102,7 +102,7 @@ Program {
 				rest: BindingObjectPattern {
 					rest: undefined
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 47
 							index: 47
@@ -118,7 +118,7 @@ Program {
 						optional: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 47
 								index: 47
@@ -135,10 +135,10 @@ Program {
 						BindingObjectPatternProperty {
 							key: StaticPropertyKey {
 								value: Identifier {
-									name: 'p'
+									name: "p"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'p'
+										filename: "input.js"
+										identifierName: "p"
 										end: Object {
 											column: 38
 											index: 38
@@ -152,7 +152,7 @@ Program {
 									}
 								}
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 38
 										index: 38
@@ -168,7 +168,7 @@ Program {
 							value: BindingObjectPattern {
 								rest: undefined
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 46
 										index: 46
@@ -184,10 +184,10 @@ Program {
 									BindingObjectPatternProperty {
 										key: StaticPropertyKey {
 											value: Identifier {
-												name: 'a'
+												name: "a"
 												loc: Object {
-													filename: 'input.js'
-													identifierName: 'a'
+													filename: "input.js"
+													identifierName: "a"
 													end: Object {
 														column: 42
 														index: 42
@@ -201,7 +201,7 @@ Program {
 												}
 											}
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 42
 													index: 42
@@ -215,10 +215,10 @@ Program {
 											}
 										}
 										value: BindingIdentifier {
-											name: 'b'
+											name: "b"
 											loc: Object {
-												filename: 'input.js'
-												identifierName: 'b'
+												filename: "input.js"
+												identifierName: "b"
 												end: Object {
 													column: 45
 													index: 45
@@ -232,7 +232,7 @@ Program {
 											}
 										}
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 45
 												index: 45
@@ -248,7 +248,7 @@ Program {
 								]
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 46
 									index: 46

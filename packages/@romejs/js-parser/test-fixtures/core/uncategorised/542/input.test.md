@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 18
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 11
 					index: 17
@@ -46,7 +46,7 @@ Program {
 			}
 			expression: CallExpression {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 11
 						index: 17
@@ -60,9 +60,9 @@ Program {
 				}
 				arguments: Array [
 					StringLiteral {
-						value: ' '
+						value: " "
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 10
 								index: 16
@@ -78,7 +78,7 @@ Program {
 				]
 				callee: MemberExpression {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 6
 							index: 12
@@ -91,9 +91,9 @@ Program {
 						}
 					}
 					object: StringLiteral {
-						value: 'foo'
+						value: "foo"
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 5
 								index: 5
@@ -108,10 +108,10 @@ Program {
 					}
 					property: StaticMemberProperty {
 						value: Identifier {
-							name: 'split'
+							name: "split"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'split'
+								filename: "input.js"
+								identifierName: "split"
 								end: Object {
 									column: 6
 									index: 12
@@ -125,8 +125,8 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'split'
+							filename: "input.js"
+							identifierName: "split"
 							end: Object {
 								column: 6
 								index: 12

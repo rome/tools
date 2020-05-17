@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 47
 			index: 47
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		SwitchStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 47
 					index: 47
@@ -45,10 +45,10 @@ Program {
 				}
 			}
 			discriminant: ReferenceIdentifier {
-				name: 'answer'
+				name: "answer"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'answer'
+					filename: "input.js"
+					identifierName: "answer"
 					end: Object {
 						column: 14
 						index: 14
@@ -64,7 +64,7 @@ Program {
 			cases: Array [
 				SwitchCase {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 45
 							index: 45
@@ -80,7 +80,7 @@ Program {
 						value: 42
 						format: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 25
 								index: 25
@@ -96,7 +96,7 @@ Program {
 					consequent: Array [
 						VariableDeclarationStatement {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 38
 									index: 38
@@ -109,9 +109,9 @@ Program {
 								}
 							}
 							declaration: VariableDeclaration {
-								kind: 'let'
+								kind: "let"
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 38
 										index: 38
@@ -126,10 +126,10 @@ Program {
 								declarations: Array [
 									VariableDeclarator {
 										id: BindingIdentifier {
-											name: 't'
+											name: "t"
 											loc: Object {
-												filename: 'input.js'
-												identifierName: 't'
+												filename: "input.js"
+												identifierName: "t"
 												end: Object {
 													column: 32
 													index: 32
@@ -143,7 +143,7 @@ Program {
 											}
 										}
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 37
 												index: 37
@@ -159,7 +159,7 @@ Program {
 											value: 42
 											format: undefined
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 37
 													index: 37
@@ -179,7 +179,7 @@ Program {
 						BreakStatement {
 							label: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 45
 									index: 45

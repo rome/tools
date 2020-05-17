@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type BigIntKeywordTypeAnnotation = JSNodeBase & {
-	type: 'BigIntKeywordTypeAnnotation';
+	type: "BigIntKeywordTypeAnnotation";
 };
 
 export const bigIntKeywordTypeAnnotation = createBuilder<BigIntKeywordTypeAnnotation>(
-	'BigIntKeywordTypeAnnotation',
+	"BigIntKeywordTypeAnnotation",
 	{
 		bindingKeys: {},
 		visitorKeys: {},

@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from '@romejs/js-compiler';
-import {AnyNode} from '@romejs/js-ast';
-import {getBindingIdentifiers} from '@romejs/js-ast-utils';
-import {descriptions} from '@romejs/diagnostics';
+import {Path} from "@romejs/js-compiler";
+import {AnyNode} from "@romejs/js-ast";
+import {getBindingIdentifiers} from "@romejs/js-ast-utils";
+import {descriptions} from "@romejs/diagnostics";
 
 export default {
-	name: 'noDupeArgs',
+	name: "noDupeArgs",
 	enter(path: Path): AnyNode {
 		const {node, context} = path;
 
-		if (node.type === 'FunctionHead') {
+		if (node.type === "FunctionHead") {
 			const uniqueIdentifiers = new Set();
 
 			for (const param of node.params) {

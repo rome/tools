@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 62
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 2
 					index: 61
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'const'
+				kind: "const"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 2
 						index: 61
@@ -62,10 +62,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'foo'
+							name: "foo"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'foo'
+								filename: "input.js"
+								identifierName: "foo"
 								end: Object {
 									column: 9
 									index: 9
@@ -79,7 +79,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 1
 								index: 60
@@ -94,7 +94,7 @@ Program {
 						init: FunctionExpression {
 							id: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 1
 									index: 60
@@ -109,7 +109,7 @@ Program {
 							body: BlockStatement {
 								directives: Array []
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 1
 										index: 60
@@ -124,7 +124,7 @@ Program {
 								body: Array [
 									ExpressionStatement {
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 12
 												index: 58
@@ -138,7 +138,7 @@ Program {
 										}
 										expression: AwaitExpression {
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 11
 													index: 57
@@ -151,10 +151,10 @@ Program {
 												}
 											}
 											argument: ReferenceIdentifier {
-												name: 'baz'
+												name: "baz"
 												loc: Object {
-													filename: 'input.js'
-													identifierName: 'baz'
+													filename: "input.js"
+													identifierName: "baz"
 													end: Object {
 														column: 11
 														index: 57
@@ -180,7 +180,7 @@ Program {
 								thisType: undefined
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 43
 										index: 43
@@ -196,7 +196,7 @@ Program {
 									BindingObjectPattern {
 										rest: undefined
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 42
 												index: 42
@@ -212,7 +212,7 @@ Program {
 											optional: undefined
 											typeAnnotation: undefined
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 42
 													index: 42
@@ -229,10 +229,10 @@ Program {
 											BindingObjectPatternProperty {
 												key: StaticPropertyKey {
 													value: Identifier {
-														name: 'async'
+														name: "async"
 														loc: Object {
-															filename: 'input.js'
-															identifierName: 'async'
+															filename: "input.js"
+															identifierName: "async"
 															end: Object {
 																column: 34
 																index: 34
@@ -246,7 +246,7 @@ Program {
 														}
 													}
 													loc: Object {
-														filename: 'input.js'
+														filename: "input.js"
 														end: Object {
 															column: 34
 															index: 34
@@ -261,7 +261,7 @@ Program {
 												}
 												value: BindingAssignmentPattern {
 													loc: Object {
-														filename: 'input.js'
+														filename: "input.js"
 														end: Object {
 															column: 40
 															index: 40
@@ -274,10 +274,10 @@ Program {
 														}
 													}
 													left: BindingIdentifier {
-														name: 'async'
+														name: "async"
 														loc: Object {
-															filename: 'input.js'
-															identifierName: 'async'
+															filename: "input.js"
+															identifierName: "async"
 															end: Object {
 																column: 34
 																index: 34
@@ -291,10 +291,10 @@ Program {
 														}
 													}
 													right: ReferenceIdentifier {
-														name: 'bar'
+														name: "bar"
 														loc: Object {
-															filename: 'input.js'
-															identifierName: 'bar'
+															filename: "input.js"
+															identifierName: "bar"
 															end: Object {
 																column: 40
 																index: 40
@@ -309,7 +309,7 @@ Program {
 													}
 												}
 												loc: Object {
-													filename: 'input.js'
+													filename: "input.js"
 													end: Object {
 														column: 40
 														index: 40

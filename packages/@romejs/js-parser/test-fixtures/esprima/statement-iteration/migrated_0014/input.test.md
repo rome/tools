@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 21
@@ -33,7 +33,7 @@ Program {
 		ForStatement {
 			update: undefined
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 20
 					index: 20
@@ -47,7 +47,7 @@ Program {
 			}
 			body: EmptyStatement {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 20
 						index: 20
@@ -61,9 +61,9 @@ Program {
 				}
 			}
 			init: AssignmentExpression {
-				operator: '='
+				operator: "="
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 9
 						index: 9
@@ -76,10 +76,10 @@ Program {
 					}
 				}
 				left: AssignmentIdentifier {
-					name: 'x'
+					name: "x"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'x'
+						filename: "input.js"
+						identifierName: "x"
 						end: Object {
 							column: 5
 							index: 5
@@ -96,7 +96,7 @@ Program {
 					value: 0
 					format: undefined
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 9
 							index: 9
@@ -111,9 +111,9 @@ Program {
 				}
 			}
 			test: BinaryExpression {
-				operator: '<'
+				operator: "<"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -126,10 +126,10 @@ Program {
 					}
 				}
 				left: ReferenceIdentifier {
-					name: 'x'
+					name: "x"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'x'
+						filename: "input.js"
+						identifierName: "x"
 						end: Object {
 							column: 12
 							index: 12
@@ -146,7 +146,7 @@ Program {
 					value: 42
 					format: undefined
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 17
 							index: 17

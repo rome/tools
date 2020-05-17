@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSImportEqualsDeclaration} from '@romejs/js-ast';
-import {Builder} from '@romejs/js-formatter';
-import {Token, concat, group, space} from '../../tokens';
+import {TSImportEqualsDeclaration} from "@romejs/js-ast";
+import {Builder} from "@romejs/js-formatter";
+import {Token, concat, group, space} from "../../tokens";
 
 export default function TSImportEqualsDeclaration(
 	builder: Builder,
@@ -15,19 +15,19 @@ export default function TSImportEqualsDeclaration(
 ): Token {
 	const tokens: Array<Token> = [];
 	if (node.isExport) {
-		tokens.push('export');
+		tokens.push("export");
 		tokens.push(space);
 	}
 
 	tokens.push(
-		'import',
+		"import",
 		space,
 		builder.tokenize(node.id, node),
 		space,
-		'=',
+		"=",
 		space,
 		builder.tokenize(node.moduleReference, node),
-		';',
+		";",
 	);
 
 	return group(concat(tokens));

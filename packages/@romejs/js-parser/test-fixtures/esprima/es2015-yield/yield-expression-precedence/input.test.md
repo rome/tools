@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 43
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		FunctionDeclaration {
 			id: BindingIdentifier {
-				name: 'g'
+				name: "g"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'g'
+					filename: "input.js"
+					identifierName: "g"
 					end: Object {
 						column: 11
 						index: 11
@@ -49,7 +49,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 42
 					index: 42
@@ -71,7 +71,7 @@ Program {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -87,7 +87,7 @@ Program {
 			body: BlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 42
 						index: 42
@@ -102,7 +102,7 @@ Program {
 				body: Array [
 					ExpressionStatement {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 40
 								index: 40
@@ -116,7 +116,7 @@ Program {
 						}
 						expression: SequenceExpression {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 40
 									index: 40
@@ -132,7 +132,7 @@ Program {
 								YieldExpression {
 									delegate: false
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 25
 											index: 25
@@ -145,9 +145,9 @@ Program {
 										}
 									}
 									argument: AssignmentExpression {
-										operator: '='
+										operator: "="
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 25
 												index: 25
@@ -160,10 +160,10 @@ Program {
 											}
 										}
 										left: AssignmentIdentifier {
-											name: 'a'
+											name: "a"
 											loc: Object {
-												filename: 'input.js'
-												identifierName: 'a'
+												filename: "input.js"
+												identifierName: "a"
 												end: Object {
 													column: 23
 													index: 23
@@ -177,10 +177,10 @@ Program {
 											}
 										}
 										right: ReferenceIdentifier {
-											name: 'b'
+											name: "b"
 											loc: Object {
-												filename: 'input.js'
-												identifierName: 'b'
+												filename: "input.js"
+												identifierName: "b"
 												end: Object {
 													column: 25
 													index: 25
@@ -198,7 +198,7 @@ Program {
 								YieldExpression {
 									delegate: true
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 37
 											index: 37
@@ -211,9 +211,9 @@ Program {
 										}
 									}
 									argument: AssignmentExpression {
-										operator: '='
+										operator: "="
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 37
 												index: 37
@@ -226,10 +226,10 @@ Program {
 											}
 										}
 										left: AssignmentIdentifier {
-											name: 'c'
+											name: "c"
 											loc: Object {
-												filename: 'input.js'
-												identifierName: 'c'
+												filename: "input.js"
+												identifierName: "c"
 												end: Object {
 													column: 35
 													index: 35
@@ -243,10 +243,10 @@ Program {
 											}
 										}
 										right: ReferenceIdentifier {
-											name: 'd'
+											name: "d"
 											loc: Object {
-												filename: 'input.js'
-												identifierName: 'd'
+												filename: "input.js"
+												identifierName: "d"
 												end: Object {
 													column: 37
 													index: 37
@@ -262,10 +262,10 @@ Program {
 									}
 								}
 								ReferenceIdentifier {
-									name: 'e'
+									name: "e"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'e'
+										filename: "input.js"
+										identifierName: "e"
 										end: Object {
 											column: 40
 											index: 40

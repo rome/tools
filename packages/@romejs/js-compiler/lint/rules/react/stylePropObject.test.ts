@@ -5,23 +5,23 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {testLintMultiple} from '../testHelpers';
+import {test} from "rome";
+import {testLintMultiple} from "../testHelpers";
 
 test(
-	'ensure style property is an object',
+	"ensure style property is an object",
 	async (t) => {
 		await testLintMultiple(
 			t,
 			[
 				// INVALID
-				'<div style={true} />',
+				"<div style={true} />",
 				`<div style="color: 'red'" />`,
 				`<div style={"color: 'red'"} />`,
 				// VALID
 				"<div style={{color: 'red'}} />",
 			],
-			{category: 'lint/stylePropObject'},
+			{category: "lint/stylePropObject"},
 		);
 	},
 );

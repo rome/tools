@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 71
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		FunctionDeclaration {
 			id: BindingIdentifier {
-				name: 'multiElementWithInitializer'
+				name: "multiElementWithInitializer"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'multiElementWithInitializer'
+					filename: "input.js"
+					identifierName: "multiElementWithInitializer"
 					end: Object {
 						column: 36
 						index: 36
@@ -49,7 +49,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 70
 					index: 70
@@ -65,7 +65,7 @@ Program {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 70
 						index: 70
@@ -87,7 +87,7 @@ Program {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 67
 						index: 67
@@ -102,7 +102,7 @@ Program {
 				rest: BindingObjectPattern {
 					rest: undefined
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 66
 							index: 66
@@ -118,7 +118,7 @@ Program {
 						optional: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 66
 								index: 66
@@ -135,10 +135,10 @@ Program {
 						BindingObjectPatternProperty {
 							key: StaticPropertyKey {
 								value: Identifier {
-									name: 'a'
+									name: "a"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'a'
+										filename: "input.js"
+										identifierName: "a"
 										end: Object {
 											column: 42
 											index: 42
@@ -152,7 +152,7 @@ Program {
 									}
 								}
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 42
 										index: 42
@@ -167,7 +167,7 @@ Program {
 							}
 							value: BindingAssignmentPattern {
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 49
 										index: 49
@@ -180,10 +180,10 @@ Program {
 									}
 								}
 								left: BindingIdentifier {
-									name: 'r'
+									name: "r"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'r'
+										filename: "input.js"
+										identifierName: "r"
 										end: Object {
 											column: 45
 											index: 45
@@ -200,7 +200,7 @@ Program {
 									value: 0
 									format: undefined
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 49
 											index: 49
@@ -215,7 +215,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 49
 									index: 49
@@ -231,10 +231,10 @@ Program {
 						BindingObjectPatternProperty {
 							key: StaticPropertyKey {
 								value: Identifier {
-									name: 'b'
+									name: "b"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'b'
+										filename: "input.js"
+										identifierName: "b"
 										end: Object {
 											column: 52
 											index: 52
@@ -248,7 +248,7 @@ Program {
 									}
 								}
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 52
 										index: 52
@@ -262,10 +262,10 @@ Program {
 								}
 							}
 							value: BindingIdentifier {
-								name: 's'
+								name: "s"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 's'
+									filename: "input.js"
+									identifierName: "s"
 									end: Object {
 										column: 55
 										index: 55
@@ -279,7 +279,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 55
 									index: 55
@@ -295,10 +295,10 @@ Program {
 						BindingObjectPatternProperty {
 							key: StaticPropertyKey {
 								value: Identifier {
-									name: 'c'
+									name: "c"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'c'
+										filename: "input.js"
+										identifierName: "c"
 										end: Object {
 											column: 58
 											index: 58
@@ -312,7 +312,7 @@ Program {
 									}
 								}
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 58
 										index: 58
@@ -327,7 +327,7 @@ Program {
 							}
 							value: BindingAssignmentPattern {
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 65
 										index: 65
@@ -340,10 +340,10 @@ Program {
 									}
 								}
 								left: BindingIdentifier {
-									name: 't'
+									name: "t"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 't'
+										filename: "input.js"
+										identifierName: "t"
 										end: Object {
 											column: 61
 											index: 61
@@ -360,7 +360,7 @@ Program {
 									value: 1
 									format: undefined
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 65
 											index: 65
@@ -375,7 +375,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 65
 									index: 65

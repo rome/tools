@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {BIN, CHILD_ARGS, VERSION} from '@romejs/core';
-import child = require('child_process');
+import {BIN, CHILD_ARGS, VERSION} from "@romejs/core";
+import child = require("child_process");
 
 export default function fork(
 	processType: string,
@@ -17,7 +17,7 @@ export default function fork(
 		BIN.join(),
 		args,
 		{
-			stdio: 'inherit',
+			stdio: "inherit",
 			execArgv: CHILD_ARGS,
 			...opts,
 			env: {

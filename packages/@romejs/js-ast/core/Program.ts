@@ -13,12 +13,12 @@ import {
 	Directive,
 	InterpreterDirective,
 	JSNodeBase,
-} from '../index';
-import {Diagnostics} from '@romejs/diagnostics';
-import {createBuilder} from '../utils';
+} from "../index";
+import {Diagnostics} from "@romejs/diagnostics";
+import {createBuilder} from "../utils";
 
 export type Program = JSNodeBase & {
-	type: 'Program';
+	type: "Program";
 	directives: Array<Directive>;
 	body: Array<AnyStatement>;
 	filename: string;
@@ -33,14 +33,14 @@ export type Program = JSNodeBase & {
 };
 
 export const MOCK_PROGRAM: Program = {
-	type: 'Program',
+	type: "Program",
 	directives: [],
 	body: [],
-	filename: 'unknown',
+	filename: "unknown",
 	mtime: undefined,
 	interpreter: undefined,
 	corrupt: false,
-	sourceType: 'module',
+	sourceType: "module",
 	diagnostics: [],
 	comments: [],
 	syntax: [],
@@ -48,7 +48,7 @@ export const MOCK_PROGRAM: Program = {
 };
 
 export const program = createBuilder<Program>(
-	'Program',
+	"Program",
 	{
 		bindingKeys: {},
 		visitorKeys: {

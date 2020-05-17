@@ -5,42 +5,42 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import '@romejs/core';
-import {descriptions} from '@romejs/diagnostics';
-import {parseJSON} from '@romejs/codec-json';
-import {test} from 'rome';
-import {ParserOptions} from '@romejs/parser-core';
-import {createUnknownFilePath} from '@romejs/path';
+import "@romejs/core";
+import {descriptions} from "@romejs/diagnostics";
+import {parseJSON} from "@romejs/codec-json";
+import {test} from "rome";
+import {ParserOptions} from "@romejs/parser-core";
+import {createUnknownFilePath} from "@romejs/path";
 
 // These are just some very basic tests, most of it is already covered by test262-parse so most are redundant
 function parseExtJSON(opts: ParserOptions) {
-	return parseJSON({...opts, path: createUnknownFilePath('input.rjson')});
+	return parseJSON({...opts, path: createUnknownFilePath("input.rjson")});
 }
 
 test(
-	'comments',
+	"comments",
 	(t) => {
 		// comment at beginning
-		t.true(parseExtJSON({input: '// comment\ntrue'}));
-		t.true(parseExtJSON({input: '/* comment */\ntrue'}));
-		t.true(parseExtJSON({input: '/* comment */ true'}));
+		t.true(parseExtJSON({input: "// comment\ntrue"}));
+		t.true(parseExtJSON({input: "/* comment */\ntrue"}));
+		t.true(parseExtJSON({input: "/* comment */ true"}));
 
 		// comment at end
-		t.true(parseExtJSON({input: 'true\n// comment'}));
-		t.true(parseExtJSON({input: 'true\n/* comment */'}));
-		t.true(parseExtJSON({input: 'true/* comment */'}));
+		t.true(parseExtJSON({input: "true\n// comment"}));
+		t.true(parseExtJSON({input: "true\n/* comment */"}));
+		t.true(parseExtJSON({input: "true/* comment */"}));
 
 		// comment before object property
 		t.looksLike(
 			parseExtJSON({input: '{/* comment */ "foo": "bar"}'}),
 			{
-				foo: 'bar',
+				foo: "bar",
 			},
 		);
 		t.looksLike(
 			parseExtJSON({input: '{// comment\n"foo": "bar"}'}),
 			{
-				foo: 'bar',
+				foo: "bar",
 			},
 		);
 
@@ -48,13 +48,13 @@ test(
 		t.looksLike(
 			parseExtJSON({input: '{"foo": /* comment */ "bar"}'}),
 			{
-				foo: 'bar',
+				foo: "bar",
 			},
 		);
 		t.looksLike(
 			parseExtJSON({input: '{"foo": // comment\n"bar"}'}),
 			{
-				foo: 'bar',
+				foo: "bar",
 			},
 		);
 
@@ -62,13 +62,13 @@ test(
 		t.looksLike(
 			parseExtJSON({input: '{"foo": "bar" /* comment */,}'}),
 			{
-				foo: 'bar',
+				foo: "bar",
 			},
 		);
 		t.looksLike(
 			parseExtJSON({input: '{"foo": "bar" // comment\n,}'}),
 			{
-				foo: 'bar',
+				foo: "bar",
 			},
 		);
 
@@ -76,46 +76,46 @@ test(
 		t.looksLike(
 			parseExtJSON({input: '{"foo": "bar", /* comment */}'}),
 			{
-				foo: 'bar',
+				foo: "bar",
 			},
 		);
 		t.looksLike(
 			parseExtJSON({input: '{"foo": "bar", // comment\n}'}),
 			{
-				foo: 'bar',
+				foo: "bar",
 			},
 		);
 
 		// comment before array element
-		t.looksLike(parseExtJSON({input: '[/* comment */ "foo"]'}), ['foo']);
-		t.looksLike(parseExtJSON({input: '[//comment\n"foo"]'}), ['foo']);
+		t.looksLike(parseExtJSON({input: '[/* comment */ "foo"]'}), ["foo"]);
+		t.looksLike(parseExtJSON({input: '[//comment\n"foo"]'}), ["foo"]);
 
 		// comment after array element
-		t.looksLike(parseExtJSON({input: '["foo" /* comment */]'}), ['foo']);
-		t.looksLike(parseExtJSON({input: '["foo" //comment\n]'}), ['foo']);
+		t.looksLike(parseExtJSON({input: '["foo" /* comment */]'}), ["foo"]);
+		t.looksLike(parseExtJSON({input: '["foo" //comment\n]'}), ["foo"]);
 
 		// comment after array element value
 		t.looksLike(
 			parseExtJSON({input: '["foo" /* comment */, "bar"]'}),
-			['foo', 'bar'],
+			["foo", "bar"],
 		);
 		t.looksLike(
 			parseExtJSON({input: '["foo" //comment\n, "bar"]'}),
-			['foo', 'bar'],
+			["foo", "bar"],
 		);
 
 		// comment only in array
-		t.looksLike(parseExtJSON({input: '[/* comment */]'}), []);
-		t.looksLike(parseExtJSON({input: '[// comment\n]'}), []);
+		t.looksLike(parseExtJSON({input: "[/* comment */]"}), []);
+		t.looksLike(parseExtJSON({input: "[// comment\n]"}), []);
 
 		// comment only in object
-		t.looksLike(parseExtJSON({input: '{/* comment */}'}), {});
-		t.looksLike(parseExtJSON({input: '{// comment\n}'}), {});
+		t.looksLike(parseExtJSON({input: "{/* comment */}"}), {});
+		t.looksLike(parseExtJSON({input: "{// comment\n}"}), {});
 
 		// ensure closed block comment
 		t.throws(
 			() => {
-				parseExtJSON({input: 'true /* unclosed comment'});
+				parseExtJSON({input: "true /* unclosed comment"});
 			},
 			descriptions.JSON.UNCLOSED_BLOCK_COMMENT.message.value,
 		);
@@ -123,27 +123,27 @@ test(
 );
 
 test(
-	'numbers',
+	"numbers",
 	(t) => {
-		t.is(parseExtJSON({input: '1'}), 1);
-		t.is(parseExtJSON({input: '12'}), 12);
-		t.is(parseExtJSON({input: '123'}), 123);
-		t.is(parseExtJSON({input: '1.2'}), 1.2);
-		t.is(parseExtJSON({input: '1234.21234'}), 1_234.21234);
-		t.is(parseExtJSON({input: '0.5e+5'}), 50_000);
-		t.is(parseExtJSON({input: '0.5e-5'}), 0.000005);
-		t.is(parseExtJSON({input: '0.5E+5'}), 50_000);
-		t.is(parseExtJSON({input: '0.5E-5'}), 0.000005);
+		t.is(parseExtJSON({input: "1"}), 1);
+		t.is(parseExtJSON({input: "12"}), 12);
+		t.is(parseExtJSON({input: "123"}), 123);
+		t.is(parseExtJSON({input: "1.2"}), 1.2);
+		t.is(parseExtJSON({input: "1234.21234"}), 1_234.21234);
+		t.is(parseExtJSON({input: "0.5e+5"}), 50_000);
+		t.is(parseExtJSON({input: "0.5e-5"}), 0.000005);
+		t.is(parseExtJSON({input: "0.5E+5"}), 50_000);
+		t.is(parseExtJSON({input: "0.5E-5"}), 0.000005);
 	},
 );
 
 test(
-	'strings',
+	"strings",
 	(t) => {
-		t.is(parseExtJSON({input: '"foo"'}), 'foo');
-		t.is(parseExtJSON({input: '"foo\u1234"'}), 'foo\u1234');
-		t.is(parseExtJSON({input: '"foo\\n"'}), 'foo\n');
-		t.is(parseExtJSON({input: '"foo\\t"'}), 'foo\t');
+		t.is(parseExtJSON({input: '"foo"'}), "foo");
+		t.is(parseExtJSON({input: '"foo\u1234"'}), "foo\u1234");
+		t.is(parseExtJSON({input: '"foo\\n"'}), "foo\n");
+		t.is(parseExtJSON({input: '"foo\\t"'}), "foo\t");
 
 		t.throws(
 			() => {
@@ -190,26 +190,26 @@ test(
 );
 
 test(
-	'booleans',
+	"booleans",
 	(t) => {
-		t.is(parseExtJSON({input: 'true'}), true);
-		t.is(parseExtJSON({input: 'false'}), false);
+		t.is(parseExtJSON({input: "true"}), true);
+		t.is(parseExtJSON({input: "false"}), false);
 	},
 );
 
 test(
-	'null',
+	"null",
 	(t) => {
-		t.is(parseExtJSON({input: 'null'}), null);
+		t.is(parseExtJSON({input: "null"}), null);
 	},
 );
 
 test(
-	'undefined',
+	"undefined",
 	(t) => {
 		t.throws(
 			() => {
-				t.is(parseExtJSON({input: 'undefined'}), undefined);
+				t.is(parseExtJSON({input: "undefined"}), undefined);
 			},
 			descriptions.JSON.UNDEFINED_IN_JSON.message.value,
 		);
@@ -217,29 +217,29 @@ test(
 );
 
 test(
-	'arrays',
+	"arrays",
 	(t) => {
-		t.looksLike(parseExtJSON({input: '[]'}), []);
-		t.looksLike(parseExtJSON({input: '[1, 2, 3]'}), [1, 2, 3]);
-		t.looksLike(parseExtJSON({input: '[[1, 2, 3]]'}), [[1, 2, 3]]);
+		t.looksLike(parseExtJSON({input: "[]"}), []);
+		t.looksLike(parseExtJSON({input: "[1, 2, 3]"}), [1, 2, 3]);
+		t.looksLike(parseExtJSON({input: "[[1, 2, 3]]"}), [[1, 2, 3]]);
 
 		t.throws(
 			() => {
-				parseExtJSON({input: '[,]'});
+				parseExtJSON({input: "[,]"});
 			},
 			descriptions.JSON.REDUNDANT_COMMA.message.value,
 		);
 
 		t.throws(
 			() => {
-				parseExtJSON({input: '[1,,]'});
+				parseExtJSON({input: "[1,,]"});
 			},
 			descriptions.JSON.REDUNDANT_COMMA.message.value,
 		);
 
 		t.throws(
 			() => {
-				parseExtJSON({input: '[1, /*comment*/,]'});
+				parseExtJSON({input: "[1, /*comment*/,]"});
 			},
 			descriptions.JSON.REDUNDANT_COMMA.message.value,
 		);
@@ -254,21 +254,21 @@ test(
 );
 
 test(
-	'objects',
+	"objects",
 	(t) => {
-		t.looksLike(parseExtJSON({input: '{}'}), {});
-		t.looksLike(parseExtJSON({input: '{"foo": "bar"}'}), {foo: 'bar'});
+		t.looksLike(parseExtJSON({input: "{}"}), {});
+		t.looksLike(parseExtJSON({input: '{"foo": "bar"}'}), {foo: "bar"});
 		t.looksLike(
 			parseExtJSON({input: '{"foo": "bar", "bar": "foo"}'}),
 			{
-				foo: 'bar',
-				bar: 'foo',
+				foo: "bar",
+				bar: "foo",
 			},
 		);
 
 		t.throws(
 			() => {
-				parseExtJSON({input: '{,}'});
+				parseExtJSON({input: "{,}"});
 			},
 			descriptions.JSON.REDUNDANT_COMMA.message.value,
 		);
@@ -290,7 +290,7 @@ test(
 );
 
 test(
-	'regular JSON',
+	"regular JSON",
 	(t) => {
 		t.throws(
 			() => {
@@ -301,14 +301,14 @@ test(
 
 		t.throws(
 			() => {
-				parseJSON({input: '// foobar\ntrue'});
+				parseJSON({input: "// foobar\ntrue"});
 			},
 			descriptions.JSON.COMMENTS_IN_JSON.message.value,
 		);
 
 		t.throws(
 			() => {
-				parseJSON({input: '/* foobar */\ntrue'});
+				parseJSON({input: "/* foobar */\ntrue"});
 			},
 			descriptions.JSON.COMMENTS_IN_JSON.message.value,
 		);

@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TransformExitResult} from '@romejs/js-compiler';
-import {AnyNode} from '@romejs/js-ast';
+import {TransformExitResult} from "@romejs/js-compiler";
+import {AnyNode} from "@romejs/js-ast";
 
 export default function assertMultipleNodes(
 	result: TransformExitResult,
@@ -15,8 +15,8 @@ export default function assertMultipleNodes(
 		return result;
 	} else if (result === undefined) {
 		return [];
-	} else if (typeof result === 'symbol') {
-		throw new Error('No symbols expected here');
+	} else if (typeof result === "symbol") {
+		throw new Error("No symbols expected here");
 	} else {
 		return [result];
 	}

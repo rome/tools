@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from '@romejs/js-ast';
-import {HydrateData, HydrateTypeFactory} from '../Evaluator';
-import T, {SerialTypeFactory, TypeCompatibilityReturn} from './T';
-import {HumanBuilder} from '../Utils';
-import {Scope} from '../scopes';
-import VoidT from './VoidT';
-import NullT from './NullT';
+import {AnyNode} from "@romejs/js-ast";
+import {HydrateData, HydrateTypeFactory} from "../Evaluator";
+import T, {SerialTypeFactory, TypeCompatibilityReturn} from "./T";
+import {HumanBuilder} from "../Utils";
+import {Scope} from "../scopes";
+import VoidT from "./VoidT";
+import NullT from "./NullT";
 
 export default class MaybeT extends T {
 	constructor(scope: Scope, originNode: undefined | AnyNode, parent: T) {
@@ -19,7 +19,7 @@ export default class MaybeT extends T {
 		this.parent = parent;
 	}
 
-	static type = 'MaybeT';
+	static type = "MaybeT";
 	parent: T;
 
 	serialize(addType: SerialTypeFactory): HydrateData {

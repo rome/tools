@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {testLintMultiple} from '../testHelpers';
+import {test} from "rome";
+import {testLintMultiple} from "../testHelpers";
 
 test(
-	'no children props',
+	"no children props",
 	async (t) => {
 		await testLintMultiple(
 			t,
@@ -22,7 +22,7 @@ test(
 				`React.createElement('div', {}, 'children')`,
 				`React.createElement('div', child1, 'child2')`,
 			],
-			{category: 'lint/noChildrenProp'},
+			{category: "lint/noChildrenProp"},
 		);
 	},
 );

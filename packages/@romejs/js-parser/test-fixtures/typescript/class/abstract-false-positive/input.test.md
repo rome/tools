@@ -9,14 +9,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 88
@@ -30,10 +30,10 @@ Program {
 	}
 	comments: Array [
 		CommentLine {
-			id: '0'
-			value: ' Exports an identifier, doesn\'t try parsing `abstract class`'
+			id: "0"
+			value: " Exports an identifier, doesn't try parsing `abstract class`"
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 62
 					index: 62
@@ -49,9 +49,9 @@ Program {
 	]
 	body: Array [
 		ExportDefaultDeclaration {
-			leadingComments: Array ['0']
+			leadingComments: Array ["0"]
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 24
 					index: 87
@@ -64,11 +64,11 @@ Program {
 				}
 			}
 			declaration: ReferenceIdentifier {
-				name: 'abstract'
+				name: "abstract"
 				leadingComments: undefined
 				loc: Object {
-					filename: 'input.ts'
-					identifierName: 'abstract'
+					filename: "input.ts"
+					identifierName: "abstract"
 					end: Object {
 						column: 23
 						index: 86

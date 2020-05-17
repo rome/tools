@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyComment, AnyNode} from '@romejs/js-ast';
-import {getLinesBetween} from '../node';
+import {AnyComment, AnyNode} from "@romejs/js-ast";
+import {getLinesBetween} from "../node";
 import {
 	Token,
 	comment,
@@ -16,7 +16,7 @@ import {
 	join,
 	lineSuffix,
 	space,
-} from '../tokens';
+} from "../tokens";
 
 export function hasInnerComments(node: AnyNode): boolean {
 	return node.innerComments !== undefined && node.innerComments.length > 0;
@@ -24,12 +24,12 @@ export function hasInnerComments(node: AnyNode): boolean {
 
 export function printComment(node: AnyComment): Token {
 	switch (node.type) {
-		case 'CommentBlock': {
-			const lines = node.value.split('\n');
-			if (lines.every((line) => line.trimStart().charAt(0) === '*')) {
+		case "CommentBlock": {
+			const lines = node.value.split("\n");
+			if (lines.every((line) => line.trimStart().charAt(0) === "*")) {
 				return comment(
 					concat([
-						'/*',
+						"/*",
 						join(
 							hardline,
 							lines.map((line, index) =>
@@ -38,7 +38,7 @@ export function printComment(node: AnyComment): Token {
 									: ` ${index < lines.length - 1 ? line.trim() : line.trimStart()}`
 							),
 						),
-						'*/',
+						"*/",
 					]),
 				);
 			} else {
@@ -46,7 +46,7 @@ export function printComment(node: AnyComment): Token {
 			}
 		}
 
-		case 'CommentLine': {
+		case "CommentLine": {
 			return comment(`//${node.value.trimEnd()}`);
 		}
 	}
@@ -63,7 +63,7 @@ function printCommentSeparator(left: AnyNode, right: AnyNode): Token {
 
 export function printLeadingComment(node: AnyComment, next: AnyNode): Token {
 	const comment = printComment(node);
-	if (node.type === 'CommentLine') {
+	if (node.type === "CommentLine") {
 		return concat([comment, hardline]);
 	} else {
 		return concat([comment, printCommentSeparator(node, next)]);
@@ -76,10 +76,10 @@ export function printTrailingComment(node: AnyComment, previous: AnyNode): Token
 
 	if (linesBetween >= 1) {
 		return lineSuffix(
-			concat([linesBetween > 1 ? hardline : '', hardline, comment]),
+			concat([linesBetween > 1 ? hardline : "", hardline, comment]),
 		);
 	} else {
-		if (node.type === 'CommentBlock') {
+		if (node.type === "CommentBlock") {
 			return ifBreak(
 				lineSuffix(concat([space, comment])),
 				concat([space, comment]),

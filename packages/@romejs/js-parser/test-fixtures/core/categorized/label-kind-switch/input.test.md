@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 1
 			index: 25
@@ -33,7 +33,7 @@ Program {
 		BlockStatement {
 			directives: Array []
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 1
 					index: 25
@@ -48,7 +48,7 @@ Program {
 			body: Array [
 				LabeledStatement {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 3
 							index: 23
@@ -61,10 +61,10 @@ Program {
 						}
 					}
 					label: Identifier {
-						name: 'a'
+						name: "a"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'a'
+							filename: "input.js"
+							identifierName: "a"
 							end: Object {
 								column: 3
 								index: 5
@@ -80,7 +80,7 @@ Program {
 					body: SwitchStatement {
 						cases: Array []
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 3
 								index: 23
@@ -93,10 +93,10 @@ Program {
 							}
 						}
 						discriminant: ReferenceIdentifier {
-							name: 'i'
+							name: "i"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'i'
+								filename: "input.js"
+								identifierName: "i"
 								end: Object {
 									column: 14
 									index: 16

@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyExpression, JSNodeBase} from '../index';
-import {createQuickBuilder} from '../utils';
+import {AnyExpression, JSNodeBase} from "../index";
+import {createQuickBuilder} from "../utils";
 
 export type ReturnStatement = JSNodeBase & {
-	type: 'ReturnStatement';
+	type: "ReturnStatement";
 	argument?: AnyExpression;
 };
 
-export const returnStatement = createQuickBuilder<ReturnStatement, 'argument'>(
-	'ReturnStatement',
-	'argument',
+export const returnStatement = createQuickBuilder<ReturnStatement, "argument">(
+	"ReturnStatement",
+	"argument",
 	{
 		bindingKeys: {},
 		visitorKeys: {

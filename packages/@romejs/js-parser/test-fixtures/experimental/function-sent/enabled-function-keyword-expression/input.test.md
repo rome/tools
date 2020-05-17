@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 44
@@ -30,16 +30,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unexpected token, expected ,'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unexpected token, expected ,"}
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 20
 					index: 38
@@ -56,10 +56,10 @@ Program {
 	body: Array [
 		FunctionDeclaration {
 			id: BindingIdentifier {
-				name: 'foo'
+				name: "foo"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'foo'
+					filename: "input.js"
+					identifierName: "foo"
 					end: Object {
 						column: 13
 						index: 13
@@ -73,7 +73,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 1
 					index: 43
@@ -95,7 +95,7 @@ Program {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 15
 						index: 15
@@ -111,7 +111,7 @@ Program {
 			body: BlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 1
 						index: 43
@@ -126,7 +126,7 @@ Program {
 				body: Array [
 					ExpressionStatement {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 18
 								index: 36
@@ -141,7 +141,7 @@ Program {
 						expression: CallExpression {
 							arguments: Array []
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 18
 									index: 36
@@ -155,7 +155,7 @@ Program {
 							}
 							callee: MetaProperty {
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 16
 										index: 34
@@ -168,10 +168,10 @@ Program {
 									}
 								}
 								meta: Identifier {
-									name: 'function'
+									name: "function"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'function'
+										filename: "input.js"
+										identifierName: "function"
 										end: Object {
 											column: 11
 											index: 29
@@ -185,10 +185,10 @@ Program {
 									}
 								}
 								property: Identifier {
-									name: 'sent'
+									name: "sent"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'sent'
+										filename: "input.js"
+										identifierName: "sent"
 										end: Object {
 											column: 16
 											index: 34
@@ -208,7 +208,7 @@ Program {
 						body: Array []
 						directives: Array []
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 21
 								index: 39
@@ -223,7 +223,7 @@ Program {
 					}
 					ExpressionStatement {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 23
 								index: 41
@@ -236,9 +236,9 @@ Program {
 							}
 						}
 						expression: ReferenceIdentifier {
-							name: 'INVALID_PLACEHOLDER'
+							name: "INVALID_PLACEHOLDER"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 22
 									index: 40

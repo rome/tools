@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Identifier, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {Identifier, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type MetaProperty = JSNodeBase & {
-	type: 'MetaProperty';
+	type: "MetaProperty";
 	meta: Identifier;
 	property: Identifier;
 };
 
 export const metaProperty = createBuilder<MetaProperty>(
-	'MetaProperty',
+	"MetaProperty",
 	{
 		bindingKeys: {},
 		visitorKeys: {

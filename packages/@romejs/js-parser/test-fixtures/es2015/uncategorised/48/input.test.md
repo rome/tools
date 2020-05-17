@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 28
 			index: 28
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 28
 					index: 28
@@ -46,7 +46,7 @@ Program {
 			}
 			expression: ArrowFunctionExpression {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 28
 						index: 28
@@ -65,7 +65,7 @@ Program {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 6
 							index: 6
@@ -79,10 +79,10 @@ Program {
 					}
 					params: Array [
 						BindingIdentifier {
-							name: 'x'
+							name: "x"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'x'
+								filename: "input.js"
+								identifierName: "x"
 								end: Object {
 									column: 2
 									index: 2
@@ -99,7 +99,7 @@ Program {
 				}
 				body: ArrowFunctionExpression {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 27
 							index: 27
@@ -118,7 +118,7 @@ Program {
 						returnType: undefined
 						thisType: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 17
 								index: 17
@@ -132,10 +132,10 @@ Program {
 						}
 						params: Array [
 							BindingIdentifier {
-								name: 'y'
+								name: "y"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'y'
+									filename: "input.js"
+									identifierName: "y"
 									end: Object {
 										column: 10
 										index: 10
@@ -149,10 +149,10 @@ Program {
 								}
 							}
 							BindingIdentifier {
-								name: 'z'
+								name: "z"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'z'
+									filename: "input.js"
+									identifierName: "z"
 									end: Object {
 										column: 13
 										index: 13
@@ -169,7 +169,7 @@ Program {
 					}
 					body: SequenceExpression {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 26
 								index: 26
@@ -183,10 +183,10 @@ Program {
 						}
 						expressions: Array [
 							ReferenceIdentifier {
-								name: 'x'
+								name: "x"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'x'
+									filename: "input.js"
+									identifierName: "x"
 									end: Object {
 										column: 20
 										index: 20
@@ -200,10 +200,10 @@ Program {
 								}
 							}
 							ReferenceIdentifier {
-								name: 'y'
+								name: "y"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'y'
+									filename: "input.js"
+									identifierName: "y"
 									end: Object {
 										column: 23
 										index: 23
@@ -217,10 +217,10 @@ Program {
 								}
 							}
 							ReferenceIdentifier {
-								name: 'z'
+								name: "z"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'z'
+									filename: "input.js"
+									identifierName: "z"
 									end: Object {
 										column: 26
 										index: 26

@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
+	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 117
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 22
 					index: 22
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'const'
+				kind: "const"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 22
 						index: 22
@@ -62,10 +62,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'x'
+							name: "x"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'x'
+								filename: "input.js"
+								identifierName: "x"
 								end: Object {
 									column: 7
 									index: 7
@@ -79,7 +79,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 21
 								index: 21
@@ -93,7 +93,7 @@ Program {
 						}
 						init: MetaProperty {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 21
 									index: 21
@@ -106,10 +106,10 @@ Program {
 								}
 							}
 							meta: Identifier {
-								name: 'import'
+								name: "import"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'import'
+									filename: "input.js"
+									identifierName: "import"
 									end: Object {
 										column: 16
 										index: 16
@@ -123,10 +123,10 @@ Program {
 								}
 							}
 							property: Identifier {
-								name: 'meta'
+								name: "meta"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'meta'
+									filename: "input.js"
+									identifierName: "meta"
 									end: Object {
 										column: 21
 										index: 21
@@ -146,7 +146,7 @@ Program {
 		}
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 28
 					index: 51
@@ -159,9 +159,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'const'
+				kind: "const"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 28
 						index: 51
@@ -176,10 +176,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'url'
+							name: "url"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'url'
+								filename: "input.js"
+								identifierName: "url"
 								end: Object {
 									column: 9
 									index: 32
@@ -193,7 +193,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 27
 								index: 50
@@ -207,7 +207,7 @@ Program {
 						}
 						init: MemberExpression {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 27
 									index: 50
@@ -221,10 +221,10 @@ Program {
 							}
 							property: StaticMemberProperty {
 								value: Identifier {
-									name: 'url'
+									name: "url"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'url'
+										filename: "input.js"
+										identifierName: "url"
 										end: Object {
 											column: 27
 											index: 50
@@ -238,8 +238,8 @@ Program {
 									}
 								}
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'url'
+									filename: "input.js"
+									identifierName: "url"
 									end: Object {
 										column: 27
 										index: 50
@@ -254,7 +254,7 @@ Program {
 							}
 							object: MetaProperty {
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 23
 										index: 46
@@ -267,10 +267,10 @@ Program {
 									}
 								}
 								meta: Identifier {
-									name: 'import'
+									name: "import"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'import'
+										filename: "input.js"
+										identifierName: "import"
 										end: Object {
 											column: 18
 											index: 41
@@ -284,10 +284,10 @@ Program {
 									}
 								}
 								property: Identifier {
-									name: 'meta'
+									name: "meta"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'meta'
+										filename: "input.js"
+										identifierName: "meta"
 										end: Object {
 											column: 23
 											index: 46
@@ -308,7 +308,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 12
 					index: 64
@@ -322,7 +322,7 @@ Program {
 			}
 			expression: MetaProperty {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 11
 						index: 63
@@ -335,10 +335,10 @@ Program {
 					}
 				}
 				meta: Identifier {
-					name: 'import'
+					name: "import"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'import'
+						filename: "input.js"
+						identifierName: "import"
 						end: Object {
 							column: 6
 							index: 58
@@ -352,10 +352,10 @@ Program {
 					}
 				}
 				property: Identifier {
-					name: 'meta'
+					name: "meta"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'meta'
+						filename: "input.js"
+						identifierName: "meta"
 						end: Object {
 							column: 11
 							index: 63
@@ -372,7 +372,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 16
 					index: 81
@@ -386,7 +386,7 @@ Program {
 			}
 			expression: MemberExpression {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 15
 						index: 80
@@ -400,10 +400,10 @@ Program {
 				}
 				property: StaticMemberProperty {
 					value: Identifier {
-						name: 'url'
+						name: "url"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'url'
+							filename: "input.js"
+							identifierName: "url"
 							end: Object {
 								column: 15
 								index: 80
@@ -417,8 +417,8 @@ Program {
 						}
 					}
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'url'
+						filename: "input.js"
+						identifierName: "url"
 						end: Object {
 							column: 15
 							index: 80
@@ -433,7 +433,7 @@ Program {
 				}
 				object: MetaProperty {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 11
 							index: 76
@@ -446,10 +446,10 @@ Program {
 						}
 					}
 					meta: Identifier {
-						name: 'import'
+						name: "import"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'import'
+							filename: "input.js"
+							identifierName: "import"
 							end: Object {
 								column: 6
 								index: 71
@@ -463,10 +463,10 @@ Program {
 						}
 					}
 					property: Identifier {
-						name: 'meta'
+						name: "meta"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'meta'
+							filename: "input.js"
+							identifierName: "meta"
 							end: Object {
 								column: 11
 								index: 76
@@ -484,7 +484,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 34
 					index: 116
@@ -497,9 +497,9 @@ Program {
 				}
 			}
 			expression: AssignmentExpression {
-				operator: '='
+				operator: "="
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 33
 						index: 115
@@ -514,7 +514,7 @@ Program {
 				right: BooleanLiteral {
 					value: true
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 33
 							index: 115
@@ -529,7 +529,7 @@ Program {
 				}
 				left: MemberExpression {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 26
 							index: 108
@@ -543,10 +543,10 @@ Program {
 					}
 					property: StaticMemberProperty {
 						value: Identifier {
-							name: 'couldBeMutable'
+							name: "couldBeMutable"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'couldBeMutable'
+								filename: "input.js"
+								identifierName: "couldBeMutable"
 								end: Object {
 									column: 26
 									index: 108
@@ -560,8 +560,8 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'couldBeMutable'
+							filename: "input.js"
+							identifierName: "couldBeMutable"
 							end: Object {
 								column: 26
 								index: 108
@@ -576,7 +576,7 @@ Program {
 					}
 					object: MetaProperty {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 11
 								index: 93
@@ -589,10 +589,10 @@ Program {
 							}
 						}
 						meta: Identifier {
-							name: 'import'
+							name: "import"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'import'
+								filename: "input.js"
+								identifierName: "import"
 								end: Object {
 									column: 6
 									index: 88
@@ -606,10 +606,10 @@ Program {
 							}
 						}
 						property: Identifier {
-							name: 'meta'
+							name: "meta"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'meta'
+								filename: "input.js"
+								identifierName: "meta"
 								end: Object {
 									column: 11
 									index: 93

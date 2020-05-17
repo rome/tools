@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Master} from '@romejs/core';
-import {Stats} from './MemoryFileSystem';
-import {WorkerContainer} from '../WorkerManager';
-import Locker from '../../common/utils/Locker';
-import {AbsoluteFilePath} from '@romejs/path';
-import {Event} from '@romejs/events';
+import {Master} from "@romejs/core";
+import {Stats} from "./MemoryFileSystem";
+import {WorkerContainer} from "../WorkerManager";
+import Locker from "../../common/utils/Locker";
+import {AbsoluteFilePath} from "@romejs/path";
+import {Event} from "@romejs/events";
 
 export default class FileAllocator {
 	constructor(master: Master) {
@@ -18,7 +18,7 @@ export default class FileAllocator {
 		this.fileToWorker = new Map();
 		this.locker = new Locker();
 		this.evictEvent = new Event({
-			name: 'evict',
+			name: "evict",
 		});
 	}
 
@@ -147,7 +147,7 @@ export default class FileAllocator {
 			// Add on the new size, and remove the old
 			if (oldStats === undefined) {
 				throw new Error(
-					'File already has an owner so expected to have old stats but had none',
+					"File already has an owner so expected to have old stats but had none",
 				);
 			}
 			workerManager.disown(workerId, oldStats);

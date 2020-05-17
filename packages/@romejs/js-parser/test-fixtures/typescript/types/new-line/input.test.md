@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 19
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 4
 					index: 4
@@ -45,10 +45,10 @@ Program {
 				}
 			}
 			expression: ReferenceIdentifier {
-				name: 'type'
+				name: "type"
 				loc: Object {
-					filename: 'input.ts'
-					identifierName: 'type'
+					filename: "input.ts"
+					identifierName: "type"
 					end: Object {
 						column: 4
 						index: 4
@@ -64,7 +64,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 13
 					index: 18
@@ -77,9 +77,9 @@ Program {
 				}
 			}
 			expression: AssignmentExpression {
-				operator: '='
+				operator: "="
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 12
 						index: 17
@@ -92,10 +92,10 @@ Program {
 					}
 				}
 				left: AssignmentIdentifier {
-					name: 'Foo'
+					name: "Foo"
 					loc: Object {
-						filename: 'input.ts'
-						identifierName: 'Foo'
+						filename: "input.ts"
+						identifierName: "Foo"
 						end: Object {
 							column: 3
 							index: 8
@@ -109,10 +109,10 @@ Program {
 					}
 				}
 				right: ReferenceIdentifier {
-					name: 'string'
+					name: "string"
 					loc: Object {
-						filename: 'input.ts'
-						identifierName: 'string'
+						filename: "input.ts"
+						identifierName: "string"
 						end: Object {
 							column: 12
 							index: 17

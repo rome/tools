@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {humanizeNumber, humanizeTime} from '@romejs/string-utils';
-import {Reporter} from '@romejs/cli-reporter';
+import {humanizeNumber, humanizeTime} from "@romejs/string-utils";
+import {Reporter} from "@romejs/cli-reporter";
 import {
 	RemoteReporterClientMessage,
 	ReporterProgressOptions,
 	ReporterStream,
-} from './types';
-import ProgressBase from './ProgressBase';
-import {ansiEscapes, formatAnsi} from '@romejs/string-markup';
+} from "./types";
+import ProgressBase from "./ProgressBase";
+import {ansiEscapes, formatAnsi} from "@romejs/string-markup";
 
 type BoldRanges = Array<[number, number]>;
 
@@ -71,34 +71,34 @@ export default class Progress extends ProgressBase {
 
 	processRemoteClientMessage(msg: RemoteReporterClientMessage) {
 		switch (msg.type) {
-			case 'PROGRESS_SET_CURRENT':
+			case "PROGRESS_SET_CURRENT":
 				return this.setCurrent(msg.current);
 
-			case 'PROGRESS_SET_TOTAL':
+			case "PROGRESS_SET_TOTAL":
 				return this.setTotal(msg.total, msg.approximate);
 
-			case 'PROGRESS_SET_TEXT':
+			case "PROGRESS_SET_TEXT":
 				return this.setText(msg.text);
 
-			case 'PROGRESS_PUSH_TEXT':
+			case "PROGRESS_PUSH_TEXT":
 				return this.pushText(msg.text);
 
-			case 'PROGRESS_POP_TEXT':
+			case "PROGRESS_POP_TEXT":
 				return this.popText(msg.text);
 
-			case 'PROGRESS_SET_APPROXIMATE_ETA':
+			case "PROGRESS_SET_APPROXIMATE_ETA":
 				return this.setApproximateETA(msg.duration);
 
-			case 'PROGRESS_TICK':
+			case "PROGRESS_TICK":
 				return this.tick();
 
-			case 'PROGRESS_END':
+			case "PROGRESS_END":
 				return this.end();
 
-			case 'PROGRESS_RESUME':
+			case "PROGRESS_RESUME":
 				return this.resume();
 
-			case 'PROGRESS_PAUSE':
+			case "PROGRESS_PAUSE":
 				return this.pause();
 		}
 	}
@@ -250,7 +250,7 @@ export default class Progress extends ProgressBase {
 	}
 
 	splitCharacters(str: string, boldRanges: BoldRanges): SplitBar {
-		return str.split('').map((char, i) => {
+		return str.split("").map((char, i) => {
 			if (this.isBoldCharacter(i, boldRanges)) {
 				return [i, formatAnsi.bold(char)];
 			} else {
@@ -261,7 +261,7 @@ export default class Progress extends ProgressBase {
 
 	buildProgressBouncer(stream: ReporterStream, bar: SplitBar): string {
 		let start = this.getBouncerPosition(stream);
-		let fullBar = '';
+		let fullBar = "";
 		for (const [i, char] of bar) {
 			const isBounce = i >= start && i < start + BOUNCER_WIDTH;
 
@@ -282,7 +282,7 @@ export default class Progress extends ProgressBase {
 		const ratio = Math.min(Math.max(this.current / total, 0), 1);
 
 		const completeLength = Math.round(stream.columns * ratio);
-		let fullBar = '';
+		let fullBar = "";
 		for (const [i, char] of bar) {
 			if (i < completeLength) {
 				if (this.paused) {
@@ -304,7 +304,7 @@ export default class Progress extends ProgressBase {
 		const boldRanges: BoldRanges = [];
 
 		// Text to prefix to the bar
-		let prefix = '';
+		let prefix = "";
 		if (title !== undefined) {
 			prefix += title;
 
@@ -316,13 +316,13 @@ export default class Progress extends ProgressBase {
 		if (text !== undefined) {
 			// Separate a title and it's text with a colon
 			if (title !== undefined) {
-				prefix += ': ';
+				prefix += ": ";
 			}
 			prefix += text;
 		}
 
 		// Text to put at the end of the bar
-		let suffix = '';
+		let suffix = "";
 
 		// Total time since the progress bar was created
 		const elapsed = this.getElapsedTime();
@@ -359,9 +359,9 @@ export default class Progress extends ProgressBase {
 			// Counter eg: 5/100
 			suffix += `${humanizeNumber(current)}`;
 			if (total !== undefined) {
-				suffix += '/';
+				suffix += "/";
 				if (this.approximateTotal) {
-					suffix += '~';
+					suffix += "~";
 				}
 				suffix += humanizeNumber(total);
 			}
@@ -372,7 +372,7 @@ export default class Progress extends ProgressBase {
 
 		// The amount of spaces to put between the title and counter
 		const spacerLength = Math.max(0, width - prefix.length - suffix.length);
-		const spacer = ' '.repeat(spacerLength);
+		const spacer = " ".repeat(spacerLength);
 
 		// Trim the prefix if it will overflow
 		prefix = prefix.slice(0, width - spacerLength - suffix.length);
@@ -404,7 +404,7 @@ export default class Progress extends ProgressBase {
 		this.lastRenderTime = Date.now();
 
 		for (const stream of this.reporter.getStreams(false)) {
-			if (stream.format === 'ansi') {
+			if (stream.format === "ansi") {
 				stream.write(ansiEscapes.cursorTo(0));
 				stream.write(this.buildBar(stream));
 			}

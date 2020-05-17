@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 9
 			index: 9
@@ -30,16 +30,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/regex'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Quantifier minimum is greater than maximum'}
+				category: "parse/regex"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Quantifier minimum is greater than maximum"}
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 6
 					index: 6
@@ -56,7 +56,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 9
 					index: 9
@@ -76,7 +76,7 @@ Program {
 				sticky: false
 				unicode: false
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 8
 						index: 8
@@ -90,7 +90,7 @@ Program {
 				}
 				expression: RegExpSubExpression {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 6
 							index: 7
@@ -108,7 +108,7 @@ Program {
 							max: 2
 							min: 1
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 6
 									index: 6
@@ -121,9 +121,9 @@ Program {
 								}
 							}
 							target: RegExpCharacter {
-								value: 'a'
+								value: "a"
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 2
 										index: 2

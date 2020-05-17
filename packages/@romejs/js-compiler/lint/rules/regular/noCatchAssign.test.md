@@ -107,7 +107,7 @@ try {
 ```
 try {
 } catch (ex) {
-	console.log('test');
+	console.log("test");
 	ex = 10;
 }
 
@@ -169,7 +169,7 @@ try {
 ```
 try {
 } catch ({message, name}) {
-	message = 'test';
+	message = "test";
 	name = 10;
 }
 

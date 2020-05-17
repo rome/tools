@@ -10,18 +10,18 @@ import {
 	BindingObjectPatternProperty,
 	JSNodeBase,
 	PatternMeta,
-} from '../index';
-import {createBuilder} from '../utils';
+} from "../index";
+import {createBuilder} from "../utils";
 
 export type BindingObjectPattern = JSNodeBase & {
 	meta?: PatternMeta;
-	type: 'BindingObjectPattern';
+	type: "BindingObjectPattern";
 	properties: Array<BindingObjectPatternProperty>;
 	rest: undefined | BindingIdentifier;
 };
 
 export const bindingObjectPattern = createBuilder<BindingObjectPattern>(
-	'BindingObjectPattern',
+	"BindingObjectPattern",
 	{
 		bindingKeys: {
 			properties: true,

@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 101
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		ClassDeclaration {
 			id: BindingIdentifier {
-				name: 'C'
+				name: "C"
 				loc: Object {
-					filename: 'input.ts'
-					identifierName: 'C'
+					filename: "input.ts"
+					identifierName: "C"
 					end: Object {
 						column: 7
 						index: 7
@@ -49,7 +49,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 1
 					index: 100
@@ -67,7 +67,7 @@ Program {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 1
 						index: 100
@@ -81,13 +81,13 @@ Program {
 				}
 				body: Array [
 					TSDeclareMethod {
-						kind: 'method'
+						kind: "method"
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'f'
+								name: "f"
 								loc: Object {
-									filename: 'input.ts'
-									identifierName: 'f'
+									filename: "input.ts"
+									identifierName: "f"
 									end: Object {
 										column: 12
 										index: 22
@@ -101,7 +101,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 12
 									index: 22
@@ -116,7 +116,7 @@ Program {
 						}
 						body: undefined
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 15
 								index: 25
@@ -138,7 +138,7 @@ Program {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 14
 									index: 24
@@ -164,7 +164,7 @@ Program {
 								line: 2
 							}
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 12
 									index: 22
@@ -179,13 +179,13 @@ Program {
 						}
 					}
 					TSDeclareMethod {
-						kind: 'method'
+						kind: "method"
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'f'
+								name: "f"
 								loc: Object {
-									filename: 'input.ts'
-									identifierName: 'f'
+									filename: "input.ts"
+									identifierName: "f"
 									end: Object {
 										column: 19
 										index: 45
@@ -199,7 +199,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 19
 									index: 45
@@ -214,7 +214,7 @@ Program {
 						}
 						body: undefined
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 22
 								index: 48
@@ -236,7 +236,7 @@ Program {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 21
 									index: 47
@@ -251,7 +251,7 @@ Program {
 						}
 						meta: ClassPropertyMeta {
 							abstract: false
-							accessibility: 'public'
+							accessibility: "public"
 							optional: false
 							readonly: false
 							static: true
@@ -262,7 +262,7 @@ Program {
 								line: 3
 							}
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 19
 									index: 45
@@ -277,13 +277,13 @@ Program {
 						}
 					}
 					TSDeclareMethod {
-						kind: 'method'
+						kind: "method"
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'f'
+								name: "f"
 								loc: Object {
-									filename: 'input.ts'
-									identifierName: 'f'
+									filename: "input.ts"
+									identifierName: "f"
 									end: Object {
 										column: 22
 										index: 71
@@ -297,7 +297,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 22
 									index: 71
@@ -312,7 +312,7 @@ Program {
 						}
 						body: undefined
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 25
 								index: 74
@@ -334,7 +334,7 @@ Program {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 24
 									index: 73
@@ -349,7 +349,7 @@ Program {
 						}
 						meta: ClassPropertyMeta {
 							abstract: false
-							accessibility: 'protected'
+							accessibility: "protected"
 							optional: false
 							readonly: false
 							static: true
@@ -360,7 +360,7 @@ Program {
 								line: 4
 							}
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 22
 									index: 71
@@ -375,13 +375,13 @@ Program {
 						}
 					}
 					TSDeclareMethod {
-						kind: 'method'
+						kind: "method"
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'f'
+								name: "f"
 								loc: Object {
-									filename: 'input.ts'
-									identifierName: 'f'
+									filename: "input.ts"
+									identifierName: "f"
 									end: Object {
 										column: 20
 										index: 95
@@ -395,7 +395,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 20
 									index: 95
@@ -410,7 +410,7 @@ Program {
 						}
 						body: undefined
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 23
 								index: 98
@@ -432,7 +432,7 @@ Program {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 22
 									index: 97
@@ -447,7 +447,7 @@ Program {
 						}
 						meta: ClassPropertyMeta {
 							abstract: false
-							accessibility: 'private'
+							accessibility: "private"
 							optional: false
 							readonly: false
 							static: true
@@ -458,7 +458,7 @@ Program {
 								line: 5
 							}
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 20
 									index: 95

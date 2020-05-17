@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 57
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		FunctionDeclaration {
 			id: BindingIdentifier {
-				name: 'foo'
+				name: "foo"
 				loc: Object {
-					filename: 'input.ts'
-					identifierName: 'foo'
+					filename: "input.ts"
+					identifierName: "foo"
 					end: Object {
 						column: 12
 						index: 12
@@ -49,7 +49,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 56
 					index: 56
@@ -65,7 +65,7 @@ Program {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 56
 						index: 56
@@ -87,7 +87,7 @@ Program {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 53
 						index: 53
@@ -100,10 +100,10 @@ Program {
 					}
 				}
 				rest: BindingIdentifier {
-					name: 'args'
+					name: "args"
 					loc: Object {
-						filename: 'input.ts'
-						identifierName: 'args'
+						filename: "input.ts"
+						identifierName: "args"
 						end: Object {
 							column: 20
 							index: 20
@@ -118,7 +118,7 @@ Program {
 					meta: PatternMeta {
 						optional: undefined
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 52
 								index: 52
@@ -132,7 +132,7 @@ Program {
 						}
 						typeAnnotation: TSTupleType {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 52
 									index: 52
@@ -146,7 +146,7 @@ Program {
 							}
 							rest: TSArrayType {
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 51
 										index: 51
@@ -160,7 +160,7 @@ Program {
 								}
 								elementType: NumberKeywordTypeAnnotation {
 									loc: Object {
-										filename: 'input.ts'
+										filename: "input.ts"
 										end: Object {
 											column: 49
 											index: 49
@@ -177,7 +177,7 @@ Program {
 							elementTypes: Array [
 								NumberKeywordTypeAnnotation {
 									loc: Object {
-										filename: 'input.ts'
+										filename: "input.ts"
 										end: Object {
 											column: 29
 											index: 29
@@ -192,7 +192,7 @@ Program {
 								}
 								TSOptionalType {
 									loc: Object {
-										filename: 'input.ts'
+										filename: "input.ts"
 										end: Object {
 											column: 38
 											index: 38
@@ -206,7 +206,7 @@ Program {
 									}
 									typeAnnotation: StringKeywordTypeAnnotation {
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 37
 												index: 37

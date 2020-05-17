@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import data from './data';
+import data from "./data";
 
 type License = {
 	reference: string;
@@ -28,11 +28,11 @@ for (const license of data.licenses) {
 
 export {licenseNames};
 
-export {ExpressionNode as SPDXExpressionNode} from './parse';
+export {ExpressionNode as SPDXExpressionNode} from "./parse";
 
 export function getSPDXLicense(licenseId: string): undefined | License {
 	return idToLicense.get(licenseId);
 }
 
-export {default as parseSPDXLicense} from './parse';
-export {default as stringifySPDXLicense} from './stringify';
+export {default as parseSPDXLicense} from "./parse";
+export {default as stringifySPDXLicense} from "./stringify";

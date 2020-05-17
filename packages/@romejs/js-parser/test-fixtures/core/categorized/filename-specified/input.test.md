@@ -9,14 +9,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 100
@@ -30,10 +30,10 @@ Program {
 	}
 	comments: Array [
 		CommentLine {
-			id: '0'
-			value: ' This comment should have a filename prop attached to loc'
+			id: "0"
+			value: " This comment should have a filename prop attached to loc"
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 59
 					index: 59
@@ -49,9 +49,9 @@ Program {
 	]
 	body: Array [
 		VariableDeclarationStatement {
-			leadingComments: Array ['0']
+			leadingComments: Array ["0"]
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 39
 					index: 99
@@ -64,10 +64,10 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'var'
+				kind: "var"
 				leadingComments: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 39
 						index: 99
@@ -82,11 +82,11 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'node'
+							name: "node"
 							leadingComments: undefined
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'node'
+								filename: "input.js"
+								identifierName: "node"
 								end: Object {
 									column: 8
 									index: 68
@@ -101,7 +101,7 @@ Program {
 						}
 						leadingComments: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 38
 								index: 98
@@ -114,9 +114,9 @@ Program {
 							}
 						}
 						init: StringLiteral {
-							value: 'shouldHaveFilenameLocProp'
+							value: "shouldHaveFilenameLocProp"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 38
 									index: 98

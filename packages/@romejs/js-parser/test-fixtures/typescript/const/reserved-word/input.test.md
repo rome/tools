@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 15
 			index: 15
@@ -30,16 +30,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unknown TS non array type start'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unknown TS non array type start"}
 			}
 			location: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				mtime: undefined
-				sourceType: 'module'
+				sourceType: "module"
 				end: Object {
 					column: 8
 					index: 8
@@ -56,7 +56,7 @@ Program {
 	body: Array [
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 15
 					index: 15
@@ -69,9 +69,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'const'
+				kind: "const"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 15
 						index: 15
@@ -86,9 +86,9 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'b'
+							name: "b"
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 14
 									index: 14
@@ -103,7 +103,7 @@ Program {
 							meta: PatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 14
 										index: 14
@@ -117,7 +117,7 @@ Program {
 								}
 								typeAnnotation: TSTypeReference {
 									loc: Object {
-										filename: 'input.ts'
+										filename: "input.ts"
 										end: Object {
 											column: 14
 											index: 14
@@ -130,9 +130,9 @@ Program {
 										}
 									}
 									typeName: ReferenceIdentifier {
-										name: 'INVALID_PLACEHOLDER'
+										name: "INVALID_PLACEHOLDER"
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 14
 												index: 14
@@ -150,7 +150,7 @@ Program {
 						}
 						init: undefined
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 14
 								index: 14

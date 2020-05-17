@@ -9,14 +9,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 255
@@ -30,10 +30,10 @@ Program {
 	}
 	comments: Array [
 		CommentLine {
-			id: '0'
-			value: ' `export abstract class {}` is not valid TypeScript.'
+			id: "0"
+			value: " `export abstract class {}` is not valid TypeScript."
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 54
 					index: 132
@@ -47,10 +47,10 @@ Program {
 			}
 		}
 		CommentLine {
-			id: '1'
-			value: ' `abstract class` is not valid as an expression.'
+			id: "1"
+			value: " `abstract class` is not valid as an expression."
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 50
 					index: 254
@@ -67,10 +67,10 @@ Program {
 	body: Array [
 		ClassDeclaration {
 			id: BindingIdentifier {
-				name: 'C1'
+				name: "C1"
 				loc: Object {
-					filename: 'input.ts'
-					identifierName: 'C1'
+					filename: "input.ts"
+					identifierName: "C1"
 					end: Object {
 						column: 17
 						index: 17
@@ -85,7 +85,7 @@ Program {
 			}
 			abstract: true
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 20
 					index: 20
@@ -104,7 +104,7 @@ Program {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 20
 						index: 20
@@ -120,10 +120,10 @@ Program {
 		}
 		ClassDeclaration {
 			id: BindingIdentifier {
-				name: 'C2'
+				name: "C2"
 				loc: Object {
-					filename: 'input.ts'
-					identifierName: 'C2'
+					filename: "input.ts"
+					identifierName: "C2"
 					end: Object {
 						column: 25
 						index: 46
@@ -139,7 +139,7 @@ Program {
 			abstract: true
 			declare: true
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 28
 					index: 49
@@ -158,7 +158,7 @@ Program {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 28
 						index: 49
@@ -173,11 +173,11 @@ Program {
 			}
 		}
 		ExportLocalDeclaration {
-			exportKind: 'value'
+			exportKind: "value"
 			specifiers: undefined
-			trailingComments: Array ['0']
+			trailingComments: Array ["0"]
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 27
 					index: 77
@@ -191,10 +191,10 @@ Program {
 			}
 			declaration: ClassDeclaration {
 				id: BindingIdentifier {
-					name: 'C3'
+					name: "C3"
 					loc: Object {
-						filename: 'input.ts'
-						identifierName: 'C3'
+						filename: "input.ts"
+						identifierName: "C3"
 						end: Object {
 							column: 24
 							index: 74
@@ -208,9 +208,9 @@ Program {
 					}
 				}
 				abstract: true
-				trailingComments: Array ['0']
+				trailingComments: Array ["0"]
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 27
 						index: 77
@@ -230,7 +230,7 @@ Program {
 					trailingComments: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 27
 							index: 77
@@ -246,9 +246,9 @@ Program {
 			}
 		}
 		ExportDefaultDeclaration {
-			leadingComments: Array ['0']
+			leadingComments: Array ["0"]
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 33
 					index: 166
@@ -262,9 +262,9 @@ Program {
 			}
 			declaration: ClassDeclaration {
 				id: BindingIdentifier {
-					name: '*default*'
+					name: "*default*"
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 33
 							index: 166
@@ -278,9 +278,9 @@ Program {
 					}
 				}
 				abstract: true
-				leadingComments: Array ['0']
+				leadingComments: Array ["0"]
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 33
 						index: 166
@@ -300,7 +300,7 @@ Program {
 					superTypeParameters: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 33
 							index: 166
@@ -316,9 +316,9 @@ Program {
 			}
 		}
 		ExportDefaultDeclaration {
-			trailingComments: Array ['1']
+			trailingComments: Array ["1"]
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 36
 					index: 203
@@ -332,10 +332,10 @@ Program {
 			}
 			declaration: ClassDeclaration {
 				id: BindingIdentifier {
-					name: 'C4'
+					name: "C4"
 					loc: Object {
-						filename: 'input.ts'
-						identifierName: 'C4'
+						filename: "input.ts"
+						identifierName: "C4"
 						end: Object {
 							column: 32
 							index: 199
@@ -349,9 +349,9 @@ Program {
 					}
 				}
 				abstract: true
-				trailingComments: Array ['1']
+				trailingComments: Array ["1"]
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 36
 						index: 203
@@ -371,7 +371,7 @@ Program {
 					trailingComments: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 36
 							index: 203

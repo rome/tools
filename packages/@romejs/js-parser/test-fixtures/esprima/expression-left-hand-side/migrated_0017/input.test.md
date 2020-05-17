@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 42
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 41
 					index: 41
@@ -46,7 +46,7 @@ Program {
 			}
 			expression: MemberExpression {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 41
 						index: 41
@@ -60,10 +60,10 @@ Program {
 				}
 				property: StaticMemberProperty {
 					value: Identifier {
-						name: 'milkyway'
+						name: "milkyway"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'milkyway'
+							filename: "input.js"
+							identifierName: "milkyway"
 							end: Object {
 								column: 41
 								index: 41
@@ -77,8 +77,8 @@ Program {
 						}
 					}
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'milkyway'
+						filename: "input.js"
+						identifierName: "milkyway"
 						end: Object {
 							column: 41
 							index: 41
@@ -93,7 +93,7 @@ Program {
 				}
 				object: CallExpression {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 32
 							index: 32
@@ -110,7 +110,7 @@ Program {
 							value: 14
 							format: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 24
 									index: 24
@@ -127,7 +127,7 @@ Program {
 							value: 3
 							format: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 27
 									index: 27
@@ -144,7 +144,7 @@ Program {
 							value: 77
 							format: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 31
 									index: 31
@@ -160,7 +160,7 @@ Program {
 					]
 					callee: MemberExpression {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 21
 								index: 21
@@ -174,10 +174,10 @@ Program {
 						}
 						property: StaticMemberProperty {
 							value: Identifier {
-								name: 'galaxies'
+								name: "galaxies"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'galaxies'
+									filename: "input.js"
+									identifierName: "galaxies"
 									end: Object {
 										column: 21
 										index: 21
@@ -191,8 +191,8 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'galaxies'
+								filename: "input.js"
+								identifierName: "galaxies"
 								end: Object {
 									column: 21
 									index: 21
@@ -207,7 +207,7 @@ Program {
 						}
 						object: CallExpression {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 12
 									index: 12
@@ -220,10 +220,10 @@ Program {
 								}
 							}
 							callee: ReferenceIdentifier {
-								name: 'universe'
+								name: "universe"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'universe'
+									filename: "input.js"
+									identifierName: "universe"
 									end: Object {
 										column: 8
 										index: 8
@@ -241,7 +241,7 @@ Program {
 									value: 42
 									format: undefined
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 11
 											index: 11

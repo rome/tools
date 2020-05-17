@@ -9,9 +9,9 @@ import {
 	AnyNode,
 	RegExpStartCharacter,
 	regExpStartCharacter,
-} from '@romejs/js-ast';
+} from "@romejs/js-ast";
 
 export default function RegExpStartCharacter(node: AnyNode) {
 	node = regExpStartCharacter.assert(node);
-	throw new Error('unimplemented');
+	throw new Error("unimplemented");
 }

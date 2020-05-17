@@ -5,22 +5,22 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Position} from '@romejs/parser-core';
+import {Position} from "@romejs/parser-core";
 import {
 	DiagnosticAdviceAction,
 	DiagnosticCategory,
 	DiagnosticDescriptionOptionalCategory,
 	DiagnosticLocation,
 	descriptions,
-} from '@romejs/diagnostics';
+} from "@romejs/diagnostics";
 import {
 	LintCompilerOptionsDecision,
 	LintCompilerOptionsDecisionAction,
-} from '../types';
-import {ob1Get0, ob1Get1} from '@romejs/ob1';
-import {AbsoluteFilePath} from '@romejs/path';
-import {LinterCompilerOptionsPerFile} from '@romejs/core/master/linter/Linter';
-import {escapeSplit} from '@romejs/string-utils';
+} from "../types";
+import {ob1Get0, ob1Get1} from "@romejs/ob1";
+import {AbsoluteFilePath} from "@romejs/path";
+import {LinterCompilerOptionsPerFile} from "@romejs/core/master/linter/Linter";
+import {escapeSplit} from "@romejs/string-utils";
 
 type UnexpectedDecision = (
 	description: DiagnosticDescriptionOptionalCategory,
@@ -30,7 +30,7 @@ function validateAction(
 	raw: string,
 	unexpected: UnexpectedDecision,
 ): undefined | LintCompilerOptionsDecisionAction {
-	if (raw === 'fix' || raw === 'suppress' || raw === 'ignore') {
+	if (raw === "fix" || raw === "suppress" || raw === "ignore") {
 		return raw;
 	} else {
 		unexpected(descriptions.LINT_COMMAND.INVALID_DECISION_ACTION(raw));
@@ -51,7 +51,7 @@ export function deriveDecisionPositionKey(
 		return undefined;
 	}
 
-	if (action === 'suppress') {
+	if (action === "suppress") {
 		return `${ob1Get1(start.line)}`;
 	} else {
 		return `${ob1Get1(start.line)}:${ob1Get0(start.column)}`;
@@ -125,9 +125,9 @@ export function parseDecisionStrings(
 
 	for (let i = 0; i < decisions.length; i++) {
 		const segment = decisions[i];
-		const parts = escapeSplit(segment, '-');
+		const parts = escapeSplit(segment, "-");
 
-		if (parts[0] === 'global') {
+		if (parts[0] === "global") {
 			parseGlobalDecision(parts.slice(1), i);
 		} else {
 			parseLineDecision(parts, i);
@@ -138,7 +138,7 @@ export function parseDecisionStrings(
 }
 
 function escapeFilename(filename: string): string {
-	return filename.replace(/-/, '\\-');
+	return filename.replace(/-/, "\\-");
 }
 
 export function buildLintDecisionGlobalString(
@@ -172,7 +172,7 @@ export function buildLintDecisionString(
 		parts.push(String(id));
 	}
 
-	return parts.join('-');
+	return parts.join("-");
 }
 
 export function buildLintDecisionAdviceAction(
@@ -193,10 +193,10 @@ export function buildLintDecisionAdviceAction(
 	},
 ): DiagnosticAdviceAction {
 	return {
-		type: 'action',
+		type: "action",
 		extra,
 		hidden: true,
-		command: 'lint',
+		command: "lint",
 		shortcut,
 		args: filename === undefined ? [] : [escapeFilename(filename)],
 		noun,

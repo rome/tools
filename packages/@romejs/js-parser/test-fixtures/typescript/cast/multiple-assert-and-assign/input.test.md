@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 26
 			index: 26
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 26
 					index: 26
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			expression: AssignmentExpression {
-				operator: '='
+				operator: "="
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 25
 						index: 25
@@ -63,7 +63,7 @@ Program {
 					value: 42
 					format: undefined
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 25
 							index: 25
@@ -78,7 +78,7 @@ Program {
 				}
 				left: TSAssignmentAsExpression {
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 19
 							index: 19
@@ -92,7 +92,7 @@ Program {
 					}
 					typeAnnotation: AnyKeywordTypeAnnotation {
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 19
 								index: 19
@@ -107,7 +107,7 @@ Program {
 					}
 					expression: TSAssignmentAsExpression {
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 12
 								index: 12
@@ -121,7 +121,7 @@ Program {
 						}
 						typeAnnotation: NumberKeywordTypeAnnotation {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 12
 									index: 12
@@ -135,10 +135,10 @@ Program {
 							}
 						}
 						expression: AssignmentIdentifier {
-							name: 'a'
+							name: "a"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'a'
+								filename: "input.ts"
+								identifierName: "a"
 								end: Object {
 									column: 2
 									index: 2

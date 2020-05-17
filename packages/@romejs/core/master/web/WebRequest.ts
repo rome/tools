@@ -5,27 +5,27 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Master, MasterRequest, WebBridge} from '@romejs/core';
+import {Master, MasterRequest, WebBridge} from "@romejs/core";
 import {
 	deriveDiagnosticFromError,
 	getDiagnosticsFromError,
-} from '@romejs/diagnostics';
-import {dedent, removePrefix, removeSuffix} from '@romejs/string-utils';
-import Bundler from '../bundler/Bundler';
-import {WebSocketInterface, createKey} from '@romejs/codec-websocket';
-import {Reporter} from '@romejs/cli-reporter';
-import {createBridgeFromWebSocketInterface} from '@romejs/events';
-import {createUnknownFilePath} from '@romejs/path';
-import {WebServer} from './index';
-import {ProjectDefinition} from '@romejs/project';
-import {HmrClientMessage} from './hmr';
-import {ConsumableUrl, consumeUrl} from '@romejs/codec-url';
-import http = require('http');
+} from "@romejs/diagnostics";
+import {dedent, removePrefix, removeSuffix} from "@romejs/string-utils";
+import Bundler from "../bundler/Bundler";
+import {WebSocketInterface, createKey} from "@romejs/codec-websocket";
+import {Reporter} from "@romejs/cli-reporter";
+import {createBridgeFromWebSocketInterface} from "@romejs/events";
+import {createUnknownFilePath} from "@romejs/path";
+import {WebServer} from "./index";
+import {ProjectDefinition} from "@romejs/project";
+import {HmrClientMessage} from "./hmr";
+import {ConsumableUrl, consumeUrl} from "@romejs/codec-url";
+import http = require("http");
 
 const waitForever = new Promise(() => {});
 
 export function stripBundleSuffix(pathname: string): string {
-	return removePrefix(removeSuffix(pathname, '.bundle'), '/');
+	return removePrefix(removeSuffix(pathname, ".bundle"), "/");
 }
 
 export default class WebRequest {
@@ -43,7 +43,7 @@ export default class WebRequest {
 
 		const reqUrl = req.url;
 		if (reqUrl === undefined) {
-			throw new Error('req.url should not be undefined');
+			throw new Error("req.url should not be undefined");
 		}
 		this.url = consumeUrl(reqUrl);
 	}
@@ -61,19 +61,19 @@ export default class WebRequest {
 	loadRawBody(): Promise<string> {
 		const {req} = this;
 
-		req.setEncoding('utf8');
-		let rawBody = '';
+		req.setEncoding("utf8");
+		let rawBody = "";
 
 		return new Promise((resolve) => {
 			req.on(
-				'data',
+				"data",
 				(chunk) => {
 					rawBody += chunk;
 				},
 			);
 
 			req.on(
-				'end',
+				"end",
 				() => {
 					resolve(rawBody);
 				},
@@ -89,7 +89,7 @@ export default class WebRequest {
 			await this.dispatchWithBody(rawBody);
 			res.end();
 		} catch (err) {
-			res.writeHead(500, {'Content-Type': 'text/plain'});
+			res.writeHead(500, {"Content-Type": "text/plain"});
 
 			let diagnostics = getDiagnosticsFromError(err);
 			if (diagnostics === undefined) {
@@ -98,7 +98,7 @@ export default class WebRequest {
 						err,
 						{
 							description: {
-								category: 'internalError/httpServer',
+								category: "internalError/httpServer",
 							},
 						},
 					),
@@ -111,7 +111,7 @@ export default class WebRequest {
 					this.master.createDiagnosticsProcessor({
 						origins: [
 							{
-								category: 'WebRequest',
+								category: "WebRequest",
 							},
 						],
 					}),
@@ -119,11 +119,11 @@ export default class WebRequest {
 				printer.processor.addDiagnostics(diagnostics);
 				await printer.print();
 			} catch (err) {
-				this.reporter.warn('Failed trying to print diagnostics');
+				this.reporter.warn("Failed trying to print diagnostics");
 				this.reporter.error(err.stack);
 			}
 
-			res.end('Diagnostics available, see console');
+			res.end("Diagnostics available, see console");
 		}
 	}
 
@@ -133,19 +133,19 @@ export default class WebRequest {
 		body;
 
 		switch (pathname) {
-			case '/favicon.ico': {
-				res.end('');
+			case "/favicon.ico": {
+				res.end("");
 				break;
 			}
 
-			case '/__rome__/websocket':
+			case "/__rome__/websocket":
 				return this.handleFrontendWebsocket();
 
-			case '/__rome__/script.js':
+			case "/__rome__/script.js":
 				return this.handleFrontendScript();
 
-			case '/__rome__': {
-				res.writeHead(200, {'Content-Type': 'text/html'});
+			case "/__rome__": {
+				res.writeHead(200, {"Content-Type": "text/html"});
 				res.end(
 					dedent`
             <!doctype html>
@@ -165,7 +165,7 @@ export default class WebRequest {
 				break;
 			}
 
-			case '/hot':
+			case "/hot":
 				return this.handleDeviceWebsocket();
 
 			default:
@@ -177,7 +177,7 @@ export default class WebRequest {
 		const {req, res} = this;
 
 		// Check for *.bundle
-		if (pathname.endsWith('.bundle')) {
+		if (pathname.endsWith(".bundle")) {
 			const handled = await this.handleBundleRequest();
 			if (handled) {
 				return;
@@ -195,7 +195,7 @@ export default class WebRequest {
 
 		this.reporter.error(`Unknown request for`, req.url);
 		res.writeHead(404);
-		res.end('Not found');
+		res.end("Not found");
 	}
 
 	async handlePossibleStatic(
@@ -219,7 +219,7 @@ export default class WebRequest {
 
 	async handleFrontendScript() {
 		const {res} = this;
-		res.writeHead(200, {'Content-Type': 'application/javascript'});
+		res.writeHead(200, {"Content-Type": "application/javascript"});
 
 		const bundler = new Bundler(
 			this.masterRequest,
@@ -227,13 +227,13 @@ export default class WebRequest {
 				inlineSourceMap: false,
 				cwd: this.masterRequest.client.flags.cwd,
 				resolver: {
-					platform: 'web',
+					platform: "web",
 				},
 			},
 		);
 		const resolved = await this.master.resolver.resolveEntryAssertPath({
 			origin: this.masterRequest.client.flags.cwd,
-			source: createUnknownFilePath('@romejs-web/frontend'),
+			source: createUnknownFilePath("@romejs-web/frontend"),
 		});
 		const bundle = await bundler.bundle(resolved);
 		res.end(bundle.entry.js);
@@ -242,19 +242,19 @@ export default class WebRequest {
 	negotiateWebsocket() {
 		const {req} = this;
 
-		const digest = createKey(String(req.headers['sec-websocket-key']));
+		const digest = createKey(String(req.headers["sec-websocket-key"]));
 
 		const headers = [
-			'HTTP/1.1 101 Switching Protocols',
-			'Upgrade: websocket',
-			'Connection: Upgrade',
-			'Sec-WebSocket-Protocol: rome',
+			"HTTP/1.1 101 Switching Protocols",
+			"Upgrade: websocket",
+			"Connection: Upgrade",
+			"Sec-WebSocket-Protocol: rome",
 			`Sec-WebSocket-Accept: ${digest}`,
-			'',
-			'',
+			"",
+			"",
 		];
 
-		req.socket.write(headers.join('\r\n'));
+		req.socket.write(headers.join("\r\n"));
 	}
 
 	async handleDeviceWebsocketMessage(
@@ -262,19 +262,19 @@ export default class WebRequest {
 		data: HmrClientMessage,
 	) {
 		switch (data.type) {
-			case 'log':
+			case "log":
 				return this.server.printConsoleLog(data);
 
-			case 'log-opt-in':
+			case "log-opt-in":
 				// ???
 				return;
 
-			case 'register-entrypoints':
+			case "register-entrypoints":
 				/// ???
 				return;
 
 			default:
-				console.log('UNKNOWN MESSAGE', data);
+				console.log("UNKNOWN MESSAGE", data);
 		}
 	}
 
@@ -282,11 +282,11 @@ export default class WebRequest {
 		const {req} = this;
 		this.negotiateWebsocket();
 
-		const socket = new WebSocketInterface('server', req.socket);
+		const socket = new WebSocketInterface("server", req.socket);
 		this.server.deviceWebsockets.add(socket);
 
 		req.socket.on(
-			'error',
+			"error",
 			(err) => {
 				console.log(err.stack);
 			},
@@ -301,7 +301,7 @@ export default class WebRequest {
 				this.handleDeviceWebsocketMessage(socket, json);
 			} catch (err) {
 				if (err instanceof SyntaxError) {
-					console.log('UNKNOWN FRAME', text);
+					console.log("UNKNOWN FRAME", text);
 					return;
 				} else {
 					throw err;
@@ -314,7 +314,7 @@ export default class WebRequest {
 		});
 
 		socket.endEvent.subscribe(() => {
-			console.log('END');
+			console.log("END");
 			this.server.deviceWebsockets.delete(socket);
 		});
 
@@ -325,18 +325,18 @@ export default class WebRequest {
 		const {req} = this;
 		this.negotiateWebsocket();
 
-		const socket = new WebSocketInterface('server', req.socket);
+		const socket = new WebSocketInterface("server", req.socket);
 		const bridge = createBridgeFromWebSocketInterface(
 			WebBridge,
 			socket,
 			{
-				type: 'client',
+				type: "client",
 			},
 		);
 		this.server.frontendWebsocketBridges.add(bridge);
 
 		req.socket.on(
-			'close',
+			"close",
 			() => {
 				this.server.frontendWebsocketBridges.delete(bridge);
 			},
@@ -344,7 +344,7 @@ export default class WebRequest {
 
 		await bridge.handshake();
 
-		this.reporter.success('Frontend websocket client connected');
+		this.reporter.success("Frontend websocket client connected");
 
 		this.server.sendRequests(bridge);
 
@@ -358,7 +358,7 @@ export default class WebRequest {
 		const bundle = await bundler.bundle(path);
 		const content = bundle.entry.js.content;
 
-		res.writeHead(200, {'Content-Type': 'application/javascript'});
+		res.writeHead(200, {"Content-Type": "application/javascript"});
 		res.end(content);
 		return true;
 	}

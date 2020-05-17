@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 36
 			index: 36
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 36
 					index: 36
@@ -46,7 +46,7 @@ Program {
 			}
 			expression: CallExpression {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 36
 						index: 36
@@ -59,10 +59,10 @@ Program {
 					}
 				}
 				callee: ReferenceIdentifier {
-					name: 'f'
+					name: "f"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'f'
+						filename: "input.js"
+						identifierName: "f"
 						end: Object {
 							column: 1
 							index: 1
@@ -77,10 +77,10 @@ Program {
 				}
 				arguments: Array [
 					ReferenceIdentifier {
-						name: 'a'
+						name: "a"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'a'
+							filename: "input.js"
+							identifierName: "a"
 							end: Object {
 								column: 3
 								index: 3
@@ -95,7 +95,7 @@ Program {
 					}
 					ArrowFunctionExpression {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 35
 								index: 35
@@ -109,7 +109,7 @@ Program {
 						}
 						body: AwaitExpression {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 35
 									index: 35
@@ -122,10 +122,10 @@ Program {
 								}
 							}
 							argument: ReferenceIdentifier {
-								name: 'promise'
+								name: "promise"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'promise'
+									filename: "input.js"
+									identifierName: "promise"
 									end: Object {
 										column: 35
 										index: 35
@@ -145,7 +145,7 @@ Program {
 							rest: undefined
 							thisType: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 21
 									index: 21
@@ -159,10 +159,10 @@ Program {
 							}
 							params: Array [
 								BindingIdentifier {
-									name: 'promise'
+									name: "promise"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'promise'
+										filename: "input.js"
+										identifierName: "promise"
 										end: Object {
 											column: 18
 											index: 18

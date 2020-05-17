@@ -12,11 +12,11 @@ import {
 	FunctionHead,
 	JSNodeBase,
 	PrivateName,
-} from '../index';
-import {createBuilder} from '../utils';
+} from "../index";
+import {createBuilder} from "../utils";
 
 export type ClassPrivateMethod = JSNodeBase & {
-	type: 'ClassPrivateMethod';
+	type: "ClassPrivateMethod";
 	kind: ClassMethodKind;
 	key: PrivateName;
 	head: FunctionHead;
@@ -25,7 +25,7 @@ export type ClassPrivateMethod = JSNodeBase & {
 };
 
 export const classPrivateMethod = createBuilder<ClassPrivateMethod>(
-	'ClassPrivateMethod',
+	"ClassPrivateMethod",
 	{
 		bindingKeys: {},
 		visitorKeys: {

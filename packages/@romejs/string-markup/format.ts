@@ -10,16 +10,16 @@ import {
 	MarkupFormatGridOptions,
 	MarkupFormatNormalizeOptions,
 	TagNode,
-} from './types';
-import {parseMarkup} from './parse';
-import {escapeMarkup} from './escape';
-import Grid from './Grid';
-import {ob1Get1} from '@romejs/ob1';
+} from "./types";
+import {parseMarkup} from "./parse";
+import {escapeMarkup} from "./escape";
+import Grid from "./Grid";
+import {ob1Get1} from "@romejs/ob1";
 import {
 	formatGrammarNumber,
 	getFileLinkFilename,
 	getFileLinkText,
-} from './tagFormatters';
+} from "./tagFormatters";
 
 function buildTag(
 	tag: TagNode,
@@ -30,7 +30,7 @@ function buildTag(
 
 	switch (tag.name) {
 		case // Normalize filename of <filelink target>
-		'filelink': {
+		"filelink": {
 			// Clone
 			attributes = {...attributes};
 
@@ -47,7 +47,7 @@ function buildTag(
 
 		// We don't technically need to normalize this but it's one less tag to have to support
 		// if other tools need to consume it
-		case 'grammarNumber':
+		case "grammarNumber":
 			return formatGrammarNumber(attributes, inner);
 	}
 
@@ -60,7 +60,7 @@ function buildTag(
 			continue;
 		}
 
-		if (value === 'true') {
+		if (value === "true") {
 			open += ` ${key}`;
 		} else {
 			const escapedValue = escapeMarkup(value);
@@ -68,7 +68,7 @@ function buildTag(
 		}
 	}
 
-	if (inner === '') {
+	if (inner === "") {
 		return `${open} />`;
 	} else {
 		return `${open}>${inner}</${tag.name}>`;
@@ -81,18 +81,18 @@ function normalizeMarkupChildren(
 ): string {
 	// Sometimes we'll populate the inner text of a tag with no children
 	if (children.length === 0) {
-		return '';
+		return "";
 	}
 
-	let buff = '';
+	let buff = "";
 	for (const child of children) {
-		if (child.type === 'Text') {
+		if (child.type === "Text") {
 			buff += escapeMarkup(child.value);
-		} else if (child.type === 'Tag') {
+		} else if (child.type === "Tag") {
 			const inner = normalizeMarkupChildren(child.children, opts);
 			buff += buildTag(child, inner, opts);
 		} else {
-			throw new Error('Unknown child node type');
+			throw new Error("Unknown child node type");
 		}
 	}
 	return buff;
@@ -102,7 +102,7 @@ export function markupToPlainTextString(
 	input: string,
 	opts: MarkupFormatGridOptions = {},
 ): string {
-	return markupToPlainText(input, opts).lines.join('\n');
+	return markupToPlainText(input, opts).lines.join("\n");
 }
 
 export function markupToPlainText(

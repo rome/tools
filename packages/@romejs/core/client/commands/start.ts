@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {commandCategories} from '../../common/commands';
-import {createLocalCommand} from '../commands';
-import ClientRequest from '../ClientRequest';
+import {commandCategories} from "../../common/commands";
+import {createLocalCommand} from "../commands";
+import ClientRequest from "../ClientRequest";
 
 export default createLocalCommand({
 	category: commandCategories.PROCESS_MANAGEMENT,
-	description: 'start daemon (if none running)',
-	usage: '',
+	description: "start daemon (if none running)",
+	usage: "",
 	examples: [],
 	defineFlags() {
 		return {};
@@ -20,7 +20,7 @@ export default createLocalCommand({
 	async callback(req: ClientRequest) {
 		const existingServer = await req.client.tryConnectToExistingDaemon();
 		if (existingServer) {
-			req.client.reporter.success('Already running server.');
+			req.client.reporter.success("Already running server.");
 			return true;
 		}
 

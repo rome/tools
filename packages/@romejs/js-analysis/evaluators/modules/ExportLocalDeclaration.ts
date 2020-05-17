@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {getBindingIdentifiers} from '@romejs/js-ast-utils';
-import {AnyNode, exportLocalDeclaration} from '@romejs/js-ast';
-import ImportT from '../../types/ImportT';
-import Hub from '../../Hub';
+import {Scope} from "../../scopes";
+import {getBindingIdentifiers} from "@romejs/js-ast-utils";
+import {AnyNode, exportLocalDeclaration} from "@romejs/js-ast";
+import ImportT from "../../types/ImportT";
+import Hub from "../../Hub";
 
 export default function ExportLocalDeclaration(
 	node: AnyNode,
@@ -26,8 +26,8 @@ export default function ExportLocalDeclaration(
 		const declType = scope.evaluate(decl);
 
 		switch (decl.type) {
-			case 'FunctionDeclaration':
-			case 'ClassDeclaration': {
+			case "FunctionDeclaration":
+			case "ClassDeclaration": {
 				const id = decl.id;
 				if (id === undefined) {
 					throw new Error(`Expected id`);
@@ -36,7 +36,7 @@ export default function ExportLocalDeclaration(
 				break;
 			}
 
-			case 'VariableDeclarationStatement': {
+			case "VariableDeclarationStatement": {
 				for (const id of getBindingIdentifiers(decl)) {
 					const type = scope.getBinding(id.name);
 					if (type === undefined) {
@@ -47,7 +47,7 @@ export default function ExportLocalDeclaration(
 				break;
 			}
 
-			case 'TypeAliasTypeAnnotation': {
+			case "TypeAliasTypeAnnotation": {
 				const type = scope.getBinding(decl.id.name);
 				if (type === undefined) {
 					throw new Error(`Couldn't find binding type for ${decl.id.name}`);
@@ -68,8 +68,8 @@ export default function ExportLocalDeclaration(
 	if (specifiers !== undefined) {
 		for (const specifier of specifiers) {
 			if (
-				specifier.type === 'ExportLocalSpecifier' ||
-				specifier.type === 'ExportExternalSpecifier'
+				specifier.type === "ExportLocalSpecifier" ||
+				specifier.type === "ExportExternalSpecifier"
 			) {
 				let type;
 				if (source === undefined) {

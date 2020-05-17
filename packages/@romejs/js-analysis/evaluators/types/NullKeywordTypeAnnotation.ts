@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
+import {Scope} from "../../scopes";
 import {
 	AnyNode,
 	NullKeywordTypeAnnotation,
 	nullKeywordTypeAnnotation,
-} from '@romejs/js-ast';
-import NullT from '../../types/NullT';
+} from "@romejs/js-ast";
+import NullT from "../../types/NullT";
 
 export default function NullKeywordTypeAnnotation(node: AnyNode, scope: Scope) {
 	node = nullKeywordTypeAnnotation.assert(node);

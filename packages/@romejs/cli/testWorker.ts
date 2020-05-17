@@ -5,19 +5,19 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import setProcessTitle from './utils/setProcessTitle';
-import {TestWorker} from '@romejs/core';
-import {parseCLIFlagsFromProcess} from '@romejs/cli-flags';
-import {TestWorkerFlags} from '@romejs/core/test-worker/TestWorker';
+import setProcessTitle from "./utils/setProcessTitle";
+import {TestWorker} from "@romejs/core";
+import {parseCLIFlagsFromProcess} from "@romejs/cli-flags";
+import {TestWorkerFlags} from "@romejs/core/test-worker/TestWorker";
 
 export default async function testWorker() {
-	setProcessTitle('test-worker');
+	setProcessTitle("test-worker");
 
 	const parser = parseCLIFlagsFromProcess({
-		programName: 'rome test-worker',
+		programName: "rome test-worker",
 		defineFlags(c): TestWorkerFlags {
 			return {
-				inspectorPort: c.get('inspectorPort').asNumberFromString(),
+				inspectorPort: c.get("inspectorPort").asNumberFromString(),
 			};
 		},
 	});

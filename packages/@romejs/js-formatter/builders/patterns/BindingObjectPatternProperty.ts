@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token} from '../../tokens';
-import {BindingObjectPatternProperty} from '@romejs/js-ast';
-import ObjectProperty from '../objects/ObjectProperty';
+import Builder from "../../Builder";
+import {Token} from "../../tokens";
+import {BindingObjectPatternProperty} from "@romejs/js-ast";
+import ObjectProperty from "../objects/ObjectProperty";
 
 export default function BindingObjectPatternProperty(
 	builder: Builder,

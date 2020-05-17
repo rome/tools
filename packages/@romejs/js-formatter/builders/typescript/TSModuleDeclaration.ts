@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSModuleBlock, TSModuleDeclaration} from '@romejs/js-ast';
-import {Builder} from '@romejs/js-formatter';
-import {Token, concat, space} from '../../tokens';
+import {TSModuleBlock, TSModuleDeclaration} from "@romejs/js-ast";
+import {Builder} from "@romejs/js-formatter";
+import {Token, concat, space} from "../../tokens";
 
 export default function TSModuleDeclaration(
 	builder: Builder,
@@ -16,25 +16,25 @@ export default function TSModuleDeclaration(
 	const tokens: Array<Token> = [];
 
 	if (node.declare) {
-		tokens.push('declare');
+		tokens.push("declare");
 		tokens.push(space);
 	}
 
 	if (!node.global) {
-		tokens.push(node.id.type === 'BindingIdentifier' ? 'namespace' : 'module');
+		tokens.push(node.id.type === "BindingIdentifier" ? "namespace" : "module");
 		tokens.push(space);
 	}
 
 	tokens.push(builder.tokenize(node.id, node));
 
 	if (!node.body) {
-		tokens.push(';');
+		tokens.push(";");
 		return concat(tokens);
 	}
 
 	let body: undefined | TSModuleBlock | TSModuleDeclaration = node.body;
-	while (body !== undefined && body.type === 'TSModuleDeclaration') {
-		tokens.push('.', builder.tokenize(body.id, body));
+	while (body !== undefined && body.type === "TSModuleDeclaration") {
+		tokens.push(".", builder.tokenize(body.id, body));
 		body = body.body;
 	}
 

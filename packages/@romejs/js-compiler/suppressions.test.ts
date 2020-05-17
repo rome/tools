@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {extractSuppressionsFromProgram} from './suppressions';
-import CompilerContext from './lib/CompilerContext';
-import {parseJS} from '@romejs/js-parser';
-import {dedent} from '@romejs/string-utils';
+import {test} from "rome";
+import {extractSuppressionsFromProgram} from "./suppressions";
+import CompilerContext from "./lib/CompilerContext";
+import {parseJS} from "@romejs/js-parser";
+import {dedent} from "@romejs/string-utils";
 
 function extractSuppressionsFromSource(sourceText: string) {
 	const ast = parseJS({
-		sourceType: 'script',
-		path: 'unknown',
+		sourceType: "script",
+		path: "unknown",
 		input: sourceText,
 	});
 	const context = new CompilerContext({ast});
@@ -22,7 +22,7 @@ function extractSuppressionsFromSource(sourceText: string) {
 }
 
 test(
-	'single category',
+	"single category",
 	async (t) => {
 		t.snapshot(
 			extractSuppressionsFromSource(
@@ -50,7 +50,7 @@ test(
 );
 
 test(
-	'multiple categories',
+	"multiple categories",
 	async (t) => {
 		t.snapshot(
 			extractSuppressionsFromSource(
@@ -78,7 +78,7 @@ test(
 );
 
 test(
-	'duplicates',
+	"duplicates",
 	async (t) => {
 		t.snapshot(
 			extractSuppressionsFromSource(

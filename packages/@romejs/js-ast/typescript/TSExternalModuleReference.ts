@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, StringLiteral} from '../index';
-import {createBuilder} from '../utils';
+import {JSNodeBase, StringLiteral} from "../index";
+import {createBuilder} from "../utils";
 
 export type TSExternalModuleReference = JSNodeBase & {
-	type: 'TSExternalModuleReference';
+	type: "TSExternalModuleReference";
 	expression: StringLiteral;
 };
 
 export const tsExternalModuleReference = createBuilder<TSExternalModuleReference>(
-	'TSExternalModuleReference',
+	"TSExternalModuleReference",
 	{
 		bindingKeys: {},
 		visitorKeys: {expression: true},

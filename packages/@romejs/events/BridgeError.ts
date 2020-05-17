@@ -1,4 +1,4 @@
-import Bridge from './Bridge';
+import Bridge from "./Bridge";
 
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.

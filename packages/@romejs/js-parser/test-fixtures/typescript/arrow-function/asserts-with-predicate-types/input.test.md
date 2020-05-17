@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 49
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 48
 					index: 48
@@ -46,7 +46,7 @@ Program {
 			}
 			expression: ArrowFunctionExpression {
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 47
 						index: 47
@@ -62,7 +62,7 @@ Program {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 47
 							index: 47
@@ -81,7 +81,7 @@ Program {
 					rest: undefined
 					thisType: undefined
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 44
 							index: 44
@@ -96,7 +96,7 @@ Program {
 					returnType: TSTypePredicate {
 						asserts: true
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 41
 								index: 41
@@ -110,7 +110,7 @@ Program {
 						}
 						typeAnnotation: StringKeywordTypeAnnotation {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 41
 									index: 41
@@ -124,10 +124,10 @@ Program {
 							}
 						}
 						parameterName: Identifier {
-							name: 'value'
+							name: "value"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'value'
+								filename: "input.ts"
+								identifierName: "value"
 								end: Object {
 									column: 31
 									index: 31
@@ -143,9 +143,9 @@ Program {
 					}
 					params: Array [
 						BindingIdentifier {
-							name: 'value'
+							name: "value"
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 44
 									index: 44
@@ -160,7 +160,7 @@ Program {
 							meta: PatternMeta {
 								optional: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 44
 										index: 44
@@ -174,7 +174,7 @@ Program {
 								}
 								typeAnnotation: UnknownKeywordTypeAnnotation {
 									loc: Object {
-										filename: 'input.ts'
+										filename: "input.ts"
 										end: Object {
 											column: 15
 											index: 15

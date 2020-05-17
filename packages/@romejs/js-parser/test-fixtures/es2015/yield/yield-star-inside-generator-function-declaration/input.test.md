@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 30
 			index: 30
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		FunctionDeclaration {
 			id: BindingIdentifier {
-				name: 'test'
+				name: "test"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'test'
+					filename: "input.js"
+					identifierName: "test"
 					end: Object {
 						column: 14
 						index: 14
@@ -49,7 +49,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 30
 					index: 30
@@ -71,7 +71,7 @@ Program {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -87,7 +87,7 @@ Program {
 			body: BlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 30
 						index: 30
@@ -102,7 +102,7 @@ Program {
 				body: Array [
 					ExpressionStatement {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 28
 								index: 28
@@ -117,7 +117,7 @@ Program {
 						expression: YieldExpression {
 							delegate: true
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 28
 									index: 28
@@ -130,10 +130,10 @@ Program {
 								}
 							}
 							argument: ReferenceIdentifier {
-								name: 'v'
+								name: "v"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'v'
+									filename: "input.js"
+									identifierName: "v"
 									end: Object {
 										column: 28
 										index: 28

@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 41
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 40
 					index: 40
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'var'
+				kind: "var"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 40
 						index: 40
@@ -62,10 +62,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'a'
+							name: "a"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'a'
+								filename: "input.js"
+								identifierName: "a"
 								end: Object {
 									column: 5
 									index: 5
@@ -79,7 +79,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 39
 								index: 39
@@ -93,7 +93,7 @@ Program {
 						}
 						init: ArrowFunctionExpression {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 39
 									index: 39
@@ -106,10 +106,10 @@ Program {
 								}
 							}
 							body: ReferenceIdentifier {
-								name: 'options'
+								name: "options"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'options'
+									filename: "input.js"
+									identifierName: "options"
 									end: Object {
 										column: 39
 										index: 39
@@ -129,7 +129,7 @@ Program {
 								returnType: undefined
 								thisType: undefined
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 31
 										index: 31
@@ -143,9 +143,9 @@ Program {
 								}
 								params: Array [
 									BindingAssignmentPattern {
-										operator: '='
+										operator: "="
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 27
 												index: 27
@@ -160,7 +160,7 @@ Program {
 										right: ObjectExpression {
 											properties: Array []
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 27
 													index: 27
@@ -174,10 +174,10 @@ Program {
 											}
 										}
 										left: BindingIdentifier {
-											name: 'options'
+											name: "options"
 											loc: Object {
-												filename: 'input.js'
-												identifierName: 'options'
+												filename: "input.js"
+												identifierName: "options"
 												end: Object {
 													column: 22
 													index: 22

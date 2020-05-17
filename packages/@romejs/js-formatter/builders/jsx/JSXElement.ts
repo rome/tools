@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
+import Builder from "../../Builder";
 import {
 	Token,
 	concat,
@@ -14,12 +14,12 @@ import {
 	join,
 	lineOrSpace,
 	space,
-} from '../../tokens';
-import {JSXElement} from '@romejs/js-ast';
+} from "../../tokens";
+import {JSXElement} from "@romejs/js-ast";
 
 export default function JSXElement(builder: Builder, node: JSXElement): Token {
 	const tokens: Array<Token> = [
-		'<',
+		"<",
 		builder.tokenize(node.name, node),
 		builder.tokenize(node.typeArguments, node),
 	];
@@ -35,14 +35,14 @@ export default function JSXElement(builder: Builder, node: JSXElement): Token {
 	}
 
 	if (node.selfClosing === true && node.children.length === 0) {
-		return group(concat([concat(tokens), space, '/>']));
+		return group(concat([concat(tokens), space, "/>"]));
 	} else {
 		return concat([
-			group(concat([concat(tokens), '>'])),
+			group(concat([concat(tokens), ">"])),
 			indent(concat(node.children.map((child) => builder.tokenize(child, node)))),
-			'</',
+			"</",
 			builder.tokenize(node.name, node),
-			'>',
+			">",
 		]);
 	}
 }

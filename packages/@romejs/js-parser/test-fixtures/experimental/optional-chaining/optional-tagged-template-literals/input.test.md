@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 9
 			index: 9
@@ -30,16 +30,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Tagged Template Literals are not allowed in optionalChain'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Tagged Template Literals are not allowed in optionalChain"}
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 4
 					index: 4
@@ -56,7 +56,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 9
 					index: 9
@@ -71,7 +71,7 @@ Program {
 			expression: TaggedTemplateExpression {
 				typeArguments: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 9
 						index: 9
@@ -86,7 +86,7 @@ Program {
 				quasi: TemplateLiteral {
 					expressions: Array []
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 9
 							index: 9
@@ -100,11 +100,11 @@ Program {
 					}
 					quasis: Array [
 						TemplateElement {
-							cooked: 'foo'
-							raw: 'foo'
+							cooked: "foo"
+							raw: "foo"
 							tail: true
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 8
 									index: 8
@@ -121,7 +121,7 @@ Program {
 				}
 				tag: MemberExpression {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 4
 							index: 4
@@ -134,10 +134,10 @@ Program {
 						}
 					}
 					object: ReferenceIdentifier {
-						name: 'a'
+						name: "a"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'a'
+							filename: "input.js"
+							identifierName: "a"
 							end: Object {
 								column: 1
 								index: 1
@@ -152,10 +152,10 @@ Program {
 					}
 					property: StaticMemberProperty {
 						value: Identifier {
-							name: 'b'
+							name: "b"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'b'
+								filename: "input.js"
+								identifierName: "b"
 								end: Object {
 									column: 4
 									index: 4
@@ -170,8 +170,8 @@ Program {
 						}
 						optional: true
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'b'
+							filename: "input.js"
+							identifierName: "b"
 							end: Object {
 								column: 4
 								index: 4

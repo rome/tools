@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 5
 			index: 12
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 3
 					index: 3
@@ -45,10 +45,10 @@ Program {
 				}
 			}
 			expression: UpdateExpression {
-				operator: '++'
+				operator: "++"
 				prefix: false
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 3
 						index: 3
@@ -61,10 +61,10 @@ Program {
 					}
 				}
 				argument: ReferenceIdentifier {
-					name: 'x'
+					name: "x"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'x'
+						filename: "input.js"
+						identifierName: "x"
 						end: Object {
 							column: 1
 							index: 1
@@ -83,7 +83,7 @@ Program {
 			body: Array []
 			directives: Array []
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 2
 					index: 6
@@ -98,7 +98,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 5
 					index: 12
@@ -118,7 +118,7 @@ Program {
 				sticky: false
 				unicode: false
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 5
 						index: 12
@@ -132,7 +132,7 @@ Program {
 				}
 				expression: RegExpSubExpression {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 4
 							index: 11
@@ -146,9 +146,9 @@ Program {
 					}
 					body: Array [
 						RegExpCharacter {
-							value: 'f'
+							value: "f"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 2
 									index: 9
@@ -162,9 +162,9 @@ Program {
 							}
 						}
 						RegExpCharacter {
-							value: 'o'
+							value: "o"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 3
 									index: 10
@@ -178,9 +178,9 @@ Program {
 							}
 						}
 						RegExpCharacter {
-							value: 'o'
+							value: "o"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 4
 									index: 11

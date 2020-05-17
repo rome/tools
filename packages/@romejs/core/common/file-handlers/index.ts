@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ProjectConfig} from '@romejs/project';
-import {UnknownFilePath} from '@romejs/path';
-import {ExtensionHandler} from './types';
+import {ProjectConfig} from "@romejs/project";
+import {UnknownFilePath} from "@romejs/path";
+import {ExtensionHandler} from "./types";
 import {
 	cjsHandler,
 	jsHandler,
@@ -15,9 +15,9 @@ import {
 	mjsHandler,
 	tsHandler,
 	tsxHandler,
-} from './javascript';
-import {textHandler} from './text';
-import {jsonHandler, rjsonHandler} from './json';
+} from "./javascript";
+import {textHandler} from "./text";
+import {jsonHandler, rjsonHandler} from "./json";
 
 type ExtensionsMap = Map<string, ExtensionHandler>;
 
@@ -40,7 +40,7 @@ export function getFileHandler(
 
 	const match = basename.match(/\.([a-zA-Z]+)$/);
 	if (match == null) {
-		return {ext: '', handler: undefined};
+		return {ext: "", handler: undefined};
 	}
 
 	const ext: string = match[1];
@@ -67,12 +67,12 @@ export function getFileHandlerAssert(
 	}
 }
 
-export const ASSET_EXPORT_TEMPORARY_VALUE = 'VALUE_INJECTED_BY_BUNDLER';
+export const ASSET_EXPORT_TEMPORARY_VALUE = "VALUE_INJECTED_BY_BUNDLER";
 
 const assetHandler: ExtensionHandler = {
 	// analyzeDependencies shim
 	...textHandler,
-	ext: 'unknown',
+	ext: "unknown",
 	canHaveScale: true,
 	isAsset: true,
 	async toJavaScript() {
@@ -109,24 +109,24 @@ const DEFAULT_HANDLERS: ExtensionsMap = new Map();
 
 const DEFAULT_ASSET_EXTENSIONS = [
 	// Images
-	'png',
-	'jpg',
-	'jpeg',
-	'gif',
+	"png",
+	"jpg",
+	"jpeg",
+	"gif",
 	// Video
-	'webm',
-	'mp4',
-	'm4v',
-	'avi',
-	'mkv',
+	"webm",
+	"mp4",
+	"m4v",
+	"avi",
+	"mkv",
 	// Audio
-	'mp3',
+	"mp3",
 	// Fonts
-	'woff',
-	'woff2',
-	'eot',
-	'ttf',
-	'otf',
+	"woff",
+	"woff2",
+	"eot",
+	"ttf",
+	"otf",
 ];
 
 for (const ext of DEFAULT_ASSET_EXTENSIONS) {

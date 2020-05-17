@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 32
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 14
 					index: 14
@@ -47,7 +47,7 @@ Program {
 			expression: ClassExpression {
 				id: undefined
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 12
 						index: 12
@@ -65,7 +65,7 @@ Program {
 					superClass: undefined
 					superTypeParameters: undefined
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 12
 							index: 12
@@ -79,7 +79,7 @@ Program {
 					}
 					typeParameters: TSTypeParameterDeclaration {
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 9
 								index: 9
@@ -93,11 +93,11 @@ Program {
 						}
 						params: Array [
 							TSTypeParameter {
-								name: 'T'
+								name: "T"
 								constraint: undefined
 								default: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 8
 										index: 8
@@ -117,7 +117,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 16
 					index: 31
@@ -131,10 +131,10 @@ Program {
 			}
 			expression: ClassExpression {
 				id: BindingIdentifier {
-					name: 'C'
+					name: "C"
 					loc: Object {
-						filename: 'input.ts'
-						identifierName: 'C'
+						filename: "input.ts"
+						identifierName: "C"
 						end: Object {
 							column: 8
 							index: 23
@@ -148,7 +148,7 @@ Program {
 					}
 				}
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 14
 						index: 29
@@ -166,7 +166,7 @@ Program {
 					superClass: undefined
 					superTypeParameters: undefined
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 14
 							index: 29
@@ -180,7 +180,7 @@ Program {
 					}
 					typeParameters: TSTypeParameterDeclaration {
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 11
 								index: 26
@@ -194,11 +194,11 @@ Program {
 						}
 						params: Array [
 							TSTypeParameter {
-								name: 'T'
+								name: "T"
 								constraint: undefined
 								default: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 10
 										index: 25

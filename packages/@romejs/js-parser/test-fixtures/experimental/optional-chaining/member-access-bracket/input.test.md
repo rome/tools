@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 13
 			index: 97
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 11
 					index: 11
@@ -46,7 +46,7 @@ Program {
 			}
 			expression: MemberExpression {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 11
 						index: 11
@@ -59,10 +59,10 @@ Program {
 					}
 				}
 				object: ReferenceIdentifier {
-					name: 'obj'
+					name: "obj"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'obj'
+						filename: "input.js"
+						identifierName: "obj"
 						end: Object {
 							column: 3
 							index: 3
@@ -77,10 +77,10 @@ Program {
 				}
 				property: ComputedMemberProperty {
 					value: ReferenceIdentifier {
-						name: 'expr'
+						name: "expr"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'expr'
+							filename: "input.js"
+							identifierName: "expr"
 							end: Object {
 								column: 10
 								index: 10
@@ -95,7 +95,7 @@ Program {
 					}
 					optional: true
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 11
 							index: 11
@@ -112,7 +112,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 20
 					index: 33
@@ -126,7 +126,7 @@ Program {
 			}
 			expression: MemberExpression {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 20
 						index: 33
@@ -140,10 +140,10 @@ Program {
 				}
 				property: ComputedMemberProperty {
 					value: ReferenceIdentifier {
-						name: 'other'
+						name: "other"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'other'
+							filename: "input.js"
+							identifierName: "other"
 							end: Object {
 								column: 19
 								index: 32
@@ -158,7 +158,7 @@ Program {
 					}
 					optional: true
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 20
 							index: 33
@@ -173,7 +173,7 @@ Program {
 				}
 				object: MemberExpression {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 11
 							index: 24
@@ -186,10 +186,10 @@ Program {
 						}
 					}
 					object: ReferenceIdentifier {
-						name: 'obj'
+						name: "obj"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'obj'
+							filename: "input.js"
+							identifierName: "obj"
 							end: Object {
 								column: 3
 								index: 16
@@ -204,10 +204,10 @@ Program {
 					}
 					property: ComputedMemberProperty {
 						value: ReferenceIdentifier {
-							name: 'expr'
+							name: "expr"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'expr'
+								filename: "input.js"
+								identifierName: "expr"
 								end: Object {
 									column: 10
 									index: 23
@@ -222,7 +222,7 @@ Program {
 						}
 						optional: true
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 11
 								index: 24
@@ -240,7 +240,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 11
 					index: 46
@@ -254,7 +254,7 @@ Program {
 			}
 			expression: MemberExpression {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 11
 						index: 46
@@ -267,10 +267,10 @@ Program {
 					}
 				}
 				object: ReferenceIdentifier {
-					name: 'obj'
+					name: "obj"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'obj'
+						filename: "input.js"
+						identifierName: "obj"
 						end: Object {
 							column: 3
 							index: 38
@@ -287,7 +287,7 @@ Program {
 					value: BooleanLiteral {
 						value: true
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 10
 								index: 45
@@ -302,7 +302,7 @@ Program {
 					}
 					optional: true
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 11
 							index: 46
@@ -319,7 +319,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 19
 					index: 67
@@ -333,7 +333,7 @@ Program {
 			}
 			expression: MemberExpression {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 19
 						index: 67
@@ -349,7 +349,7 @@ Program {
 					value: BooleanLiteral {
 						value: true
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 18
 								index: 66
@@ -364,7 +364,7 @@ Program {
 					}
 					optional: true
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 19
 							index: 67
@@ -379,7 +379,7 @@ Program {
 				}
 				object: MemberExpression {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 11
 							index: 59
@@ -392,10 +392,10 @@ Program {
 						}
 					}
 					object: ReferenceIdentifier {
-						name: 'obj'
+						name: "obj"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'obj'
+							filename: "input.js"
+							identifierName: "obj"
 							end: Object {
 								column: 3
 								index: 51
@@ -412,7 +412,7 @@ Program {
 						value: BooleanLiteral {
 							value: true
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 10
 									index: 58
@@ -427,7 +427,7 @@ Program {
 						}
 						optional: true
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 11
 								index: 59
@@ -445,7 +445,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 13
 					index: 82
@@ -459,7 +459,7 @@ Program {
 			}
 			expression: MemberExpression {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 13
 						index: 82
@@ -473,10 +473,10 @@ Program {
 				}
 				property: ComputedMemberProperty {
 					value: ReferenceIdentifier {
-						name: 'expr'
+						name: "expr"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'expr'
+							filename: "input.js"
+							identifierName: "expr"
 							end: Object {
 								column: 12
 								index: 81
@@ -491,7 +491,7 @@ Program {
 					}
 					optional: true
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 13
 							index: 82
@@ -506,7 +506,7 @@ Program {
 				}
 				object: MemberExpression {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 5
 							index: 74
@@ -519,10 +519,10 @@ Program {
 						}
 					}
 					object: ReferenceIdentifier {
-						name: 'obj'
+						name: "obj"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'obj'
+							filename: "input.js"
+							identifierName: "obj"
 							end: Object {
 								column: 3
 								index: 72
@@ -537,10 +537,10 @@ Program {
 					}
 					property: StaticMemberProperty {
 						value: Identifier {
-							name: 'a'
+							name: "a"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'a'
+								filename: "input.js"
+								identifierName: "a"
 								end: Object {
 									column: 5
 									index: 74
@@ -554,8 +554,8 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'a'
+							filename: "input.js"
+							identifierName: "a"
 							end: Object {
 								column: 5
 								index: 74
@@ -573,7 +573,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 13
 					index: 97
@@ -587,7 +587,7 @@ Program {
 			}
 			expression: MemberExpression {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 13
 						index: 97
@@ -603,7 +603,7 @@ Program {
 					value: BooleanLiteral {
 						value: true
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 12
 								index: 96
@@ -618,7 +618,7 @@ Program {
 					}
 					optional: true
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 13
 							index: 97
@@ -633,7 +633,7 @@ Program {
 				}
 				object: MemberExpression {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 5
 							index: 89
@@ -646,10 +646,10 @@ Program {
 						}
 					}
 					object: ReferenceIdentifier {
-						name: 'obj'
+						name: "obj"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'obj'
+							filename: "input.js"
+							identifierName: "obj"
 							end: Object {
 								column: 3
 								index: 87
@@ -664,10 +664,10 @@ Program {
 					}
 					property: StaticMemberProperty {
 						value: Identifier {
-							name: 'a'
+							name: "a"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'a'
+								filename: "input.js"
+								identifierName: "a"
 								end: Object {
 									column: 5
 									index: 89
@@ -681,8 +681,8 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'a'
+							filename: "input.js"
+							identifierName: "a"
 							end: Object {
 								column: 5
 								index: 89

@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 16
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		TSImportEqualsDeclaration {
 			id: BindingIdentifier {
-				name: 'A'
+				name: "A"
 				loc: Object {
-					filename: 'input.ts'
-					identifierName: 'A'
+					filename: "input.ts"
+					identifierName: "A"
 					end: Object {
 						column: 8
 						index: 8
@@ -50,7 +50,7 @@ Program {
 			}
 			isExport: false
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 15
 					index: 15
@@ -64,7 +64,7 @@ Program {
 			}
 			moduleReference: TSQualifiedName {
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 14
 						index: 14
@@ -77,10 +77,10 @@ Program {
 					}
 				}
 				left: ReferenceIdentifier {
-					name: 'B'
+					name: "B"
 					loc: Object {
-						filename: 'input.ts'
-						identifierName: 'B'
+						filename: "input.ts"
+						identifierName: "B"
 						end: Object {
 							column: 12
 							index: 12
@@ -94,10 +94,10 @@ Program {
 					}
 				}
 				right: Identifier {
-					name: 'C'
+					name: "C"
 					loc: Object {
-						filename: 'input.ts'
-						identifierName: 'C'
+						filename: "input.ts"
+						identifierName: "C"
 						end: Object {
 							column: 14
 							index: 14

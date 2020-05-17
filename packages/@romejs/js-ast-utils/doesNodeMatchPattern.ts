@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from '@romejs/js-ast';
-import getNodeReferenceParts from './getNodeReferenceParts';
-import isIdentifierish from './isIdentifierish';
+import {AnyNode} from "@romejs/js-ast";
+import getNodeReferenceParts from "./getNodeReferenceParts";
+import isIdentifierish from "./isIdentifierish";
 
 const splitCache: Map<string, SplitResult> = new Map();
 
@@ -22,11 +22,11 @@ function split(str: string): SplitResult {
 		return cached;
 	}
 
-	const parts = str.split('.');
+	const parts = str.split(".");
 
 	let hasDoubleStar = false;
 	for (const part of parts) {
-		if (part === '**') {
+		if (part === "**") {
 			hasDoubleStar = true;
 			break;
 		}
@@ -46,7 +46,7 @@ export default function doesNodeMatchPattern(
 	}
 
 	// Not a member expression
-	if (node.type !== 'MemberExpression' && !isIdentifierish(node)) {
+	if (node.type !== "MemberExpression" && !isIdentifierish(node)) {
 		return false;
 	}
 
@@ -86,11 +86,11 @@ export default function doesNodeMatchPattern(
 		nextExpectedIndex++;
 
 		// A star part can accept anything
-		if (expected === '*') {
+		if (expected === "*") {
 			continue;
 		}
 
-		if (expected === '**') {
+		if (expected === "**") {
 			// Ran out of matches but we've accepted the current part
 			if (nextExpectedIndex >= expectedParts.length) {
 				return true;
@@ -99,7 +99,7 @@ export default function doesNodeMatchPattern(
 			const next = expectedParts[nextExpectedIndex];
 			nextExpectedIndex++;
 
-			if (next === '*' || next === '**') {
+			if (next === "*" || next === "**") {
 				throw new Error(
 					`The next expected part was ${next} but this isn't allowed since we're processing a double star`,
 				);

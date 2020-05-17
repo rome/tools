@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
+	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 32
@@ -34,7 +34,7 @@ Program {
 			exportKind: undefined
 			namedSpecifiers: Array []
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 31
 					index: 31
@@ -47,9 +47,9 @@ Program {
 				}
 			}
 			source: StringLiteral {
-				value: 'foo'
+				value: "foo"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 30
 						index: 30
@@ -64,7 +64,7 @@ Program {
 			}
 			namespaceSpecifier: ExportNamespaceSpecifier {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 19
 						index: 19
@@ -77,10 +77,10 @@ Program {
 					}
 				}
 				exported: Identifier {
-					name: 'default'
+					name: "default"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'default'
+						filename: "input.js"
+						identifierName: "default"
 						end: Object {
 							column: 19
 							index: 19

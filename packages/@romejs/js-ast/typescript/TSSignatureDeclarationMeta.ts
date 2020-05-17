@@ -12,11 +12,11 @@ import {
 	BindingObjectPattern,
 	JSNodeBase,
 	TSTypeParameterDeclaration,
-} from '../index';
-import {createBuilder} from '../utils';
+} from "../index";
+import {createBuilder} from "../utils";
 
 export type TSSignatureDeclarationMeta = JSNodeBase & {
-	type: 'TSSignatureDeclarationMeta';
+	type: "TSSignatureDeclarationMeta";
 	parameters: Array<
 		BindingIdentifier | BindingObjectPattern | BindingArrayPattern
 	>;
@@ -25,7 +25,7 @@ export type TSSignatureDeclarationMeta = JSNodeBase & {
 };
 
 export const tsSignatureDeclarationMeta = createBuilder<TSSignatureDeclarationMeta>(
-	'TSSignatureDeclarationMeta',
+	"TSSignatureDeclarationMeta",
 	{
 		bindingKeys: {},
 		visitorKeys: {

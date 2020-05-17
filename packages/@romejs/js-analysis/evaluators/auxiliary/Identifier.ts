@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {AnyNode, Identifier, identifier} from '@romejs/js-ast';
-import UndeclaredVarE from '../../types/errors/UndeclaredVarE';
-import OpenT from '../../types/OpenT';
-import AnyT from '../../types/AnyT';
+import {Scope} from "../../scopes";
+import {AnyNode, Identifier, identifier} from "@romejs/js-ast";
+import UndeclaredVarE from "../../types/errors/UndeclaredVarE";
+import OpenT from "../../types/OpenT";
+import AnyT from "../../types/AnyT";
 
 export default function Identifier(node: AnyNode, scope: Scope) {
 	node = identifier.assert(node);
@@ -21,30 +21,30 @@ export default function Identifier(node: AnyNode, scope: Scope) {
 		return type;
 	} else {
 		switch (node.name) {
-			case 'React$PropType$Primitive':
-			case 'React$PropType$ArrayOf':
-			case 'React$PropType$InstanceOf':
-			case 'React$PropType$ObjectOf':
-			case 'React$PropType$OneOf':
-			case 'React$PropType$OneOfType':
-			case 'React$PropTypePartial':
-			case 'React$ElementProps':
-			case 'React$ElementRef':
-			case '$Exact':
-			case 'Partial':
-			case '$Keys':
-			case 'Object$Assign':
-			case 'Object$GetPrototypeOf':
-			case 'Object$SetPrototypeOf':
-			case '$CharSet':
-			case 'Class':
-			case '$Compose':
-			case '$ComposeReverse':
-			case '$Subtype':
-			case 'Function$Prototype$Apply':
-			case 'Function$Prototype$Bind':
-			case 'Function$Prototype$Call':
-			case '$Exports':
+			case "React$PropType$Primitive":
+			case "React$PropType$ArrayOf":
+			case "React$PropType$InstanceOf":
+			case "React$PropType$ObjectOf":
+			case "React$PropType$OneOf":
+			case "React$PropType$OneOfType":
+			case "React$PropTypePartial":
+			case "React$ElementProps":
+			case "React$ElementRef":
+			case "$Exact":
+			case "Partial":
+			case "$Keys":
+			case "Object$Assign":
+			case "Object$GetPrototypeOf":
+			case "Object$SetPrototypeOf":
+			case "$CharSet":
+			case "Class":
+			case "$Compose":
+			case "$ComposeReverse":
+			case "$Subtype":
+			case "Function$Prototype$Apply":
+			case "Function$Prototype$Bind":
+			case "Function$Prototype$Call":
+			case "$Exports":
 				return new AnyT(scope, node);
 
 			default:

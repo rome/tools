@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ProjectConfig, ProjectConfigJSON} from './types';
-import {AbsoluteFilePathSet, createAbsoluteFilePath} from '@romejs/path';
+import {ProjectConfig, ProjectConfigJSON} from "./types";
+import {AbsoluteFilePathSet, createAbsoluteFilePath} from "@romejs/path";
 
 export function serializeJSONProjectConfig(
 	config: ProjectConfig,
 ): ProjectConfigJSON {
-	const targets: ProjectConfigJSON['targets'] = {};
+	const targets: ProjectConfigJSON["targets"] = {};
 	for (const [name, target] of config.targets) {
 		targets[name] = target;
 	}

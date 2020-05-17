@@ -5,23 +5,23 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from '@romejs/js-compiler';
-import {AnyNode, AnyStatement, ImportDeclaration} from '@romejs/js-ast';
-import {SourceLocation} from '@romejs/parser-core';
-import {descriptions} from '@romejs/diagnostics';
+import {Path} from "@romejs/js-compiler";
+import {AnyNode, AnyStatement, ImportDeclaration} from "@romejs/js-ast";
+import {SourceLocation} from "@romejs/parser-core";
+import {descriptions} from "@romejs/diagnostics";
 
 export default {
-	name: 'duplicateImport',
+	name: "duplicateImport",
 	enter(path: Path): AnyNode {
 		const {node} = path;
 
-		if (node.type === 'Program') {
+		if (node.type === "Program") {
 			const skipImports: Set<ImportDeclaration> = new Set();
 			const seenSources: Map<string, undefined | SourceLocation> = new Map();
 			let shouldFix = false;
 
 			for (const bodyNode of node.body) {
-				if (bodyNode.type === 'ImportDeclaration') {
+				if (bodyNode.type === "ImportDeclaration") {
 					const source = bodyNode.source.value;
 
 					// Allow duplicate sources if the `importKind` is different
@@ -56,7 +56,7 @@ export default {
 				for (let i = 0; i < node.body.length; i++) {
 					const bodyNode = node.body[i];
 
-					if (bodyNode.type === 'ImportDeclaration') {
+					if (bodyNode.type === "ImportDeclaration") {
 						// Skip import if it's already been consumed
 						if (skipImports.has(bodyNode)) {
 							continue;
@@ -73,7 +73,7 @@ export default {
 							const possibleDuplicateNode = node.body[x];
 
 							if (
-								possibleDuplicateNode.type === 'ImportDeclaration' &&
+								possibleDuplicateNode.type === "ImportDeclaration" &&
 								bodyNode.source.value === possibleDuplicateNode.source.value &&
 								bodyNode.importKind === possibleDuplicateNode.importKind &&
 								!skipImports.has(possibleDuplicateNode)

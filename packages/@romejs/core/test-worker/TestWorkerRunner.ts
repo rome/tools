@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {UnknownObject} from '@romejs/typescript-helpers';
+import {UnknownObject} from "@romejs/typescript-helpers";
 import {
 	Diagnostic,
 	DiagnosticAdvice,
@@ -19,39 +19,39 @@ import {
 	deriveDiagnosticFromErrorStructure,
 	descriptions,
 	getErrorStackAdvice,
-} from '@romejs/diagnostics';
+} from "@romejs/diagnostics";
 import {
 	GlobalTestOptions,
 	TestCallback,
 	TestOptions,
-} from '@romejs-runtime/rome/test';
+} from "@romejs-runtime/rome/test";
 import {
 	TestRef,
 	default as TestWorkerBridge,
 	TestWorkerPrepareTestOptions,
 	TestWorkerPrepareTestResult,
 	TestWorkerRunTestOptions,
-} from '../common/bridges/TestWorkerBridge';
-import {TestMasterRunnerOptions} from '../master/testing/types';
+} from "../common/bridges/TestWorkerBridge";
+import {TestMasterRunnerOptions} from "../master/testing/types";
 import SnapshotManager, {
 	InlineSnapshotUpdate,
 	SnapshotCounts,
-} from './SnapshotManager';
-import TestAPI, {OnTimeout} from './TestAPI';
-import executeMain from '../common/utils/executeMain';
+} from "./SnapshotManager";
+import TestAPI, {OnTimeout} from "./TestAPI";
+import executeMain from "../common/utils/executeMain";
 import {
 	FileReference,
 	convertTransportFileReference,
-} from '../common/types/files';
-import {AbsoluteFilePath, createAbsoluteFilePath} from '@romejs/path';
-import {escapeMarkup, markup} from '@romejs/string-markup';
+} from "../common/types/files";
+import {AbsoluteFilePath, createAbsoluteFilePath} from "@romejs/path";
+import {escapeMarkup, markup} from "@romejs/string-markup";
 import {
 	ErrorFrames,
 	StructuredError,
 	getErrorStructure,
 	getSourceLocationFromErrorFrame,
-} from '@romejs/v8';
-import prettyFormat from '@romejs/pretty-format';
+} from "@romejs/v8";
+import prettyFormat from "@romejs/pretty-format";
 
 const MAX_RUNNING_TESTS = 20;
 
@@ -60,7 +60,7 @@ function cleanFrames(frames: ErrorFrames): ErrorFrames {
 	// Remove everything before the original module factory
 	let latestTestWorkerFrame = frames.find((frame, i) => {
 		if (
-			frame.typeName === 'global' &&
+			frame.typeName === "global" &&
 			frame.methodName === undefined &&
 			frame.functionName === undefined
 		) {
@@ -69,8 +69,8 @@ function cleanFrames(frames: ErrorFrames): ErrorFrames {
 			const nextFrame = frames[i + 1];
 			if (
 				nextFrame !== undefined &&
-				nextFrame.typeName === 'Script' &&
-				nextFrame.methodName === 'runInContext'
+				nextFrame.typeName === "Script" &&
+				nextFrame.methodName === "runInContext"
 			) {
 				// Yes!
 				// TODO also check for ___$romejs$core$common$utils$executeMain_ts$default (packages/romejs/core/common/utils/executeMain.ts:69:17)
@@ -85,7 +85,7 @@ function cleanFrames(frames: ErrorFrames): ErrorFrames {
 	if (latestTestWorkerFrame === undefined) {
 		latestTestWorkerFrame = frames.find((frame) => {
 			return (
-				frame.typeName !== undefined && frame.typeName.includes('$TestWorkerRunner')
+				frame.typeName !== undefined && frame.typeName.includes("$TestWorkerRunner")
 			);
 		});
 	}
@@ -151,12 +151,12 @@ export default class TestWorkerRunner {
 	createConsole(): Partial<Console> {
 		const addDiagnostic = (category: DiagnosticLogCategory, args: Array<unknown>) => {
 			let textParts: Array<string> = [];
-			if (args.length === 1 && typeof args[0] === 'string') {
+			if (args.length === 1 && typeof args[0] === "string") {
 				textParts.push(escapeMarkup(args[0]));
 			} else {
 				textParts = args.map((arg) => prettyFormat(arg, {markup: true}));
 			}
-			const text = textParts.join(' ');
+			const text = textParts.join(" ");
 
 			const err = new Error();
 
@@ -164,7 +164,7 @@ export default class TestWorkerRunner {
 			const frames = cleanFrames(getErrorStructure(err).frames.slice(2));
 
 			this.consoleAdvice.push({
-				type: 'log',
+				type: "log",
 				category,
 				text,
 			});
@@ -179,29 +179,29 @@ export default class TestWorkerRunner {
 		};
 
 		function log(...args: Array<unknown>): void {
-			addDiagnostic('none', args);
+			addDiagnostic("none", args);
 		}
 
 		return {
 			assert(expression: unknown, ...args: Array<unknown>): void {
 				if (!expression) {
-					args[0] = `Assertion failed${args.length === 0 ? '' : `: ${args[0]}`}`;
-					addDiagnostic('warn', args);
+					args[0] = `Assertion failed${args.length === 0 ? "" : `: ${args[0]}`}`;
+					addDiagnostic("warn", args);
 				}
 			},
 			dir(obj: unknown): void {
-				addDiagnostic('info', [obj]);
+				addDiagnostic("info", [obj]);
 			},
 			error: (...args: Array<unknown>): void => {
-				addDiagnostic('error', args);
+				addDiagnostic("error", args);
 			},
 			warn: (...args: Array<unknown>): void => {
-				addDiagnostic('warn', args);
+				addDiagnostic("warn", args);
 			},
 			dirxml: log,
 			debug: log,
 			info: (...args: Array<unknown>): void => {
-				addDiagnostic('info', args);
+				addDiagnostic("info", args);
 			},
 			log,
 			trace: log,
@@ -272,8 +272,8 @@ export default class TestWorkerRunner {
 					firstAdvice: [],
 					lastAdvice: [
 						{
-							type: 'log',
-							category: 'info',
+							type: "log",
+							category: "info",
 							text: markup`Error occured while executing test file <filelink emphasis target="${this.file.uid}" />`,
 						},
 					],
@@ -297,7 +297,7 @@ export default class TestWorkerRunner {
 
 		let testName = options.name;
 		if (Array.isArray(testName)) {
-			testName = testName.join(' > ');
+			testName = testName.join(" > ");
 		}
 
 		if (this.foundTests.has(testName)) {
@@ -330,7 +330,7 @@ export default class TestWorkerRunner {
 					description: {
 						...diag.description,
 						message: createBlessedDiagnosticMessage(
-							'Focused tests are not allowed due to a set flag',
+							"Focused tests are not allowed due to a set flag",
 						),
 					},
 				});
@@ -344,8 +344,8 @@ export default class TestWorkerRunner {
 		advice?: DiagnosticAdvice,
 	) {
 		let origin: DiagnosticOrigin = {
-			category: 'test/error',
-			message: 'Generated from a test worker without being attached to a test',
+			category: "test/error",
+			message: "Generated from a test worker without being attached to a test",
 		};
 
 		if (ref !== undefined) {
@@ -375,7 +375,7 @@ export default class TestWorkerRunner {
 			struct,
 			{
 				description: {
-					category: 'tests/failure',
+					category: "tests/failure",
 				},
 				filename: this.file.real.join(),
 				cleanFrames,
@@ -428,8 +428,8 @@ export default class TestWorkerRunner {
 					firstAdvice: [],
 					lastAdvice: [
 						{
-							type: 'log',
-							category: 'info',
+							type: "log",
+							category: "info",
 							text: `Error occured while running <emphasis>teardown</emphasis> for test <emphasis>${testName}</emphasis>`,
 						},
 						...api.advice,
@@ -480,7 +480,7 @@ export default class TestWorkerRunner {
 				const res = callback(api);
 
 				// Ducktyping this to detect a cross-realm Promise
-				if (res !== undefined && typeof res.then === 'function') {
+				if (res !== undefined && typeof res.then === "function") {
 					await Promise.race([timeoutPromise, res]);
 				}
 			});
@@ -619,8 +619,8 @@ export default class TestWorkerRunner {
 					firstAdvice: [],
 					lastAdvice: [
 						{
-							type: 'log',
-							category: 'info',
+							type: "log",
+							category: "info",
 							text: markup`Error occured while executing test file <filelink emphasis target="${this.file.uid}" />`,
 						},
 						INTERNAL_ERROR_LOG_ADVICE,

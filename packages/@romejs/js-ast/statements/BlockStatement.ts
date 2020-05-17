@@ -5,18 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyStatement, Directive, JSNodeBase} from '../index';
-import {createQuickBuilder} from '../utils';
+import {AnyStatement, Directive, JSNodeBase} from "../index";
+import {createQuickBuilder} from "../utils";
 
 export type BlockStatement = JSNodeBase & {
-	type: 'BlockStatement';
+	type: "BlockStatement";
 	body: Array<AnyStatement>;
 	directives?: Array<Directive>;
 };
 
-export const blockStatement = createQuickBuilder<BlockStatement, 'body'>(
-	'BlockStatement',
-	'body',
+export const blockStatement = createQuickBuilder<BlockStatement, "body">(
+	"BlockStatement",
+	"body",
 	{
 		bindingKeys: {},
 		visitorKeys: {

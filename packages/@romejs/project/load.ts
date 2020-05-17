@@ -8,7 +8,7 @@
 // In this file, all methods are synchronous. This is pretty gross since the rest of Rome is async everything.
 // This is required so we can integrate the project config code in third-party integrations with sync architectures.
 // Project configs are initialized very infrequently anyway so we can live with the extremely minor perf hit.
-import {Consumer} from '@romejs/consume';
+import {Consumer} from "@romejs/consume";
 import {
 	DEFAULT_PROJECT_CONFIG,
 	PartialProjectConfig,
@@ -17,24 +17,24 @@ import {
 	ProjectConfigMetaHard,
 	ProjectConfigObjects,
 	ProjectConfigTarget,
-} from './types';
-import {parsePathPatternsFile} from '@romejs/path-match';
+} from "./types";
+import {parsePathPatternsFile} from "@romejs/path-match";
 import {
 	arrayOfPatterns,
 	arrayOfStrings,
 	getParentConfigDependencies,
 	mergeAbsoluteFilePathSets,
 	mergeArrays,
-} from './utils';
-import {ConsumeJSONResult, consumeJSONExtra} from '@romejs/codec-json';
-import {AbsoluteFilePath, AbsoluteFilePathSet} from '@romejs/path';
-import {existsSync, lstatSync, readFileTextSync, readdirSync} from '@romejs/fs';
-import crypto = require('crypto');
-import {ROME_CONFIG_PACKAGE_JSON_FIELD} from './constants';
-import {parseSemverRange} from '@romejs/codec-semver';
-import {descriptions} from '@romejs/diagnostics';
+} from "./utils";
+import {ConsumeJSONResult, consumeJSONExtra} from "@romejs/codec-json";
+import {AbsoluteFilePath, AbsoluteFilePathSet} from "@romejs/path";
+import {existsSync, lstatSync, readFileTextSync, readdirSync} from "@romejs/fs";
+import crypto = require("crypto");
+import {ROME_CONFIG_PACKAGE_JSON_FIELD} from "./constants";
+import {parseSemverRange} from "@romejs/codec-semver";
+import {descriptions} from "@romejs/diagnostics";
 
-const IGNORE_FILENAMES = ['.gitignore', '.hgignore'];
+const IGNORE_FILENAMES = [".gitignore", ".hgignore"];
 
 function categoryExists(consumer: Consumer): boolean {
 	if (!consumer.exists()) {
@@ -42,7 +42,7 @@ function categoryExists(consumer: Consumer): boolean {
 	}
 
 	const value = consumer.asUnknown();
-	if (typeof value === 'boolean') {
+	if (typeof value === "boolean") {
 		consumer.unexpected(descriptions.PROJECT_CONFIG.BOOLEAN_CATEGORY(value));
 		return false;
 	}
@@ -70,7 +70,7 @@ export function loadCompleteProjectConfig(
 		},
 	};
 
-	const name = consumer.get('name').asString(
+	const name = consumer.get("name").asString(
 		`project-${projectFolder.getBasename()}`,
 	);
 
@@ -133,16 +133,16 @@ export function normalizeProjectConfig(
 
 	let configSourceSubKey;
 	let name: undefined | string;
-	const isInPackageJson = configPath.getBasename() === 'package.json';
+	const isInPackageJson = configPath.getBasename() === "package.json";
 	if (isInPackageJson) {
 		// Infer name from package.json
-		name = consumer.get('name').asStringOrVoid();
+		name = consumer.get("name").asStringOrVoid();
 
 		consumer = consumer.get(ROME_CONFIG_PACKAGE_JSON_FIELD);
 		configSourceSubKey = ROME_CONFIG_PACKAGE_JSON_FIELD;
 	}
 
-	const hash = crypto.createHash('sha256').update(configFile).digest('hex');
+	const hash = crypto.createHash("sha256").update(configFile).digest("hex");
 
 	const config: PartialProjectConfig = {
 		compiler: {},
@@ -174,56 +174,56 @@ export function normalizeProjectConfig(
 	};
 
 	// We never use `name` here but it's used in `loadCompleteProjectConfig`
-	consumer.markUsedProperty('name');
+	consumer.markUsedProperty("name");
 
-	if (consumer.has('version')) {
-		const version = consumer.get('version');
+	if (consumer.has("version")) {
+		const version = consumer.get("version");
 
 		consumer.handleThrownDiagnostics(() => {
 			config.version = parseSemverRange({
 				path: consumer.filename,
 				input: version.asString(),
-				offsetPosition: version.getLocation('inner-value').start,
+				offsetPosition: version.getLocation("inner-value").start,
 			});
 
 			// TODO verify that config.version range satisfies current version
 		});
 	}
 
-	if (consumer.has('root')) {
-		config.root = consumer.get('root').asBoolean();
+	if (consumer.has("root")) {
+		config.root = consumer.get("root").asBoolean();
 	}
 
-	const cache = consumer.get('cache');
+	const cache = consumer.get("cache");
 	if (categoryExists(cache)) {
 		// TODO
 	}
 
-	const resolver = consumer.get('resolver');
+	const resolver = consumer.get("resolver");
 	if (categoryExists(resolver)) {
 		// TODO
 	}
 
-	const bundler = consumer.get('bundler');
+	const bundler = consumer.get("bundler");
 	if (categoryExists(bundler)) {
-		if (bundler.has('mode')) {
-			config.bundler.mode = bundler.get('mode').asStringSetOrVoid([
-				'modern',
-				'legacy',
+		if (bundler.has("mode")) {
+			config.bundler.mode = bundler.get("mode").asStringSetOrVoid([
+				"modern",
+				"legacy",
 			]);
 		}
 	}
 
-	const typeChecking = consumer.get('typeChecking');
+	const typeChecking = consumer.get("typeChecking");
 	if (categoryExists(typeChecking)) {
-		if (typeChecking.has('enabled')) {
-			config.typeCheck.enabled = typeChecking.get('enabled').asBoolean();
+		if (typeChecking.has("enabled")) {
+			config.typeCheck.enabled = typeChecking.get("enabled").asBoolean();
 		}
 
-		if (typeChecking.has('libs')) {
+		if (typeChecking.has("libs")) {
 			const libs = normalizeTypeCheckingLibs(
 				projectFolder,
-				typeChecking.get('libs'),
+				typeChecking.get("libs"),
 			);
 			config.typeCheck.libs = libs.files;
 			meta.configDependencies = new AbsoluteFilePathSet([
@@ -234,87 +234,87 @@ export function normalizeProjectConfig(
 		}
 	}
 
-	const dependencies = consumer.get('dependencies');
+	const dependencies = consumer.get("dependencies");
 	if (categoryExists(dependencies)) {
-		if (dependencies.has('enabled')) {
-			config.dependencies.enabled = dependencies.get('dependencies').asBoolean();
+		if (dependencies.has("enabled")) {
+			config.dependencies.enabled = dependencies.get("dependencies").asBoolean();
 		}
 	}
 
-	const lint = consumer.get('lint');
+	const lint = consumer.get("lint");
 	if (categoryExists(lint)) {
-		if (lint.has('ignore')) {
-			config.lint.ignore = arrayOfPatterns(lint.get('ignore'));
+		if (lint.has("ignore")) {
+			config.lint.ignore = arrayOfPatterns(lint.get("ignore"));
 		}
 
-		if (lint.has('globals')) {
-			config.lint.globals = arrayOfStrings(lint.get('globals'));
+		if (lint.has("globals")) {
+			config.lint.globals = arrayOfStrings(lint.get("globals"));
 		}
 	}
 
-	const tests = consumer.get('tests');
+	const tests = consumer.get("tests");
 	if (categoryExists(tests)) {
-		if (tests.has('ignore')) {
-			config.tests.ignore = arrayOfPatterns(tests.get('ignore'));
+		if (tests.has("ignore")) {
+			config.tests.ignore = arrayOfPatterns(tests.get("ignore"));
 		}
 	}
 
-	const develop = consumer.get('develop');
+	const develop = consumer.get("develop");
 	if (categoryExists(develop)) {
-		if (develop.has('serveStatic')) {
-			config.develop.serveStatic = develop.get('serveStatic').asBoolean();
+		if (develop.has("serveStatic")) {
+			config.develop.serveStatic = develop.get("serveStatic").asBoolean();
 		}
 	}
 
-	const files = consumer.get('files');
+	const files = consumer.get("files");
 	if (categoryExists(files)) {
-		if (files.has('vendorPath')) {
+		if (files.has("vendorPath")) {
 			config.files.vendorPath = projectFolder.resolve(
-				files.get('vendorPath').asString(),
+				files.get("vendorPath").asString(),
 			);
 		}
 
-		if (files.has('maxSize')) {
-			config.files.maxSize = files.get('maxSize').asNumber();
+		if (files.has("maxSize")) {
+			config.files.maxSize = files.get("maxSize").asNumber();
 		}
 
-		if (files.has('assetExtensions')) {
-			config.files.assetExtensions = files.get('assetExtensions').asArray().map((
+		if (files.has("assetExtensions")) {
+			config.files.assetExtensions = files.get("assetExtensions").asArray().map((
 				item,
 			) => item.asString());
 		}
 	}
 
-	const vcs = consumer.get('vcs');
+	const vcs = consumer.get("vcs");
 	if (categoryExists(vcs)) {
-		if (vcs.has('root')) {
-			config.vcs.root = projectFolder.resolve(vcs.get('root').asString());
+		if (vcs.has("root")) {
+			config.vcs.root = projectFolder.resolve(vcs.get("root").asString());
 		}
 	}
 
-	const compiler = consumer.get('compiler');
+	const compiler = consumer.get("compiler");
 	if (categoryExists(compiler)) {
 		// TODO
 	}
 
-	const targets = consumer.get('targets');
+	const targets = consumer.get("targets");
 	if (categoryExists(targets)) {
 		for (const [name, object] of targets.asMap()) {
 			const target: ProjectConfigTarget = {
-				constraints: object.get('constraints').asImplicitArray().map((item) =>
+				constraints: object.get("constraints").asImplicitArray().map((item) =>
 					item.asString()
 				),
 			};
-			object.enforceUsedProperties('config target property');
+			object.enforceUsedProperties("config target property");
 			config.targets.set(name, target);
 		}
 	}
 
 	// Need to get this before enforceUsedProperties so it will be flagged
-	const _extends = consumer.get('extends');
+	const _extends = consumer.get("extends");
 
 	// Flag unknown properties
-	consumer.enforceUsedProperties('config property');
+	consumer.enforceUsedProperties("config property");
 
 	if (_extends.exists()) {
 		return extendProjectConfig(projectFolder, _extends, config, meta);
@@ -367,7 +367,7 @@ function extendProjectConfig(
 ): ReturnType<typeof normalizeProjectConfig> {
 	const extendsRelative = extendsStrConsumer.asString();
 
-	if (extendsRelative === 'parent') {
+	if (extendsRelative === "parent") {
 		// TODO maybe do some magic here?
 	}
 

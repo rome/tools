@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 23
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 7
 					index: 7
@@ -45,10 +45,10 @@ Program {
 				}
 			}
 			expression: ReferenceIdentifier {
-				name: 'declare'
+				name: "declare"
 				loc: Object {
-					filename: 'input.ts'
-					identifierName: 'declare'
+					filename: "input.ts"
+					identifierName: "declare"
 					end: Object {
 						column: 7
 						index: 7
@@ -64,10 +64,10 @@ Program {
 		}
 		TSInterfaceDeclaration {
 			id: BindingIdentifier {
-				name: 'I'
+				name: "I"
 				loc: Object {
-					filename: 'input.ts'
-					identifierName: 'I'
+					filename: "input.ts"
+					identifierName: "I"
 					end: Object {
 						column: 11
 						index: 19
@@ -83,7 +83,7 @@ Program {
 			extends: undefined
 			typeParameters: undefined
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 14
 					index: 22
@@ -98,7 +98,7 @@ Program {
 			body: TSInterfaceBody {
 				body: Array []
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 14
 						index: 22

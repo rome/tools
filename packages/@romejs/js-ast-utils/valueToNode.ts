@@ -23,9 +23,9 @@ import {
 	referenceIdentifier,
 	staticPropertyKey,
 	stringLiteral,
-} from '@romejs/js-ast';
-import createPropertyKey from './createPropertyKey';
-import {UnknownObject} from '@romejs/typescript-helpers';
+} from "@romejs/js-ast";
+import createPropertyKey from "./createPropertyKey";
+import {UnknownObject} from "@romejs/typescript-helpers";
 
 export default function valueToNode(
 	value: unknown,
@@ -39,23 +39,23 @@ export default function valueToNode(
 	| ReferenceIdentifier
 	| ArrayExpression {
 	if (ancestry.includes(value)) {
-		throw new Error('Recursion detected');
+		throw new Error("Recursion detected");
 	}
 
 	switch (typeof value) {
-		case 'string':
+		case "string":
 			return stringLiteral.quick(value);
 
-		case 'boolean':
+		case "boolean":
 			return booleanLiteral.quick(value);
 
-		case 'number':
+		case "number":
 			return numericLiteral.quick(value);
 
-		case 'undefined':
-			return referenceIdentifier.quick('undefined');
+		case "undefined":
+			return referenceIdentifier.quick("undefined");
 
-		case 'object': {
+		case "object": {
 			if (value === null) {
 				return nullLiteral.create({});
 			}
@@ -86,6 +86,6 @@ export default function valueToNode(
 		}
 
 		default:
-			throw new Error('Do not know how to turn this value into a literal');
+			throw new Error("Do not know how to turn this value into a literal");
 	}
 }

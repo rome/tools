@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 70
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		ClassDeclaration {
 			id: BindingIdentifier {
-				name: 'A'
+				name: "A"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'A'
+					filename: "input.js"
+					identifierName: "A"
 					end: Object {
 						column: 7
 						index: 7
@@ -49,7 +49,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 1
 					index: 69
@@ -66,7 +66,7 @@ Program {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 1
 						index: 69
@@ -79,10 +79,10 @@ Program {
 					}
 				}
 				superClass: ReferenceIdentifier {
-					name: 'B'
+					name: "B"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'B'
+						filename: "input.js"
+						identifierName: "B"
 						end: Object {
 							column: 17
 							index: 17
@@ -97,13 +97,13 @@ Program {
 				}
 				body: Array [
 					ClassMethod {
-						kind: 'constructor'
+						kind: "constructor"
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'constructor'
+								name: "constructor"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'constructor'
+									filename: "input.js"
+									identifierName: "constructor"
 									end: Object {
 										column: 15
 										index: 35
@@ -117,7 +117,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 15
 									index: 35
@@ -131,7 +131,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 5
 								index: 67
@@ -153,7 +153,7 @@ Program {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 17
 									index: 37
@@ -179,7 +179,7 @@ Program {
 								line: 2
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 15
 									index: 35
@@ -195,7 +195,7 @@ Program {
 						body: BlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 5
 									index: 67
@@ -210,7 +210,7 @@ Program {
 							body: Array [
 								ExpressionStatement {
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 21
 											index: 61
@@ -224,7 +224,7 @@ Program {
 									}
 									expression: ArrowFunctionExpression {
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 21
 												index: 61
@@ -244,7 +244,7 @@ Program {
 											returnType: undefined
 											thisType: undefined
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 13
 													index: 53
@@ -260,7 +260,7 @@ Program {
 										body: CallExpression {
 											arguments: Array []
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 21
 													index: 61
@@ -274,7 +274,7 @@ Program {
 											}
 											callee: Super {
 												loc: Object {
-													filename: 'input.js'
+													filename: "input.js"
 													end: Object {
 														column: 19
 														index: 59

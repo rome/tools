@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 42
@@ -30,16 +30,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'arguments is a reserved word'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "arguments is a reserved word"}
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 19
 					index: 19
@@ -56,7 +56,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 41
 					index: 41
@@ -71,7 +71,7 @@ Program {
 			expression: CallExpression {
 				arguments: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 41
 						index: 41
@@ -85,10 +85,10 @@ Program {
 				}
 				callee: FunctionExpression {
 					id: BindingIdentifier {
-						name: 'arguments'
+						name: "arguments"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'arguments'
+							filename: "input.js"
+							identifierName: "arguments"
 							end: Object {
 								column: 19
 								index: 19
@@ -102,7 +102,7 @@ Program {
 						}
 					}
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 38
 							index: 38
@@ -124,7 +124,7 @@ Program {
 						thisType: undefined
 						typeParameters: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 21
 								index: 21
@@ -140,7 +140,7 @@ Program {
 					body: BlockStatement {
 						body: Array []
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 38
 								index: 38
@@ -154,9 +154,9 @@ Program {
 						}
 						directives: Array [
 							Directive {
-								value: 'use strict'
+								value: "use strict"
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 36
 										index: 36

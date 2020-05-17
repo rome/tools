@@ -34,8 +34,8 @@
  *   WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-import {DOUBLE_QUOTE, SINGLE_QUOTE, TICK_QUOTE} from './constants';
-import {isDigit} from '@romejs/parser-core';
+import {DOUBLE_QUOTE, SINGLE_QUOTE, TICK_QUOTE} from "./constants";
+import {isDigit} from "@romejs/parser-core";
 
 // This regex represents printable ASCII characters, except the characters: '"\`
 const PRINTABLE_ASCII = /[ !#-&\(-\[\]-_a-~]/;
@@ -51,14 +51,14 @@ function escapeChar(
 		case "'":
 			return "\\'";
 
-		case '\b':
-			return '\\b';
+		case "\b":
+			return "\\b";
 
-		case '\f':
-			return '\\f';
+		case "\f":
+			return "\\f";
 
-		case '\\':
-			return '\\\\';
+		case "\\":
+			return "\\\\";
 	}
 
 	if (ignoreWhitespaceEscapes) {
@@ -66,20 +66,20 @@ function escapeChar(
 	}
 
 	switch (char) {
-		case '\n':
-			return '\\n';
+		case "\n":
+			return "\\n";
 
-		case '\r':
-			return '\\r';
+		case "\r":
+			return "\\r";
 
-		case '\t':
-			return '\\t';
+		case "\t":
+			return "\\t";
 	}
 
 	return undefined;
 }
 
-type QuoteChar = '' | '"' | "'" | '`';
+type QuoteChar = "" | '"' | "'" | "`";
 
 type EscapeStringOptions = {
 	quote?: QuoteChar;
@@ -93,11 +93,11 @@ export default function escapeString(
 	opts: EscapeStringOptions = {},
 ): string {
 	let index = -1;
-	let result = '';
+	let result = "";
 
 	const {
 		ignoreWhitespaceEscapes = false,
-		quote = '',
+		quote = "",
 		json = false,
 		unicodeOnly = false,
 	} = opts;
@@ -150,13 +150,13 @@ export default function escapeString(
 
 		// Escape back tick
 		if (char === TICK_QUOTE) {
-			result += quote === char ? '\\`' : char;
+			result += quote === char ? "\\`" : char;
 			continue;
 		}
 
 		// Null escape
-		if (char === '\0' && !json && !isDigit(str[index + 1])) {
-			result += '\\0';
+		if (char === "\0" && !json && !isDigit(str[index + 1])) {
+			result += "\\0";
 			continue;
 		}
 
@@ -172,7 +172,7 @@ export default function escapeString(
 		// Unicode escape
 		const hex = char.charCodeAt(0).toString(16);
 		const isLonghand = json || hex.length > 2;
-		const modifier = isLonghand ? 'u' : 'x';
+		const modifier = isLonghand ? "u" : "x";
 		const code = `0000${hex}`.slice(isLonghand ? -4 : -2);
 		const escaped = `\\${modifier}${code}`;
 		result += escaped;

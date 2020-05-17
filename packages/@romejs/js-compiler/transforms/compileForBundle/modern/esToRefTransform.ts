@@ -12,20 +12,20 @@ import {
 	REDUCE_REMOVE,
 	TransformExitResult,
 	TypeBinding,
-} from '@romejs/js-compiler';
+} from "@romejs/js-compiler";
 import {
 	getModuleId,
 	getOptions,
 	getPrefixedName,
 	getPrefixedNamespace,
 	getPrivateName,
-} from '../_utils';
+} from "../_utils";
 import {
 	getBindingIdentifiers,
 	getImportSpecifiers,
 	renameBindings,
 	template,
-} from '@romejs/js-ast-utils';
+} from "@romejs/js-ast-utils";
 import {
 	AnyNode,
 	ObjectProperties,
@@ -43,10 +43,10 @@ import {
 	variableDeclaration,
 	variableDeclarationStatement,
 	variableDeclarator,
-} from '@romejs/js-ast';
+} from "@romejs/js-ast";
 
 export default {
-	name: 'esToRefTransform',
+	name: "esToRefTransform",
 	enter(path: Path): TransformExitResult {
 		const {node, scope, context} = path;
 
@@ -63,9 +63,9 @@ export default {
 			// map exports and imports and correctly
 			for (const child of node.body) {
 				if (
-					child.type === 'ImportDeclaration' &&
-					child.importKind !== 'type' &&
-					child.importKind !== 'typeof'
+					child.type === "ImportDeclaration" &&
+					child.importKind !== "type" &&
+					child.importKind !== "typeof"
 				) {
 					const moduleId = getModuleId(child.source.value, opts);
 					if (moduleId === undefined) {
@@ -73,25 +73,25 @@ export default {
 					}
 
 					for (const specifier of getImportSpecifiers(child)) {
-						if (specifier.type === 'ImportSpecifier') {
+						if (specifier.type === "ImportSpecifier") {
 							mappings.set(
 								specifier.local.name.name,
 								getPrefixedName(specifier.imported.name, moduleId, opts),
 							);
-						} else if (specifier.type === 'ImportNamespaceSpecifier') {
+						} else if (specifier.type === "ImportNamespaceSpecifier") {
 							mappings.set(specifier.local.name.name, getPrefixedNamespace(moduleId));
-						} else if (specifier.type === 'ImportDefaultSpecifier') {
+						} else if (specifier.type === "ImportDefaultSpecifier") {
 							mappings.set(
 								specifier.local.name.name,
-								getPrefixedName('default', moduleId, opts),
+								getPrefixedName("default", moduleId, opts),
 							);
 						} else {
-							throw new Error('unexpected');
+							throw new Error("unexpected");
 						}
 					}
 				}
 
-				if (child.type === 'ExportLocalDeclaration') {
+				if (child.type === "ExportLocalDeclaration") {
 					// export const foo = '';
 					// export function foo() {}
 					for (const {name} of getBindingIdentifiers(child)) {
@@ -114,15 +114,15 @@ export default {
 					}
 				}
 
-				if (child.type === 'ExportDefaultDeclaration') {
+				if (child.type === "ExportDefaultDeclaration") {
 					const {declaration: decl} = child;
 					if (
-						(decl.type === 'FunctionDeclaration' || decl.type === 'ClassDeclaration') &&
+						(decl.type === "FunctionDeclaration" || decl.type === "ClassDeclaration") &&
 						decl.id !== undefined
 					) {
 						mappings.set(
 							decl.id.name,
-							getPrefixedName('default', opts.moduleId, opts),
+							getPrefixedName("default", opts.moduleId, opts),
 						);
 					}
 				}
@@ -137,14 +137,14 @@ export default {
 				// Get all the export names
 				const exportNames: Map<string, string> = new Map();
 				for (const child of newProgram.body) {
-					if (child.type === 'ExportDefaultDeclaration') {
+					if (child.type === "ExportDefaultDeclaration") {
 						exportNames.set(
-							'default',
-							getPrefixedName('default', opts.moduleId, opts),
+							"default",
+							getPrefixedName("default", opts.moduleId, opts),
 						);
 					}
 
-					if (child.type === 'ExportExternalDeclaration') {
+					if (child.type === "ExportExternalDeclaration") {
 						// TODO defaultSpecifier and namespaceSpecifier
 						const {source} = child;
 
@@ -161,10 +161,10 @@ export default {
 						}
 					}
 
-					if (child.type === 'ExportLocalDeclaration') {
+					if (child.type === "ExportLocalDeclaration") {
 						if (child.declaration !== undefined) {
 							throw new Error(
-								'No export declarations should be here as they have been removed by renameBindings',
+								"No export declarations should be here as they have been removed by renameBindings",
 							);
 						}
 
@@ -200,7 +200,7 @@ export default {
 
 					exportObjProps.push(
 						objectMethod.create({
-							kind: 'get',
+							kind: "get",
 							key: staticPropertyKey.quick(identifier.quick(exported)),
 							head: functionHead.quick([]),
 							body: blockStatement.create({
@@ -220,11 +220,11 @@ export default {
 
 				return {
 					...newProgram,
-					type: 'Program',
+					type: "Program",
 					body: [
 						variableDeclarationStatement.quick(
 							variableDeclaration.create({
-								kind: 'const',
+								kind: "const",
 								declarations: [
 									variableDeclarator.create({
 										id: bindingIdentifier.create({
@@ -243,16 +243,16 @@ export default {
 			}
 		}
 
-		if (node.type === 'ImportDeclaration') {
+		if (node.type === "ImportDeclaration") {
 			// should have already been handled with the Program branch
 			return REDUCE_REMOVE;
 		}
 
-		if (node.type === 'ExportDefaultDeclaration') {
+		if (node.type === "ExportDefaultDeclaration") {
 			const {declaration} = node;
 			if (
-				declaration.type === 'FunctionDeclaration' ||
-				declaration.type === 'ClassDeclaration'
+				declaration.type === "FunctionDeclaration" ||
+				declaration.type === "ClassDeclaration"
 			) {
 				if (declaration.id === undefined) {
 					return {
@@ -261,7 +261,7 @@ export default {
 						declaration: {
 							...declaration,
 							id: bindingIdentifier.create({
-								name: getPrefixedName('default', opts.moduleId, opts),
+								name: getPrefixedName("default", opts.moduleId, opts),
 							}),
 						},
 					};
@@ -271,19 +271,19 @@ export default {
 				}
 			} else {
 				return template.statement`const ${getPrefixedName(
-					'default',
+					"default",
 					opts.moduleId,
 					opts,
 				)} = ${declaration};`;
 			}
 		}
 
-		if (node.type === 'ExportExternalDeclaration') {
+		if (node.type === "ExportExternalDeclaration") {
 			// Remove external exports with a source as they will be resolved correctly and never point here
 			return REDUCE_REMOVE;
 		}
 
-		if (node.type === 'ExportLocalDeclaration') {
+		if (node.type === "ExportLocalDeclaration") {
 			const {declaration, specifiers} = node;
 
 			if (specifiers === undefined) {
@@ -299,14 +299,14 @@ export default {
 				const nodes: Array<AnyNode> = [];
 
 				for (const specifier of specifiers) {
-					if (specifier.type === 'ExportLocalSpecifier') {
+					if (specifier.type === "ExportLocalSpecifier") {
 						const binding = path.scope.getBinding(specifier.local.name);
 
 						// TODO we only really need this declaration for global bindings, `analyze()` could detect the exported import and resolvedImports would just work
 						if (binding === undefined || binding instanceof ImportBinding) {
 							nodes.push(
 								variableDeclaration.create({
-									kind: 'const',
+									kind: "const",
 									declarations: [
 										variableDeclarator.create({
 											id: bindingIdentifier.create({
@@ -331,7 +331,7 @@ export default {
 			}
 		}
 
-		if (node.type === 'ExportAllDeclaration' && opts.moduleAll === true) {
+		if (node.type === "ExportAllDeclaration" && opts.moduleAll === true) {
 			const moduleId = getModuleId(node.source.value, opts);
 			if (moduleId === undefined) {
 				return node;
@@ -353,7 +353,7 @@ export default {
       `;
 		}
 
-		if (node.type === 'ExportAllDeclaration' && opts.moduleAll !== true) {
+		if (node.type === "ExportAllDeclaration" && opts.moduleAll !== true) {
 			// We can remove these, this signature has already been flagged by analyze() and we'll automatically forward it
 			return REDUCE_REMOVE;
 		}

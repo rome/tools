@@ -5,26 +5,26 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from '@romejs/js-compiler';
+import {Path} from "@romejs/js-compiler";
 import {
 	AnyExpression,
 	AnyNode,
 	binaryExpression,
 	stringLiteral,
-} from '@romejs/js-ast';
+} from "@romejs/js-ast";
 
 export default {
-	name: 'templateLiterals',
+	name: "templateLiterals",
 	enter(path: Path): AnyNode {
 		const {node, parent} = path;
 
-		if (node.type === 'TaggedTemplateExpression') {
+		if (node.type === "TaggedTemplateExpression") {
 			// TODO
 		}
 
 		if (
-			node.type === 'TemplateLiteral' &&
-			parent.type !== 'TaggedTemplateExpression'
+			node.type === "TemplateLiteral" &&
+			parent.type !== "TaggedTemplateExpression"
 		) {
 			const nodes: Array<AnyExpression> = [];
 			const {expressions, quasis} = node;
@@ -41,7 +41,7 @@ export default {
 
 				if (index < expressions.length) {
 					const expr = expressions[index++];
-					if (expr.type !== 'StringLiteral' || expr.value !== '') {
+					if (expr.type !== "StringLiteral" || expr.value !== "") {
 						nodes.push(expr);
 					}
 				}
@@ -52,15 +52,15 @@ export default {
 			}
 
 			// Since `+` is left-to-right associative, nsure the first node is a string if first/second isn't
-			if (nodes[0].type !== 'StringLiteral' && nodes[1].type !== 'StringLiteral') {
-				nodes.unshift(stringLiteral.quick(''));
+			if (nodes[0].type !== "StringLiteral" && nodes[1].type !== "StringLiteral") {
+				nodes.unshift(stringLiteral.quick(""));
 			}
 
 			// Build the final expression
 			let root = nodes[0];
 			for (let i = 1; i < nodes.length; i++) {
 				root = binaryExpression.create({
-					operator: '+',
+					operator: "+",
 					left: root,
 					right: nodes[i],
 				});

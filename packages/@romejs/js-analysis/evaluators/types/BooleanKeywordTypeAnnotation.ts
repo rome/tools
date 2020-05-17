@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
+import {Scope} from "../../scopes";
 import {
 	AnyNode,
 	BooleanKeywordTypeAnnotation,
 	booleanKeywordTypeAnnotation,
-} from '@romejs/js-ast';
-import BooleanT from '../../types/BooleanT';
+} from "@romejs/js-ast";
+import BooleanT from "../../types/BooleanT";
 
 export default function BooleanKeywordTypeAnnotation(
 	node: AnyNode,

@@ -11,17 +11,17 @@ import Resolver, {
 	ResolverQuerySource,
 	ResolverRemoteQuery,
 	isPathLike,
-} from './Resolver';
+} from "./Resolver";
 import {
 	DiagnosticAdvice,
 	buildSuggestionAdvice,
 	createSingleDiagnosticError,
 	descriptions,
-} from '@romejs/diagnostics';
-import {orderBySimilarity} from '@romejs/string-utils';
-import {AbsoluteFilePath, createUnknownFilePath} from '@romejs/path';
-import {PLATFORMS} from '../../common/types/platform';
-import {markup} from '@romejs/string-markup';
+} from "@romejs/diagnostics";
+import {orderBySimilarity} from "@romejs/string-utils";
+import {AbsoluteFilePath, createUnknownFilePath} from "@romejs/path";
+import {PLATFORMS} from "../../common/types/platform";
+import {markup} from "@romejs/string-markup";
 
 export default function resolverSuggest(
 	resolver: Resolver,
@@ -29,13 +29,13 @@ export default function resolverSuggest(
 	resolved: ResolverQueryResponseNotFound,
 	origQuerySource?: ResolverQuerySource,
 ): Error {
-	let errMsg = '';
-	if (resolved.type === 'UNSUPPORTED') {
+	let errMsg = "";
+	if (resolved.type === "UNSUPPORTED") {
 		errMsg = `Unsupported path format`;
-	} else if (resolved.type === 'MISSING') {
+	} else if (resolved.type === "MISSING") {
 		errMsg = `Cannot find`;
-	} else if (resolved.type === 'FETCH_ERROR') {
-		errMsg = 'Failed to fetch';
+	} else if (resolved.type === "FETCH_ERROR") {
+		errMsg = "Failed to fetch";
 	}
 
 	errMsg += ` "${query.source.join()}" from "${query.origin.join()}"`;
@@ -65,17 +65,17 @@ export default function resolverSuggest(
 				strict: false,
 			});
 
-			if (nonStrictResolved.type === 'FOUND') {
-				if (nonStrictResolved.types.includes('implicitIndex')) {
+			if (nonStrictResolved.type === "FOUND") {
+				if (nonStrictResolved.types.includes("implicitIndex")) {
 					advice.push({
-						type: 'log',
-						category: 'info',
+						type: "log",
+						category: "info",
 						text: `This successfully resolves as an implicit index file. Trying adding <emphasis>/index${nonStrictResolved.path.getExtensions()}</emphasis> to the end of the import source`,
 					});
-				} else if (nonStrictResolved.types.includes('implicitExtension')) {
+				} else if (nonStrictResolved.types.includes("implicitExtension")) {
 					advice.push({
-						type: 'log',
-						category: 'info',
+						type: "log",
+						category: "info",
 						text: `This successfully resolves as an implicit extension. Try adding the extension <emphasis>${nonStrictResolved.path.getExtensions()}</emphasis>`,
 					});
 				}
@@ -97,7 +97,7 @@ export default function resolverSuggest(
 				platform: PLATFORM,
 			});
 
-			if (resolved.type === 'FOUND') {
+			if (resolved.type === "FOUND") {
 				validPlatforms.push(
 					markup`<emphasis>${PLATFORM}</emphasis> at <filelink emphasis target="${resolved.ref.uid}" />`,
 				);
@@ -106,14 +106,14 @@ export default function resolverSuggest(
 		if (validPlatforms.length > 0) {
 			if (query.platform === undefined) {
 				advice.push({
-					type: 'log',
-					category: 'info',
-					text: 'No platform was specified but we found modules for the following platforms',
+					type: "log",
+					category: "info",
+					text: "No platform was specified but we found modules for the following platforms",
 				});
 			} else {
 				advice.push({
-					type: 'log',
-					category: 'info',
+					type: "log",
+					category: "info",
 					text: markup`No module found for the platform <emphasis>${query.platform}</emphasis> but we found these others`,
 				});
 			}
@@ -121,7 +121,7 @@ export default function resolverSuggest(
 			skipSimilaritySuggestions = true;
 
 			advice.push({
-				type: 'list',
+				type: "list",
 				list: validPlatforms,
 			});
 		}
@@ -133,15 +133,15 @@ export default function resolverSuggest(
 			resolved.source !== undefined
 		) {
 			advice.push({
-				type: 'log',
-				category: 'info',
+				type: "log",
+				category: "info",
 				text: `Found while resolving <emphasis>${query.source}</emphasis> from <filelink emphasis target="${query.origin}" />`,
 			});
 
 			const origPointer = origQuerySource.location;
 
 			advice.push({
-				type: 'frame',
+				type: "frame",
 				location: origPointer,
 			});
 		}
@@ -188,7 +188,7 @@ export default function resolverSuggest(
 							formatItem: (relative) => {
 								const absolute = relativeToAbsolute.get(relative);
 								if (absolute === undefined) {
-									throw new Error('Should be valid');
+									throw new Error("Should be valid");
 								}
 
 								return markup`<filelink target="${absolute}">${relative}</filelink>`;
@@ -206,8 +206,8 @@ export default function resolverSuggest(
 			undefined
 		) {
 			advice.push({
-				type: 'log',
-				category: 'warn',
+				type: "log",
+				category: "warn",
 				text: "You aren't in a Rome project",
 			});
 		}
@@ -245,7 +245,7 @@ function getPathSuggestions(
 
 	// Remove . and .. entries from beginning
 	const sourceParts = [...source.getSegments()];
-	while (sourceParts[0] === '.' || sourceParts[0] === '..') {
+	while (sourceParts[0] === "." || sourceParts[0] === "..") {
 		sourceParts.shift();
 	}
 
@@ -350,7 +350,7 @@ function getPackageSuggestions(
 
 		const absolute = possibleGlobalPackages.get(name);
 		if (absolute === undefined) {
-			throw new Error('Should exist');
+			throw new Error("Should exist");
 		}
 
 		return [name, absolute];

@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Label, LabelKind} from '../tokenizer/state';
-import {types as tt} from '../tokenizer/types';
-import {Position, SourceLocation} from '@romejs/parser-core';
+import {Label, LabelKind} from "../tokenizer/state";
+import {types as tt} from "../tokenizer/types";
+import {Position, SourceLocation} from "@romejs/parser-core";
 import {
 	IndexTracker,
 	isIdentifierChar,
@@ -15,8 +15,8 @@ import {
 	keywordRelationalOperator,
 	lineBreak,
 	skipWhiteSpace,
-} from '@romejs/js-parser-utils';
-import {JSParser, OpeningContext} from '../parser';
+} from "@romejs/js-parser-utils";
+import {JSParser, OpeningContext} from "../parser";
 import {
 	AnyBindingPattern,
 	AnyExpression,
@@ -60,9 +60,9 @@ import {
 	VariableDeclarator,
 	WhileStatement,
 	WithStatement,
-} from '@romejs/js-ast';
-import * as charCodes from '@romejs/string-charcodes';
-import {nextToken, setStrict, skipLineComment} from '../tokenizer/index';
+} from "@romejs/js-ast";
+import * as charCodes from "@romejs/string-charcodes";
+import {nextToken, setStrict, skipLineComment} from "../tokenizer/index";
 import {
 	ParseExportResult,
 	ParseImportResult,
@@ -84,17 +84,17 @@ import {
 	parseTSTypeExpressionStatement,
 	parseTargetBindingPattern,
 	toTargetAssignmentPattern,
-} from './index';
-import {ob1Add, ob1Get0, ob1Inc, ob1Number0} from '@romejs/ob1';
-import {descriptions} from '@romejs/diagnostics';
+} from "./index";
+import {ob1Add, ob1Get0, ob1Inc, ob1Number0} from "@romejs/ob1";
+import {descriptions} from "@romejs/diagnostics";
 
-const loopLabel: Label = {kind: 'loop'};
-const switchLabel: Label = {kind: 'switch'};
+const loopLabel: Label = {kind: "loop"};
+const switchLabel: Label = {kind: "switch"};
 
 export function parseTopLevel(parser: JSParser): Program {
 	const start = parser.getPosition();
 	const openContext: OpeningContext = {
-		name: 'top-level',
+		name: "top-level",
 		start,
 		indent: ob1Number0,
 		open: tt.eof,
@@ -112,7 +112,7 @@ export function parseTopLevel(parser: JSParser): Program {
 	return parser.finishNode(
 		start,
 		{
-			type: 'Program',
+			type: "Program",
 			corrupt: parser.state.corrupt,
 			body,
 			directives,
@@ -134,7 +134,7 @@ export function parsePossibleInterpreterDirective(
 	// Check for #!
 	if (
 		parser.match(tt.hash) &&
-		parser.input[ob1Get0(parser.state.endPos.index)] === '!'
+		parser.input[ob1Get0(parser.state.endPos.index)] === "!"
 	) {
 		// Parse as a regular comment, we should abstract this logic
 		// TODO this gets pushed to all the comments which is bad
@@ -144,7 +144,7 @@ export function parsePossibleInterpreterDirective(
 		parser.next();
 
 		return {
-			type: 'InterpreterDirective',
+			type: "InterpreterDirective",
 			value: comment.value,
 			loc: comment.loc,
 		};
@@ -172,21 +172,21 @@ export function expressionStatementToDirective(
 		start,
 		end,
 		{
-			type: 'Directive',
+			type: "Directive",
 			value: val,
 		},
 	);
 }
 
 export function isLetStart(parser: JSParser, context?: string): boolean {
-	if (!parser.isContextual('let')) {
+	if (!parser.isContextual("let")) {
 		return false;
 	}
 
 	skipWhiteSpace.lastIndex = ob1Get0(parser.state.index);
 	const skip = skipWhiteSpace.exec(parser.input);
 	if (skip == null) {
-		throw new Error('Should never be true');
+		throw new Error("Should never be true");
 	}
 
 	const next = ob1Add(parser.state.index, skip[0].length);
@@ -227,12 +227,12 @@ export function isLetStart(parser: JSParser, context?: string): boolean {
 
 type StatementContext =
 	 | undefined
-	| 'if'
-	| 'label'
-	| 'do'
-	| 'while'
-	| 'with'
-	| 'for';
+	| "if"
+	| "label"
+	| "do"
+	| "while"
+	| "with"
+	| "for";
 
 // Parse a single statement.
 
@@ -250,11 +250,11 @@ export function parseStatement(
 	let startType = parser.state.tokenType;
 	const start = parser.getPosition();
 
-	if (startType === tt._const && parser.isSyntaxEnabled('ts')) {
+	if (startType === tt._const && parser.isSyntaxEnabled("ts")) {
 		const ahead = parser.lookaheadState();
-		if (ahead.tokenType === tt.name && ahead.tokenValue === 'enum') {
+		if (ahead.tokenType === tt.name && ahead.tokenValue === "enum") {
 			parser.expect(tt._const);
-			parser.expectContextual('enum');
+			parser.expectContextual("enum");
 			return parseTSEnumDeclaration(parser, start, /* isConst */ true);
 		}
 	}
@@ -262,7 +262,7 @@ export function parseStatement(
 	let kind: undefined | VariableDeclarationKind;
 	if (isLetStart(parser, context)) {
 		startType = tt._var;
-		kind = 'let';
+		kind = "let";
 	}
 
 	// Most types of statements are recognized by the keyword they
@@ -293,11 +293,11 @@ export function parseStatement(
 			}
 
 			if (context !== undefined) {
-				if (parser.inScope('STRICT')) {
+				if (parser.inScope("STRICT")) {
 					parser.addDiagnostic({
 						description: descriptions.JS_PARSER.ILLEGAL_FUNCTION_IN_STRICT,
 					});
-				} else if (context !== 'if' && context !== 'label') {
+				} else if (context !== "if" && context !== "label") {
 					parser.addDiagnostic({
 						description: descriptions.JS_PARSER.ILLEGAL_FUNCTION_IN_NON_STRICT,
 					});
@@ -344,7 +344,7 @@ export function parseStatement(
 		case tt._var: {
 			kind =
 				kind === undefined ? assertVarKind(String(parser.state.tokenValue)) : kind;
-			if (context !== undefined && kind !== 'var') {
+			if (context !== undefined && kind !== "var") {
 				parser.addDiagnostic({
 					description: descriptions.JS_PARSER.LEXICAL_DECLARATION_IN_SINGLE_STATEMENT_CONTEXT,
 				});
@@ -419,11 +419,11 @@ export function parseStatement(
 
 	// Identifier node, we switch to interpreting it as a label.
 	const maybeName = String(parser.state.tokenValue);
-	const expr = parseExpression(parser, 'statement expression');
+	const expr = parseExpression(parser, "statement expression");
 
 	if (
 		startType === tt.name &&
-		expr.type === 'ReferenceIdentifier' &&
+		expr.type === "ReferenceIdentifier" &&
 		parser.eat(tt.colon)
 	) {
 		return parseLabeledStatement(parser, start, maybeName, expr, context);
@@ -433,7 +433,7 @@ export function parseStatement(
 }
 
 export function isAsyncFunctionDeclarationStart(parser: JSParser): boolean {
-	if (!parser.isContextual('async')) {
+	if (!parser.isContextual("async")) {
 		return false;
 	}
 
@@ -451,7 +451,7 @@ export function isAsyncFunctionDeclarationStart(parser: JSParser): boolean {
 
 	return (
 		!lineBreak.test(parser.getRawInput(index, next)) &&
-		parser.getRawInput(next, ob1Add(next, 8)) === 'function' &&
+		parser.getRawInput(next, ob1Add(next, 8)) === "function" &&
 		(ob1Get0(next) + 8 === input.length ||
 		!isIdentifierChar(input.charCodeAt(ob1Get0(next) + 8)))
 	);
@@ -459,10 +459,10 @@ export function isAsyncFunctionDeclarationStart(parser: JSParser): boolean {
 
 export function assertModuleNodeAllowed(parser: JSParser, node: AnyNode): void {
 	if (
-		(node.type === 'ImportDeclaration' &&
-		(node.importKind === 'type' || node.importKind === 'typeof')) ||
-		(node.type === 'ExportLocalDeclaration' && node.exportKind === 'type') ||
-		(node.type === 'ExportAllDeclaration' && node.exportKind === 'type')
+		(node.type === "ImportDeclaration" &&
+		(node.importKind === "type" || node.importKind === "typeof")) ||
+		(node.type === "ExportLocalDeclaration" && node.exportKind === "type") ||
+		(node.type === "ExportAllDeclaration" && node.exportKind === "type")
 	) {
 		// Allow Flow type imports and exports in all conditions because
 		// Flow itself does not care about 'sourceType'.
@@ -503,7 +503,7 @@ export function parseBreakContinueStatement(
 	for (i = 0; i < parser.state.labels.length; ++i) {
 		const lab = parser.state.labels[i];
 		if (label === undefined || lab.name === label.name) {
-			if (lab.kind !== undefined && (isBreak || lab.kind === 'loop')) {
+			if (lab.kind !== undefined && (isBreak || lab.kind === "loop")) {
 				break;
 			}
 
@@ -523,7 +523,7 @@ export function parseBreakContinueStatement(
 		return parser.finishNode(
 			start,
 			{
-				type: 'BreakStatement',
+				type: "BreakStatement",
 				label,
 			},
 		);
@@ -531,7 +531,7 @@ export function parseBreakContinueStatement(
 		return parser.finishNode(
 			start,
 			{
-				type: 'ContinueStatement',
+				type: "ContinueStatement",
 				label,
 			},
 		);
@@ -544,7 +544,7 @@ export function parseDebuggerStatement(
 ): DebuggerStatement {
 	parser.next();
 	parser.semicolon();
-	return parser.finishNode(start, {type: 'DebuggerStatement'});
+	return parser.finishNode(start, {type: "DebuggerStatement"});
 }
 
 export function parseDoStatement(
@@ -553,15 +553,15 @@ export function parseDoStatement(
 ): DoWhileStatement {
 	parser.next();
 	parser.state.labels.push(loopLabel);
-	const body = parseStatement(parser, 'do');
+	const body = parseStatement(parser, "do");
 	parser.state.labels.pop();
 	parser.expect(tt._while);
-	const test = parseParenExpression(parser, 'do test');
+	const test = parseParenExpression(parser, "do test");
 	parser.eat(tt.semi);
 	return parser.finishNode(
 		start,
 		{
-			type: 'DoWhileStatement',
+			type: "DoWhileStatement",
 			body,
 			test,
 		},
@@ -576,11 +576,11 @@ export function parseForStatement(
 	parser.state.labels.push(loopLabel);
 
 	let awaitAt;
-	if (parser.inScope('ASYNC') && parser.eatContextual('await')) {
+	if (parser.inScope("ASYNC") && parser.eatContextual("await")) {
 		awaitAt = parser.getLastEndPosition();
 	}
 
-	const openContext = parser.expectOpening(tt.parenL, tt.parenR, 'for head');
+	const openContext = parser.expectOpening(tt.parenL, tt.parenR, "for head");
 
 	if (parser.match(tt.semi)) {
 		if (awaitAt) {
@@ -593,7 +593,7 @@ export function parseForStatement(
 	if (parser.match(tt._var) || parser.match(tt._const) || _isLet) {
 		const initStart = parser.getPosition();
 
-		const kind = assertVarKind(_isLet ? 'let' : String(parser.state.tokenValue));
+		const kind = assertVarKind(_isLet ? "let" : String(parser.state.tokenValue));
 		parser.next();
 
 		const declarations = parseVar(parser, initStart, kind, true);
@@ -601,14 +601,14 @@ export function parseForStatement(
 		const init: VariableDeclaration = parser.finishNode(
 			initStart,
 			{
-				type: 'VariableDeclaration',
+				type: "VariableDeclaration",
 				kind,
 				declarations,
 			},
 		);
 
 		if (
-			(parser.match(tt._in) || parser.isContextual('of')) &&
+			(parser.match(tt._in) || parser.isContextual("of")) &&
 			init.declarations.length === 1
 		) {
 			return parseForIn(parser, start, openContext, init, awaitAt);
@@ -625,12 +625,12 @@ export function parseForStatement(
 	}
 
 	const refShorthandDefaultPos: IndexTracker = {index: ob1Number0};
-	let init = parseExpression(parser, 'for init', true, refShorthandDefaultPos);
+	let init = parseExpression(parser, "for init", true, refShorthandDefaultPos);
 
-	if (parser.match(tt._in) || parser.isContextual('of')) {
-		const description = parser.isContextual('of')
-			? 'for-of statement'
-			: 'for-in statement';
+	if (parser.match(tt._in) || parser.isContextual("of")) {
+		const description = parser.isContextual("of")
+			? "for-of statement"
+			: "for-in statement";
 		const initPattern = toTargetAssignmentPattern(parser, init, description);
 		checkLVal(parser, init, undefined, undefined, description);
 		return parseForIn(parser, start, openContext, initPattern, awaitAt);
@@ -653,7 +653,7 @@ export function parseForStatement(
 }
 
 export function assertVarKind(kind: string): VariableDeclarationKind {
-	if (kind === 'let' || kind === 'var' || kind === 'const') {
+	if (kind === "let" || kind === "var" || kind === "const") {
 		return kind;
 	} else {
 		throw new Error(`Expected valid variable kind but got ${kind}`);
@@ -662,15 +662,15 @@ export function assertVarKind(kind: string): VariableDeclarationKind {
 
 export function parseIfStatement(parser: JSParser, start: Position): IfStatement {
 	parser.next();
-	const test = parseParenExpression(parser, 'if test');
-	const consequent = parseStatement(parser, 'if');
+	const test = parseParenExpression(parser, "if test");
+	const consequent = parseStatement(parser, "if");
 	const alternate = parser.eat(tt._else)
-		? parseStatement(parser, 'if')
+		? parseStatement(parser, "if")
 		: undefined;
 	return parser.finishNode(
 		start,
 		{
-			type: 'IfStatement',
+			type: "IfStatement",
 			test,
 			consequent,
 			alternate,
@@ -683,8 +683,8 @@ export function parseReturnStatement(
 	start: Position,
 ): ReturnStatement {
 	if (
-		!parser.inScope('FUNCTION') &&
-		parser.sourceType !== 'template' &&
+		!parser.inScope("FUNCTION") &&
+		parser.sourceType !== "template" &&
 		!parser.options.allowReturnOutsideFunction
 	) {
 		parser.addDiagnostic({
@@ -701,14 +701,14 @@ export function parseReturnStatement(
 	// possibility to insert one.
 	let argument;
 	if (!parser.isLineTerminator()) {
-		argument = parseExpression(parser, 'return argument');
+		argument = parseExpression(parser, "return argument");
 		parser.semicolon();
 	}
 
 	return parser.finishNode(
 		start,
 		{
-			type: 'ReturnStatement',
+			type: "ReturnStatement",
 			argument,
 		},
 	);
@@ -719,10 +719,10 @@ export function parseSwitchStatement(
 	start: Position,
 ): SwitchStatement {
 	parser.expect(tt._switch);
-	const discriminant = parseParenExpression(parser, 'switch discriminant');
+	const discriminant = parseParenExpression(parser, "switch discriminant");
 	const cases: Array<SwitchCase> = [];
 	const hasBrace = parser.match(tt.braceL);
-	const openContext = parser.expectOpening(tt.braceL, tt.braceR, 'switch body');
+	const openContext = parser.expectOpening(tt.braceL, tt.braceR, "switch body");
 	parser.state.labels.push(switchLabel);
 
 	if (hasBrace) {
@@ -746,7 +746,7 @@ export function parseSwitchStatement(
 				parser.finishNode(
 					cur.start,
 					{
-						type: 'SwitchCase',
+						type: "SwitchCase",
 						test: cur.test,
 						consequent: cur.consequent,
 					},
@@ -772,7 +772,7 @@ export function parseSwitchStatement(
 
 				let test;
 				if (isCase) {
-					test = parseExpression(parser, 'case test');
+					test = parseExpression(parser, "case test");
 				} else {
 					if (sawDefault) {
 						// TODO point to other default
@@ -813,7 +813,7 @@ export function parseSwitchStatement(
 	return parser.finishNode(
 		start,
 		{
-			type: 'SwitchStatement',
+			type: "SwitchStatement",
 			discriminant,
 			cases,
 		},
@@ -839,12 +839,12 @@ export function parseThrowStatement(
 		});
 	}
 
-	const argument = parseExpression(parser, 'throw argument');
+	const argument = parseExpression(parser, "throw argument");
 	parser.semicolon();
 	return parser.finishNode(
 		start,
 		{
-			type: 'ThrowStatement',
+			type: "ThrowStatement",
 			argument,
 		},
 	);
@@ -868,11 +868,11 @@ export function parseTryStatement(
 			const openContext = parser.expectOpening(
 				tt.parenL,
 				tt.parenR,
-				'catch clause param',
+				"catch clause param",
 			);
 			param = parseTargetBindingPattern(parser);
 			const clashes: Map<string, AnyNode> = new Map();
-			checkLVal(parser, param, true, clashes, 'catch clause');
+			checkLVal(parser, param, true, clashes, "catch clause");
 			parser.expectClosing(openContext);
 		}
 
@@ -880,7 +880,7 @@ export function parseTryStatement(
 		handler = parser.finishNode(
 			clauseStart,
 			{
-				type: 'CatchClause',
+				type: "CatchClause",
 				body,
 				param,
 			},
@@ -899,7 +899,7 @@ export function parseTryStatement(
 	return parser.finishNode(
 		start,
 		{
-			type: 'TryStatement',
+			type: "TryStatement",
 			block,
 			finalizer,
 			handler,
@@ -918,11 +918,11 @@ export function parseVarStatement(
 	return parser.finishNode(
 		start,
 		{
-			type: 'VariableDeclarationStatement',
+			type: "VariableDeclarationStatement",
 			declaration: parser.finishNode(
 				start,
 				{
-					type: 'VariableDeclaration',
+					type: "VariableDeclaration",
 					kind,
 					declarations,
 				},
@@ -936,11 +936,11 @@ export function parseWhileStatement(
 	start: Position,
 ): WhileStatement {
 	parser.next();
-	const test = parseParenExpression(parser, 'while test');
+	const test = parseParenExpression(parser, "while test");
 	parser.state.labels.push(loopLabel);
-	const body = parseStatement(parser, 'while');
+	const body = parseStatement(parser, "while");
 	parser.state.labels.pop();
-	return parser.finishNode(start, {type: 'WhileStatement', test, body});
+	return parser.finishNode(start, {type: "WhileStatement", test, body});
 }
 
 export function parseWithStatement(
@@ -948,10 +948,10 @@ export function parseWithStatement(
 	start: Position,
 ): WithStatement {
 	parser.next();
-	const object = parseParenExpression(parser, 'with object');
-	const body = parseStatement(parser, 'with');
+	const object = parseParenExpression(parser, "with object");
+	const body = parseStatement(parser, "with");
 
-	if (parser.inScope('STRICT')) {
+	if (parser.inScope("STRICT")) {
 		parser.addDiagnostic({
 			loc: parser.finishLoc(start),
 			description: descriptions.JS_PARSER.WITH_IN_STRICT,
@@ -961,7 +961,7 @@ export function parseWithStatement(
 	return parser.finishNode(
 		start,
 		{
-			type: 'WithStatement',
+			type: "WithStatement",
 			object,
 			body,
 		},
@@ -973,7 +973,7 @@ export function parseEmptyStatement(
 	start: Position,
 ): EmptyStatement {
 	parser.next();
-	return parser.finishNode(start, {type: 'EmptyStatement'});
+	return parser.finishNode(start, {type: "EmptyStatement"});
 }
 
 export function parseLabeledStatement(
@@ -994,9 +994,9 @@ export function parseLabeledStatement(
 
 	let kind: LabelKind = undefined;
 	if (parser.state.tokenType.isLoop) {
-		kind = 'loop';
+		kind = "loop";
 	} else if (parser.match(tt._switch)) {
-		kind = 'switch';
+		kind = "switch";
 	}
 
 	for (let i = parser.state.labels.length - 1; i >= 0; i--) {
@@ -1016,9 +1016,9 @@ export function parseLabeledStatement(
 		statementStart: parser.state.startPos.index,
 	});
 
-	let statementContext: StatementContext = 'label';
+	let statementContext: StatementContext = "label";
 	if (context !== undefined) {
-		if (context.includes('label')) {
+		if (context.includes("label")) {
 			statementContext = context;
 		} else {
 			// @ts-ignore
@@ -1028,11 +1028,11 @@ export function parseLabeledStatement(
 	const body = parseStatement(parser, statementContext);
 
 	if (
-		body.type === 'ClassDeclaration' ||
-		(body.type === 'VariableDeclarationStatement' &&
-		body.declaration.kind !== 'var') ||
-		(body.type === 'FunctionDeclaration' &&
-		(parser.inScope('STRICT') ||
+		body.type === "ClassDeclaration" ||
+		(body.type === "VariableDeclarationStatement" &&
+		body.declaration.kind !== "var") ||
+		(body.type === "FunctionDeclaration" &&
+		(parser.inScope("STRICT") ||
 		body.head.generator === true ||
 		body.head.async === true))
 	) {
@@ -1046,10 +1046,10 @@ export function parseLabeledStatement(
 	return parser.finishNode(
 		start,
 		{
-			type: 'LabeledStatement',
+			type: "LabeledStatement",
 			label: {
 				...expr,
-				type: 'Identifier',
+				type: "Identifier",
 			},
 			body,
 		},
@@ -1070,7 +1070,7 @@ export function parseExpressionStatement(
 	return parser.finishNode(
 		start,
 		{
-			type: 'ExpressionStatement',
+			type: "ExpressionStatement",
 			expression: expr,
 		},
 	);
@@ -1081,7 +1081,7 @@ export function parseBlock(
 	allowDirectives?: boolean,
 ): BlockStatement {
 	const start = parser.getPosition();
-	const openContext = parser.expectOpening(tt.braceL, tt.braceR, 'block');
+	const openContext = parser.expectOpening(tt.braceL, tt.braceR, "block");
 	const {body, directives} = parseBlockBody(
 		parser,
 		allowDirectives,
@@ -1091,7 +1091,7 @@ export function parseBlock(
 	return parser.finishNode(
 		start,
 		{
-			type: 'BlockStatement',
+			type: "BlockStatement",
 			directives,
 			body,
 		},
@@ -1100,8 +1100,8 @@ export function parseBlock(
 
 export function isValidDirective(parser: JSParser, stmt: AnyStatement): boolean {
 	return (
-		stmt.type === 'ExpressionStatement' &&
-		stmt.expression.type === 'StringLiteral' &&
+		stmt.type === "ExpressionStatement" &&
+		stmt.expression.type === "StringLiteral" &&
 		!parser.isParenthesized(stmt.expression)
 	);
 }
@@ -1154,13 +1154,13 @@ export function parseBlockOrModuleBlockBody(
 		if (
 			allowDirectives &&
 			!parsedNonDirective &&
-			stmt.type === 'ExpressionStatement' &&
+			stmt.type === "ExpressionStatement" &&
 			isValidDirective(parser, stmt)
 		) {
 			const directive = expressionStatementToDirective(parser, stmt);
 			directives.push(directive);
 
-			if (didSetStrict === undefined && directive.value === 'use strict') {
+			if (didSetStrict === undefined && directive.value === "use strict") {
 				setStrict(parser, true);
 				didSetStrict = true;
 
@@ -1180,7 +1180,7 @@ export function parseBlockOrModuleBlockBody(
 	}
 
 	if (didSetStrict) {
-		parser.popScope('STRICT');
+		parser.popScope("STRICT");
 	}
 
 	return {body, directives};
@@ -1196,21 +1196,21 @@ export function parseFor(
 
 	const test = parser.match(tt.semi)
 		? undefined
-		: parseExpression(parser, 'for test');
+		: parseExpression(parser, "for test");
 	parser.expect(tt.semi);
 
 	const update = parser.match(tt.parenR)
 		? undefined
-		: parseExpression(parser, 'for update');
+		: parseExpression(parser, "for update");
 	parser.expectClosing(openContext);
 
-	const body = parseStatement(parser, 'for');
+	const body = parseStatement(parser, "for");
 	parser.state.labels.pop();
 
 	return parser.finishNode(
 		start,
 		{
-			type: 'ForStatement',
+			type: "ForStatement",
 			init,
 			test,
 			update,
@@ -1238,12 +1238,12 @@ export function parseForIn(
 	}
 
 	if (
-		init.type === 'VariableDeclaration' &&
+		init.type === "VariableDeclaration" &&
 		init.declarations[0].init !== undefined &&
 		(!isForIn ||
-		parser.inScope('STRICT') ||
-		init.kind !== 'var' ||
-		init.declarations[0].id.type !== 'BindingIdentifier')
+		parser.inScope("STRICT") ||
+		init.kind !== "var" ||
+		init.declarations[0].id.type !== "BindingIdentifier")
 	) {
 		parser.addDiagnostic({
 			loc: init.loc,
@@ -1253,18 +1253,18 @@ export function parseForIn(
 
 	const left = init;
 	const right = isForIn
-		? parseExpression(parser, 'for right')
-		: parseMaybeAssign(parser, 'for right');
+		? parseExpression(parser, "for right")
+		: parseMaybeAssign(parser, "for right");
 	parser.expectClosing(openContext);
 
-	const body = parseStatement(parser, 'for');
+	const body = parseStatement(parser, "for");
 	parser.state.labels.pop();
 
 	if (isForIn) {
 		const node: ForInStatement = parser.finishNode(
 			start,
 			{
-				type: 'ForInStatement',
+				type: "ForInStatement",
 				left,
 				right,
 				body,
@@ -1275,7 +1275,7 @@ export function parseForIn(
 		const node: ForOfStatement = parser.finishNode(
 			start,
 			{
-				type: 'ForOfStatement',
+				type: "ForOfStatement",
 				await: isAwait,
 				left,
 				right,
@@ -1298,18 +1298,18 @@ export function parseVar(
 		const start = parser.getPosition();
 		const id = parseVarHead(parser, start);
 
-		if (kind === 'var') {
+		if (kind === "var") {
 			parser.state.hasHoistedVars = true;
 		}
 
 		let init;
 		if (parser.eat(tt.eq)) {
-			init = parseMaybeAssign(parser, 'var init', isFor);
+			init = parseMaybeAssign(parser, "var init", isFor);
 		} else {
-			if (kind === 'const' && !(parser.match(tt._in) || parser.isContextual('of'))) {
+			if (kind === "const" && !(parser.match(tt._in) || parser.isContextual("of"))) {
 				// `const` with no initializer is allowed in TypeScript.
 				// It could be a declaration like `const x: number;`.
-				if (!parser.isSyntaxEnabled('ts')) {
+				if (!parser.isSyntaxEnabled("ts")) {
 					parser.addDiagnostic({
 						description: descriptions.JS_PARSER.CONST_WITHOUT_INITIALIZER,
 						loc: id.loc,
@@ -1319,9 +1319,9 @@ export function parseVar(
 
 			// We exclude `const` because we already validated it above
 			if (
-				kind !== 'const' &&
-				id.type !== 'BindingIdentifier' &&
-				!(isFor && (parser.match(tt._in) || parser.isContextual('of')))
+				kind !== "const" &&
+				id.type !== "BindingIdentifier" &&
+				!(isFor && (parser.match(tt._in) || parser.isContextual("of")))
 			) {
 				parser.addDiagnostic({
 					start: parser.state.lastEndPos,
@@ -1334,7 +1334,7 @@ export function parseVar(
 			parser.finishNode(
 				start,
 				{
-					type: 'VariableDeclarator',
+					type: "VariableDeclarator",
 					id,
 					init,
 				},
@@ -1355,12 +1355,12 @@ export function parseVarHead(
 ): AnyTargetBindingPattern {
 	const id = parseTargetBindingPattern(parser);
 
-	checkLVal(parser, id, true, undefined, 'variable declaration');
+	checkLVal(parser, id, true, undefined, "variable declaration");
 
 	let definite: undefined | boolean;
-	if (id.type === 'BindingIdentifier' && parser.match(tt.bang)) {
+	if (id.type === "BindingIdentifier" && parser.match(tt.bang)) {
 		definite = true;
-		parser.expectSyntaxEnabled('ts');
+		parser.expectSyntaxEnabled("ts");
 		parser.next();
 	}
 
@@ -1374,7 +1374,7 @@ export function parseVarHead(
 				meta: parser.finishNode(
 					start,
 					{
-						type: 'PatternMeta',
+						type: "PatternMeta",
 						typeAnnotation,
 						definite,
 					},
@@ -1384,7 +1384,7 @@ export function parseVarHead(
 	} else if (definite) {
 		return {
 			...id,
-			meta: parser.finishNode(start, {type: 'PatternMeta', definite}),
+			meta: parser.finishNode(start, {type: "PatternMeta", definite}),
 		};
 	} else {
 		return id;
@@ -1418,19 +1418,19 @@ export function parseFunctionDeclaration(
 	);
 
 	if (id === undefined) {
-		throw new Error('Required function name');
+		throw new Error("Required function name");
 	}
 
 	if (body === undefined) {
 		return parser.finalizeNode({
-			type: 'TSDeclareFunction',
+			type: "TSDeclareFunction",
 			...shape,
 			id,
 		});
 	}
 
 	return parser.finalizeNode({
-		type: 'FunctionDeclaration',
+		type: "FunctionDeclaration",
 		...shape,
 		id,
 		body,
@@ -1454,8 +1454,8 @@ export function parseExportDefaultFunctionDeclaration(
 
 	if (id === undefined) {
 		id = {
-			type: 'BindingIdentifier',
-			name: '*default*',
+			type: "BindingIdentifier",
+			name: "*default*",
 			// Does this `loc` make sense?
 			loc: shape.loc,
 		};
@@ -1463,14 +1463,14 @@ export function parseExportDefaultFunctionDeclaration(
 
 	if (body === undefined) {
 		return parser.finalizeNode({
-			type: 'TSDeclareFunction',
+			type: "TSDeclareFunction",
 			...shape,
 			id,
 		});
 	}
 
 	return parser.finalizeNode({
-		type: 'FunctionDeclaration',
+		type: "FunctionDeclaration",
 		...shape,
 		id,
 		body,
@@ -1493,13 +1493,13 @@ export function parseFunctionExpression(
 	);
 
 	if (body === undefined) {
-		throw new Error('Expected body');
+		throw new Error("Expected body");
 	}
 
 	return {
 		...shape,
 		body,
-		type: 'FunctionExpression',
+		type: "FunctionExpression",
 	};
 }
 
@@ -1528,13 +1528,13 @@ export function parseFunction(
 
 	const oldYieldPos = parser.state.yieldPos;
 	const oldAwaitPos = parser.state.awaitPos;
-	parser.pushScope('FUNCTION_LOC', start);
-	parser.pushScope('FUNCTION', true);
-	parser.pushScope('METHOD', false);
-	parser.pushScope('GENERATOR', isGenerator);
-	parser.pushScope('ASYNC', isAsync);
-	parser.pushScope('CLASS_PROPERTY', false);
-	parser.pushScope('NON_ARROW_FUNCTION');
+	parser.pushScope("FUNCTION_LOC", start);
+	parser.pushScope("FUNCTION", true);
+	parser.pushScope("METHOD", false);
+	parser.pushScope("GENERATOR", isGenerator);
+	parser.pushScope("ASYNC", isAsync);
+	parser.pushScope("CLASS_PROPERTY", false);
+	parser.pushScope("NON_ARROW_FUNCTION");
 	parser.state.yieldPos = ob1Number0;
 	parser.state.awaitPos = ob1Number0;
 
@@ -1563,16 +1563,16 @@ export function parseFunction(
 	parser.state.yieldPos = oldYieldPos;
 	parser.state.awaitPos = oldAwaitPos;
 
-	parser.popScope('NON_ARROW_FUNCTION');
-	parser.popScope('FUNCTION');
-	parser.popScope('FUNCTION_LOC');
-	parser.popScope('CLASS_PROPERTY');
-	parser.popScope('METHOD');
-	parser.popScope('GENERATOR');
-	parser.popScope('ASYNC');
+	parser.popScope("NON_ARROW_FUNCTION");
+	parser.popScope("FUNCTION");
+	parser.popScope("FUNCTION_LOC");
+	parser.popScope("CLASS_PROPERTY");
+	parser.popScope("METHOD");
+	parser.popScope("GENERATOR");
+	parser.popScope("ASYNC");
 
-	if (body !== undefined && body.type !== 'BlockStatement') {
-		throw new Error('Expected block statement for functions');
+	if (body !== undefined && body.type !== "BlockStatement") {
+		throw new Error("Expected block statement for functions");
 	}
 
 	return {
@@ -1587,16 +1587,16 @@ export function parseFunction(
 }
 
 export function splitFunctionParams(
-	params: FunctionHead['params'],
+	params: FunctionHead["params"],
 ): {
-	params: FunctionHead['params'];
+	params: FunctionHead["params"];
 	thisType: undefined | BindingIdentifier;
 } {
 	const firstParam = params[0];
 	if (
 		firstParam !== undefined &&
-		firstParam.type === 'BindingIdentifier' &&
-		firstParam.name === 'this'
+		firstParam.type === "BindingIdentifier" &&
+		firstParam.name === "this"
 	) {
 		return {
 			thisType: firstParam,
@@ -1620,10 +1620,10 @@ export function parseFunctionParams(
 	rest: undefined | AnyTargetBindingPattern;
 } {
 	let typeParameters = undefined;
-	if (parser.isRelational('<')) {
+	if (parser.isRelational("<")) {
 		typeParameters = maybeParseTSTypeParameters(parser);
 
-		if (typeParameters !== undefined && (kind === 'get' || kind === 'set')) {
+		if (typeParameters !== undefined && (kind === "get" || kind === "set")) {
 			parser.addDiagnostic({
 				loc: typeParameters.loc,
 				description: descriptions.JS_PARSER.ACCESSOR_WITH_TYPE_PARAMS,
@@ -1631,12 +1631,12 @@ export function parseFunctionParams(
 		}
 	}
 
-	parser.pushScope('PARAMETERS', true);
+	parser.pushScope("PARAMETERS", true);
 
 	const openContext = parser.expectOpening(
 		tt.parenL,
 		tt.parenR,
-		'function params',
+		"function params",
 	);
 	const {list: params, rest} = parseBindingListNonEmpty(
 		parser,
@@ -1644,7 +1644,7 @@ export function parseFunctionParams(
 		allowTSModifiers,
 	);
 
-	parser.popScope('PARAMETERS');
+	parser.popScope("PARAMETERS");
 	checkYieldAwaitInDefaultParams(parser);
 	return {params, rest, typeParameters};
 }

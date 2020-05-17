@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from '@romejs/js-ast';
-import T, {SerialTypeFactory} from './T';
-import {HydrateData, HydrateTypeFactory} from '../Evaluator';
-import {Scope} from '../scopes';
-import ClassT from './ClassT';
-import InstanceT from './InstanceT';
+import {AnyNode} from "@romejs/js-ast";
+import T, {SerialTypeFactory} from "./T";
+import {HydrateData, HydrateTypeFactory} from "../Evaluator";
+import {Scope} from "../scopes";
+import ClassT from "./ClassT";
+import InstanceT from "./InstanceT";
 
 export default class GenericT extends T {
 	constructor(
@@ -27,7 +27,7 @@ export default class GenericT extends T {
 	name: string;
 	type: T;
 
-	static type = 'GenericT';
+	static type = "GenericT";
 
 	serialize(addType: SerialTypeFactory): HydrateData {
 		return {

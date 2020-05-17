@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {AnyNode, Directive, directive} from '@romejs/js-ast';
+import {Scope} from "../../scopes";
+import {AnyNode, Directive, directive} from "@romejs/js-ast";
 
 export default function Directive(node: AnyNode, scope: Scope) {
 	node = directive.assert(node);
 	scope;
-	throw new Error('unimplemented');
+	throw new Error("unimplemented");
 }

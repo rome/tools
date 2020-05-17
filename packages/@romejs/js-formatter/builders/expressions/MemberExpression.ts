@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token, concat} from '../../tokens';
-import {MemberExpression} from '@romejs/js-ast';
+import Builder from "../../Builder";
+import {Token, concat} from "../../tokens";
+import {MemberExpression} from "@romejs/js-ast";
 
 export default function MemberExpression(
 	builder: Builder,

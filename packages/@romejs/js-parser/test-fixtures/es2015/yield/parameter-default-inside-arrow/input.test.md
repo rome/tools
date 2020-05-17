@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 17
 			index: 17
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 17
 					index: 17
@@ -46,7 +46,7 @@ Program {
 			}
 			expression: ArrowFunctionExpression {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -62,7 +62,7 @@ Program {
 					body: Array []
 					directives: Array []
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 17
 							index: 17
@@ -82,7 +82,7 @@ Program {
 					returnType: undefined
 					thisType: undefined
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 14
 							index: 14
@@ -96,9 +96,9 @@ Program {
 					}
 					params: Array [
 						BindingAssignmentPattern {
-							operator: '='
+							operator: "="
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 10
 									index: 10
@@ -111,10 +111,10 @@ Program {
 								}
 							}
 							left: BindingIdentifier {
-								name: 'x'
+								name: "x"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'x'
+									filename: "input.js"
+									identifierName: "x"
 									end: Object {
 										column: 2
 										index: 2
@@ -128,10 +128,10 @@ Program {
 								}
 							}
 							right: ReferenceIdentifier {
-								name: 'yield'
+								name: "yield"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'yield'
+									filename: "input.js"
+									identifierName: "yield"
 									end: Object {
 										column: 10
 										index: 10

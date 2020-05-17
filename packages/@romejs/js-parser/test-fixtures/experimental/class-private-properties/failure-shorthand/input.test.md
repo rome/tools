@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 57
@@ -30,16 +30,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unknown start to an statement expression'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unknown start to an statement expression"}
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 10
 					index: 46
@@ -56,10 +56,10 @@ Program {
 	body: Array [
 		ClassDeclaration {
 			id: BindingIdentifier {
-				name: 'Foo'
+				name: "Foo"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'Foo'
+					filename: "input.js"
+					identifierName: "Foo"
 					end: Object {
 						column: 9
 						index: 9
@@ -73,7 +73,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 1
 					index: 56
@@ -91,7 +91,7 @@ Program {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 1
 						index: 56
@@ -107,10 +107,10 @@ Program {
 					ClassPrivateProperty {
 						key: PrivateName {
 							id: Identifier {
-								name: 'x'
+								name: "x"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'x'
+									filename: "input.js"
+									identifierName: "x"
 									end: Object {
 										column: 4
 										index: 16
@@ -124,7 +124,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 4
 									index: 16
@@ -140,7 +140,7 @@ Program {
 						value: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 5
 								index: 17
@@ -165,7 +165,7 @@ Program {
 								line: 2
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 4
 									index: 16
@@ -180,13 +180,13 @@ Program {
 						}
 					}
 					ClassMethod {
-						kind: 'constructor'
+						kind: "constructor"
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'constructor'
+								name: "constructor"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'constructor'
+									filename: "input.js"
+									identifierName: "constructor"
 									end: Object {
 										column: 13
 										index: 31
@@ -200,7 +200,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 13
 									index: 31
@@ -214,7 +214,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 3
 								index: 54
@@ -236,7 +236,7 @@ Program {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 15
 									index: 33
@@ -262,7 +262,7 @@ Program {
 								line: 3
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 13
 									index: 31
@@ -278,7 +278,7 @@ Program {
 						body: BlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 3
 									index: 54
@@ -293,7 +293,7 @@ Program {
 							body: Array [
 								ExpressionStatement {
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 12
 											index: 48
@@ -306,10 +306,10 @@ Program {
 										}
 									}
 									expression: UnaryExpression {
-										operator: 'delete'
+										operator: "delete"
 										prefix: true
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 12
 												index: 48
@@ -322,9 +322,9 @@ Program {
 											}
 										}
 										argument: ReferenceIdentifier {
-											name: 'INVALID_PLACEHOLDER'
+											name: "INVALID_PLACEHOLDER"
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 12
 													index: 48
@@ -341,7 +341,7 @@ Program {
 								}
 								ExpressionStatement {
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 14
 											index: 50
@@ -354,10 +354,10 @@ Program {
 										}
 									}
 									expression: ReferenceIdentifier {
-										name: 'x'
+										name: "x"
 										loc: Object {
-											filename: 'input.js'
-											identifierName: 'x'
+											filename: "input.js"
+											identifierName: "x"
 											end: Object {
 												column: 13
 												index: 49

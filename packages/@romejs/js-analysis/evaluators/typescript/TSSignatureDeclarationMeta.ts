@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
+import {Scope} from "../../scopes";
 import {
 	AnyNode,
 	TSSignatureDeclarationMeta,
 	tsSignatureDeclarationMeta,
-} from '@romejs/js-ast';
+} from "@romejs/js-ast";
 
 export default function TSSignatureDeclarationMeta(node: AnyNode, scope: Scope) {
 	node = tsSignatureDeclarationMeta.assert(node);
 	scope;
-	throw new Error('unimplemented');
+	throw new Error("unimplemented");
 }

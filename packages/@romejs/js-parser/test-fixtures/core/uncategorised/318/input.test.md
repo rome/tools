@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 4
 			index: 40
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 4
 					index: 40
@@ -47,7 +47,7 @@ Program {
 			expression: CallExpression {
 				arguments: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 3
 						index: 39
@@ -62,7 +62,7 @@ Program {
 				callee: FunctionExpression {
 					id: undefined
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 1
 							index: 37
@@ -84,7 +84,7 @@ Program {
 						thisType: undefined
 						typeParameters: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 12
 								index: 12
@@ -100,7 +100,7 @@ Program {
 					body: BlockStatement {
 						body: Array []
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 1
 								index: 37
@@ -114,9 +114,9 @@ Program {
 						}
 						directives: Array [
 							Directive {
-								value: 'use strict'
+								value: "use strict"
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 14
 										index: 29
@@ -130,9 +130,9 @@ Program {
 								}
 							}
 							Directive {
-								value: '\0'
+								value: "\0"
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 5
 										index: 35

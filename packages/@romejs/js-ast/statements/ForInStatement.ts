@@ -11,18 +11,18 @@ import {
 	AnyTargetAssignmentPattern,
 	JSNodeBase,
 	VariableDeclaration,
-} from '../index';
-import {createBuilder} from '../utils';
+} from "../index";
+import {createBuilder} from "../utils";
 
 export type ForInStatement = JSNodeBase & {
-	type: 'ForInStatement';
+	type: "ForInStatement";
 	left: VariableDeclaration | AnyTargetAssignmentPattern;
 	right: AnyExpression;
 	body: AnyStatement;
 };
 
 export const forInStatement = createBuilder<ForInStatement>(
-	'ForInStatement',
+	"ForInStatement",
 	{
 		bindingKeys: {},
 		visitorKeys: {

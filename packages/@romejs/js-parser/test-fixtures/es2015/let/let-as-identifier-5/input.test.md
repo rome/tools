@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 14
@@ -33,7 +33,7 @@ Program {
 		IfStatement {
 			alternate: undefined
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 10
 					index: 10
@@ -49,7 +49,7 @@ Program {
 				value: 1
 				format: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 5
 						index: 5
@@ -64,7 +64,7 @@ Program {
 			}
 			consequent: ExpressionStatement {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 10
 						index: 10
@@ -77,10 +77,10 @@ Program {
 					}
 				}
 				expression: ReferenceIdentifier {
-					name: 'let'
+					name: "let"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'let'
+						filename: "input.js"
+						identifierName: "let"
 						end: Object {
 							column: 10
 							index: 10
@@ -99,7 +99,7 @@ Program {
 			body: Array []
 			directives: Array []
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 2
 					index: 13

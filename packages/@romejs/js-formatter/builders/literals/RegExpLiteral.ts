@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token, concat} from '../../tokens';
-import {RegExpLiteral} from '@romejs/js-ast';
+import Builder from "../../Builder";
+import {Token, concat} from "../../tokens";
+import {RegExpLiteral} from "@romejs/js-ast";
 
 export default function RegExpLiteral(
 	builder: Builder,
@@ -16,33 +16,33 @@ export default function RegExpLiteral(
 	const flags: Array<string> = [];
 
 	if (node.global === true) {
-		flags.push('g');
+		flags.push("g");
 	}
 
 	if (node.multiline === true) {
-		flags.push('m');
+		flags.push("m");
 	}
 
 	if (node.sticky === true) {
-		flags.push('y');
+		flags.push("y");
 	}
 
 	if (node.insensitive === true) {
-		flags.push('i');
+		flags.push("i");
 	}
 
 	if (node.noDotNewline === true) {
-		flags.push('s');
+		flags.push("s");
 	}
 
 	if (node.unicode === true) {
-		flags.push('u');
+		flags.push("u");
 	}
 
 	return concat([
-		'/',
+		"/",
 		builder.tokenize(node.expression, node),
-		'/',
-		flags.join(''),
+		"/",
+		flags.join(""),
 	]);
 }

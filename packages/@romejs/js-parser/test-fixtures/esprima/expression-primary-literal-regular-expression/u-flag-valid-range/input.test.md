@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 62
@@ -30,16 +30,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/regex'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Range values reversed. Start char code is greater than end char code'}
+				category: "parse/regex"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Range values reversed. Start char code is greater than end char code"}
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 18
 					index: 18
@@ -56,7 +56,7 @@ Program {
 	body: Array [
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 61
 					index: 61
@@ -69,9 +69,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'var'
+				kind: "var"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 61
 						index: 61
@@ -86,10 +86,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'x'
+							name: "x"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'x'
+								filename: "input.js"
+								identifierName: "x"
 								end: Object {
 									column: 5
 									index: 5
@@ -103,7 +103,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 60
 								index: 60
@@ -123,7 +123,7 @@ Program {
 							sticky: false
 							unicode: true
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 60
 									index: 60
@@ -137,7 +137,7 @@ Program {
 							}
 							expression: RegExpSubExpression {
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 58
 										index: 58
@@ -153,7 +153,7 @@ Program {
 									RegExpCharSet {
 										invert: false
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 19
 												index: 19
@@ -167,9 +167,9 @@ Program {
 										}
 										body: Array [
 											RegExpCharacter {
-												value: 'u'
+												value: "u"
 												loc: Object {
-													filename: 'input.js'
+													filename: "input.js"
 													end: Object {
 														column: 12
 														index: 12
@@ -183,9 +183,9 @@ Program {
 												}
 											}
 											RegExpCharacter {
-												value: '{'
+												value: "{"
 												loc: Object {
-													filename: 'input.js'
+													filename: "input.js"
 													end: Object {
 														column: 13
 														index: 13
@@ -199,9 +199,9 @@ Program {
 												}
 											}
 											RegExpCharacter {
-												value: '6'
+												value: "6"
 												loc: Object {
-													filename: 'input.js'
+													filename: "input.js"
 													end: Object {
 														column: 14
 														index: 14
@@ -215,9 +215,9 @@ Program {
 												}
 											}
 											RegExpCharacter {
-												value: '1'
+												value: "1"
 												loc: Object {
-													filename: 'input.js'
+													filename: "input.js"
 													end: Object {
 														column: 15
 														index: 15
@@ -232,7 +232,7 @@ Program {
 											}
 											RegExpCharSetRange {
 												loc: Object {
-													filename: 'input.js'
+													filename: "input.js"
 													end: Object {
 														column: 18
 														index: 18
@@ -245,9 +245,9 @@ Program {
 													}
 												}
 												end: RegExpCharacter {
-													value: '}'
+													value: "}"
 													loc: Object {
-														filename: 'input.js'
+														filename: "input.js"
 														end: Object {
 															column: 16
 															index: 16
@@ -261,9 +261,9 @@ Program {
 													}
 												}
 												start: RegExpCharacter {
-													value: 'b'
+													value: "b"
 													loc: Object {
-														filename: 'input.js'
+														filename: "input.js"
 														end: Object {
 															column: 18
 															index: 18
@@ -282,7 +282,7 @@ Program {
 									RegExpCharSet {
 										invert: false
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 29
 												index: 29
@@ -297,7 +297,7 @@ Program {
 										body: Array [
 											RegExpCharSetRange {
 												loc: Object {
-													filename: 'input.js'
+													filename: "input.js"
 													end: Object {
 														column: 28
 														index: 28
@@ -310,9 +310,9 @@ Program {
 													}
 												}
 												end: RegExpCharacter {
-													value: 'b'
+													value: "b"
 													loc: Object {
-														filename: 'input.js'
+														filename: "input.js"
 														end: Object {
 															column: 28
 															index: 28
@@ -326,9 +326,9 @@ Program {
 													}
 												}
 												start: RegExpCharacter {
-													value: 'a'
+													value: "a"
 													loc: Object {
-														filename: 'input.js'
+														filename: "input.js"
 														end: Object {
 															column: 26
 															index: 26
@@ -347,7 +347,7 @@ Program {
 									RegExpCharSet {
 										invert: false
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 39
 												index: 39
@@ -362,7 +362,7 @@ Program {
 										body: Array [
 											RegExpCharSetRange {
 												loc: Object {
-													filename: 'input.js'
+													filename: "input.js"
 													end: Object {
 														column: 34
 														index: 34
@@ -375,9 +375,9 @@ Program {
 													}
 												}
 												end: RegExpCharacter {
-													value: 'u'
+													value: "u"
 													loc: Object {
-														filename: 'input.js'
+														filename: "input.js"
 														end: Object {
 															column: 34
 															index: 34
@@ -391,9 +391,9 @@ Program {
 													}
 												}
 												start: RegExpCharacter {
-													value: 'a'
+													value: "a"
 													loc: Object {
-														filename: 'input.js'
+														filename: "input.js"
 														end: Object {
 															column: 31
 															index: 31
@@ -408,9 +408,9 @@ Program {
 												}
 											}
 											RegExpCharacter {
-												value: '{'
+												value: "{"
 												loc: Object {
-													filename: 'input.js'
+													filename: "input.js"
 													end: Object {
 														column: 35
 														index: 35
@@ -424,9 +424,9 @@ Program {
 												}
 											}
 											RegExpCharacter {
-												value: '6'
+												value: "6"
 												loc: Object {
-													filename: 'input.js'
+													filename: "input.js"
 													end: Object {
 														column: 36
 														index: 36
@@ -440,9 +440,9 @@ Program {
 												}
 											}
 											RegExpCharacter {
-												value: '2'
+												value: "2"
 												loc: Object {
-													filename: 'input.js'
+													filename: "input.js"
 													end: Object {
 														column: 37
 														index: 37
@@ -456,9 +456,9 @@ Program {
 												}
 											}
 											RegExpCharacter {
-												value: '}'
+												value: "}"
 												loc: Object {
-													filename: 'input.js'
+													filename: "input.js"
 													end: Object {
 														column: 38
 														index: 38
@@ -476,7 +476,7 @@ Program {
 									RegExpCharSet {
 										invert: false
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 49
 												index: 49
@@ -491,7 +491,7 @@ Program {
 										body: Array [
 											RegExpCharSetRange {
 												loc: Object {
-													filename: 'input.js'
+													filename: "input.js"
 													end: Object {
 														column: 48
 														index: 48
@@ -504,9 +504,9 @@ Program {
 													}
 												}
 												end: RegExpCharacter {
-													value: 'b'
+													value: "b"
 													loc: Object {
-														filename: 'input.js'
+														filename: "input.js"
 														end: Object {
 															column: 48
 															index: 48
@@ -520,9 +520,9 @@ Program {
 													}
 												}
 												start: RegExpCharacter {
-													value: 'a'
+													value: "a"
 													loc: Object {
-														filename: 'input.js'
+														filename: "input.js"
 														end: Object {
 															column: 41
 															index: 41
@@ -539,9 +539,9 @@ Program {
 										]
 									}
 									RegExpCharacter {
-										value: 'u'
+										value: "u"
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 51
 												index: 51
@@ -555,9 +555,9 @@ Program {
 										}
 									}
 									RegExpCharacter {
-										value: '{'
+										value: "{"
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 52
 												index: 52
@@ -571,9 +571,9 @@ Program {
 										}
 									}
 									RegExpCharacter {
-										value: '1'
+										value: "1"
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 53
 												index: 53
@@ -587,9 +587,9 @@ Program {
 										}
 									}
 									RegExpCharacter {
-										value: 'f'
+										value: "f"
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 54
 												index: 54
@@ -603,9 +603,9 @@ Program {
 										}
 									}
 									RegExpCharacter {
-										value: 'f'
+										value: "f"
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 55
 												index: 55
@@ -619,9 +619,9 @@ Program {
 										}
 									}
 									RegExpCharacter {
-										value: 'f'
+										value: "f"
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 56
 												index: 56
@@ -635,9 +635,9 @@ Program {
 										}
 									}
 									RegExpCharacter {
-										value: 'f'
+										value: "f"
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 57
 												index: 57
@@ -651,9 +651,9 @@ Program {
 										}
 									}
 									RegExpCharacter {
-										value: '}'
+										value: "}"
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 58
 												index: 58

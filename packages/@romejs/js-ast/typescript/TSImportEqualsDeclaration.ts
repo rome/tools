@@ -5,18 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyTSModuleReference, BindingIdentifier, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {AnyTSModuleReference, BindingIdentifier, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type TSImportEqualsDeclaration = JSNodeBase & {
-	type: 'TSImportEqualsDeclaration';
+	type: "TSImportEqualsDeclaration";
 	id: BindingIdentifier;
 	moduleReference: AnyTSModuleReference;
 	isExport?: boolean;
 };
 
 export const tsImportEqualsDeclaration = createBuilder<TSImportEqualsDeclaration>(
-	'TSImportEqualsDeclaration',
+	"TSImportEqualsDeclaration",
 	{
 		bindingKeys: {
 			id: true,

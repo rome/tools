@@ -5,18 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token, concat, space} from '../../tokens';
-import {YieldExpression} from '@romejs/js-ast';
+import Builder from "../../Builder";
+import {Token, concat, space} from "../../tokens";
+import {YieldExpression} from "@romejs/js-ast";
 
 export default function YieldExpression(
 	builder: Builder,
 	node: YieldExpression,
 ): Token {
-	const tokens: Array<Token> = ['yield'];
+	const tokens: Array<Token> = ["yield"];
 
 	if (node.delegate === true) {
-		tokens.push('*');
+		tokens.push("*");
 	}
 
 	if (node.argument) {

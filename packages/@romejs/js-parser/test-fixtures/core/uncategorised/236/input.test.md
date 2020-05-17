@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 26
 			index: 26
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		WhileStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 26
 					index: 26
@@ -47,7 +47,7 @@ Program {
 			test: BooleanLiteral {
 				value: true
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 11
 						index: 11
@@ -62,7 +62,7 @@ Program {
 			}
 			body: ExpressionStatement {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 26
 						index: 26
@@ -77,7 +77,7 @@ Program {
 				expression: CallExpression {
 					arguments: Array []
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 26
 							index: 26
@@ -90,10 +90,10 @@ Program {
 						}
 					}
 					callee: ReferenceIdentifier {
-						name: 'doSomething'
+						name: "doSomething"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'doSomething'
+							filename: "input.js"
+							identifierName: "doSomething"
 							end: Object {
 								column: 24
 								index: 24

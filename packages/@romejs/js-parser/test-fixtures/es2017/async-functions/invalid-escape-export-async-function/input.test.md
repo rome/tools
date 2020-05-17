@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 43
@@ -30,16 +30,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unexpected token, expected {'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unexpected token, expected {"}
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 17
 					index: 17
@@ -56,9 +56,9 @@ Program {
 	body: Array [
 		ExportLocalDeclaration {
 			declaration: undefined
-			exportKind: 'value'
+			exportKind: "value"
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 42
 					index: 42
@@ -73,7 +73,7 @@ Program {
 			specifiers: Array [
 				ExportLocalSpecifier {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 17
 							index: 17
@@ -86,10 +86,10 @@ Program {
 						}
 					}
 					exported: Identifier {
-						name: 'async'
+						name: "async"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'async'
+							filename: "input.js"
+							identifierName: "async"
 							end: Object {
 								column: 17
 								index: 17
@@ -103,10 +103,10 @@ Program {
 						}
 					}
 					local: ReferenceIdentifier {
-						name: 'async'
+						name: "async"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'async'
+							filename: "input.js"
+							identifierName: "async"
 							end: Object {
 								column: 17
 								index: 17
@@ -122,7 +122,7 @@ Program {
 				}
 				ExportLocalSpecifier {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 26
 							index: 26
@@ -135,10 +135,10 @@ Program {
 						}
 					}
 					exported: Identifier {
-						name: 'function'
+						name: "function"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'function'
+							filename: "input.js"
+							identifierName: "function"
 							end: Object {
 								column: 26
 								index: 26
@@ -152,10 +152,10 @@ Program {
 						}
 					}
 					local: ReferenceIdentifier {
-						name: 'function'
+						name: "function"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'function'
+							filename: "input.js"
+							identifierName: "function"
 							end: Object {
 								column: 26
 								index: 26
@@ -171,7 +171,7 @@ Program {
 				}
 				ExportLocalSpecifier {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 28
 							index: 28
@@ -184,10 +184,10 @@ Program {
 						}
 					}
 					exported: Identifier {
-						name: 'y'
+						name: "y"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'y'
+							filename: "input.js"
+							identifierName: "y"
 							end: Object {
 								column: 28
 								index: 28
@@ -201,10 +201,10 @@ Program {
 						}
 					}
 					local: ReferenceIdentifier {
-						name: 'y'
+						name: "y"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'y'
+							filename: "input.js"
+							identifierName: "y"
 							end: Object {
 								column: 28
 								index: 28
@@ -220,7 +220,7 @@ Program {
 				}
 				ExportLocalSpecifier {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 29
 							index: 29
@@ -233,10 +233,10 @@ Program {
 						}
 					}
 					exported: Identifier {
-						name: ''
+						name: ""
 						loc: Object {
-							filename: 'input.js'
-							identifierName: ''
+							filename: "input.js"
+							identifierName: ""
 							end: Object {
 								column: 29
 								index: 29
@@ -250,10 +250,10 @@ Program {
 						}
 					}
 					local: ReferenceIdentifier {
-						name: ''
+						name: ""
 						loc: Object {
-							filename: 'input.js'
-							identifierName: ''
+							filename: "input.js"
+							identifierName: ""
 							end: Object {
 								column: 29
 								index: 29
@@ -269,7 +269,7 @@ Program {
 				}
 				ExportLocalSpecifier {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 30
 							index: 30
@@ -282,10 +282,10 @@ Program {
 						}
 					}
 					exported: Identifier {
-						name: ''
+						name: ""
 						loc: Object {
-							filename: 'input.js'
-							identifierName: ''
+							filename: "input.js"
+							identifierName: ""
 							end: Object {
 								column: 30
 								index: 30
@@ -299,10 +299,10 @@ Program {
 						}
 					}
 					local: ReferenceIdentifier {
-						name: ''
+						name: ""
 						loc: Object {
-							filename: 'input.js'
-							identifierName: ''
+							filename: "input.js"
+							identifierName: ""
 							end: Object {
 								column: 30
 								index: 30
@@ -318,7 +318,7 @@ Program {
 				}
 				ExportLocalSpecifier {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 32
 							index: 32
@@ -331,10 +331,10 @@ Program {
 						}
 					}
 					exported: Identifier {
-						name: ''
+						name: ""
 						loc: Object {
-							filename: 'input.js'
-							identifierName: ''
+							filename: "input.js"
+							identifierName: ""
 							end: Object {
 								column: 32
 								index: 32
@@ -348,10 +348,10 @@ Program {
 						}
 					}
 					local: ReferenceIdentifier {
-						name: ''
+						name: ""
 						loc: Object {
-							filename: 'input.js'
-							identifierName: ''
+							filename: "input.js"
+							identifierName: ""
 							end: Object {
 								column: 32
 								index: 32
@@ -367,7 +367,7 @@ Program {
 				}
 				ExportLocalSpecifier {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 38
 							index: 38
@@ -380,10 +380,10 @@ Program {
 						}
 					}
 					exported: Identifier {
-						name: 'await'
+						name: "await"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'await'
+							filename: "input.js"
+							identifierName: "await"
 							end: Object {
 								column: 38
 								index: 38
@@ -397,10 +397,10 @@ Program {
 						}
 					}
 					local: ReferenceIdentifier {
-						name: 'await'
+						name: "await"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'await'
+							filename: "input.js"
+							identifierName: "await"
 							end: Object {
 								column: 38
 								index: 38
@@ -416,7 +416,7 @@ Program {
 				}
 				ExportLocalSpecifier {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 40
 							index: 40
@@ -429,10 +429,10 @@ Program {
 						}
 					}
 					exported: Identifier {
-						name: 'x'
+						name: "x"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'x'
+							filename: "input.js"
+							identifierName: "x"
 							end: Object {
 								column: 40
 								index: 40
@@ -446,10 +446,10 @@ Program {
 						}
 					}
 					local: ReferenceIdentifier {
-						name: 'x'
+						name: "x"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'x'
+							filename: "input.js"
+							identifierName: "x"
 							end: Object {
 								column: 40
 								index: 40

@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 39
 			index: 39
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		ClassDeclaration {
 			id: BindingIdentifier {
-				name: 'A'
+				name: "A"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'A'
+					filename: "input.js"
+					identifierName: "A"
 					end: Object {
 						column: 7
 						index: 7
@@ -49,7 +49,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 39
 					index: 39
@@ -67,7 +67,7 @@ Program {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 39
 						index: 39
@@ -81,10 +81,10 @@ Program {
 				}
 				superClass: ClassExpression {
 					id: BindingIdentifier {
-						name: 'B'
+						name: "B"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'B'
+							filename: "input.js"
+							identifierName: "B"
 							end: Object {
 								column: 23
 								index: 23
@@ -98,7 +98,7 @@ Program {
 						}
 					}
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 36
 							index: 36
@@ -116,7 +116,7 @@ Program {
 						superTypeParameters: undefined
 						typeParameters: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 36
 								index: 36
@@ -129,10 +129,10 @@ Program {
 							}
 						}
 						superClass: ReferenceIdentifier {
-							name: 'C'
+							name: "C"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'C'
+								filename: "input.js"
+								identifierName: "C"
 								end: Object {
 									column: 33
 									index: 33

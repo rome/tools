@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from '@romejs/js-ast';
-import {HumanBuilder} from '../Utils';
-import {HydrateData} from '../Evaluator';
-import {Scope} from '../scopes';
-import T from './T';
+import {AnyNode} from "@romejs/js-ast";
+import {HumanBuilder} from "../Utils";
+import {HydrateData} from "../Evaluator";
+import {Scope} from "../scopes";
+import T from "./T";
 
 export default class ImportT extends T {
 	constructor(
@@ -38,7 +38,7 @@ export default class ImportT extends T {
 		);
 	}
 
-	static type = 'ImportT';
+	static type = "ImportT";
 	importedName: undefined | string;
 	absolute: undefined | string;
 	resolvedType: undefined | T;

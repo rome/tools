@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 113
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 21
 					index: 21
@@ -46,7 +46,7 @@ Program {
 			}
 			expression: ImportCall {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 20
 						index: 20
@@ -59,9 +59,9 @@ Program {
 					}
 				}
 				argument: StringLiteral {
-					value: 'testing.js'
+					value: "testing.js"
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 19
 							index: 19
@@ -78,7 +78,7 @@ Program {
 		}
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 21
 					index: 44
@@ -91,9 +91,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'const'
+				kind: "const"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 21
 						index: 44
@@ -108,10 +108,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'test'
+							name: "test"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'test'
+								filename: "input.js"
+								identifierName: "test"
 								end: Object {
 									column: 10
 									index: 33
@@ -125,7 +125,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 20
 								index: 43
@@ -138,9 +138,9 @@ Program {
 							}
 						}
 						init: StringLiteral {
-							value: 'hello'
+							value: "hello"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 20
 									index: 43
@@ -159,7 +159,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 29
 					index: 74
@@ -173,7 +173,7 @@ Program {
 			}
 			expression: ImportCall {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 28
 						index: 73
@@ -187,7 +187,7 @@ Program {
 				}
 				argument: TemplateLiteral {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 27
 							index: 72
@@ -201,10 +201,10 @@ Program {
 					}
 					expressions: Array [
 						ReferenceIdentifier {
-							name: 'test'
+							name: "test"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'test'
+								filename: "input.js"
+								identifierName: "test"
 								end: Object {
 									column: 22
 									index: 67
@@ -220,11 +220,11 @@ Program {
 					]
 					quasis: Array [
 						TemplateElement {
-							cooked: 'testing/'
-							raw: 'testing/'
+							cooked: "testing/"
+							raw: "testing/"
 							tail: false
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 16
 									index: 61
@@ -238,11 +238,11 @@ Program {
 							}
 						}
 						TemplateElement {
-							cooked: '.js'
-							raw: '.js'
+							cooked: ".js"
+							raw: ".js"
 							tail: true
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 26
 									index: 71
@@ -261,7 +261,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 36
 					index: 112
@@ -275,7 +275,7 @@ Program {
 			}
 			expression: CallExpression {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 35
 						index: 111
@@ -290,7 +290,7 @@ Program {
 				arguments: Array [
 					ArrowFunctionExpression {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 34
 								index: 110
@@ -306,7 +306,7 @@ Program {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 34
 									index: 110
@@ -327,7 +327,7 @@ Program {
 							returnType: undefined
 							thisType: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 31
 									index: 107
@@ -344,7 +344,7 @@ Program {
 				]
 				callee: MemberExpression {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 25
 							index: 101
@@ -358,7 +358,7 @@ Program {
 					}
 					object: ImportCall {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 20
 								index: 96
@@ -371,9 +371,9 @@ Program {
 							}
 						}
 						argument: StringLiteral {
-							value: 'testing.js'
+							value: "testing.js"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 19
 									index: 95
@@ -389,10 +389,10 @@ Program {
 					}
 					property: StaticMemberProperty {
 						value: Identifier {
-							name: 'then'
+							name: "then"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'then'
+								filename: "input.js"
+								identifierName: "then"
 								end: Object {
 									column: 25
 									index: 101
@@ -406,8 +406,8 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'then'
+							filename: "input.js"
+							identifierName: "then"
 							end: Object {
 								column: 25
 								index: 101

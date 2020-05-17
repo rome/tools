@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 23
 			index: 23
@@ -30,16 +30,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unexpected token, expected ,'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unexpected token, expected ,"}
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 12
 					index: 12
@@ -56,7 +56,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 23
 					index: 23
@@ -69,9 +69,9 @@ Program {
 				}
 			}
 			expression: AssignmentExpression {
-				operator: '='
+				operator: "="
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 23
 						index: 23
@@ -84,10 +84,10 @@ Program {
 					}
 				}
 				right: ReferenceIdentifier {
-					name: 'arr'
+					name: "arr"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'arr'
+						filename: "input.js"
+						identifierName: "arr"
 						end: Object {
 							column: 23
 							index: 23
@@ -103,7 +103,7 @@ Program {
 				left: AssignmentArrayPattern {
 					rest: undefined
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 17
 							index: 17
@@ -117,10 +117,10 @@ Program {
 					}
 					elements: Array [
 						AssignmentIdentifier {
-							name: 'a'
+							name: "a"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'a'
+								filename: "input.js"
+								identifierName: "a"
 								end: Object {
 									column: 2
 									index: 2
@@ -136,7 +136,7 @@ Program {
 						AssignmentObjectPattern {
 							rest: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 15
 									index: 15
@@ -152,10 +152,10 @@ Program {
 								AssignmentObjectPatternProperty {
 									key: StaticPropertyKey {
 										value: Identifier {
-											name: 'b'
+											name: "b"
 											loc: Object {
-												filename: 'input.js'
-												identifierName: 'b'
+												filename: "input.js"
+												identifierName: "b"
 												end: Object {
 													column: 6
 													index: 6
@@ -169,7 +169,7 @@ Program {
 											}
 										}
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 6
 												index: 6
@@ -183,9 +183,9 @@ Program {
 										}
 									}
 									value: AssignmentAssignmentPattern {
-										operator: '='
+										operator: "="
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 14
 												index: 14
@@ -201,7 +201,7 @@ Program {
 											value: 1
 											format: undefined
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 14
 													index: 14
@@ -217,7 +217,7 @@ Program {
 										left: AssignmentObjectPattern {
 											rest: undefined
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 10
 													index: 10
@@ -233,10 +233,10 @@ Program {
 												AssignmentObjectPatternProperty {
 													key: StaticPropertyKey {
 														value: Identifier {
-															name: 'c'
+															name: "c"
 															loc: Object {
-																filename: 'input.js'
-																identifierName: 'c'
+																filename: "input.js"
+																identifierName: "c"
 																end: Object {
 																	column: 10
 																	index: 10
@@ -250,7 +250,7 @@ Program {
 															}
 														}
 														loc: Object {
-															filename: 'input.js'
+															filename: "input.js"
 															end: Object {
 																column: 10
 																index: 10
@@ -264,10 +264,10 @@ Program {
 														}
 													}
 													value: AssignmentIdentifier {
-														name: 'c'
+														name: "c"
 														loc: Object {
-															filename: 'input.js'
-															identifierName: 'c'
+															filename: "input.js"
+															identifierName: "c"
 															end: Object {
 																column: 10
 																index: 10
@@ -281,7 +281,7 @@ Program {
 														}
 													}
 													loc: Object {
-														filename: 'input.js'
+														filename: "input.js"
 														end: Object {
 															column: 10
 															index: 10
@@ -298,7 +298,7 @@ Program {
 										}
 									}
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 14
 											index: 14
@@ -314,9 +314,9 @@ Program {
 							]
 						}
 						AssignmentIdentifier {
-							name: 'INVALID_PLACEHOLDER'
+							name: "INVALID_PLACEHOLDER"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 16
 									index: 16

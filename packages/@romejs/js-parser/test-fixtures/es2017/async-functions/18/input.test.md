@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 44
 			index: 44
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 44
 					index: 44
@@ -46,7 +46,7 @@ Program {
 			}
 			expression: CallExpression {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 44
 						index: 44
@@ -59,10 +59,10 @@ Program {
 					}
 				}
 				callee: ReferenceIdentifier {
-					name: 'f'
+					name: "f"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'f'
+						filename: "input.js"
+						identifierName: "f"
 						end: Object {
 							column: 1
 							index: 1
@@ -79,7 +79,7 @@ Program {
 					FunctionExpression {
 						id: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 43
 								index: 43
@@ -100,7 +100,7 @@ Program {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 25
 									index: 25
@@ -114,10 +114,10 @@ Program {
 							}
 							params: Array [
 								BindingIdentifier {
-									name: 'promise'
+									name: "promise"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'promise'
+										filename: "input.js"
+										identifierName: "promise"
 										end: Object {
 											column: 24
 											index: 24
@@ -133,7 +133,7 @@ Program {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 24
 												index: 24
@@ -152,7 +152,7 @@ Program {
 						body: BlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 43
 									index: 43
@@ -167,7 +167,7 @@ Program {
 							body: Array [
 								ExpressionStatement {
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 41
 											index: 41
@@ -181,7 +181,7 @@ Program {
 									}
 									expression: AwaitExpression {
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 41
 												index: 41
@@ -194,10 +194,10 @@ Program {
 											}
 										}
 										argument: ReferenceIdentifier {
-											name: 'promise'
+											name: "promise"
 											loc: Object {
-												filename: 'input.js'
-												identifierName: 'promise'
+												filename: "input.js"
+												identifierName: "promise"
 												end: Object {
 													column: 41
 													index: 41

@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {naturalCompare} from '@romejs/string-utils';
-import {CoverageFolder} from './types';
+import {naturalCompare} from "@romejs/string-utils";
+import {CoverageFolder} from "./types";
 
 export function sortMapKeys<T>(map: Map<string, T>): Map<string, T> {
 	const sortedKeys = Array.from(map.keys()).sort(naturalCompare);
@@ -14,7 +14,7 @@ export function sortMapKeys<T>(map: Map<string, T>): Map<string, T> {
 	for (const key of sortedKeys) {
 		const val = map.get(key);
 		if (val === undefined) {
-			throw new Error('Expected value');
+			throw new Error("Expected value");
 		}
 		newMap.set(key, val);
 	}

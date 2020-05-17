@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type NeverKeywordTypeAnnotation = JSNodeBase & {
-	type: 'NeverKeywordTypeAnnotation';
+	type: "NeverKeywordTypeAnnotation";
 };
 
 export const neverKeywordTypeAnnotation = createBuilder<NeverKeywordTypeAnnotation>(
-	'NeverKeywordTypeAnnotation',
+	"NeverKeywordTypeAnnotation",
 	{
 		bindingKeys: {},
 		visitorKeys: {},

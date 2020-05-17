@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {consumeJSON} from '@romejs/codec-json';
-import {VERSION} from './constants';
-import {ROME_CONFIG_FILENAMES} from '@romejs/project';
+import {consumeJSON} from "@romejs/codec-json";
+import {VERSION} from "./constants";
+import {ROME_CONFIG_FILENAMES} from "@romejs/project";
 import {
 	AbsoluteFilePath,
 	HOME_PATH,
 	TEMP_PATH,
 	createAbsoluteFilePath,
-} from '@romejs/path';
-import {existsSync, readFileTextSync} from '@romejs/fs';
+} from "@romejs/path";
+import {existsSync, readFileTextSync} from "@romejs/fs";
 
 export type UserConfig = {
 	runtimeModulesPath: AbsoluteFilePath;
@@ -24,13 +24,13 @@ export type UserConfig = {
 const VERSION_PATH = TEMP_PATH.append(`rome-${VERSION}`);
 
 export const DEFAULT_USER_CONFIG: UserConfig = {
-	runtimeModulesPath: VERSION_PATH.append('runtime'),
-	cachePath: VERSION_PATH.append('cache'),
+	runtimeModulesPath: VERSION_PATH.append("runtime"),
+	cachePath: VERSION_PATH.append("cache"),
 };
 
 export function loadUserConfig(): UserConfig {
 	for (const configFilename of ROME_CONFIG_FILENAMES) {
-		const configPath = HOME_PATH.append(['.config', configFilename]);
+		const configPath = HOME_PATH.append([".config", configFilename]);
 
 		if (!existsSync(configPath)) {
 			continue;
@@ -46,19 +46,19 @@ export function loadUserConfig(): UserConfig {
 			...DEFAULT_USER_CONFIG,
 		};
 
-		if (consumer.has('cachePath')) {
+		if (consumer.has("cachePath")) {
 			userConfig.cachePath = createAbsoluteFilePath(
-				consumer.get('cachePath').asString(),
+				consumer.get("cachePath").asString(),
 			);
 		}
 
-		if (consumer.has('runtimeModulesPath')) {
+		if (consumer.has("runtimeModulesPath")) {
 			userConfig.runtimeModulesPath = createAbsoluteFilePath(
-				consumer.get('runtimeModulesPath').asString(),
+				consumer.get("runtimeModulesPath").asString(),
 			);
 		}
 
-		consumer.enforceUsedProperties('config property');
+		consumer.enforceUsedProperties("config property");
 
 		return userConfig;
 	}

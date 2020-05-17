@@ -9,14 +9,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 50
 			index: 50
@@ -30,10 +30,10 @@ Program {
 	}
 	comments: Array [
 		CommentBlock {
-			id: '0'
-			value: ' perfect '
+			id: "0"
+			value: " perfect "
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 40
 					index: 40
@@ -50,7 +50,7 @@ Program {
 	body: Array [
 		SwitchStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 50
 					index: 50
@@ -63,10 +63,10 @@ Program {
 				}
 			}
 			discriminant: ReferenceIdentifier {
-				name: 'answer'
+				name: "answer"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'answer'
+					filename: "input.js"
+					identifierName: "answer"
 					end: Object {
 						column: 14
 						index: 14
@@ -82,7 +82,7 @@ Program {
 			cases: Array [
 				SwitchCase {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 48
 							index: 48
@@ -98,7 +98,7 @@ Program {
 						value: 42
 						format: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 25
 								index: 25
@@ -113,9 +113,9 @@ Program {
 					}
 					consequent: Array [
 						ExpressionStatement {
-							leadingComments: Array ['0']
+							leadingComments: Array ["0"]
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 48
 									index: 48
@@ -131,7 +131,7 @@ Program {
 								arguments: Array []
 								leadingComments: undefined
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 48
 										index: 48
@@ -144,11 +144,11 @@ Program {
 									}
 								}
 								callee: ReferenceIdentifier {
-									name: 'bingo'
+									name: "bingo"
 									leadingComments: undefined
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'bingo'
+										filename: "input.js"
+										identifierName: "bingo"
 										end: Object {
 											column: 46
 											index: 46

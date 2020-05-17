@@ -12,26 +12,26 @@ import {
 	ConstImportModuleKind,
 	ConstProgramSyntax,
 	ReferenceIdentifier,
-} from '@romejs/js-ast';
-import {SourceLocation} from '@romejs/parser-core';
+} from "@romejs/js-ast";
+import {SourceLocation} from "@romejs/parser-core";
 import {
 	ClassBinding,
 	FunctionBinding,
 	Path,
 	Scope,
 	TypeBinding,
-} from '@romejs/js-compiler';
+} from "@romejs/js-compiler";
 import {
 	AnalyzeDependency,
 	AnalyzeDependencyName,
 	AnalyzeDependencyResult,
 	AnalyzeExportValueType,
 	AnyAnalyzeExport,
-} from '@romejs/core';
+} from "@romejs/core";
 
 export function isOptional(path: Path): boolean {
 	for (const {node} of path.ancestryPaths) {
-		if (node.type === 'TryStatement') {
+		if (node.type === "TryStatement") {
 			return true;
 		}
 	}
@@ -40,19 +40,19 @@ export function isOptional(path: Path): boolean {
 }
 
 export function isTypeKind(kind: undefined | ConstImportModuleKind): boolean {
-	return kind === 'type' || kind === 'typeof';
+	return kind === "type" || kind === "typeof";
 }
 
 export function getImportKind(
 	kind: undefined | ConstImportModuleKind,
 ): ConstImportModuleKind {
-	return kind === undefined ? 'value' : kind;
+	return kind === undefined ? "value" : kind;
 }
 
 export function getExportKind(
 	kind: undefined | ConstExportModuleKind,
 ): ConstExportModuleKind {
-	return kind === undefined ? 'value' : kind;
+	return kind === undefined ? "value" : kind;
 }
 
 export function maybeTypeBinding(
@@ -61,8 +61,8 @@ export function maybeTypeBinding(
 	id: BindingIdentifier | ReferenceIdentifier,
 ): ConstExportModuleKind {
 	const binding = scope.getBinding(id.name);
-	if (kind === 'value' && binding instanceof TypeBinding) {
-		return 'type';
+	if (kind === "value" && binding instanceof TypeBinding) {
+		return "type";
 	} else {
 		return kind;
 	}
@@ -78,11 +78,11 @@ export function getKindWithSpecifiers(
 	}
 
 	for (const specifierKind of specifierKinds) {
-		if (specifierKind === 'value') {
-			return 'value';
+		if (specifierKind === "value") {
+			return "value";
 		}
 	}
-	return 'type';
+	return "type";
 }
 
 // We use this to have an easy way to identify the actual runtime type of an import
@@ -93,39 +93,39 @@ export function getAnalyzeExportValueType(
 	node: undefined | AnyNode,
 ): AnalyzeExportValueType {
 	if (node === undefined) {
-		return 'other';
+		return "other";
 	}
 
-	if (node.type === 'Identifier') {
+	if (node.type === "Identifier") {
 		const binding = scope.getBinding(node.name);
 
 		if (binding instanceof FunctionBinding) {
-			return 'function';
+			return "function";
 		}
 
 		if (binding instanceof ClassBinding) {
-			return 'class';
+			return "class";
 		}
 
 		if (binding instanceof TypeBinding) {
 			const {typeKind} = binding;
 			switch (typeKind) {
-				case 'function':
-				case 'class':
+				case "function":
+				case "class":
 					return typeKind;
 			}
 		}
 	}
 
-	if (node.type === 'FunctionDeclaration') {
-		return 'function';
+	if (node.type === "FunctionDeclaration") {
+		return "function";
 	}
 
-	if (node.type === 'ClassDeclaration' || node.type === 'ClassExpression') {
-		return 'class';
+	if (node.type === "ClassDeclaration" || node.type === "ClassExpression") {
+		return "class";
 	}
 
-	return 'other';
+	return "other";
 }
 
 // Resolve a export declaration to it's binding node if one exists
@@ -133,7 +133,7 @@ export function getDeclarationLoc(
 	scope: Scope,
 	node: AnyNode,
 ): undefined | SourceLocation {
-	if (node.type === 'ReferenceIdentifier') {
+	if (node.type === "ReferenceIdentifier") {
 		const binding = scope.getBinding(node.name);
 		if (binding !== undefined) {
 			return binding.node.loc;
@@ -175,23 +175,23 @@ function exportsSame(a: AnyAnalyzeExport, b: AnyAnalyzeExport): boolean {
 	}
 
 	switch (a.type) {
-		case 'local':
-			return b.type === 'local' && a.name === b.name;
+		case "local":
+			return b.type === "local" && a.name === b.name;
 
-		case 'external':
+		case "external":
 			return (
-				b.type === 'external' &&
+				b.type === "external" &&
 				a.imported === b.imported &&
 				a.exported === b.exported &&
 				a.source === b.source
 			);
 
-		case 'externalAll':
-			return b.type === 'externalAll' && a.source === b.source;
+		case "externalAll":
+			return b.type === "externalAll" && a.source === b.source;
 
-		case 'externalNamespace':
+		case "externalNamespace":
 			return (
-				b.type === 'externalNamespace' &&
+				b.type === "externalNamespace" &&
 				a.source === b.source &&
 				a.exported === b.exported
 			);

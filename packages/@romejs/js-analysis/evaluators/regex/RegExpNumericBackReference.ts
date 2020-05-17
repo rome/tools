@@ -9,9 +9,9 @@ import {
 	AnyNode,
 	RegExpNumericBackReference,
 	regExpNumericBackReference,
-} from '@romejs/js-ast';
+} from "@romejs/js-ast";
 
 export default function RegExpNumericBackReference(node: AnyNode) {
 	node = regExpNumericBackReference.assert(node);
-	throw new Error('unimplemented');
+	throw new Error("unimplemented");
 }

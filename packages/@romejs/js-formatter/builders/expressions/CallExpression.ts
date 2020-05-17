@@ -9,9 +9,9 @@ import {
 	CallExpression,
 	NewExpression,
 	OptionalCallExpression,
-} from '@romejs/js-ast';
-import {isFunctionNode} from '@romejs/js-ast-utils';
-import Builder from '../../Builder';
+} from "@romejs/js-ast";
+import {isFunctionNode} from "@romejs/js-ast-utils";
+import Builder from "../../Builder";
 import {
 	Token,
 	concat,
@@ -20,9 +20,9 @@ import {
 	ifBreak,
 	indent,
 	softline,
-} from '../../tokens';
-import {printCommaList} from '../utils';
-import {hasInnerComments} from '../comments';
+} from "../../tokens";
+import {printCommaList} from "../utils";
+import {hasInnerComments} from "../comments";
 
 type AnyCallableExpression =
 	 | CallExpression
@@ -35,8 +35,8 @@ export default function CallExpression(
 ): Token {
 	const tokens: Array<Token> = [builder.tokenize(node.callee, node)];
 
-	if (node.type === 'OptionalCallExpression') {
-		tokens.push('?.');
+	if (node.type === "OptionalCallExpression") {
+		tokens.push("?.");
 	}
 
 	if (node.typeArguments) {
@@ -51,30 +51,30 @@ export default function CallExpression(
 function printArguments(builder: Builder, node: AnyCallableExpression): Token {
 	if (node.arguments.length === 0) {
 		if (hasInnerComments(node)) {
-			return concat(['(', builder.tokenizeInnerComments(node, true), hardline, ')']);
+			return concat(["(", builder.tokenizeInnerComments(node, true), hardline, ")"]);
 		} else {
-			return '()';
+			return "()";
 		}
 	}
 
 	if (node.arguments.length === 1) {
 		const argument = node.arguments[0];
 		if (
-			argument.type === 'ArrayExpression' ||
-			argument.type === 'ObjectExpression' ||
+			argument.type === "ArrayExpression" ||
+			argument.type === "ObjectExpression" ||
 			isFunctionNode(argument)
 		) {
-			return concat(['(', builder.tokenize(argument, node), ')']);
+			return concat(["(", builder.tokenize(argument, node), ")"]);
 		}
 	}
 
 	return group(
 		concat([
-			'(',
+			"(",
 			indent(concat([softline, printCommaList(builder, node.arguments, node)])),
-			ifBreak(','),
+			ifBreak(","),
 			softline,
-			')',
+			")",
 		]),
 	);
 }

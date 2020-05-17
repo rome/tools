@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 64
 			index: 64
@@ -30,16 +30,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'eval is a reserved word'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "eval is a reserved word"}
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 53
 					index: 53
@@ -56,10 +56,10 @@ Program {
 	body: Array [
 		FunctionDeclaration {
 			id: BindingIdentifier {
-				name: 'hello'
+				name: "hello"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'hello'
+					filename: "input.js"
+					identifierName: "hello"
 					end: Object {
 						column: 14
 						index: 14
@@ -73,7 +73,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 64
 					index: 64
@@ -95,7 +95,7 @@ Program {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 16
 						index: 16
@@ -110,7 +110,7 @@ Program {
 			}
 			body: BlockStatement {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 64
 						index: 64
@@ -124,9 +124,9 @@ Program {
 				}
 				directives: Array [
 					Directive {
-						value: 'use strict'
+						value: "use strict"
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 31
 								index: 31
@@ -143,7 +143,7 @@ Program {
 				body: Array [
 					ExpressionStatement {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 62
 								index: 62
@@ -157,7 +157,7 @@ Program {
 						}
 						expression: ObjectExpression {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 60
 									index: 60
@@ -173,10 +173,10 @@ Program {
 								ObjectProperty {
 									key: StaticPropertyKey {
 										value: Identifier {
-											name: 's'
+											name: "s"
 											loc: Object {
-												filename: 'input.js'
-												identifierName: 's'
+												filename: "input.js"
+												identifierName: "s"
 												end: Object {
 													column: 36
 													index: 36
@@ -190,7 +190,7 @@ Program {
 											}
 										}
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 36
 												index: 36
@@ -205,10 +205,10 @@ Program {
 									}
 									value: FunctionExpression {
 										id: BindingIdentifier {
-											name: 's'
+											name: "s"
 											loc: Object {
-												filename: 'input.js'
-												identifierName: 's'
+												filename: "input.js"
+												identifierName: "s"
 												end: Object {
 													column: 48
 													index: 48
@@ -222,7 +222,7 @@ Program {
 											}
 										}
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 58
 												index: 58
@@ -238,7 +238,7 @@ Program {
 											body: Array []
 											directives: Array []
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 58
 													index: 58
@@ -260,7 +260,7 @@ Program {
 											thisType: undefined
 											typeParameters: undefined
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 54
 													index: 54
@@ -274,10 +274,10 @@ Program {
 											}
 											params: Array [
 												BindingIdentifier {
-													name: 'eval'
+													name: "eval"
 													loc: Object {
-														filename: 'input.js'
-														identifierName: 'eval'
+														filename: "input.js"
+														identifierName: "eval"
 														end: Object {
 															column: 53
 															index: 53
@@ -293,7 +293,7 @@ Program {
 														optional: undefined
 														typeAnnotation: undefined
 														loc: Object {
-															filename: 'input.js'
+															filename: "input.js"
 															end: Object {
 																column: 53
 																index: 53
@@ -311,7 +311,7 @@ Program {
 										}
 									}
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 58
 											index: 58

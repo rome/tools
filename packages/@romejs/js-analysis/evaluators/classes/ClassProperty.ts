@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ClassScope, Scope, ThisScope} from '../../scopes';
-import {AnyNode, ClassProperty, classProperty} from '@romejs/js-ast';
-import AnyT from '../../types/AnyT';
-import ObjPropT from '../../types/ObjPropT';
+import {ClassScope, Scope, ThisScope} from "../../scopes";
+import {AnyNode, ClassProperty, classProperty} from "@romejs/js-ast";
+import AnyT from "../../types/AnyT";
+import ObjPropT from "../../types/ObjPropT";
 
 export default function ClassProperty(node: AnyNode, scope: Scope) {
 	node = classProperty.assert(node);
 
-	if (node.key.type === 'ComputedPropertyKey') {
+	if (node.key.type === "ComputedPropertyKey") {
 		// TODO
 		return undefined;
 	}
@@ -43,11 +43,11 @@ export default function ClassProperty(node: AnyNode, scope: Scope) {
 
 	const actualValue = annotatedType === undefined ? inferredType : annotatedType;
 	if (actualValue === undefined) {
-		throw new Error('Expected actual value');
+		throw new Error("Expected actual value");
 	}
 
-	if (node.key.value.type !== 'Identifier') {
-		throw new Error('Expected only an identifier key');
+	if (node.key.value.type !== "Identifier") {
+		throw new Error("Expected only an identifier key");
 	}
 
 	return new ObjPropT(scope, node, node.key.value.name, actualValue);

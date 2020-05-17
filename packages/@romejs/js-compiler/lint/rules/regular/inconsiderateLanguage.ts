@@ -5,19 +5,19 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from '@romejs/js-compiler';
-import {AnyNode} from '@romejs/js-ast';
-import {PositionTracker, SourceLocation} from '@romejs/parser-core';
-import {ob1Coerce0} from '@romejs/ob1';
-import {isIdentifierish} from '@romejs/js-ast-utils';
-import {descriptions} from '@romejs/diagnostics';
-import inconsiderateLanguage from './inconsiderateLanguage.json';
-import {preserveCasing} from '@romejs/string-utils';
+import {Path} from "@romejs/js-compiler";
+import {AnyNode} from "@romejs/js-ast";
+import {PositionTracker, SourceLocation} from "@romejs/parser-core";
+import {ob1Coerce0} from "@romejs/ob1";
+import {isIdentifierish} from "@romejs/js-ast-utils";
+import {descriptions} from "@romejs/diagnostics";
+import inconsiderateLanguage from "./inconsiderateLanguage.json";
+import {preserveCasing} from "@romejs/string-utils";
 
 // Fast regex for checking if we need to validate a string
 const regex = new RegExp(
-	inconsiderateLanguage.map((term) => term.word).join('|'),
-	'gi',
+	inconsiderateLanguage.map((term) => term.word).join("|"),
+	"gi",
 );
 
 type CheckResult = {
@@ -94,7 +94,7 @@ function check(
 }
 
 export default {
-	name: 'inconsiderateLanguage',
+	name: "inconsiderateLanguage",
 	enter(path: Path): AnyNode {
 		const {node, context} = path;
 
@@ -102,7 +102,7 @@ export default {
 		if (loc !== undefined) {
 			// Infer a string to check
 			let value: undefined | string;
-			if (node.type === 'CommentBlock' || node.type === 'CommentLine') {
+			if (node.type === "CommentBlock" || node.type === "CommentLine") {
 				value = node.value;
 			}
 			if (isIdentifierish(node)) {
@@ -127,7 +127,7 @@ export default {
 
 				// Autofix if not suppressed
 				if (results.length > 0 && !suppressed) {
-					if (node.type === 'CommentBlock' || node.type === 'CommentLine') {
+					if (node.type === "CommentBlock" || node.type === "CommentLine") {
 						return {
 							...node,
 							value: fixed,

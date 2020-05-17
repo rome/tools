@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 29
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 11
 					index: 11
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'let'
+				kind: "let"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 11
 						index: 11
@@ -62,10 +62,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'X'
+							name: "X"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'X'
+								filename: "input.ts"
+								identifierName: "X"
 								end: Object {
 									column: 5
 									index: 5
@@ -79,7 +79,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 10
 								index: 10
@@ -92,9 +92,9 @@ Program {
 							}
 						}
 						init: StringLiteral {
-							value: ''
+							value: ""
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 10
 									index: 10
@@ -113,10 +113,10 @@ Program {
 		}
 		TypeAliasTypeAnnotation {
 			id: BindingIdentifier {
-				name: 'X'
+				name: "X"
 				loc: Object {
-					filename: 'input.ts'
-					identifierName: 'X'
+					filename: "input.ts"
+					identifierName: "X"
 					end: Object {
 						column: 6
 						index: 18
@@ -131,7 +131,7 @@ Program {
 			}
 			typeParameters: undefined
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 16
 					index: 28
@@ -145,7 +145,7 @@ Program {
 			}
 			right: NumberKeywordTypeAnnotation {
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 15
 						index: 27

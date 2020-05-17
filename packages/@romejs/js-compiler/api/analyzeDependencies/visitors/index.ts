@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import es from './es';
-import cjs from './cjs';
+import es from "./es";
+import cjs from "./cjs";
 
 export default [es, cjs];

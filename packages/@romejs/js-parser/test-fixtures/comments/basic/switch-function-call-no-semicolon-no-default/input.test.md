@@ -9,14 +9,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 61
@@ -30,10 +30,10 @@ Program {
 	}
 	comments: Array [
 		CommentLine {
-			id: '0'
-			value: ' comment'
+			id: "0"
+			value: " comment"
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 14
 					index: 58
@@ -50,7 +50,7 @@ Program {
 	body: Array [
 		SwitchStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 1
 					index: 60
@@ -63,10 +63,10 @@ Program {
 				}
 			}
 			discriminant: ReferenceIdentifier {
-				name: 'x'
+				name: "x"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'x'
+					filename: "input.js"
+					identifierName: "x"
 					end: Object {
 						column: 9
 						index: 9
@@ -81,9 +81,9 @@ Program {
 			}
 			cases: Array [
 				SwitchCase {
-					trailingComments: Array ['0']
+					trailingComments: Array ["0"]
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 20
 							index: 43
@@ -99,7 +99,7 @@ Program {
 						value: 1
 						format: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 8
 								index: 21
@@ -116,7 +116,7 @@ Program {
 						ExpressionStatement {
 							trailingComments: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 20
 									index: 43
@@ -131,7 +131,7 @@ Program {
 							expression: CallExpression {
 								trailingComments: undefined
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 20
 										index: 43
@@ -145,9 +145,9 @@ Program {
 								}
 								arguments: Array [
 									StringLiteral {
-										value: '1'
+										value: "1"
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 19
 												index: 42
@@ -163,7 +163,7 @@ Program {
 								]
 								callee: MemberExpression {
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 15
 											index: 38
@@ -176,10 +176,10 @@ Program {
 										}
 									}
 									object: ReferenceIdentifier {
-										name: 'console'
+										name: "console"
 										loc: Object {
-											filename: 'input.js'
-											identifierName: 'console'
+											filename: "input.js"
+											identifierName: "console"
 											end: Object {
 												column: 11
 												index: 34
@@ -194,10 +194,10 @@ Program {
 									}
 									property: StaticMemberProperty {
 										value: Identifier {
-											name: 'log'
+											name: "log"
 											loc: Object {
-												filename: 'input.js'
-												identifierName: 'log'
+												filename: "input.js"
+												identifierName: "log"
 												end: Object {
 													column: 15
 													index: 38
@@ -211,8 +211,8 @@ Program {
 											}
 										}
 										loc: Object {
-											filename: 'input.js'
-											identifierName: 'log'
+											filename: "input.js"
+											identifierName: "log"
 											end: Object {
 												column: 15
 												index: 38

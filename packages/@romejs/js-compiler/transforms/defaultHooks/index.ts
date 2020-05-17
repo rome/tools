@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, createHook} from '@romejs/js-compiler';
+import {Path, createHook} from "@romejs/js-compiler";
 import {
 	AnyComment,
 	AnyCommentOptionalId,
@@ -19,7 +19,7 @@ import {
 	variableDeclaration,
 	variableDeclarationStatement,
 	variableDeclarator,
-} from '@romejs/js-ast';
+} from "@romejs/js-ast";
 
 type VariableInjectorState = {
 	bindings: Array<[string, undefined | AnyExpression]>;
@@ -35,7 +35,7 @@ export const bindingInjector = createHook<
 	VariableInjectorArgs,
 	[ReferenceIdentifier, AssignmentIdentifier]
 >({
-	name: 'bindingInjectorHook',
+	name: "bindingInjectorHook",
 	initialState: {
 		bindings: [],
 	},
@@ -57,8 +57,8 @@ export const bindingInjector = createHook<
 	exit(path: Path, state: VariableInjectorState): AnyNode {
 		const {node} = path;
 
-		if (node.type !== 'BlockStatement' && node.type !== 'Program') {
-			throw new Error('Never should have been used as a provider');
+		if (node.type !== "BlockStatement" && node.type !== "Program") {
+			throw new Error("Never should have been used as a provider");
 		}
 
 		const {bindings} = state;
@@ -71,7 +71,7 @@ export const bindingInjector = createHook<
 			body: [
 				variableDeclarationStatement.quick(
 					variableDeclaration.create({
-						kind: 'var',
+						kind: "var",
 						declarations: bindings.map(([name, init]) => {
 							return variableDeclarator.create({
 								id: bindingIdentifier.quick(name),
@@ -87,11 +87,11 @@ export const bindingInjector = createHook<
 });
 
 export const variableInjectorVisitor = {
-	name: 'variableInjector',
+	name: "variableInjector",
 	enter(path: Path) {
 		const {node} = path;
 
-		if (node.type === 'BlockStatement' || node.type === 'Program') {
+		if (node.type === "BlockStatement" || node.type === "Program") {
 			path.provideHook(bindingInjector);
 		}
 
@@ -110,7 +110,7 @@ export const commentInjector = createHook<
 	CommentInjectorArg,
 	string
 >({
-	name: 'commentInjectorHook',
+	name: "commentInjectorHook",
 	initialState: {
 		comments: [],
 	},
@@ -143,8 +143,8 @@ export const commentInjector = createHook<
 	exit(path: Path, state: CommentInjectorState): AnyNode {
 		const {node} = path;
 
-		if (node.type !== 'Program') {
-			throw new Error('Never should have been used as a provider');
+		if (node.type !== "Program") {
+			throw new Error("Never should have been used as a provider");
 		}
 
 		return {
@@ -155,15 +155,15 @@ export const commentInjector = createHook<
 });
 
 export const commentInjectorVisitor = {
-	name: 'commentInjector',
+	name: "commentInjector",
 	enter(path: Path) {
 		const {node, context} = path;
 
-		if (node.type === 'CommentBlock' || node.type === 'CommentLine') {
+		if (node.type === "CommentBlock" || node.type === "CommentLine") {
 			context.comments.updateComment(node);
 		}
 
-		if (node.type === 'Program') {
+		if (node.type === "Program") {
 			context.comments.setComments(node.comments);
 			return path.provideHook(commentInjector);
 		}

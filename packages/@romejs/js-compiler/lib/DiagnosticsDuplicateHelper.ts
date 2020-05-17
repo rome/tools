@@ -10,15 +10,15 @@ import {
 	DiagnosticDescription,
 	DiagnosticLocation,
 	buildDuplicateLocationAdvice,
-} from '@romejs/diagnostics';
-import CompilerContext from './CompilerContext';
+} from "@romejs/diagnostics";
+import CompilerContext from "./CompilerContext";
 
 type DescriptionFactory = (key: string) => DiagnosticDescription;
 
 export class DiagnosticsDuplicateHelper {
 	constructor(context: CompilerContext, descriptionFactory: DescriptionFactory) {
 		this.context = context;
-		this.category = descriptionFactory('').category;
+		this.category = descriptionFactory("").category;
 		this.descriptionFactory = descriptionFactory;
 		this.locations = new Map();
 	}

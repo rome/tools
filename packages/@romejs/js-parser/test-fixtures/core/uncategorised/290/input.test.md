@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 30
 			index: 30
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		FunctionDeclaration {
 			id: BindingIdentifier {
-				name: 'hello'
+				name: "hello"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'hello'
+					filename: "input.js"
+					identifierName: "hello"
 					end: Object {
 						column: 14
 						index: 14
@@ -49,7 +49,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 30
 					index: 30
@@ -70,7 +70,7 @@ Program {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -84,10 +84,10 @@ Program {
 				}
 				params: Array [
 					BindingIdentifier {
-						name: 'a'
+						name: "a"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'a'
+							filename: "input.js"
+							identifierName: "a"
 							end: Object {
 								column: 16
 								index: 16
@@ -103,7 +103,7 @@ Program {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 16
 									index: 16
@@ -122,7 +122,7 @@ Program {
 			body: BlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 30
 						index: 30
@@ -137,7 +137,7 @@ Program {
 				body: Array [
 					ExpressionStatement {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 28
 								index: 28
@@ -152,7 +152,7 @@ Program {
 						expression: CallExpression {
 							arguments: Array []
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 27
 									index: 27
@@ -165,10 +165,10 @@ Program {
 								}
 							}
 							callee: ReferenceIdentifier {
-								name: 'sayHi'
+								name: "sayHi"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'sayHi'
+									filename: "input.js"
+									identifierName: "sayHi"
 									end: Object {
 										column: 25
 										index: 25

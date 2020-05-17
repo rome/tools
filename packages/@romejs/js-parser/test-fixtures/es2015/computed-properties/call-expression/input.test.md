@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 29
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 2
 					index: 28
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'var'
+				kind: "var"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 2
 						index: 28
@@ -62,10 +62,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'foo'
+							name: "foo"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'foo'
+								filename: "input.js"
+								identifierName: "foo"
 								end: Object {
 									column: 7
 									index: 7
@@ -79,7 +79,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 1
 								index: 27
@@ -93,7 +93,7 @@ Program {
 						}
 						init: ObjectExpression {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 1
 									index: 27
@@ -111,7 +111,7 @@ Program {
 										value: CallExpression {
 											arguments: Array []
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 8
 													index: 20
@@ -124,10 +124,10 @@ Program {
 												}
 											}
 											callee: ReferenceIdentifier {
-												name: 'bar'
+												name: "bar"
 												loc: Object {
-													filename: 'input.js'
-													identifierName: 'bar'
+													filename: "input.js"
+													identifierName: "bar"
 													end: Object {
 														column: 6
 														index: 18
@@ -142,7 +142,7 @@ Program {
 											}
 										}
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 9
 												index: 21
@@ -156,9 +156,9 @@ Program {
 										}
 									}
 									value: StringLiteral {
-										value: ''
+										value: ""
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 13
 												index: 25
@@ -172,7 +172,7 @@ Program {
 										}
 									}
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 13
 											index: 25

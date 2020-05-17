@@ -10,17 +10,17 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array [
-		'jsx'
-		'ts'
+		"jsx"
+		"ts"
 	]
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 10
 			index: 51
@@ -35,7 +35,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 10
 					index: 51
@@ -49,9 +49,9 @@ Program {
 			}
 			expression: JSXElement {
 				name: JSXReferenceIdentifier {
-					name: 'AbC-def'
+					name: "AbC-def"
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 8
 							index: 8
@@ -67,7 +67,7 @@ Program {
 				selfClosing: false
 				typeArguments: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 10
 						index: 51
@@ -81,9 +81,9 @@ Program {
 				}
 				children: Array [
 					JSXText {
-						value: '\nbar\nbaz\n'
+						value: "\nbar\nbaz\n"
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 0
 								index: 41
@@ -100,9 +100,9 @@ Program {
 				attributes: Array [
 					JSXAttribute {
 						name: JSXIdentifier {
-							name: 'test'
+							name: "test"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 6
 									index: 15
@@ -116,9 +116,9 @@ Program {
 							}
 						}
 						value: StringLiteral {
-							value: '&&'
+							value: "&&"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 22
 									index: 31
@@ -132,7 +132,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 22
 								index: 31

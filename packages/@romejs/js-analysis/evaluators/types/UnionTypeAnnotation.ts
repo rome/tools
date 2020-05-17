@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
+import {Scope} from "../../scopes";
 import {
 	AnyNode,
 	UnionTypeAnnotation,
 	unionTypeAnnotation,
-} from '@romejs/js-ast';
-import UnionT from '../../types/UnionT';
+} from "@romejs/js-ast";
+import UnionT from "../../types/UnionT";
 
 export default function UnionTypeAnnotation(node: AnyNode, scope: Scope) {
 	node = unionTypeAnnotation.assert(node);

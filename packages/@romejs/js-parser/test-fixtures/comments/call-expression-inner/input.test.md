@@ -9,14 +9,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 29
@@ -30,10 +30,10 @@ Program {
 	}
 	comments: Array [
 		CommentBlock {
-			id: '0'
-			value: ' EMPTY '
+			id: "0"
+			value: " EMPTY "
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 26
 					index: 26
@@ -50,7 +50,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 28
 					index: 28
@@ -65,9 +65,9 @@ Program {
 			expression: CallExpression {
 				arguments: Array []
 				trailingComments: Array []
-				innerComments: Array ['0']
+				innerComments: Array ["0"]
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 27
 						index: 27
@@ -80,10 +80,10 @@ Program {
 					}
 				}
 				callee: ReferenceIdentifier {
-					name: 'callExpression'
+					name: "callExpression"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'callExpression'
+						filename: "input.js"
+						identifierName: "callExpression"
 						end: Object {
 							column: 14
 							index: 14

@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 26
@@ -30,11 +30,11 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 20
 					index: 20
@@ -47,17 +47,17 @@ Program {
 				}
 			}
 			description: Object {
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Label <emphasis>__proto__</emphasis> is already declared'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Label <emphasis>__proto__</emphasis> is already declared"}
 				advice: Array [
 					log {
-						category: 'info'
-						text: 'Defined already here'
+						category: "info"
+						text: "Defined already here"
 					}
 					frame {
 						location: Object {
-							filename: 'input.js'
-							identifierName: '__proto__'
+							filename: "input.js"
+							identifierName: "__proto__"
 							end: Object {
 								column: 9
 								index: 9
@@ -77,7 +77,7 @@ Program {
 	body: Array [
 		LabeledStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 25
 					index: 25
@@ -90,10 +90,10 @@ Program {
 				}
 			}
 			label: Identifier {
-				name: '__proto__'
+				name: "__proto__"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: '__proto__'
+					filename: "input.js"
+					identifierName: "__proto__"
 					end: Object {
 						column: 9
 						index: 9
@@ -108,7 +108,7 @@ Program {
 			}
 			body: LabeledStatement {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 25
 						index: 25
@@ -121,10 +121,10 @@ Program {
 					}
 				}
 				label: Identifier {
-					name: '__proto__'
+					name: "__proto__"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: '__proto__'
+						filename: "input.js"
+						identifierName: "__proto__"
 						end: Object {
 							column: 20
 							index: 20
@@ -139,7 +139,7 @@ Program {
 				}
 				body: ExpressionStatement {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 25
 							index: 25
@@ -155,7 +155,7 @@ Program {
 						value: 42
 						format: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 24
 								index: 24

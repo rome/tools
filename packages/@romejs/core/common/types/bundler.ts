@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Diagnostics} from '@romejs/diagnostics';
-import {SourceMapGenerator} from '@romejs/codec-source-map';
-import {AbsoluteFilePath} from '@romejs/path';
-import {ResolverOptions} from '../../master/fs/Resolver';
+import {Diagnostics} from "@romejs/diagnostics";
+import {SourceMapGenerator} from "@romejs/codec-source-map";
+import {AbsoluteFilePath} from "@romejs/path";
+import {ResolverOptions} from "../../master/fs/Resolver";
 
 export type BundlerConfig = {
 	inlineSourceMap: boolean;
@@ -16,9 +16,9 @@ export type BundlerConfig = {
 	resolver: ResolverOptions;
 };
 
-export type BundlerMode = 'modern' | 'legacy';
+export type BundlerMode = "modern" | "legacy";
 
-export const BUNDLER_MODES: Array<BundlerMode> = ['modern', 'legacy'];
+export const BUNDLER_MODES: Array<BundlerMode> = ["modern", "legacy"];
 
 export type BundleRequestResult = {
 	cached: boolean;
@@ -38,7 +38,7 @@ export type BundleBuddyGraphNode = {
 export type BundlerFiles = Map<
 	string,
 	{
-		kind: 'asset' | 'entry' | 'sourcemap' | 'stats' | 'manifest' | 'file';
+		kind: "asset" | "entry" | "sourcemap" | "stats" | "manifest" | "file";
 		content: () => string | Buffer;
 	}
 >;

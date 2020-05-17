@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
+	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 19
@@ -30,16 +30,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Expected a semicolon or a line terminator'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'module'
+				sourceType: "module"
 				end: Object {
 					column: 16
 					index: 16
@@ -56,9 +56,9 @@ Program {
 	body: Array [
 		ExportLocalDeclaration {
 			declaration: undefined
-			exportKind: 'value'
+			exportKind: "value"
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 16
 					index: 16
@@ -73,7 +73,7 @@ Program {
 			specifiers: Array [
 				ExportLocalSpecifier {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 15
 							index: 15
@@ -86,10 +86,10 @@ Program {
 						}
 					}
 					exported: Identifier {
-						name: 'default'
+						name: "default"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'default'
+							filename: "input.js"
+							identifierName: "default"
 							end: Object {
 								column: 15
 								index: 15
@@ -103,10 +103,10 @@ Program {
 						}
 					}
 					local: ReferenceIdentifier {
-						name: 'default'
+						name: "default"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'default'
+							filename: "input.js"
+							identifierName: "default"
 							end: Object {
 								column: 15
 								index: 15
@@ -124,7 +124,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 0
 					index: 19
@@ -137,10 +137,10 @@ Program {
 				}
 			}
 			expression: UnaryExpression {
-				operator: '+'
+				operator: "+"
 				prefix: true
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 0
 						index: 19
@@ -153,9 +153,9 @@ Program {
 					}
 				}
 				argument: ReferenceIdentifier {
-					name: 'INVALID_PLACEHOLDER'
+					name: "INVALID_PLACEHOLDER"
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 0
 							index: 19

@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {AnyNode, assignmentExpression} from '@romejs/js-ast';
-import SideEffectT from '../../types/SideEffectT';
+import {Scope} from "../../scopes";
+import {AnyNode, assignmentExpression} from "@romejs/js-ast";
+import SideEffectT from "../../types/SideEffectT";
 
 export default function AssignmentExpression(node: AnyNode, scope: Scope) {
 	node = assignmentExpression.assert(node);
 
 	const {left, right, operator} = node;
 
-	if (operator === '=') {
+	if (operator === "=") {
 		const rightType = scope.evaluate(right);
 		const leftType = scope.evaluate(left);
 		leftType.shouldMatch(rightType);

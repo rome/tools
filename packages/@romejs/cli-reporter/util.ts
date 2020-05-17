@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ReporterProgress} from './types';
-import Reporter from './Reporter';
-import readline = require('readline');
+import {ReporterProgress} from "./types";
+import Reporter from "./Reporter";
+import readline = require("readline");
 
 export function mergeProgresses(
 	progresses: Array<ReporterProgress>,
@@ -93,18 +93,18 @@ export function onKeypress(
 
 	function onkeypress(chunk: Buffer, key: Key) {
 		switch (key.name) {
-			case 'c': {
+			case "c": {
 				if (key.ctrl) {
 					reporter.br(true);
-					reporter.warn('Cancelled by user');
+					reporter.warn("Cancelled by user");
 					process.exit(1);
 				}
 				return;
 			}
 
-			case 'escape': {
+			case "escape": {
 				reporter.br(true);
-				reporter.warn('Cancelled by user');
+				reporter.warn("Cancelled by user");
 				process.exit(1);
 				return;
 			}
@@ -113,11 +113,11 @@ export function onKeypress(
 		callback(key);
 	}
 
-	stdin.addListener('keypress', onkeypress);
+	stdin.addListener("keypress", onkeypress);
 
 	return {
 		finish() {
-			stdin.removeListener('keypress', onkeypress);
+			stdin.removeListener("keypress", onkeypress);
 			setRawMode(stdin, false);
 		},
 	};

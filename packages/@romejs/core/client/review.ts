@@ -5,18 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import ClientRequest from './ClientRequest';
-import {DiagnosticsPrinter, printDiagnostics} from '@romejs/cli-diagnostics';
-import {SelectOption} from '@romejs/cli-reporter';
+import ClientRequest from "./ClientRequest";
+import {DiagnosticsPrinter, printDiagnostics} from "@romejs/cli-diagnostics";
+import {SelectOption} from "@romejs/cli-reporter";
 import {
 	Diagnostic,
 	DiagnosticAdviceAction,
 	derivePositionlessKeyFromDiagnostic,
-} from '@romejs/diagnostics';
-import {MasterQueryResponse} from '../common/bridges/MasterBridge';
-import {ClientRequestFlags} from '../common/types/client';
-import {Dict} from '@romejs/typescript-helpers';
-import {EMPTY_SUCCESS_RESPONSE} from '../master/MasterRequest';
+} from "@romejs/diagnostics";
+import {MasterQueryResponse} from "../common/bridges/MasterBridge";
+import {ClientRequestFlags} from "../common/types/client";
+import {Dict} from "@romejs/typescript-helpers";
+import {EMPTY_SUCCESS_RESPONSE} from "../master/MasterRequest";
 
 type State = {
 	initial: boolean;
@@ -33,10 +33,10 @@ async function check(
 	reporter.clearScreen();
 
 	if (state.initial) {
-		reporter.info('Fetching initial diagnostics');
+		reporter.info("Fetching initial diagnostics");
 		state.initial = false;
 	} else {
-		reporter.info('Updating diagnostics');
+		reporter.info("Updating diagnostics");
 	}
 
 	const res = await req.fork({
@@ -45,12 +45,12 @@ async function check(
 		noData: false,
 	}).initCommand();
 
-	if (res.type === 'SUCCESS') {
-		throw new Error('Expected diagnostics or an error');
+	if (res.type === "SUCCESS") {
+		throw new Error("Expected diagnostics or an error");
 	}
 
 	// In case it returned an error
-	if (res.type !== 'DIAGNOSTICS') {
+	if (res.type !== "DIAGNOSTICS") {
 		return res;
 	}
 
@@ -88,7 +88,7 @@ async function ask(
 	let hasExtraOptions = false;
 	const actions: Array<DiagnosticAdviceAction> = [];
 	for (const item of advice) {
-		if (item.type === 'action') {
+		if (item.type === "action") {
 			// Only show extra items and hide all non-extra items when `more === true`
 			if (item.extra === true) {
 				hasExtraOptions = true;
@@ -102,7 +102,7 @@ async function ask(
 			actions.push(item);
 		}
 	}
-	advice = advice.filter((item) => item.type !== 'action');
+	advice = advice.filter((item) => item.type !== "action");
 	diag = {
 		...diag,
 		description: {
@@ -112,7 +112,7 @@ async function ask(
 	};
 
 	const optionToAction: Map<string, DiagnosticAdviceAction> = new Map();
-	const chosenShortcuts: Set<string> = new Set(['n', 'escape']);
+	const chosenShortcuts: Set<string> = new Set(["n", "escape"]);
 
 	const actionOptions: Dict<SelectOption> = {};
 
@@ -137,26 +137,26 @@ async function ask(
 		less?: SelectOption;
 	} = {
 		ignore: {
-			label: 'Do nothing',
-			shortcut: 'n',
+			label: "Do nothing",
+			shortcut: "n",
 		},
 		...actionOptions,
 		exit: {
-			label: 'Exit',
-			shortcut: 'escape',
+			label: "Exit",
+			shortcut: "escape",
 		},
 	};
 
 	if (hasExtraOptions) {
 		if (showMoreOptions) {
 			options.more = {
-				label: 'Less options...',
-				shortcut: 'l',
+				label: "Less options...",
+				shortcut: "l",
 			};
 		} else {
 			options.more = {
-				label: 'More options...',
-				shortcut: 'm',
+				label: "More options...",
+				shortcut: "m",
 			};
 		}
 	}
@@ -168,7 +168,7 @@ async function ask(
 	printer.print();
 
 	const answer = await reporter.radio(
-		'How do you want to resolve this?',
+		"How do you want to resolve this?",
 		{
 			options,
 		},
@@ -191,35 +191,35 @@ async function ask(
 			);
 		} else {
 			reporter.warn(
-				'The following diagnostic dependencies changed while waiting for your response.',
+				"The following diagnostic dependencies changed while waiting for your response.",
 			);
 			reporter.list(files);
 		}
 
-		await reporter.confirm('Press any key to try again');
+		await reporter.confirm("Press any key to try again");
 
 		return await check(req, state);
 	}
 
-	if (answer === 'less') {
+	if (answer === "less") {
 		return await ask(diag, req, state, false);
 	}
 
-	if (answer === 'more') {
+	if (answer === "more") {
 		return await ask(diag, req, state, true);
 	}
 
-	if (answer === 'ignore') {
+	if (answer === "ignore") {
 		return await check(req, state);
 	}
 
-	if (answer === 'exit') {
+	if (answer === "exit") {
 		return EMPTY_SUCCESS_RESPONSE;
 	}
 
 	const action = optionToAction.get(answer);
 	if (action === undefined) {
-		throw new Error('Should have found an action for this option');
+		throw new Error("Should have found an action for this option");
 	}
 
 	const requestFlags: Partial<ClientRequestFlags> = {
@@ -234,9 +234,9 @@ async function ask(
 			commandFlags: action.commandFlags,
 			requestFlags,
 		},
-		'master',
+		"master",
 	);
-	if (actionRes.type !== 'DIAGNOSTICS' && actionRes.type !== 'SUCCESS') {
+	if (actionRes.type !== "DIAGNOSTICS" && actionRes.type !== "SUCCESS") {
 		return actionRes;
 	}
 
@@ -258,9 +258,9 @@ export default async function review(
 	reporter.clearScreen();
 
 	if (state.seen.size === 0) {
-		reporter.success('Nothing to review!');
+		reporter.success("Nothing to review!");
 	} else {
-		if (res.type === 'DIAGNOSTICS') {
+		if (res.type === "DIAGNOSTICS") {
 			printDiagnostics({
 				diagnostics: res.diagnostics,
 				suppressions: [],

@@ -13,7 +13,7 @@ import {
 	MarkupTagName,
 	TagNode,
 	TextNode,
-} from './types';
+} from "./types";
 import {
 	Number1,
 	ob1Add,
@@ -23,20 +23,20 @@ import {
 	ob1Inc,
 	ob1Number1,
 	ob1Sub,
-} from '@romejs/ob1';
-import {formatAnsi} from './ansi';
+} from "@romejs/ob1";
+import {formatAnsi} from "./ansi";
 import {
 	humanizeFileSize,
 	humanizeNumber,
 	humanizeTime,
-} from '@romejs/string-utils';
+} from "@romejs/string-utils";
 import {
 	formatApprox,
 	formatGrammarNumber,
 	formatNumber,
 	getFileLinkFilename,
 	getFileLinkText,
-} from './tagFormatters';
+} from "./tagFormatters";
 
 type Cursor = {
 	line: Number1;
@@ -58,12 +58,12 @@ function cursorToIndex(
 type Ancestry = Array<TagNode>;
 
 function createTag(
-	name: TagNode['name'],
-	attributes: TagNode['attributes'],
-	children: TagNode['children'] = [],
+	name: TagNode["name"],
+	attributes: TagNode["attributes"],
+	children: TagNode["children"] = [],
 ): TagNode {
 	return {
-		type: 'Tag',
+		type: "Tag",
 		name,
 		attributes,
 		children,
@@ -112,14 +112,14 @@ export default class Grid {
 
 			// Pad out line to viewport width
 			while (newColumns.length < viewportWidth) {
-				newColumns.push(' ');
+				newColumns.push(" ");
 			}
 
 			// Skip if all it contains is spaces
 
 			let onlySpaces = true;
 			for (const char of newColumns) {
-				if (char !== ' ') {
+				if (char !== " ") {
 					onlySpaces = false;
 				}
 			}
@@ -133,10 +133,10 @@ export default class Grid {
 			let offset = 0;
 
 			// Shift whitespace from right to left
-			while (newColumns[newColumns.length - 1] === ' ') {
+			while (newColumns[newColumns.length - 1] === " ") {
 				offset++;
 				newColumns.pop();
-				newColumns.unshift(' ');
+				newColumns.unshift(" ");
 			}
 
 			const newRanges = ranges.map((range) => {
@@ -190,14 +190,14 @@ export default class Grid {
 	}
 
 	getLines(): Array<string> {
-		return this.lines.map(({columns}) => columns.join(''));
+		return this.lines.map(({columns}) => columns.join(""));
 	}
 
 	getFormattedLines(): Array<string> {
 		const lines = [];
 
 		for (const {ranges, columns} of this.lines) {
-			let content = columns.join('');
+			let content = columns.join("");
 
 			// Sort ranges from last to first
 			const sortedRanges = ranges.sort((a, b) => b.end - a.end);
@@ -233,7 +233,7 @@ export default class Grid {
 		// Pad columns
 		const line = this.lines[lineIndex];
 		for (let i = colIndex - 1; i >= 0 && line.columns[i] === undefined; i--) {
-			line.columns[i] = ' ';
+			line.columns[i] = " ";
 		}
 	}
 
@@ -296,7 +296,7 @@ export default class Grid {
 	}
 
 	writeChar(char: string) {
-		if (char === '\n') {
+		if (char === "\n") {
 			this.newline();
 			return;
 		}
@@ -306,13 +306,13 @@ export default class Grid {
 	}
 
 	writeText(text: string, ancestry: Ancestry) {
-		if (text === '') {
+		if (text === "") {
 			return;
 		}
 
 		const start = this.getCursor();
 
-		const words = text.split(' ');
+		const words = text.split(" ");
 
 		for (let i = 0; i < words.length; i++) {
 			const word = words[i];
@@ -335,7 +335,7 @@ export default class Grid {
 			let ignoreTrailingSpace = false;
 
 			// Start of a sentence that was caused by line wrapping
-			if (!word.endsWith('\n') && this.cursor.column === ob1Number1 && word !== '') {
+			if (!word.endsWith("\n") && this.cursor.column === ob1Number1 && word !== "") {
 				ignoreTrailingSpace = true;
 			}
 
@@ -353,7 +353,7 @@ export default class Grid {
 			}
 
 			if (!ignoreTrailingSpace) {
-				this.writeChar(' ');
+				this.writeChar(" ");
 			}
 		}
 
@@ -416,7 +416,7 @@ export default class Grid {
 	drawList(tag: TagNode, ancestry: Ancestry) {
 		let items: Array<TagNode> = [];
 		for (const child of tag.children) {
-			if (child.type === 'Tag' && child.name === 'li') {
+			if (child.type === "Tag" && child.name === "li") {
 				items.push(child);
 			}
 		}
@@ -426,10 +426,10 @@ export default class Grid {
 
 		this.ensureNewline();
 
-		const ordered = tag.name === 'ol';
+		const ordered = tag.name === "ol";
 
 		if (ordered) {
-			const reversed = tag.attributes.reversed === 'true';
+			const reversed = tag.attributes.reversed === "true";
 			const startOffset: number = Number(tag.attributes.start) || 0;
 
 			const highestNumSize = humanizeNumber(items.length + startOffset).length;
@@ -445,13 +445,13 @@ export default class Grid {
 				}
 
 				const humanNum = humanizeNumber(num);
-				const padding = ' '.repeat(highestNumSize - humanNum.length);
-				this.writeText(`${padding}${humanNum}. `, [createTag('dim', {})]);
+				const padding = " ".repeat(highestNumSize - humanNum.length);
+				this.writeText(`${padding}${humanNum}. `, [createTag("dim", {})]);
 				this.drawListItem(item, ancestry);
 			}
 		} else {
 			for (const item of items) {
-				this.writeText('- ', [createTag('dim', {})]);
+				this.writeText("- ", [createTag("dim", {})]);
 				this.drawListItem(item, ancestry);
 			}
 		}
@@ -473,11 +473,11 @@ export default class Grid {
 		const rows: Array<Array<TagNode>> = [];
 
 		for (const child of tag.children) {
-			if (child.type === 'Tag' && child.name === 'tr') {
+			if (child.type === "Tag" && child.name === "tr") {
 				const row: Array<TagNode> = [];
 
 				for (const field of child.children) {
-					if (field.type === 'Tag' && field.name === 'td') {
+					if (field.type === "Tag" && field.name === "td") {
 						row.push(field);
 					} else {
 						// Probably error?
@@ -547,7 +547,7 @@ export default class Grid {
 
 				const grid = new Grid({...this.markupOptions, columns: ob1Get1(width)});
 				grid.drawTag(field, ancestry);
-				if (field.attributes.align === 'right') {
+				if (field.attributes.align === "right") {
 					grid.alignRight();
 				}
 
@@ -599,7 +599,7 @@ export default class Grid {
 
 		const oldCanLineWrap = this.canLineWrap;
 
-		if (tag.name === 'nobr') {
+		if (tag.name === "nobr") {
 			this.canLineWrap = false;
 		}
 
@@ -608,13 +608,13 @@ export default class Grid {
 		}
 
 		switch (tag.name) {
-			case 'ol':
-			case 'ul': {
+			case "ol":
+			case "ul": {
 				this.drawList(tag, subAncestry);
 				break;
 			}
 
-			case 'table': {
+			case "table": {
 				this.drawTable(tag, subAncestry);
 				break;
 			}
@@ -634,7 +634,7 @@ export default class Grid {
 
 	drawChildren(children: Children, ancestry: Ancestry) {
 		for (const child of children) {
-			if (child.type === 'Text') {
+			if (child.type === "Text") {
 				this.writeText(child.value, ancestry);
 			} else {
 				this.drawTag(child, ancestry);
@@ -657,17 +657,17 @@ export default class Grid {
 	}
 
 	normalizeChild(child: ChildNode): Children {
-		if (child.type === 'Text') {
+		if (child.type === "Text") {
 			let {value} = child;
 
 			// Replace '\t' with '  '
 			// Remove '\r' in case it snuck in as file contents
-			value = value.replace(/\t/g, '  ');
-			value = value.replace(/\r/g, '');
+			value = value.replace(/\t/g, "  ");
+			value = value.replace(/\r/g, "");
 
 			return [
 				{
-					type: 'Text',
+					type: "Text",
 					value,
 				},
 			];
@@ -679,10 +679,10 @@ export default class Grid {
 		const hasText = textLength > 0;
 
 		const {emphasis, ...attributesWithoutEmphasis} = tag.attributes;
-		if (emphasis === 'true') {
+		if (emphasis === "true") {
 			return this.normalizeChild(
 				createTag(
-					'emphasis',
+					"emphasis",
 					{},
 					[
 						{
@@ -695,10 +695,10 @@ export default class Grid {
 		}
 
 		const {dim, ...attributes} = attributesWithoutEmphasis;
-		if (dim === 'true') {
+		if (dim === "true") {
 			return this.normalizeChild(
 				createTag(
-					'dim',
+					"dim",
 					{},
 					[
 						{
@@ -711,15 +711,15 @@ export default class Grid {
 		}
 
 		// Insert padding
-		if (tag.name === 'pad') {
+		if (tag.name === "pad") {
 			const width = Number(tag.attributes.width) || 0;
 			const paddingSize = width - textLength;
 			if (paddingSize > 0) {
 				const paddingTextNode: TextNode = {
-					type: 'Text',
-					value: ' '.repeat(paddingSize),
+					type: "Text",
+					value: " ".repeat(paddingSize),
 				};
-				if (tag.attributes.align === 'right') {
+				if (tag.attributes.align === "right") {
 					return [paddingTextNode, ...tag.children];
 				} else {
 					return [...tag.children, paddingTextNode];
@@ -730,21 +730,21 @@ export default class Grid {
 		}
 
 		// Insert highlight legend
-		if (tag.name === 'highlight') {
+		if (tag.name === "highlight") {
 			const {legend, ...attributesWithoutLegend} = attributes;
 			const index = Math.min(0, Number(attributes.i) || 0);
-			if (legend === 'true') {
+			if (legend === "true") {
 				return [
 					{
 						...tag,
 						attributes: attributesWithoutLegend,
 					},
 					createTag(
-						'dim',
+						"dim",
 						{},
 						[
 							{
-								type: 'Text',
+								type: "Text",
 								value: `[${String(index + 1)}]`,
 							},
 						],
@@ -755,32 +755,32 @@ export default class Grid {
 
 		if (hasText) {
 			// Wrap hr text in spaces
-			if (tag.name === 'hr') {
+			if (tag.name === "hr") {
 				return [
 					{
 						...tag,
 						children: [
 							{
-								type: 'Text',
-								value: ' ',
+								type: "Text",
+								value: " ",
 							},
 							...children,
 							{
-								type: 'Text',
-								value: ' ',
+								type: "Text",
+								value: " ",
 							},
 						],
 					},
 				];
 			}
 		} else {
-			if (tag.name === 'filelink') {
+			if (tag.name === "filelink") {
 				return [
 					{
 						...tag,
 						children: [
 							{
-								type: 'Text',
+								type: "Text",
 								value: getFileLinkText(
 									getFileLinkFilename(tag.attributes, this.markupOptions),
 									tag.attributes,
@@ -795,23 +795,23 @@ export default class Grid {
 
 		// These tags only expect text inside off them
 		const singleInnerText =
-			children.length === 1 && children[0].type === 'Text'
+			children.length === 1 && children[0].type === "Text"
 				? children[0].value
 				: undefined;
 		if (singleInnerText !== undefined) {
 			switch (tag.name) {
-				case 'filesize':
+				case "filesize":
 					return [
 						{
-							type: 'Text',
+							type: "Text",
 							value: humanizeFileSize(Number(singleInnerText)),
 						},
 					];
 
-				case 'duration':
+				case "duration":
 					return [
 						{
-							type: 'Text',
+							type: "Text",
 							value: formatApprox(
 								attributes,
 								humanizeTime(Number(singleInnerText), true),
@@ -819,18 +819,18 @@ export default class Grid {
 						},
 					];
 
-				case 'number':
+				case "number":
 					return [
 						{
-							type: 'Text',
+							type: "Text",
 							value: formatNumber(attributes, singleInnerText),
 						},
 					];
 
-				case 'grammarNumber':
+				case "grammarNumber":
 					return [
 						{
-							type: 'Text',
+							type: "Text",
 							value: formatGrammarNumber(attributes, singleInnerText),
 						},
 					];
@@ -850,11 +850,11 @@ function getChildrenTextLength(children: Children): number {
 	let length = 0;
 
 	for (const child of children) {
-		if (child.type === 'Text') {
+		if (child.type === "Text") {
 			length += child.value.length;
 		}
 
-		if (child.type === 'Tag') {
+		if (child.type === "Tag") {
 			length += getChildrenTextLength(child.children);
 		}
 	}
@@ -871,14 +871,14 @@ const hooks: Map<
 > = new Map();
 
 hooks.set(
-	'hr',
+	"hr",
 	{
 		after: (tag, grid, ancestry) => {
 			const size =
 				grid.viewportWidth === undefined
 					? 100
 					: ob1Get1(grid.viewportWidth) - ob1Get1(grid.cursor.column) + 1;
-			grid.writeText('\u2501'.repeat(size), ancestry);
+			grid.writeText("\u2501".repeat(size), ancestry);
 		},
 	},
 );
@@ -889,7 +889,7 @@ function ansiFormatText(
 	opts: MarkupFormatOptions,
 ): string {
 	switch (tagName) {
-		case 'hyperlink': {
+		case "hyperlink": {
 			let text = value;
 			let hyperlink = attributes.target;
 
@@ -897,58 +897,58 @@ function ansiFormatText(
 				hyperlink = text;
 			}
 
-			if (text === '') {
+			if (text === "") {
 				text = hyperlink;
 			}
 
 			return formatAnsi.hyperlink(text, hyperlink);
 		}
 
-		case 'filelink': {
+		case "filelink": {
 			const filename = getFileLinkFilename(attributes, opts);
 			return formatAnsi.hyperlink(value, `file://${filename}`);
 		}
 
-		case 'inverse':
+		case "inverse":
 			return formatAnsi.inverse(` ${value} `);
 
-		case 'emphasis':
+		case "emphasis":
 			return formatAnsi.bold(value);
 
-		case 'dim':
+		case "dim":
 			return formatAnsi.dim(value);
 
-		case 'italic':
+		case "italic":
 			return formatAnsi.italic(value);
 
-		case 'underline':
+		case "underline":
 			return formatAnsi.underline(value);
 
-		case 'strike':
+		case "strike":
 			return formatAnsi.strikethrough(value);
 
-		case 'error':
+		case "error":
 			return formatAnsi.red(value);
 
-		case 'success':
+		case "success":
 			return formatAnsi.green(value);
 
-		case 'warn':
+		case "warn":
 			return formatAnsi.yellow(value);
 
-		case 'info':
+		case "info":
 			return formatAnsi.blue(value);
 
-		case 'command':
+		case "command":
 			return formatAnsi.italic(value);
 
-		case 'highlight': {
+		case "highlight": {
 			const index = Math.min(0, Number(attributes.i) || 0);
 			const fn = ansiHighlightFactories[index % ansiHighlightFactories.length];
 			return fn(value);
 		}
 
-		case 'color':
+		case "color":
 			return formatAnsiBackground(
 				attributes.bg,
 				formatAnsiForeground(attributes.fg, value),
@@ -971,52 +971,52 @@ function formatAnsiBackground(bg: undefined | string, text: string): string {
 	}
 
 	switch (bg) {
-		case 'black':
+		case "black":
 			return formatAnsi.bgBlack(text);
 
-		case 'brightBlack':
+		case "brightBlack":
 			return formatAnsi.bgBrightBlack(text);
 
-		case 'red':
+		case "red":
 			return formatAnsi.bgRed(text);
 
-		case 'brightRed':
+		case "brightRed":
 			return formatAnsi.bgBrightRed(text);
 
-		case 'green':
+		case "green":
 			return formatAnsi.bgGreen(text);
 
-		case 'brightGreen':
+		case "brightGreen":
 			return formatAnsi.bgBrightGreen(text);
 
-		case 'yellow':
+		case "yellow":
 			return formatAnsi.bgYellow(text);
 
-		case 'brightYellow':
+		case "brightYellow":
 			return formatAnsi.bgBrightYellow(text);
 
-		case 'blue':
+		case "blue":
 			return formatAnsi.bgBlue(text);
 
-		case 'brightBlue':
+		case "brightBlue":
 			return formatAnsi.bgBrightBlue(text);
 
-		case 'magenta':
+		case "magenta":
 			return formatAnsi.bgMagenta(text);
 
-		case 'brightMagenta':
+		case "brightMagenta":
 			return formatAnsi.bgBrightMagenta(text);
 
-		case 'cyan':
+		case "cyan":
 			return formatAnsi.bgCyan(text);
 
-		case 'brightCyan':
+		case "brightCyan":
 			return formatAnsi.bgBrightCyan(text);
 
-		case 'white':
+		case "white":
 			return formatAnsi.bgWhite(text);
 
-		case 'brightWhite':
+		case "brightWhite":
 			return formatAnsi.bgBrightWhite(text);
 
 		default:
@@ -1030,52 +1030,52 @@ function formatAnsiForeground(fg: undefined | string, text: string): string {
 	}
 
 	switch (fg) {
-		case 'black':
+		case "black":
 			return formatAnsi.black(text);
 
-		case 'brightBlack':
+		case "brightBlack":
 			return formatAnsi.brightBlack(text);
 
-		case 'red':
+		case "red":
 			return formatAnsi.red(text);
 
-		case 'brightRed':
+		case "brightRed":
 			return formatAnsi.brightRed(text);
 
-		case 'green':
+		case "green":
 			return formatAnsi.green(text);
 
-		case 'brightGreen':
+		case "brightGreen":
 			return formatAnsi.brightGreen(text);
 
-		case 'yellow':
+		case "yellow":
 			return formatAnsi.yellow(text);
 
-		case 'brightYellow':
+		case "brightYellow":
 			return formatAnsi.brightYellow(text);
 
-		case 'blue':
+		case "blue":
 			return formatAnsi.blue(text);
 
-		case 'brightBlue':
+		case "brightBlue":
 			return formatAnsi.brightBlue(text);
 
-		case 'magenta':
+		case "magenta":
 			return formatAnsi.magenta(text);
 
-		case 'brightMagenta':
+		case "brightMagenta":
 			return formatAnsi.brightMagenta(text);
 
-		case 'cyan':
+		case "cyan":
 			return formatAnsi.cyan(text);
 
-		case 'brightCyan':
+		case "brightCyan":
 			return formatAnsi.brightCyan(text);
 
-		case 'white':
+		case "white":
 			return formatAnsi.white(text);
 
-		case 'brightWhite':
+		case "brightWhite":
 			return formatAnsi.brightWhite(text);
 
 		default:

@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
+	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 36
 			index: 36
@@ -33,7 +33,7 @@ Program {
 		ExportExternalDeclaration {
 			exportKind: undefined
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 36
 					index: 36
@@ -46,9 +46,9 @@ Program {
 				}
 			}
 			source: StringLiteral {
-				value: 'bar'
+				value: "bar"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 35
 						index: 35
@@ -63,7 +63,7 @@ Program {
 			}
 			namespaceSpecifier: ExportNamespaceSpecifier {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 15
 						index: 15
@@ -76,10 +76,10 @@ Program {
 					}
 				}
 				exported: Identifier {
-					name: 'foo'
+					name: "foo"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'foo'
+						filename: "input.js"
+						identifierName: "foo"
 						end: Object {
 							column: 15
 							index: 15
@@ -96,7 +96,7 @@ Program {
 			namedSpecifiers: Array [
 				ExportExternalSpecifier {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 22
 							index: 22
@@ -109,10 +109,10 @@ Program {
 						}
 					}
 					exported: Identifier {
-						name: 'bar'
+						name: "bar"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'bar'
+							filename: "input.js"
+							identifierName: "bar"
 							end: Object {
 								column: 22
 								index: 22
@@ -126,10 +126,10 @@ Program {
 						}
 					}
 					local: Identifier {
-						name: 'bar'
+						name: "bar"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'bar'
+							filename: "input.js"
+							identifierName: "bar"
 							end: Object {
 								column: 22
 								index: 22

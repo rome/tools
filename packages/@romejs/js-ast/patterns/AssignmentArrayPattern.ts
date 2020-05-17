@@ -9,18 +9,18 @@
 	ArrayHole,
 	JSNodeBase,
 	PatternMeta,
-} from '../index';
-import {createBuilder} from '../utils';
+} from "../index";
+import {createBuilder} from "../utils";
 
 export type AssignmentArrayPattern = JSNodeBase & {
-	type: 'AssignmentArrayPattern';
+	type: "AssignmentArrayPattern";
 	meta?: PatternMeta;
 	elements: Array<ArrayHole | AnyAssignmentPattern>;
 	rest?: AnyTargetAssignmentPattern;
 };
 
 export const assignmentArrayPattern = createBuilder<AssignmentArrayPattern>(
-	'AssignmentArrayPattern',
+	"AssignmentArrayPattern",
 	{
 		bindingKeys: {},
 		visitorKeys: {

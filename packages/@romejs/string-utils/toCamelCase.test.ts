@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {toCamelCase} from './toCamelCase';
-import {test} from 'rome';
+import {toCamelCase} from "./toCamelCase";
+import {test} from "rome";
 
 test(
-	'toCamelCase',
+	"toCamelCase",
 	(t) => {
 		const testCases = [
-			{input: 'rometest', expected: 'rometest'},
-			{input: 'rome test', expected: 'romeTest'},
-			{input: 'RoMe TeSt', expected: 'RoMeTeSt'},
-			{input: 'ROME TEST', expected: 'ROMETEST'},
+			{input: "rometest", expected: "rometest"},
+			{input: "rome test", expected: "romeTest"},
+			{input: "RoMe TeSt", expected: "RoMeTeSt"},
+			{input: "ROME TEST", expected: "ROMETEST"},
 		];
 
 		testCases.forEach((td) => {

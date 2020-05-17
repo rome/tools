@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 63
@@ -31,10 +31,10 @@ Program {
 	}
 	body: Array [
 		ExportLocalDeclaration {
-			exportKind: 'type'
+			exportKind: "type"
 			specifiers: undefined
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 23
 					index: 23
@@ -48,10 +48,10 @@ Program {
 			}
 			declaration: TypeAliasTypeAnnotation {
 				id: BindingIdentifier {
-					name: 'T'
+					name: "T"
 					loc: Object {
-						filename: 'input.ts'
-						identifierName: 'T'
+						filename: "input.ts"
+						identifierName: "T"
 						end: Object {
 							column: 13
 							index: 13
@@ -66,7 +66,7 @@ Program {
 				}
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 23
 						index: 23
@@ -80,7 +80,7 @@ Program {
 				}
 				right: NumberKeywordTypeAnnotation {
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 22
 							index: 22
@@ -96,10 +96,10 @@ Program {
 			}
 		}
 		ExportLocalDeclaration {
-			exportKind: 'value'
+			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 16
 					index: 40
@@ -113,10 +113,10 @@ Program {
 			}
 			declaration: TSEnumDeclaration {
 				id: BindingIdentifier {
-					name: 'E'
+					name: "E"
 					loc: Object {
-						filename: 'input.ts'
-						identifierName: 'E'
+						filename: "input.ts"
+						identifierName: "E"
 						end: Object {
 							column: 13
 							index: 37
@@ -132,7 +132,7 @@ Program {
 				const: false
 				members: Array []
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 16
 						index: 40
@@ -147,10 +147,10 @@ Program {
 			}
 		}
 		ExportLocalDeclaration {
-			exportKind: 'type'
+			exportKind: "type"
 			specifiers: undefined
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 21
 					index: 62
@@ -164,10 +164,10 @@ Program {
 			}
 			declaration: TSInterfaceDeclaration {
 				id: BindingIdentifier {
-					name: 'I'
+					name: "I"
 					loc: Object {
-						filename: 'input.ts'
-						identifierName: 'I'
+						filename: "input.ts"
+						identifierName: "I"
 						end: Object {
 							column: 18
 							index: 59
@@ -183,7 +183,7 @@ Program {
 				extends: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 21
 						index: 62
@@ -198,7 +198,7 @@ Program {
 				body: TSInterfaceBody {
 					body: Array []
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 21
 							index: 62

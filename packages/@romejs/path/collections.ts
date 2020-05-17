@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AbsoluteFilePath, RelativeFilePath, UnknownFilePath} from '.';
+import {AbsoluteFilePath, RelativeFilePath, UnknownFilePath} from ".";
 
 // Sometimes we don't want to have to deal with what a FilePath serializes into
 // For those purposes we have these wrappers around Map and Set. Here we can add some custom logic
@@ -123,27 +123,27 @@ class FilePathSet<FilePath extends UnknownFilePath> {
 
 export class AbsoluteFilePathMap<Value>
 	extends FilePathMap<AbsoluteFilePath, Value> {
-	type: 'absolute' = 'absolute';
+	type: "absolute" = "absolute";
 }
 
 export class RelativeFilePathMap<Value>
 	extends FilePathMap<RelativeFilePath, Value> {
-	type: 'relative' = 'relative';
+	type: "relative" = "relative";
 }
 
 export class UnknownFilePathMap<Value>
 	extends FilePathMap<UnknownFilePath, Value> {
-	type: 'unknown' = 'unknown';
+	type: "unknown" = "unknown";
 }
 
 export class AbsoluteFilePathSet extends FilePathSet<AbsoluteFilePath> {
-	type: 'absolute' = 'absolute';
+	type: "absolute" = "absolute";
 }
 
 export class RelativeFilePathSet extends FilePathSet<RelativeFilePath> {
-	type: 'relative' = 'relative';
+	type: "relative" = "relative";
 }
 
 export class UnknownFilePathSet extends FilePathSet<UnknownFilePath> {
-	type: 'unknown' = 'unknown';
+	type: "unknown" = "unknown";
 }

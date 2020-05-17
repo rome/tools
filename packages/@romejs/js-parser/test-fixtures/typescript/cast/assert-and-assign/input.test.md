@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 19
 			index: 19
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 19
 					index: 19
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			expression: AssignmentExpression {
-				operator: '='
+				operator: "="
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 18
 						index: 18
@@ -63,7 +63,7 @@ Program {
 					value: 42
 					format: undefined
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 18
 							index: 18
@@ -78,7 +78,7 @@ Program {
 				}
 				left: TSAssignmentAsExpression {
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 12
 							index: 12
@@ -92,7 +92,7 @@ Program {
 					}
 					typeAnnotation: NumberKeywordTypeAnnotation {
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 12
 								index: 12
@@ -106,10 +106,10 @@ Program {
 						}
 					}
 					expression: AssignmentIdentifier {
-						name: 'a'
+						name: "a"
 						loc: Object {
-							filename: 'input.ts'
-							identifierName: 'a'
+							filename: "input.ts"
+							identifierName: "a"
 							end: Object {
 								column: 2
 								index: 2

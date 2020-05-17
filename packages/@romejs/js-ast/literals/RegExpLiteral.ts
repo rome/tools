@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, RegExpAlternation, RegExpSubExpression} from '../index';
-import {createBuilder} from '../utils';
+import {JSNodeBase, RegExpAlternation, RegExpSubExpression} from "../index";
+import {createBuilder} from "../utils";
 
 export type RegExpLiteral = JSNodeBase & {
-	type: 'RegExpLiteral';
+	type: "RegExpLiteral";
 	expression: RegExpSubExpression | RegExpAlternation;
 	global?: boolean;
 	multiline?: boolean;
@@ -20,7 +20,7 @@ export type RegExpLiteral = JSNodeBase & {
 };
 
 export const regExpLiteral = createBuilder<RegExpLiteral>(
-	'RegExpLiteral',
+	"RegExpLiteral",
 	{
 		bindingKeys: {},
 		visitorKeys: {

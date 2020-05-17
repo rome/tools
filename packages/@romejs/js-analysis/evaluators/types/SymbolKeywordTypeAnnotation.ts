@@ -9,9 +9,9 @@ import {
 	AnyNode,
 	SymbolKeywordTypeAnnotation,
 	symbolKeywordTypeAnnotation,
-} from '@romejs/js-ast';
+} from "@romejs/js-ast";
 
 export default function SymbolKeywordTypeAnnotation(node: AnyNode) {
 	node = symbolKeywordTypeAnnotation.assert(node);
-	throw new Error('unimplemented');
+	throw new Error("unimplemented");
 }

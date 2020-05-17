@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 34
@@ -30,16 +30,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Expected a semicolon or a line terminator'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 8
 					index: 28
@@ -56,10 +56,10 @@ Program {
 	body: Array [
 		ClassDeclaration {
 			id: BindingIdentifier {
-				name: 'Foo'
+				name: "Foo"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'Foo'
+					filename: "input.js"
+					identifierName: "Foo"
 					end: Object {
 						column: 9
 						index: 9
@@ -73,7 +73,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 11
 					index: 31
@@ -91,7 +91,7 @@ Program {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 11
 						index: 31
@@ -107,10 +107,10 @@ Program {
 					ClassProperty {
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'p'
+								name: "p"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'p'
+									filename: "input.js"
+									identifierName: "p"
 									end: Object {
 										column: 3
 										index: 15
@@ -124,7 +124,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 3
 									index: 15
@@ -140,7 +140,7 @@ Program {
 						value: CallExpression {
 							arguments: Array []
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 8
 									index: 28
@@ -154,7 +154,7 @@ Program {
 							}
 							callee: MemberExpression {
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 5
 										index: 25
@@ -167,10 +167,10 @@ Program {
 									}
 								}
 								object: ReferenceIdentifier {
-									name: 'x'
+									name: "x"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'x'
+										filename: "input.js"
+										identifierName: "x"
 										end: Object {
 											column: 7
 											index: 19
@@ -185,10 +185,10 @@ Program {
 								}
 								property: ComputedMemberProperty {
 									value: ReferenceIdentifier {
-										name: 'm'
+										name: "m"
 										loc: Object {
-											filename: 'input.js'
-											identifierName: 'm'
+											filename: "input.js"
+											identifierName: "m"
 											end: Object {
 												column: 4
 												index: 24
@@ -202,7 +202,7 @@ Program {
 										}
 									}
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 5
 											index: 25
@@ -220,7 +220,7 @@ Program {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 8
 								index: 28
@@ -245,7 +245,7 @@ Program {
 								line: 2
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 3
 									index: 15
@@ -262,10 +262,10 @@ Program {
 					ClassProperty {
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: ''
+								name: ""
 								loc: Object {
-									filename: 'input.js'
-									identifierName: ''
+									filename: "input.js"
+									identifierName: ""
 									end: Object {
 										column: 10
 										index: 30
@@ -279,7 +279,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 10
 									index: 30
@@ -296,7 +296,7 @@ Program {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 10
 								index: 30
@@ -321,7 +321,7 @@ Program {
 								line: 3
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 10
 									index: 30
@@ -340,7 +340,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 1
 					index: 33
@@ -353,9 +353,9 @@ Program {
 				}
 			}
 			expression: ReferenceIdentifier {
-				name: 'INVALID_PLACEHOLDER'
+				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 1
 						index: 33

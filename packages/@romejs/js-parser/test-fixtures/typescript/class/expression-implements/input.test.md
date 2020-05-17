@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 62
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 29
 					index: 29
@@ -47,7 +47,7 @@ Program {
 			expression: ClassExpression {
 				id: undefined
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 27
 						index: 27
@@ -65,7 +65,7 @@ Program {
 					superTypeParameters: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 27
 							index: 27
@@ -80,7 +80,7 @@ Program {
 					implements: Array [
 						TSExpressionWithTypeArguments {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 24
 									index: 24
@@ -94,7 +94,7 @@ Program {
 							}
 							expression: TSQualifiedName {
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 21
 										index: 21
@@ -107,10 +107,10 @@ Program {
 									}
 								}
 								left: ReferenceIdentifier {
-									name: 'X'
+									name: "X"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'X'
+										filename: "input.ts"
+										identifierName: "X"
 										end: Object {
 											column: 19
 											index: 19
@@ -124,10 +124,10 @@ Program {
 									}
 								}
 								right: Identifier {
-									name: 'Y'
+									name: "Y"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'Y'
+										filename: "input.ts"
+										identifierName: "Y"
 										end: Object {
 											column: 21
 											index: 21
@@ -143,7 +143,7 @@ Program {
 							}
 							typeParameters: TSTypeParameterInstantiation {
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 24
 										index: 24
@@ -159,7 +159,7 @@ Program {
 									TSTypeReference {
 										typeParameters: undefined
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 23
 												index: 23
@@ -172,10 +172,10 @@ Program {
 											}
 										}
 										typeName: ReferenceIdentifier {
-											name: 'T'
+											name: "T"
 											loc: Object {
-												filename: 'input.ts'
-												identifierName: 'T'
+												filename: "input.ts"
+												identifierName: "T"
 												end: Object {
 													column: 23
 													index: 23
@@ -198,7 +198,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 31
 					index: 61
@@ -212,10 +212,10 @@ Program {
 			}
 			expression: ClassExpression {
 				id: BindingIdentifier {
-					name: 'C'
+					name: "C"
 					loc: Object {
-						filename: 'input.ts'
-						identifierName: 'C'
+						filename: "input.ts"
+						identifierName: "C"
 						end: Object {
 							column: 8
 							index: 38
@@ -229,7 +229,7 @@ Program {
 					}
 				}
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 29
 						index: 59
@@ -247,7 +247,7 @@ Program {
 					superTypeParameters: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 29
 							index: 59
@@ -262,7 +262,7 @@ Program {
 					implements: Array [
 						TSExpressionWithTypeArguments {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 26
 									index: 56
@@ -276,7 +276,7 @@ Program {
 							}
 							expression: TSQualifiedName {
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 23
 										index: 53
@@ -289,10 +289,10 @@ Program {
 									}
 								}
 								left: ReferenceIdentifier {
-									name: 'X'
+									name: "X"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'X'
+										filename: "input.ts"
+										identifierName: "X"
 										end: Object {
 											column: 21
 											index: 51
@@ -306,10 +306,10 @@ Program {
 									}
 								}
 								right: Identifier {
-									name: 'Y'
+									name: "Y"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'Y'
+										filename: "input.ts"
+										identifierName: "Y"
 										end: Object {
 											column: 23
 											index: 53
@@ -325,7 +325,7 @@ Program {
 							}
 							typeParameters: TSTypeParameterInstantiation {
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 26
 										index: 56
@@ -341,7 +341,7 @@ Program {
 									TSTypeReference {
 										typeParameters: undefined
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 25
 												index: 55
@@ -354,10 +354,10 @@ Program {
 											}
 										}
 										typeName: ReferenceIdentifier {
-											name: 'T'
+											name: "T"
 											loc: Object {
-												filename: 'input.ts'
-												identifierName: 'T'
+												filename: "input.ts"
+												identifierName: "T"
 												end: Object {
 													column: 25
 													index: 55

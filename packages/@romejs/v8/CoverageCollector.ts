@@ -11,10 +11,10 @@ import {
 	CoverageLocationRange,
 	CoverageRangeWithMetadata,
 	LocationRangeKind,
-} from '@romejs/v8';
-import {SourceMapConsumer} from '@romejs/codec-source-map';
-import {Position} from '@romejs/parser-core';
-import {urlToFilename} from './utils';
+} from "@romejs/v8";
+import {SourceMapConsumer} from "@romejs/codec-source-map";
+import {Position} from "@romejs/parser-core";
+import {urlToFilename} from "./utils";
 import {
 	Number0,
 	Number1,
@@ -23,8 +23,8 @@ import {
 	ob1Inc,
 	ob1Number0,
 	ob1Number1,
-} from '@romejs/ob1';
-import inspector = require('inspector');
+} from "@romejs/ob1";
+import inspector = require("inspector");
 
 function createCoverageFileStats(
 	covered: number,
@@ -76,11 +76,11 @@ export default class CoverageCollector {
 			for (const {ranges, functionName, isBlockCoverage} of entry.functions) {
 				data.ranges = data.ranges.concat(
 					ranges.map((range) => {
-						let kind: LocationRangeKind = 'expression';
-						if (functionName !== '') {
-							kind = 'function';
+						let kind: LocationRangeKind = "expression";
+						if (functionName !== "") {
+							kind = "function";
 						} else if (isBlockCoverage) {
-							kind = 'branch';
+							kind = "branch";
 						}
 
 						return {
@@ -123,7 +123,7 @@ export default class CoverageCollector {
 
 				while (index < newIndex) {
 					const char = code[ob1Get0(index)];
-					if (char === '\n') {
+					if (char === "\n") {
 						line = ob1Inc(line);
 						column = ob1Number0;
 					} else {
@@ -242,7 +242,7 @@ export default class CoverageCollector {
 				}
 
 				// Mark covered kind
-				if (kind === 'function') {
+				if (kind === "function") {
 					if (count === 0) {
 						uncoveredBranches.add(start.index);
 						uncoveredFunctions.add(start.line);
@@ -250,7 +250,7 @@ export default class CoverageCollector {
 						coveredFunctions.add(start.line);
 						coveredBranches.add(start.index);
 					}
-				} else if (kind === 'branch') {
+				} else if (kind === "branch") {
 					if (count === 0) {
 						uncoveredBranches.add(start.index);
 					} else {

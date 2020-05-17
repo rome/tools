@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSNonNullExpression} from '@romejs/js-ast';
-import {Builder} from '@romejs/js-formatter';
-import {Token, concat} from '../../tokens';
+import {TSNonNullExpression} from "@romejs/js-ast";
+import {Builder} from "@romejs/js-formatter";
+import {Token, concat} from "../../tokens";
 
 export default function TSNonNullExpression(
 	builder: Builder,
@@ -16,7 +16,7 @@ export default function TSNonNullExpression(
 	const expr = builder.tokenize(node.expression, node);
 
 	if (builder.options.typeAnnotations) {
-		return concat([expr, '!']);
+		return concat([expr, "!"]);
 	} else {
 		return expr;
 	}

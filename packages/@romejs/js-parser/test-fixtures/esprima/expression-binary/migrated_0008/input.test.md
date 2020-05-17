@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 10
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 9
 					index: 9
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			expression: BinaryExpression {
-				operator: '/'
+				operator: "/"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 9
 						index: 9
@@ -60,10 +60,10 @@ Program {
 					}
 				}
 				right: ReferenceIdentifier {
-					name: 'z'
+					name: "z"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'z'
+						filename: "input.js"
+						identifierName: "z"
 						end: Object {
 							column: 9
 							index: 9
@@ -77,9 +77,9 @@ Program {
 					}
 				}
 				left: BinaryExpression {
-					operator: '*'
+					operator: "*"
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 5
 							index: 5
@@ -92,10 +92,10 @@ Program {
 						}
 					}
 					left: ReferenceIdentifier {
-						name: 'x'
+						name: "x"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'x'
+							filename: "input.js"
+							identifierName: "x"
 							end: Object {
 								column: 1
 								index: 1
@@ -109,10 +109,10 @@ Program {
 						}
 					}
 					right: ReferenceIdentifier {
-						name: 'y'
+						name: "y"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'y'
+							filename: "input.js"
+							identifierName: "y"
 							end: Object {
 								column: 5
 								index: 5

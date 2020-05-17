@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {testLint} from '../testHelpers';
-import {dedent} from '@romejs/string-utils';
+import {test} from "rome";
+import {testLint} from "../testHelpers";
+import {dedent} from "@romejs/string-utils";
 
 test(
-	'no label var',
+	"no label var",
 	async (t) => {
 		await testLint(
 			t,
@@ -18,7 +18,7 @@ test(
         const x = 'test';
         x: const y = 'test';
       `,
-			{category: 'lint/noLabelVar'},
+			{category: "lint/noLabelVar"},
 		);
 
 		await testLint(
@@ -27,7 +27,7 @@ test(
         const x = 'test';
         z: const y = 'test';
       `,
-			{category: 'lint/noLabelVar'},
+			{category: "lint/noLabelVar"},
 		);
 	},
 );

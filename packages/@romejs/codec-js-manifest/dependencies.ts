@@ -5,18 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Consumer} from '@romejs/consume';
+import {Consumer} from "@romejs/consume";
 import {
 	SemverRangeNode,
 	parseSemverRange,
 	stringifySemver,
-} from '@romejs/codec-semver';
-import {tryParseWithOptionalOffsetPosition} from '@romejs/parser-core';
-import {UnknownFilePath, createUnknownFilePath} from '@romejs/path';
-import {normalizeName} from './name';
-import {ob1Add} from '@romejs/ob1';
-import {descriptions} from '@romejs/diagnostics';
-import {ManifestName} from './types';
+} from "@romejs/codec-semver";
+import {tryParseWithOptionalOffsetPosition} from "@romejs/parser-core";
+import {UnknownFilePath, createUnknownFilePath} from "@romejs/path";
+import {normalizeName} from "./name";
+import {ob1Add} from "@romejs/ob1";
+import {descriptions} from "@romejs/diagnostics";
+import {ManifestName} from "./types";
 
 export type DependencyPattern =
 	 | HostedGitPattern
@@ -37,7 +37,7 @@ type UrlWithHash = {
 
 export function stringifyDependencyPattern(pattern: DependencyPattern): string {
 	switch (pattern.type) {
-		case 'hosted-git': {
+		case "hosted-git": {
 			let str = `${pattern.host}:${pattern.user}/${pattern.repo}`;
 			if (pattern.commitish !== undefined) {
 				str += `#${pattern.commitish}`;
@@ -45,24 +45,24 @@ export function stringifyDependencyPattern(pattern: DependencyPattern): string {
 			return str;
 		}
 
-		case 'file':
+		case "file":
 			return `file:${pattern.path}`;
 
-		case 'semver':
+		case "semver":
 			return stringifySemver(pattern.range);
 
-		case 'tag':
+		case "tag":
 			return pattern.tag;
 
-		case 'git':
-		case 'http-tarball':
+		case "git":
+		case "http-tarball":
 			if (pattern.hash === undefined) {
 				return pattern.url;
 			} else {
 				return `${pattern.url}#${pattern.hash}`;
 			}
 
-		case 'npm': {
+		case "npm": {
 			let str = `${NPM_PREFIX}${pattern.name}`;
 			if (pattern.range !== undefined) {
 				str += `@${stringifySemver(pattern.range)}`;
@@ -70,13 +70,13 @@ export function stringifyDependencyPattern(pattern: DependencyPattern): string {
 			return str;
 		}
 
-		case 'link':
+		case "link":
 			return `${LINK_PREFIX}${pattern.path.join()}`;
 	}
 }
 
 function explodeHashUrl(pattern: string, consumer: Consumer): UrlWithHash {
-	const parts = pattern.split('#');
+	const parts = pattern.split("#");
 
 	if (parts.length > 2) {
 		consumer.unexpected(descriptions.MANIFEST.TOO_MANY_HASH_PARTS);
@@ -97,10 +97,10 @@ function removePrefix(prefix: string, value: string): string {
 }
 
 //# HOSTED GIT
-export type HostedGitHost = 'bitbucket' | 'github' | 'gist' | 'gitlab';
+export type HostedGitHost = "bitbucket" | "github" | "gist" | "gitlab";
 
 type IncompleteHostedGitPattern = {
-	type: 'hosted-git';
+	type: "hosted-git";
 	host: HostedGitHost;
 	user: string;
 	repo: string;
@@ -114,10 +114,10 @@ type HostedGitPattern = IncompleteHostedGitPattern & {
 const GITHUB_SHORTHAND = /^[^:@%\/\s.\-][^:@%\/\s]*[\/][^:@\s\/%]+(?:#.*)?$/;
 
 const HOSTED_GIT_PREFIXES: Array<HostedGitHost> = [
-	'bitbucket',
-	'github',
-	'gist',
-	'gitlab',
+	"bitbucket",
+	"github",
+	"gist",
+	"gitlab",
 ];
 
 function parseHostedGit(
@@ -127,13 +127,13 @@ function parseHostedGit(
 ): HostedGitPattern {
 	// Extract and trim hash
 	let commitish: undefined | string;
-	if (pattern.includes('#')) {
-		const hashIndex = pattern.indexOf('#');
+	if (pattern.includes("#")) {
+		const hashIndex = pattern.indexOf("#");
 		commitish = pattern.slice(hashIndex + 1);
 		pattern = pattern.slice(0, hashIndex - 1);
 	}
 
-	const parts = pattern.split('/');
+	const parts = pattern.split("/");
 	if (parts.length > 2) {
 		consumer.unexpected(descriptions.MANIFEST.TOO_MANY_HOSTED_GIT_PARTS);
 	}
@@ -141,17 +141,17 @@ function parseHostedGit(
 	let user = parts[0];
 	if (user === undefined) {
 		consumer.unexpected(descriptions.MANIFEST.MISSING_HOSTED_GIT_USER);
-		user = 'unknown';
+		user = "unknown";
 	}
 
 	let repo = parts[1];
 	if (repo === undefined) {
 		consumer.unexpected(descriptions.MANIFEST.MISSING_HOSTED_GIT_REPO);
-		repo = 'unknown';
+		repo = "unknown";
 	}
 
 	const incomplete: IncompleteHostedGitPattern = {
-		type: 'hosted-git',
+		type: "hosted-git",
 		host,
 		user,
 		repo,
@@ -166,21 +166,21 @@ function parseHostedGit(
 
 export function getHostedGitURL(pattern: IncompleteHostedGitPattern): string {
 	switch (pattern.host) {
-		case 'bitbucket':
-			return '';
+		case "bitbucket":
+			return "";
 
-		case 'gitlab':
-		case 'gist':
-			return '';
+		case "gitlab":
+		case "gist":
+			return "";
 
-		case 'github':
-			return '';
+		case "github":
+			return "";
 	}
 }
 
 //# REGULAR GIT
 type GitPattern = UrlWithHash & {
-	type: 'git';
+	type: "git";
 };
 
 const GIT_PATTERN_MATCHERS = [
@@ -193,14 +193,14 @@ const GIT_PATTERN_MATCHERS = [
 
 function parseGit(pattern: string, consumer: Consumer): GitPattern {
 	return {
-		type: 'git',
+		type: "git",
 		...explodeHashUrl(pattern, consumer),
 	};
 }
 
 //# TARBALL
 type HTTPTarballPattern = UrlWithHash & {
-	type: 'http-tarball';
+	type: "http-tarball";
 };
 
 function parseHttpTarball(
@@ -208,14 +208,14 @@ function parseHttpTarball(
 	consumer: Consumer,
 ): HTTPTarballPattern {
 	return {
-		type: 'http-tarball',
+		type: "http-tarball",
 		...explodeHashUrl(pattern, consumer),
 	};
 }
 
 //# SEMVER
 type SemverPattern = {
-	type: 'semver';
+	type: "semver";
 	range: SemverRangeNode;
 };
 
@@ -231,13 +231,13 @@ function parseSemver(
 			input: pattern,
 		},
 		{
-			getOffsetPosition: () => consumer.getLocation('inner-value').start,
+			getOffsetPosition: () => consumer.getLocation("inner-value").start,
 			parse: (opts) => parseSemverRange(opts),
 		},
 	);
 
 	return {
-		type: 'semver',
+		type: "semver",
 		range: ast,
 	};
 }
@@ -246,14 +246,14 @@ function parseSemver(
 const FILE_PREFIX_REGEX = /^\.{1,2}\//;
 
 type FilePattern = {
-	type: 'file';
+	type: "file";
 	path: string;
 };
 
 function parseFile(pattern: string): FilePattern {
 	return {
-		type: 'file',
-		path: removePrefix('file:', pattern),
+		type: "file",
+		path: removePrefix("file:", pattern),
 	};
 }
 
@@ -263,37 +263,37 @@ function parseFile(pattern: string): FilePattern {
 const TAG_REGEX = /^[a-z]+$/g;
 
 type TagPattern = {
-	type: 'tag';
+	type: "tag";
 	tag: string;
 };
 
 function parseTag(pattern: string): TagPattern {
 	return {
-		type: 'tag',
+		type: "tag",
 		tag: pattern,
 	};
 }
 
 //# LINK
-const LINK_PREFIX = 'link:';
+const LINK_PREFIX = "link:";
 
 type LinkPattern = {
-	type: 'link';
+	type: "link";
 	path: UnknownFilePath;
 };
 
 function parseLink(pattern: string): LinkPattern {
 	return {
-		type: 'link',
+		type: "link",
 		path: createUnknownFilePath(pattern.slice(LINK_PREFIX.length)),
 	};
 }
 
 //# NPM
-const NPM_PREFIX = 'npm:';
+const NPM_PREFIX = "npm:";
 
 type NpmPattern = {
-	type: 'npm';
+	type: "npm";
 	name: ManifestName;
 	range: undefined | SemverRangeNode;
 };
@@ -307,10 +307,10 @@ function parseNpm(
 	let offset = NPM_PREFIX.length;
 	pattern = pattern.slice(NPM_PREFIX.length);
 
-	if (pattern === '') {
+	if (pattern === "") {
 		consumer.unexpected(descriptions.MANIFEST.EMPTY_NPM_PATTERN);
 		return {
-			type: 'npm',
+			type: "npm",
 			name: {
 				org: undefined,
 				packageName: undefined,
@@ -320,13 +320,13 @@ function parseNpm(
 	}
 
 	// Split and verify count
-	const parts = pattern.split('@');
-	let nameRaw = '';
+	const parts = pattern.split("@");
+	let nameRaw = "";
 	let rangeRaw: undefined | string;
 
 	// Org signifier
-	if (parts[0] === '') {
-		nameRaw += '@';
+	if (parts[0] === "") {
+		nameRaw += "@";
 		parts.shift();
 	}
 
@@ -353,7 +353,7 @@ function parseNpm(
 						: consumer.getLocationRange(
 								ob1Add(start, offset),
 								end === undefined ? undefined : ob1Add(end, offset),
-								'inner-value',
+								"inner-value",
 							),
 				},
 			);
@@ -374,7 +374,7 @@ function parseNpm(
 			},
 			{
 				getOffsetPosition: () => {
-					const pos = consumer.getLocation('inner-value').start;
+					const pos = consumer.getLocation("inner-value").start;
 					return {
 						...pos,
 						column: ob1Add(pos.column, offset),
@@ -386,7 +386,7 @@ function parseNpm(
 	}
 
 	return {
-		type: 'npm',
+		type: "npm",
 		name,
 		range,
 	};
@@ -412,7 +412,7 @@ export function parseGitDependencyPattern(
 	}
 
 	if (GITHUB_SHORTHAND.test(pattern)) {
-		return parseHostedGit('github', pattern, consumer);
+		return parseHostedGit("github", pattern, consumer);
 	}
 
 	return undefined;
@@ -429,7 +429,7 @@ export function parseDependencyPattern(
 		return gitPattern;
 	}
 
-	if (pattern.startsWith('http://') || pattern.startsWith('https://')) {
+	if (pattern.startsWith("http://") || pattern.startsWith("https://")) {
 		return parseHttpTarball(pattern, consumer);
 	}
 
@@ -444,7 +444,7 @@ export function parseDependencyPattern(
 	if (
 		FILE_PREFIX_REGEX.test(pattern) ||
 		createUnknownFilePath(pattern).isAbsolute() ||
-		pattern.startsWith('file:')
+		pattern.startsWith("file:")
 	) {
 		return parseFile(pattern);
 	}
@@ -483,7 +483,7 @@ export function normalizeDependencies(
 					description,
 					{
 						at,
-						target: 'key',
+						target: "key",
 					},
 				);
 			},

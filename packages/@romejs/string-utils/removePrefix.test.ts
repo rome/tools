@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {removePrefix} from './removePrefix';
-import {test} from 'rome';
+import {removePrefix} from "./removePrefix";
+import {test} from "rome";
 
 test(
-	'removePrefix',
+	"removePrefix",
 	(t) => {
 		const testCases = [
-			{firstInput: 'romeTest', secondInput: 'rome', expected: 'Test'},
-			{firstInput: 'Testrome', secondInput: 'rome', expected: 'Testrome'},
-			{firstInput: 'romeTest', secondInput: '123', expected: 'romeTest'},
+			{firstInput: "romeTest", secondInput: "rome", expected: "Test"},
+			{firstInput: "Testrome", secondInput: "rome", expected: "Testrome"},
+			{firstInput: "romeTest", secondInput: "123", expected: "romeTest"},
 		];
 
 		testCases.forEach((td) => {

@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Reporter} from '@romejs/cli-reporter';
-import {AbsoluteFilePath} from '@romejs/path';
-import {DiagnosticsProcessor} from '@romejs/diagnostics';
+import {Reporter} from "@romejs/cli-reporter";
+import {AbsoluteFilePath} from "@romejs/path";
+import {DiagnosticsProcessor} from "@romejs/diagnostics";
 
 export type DiagnosticsPrinterFlags = {
 	grep: string;

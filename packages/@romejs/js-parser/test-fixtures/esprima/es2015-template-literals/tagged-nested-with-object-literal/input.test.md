@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 45
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 44
 					index: 44
@@ -47,7 +47,7 @@ Program {
 			expression: TaggedTemplateExpression {
 				typeArguments: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 44
 						index: 44
@@ -60,10 +60,10 @@ Program {
 					}
 				}
 				tag: ReferenceIdentifier {
-					name: 'raw'
+					name: "raw"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'raw'
+						filename: "input.js"
+						identifierName: "raw"
 						end: Object {
 							column: 3
 							index: 3
@@ -78,7 +78,7 @@ Program {
 				}
 				quasi: TemplateLiteral {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 44
 							index: 44
@@ -92,11 +92,11 @@ Program {
 					}
 					quasis: Array [
 						TemplateElement {
-							cooked: 'token '
-							raw: 'token '
+							cooked: "token "
+							raw: "token "
 							tail: false
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 10
 									index: 10
@@ -110,11 +110,11 @@ Program {
 							}
 						}
 						TemplateElement {
-							cooked: ''
-							raw: ''
+							cooked: ""
+							raw: ""
 							tail: true
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 43
 									index: 43
@@ -131,7 +131,7 @@ Program {
 					expressions: Array [
 						TemplateLiteral {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 42
 									index: 42
@@ -145,11 +145,11 @@ Program {
 							}
 							quasis: Array [
 								TemplateElement {
-									cooked: 'nested '
-									raw: 'nested '
+									cooked: "nested "
+									raw: "nested "
 									tail: false
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 20
 											index: 20
@@ -163,11 +163,11 @@ Program {
 									}
 								}
 								TemplateElement {
-									cooked: ' blah'
-									raw: ' blah'
+									cooked: " blah"
+									raw: " blah"
 									tail: true
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 41
 											index: 41
@@ -183,9 +183,9 @@ Program {
 							]
 							expressions: Array [
 								BinaryExpression {
-									operator: '+'
+									operator: "+"
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 35
 											index: 35
@@ -200,7 +200,7 @@ Program {
 									right: ObjectExpression {
 										properties: Array []
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 35
 												index: 35
@@ -216,7 +216,7 @@ Program {
 									left: TemplateLiteral {
 										expressions: Array []
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 30
 												index: 30
@@ -230,11 +230,11 @@ Program {
 										}
 										quasis: Array [
 											TemplateElement {
-												cooked: 'deeply'
-												raw: 'deeply'
+												cooked: "deeply"
+												raw: "deeply"
 												tail: true
 												loc: Object {
-													filename: 'input.js'
+													filename: "input.js"
 													end: Object {
 														column: 29
 														index: 29

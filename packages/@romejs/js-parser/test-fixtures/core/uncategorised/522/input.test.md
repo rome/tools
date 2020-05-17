@@ -8,14 +8,14 @@
 Program {
 	comments: Array []
 	corrupt: false
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 69
 			index: 69
@@ -29,9 +29,9 @@ Program {
 	}
 	directives: Array [
 		Directive {
-			value: 'use strict'
+			value: "use strict"
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -47,16 +47,16 @@ Program {
 	]
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Legacy octal literals are not allowed in strict mode'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Legacy octal literals are not allowed in strict mode"}
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 68
 					index: 68
@@ -73,10 +73,10 @@ Program {
 	body: Array [
 		FunctionDeclaration {
 			id: BindingIdentifier {
-				name: 'foo'
+				name: "foo"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'foo'
+					filename: "input.js"
+					identifierName: "foo"
 					end: Object {
 						column: 25
 						index: 25
@@ -90,7 +90,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 42
 					index: 42
@@ -112,7 +112,7 @@ Program {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 27
 						index: 27
@@ -128,7 +128,7 @@ Program {
 			body: BlockStatement {
 				body: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 42
 						index: 42
@@ -142,9 +142,9 @@ Program {
 				}
 				directives: Array [
 					Directive {
-						value: 'use strict'
+						value: "use strict"
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 41
 								index: 41
@@ -162,10 +162,10 @@ Program {
 		}
 		FunctionDeclaration {
 			id: BindingIdentifier {
-				name: 'bar'
+				name: "bar"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'bar'
+					filename: "input.js"
+					identifierName: "bar"
 					end: Object {
 						column: 54
 						index: 54
@@ -179,7 +179,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 69
 					index: 69
@@ -201,7 +201,7 @@ Program {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 56
 						index: 56
@@ -217,7 +217,7 @@ Program {
 			body: BlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 69
 						index: 69
@@ -232,7 +232,7 @@ Program {
 				body: Array [
 					VariableDeclarationStatement {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 68
 								index: 68
@@ -245,9 +245,9 @@ Program {
 							}
 						}
 						declaration: VariableDeclaration {
-							kind: 'var'
+							kind: "var"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 68
 									index: 68
@@ -262,10 +262,10 @@ Program {
 							declarations: Array [
 								VariableDeclarator {
 									id: BindingIdentifier {
-										name: 'v'
+										name: "v"
 										loc: Object {
-											filename: 'input.js'
-											identifierName: 'v'
+											filename: "input.js"
+											identifierName: "v"
 											end: Object {
 												column: 62
 												index: 62
@@ -279,7 +279,7 @@ Program {
 										}
 									}
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 68
 											index: 68
@@ -293,9 +293,9 @@ Program {
 									}
 									init: NumericLiteral {
 										value: 13
-										format: 'octal'
+										format: "octal"
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 68
 												index: 68

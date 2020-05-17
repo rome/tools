@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from '@romejs/js-ast';
-import {HydrateData} from '../Evaluator';
-import {Scope} from '../scopes';
-import VoidT from './VoidT';
-import T from './T';
+import {AnyNode} from "@romejs/js-ast";
+import {HydrateData} from "../Evaluator";
+import {Scope} from "../scopes";
+import VoidT from "./VoidT";
+import T from "./T";
 
 export default class EmptyT extends T {
-	static type = 'EmptyT';
+	static type = "EmptyT";
 
 	serialize(): HydrateData {
 		return {};
@@ -23,7 +23,7 @@ export default class EmptyT extends T {
 	}
 
 	humanize(): string {
-		return 'empty';
+		return "empty";
 	}
 
 	compatibleWith(otherType: T): boolean {

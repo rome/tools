@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type BigIntLiteral = JSNodeBase & {
-	type: 'BigIntLiteral';
+	type: "BigIntLiteral";
 	value: string;
 };
 
 export const bigIntLiteral = createBuilder<BigIntLiteral>(
-	'BigIntLiteral',
+	"BigIntLiteral",
 	{
 		bindingKeys: {},
 		visitorKeys: {},

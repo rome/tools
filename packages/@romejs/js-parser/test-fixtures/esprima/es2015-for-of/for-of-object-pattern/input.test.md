@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 19
@@ -33,7 +33,7 @@ Program {
 		ForOfStatement {
 			await: false
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 18
 					index: 18
@@ -47,7 +47,7 @@ Program {
 			}
 			body: EmptyStatement {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -61,10 +61,10 @@ Program {
 				}
 			}
 			right: ReferenceIdentifier {
-				name: 'z'
+				name: "z"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'z'
+					filename: "input.js"
+					identifierName: "z"
 					end: Object {
 						column: 16
 						index: 16
@@ -80,7 +80,7 @@ Program {
 			left: AssignmentObjectPattern {
 				rest: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 11
 						index: 11
@@ -96,10 +96,10 @@ Program {
 					AssignmentObjectPatternProperty {
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'x'
+								name: "x"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'x'
+									filename: "input.js"
+									identifierName: "x"
 									end: Object {
 										column: 7
 										index: 7
@@ -113,7 +113,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 7
 									index: 7
@@ -127,10 +127,10 @@ Program {
 							}
 						}
 						value: AssignmentIdentifier {
-							name: 'x'
+							name: "x"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'x'
+								filename: "input.js"
+								identifierName: "x"
 								end: Object {
 									column: 7
 									index: 7
@@ -144,7 +144,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 7
 								index: 7
@@ -160,10 +160,10 @@ Program {
 					AssignmentObjectPatternProperty {
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'y'
+								name: "y"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'y'
+									filename: "input.js"
+									identifierName: "y"
 									end: Object {
 										column: 10
 										index: 10
@@ -177,7 +177,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 10
 									index: 10
@@ -191,10 +191,10 @@ Program {
 							}
 						}
 						value: AssignmentIdentifier {
-							name: 'y'
+							name: "y"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'y'
+								filename: "input.js"
+								identifierName: "y"
 								end: Object {
 									column: 10
 									index: 10
@@ -208,7 +208,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 10
 								index: 10

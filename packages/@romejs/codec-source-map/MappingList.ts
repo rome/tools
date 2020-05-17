@@ -11,9 +11,9 @@
  * http://opensource.org/licenses/BSD-3-Clause
  */
 
-import {Mapping} from './types';
-import {compareByGeneratedPositionsInflated} from './util';
-import {ob1Number0, ob1Number1Neg1} from '@romejs/ob1';
+import {Mapping} from "./types";
+import {compareByGeneratedPositionsInflated} from "./util";
+import {ob1Number0, ob1Number1Neg1} from "@romejs/ob1";
 
 /**
  * Determine whether mappingB is after mappingA with respect to generated

@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import {Path, createHook} from '@romejs/js-compiler';
+import {Path, createHook} from "@romejs/js-compiler";
 import {
 	AnyNode,
 	FunctionDeclaration,
@@ -17,9 +17,9 @@ import {
 	returnStatement,
 	variableDeclarationStatement,
 	variableDeclarator,
-} from '@romejs/js-ast';
-import {isFunctionNode} from '@romejs/js-ast-utils';
-import {descriptions} from '@romejs/diagnostics';
+} from "@romejs/js-ast";
+import {isFunctionNode} from "@romejs/js-ast-utils";
+import {descriptions} from "@romejs/diagnostics";
 
 type State = {
 	declarators: Array<VariableDeclarator>;
@@ -33,7 +33,7 @@ type Arg = {
 // This hook is created with a list of initial VariableDeclarators that contain functions we want to convert
 // We then remove any ArrowFunctionExpression VariableDeclarators that contain a valid ThisExpression
 const hook = createHook<State, Arg, ThisExpression>({
-	name: 'preferFunctionDeclarationsHook',
+	name: "preferFunctionDeclarationsHook",
 	initialState: {
 		declarators: [],
 	},
@@ -83,10 +83,10 @@ const hook = createHook<State, Arg, ThisExpression>({
 
 			if (
 				init === undefined ||
-				(init.type !== 'FunctionExpression' &&
-				init.type !== 'ArrowFunctionExpression')
+				(init.type !== "FunctionExpression" &&
+				init.type !== "ArrowFunctionExpression")
 			) {
-				throw new Error('Invalid declarator put into state');
+				throw new Error("Invalid declarator put into state");
 			}
 
 			// TODO if this is suppressed then don't transform
@@ -98,7 +98,7 @@ const hook = createHook<State, Arg, ThisExpression>({
 
 			// Convert arrow function body if necessary
 			const body =
-				init.body.type === 'BlockStatement'
+				init.body.type === "BlockStatement"
 					? init.body
 					: blockStatement.create({
 							body: [returnStatement.quick(init.body)],
@@ -118,22 +118,22 @@ const hook = createHook<State, Arg, ThisExpression>({
 });
 
 export default {
-	name: 'preferFunctionDeclarations',
+	name: "preferFunctionDeclarations",
 	enter(path: Path): AnyNode {
 		const {node} = path;
 
 		if (
-			node.type === 'VariableDeclarationStatement' &&
-			node.declaration.kind === 'const'
+			node.type === "VariableDeclarationStatement" &&
+			node.declaration.kind === "const"
 		) {
 			// Get all declarators that are function expressions, have no type annotation, and have a binding identifier id
 			const declarators = node.declaration.declarations.filter((decl) => {
 				return (
-					decl.id.type === 'BindingIdentifier' &&
+					decl.id.type === "BindingIdentifier" &&
 					(decl.id.meta === undefined || decl.id.meta.typeAnnotation === undefined) &&
 					decl.init !== undefined &&
-					(decl.init.type === 'FunctionExpression' ||
-					decl.init.type === 'ArrowFunctionExpression')
+					(decl.init.type === "FunctionExpression" ||
+					decl.init.type === "ArrowFunctionExpression")
 				);
 			});
 			if (declarators.length > 0) {
@@ -148,11 +148,11 @@ export default {
 
 		// If we have a `this` inside of an arrow function attached as a variable declarator then we should consider
 		// it valid
-		if (node.type === 'ThisExpression') {
+		if (node.type === "ThisExpression") {
 			// Try to find the arrow function owner, or stop if we get to another function
 			const func = path.findAncestry((path) => {
-				if (path.node.type === 'ArrowFunctionExpression') {
-					return path.parent.type === 'VariableDeclarator';
+				if (path.node.type === "ArrowFunctionExpression") {
+					return path.parent.type === "VariableDeclarator";
 				}
 
 				if (isFunctionNode(path.node)) {
@@ -163,7 +163,7 @@ export default {
 			});
 
 			// We'll only return an ArrowFunctionExpression if it was inside of a VariableDeclarator
-			if (func !== undefined && func.node.type === 'ArrowFunctionExpression') {
+			if (func !== undefined && func.node.type === "ArrowFunctionExpression") {
 				return path.callHook(
 					hook,
 					{

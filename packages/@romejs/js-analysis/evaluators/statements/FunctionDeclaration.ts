@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
+import {Scope} from "../../scopes";
 import {
 	AnyNode,
 	FunctionDeclaration,
 	functionDeclaration,
-} from '@romejs/js-ast';
-import executeFunction from '../../utils/executeFunction';
+} from "@romejs/js-ast";
+import executeFunction from "../../utils/executeFunction";
 
 export default function FunctionDeclaration(node: AnyNode, scope: Scope) {
 	node = functionDeclaration.assert(node);

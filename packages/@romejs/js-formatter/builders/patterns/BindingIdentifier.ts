@@ -5,19 +5,19 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token, concat} from '../../tokens';
-import {BindingIdentifier} from '@romejs/js-ast';
-import Identifier from '../auxiliary/Identifier';
-import {printPatternMeta} from '../utils';
+import Builder from "../../Builder";
+import {Token, concat} from "../../tokens";
+import {BindingIdentifier} from "@romejs/js-ast";
+import Identifier from "../auxiliary/Identifier";
+import {printPatternMeta} from "../utils";
 
 export default function BindingIdentifier(
 	builder: Builder,
 	node: BindingIdentifier,
 ): Token {
-	if (node.name[0] === '*') {
+	if (node.name[0] === "*") {
 		// Internal name
-		return '';
+		return "";
 	}
 
 	return concat([

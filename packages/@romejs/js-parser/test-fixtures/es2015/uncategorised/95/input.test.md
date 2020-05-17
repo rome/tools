@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
+	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 56
 			index: 56
@@ -34,7 +34,7 @@ Program {
 			importKind: undefined
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 56
 					index: 56
@@ -47,9 +47,9 @@ Program {
 				}
 			}
 			source: StringLiteral {
-				value: 'crypto'
+				value: "crypto"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 56
 						index: 56
@@ -64,7 +64,7 @@ Program {
 			}
 			defaultSpecifier: ImportDefaultSpecifier {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -78,10 +78,10 @@ Program {
 				}
 				local: ImportSpecifierLocal {
 					name: BindingIdentifier {
-						name: 'crypto'
+						name: "crypto"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'crypto'
+							filename: "input.js"
+							identifierName: "crypto"
 							end: Object {
 								column: 13
 								index: 13
@@ -96,7 +96,7 @@ Program {
 					}
 					importKind: undefined
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 13
 							index: 13
@@ -113,7 +113,7 @@ Program {
 			namedSpecifiers: Array [
 				ImportSpecifier {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 24
 							index: 24
@@ -126,10 +126,10 @@ Program {
 						}
 					}
 					imported: Identifier {
-						name: 'decrypt'
+						name: "decrypt"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'decrypt'
+							filename: "input.js"
+							identifierName: "decrypt"
 							end: Object {
 								column: 24
 								index: 24
@@ -144,10 +144,10 @@ Program {
 					}
 					local: ImportSpecifierLocal {
 						name: BindingIdentifier {
-							name: 'decrypt'
+							name: "decrypt"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'decrypt'
+								filename: "input.js"
+								identifierName: "decrypt"
 								end: Object {
 									column: 24
 									index: 24
@@ -162,7 +162,7 @@ Program {
 						}
 						importKind: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 24
 								index: 24
@@ -178,7 +178,7 @@ Program {
 				}
 				ImportSpecifier {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 40
 							index: 40
@@ -191,10 +191,10 @@ Program {
 						}
 					}
 					imported: Identifier {
-						name: 'encrypt'
+						name: "encrypt"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'encrypt'
+							filename: "input.js"
+							identifierName: "encrypt"
 							end: Object {
 								column: 33
 								index: 33
@@ -209,10 +209,10 @@ Program {
 					}
 					local: ImportSpecifierLocal {
 						name: BindingIdentifier {
-							name: 'enc'
+							name: "enc"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'enc'
+								filename: "input.js"
+								identifierName: "enc"
 								end: Object {
 									column: 40
 									index: 40
@@ -227,7 +227,7 @@ Program {
 						}
 						importKind: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 40
 								index: 40

@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 19
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 18
 					index: 18
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			expression: BinaryExpression {
-				operator: 'instanceof'
+				operator: "instanceof"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -60,10 +60,10 @@ Program {
 					}
 				}
 				left: ReferenceIdentifier {
-					name: 'let'
+					name: "let"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'let'
+						filename: "input.js"
+						identifierName: "let"
 						end: Object {
 							column: 3
 							index: 3
@@ -77,10 +77,10 @@ Program {
 					}
 				}
 				right: ReferenceIdentifier {
-					name: 'Foo'
+					name: "Foo"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'Foo'
+						filename: "input.js"
+						identifierName: "Foo"
 						end: Object {
 							column: 18
 							index: 18

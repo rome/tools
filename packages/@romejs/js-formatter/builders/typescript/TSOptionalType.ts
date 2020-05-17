@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSOptionalType} from '@romejs/js-ast';
-import {Builder} from '@romejs/js-formatter';
-import {Token, concat} from '../../tokens';
+import {TSOptionalType} from "@romejs/js-ast";
+import {Builder} from "@romejs/js-formatter";
+import {Token, concat} from "../../tokens";
 
 export default function TSOptionalType(
 	builder: Builder,
 	node: TSOptionalType,
 ): Token {
-	return concat([builder.tokenize(node.typeAnnotation, node), '?']);
+	return concat([builder.tokenize(node.typeAnnotation, node), "?"]);
 }

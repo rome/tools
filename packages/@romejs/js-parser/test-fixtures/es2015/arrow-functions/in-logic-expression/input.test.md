@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 19
 			index: 39
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 19
 					index: 19
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			expression: LogicalExpression {
-				operator: '||'
+				operator: "||"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -62,7 +62,7 @@ Program {
 				right: BooleanLiteral {
 					value: true
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 18
 							index: 18
@@ -77,7 +77,7 @@ Program {
 				}
 				left: ArrowFunctionExpression {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 9
 							index: 9
@@ -93,7 +93,7 @@ Program {
 						body: Array []
 						directives: Array []
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 9
 								index: 9
@@ -114,7 +114,7 @@ Program {
 						returnType: undefined
 						thisType: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 6
 								index: 6
@@ -132,7 +132,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 19
 					index: 39
@@ -146,7 +146,7 @@ Program {
 			}
 			expression: ConditionalExpression {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 18
 						index: 38
@@ -159,10 +159,10 @@ Program {
 					}
 				}
 				alternate: ReferenceIdentifier {
-					name: 'b'
+					name: "b"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'b'
+						filename: "input.js"
+						identifierName: "b"
 						end: Object {
 							column: 18
 							index: 38
@@ -176,10 +176,10 @@ Program {
 					}
 				}
 				consequent: ReferenceIdentifier {
-					name: 'a'
+					name: "a"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'a'
+						filename: "input.js"
+						identifierName: "a"
 						end: Object {
 							column: 14
 							index: 34
@@ -194,7 +194,7 @@ Program {
 				}
 				test: ArrowFunctionExpression {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 9
 							index: 29
@@ -210,7 +210,7 @@ Program {
 						body: Array []
 						directives: Array []
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 9
 								index: 29
@@ -231,7 +231,7 @@ Program {
 						returnType: undefined
 						thisType: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 6
 								index: 26

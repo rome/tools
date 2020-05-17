@@ -5,27 +5,27 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ModuleSignature} from '@romejs/js-analysis';
-import {Manifest} from '@romejs/codec-js-manifest';
-import {ConstProgramSyntax, ConstSourceType, Program} from '@romejs/js-ast';
+import {ModuleSignature} from "@romejs/js-analysis";
+import {Manifest} from "@romejs/codec-js-manifest";
+import {ConstProgramSyntax, ConstSourceType, Program} from "@romejs/js-ast";
 import {
 	BundleCompileOptions,
 	CompileResult,
 	LintCompilerOptions,
 	TransformStageName,
-} from '@romejs/js-compiler';
-import {Profile} from '@romejs/v8';
-import {ProfilingStartData} from './MasterBridge';
+} from "@romejs/js-compiler";
+import {Profile} from "@romejs/v8";
+import {ProfilingStartData} from "./MasterBridge";
 import {
 	DiagnosticSuppressions,
 	Diagnostics,
 	DiagnosticsError,
-} from '@romejs/diagnostics';
-import {ProjectConfigJSON} from '@romejs/project';
-import {Bridge} from '@romejs/events';
-import {JSONFileReference} from '../types/files';
-import {AnalyzeDependencyResult} from '../types/analyzeDependencies';
-import {InlineSnapshotUpdates} from '@romejs/core/test-worker/SnapshotManager';
+} from "@romejs/diagnostics";
+import {ProjectConfigJSON} from "@romejs/project";
+import {Bridge} from "@romejs/events";
+import {JSONFileReference} from "../types/files";
+import {AnalyzeDependencyResult} from "../types/analyzeDependencies";
+import {InlineSnapshotUpdates} from "@romejs/core/test-worker/SnapshotManager";
 
 export type WorkerProjects = Array<{
 	id: number;
@@ -39,7 +39,7 @@ export type WorkerCompileResult = CompileResult & {
 
 export type WorkerPartialManifest = {
 	path: string;
-	type: Manifest['type'];
+	type: Manifest["type"];
 };
 
 export type WorkerPartialManifests = Array<{
@@ -52,7 +52,7 @@ export type WorkerCompilerOptions = {
 	bundle?: WorkerBundleCompileOptions;
 };
 
-export type WorkerBundleCompileOptions = Omit<BundleCompileOptions, 'analyze'>;
+export type WorkerBundleCompileOptions = Omit<BundleCompileOptions, "analyze">;
 
 //
 export type WorkerAnalyzeDependencyResult = AnalyzeDependencyResult & {
@@ -88,19 +88,19 @@ export type WorkerStatus = {
 export type PrefetchedModuleSignatures = {
 	[key: string]:
 		 | {
-				type: 'USE_CACHED';
+				type: "USE_CACHED";
 				filename: string;
 			}
 		| {
-				type: 'RESOLVED';
+				type: "RESOLVED";
 				graph: ModuleSignature;
 			}
 		| {
-				type: 'OWNED';
+				type: "OWNED";
 				file: JSONFileReference;
 			}
 		| {
-				type: 'POINTER';
+				type: "POINTER";
 				key: string;
 			};
 };
@@ -119,8 +119,8 @@ export type WorkerLintResult = {
 
 export default class WorkerBridge extends Bridge {
 	log = this.createEvent<string, void>({
-		name: 'log',
-		direction: 'server->client',
+		name: "log",
+		direction: "server->client",
 	});
 
 	updateProjects = this.createEvent<
@@ -129,8 +129,8 @@ export default class WorkerBridge extends Bridge {
 		},
 		void
 	>({
-		name: 'updateProjects',
-		direction: 'server->client',
+		name: "updateProjects",
+		direction: "server->client",
 	});
 
 	updateManifests = this.createEvent<
@@ -139,23 +139,23 @@ export default class WorkerBridge extends Bridge {
 		},
 		void
 	>({
-		name: 'updateManifests',
-		direction: 'server->client',
+		name: "updateManifests",
+		direction: "server->client",
 	});
 
 	profilingStart = this.createEvent<ProfilingStartData, void>({
-		name: 'profiling.start',
-		direction: 'server->client',
+		name: "profiling.start",
+		direction: "server->client",
 	});
 
 	profilingStop = this.createEvent<void, Profile>({
-		name: 'profiling.stop',
-		direction: 'server->client',
+		name: "profiling.stop",
+		direction: "server->client",
 	});
 
 	status = this.createEvent<void, WorkerStatus>({
-		name: 'status',
-		direction: 'server->client',
+		name: "status",
+		direction: "server->client",
 	});
 
 	evict = this.createEvent<
@@ -164,8 +164,8 @@ export default class WorkerBridge extends Bridge {
 		},
 		void
 	>({
-		name: 'evict',
-		direction: 'server->client',
+		name: "evict",
+		direction: "server->client",
 	});
 
 	format = this.createEvent<
@@ -175,8 +175,8 @@ export default class WorkerBridge extends Bridge {
 		},
 		undefined | WorkerFormatResult
 	>({
-		name: 'format',
-		direction: 'server->client',
+		name: "format",
+		direction: "server->client",
 	});
 
 	moduleSignatureJS = this.createEvent<
@@ -186,8 +186,8 @@ export default class WorkerBridge extends Bridge {
 		},
 		ModuleSignature
 	>({
-		name: 'moduleSignatureJS',
-		direction: 'server->client',
+		name: "moduleSignatureJS",
+		direction: "server->client",
 	});
 
 	analyzeDependencies = this.createEvent<
@@ -197,8 +197,8 @@ export default class WorkerBridge extends Bridge {
 		},
 		AnalyzeDependencyResult
 	>({
-		name: 'analyzeDependencies',
-		direction: 'server->client',
+		name: "analyzeDependencies",
+		direction: "server->client",
 	});
 
 	lint = this.createEvent<
@@ -208,7 +208,7 @@ export default class WorkerBridge extends Bridge {
 			parseOptions: WorkerParseOptions;
 		},
 		WorkerLintResult
-	>({name: 'lint', direction: 'server->client'});
+	>({name: "lint", direction: "server->client"});
 
 	updateInlineSnapshots = this.createEvent<
 		{
@@ -217,7 +217,7 @@ export default class WorkerBridge extends Bridge {
 			parseOptions: WorkerParseOptions;
 		},
 		Diagnostics
-	>({name: 'updateInlineSnapshots', direction: 'server->client'});
+	>({name: "updateInlineSnapshots", direction: "server->client"});
 
 	compileJS = this.createEvent<
 		{
@@ -227,7 +227,7 @@ export default class WorkerBridge extends Bridge {
 			parseOptions: WorkerParseOptions;
 		},
 		CompileResult
-	>({name: 'compileJS', direction: 'server->client'});
+	>({name: "compileJS", direction: "server->client"});
 
 	parseJS = this.createEvent<
 		{
@@ -235,7 +235,7 @@ export default class WorkerBridge extends Bridge {
 			options: WorkerParseOptions;
 		},
 		Program
-	>({name: 'parseJS', direction: 'server->client'});
+	>({name: "parseJS", direction: "server->client"});
 
 	updateBuffer = this.createEvent<
 		{
@@ -244,17 +244,17 @@ export default class WorkerBridge extends Bridge {
 		},
 		void
 	>({
-		name: 'updateBuffer',
-		direction: 'server->client',
+		name: "updateBuffer",
+		direction: "server->client",
 	});
 
 	init() {
 		this.addErrorTransport(
-			'DiagnosticsError',
+			"DiagnosticsError",
 			{
 				serialize(err: Error) {
 					if (!(err instanceof DiagnosticsError)) {
-						throw new Error('Expected DiagnosticsError');
+						throw new Error("Expected DiagnosticsError");
 					}
 
 					return {

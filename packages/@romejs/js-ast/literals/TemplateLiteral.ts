@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyExpression, JSNodeBase, TemplateElement} from '../index';
-import {createBuilder} from '../utils';
+import {AnyExpression, JSNodeBase, TemplateElement} from "../index";
+import {createBuilder} from "../utils";
 
 export type TemplateLiteral = JSNodeBase & {
-	type: 'TemplateLiteral';
+	type: "TemplateLiteral";
 	quasis: Array<TemplateElement>;
 	expressions: Array<AnyExpression>;
 };
 
 export const templateLiteral = createBuilder<TemplateLiteral>(
-	'TemplateLiteral',
+	"TemplateLiteral",
 	{
 		bindingKeys: {},
 		visitorKeys: {

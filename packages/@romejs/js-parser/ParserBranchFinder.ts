@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {State} from './tokenizer/state';
-import {DiagnosticsFatalError, JSParser} from './parser';
+import {State} from "./tokenizer/state";
+import {DiagnosticsFatalError, JSParser} from "./parser";
 
 export type ParserBranch<T> = {
 	diagnosticsPriority: undefined | number;
@@ -56,7 +56,7 @@ export default class ParserBranchFinder<T> {
 		const {parser} = this;
 		const prevState = parser.cloneState();
 
-		parser.pushScope('MAX_NEW_DIAGNOSTICS', maxNewDiagnostics);
+		parser.pushScope("MAX_NEW_DIAGNOSTICS", maxNewDiagnostics);
 
 		let result;
 		try {
@@ -77,7 +77,7 @@ export default class ParserBranchFinder<T> {
 
 		// We capture the state at this point because it could have been previously changed
 		const newState = parser.state;
-		parser.popScope('MAX_NEW_DIAGNOSTICS');
+		parser.popScope("MAX_NEW_DIAGNOSTICS");
 		parser.setState(prevState);
 
 		// Verify that we didn't exceed the maxDiagnostics, this should have already been done in Parser#addDiagnostic
@@ -149,7 +149,7 @@ export default class ParserBranchFinder<T> {
 
 	getBranch(): ParserBranch<T> {
 		if (this.branch === undefined) {
-			throw new Error('No branch');
+			throw new Error("No branch");
 		} else {
 			return this.branch;
 		}
@@ -165,7 +165,7 @@ export default class ParserBranchFinder<T> {
 
 	pick(): T {
 		if (this.picked) {
-			throw new Error('Already been picked');
+			throw new Error("Already been picked");
 		}
 		this.picked = true;
 

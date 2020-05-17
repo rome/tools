@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {testLint} from '../testHelpers';
+import {test} from "rome";
+import {testLint} from "../testHelpers";
 
 test(
-	'disallow multiple spaces in regular expression literals',
+	"disallow multiple spaces in regular expression literals",
 	async (t) => {
 		await testLint(
 			t,
 			`/foo  bar/`,
 			{
-				category: 'lint/noMultipleSpacesInRegularExpressionLiterals',
+				category: "lint/noMultipleSpacesInRegularExpressionLiterals",
 			},
 		);
 
@@ -23,7 +23,7 @@ test(
 			t,
 			`/foo {2}bar/`,
 			{
-				category: 'lint/noMultipleSpacesInRegularExpressionLiterals',
+				category: "lint/noMultipleSpacesInRegularExpressionLiterals",
 			},
 		);
 	},

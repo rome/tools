@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Scope from './Scope';
+import Scope from "./Scope";
 import {
 	ArgumentsBinding,
 	LetBinding,
 	REDUCE_SKIP_SUBTREE,
-} from '@romejs/js-compiler';
-import {getBindingIdentifiers, isFunctionNode} from '@romejs/js-ast-utils';
-import {AnyFunction, Program} from '@romejs/js-ast';
+} from "@romejs/js-compiler";
+import {getBindingIdentifiers, isFunctionNode} from "@romejs/js-ast-utils";
+import {AnyFunction, Program} from "@romejs/js-ast";
 
 export function addFunctionBindings(
 	scope: Scope,
@@ -36,7 +36,7 @@ export function addFunctionBindings(
 					node: id,
 					name: id.name,
 					scope,
-					kind: 'parameter',
+					kind: "parameter",
 				}),
 			);
 		}
@@ -46,7 +46,7 @@ export function addFunctionBindings(
 	if (hasArguments) {
 		scope.addBinding(
 			new ArgumentsBinding({
-				name: 'arguments',
+				name: "arguments",
 				node,
 				scope,
 			}),
@@ -66,7 +66,7 @@ export function addVarBindings(scope: Scope, topNode: AnyFunction | Program) {
 		topNode,
 		[
 			{
-				name: 'scopeVarFunc',
+				name: "scopeVarFunc",
 				enter: (path) => {
 					const {node, parent} = path;
 
@@ -74,7 +74,7 @@ export function addVarBindings(scope: Scope, topNode: AnyFunction | Program) {
 						return REDUCE_SKIP_SUBTREE;
 					}
 
-					if (node.type === 'VariableDeclaration' && node.kind === 'var') {
+					if (node.type === "VariableDeclaration" && node.kind === "var") {
 						scope.evaluate(node, parent);
 					}
 

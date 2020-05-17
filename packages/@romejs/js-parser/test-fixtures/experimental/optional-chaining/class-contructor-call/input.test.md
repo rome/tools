@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 12
 			index: 12
@@ -30,11 +30,11 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 10
 					index: 10
@@ -47,16 +47,16 @@ Program {
 				}
 			}
 			description: Object {
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'constructors in/after an Optional Chain are not allowed'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "constructors in/after an Optional Chain are not allowed"}
 				advice: Array [
 					log {
-						category: 'info'
-						text: 'Optional chain member responsible'
+						category: "info"
+						text: "Optional chain member responsible"
 					}
 					frame {
 						location: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 8
 								index: 8
@@ -76,7 +76,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 12
 					index: 12
@@ -93,7 +93,7 @@ Program {
 				optional: undefined
 				typeArguments: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 12
 						index: 12
@@ -107,7 +107,7 @@ Program {
 				}
 				callee: MemberExpression {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 10
 							index: 10
@@ -121,10 +121,10 @@ Program {
 					}
 					property: StaticMemberProperty {
 						value: Identifier {
-							name: 'd'
+							name: "d"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'd'
+								filename: "input.js"
+								identifierName: "d"
 								end: Object {
 									column: 10
 									index: 10
@@ -138,8 +138,8 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'd'
+							filename: "input.js"
+							identifierName: "d"
 							end: Object {
 								column: 10
 								index: 10
@@ -154,7 +154,7 @@ Program {
 					}
 					object: MemberExpression {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 8
 								index: 8
@@ -167,10 +167,10 @@ Program {
 							}
 						}
 						object: ReferenceIdentifier {
-							name: 'C'
+							name: "C"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'C'
+								filename: "input.js"
+								identifierName: "C"
 								end: Object {
 									column: 5
 									index: 5
@@ -185,10 +185,10 @@ Program {
 						}
 						property: StaticMemberProperty {
 							value: Identifier {
-								name: 'b'
+								name: "b"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'b'
+									filename: "input.js"
+									identifierName: "b"
 									end: Object {
 										column: 8
 										index: 8
@@ -203,8 +203,8 @@ Program {
 							}
 							optional: true
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'b'
+								filename: "input.js"
+								identifierName: "b"
 								end: Object {
 									column: 8
 									index: 8

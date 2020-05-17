@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyExpression, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {AnyExpression, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type ExpressionStatement = JSNodeBase & {
-	type: 'ExpressionStatement';
+	type: "ExpressionStatement";
 	expression: AnyExpression;
 };
 
 export const expressionStatement = createBuilder<ExpressionStatement>(
-	'ExpressionStatement',
+	"ExpressionStatement",
 	{
 		bindingKeys: {},
 		visitorKeys: {

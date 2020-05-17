@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ForStatement} from '@romejs/js-ast';
-import Builder from '../../Builder';
+import {ForStatement} from "@romejs/js-ast";
+import Builder from "../../Builder";
 import {
 	Token,
 	concat,
@@ -15,8 +15,8 @@ import {
 	lineOrSpace,
 	softline,
 	space,
-} from '../../tokens';
-import {printClause} from '../utils';
+} from "../../tokens";
+import {printClause} from "../utils";
 
 export default function ForStatement(
 	builder: Builder,
@@ -25,24 +25,24 @@ export default function ForStatement(
 	const body = printClause(builder, node.body, node);
 
 	if (!node.init && !node.test && !node.update) {
-		return group(concat(['for', space, '(;;)', body]));
+		return group(concat(["for", space, "(;;)", body]));
 	}
 
 	return group(
 		concat([
-			'for',
+			"for",
 			space,
-			'(',
+			"(",
 			group(
 				concat([
 					indent(
 						concat([
 							softline,
 							builder.tokenize(node.init, node),
-							';',
+							";",
 							lineOrSpace,
 							builder.tokenize(node.test, node),
-							';',
+							";",
 							lineOrSpace,
 							builder.tokenize(node.update, node),
 						]),
@@ -50,7 +50,7 @@ export default function ForStatement(
 					softline,
 				]),
 			),
-			')',
+			")",
 			body,
 		]),
 	);

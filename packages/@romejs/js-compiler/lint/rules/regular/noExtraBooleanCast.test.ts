@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {testLint} from '../testHelpers';
-import {dedent} from '@romejs/string-utils';
+import {test} from "rome";
+import {testLint} from "../testHelpers";
+import {dedent} from "@romejs/string-utils";
 
 test(
-	'disallow unnecessary boolean casts',
+	"disallow unnecessary boolean casts",
 	async (t) => {
 		await testLint(
 			t,
@@ -19,7 +19,7 @@ test(
           return foo;
         }
       `,
-			{category: 'lint/noExtraBooleanCast'},
+			{category: "lint/noExtraBooleanCast"},
 		);
 
 		await testLint(
@@ -29,7 +29,7 @@ test(
           return foo;
         }
       `,
-			{category: 'lint/noExtraBooleanCast'},
+			{category: "lint/noExtraBooleanCast"},
 		);
 
 		await testLint(
@@ -40,7 +40,7 @@ test(
           1 + 1;
         } while (Boolean(x));
       `,
-			{category: 'lint/noExtraBooleanCast'},
+			{category: "lint/noExtraBooleanCast"},
 		);
 
 		await testLint(
@@ -50,7 +50,7 @@ test(
           return 1 + 1;
         }
       `,
-			{category: 'lint/noExtraBooleanCast'},
+			{category: "lint/noExtraBooleanCast"},
 		);
 	},
 );

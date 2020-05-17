@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, PatternMeta} from '../index';
-import {createQuickBuilder} from '../utils';
+import {JSNodeBase, PatternMeta} from "../index";
+import {createQuickBuilder} from "../utils";
 
 export type ReferenceIdentifier = JSNodeBase & {
-	type: 'ReferenceIdentifier';
+	type: "ReferenceIdentifier";
 	name: string;
 	definite?: boolean;
 	meta?: PatternMeta;
@@ -17,10 +17,10 @@ export type ReferenceIdentifier = JSNodeBase & {
 
 export const referenceIdentifier = createQuickBuilder<
 	ReferenceIdentifier,
-	'name'
+	"name"
 >(
-	'ReferenceIdentifier',
-	'name',
+	"ReferenceIdentifier",
+	"name",
 	{
 		bindingKeys: {},
 		visitorKeys: {

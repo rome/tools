@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 31
 			index: 31
@@ -33,7 +33,7 @@ Program {
 		ForOfStatement {
 			await: false
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 31
 					index: 31
@@ -46,10 +46,10 @@ Program {
 				}
 			}
 			right: ReferenceIdentifier {
-				name: 'list'
+				name: "list"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'list'
+					filename: "input.js"
+					identifierName: "list"
 					end: Object {
 						column: 18
 						index: 18
@@ -63,9 +63,9 @@ Program {
 				}
 			}
 			left: VariableDeclaration {
-				kind: 'var'
+				kind: "var"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 10
 						index: 10
@@ -80,10 +80,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'x'
+							name: "x"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'x'
+								filename: "input.js"
+								identifierName: "x"
 								end: Object {
 									column: 10
 									index: 10
@@ -98,7 +98,7 @@ Program {
 						}
 						init: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 10
 								index: 10
@@ -115,7 +115,7 @@ Program {
 			}
 			body: ExpressionStatement {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 31
 						index: 31
@@ -129,7 +129,7 @@ Program {
 				}
 				expression: CallExpression {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 30
 							index: 30
@@ -142,10 +142,10 @@ Program {
 						}
 					}
 					callee: ReferenceIdentifier {
-						name: 'process'
+						name: "process"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'process'
+							filename: "input.js"
+							identifierName: "process"
 							end: Object {
 								column: 27
 								index: 27
@@ -160,10 +160,10 @@ Program {
 					}
 					arguments: Array [
 						ReferenceIdentifier {
-							name: 'x'
+							name: "x"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'x'
+								filename: "input.js"
+								identifierName: "x"
 								end: Object {
 									column: 29
 									index: 29

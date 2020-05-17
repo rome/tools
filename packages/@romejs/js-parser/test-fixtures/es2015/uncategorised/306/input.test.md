@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 35
 			index: 35
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 35
 					index: 35
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'var'
+				kind: "var"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 35
 						index: 35
@@ -64,7 +64,7 @@ Program {
 						id: BindingArrayPattern {
 							rest: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 29
 									index: 29
@@ -79,7 +79,7 @@ Program {
 							elements: Array [
 								BindingAssignmentPattern {
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 28
 											index: 28
@@ -92,10 +92,10 @@ Program {
 										}
 									}
 									right: ReferenceIdentifier {
-										name: 'defaultValue'
+										name: "defaultValue"
 										loc: Object {
-											filename: 'input.js'
-											identifierName: 'defaultValue'
+											filename: "input.js"
+											identifierName: "defaultValue"
 											end: Object {
 												column: 28
 												index: 28
@@ -109,10 +109,10 @@ Program {
 										}
 									}
 									left: BindingIdentifier {
-										name: 'localVar'
+										name: "localVar"
 										loc: Object {
-											filename: 'input.js'
-											identifierName: 'localVar'
+											filename: "input.js"
+											identifierName: "localVar"
 											end: Object {
 												column: 13
 												index: 13
@@ -128,7 +128,7 @@ Program {
 											optional: undefined
 											typeAnnotation: undefined
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 13
 													index: 13
@@ -146,7 +146,7 @@ Program {
 							]
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 35
 								index: 35
@@ -159,10 +159,10 @@ Program {
 							}
 						}
 						init: ReferenceIdentifier {
-							name: 'obj'
+							name: "obj"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'obj'
+								filename: "input.js"
+								identifierName: "obj"
 								end: Object {
 									column: 35
 									index: 35

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {naturalCompare} from './naturalCompare';
+import {naturalCompare} from "./naturalCompare";
 
 export function orderByNatural(
 	strs: Array<string>,

@@ -5,27 +5,27 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {PathPatternNode, PatternPartNode, PatternSegmentNode} from './types';
+import {PathPatternNode, PatternPartNode, PatternSegmentNode} from "./types";
 
 export function stringifyPathPattern(
 	node: PathPatternNode | PatternPartNode | PatternSegmentNode,
 ): string {
 	switch (node.type) {
-		case 'PathPattern':
+		case "PathPattern":
 			return node.segments.map((segment) => stringifyPathPattern(segment)).join(
-				'/',
+				"/",
 			);
 
-		case 'Segment':
-			return node.parts.map((part) => stringifyPathPattern(part)).join('');
+		case "Segment":
+			return node.parts.map((part) => stringifyPathPattern(part)).join("");
 
-		case 'WildcardSegment':
-			return '**';
+		case "WildcardSegment":
+			return "**";
 
-		case 'Wildcard':
-			return '*';
+		case "Wildcard":
+			return "*";
 
-		case 'Word':
+		case "Word":
 			return node.value;
 	}
 }

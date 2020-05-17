@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, TSTypeParameter} from '../index';
-import {createBuilder} from '../utils';
+import {JSNodeBase, TSTypeParameter} from "../index";
+import {createBuilder} from "../utils";
 
 export type TSTypeParameterDeclaration = JSNodeBase & {
-	type: 'TSTypeParameterDeclaration';
+	type: "TSTypeParameterDeclaration";
 	params: Array<TSTypeParameter>;
 };
 
 export const tsTypeParameterDeclaration = createBuilder<TSTypeParameterDeclaration>(
-	'TSTypeParameterDeclaration',
+	"TSTypeParameterDeclaration",
 	{
 		bindingKeys: {},
 		visitorKeys: {

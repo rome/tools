@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Comments, PathComments, PathToComments} from './types';
-import {naturalCompare} from '@romejs/string-utils';
-import {isValidWord} from './parse';
-import {Consumer} from '@romejs/consume';
-import {PRIORITIZE_KEYS, formatNumber} from '@romejs/pretty-format';
-import {escapeString} from '@romejs/string-escape';
+import {Comments, PathComments, PathToComments} from "./types";
+import {naturalCompare} from "@romejs/string-utils";
+import {isValidWord} from "./parse";
+import {Consumer} from "@romejs/consume";
+import {PRIORITIZE_KEYS, formatNumber} from "@romejs/pretty-format";
+import {escapeString} from "@romejs/string-escape";
 
 function joinList(
 	open: string,
@@ -29,12 +29,12 @@ function joinList(
 		// We never want to place a comment in between braces because it will break for line comments
 
 		// and look weird for blocks
-		if (first[0] !== '/') {
+		if (first[0] !== "/") {
 			return open + first + close;
 		}
 	}
 
-	return [open, ...items, indent + close].join('\n');
+	return [open, ...items, indent + close].join("\n");
 }
 
 function stringifyKey(key: string): string {
@@ -58,7 +58,7 @@ export function stringifyComments(
 	comments: Comments,
 ): Array<string> {
 	return comments.map((node) => {
-		if (node.type === 'BlockComment') {
+		if (node.type === "BlockComment") {
 			return `${indent}/*${node.value}*/`;
 		} else {
 			// node.type === 'LineComment'
@@ -69,7 +69,7 @@ export function stringifyComments(
 
 function stringifyPrimitives(value: unknown): undefined | string {
 	if (value === null) {
-		return 'null';
+		return "null";
 	}
 
 	// Coerce primitive objects to their primitive form, as specified in ECMA262 24.5.2.1
@@ -83,15 +83,15 @@ function stringifyPrimitives(value: unknown): undefined | string {
 
 	// Basic primitive types
 	switch (typeof value) {
-		case 'symbol':
-		case 'function':
-		case 'undefined':
-			return 'null';
+		case "symbol":
+		case "function":
+		case "undefined":
+			return "null";
 
-		case 'boolean':
-			return value ? 'true' : 'false';
+		case "boolean":
+			return value ? "true" : "false";
 
-		case 'string':
+		case "string":
 			return escapeString(
 				value,
 				{
@@ -101,11 +101,11 @@ function stringifyPrimitives(value: unknown): undefined | string {
 				},
 			);
 
-		case 'bigint':
+		case "bigint":
 			// This is the actual V8 message lol
-			throw new Error('Do not know how to serialize a BigInt');
+			throw new Error("Do not know how to serialize a BigInt");
 
-		case 'number':
+		case "number":
 			return formatNumber(value);
 	}
 
@@ -127,7 +127,7 @@ function sortMap(map: Map<string, Consumer>): Map<string, Consumer> {
 
 			const val = map.get(key);
 			if (val === undefined) {
-				throw new Error('Expected value');
+				throw new Error("Expected value");
 			}
 
 			sortedMap.set(key, val);
@@ -138,7 +138,7 @@ function sortMap(map: Map<string, Consumer>): Map<string, Consumer> {
 	for (const key of sortedKeys) {
 		const val = map.get(key);
 		if (val === undefined) {
-			throw new Error('Expected value');
+			throw new Error("Expected value");
 		}
 
 		sortedMap.set(key, val);
@@ -160,7 +160,7 @@ type StringifyObjectOptions = StringifyOptions & {
 };
 
 function getComments(consumer: Consumer, opts: StringifyOptions): PathComments {
-	const comments = opts.comments.get(consumer.keyPath.join('.'));
+	const comments = opts.comments.get(consumer.keyPath.join("."));
 	if (comments === undefined) {
 		return {
 			inner: [],
@@ -199,7 +199,7 @@ function stringifyArray(consumer: Consumer, info: StringifyObjectOptions) {
 	const innerComments = getComments(consumer, info).inner;
 	buff = buff.concat(stringifyComments(nextIndent, innerComments));
 
-	return joinList('[', ']', prevIndent, buff);
+	return joinList("[", "]", prevIndent, buff);
 }
 
 function stringifyPlainObject(
@@ -218,9 +218,9 @@ function stringifyPlainObject(
 		const value = consumer.asUnknown();
 
 		if (
-			typeof value === 'function' ||
-			typeof value === 'undefined' ||
-			typeof value === 'symbol'
+			typeof value === "function" ||
+			typeof value === "undefined" ||
+			typeof value === "symbol"
 		) {
 			map.delete(key);
 		}
@@ -231,7 +231,7 @@ function stringifyPlainObject(
 	// We only want to increase the level for properties when we aren't at the top
 	if (isTopLevel && level === 0) {
 		propLevel = 0;
-		nextIndent = '';
+		nextIndent = "";
 	}
 
 	// Build properties
@@ -265,7 +265,7 @@ function stringifyPlainObject(
 
 	if (level === 0 && isTopLevel) {
 		if (hasProps) {
-			return buff.join('\n');
+			return buff.join("\n");
 		} else if (buff.length > 0) {
 			// Otherwise we just have a bunch of comments
 			// Indent them correctly and just output it as a normal object
@@ -275,7 +275,7 @@ function stringifyPlainObject(
 		}
 	}
 
-	return joinList('{', '}', prevIndent, buff);
+	return joinList("{", "}", prevIndent, buff);
 }
 
 function stringifyObject(
@@ -288,8 +288,8 @@ function stringifyObject(
 	const info: StringifyObjectOptions = {
 		comments: opts.comments,
 		isTopLevel,
-		nextIndent: '\t'.repeat(level + 1),
-		prevIndent: level === 0 ? '' : '\t'.repeat(level - 1),
+		nextIndent: "\t".repeat(level + 1),
+		prevIndent: level === 0 ? "" : "\t".repeat(level - 1),
 		level,
 		stack,
 	};
@@ -321,9 +321,9 @@ export function stringifyRootConsumer(
 	// Nothing else handles comments at the top level
 	const inner = stringifyConsumer(consumer, opts);
 	const comments = getComments(consumer, opts);
-	const outer = stringifyComments('', comments.outer);
+	const outer = stringifyComments("", comments.outer);
 
-	return [...outer, inner].join('\n');
+	return [...outer, inner].join("\n");
 }
 
 function stringifyConsumer(consumer: Consumer, opts: StringifyOptions): string {
@@ -337,7 +337,7 @@ function stringifyConsumer(consumer: Consumer, opts: StringifyOptions): string {
 
 	// Check if we're already stringfying this value to prevent recursion
 	if (opts.stack.has(value)) {
-		throw new TypeError('Recursive');
+		throw new TypeError("Recursive");
 	}
 
 	return stringifyObject(consumer, value, opts);

@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type MixedKeywordTypeAnnotation = JSNodeBase & {
-	type: 'MixedKeywordTypeAnnotation';
+	type: "MixedKeywordTypeAnnotation";
 };
 
 export const mixedKeywordTypeAnnotation = createBuilder<MixedKeywordTypeAnnotation>(
-	'MixedKeywordTypeAnnotation',
+	"MixedKeywordTypeAnnotation",
 	{
 		bindingKeys: {},
 		visitorKeys: {},

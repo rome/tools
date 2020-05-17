@@ -13,24 +13,24 @@ import {
 	Diagnostics,
 	DiagnosticsProcessor,
 	deriveRootAdviceFromDiagnostic,
-} from '@romejs/diagnostics';
-import {Reporter} from '@romejs/cli-reporter';
+} from "@romejs/diagnostics";
+import {Reporter} from "@romejs/cli-reporter";
 import {
 	DiagnosticsFileReader,
 	DiagnosticsFileReaderStats,
 	DiagnosticsPrinterFlags,
 	DiagnosticsPrinterOptions,
-} from './types';
+} from "./types";
 
 import {
 	formatAnsi,
 	markup,
 	markupToPlainTextString,
-} from '@romejs/string-markup';
-import {ToLines, toLines} from './utils';
-import printAdvice from './printAdvice';
-import {default as successBanner} from './banners/success.json';
-import {default as errorBanner} from './banners/error.json';
+} from "@romejs/string-markup";
+import {ToLines, toLines} from "./utils";
+import printAdvice from "./printAdvice";
+import {default as successBanner} from "./banners/success.json";
+import {default as errorBanner} from "./banners/error.json";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathSet,
@@ -39,9 +39,9 @@ import {
 	UnknownFilePathSet,
 	createAbsoluteFilePath,
 	createUnknownFilePath,
-} from '@romejs/path';
-import {Number0, Number1} from '@romejs/ob1';
-import {existsSync, lstatSync, readFileTextSync} from '@romejs/fs';
+} from "@romejs/path";
+import {Number0, Number1} from "@romejs/ob1";
+import {existsSync, lstatSync, readFileTextSync} from "@romejs/fs";
 
 type Banner = {
 	// Array<number> should really be [number, number, number], but TypeScript widens the imported types
@@ -88,7 +88,7 @@ type FooterPrintCallback = (
 ) => void | boolean;
 
 export const DEFAULT_PRINTER_FLAGS: DiagnosticsPrinterFlags = {
-	grep: '',
+	grep: "",
 	inverseGrep: false,
 	showAllDiagnostics: true,
 	fieri: false,
@@ -98,14 +98,14 @@ export const DEFAULT_PRINTER_FLAGS: DiagnosticsPrinterFlags = {
 
 // Dependency that may not be included in the output diagnostic but whose changes may effect the validity of this one
 type ChangeFileDependency = {
-	type: 'change';
+	type: "change";
 	path: UnknownFilePath;
 	mtime: number;
 };
 
 // Dependency that will have a code frame in the output diagnostic
 type ReferenceFileDependency = {
-	type: 'reference';
+	type: "reference";
 	path: UnknownFilePath;
 	mtime: undefined | number;
 	sourceType: undefined | DiagnosticSourceType;
@@ -167,7 +167,7 @@ export default class DiagnosticsPrinter extends Error {
 
 	createFilePath(filename: undefined | string): UnknownFilePath {
 		if (filename === undefined) {
-			filename = 'unknown';
+			filename = "unknown";
 		}
 
 		const {normalizeFilename} = this.reporter.markupOptions;
@@ -212,7 +212,7 @@ export default class DiagnosticsPrinter extends Error {
 		const {grep, inverseGrep} = this.flags;
 
 		// An empty grep pattern means show everything
-		if (grep === undefined || grep === '') {
+		if (grep === undefined || grep === "") {
 			return false;
 		}
 
@@ -233,7 +233,7 @@ export default class DiagnosticsPrinter extends Error {
 	) {
 		this.fileMtimes.set(info.path, stats.mtime);
 
-		if (info.type === 'reference') {
+		if (info.type === "reference") {
 			this.fileSources.set(
 				info.path,
 				{
@@ -259,7 +259,7 @@ export default class DiagnosticsPrinter extends Error {
 		} of diagnostics) {
 			if (filename !== undefined) {
 				deps.push({
-					type: 'reference',
+					type: "reference",
 					path: this.createFilePath(filename),
 					mtime,
 					language,
@@ -270,7 +270,7 @@ export default class DiagnosticsPrinter extends Error {
 			if (dependencies !== undefined) {
 				for (const {filename, mtime} of dependencies) {
 					deps.push({
-						type: 'change',
+						type: "change",
 						path: this.createFilePath(filename),
 						mtime,
 					});
@@ -278,11 +278,11 @@ export default class DiagnosticsPrinter extends Error {
 			}
 
 			for (const item of advice) {
-				if (item.type === 'frame') {
+				if (item.type === "frame") {
 					const {location} = item;
 					if (location.filename !== undefined && location.sourceText === undefined) {
 						deps.push({
-							type: 'reference',
+							type: "reference",
 							path: this.createFilePath(location.filename),
 							language: location.language,
 							sourceType: location.sourceType,
@@ -305,18 +305,18 @@ export default class DiagnosticsPrinter extends Error {
 			const existing = depsMap.get(path);
 
 			// reference dependency can override change since it has more metadata that needs conflict resolution
-			if (existing === undefined || existing.type === 'change') {
+			if (existing === undefined || existing.type === "change") {
 				depsMap.set(dep.path, dep);
 				continue;
 			}
 
-			if (dep.type === 'reference') {
+			if (dep.type === "reference") {
 				if (existing.sourceType !== dep.sourceType) {
-					existing.sourceType = 'unknown';
+					existing.sourceType = "unknown";
 				}
 
 				if (existing.language !== dep.language) {
-					existing.language = 'unknown';
+					existing.language = "unknown";
 				}
 			}
 		}
@@ -382,7 +382,7 @@ export default class DiagnosticsPrinter extends Error {
 		const firstAdvice = advice[0];
 		if (
 			firstAdvice !== undefined &&
-			firstAdvice.type === 'stacktrace' &&
+			firstAdvice.type === "stacktrace" &&
 			firstAdvice.frames.length === 1
 		) {
 			const frame = firstAdvice.frames[0];
@@ -398,7 +398,7 @@ export default class DiagnosticsPrinter extends Error {
 		if (start !== undefined && end !== undefined) {
 			adviceLoop: for (const item of advice) {
 				if (
-					item.type === 'frame' &&
+					item.type === "frame" &&
 					item.location.filename === filename &&
 					equalPosition(item.location.start, start) &&
 					equalPosition(item.location.end, end)
@@ -407,7 +407,7 @@ export default class DiagnosticsPrinter extends Error {
 					break;
 				}
 
-				if (item.type === 'stacktrace') {
+				if (item.type === "stacktrace") {
 					for (const frame of item.frames) {
 						if (frame.filename === filename && equalPosition(frame, start)) {
 							skipFrame = true;
@@ -426,19 +426,19 @@ export default class DiagnosticsPrinter extends Error {
 
 			if (outdatedFilesArr.length === 1 && outdatedFilesArr[0] === filename) {
 				outdatedAdvice.push({
-					type: 'log',
-					category: 'warn',
-					text: 'This file has been changed since the diagnostic was produced and may be out of date',
+					type: "log",
+					category: "warn",
+					text: "This file has been changed since the diagnostic was produced and may be out of date",
 				});
 			} else {
 				outdatedAdvice.push({
-					type: 'log',
-					category: 'warn',
-					text: 'This diagnostic may be out of date as it relies on the following files that have been changed since the diagnostic was generated',
+					type: "log",
+					category: "warn",
+					text: "This diagnostic may be out of date as it relies on the following files that have been changed since the diagnostic was generated",
 				});
 
 				outdatedAdvice.push({
-					type: 'list',
+					type: "list",
 					list: outdatedFilesArr.map((filename) =>
 						markup`<filelink target="${filename}" />`
 					),
@@ -492,7 +492,7 @@ export default class DiagnosticsPrinter extends Error {
 
 				if (origins !== undefined && origins.length > 0) {
 					reporter.br();
-					reporter.info('Why are you seeing this diagnostic?');
+					reporter.info("Why are you seeing this diagnostic?");
 					reporter.br();
 					reporter.list(
 						origins.map((origin) => {
@@ -546,7 +546,7 @@ export default class DiagnosticsPrinter extends Error {
 
 		if (this.hasTruncatedDiagnostics) {
 			reporter.warn(
-				'Some diagnostics have been truncated. Use the --verbose-diagnostics flag to disable truncation.',
+				"Some diagnostics have been truncated. Use the --verbose-diagnostics flag to disable truncation.",
 			);
 		}
 
@@ -570,7 +570,7 @@ export default class DiagnosticsPrinter extends Error {
 		if (isError) {
 			this.footerError();
 		} else {
-			reporter.success('No known problems!');
+			reporter.success("No known problems!");
 		}
 	}
 
@@ -589,7 +589,7 @@ export default class DiagnosticsPrinter extends Error {
 					const pallete = banner.palettes[palleteIndex];
 					stream.write(
 						formatAnsi.bgRgb(
-							' ',
+							" ",
 							{
 								r: pallete[0],
 								g: pallete[1],
@@ -598,7 +598,7 @@ export default class DiagnosticsPrinter extends Error {
 						).repeat(times),
 					);
 				}
-				stream.write('\n');
+				stream.write("\n");
 			}
 		}
 	}

@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 26
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 25
 					index: 25
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			expression: AssignmentExpression {
-				operator: '='
+				operator: "="
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 24
 						index: 24
@@ -63,7 +63,7 @@ Program {
 					value: 0
 					format: undefined
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 24
 							index: 24
@@ -79,7 +79,7 @@ Program {
 				left: AssignmentArrayPattern {
 					rest: undefined
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 22
 							index: 22
@@ -93,10 +93,10 @@ Program {
 					}
 					elements: Array [
 						AssignmentIdentifier {
-							name: 'a'
+							name: "a"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'a'
+								filename: "input.js"
+								identifierName: "a"
 								end: Object {
 									column: 2
 									index: 2
@@ -110,9 +110,9 @@ Program {
 							}
 						}
 						AssignmentAssignmentPattern {
-							operator: '='
+							operator: "="
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 6
 									index: 6
@@ -125,10 +125,10 @@ Program {
 								}
 							}
 							left: AssignmentIdentifier {
-								name: 'b'
+								name: "b"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'b'
+									filename: "input.js"
+									identifierName: "b"
 									end: Object {
 										column: 4
 										index: 4
@@ -145,7 +145,7 @@ Program {
 								value: 0
 								format: undefined
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 6
 										index: 6
@@ -160,9 +160,9 @@ Program {
 							}
 						}
 						AssignmentAssignmentPattern {
-							operator: '='
+							operator: "="
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 21
 									index: 21
@@ -177,7 +177,7 @@ Program {
 							right: ObjectExpression {
 								properties: Array []
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 21
 										index: 21
@@ -192,7 +192,7 @@ Program {
 							}
 							left: AssignmentArrayPattern {
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 18
 										index: 18
@@ -206,10 +206,10 @@ Program {
 								}
 								elements: Array [
 									AssignmentIdentifier {
-										name: 'c'
+										name: "c"
 										loc: Object {
-											filename: 'input.js'
-											identifierName: 'c'
+											filename: "input.js"
+											identifierName: "c"
 											end: Object {
 												column: 9
 												index: 9
@@ -225,7 +225,7 @@ Program {
 								]
 								rest: MemberExpression {
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 17
 											index: 17
@@ -238,10 +238,10 @@ Program {
 										}
 									}
 									object: ReferenceIdentifier {
-										name: 'a'
+										name: "a"
 										loc: Object {
-											filename: 'input.js'
-											identifierName: 'a'
+											filename: "input.js"
+											identifierName: "a"
 											end: Object {
 												column: 14
 												index: 14
@@ -259,7 +259,7 @@ Program {
 											value: 0
 											format: undefined
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 16
 													index: 16
@@ -273,7 +273,7 @@ Program {
 											}
 										}
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 17
 												index: 17

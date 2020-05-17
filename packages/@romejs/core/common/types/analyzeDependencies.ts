@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Diagnostics} from '@romejs/diagnostics';
+import {Diagnostics} from "@romejs/diagnostics";
 import {
 	ConstExportModuleKind,
 	ConstImportModuleKind,
 	ConstProgramSyntax,
-} from '@romejs/js-ast';
-import {SourceLocation} from '@romejs/parser-core';
-import {Dict} from '@romejs/typescript-helpers';
+} from "@romejs/js-ast";
+import {SourceLocation} from "@romejs/parser-core";
+import {Dict} from "@romejs/typescript-helpers";
 
-export type AnalyzeModuleType = 'es' | 'cjs' | 'unknown';
+export type AnalyzeModuleType = "es" | "cjs" | "unknown";
 
 export type AnalyzeDependencyName = {
 	name: string;
@@ -22,10 +22,10 @@ export type AnalyzeDependencyName = {
 	loc?: SourceLocation;
 };
 
-export type AnalyzeExportValueType = 'class' | 'function' | 'other';
+export type AnalyzeExportValueType = "class" | "function" | "other";
 
 export type AnalyzeExportLocal = {
-	type: 'local';
+	type: "local";
 	loc?: SourceLocation;
 	kind: ConstExportModuleKind;
 	valueType: AnalyzeExportValueType;
@@ -35,14 +35,14 @@ export type AnalyzeExportLocal = {
 export type AnyAnalyzeExport =
 	 | AnalyzeExportLocal
 	| {
-			type: 'externalNamespace';
+			type: "externalNamespace";
 			kind: ConstImportModuleKind;
 			loc?: SourceLocation;
 			exported: string;
 			source: string;
 		}
 	| {
-			type: 'external';
+			type: "external";
 			kind: ConstImportModuleKind;
 			loc?: SourceLocation;
 			imported: string;
@@ -50,7 +50,7 @@ export type AnyAnalyzeExport =
 			source: string;
 		}
 	| {
-			type: 'externalAll';
+			type: "externalAll";
 			loc?: SourceLocation;
 			kind: ConstImportModuleKind;
 			source: string;
@@ -94,7 +94,7 @@ export type AnalyzeDependencyResult = {
 
 export const UNKNOWN_ANALYZE_DEPENDENCIES_RESULT: AnalyzeDependencyResult = {
 	topLevelLocalBindings: {},
-	moduleType: 'unknown',
+	moduleType: "unknown",
 	syntax: [],
 	diagnostics: [],
 	firstTopAwaitLocation: undefined,

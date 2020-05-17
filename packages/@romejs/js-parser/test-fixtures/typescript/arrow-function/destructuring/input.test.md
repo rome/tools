@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 18
@@ -30,16 +30,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unexpected token, expected ,'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unexpected token, expected ,"}
 			}
 			location: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				mtime: undefined
-				sourceType: 'module'
+				sourceType: "module"
 				end: Object {
 					column: 6
 					index: 6
@@ -56,7 +56,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 8
 					index: 8
@@ -69,9 +69,9 @@ Program {
 				}
 			}
 			expression: AssignmentExpression {
-				operator: '='
+				operator: "="
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 8
 						index: 8
@@ -87,7 +87,7 @@ Program {
 					value: 0
 					format: undefined
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 8
 							index: 8
@@ -103,7 +103,7 @@ Program {
 				left: AssignmentObjectPattern {
 					rest: undefined
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 4
 							index: 4
@@ -119,10 +119,10 @@ Program {
 						AssignmentObjectPatternProperty {
 							key: StaticPropertyKey {
 								value: Identifier {
-									name: 'a'
+									name: "a"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'a'
+										filename: "input.ts"
+										identifierName: "a"
 										end: Object {
 											column: 4
 											index: 4
@@ -136,7 +136,7 @@ Program {
 									}
 								}
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 4
 										index: 4
@@ -150,10 +150,10 @@ Program {
 								}
 							}
 							value: AssignmentIdentifier {
-								name: 'a'
+								name: "a"
 								loc: Object {
-									filename: 'input.ts'
-									identifierName: 'a'
+									filename: "input.ts"
+									identifierName: "a"
 									end: Object {
 										column: 4
 										index: 4
@@ -167,7 +167,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 4
 									index: 4
@@ -186,7 +186,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 10
 					index: 10
@@ -199,9 +199,9 @@ Program {
 				}
 			}
 			expression: ReferenceIdentifier {
-				name: 'INVALID_PLACEHOLDER'
+				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 10
 						index: 10
@@ -217,7 +217,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 11
 					index: 11
@@ -230,9 +230,9 @@ Program {
 				}
 			}
 			expression: ReferenceIdentifier {
-				name: 'INVALID_PLACEHOLDER'
+				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 11
 						index: 11
@@ -248,7 +248,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 14
 					index: 14
@@ -261,9 +261,9 @@ Program {
 				}
 			}
 			expression: ReferenceIdentifier {
-				name: 'INVALID_PLACEHOLDER'
+				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 14
 						index: 14
@@ -279,7 +279,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 17
 					index: 17
@@ -295,7 +295,7 @@ Program {
 				value: 0
 				format: undefined
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 16
 						index: 16

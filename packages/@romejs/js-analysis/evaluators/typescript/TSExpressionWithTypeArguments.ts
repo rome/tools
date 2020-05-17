@@ -9,9 +9,9 @@ import {
 	AnyNode,
 	TSExpressionWithTypeArguments,
 	tsExpressionWithTypeArguments,
-} from '@romejs/js-ast';
+} from "@romejs/js-ast";
 
 export default function TSExpressionWithTypeArguments(node: AnyNode) {
 	node = tsExpressionWithTypeArguments.assert(node);
-	throw new Error('unimplemented');
+	throw new Error("unimplemented");
 }

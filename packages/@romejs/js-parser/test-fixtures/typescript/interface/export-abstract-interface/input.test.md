@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 33
@@ -30,16 +30,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Expected a semicolon or a line terminator'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				mtime: undefined
-				sourceType: 'module'
+				sourceType: "module"
 				end: Object {
 					column: 15
 					index: 15
@@ -56,7 +56,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 15
 					index: 15
@@ -69,10 +69,10 @@ Program {
 				}
 			}
 			expression: ReferenceIdentifier {
-				name: 'abstract'
+				name: "abstract"
 				loc: Object {
-					filename: 'input.ts'
-					identifierName: 'abstract'
+					filename: "input.ts"
+					identifierName: "abstract"
 					end: Object {
 						column: 15
 						index: 15
@@ -88,10 +88,10 @@ Program {
 		}
 		TSInterfaceDeclaration {
 			id: BindingIdentifier {
-				name: 'I'
+				name: "I"
 				loc: Object {
-					filename: 'input.ts'
-					identifierName: 'I'
+					filename: "input.ts"
+					identifierName: "I"
 					end: Object {
 						column: 27
 						index: 27
@@ -107,7 +107,7 @@ Program {
 			extends: undefined
 			typeParameters: undefined
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 1
 					index: 32
@@ -122,7 +122,7 @@ Program {
 			body: TSInterfaceBody {
 				body: Array []
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 1
 						index: 32

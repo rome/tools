@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {HumanBuilder} from '../Utils';
-import {HydrateData, HydrateTypeFactory} from '../Evaluator';
-import T, {SerialTypeFactory, TypeCompatibilityReturn} from './T';
-import {Scope} from '../scopes';
-import {AnyNode} from '@romejs/js-ast';
+import {HumanBuilder} from "../Utils";
+import {HydrateData, HydrateTypeFactory} from "../Evaluator";
+import T, {SerialTypeFactory, TypeCompatibilityReturn} from "./T";
+import {Scope} from "../scopes";
+import {AnyNode} from "@romejs/js-ast";
 
 export default class ObjPropT extends T {
 	constructor(
@@ -23,7 +23,7 @@ export default class ObjPropT extends T {
 		this.value = value;
 	}
 
-	static type = 'ObjPropT';
+	static type = "ObjPropT";
 	key: string;
 	value: T;
 

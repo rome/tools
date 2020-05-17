@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from '@romejs/js-ast';
-import {HydrateData} from '../Evaluator';
-import BooleanLiteralT from './BooleanLiteralT';
-import {Scope} from '../scopes';
-import T from './T';
+import {AnyNode} from "@romejs/js-ast";
+import {HydrateData} from "../Evaluator";
+import BooleanLiteralT from "./BooleanLiteralT";
+import {Scope} from "../scopes";
+import T from "./T";
 
 export default class BooleanT extends T {
-	static type = 'BooleanT';
+	static type = "BooleanT";
 
 	serialize(): HydrateData {
 		return {};
@@ -23,7 +23,7 @@ export default class BooleanT extends T {
 	}
 
 	humanize(): string {
-		return 'boolean';
+		return "boolean";
 	}
 
 	compatibleWith(type: T): boolean {

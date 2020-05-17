@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSEnumMember} from '@romejs/js-ast';
-import {Builder} from '@romejs/js-formatter';
-import {Token, concat, space} from '../../tokens';
+import {TSEnumMember} from "@romejs/js-ast";
+import {Builder} from "@romejs/js-formatter";
+import {Token, concat, space} from "../../tokens";
 
 export default function TSEnumMember(
 	builder: Builder,
@@ -16,10 +16,10 @@ export default function TSEnumMember(
 	const tokens: Array<Token> = [builder.tokenize(node.id, node)];
 
 	if (node.initializer) {
-		tokens.push(space, '=', space, builder.tokenize(node.initializer, node));
+		tokens.push(space, "=", space, builder.tokenize(node.initializer, node));
 	}
 
-	tokens.push(',');
+	tokens.push(",");
 
 	return concat(tokens);
 }

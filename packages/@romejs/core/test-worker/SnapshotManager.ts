@@ -9,22 +9,22 @@ import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	createAbsoluteFilePath,
-} from '@romejs/path';
-import {exists, readFileText, unlink, writeFile} from '@romejs/fs';
-import {TestMasterRunnerOptions} from '../master/testing/types';
-import TestWorkerRunner from './TestWorkerRunner';
-import {DiagnosticDescription, descriptions} from '@romejs/diagnostics';
-import {createSnapshotParser} from './SnapshotParser';
-import {ErrorFrame} from '@romejs/v8';
-import {Number0, Number1} from '@romejs/ob1';
-import prettyFormat from '@romejs/pretty-format';
+} from "@romejs/path";
+import {exists, readFileText, unlink, writeFile} from "@romejs/fs";
+import {TestMasterRunnerOptions} from "../master/testing/types";
+import TestWorkerRunner from "./TestWorkerRunner";
+import {DiagnosticDescription, descriptions} from "@romejs/diagnostics";
+import {createSnapshotParser} from "./SnapshotParser";
+import {ErrorFrame} from "@romejs/v8";
+import {Number0, Number1} from "@romejs/ob1";
+import prettyFormat from "@romejs/pretty-format";
 
 function cleanHeading(key: string): string {
-	if (key[0] === '`') {
+	if (key[0] === "`") {
 		key = key.slice(1);
 	}
 
-	if (key[key.length - 1] === '`') {
+	if (key[key.length - 1] === "`") {
 		key = key.slice(0, -1);
 	}
 
@@ -45,7 +45,7 @@ type Snapshot = {
 	entries: Map<string, SnapshotEntry>;
 };
 
-export const SNAPSHOT_EXT = '.test.md';
+export const SNAPSHOT_EXT = ".test.md";
 
 function buildEntriesKey(testName: string, entryName: string): string {
 	return `${testName}#${entryName}`;
@@ -141,24 +141,24 @@ export default class SnapshotManager {
 		while (nodes.length > 0) {
 			const node = nodes.shift()!;
 
-			if (node.type === 'Heading' && node.level === 1) {
+			if (node.type === "Heading" && node.level === 1) {
 				// Title
 				continue;
 			}
 
-			if (node.type === 'Heading' && node.level === 2) {
+			if (node.type === "Heading" && node.level === 2) {
 				const testName = cleanHeading(node.text);
 
 				while (nodes.length > 0) {
 					const node = nodes[0];
 
-					if (node.type === 'Heading' && node.level === 3) {
+					if (node.type === "Heading" && node.level === 3) {
 						nodes.shift();
 
 						const entryName = cleanHeading(node.text);
 
 						const codeBlock = nodes.shift();
-						if (codeBlock === undefined || codeBlock.type !== 'CodeBlock') {
+						if (codeBlock === undefined || codeBlock.type !== "CodeBlock") {
 							throw parser.unexpected({
 								description: descriptions.SNAPSHOTS.EXPECTED_CODE_BLOCK_AFTER_HEADING,
 								loc: node.loc,
@@ -178,14 +178,14 @@ export default class SnapshotManager {
 						continue;
 					}
 
-					if (node.type === 'CodeBlock') {
+					if (node.type === "CodeBlock") {
 						nodes.shift();
 
 						snapshot.entries.set(
-							buildEntriesKey(testName, '0'),
+							buildEntriesKey(testName, "0"),
 							{
 								testName,
-								entryName: '0',
+								entryName: "0",
 								language: node.language,
 								value: node.text,
 							},
@@ -207,8 +207,8 @@ export default class SnapshotManager {
 		let lines: Array<string> = [];
 
 		function pushNewline() {
-			if (lines[lines.length - 1] !== '') {
-				lines.push('');
+			if (lines[lines.length - 1] !== "") {
+				lines.push("");
 			}
 		}
 
@@ -245,19 +245,19 @@ export default class SnapshotManager {
 				const entry = entries.get(snapshotName)!;
 
 				const {value} = entry;
-				const language = entry.language === undefined ? '' : entry.language;
+				const language = entry.language === undefined ? "" : entry.language;
 
 				// If the test only has one snapshot then omit the heading
-				const skipHeading = snapshotName === '0' && entryNames.length === 1;
+				const skipHeading = snapshotName === "0" && entryNames.length === 1;
 				if (!skipHeading) {
 					lines.push(`### \`${snapshotName}\``);
 				}
 
 				pushNewline();
-				lines.push('```' + language);
+				lines.push("```" + language);
 				// TODO escape triple backquotes
 				lines.push(value);
-				lines.push('```');
+				lines.push("```");
 				pushNewline();
 			}
 		}
@@ -274,7 +274,7 @@ export default class SnapshotManager {
 
 		for (const [path, {used, existsOnDisk, raw, entries}] of this.snapshots) {
 			const lines = this.buildSnapshot(entries.values());
-			const formatted = lines.join('\n');
+			const formatted = lines.join("\n");
 
 			if (this.options.freezeSnapshots) {
 				if (used) {
@@ -310,14 +310,14 @@ export default class SnapshotManager {
 	testInlineSnapshot(
 		callFrame: ErrorFrame,
 		received: unknown,
-		expected?: InlineSnapshotUpdate['snapshot'],
+		expected?: InlineSnapshotUpdate["snapshot"],
 	): {
-		status: 'MATCH' | 'NO_MATCH' | 'UPDATE';
+		status: "MATCH" | "NO_MATCH" | "UPDATE";
 	} {
 		let receivedFormat = prettyFormat(received);
 
 		let expectedFormat;
-		if (typeof expected === 'string') {
+		if (typeof expected === "string") {
 			expectedFormat = expected;
 		} else {
 			expectedFormat = prettyFormat(expected);
@@ -325,22 +325,22 @@ export default class SnapshotManager {
 
 		// Matches, no need to do anything
 		if (receivedFormat === expectedFormat) {
-			return {status: 'MATCH'};
+			return {status: "MATCH"};
 		}
 
 		const shouldSave = this.options.updateSnapshots || expected === undefined;
 		if (shouldSave) {
 			const {lineNumber, columnNumber} = callFrame;
 			if (lineNumber === undefined || columnNumber === undefined) {
-				throw new Error('Call frame has no line or column');
+				throw new Error("Call frame has no line or column");
 			}
 
 			if (!this.options.freezeSnapshots) {
-				let snapshot: InlineSnapshotUpdate['snapshot'] = receivedFormat;
+				let snapshot: InlineSnapshotUpdate["snapshot"] = receivedFormat;
 				if (
-					typeof received === 'string' ||
-					typeof received === 'number' ||
-					typeof received === 'boolean' ||
+					typeof received === "string" ||
+					typeof received === "number" ||
+					typeof received === "boolean" ||
 					received === undefined ||
 					received === null
 				) {
@@ -354,10 +354,10 @@ export default class SnapshotManager {
 				});
 			}
 
-			return {status: 'UPDATE'};
+			return {status: "UPDATE"};
 		}
 
-		return {status: 'NO_MATCH'};
+		return {status: "NO_MATCH"};
 	}
 
 	async get(
@@ -410,7 +410,7 @@ export default class SnapshotManager {
 		let snapshot = this.snapshots.get(snapshotPath);
 		if (snapshot === undefined) {
 			snapshot = {
-				raw: '',
+				raw: "",
 				existsOnDisk: false,
 				used: true,
 				entries: new Map(),

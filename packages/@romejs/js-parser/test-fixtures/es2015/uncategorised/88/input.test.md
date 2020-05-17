@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
+	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 54
@@ -35,7 +35,7 @@ Program {
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 23
 					index: 23
@@ -48,9 +48,9 @@ Program {
 				}
 			}
 			source: StringLiteral {
-				value: ''
+				value: ""
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 22
 						index: 22
@@ -65,7 +65,7 @@ Program {
 			}
 			defaultSpecifier: ImportDefaultSpecifier {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 14
 						index: 14
@@ -79,10 +79,10 @@ Program {
 				}
 				local: ImportSpecifierLocal {
 					name: BindingIdentifier {
-						name: 'encrypt'
+						name: "encrypt"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'encrypt'
+							filename: "input.js"
+							identifierName: "encrypt"
 							end: Object {
 								column: 14
 								index: 14
@@ -97,7 +97,7 @@ Program {
 					}
 					importKind: undefined
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 14
 							index: 14
@@ -114,9 +114,9 @@ Program {
 		}
 		ExportLocalDeclaration {
 			declaration: undefined
-			exportKind: 'value'
+			exportKind: "value"
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 29
 					index: 53
@@ -131,7 +131,7 @@ Program {
 			specifiers: Array [
 				ExportLocalSpecifier {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 27
 							index: 51
@@ -144,10 +144,10 @@ Program {
 						}
 					}
 					exported: Identifier {
-						name: 'default'
+						name: "default"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'default'
+							filename: "input.js"
+							identifierName: "default"
 							end: Object {
 								column: 27
 								index: 51
@@ -161,10 +161,10 @@ Program {
 						}
 					}
 					local: ReferenceIdentifier {
-						name: 'encrypt'
+						name: "encrypt"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'encrypt'
+							filename: "input.js"
+							identifierName: "encrypt"
 							end: Object {
 								column: 16
 								index: 40

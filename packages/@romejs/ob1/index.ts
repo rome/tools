@@ -10,12 +10,12 @@
 // https://github.com/Microsoft/TypeScript/issues/15807
 // A type representing 0-based offsets.
 export type Number0 = {
-	_tag: 'ZERO_OFFSET';
+	_tag: "ZERO_OFFSET";
 };
 
 // A type representing 1-based offsets.
 export type Number1 = {
-	_tag: 'ONE_OFFSET';
+	_tag: "ONE_OFFSET";
 };
 
 type AnyNumber = Number0 | Number1;

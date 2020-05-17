@@ -5,26 +5,26 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Reporter, ReporterTableField} from '@romejs/cli-reporter';
-import {serializeCLIFlags} from './serializeCLIFlags';
+import {Reporter, ReporterTableField} from "@romejs/cli-reporter";
+import {serializeCLIFlags} from "./serializeCLIFlags";
 import {
 	ConsumePath,
 	ConsumePropertyDefinition,
 	ConsumeSourceLocationRequestTarget,
 	Consumer,
 	consume,
-} from '@romejs/consume';
+} from "@romejs/consume";
 import {
 	dedent,
 	naturalCompare,
 	toCamelCase,
 	toKebabCase,
-} from '@romejs/string-utils';
-import {createUnknownFilePath} from '@romejs/path';
-import {Dict} from '@romejs/typescript-helpers';
-import {markup} from '@romejs/string-markup';
-import {descriptions} from '@romejs/diagnostics';
-import {JSONObject} from '@romejs/codec-json';
+} from "@romejs/string-utils";
+import {createUnknownFilePath} from "@romejs/path";
+import {Dict} from "@romejs/typescript-helpers";
+import {markup} from "@romejs/string-markup";
+import {descriptions} from "@romejs/diagnostics";
+import {JSONObject} from "@romejs/codec-json";
 
 export type Examples = Array<{
 	description: string;
@@ -66,19 +66,19 @@ export type ParserOptions<T> = {
 };
 
 function splitCommandName(cmd: string): Array<string> {
-	return cmd.split(' ');
+	return cmd.split(" ");
 }
 
 // Whether we can display this value in help
 function isDisplayableHelpValue(value: unknown): value is string | number {
-	return typeof value === 'string' || typeof value === 'number';
+	return typeof value === "string" || typeof value === "number";
 }
 
 type _FlagValue = undefined | number | string | boolean;
 
 export type FlagValue = _FlagValue | Array<_FlagValue>;
 
-type SupportedAutocompleteShells = 'bash' | 'fish';
+type SupportedAutocompleteShells = "bash" | "fish";
 
 export default class Parser<T> {
 	constructor(reporter: Reporter, opts: ParserOptions<T>, rawArgs: Array<string>) {
@@ -118,7 +118,7 @@ export default class Parser<T> {
 	args: Array<string>;
 
 	looksLikeFlag(flag: undefined | string): boolean {
-		return flag?.[0] === '-';
+		return flag?.[0] === "-";
 	}
 
 	toCamelCase(name: string): string {
@@ -149,23 +149,23 @@ export default class Parser<T> {
 		while (rawArgs.length > 0) {
 			const arg: string = String(rawArgs.shift());
 
-			if (arg === '--') {
+			if (arg === "--") {
 				// We consider a -- by itself to halt parsing of args, the rest of the remaining args are added to _
 				this.args = this.args.concat(rawArgs);
 				break;
-			} else if (arg[0] === '-') {
+			} else if (arg[0] === "-") {
 				// Clean the argument by stripping off the dashes
-				const name = arg[1] === '-' ? arg.slice(2) : arg.slice(1);
+				const name = arg[1] === "-" ? arg.slice(2) : arg.slice(1);
 
 				// Flags beginning with no- are always false
-				if (name.startsWith('no-')) {
+				if (name.startsWith("no-")) {
 					const camelName = this.toCamelCase(name.slice(3));
 					this.setFlag(camelName, false);
 					continue;
 				}
 
 				// Allow for arguments to be passed as --foo=bar
-				const equalsIndex = name.indexOf('=');
+				const equalsIndex = name.indexOf("=");
 				if (equalsIndex !== -1) {
 					const cleanName = this.toCamelCase(name.slice(0, equalsIndex));
 					const value = name.slice(equalsIndex + 1);
@@ -185,7 +185,7 @@ export default class Parser<T> {
 
 				this.flagToArgIndex.set(camelName, this.args.length);
 
-				if (arg[0] === '-' && arg[1] !== '-') {
+				if (arg[0] === "-" && arg[1] !== "-") {
 					this.shorthandFlags.add(camelName);
 				}
 			} else {
@@ -204,21 +204,21 @@ export default class Parser<T> {
 		}
 
 		return consume({
-			filePath: createUnknownFilePath('argv'),
+			filePath: createUnknownFilePath("argv"),
 			value: flags,
 			onDefinition: (def, valueConsumer) => {
-				const key = def.objectPath.join('.');
+				const key = def.objectPath.join(".");
 
 				// Detect root object
-				if (key === '') {
+				if (key === "") {
 					return;
 				}
 
 				const value = flags[key];
 
 				// Allow omitting a string flag value
-				if (def.type === 'string' && value === true) {
-					valueConsumer.setValue('');
+				if (def.type === "string" && value === true) {
+					valueConsumer.setValue("");
 				}
 
 				this.declareArgument({
@@ -231,14 +231,14 @@ export default class Parser<T> {
 				// We've parsed arguments like `--foo bar` as `{foo: 'bar}`
 				// However, --foo may be a boolean flag, so `bar` needs to be correctly added to args
 				if (
-					def.type === 'boolean' &&
+					def.type === "boolean" &&
 					value !== true &&
 					value !== false &&
 					value !== undefined
 				) {
 					const argIndex = this.flagToArgIndex.get(key);
 					if (argIndex === undefined) {
-						throw new Error('No arg index. Should always exist.');
+						throw new Error("No arg index. Should always exist.");
 					}
 
 					// Insert the argument at the correct place
@@ -252,7 +252,7 @@ export default class Parser<T> {
 				}
 			},
 			context: {
-				category: 'flags/invalid',
+				category: "flags/invalid",
 				normalizeKey: (key) => {
 					return this.incorrectCaseFlags.has(key) ? key : toKebabCase(key);
 				},
@@ -276,7 +276,7 @@ export default class Parser<T> {
 							shorthandFlags: this.shorthandFlags,
 						},
 						{
-							type: 'flag',
+							type: "flag",
 							key: String(keys[0]),
 							target,
 						},
@@ -350,7 +350,7 @@ export default class Parser<T> {
 			);
 		}
 
-		consumer.enforceUsedProperties('flag', false);
+		consumer.enforceUsedProperties("flag", false);
 	}
 
 	async init(): Promise<T> {
@@ -360,9 +360,9 @@ export default class Parser<T> {
 		const version = this.opts.version;
 		if (version !== undefined) {
 			const shouldDisplayVersion = consumer.get(
-				'version',
+				"version",
 				{
-					description: 'Show the version',
+					description: "Show the version",
 				},
 			).asBoolean(false);
 			if (shouldDisplayVersion) {
@@ -374,12 +374,12 @@ export default class Parser<T> {
 		// i could add a flag for dev-rome itself
 		// i could take the input command name from the flag
 		const generateAutocomplete: undefined | SupportedAutocompleteShells = consumer.get(
-			'generateAutocomplete',
+			"generateAutocomplete",
 			{
-				description: 'Generate a shell autocomplete',
-				inputName: 'shell',
+				description: "Generate a shell autocomplete",
+				inputName: "shell",
 			},
-		).asStringSetOrVoid(['fish', 'bash']);
+		).asStringSetOrVoid(["fish", "bash"]);
 		if (generateAutocomplete !== undefined) {
 			await this.generateAutocomplete(generateAutocomplete);
 			process.exit(0);
@@ -387,9 +387,9 @@ export default class Parser<T> {
 
 		// Show help for --help
 		const shouldShowHelp = consumer.get(
-			'help',
+			"help",
 			{
-				description: 'Show this help screen',
+				description: "Show this help screen",
 			},
 		).asBoolean(false);
 
@@ -450,7 +450,7 @@ export default class Parser<T> {
 			let argCol = toKebabCase(decl.name);
 
 			// For booleans that default to `true`, show the --no- version as that'll be what users should use
-			if (def.type === 'boolean' && def.default === true) {
+			if (def.type === "boolean" && def.default === true) {
 				argCol = `--no-${argCol}`;
 				argName = `no-${argName}`;
 			} else {
@@ -458,14 +458,14 @@ export default class Parser<T> {
 			}
 
 			// Add input specifier unless a boolean
-			if (def.type !== 'boolean') {
+			if (def.type !== "boolean") {
 				let {inputName} = metadata;
 
 				if (inputName === undefined) {
-					if (def.type === 'number') {
-						inputName = 'num';
+					if (def.type === "number") {
+						inputName = "num";
 					} else {
-						inputName = 'input';
+						inputName = "input";
 					}
 				}
 
@@ -479,7 +479,7 @@ export default class Parser<T> {
 
 			let descCol: string =
 				metadata.description === undefined
-					? 'no description found'
+					? "no description found"
 					: metadata.description;
 
 			const {default: defaultValue} = def;
@@ -487,12 +487,12 @@ export default class Parser<T> {
 				descCol += ` (default: ${JSON.stringify(defaultValue)})`;
 			}
 
-			if (def.type === 'string' && def.allowedValues !== undefined) {
+			if (def.type === "string" && def.allowedValues !== undefined) {
 				const displayAllowedValues = def.allowedValues.filter((item) =>
 					isDisplayableHelpValue(item)
 				);
 				if (displayAllowedValues !== undefined) {
-					descCol += ` (values: ${displayAllowedValues.join('|')})`;
+					descCol += ` (values: ${displayAllowedValues.join("|")})`;
 				}
 			}
 
@@ -508,12 +508,12 @@ export default class Parser<T> {
 
 		// Build table rows
 		return optionOutput.map((opt) => [
-			{align: 'right', value: opt.arg},
+			{align: "right", value: opt.arg},
 			opt.description,
 		]);
 	}
 
-	showUsageHelp(description?: string, usage: string = '[flags]', prefix?: string) {
+	showUsageHelp(description?: string, usage: string = "[flags]", prefix?: string) {
 		const {reporter} = this;
 		const {programName} = this.opts;
 
@@ -531,7 +531,7 @@ export default class Parser<T> {
 				}
 				commandParts.push(usage);
 
-				const command = commandParts.join(' ');
+				const command = commandParts.join(" ");
 				reporter.command(command);
 			},
 		);
@@ -556,7 +556,7 @@ export default class Parser<T> {
 		const optRows = this.buildOptionsHelp(argKeys);
 		if (optRows.length > 0) {
 			reporter.section(
-				'Command Flags',
+				"Command Flags",
 				() => {
 					reporter.table([], optRows);
 				},
@@ -564,10 +564,10 @@ export default class Parser<T> {
 		}
 
 		reporter.section(
-			'Global Flags',
+			"Global Flags",
 			() => {
-				reporter.info('To view global flags run');
-				reporter.command('rome --help');
+				reporter.info("To view global flags run");
+				reporter.command("rome --help");
 			},
 		);
 	}
@@ -575,7 +575,7 @@ export default class Parser<T> {
 	showGlobalFlags() {
 		const {reporter} = this;
 		reporter.section(
-			'Global Flags',
+			"Global Flags",
 			() => {
 				// Show options not attached to any commands
 				const lonerArgKeys = [];
@@ -606,11 +606,11 @@ export default class Parser<T> {
 		const {programName} = this.opts;
 
 		switch (shell) {
-			case 'bash': {
+			case "bash": {
 				reporter.logAllNoMarkup(this.genBashCompletions(programName));
 				break;
 			}
-			case 'fish': {
+			case "fish": {
 				reporter.logAllNoMarkup(this.genFishCompletions(programName));
 				break;
 			}
@@ -618,7 +618,7 @@ export default class Parser<T> {
 	}
 
 	genFishCompletions(prg: string): string {
-		let script = '';
+		let script = "";
 		const scriptPre = `complete -c ${prg}`;
 
 		// add rome
@@ -633,7 +633,7 @@ export default class Parser<T> {
 		for (let meta of this.declaredFlags.values()) {
 			const subcmdCond =
 				meta.command === undefined
-					? ''
+					? ""
 					: `-n '__fish_seen_subcommand_from ${meta.command}'`;
 			script += `${scriptPre} ${subcmdCond} -l '${meta.name}'\n`;
 		}
@@ -642,9 +642,9 @@ export default class Parser<T> {
 	}
 
 	genBashCompletions(prg: string): string {
-		let romeCmds = '';
-		let commandFuncs = '';
-		let globalFlags = '';
+		let romeCmds = "";
+		let commandFuncs = "";
+		let globalFlags = "";
 		let cmdFlagMap = new Map();
 
 		for (let subcmd of this.commands.keys()) {
@@ -753,7 +753,7 @@ export default class Parser<T> {
 		const commandsByCategory: Map<undefined | string, Array<AnyCommandOptions>> = new Map();
 		const categoryNames: Set<string | undefined> = new Set();
 		for (const [name, command] of this.commands) {
-			if (name[0] === '_') {
+			if (name[0] === "_") {
 				continue;
 			}
 
@@ -768,7 +768,7 @@ export default class Parser<T> {
 		}
 
 		reporter.section(
-			'Commands',
+			"Commands",
 			() => {
 				const sortedCategoryNames: Array<string | undefined> = Array.from(
 					categoryNames,
@@ -793,14 +793,14 @@ export default class Parser<T> {
 					reporter.list(
 						commands.map((cmd) => {
 							return `<emphasis>${cmd.name}</emphasis> ${cmd.description === undefined
-								? ''
+								? ""
 								: cmd.description}`;
 						}),
 					);
 					reporter.br();
 				}
 
-				reporter.info('To view help for a specific command run');
+				reporter.info("To view help for a specific command run");
 				reporter.command(`${programName} command_name --help`);
 			},
 		);
@@ -817,7 +817,7 @@ export default class Parser<T> {
 		}
 
 		reporter.section(
-			'Examples',
+			"Examples",
 			() => {
 				for (const {description, command} of examples) {
 					const commandParts = [];
@@ -829,7 +829,7 @@ export default class Parser<T> {
 					}
 					commandParts.push(command);
 
-					const builtCommand = commandParts.join(' ');
+					const builtCommand = commandParts.join(" ");
 
 					reporter.br();
 					if (description !== undefined) {
@@ -848,13 +848,13 @@ export default class Parser<T> {
 
 		if (this.args.length === 0) {
 			this.reporter.error(
-				'No command specified. Run --help to see available commands.',
+				"No command specified. Run --help to see available commands.",
 			);
 		} else {
 			// TODO command name is not sanitized for markup
 			// TODO produce a diagnostic instead
 			this.reporter.error(
-				`Unknown command <emphasis>${this.args.join(' ')}</emphasis>. Run --help to see available commands.`,
+				`Unknown command <emphasis>${this.args.join(" ")}</emphasis>. Run --help to see available commands.`,
 			);
 		}
 

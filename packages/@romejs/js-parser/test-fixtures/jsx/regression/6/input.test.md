@@ -10,17 +10,17 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array [
-		'jsx'
-		'ts'
+		"jsx"
+		"ts"
 	]
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 32
 			index: 32
@@ -35,7 +35,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 32
 					index: 32
@@ -49,9 +49,9 @@ Program {
 			}
 			expression: JSXElement {
 				name: JSXIdentifier {
-					name: 'div'
+					name: "div"
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 4
 							index: 4
@@ -68,7 +68,7 @@ Program {
 				selfClosing: true
 				typeArguments: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 32
 						index: 32
@@ -83,9 +83,9 @@ Program {
 				attributes: Array [
 					JSXAttribute {
 						name: JSXIdentifier {
-							name: 'pre'
+							name: "pre"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 8
 									index: 8
@@ -99,9 +99,9 @@ Program {
 							}
 						}
 						value: StringLiteral {
-							value: 'leading'
+							value: "leading"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 18
 									index: 18
@@ -115,7 +115,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 18
 								index: 18
@@ -130,7 +130,7 @@ Program {
 					}
 					JSXSpreadAttribute {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 29
 								index: 29
@@ -143,10 +143,10 @@ Program {
 							}
 						}
 						argument: ReferenceIdentifier {
-							name: 'props'
+							name: "props"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'props'
+								filename: "input.js"
+								identifierName: "props"
 								end: Object {
 									column: 28
 									index: 28

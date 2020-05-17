@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSMethodSignature} from '@romejs/js-ast';
-import {Builder} from '@romejs/js-formatter';
-import {Token, concat, group, space} from '../../tokens';
+import {TSMethodSignature} from "@romejs/js-ast";
+import {Builder} from "@romejs/js-formatter";
+import {Token, concat, group, space} from "../../tokens";
 
 export default function TSMethodSignature(
 	builder: Builder,
@@ -19,12 +19,12 @@ export default function TSMethodSignature(
 	];
 
 	if (node.returnType) {
-		tokens.push(':');
+		tokens.push(":");
 		tokens.push(space);
 		tokens.push(builder.tokenize(node.returnType, node));
 	}
 
-	tokens.push(';');
+	tokens.push(";");
 
 	return group(concat(tokens));
 }

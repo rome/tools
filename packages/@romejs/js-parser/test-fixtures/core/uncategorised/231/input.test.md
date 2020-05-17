@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 42
 			index: 42
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		IfStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 42
 					index: 42
@@ -45,10 +45,10 @@ Program {
 				}
 			}
 			test: ReferenceIdentifier {
-				name: 'morning'
+				name: "morning"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'morning'
+					filename: "input.js"
+					identifierName: "morning"
 					end: Object {
 						column: 11
 						index: 11
@@ -63,7 +63,7 @@ Program {
 			}
 			alternate: ExpressionStatement {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 42
 						index: 42
@@ -78,7 +78,7 @@ Program {
 				expression: CallExpression {
 					arguments: Array []
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 42
 							index: 42
@@ -91,10 +91,10 @@ Program {
 						}
 					}
 					callee: ReferenceIdentifier {
-						name: 'goodDay'
+						name: "goodDay"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'goodDay'
+							filename: "input.js"
+							identifierName: "goodDay"
 							end: Object {
 								column: 40
 								index: 40
@@ -111,7 +111,7 @@ Program {
 			}
 			consequent: ExpressionStatement {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 27
 						index: 27
@@ -126,7 +126,7 @@ Program {
 				expression: CallExpression {
 					arguments: Array []
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 26
 							index: 26
@@ -139,10 +139,10 @@ Program {
 						}
 					}
 					callee: ReferenceIdentifier {
-						name: 'goodMorning'
+						name: "goodMorning"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'goodMorning'
+							filename: "input.js"
+							identifierName: "goodMorning"
 							end: Object {
 								column: 24
 								index: 24

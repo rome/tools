@@ -11,7 +11,7 @@ Array [
 	COMPLETION {
 		node: ReturnStatement {
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 28
 					index: 28
@@ -26,7 +26,7 @@ Array [
 			argument: BooleanLiteral {
 				value: false
 				loc: Object {
-					filename: 'unknown'
+					filename: "unknown"
 					end: Object {
 						column: 27
 						index: 27
@@ -52,7 +52,7 @@ Array [
 		node: ReturnStatement {
 			argument: undefined
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 22
 					index: 22
@@ -76,7 +76,7 @@ Array [
 	COMPLETION {
 		node: ReturnStatement {
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 38
 					index: 38
@@ -91,7 +91,7 @@ Array [
 			argument: BooleanLiteral {
 				value: false
 				loc: Object {
-					filename: 'unknown'
+					filename: "unknown"
 					end: Object {
 						column: 37
 						index: 37
@@ -107,11 +107,11 @@ Array [
 		}
 	}
 	INVALID {
-		description: 'empty alternate'
+		description: "empty alternate"
 		node: IfStatement {
 			alternate: undefined
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 39
 					index: 39
@@ -124,10 +124,10 @@ Array [
 				}
 			}
 			test: ReferenceIdentifier {
-				name: 'bar'
+				name: "bar"
 				loc: Object {
-					filename: 'unknown'
-					identifierName: 'bar'
+					filename: "unknown"
+					identifierName: "bar"
 					end: Object {
 						column: 22
 						index: 22
@@ -143,7 +143,7 @@ Array [
 			consequent: BlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: 'unknown'
+					filename: "unknown"
 					end: Object {
 						column: 39
 						index: 39
@@ -158,7 +158,7 @@ Array [
 				body: Array [
 					ReturnStatement {
 						loc: Object {
-							filename: 'unknown'
+							filename: "unknown"
 							end: Object {
 								column: 38
 								index: 38
@@ -173,7 +173,7 @@ Array [
 						argument: BooleanLiteral {
 							value: false
 							loc: Object {
-								filename: 'unknown'
+								filename: "unknown"
 								end: Object {
 									column: 37
 									index: 37
@@ -201,7 +201,7 @@ Array [
 	COMPLETION {
 		node: ReturnStatement {
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 38
 					index: 38
@@ -216,7 +216,7 @@ Array [
 			argument: BooleanLiteral {
 				value: false
 				loc: Object {
-					filename: 'unknown'
+					filename: "unknown"
 					end: Object {
 						column: 37
 						index: 37
@@ -234,7 +234,7 @@ Array [
 	COMPLETION {
 		node: ReturnStatement {
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 58
 					index: 58
@@ -249,7 +249,7 @@ Array [
 			argument: BooleanLiteral {
 				value: true
 				loc: Object {
-					filename: 'unknown'
+					filename: "unknown"
 					end: Object {
 						column: 57
 						index: 57
@@ -274,7 +274,7 @@ Array [
 	COMPLETION {
 		node: ReturnStatement {
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 52
 					index: 52
@@ -289,7 +289,7 @@ Array [
 			argument: BooleanLiteral {
 				value: false
 				loc: Object {
-					filename: 'unknown'
+					filename: "unknown"
 					end: Object {
 						column: 51
 						index: 51
@@ -314,7 +314,7 @@ Array [
 	COMPLETION {
 		node: ReturnStatement {
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 52
 					index: 52
@@ -329,7 +329,7 @@ Array [
 			argument: BooleanLiteral {
 				value: false
 				loc: Object {
-					filename: 'unknown'
+					filename: "unknown"
 					end: Object {
 						column: 51
 						index: 51
@@ -354,12 +354,12 @@ Array [
 ```javascript
 Array [
 	INVALID {
-		description: 'empty block'
+		description: "empty block"
 		node: BlockStatement {
 			body: Array []
 			directives: Array []
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 17
 					index: 17
@@ -381,11 +381,11 @@ Array [
 ```javascript
 Array [
 	INVALID {
-		description: 'empty block'
+		description: "empty block"
 		node: BlockStatement {
 			body: Array []
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 25
 					index: 25
@@ -399,9 +399,9 @@ Array [
 			}
 			directives: Array [
 				Directive {
-					value: 'foobar'
+					value: "foobar"
 					loc: Object {
-						filename: 'unknown'
+						filename: "unknown"
 						end: Object {
 							column: 24
 							index: 24
@@ -425,11 +425,11 @@ Array [
 ```javascript
 Array [
 	INVALID {
-		description: 'empty block'
+		description: "empty block"
 		node: BlockStatement {
 			directives: Array []
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 35
 					index: 35
@@ -444,7 +444,7 @@ Array [
 			body: Array [
 				ExpressionStatement {
 					loc: Object {
-						filename: 'unknown'
+						filename: "unknown"
 						end: Object {
 							column: 34
 							index: 34
@@ -457,9 +457,9 @@ Array [
 						}
 					}
 					expression: StringLiteral {
-						value: 'foobar'
+						value: "foobar"
 						loc: Object {
-							filename: 'unknown'
+							filename: "unknown"
 							end: Object {
 								column: 33
 								index: 33
@@ -477,11 +477,11 @@ Array [
 		}
 	}
 	INVALID {
-		description: 'empty alternate'
+		description: "empty alternate"
 		node: IfStatement {
 			alternate: undefined
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 35
 					index: 35
@@ -494,10 +494,10 @@ Array [
 				}
 			}
 			test: ReferenceIdentifier {
-				name: 'bar'
+				name: "bar"
 				loc: Object {
-					filename: 'unknown'
-					identifierName: 'bar'
+					filename: "unknown"
+					identifierName: "bar"
 					end: Object {
 						column: 22
 						index: 22
@@ -513,7 +513,7 @@ Array [
 			consequent: BlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: 'unknown'
+					filename: "unknown"
 					end: Object {
 						column: 35
 						index: 35
@@ -528,7 +528,7 @@ Array [
 				body: Array [
 					ExpressionStatement {
 						loc: Object {
-							filename: 'unknown'
+							filename: "unknown"
 							end: Object {
 								column: 34
 								index: 34
@@ -541,9 +541,9 @@ Array [
 							}
 						}
 						expression: StringLiteral {
-							value: 'foobar'
+							value: "foobar"
 							loc: Object {
-								filename: 'unknown'
+								filename: "unknown"
 								end: Object {
 									column: 33
 									index: 33
@@ -569,11 +569,11 @@ Array [
 ```javascript
 Array [
 	INVALID {
-		description: 'empty block'
+		description: "empty block"
 		node: BlockStatement {
 			directives: Array []
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 35
 					index: 35
@@ -588,7 +588,7 @@ Array [
 			body: Array [
 				ExpressionStatement {
 					loc: Object {
-						filename: 'unknown'
+						filename: "unknown"
 						end: Object {
 							column: 34
 							index: 34
@@ -601,9 +601,9 @@ Array [
 						}
 					}
 					expression: StringLiteral {
-						value: 'foobar'
+						value: "foobar"
 						loc: Object {
-							filename: 'unknown'
+							filename: "unknown"
 							end: Object {
 								column: 33
 								index: 33
@@ -621,12 +621,12 @@ Array [
 		}
 	}
 	INVALID {
-		description: 'empty block'
+		description: "empty block"
 		node: BlockStatement {
 			body: Array []
 			directives: Array []
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 43
 					index: 43
@@ -648,11 +648,11 @@ Array [
 ```javascript
 Array [
 	INVALID {
-		description: 'switch with no default clause'
+		description: "switch with no default clause"
 		node: SwitchStatement {
 			cases: Array []
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 30
 					index: 30
@@ -665,10 +665,10 @@ Array [
 				}
 			}
 			discriminant: ReferenceIdentifier {
-				name: 'foo'
+				name: "foo"
 				loc: Object {
-					filename: 'unknown'
-					identifierName: 'foo'
+					filename: "unknown"
+					identifierName: "foo"
 					end: Object {
 						column: 26
 						index: 26
@@ -691,10 +691,10 @@ Array [
 ```javascript
 Array [
 	INVALID {
-		description: 'switch with no default clause'
+		description: "switch with no default clause"
 		node: SwitchStatement {
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 44
 					index: 44
@@ -707,10 +707,10 @@ Array [
 				}
 			}
 			discriminant: ReferenceIdentifier {
-				name: 'foo'
+				name: "foo"
 				loc: Object {
-					filename: 'unknown'
-					identifierName: 'foo'
+					filename: "unknown"
+					identifierName: "foo"
 					end: Object {
 						column: 26
 						index: 26
@@ -726,7 +726,7 @@ Array [
 			cases: Array [
 				SwitchCase {
 					loc: Object {
-						filename: 'unknown'
+						filename: "unknown"
 						end: Object {
 							column: 43
 							index: 43
@@ -739,9 +739,9 @@ Array [
 						}
 					}
 					test: StringLiteral {
-						value: 'bar'
+						value: "bar"
 						loc: Object {
-							filename: 'unknown'
+							filename: "unknown"
 							end: Object {
 								column: 39
 								index: 39
@@ -759,7 +759,7 @@ Array [
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: 'unknown'
+								filename: "unknown"
 								end: Object {
 									column: 43
 									index: 43
@@ -785,12 +785,12 @@ Array [
 ```javascript
 Array [
 	INVALID {
-		description: 'empty block'
+		description: "empty block"
 		node: BlockStatement {
 			body: Array []
 			directives: Array []
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 40
 					index: 40
@@ -814,7 +814,7 @@ Array [
 	COMPLETION {
 		node: ReturnStatement {
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 63
 					index: 63
@@ -829,7 +829,7 @@ Array [
 			argument: BooleanLiteral {
 				value: false
 				loc: Object {
-					filename: 'unknown'
+					filename: "unknown"
 					end: Object {
 						column: 62
 						index: 62
@@ -845,11 +845,11 @@ Array [
 		}
 	}
 	INVALID {
-		description: 'empty alternate'
+		description: "empty alternate"
 		node: IfStatement {
 			alternate: undefined
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 64
 					index: 64
@@ -864,7 +864,7 @@ Array [
 			test: BooleanLiteral {
 				value: true
 				loc: Object {
-					filename: 'unknown'
+					filename: "unknown"
 					end: Object {
 						column: 47
 						index: 47
@@ -880,7 +880,7 @@ Array [
 			consequent: BlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: 'unknown'
+					filename: "unknown"
 					end: Object {
 						column: 64
 						index: 64
@@ -895,7 +895,7 @@ Array [
 				body: Array [
 					ReturnStatement {
 						loc: Object {
-							filename: 'unknown'
+							filename: "unknown"
 							end: Object {
 								column: 63
 								index: 63
@@ -910,7 +910,7 @@ Array [
 						argument: BooleanLiteral {
 							value: false
 							loc: Object {
-								filename: 'unknown'
+								filename: "unknown"
 								end: Object {
 									column: 62
 									index: 62

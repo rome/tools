@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSONPropertyValue} from './types';
+import {JSONPropertyValue} from "./types";
 
 export type AsyncFunc = () => void | undefined | Promise<void>;
 
@@ -21,25 +21,25 @@ export type TestSnapshotOptions = {
 // These diagnostics are subsets of the official diagnostics
 // We can potentially normalize these and ensure backwards compatibility with the official diagnostics
 
-export type TestDiagnosticLogCategory = 'none' | 'info' | 'warn' | 'error';
+export type TestDiagnosticLogCategory = "none" | "info" | "warn" | "error";
 
 export type TestDiagnosticAdviceInspect = {
-	type: 'inspect';
+	type: "inspect";
 	data: JSONPropertyValue;
 };
 
 export type TestDiagnosticAdviceList = {
-	type: 'list';
+	type: "list";
 	list: Array<string>;
 };
 
 export type TestDiagnosticAdviceCode = {
-	type: 'code';
+	type: "code";
 	code: string;
 };
 
 export type TestDiagnosticAdviceLog = {
-	type: 'log';
+	type: "log";
 	category: TestDiagnosticLogCategory;
 	text: string;
 };
@@ -124,15 +124,15 @@ function registerTest(
 ) {
 	const register = testOptions.register;
 
-	if (typeof register !== 'function') {
-		throw new Error('Test harness does not exist');
+	if (typeof register !== "function") {
+		throw new Error("Test harness does not exist");
 	}
 
 	register(callsiteError, opts, callback);
 }
 
 function isOptionsObject(arg: TestArg): arg is NamelessTestOptions {
-	return typeof arg === 'object' && arg != null && !Array.isArray(arg);
+	return typeof arg === "object" && arg != null && !Array.isArray(arg);
 }
 
 function splitArgs(
@@ -142,22 +142,22 @@ function splitArgs(
 	callback: TestCallback;
 } {
 	const name = args.shift();
-	if (typeof name !== 'string' && !Array.isArray(name)) {
-		throw new Error('Expected test name to be a string or an array of strings');
+	if (typeof name !== "string" && !Array.isArray(name)) {
+		throw new Error("Expected test name to be a string or an array of strings");
 	}
 
 	const callback = args.pop();
-	if (typeof callback !== 'function') {
-		throw new Error('Expected options callback');
+	if (typeof callback !== "function") {
+		throw new Error("Expected options callback");
 	}
 
 	const options = args.pop();
 	if (options !== undefined && !isOptionsObject(options)) {
-		throw new Error('Expected options object');
+		throw new Error("Expected options object");
 	}
 
 	if (args.length > 0) {
-		throw new Error('Expected to have exhausted test register arguments');
+		throw new Error("Expected to have exhausted test register arguments");
 	}
 
 	return {

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyDeclaration, AnyNode} from '@romejs/js-ast';
+import {AnyDeclaration, AnyNode} from "@romejs/js-ast";
 
 export default function isDeclaration(
 	node: undefined | AnyNode,
@@ -15,22 +15,22 @@ export default function isDeclaration(
 	}
 
 	switch (node.type) {
-		case 'FunctionDeclaration':
-		case 'ClassDeclaration':
-		case 'ExportAllDeclaration':
-		case 'ExportDefaultDeclaration':
-		case 'ExportLocalDeclaration':
-		case 'ImportDeclaration':
-		case 'TypeAliasTypeAnnotation':
-		case 'VariableDeclarationStatement':
-		case 'ExportExternalDeclaration':
-		case 'TSDeclareFunction':
-		case 'TSEnumDeclaration':
-		case 'TSExportAssignment':
-		case 'TSImportEqualsDeclaration':
-		case 'TSInterfaceDeclaration':
-		case 'TSModuleDeclaration':
-		case 'TSNamespaceExportDeclaration': {
+		case "FunctionDeclaration":
+		case "ClassDeclaration":
+		case "ExportAllDeclaration":
+		case "ExportDefaultDeclaration":
+		case "ExportLocalDeclaration":
+		case "ImportDeclaration":
+		case "TypeAliasTypeAnnotation":
+		case "VariableDeclarationStatement":
+		case "ExportExternalDeclaration":
+		case "TSDeclareFunction":
+		case "TSEnumDeclaration":
+		case "TSExportAssignment":
+		case "TSImportEqualsDeclaration":
+		case "TSInterfaceDeclaration":
+		case "TSModuleDeclaration":
+		case "TSNamespaceExportDeclaration": {
 			const declaration: AnyDeclaration = node;
 			declaration;
 			return true;

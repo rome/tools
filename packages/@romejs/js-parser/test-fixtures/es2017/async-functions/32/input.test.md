@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 57
@@ -30,16 +30,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unexpected token, expected ,'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unexpected token, expected ,"}
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 28
 					index: 28
@@ -56,7 +56,7 @@ Program {
 	body: Array [
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 32
 					index: 32
@@ -69,9 +69,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'const'
+				kind: "const"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 32
 						index: 32
@@ -86,10 +86,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'foo'
+							name: "foo"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'foo'
+								filename: "input.js"
+								identifierName: "foo"
 								end: Object {
 									column: 9
 									index: 9
@@ -103,7 +103,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 32
 								index: 32
@@ -117,7 +117,7 @@ Program {
 						}
 						init: CallExpression {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 32
 									index: 32
@@ -130,10 +130,10 @@ Program {
 								}
 							}
 							callee: ReferenceIdentifier {
-								name: 'async'
+								name: "async"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'async'
+									filename: "input.js"
+									identifierName: "async"
 									end: Object {
 										column: 17
 										index: 17
@@ -148,9 +148,9 @@ Program {
 							}
 							arguments: Array [
 								AssignmentExpression {
-									operator: '='
+									operator: "="
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 32
 											index: 32
@@ -163,10 +163,10 @@ Program {
 										}
 									}
 									right: ReferenceIdentifier {
-										name: 'bar'
+										name: "bar"
 										loc: Object {
-											filename: 'input.js'
-											identifierName: 'bar'
+											filename: "input.js"
+											identifierName: "bar"
 											end: Object {
 												column: 32
 												index: 32
@@ -182,7 +182,7 @@ Program {
 									left: AssignmentObjectPattern {
 										rest: undefined
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 26
 												index: 26
@@ -198,10 +198,10 @@ Program {
 											AssignmentObjectPatternProperty {
 												key: StaticPropertyKey {
 													value: Identifier {
-														name: 'async'
+														name: "async"
 														loc: Object {
-															filename: 'input.js'
-															identifierName: 'async'
+															filename: "input.js"
+															identifierName: "async"
 															end: Object {
 																column: 26
 																index: 26
@@ -215,8 +215,8 @@ Program {
 														}
 													}
 													loc: Object {
-														filename: 'input.js'
-														identifierName: 'async'
+														filename: "input.js"
+														identifierName: "async"
 														end: Object {
 															column: 26
 															index: 26
@@ -230,10 +230,10 @@ Program {
 													}
 												}
 												value: AssignmentIdentifier {
-													name: 'async'
+													name: "async"
 													loc: Object {
-														filename: 'input.js'
-														identifierName: 'async'
+														filename: "input.js"
+														identifierName: "async"
 														end: Object {
 															column: 26
 															index: 26
@@ -247,7 +247,7 @@ Program {
 													}
 												}
 												loc: Object {
-													filename: 'input.js'
+													filename: "input.js"
 													end: Object {
 														column: 26
 														index: 26
@@ -271,7 +271,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 34
 					index: 34
@@ -284,9 +284,9 @@ Program {
 				}
 			}
 			expression: ReferenceIdentifier {
-				name: 'INVALID_PLACEHOLDER'
+				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 34
 						index: 34
@@ -302,7 +302,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 35
 					index: 35
@@ -315,9 +315,9 @@ Program {
 				}
 			}
 			expression: ReferenceIdentifier {
-				name: 'INVALID_PLACEHOLDER'
+				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 35
 						index: 35
@@ -333,7 +333,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 38
 					index: 38
@@ -346,9 +346,9 @@ Program {
 				}
 			}
 			expression: ReferenceIdentifier {
-				name: 'INVALID_PLACEHOLDER'
+				name: "INVALID_PLACEHOLDER"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 38
 						index: 38
@@ -365,7 +365,7 @@ Program {
 		BlockStatement {
 			directives: Array []
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 1
 					index: 55
@@ -380,7 +380,7 @@ Program {
 			body: Array [
 				ExpressionStatement {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 7
 							index: 48
@@ -393,10 +393,10 @@ Program {
 						}
 					}
 					expression: ReferenceIdentifier {
-						name: 'await'
+						name: "await"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'await'
+							filename: "input.js"
+							identifierName: "await"
 							end: Object {
 								column: 7
 								index: 48
@@ -412,7 +412,7 @@ Program {
 				}
 				ExpressionStatement {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 12
 							index: 53
@@ -425,10 +425,10 @@ Program {
 						}
 					}
 					expression: ReferenceIdentifier {
-						name: 'baz'
+						name: "baz"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'baz'
+							filename: "input.js"
+							identifierName: "baz"
 							end: Object {
 								column: 11
 								index: 52
@@ -446,7 +446,7 @@ Program {
 		}
 		EmptyStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 2
 					index: 56

@@ -25,7 +25,7 @@
 ### `0: formatted`
 
 ```
-const user = 'Faustina';
-const helloUser = 'Hello, ${user}!';
+const user = "Faustina";
+const helloUser = "Hello, ${user}!";
 
 ```

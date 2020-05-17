@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 37
@@ -30,11 +30,11 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 14
 					index: 14
@@ -47,16 +47,16 @@ Program {
 				}
 			}
 			description: Object {
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unclosed switch body'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unclosed switch body"}
 				advice: Array [
 					log {
-						category: 'info'
-						text: 'We expected to find the closing character <emphasis>}</emphasis> here'
+						category: "info"
+						text: "We expected to find the closing character <emphasis>}</emphasis> here"
 					}
 					frame {
 						location: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 0
 								index: 37
@@ -76,7 +76,7 @@ Program {
 	body: Array [
 		SwitchStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 36
 					index: 36
@@ -89,10 +89,10 @@ Program {
 				}
 			}
 			discriminant: ReferenceIdentifier {
-				name: 'cond'
+				name: "cond"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'cond'
+					filename: "input.js"
+					identifierName: "cond"
 					end: Object {
 						column: 12
 						index: 12
@@ -108,7 +108,7 @@ Program {
 			cases: Array [
 				SwitchCase {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 36
 							index: 36
@@ -124,7 +124,7 @@ Program {
 						value: 10
 						format: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 23
 								index: 23
@@ -140,7 +140,7 @@ Program {
 					consequent: Array [
 						VariableDeclarationStatement {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 36
 									index: 36
@@ -153,9 +153,9 @@ Program {
 								}
 							}
 							declaration: VariableDeclaration {
-								kind: 'let'
+								kind: "let"
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 36
 										index: 36
@@ -170,10 +170,10 @@ Program {
 								declarations: Array [
 									VariableDeclarator {
 										id: BindingIdentifier {
-											name: 'a'
+											name: "a"
 											loc: Object {
-												filename: 'input.js'
-												identifierName: 'a'
+												filename: "input.js"
+												identifierName: "a"
 												end: Object {
 													column: 30
 													index: 30
@@ -187,7 +187,7 @@ Program {
 											}
 										}
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 35
 												index: 35
@@ -203,7 +203,7 @@ Program {
 											value: 20
 											format: undefined
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 35
 													index: 35

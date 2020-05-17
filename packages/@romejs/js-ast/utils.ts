@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {assertSingleNode, inheritLoc} from '@romejs/js-ast-utils';
-import {NodeBase} from '@romejs/parser-core';
-import {AnyNode} from './index';
-import {JSNodeBase} from './base';
-import {TransformExitResult} from '@romejs/js-compiler';
+import {assertSingleNode, inheritLoc} from "@romejs/js-ast-utils";
+import {NodeBase} from "@romejs/parser-core";
+import {AnyNode} from "./index";
+import {JSNodeBase} from "./base";
+import {TransformExitResult} from "@romejs/js-compiler";
 
 export const bindingKeys: Map<string, Array<string>> = new Map();
 export const visitorKeys: Map<string, Array<string>> = new Map();
@@ -54,7 +54,7 @@ export function createQuickBuilder<
 	Node extends AnyNode,
 	QuickKey extends keyof Node
 >(
-	type: Node['type'],
+	type: Node["type"],
 	quickKey: QuickKey,
 	opts: CreateBuilderOptions<Node>,
 ): QuickBuilder<Node, Node[QuickKey]> {
@@ -81,7 +81,7 @@ class Builder<Node extends AnyNode> {
 	type: string;
 	visitorKeys: VisitorKeys<Node>;
 
-	create(opts: Omit<Node, 'type'>, inheritNode?: AnyNode): Node {
+	create(opts: Omit<Node, "type">, inheritNode?: AnyNode): Node {
 		// @ts-ignore
 		return {
 			loc: inheritNode === undefined ? undefined : inheritLoc(inheritNode),
@@ -126,7 +126,7 @@ class QuickBuilder<Node extends AnyNode, Arg> extends Builder<Node> {
 
 	quickKey: keyof Node;
 
-	quick(arg: Arg, opts?: Partial<Omit<Node, 'type'>>, inheritNode?: Node): Node {
+	quick(arg: Arg, opts?: Partial<Omit<Node, "type">>, inheritNode?: Node): Node {
 		const node = ({
 			...opts,
 			[this.quickKey]: arg,

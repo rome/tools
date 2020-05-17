@@ -5,19 +5,19 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Intrinsics from './Intrinsics';
-import Evaluator from './Evaluator';
-import T from './types/T';
-import Hub from './Hub';
-import {AnyNode} from '@romejs/js-ast';
-import StringLiteralT from './types/StringLiteralT';
-import UnknownT from './types/UnknownT';
-import GetPropT from './types/GetPropT';
-import UnionT from './types/UnionT';
-import OpenT from './types/OpenT';
-import {Class} from '@romejs/typescript-helpers';
+import Intrinsics from "./Intrinsics";
+import Evaluator from "./Evaluator";
+import T from "./types/T";
+import Hub from "./Hub";
+import {AnyNode} from "@romejs/js-ast";
+import StringLiteralT from "./types/StringLiteralT";
+import UnknownT from "./types/UnknownT";
+import GetPropT from "./types/GetPropT";
+import UnionT from "./types/UnionT";
+import OpenT from "./types/OpenT";
+import {Class} from "@romejs/typescript-helpers";
 
-type BindingStatus = 'declared' | 'initialized';
+type BindingStatus = "declared" | "initialized";
 
 type Binding = {
 	type: T;
@@ -37,7 +37,7 @@ export class Scope {
 		}
 
 		if (evaluator === undefined) {
-			throw new Error('No evaluator was passed or inferred');
+			throw new Error("No evaluator was passed or inferred");
 		}
 
 		this.intrinsics = evaluator.intrinsics;
@@ -99,26 +99,26 @@ export class Scope {
 
 	declareBinding(name: string, originNode: AnyNode) {
 		if (name === undefined) {
-			throw new Error('Expected name');
+			throw new Error("Expected name");
 		}
 		this.bindings.set(
 			name,
 			{
 				type: new OpenT(this, originNode),
-				status: 'declared',
+				status: "declared",
 			},
 		);
 	}
 
 	addBinding(name: string, type: T) {
 		if (name === undefined) {
-			throw new Error('Expected name');
+			throw new Error("Expected name");
 		}
 
 		const existingBinding = this.bindings.get(name);
-		if (existingBinding !== undefined && existingBinding.status === 'declared') {
+		if (existingBinding !== undefined && existingBinding.status === "declared") {
 			if (!(existingBinding.type instanceof OpenT)) {
-				throw new Error('expected OpenT');
+				throw new Error("expected OpenT");
 			}
 
 			existingBinding.type.shouldMatch(type);
@@ -128,7 +128,7 @@ export class Scope {
 			name,
 			{
 				type,
-				status: 'initialized',
+				status: "initialized",
 			},
 		);
 	}
@@ -166,7 +166,7 @@ export class Scope {
 	find<S extends Scope>(klass: Class<S>): S {
 		const scope = this.findOptional(klass);
 		if (scope === undefined) {
-			throw new Error('Failed to find class');
+			throw new Error("Failed to find class");
 		} else {
 			return scope;
 		}

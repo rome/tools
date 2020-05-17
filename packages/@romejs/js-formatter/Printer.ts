@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Mapping} from '@romejs/codec-source-map';
+import {Mapping} from "@romejs/codec-source-map";
 import {
 	Number0,
 	Number1,
@@ -13,8 +13,8 @@ import {
 	ob1Inc,
 	ob1Number0,
 	ob1Number1,
-} from '@romejs/ob1';
-import {Token} from './tokens';
+} from "@romejs/ob1";
+import {Token} from "./tokens";
 
 export type PrinterOptions = {
 	printWidth: number;
@@ -95,7 +95,7 @@ function forkState(parent: State, callback: (state: State) => void): void {
 function write(str: string, state: State): void {
 	for (const ch of str) {
 		state.generatedIndex.value = ob1Inc(state.generatedIndex.value);
-		if (ch === '\n') {
+		if (ch === "\n") {
 			state.generatedLine.value = ob1Inc(state.generatedLine.value);
 			state.generatedColumn.value = ob1Number0;
 		} else {
@@ -111,17 +111,17 @@ function print(token: Token, state: State, options: PrinterOptions): void {
 	while (stack.length > 0) {
 		const [token, state] = stack.pop()!;
 
-		if (typeof token === 'string') {
-			if (token !== '') {
+		if (typeof token === "string") {
+			if (token !== "") {
 				// Print pending tabs
 				if (state.pendingTabs.value > 0) {
-					write('\t'.repeat(state.pendingTabs.value), state);
+					write("\t".repeat(state.pendingTabs.value), state);
 					state.pendingTabs.value = 0;
 				}
 
 				// Print pending spaces
 				if (state.pendingSpaces.value > 0) {
-					write(' '.repeat(state.pendingSpaces.value), state);
+					write(" ".repeat(state.pendingSpaces.value), state);
 					state.pendingSpaces.value = 0;
 				}
 
@@ -143,19 +143,19 @@ function print(token: Token, state: State, options: PrinterOptions): void {
 			}
 		} else {
 			switch (token.type) {
-				case 'Comment': {
+				case "Comment": {
 					stack.push([token.value, state]);
 					break;
 				}
 
-				case 'Concat': {
+				case "Concat": {
 					for (let i = token.parts.length - 1; i >= 0; i--) {
 						stack.push([token.parts[i], state]);
 					}
 					break;
 				}
 
-				case 'Group': {
+				case "Group": {
 					if (token.shouldBreak) {
 						if (state.flat) {
 							throw new BreakError();
@@ -191,7 +191,7 @@ function print(token: Token, state: State, options: PrinterOptions): void {
 					break;
 				}
 
-				case 'IfBreak': {
+				case "IfBreak": {
 					if (state.flat) {
 						if (token.flatContents) {
 							stack.push([token.flatContents, state]);
@@ -202,7 +202,7 @@ function print(token: Token, state: State, options: PrinterOptions): void {
 					break;
 				}
 
-				case 'Indent': {
+				case "Indent": {
 					stack.push([
 						token.contents,
 						{
@@ -213,19 +213,19 @@ function print(token: Token, state: State, options: PrinterOptions): void {
 					break;
 				}
 
-				case 'Line': {
+				case "Line": {
 					if (state.flat) {
 						switch (token.mode) {
-							case 'space': {
+							case "space": {
 								state.pendingSpaces.value++;
 								break;
 							}
 
-							case 'soft':
+							case "soft":
 								// Soft lines are not printed in flat mode.
 								break;
 
-							case 'hard':
+							case "hard":
 								// Hard lines are always printed.
 								// In flat mode, the current group be broken.
 								throw new BreakError();
@@ -237,7 +237,7 @@ function print(token: Token, state: State, options: PrinterOptions): void {
 								stack.push(state.lineSuffixes.pop()!);
 							}
 						} else {
-							write('\n', state);
+							write("\n", state);
 
 							// Enqueue the indentation
 							state.pendingTabs.value = state.indent.value;
@@ -246,7 +246,7 @@ function print(token: Token, state: State, options: PrinterOptions): void {
 					break;
 				}
 
-				case 'LineSuffix': {
+				case "LineSuffix": {
 					if (state.flat) {
 						throw new BreakError();
 					} else {
@@ -255,7 +255,7 @@ function print(token: Token, state: State, options: PrinterOptions): void {
 					break;
 				}
 
-				case 'PositionMarker': {
+				case "PositionMarker": {
 					if (
 						state.mappings.length > 0 &&
 						state.mappings[state.mappings.length - 1].generated.index ===
@@ -280,7 +280,7 @@ function print(token: Token, state: State, options: PrinterOptions): void {
 					break;
 				}
 
-				case 'Space': {
+				case "Space": {
 					state.pendingSpaces.value++;
 					break;
 				}
@@ -309,7 +309,7 @@ export function printTokenToString(
 	print(token, state, options);
 
 	return {
-		code: state.buffer.join(''),
+		code: state.buffer.join(""),
 		mappings: state.mappings,
 	};
 }

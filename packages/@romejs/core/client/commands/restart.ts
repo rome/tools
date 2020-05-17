@@ -5,28 +5,28 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {commandCategories} from '../../common/commands';
-import {createLocalCommand} from '../commands';
-import ClientRequest from '../ClientRequest';
+import {commandCategories} from "../../common/commands";
+import {createLocalCommand} from "../commands";
+import ClientRequest from "../ClientRequest";
 
 export default createLocalCommand({
 	category: commandCategories.PROCESS_MANAGEMENT,
-	description: 'restart daemon',
-	usage: '',
+	description: "restart daemon",
+	usage: "",
 	examples: [],
 	defineFlags() {
 		return {};
 	},
 	async callback(req: ClientRequest) {
 		const stopped = await req.client.query({
-			commandName: 'stop',
+			commandName: "stop",
 		});
 
-		if (stopped.type === 'SUCCESS' && stopped.data === true) {
+		if (stopped.type === "SUCCESS" && stopped.data === true) {
 			const started = await req.client.query({
-				commandName: 'start',
+				commandName: "start",
 			});
-			return started.type === 'SUCCESS' && started.data === true;
+			return started.type === "SUCCESS" && started.data === true;
 		} else {
 			return false;
 		}

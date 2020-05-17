@@ -5,20 +5,20 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyExpression, AnyPrimaryType, JSNodeBase, PrivateName} from '../index';
-import {createBuilder} from '../utils';
-import {ClassPropertyMeta} from './ClassPropertyMeta';
+import {AnyExpression, AnyTSPrimary, JSNodeBase, PrivateName} from "../index";
+import {createBuilder} from "../utils";
+import {ClassPropertyMeta} from "./ClassPropertyMeta";
 
 export type ClassPrivateProperty = JSNodeBase & {
-	type: 'ClassPrivateProperty';
+	type: "ClassPrivateProperty";
 	key: PrivateName;
 	meta: ClassPropertyMeta;
 	value: undefined | AnyExpression;
-	typeAnnotation?: AnyPrimaryType;
+	typeAnnotation?: AnyTSPrimary;
 };
 
 export const classPrivateProperty = createBuilder<ClassPrivateProperty>(
-	'ClassPrivateProperty',
+	"ClassPrivateProperty",
 	{
 		bindingKeys: {},
 		visitorKeys: {

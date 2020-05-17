@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TransformExitResult} from '@romejs/js-compiler';
-import {AnyNode} from '@romejs/js-ast';
+import {TransformExitResult} from "@romejs/js-compiler";
+import {AnyNode} from "@romejs/js-ast";
 
 export default function assertSingleNode(result: TransformExitResult): AnyNode {
 	if (Array.isArray(result)) {
@@ -15,9 +15,9 @@ export default function assertSingleNode(result: TransformExitResult): AnyNode {
 		}
 		return result[0];
 	} else if (result === undefined) {
-		throw new Error('Expected node or node list but got null');
-	} else if (typeof result === 'symbol') {
-		throw new Error('No symbols expected here');
+		throw new Error("Expected node or node list but got null");
+	} else if (typeof result === "symbol") {
+		throw new Error("No symbols expected here");
 	} else {
 		return result;
 	}

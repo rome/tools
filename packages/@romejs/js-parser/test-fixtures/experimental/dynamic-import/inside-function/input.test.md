@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 66
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		FunctionDeclaration {
 			id: BindingIdentifier {
-				name: 'loadImport'
+				name: "loadImport"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'loadImport'
+					filename: "input.js"
+					identifierName: "loadImport"
 					end: Object {
 						column: 19
 						index: 19
@@ -49,7 +49,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 1
 					index: 65
@@ -70,7 +70,7 @@ Program {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 25
 						index: 25
@@ -84,10 +84,10 @@ Program {
 				}
 				params: Array [
 					BindingIdentifier {
-						name: 'file'
+						name: "file"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'file'
+							filename: "input.js"
+							identifierName: "file"
 							end: Object {
 								column: 24
 								index: 24
@@ -103,7 +103,7 @@ Program {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 24
 									index: 24
@@ -122,7 +122,7 @@ Program {
 			body: BlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 1
 						index: 65
@@ -137,7 +137,7 @@ Program {
 				body: Array [
 					ReturnStatement {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 35
 								index: 63
@@ -151,7 +151,7 @@ Program {
 						}
 						argument: ImportCall {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 34
 									index: 62
@@ -165,7 +165,7 @@ Program {
 							}
 							argument: TemplateLiteral {
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 33
 										index: 61
@@ -179,10 +179,10 @@ Program {
 								}
 								expressions: Array [
 									ReferenceIdentifier {
-										name: 'file'
+										name: "file"
 										loc: Object {
-											filename: 'input.js'
-											identifierName: 'file'
+											filename: "input.js"
+											identifierName: "file"
 											end: Object {
 												column: 28
 												index: 56
@@ -198,11 +198,11 @@ Program {
 								]
 								quasis: Array [
 									TemplateElement {
-										cooked: 'test/'
-										raw: 'test/'
+										cooked: "test/"
+										raw: "test/"
 										tail: false
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 22
 												index: 50
@@ -216,11 +216,11 @@ Program {
 										}
 									}
 									TemplateElement {
-										cooked: '.js'
-										raw: '.js'
+										cooked: ".js"
+										raw: ".js"
 										tail: true
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 32
 												index: 60

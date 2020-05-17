@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {AnyNode, TryStatement, tryStatement} from '@romejs/js-ast';
+import {Scope} from "../../scopes";
+import {AnyNode, TryStatement, tryStatement} from "@romejs/js-ast";
 
 export default function TryStatement(node: AnyNode, scope: Scope) {
 	node = tryStatement.assert(node);
 	scope;
-	throw new Error('unimplemented');
+	throw new Error("unimplemented");
 }

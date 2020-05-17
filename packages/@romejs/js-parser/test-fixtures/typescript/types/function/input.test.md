@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 56
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 55
 					index: 55
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'let'
+				kind: "let"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 55
 						index: 55
@@ -62,9 +62,9 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'f'
+							name: "f"
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 54
 									index: 54
@@ -79,7 +79,7 @@ Program {
 							meta: PatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 54
 										index: 54
@@ -93,7 +93,7 @@ Program {
 								}
 								typeAnnotation: TSFunctionType {
 									loc: Object {
-										filename: 'input.ts'
+										filename: "input.ts"
 										end: Object {
 											column: 54
 											index: 54
@@ -107,7 +107,7 @@ Program {
 									}
 									typeAnnotation: VoidKeywordTypeAnnotation {
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 54
 												index: 54
@@ -123,7 +123,7 @@ Program {
 									meta: TSSignatureDeclarationMeta {
 										typeParameters: undefined
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 54
 												index: 54
@@ -136,10 +136,10 @@ Program {
 											}
 										}
 										rest: BindingIdentifier {
-											name: 'c'
+											name: "c"
 											loc: Object {
-												filename: 'input.ts'
-												identifierName: 'c'
+												filename: "input.ts"
+												identifierName: "c"
 												end: Object {
 													column: 35
 													index: 35
@@ -154,7 +154,7 @@ Program {
 											meta: PatternMeta {
 												optional: undefined
 												loc: Object {
-													filename: 'input.ts'
+													filename: "input.ts"
 													end: Object {
 														column: 45
 														index: 45
@@ -168,7 +168,7 @@ Program {
 												}
 												typeAnnotation: TSArrayType {
 													loc: Object {
-														filename: 'input.ts'
+														filename: "input.ts"
 														end: Object {
 															column: 45
 															index: 45
@@ -182,7 +182,7 @@ Program {
 													}
 													elementType: NumberKeywordTypeAnnotation {
 														loc: Object {
-															filename: 'input.ts'
+															filename: "input.ts"
 															end: Object {
 																column: 43
 																index: 43
@@ -200,10 +200,10 @@ Program {
 										}
 										parameters: Array [
 											BindingIdentifier {
-												name: 'a'
+												name: "a"
 												loc: Object {
-													filename: 'input.ts'
-													identifierName: 'a'
+													filename: "input.ts"
+													identifierName: "a"
 													end: Object {
 														column: 9
 														index: 9
@@ -218,7 +218,7 @@ Program {
 												meta: PatternMeta {
 													optional: undefined
 													loc: Object {
-														filename: 'input.ts'
+														filename: "input.ts"
 														end: Object {
 															column: 17
 															index: 17
@@ -232,7 +232,7 @@ Program {
 													}
 													typeAnnotation: NumberKeywordTypeAnnotation {
 														loc: Object {
-															filename: 'input.ts'
+															filename: "input.ts"
 															end: Object {
 																column: 17
 																index: 17
@@ -248,10 +248,10 @@ Program {
 												}
 											}
 											BindingIdentifier {
-												name: 'b'
+												name: "b"
 												loc: Object {
-													filename: 'input.ts'
-													identifierName: 'b'
+													filename: "input.ts"
+													identifierName: "b"
 													end: Object {
 														column: 20
 														index: 20
@@ -266,7 +266,7 @@ Program {
 												meta: PatternMeta {
 													optional: true
 													loc: Object {
-														filename: 'input.ts'
+														filename: "input.ts"
 														end: Object {
 															column: 29
 															index: 29
@@ -280,7 +280,7 @@ Program {
 													}
 													typeAnnotation: NumberKeywordTypeAnnotation {
 														loc: Object {
-															filename: 'input.ts'
+															filename: "input.ts"
 															end: Object {
 																column: 29
 																index: 29
@@ -302,7 +302,7 @@ Program {
 						}
 						init: undefined
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 54
 								index: 54

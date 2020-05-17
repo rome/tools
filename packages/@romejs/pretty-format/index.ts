@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {UnknownObject, isIterable} from '@romejs/typescript-helpers';
-import {escapeString} from '@romejs/string-escape';
-import {humanizeNumber, naturalCompare} from '@romejs/string-utils';
-import {escapeMarkup, markupTag} from '@romejs/string-markup';
+import {UnknownObject, isIterable} from "@romejs/typescript-helpers";
+import {escapeString} from "@romejs/string-escape";
+import {humanizeNumber, naturalCompare} from "@romejs/string-utils";
+import {escapeMarkup, markupTag} from "@romejs/string-markup";
 
 type RecursiveStack = Array<unknown>;
 
@@ -32,13 +32,13 @@ type FormatPartialOptions = {
 const DEFAULT_OPTIONS: FormatOptions = {
 	maxDepth: Infinity,
 	markup: false,
-	indent: '',
+	indent: "",
 	depth: 0,
 	stack: [],
 	compact: false,
 };
 
-const INDENT = '\t';
+const INDENT = "\t";
 
 function maybeEscapeMarkup(str: string, opts: FormatOptions): string {
 	if (opts.markup) {
@@ -60,50 +60,50 @@ export default function prettyFormat(
 	};
 
 	if (opts.maxDepth === opts.depth) {
-		return '[depth exceeded]';
+		return "[depth exceeded]";
 	}
 
 	switch (typeof obj) {
-		case 'symbol': {
+		case "symbol": {
 			const val = maybeEscapeMarkup(formatSymbol(obj), opts);
-			return opts.markup ? markupTag('color', val, {fg: 'green'}) : val;
+			return opts.markup ? markupTag("color", val, {fg: "green"}) : val;
 		}
 
-		case 'string': {
+		case "string": {
 			const val = maybeEscapeMarkup(formatString(obj), opts);
-			return opts.markup ? markupTag('color', val, {fg: 'green'}) : val;
+			return opts.markup ? markupTag("color", val, {fg: "green"}) : val;
 		}
 
-		case 'bigint':
-		case 'number': {
+		case "bigint":
+		case "number": {
 			const val = formatNumber(obj);
-			return opts.markup ? markupTag('color', val, {fg: 'yellow'}) : val;
+			return opts.markup ? markupTag("color", val, {fg: "yellow"}) : val;
 		}
 
-		case 'boolean': {
+		case "boolean": {
 			const val = formatBoolean(obj);
-			return opts.markup ? markupTag('color', val, {fg: 'yellow'}) : val;
+			return opts.markup ? markupTag("color", val, {fg: "yellow"}) : val;
 		}
 
-		case 'undefined': {
+		case "undefined": {
 			const val = formatUndefined();
-			return opts.markup ? markupTag('color', val, {fg: 'brightBlack'}) : val;
+			return opts.markup ? markupTag("color", val, {fg: "brightBlack"}) : val;
 		}
 
-		case 'function':
+		case "function":
 			return formatFunction(obj, opts);
 
-		case 'object':
+		case "object":
 			return formatObjectish((obj as Objectish), opts);
 
 		default:
-			throw new Error('Unknown type');
+			throw new Error("Unknown type");
 	}
 }
 
 function joinList(items: Array<string>, opts: FormatOptions): string {
 	if (items.length === 0) {
-		return '';
+		return "";
 	}
 
 	const lines = [];
@@ -112,11 +112,11 @@ function joinList(items: Array<string>, opts: FormatOptions): string {
 		lines.push(`${opts.indent}${item}`);
 	}
 
-	return lines.join('\n');
+	return lines.join("\n");
 }
 
 function isNativeFunction(val: Function): boolean {
-	return val.toString().endsWith('{ [native code] }');
+	return val.toString().endsWith("{ [native code] }");
 }
 
 function formatSymbol(val: Symbol): string {
@@ -127,44 +127,44 @@ function formatString(val: string): string {
 	return escapeString(
 		val,
 		{
-			quote: "'",
+			quote: '"',
 		},
 	);
 }
 
 // This function is used by rome-json so make sure it can parse whatever you return here
 export function formatNumber(val: bigint | number): string {
-	if (typeof val === 'bigint') {
-		return humanizeNumber(val, '_');
+	if (typeof val === "bigint") {
+		return humanizeNumber(val, "_");
 	} else if (isNaN(val)) {
-		return 'NaN';
+		return "NaN";
 	} else if (Object.is(val, -0)) {
-		return '-0';
+		return "-0";
 	} else if (isFinite(val)) {
-		return humanizeNumber(val, '_');
+		return humanizeNumber(val, "_");
 	} else if (Object.is(val, -Infinity)) {
-		return '-Infinity';
+		return "-Infinity";
 	} else if (Object.is(val, +Infinity)) {
-		return 'Infinity';
+		return "Infinity";
 	} else {
 		throw new Error("Don't know how to format this number");
 	}
 }
 
 function formatUndefined(): string {
-	return 'undefined';
+	return "undefined";
 }
 
 function formatNull(): string {
-	return 'null';
+	return "null";
 }
 
 function formatBoolean(val: boolean): string {
-	return val === true ? 'true' : 'false';
+	return val === true ? "true" : "false";
 }
 
 function formatFunction(val: Function, opts: FormatOptions): string {
-	const name = val.name === '' ? 'anonymous' : maybeEscapeMarkup(val.name, opts);
+	const name = val.name === "" ? "anonymous" : maybeEscapeMarkup(val.name, opts);
 	let label = `Function ${name}`;
 
 	if (isNativeFunction(val)) {
@@ -192,7 +192,7 @@ function getExtraObjectProps(
 	if (obj instanceof Map) {
 		for (const [key, val] of obj) {
 			const formattedKey =
-				typeof key === 'string' ? formatKey(key, opts) : prettyFormat(key, opts);
+				typeof key === "string" ? formatKey(key, opts) : prettyFormat(key, opts);
 			props.push(`${formattedKey} => ${prettyFormat(val, opts)}`);
 		}
 	} else if (isIterable(obj)) {
@@ -219,7 +219,7 @@ function formatKey(rawKey: string, opts: FormatOptions): string {
 
 // These are object keys that should always go at the top and ignore any alphabetization
 // This is fairly arbitrary but should include generic identifier keys
-export const PRIORITIZE_KEYS = ['id', 'type', 'kind', 'key', 'name', 'value'];
+export const PRIORITIZE_KEYS = ["id", "type", "kind", "key", "name", "value"];
 
 type KeyInfo = {
 	key: string;
@@ -245,7 +245,7 @@ function sortKeys(obj: Objectish): Array<KeyInfo> {
 
 		// Objects with properties should be at the bottom
 		let isObject = false;
-		if (typeof val === 'object' && val != null && Object.keys(val).length > 0) {
+		if (typeof val === "object" && val != null && Object.keys(val).length > 0) {
 			isObject = true;
 		}
 		if (Array.isArray(val) && val.length > 0) {
@@ -262,7 +262,7 @@ function sortKeys(obj: Objectish): Array<KeyInfo> {
 }
 
 function lineCount(str: string): number {
-	return str.split('\n').length;
+	return str.split("\n").length;
 	formatKey;
 }
 
@@ -280,7 +280,7 @@ function formatObject(
 	const {stack} = opts;
 	if (stack.length > 0 && stack.includes(obj)) {
 		label = `Circular ${label} ${stack.indexOf(obj)}`;
-		return opts.markup ? markupTag('color', label, {fg: 'cyan'}) : label;
+		return opts.markup ? markupTag("color", label, {fg: "cyan"}) : label;
 	}
 
 	//
@@ -331,17 +331,17 @@ function formatObject(
 	}
 
 	//
-	let open = '{';
-	let close = '}';
+	let open = "{";
+	let close = "}";
 	if (isIterable(obj)) {
-		open = '[';
-		close = ']';
+		open = "[";
+		close = "]";
 	}
 
 	//
 	let inner = joinList(props, nextOpts);
-	if (inner !== '') {
-		if (props.length === 1 && !inner.includes('\n')) {
+	if (inner !== "") {
+		if (props.length === 1 && !inner.includes("\n")) {
 			// Single prop with no newlines shouldn't be indented
 			inner = inner.trim();
 		} else {
@@ -349,7 +349,7 @@ function formatObject(
 		}
 	}
 
-	label = opts.markup ? markupTag('color', label, {fg: 'cyan'}) : label;
+	label = opts.markup ? markupTag("color", label, {fg: "cyan"}) : label;
 	return `${label} ${open}${inner}${close}`;
 }
 
@@ -369,20 +369,20 @@ type Objectish = {
 function formatObjectish(val: null | Objectish, opts: FormatOptions): string {
 	if (val === null) {
 		const val = formatNull();
-		return opts.markup ? markupTag('emphasis', val) : val;
+		return opts.markup ? markupTag("emphasis", val) : val;
 	}
 
 	if (val instanceof RegExp) {
 		const str = formatRegExp(val);
-		return opts.markup ? markupTag('color', str, {fg: 'red'}) : str;
+		return opts.markup ? markupTag("color", str, {fg: "red"}) : str;
 	}
 
 	if (val instanceof Date) {
 		const str = formatDate(val);
-		return opts.markup ? markupTag('color', str, {fg: 'magenta'}) : str;
+		return opts.markup ? markupTag("color", str, {fg: "magenta"}) : str;
 	}
 
-	let label = 'null';
+	let label = "null";
 
 	if (val.constructor !== undefined) {
 		label = maybeEscapeMarkup(val.constructor.name, opts);
@@ -391,12 +391,12 @@ function formatObjectish(val: null | Objectish, opts: FormatOptions): string {
 	let labelKeys: Array<string> = [];
 
 	// If there's a string type or kind property then use it as the label
-	if (typeof val.type === 'string') {
+	if (typeof val.type === "string") {
 		label = maybeEscapeMarkup(val.type, opts);
-		labelKeys.push('type');
-	} else if (typeof val.kind === 'string') {
+		labelKeys.push("type");
+	} else if (typeof val.kind === "string") {
 		label = maybeEscapeMarkup(val.kind, opts);
-		labelKeys.push('kind');
+		labelKeys.push("kind");
 	}
 
 	return formatObject(label, val, opts, labelKeys);

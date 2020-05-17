@@ -10,16 +10,16 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	trailingComments: Array []
-	innerComments: Array ['0']
-	syntax: Array ['jsx']
+	innerComments: Array ["0"]
+	syntax: Array ["jsx"]
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 6
@@ -33,10 +33,10 @@ Program {
 	}
 	comments: Array [
 		CommentLine {
-			id: '0'
-			value: 'a'
+			id: "0"
+			value: "a"
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 5
 					index: 5

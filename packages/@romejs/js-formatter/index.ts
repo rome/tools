@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyComment, AnyNode, MOCK_PARENT} from '@romejs/js-ast';
-import Builder from './Builder';
-import {PrinterOutput, printTokenToString} from './Printer';
+import {AnyComment, AnyNode, MOCK_PARENT} from "@romejs/js-ast";
+import Builder from "./Builder";
+import {PrinterOutput, printTokenToString} from "./Printer";
 
 export {Builder};
 
 export type FormatterOptions = {
 	typeAnnotations?: boolean;
-	format?: 'pretty' | 'compact';
+	format?: "pretty" | "compact";
 	indent?: number;
 	comments?: Array<AnyComment>;
 	sourceMaps?: boolean;
@@ -23,7 +23,7 @@ export type FormatterOptions = {
 export function formatJS(
 	ast: AnyNode,
 	{
-		format = 'pretty',
+		format = "pretty",
 		typeAnnotations = true,
 		sourceMaps = false,
 		comments,
@@ -36,13 +36,13 @@ export function formatJS(
 			sourceMaps,
 			typeAnnotations,
 		},
-		ast.type === 'Program' ? ast.comments : comments,
+		ast.type === "Program" ? ast.comments : comments,
 	);
 	const token = builder.tokenize(ast, MOCK_PARENT);
 	const formatted = printTokenToString(
 		token,
 		{
-			printWidth: format === 'pretty' ? 80 : Infinity,
+			printWidth: format === "pretty" ? 80 : Infinity,
 			rootIndent: indent,
 		},
 	);

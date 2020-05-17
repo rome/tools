@@ -5,20 +5,20 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, TransformExitResult} from '@romejs/js-compiler';
-import {unaryExpression} from '@romejs/js-ast';
-import {descriptions} from '@romejs/diagnostics';
+import {Path, TransformExitResult} from "@romejs/js-compiler";
+import {unaryExpression} from "@romejs/js-ast";
+import {descriptions} from "@romejs/diagnostics";
 
 export default {
-	name: 'unsafeNegation',
+	name: "unsafeNegation",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 
 		if (
-			node.type === 'BinaryExpression' &&
-			(node.operator === 'in' || node.operator === 'instanceof') &&
-			node.left.type === 'UnaryExpression' &&
-			node.left.operator === '!'
+			node.type === "BinaryExpression" &&
+			(node.operator === "in" || node.operator === "instanceof") &&
+			node.left.type === "UnaryExpression" &&
+			node.left.operator === "!"
 		) {
 			return path.context.addFixableDiagnostic(
 				{

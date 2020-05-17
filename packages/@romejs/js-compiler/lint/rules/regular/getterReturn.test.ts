@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {testLint} from '../testHelpers';
-import {dedent} from '@romejs/string-utils';
+import {test} from "rome";
+import {testLint} from "../testHelpers";
+import {dedent} from "@romejs/string-utils";
 
 test(
-	'getter return',
+	"getter return",
 	async (t) => {
 		await testLint(
 			t,
@@ -21,7 +21,7 @@ test(
           }
         }
       `,
-			{category: 'lint/getterReturn'},
+			{category: "lint/getterReturn"},
 		);
 
 		await testLint(
@@ -33,7 +33,7 @@ test(
           },
         };
       `,
-			{category: 'lint/getterReturn'},
+			{category: "lint/getterReturn"},
 		);
 
 		await testLint(
@@ -46,7 +46,7 @@ test(
           },
         });
       `,
-			{category: 'lint/getterReturn'},
+			{category: "lint/getterReturn"},
 		);
 	},
 );

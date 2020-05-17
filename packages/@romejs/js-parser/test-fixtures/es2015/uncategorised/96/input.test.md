@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
+	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 25
 			index: 25
@@ -30,16 +30,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unexpected token, expected {'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unexpected token, expected {"}
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'module'
+				sourceType: "module"
 				end: Object {
 					column: 14
 					index: 14
@@ -59,7 +59,7 @@ Program {
 			importKind: undefined
 			namespaceSpecifier: undefined
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 25
 					index: 25
@@ -72,9 +72,9 @@ Program {
 				}
 			}
 			source: StringLiteral {
-				value: ''
+				value: ""
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 25
 						index: 25
@@ -90,7 +90,7 @@ Program {
 			namedSpecifiers: Array [
 				ImportSpecifier {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 14
 							index: 14
@@ -103,10 +103,10 @@ Program {
 						}
 					}
 					imported: Identifier {
-						name: 'default'
+						name: "default"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'default'
+							filename: "input.js"
+							identifierName: "default"
 							end: Object {
 								column: 14
 								index: 14
@@ -121,10 +121,10 @@ Program {
 					}
 					local: ImportSpecifierLocal {
 						name: BindingIdentifier {
-							name: 'default'
+							name: "default"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'default'
+								filename: "input.js"
+								identifierName: "default"
 								end: Object {
 									column: 14
 									index: 14
@@ -139,7 +139,7 @@ Program {
 						}
 						importKind: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 14
 								index: 14
@@ -155,7 +155,7 @@ Program {
 				}
 				ImportSpecifier {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 19
 							index: 19
@@ -168,10 +168,10 @@ Program {
 						}
 					}
 					imported: Identifier {
-						name: 'from'
+						name: "from"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'from'
+							filename: "input.js"
+							identifierName: "from"
 							end: Object {
 								column: 19
 								index: 19
@@ -186,10 +186,10 @@ Program {
 					}
 					local: ImportSpecifierLocal {
 						name: BindingIdentifier {
-							name: 'from'
+							name: "from"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'from'
+								filename: "input.js"
+								identifierName: "from"
 								end: Object {
 									column: 19
 									index: 19
@@ -204,7 +204,7 @@ Program {
 						}
 						importKind: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 19
 								index: 19
@@ -220,7 +220,7 @@ Program {
 				}
 				ImportSpecifier {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 25
 							index: 25
@@ -233,10 +233,10 @@ Program {
 						}
 					}
 					imported: Identifier {
-						name: ''
+						name: ""
 						loc: Object {
-							filename: 'input.js'
-							identifierName: ''
+							filename: "input.js"
+							identifierName: ""
 							end: Object {
 								column: 25
 								index: 25
@@ -251,10 +251,10 @@ Program {
 					}
 					local: ImportSpecifierLocal {
 						name: BindingIdentifier {
-							name: ''
+							name: ""
 							loc: Object {
-								filename: 'input.js'
-								identifierName: ''
+								filename: "input.js"
+								identifierName: ""
 								end: Object {
 									column: 25
 									index: 25
@@ -269,7 +269,7 @@ Program {
 						}
 						importKind: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 25
 								index: 25

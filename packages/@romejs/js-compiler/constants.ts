@@ -5,6 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export const SCOPE_PRIVATE_PREFIX = '___R$';
+export const SCOPE_PRIVATE_PREFIX = "___R$";
 export const REDUCE_SKIP_SUBTREE = Symbol();
 export const REDUCE_REMOVE = Symbol();

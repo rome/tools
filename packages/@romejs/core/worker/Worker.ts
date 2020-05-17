@@ -5,38 +5,38 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ModuleSignature, TypeCheckProvider} from '@romejs/js-analysis';
+import {ModuleSignature, TypeCheckProvider} from "@romejs/js-analysis";
 import WorkerBridge, {
 	PrefetchedModuleSignatures,
 	WorkerParseOptions,
 	WorkerPartialManifest,
 	WorkerPartialManifests,
 	WorkerProjects,
-} from '../common/bridges/WorkerBridge';
-import {ConstProgramSyntax, ConstSourceType, Program} from '@romejs/js-ast';
-import Logger from '../common/utils/Logger';
-import {parseJS} from '@romejs/js-parser';
-import {Profiler} from '@romejs/v8';
-import WorkerAPI from './WorkerAPI';
-import {Reporter} from '@romejs/cli-reporter';
-import setupGlobalErrorHandlers from '../common/utils/setupGlobalErrorHandlers';
-import {UserConfig, loadUserConfig} from '../common/userConfig';
-import {hydrateJSONProjectConfig} from '@romejs/project';
-import {Diagnostics, DiagnosticsError} from '@romejs/diagnostics';
+} from "../common/bridges/WorkerBridge";
+import {ConstProgramSyntax, ConstSourceType, Program} from "@romejs/js-ast";
+import Logger from "../common/utils/Logger";
+import {parseJS} from "@romejs/js-parser";
+import {Profiler} from "@romejs/v8";
+import WorkerAPI from "./WorkerAPI";
+import {Reporter} from "@romejs/cli-reporter";
+import setupGlobalErrorHandlers from "../common/utils/setupGlobalErrorHandlers";
+import {UserConfig, loadUserConfig} from "../common/userConfig";
+import {hydrateJSONProjectConfig} from "@romejs/project";
+import {Diagnostics, DiagnosticsError} from "@romejs/diagnostics";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	UnknownFilePathMap,
 	createAbsoluteFilePath,
 	createUnknownFilePath,
-} from '@romejs/path';
-import {lstat, readFileText, writeFile} from '@romejs/fs';
+} from "@romejs/path";
+import {lstat, readFileText, writeFile} from "@romejs/fs";
 import {
 	FileReference,
 	convertTransportFileReference,
-} from '../common/types/files';
-import {getFileHandlerAssert} from '../common/file-handlers/index';
-import {TransformProjectDefinition} from '@romejs/js-compiler';
+} from "../common/types/files";
+import {getFileHandlerAssert} from "../common/file-handlers/index";
+import {TransformProjectDefinition} from "@romejs/js-compiler";
 
 export type ParseJSResult = {
 	ast: Program;
@@ -64,13 +64,13 @@ export default class Worker {
 		this.buffers = new AbsoluteFilePathMap();
 
 		this.logger = new Logger(
-			'worker',
+			"worker",
 			() => opts.bridge.log.hasSubscribers(),
 			{
 				streams: [
 					{
-						type: 'all',
-						format: 'none',
+						type: "all",
+						format: "none",
 						columns: Reporter.DEFAULT_COLUMNS,
 						unicode: true,
 						write(chunk) {
@@ -130,7 +130,7 @@ export default class Worker {
 		let profiler: undefined | Profiler;
 		bridge.profilingStart.subscribe(async (data) => {
 			if (profiler !== undefined) {
-				throw new Error('Expected no profiler to be running');
+				throw new Error("Expected no profiler to be running");
 			}
 			profiler = new Profiler();
 			await profiler.startProfiling(data.samplingInterval);
@@ -138,7 +138,7 @@ export default class Worker {
 
 		bridge.profilingStop.subscribe(async () => {
 			if (profiler === undefined) {
-				throw new Error('Expected a profiler to be running');
+				throw new Error("Expected a profiler to be running");
 			}
 			const workerProfile = await profiler.stopProfiling();
 			profiler = undefined;
@@ -265,7 +265,7 @@ export default class Worker {
 			}
 
 			switch (value.type) {
-				case 'RESOLVED': {
+				case "RESOLVED": {
 					this.moduleSignatureCache.set(
 						createUnknownFilePath(value.graph.filename),
 						value.graph,
@@ -273,16 +273,16 @@ export default class Worker {
 					return value.graph;
 				}
 
-				case 'OWNED':
+				case "OWNED":
 					return this.api.moduleSignatureJS(
 						convertTransportFileReference(value.file),
 						parseOptions,
 					);
 
-				case 'POINTER':
+				case "POINTER":
 					return resolveGraph(value.key);
 
-				case 'USE_CACHED': {
+				case "USE_CACHED": {
 					const cached = this.moduleSignatureCache.get(
 						createUnknownFilePath(value.filename),
 					);
@@ -350,18 +350,18 @@ export default class Worker {
 		} else if (handler.sourceType !== undefined) {
 			sourceType = handler.sourceType;
 		} else {
-			sourceType = 'script';
+			sourceType = "script";
 
 			if (ref.manifest !== undefined) {
 				const manifest = this.getPartialManifest(ref.manifest);
-				if (manifest.type === 'module') {
-					sourceType = 'module';
+				if (manifest.type === "module") {
+					sourceType = "module";
 				}
 			}
 		}
 
-		if (project.config.bundler.mode === 'legacy') {
-			sourceType = 'module';
+		if (project.config.bundler.mode === "legacy") {
+			sourceType = "module";
 		}
 
 		const cacheEnabled = options.cache !== false;
@@ -413,12 +413,12 @@ export default class Worker {
 			path: createUnknownFilePath(uid),
 			sourceType,
 			syntax,
-			allowReturnOutsideFunction: sourceType === 'script',
+			allowReturnOutsideFunction: sourceType === "script",
 		});
 
 		// If the AST is corrupt then we don't under any circumstance allow it
 		if (ast.corrupt) {
-			throw new DiagnosticsError('Corrupt AST', ast.diagnostics);
+			throw new DiagnosticsError("Corrupt AST", ast.diagnostics);
 		}
 
 		// Sometimes we may want to allow the "fixed" AST

@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from '@romejs/js-ast';
-import {HydrateData} from '../Evaluator';
-import {Scope} from '../scopes';
-import NumericLiteralT from './NumericLiteralT';
-import ObjT from './ObjT';
-import T from './T';
+import {AnyNode} from "@romejs/js-ast";
+import {HydrateData} from "../Evaluator";
+import {Scope} from "../scopes";
+import NumericLiteralT from "./NumericLiteralT";
+import ObjT from "./ObjT";
+import T from "./T";
 
 export default class NumericT extends ObjT {
 	constructor(scope: Scope, originNode: undefined | AnyNode) {
@@ -25,7 +25,7 @@ export default class NumericT extends ObjT {
 		);
 	}
 
-	static type = 'NumericT';
+	static type = "NumericT";
 
 	serialize(): HydrateData {
 		return {};
@@ -36,7 +36,7 @@ export default class NumericT extends ObjT {
 	}
 
 	humanize(): string {
-		return 'number';
+		return "number";
 	}
 
 	compatibleWith(type: T): boolean {

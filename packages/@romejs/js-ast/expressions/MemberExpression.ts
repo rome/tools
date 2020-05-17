@@ -11,17 +11,17 @@ import {
 	JSNodeBase,
 	StaticMemberProperty,
 	Super,
-} from '../index';
-import {createBuilder} from '../utils';
+} from "../index";
+import {createBuilder} from "../utils";
 
 export type MemberExpression = JSNodeBase & {
-	type: 'MemberExpression';
+	type: "MemberExpression";
 	object: AnyExpression | Super;
 	property: StaticMemberProperty | ComputedMemberProperty;
 };
 
 export const memberExpression = createBuilder<MemberExpression>(
-	'MemberExpression',
+	"MemberExpression",
 	{
 		bindingKeys: {},
 		visitorKeys: {

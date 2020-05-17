@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token} from '../../tokens';
-import {AssignmentArrayPattern} from '@romejs/js-ast';
-import ArrayExpression from '../expressions/ArrayExpression';
+import Builder from "../../Builder";
+import {Token} from "../../tokens";
+import {AssignmentArrayPattern} from "@romejs/js-ast";
+import ArrayExpression from "../expressions/ArrayExpression";
 
 export default function AssignmentArrayPattern(
 	builder: Builder,

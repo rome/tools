@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {UNKNOWN_ANALYZE_DEPENDENCIES_RESULT} from '../types/analyzeDependencies';
-import {PartialExtensionHandler} from './types';
+import {UNKNOWN_ANALYZE_DEPENDENCIES_RESULT} from "../types/analyzeDependencies";
+import {PartialExtensionHandler} from "./types";
 
 export const textHandler: PartialExtensionHandler = {
-	sourceType: 'module',
+	sourceType: "module",
 
 	// Mock a single default export
 	// We could always just pass this through to analyzeDependencies and get the same result due to the toJavaScript call below,
@@ -17,15 +17,15 @@ export const textHandler: PartialExtensionHandler = {
 	async analyzeDependencies() {
 		return {
 			...UNKNOWN_ANALYZE_DEPENDENCIES_RESULT,
-			moduleType: 'es',
+			moduleType: "es",
 			exports: [
 				{
-					type: 'local',
+					type: "local",
 					// TODO we could fake this?
 					loc: undefined,
-					kind: 'value',
-					valueType: 'other',
-					name: 'default',
+					kind: "value",
+					valueType: "other",
+					name: "default",
 				},
 			],
 		};

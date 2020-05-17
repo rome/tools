@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 25
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 24
 					index: 24
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			expression: BinaryExpression {
-				operator: '/'
+				operator: "/"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 23
 						index: 23
@@ -60,10 +60,10 @@ Program {
 					}
 				}
 				right: ReferenceIdentifier {
-					name: 'i'
+					name: "i"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'i'
+						filename: "input.js"
+						identifierName: "i"
 						end: Object {
 							column: 23
 							index: 23
@@ -77,9 +77,9 @@ Program {
 					}
 				}
 				left: BinaryExpression {
-					operator: '/'
+					operator: "/"
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 21
 							index: 21
@@ -95,7 +95,7 @@ Program {
 						value: 42
 						format: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 21
 								index: 21
@@ -109,10 +109,10 @@ Program {
 						}
 					}
 					left: UnaryExpression {
-						operator: '!'
+						operator: "!"
 						prefix: true
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 17
 								index: 17
@@ -126,10 +126,10 @@ Program {
 						}
 						argument: FunctionExpression {
 							id: BindingIdentifier {
-								name: 'fn'
+								name: "fn"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'fn'
+									filename: "input.js"
+									identifierName: "fn"
 									end: Object {
 										column: 12
 										index: 12
@@ -143,7 +143,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 17
 									index: 17
@@ -159,7 +159,7 @@ Program {
 								body: Array []
 								directives: Array []
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 17
 										index: 17
@@ -182,7 +182,7 @@ Program {
 								thisType: undefined
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 14
 										index: 14

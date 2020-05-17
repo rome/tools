@@ -30,7 +30,7 @@
 ### `0: formatted`
 
 ```
-const arr = [['a', 'b', 'c'], [1, 2, 3]];
+const arr = [["a", "b", "c"], [1, 2, 3]];
 arr[0][2] = undefined;
 
 ```

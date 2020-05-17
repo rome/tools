@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TestHelper} from 'rome';
-import lint from '../index';
-import {parseJS} from '@romejs/js-parser';
-import {createUnknownFilePath} from '@romejs/path';
-import {DEFAULT_PROJECT_CONFIG} from '@romejs/project';
-import {ConstProgramSyntax, ConstSourceType} from '@romejs/js-ast';
-import {DiagnosticCategory} from '@romejs/diagnostics';
-import {printDiagnosticsToString} from '@romejs/cli-diagnostics';
+import {TestHelper} from "rome";
+import lint from "../index";
+import {parseJS} from "@romejs/js-parser";
+import {createUnknownFilePath} from "@romejs/path";
+import {DEFAULT_PROJECT_CONFIG} from "@romejs/project";
+import {ConstProgramSyntax, ConstSourceType} from "@romejs/js-ast";
+import {DiagnosticCategory} from "@romejs/diagnostics";
+import {printDiagnosticsToString} from "@romejs/cli-diagnostics";
 
 type TestLintOptions = {
 	category: undefined | DiagnosticCategory;
@@ -33,16 +33,16 @@ export async function testLintMultiple(
 export async function testLint(
 	t: TestHelper,
 	input: string,
-	{syntax = ['jsx', 'ts'], category, sourceType = 'module'}: TestLintOptions,
+	{syntax = ["jsx", "ts"], category, sourceType = "module"}: TestLintOptions,
 ) {
 	t.addToAdvice({
-		type: 'log',
-		category: 'info',
-		text: 'Lint options',
+		type: "log",
+		category: "info",
+		text: "Lint options",
 	});
 
 	t.addToAdvice({
-		type: 'inspect',
+		type: "inspect",
 		data: {
 			category,
 			syntax,
@@ -51,20 +51,20 @@ export async function testLint(
 	});
 
 	t.addToAdvice({
-		type: 'log',
-		category: 'info',
-		text: 'Input',
+		type: "log",
+		category: "info",
+		text: "Input",
 	});
 
 	t.addToAdvice({
-		type: 'code',
+		type: "code",
 		code: input,
 	});
 
 	const ast = parseJS({
 		input,
 		sourceType,
-		path: createUnknownFilePath('unknown'),
+		path: createUnknownFilePath("unknown"),
 		syntax,
 	});
 

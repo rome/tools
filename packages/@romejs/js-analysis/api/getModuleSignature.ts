@@ -10,13 +10,13 @@ import {
 	ModuleSignature,
 	ModuleSignatureExport,
 	ModuleSignatureType,
-} from '../types';
-import {Program} from '@romejs/js-ast';
-import buildGraph from './buildGraph';
-import T from '../types/T';
-import E from '../types/errors/E';
-import {TransformProjectDefinition} from '@romejs/js-compiler';
-import {Dict} from '@romejs/typescript-helpers';
+} from "../types";
+import {Program} from "@romejs/js-ast";
+import buildGraph from "./buildGraph";
+import T from "../types/T";
+import E from "../types/errors/E";
+import {TransformProjectDefinition} from "@romejs/js-compiler";
+import {Dict} from "@romejs/typescript-helpers";
 
 const exportsCache: WeakMap<Program, ModuleSignature> = new WeakMap();
 
@@ -30,7 +30,7 @@ export default async function getModuleSignature(
 	const {ast, provider} = opts;
 	const {filename} = ast;
 
-	if (filename.includes('node_modules')) {
+	if (filename.includes("node_modules")) {
 		return {
 			filename,
 			exports: [],
@@ -70,7 +70,7 @@ export default async function getModuleSignature(
 			types[reducedType.id] = {
 				human: undefined,
 				origin: reducedType.originLoc,
-				type: 'AnyT',
+				type: "AnyT",
 				data: {},
 			};
 			return reducedType.id;
@@ -88,19 +88,19 @@ export default async function getModuleSignature(
 	}
 
 	for (const def of exports) {
-		if (def.type === 'all') {
+		if (def.type === "all") {
 			exportMap.push({
-				type: 'all',
+				type: "all",
 				source: def.source,
 			});
-		} else if (def.type === 'local') {
+		} else if (def.type === "local") {
 			exportMap.push({
-				type: 'local',
+				type: "local",
 				name: def.name,
 				value: addType(def.value),
 			});
 		} else {
-			throw new Error('unknown export def type');
+			throw new Error("unknown export def type");
 		}
 	}
 

@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token, concat} from '../../tokens';
-import {JSXMemberExpression} from '@romejs/js-ast';
+import Builder from "../../Builder";
+import {Token, concat} from "../../tokens";
+import {JSXMemberExpression} from "@romejs/js-ast";
 
 export default function JSXMemberExpression(
 	builder: Builder,
@@ -15,7 +15,7 @@ export default function JSXMemberExpression(
 ): Token {
 	return concat([
 		builder.tokenize(node.object, node),
-		'.',
+		".",
 		builder.tokenize(node.property, node),
 	]);
 }

@@ -5,23 +5,23 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
+import {test} from "rome";
 
-import {testLintMultiple} from '../testHelpers';
+import {testLintMultiple} from "../testHelpers";
 
 test(
-	'do not allow findDOMNode',
+	"do not allow findDOMNode",
 	async (t) => {
 		await testLintMultiple(
 			t,
 			[
 				// INVALID
-				'findDOMNode(this).scrollIntoView()',
-				'ReactDOM.findDOMNode(this).scrollIntoView()',
+				"findDOMNode(this).scrollIntoView()",
+				"ReactDOM.findDOMNode(this).scrollIntoView()",
 				// VALID
-				'this.node.scrollIntoView()',
+				"this.node.scrollIntoView()",
 			],
-			{category: 'lint/noFindDOMNode'},
+			{category: "lint/noFindDOMNode"},
 		);
 	},
 );

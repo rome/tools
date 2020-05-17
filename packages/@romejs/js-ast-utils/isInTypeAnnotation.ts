@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from '@romejs/js-ast';
-import {Path} from '@romejs/js-compiler';
-import isTypeNode from './isTypeNode';
-import isTypeExpressionWrapperNode from './isTypeExpressionWrapperNode';
+import {AnyNode} from "@romejs/js-ast";
+import {Path} from "@romejs/js-compiler";
+import isTypeNode from "./isTypeNode";
+import isTypeExpressionWrapperNode from "./isTypeExpressionWrapperNode";
 
 // Is this honestly the best heuristics?
 function getTypeNode(path: Path): undefined | AnyNode {

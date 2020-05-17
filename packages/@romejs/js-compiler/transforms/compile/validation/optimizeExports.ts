@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ImportBinding, Path} from '@romejs/js-compiler';
+import {ImportBinding, Path} from "@romejs/js-compiler";
 import {
 	AnyNode,
 	ExportExternalDeclaration,
@@ -15,10 +15,10 @@ import {
 	exportLocalDeclaration,
 	identifier,
 	stringLiteral,
-} from '@romejs/js-ast';
+} from "@romejs/js-ast";
 
 export default {
-	name: 'optimizeExports',
+	name: "optimizeExports",
 	enter(
 		path: Path,
 	): AnyNode | Array<ExportExternalDeclaration | ExportLocalDeclaration> {
@@ -26,8 +26,8 @@ export default {
 
 		// turn `import {a} from 'b'; export {a}`; to `export {a} from 'b';`';
 		if (
-			node.type === 'ExportLocalDeclaration' &&
-			node.exportKind === 'value' &&
+			node.type === "ExportLocalDeclaration" &&
+			node.exportKind === "value" &&
 			node.declaration === undefined &&
 			node.specifiers !== undefined
 		) {
@@ -35,12 +35,12 @@ export default {
 			const specifiers = [];
 
 			for (const specifier of node.specifiers) {
-				if (specifier.type === 'ExportLocalSpecifier') {
+				if (specifier.type === "ExportLocalSpecifier") {
 					const binding = path.scope.getBinding(specifier.local.name);
 					if (
 						binding !== undefined &&
 						binding instanceof ImportBinding &&
-						binding.meta.type === 'name'
+						binding.meta.type === "name"
 					) {
 						nodes.push(
 							exportExternalDeclaration.create({

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, ConditionalExpression, IfStatement} from '@romejs/js-ast';
+import {AnyNode, ConditionalExpression, IfStatement} from "@romejs/js-ast";
 
 export default function isConditional(
 	node: undefined | AnyNode,
@@ -15,8 +15,8 @@ export default function isConditional(
 	}
 
 	switch (node.type) {
-		case 'ConditionalExpression':
-		case 'IfStatement':
+		case "ConditionalExpression":
+		case "IfStatement":
 			return true;
 
 		default:

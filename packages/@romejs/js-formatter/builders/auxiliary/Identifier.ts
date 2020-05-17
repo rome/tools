@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token} from '../../tokens';
+import Builder from "../../Builder";
+import {Token} from "../../tokens";
 import {
 	AssignmentIdentifier,
 	BindingIdentifier,
 	Identifier,
 	ReferenceIdentifier,
-} from '@romejs/js-ast';
+} from "@romejs/js-ast";
 
 export default function Identifier(
 	builder: Builder,

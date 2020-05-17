@@ -10,17 +10,17 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.tsx'
+	filename: "input.tsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
+	sourceType: "module"
 	syntax: Array [
-		'jsx'
-		'ts'
+		"jsx"
+		"ts"
 	]
 	loc: Object {
-		filename: 'input.tsx'
+		filename: "input.tsx"
 		end: Object {
 			column: 0
 			index: 33
@@ -35,10 +35,10 @@ Program {
 	body: Array [
 		FunctionDeclaration {
 			id: BindingIdentifier {
-				name: 'f'
+				name: "f"
 				loc: Object {
-					filename: 'input.tsx'
-					identifierName: 'f'
+					filename: "input.tsx"
+					identifierName: "f"
 					end: Object {
 						column: 10
 						index: 10
@@ -52,7 +52,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.tsx'
+				filename: "input.tsx"
 				end: Object {
 					column: 32
 					index: 32
@@ -68,7 +68,7 @@ Program {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: 'input.tsx'
+					filename: "input.tsx"
 					end: Object {
 						column: 32
 						index: 32
@@ -90,7 +90,7 @@ Program {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.tsx'
+					filename: "input.tsx"
 					end: Object {
 						column: 29
 						index: 29
@@ -104,7 +104,7 @@ Program {
 				}
 				returnType: TSFunctionType {
 					loc: Object {
-						filename: 'input.tsx'
+						filename: "input.tsx"
 						end: Object {
 							column: 29
 							index: 29
@@ -118,7 +118,7 @@ Program {
 					}
 					typeAnnotation: NumberKeywordTypeAnnotation {
 						loc: Object {
-							filename: 'input.tsx'
+							filename: "input.tsx"
 							end: Object {
 								column: 29
 								index: 29
@@ -135,7 +135,7 @@ Program {
 						parameters: Array []
 						rest: undefined
 						loc: Object {
-							filename: 'input.tsx'
+							filename: "input.tsx"
 							end: Object {
 								column: 29
 								index: 29
@@ -149,7 +149,7 @@ Program {
 						}
 						typeParameters: TSTypeParameterDeclaration {
 							loc: Object {
-								filename: 'input.tsx'
+								filename: "input.tsx"
 								end: Object {
 									column: 17
 									index: 17
@@ -163,11 +163,11 @@ Program {
 							}
 							params: Array [
 								TSTypeParameter {
-									name: 'T'
+									name: "T"
 									constraint: undefined
 									default: undefined
 									loc: Object {
-										filename: 'input.tsx'
+										filename: "input.tsx"
 										end: Object {
 											column: 16
 											index: 16

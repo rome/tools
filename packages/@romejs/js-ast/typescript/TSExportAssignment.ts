@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyExpression, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {AnyExpression, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type TSExportAssignment = JSNodeBase & {
-	type: 'TSExportAssignment';
+	type: "TSExportAssignment";
 	expression: AnyExpression;
 };
 
 export const tsExportAssignment = createBuilder<TSExportAssignment>(
-	'TSExportAssignment',
+	"TSExportAssignment",
 	{bindingKeys: {}, visitorKeys: {expression: true}},
 );

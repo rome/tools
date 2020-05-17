@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {commandCategories} from '../../common/commands';
-import {createLocalCommand} from '../commands';
-import ClientRequest from '../ClientRequest';
+import {commandCategories} from "../../common/commands";
+import {createLocalCommand} from "../commands";
+import ClientRequest from "../ClientRequest";
 
 export default createLocalCommand({
 	category: commandCategories.PROCESS_MANAGEMENT,
-	description: 'stop a running daemon if one exists',
-	usage: '',
+	description: "stop a running daemon if one exists",
+	usage: "",
 	examples: [],
 	defineFlags() {
 		return {};
@@ -24,18 +24,18 @@ export default createLocalCommand({
 		if (bridge) {
 			const stop = await req.client.query(
 				{
-					commandName: 'stop',
+					commandName: "stop",
 				},
-				'master',
+				"master",
 			);
-			if (stop.type === 'ERROR' && stop.fatal) {
-				reporter.success('Stopped server.');
+			if (stop.type === "ERROR" && stop.fatal) {
+				reporter.success("Stopped server.");
 			} else {
-				reporter.error('Failed to stop server.');
+				reporter.error("Failed to stop server.");
 				return false;
 			}
 		} else {
-			reporter.warn('No running server to stop.');
+			reporter.warn("No running server to stop.");
 		}
 		return true;
 	},

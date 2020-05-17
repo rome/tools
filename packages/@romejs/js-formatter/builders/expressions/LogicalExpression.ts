@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token} from '../../tokens';
-import {AnyNode, LogicalExpression} from '@romejs/js-ast';
-import BinaryExpression from './BinaryExpression';
+import Builder from "../../Builder";
+import {Token} from "../../tokens";
+import {AnyNode, LogicalExpression} from "@romejs/js-ast";
+import BinaryExpression from "./BinaryExpression";
 
 export default function LogicalExpression(
 	builder: Builder,

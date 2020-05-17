@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, BinaryExpression, LogicalExpression} from '@romejs/js-ast';
-import {getPrecedence, isBinary} from '@romejs/js-ast-utils';
-import Builder from '../../Builder';
-import {Token, concat, group, lineOrSpace, space} from '../../tokens';
+import {AnyNode, BinaryExpression, LogicalExpression} from "@romejs/js-ast";
+import {getPrecedence, isBinary} from "@romejs/js-ast-utils";
+import Builder from "../../Builder";
+import {Token, concat, group, lineOrSpace, space} from "../../tokens";
 
 export default function BinaryExpression(
 	builder: Builder,
@@ -16,10 +16,10 @@ export default function BinaryExpression(
 	parent: AnyNode,
 ): Token {
 	const shouldNotGroup =
-		(parent.type === 'IfStatement' && parent.test === node) ||
-		(parent.type === 'DoWhileStatement' && parent.test === node) ||
-		(parent.type === 'WhileStatement' && parent.test === node) ||
-		(parent.type === 'SwitchStatement' && parent.discriminant === node);
+		(parent.type === "IfStatement" && parent.test === node) ||
+		(parent.type === "DoWhileStatement" && parent.test === node) ||
+		(parent.type === "WhileStatement" && parent.test === node) ||
+		(parent.type === "SwitchStatement" && parent.discriminant === node);
 
 	const parts = printBinaryExpression(builder, node, parent, shouldNotGroup);
 
@@ -51,9 +51,9 @@ function printBinaryExpression(
 	//   obj && {
 	//   arr ?? [
 	const shouldInline =
-		node.type === 'LogicalExpression' &&
-		(node.right.type === 'ArrayExpression' ||
-		node.right.type === 'ObjectExpression');
+		node.type === "LogicalExpression" &&
+		(node.right.type === "ArrayExpression" ||
+		node.right.type === "ObjectExpression");
 
 	const right = concat([
 		node.operator,

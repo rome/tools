@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyIdentifier, AnyNode} from '@romejs/js-ast';
+import {AnyIdentifier, AnyNode} from "@romejs/js-ast";
 
 export default function isIdentifierish(node: AnyNode): node is AnyIdentifier {
 	return (
-		node.type === 'Identifier' ||
-		node.type === 'JSXIdentifier' ||
-		node.type === 'JSXReferenceIdentifier' ||
-		node.type === 'BindingIdentifier' ||
-		node.type === 'AssignmentIdentifier' ||
-		node.type === 'ReferenceIdentifier'
+		node.type === "Identifier" ||
+		node.type === "JSXIdentifier" ||
+		node.type === "JSXReferenceIdentifier" ||
+		node.type === "BindingIdentifier" ||
+		node.type === "AssignmentIdentifier" ||
+		node.type === "ReferenceIdentifier"
 	);
 }

@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {CheckProvider} from '../types';
-import {DiagnosticAdvice, Diagnostics, descriptions} from '@romejs/diagnostics';
-import {Program} from '@romejs/js-ast';
-import Hub from '../Hub';
-import E from '../types/errors/E';
-import T from '../types/T';
-import OpenT from '../types/OpenT';
-import buildGraph from './buildGraph';
-import {TransformProjectDefinition} from '@romejs/js-compiler';
+import {CheckProvider} from "../types";
+import {DiagnosticAdvice, Diagnostics, descriptions} from "@romejs/diagnostics";
+import {Program} from "@romejs/js-ast";
+import Hub from "../Hub";
+import E from "../types/errors/E";
+import T from "../types/T";
+import OpenT from "../types/OpenT";
+import buildGraph from "./buildGraph";
+import {TransformProjectDefinition} from "@romejs/js-compiler";
 
 export default async function check(
 	opts: {
@@ -79,13 +79,13 @@ function resolveGraph(hub: Hub): Diagnostics {
 
 				if (originLoc !== undefined && marker !== undefined) {
 					advice.push({
-						type: 'log',
-						category: 'info',
+						type: "log",
+						category: "info",
 						text: marker,
 					});
 				} else if (originLoc !== undefined) {
 					advice.push({
-						type: 'frame',
+						type: "frame",
 						location: {
 							filename: originLoc.filename,
 							start: originLoc.start,
@@ -122,7 +122,7 @@ function resolveGraph(hub: Hub): Diagnostics {
 			const upper = line.value;
 			const compatibility = utils.checkCompability(upper, lower);
 
-			if (compatibility.type === 'incompatible') {
+			if (compatibility.type === "incompatible") {
 				// ignore associated errors, as they've already been handled
 				if (isError(compatibility.lower) || isError(compatibility.upper)) {
 					continue;

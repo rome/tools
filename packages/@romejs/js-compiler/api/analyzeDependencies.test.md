@@ -9,16 +9,16 @@ Object {
 	dependencies: Array []
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
-	moduleType: 'es'
+	moduleType: "es"
 	syntax: Array []
 	topLevelLocalBindings: Object {}
 	exports: Array [
 		local {
-			kind: 'value'
-			name: 'foo'
-			valueType: 'other'
+			kind: "value"
+			name: "foo"
+			valueType: "other"
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 19
 					index: 19
@@ -34,13 +34,13 @@ Object {
 	]
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'analyzeDependencies'}]
+			origins: Array [Object {category: "analyzeDependencies"}]
 			location: Object {
-				filename: 'unknown'
-				language: 'js'
+				filename: "unknown"
+				language: "js"
 				marker: undefined
 				mtime: undefined
-				sourceType: 'module'
+				sourceType: "module"
 				end: Object {
 					column: 19
 					index: 19
@@ -53,28 +53,28 @@ Object {
 				}
 			}
 			description: Object {
-				category: 'analyzeDependencies/cjsExportInES'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'You cannot use CommonJS exports in an ES module'}
+				category: "analyzeDependencies/cjsExportInES"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "You cannot use CommonJS exports in an ES module"}
 				advice: Array [
 					action {
-						command: 'lint'
+						command: "lint"
 						extra: undefined
 						hidden: true
-						instruction: 'To suppress this error run'
-						noun: 'Add suppression comment'
-						shortcut: 's'
-						args: Array ['unknown']
-						commandFlags: Object {decisions: Array ['suppress-analyzeDependencies/cjsExportInES-unknown-1']}
+						instruction: "To suppress this error run"
+						noun: "Add suppression comment"
+						shortcut: "s"
+						args: Array ["unknown"]
+						commandFlags: Object {decisions: Array ["suppress-analyzeDependencies/cjsExportInES-unknown-1"]}
 					}
 					action {
 						args: Array []
-						command: 'lint'
+						command: "lint"
 						extra: true
 						hidden: true
-						instruction: 'To add suppression comments for ALL files with this category run'
-						noun: 'Add suppression comments for ALL files with this category'
+						instruction: "To add suppression comments for ALL files with this category run"
+						noun: "Add suppression comments for ALL files with this category"
 						shortcut: undefined
-						commandFlags: Object {decisions: Array ['global-suppress-analyzeDependencies/cjsExportInES']}
+						commandFlags: Object {decisions: Array ["global-suppress-analyzeDependencies/cjsExportInES"]}
 					}
 				]
 			}
@@ -91,12 +91,12 @@ Object {
 	diagnostics: Array []
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
-	moduleType: 'es'
+	moduleType: "es"
 	syntax: Array []
 	topLevelLocalBindings: Object {
 		foo: Object {
-			filename: 'unknown'
-			identifierName: 'foo'
+			filename: "unknown"
+			identifierName: "foo"
 			end: Object {
 				column: 16
 				index: 16
@@ -111,12 +111,12 @@ Object {
 	}
 	exports: Array [
 		local {
-			kind: 'value'
-			name: 'foo'
-			valueType: 'other'
+			kind: "value"
+			name: "foo"
+			valueType: "other"
 			loc: Object {
-				filename: 'unknown'
-				identifierName: 'foo'
+				filename: "unknown"
+				identifierName: "foo"
 				end: Object {
 					column: 16
 					index: 16
@@ -141,19 +141,19 @@ Object {
 	exports: Array []
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
-	moduleType: 'es'
+	moduleType: "es"
 	syntax: Array []
 	topLevelLocalBindings: Object {}
 	dependencies: Array [
 		es {
-			kind: 'value'
+			kind: "value"
 			all: false
 			async: false
 			names: Array []
 			optional: false
-			source: 'bar'
+			source: "bar"
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 12
 					index: 12
@@ -179,7 +179,7 @@ Object {
 	exports: Array []
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
-	moduleType: 'es'
+	moduleType: "es"
 	syntax: Array []
 	topLevelLocalBindings: Object {}
 }
@@ -193,12 +193,12 @@ Object {
 	exports: Array []
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
-	moduleType: 'es'
+	moduleType: "es"
 	syntax: Array []
 	topLevelLocalBindings: Object {
 		bar: Object {
-			filename: 'unknown'
-			identifierName: 'bar'
+			filename: "unknown"
+			identifierName: "bar"
 			end: Object {
 				column: 11
 				index: 11
@@ -211,8 +211,8 @@ Object {
 			}
 		}
 		foo: Object {
-			filename: 'unknown'
-			identifierName: 'foo'
+			filename: "unknown"
+			identifierName: "foo"
 			end: Object {
 				column: 9
 				index: 34
@@ -227,13 +227,13 @@ Object {
 	}
 	dependencies: Array [
 		es {
-			kind: 'value'
+			kind: "value"
 			all: false
 			async: false
 			optional: false
-			source: 'foo'
+			source: "foo"
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 23
 					index: 23
@@ -247,9 +247,9 @@ Object {
 			}
 			names: Array [
 				value {
-					name: 'bar'
+					name: "bar"
 					loc: Object {
-						filename: 'unknown'
+						filename: "unknown"
 						end: Object {
 							column: 11
 							index: 11
@@ -275,12 +275,12 @@ Object {
 	dependencies: Array []
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
-	moduleType: 'cjs'
+	moduleType: "cjs"
 	syntax: Array []
 	topLevelLocalBindings: Object {
 		foo: Object {
-			filename: 'unknown'
-			identifierName: 'foo'
+			filename: "unknown"
+			identifierName: "foo"
 			end: Object {
 				column: 16
 				index: 16
@@ -295,25 +295,25 @@ Object {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: '<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module"}
 				advice: Array [
 					log {
-						category: 'info'
-						text: 'Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module'
+						category: "info"
+						text: "Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module"
 					}
 					log {
-						category: 'info'
-						text: 'Add <emphasis>"type": "module"</emphasis> to your <filelink emphasis target="package.json" />'
+						category: "info"
+						text: "Add <emphasis>\"type\": \"module\"</emphasis> to your <filelink emphasis target=\"package.json\" />"
 					}
 				]
 			}
 			location: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 25
 					index: 25
@@ -329,12 +329,12 @@ Object {
 	]
 	exports: Array [
 		local {
-			kind: 'value'
-			name: 'foo'
-			valueType: 'other'
+			kind: "value"
+			name: "foo"
+			valueType: "other"
 			loc: Object {
-				filename: 'unknown'
-				identifierName: 'foo'
+				filename: "unknown"
+				identifierName: "foo"
 				end: Object {
 					column: 16
 					index: 16
@@ -348,11 +348,11 @@ Object {
 			}
 		}
 		local {
-			kind: 'value'
-			name: 'bar'
-			valueType: 'other'
+			kind: "value"
+			name: "bar"
+			valueType: "other"
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 19
 					index: 45
@@ -366,10 +366,10 @@ Object {
 			}
 		}
 		local {
-			kind: 'value'
-			name: 'default'
+			kind: "value"
+			name: "default"
 			loc: undefined
-			valueType: 'other'
+			valueType: "other"
 		}
 	]
 }
@@ -383,12 +383,12 @@ Object {
 	exports: Array []
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
-	moduleType: 'es'
+	moduleType: "es"
 	syntax: Array []
 	topLevelLocalBindings: Object {
 		yes: Object {
-			filename: 'unknown'
-			identifierName: 'yes'
+			filename: "unknown"
+			identifierName: "yes"
 			end: Object {
 				column: 12
 				index: 30
@@ -403,14 +403,14 @@ Object {
 	}
 	dependencies: Array [
 		es {
-			kind: 'value'
+			kind: "value"
 			all: true
 			async: true
 			names: Array []
 			optional: false
-			source: './foo'
+			source: "./foo"
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 14
 					index: 14
@@ -424,14 +424,14 @@ Object {
 			}
 		}
 		es {
-			kind: 'value'
+			kind: "value"
 			all: true
 			async: true
 			names: Array []
 			optional: false
-			source: './bar'
+			source: "./bar"
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 16
 					index: 51
@@ -456,16 +456,16 @@ Object {
 	diagnostics: Array []
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
-	moduleType: 'cjs'
+	moduleType: "cjs"
 	syntax: Array []
 	topLevelLocalBindings: Object {}
 	exports: Array [
 		local {
-			kind: 'value'
-			name: 'yes'
-			valueType: 'other'
+			kind: "value"
+			name: "yes"
+			valueType: "other"
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 27
 					index: 27
@@ -479,10 +479,10 @@ Object {
 			}
 		}
 		local {
-			kind: 'value'
-			name: 'default'
+			kind: "value"
+			name: "default"
 			loc: undefined
-			valueType: 'other'
+			valueType: "other"
 		}
 	]
 }
@@ -496,16 +496,16 @@ Object {
 	diagnostics: Array []
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
-	moduleType: 'cjs'
+	moduleType: "cjs"
 	syntax: Array []
 	topLevelLocalBindings: Object {}
 	exports: Array [
 		local {
-			kind: 'value'
-			name: 'default'
-			valueType: 'other'
+			kind: "value"
+			name: "default"
+			valueType: "other"
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 30
 					index: 30
@@ -519,10 +519,10 @@ Object {
 			}
 		}
 		local {
-			kind: 'value'
-			name: 'default'
+			kind: "value"
+			name: "default"
 			loc: undefined
-			valueType: 'other'
+			valueType: "other"
 		}
 	]
 }
@@ -536,12 +536,12 @@ Object {
 	diagnostics: Array []
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
-	moduleType: 'es'
+	moduleType: "es"
 	syntax: Array []
 	topLevelLocalBindings: Object {
 		Bar: Object {
-			filename: 'unknown'
-			identifierName: 'Bar'
+			filename: "unknown"
+			identifierName: "Bar"
 			end: Object {
 				column: 16
 				index: 64
@@ -554,8 +554,8 @@ Object {
 			}
 		}
 		foo: Object {
-			filename: 'unknown'
-			identifierName: 'foo'
+			filename: "unknown"
+			identifierName: "foo"
 			end: Object {
 				column: 19
 				index: 42
@@ -568,8 +568,8 @@ Object {
 			}
 		}
 		yes: Object {
-			filename: 'unknown'
-			identifierName: 'yes'
+			filename: "unknown"
+			identifierName: "yes"
 			end: Object {
 				column: 16
 				index: 16
@@ -584,12 +584,12 @@ Object {
 	}
 	exports: Array [
 		local {
-			kind: 'value'
-			name: 'yes'
-			valueType: 'other'
+			kind: "value"
+			name: "yes"
+			valueType: "other"
 			loc: Object {
-				filename: 'unknown'
-				identifierName: 'yes'
+				filename: "unknown"
+				identifierName: "yes"
 				end: Object {
 					column: 16
 					index: 16
@@ -603,12 +603,12 @@ Object {
 			}
 		}
 		local {
-			kind: 'value'
-			name: 'foo'
-			valueType: 'function'
+			kind: "value"
+			name: "foo"
+			valueType: "function"
 			loc: Object {
-				filename: 'unknown'
-				identifierName: 'foo'
+				filename: "unknown"
+				identifierName: "foo"
 				end: Object {
 					column: 19
 					index: 42
@@ -622,12 +622,12 @@ Object {
 			}
 		}
 		local {
-			kind: 'value'
-			name: 'Bar'
-			valueType: 'class'
+			kind: "value"
+			name: "Bar"
+			valueType: "class"
 			loc: Object {
-				filename: 'unknown'
-				identifierName: 'Bar'
+				filename: "unknown"
+				identifierName: "Bar"
 				end: Object {
 					column: 16
 					index: 64
@@ -652,16 +652,16 @@ Object {
 	diagnostics: Array []
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
-	moduleType: 'es'
+	moduleType: "es"
 	syntax: Array []
 	topLevelLocalBindings: Object {}
 	exports: Array [
 		local {
-			kind: 'value'
-			name: 'default'
-			valueType: 'other'
+			kind: "value"
+			name: "default"
+			valueType: "other"
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 20
 					index: 20
@@ -685,17 +685,17 @@ Object {
 	diagnostics: Array []
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
-	moduleType: 'es'
+	moduleType: "es"
 	syntax: Array []
 	topLevelLocalBindings: Object {}
 	exports: Array [
 		external {
-			kind: 'value'
-			exported: 'foo'
-			imported: 'foo'
-			source: 'foobar'
+			kind: "value"
+			exported: "foo"
+			imported: "foo"
+			source: "foobar"
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 11
 					index: 11
@@ -709,12 +709,12 @@ Object {
 			}
 		}
 		external {
-			kind: 'value'
-			exported: 'bar'
-			imported: 'bar'
-			source: 'foobar'
+			kind: "value"
+			exported: "bar"
+			imported: "bar"
+			source: "foobar"
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 16
 					index: 16
@@ -728,12 +728,12 @@ Object {
 			}
 		}
 		external {
-			kind: 'value'
-			exported: 'no'
-			imported: 'default'
-			source: 'foobar'
+			kind: "value"
+			exported: "no"
+			imported: "default"
+			source: "foobar"
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 31
 					index: 31
@@ -747,12 +747,12 @@ Object {
 			}
 		}
 		external {
-			kind: 'value'
-			exported: 'noo'
-			imported: 'boo'
-			source: 'foobar'
+			kind: "value"
+			exported: "noo"
+			imported: "boo"
+			source: "foobar"
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 43
 					index: 43
@@ -768,13 +768,13 @@ Object {
 	]
 	dependencies: Array [
 		es {
-			kind: 'value'
+			kind: "value"
 			all: false
 			async: false
 			optional: false
-			source: 'foobar'
+			source: "foobar"
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 58
 					index: 58
@@ -788,9 +788,9 @@ Object {
 			}
 			names: Array [
 				value {
-					name: 'foo'
+					name: "foo"
 					loc: Object {
-						filename: 'unknown'
+						filename: "unknown"
 						end: Object {
 							column: 11
 							index: 11
@@ -804,9 +804,9 @@ Object {
 					}
 				}
 				value {
-					name: 'bar'
+					name: "bar"
 					loc: Object {
-						filename: 'unknown'
+						filename: "unknown"
 						end: Object {
 							column: 16
 							index: 16
@@ -820,9 +820,9 @@ Object {
 					}
 				}
 				value {
-					name: 'default'
+					name: "default"
 					loc: Object {
-						filename: 'unknown'
+						filename: "unknown"
 						end: Object {
 							column: 31
 							index: 31
@@ -836,9 +836,9 @@ Object {
 					}
 				}
 				value {
-					name: 'boo'
+					name: "boo"
 					loc: Object {
-						filename: 'unknown'
+						filename: "unknown"
 						end: Object {
 							column: 43
 							index: 43
@@ -864,15 +864,15 @@ Object {
 	diagnostics: Array []
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
-	moduleType: 'es'
+	moduleType: "es"
 	syntax: Array []
 	topLevelLocalBindings: Object {}
 	exports: Array [
 		externalAll {
-			kind: 'value'
-			source: 'foobar'
+			kind: "value"
+			source: "foobar"
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 23
 					index: 23
@@ -888,14 +888,14 @@ Object {
 	]
 	dependencies: Array [
 		es {
-			kind: 'value'
+			kind: "value"
 			all: true
 			async: false
 			names: Array []
 			optional: false
-			source: 'foobar'
+			source: "foobar"
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 22
 					index: 22
@@ -920,12 +920,12 @@ Object {
 	exports: Array []
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
-	moduleType: 'es'
+	moduleType: "es"
 	syntax: Array []
 	topLevelLocalBindings: Object {
 		bar: Object {
-			filename: 'unknown'
-			identifierName: 'bar'
+			filename: "unknown"
+			identifierName: "bar"
 			end: Object {
 				column: 10
 				index: 10
@@ -940,13 +940,13 @@ Object {
 	}
 	dependencies: Array [
 		es {
-			kind: 'value'
+			kind: "value"
 			all: false
 			async: false
 			optional: false
-			source: 'foobar'
+			source: "foobar"
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 24
 					index: 24
@@ -960,9 +960,9 @@ Object {
 			}
 			names: Array [
 				value {
-					name: 'default'
+					name: "default"
 					loc: Object {
-						filename: 'unknown'
+						filename: "unknown"
 						end: Object {
 							column: 10
 							index: 10
@@ -989,12 +989,12 @@ Object {
 	exports: Array []
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
-	moduleType: 'es'
+	moduleType: "es"
 	syntax: Array []
 	topLevelLocalBindings: Object {
 		bar: Object {
-			filename: 'unknown'
-			identifierName: 'bar'
+			filename: "unknown"
+			identifierName: "bar"
 			end: Object {
 				column: 11
 				index: 11
@@ -1007,8 +1007,8 @@ Object {
 			}
 		}
 		foo: Object {
-			filename: 'unknown'
-			identifierName: 'foo'
+			filename: "unknown"
+			identifierName: "foo"
 			end: Object {
 				column: 16
 				index: 16
@@ -1021,8 +1021,8 @@ Object {
 			}
 		}
 		lol: Object {
-			filename: 'unknown'
-			identifierName: 'lol'
+			filename: "unknown"
+			identifierName: "lol"
 			end: Object {
 				column: 32
 				index: 32
@@ -1035,8 +1035,8 @@ Object {
 			}
 		}
 		to: Object {
-			filename: 'unknown'
-			identifierName: 'to'
+			filename: "unknown"
+			identifierName: "to"
 			end: Object {
 				column: 42
 				index: 42
@@ -1051,13 +1051,13 @@ Object {
 	}
 	dependencies: Array [
 		es {
-			kind: 'value'
+			kind: "value"
 			all: false
 			async: false
 			optional: false
-			source: 'foobar'
+			source: "foobar"
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 57
 					index: 57
@@ -1071,9 +1071,9 @@ Object {
 			}
 			names: Array [
 				value {
-					name: 'bar'
+					name: "bar"
 					loc: Object {
-						filename: 'unknown'
+						filename: "unknown"
 						end: Object {
 							column: 11
 							index: 11
@@ -1087,9 +1087,9 @@ Object {
 					}
 				}
 				value {
-					name: 'foo'
+					name: "foo"
 					loc: Object {
-						filename: 'unknown'
+						filename: "unknown"
 						end: Object {
 							column: 16
 							index: 16
@@ -1103,9 +1103,9 @@ Object {
 					}
 				}
 				value {
-					name: 'default'
+					name: "default"
 					loc: Object {
-						filename: 'unknown'
+						filename: "unknown"
 						end: Object {
 							column: 32
 							index: 32
@@ -1119,9 +1119,9 @@ Object {
 					}
 				}
 				value {
-					name: 'ya'
+					name: "ya"
 					loc: Object {
-						filename: 'unknown'
+						filename: "unknown"
 						end: Object {
 							column: 42
 							index: 42
@@ -1148,19 +1148,19 @@ Object {
 	exports: Array []
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
-	moduleType: 'es'
+	moduleType: "es"
 	syntax: Array []
 	topLevelLocalBindings: Object {}
 	dependencies: Array [
 		es {
-			kind: 'value'
+			kind: "value"
 			all: false
 			async: false
 			names: Array []
 			optional: false
-			source: 'foobar'
+			source: "foobar"
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 29
 					index: 29
@@ -1185,17 +1185,17 @@ Object {
 	diagnostics: Array []
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
-	moduleType: 'es'
+	moduleType: "es"
 	syntax: Array []
 	topLevelLocalBindings: Object {}
 	exports: Array [
 		local {
-			kind: 'value'
-			name: 'foo'
-			valueType: 'other'
+			kind: "value"
+			name: "foo"
+			valueType: "other"
 			loc: Object {
-				filename: 'unknown'
-				identifierName: 'foo'
+				filename: "unknown"
+				identifierName: "foo"
 				end: Object {
 					column: 11
 					index: 11
@@ -1209,12 +1209,12 @@ Object {
 			}
 		}
 		local {
-			kind: 'value'
-			name: 'bar'
-			valueType: 'other'
+			kind: "value"
+			name: "bar"
+			valueType: "other"
 			loc: Object {
-				filename: 'unknown'
-				identifierName: 'bar'
+				filename: "unknown"
+				identifierName: "bar"
 				end: Object {
 					column: 16
 					index: 16
@@ -1228,12 +1228,12 @@ Object {
 			}
 		}
 		local {
-			kind: 'value'
-			name: 'no'
-			valueType: 'other'
+			kind: "value"
+			name: "no"
+			valueType: "other"
 			loc: Object {
-				filename: 'unknown'
-				identifierName: 'yes'
+				filename: "unknown"
+				identifierName: "yes"
 				end: Object {
 					column: 21
 					index: 21
@@ -1258,12 +1258,12 @@ Object {
 	exports: Array []
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
-	moduleType: 'es'
+	moduleType: "es"
 	syntax: Array []
 	topLevelLocalBindings: Object {
 		yeah: Object {
-			filename: 'unknown'
-			identifierName: 'yeah'
+			filename: "unknown"
+			identifierName: "yeah"
 			end: Object {
 				column: 13
 				index: 42
@@ -1278,14 +1278,14 @@ Object {
 	}
 	dependencies: Array [
 		es {
-			kind: 'value'
+			kind: "value"
 			all: false
 			async: false
 			names: Array []
 			optional: false
-			source: 'foo'
+			source: "foo"
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 26
 					index: 26
@@ -1299,14 +1299,14 @@ Object {
 			}
 		}
 		cjs {
-			kind: 'value'
+			kind: "value"
 			all: true
 			async: false
 			names: Array []
 			optional: false
-			source: 'bar'
+			source: "bar"
 			loc: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 16
 					index: 63
@@ -1331,11 +1331,11 @@ Object {
 	diagnostics: Array []
 	exports: Array []
 	importFirstUsage: Array []
-	moduleType: 'es'
+	moduleType: "es"
 	syntax: Array []
 	topLevelLocalBindings: Object {}
 	firstTopAwaitLocation: Object {
-		filename: 'unknown'
+		filename: "unknown"
 		end: Object {
 			column: 14
 			index: 14
@@ -1358,20 +1358,20 @@ Object {
 	diagnostics: Array []
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
-	moduleType: 'cjs'
+	moduleType: "cjs"
 	syntax: Array []
 	exports: Array [
 		local {
-			kind: 'value'
-			name: 'default'
+			kind: "value"
+			name: "default"
 			loc: undefined
-			valueType: 'other'
+			valueType: "other"
 		}
 	]
 	topLevelLocalBindings: Object {
 		yes: Object {
-			filename: 'unknown'
-			identifierName: 'yes'
+			filename: "unknown"
+			identifierName: "yes"
 			end: Object {
 				column: 12
 				index: 59
@@ -1396,7 +1396,7 @@ Object {
 	exports: Array []
 	firstTopAwaitLocation: undefined
 	importFirstUsage: Array []
-	moduleType: 'es'
+	moduleType: "es"
 	syntax: Array []
 	topLevelLocalBindings: Object {}
 }

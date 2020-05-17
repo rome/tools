@@ -8,9 +8,9 @@
 import {
 	AssignmentAssignmentPattern,
 	BindingAssignmentPattern,
-} from '@romejs/js-ast';
-import Builder from '../../Builder';
-import {Token, concat, space} from '../../tokens';
+} from "@romejs/js-ast";
+import Builder from "../../Builder";
+import {Token, concat, space} from "../../tokens";
 
 export default function BindingAssignmentPattern(
 	builder: Builder,
@@ -19,7 +19,7 @@ export default function BindingAssignmentPattern(
 	return concat([
 		builder.tokenize(node.left, node),
 		space,
-		'=',
+		"=",
 		space,
 		builder.tokenize(node.right, node),
 	]);

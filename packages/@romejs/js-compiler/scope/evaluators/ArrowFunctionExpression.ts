@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Scope from '../Scope';
-import {AnyNode, ArrowFunctionExpression} from '@romejs/js-ast';
+import Scope from "../Scope";
+import {AnyNode, ArrowFunctionExpression} from "@romejs/js-ast";
 
 export default {
 	creator: true,

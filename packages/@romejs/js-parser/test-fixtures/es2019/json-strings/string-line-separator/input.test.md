@@ -9,14 +9,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 102
@@ -30,10 +30,10 @@ Program {
 	}
 	comments: Array [
 		CommentLine {
-			id: '0'
-			value: '      ^ That\'s a U+2028 LINE SEPARATOR UTF-16 char (between \'before\' and \'after\')'
+			id: "0"
+			value: "      ^ That's a U+2028 LINE SEPARATOR UTF-16 char (between 'before' and 'after')"
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 83
 					index: 101
@@ -49,9 +49,9 @@ Program {
 	]
 	body: Array [
 		ExpressionStatement {
-			trailingComments: Array ['0']
+			trailingComments: Array ["0"]
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 17
 					index: 17
@@ -64,9 +64,9 @@ Program {
 				}
 			}
 			expression: StringLiteral {
-				value: 'before\u2028after'
+				value: "before\u2028after"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 15
 						index: 15

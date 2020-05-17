@@ -9,9 +9,9 @@ import {
 	AnyNode,
 	RegExpDigitCharacter,
 	regExpDigitCharacter,
-} from '@romejs/js-ast';
+} from "@romejs/js-ast";
 
 export default function RegExpDigitCharacter(node: AnyNode) {
 	node = regExpDigitCharacter.assert(node);
-	throw new Error('unimplemented');
+	throw new Error("unimplemented");
 }

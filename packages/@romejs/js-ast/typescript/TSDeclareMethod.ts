@@ -11,11 +11,11 @@ import {
 	ClassPropertyMeta,
 	FunctionHead,
 	JSNodeBase,
-} from '../index';
-import {createBuilder} from '../utils';
+} from "../index";
+import {createBuilder} from "../utils";
 
 export type TSDeclareMethod = JSNodeBase & {
-	type: 'TSDeclareMethod';
+	type: "TSDeclareMethod";
 	meta: ClassPropertyMeta;
 	kind: ClassMethodKind;
 	key: AnyObjectPropertyKey;
@@ -24,7 +24,7 @@ export type TSDeclareMethod = JSNodeBase & {
 };
 
 export const tsDeclareMethod = createBuilder<TSDeclareMethod>(
-	'TSDeclareMethod',
+	"TSDeclareMethod",
 	{
 		bindingKeys: {},
 		visitorKeys: {

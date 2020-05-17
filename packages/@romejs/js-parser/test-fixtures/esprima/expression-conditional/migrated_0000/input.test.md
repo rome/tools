@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 10
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 9
 					index: 9
@@ -46,7 +46,7 @@ Program {
 			}
 			expression: ConditionalExpression {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 9
 						index: 9
@@ -62,7 +62,7 @@ Program {
 					value: 2
 					format: undefined
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 9
 							index: 9
@@ -79,7 +79,7 @@ Program {
 					value: 1
 					format: undefined
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 5
 							index: 5
@@ -93,10 +93,10 @@ Program {
 					}
 				}
 				test: ReferenceIdentifier {
-					name: 'y'
+					name: "y"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'y'
+						filename: "input.js"
+						identifierName: "y"
 						end: Object {
 							column: 1
 							index: 1

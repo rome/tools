@@ -12,8 +12,8 @@ import {
 	ExportNamespaceSpecifier,
 	JSNodeBase,
 	StringLiteral,
-} from '../index';
-import {createBuilder} from '../utils';
+} from "../index";
+import {createBuilder} from "../utils";
 
 export type AnyExportExternalSpecifier =
 	 | ExportNamespaceSpecifier
@@ -21,7 +21,7 @@ export type AnyExportExternalSpecifier =
 	| ExportExternalSpecifier;
 
 export type ExportExternalDeclaration = JSNodeBase & {
-	type: 'ExportExternalDeclaration';
+	type: "ExportExternalDeclaration";
 	defaultSpecifier?: ExportDefaultSpecifier;
 	namespaceSpecifier?: ExportNamespaceSpecifier;
 	namedSpecifiers: Array<ExportExternalSpecifier>;
@@ -30,7 +30,7 @@ export type ExportExternalDeclaration = JSNodeBase & {
 };
 
 export const exportExternalDeclaration = createBuilder<ExportExternalDeclaration>(
-	'ExportExternalDeclaration',
+	"ExportExternalDeclaration",
 	{
 		bindingKeys: {},
 		visitorKeys: {

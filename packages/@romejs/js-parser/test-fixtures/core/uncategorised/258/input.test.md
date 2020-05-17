@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 61
 			index: 61
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		LabeledStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 61
 					index: 61
@@ -45,10 +45,10 @@ Program {
 				}
 			}
 			label: Identifier {
-				name: 'target1'
+				name: "target1"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'target1'
+					filename: "input.js"
+					identifierName: "target1"
 					end: Object {
 						column: 7
 						index: 7
@@ -63,7 +63,7 @@ Program {
 			}
 			body: LabeledStatement {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 61
 						index: 61
@@ -76,10 +76,10 @@ Program {
 					}
 				}
 				label: Identifier {
-					name: 'target2'
+					name: "target2"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'target2'
+						filename: "input.js"
+						identifierName: "target2"
 						end: Object {
 							column: 16
 							index: 16
@@ -94,7 +94,7 @@ Program {
 				}
 				body: LabeledStatement {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 61
 							index: 61
@@ -107,10 +107,10 @@ Program {
 						}
 					}
 					label: Identifier {
-						name: 'target3'
+						name: "target3"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'target3'
+							filename: "input.js"
+							identifierName: "target3"
 							end: Object {
 								column: 25
 								index: 25
@@ -125,7 +125,7 @@ Program {
 					}
 					body: WhileStatement {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 61
 								index: 61
@@ -140,7 +140,7 @@ Program {
 						test: BooleanLiteral {
 							value: true
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 38
 									index: 38
@@ -156,7 +156,7 @@ Program {
 						body: BlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 61
 									index: 61
@@ -171,7 +171,7 @@ Program {
 							body: Array [
 								ContinueStatement {
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 59
 											index: 59
@@ -184,10 +184,10 @@ Program {
 										}
 									}
 									label: Identifier {
-										name: 'target1'
+										name: "target1"
 										loc: Object {
-											filename: 'input.js'
-											identifierName: 'target1'
+											filename: "input.js"
+											identifierName: "target1"
 											end: Object {
 												column: 58
 												index: 58

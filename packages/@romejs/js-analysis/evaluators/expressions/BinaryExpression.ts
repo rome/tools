@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {AnyNode, BinaryExpression, binaryExpression} from '@romejs/js-ast';
-import Evaluator from '../../Evaluator';
-import NumericT from '../../types/NumericT';
-import ExhaustiveT from '../../types/ExhaustiveT';
-import RefineTypeofT from '../../types/RefineTypeofT';
-import BinaryOpT from '../../types/BinaryOpT';
+import {Scope} from "../../scopes";
+import {AnyNode, BinaryExpression, binaryExpression} from "@romejs/js-ast";
+import Evaluator from "../../Evaluator";
+import NumericT from "../../types/NumericT";
+import ExhaustiveT from "../../types/ExhaustiveT";
+import RefineTypeofT from "../../types/RefineTypeofT";
+import BinaryOpT from "../../types/BinaryOpT";
 
 function maybeRefine(
 	node: AnyNode,
@@ -21,15 +21,15 @@ function maybeRefine(
 ): boolean {
 	const evaluator: Evaluator = scope.evaluator;
 
-	if (left.type === 'Identifier') {
+	if (left.type === "Identifier") {
 		scope.addBinding(left.name, evaluator.getTypeFromEvaluatedNode(right));
 		return true;
 	}
 
 	if (
-		left.type === 'UnaryExpression' &&
-		left.operator === 'typeof' &&
-		left.argument.type === 'ReferenceIdentifier'
+		left.type === "UnaryExpression" &&
+		left.operator === "typeof" &&
+		left.argument.type === "ReferenceIdentifier"
 	) {
 		const name = left.argument.name;
 		const binding = scope.getBinding(name);
@@ -56,21 +56,21 @@ export default function BinaryExpression(node: AnyNode, scope: Scope) {
 
 	// Enforce that the left and right sides of these operators are numbers
 	switch (node.operator) {
-		case '<<':
-		case '>>':
-		case '>>>':
-		case '-':
-		case '*':
-		case '/':
-		case '%':
-		case '**':
-		case '|':
-		case '^':
-		case '&':
-		case '<':
-		case '<=':
-		case '>':
-		case '>=': {
+		case "<<":
+		case ">>":
+		case ">>>":
+		case "-":
+		case "*":
+		case "/":
+		case "%":
+		case "**":
+		case "|":
+		case "^":
+		case "&":
+		case "<":
+		case "<=":
+		case ">":
+		case ">=": {
 			const num = new NumericT(scope, undefined);
 			new ExhaustiveT(scope, node, left, num);
 			new ExhaustiveT(scope, node, right, num);
@@ -80,7 +80,7 @@ export default function BinaryExpression(node: AnyNode, scope: Scope) {
 
 	// Refinements
 	let refinedScope = scope;
-	if (node.operator === '===') {
+	if (node.operator === "===") {
 		refinedScope = scope.refine();
 		maybeRefine(node, node.left, node.right, refinedScope) ||
 		maybeRefine(node, node.right, node.left, refinedScope);

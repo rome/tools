@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyComment, AnyNode, Program} from '@romejs/js-ast';
-import {CompilerContext} from '@romejs/js-compiler';
-import {Number1, ob1Get1} from '@romejs/ob1';
-import Path from '../lib/Path';
-import {SUPPRESSION_START} from '../suppressions';
-import {commentInjector} from '../transforms/defaultHooks/index';
-import {LintCompilerOptionsDecision} from '../types';
+import {AnyComment, AnyNode, Program} from "@romejs/js-ast";
+import {CompilerContext} from "@romejs/js-compiler";
+import {Number1, ob1Get1} from "@romejs/ob1";
+import Path from "../lib/Path";
+import {SUPPRESSION_START} from "../suppressions";
+import {commentInjector} from "../transforms/defaultHooks/index";
+import {LintCompilerOptionsDecision} from "../types";
 
 function getStartLine(node: AnyNode): undefined | Number1 {
 	const {loc} = node;
@@ -23,7 +23,7 @@ function getStartLine(node: AnyNode): undefined | Number1 {
 }
 
 function buildSuppressionCommentValue(categories: Set<string>): string {
-	return `${SUPPRESSION_START} ${Array.from(categories).join(' ')}`;
+	return `${SUPPRESSION_START} ${Array.from(categories).join(" ")}`;
 }
 
 export function addSuppressions(context: CompilerContext, ast: Program): Program {
@@ -41,7 +41,7 @@ export function addSuppressions(context: CompilerContext, ast: Program): Program
 		// Find all suppression decisions
 		const suppressionCategories: Set<string> = new Set();
 		for (const {category, action} of decisions) {
-			if (action === 'suppress') {
+			if (action === "suppress") {
 				suppressionCategories.add(category);
 			}
 		}
@@ -61,7 +61,7 @@ export function addSuppressions(context: CompilerContext, ast: Program): Program
 			const id = path.callHook(
 				commentInjector,
 				{
-					type: 'CommentLine',
+					type: "CommentLine",
 					value: ` ${buildSuppressionCommentValue(suppressionCategories)}`,
 				},
 			);
@@ -100,15 +100,15 @@ export function addSuppressions(context: CompilerContext, ast: Program): Program
 	return context.reduceRoot(
 		ast,
 		{
-			name: 'suppressionVisitor',
+			name: "suppressionVisitor",
 			enter(path: Path) {
 				const {node} = path;
 
 				// Don't allow attaching suppression comments to a comment or program...
 				if (
-					node.type === 'CommentBlock' ||
-					node.type === 'CommentLine' ||
-					node.type === 'Program'
+					node.type === "CommentBlock" ||
+					node.type === "CommentLine" ||
+					node.type === "Program"
 				) {
 					return node;
 				}

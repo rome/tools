@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Identifier, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {Identifier, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type ExportDefaultSpecifier = JSNodeBase & {
-	type: 'ExportDefaultSpecifier';
+	type: "ExportDefaultSpecifier";
 	exported: Identifier;
 };
 
 export const exportDefaultSpecifier = createBuilder<ExportDefaultSpecifier>(
-	'ExportDefaultSpecifier',
+	"ExportDefaultSpecifier",
 	{
 		bindingKeys: {},
 		visitorKeys: {

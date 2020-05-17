@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 30
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 29
 					index: 29
@@ -46,7 +46,7 @@ Program {
 			}
 			expression: ArrowFunctionExpression {
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 28
 						index: 28
@@ -59,10 +59,10 @@ Program {
 					}
 				}
 				body: ReferenceIdentifier {
-					name: 'x'
+					name: "x"
 					loc: Object {
-						filename: 'input.ts'
-						identifierName: 'x'
+						filename: "input.ts"
+						identifierName: "x"
 						end: Object {
 							column: 28
 							index: 28
@@ -81,7 +81,7 @@ Program {
 					rest: undefined
 					thisType: undefined
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 26
 							index: 26
@@ -95,7 +95,7 @@ Program {
 					}
 					returnType: AnyKeywordTypeAnnotation {
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 23
 								index: 23
@@ -110,9 +110,9 @@ Program {
 					}
 					params: Array [
 						BindingIdentifier {
-							name: 'x'
+							name: "x"
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 26
 									index: 26
@@ -127,7 +127,7 @@ Program {
 							meta: PatternMeta {
 								optional: true
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 26
 										index: 26
@@ -141,7 +141,7 @@ Program {
 								}
 								typeAnnotation: NumberKeywordTypeAnnotation {
 									loc: Object {
-										filename: 'input.ts'
+										filename: "input.ts"
 										end: Object {
 											column: 17
 											index: 17

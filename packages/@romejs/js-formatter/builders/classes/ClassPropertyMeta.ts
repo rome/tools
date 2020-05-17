@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token, concat, space} from '../../tokens';
-import {ClassPropertyMeta} from '@romejs/js-ast';
+import Builder from "../../Builder";
+import {Token, concat, space} from "../../tokens";
+import {ClassPropertyMeta} from "@romejs/js-ast";
 
 export default function ClassPropertyMeta(
 	builder: Builder,
@@ -21,16 +21,16 @@ export default function ClassPropertyMeta(
 		}
 
 		if (node.readonly) {
-			tokens.push('readonly', space);
+			tokens.push("readonly", space);
 		}
 
 		if (node.abstract) {
-			tokens.push('abstract', space);
+			tokens.push("abstract", space);
 		}
 	}
 
 	if (node.static) {
-		tokens.push('static', space);
+		tokens.push("static", space);
 	}
 
 	return concat(tokens);

@@ -9,14 +9,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 62
@@ -30,10 +30,10 @@ Program {
 	}
 	comments: Array [
 		CommentBlock {
-			id: '0'
-			value: ' EMPTY '
+			id: "0"
+			value: " EMPTY "
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 22
 					index: 22
@@ -47,10 +47,10 @@ Program {
 			}
 		}
 		CommentBlock {
-			id: '1'
-			value: ' ARGS '
+			id: "1"
+			value: " ARGS "
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 21
 					index: 46
@@ -64,10 +64,10 @@ Program {
 			}
 		}
 		CommentLine {
-			id: '2'
-			value: ' BODY'
+			id: "2"
+			value: " BODY"
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 9
 					index: 59
@@ -84,10 +84,10 @@ Program {
 	body: Array [
 		TSDeclareFunction {
 			id: BindingIdentifier {
-				name: 'x'
+				name: "x"
 				loc: Object {
-					filename: 'input.ts'
-					identifierName: 'x'
+					filename: "input.ts"
+					identifierName: "x"
 					end: Object {
 						column: 10
 						index: 10
@@ -101,7 +101,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 24
 					index: 24
@@ -123,9 +123,9 @@ Program {
 				thisType: undefined
 				trailingComments: Array []
 				typeParameters: undefined
-				innerComments: Array ['0']
+				innerComments: Array ["0"]
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 23
 						index: 23
@@ -141,10 +141,10 @@ Program {
 		}
 		FunctionDeclaration {
 			id: BindingIdentifier {
-				name: 'x'
+				name: "x"
 				loc: Object {
-					filename: 'input.ts'
-					identifierName: 'x'
+					filename: "input.ts"
+					identifierName: "x"
 					end: Object {
 						column: 10
 						index: 35
@@ -158,7 +158,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 1
 					index: 61
@@ -174,10 +174,10 @@ Program {
 				body: Array []
 				directives: Array []
 				trailingComments: Array []
-				innerComments: Array ['2']
-				leadingComments: Array ['1']
+				innerComments: Array ["2"]
+				leadingComments: Array ["1"]
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 1
 						index: 61
@@ -200,9 +200,9 @@ Program {
 				thisType: undefined
 				trailingComments: Array []
 				typeParameters: undefined
-				innerComments: Array ['1']
+				innerComments: Array ["1"]
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 22
 						index: 47

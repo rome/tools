@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {MasterRequest} from '@romejs/core';
-import {ProjectDefinition} from '@romejs/project';
-import {SourceMap} from '@romejs/codec-source-map';
-import Bundler from '../bundler/Bundler';
-import {commandCategories} from '../../common/commands';
-import {createMasterCommand} from '../commands';
-import {AbsoluteFilePath, createRelativeFilePath} from '@romejs/path';
+import {MasterRequest} from "@romejs/core";
+import {ProjectDefinition} from "@romejs/project";
+import {SourceMap} from "@romejs/codec-source-map";
+import Bundler from "../bundler/Bundler";
+import {commandCategories} from "../../common/commands";
+import {createMasterCommand} from "../commands";
+import {AbsoluteFilePath, createRelativeFilePath} from "@romejs/path";
 
 // This will be dispatched to the client where it has a special case for `executeCode`
 type RunResult = {
-	type: 'executeCode';
+	type: "executeCode";
 	filename: string;
 	code: string;
 	map: SourceMap;
@@ -23,8 +23,8 @@ type RunResult = {
 
 export default createMasterCommand({
 	category: commandCategories.PROJECT_MANAGEMENT,
-	description: 'TODO',
-	usage: '',
+	description: "TODO",
+	usage: "",
 	examples: [],
 	defineFlags() {
 		return {};
@@ -39,7 +39,7 @@ export default createMasterCommand({
 			const bundler = Bundler.createFromMasterRequest(req);
 			const {entry} = await bundler.bundle(path);
 			return {
-				type: 'executeCode',
+				type: "executeCode",
 				filename: path.join(),
 				code: entry.js.content,
 				map: entry.sourceMap.map.serialize(),
@@ -57,7 +57,7 @@ export default createMasterCommand({
 			...req.getResolverOptionsFromFlags(),
 			source: createRelativeFilePath(target),
 		});
-		if (resolved.type === 'FOUND') {
+		if (resolved.type === "FOUND") {
 			return executeCode(resolved.path);
 		}
 
@@ -72,7 +72,7 @@ export default createMasterCommand({
 				const resolved = await master.resolver.resolveEntryAssertPath({
 					...req.getResolverOptionsFromFlags(),
 					origin: folder,
-					platform: 'node',
+					platform: "node",
 					source: createRelativeFilePath(relative),
 				});
 

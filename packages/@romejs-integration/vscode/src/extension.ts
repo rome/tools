@@ -10,14 +10,14 @@ import {
 	LanguageClientOptions,
 	ServerOptions,
 	TransportKind,
-} from 'vscode-languageclient';
+} from "vscode-languageclient";
 // rome-ignore resolver/notFound
-import * as vscode from 'vscode';
-import path = require('path');
+import * as vscode from "vscode";
+import path = require("path");
 
-import fs = require('fs');
+import fs = require("fs");
 
-import os = require('os');
+import os = require("os");
 
 let client: LanguageClient;
 
@@ -31,7 +31,7 @@ function crawl(root: string): Iterable<string> {
 
 					return {
 						value,
-						done: root === '.' || root === '/',
+						done: root === "." || root === "/",
 					};
 				},
 			};
@@ -57,16 +57,16 @@ async function tryChain(
 
 async function tryManifest(root: string): Promise<undefined | string> {
 	for (const dir of crawl(root)) {
-		const manifestLoc = path.join(dir, 'package.json');
+		const manifestLoc = path.join(dir, "package.json");
 
 		try {
-			const content = await fs.promises.readFile(manifestLoc, 'utf8');
+			const content = await fs.promises.readFile(manifestLoc, "utf8");
 			const json = JSON.parse(content);
 			if (json.romeLSPBin) {
 				return String(path.resolve(dir, json.romeLSPBin));
 			}
 		} catch (err) {
-			if (err instanceof SyntaxError || err.code === 'ENOENT') {
+			if (err instanceof SyntaxError || err.code === "ENOENT") {
 				continue;
 			} else {
 				throw err;
@@ -84,7 +84,7 @@ async function getRomeLocation(): Promise<undefined | string> {
 
 	// Find relative to workspace folders
 	for (const {uri} of workspaceFolders) {
-		if (uri.scheme === 'file') {
+		if (uri.scheme === "file") {
 			const manifest = await tryManifest(uri.path);
 			if (manifest !== undefined) {
 				return manifest;
@@ -99,7 +99,7 @@ async function getRomeLocation(): Promise<undefined | string> {
 
 	// Find development build
 	try {
-		const possible = path.join(os.tmpdir(), 'rome-dev', 'index.js');
+		const possible = path.join(os.tmpdir(), "rome-dev", "index.js");
 		await fs.promises.access(possible);
 		return possible;
 	} catch (err) {
@@ -109,7 +109,7 @@ async function getRomeLocation(): Promise<undefined | string> {
 }
 
 export async function activate() {
-	const outputChannel = vscode.window.createOutputChannel('Rome');
+	const outputChannel = vscode.window.createOutputChannel("Rome");
 
 	function log(message: string) {
 		outputChannel.appendLine(message);
@@ -120,7 +120,7 @@ export async function activate() {
 	// If no romePath was found then watch workspace folders until we find one
 	if (romePath === undefined) {
 		log(
-			'No Rome path found. Waiting for workspace folder changes before trying again',
+			"No Rome path found. Waiting for workspace folder changes before trying again",
 		);
 
 		await new Promise((resolve) => {
@@ -137,29 +137,29 @@ export async function activate() {
 	}
 
 	if (romePath === undefined) {
-		throw new Error('Should have been defined');
+		throw new Error("Should have been defined");
 	}
 
 	log(`Discovered Rome path ${romePath}`);
 
 	let serverOptions: ServerOptions = {
 		module: romePath,
-		args: ['lsp'],
+		args: ["lsp"],
 		transport: TransportKind.stdio,
 	};
 
 	let clientOptions: LanguageClientOptions = {
 		outputChannel,
 		documentSelector: [
-			{scheme: 'file', language: 'javascript'},
-			{scheme: 'file', language: 'javascriptreact'},
-			{scheme: 'file', language: 'typescript'},
-			{scheme: 'file', language: 'typescriptreact'},
-			{scheme: 'file', language: 'json'},
+			{scheme: "file", language: "javascript"},
+			{scheme: "file", language: "javascriptreact"},
+			{scheme: "file", language: "typescript"},
+			{scheme: "file", language: "typescriptreact"},
+			{scheme: "file", language: "json"},
 		],
 	};
 
-	client = new LanguageClient('rome', 'Rome', serverOptions, clientOptions);
+	client = new LanguageClient("rome", "Rome", serverOptions, clientOptions);
 
 	client.start();
 }

@@ -12,8 +12,8 @@ import {
 	identifier,
 	staticMemberProperty,
 	stringLiteral,
-} from '@romejs/js-ast';
-import isValidIdentifierName from './isValidIdentifierName';
+} from "@romejs/js-ast";
+import isValidIdentifierName from "./isValidIdentifierName";
 
 export default function createMemberProperty(
 	name: string,

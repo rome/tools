@@ -5,18 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyPrimaryType, Identifier, JSNodeBase, TSThisType} from '../index';
-import {createBuilder} from '../utils';
+import {AnyTSPrimary, Identifier, JSNodeBase, TSThisType} from "../index";
+import {createBuilder} from "../utils";
 
 export type TSTypePredicate = JSNodeBase & {
-	type: 'TSTypePredicate';
+	type: "TSTypePredicate";
 	asserts: boolean;
 	parameterName: Identifier | TSThisType;
-	typeAnnotation?: AnyPrimaryType;
+	typeAnnotation?: AnyTSPrimary;
 };
 
 export const tsTypePredicate = createBuilder<TSTypePredicate>(
-	'TSTypePredicate',
+	"TSTypePredicate",
 	{
 		bindingKeys: {},
 		visitorKeys: {

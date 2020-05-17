@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Program} from '@romejs/js-ast';
+import {Program} from "@romejs/js-ast";
 import {
 	JSParserOptions,
 	JSParserUserOptions,
 	normalizeOptions,
-} from './options';
-import {Token} from './tokenizer/index';
-import {types as tokTypes} from './tokenizer/types';
-import {createJSParser} from './parser';
-import './tokenizer/context';
+} from "./options";
+import {Token} from "./tokenizer/index";
+import {types as tokTypes} from "./tokenizer/types";
+import {createJSParser} from "./parser";
+import "./tokenizer/context";
 
 export function parseJS(userOptions: JSParserUserOptions): Program {
 	const options: JSParserOptions = normalizeOptions(userOptions);
@@ -38,7 +38,7 @@ export function tokenizeJS(
 		const invalidStart = firstDiag.location.start;
 		const invalidEnd = firstDiag.location.end;
 		if (invalidStart === undefined || invalidEnd === undefined) {
-			throw new Error('All parser diagnostics are expected to have a start/end');
+			throw new Error("All parser diagnostics are expected to have a start/end");
 		}
 
 		const invalidStartIndex = invalidStart.index;
@@ -69,5 +69,5 @@ export {Token};
 
 export {tokTypes};
 
-export {keywords as keywordTokTypes} from './tokenizer/types';
-export * from './xhtmlEntities';
+export {keywords as keywordTokTypes} from "./tokenizer/types";
+export * from "./xhtmlEntities";

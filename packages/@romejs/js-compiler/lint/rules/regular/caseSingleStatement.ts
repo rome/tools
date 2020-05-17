@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, TransformExitResult} from '@romejs/js-compiler';
-import {blockStatement} from '@romejs/js-ast';
-import {descriptions} from '@romejs/diagnostics';
+import {Path, TransformExitResult} from "@romejs/js-compiler";
+import {blockStatement} from "@romejs/js-ast";
+import {descriptions} from "@romejs/diagnostics";
 
 export default {
-	name: 'caseSingleStatement',
+	name: "caseSingleStatement",
 	enter(path: Path): TransformExitResult {
 		const {node, context} = path;
 
-		if (node.type === 'SwitchCase' && node.consequent.length > 1) {
+		if (node.type === "SwitchCase" && node.consequent.length > 1) {
 			return context.addFixableDiagnostic(
 				{
 					old: node,

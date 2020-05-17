@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import getCompletionRecords from './getCompletionRecords';
-import {test} from 'rome';
-import {parseJS} from '@romejs/js-parser';
-import {functionDeclaration} from '@romejs/js-ast';
+import getCompletionRecords from "./getCompletionRecords";
+import {test} from "rome";
+import {parseJS} from "@romejs/js-parser";
+import {functionDeclaration} from "@romejs/js-ast";
 
 function helper(input: string) {
 	return getCompletionRecords(
 		functionDeclaration.assert(
 			parseJS({
-				path: 'unknown',
+				path: "unknown",
 				input: `function foo(){${input}}`,
 			}).body[0],
 		).body,
@@ -22,7 +22,7 @@ function helper(input: string) {
 }
 
 test(
-	'invalid',
+	"invalid",
 	async (t) => {
 		t.snapshot(helper(`{}`));
 		t.snapshot(helper(`'foobar';`));
@@ -35,7 +35,7 @@ test(
 );
 
 test(
-	'completions',
+	"completions",
 	async (t) => {
 		t.snapshot(helper(`return false;`));
 		t.snapshot(helper(`return; invalid;`));
@@ -47,7 +47,7 @@ test(
 );
 
 test(
-	'mix',
+	"mix",
 	async (t) => {
 		t.snapshot(helper(`switch (foo) {default: {if (true) {return false;}}}`));
 	},

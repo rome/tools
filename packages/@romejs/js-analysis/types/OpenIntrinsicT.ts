@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../scopes';
-import {HydrateData} from '../Evaluator';
-import T from './T';
-import OpenT from './OpenT';
-import {AnyNode} from '@romejs/js-ast';
+import {Scope} from "../scopes";
+import {HydrateData} from "../Evaluator";
+import T from "./T";
+import OpenT from "./OpenT";
+import {AnyNode} from "@romejs/js-ast";
 
 export default class OpenIntrinsicT extends OpenT {
 	constructor(scope: Scope, originNode: undefined | AnyNode, name: string) {
@@ -17,7 +17,7 @@ export default class OpenIntrinsicT extends OpenT {
 		this.name = name;
 	}
 
-	static type = 'OpenIntrinsicT';
+	static type = "OpenIntrinsicT";
 
 	name: string;
 
@@ -36,6 +36,6 @@ export default class OpenIntrinsicT extends OpenT {
 	}
 
 	humanize(): string {
-		return 'open intrinsic';
+		return "open intrinsic";
 	}
 }

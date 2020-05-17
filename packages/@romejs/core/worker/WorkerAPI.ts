@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {FileReference, Worker} from '@romejs/core';
-import {AnyNode, Program} from '@romejs/js-ast';
-import {Diagnostics, catchDiagnostics, descriptions} from '@romejs/diagnostics';
+import {FileReference, Worker} from "@romejs/core";
+import {AnyNode, Program} from "@romejs/js-ast";
+import {Diagnostics, catchDiagnostics, descriptions} from "@romejs/diagnostics";
 import {
 	CompileResult,
 	CompilerContext,
@@ -15,28 +15,28 @@ import {
 	Path,
 	TransformStageName,
 	compile,
-} from '@romejs/js-compiler';
+} from "@romejs/js-compiler";
 import {
 	WorkerCompilerOptions,
 	WorkerFormatResult,
 	WorkerLintOptions,
 	WorkerLintResult,
 	WorkerParseOptions,
-} from '../common/bridges/WorkerBridge';
-import Logger from '../common/utils/Logger';
-import * as jsAnalysis from '@romejs/js-analysis';
-import {ExtensionLintResult} from '../common/file-handlers/types';
-import {getFileHandlerAssert} from '../common/file-handlers/index';
+} from "../common/bridges/WorkerBridge";
+import Logger from "../common/utils/Logger";
+import * as jsAnalysis from "@romejs/js-analysis";
+import {ExtensionLintResult} from "../common/file-handlers/types";
+import {getFileHandlerAssert} from "../common/file-handlers/index";
 import {
 	AnalyzeDependencyResult,
 	UNKNOWN_ANALYZE_DEPENDENCIES_RESULT,
-} from '../common/types/analyzeDependencies';
+} from "../common/types/analyzeDependencies";
 import {
 	InlineSnapshotUpdate,
 	InlineSnapshotUpdates,
-} from '../test-worker/SnapshotManager';
-import {formatJS} from '@romejs/js-formatter';
-import {getNodeReferenceParts, valueToNode} from '@romejs/js-ast-utils';
+} from "../test-worker/SnapshotManager";
+import {formatJS} from "@romejs/js-formatter";
+import {getNodeReferenceParts, valueToNode} from "@romejs/js-ast-utils";
 
 // Some Windows git repos will automatically convert Unix line endings to Windows
 // This retains the line endings for the formatted code if they were present in the source
@@ -44,8 +44,8 @@ function normalizeFormattedLineEndings(
 	sourceText: string,
 	formatted: string,
 ): string {
-	if (sourceText.includes('\r')) {
-		return formatted.replace(/\n/g, '\r\n');
+	if (sourceText.includes("\r")) {
+		return formatted.replace(/\n/g, "\r\n");
 	} else {
 		return formatted;
 	}
@@ -72,9 +72,9 @@ export default class WorkerAPI {
 						advice: [
 							...diag.description.advice,
 							{
-								type: 'log',
-								category: 'warn',
-								text: 'This diagnostic was generated on a file that has been converted to JavaScript. The source locations are most likely incorrect',
+								type: "log",
+								category: "warn",
+								text: "This diagnostic was generated on a file that has been converted to JavaScript. The source locations are most likely incorrect",
 							},
 						],
 					},
@@ -119,10 +119,10 @@ export default class WorkerAPI {
 		ast = context.reduceRoot(
 			ast,
 			{
-				name: 'updateInlineSnapshots',
+				name: "updateInlineSnapshots",
 				enter(path: Path): AnyNode {
 					const {node} = path;
-					if (node.type !== 'CallExpression' || pendingUpdates.size === 0) {
+					if (node.type !== "CallExpression" || pendingUpdates.size === 0) {
 						return node;
 					}
 
@@ -179,7 +179,7 @@ export default class WorkerAPI {
 		const diags = context.diagnostics.getDiagnostics();
 
 		if (pendingUpdates.size > 0 && diags.length === 0) {
-			throw new Error('Left over inline snapshots that were not updated');
+			throw new Error("Left over inline snapshots that were not updated");
 		}
 
 		if (diags.length === 0) {
@@ -349,8 +349,8 @@ export default class WorkerAPI {
 				}
 			},
 			{
-				category: 'lint',
-				message: 'Caught by WorkerAPI.lint',
+				category: "lint",
+				message: "Caught by WorkerAPI.lint",
 			},
 		);
 

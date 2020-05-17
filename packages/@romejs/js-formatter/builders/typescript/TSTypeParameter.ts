@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSTypeParameter} from '@romejs/js-ast';
-import {Builder} from '@romejs/js-formatter';
-import {Token, concat, space} from '../../tokens';
+import {TSTypeParameter} from "@romejs/js-ast";
+import {Builder} from "@romejs/js-formatter";
+import {Token, concat, space} from "../../tokens";
 
 export default function TSTypeParameter(
 	builder: Builder,
@@ -16,11 +16,11 @@ export default function TSTypeParameter(
 	const tokens: Array<Token> = [node.name];
 
 	if (node.constraint) {
-		tokens.push(space, 'extends', space, builder.tokenize(node.constraint, node));
+		tokens.push(space, "extends", space, builder.tokenize(node.constraint, node));
 	}
 
 	if (node.default) {
-		tokens.push(space, '=', space, builder.tokenize(node.default, node));
+		tokens.push(space, "=", space, builder.tokenize(node.default, node));
 	}
 
 	return concat(tokens);

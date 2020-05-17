@@ -14,7 +14,7 @@
 ### `0: formatted`
 
 ```
-foobar('yes');
+foobar("yes");
 
 ```
 
@@ -30,6 +30,6 @@ foobar('yes');
 ### `0: formatted`
 
 ```
-foobar('yes');
+foobar("yes");
 
 ```

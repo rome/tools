@@ -10,17 +10,17 @@ import {
 	parseJSON,
 	stringifyJSON,
 	stringifyRJSONFromConsumer,
-} from '@romejs/codec-json';
-import {createAbsoluteFilePath, createUnknownFilePath} from '@romejs/path';
+} from "@romejs/codec-json";
+import {createAbsoluteFilePath, createUnknownFilePath} from "@romejs/path";
 import {
 	ExtensionHandler,
 	ExtensionHandlerMethodInfo,
 	ExtensionLintResult,
-} from './types';
-import {textHandler} from './text';
+} from "./types";
+import {textHandler} from "./text";
 
 export const jsonHandler: ExtensionHandler = {
-	ext: 'json',
+	ext: "json",
 
 	// analyzeDependencies shim
 	...textHandler,
@@ -72,7 +72,7 @@ export const jsonHandler: ExtensionHandler = {
 		});
 
 		const rawJson = JSON.stringify(obj);
-		const json: string = rawJson === undefined ? 'undefined' : rawJson;
+		const json: string = rawJson === undefined ? "undefined" : rawJson;
 
 		// TODO handle unicode newlines here
 		return {
@@ -84,5 +84,5 @@ export const jsonHandler: ExtensionHandler = {
 
 export const rjsonHandler: ExtensionHandler = {
 	...jsonHandler,
-	ext: 'rjson',
+	ext: "rjson",
 };

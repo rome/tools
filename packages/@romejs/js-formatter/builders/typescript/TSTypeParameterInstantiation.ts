@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSTypeParameterInstantiation} from '@romejs/js-ast';
-import {Builder} from '@romejs/js-formatter';
-import {Token} from '../../tokens';
-import TSTypeParameterDeclaration from './TSTypeParameterDeclaration';
+import {TSTypeParameterInstantiation} from "@romejs/js-ast";
+import {Builder} from "@romejs/js-formatter";
+import {Token} from "../../tokens";
+import TSTypeParameterDeclaration from "./TSTypeParameterDeclaration";
 
 export default function TSTypeParameterInstantiation(
 	builder: Builder,

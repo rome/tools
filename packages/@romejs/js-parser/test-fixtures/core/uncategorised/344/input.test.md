@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 16
 			index: 30
@@ -30,9 +30,9 @@ Program {
 	}
 	directives: Array [
 		Directive {
-			value: 'use strict'
+			value: "use strict"
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -49,7 +49,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 16
 					index: 30
@@ -64,7 +64,7 @@ Program {
 			expression: CallExpression {
 				arguments: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 15
 						index: 29
@@ -78,7 +78,7 @@ Program {
 				}
 				callee: MemberExpression {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 13
 							index: 27
@@ -91,10 +91,10 @@ Program {
 						}
 					}
 					object: ReferenceIdentifier {
-						name: 'object'
+						name: "object"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'object'
+							filename: "input.js"
+							identifierName: "object"
 							end: Object {
 								column: 6
 								index: 20
@@ -109,10 +109,10 @@ Program {
 					}
 					property: StaticMemberProperty {
 						value: Identifier {
-							name: 'static'
+							name: "static"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'static'
+								filename: "input.js"
+								identifierName: "static"
 								end: Object {
 									column: 13
 									index: 27
@@ -126,8 +126,8 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'static'
+							filename: "input.js"
+							identifierName: "static"
 							end: Object {
 								column: 13
 								index: 27

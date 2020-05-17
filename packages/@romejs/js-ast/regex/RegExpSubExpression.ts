@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyRegExpBodyItem, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {AnyRegExpBodyItem, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type RegExpSubExpression = JSNodeBase & {
-	type: 'RegExpSubExpression';
+	type: "RegExpSubExpression";
 	body: Array<AnyRegExpBodyItem>;
 };
 
 export const regExpSubExpression = createBuilder<RegExpSubExpression>(
-	'RegExpSubExpression',
+	"RegExpSubExpression",
 	{
 		bindingKeys: {},
 		visitorKeys: {

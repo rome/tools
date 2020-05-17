@@ -5,24 +5,24 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {testLintMultiple} from '../testHelpers';
+import {test} from "rome";
+import {testLintMultiple} from "../testHelpers";
 
 test(
-	'double equals',
+	"double equals",
 	async (t) => {
 		await testLintMultiple(
 			t,
 			[
 				// VALID
-				'foo == null',
-				'foo != null',
-				'null == foo',
-				'null != foo',
+				"foo == null",
+				"foo != null",
+				"null == foo",
+				"null != foo",
 				// INVALID
-				'foo == bar',
+				"foo == bar",
 			],
-			{category: 'lint/doubleEquals'},
+			{category: "lint/doubleEquals"},
 		);
 	},
 );

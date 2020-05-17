@@ -5,19 +5,19 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from '@romejs/js-compiler';
-import {AnyNode} from '@romejs/js-ast';
-import {descriptions} from '@romejs/diagnostics';
+import {Path} from "@romejs/js-compiler";
+import {AnyNode} from "@romejs/js-ast";
+import {descriptions} from "@romejs/diagnostics";
 
 export default {
-	name: 'noDeleteVars',
+	name: "noDeleteVars",
 	enter(path: Path): AnyNode {
 		const {node} = path;
 
 		if (
-			node.type === 'UnaryExpression' &&
-			node.operator === 'delete' &&
-			node.argument.type === 'ReferenceIdentifier'
+			node.type === "UnaryExpression" &&
+			node.operator === "delete" &&
+			node.argument.type === "ReferenceIdentifier"
 		) {
 			path.context.addNodeDiagnostic(node, descriptions.LINT.NO_DELETE_VARS);
 		}

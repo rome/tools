@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {BindingIdentifier, ClassHead, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {BindingIdentifier, ClassHead, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type ClassExpression = JSNodeBase & {
-	type: 'ClassExpression';
+	type: "ClassExpression";
 	id?: BindingIdentifier;
 	meta: ClassHead;
 };
 
 export const classExpression = createBuilder<ClassExpression>(
-	'ClassExpression',
+	"ClassExpression",
 	{
 		bindingKeys: {
 			id: true,

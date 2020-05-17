@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {testLint} from '../testHelpers';
-import {dedent} from '@romejs/string-utils';
+import {test} from "rome";
+import {testLint} from "../testHelpers";
+import {dedent} from "@romejs/string-utils";
 
 test(
-	'no cond assign',
+	"no cond assign",
 	async (t) => {
 		await testLint(
 			t,
@@ -19,7 +19,7 @@ test(
           console.log('foo');
         }
       `,
-			{category: 'lint/noCondAssign'},
+			{category: "lint/noCondAssign"},
 		);
 
 		await testLint(
@@ -29,7 +29,7 @@ test(
           console.log('foo');
         }
       `,
-			{category: 'lint/noCondAssign'},
+			{category: "lint/noCondAssign"},
 		);
 
 		await testLint(
@@ -39,7 +39,7 @@ test(
           console.log('foo');
         }
       `,
-			{category: 'lint/noCondAssign'},
+			{category: "lint/noCondAssign"},
 		);
 
 		await testLint(
@@ -49,7 +49,7 @@ test(
           console.log('foo');
         } while (foo = 'bar')
       `,
-			{category: 'lint/noCondAssign'},
+			{category: "lint/noCondAssign"},
 		);
 	},
 );

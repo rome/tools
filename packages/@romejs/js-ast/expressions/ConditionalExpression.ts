@@ -5,18 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyExpression, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {AnyExpression, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type ConditionalExpression = JSNodeBase & {
-	type: 'ConditionalExpression';
+	type: "ConditionalExpression";
 	test: AnyExpression;
 	alternate: AnyExpression;
 	consequent: AnyExpression;
 };
 
 export const conditionalExpression = createBuilder<ConditionalExpression>(
-	'ConditionalExpression',
+	"ConditionalExpression",
 	{
 		bindingKeys: {},
 		visitorKeys: {

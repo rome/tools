@@ -125,7 +125,7 @@ const a = [1, 2].map(function(x) {
 ### `4: formatted`
 
 ```
-const a = [<div key="a" />, <div key={'b'} />];
+const a = [<div key='a' />, <div key={"b"} />];
 
 ```
 

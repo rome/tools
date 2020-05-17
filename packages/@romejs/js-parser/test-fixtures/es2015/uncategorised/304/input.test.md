@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 45
 			index: 45
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 45
 					index: 45
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'var'
+				kind: "var"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 45
 						index: 45
@@ -64,7 +64,7 @@ Program {
 						id: BindingObjectPattern {
 							rest: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 39
 									index: 39
@@ -80,10 +80,10 @@ Program {
 								BindingObjectPatternProperty {
 									key: StaticPropertyKey {
 										value: Identifier {
-											name: 'propName'
+											name: "propName"
 											loc: Object {
-												filename: 'input.js'
-												identifierName: 'propName'
+												filename: "input.js"
+												identifierName: "propName"
 												end: Object {
 													column: 13
 													index: 13
@@ -97,7 +97,7 @@ Program {
 											}
 										}
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 13
 												index: 13
@@ -112,7 +112,7 @@ Program {
 									}
 									value: BindingAssignmentPattern {
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 38
 												index: 38
@@ -125,10 +125,10 @@ Program {
 											}
 										}
 										left: BindingIdentifier {
-											name: 'localVar'
+											name: "localVar"
 											loc: Object {
-												filename: 'input.js'
-												identifierName: 'localVar'
+												filename: "input.js"
+												identifierName: "localVar"
 												end: Object {
 													column: 23
 													index: 23
@@ -142,10 +142,10 @@ Program {
 											}
 										}
 										right: ReferenceIdentifier {
-											name: 'defaultValue'
+											name: "defaultValue"
 											loc: Object {
-												filename: 'input.js'
-												identifierName: 'defaultValue'
+												filename: "input.js"
+												identifierName: "defaultValue"
 												end: Object {
 													column: 38
 													index: 38
@@ -160,7 +160,7 @@ Program {
 										}
 									}
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 38
 											index: 38
@@ -176,7 +176,7 @@ Program {
 							]
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 45
 								index: 45
@@ -189,10 +189,10 @@ Program {
 							}
 						}
 						init: ReferenceIdentifier {
-							name: 'obj'
+							name: "obj"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'obj'
+								filename: "input.js"
+								identifierName: "obj"
 								end: Object {
 									column: 45
 									index: 45

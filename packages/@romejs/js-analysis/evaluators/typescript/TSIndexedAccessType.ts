@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
+import {Scope} from "../../scopes";
 import {
 	AnyNode,
 	TSIndexedAccessType,
 	tsIndexedAccessType,
-} from '@romejs/js-ast';
+} from "@romejs/js-ast";
 
 export default function TSIndexedAccessType(node: AnyNode, scope: Scope) {
 	node = tsIndexedAccessType.assert(node);
 	scope;
-	throw new Error('unimplemented');
+	throw new Error("unimplemented");
 }

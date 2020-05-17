@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, RegExpCharacter, regExpCharacter} from '@romejs/js-ast';
+import {AnyNode, RegExpCharacter, regExpCharacter} from "@romejs/js-ast";
 
 export default function RegExpCharacter(node: AnyNode) {
 	node = regExpCharacter.assert(node);
-	throw new Error('unimplemented');
+	throw new Error("unimplemented");
 }

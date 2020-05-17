@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 21
@@ -30,16 +30,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unexpected keyword this'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unexpected keyword this"}
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 12
 					index: 12
@@ -56,7 +56,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 20
 					index: 20
@@ -70,7 +70,7 @@ Program {
 			}
 			expression: ObjectExpression {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -86,10 +86,10 @@ Program {
 					ObjectProperty {
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'get'
+								name: "get"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'get'
+									filename: "input.js"
+									identifierName: "get"
 									end: Object {
 										column: 6
 										index: 6
@@ -103,7 +103,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 6
 									index: 6
@@ -117,10 +117,10 @@ Program {
 							}
 						}
 						value: ReferenceIdentifier {
-							name: 'get'
+							name: "get"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'get'
+								filename: "input.js"
+								identifierName: "get"
 								end: Object {
 									column: 6
 									index: 6
@@ -134,7 +134,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 6
 								index: 6
@@ -150,10 +150,10 @@ Program {
 					ObjectProperty {
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'this'
+								name: "this"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'this'
+									filename: "input.js"
+									identifierName: "this"
 									end: Object {
 										column: 12
 										index: 12
@@ -167,7 +167,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 12
 									index: 12
@@ -181,10 +181,10 @@ Program {
 							}
 						}
 						value: ReferenceIdentifier {
-							name: 'this'
+							name: "this"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'this'
+								filename: "input.js"
+								identifierName: "this"
 								end: Object {
 									column: 12
 									index: 12
@@ -198,7 +198,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 12
 								index: 12
@@ -214,10 +214,10 @@ Program {
 					ObjectProperty {
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'if'
+								name: "if"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'if'
+									filename: "input.js"
+									identifierName: "if"
 									end: Object {
 										column: 16
 										index: 16
@@ -231,7 +231,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 16
 									index: 16
@@ -245,10 +245,10 @@ Program {
 							}
 						}
 						value: ReferenceIdentifier {
-							name: 'if'
+							name: "if"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'if'
+								filename: "input.js"
+								identifierName: "if"
 								end: Object {
 									column: 16
 									index: 16
@@ -262,7 +262,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 16
 								index: 16

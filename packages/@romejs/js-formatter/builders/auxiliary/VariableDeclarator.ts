@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {VariableDeclarator} from '@romejs/js-ast';
-import {Token, concat, space} from '../../tokens';
-import {printAssignment} from '../utils';
+import Builder from "../../Builder";
+import {VariableDeclarator} from "@romejs/js-ast";
+import {Token, concat, space} from "../../tokens";
+import {printAssignment} from "../utils";
 
 export default function VariableDeclarator(
 	builder: Builder,
@@ -19,7 +19,7 @@ export default function VariableDeclarator(
 			builder,
 			node,
 			node.id,
-			concat([space, '=']),
+			concat([space, "="]),
 			node.init,
 		);
 	} else {

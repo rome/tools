@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 18
 			index: 18
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 18
 					index: 18
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			expression: AssignmentExpression {
-				operator: '='
+				operator: "="
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -60,10 +60,10 @@ Program {
 					}
 				}
 				right: ReferenceIdentifier {
-					name: 'd'
+					name: "d"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'd'
+						filename: "input.js"
+						identifierName: "d"
 						end: Object {
 							column: 18
 							index: 18
@@ -78,7 +78,7 @@ Program {
 				}
 				left: AssignmentArrayPattern {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 14
 							index: 14
@@ -92,10 +92,10 @@ Program {
 					}
 					elements: Array [
 						AssignmentIdentifier {
-							name: 'a'
+							name: "a"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'a'
+								filename: "input.js"
+								identifierName: "a"
 								end: Object {
 									column: 2
 									index: 2
@@ -112,7 +112,7 @@ Program {
 					rest: AssignmentArrayPattern {
 						rest: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 13
 								index: 13
@@ -126,10 +126,10 @@ Program {
 						}
 						elements: Array [
 							AssignmentIdentifier {
-								name: 'b'
+								name: "b"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'b'
+									filename: "input.js"
+									identifierName: "b"
 									end: Object {
 										column: 9
 										index: 9
@@ -143,10 +143,10 @@ Program {
 								}
 							}
 							AssignmentIdentifier {
-								name: 'c'
+								name: "c"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'c'
+									filename: "input.js"
+									identifierName: "c"
 									end: Object {
 										column: 12
 										index: 12

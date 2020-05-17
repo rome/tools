@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {MasterRequest} from '@romejs/core';
-import {commandCategories} from '../../common/commands';
-import {createMasterCommand} from '../commands';
-import {createUnknownFilePath} from '@romejs/path';
+import {MasterRequest} from "@romejs/core";
+import {commandCategories} from "../../common/commands";
+import {createMasterCommand} from "../commands";
+import {createUnknownFilePath} from "@romejs/path";
 
 export default createMasterCommand({
 	category: commandCategories.SOURCE_CODE,
-	description: 'resolve a file',
-	usage: '',
+	description: "resolve a file",
+	usage: "",
 	examples: [],
 	defineFlags() {
 		return {};
@@ -25,7 +25,7 @@ export default createMasterCommand({
 		req.expectArgumentLength(1, 2);
 
 		let origin;
-		let relative = '';
+		let relative = "";
 		let key;
 
 		if (args.length === 2) {
@@ -47,7 +47,7 @@ export default createMasterCommand({
 		const resolved = await master.resolver.resolveEntryAssert(
 			query,
 			{
-				location: req.getDiagnosticPointerFromFlags({type: 'arg', key}),
+				location: req.getDiagnosticPointerFromFlags({type: "arg", key}),
 			},
 		);
 		const filename = resolved.ref.real.join();

@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type RegExpNonWhiteSpaceCharacter = JSNodeBase & {
-	type: 'RegExpNonWhiteSpaceCharacter';
+	type: "RegExpNonWhiteSpaceCharacter";
 };
 
 export const regExpNonWhiteSpaceCharacter = createBuilder<RegExpNonWhiteSpaceCharacter>(
-	'RegExpNonWhiteSpaceCharacter',
+	"RegExpNonWhiteSpaceCharacter",
 	{
 		bindingKeys: {},
 		visitorKeys: {},

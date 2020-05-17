@@ -12,14 +12,14 @@ import {
 	GUTTER,
 	HALF_MAX_CODE_FRAME_LINES,
 	MAX_CODE_FRAME_LINES,
-} from './constants';
-import {Position} from '@romejs/parser-core';
+} from "./constants";
+import {Position} from "@romejs/parser-core";
 import {
 	ToLines,
 	cleanEquivalentString,
 	joinNoBreak,
 	normalizeTabs,
-} from './utils';
+} from "./utils";
 import {
 	Number0,
 	ob1Coerce0,
@@ -30,8 +30,8 @@ import {
 	ob1Number0,
 	ob1Number1Neg1,
 	ob1Sub,
-} from '@romejs/ob1';
-import {markupToPlainTextString} from '@romejs/string-markup';
+} from "@romejs/ob1";
+import {markupToPlainTextString} from "@romejs/string-markup";
 
 function createPointer(
 	markerMessage: string,
@@ -39,14 +39,14 @@ function createPointer(
 	markerStart: Number0,
 	markerEnd: Number0,
 ): undefined | string {
-	let result = '';
+	let result = "";
 
 	let markerSize = ob1Get0(ob1Sub(markerEnd, markerStart));
 
 	// If the range contains tabs then increase the marker size
 	for (let i = ob1Get0(markerStart); i < ob1Get0(markerEnd); i++) {
 		const char = line[i];
-		if (char === '\t') {
+		if (char === "\t") {
 			markerSize++;
 		}
 	}
@@ -60,24 +60,24 @@ function createPointer(
 		// Add indentation, handling hard tabs as two soft spaces
 		for (let i = 0; i < ob1Get0(markerStart); i++) {
 			const char = line[i];
-			if (char === '\t') {
+			if (char === "\t") {
 				// normalizeTabs will be called on this line and this replacement made
-				result += '  ';
+				result += "  ";
 			} else {
-				result += ' ';
+				result += " ";
 			}
 		}
 
 		// Add pointer
-		result += `<error><emphasis>${'^'.repeat(pointerLength)}</emphasis></error>`;
+		result += `<error><emphasis>${"^".repeat(pointerLength)}</emphasis></error>`;
 	}
 
 	// Add marker
-	if (markerMessage !== '') {
+	if (markerMessage !== "") {
 		result += ` ${markerMessage}`;
 	}
 
-	if (result === '') {
+	if (result === "") {
 		return undefined;
 	} else {
 		return result;
@@ -92,8 +92,8 @@ export default function buildMessageCodeFrame(
 	markerMessage: string,
 ): string {
 	if (allLines.length === 0 || start === undefined || end === undefined) {
-		if (markerMessage === '') {
-			return '';
+		if (markerMessage === "") {
+			return "";
 		} else {
 			return `<nobr>${markerMessage}</nobr>`;
 		}
@@ -132,7 +132,7 @@ export default function buildMessageCodeFrame(
 
 		// Ensure that the frame doesn't start with whitespace
 		if (
-			rawLine.trim() === '' &&
+			rawLine.trim() === "" &&
 			formattedLines.length === 0 &&
 			i !== startLineIndex
 		) {
@@ -151,7 +151,7 @@ export default function buildMessageCodeFrame(
 			} else if (i === startLineIndex) {
 				// First line in selection
 				pointer = createPointer(
-					'',
+					"",
 					rawLine,
 					start.column,
 					// line could be highlighted
@@ -195,7 +195,7 @@ export default function buildMessageCodeFrame(
 	// Remove trailing blank lines
 	for (let i = formattedLines.length - 1; i >= 0; i--) {
 		const info = formattedLines[i];
-		if (info !== undefined && info.line === '') {
+		if (info !== undefined && info.line === "") {
 			formattedLines.pop();
 		} else {
 			break;
@@ -208,8 +208,8 @@ export default function buildMessageCodeFrame(
 		end.line === ob1Number1Neg1 ||
 		start.line === ob1Number1Neg1
 	) {
-		if (markerMessage === '') {
-			return '';
+		if (markerMessage === "") {
+			return "";
 		} else {
 			return `<nobr>${markerMessage}</nobr>`;
 		}
@@ -218,20 +218,20 @@ export default function buildMessageCodeFrame(
 	// Calculate max size of gutter, this is the maximum visible line plus the futter length plus the frame indent
 	const lastLine = formattedLines[formattedLines.length - 1];
 	if (lastLine === undefined) {
-		throw new Error('Expected there to be a last line');
+		throw new Error("Expected there to be a last line");
 	}
 
 	const maxGutterLength =
 		String(maxVisibleLineNo).length + GUTTER.length + CODE_FRAME_INDENT.length;
 
 	// If what the marker is highlighting equals the marker message then it's redundant so don't show the message
-	if (markerMessage !== '') {
+	if (markerMessage !== "") {
 		const text = sourceText.slice(ob1Get0(start.index), ob1Get0(end.index));
 		if (
 			cleanEquivalentString(text) ===
 			cleanEquivalentString(markupToPlainTextString(markerMessage))
 		) {
-			markerMessage = '';
+			markerMessage = "";
 		}
 	}
 
@@ -240,7 +240,7 @@ export default function buildMessageCodeFrame(
 		const selection = formattedLines[0];
 		if (selection === undefined) {
 			throw new Error(
-				'Expected a selection? undefined is only valid here as an omitted line signifier',
+				"Expected a selection? undefined is only valid here as an omitted line signifier",
 			);
 		}
 

@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '@romejs/js-compiler';
-import {AnyNode} from '@romejs/js-ast';
-import doesNodeMatchPattern from './doesNodeMatchPattern';
+import {Scope} from "@romejs/js-compiler";
+import {AnyNode} from "@romejs/js-ast";
+import doesNodeMatchPattern from "./doesNodeMatchPattern";
 
 export default function getRequireSource(
 	node: undefined | AnyNode,
@@ -20,32 +20,32 @@ export default function getRequireSource(
 
 	if (
 		allowStaticMember &&
-		node.type === 'MemberExpression' &&
-		node.property.type === 'StaticMemberProperty'
+		node.type === "MemberExpression" &&
+		node.property.type === "StaticMemberProperty"
 	) {
 		node = node.object;
 	}
 
-	if (node.type !== 'CallExpression') {
+	if (node.type !== "CallExpression") {
 		return undefined;
 	}
 
 	const {arguments: args, callee} = node;
 
 	const [firstArg] = args;
-	if (args.length !== 1 || firstArg.type !== 'StringLiteral') {
+	if (args.length !== 1 || firstArg.type !== "StringLiteral") {
 		return undefined;
 	}
 
 	const validRequireCallee =
-		callee.type === 'ReferenceIdentifier' &&
-		callee.name === 'require' &&
-		scope.getBinding('require') === undefined;
+		callee.type === "ReferenceIdentifier" &&
+		callee.name === "require" &&
+		scope.getBinding("require") === undefined;
 
 	const validRomeRequreCallee =
-		(doesNodeMatchPattern(callee, 'Rome.requireDefault') ||
-		doesNodeMatchPattern(callee, 'Rome.requireNamespace')) &&
-		scope.getBinding('Rome') === undefined;
+		(doesNodeMatchPattern(callee, "Rome.requireDefault") ||
+		doesNodeMatchPattern(callee, "Rome.requireNamespace")) &&
+		scope.getBinding("Rome") === undefined;
 
 	if (validRequireCallee || validRomeRequreCallee) {
 		return firstArg.value;

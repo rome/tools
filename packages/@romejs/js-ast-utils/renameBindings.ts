@@ -5,19 +5,19 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Binding, Path} from '@romejs/js-compiler';
-import inheritLoc from './inheritLoc';
+import {Binding, Path} from "@romejs/js-compiler";
+import inheritLoc from "./inheritLoc";
 import {
 	AnyNode,
 	exportLocalDeclaration,
 	exportLocalSpecifier,
 	identifier,
 	referenceIdentifier,
-} from '@romejs/js-ast';
-import getBindingIdentifiers from './getBindingIdentifiers';
-import isVariableIdentifier from './isVariableIdentifier';
-import assertSingleOrMultipleNodes from './assertSingleOrMultipleNodes';
-import {AnyVariableIdentifier} from '@romejs/js-ast/unions';
+} from "@romejs/js-ast";
+import getBindingIdentifiers from "./getBindingIdentifiers";
+import isVariableIdentifier from "./isVariableIdentifier";
+import assertSingleOrMultipleNodes from "./assertSingleOrMultipleNodes";
+import {AnyVariableIdentifier} from "@romejs/js-ast/unions";
 
 // This methods allows either passing in Bindings that could be present within deep scopes,
 // or local names for the scope in the passed Path
@@ -34,7 +34,7 @@ export default function renameBindings(
 	// get a list of the current bindings for this scope
 	const oldNameToBinding: Map<string, undefined | Binding> = new Map();
 	for (const [oldName, newName] of oldToNewMapping) {
-		if (typeof oldName === 'string') {
+		if (typeof oldName === "string") {
 			const binding = path.scope.getBinding(oldName);
 			oldNameToBinding.set(oldName, binding);
 		} else {
@@ -45,7 +45,7 @@ export default function renameBindings(
 	// discover nodes to replace first without manipulating the AST as that will change the scope and binding objects
 	const replaceNodesWithName: Map<AnyVariableIdentifier, string> = new Map();
 	path.traverse(
-		'renameBindingsCollector',
+		"renameBindingsCollector",
 		(path) => {
 			const {node, scope} = path;
 			if (!isVariableIdentifier(node)) {
@@ -61,7 +61,7 @@ export default function renameBindings(
 			) {
 				const newName = oldToNewMapping.get(node.name);
 				if (newName === undefined) {
-					throw new Error('Should exist');
+					throw new Error("Should exist");
 				}
 				replaceNodesWithName.set(node, newName);
 			}
@@ -70,7 +70,7 @@ export default function renameBindings(
 			if (binding !== undefined && oldBindingToNewName.has(binding)) {
 				const newName = oldBindingToNewName.get(binding);
 				if (newName === undefined) {
-					throw new Error('Should exist');
+					throw new Error("Should exist");
 				}
 				replaceNodesWithName.set(node, newName);
 			}
@@ -86,16 +86,16 @@ export default function renameBindings(
 	// replace the nodes
 	const renamedNode = path.reduce(
 		{
-			name: 'renameBindings',
+			name: "renameBindings",
 			enter(path): AnyNode | Array<AnyNode> {
 				const {node} = path;
 
 				// Retain the correct exported name for `export function` and `export class`
 				if (
-					node.type === 'ExportLocalDeclaration' &&
+					node.type === "ExportLocalDeclaration" &&
 					node.declaration !== undefined &&
-					(node.declaration.type === 'FunctionDeclaration' ||
-					node.declaration.type === 'ClassDeclaration')
+					(node.declaration.type === "FunctionDeclaration" ||
+					node.declaration.type === "ClassDeclaration")
 				) {
 					const newName = replaceNodesWithName.get(node.declaration.id);
 
@@ -120,7 +120,7 @@ export default function renameBindings(
 				}
 
 				// Retain the correct exported names for `export const`
-				if (node.type === 'ExportLocalDeclaration' && node.declaration !== undefined) {
+				if (node.type === "ExportLocalDeclaration" && node.declaration !== undefined) {
 					const bindings = getBindingIdentifiers(node.declaration);
 					let includesAny = false;
 					for (const node of bindings) {
@@ -177,7 +177,7 @@ export default function renameBindings(
 	//
 	if (replaced.size !== replaceNodesWithName.size) {
 		console.log({replaced, replaceNodesWithName});
-		throw new Error('Missed some bindings');
+		throw new Error("Missed some bindings");
 	}
 
 	return assertSingleOrMultipleNodes(renamedNode);

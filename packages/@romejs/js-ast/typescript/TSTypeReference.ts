@@ -9,17 +9,17 @@ import {
 	AnyTSEntityName,
 	JSNodeBase,
 	TSTypeParameterInstantiation,
-} from '../index';
-import {createBuilder} from '../utils';
+} from "../index";
+import {createBuilder} from "../utils";
 
 export type TSTypeReference = JSNodeBase & {
-	type: 'TSTypeReference';
+	type: "TSTypeReference";
 	typeName: AnyTSEntityName;
 	typeParameters?: TSTypeParameterInstantiation;
 };
 
 export const tsTypeReference = createBuilder<TSTypeReference>(
-	'TSTypeReference',
+	"TSTypeReference",
 	{
 		bindingKeys: {},
 		visitorKeys: {

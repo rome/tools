@@ -10,7 +10,7 @@ import {
 	ForInStatement,
 	ForOfStatement,
 	ForStatement,
-} from '@romejs/js-ast';
+} from "@romejs/js-ast";
 
 export default function isFor(
 	node: undefined | AnyNode,
@@ -20,9 +20,9 @@ export default function isFor(
 	}
 
 	switch (node.type) {
-		case 'ForStatement':
-		case 'ForInStatement':
-		case 'ForOfStatement':
+		case "ForStatement":
+		case "ForInStatement":
+		case "ForOfStatement":
 			return true;
 
 		default:

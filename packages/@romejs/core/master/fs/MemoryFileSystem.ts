@@ -5,44 +5,44 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Master from '../Master';
+import Master from "../Master";
 import {
 	Manifest,
 	ManifestDefinition,
 	normalizeManifest,
-} from '@romejs/codec-js-manifest';
+} from "@romejs/codec-js-manifest";
 import {
 	PathPatterns,
 	matchPathPatterns,
 	parsePathPattern,
-} from '@romejs/path-match';
+} from "@romejs/path-match";
 import {
 	ProjectConfig,
 	ProjectDefinition,
 	ROME_CONFIG_FILENAMES,
-} from '@romejs/project';
-import {DiagnosticsProcessor, catchDiagnostics} from '@romejs/diagnostics';
-import {Event} from '@romejs/events';
-import {consumeJSON} from '@romejs/codec-json';
-import {humanizeNumber} from '@romejs/string-utils';
-import {WorkerPartialManifest} from '../../common/bridges/WorkerBridge';
+} from "@romejs/project";
+import {DiagnosticsProcessor, catchDiagnostics} from "@romejs/diagnostics";
+import {Event} from "@romejs/events";
+import {consumeJSON} from "@romejs/codec-json";
+import {humanizeNumber} from "@romejs/string-utils";
+import {WorkerPartialManifest} from "../../common/bridges/WorkerBridge";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
-} from '@romejs/path';
-import {exists, lstat, readFileText, readdir, watch} from '@romejs/fs';
-import {getFileHandler} from '../../common/file-handlers/index';
-import {markup} from '@romejs/string-markup';
-import crypto = require('crypto');
-import fs = require('fs');
+} from "@romejs/path";
+import {exists, lstat, readFileText, readdir, watch} from "@romejs/fs";
+import {getFileHandler} from "../../common/file-handlers/index";
+import {markup} from "@romejs/string-markup";
+import crypto = require("crypto");
+import fs = require("fs");
 
-const DEFAULT_DENYLIST = ['.hg', '.git'];
+const DEFAULT_DENYLIST = [".hg", ".git"];
 
 const GLOB_IGNORE: PathPatterns = [
-	parsePathPattern({input: 'node_modules'}),
-	parsePathPattern({input: '.git'}),
-	parsePathPattern({input: '.hg'}),
+	parsePathPattern({input: "node_modules"}),
+	parsePathPattern({input: ".git"}),
+	parsePathPattern({input: ".hg"}),
 ];
 
 function concatGlobIgnore(patterns: PathPatterns): PathPatterns {
@@ -57,7 +57,7 @@ function concatGlobIgnore(patterns: PathPatterns): PathPatterns {
 }
 
 function isValidManifest(path: AbsoluteFilePath): boolean {
-	if (path.getBasename() !== 'package.json') {
+	if (path.getBasename() !== "package.json") {
 		return false;
 	}
 
@@ -75,16 +75,16 @@ function isValidManifest(path: AbsoluteFilePath): boolean {
 	//   -3: scope folder
 	//   -4: node_modules
 	const segments = path.getSegments();
-	if (segments.includes('node_modules')) {
+	if (segments.includes("node_modules")) {
 		// Unscoped package
-		if (segments[segments.length - 3] === 'node_modules') {
+		if (segments[segments.length - 3] === "node_modules") {
 			return true;
 		}
 
 		// Scoped module
 		if (
-			segments[segments.length - 4] === 'node_modules' &&
-			segments[segments.length - 3].startsWith('@')
+			segments[segments.length - 4] === "node_modules" &&
+			segments[segments.length - 3].startsWith("@")
 		) {
 			return true;
 		}
@@ -111,7 +111,7 @@ type CrawlOptions = {
 	tick?: (path: AbsoluteFilePath) => void;
 };
 
-export type StatsType = 'unknown' | 'directory' | 'file';
+export type StatsType = "unknown" | "directory" | "file";
 
 export type Stats = {
 	size: number;
@@ -152,7 +152,7 @@ async function createWatcher(
 
 			let recursive = true;
 
-			if (process.platform === 'linux') {
+			if (process.platform === "linux") {
 				// Node on Linux doesn't support recursive directory watching so we need an fs.watch for every directory...
 				recursive = false;
 			} else if (!folderPath.equal(projectFolderPath)) {
@@ -174,12 +174,12 @@ async function createWatcher(
 					memoryFs.stat(path).then((newStats) => {
 						const diagnostics = memoryFs.master.createDisconnectedDiagnosticsProcessor([
 							{
-								category: 'memory-fs',
-								message: 'Processing fs.watch changes',
+								category: "memory-fs",
+								message: "Processing fs.watch changes",
 							},
 						]);
 
-						if (newStats.type === 'file') {
+						if (newStats.type === "file") {
 							memoryFs.handleFileChange(
 								path,
 								newStats,
@@ -188,7 +188,7 @@ async function createWatcher(
 									crawl: true,
 								},
 							);
-						} else if (newStats.type === 'directory') {
+						} else if (newStats.type === "directory") {
 							memoryFs.addDirectory(
 								path,
 								newStats,
@@ -200,7 +200,7 @@ async function createWatcher(
 							);
 						}
 					}).catch((err) => {
-						if (err.code === 'ENOENT') {
+						if (err.code === "ENOENT") {
 							memoryFs.handleDeletion(path);
 						} else {
 							throw err;
@@ -253,11 +253,11 @@ export default class MemoryFileSystem {
 		this.manifestCounter = 0;
 
 		this.changedFileEvent = new Event({
-			name: 'MemoryFileSystem.changedFile',
+			name: "MemoryFileSystem.changedFile",
 			onError: master.onFatalErrorBound,
 		});
 		this.deletedFileEvent = new Event({
-			name: 'MemoryFileSystem.deletedFile',
+			name: "MemoryFileSystem.deletedFile",
 			onError: master.onFatalErrorBound,
 		});
 	}
@@ -316,7 +316,7 @@ export default class MemoryFileSystem {
 		while (queue.length > 0) {
 			const path = queue.pop();
 			if (path === undefined) {
-				throw new Error('Unknown path');
+				throw new Error("Unknown path");
 			}
 
 			this.directories.delete(path);
@@ -420,7 +420,7 @@ export default class MemoryFileSystem {
 
 		// If this is a manifest filename then clear it from 'any possible package and our internal module map
 		const basename = path.getBasename();
-		if (basename === 'package.json') {
+		if (basename === "package.json") {
 			this.handleDeletedManifest(path);
 		}
 
@@ -522,8 +522,8 @@ export default class MemoryFileSystem {
 		const diagnostics = this.master.createDiagnosticsProcessor({
 			origins: [
 				{
-					category: 'memory-fs',
-					message: 'Crawling project folder',
+					category: "memory-fs",
+					message: "Crawling project folder",
 				},
 			],
 		});
@@ -554,11 +554,11 @@ export default class MemoryFileSystem {
 	async stat(path: AbsoluteFilePath): Promise<Stats> {
 		const stats = await lstat(path);
 
-		let type: StatsType = 'unknown';
+		let type: StatsType = "unknown";
 		if (stats.isDirectory()) {
-			type = 'directory';
+			type = "directory";
 		} else if (stats.isFile()) {
-			type = 'file';
+			type = "file";
 		}
 
 		return {
@@ -589,14 +589,14 @@ export default class MemoryFileSystem {
 		return stats;
 	}
 
-	isIgnored(path: AbsoluteFilePath, type: 'directory' | 'file'): boolean {
+	isIgnored(path: AbsoluteFilePath, type: "directory" | "file"): boolean {
 		const project = this.master.projectManager.findProjectExisting(path);
 		if (project === undefined) {
 			return false;
 		}
 
 		// If we're a file and don't have an extension handler so there's no reason for us to care about it
-		if (type === 'file' && getFileHandler(path, project.config) === undefined) {
+		if (type === "file" && getFileHandler(path, project.config) === undefined) {
 			return true;
 		}
 
@@ -610,7 +610,7 @@ export default class MemoryFileSystem {
 	}
 
 	isInsideProject(path: AbsoluteFilePath): boolean {
-		return path.getSegments().includes('node_modules') === false;
+		return path.getSegments().includes("node_modules") === false;
 	}
 
 	// This is a wrapper around _declareManifest as it can produce diagnostics
@@ -632,12 +632,12 @@ export default class MemoryFileSystem {
 	): Promise<void> {
 		// Fetch the manifest
 		const manifestRaw = await readFileText(path);
-		const hash = crypto.createHash('sha256').update(manifestRaw).digest('hex');
+		const hash = crypto.createHash("sha256").update(manifestRaw).digest("hex");
 
 		const consumer = consumeJSON({
 			path,
 			input: manifestRaw,
-			consumeDiagnosticCategory: 'parse/manifest',
+			consumeDiagnosticCategory: "parse/manifest",
 		});
 
 		const {
@@ -713,12 +713,12 @@ export default class MemoryFileSystem {
 			const ignoreMatched = matchPathPatterns(path, ignore, cwd);
 
 			// Don't even recurse into explicit matches
-			if (ignoreMatched === 'EXPLICIT_MATCH') {
+			if (ignoreMatched === "EXPLICIT_MATCH") {
 				continue;
 			}
 
 			// Add if a matching file
-			if (this.files.has(path) && ignoreMatched === 'NO_MATCH') {
+			if (this.files.has(path) && ignoreMatched === "NO_MATCH") {
 				if (test !== undefined && !test(path)) {
 					continue;
 				}
@@ -802,7 +802,7 @@ export default class MemoryFileSystem {
 		}
 
 		// Check if this folder has been ignored
-		if (this.isIgnored(folderPath, 'directory')) {
+		if (this.isIgnored(folderPath, "directory")) {
 			return false;
 		}
 
@@ -824,9 +824,9 @@ export default class MemoryFileSystem {
 			// Declare the file
 			const declareItem = async (path: AbsoluteFilePath) => {
 				const stats = await this.stat(path);
-				if (stats.type === 'file') {
+				if (stats.type === "file") {
 					await this.addFile(path, stats, opts);
-				} else if (stats.type === 'directory') {
+				} else if (stats.type === "directory") {
 					await this.addDirectory(path, stats, opts);
 				}
 			};
@@ -887,7 +887,7 @@ export default class MemoryFileSystem {
 		}
 
 		// Check if this file has been ignored
-		if (this.isIgnored(path, 'file')) {
+		if (this.isIgnored(path, "file")) {
 			return false;
 		}
 

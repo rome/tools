@@ -9,14 +9,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 92
@@ -30,10 +30,10 @@ Program {
 	}
 	comments: Array [
 		CommentLine {
-			id: '0'
-			value: ' foo'
+			id: "0"
+			value: " foo"
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 10
 					index: 24
@@ -47,10 +47,10 @@ Program {
 			}
 		}
 		CommentLine {
-			id: '1'
-			value: ' falls through'
+			id: "1"
+			value: " falls through"
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 24
 					index: 61
@@ -67,7 +67,7 @@ Program {
 	body: Array [
 		SwitchStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 1
 					index: 91
@@ -80,10 +80,10 @@ Program {
 				}
 			}
 			discriminant: ReferenceIdentifier {
-				name: 'foo'
+				name: "foo"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'foo'
+					filename: "input.js"
+					identifierName: "foo"
 					end: Object {
 						column: 10
 						index: 10
@@ -99,9 +99,9 @@ Program {
 			cases: Array [
 				SwitchCase {
 					consequent: Array []
-					trailingComments: Array ['1']
+					trailingComments: Array ["1"]
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 11
 							index: 36
@@ -116,9 +116,9 @@ Program {
 					test: NumericLiteral {
 						value: 1
 						format: undefined
-						leadingComments: Array ['0']
+						leadingComments: Array ["0"]
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 10
 								index: 35
@@ -134,7 +134,7 @@ Program {
 				}
 				SwitchCase {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 15
 							index: 89
@@ -149,9 +149,9 @@ Program {
 					test: NumericLiteral {
 						value: 2
 						format: undefined
-						leadingComments: Array ['1']
+						leadingComments: Array ["1"]
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 10
 								index: 72
@@ -167,7 +167,7 @@ Program {
 					consequent: Array [
 						ExpressionStatement {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 15
 									index: 89
@@ -182,7 +182,7 @@ Program {
 							expression: CallExpression {
 								arguments: Array []
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 14
 										index: 88
@@ -195,10 +195,10 @@ Program {
 									}
 								}
 								callee: ReferenceIdentifier {
-									name: 'doIt'
+									name: "doIt"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'doIt'
+										filename: "input.js"
+										identifierName: "doIt"
 										end: Object {
 											column: 12
 											index: 86

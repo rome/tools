@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyExpression, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {AnyExpression, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type YieldExpression = JSNodeBase & {
-	type: 'YieldExpression';
+	type: "YieldExpression";
 	delegate?: boolean;
 	argument?: AnyExpression;
 };
 
 export const yieldExpression = createBuilder<YieldExpression>(
-	'YieldExpression',
+	"YieldExpression",
 	{bindingKeys: {}, visitorKeys: {argument: true}},
 );

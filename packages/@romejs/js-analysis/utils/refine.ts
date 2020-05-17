@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../scopes';
-import {AnyNode, ReferenceIdentifier, UnaryExpression} from '@romejs/js-ast';
-import T from '../types/T';
-import Evaluator from '../Evaluator';
-import RefinedT from '../types/RefinedT';
-import UnionT from '../types/UnionT';
-import RefineTypeofT from '../types/RefineTypeofT';
+import {Scope} from "../scopes";
+import {AnyNode, ReferenceIdentifier, UnaryExpression} from "@romejs/js-ast";
+import T from "../types/T";
+import Evaluator from "../Evaluator";
+import RefinedT from "../types/RefinedT";
+import UnionT from "../types/UnionT";
+import RefineTypeofT from "../types/RefineTypeofT";
 
 type TypeDefinition = {
 	name: string;
@@ -34,9 +34,9 @@ function isTypeofNode(
 	argument: ReferenceIdentifier;
 } {
 	return (
-		node.type === 'UnaryExpression' &&
-		node.operator === 'typeof' &&
-		node.argument.type === 'ReferenceIdentifier'
+		node.type === "UnaryExpression" &&
+		node.operator === "typeof" &&
+		node.argument.type === "ReferenceIdentifier"
 	);
 }
 
@@ -45,16 +45,16 @@ function genTypes(node: AnyNode, scope: Scope): Array<TypeDefinition> {
 	let types = [];
 
 	switch (node.type) {
-		case 'BinaryExpression': {
+		case "BinaryExpression": {
 			const {left, right} = node;
 			switch (node.operator) {
-				case '==':
+				case "==":
 					return [];
 
-				case '!=':
+				case "!=":
 					return [];
 
-				case '===': {
+				case "===": {
 					// typeof foo === 'string'
 					if (isTypeofNode(left)) {
 						const name = left.argument.name;
@@ -73,7 +73,7 @@ function genTypes(node: AnyNode, scope: Scope): Array<TypeDefinition> {
 					}
 
 					// foo === 'bar'
-					if (left.type === 'ReferenceIdentifier') {
+					if (left.type === "ReferenceIdentifier") {
 						types.push({
 							name: left.name,
 							value: evaluator.getTypeFromEvaluatedNode(right),
@@ -98,7 +98,7 @@ function genTypes(node: AnyNode, scope: Scope): Array<TypeDefinition> {
 					}
 
 					// 'bar' === foo
-					if (right.type === 'ReferenceIdentifier') {
+					if (right.type === "ReferenceIdentifier") {
 						types.push({
 							name: right.name,
 							value: evaluator.getTypeFromEvaluatedNode(left),
@@ -107,9 +107,9 @@ function genTypes(node: AnyNode, scope: Scope): Array<TypeDefinition> {
 					break;
 				}
 
-				case '!==': {
+				case "!==": {
 					// TODO add `typeof`
-					if (left.type === 'ReferenceIdentifier') {
+					if (left.type === "ReferenceIdentifier") {
 						types.push({
 							name: left.name,
 							value: new RefinedT(
@@ -120,7 +120,7 @@ function genTypes(node: AnyNode, scope: Scope): Array<TypeDefinition> {
 							),
 						});
 					}
-					if (right.type === 'ReferenceIdentifier') {
+					if (right.type === "ReferenceIdentifier") {
 						types.push({
 							name: right.name,
 							value: new RefinedT(
@@ -134,18 +134,18 @@ function genTypes(node: AnyNode, scope: Scope): Array<TypeDefinition> {
 					return types;
 				}
 
-				case 'instanceof':
+				case "instanceof":
 					return [];
 
 				default:
-					throw new Error('Unknown BinaryExpression operator');
+					throw new Error("Unknown BinaryExpression operator");
 			}
 			break;
 		}
 
-		case 'LogicalExpression':
+		case "LogicalExpression":
 			switch (node.operator) {
-				case '||': {
+				case "||": {
 					const leftMap = typesToMap(genTypes(node.left, scope));
 					const rightMap = typesToMap(genTypes(node.right, scope));
 					const names = new Set([...leftMap.keys(), ...rightMap.keys()]);
@@ -167,7 +167,7 @@ function genTypes(node: AnyNode, scope: Scope): Array<TypeDefinition> {
 							}
 
 							if (type === undefined) {
-								throw new Error('Expected type');
+								throw new Error("Expected type");
 							}
 
 							return {
@@ -178,7 +178,7 @@ function genTypes(node: AnyNode, scope: Scope): Array<TypeDefinition> {
 					);
 				}
 
-				case '&&':
+				case "&&":
 					return [...genTypes(node.left, scope), ...genTypes(node.right, scope)];
 			}
 	}

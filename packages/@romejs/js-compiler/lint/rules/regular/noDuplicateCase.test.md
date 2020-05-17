@@ -28,17 +28,17 @@
 ### `0: formatted`
 
 ```
-const expr = 'a';
+const expr = "a";
 switch (expr) {
-	case 'a':
+	case "a":
 		break;
-	case 'b':
+	case "b":
 		break;
-	case 'c':
+	case "c":
 		break;
-	case 'd':
+	case "d":
 		break;
-	case 'c':
+	case "c":
 		break;
 	default:
 		break;

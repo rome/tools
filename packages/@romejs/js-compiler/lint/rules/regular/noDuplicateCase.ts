@@ -5,20 +5,20 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from '@romejs/js-compiler';
-import {AnyNode} from '@romejs/js-ast';
-import {descriptions} from '@romejs/diagnostics';
+import {Path} from "@romejs/js-compiler";
+import {AnyNode} from "@romejs/js-ast";
+import {descriptions} from "@romejs/diagnostics";
 
 export default {
-	name: 'noDuplicateCase',
+	name: "noDuplicateCase",
 	enter(path: Path): AnyNode {
 		const {node, context} = path;
 
-		if (node.type === 'SwitchStatement') {
+		if (node.type === "SwitchStatement") {
 			const uniqueSwitchCases = new Set();
 
 			for (const param of node.cases) {
-				if (param.test && param.test.type === 'StringLiteral') {
+				if (param.test && param.test.type === "StringLiteral") {
 					const {test} = param;
 
 					if (uniqueSwitchCases.has(test.value)) {

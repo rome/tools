@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Reporter, ReporterProgress} from '@romejs/cli-reporter';
+import {Reporter, ReporterProgress} from "@romejs/cli-reporter";
 import {
 	Diagnostic,
 	DiagnosticsError,
@@ -15,28 +15,28 @@ import {
 	descriptions,
 	diagnosticLocationToMarkupFilelink,
 	getDiagnosticsFromError,
-} from '@romejs/diagnostics';
-import {TestRef} from '../../common/bridges/TestWorkerBridge';
-import {Master, MasterRequest, TestWorkerBridge} from '@romejs/core';
-import {DiagnosticsPrinter} from '@romejs/cli-diagnostics';
-import {createClient} from '@romejs/codec-websocket';
-import {humanizeNumber} from '@romejs/string-utils';
+} from "@romejs/diagnostics";
+import {TestRef} from "../../common/bridges/TestWorkerBridge";
+import {Master, MasterRequest, TestWorkerBridge} from "@romejs/core";
+import {DiagnosticsPrinter} from "@romejs/cli-diagnostics";
+import {createClient} from "@romejs/codec-websocket";
+import {humanizeNumber} from "@romejs/string-utils";
 import {
 	Bridge,
 	BridgeError,
 	createBridgeFromChildProcess,
-} from '@romejs/events';
+} from "@romejs/events";
 import {
 	CoverageCollector,
 	ErrorFrame,
 	InspectorClient,
 	InspectorClientCloseError,
 	urlToFilename,
-} from '@romejs/v8';
-import fork from '../../common/utils/fork';
-import {ManifestDefinition} from '@romejs/codec-js-manifest';
-import {AbsoluteFilePath} from '@romejs/path';
-import {ob1Coerce0To1} from '@romejs/ob1';
+} from "@romejs/v8";
+import fork from "../../common/utils/fork";
+import {ManifestDefinition} from "@romejs/codec-js-manifest";
+import {AbsoluteFilePath} from "@romejs/path";
+import {ob1Coerce0To1} from "@romejs/ob1";
 import {
 	CoverageFolder,
 	TestMasterRunnerConstructorOptions,
@@ -45,18 +45,18 @@ import {
 	TestSources,
 	TestWorkerContainer,
 	TestWorkerContainers,
-} from './types';
-import {formatPercent, percentInsideCoverageFolder, sortMapKeys} from './utils';
-import {escapeMarkup, markup, safeMarkup} from '@romejs/string-markup';
-import {MAX_WORKER_COUNT} from '@romejs/core/common/constants';
-import {TestWorkerFlags} from '@romejs/core/test-worker/TestWorker';
-import net = require('net');
+} from "./types";
+import {formatPercent, percentInsideCoverageFolder, sortMapKeys} from "./utils";
+import {escapeMarkup, markup, safeMarkup} from "@romejs/string-markup";
+import {MAX_WORKER_COUNT} from "@romejs/core/common/constants";
+import {TestWorkerFlags} from "@romejs/core/test-worker/TestWorker";
+import net = require("net");
 import {
 	FocusedTest,
 	TestWorkerFileResult,
-} from '@romejs/core/test-worker/TestWorkerRunner';
-import {FileReference} from '@romejs/core/common/types/files';
-import {SourceMapConsumerCollection} from '@romejs/codec-source-map';
+} from "@romejs/core/test-worker/TestWorkerRunner";
+import {FileReference} from "@romejs/core/common/types/files";
+import {SourceMapConsumerCollection} from "@romejs/codec-source-map";
 
 class BridgeDiagnosticsError extends DiagnosticsError {
 	constructor(diag: Diagnostic, bridge: Bridge) {
@@ -82,13 +82,13 @@ function findAvailablePort(): Promise<number> {
 		// When you create a server without specifying a port then the OS will choose a port number for you!
 		const server = net.createServer();
 		server.unref();
-		server.on('error', reject);
+		server.on("error", reject);
 		server.listen(
 			undefined,
 			() => {
 				const address = server.address();
-				if (address == null || typeof address === 'string') {
-					throw new Error('Invalid address value');
+				if (address == null || typeof address === "string") {
+					throw new Error("Invalid address value");
 				}
 
 				server.close(() => {
@@ -137,8 +137,8 @@ export default class TestMasterRunner {
 			this.request.createDiagnosticsProcessor({
 				origins: [
 					{
-						category: 'test',
-						message: 'Run initiated',
+						category: "test",
+						message: "Run initiated",
 					},
 				],
 			}),
@@ -240,9 +240,9 @@ export default class TestMasterRunner {
 		const {flags} = req.client;
 
 		if (inspector !== undefined && opts.coverage === true) {
-			await inspector.call('Profiler.enable');
+			await inspector.call("Profiler.enable");
 			await inspector.call(
-				'Profiler.startPreciseCoverage',
+				"Profiler.startPreciseCoverage",
 				{
 					// Turning this on disables V8 optimizations https://v8.dev/blog/javascript-code-coverage#precise-coverage-(function-granularity)
 					callCount: false,
@@ -311,12 +311,12 @@ export default class TestMasterRunner {
 				if (inspector !== undefined) {
 					if (opts.coverage) {
 						if (inspector.alive) {
-							const profile = await inspector.call('Profiler.takePreciseCoverage');
-							this.coverageCollector.addCoverage(profile.get('result').asAny());
+							const profile = await inspector.call("Profiler.takePreciseCoverage");
+							this.coverageCollector.addCoverage(profile.get("result").asAny());
 
 							// Not really necessary but let's clean up anyway for completeness
-							await inspector.call('Profiler.stopPreciseCoverage');
-							await inspector.call('Profiler.disable');
+							await inspector.call("Profiler.stopPreciseCoverage");
+							await inspector.call("Profiler.disable");
 						} else {
 							// TODO log that we failed to fetch some coverage
 						}
@@ -345,7 +345,7 @@ export default class TestMasterRunner {
 					err,
 					{
 						description: {
-							category: 'tests/failure',
+							category: "tests/failure",
 						},
 					},
 				),
@@ -363,20 +363,20 @@ export default class TestMasterRunner {
 
 	async spawnWorker(flags: TestWorkerFlags): Promise<TestWorkerContainer> {
 		const proc = fork(
-			'test-worker',
+			"test-worker",
 			{
-				stdio: 'pipe',
+				stdio: "pipe",
 			},
-			['--inspector-port', String(flags.inspectorPort)],
+			["--inspector-port", String(flags.inspectorPort)],
 		);
 
 		const {stdout, stderr} = proc;
 		if (stdout == null || stderr == null) {
-			throw new Error('stdout or stderr was undefined for a spawned Worker');
+			throw new Error("stdout or stderr was undefined for a spawned Worker");
 		}
 
 		stdout.on(
-			'data',
+			"data",
 			(chunk) => {
 				process.stdout.write(chunk);
 			},
@@ -384,19 +384,19 @@ export default class TestMasterRunner {
 
 		// Suppress any debugger logs
 		stderr.on(
-			'data',
+			"data",
 			(chunk) => {
 				const str = chunk.toString();
 
-				if (str.startsWith('Debugger listening on ws://')) {
+				if (str.startsWith("Debugger listening on ws://")) {
 					return;
 				}
 
-				if (str.startsWith('For help, see: https://nodejs.org/en/docs/inspector')) {
+				if (str.startsWith("For help, see: https://nodejs.org/en/docs/inspector")) {
 					return;
 				}
 
-				if (str.startsWith('Debugger attached')) {
+				if (str.startsWith("Debugger attached")) {
 					return;
 				}
 
@@ -408,7 +408,7 @@ export default class TestMasterRunner {
 			TestWorkerBridge,
 			proc,
 			{
-				type: 'client',
+				type: "client",
 			},
 		);
 		await bridge.handshake();
@@ -419,7 +419,7 @@ export default class TestMasterRunner {
 		if (inspectorUrl !== undefined) {
 			const client = new InspectorClient(await createClient(inspectorUrl));
 			inspector = client;
-			await client.call('Debugger.enable');
+			await client.call("Debugger.enable");
 
 			bridge.endEvent.subscribe(() => {
 				client.end();
@@ -458,7 +458,7 @@ export default class TestMasterRunner {
 			container.bridge.monitorHeartbeat(
 				5_000,
 				async () => {
-					this.handleWorkerTimeout('10 seconds', container);
+					this.handleWorkerTimeout("10 seconds", container);
 				},
 			);
 		}
@@ -473,7 +473,7 @@ export default class TestMasterRunner {
 
 		// Prepare all tests
 		const progress = this.reporter.progress({
-			title: 'Preparing',
+			title: "Preparing",
 		});
 		progress.setTotal(this.sourcesQueue.length);
 		const callbacks = await Promise.all(
@@ -532,25 +532,25 @@ export default class TestMasterRunner {
 			return undefined;
 		}
 
-		inspector.call('Debugger.pause');
+		inspector.call("Debugger.pause");
 
-		const params = await inspector.wait('Debugger.paused');
+		const params = await inspector.wait("Debugger.paused");
 
 		const frames: Array<ErrorFrame> = [];
 
-		const callFrames = params.get('callFrames').asArray().slice(0, 20);
+		const callFrames = params.get("callFrames").asArray().slice(0, 20);
 		for (const callFrame of callFrames) {
-			const loc = callFrame.get('location');
+			const loc = callFrame.get("location");
 
 			const resolved = this.sourceMaps.assertApproxOriginalPositionFor(
-				urlToFilename(callFrame.get('url').asString()),
-				ob1Coerce0To1(loc.get('lineNumber').asZeroIndexedNumber()),
-				loc.get('columnNumber').asZeroIndexedNumber(),
+				urlToFilename(callFrame.get("url").asString()),
+				ob1Coerce0To1(loc.get("lineNumber").asZeroIndexedNumber()),
+				loc.get("columnNumber").asZeroIndexedNumber(),
 			);
 
-			const name = callFrame.get('scopeChain').asArray()[0].get('name').asString(
-				'',
-			).split('$').pop();
+			const name = callFrame.get("scopeChain").asArray()[0].get("name").asString(
+				"",
+			).split("$").pop();
 
 			frames.push({
 				resolvedLocation: resolved.found,
@@ -572,19 +572,19 @@ export default class TestMasterRunner {
 			new BridgeDiagnosticsError(
 				deriveDiagnosticFromErrorStructure(
 					{
-						name: 'Error',
+						name: "Error",
 						frames,
 					},
 					{
 						description: {
-							category: 'tests/timeout',
+							category: "tests/timeout",
 							message: createBlessedDiagnosticMessage(
 								`Test worker was unresponsive for <emphasis>${duration}</emphasis>. Possible infinite loop. Below is a stack trace before the test was terminated.`,
 							),
 							advice: [
 								{
-									type: 'log',
-									category: 'info',
+									type: "log",
+									category: "info",
 									text: `You can find the specific test that caused this by running <command>rome test --sync-tests</command>`,
 								},
 							],
@@ -598,7 +598,7 @@ export default class TestMasterRunner {
 
 	getWorkers(): TestWorkerContainers {
 		if (this.workers === undefined) {
-			throw new Error('TestMasterRunner.init has not been called yet');
+			throw new Error("TestMasterRunner.init has not been called yet");
 		} else {
 			return this.workers;
 		}
@@ -652,7 +652,7 @@ export default class TestMasterRunner {
 		const key = this.refToKey(ref);
 		const running = this.runningTests.get(key);
 		if (running === undefined) {
-			throw new Error('Expected there to be a running test');
+			throw new Error("Expected there to be a running test");
 		}
 
 		if (running.timeout !== undefined) {
@@ -668,7 +668,7 @@ export default class TestMasterRunner {
 
 		const progress = this.request.reporter.progress({
 			persistent: true,
-			title: 'Running',
+			title: "Running",
 		});
 		progress.setTotal(this.getTotalTests());
 
@@ -702,7 +702,7 @@ export default class TestMasterRunner {
 								label: ref.testName,
 								filename: ref.filename,
 								description: {
-									category: 'tests/failure',
+									category: "tests/failure",
 								},
 							},
 						);
@@ -759,7 +759,7 @@ export default class TestMasterRunner {
 			return;
 		}
 
-		reporter.info('Generating coverage');
+		reporter.info("Generating coverage");
 
 		// Fetch coverage entries
 		const files = coverageCollector.generate();
@@ -767,7 +767,7 @@ export default class TestMasterRunner {
 			return;
 		}
 
-		reporter.heading('Code coverage');
+		reporter.heading("Code coverage");
 
 		// Get the packages associated with all the ran tests, we will filter code coverage to those packages only
 		const testedPackages: Set<undefined | ManifestDefinition> = new Set();
@@ -804,10 +804,10 @@ export default class TestMasterRunner {
 			// Track unfiltered files
 			totalFiles++;
 
-			const filenameParts = filename.split('/');
+			const filenameParts = filename.split("/");
 			const basename = filenameParts.pop();
 			if (basename === undefined) {
-				throw new Error('Should always be at least one element from a split()');
+				throw new Error("Should always be at least one element from a split()");
 			}
 
 			let target: CoverageFolder = root;
@@ -850,11 +850,11 @@ export default class TestMasterRunner {
 		const showAllCoverage = this.options.showAllCoverage || totalFiles < 15;
 
 		function buildRows(folder: CoverageFolder, depth: number) {
-			const name = folder.name === undefined ? 'All files' : `${folder.name}/`;
+			const name = folder.name === undefined ? "All files" : `${folder.name}/`;
 			const folderPercent = percentInsideCoverageFolder(folder);
 
 			rows.push([
-				' '.repeat(depth) + `<emphasis>${name}</emphasis>`,
+				" ".repeat(depth) + `<emphasis>${name}</emphasis>`,
 				formatPercent(folderPercent.functions),
 				formatPercent(folderPercent.branches),
 				formatPercent(folderPercent.lines),
@@ -865,7 +865,7 @@ export default class TestMasterRunner {
 				return;
 			}
 
-			const fileIndent = ' '.repeat(depth + 1);
+			const fileIndent = " ".repeat(depth + 1);
 			for (const [name, file] of sortMapKeys(folder.files)) {
 				let absolute = file.filename;
 
@@ -890,12 +890,12 @@ export default class TestMasterRunner {
 
 		buildRows(root, 0);
 
-		reporter.table(['File', '% Functions', '% Branches', '% Lines'], rows);
+		reporter.table(["File", "% Functions", "% Branches", "% Lines"], rows);
 
 		if (!showAllCoverage) {
 			reporter.br();
 			reporter.info(
-				'Additional coverage information available. Refine the executed tests or add the <emphasis>--show-all-coverage</emphasis> flag',
+				"Additional coverage information available. Refine the executed tests or add the <emphasis>--show-all-coverage</emphasis> flag",
 			);
 		}
 
@@ -957,10 +957,10 @@ export default class TestMasterRunner {
 			count: number;
 			noun: string;
 		}> = [
-			{inline: false, count: createdSnapshots, noun: 'created'},
-			{inline: false, count: updatedSnapshots, noun: 'updated'},
-			{inline: false, count: deletedSnapshots, noun: 'deleted'},
-			{inline: true, count: updatedInlineSnapshots, noun: 'updated'},
+			{inline: false, count: createdSnapshots, noun: "created"},
+			{inline: false, count: updatedSnapshots, noun: "updated"},
+			{inline: false, count: deletedSnapshots, noun: "deleted"},
+			{inline: true, count: updatedInlineSnapshots, noun: "updated"},
 		].filter(({count}) => count > 0);
 
 		if (snapshotCounts.length === 0) {
@@ -971,8 +971,8 @@ export default class TestMasterRunner {
 		const parts = [
 			// Inline snapshots will always be the last element, so if it's inline here then there's no others
 			`<number emphasis>${first.count}</number> ${first.inline
-				? 'inline snapshots'
-				: 'snapshots'} ${first.noun}`,
+				? "inline snapshots"
+				: "snapshots"} ${first.noun}`,
 		];
 
 		for (let {inline, count, noun} of snapshotCounts) {
@@ -982,7 +982,7 @@ export default class TestMasterRunner {
 			parts.push(`<number emphasis>${count}</number> ${noun}`);
 		}
 
-		reporter.success(parts.join(', '));
+		reporter.success(parts.join(", "));
 	}
 
 	throwPrinter() {
@@ -995,7 +995,7 @@ export default class TestMasterRunner {
 
 			if (!isError) {
 				// Don't say "all" when we have focused tests
-				let prefix = this.focusedTests.length === 0 ? 'All ' : '';
+				let prefix = this.focusedTests.length === 0 ? "All " : "";
 				const totalCount = this.getTotalTests();
 				reporter.success(
 					`${prefix}<emphasis>${humanizeNumber(totalCount)}</emphasis> ${grammarNumberTests(

@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 85
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		TSModuleDeclaration {
 			id: BindingIdentifier {
-				name: 'N'
+				name: "N"
 				loc: Object {
-					filename: 'input.ts'
-					identifierName: 'N'
+					filename: "input.ts"
+					identifierName: "N"
 					end: Object {
 						column: 19
 						index: 19
@@ -50,7 +50,7 @@ Program {
 			}
 			declare: true
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 24
 					index: 24
@@ -64,10 +64,10 @@ Program {
 			}
 			body: TSModuleDeclaration {
 				id: BindingIdentifier {
-					name: 'M'
+					name: "M"
 					loc: Object {
-						filename: 'input.ts'
-						identifierName: 'M'
+						filename: "input.ts"
+						identifierName: "M"
 						end: Object {
 							column: 21
 							index: 21
@@ -81,7 +81,7 @@ Program {
 					}
 				}
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 24
 						index: 24
@@ -96,7 +96,7 @@ Program {
 				body: TSModuleBlock {
 					body: Array []
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 24
 							index: 24
@@ -113,10 +113,10 @@ Program {
 		}
 		TSModuleDeclaration {
 			id: BindingIdentifier {
-				name: 'M'
+				name: "M"
 				loc: Object {
-					filename: 'input.ts'
-					identifierName: 'M'
+					filename: "input.ts"
+					identifierName: "M"
 					end: Object {
 						column: 16
 						index: 41
@@ -131,7 +131,7 @@ Program {
 			}
 			declare: true
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 19
 					index: 44
@@ -146,7 +146,7 @@ Program {
 			body: TSModuleBlock {
 				body: Array []
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 19
 						index: 44
@@ -162,9 +162,9 @@ Program {
 		}
 		TSModuleDeclaration {
 			id: StringLiteral {
-				value: 'm'
+				value: "m"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 18
 						index: 63
@@ -180,7 +180,7 @@ Program {
 			declare: true
 			global: undefined
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 21
 					index: 66
@@ -195,7 +195,7 @@ Program {
 			body: TSModuleBlock {
 				body: Array []
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 21
 						index: 66
@@ -211,10 +211,10 @@ Program {
 		}
 		TSModuleDeclaration {
 			id: BindingIdentifier {
-				name: 'global'
+				name: "global"
 				loc: Object {
-					filename: 'input.ts'
-					identifierName: 'global'
+					filename: "input.ts"
+					identifierName: "global"
 					end: Object {
 						column: 14
 						index: 81
@@ -230,7 +230,7 @@ Program {
 			declare: true
 			global: true
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 17
 					index: 84
@@ -245,7 +245,7 @@ Program {
 			body: TSModuleBlock {
 				body: Array []
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 17
 						index: 84

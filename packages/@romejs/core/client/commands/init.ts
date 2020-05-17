@@ -5,19 +5,19 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {commandCategories} from '../../common/commands';
-import {createLocalCommand} from '../commands';
-import ClientRequest from '../ClientRequest';
-import {Dict} from '@romejs/typescript-helpers';
-import {exists, writeFile} from '@romejs/fs';
-import {VERSION} from '../../common/constants';
-import {Consumer} from '@romejs/consume';
-import {stringifyRJSON} from '@romejs/codec-json';
+import {commandCategories} from "../../common/commands";
+import {createLocalCommand} from "../commands";
+import ClientRequest from "../ClientRequest";
+import {Dict} from "@romejs/typescript-helpers";
+import {exists, writeFile} from "@romejs/fs";
+import {VERSION} from "../../common/constants";
+import {Consumer} from "@romejs/consume";
+import {stringifyRJSON} from "@romejs/codec-json";
 
 export default createLocalCommand({
 	category: commandCategories.PROJECT_MANAGEMENT,
-	description: 'create a project config',
-	usage: '',
+	description: "create a project config",
+	usage: "",
 	examples: [],
 	defineFlags(consumer: Consumer) {
 		return {};
@@ -25,13 +25,13 @@ export default createLocalCommand({
 	async callback(req: ClientRequest) {
 		const {reporter} = req.client;
 
-		const configPath = req.client.flags.cwd.append('rome.rjson');
+		const configPath = req.client.flags.cwd.append("rome.rjson");
 		if (await exists(configPath)) {
 			reporter.error(
 				`<filelink target="${configPath.join()}" emphasis>rome.rjson</filelink> file already exists`,
 			);
 			reporter.info(
-				'Use <command>rome config</command> to update an existing config',
+				"Use <command>rome config</command> to update an existing config",
 			);
 			return false;
 		}

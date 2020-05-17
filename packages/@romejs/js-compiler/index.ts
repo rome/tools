@@ -6,40 +6,40 @@
  */
 
 // lib
-export {default as CompilerContext} from './lib/CompilerContext';
+export {default as CompilerContext} from "./lib/CompilerContext";
 
-export {PathOptions} from './lib/Path';
-export {default as Path} from './lib/Path';
+export {PathOptions} from "./lib/Path";
+export {default as Path} from "./lib/Path";
 
-export {default as Record} from './lib/Record';
-export {default as Cache} from './lib/Cache';
+export {default as Record} from "./lib/Record";
+export {default as Cache} from "./lib/Cache";
 
 // methods
-export * from './lint/decisions';
-export {default as lint} from './lint/index';
-export {default as compile} from './api/compile';
+export * from "./lint/decisions";
+export {default as lint} from "./lint/index";
+export {default as compile} from "./api/compile";
 export {
 	default as analyzeDependencies,
 	mergeAnalyzeDependencies,
-} from './api/analyzeDependencies/index';
+} from "./api/analyzeDependencies/index";
 
 // scope
-export {default as Scope} from './scope/Scope';
-export * from './scope/bindings';
+export {default as Scope} from "./scope/Scope";
+export * from "./scope/bindings";
 
 // utils
-export * from './constants';
+export * from "./constants";
 
-export {areAnalyzeDependencyResultsEqual} from './api/analyzeDependencies/utils';
-export {getPrefixedNamespace as getPrefixedBundleNamespace} from './transforms/compileForBundle/_utils';
-export {default as createHook} from './api/createHook';
+export {areAnalyzeDependencyResultsEqual} from "./api/analyzeDependencies/utils";
+export {getPrefixedNamespace as getPrefixedBundleNamespace} from "./transforms/compileForBundle/_utils";
+export {default as createHook} from "./api/createHook";
 export {
 	extractSuppressionsFromProgram,
 	matchesSuppression,
-} from './suppressions';
+} from "./suppressions";
 
 // types
-export {LintResult} from './lint/index';
-export {CompileResult} from './api/compile';
-export {HookDescriptor} from './api/createHook';
-export * from './types';
+export {LintResult} from "./lint/index";
+export {CompileResult} from "./api/compile";
+export {HookDescriptor} from "./api/createHook";
+export * from "./types";

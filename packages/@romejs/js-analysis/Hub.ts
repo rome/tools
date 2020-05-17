@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import T from './types/T';
-import {CompilerContext, TransformProjectDefinition} from '@romejs/js-compiler';
-import {Program} from '@romejs/js-ast';
-import Graph from './Graph';
-import Evaluator from './Evaluator';
-import Utils from './Utils';
+import T from "./types/T";
+import {CompilerContext, TransformProjectDefinition} from "@romejs/js-compiler";
+import {Program} from "@romejs/js-ast";
+import Graph from "./Graph";
+import Evaluator from "./Evaluator";
+import Utils from "./Utils";
 
 const statuses = {
 	OPEN: 0,
@@ -24,11 +24,11 @@ export default class Hub {
 	constructor(ast: Program, project: TransformProjectDefinition) {
 		this.context = new CompilerContext({
 			// TODO
-			sourceText: '',
+			sourceText: "",
 			ast,
 			project,
 			origin: {
-				category: 'typeChecking',
+				category: "typeChecking",
 			},
 		});
 		this.utils = new Utils(this);
@@ -68,7 +68,7 @@ export default class Hub {
 	assertOpen() {
 		if (this.isClosed() && this.isClosing() === false) {
 			throw new Error(
-				'This method can only be called when the graph has been open',
+				"This method can only be called when the graph has been open",
 			);
 		}
 	}
@@ -76,7 +76,7 @@ export default class Hub {
 	assertClosed() {
 		if (this.isOpen() && this.isClosing() === false) {
 			throw new Error(
-				'This method can only be called when the graph has been closed',
+				"This method can only be called when the graph has been closed",
 			);
 		}
 	}

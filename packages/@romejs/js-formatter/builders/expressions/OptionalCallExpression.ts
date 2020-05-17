@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token} from '../../tokens';
-import {OptionalCallExpression} from '@romejs/js-ast';
-import CallExpression from './CallExpression';
+import Builder from "../../Builder";
+import {Token} from "../../tokens";
+import {OptionalCallExpression} from "@romejs/js-ast";
+import CallExpression from "./CallExpression";
 
 export default function OptionalCallExpression(
 	builder: Builder,

@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import * as compiler from '@romejs/js-compiler';
-import {check as typeCheck} from '@romejs/js-analysis';
-import {ConstProgramSyntax, ConstSourceType} from '@romejs/js-ast';
-import {formatJS} from '@romejs/js-formatter';
+import * as compiler from "@romejs/js-compiler";
+import {check as typeCheck} from "@romejs/js-analysis";
+import {ConstProgramSyntax, ConstSourceType} from "@romejs/js-ast";
+import {formatJS} from "@romejs/js-formatter";
 import {
 	ExtensionHandler,
 	ExtensionHandlerMethodInfo,
 	ExtensionLintInfo,
 	ExtensionLintResult,
-} from './types';
-import {ParseJSResult} from '@romejs/core/worker/Worker';
+} from "./types";
+import {ParseJSResult} from "@romejs/core/worker/Worker";
 
 // These are extensions that be implicitly tried when a file is referenced
 // This is mostly for compatibility with Node.js projects. This list should not
@@ -23,7 +23,7 @@ import {ParseJSResult} from '@romejs/core/worker/Worker';
 // should be required everywhere.
 // TypeScript is unfortunately included here as it produces an error if you use an
 // import source with ".ts"
-export const IMPLICIT_JS_EXTENSIONS = ['js', 'ts', 'tsx', 'json'];
+export const IMPLICIT_JS_EXTENSIONS = ["js", "ts", "tsx", "json"];
 
 // Used when filtering files
 export const JS_EXTENSIONS: Array<string> = [];
@@ -152,9 +152,9 @@ function buildJSHandler(
 	};
 }
 
-export const jsHandler = buildJSHandler('js', []);
-export const jsxHandler = buildJSHandler('jsx', ['jsx']);
-export const cjsHandler = buildJSHandler('cjs', [], 'script');
-export const mjsHandler = buildJSHandler('mjs', [], 'module');
-export const tsHandler = buildJSHandler('ts', ['ts'], 'module');
-export const tsxHandler = buildJSHandler('tsx', ['ts', 'jsx'], 'module');
+export const jsHandler = buildJSHandler("js", []);
+export const jsxHandler = buildJSHandler("jsx", ["jsx"]);
+export const cjsHandler = buildJSHandler("cjs", [], "script");
+export const mjsHandler = buildJSHandler("mjs", [], "module");
+export const tsHandler = buildJSHandler("ts", ["ts"], "module");
+export const tsxHandler = buildJSHandler("tsx", ["ts", "jsx"], "module");

@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {SourceLocation} from '@romejs/parser-core';
-import DependencyGraph from './DependencyGraph';
-import DependencyNode from './DependencyNode';
-import {AnalyzeDependencyImportUsageItem} from '@romejs/core';
-import {Diagnostics, descriptions} from '@romejs/diagnostics';
-import {AbsoluteFilePath} from '@romejs/path';
+import {SourceLocation} from "@romejs/parser-core";
+import DependencyGraph from "./DependencyGraph";
+import DependencyNode from "./DependencyNode";
+import {AnalyzeDependencyImportUsageItem} from "@romejs/core";
+import {Diagnostics, descriptions} from "@romejs/diagnostics";
+import {AbsoluteFilePath} from "@romejs/path";
 
 type FirstTopAwaitLocations = Array<{
 	mtime: number;
@@ -84,7 +84,7 @@ export default class DependencyOrderer {
 		const subAncestry = ancestry.concat([path.join()]);
 		for (const depPath of node.getAbsoluteDependencies()) {
 			const dep = node.getDependencyInfoFromAbsolute(depPath).analyze;
-			if (dep.kind === 'value') {
+			if (dep.kind === "value") {
 				this.addFile(depPath, subAncestry);
 			}
 		}
@@ -105,12 +105,12 @@ export default class DependencyOrderer {
 					imp.imported,
 					imp.loc,
 				);
-				if (resolved.type !== 'FOUND') {
+				if (resolved.type !== "FOUND") {
 					continue;
 				}
 
 				// Hoisted exports will always be accessible
-				if (resolved.record.valueType === 'function') {
+				if (resolved.record.valueType === "function") {
 					continue;
 				}
 

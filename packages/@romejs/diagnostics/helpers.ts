@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {DiagnosticAdvice, DiagnosticLocation} from './types';
-import {orderBySimilarity} from '@romejs/string-utils';
-import stringDiff from '@romejs/string-diff';
-import {Position} from '@romejs/parser-core';
-import {ob1Get1} from '@romejs/ob1';
-import {NEWLINE} from '@romejs/js-parser-utils';
-import {escapeMarkup, markup} from '@romejs/string-markup';
+import {DiagnosticAdvice, DiagnosticLocation} from "./types";
+import {orderBySimilarity} from "@romejs/string-utils";
+import stringDiff from "@romejs/string-diff";
+import {Position} from "@romejs/parser-core";
+import {ob1Get1} from "@romejs/ob1";
+import {NEWLINE} from "@romejs/js-parser-utils";
+import {escapeMarkup, markup} from "@romejs/string-markup";
 
 type BuildSuggestionAdviceOptions = {
 	minRating?: number;
@@ -60,31 +60,31 @@ export function buildSuggestionAdvice(
 	// If there's only 2 suggestions then just say "Did you mean A or B?" rather than printing the list
 	if (strings.length === 1) {
 		advice.push({
-			type: 'log',
-			category: 'info',
+			type: "log",
+			category: "info",
 			text: markup`Did you mean <emphasis>${topRatingFormatted}</emphasis> or <emphasis>${strings[0]}</emphasis>?`,
 		});
 	} else {
 		advice.push({
-			type: 'log',
-			category: 'info',
+			type: "log",
+			category: "info",
 			text: markup`Did you mean <emphasis>${topRatingFormatted}</emphasis>?`,
 		});
 
 		advice.push({
-			type: 'diff',
+			type: "diff",
 			diff: stringDiff(value, topRatingRaw),
 		});
 
 		if (strings.length > 0) {
 			advice.push({
-				type: 'log',
-				category: 'info',
-				text: 'Or one of these?',
+				type: "log",
+				category: "info",
+				text: "Or one of these?",
 			});
 
 			advice.push({
-				type: 'list',
+				type: "list",
 				list: strings.map((str) => escapeMarkup(str)),
 				truncate: true,
 			});
@@ -97,9 +97,9 @@ export function buildSuggestionAdvice(
 		topRatingRaw.toLowerCase() === value.toLowerCase()
 	) {
 		advice.push({
-			type: 'log',
-			category: 'warn',
-			text: 'This operation is case sensitive',
+			type: "log",
+			category: "warn",
+			text: "This operation is case sensitive",
 		});
 	}
 
@@ -119,7 +119,7 @@ export function truncateSourceText(
 	const toLine = Math.max(ob1Get1(end.line) + 10, lines.length);
 
 	const capturedLines = lines.slice(fromLine, toLine);
-	return '\n'.repeat(fromLine) + capturedLines.join('\n');
+	return "\n".repeat(fromLine) + capturedLines.join("\n");
 }
 
 export function buildDuplicateLocationAdvice(
@@ -128,13 +128,13 @@ export function buildDuplicateLocationAdvice(
 	const locationAdvice: DiagnosticAdvice = locations.map((location) => {
 		if (location === undefined) {
 			return {
-				type: 'log',
-				category: 'warn',
-				text: 'Unable to find location',
+				type: "log",
+				category: "warn",
+				text: "Unable to find location",
 			};
 		} else {
 			return {
-				type: 'frame',
+				type: "frame",
 				location,
 			};
 		}
@@ -142,9 +142,9 @@ export function buildDuplicateLocationAdvice(
 
 	return [
 		{
-			type: 'log',
-			category: 'info',
-			text: 'Defined already here',
+			type: "log",
+			category: "info",
+			text: "Defined already here",
 		},
 		...locationAdvice,
 	];
@@ -156,7 +156,7 @@ export function diagnosticLocationToMarkupFilelink(
 	const {start, filename} = loc;
 
 	if (filename === undefined) {
-		return 'unknown';
+		return "unknown";
 	}
 
 	if (start === undefined) {

@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type SymbolKeywordTypeAnnotation = JSNodeBase & {
-	type: 'SymbolKeywordTypeAnnotation';
+	type: "SymbolKeywordTypeAnnotation";
 };
 
 export const symbolKeywordTypeAnnotation = createBuilder<SymbolKeywordTypeAnnotation>(
-	'SymbolKeywordTypeAnnotation',
+	"SymbolKeywordTypeAnnotation",
 	{
 		bindingKeys: {},
 		visitorKeys: {},

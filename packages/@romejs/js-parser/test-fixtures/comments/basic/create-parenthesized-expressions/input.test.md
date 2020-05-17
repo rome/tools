@@ -9,14 +9,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 66
@@ -30,10 +30,10 @@ Program {
 	}
 	comments: Array [
 		CommentLine {
-			id: '0'
-			value: ' One'
+			id: "0"
+			value: " One"
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 6
 					index: 6
@@ -47,10 +47,10 @@ Program {
 			}
 		}
 		CommentBlock {
-			id: '1'
-			value: ' Two '
+			id: "1"
+			value: " Two "
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 9
 					index: 22
@@ -64,10 +64,10 @@ Program {
 			}
 		}
 		CommentLine {
-			id: '2'
-			value: ' Three'
+			id: "2"
+			value: " Three"
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 10
 					index: 41
@@ -81,10 +81,10 @@ Program {
 			}
 		}
 		CommentBlock {
-			id: '3'
-			value: ' Four '
+			id: "3"
+			value: " Four "
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 11
 					index: 61
@@ -100,10 +100,10 @@ Program {
 	]
 	body: Array [
 		ExpressionStatement {
-			leadingComments: Array ['0']
-			trailingComments: Array ['1']
+			leadingComments: Array ["0"]
+			trailingComments: Array ["1"]
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 4
 					index: 11
@@ -120,7 +120,7 @@ Program {
 				format: undefined
 				leadingComments: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 2
 						index: 9
@@ -135,9 +135,9 @@ Program {
 			}
 		}
 		ExpressionStatement {
-			leadingComments: Array ['1']
+			leadingComments: Array ["1"]
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 4
 					index: 27
@@ -154,7 +154,7 @@ Program {
 				format: undefined
 				leadingComments: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 2
 						index: 25
@@ -170,7 +170,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 2
 					index: 48
@@ -185,9 +185,9 @@ Program {
 			expression: NumericLiteral {
 				value: 3
 				format: undefined
-				leadingComments: Array ['2']
+				leadingComments: Array ["2"]
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 3
 						index: 45
@@ -203,7 +203,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 15
 					index: 65
@@ -218,9 +218,9 @@ Program {
 			expression: NumericLiteral {
 				value: 4
 				format: undefined
-				leadingComments: Array ['3']
+				leadingComments: Array ["3"]
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 13
 						index: 63

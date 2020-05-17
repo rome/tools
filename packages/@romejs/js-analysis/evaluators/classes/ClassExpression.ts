@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ClassScope, Scope} from '../../scopes';
-import {AnyNode, ClassExpression, classExpression} from '@romejs/js-ast';
-import InstanceT from '../../types/InstanceT';
-import ClassT from '../../types/ClassT';
-import T from '../../types/T';
-import OpenT from '../../types/OpenT';
+import {ClassScope, Scope} from "../../scopes";
+import {AnyNode, ClassExpression, classExpression} from "@romejs/js-ast";
+import InstanceT from "../../types/InstanceT";
+import ClassT from "../../types/ClassT";
+import T from "../../types/T";
+import OpenT from "../../types/OpenT";
 
 export default function ClassExpression(node: AnyNode, scope: Scope) {
-	node = node.type === 'ClassDeclaration' ? node : classExpression.assert(node);
+	node = node.type === "ClassDeclaration" ? node : classExpression.assert(node);
 
 	const instances = [];
 	const statics = [];
@@ -44,10 +44,10 @@ export default function ClassExpression(node: AnyNode, scope: Scope) {
 	for (const bodyNode of node.meta.body) {
 		const type = bodyScope.evaluate(bodyNode);
 
-		if (bodyNode.type === 'ClassMethod' && bodyNode.kind === 'constructor') {
+		if (bodyNode.type === "ClassMethod" && bodyNode.kind === "constructor") {
 			_constructor = type;
 		} else {
-			if (bodyNode.type !== 'TSIndexSignature' && bodyNode.meta.static === true) {
+			if (bodyNode.type !== "TSIndexSignature" && bodyNode.meta.static === true) {
 				statics.push(type);
 			} else {
 				instances.push(type);

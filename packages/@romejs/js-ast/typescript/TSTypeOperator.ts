@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyTSPrimary, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {AnyTSPrimary, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type TSTypeOperator = JSNodeBase & {
-	type: 'TSTypeOperator';
-	operator: 'keyof' | 'unique' | 'readonly';
+	type: "TSTypeOperator";
+	operator: "keyof" | "unique" | "readonly";
 	typeAnnotation: AnyTSPrimary;
 };
 
 export const tsTypeOperator = createBuilder<TSTypeOperator>(
-	'TSTypeOperator',
+	"TSTypeOperator",
 	{
 		bindingKeys: {},
 		visitorKeys: {

@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, ImportDeclaration, importDeclaration} from '@romejs/js-ast';
-import {Scope} from '../../scopes';
-import ImportT from '../../types/ImportT';
-import {getImportSpecifiers} from '@romejs/js-ast-utils';
+import {AnyNode, ImportDeclaration, importDeclaration} from "@romejs/js-ast";
+import {Scope} from "../../scopes";
+import ImportT from "../../types/ImportT";
+import {getImportSpecifiers} from "@romejs/js-ast-utils";
 
 export default function ImportDeclaration(node: AnyNode, scope: Scope) {
 	node = importDeclaration.assert(node);
@@ -16,7 +16,7 @@ export default function ImportDeclaration(node: AnyNode, scope: Scope) {
 	const source = node.source.value;
 
 	for (const specifier of getImportSpecifiers(node)) {
-		if (specifier.type === 'ImportSpecifier') {
+		if (specifier.type === "ImportSpecifier") {
 			const localName = specifier.local.name.name;
 			const importedName = specifier.imported.name;
 
@@ -29,18 +29,18 @@ export default function ImportDeclaration(node: AnyNode, scope: Scope) {
 				},
 			);
 			scope.addBinding(localName, open);
-		} else if (specifier.type === 'ImportDefaultSpecifier') {
+		} else if (specifier.type === "ImportDefaultSpecifier") {
 			const localName = specifier.local.name.name;
 			const open = new ImportT(
 				scope,
 				specifier,
 				{
-					importedName: 'default',
+					importedName: "default",
 					source,
 				},
 			);
 			scope.addBinding(localName, open);
-		} else if (specifier.type === 'ImportNamespaceSpecifier') {
+		} else if (specifier.type === "ImportNamespaceSpecifier") {
 			const localName = specifier.local.name.name;
 			const open = new ImportT(
 				scope,

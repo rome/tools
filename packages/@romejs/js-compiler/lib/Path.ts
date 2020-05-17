@@ -5,20 +5,20 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, MOCK_PARENT} from '@romejs/js-ast';
+import {AnyNode, MOCK_PARENT} from "@romejs/js-ast";
 import {
 	CompilerContext,
 	Scope,
 	TransformVisitor,
 	TransformVisitors,
-} from '@romejs/js-compiler';
+} from "@romejs/js-compiler";
 import {
 	AnyHookDescriptor,
 	HookDescriptor,
 	HookInstance,
-} from '../api/createHook';
-import reduce from '../methods/reduce';
-import {TransformExitResult} from '../types';
+} from "../api/createHook";
+import reduce from "../methods/reduce";
+import {TransformExitResult} from "../types";
 
 export type PathOptions = {
 	ancestryPaths?: Array<Path>;

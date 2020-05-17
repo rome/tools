@@ -5,114 +5,114 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import '@romejs/core';
-import {consumeJSONExtra, stringifyRJSONFromConsumer} from '@romejs/codec-json';
-import {test} from 'rome';
-import {ParserOptions} from '@romejs/parser-core';
-import {createUnknownFilePath} from '@romejs/path';
-import {Dict} from '@romejs/typescript-helpers';
+import "@romejs/core";
+import {consumeJSONExtra, stringifyRJSONFromConsumer} from "@romejs/codec-json";
+import {test} from "rome";
+import {ParserOptions} from "@romejs/parser-core";
+import {createUnknownFilePath} from "@romejs/path";
+import {Dict} from "@romejs/typescript-helpers";
 
 function consumeExtJSON(opts: ParserOptions) {
 	return consumeJSONExtra({
 		...opts,
-		path: createUnknownFilePath('input.rjson'),
+		path: createUnknownFilePath("input.rjson"),
 	});
 }
 
 test(
-	'arrays',
+	"arrays",
 	(t) => {
 		t.inlineSnapshot(
-			stringifyRJSONFromConsumer(consumeExtJSON({input: '[]'})),
-			'[]',
+			stringifyRJSONFromConsumer(consumeExtJSON({input: "[]"})),
+			"[]",
 		);
 		t.inlineSnapshot(
-			stringifyRJSONFromConsumer(consumeExtJSON({input: '[1]'})),
-			'[1]',
+			stringifyRJSONFromConsumer(consumeExtJSON({input: "[1]"})),
+			"[1]",
 		);
 		t.inlineSnapshot(
-			stringifyRJSONFromConsumer(consumeExtJSON({input: '[1,]'})),
-			'[1]',
+			stringifyRJSONFromConsumer(consumeExtJSON({input: "[1,]"})),
+			"[1]",
 		);
 		t.inlineSnapshot(
-			stringifyRJSONFromConsumer(consumeExtJSON({input: '[1, 2, 3]'})),
-			'[\n\t1\n\t2\n\t3\n]',
+			stringifyRJSONFromConsumer(consumeExtJSON({input: "[1, 2, 3]"})),
+			"[\n\t1\n\t2\n\t3\n]",
 		);
 	},
 );
 
 test(
-	'booleans',
+	"booleans",
 	(t) => {
 		t.inlineSnapshot(
-			stringifyRJSONFromConsumer(consumeExtJSON({input: 'true'})),
-			'true',
+			stringifyRJSONFromConsumer(consumeExtJSON({input: "true"})),
+			"true",
 		);
 		t.inlineSnapshot(
-			stringifyRJSONFromConsumer(consumeExtJSON({input: 'false'})),
-			'false',
+			stringifyRJSONFromConsumer(consumeExtJSON({input: "false"})),
+			"false",
 		);
 	},
 );
 
 test(
-	'numbers',
+	"numbers",
 	(t) => {
 		t.inlineSnapshot(
-			stringifyRJSONFromConsumer(consumeExtJSON({input: '1'})),
-			'1',
+			stringifyRJSONFromConsumer(consumeExtJSON({input: "1"})),
+			"1",
 		);
 		t.inlineSnapshot(
-			stringifyRJSONFromConsumer(consumeExtJSON({input: '12'})),
-			'12',
+			stringifyRJSONFromConsumer(consumeExtJSON({input: "12"})),
+			"12",
 		);
 		t.inlineSnapshot(
-			stringifyRJSONFromConsumer(consumeExtJSON({input: '123'})),
-			'123',
+			stringifyRJSONFromConsumer(consumeExtJSON({input: "123"})),
+			"123",
 		);
 		t.inlineSnapshot(
-			stringifyRJSONFromConsumer(consumeExtJSON({input: '123.45'})),
-			'123.45',
+			stringifyRJSONFromConsumer(consumeExtJSON({input: "123.45"})),
+			"123.45",
 		);
 		t.inlineSnapshot(
-			stringifyRJSONFromConsumer(consumeExtJSON({input: '1.2341234123412341e+27'})),
-			'1.2341234123412341e+27',
+			stringifyRJSONFromConsumer(consumeExtJSON({input: "1.2341234123412341e+27"})),
+			"1.2341234123412341e+27",
 		);
 		t.inlineSnapshot(
-			stringifyRJSONFromConsumer(consumeExtJSON({input: '1.2341234123412341E+27'})),
-			'1.2341234123412341e+27',
+			stringifyRJSONFromConsumer(consumeExtJSON({input: "1.2341234123412341E+27"})),
+			"1.2341234123412341e+27",
 		);
 	},
 );
 
 test(
-	'null',
+	"null",
 	(t) => {
 		t.inlineSnapshot(
-			stringifyRJSONFromConsumer(consumeExtJSON({input: 'null'})),
-			'null',
+			stringifyRJSONFromConsumer(consumeExtJSON({input: "null"})),
+			"null",
 		);
 
-		const funcToNull = consumeExtJSON({input: '1'});
+		const funcToNull = consumeExtJSON({input: "1"});
 		funcToNull.consumer.setValue(() => {});
-		t.inlineSnapshot(stringifyRJSONFromConsumer(funcToNull), 'null');
+		t.inlineSnapshot(stringifyRJSONFromConsumer(funcToNull), "null");
 
-		const undefinedToNull = consumeExtJSON({input: '1'});
+		const undefinedToNull = consumeExtJSON({input: "1"});
 		undefinedToNull.consumer.setValue(undefined);
-		t.inlineSnapshot(stringifyRJSONFromConsumer(undefinedToNull), 'null');
+		t.inlineSnapshot(stringifyRJSONFromConsumer(undefinedToNull), "null");
 
-		const NaNToNull = consumeExtJSON({input: '1'});
+		const NaNToNull = consumeExtJSON({input: "1"});
 		NaNToNull.consumer.setValue(NaN);
-		t.inlineSnapshot(stringifyRJSONFromConsumer(NaNToNull), 'NaN');
+		t.inlineSnapshot(stringifyRJSONFromConsumer(NaNToNull), "NaN");
 	},
 );
 
 test(
-	'objects',
+	"objects",
 	(t) => {
 		t.inlineSnapshot(
-			stringifyRJSONFromConsumer(consumeExtJSON({input: '{}'})),
-			'{}',
+			stringifyRJSONFromConsumer(consumeExtJSON({input: "{}"})),
+			"{}",
 		);
 		t.inlineSnapshot(
 			stringifyRJSONFromConsumer(consumeExtJSON({input: '{"foo":"bar"}'})),
@@ -130,10 +130,10 @@ test(
 		);
 
 		// ignore functions and undefined
-		const ret = consumeExtJSON({input: '{}'});
-		ret.consumer.get('foo').setValue('bar');
-		ret.consumer.get('func').setValue(function() {});
-		ret.consumer.get('undef').setValue(undefined);
+		const ret = consumeExtJSON({input: "{}"});
+		ret.consumer.get("foo").setValue("bar");
+		ret.consumer.get("func").setValue(function() {});
+		ret.consumer.get("undef").setValue(undefined);
 		t.inlineSnapshot(stringifyRJSONFromConsumer(ret), 'foo: "bar"');
 	},
 );
@@ -154,7 +154,7 @@ hello: [
   3.53
 ]`;
 test(
-	'complex',
+	"complex",
 	(t) => {
 		const consumer = consumeExtJSON({input: complexTest});
 		t.inlineSnapshot(
@@ -165,15 +165,15 @@ test(
 );
 
 test(
-	'comments',
+	"comments",
 	(t) => {
 		t.inlineSnapshot(
-			stringifyRJSONFromConsumer(consumeExtJSON({input: '// foo\ntrue'})),
-			'// foo\ntrue',
+			stringifyRJSONFromConsumer(consumeExtJSON({input: "// foo\ntrue"})),
+			"// foo\ntrue",
 		);
 		t.inlineSnapshot(
-			stringifyRJSONFromConsumer(consumeExtJSON({input: 'true\n// foo'})),
-			'// foo\ntrue',
+			stringifyRJSONFromConsumer(consumeExtJSON({input: "true\n// foo"})),
+			"// foo\ntrue",
 		);
 
 		//# Comments - loose
@@ -211,7 +211,7 @@ test(
   ]`,
 				}),
 			),
-			'[\n\t// inner comment\n]',
+			"[\n\t// inner comment\n]",
 		);
 		// comments in empty object
 		t.inlineSnapshot(
@@ -222,7 +222,7 @@ test(
   }`,
 				}),
 			),
-			'{\n  // inner comment\n}',
+			"{\n  // inner comment\n}",
 		);
 
 		//# Comments - object property
@@ -291,13 +291,13 @@ test(
 );
 
 test(
-	'recursion',
+	"recursion",
 	(t) => {
 		t.throws(() => {
-			const ret = consumeExtJSON({input: '{}'});
+			const ret = consumeExtJSON({input: "{}"});
 			const foo: Dict<unknown> = {};
 			foo.bar = foo;
-			ret.consumer.get('foo').setValue(foo);
+			ret.consumer.get("foo").setValue(foo);
 			stringifyRJSONFromConsumer(ret);
 		});
 	},

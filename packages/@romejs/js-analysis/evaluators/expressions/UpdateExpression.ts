@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {AnyNode, UpdateExpression, updateExpression} from '@romejs/js-ast';
-import NumericT from '../../types/NumericT';
-import ExhaustiveT from '../../types/ExhaustiveT';
+import {Scope} from "../../scopes";
+import {AnyNode, UpdateExpression, updateExpression} from "@romejs/js-ast";
+import NumericT from "../../types/NumericT";
+import ExhaustiveT from "../../types/ExhaustiveT";
 
 export default function UpdateExpression(node: AnyNode, scope: Scope) {
 	node = updateExpression.assert(node);

@@ -10,15 +10,15 @@ import {
 	AnyNode,
 	MetaProperty,
 	stringLiteral,
-} from '@romejs/js-ast';
-import {template} from '@romejs/js-ast-utils';
-import {CompilerContext, Path} from '@romejs/js-compiler';
+} from "@romejs/js-ast";
+import {template} from "@romejs/js-ast-utils";
+import {CompilerContext, Path} from "@romejs/js-compiler";
 
 function isImportMeta(node: AnyNode): node is MetaProperty {
 	return (
-		node.type === 'MetaProperty' &&
-		node.meta.name === 'import' &&
-		node.property.name === 'meta'
+		node.type === "MetaProperty" &&
+		node.meta.name === "import" &&
+		node.property.name === "meta"
 	);
 }
 
@@ -32,14 +32,14 @@ function createURLString(context: CompilerContext): AnyExpression {
 function getFilename(context: CompilerContext): string {
 	const {path} = context;
 	if (path === undefined) {
-		return '';
+		return "";
 	} else {
 		return path.join();
 	}
 }
 
 export default {
-	name: 'metaPropertyTransform',
+	name: "metaPropertyTransform",
 	enter(path: Path): AnyNode {
 		const {node, context} = path;
 
@@ -64,11 +64,11 @@ export default {
 
 		// Direct reference to import.meta.url
 		if (
-			node.type === 'MemberExpression' &&
-			node.property.type === 'StaticMemberProperty' &&
+			node.type === "MemberExpression" &&
+			node.property.type === "StaticMemberProperty" &&
 			isImportMeta(node.object) &&
-			node.property.value.type === 'Identifier' &&
-			node.property.value.name === 'url'
+			node.property.value.type === "Identifier" &&
+			node.property.value.name === "url"
 		) {
 			return createURLString(context);
 		}

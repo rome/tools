@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from '@romejs/js-ast';
-import {HydrateData} from '../Evaluator';
-import {Scope} from '../scopes';
-import T from './T';
+import {AnyNode} from "@romejs/js-ast";
+import {HydrateData} from "../Evaluator";
+import {Scope} from "../scopes";
+import T from "./T";
 
 export default class VoidT extends T {
-	static type = 'VoidT';
+	static type = "VoidT";
 
 	serialize(): HydrateData {
 		return {};
@@ -22,6 +22,6 @@ export default class VoidT extends T {
 	}
 
 	humanize(): string {
-		return 'void';
+		return "void";
 	}
 }

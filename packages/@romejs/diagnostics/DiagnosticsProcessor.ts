@@ -12,24 +12,24 @@ import {
 	DiagnosticSuppression,
 	DiagnosticSuppressions,
 	Diagnostics,
-} from './types';
-import {addOriginsToDiagnostics} from './derive';
-import {naturalCompare} from '@romejs/string-utils';
-import {DiagnosticsError} from './errors';
-import {ob1Get0} from '@romejs/ob1';
-import {DiagnosticCategoryPrefix} from './categories';
-import {descriptions} from './descriptions';
-import {matchesSuppression} from '@romejs/js-compiler';
-import {SourceMapConsumerCollection} from '@romejs/codec-source-map';
-import DiagnosticsNormalizer from './DiagnosticsNormalizer';
-import {MarkupFormatNormalizeOptions} from '@romejs/string-markup';
+} from "./types";
+import {addOriginsToDiagnostics} from "./derive";
+import {naturalCompare} from "@romejs/string-utils";
+import {DiagnosticsError} from "./errors";
+import {ob1Get0} from "@romejs/ob1";
+import {DiagnosticCategoryPrefix} from "./categories";
+import {descriptions} from "./descriptions";
+import {matchesSuppression} from "@romejs/js-compiler";
+import {SourceMapConsumerCollection} from "@romejs/codec-source-map";
+import DiagnosticsNormalizer from "./DiagnosticsNormalizer";
+import {MarkupFormatNormalizeOptions} from "@romejs/string-markup";
 
 type UniquePart =
-	 | 'filename'
-	| 'message'
-	| 'start.line'
-	| 'start.column'
-	| 'category';
+	 | "filename"
+	| "message"
+	| "start.line"
+	| "start.column"
+	| "category";
 
 type UniqueRule = Array<UniquePart>;
 
@@ -45,7 +45,7 @@ export type DiagnosticsProcessorOptions = {
 };
 
 const DEFAULT_UNIQUE: UniqueRules = [
-	['category', 'filename', 'message', 'start.line', 'start.column'],
+	["category", "filename", "message", "start.line", "start.column"],
 ];
 
 type DiagnosticsByFilename = Map<undefined | string, Diagnostics>;
@@ -114,7 +114,7 @@ export default class DiagnosticsProcessor {
 	maybeThrowDiagnosticsError() {
 		if (this.hasDiagnostics()) {
 			throw new DiagnosticsError(
-				'Thrown by DiagnosticsProcessor',
+				"Thrown by DiagnosticsProcessor",
 				this.getDiagnostics(),
 			);
 		}
@@ -126,7 +126,7 @@ export default class DiagnosticsProcessor {
 
 	assertEmpty() {
 		if (this.hasDiagnostics()) {
-			throw new Error('Expected no diagnostics for this operation');
+			throw new Error("Expected no diagnostics for this operation");
 		}
 	}
 
@@ -222,29 +222,29 @@ export default class DiagnosticsProcessor {
 		for (const rule of this.unique) {
 			const parts = [];
 
-			if (rule.includes('category')) {
+			if (rule.includes("category")) {
 				parts.push(`category:${diag.description.category}`);
 			}
 
-			if (rule.includes('filename')) {
+			if (rule.includes("filename")) {
 				parts.push(`filename:${String(diag.location.filename)}`);
 			}
 
-			if (rule.includes('message')) {
+			if (rule.includes("message")) {
 				parts.push(`message:${diag.description.message}`);
 			}
 
 			if (start !== undefined) {
-				if (rule.includes('start.line')) {
+				if (rule.includes("start.line")) {
 					parts.push(`start.line:${start.line}`);
 				}
 
-				if (rule.includes('start.column')) {
+				if (rule.includes("start.column")) {
 					parts.push(`start.column:${start.column}`);
 				}
 			}
 
-			const key = parts.join(',');
+			const key = parts.join(",");
 			keys.push(key);
 		}
 
@@ -275,7 +275,7 @@ export default class DiagnosticsProcessor {
 
 		if (this.locked) {
 			throw new Error(
-				'DiagnosticsProcessor is locked and cannot accept anymore diagnostics',
+				"DiagnosticsProcessor is locked and cannot accept anymore diagnostics",
 			);
 		}
 
@@ -369,7 +369,7 @@ export default class DiagnosticsProcessor {
 				continue;
 			}
 
-			const [categoryPrefix] = suppression.category.split('/');
+			const [categoryPrefix] = suppression.category.split("/");
 			if (this.allowedUnusedSuppressionPrefixes.has(categoryPrefix)) {
 				continue;
 			}
@@ -404,7 +404,7 @@ export default class DiagnosticsProcessor {
 		for (const filename of filenames) {
 			const fileDiagnostics = diagnosticsByFilename.get(filename);
 			if (fileDiagnostics === undefined) {
-				throw new Error('We use keys() so should be present');
+				throw new Error("We use keys() so should be present");
 			}
 
 			// Sort all file diagnostics by location start index

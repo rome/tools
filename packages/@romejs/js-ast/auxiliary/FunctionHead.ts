@@ -7,16 +7,16 @@
 
 import {
 	AnyParamBindingPattern,
-	AnyPrimaryType,
+	AnyTSPrimary,
 	AnyTargetBindingPattern,
 	BindingIdentifier,
 	JSNodeBase,
 	TSTypeParameterDeclaration,
-} from '../index';
-import {createQuickBuilder} from '../utils';
+} from "../index";
+import {createQuickBuilder} from "../utils";
 
 export type FunctionHead = JSNodeBase & {
-	type: 'FunctionHead';
+	type: "FunctionHead";
 	params: Array<AnyParamBindingPattern>;
 	rest?: AnyTargetBindingPattern;
 	thisType?: BindingIdentifier;
@@ -24,12 +24,12 @@ export type FunctionHead = JSNodeBase & {
 	generator?: boolean;
 	async?: boolean;
 	typeParameters?: TSTypeParameterDeclaration;
-	returnType?: AnyPrimaryType;
+	returnType?: AnyTSPrimary;
 };
 
-export const functionHead = createQuickBuilder<FunctionHead, 'params'>(
-	'FunctionHead',
-	'params',
+export const functionHead = createQuickBuilder<FunctionHead, "params">(
+	"FunctionHead",
+	"params",
 	{
 		bindingKeys: {
 			params: true,

@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Profile} from '@romejs/v8';
-import {Diagnostics} from '@romejs/diagnostics';
-import {ClientFlagsJSON, ClientRequestFlags} from '../types/client';
-import {Bridge} from '@romejs/events';
-import {JSONObject, JSONPropertyValue} from '@romejs/codec-json';
+import {Profile} from "@romejs/v8";
+import {Diagnostics} from "@romejs/diagnostics";
+import {ClientFlagsJSON, ClientRequestFlags} from "../types/client";
+import {Bridge} from "@romejs/events";
+import {JSONObject, JSONPropertyValue} from "@romejs/codec-json";
 import {
 	RemoteReporterClientMessage,
 	RemoteReporterReceiveMessage,
 	ReporterStream,
-} from '@romejs/cli-reporter';
-import {MasterMarker} from '../../master/Master';
+} from "@romejs/cli-reporter";
+import {MasterMarker} from "../../master/Master";
 
 export type MasterQueryRequest = {
 	requestFlags: ClientRequestFlags;
@@ -30,21 +30,21 @@ export type MasterQueryRequest = {
 
 export type PartialMasterQueryRequest = Partial<Omit<
 	MasterQueryRequest,
-	'requestFlags' | 'commandName'
+	"requestFlags" | "commandName"
 >> & {
 	requestFlags?: Partial<ClientRequestFlags>;
 	commandName: string;
 };
 
 export type MasterQueryResponseSuccess = {
-	type: 'SUCCESS';
+	type: "SUCCESS";
 	hasData: boolean;
 	data: JSONPropertyValue;
 	markers: Array<MasterMarker>;
 };
 
 export type MasterQueryResponseError = {
-	type: 'ERROR';
+	type: "ERROR";
 	fatal: boolean;
 	handled: boolean;
 	name: string;
@@ -53,18 +53,18 @@ export type MasterQueryResponseError = {
 };
 
 export type MasterQueryResponseDiagnostics = {
-	type: 'DIAGNOSTICS';
+	type: "DIAGNOSTICS";
 	diagnostics: Diagnostics;
 };
 
 export type MasterQueryResponseInvalid = {
-	type: 'INVALID_REQUEST';
+	type: "INVALID_REQUEST";
 	diagnostics: Diagnostics;
 	showHelp: boolean;
 };
 
 export type MasterQueryResponseCancelled = {
-	type: 'CANCELLED';
+	type: "CANCELLED";
 };
 
 export type MasterQueryResponse =
@@ -84,100 +84,100 @@ export type MasterBridgeInfo = {
 	hasClearScreen: boolean;
 	useRemoteReporter: boolean;
 	unicode: boolean;
-	format: ReporterStream['format'];
+	format: ReporterStream["format"];
 	flags: ClientFlagsJSON;
 };
 
 export default class MasterBridge extends Bridge {
 	getClientInfo = this.createEvent<void, MasterBridgeInfo>({
-		name: 'getClientInfo',
-		direction: 'server->client',
+		name: "getClientInfo",
+		direction: "server->client",
 	});
 
 	stdout = this.createEvent<string, void>({
-		name: 'stdout',
-		direction: 'server->client',
+		name: "stdout",
+		direction: "server->client",
 	});
 
 	stderr = this.createEvent<string, void>({
-		name: 'stderr',
-		direction: 'server->client',
+		name: "stderr",
+		direction: "server->client",
 	});
 
 	enableWorkerLogs = this.createEvent<void, void>({
-		name: 'enableWorkerLogs',
-		direction: 'server<-client',
+		name: "enableWorkerLogs",
+		direction: "server<-client",
 	});
 
 	log = this.createEvent<
 		{
-			origin: 'master' | 'worker';
+			origin: "master" | "worker";
 			chunk: string;
 		},
 		void
 	>({
-		name: 'log',
-		direction: 'server->client',
+		name: "log",
+		direction: "server->client",
 	});
 
 	setColumns = this.createEvent<number, void>({
-		name: 'columns.set',
-		direction: 'server<-client',
+		name: "columns.set",
+		direction: "server<-client",
 	});
 
 	reporterRemoteServerMessage = this.createEvent<
 		RemoteReporterClientMessage,
 		void
 	>({
-		name: 'reporterRemoteToLocalMessage',
-		direction: 'server->client',
+		name: "reporterRemoteToLocalMessage",
+		direction: "server->client",
 	});
 
 	reporterRemoteClientMessage = this.createEvent<
 		RemoteReporterReceiveMessage,
 		void
 	>({
-		name: 'reporterLocalToRemoteMessage',
-		direction: 'server<-client',
+		name: "reporterLocalToRemoteMessage",
+		direction: "server<-client",
 	});
 
 	query = this.createEvent<PartialMasterQueryRequest, MasterQueryResponse>({
-		name: 'query',
-		direction: 'server<-client',
+		name: "query",
+		direction: "server<-client",
 	});
 
 	cancelQuery = this.createEvent<string, void>({
-		name: 'cancel',
-		direction: 'server<-client',
+		name: "cancel",
+		direction: "server<-client",
 	});
 
 	profilingGetWorkers = this.createEvent<void, Array<number>>({
-		name: 'profiling.getWorkers',
-		direction: 'server<-client',
+		name: "profiling.getWorkers",
+		direction: "server<-client",
 	});
 
 	profilingStart = this.createEvent<ProfilingStartData, void>({
-		name: 'profiling.start',
-		direction: 'server<-client',
+		name: "profiling.start",
+		direction: "server<-client",
 	});
 
 	profilingStop = this.createEvent<void, Profile>({
-		name: 'profiling.stop',
-		direction: 'server<-client',
+		name: "profiling.stop",
+		direction: "server<-client",
 	});
 
 	profilingStopWorker = this.createEvent<number, Profile>({
-		name: 'profile.stopWorker',
-		direction: 'server<-client',
+		name: "profile.stopWorker",
+		direction: "server<-client",
 	});
 
 	lspFromClientBuffer = this.createEvent<string, void>({
-		name: 'lspFromClientBuffer',
-		direction: 'server<-client',
+		name: "lspFromClientBuffer",
+		direction: "server<-client",
 	});
 
 	lspFromServerBuffer = this.createEvent<string, void>({
-		name: 'lspFromServerBuffer',
-		direction: 'server->client',
+		name: "lspFromServerBuffer",
+		direction: "server->client",
 	});
 }

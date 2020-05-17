@@ -9,17 +9,17 @@ Program {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array [
-		'jsx'
-		'ts'
+		"jsx"
+		"ts"
 	]
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 38
 			index: 38
@@ -33,16 +33,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment <>...</>?'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Adjacent JSX elements must be wrapped in an enclosing tag. Did you want a JSX fragment <>...</>?"}
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 22
 					index: 22
@@ -59,7 +59,7 @@ Program {
 	body: Array [
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 38
 					index: 38
@@ -72,9 +72,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'var'
+				kind: "var"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 38
 						index: 38
@@ -89,10 +89,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'x'
+							name: "x"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'x'
+								filename: "input.js"
+								identifierName: "x"
 								end: Object {
 									column: 5
 									index: 5
@@ -106,7 +106,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 38
 								index: 38
@@ -119,9 +119,9 @@ Program {
 							}
 						}
 						init: BinaryExpression {
-							operator: '<'
+							operator: "<"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 38
 									index: 38
@@ -134,9 +134,9 @@ Program {
 								}
 							}
 							left: BinaryExpression {
-								operator: '>'
+								operator: ">"
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 30
 										index: 30
@@ -149,10 +149,10 @@ Program {
 									}
 								}
 								right: ReferenceIdentifier {
-									name: 'two'
+									name: "two"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'two'
+										filename: "input.js"
+										identifierName: "two"
 										end: Object {
 											column: 30
 											index: 30
@@ -166,9 +166,9 @@ Program {
 									}
 								}
 								left: BinaryExpression {
-									operator: '<'
+									operator: "<"
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 26
 											index: 26
@@ -181,10 +181,10 @@ Program {
 										}
 									}
 									right: ReferenceIdentifier {
-										name: 'div'
+										name: "div"
 										loc: Object {
-											filename: 'input.js'
-											identifierName: 'div'
+											filename: "input.js"
+											identifierName: "div"
 											end: Object {
 												column: 26
 												index: 26
@@ -199,9 +199,9 @@ Program {
 									}
 									left: JSXElement {
 										name: JSXIdentifier {
-											name: 'div'
+											name: "div"
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 12
 													index: 12
@@ -218,7 +218,7 @@ Program {
 										selfClosing: false
 										typeArguments: undefined
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 22
 												index: 22
@@ -232,9 +232,9 @@ Program {
 										}
 										children: Array [
 											JSXText {
-												value: 'one'
+												value: "one"
 												loc: Object {
-													filename: 'input.js'
+													filename: "input.js"
 													end: Object {
 														column: 16
 														index: 16
@@ -259,7 +259,7 @@ Program {
 								sticky: false
 								unicode: false
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 38
 										index: 38
@@ -273,7 +273,7 @@ Program {
 								}
 								expression: RegExpSubExpression {
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 37
 											index: 37
@@ -287,9 +287,9 @@ Program {
 									}
 									body: Array [
 										RegExpCharacter {
-											value: 'd'
+											value: "d"
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 33
 													index: 33
@@ -303,9 +303,9 @@ Program {
 											}
 										}
 										RegExpCharacter {
-											value: 'i'
+											value: "i"
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 34
 													index: 34
@@ -319,9 +319,9 @@ Program {
 											}
 										}
 										RegExpCharacter {
-											value: 'v'
+											value: "v"
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 35
 													index: 35
@@ -335,9 +335,9 @@ Program {
 											}
 										}
 										RegExpCharacter {
-											value: '>'
+											value: ">"
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 36
 													index: 36
@@ -351,9 +351,9 @@ Program {
 											}
 										}
 										RegExpCharacter {
-											value: ';'
+											value: ";"
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 37
 													index: 37

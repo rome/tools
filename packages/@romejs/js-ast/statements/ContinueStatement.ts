@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Identifier, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {Identifier, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type ContinueStatement = JSNodeBase & {
-	type: 'ContinueStatement';
+	type: "ContinueStatement";
 	label?: Identifier;
 };
 
 export const continueStatement = createBuilder<ContinueStatement>(
-	'ContinueStatement',
+	"ContinueStatement",
 	{
 		bindingKeys: {},
 		visitorKeys: {

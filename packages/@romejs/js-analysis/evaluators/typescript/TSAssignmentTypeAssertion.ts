@@ -9,9 +9,9 @@ import {
 	AnyNode,
 	TSAssignmentTypeAssertion,
 	tsAssignmentTypeAssertion,
-} from '@romejs/js-ast';
+} from "@romejs/js-ast";
 
 export default function TSAssignmentTypeAssertion(node: AnyNode) {
 	node = tsAssignmentTypeAssertion.assert(node);
-	throw new Error('unimplemented');
+	throw new Error("unimplemented");
 }

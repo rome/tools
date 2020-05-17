@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {FunctionScope, Scope} from '../../scopes';
-import {AnyNode, ReturnStatement, returnStatement} from '@romejs/js-ast';
+import {FunctionScope, Scope} from "../../scopes";
+import {AnyNode, ReturnStatement, returnStatement} from "@romejs/js-ast";
 
 export default function ReturnStatement(node: AnyNode, scope: Scope) {
 	node = returnStatement.assert(node);

@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AbsoluteFilePath, AbsoluteFilePathSet} from '@romejs/path';
+import {AbsoluteFilePath, AbsoluteFilePathSet} from "@romejs/path";
 
-import fs = require('fs');
+import fs = require("fs");
 
 // This file contains some wrappers around Node's fs module. Except here we support passing in AbsoluteFilePath instances.
 // NOTE We don't bother using Node's built-in fs promise functions at all. They already contain a level of indirection to callbacks.
@@ -86,7 +86,7 @@ export async function readFileText(path: AbsoluteFilePath): Promise<string> {
 }
 
 export function readFileTextSync(path: AbsoluteFilePath): string {
-	return fs.readFileSync(path.join(), 'utf8');
+	return fs.readFileSync(path.join(), "utf8");
 }
 
 // writeFile
@@ -174,7 +174,7 @@ export function unlink(path: AbsoluteFilePath): Promise<void> {
 			fs.unlink(
 				filename,
 				(err) => {
-					if (err != null && err.code !== 'ENOENT') {
+					if (err != null && err.code !== "ENOENT") {
 						callback(err);
 					} else {
 						callback(null);
@@ -189,7 +189,7 @@ export function unlinkSync(path: AbsoluteFilePath): void {
 	try {
 		fs.unlinkSync(path.join());
 	} catch (err) {
-		if (err.code !== 'ENOENT') {
+		if (err.code !== "ENOENT") {
 			throw err;
 		}
 	}

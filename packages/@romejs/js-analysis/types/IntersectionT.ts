@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from '@romejs/js-ast';
-import {HydrateData, HydrateTypeFactory} from '../Evaluator';
-import T, {SerialTypeFactory, TypeCompatibilityReturn} from './T';
-import {Scope} from '../scopes';
-import {HumanBuilder} from '../Utils';
+import {AnyNode} from "@romejs/js-ast";
+import {HydrateData, HydrateTypeFactory} from "../Evaluator";
+import T, {SerialTypeFactory, TypeCompatibilityReturn} from "./T";
+import {Scope} from "../scopes";
+import {HumanBuilder} from "../Utils";
 
 export default class IntersectionT extends T {
 	constructor(scope: Scope, originNode: undefined | AnyNode, types: Array<T>) {
@@ -17,7 +17,7 @@ export default class IntersectionT extends T {
 		this.types = types;
 	}
 
-	static type = 'IntersectionT';
+	static type = "IntersectionT";
 	types: Array<T>;
 
 	serialize(addType: SerialTypeFactory): HydrateData {
@@ -42,7 +42,7 @@ export default class IntersectionT extends T {
 	compatibleWith(otherType: T): boolean | TypeCompatibilityReturn {
 		for (const type of this.types) {
 			const compatibility = this.utils.checkCompability(type, otherType);
-			if (compatibility.type === 'incompatible') {
+			if (compatibility.type === "incompatible") {
 				return compatibility;
 			}
 		}
@@ -50,6 +50,6 @@ export default class IntersectionT extends T {
 	}
 
 	humanize(builder: HumanBuilder): string {
-		return this.types.map((type) => builder.humanize(type)).join(' & ');
+		return this.types.map((type) => builder.humanize(type)).join(" & ");
 	}
 }

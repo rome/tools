@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, createHook} from '@romejs/js-compiler';
+import {Path, createHook} from "@romejs/js-compiler";
 import {
 	AnyNode,
 	Identifier,
@@ -16,8 +16,8 @@ import {
 	variableDeclaration,
 	variableDeclarationStatement,
 	variableDeclarator,
-} from '@romejs/js-ast';
-import {inheritLoc} from '@romejs/js-ast-utils';
+} from "@romejs/js-ast";
+import {inheritLoc} from "@romejs/js-ast-utils";
 
 function isInsideArrow(path: Path): boolean {
 	for (const ancestor of path.ancestryPaths) {
@@ -26,11 +26,11 @@ function isInsideArrow(path: Path): boolean {
 		// If we hit a function first then it takes precedence over any arrow
 
 		// NOTE: There are other nodes for functions not included
-		if (type === 'FunctionExpression' || type === 'FunctionDeclaration') {
+		if (type === "FunctionExpression" || type === "FunctionDeclaration") {
 			return false;
 		}
 
-		if (type === 'ArrowFunctionExpression') {
+		if (type === "ArrowFunctionExpression") {
 			return true;
 		}
 	}
@@ -43,7 +43,7 @@ type State = {
 };
 
 const arrowProvider = createHook<State, ThisExpression, Identifier>({
-	name: 'arrowProvider',
+	name: "arrowProvider",
 	initialState: {
 		id: undefined,
 	},
@@ -59,7 +59,7 @@ const arrowProvider = createHook<State, ThisExpression, Identifier>({
 		return {
 			value: identifier.create({
 				name: id,
-				loc: inheritLoc(node, 'this'),
+				loc: inheritLoc(node, "this"),
 			}),
 			state: {
 				id,
@@ -69,8 +69,8 @@ const arrowProvider = createHook<State, ThisExpression, Identifier>({
 	exit(path: Path, state: State): AnyNode {
 		const {node} = path;
 
-		if (node.type !== 'FunctionDeclaration' && node.type !== 'FunctionExpression') {
-			throw new Error('Only ever expected function nodes');
+		if (node.type !== "FunctionDeclaration" && node.type !== "FunctionExpression") {
+			throw new Error("Only ever expected function nodes");
 		}
 
 		// This is called after the subtree has been transformed
@@ -86,7 +86,7 @@ const arrowProvider = createHook<State, ThisExpression, Identifier>({
 					body: [
 						variableDeclarationStatement.quick(
 							variableDeclaration.create({
-								kind: 'const',
+								kind: "const",
 								declarations: [
 									variableDeclarator.create({
 										id: bindingIdentifier.quick(state.id),
@@ -104,16 +104,16 @@ const arrowProvider = createHook<State, ThisExpression, Identifier>({
 });
 
 export default {
-	name: 'arrowFunctions',
+	name: "arrowFunctions",
 	enter(path: Path) {
 		const {node} = path;
 
-		if (node.type === 'FunctionDeclaration' || node.type === 'FunctionExpression') {
+		if (node.type === "FunctionDeclaration" || node.type === "FunctionExpression") {
 			// Add a provider to consume `this` inside of arrow functions
 			return path.provideHook(arrowProvider);
 		}
 
-		if (node.type === 'ThisExpression' && isInsideArrow(path)) {
+		if (node.type === "ThisExpression" && isInsideArrow(path)) {
 			// If we're a this expression and we're inside of an arrow then consume us by a descendent provider
 			return path.callHook(arrowProvider, node);
 		}
@@ -123,12 +123,12 @@ export default {
 	exit(path: Path) {
 		const {node} = path;
 
-		if (node.type === 'ArrowFunctionExpression') {
+		if (node.type === "ArrowFunctionExpression") {
 			return {
 				// Convert all arrow functions into normal functions, we do this in the `exit` method because we
 				// still need the arrow to be in the tree for the `isInsideArrow` call in `enter to work
 				...node,
-				type: 'FunctionExpression',
+				type: "FunctionExpression",
 			};
 		}
 

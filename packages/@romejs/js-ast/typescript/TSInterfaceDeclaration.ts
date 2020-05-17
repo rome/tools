@@ -11,11 +11,11 @@ import {
 	TSExpressionWithTypeArguments,
 	TSInterfaceBody,
 	TSTypeParameterDeclaration,
-} from '../index';
-import {createBuilder} from '../utils';
+} from "../index";
+import {createBuilder} from "../utils";
 
 export type TSInterfaceDeclaration = JSNodeBase & {
-	type: 'TSInterfaceDeclaration';
+	type: "TSInterfaceDeclaration";
 	id: BindingIdentifier;
 	body: TSInterfaceBody;
 	typeParameters?: TSTypeParameterDeclaration;
@@ -24,7 +24,7 @@ export type TSInterfaceDeclaration = JSNodeBase & {
 };
 
 export const tsInterfaceDeclaration = createBuilder<TSInterfaceDeclaration>(
-	'TSInterfaceDeclaration',
+	"TSInterfaceDeclaration",
 	{
 		bindingKeys: {
 			id: true,

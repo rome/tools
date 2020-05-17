@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 70
 			index: 70
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 70
 					index: 70
@@ -46,7 +46,7 @@ Program {
 			}
 			expression: TemplateLiteral {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 70
 						index: 70
@@ -60,11 +60,11 @@ Program {
 				}
 				quasis: Array [
 					TemplateElement {
-						cooked: 'outer'
-						raw: 'outer'
+						cooked: "outer"
+						raw: "outer"
 						tail: false
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 6
 								index: 6
@@ -78,11 +78,11 @@ Program {
 						}
 					}
 					TemplateElement {
-						cooked: 'bar'
-						raw: 'bar'
+						cooked: "bar"
+						raw: "bar"
 						tail: false
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 24
 								index: 24
@@ -96,11 +96,11 @@ Program {
 						}
 					}
 					TemplateElement {
-						cooked: 'end'
-						raw: 'end'
+						cooked: "end"
+						raw: "end"
 						tail: true
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 69
 								index: 69
@@ -117,7 +117,7 @@ Program {
 				expressions: Array [
 					ObjectExpression {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 20
 								index: 20
@@ -133,10 +133,10 @@ Program {
 							ObjectProperty {
 								key: StaticPropertyKey {
 									value: Identifier {
-										name: 'x'
+										name: "x"
 										loc: Object {
-											filename: 'input.js'
-											identifierName: 'x'
+											filename: "input.js"
+											identifierName: "x"
 											end: Object {
 												column: 10
 												index: 10
@@ -150,7 +150,7 @@ Program {
 										}
 									}
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 10
 											index: 10
@@ -165,7 +165,7 @@ Program {
 								}
 								value: ObjectExpression {
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 19
 											index: 19
@@ -181,10 +181,10 @@ Program {
 										ObjectProperty {
 											key: StaticPropertyKey {
 												value: Identifier {
-													name: 'y'
+													name: "y"
 													loc: Object {
-														filename: 'input.js'
-														identifierName: 'y'
+														filename: "input.js"
+														identifierName: "y"
 														end: Object {
 															column: 14
 															index: 14
@@ -198,7 +198,7 @@ Program {
 													}
 												}
 												loc: Object {
-													filename: 'input.js'
+													filename: "input.js"
 													end: Object {
 														column: 14
 														index: 14
@@ -215,7 +215,7 @@ Program {
 												value: 10
 												format: undefined
 												loc: Object {
-													filename: 'input.js'
+													filename: "input.js"
 													end: Object {
 														column: 18
 														index: 18
@@ -229,7 +229,7 @@ Program {
 												}
 											}
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 18
 													index: 18
@@ -245,7 +245,7 @@ Program {
 									]
 								}
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 19
 										index: 19
@@ -262,7 +262,7 @@ Program {
 					}
 					TemplateLiteral {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 65
 								index: 65
@@ -276,11 +276,11 @@ Program {
 						}
 						quasis: Array [
 							TemplateElement {
-								cooked: 'nested'
-								raw: 'nested'
+								cooked: "nested"
+								raw: "nested"
 								tail: false
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 33
 										index: 33
@@ -294,11 +294,11 @@ Program {
 								}
 							}
 							TemplateElement {
-								cooked: 'endnest'
-								raw: 'endnest'
+								cooked: "endnest"
+								raw: "endnest"
 								tail: true
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 64
 										index: 64
@@ -316,7 +316,7 @@ Program {
 							FunctionExpression {
 								id: undefined
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 56
 										index: 56
@@ -338,7 +338,7 @@ Program {
 									thisType: undefined
 									typeParameters: undefined
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 45
 											index: 45
@@ -354,7 +354,7 @@ Program {
 								body: BlockStatement {
 									directives: Array []
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 56
 											index: 56
@@ -369,7 +369,7 @@ Program {
 									body: Array [
 										ReturnStatement {
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 55
 													index: 55
@@ -385,7 +385,7 @@ Program {
 												value: 1
 												format: undefined
 												loc: Object {
-													filename: 'input.js'
+													filename: "input.js"
 													end: Object {
 														column: 54
 														index: 54

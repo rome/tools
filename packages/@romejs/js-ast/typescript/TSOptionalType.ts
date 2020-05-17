@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyTSPrimary, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {AnyTSPrimary, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type TSOptionalType = JSNodeBase & {
-	type: 'TSOptionalType';
+	type: "TSOptionalType";
 	typeAnnotation: AnyTSPrimary;
 };
 
 export const tsOptionalType = createBuilder<TSOptionalType>(
-	'TSOptionalType',
+	"TSOptionalType",
 	{
 		bindingKeys: {},
 		visitorKeys: {

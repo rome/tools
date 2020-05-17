@@ -9,14 +9,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 11
 			index: 36
@@ -30,10 +30,10 @@ Program {
 	}
 	comments: Array [
 		CommentLine {
-			id: '0'
-			value: ' Some comment'
+			id: "0"
+			value: " Some comment"
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 24
 					index: 24
@@ -51,7 +51,7 @@ Program {
 		IfStatement {
 			alternate: undefined
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 11
 					index: 36
@@ -64,10 +64,10 @@ Program {
 				}
 			}
 			test: ReferenceIdentifier {
-				name: 'x'
+				name: "x"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'x'
+					filename: "input.js"
+					identifierName: "x"
 					end: Object {
 						column: 5
 						index: 5
@@ -83,7 +83,7 @@ Program {
 			consequent: BlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 11
 						index: 36
@@ -97,9 +97,9 @@ Program {
 				}
 				body: Array [
 					ExpressionStatement {
-						leadingComments: Array ['0']
+						leadingComments: Array ["0"]
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 9
 								index: 34
@@ -115,7 +115,7 @@ Program {
 							arguments: Array []
 							leadingComments: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 8
 									index: 33
@@ -128,11 +128,11 @@ Program {
 								}
 							}
 							callee: ReferenceIdentifier {
-								name: 'doThat'
+								name: "doThat"
 								leadingComments: undefined
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'doThat'
+									filename: "input.js"
+									identifierName: "doThat"
 									end: Object {
 										column: 6
 										index: 31

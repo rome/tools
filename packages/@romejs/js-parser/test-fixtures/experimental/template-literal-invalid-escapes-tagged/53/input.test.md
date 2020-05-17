@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 16
 			index: 16
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 16
 					index: 16
@@ -47,7 +47,7 @@ Program {
 			expression: TaggedTemplateExpression {
 				typeArguments: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 16
 						index: 16
@@ -60,10 +60,10 @@ Program {
 					}
 				}
 				tag: ReferenceIdentifier {
-					name: 'sampleTag'
+					name: "sampleTag"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'sampleTag'
+						filename: "input.js"
+						identifierName: "sampleTag"
 						end: Object {
 							column: 9
 							index: 9
@@ -79,7 +79,7 @@ Program {
 				quasi: TemplateLiteral {
 					expressions: Array []
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 16
 							index: 16
@@ -93,11 +93,11 @@ Program {
 					}
 					quasis: Array [
 						TemplateElement {
-							cooked: '\\u{\\`'
-							raw: '\\u{\\`'
+							cooked: "\\u{\\`"
+							raw: "\\u{\\`"
 							tail: true
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 15
 									index: 15

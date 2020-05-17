@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {CompilerContext, Path, TransformExitResult} from '@romejs/js-compiler';
+import {CompilerContext, Path, TransformExitResult} from "@romejs/js-compiler";
 import {
 	AnyNode,
 	AnyStatement,
@@ -28,9 +28,9 @@ import {
 	returnStatement,
 	staticMemberProperty,
 	thisExpression,
-} from '@romejs/js-ast';
-import {template} from '@romejs/js-ast-utils';
-import {descriptions} from '@romejs/diagnostics';
+} from "@romejs/js-ast";
+import {template} from "@romejs/js-ast-utils";
+import {descriptions} from "@romejs/diagnostics";
 
 function transformClass(
 	node: ClassDeclaration | ClassExpression,
@@ -52,13 +52,13 @@ function transformClass(
 	const {superClass} = node.meta;
 	if (superClass !== undefined) {
 		if (
-			superClass.type === 'ReferenceIdentifier' &&
+			superClass.type === "ReferenceIdentifier" &&
 			scope.hasBinding(superClass.name)
 		) {
 			superClassRef = superClass;
 		} else {
 			superClassRef = referenceIdentifier.create({
-				name: scope.generateUid('superClass'),
+				name: scope.generateUid("superClass"),
 			});
 			prependDeclarations.push(
 				template.statement`const ${superClassRef} = ${superClass};`,
@@ -68,12 +68,12 @@ function transformClass(
 
 	// get the class name, if there's no class id then generate a new name
 	const className: string =
-		node.id === undefined ? scope.generateUid('class') : node.id.name;
+		node.id === undefined ? scope.generateUid("class") : node.id.name;
 
 	// push on the superClass setup
 	if (superClass !== undefined) {
 		if (superClassRef === undefined) {
-			throw new Error('Impossible');
+			throw new Error("Impossible");
 		}
 
 		// inherit static properties
@@ -101,33 +101,33 @@ function transformClass(
 
 	const newNode = classDeclaration.assert(
 		path.reduce({
-			name: 'classesSuperTransform',
+			name: "classesSuperTransform",
 			enter(path) {
 				if (superClassRef === undefined) {
-					throw new Error('Impossible');
+					throw new Error("Impossible");
 				}
 
 				const {node} = path;
 
 				// TODO correctly support super() by using return value
-				if (node.type === 'CallExpression' && node.callee.type === 'Super') {
+				if (node.type === "CallExpression" && node.callee.type === "Super") {
 					// replace super(...args); with Super.call(this, ...args);
 					return callExpression.create({
 						callee: memberExpression.create({
 							object: superClassRef,
-							property: staticMemberProperty.quick(identifier.quick('call')),
+							property: staticMemberProperty.quick(identifier.quick("call")),
 						}),
 						arguments: [thisExpression.create({}), ...node.arguments],
 					});
 				}
 
 				// TODO super.foo
-				if (node.type === 'MemberExpression' && node.object.type === 'Super') {
+				if (node.type === "MemberExpression" && node.object.type === "Super") {
 					const classMethod2 = path.findAncestry((path) =>
-						path.node.type === 'ClassMethod'
+						path.node.type === "ClassMethod"
 					);
 					if (classMethod2 === undefined) {
-						throw new Error('Expected to find class method here');
+						throw new Error("Expected to find class method here");
 					}
 					const isStatic = classMethod.assert(classMethod2.node).meta.static === true;
 
@@ -142,7 +142,7 @@ function transformClass(
 
 					const superProtoRef = memberExpression.create({
 						object: superClassRef,
-						property: staticMemberProperty.quick(identifier.quick('prototype')),
+						property: staticMemberProperty.quick(identifier.quick("prototype")),
 					});
 					return memberExpression.create({
 						object: superProtoRef,
@@ -152,15 +152,15 @@ function transformClass(
 
 				// super.foo();
 				if (
-					node.type === 'CallExpression' &&
-					node.callee.type === 'MemberExpression' &&
-					node.callee.object.type === 'Super'
+					node.type === "CallExpression" &&
+					node.callee.type === "MemberExpression" &&
+					node.callee.object.type === "Super"
 				) {
 					const classMethod2 = path.findAncestry((path) =>
-						path.node.type === 'ClassMethod'
+						path.node.type === "ClassMethod"
 					);
 					if (classMethod2 === undefined) {
-						throw new Error('Expected to find class method here');
+						throw new Error("Expected to find class method here");
 					}
 					const isStatic = classMethod.assert(classMethod2.node).meta.static === true;
 
@@ -177,7 +177,7 @@ function transformClass(
 						return callExpression.create({
 							callee: memberExpression.create({
 								object: methodRef,
-								property: staticMemberProperty.quick(identifier.quick('call')),
+								property: staticMemberProperty.quick(identifier.quick("call")),
 							}),
 							arguments: [referenceIdentifier.quick(className), ...args],
 						});
@@ -187,7 +187,7 @@ function transformClass(
 					let methodRef;
 					let prototypeRef = memberExpression.create({
 						object: superClassRef,
-						property: staticMemberProperty.quick(identifier.quick('prototype')),
+						property: staticMemberProperty.quick(identifier.quick("prototype")),
 					});
 					methodRef = memberExpression.create({
 						object: prototypeRef,
@@ -196,7 +196,7 @@ function transformClass(
 					return callExpression.create({
 						callee: memberExpression.create({
 							object: methodRef,
-							property: staticMemberProperty.quick(identifier.quick('call')),
+							property: staticMemberProperty.quick(identifier.quick("call")),
 						}),
 						arguments: [thisExpression.create({}), ...args],
 					});
@@ -211,7 +211,7 @@ function transformClass(
 	// setup method declarations
 	let constructorMethod = undefined;
 	for (const bodyNode of newNode.meta.body) {
-		if (bodyNode.type !== 'ClassMethod') {
+		if (bodyNode.type !== "ClassMethod") {
 			context.addNodeDiagnostic(
 				bodyNode,
 				descriptions.COMPILER.CLASSES_UNSUPPORTED,
@@ -220,11 +220,11 @@ function transformClass(
 		}
 
 		// save the constructor if this is it, we'll process this later
-		if (bodyNode.kind === 'constructor') {
+		if (bodyNode.kind === "constructor") {
 			constructorMethod = bodyNode;
 		}
 
-		if (bodyNode.kind === 'method') {
+		if (bodyNode.kind === "method") {
 			// create the function expression to represent this method
 			const functionNode = functionExpression.create({
 				head: bodyNode.head,
@@ -240,7 +240,7 @@ function transformClass(
 			}
 
 			// use computed properties for computed methods
-			if (bodyNode.key.type === 'ComputedPropertyKey') {
+			if (bodyNode.key.type === "ComputedPropertyKey") {
 				declarations.push(
 					template.statement`${target}[${bodyNode.key.value}] = ${functionNode}`,
 				);
@@ -276,20 +276,20 @@ function transformClass(
 }
 
 export default {
-	name: 'classes',
+	name: "classes",
 	enter(path: Path): TransformExitResult {
 		const {node, scope, context} = path;
 
 		// correctly replace an export class with the class node then append the declarations
 		if (
-			(node.type === 'ExportLocalDeclaration' ||
-			node.type === 'ExportDefaultDeclaration') &&
+			(node.type === "ExportLocalDeclaration" ||
+			node.type === "ExportDefaultDeclaration") &&
 			node.declaration !== undefined &&
-			node.declaration.type === 'ClassDeclaration'
+			node.declaration.type === "ClassDeclaration"
 		) {
 			const {_constructor, declarations, prependDeclarations} = transformClass(
 				node.declaration,
-				path.getChildPath('declaration'),
+				path.getChildPath("declaration"),
 				context,
 			);
 			const nodes: Array<AnyNode> = [
@@ -303,7 +303,7 @@ export default {
 			return nodes;
 		}
 
-		if (node.type === 'ClassDeclaration') {
+		if (node.type === "ClassDeclaration") {
 			const {_constructor, prependDeclarations, declarations} = transformClass(
 				node,
 				path,
@@ -313,9 +313,9 @@ export default {
 		}
 
 		// turn a class expression into an IIFE that returns a class declaration
-		if (node.type === 'ClassExpression') {
+		if (node.type === "ClassExpression") {
 			const className =
-				node.id === undefined ? scope.generateUid('class') : node.id.name;
+				node.id === undefined ? scope.generateUid("class") : node.id.name;
 
 			return callExpression.create({
 				callee: arrowFunctionExpression.create({
@@ -324,7 +324,7 @@ export default {
 						body: [
 							{
 								...node,
-								type: 'ClassDeclaration',
+								type: "ClassDeclaration",
 								id: bindingIdentifier.quick(className),
 							},
 							returnStatement.create({

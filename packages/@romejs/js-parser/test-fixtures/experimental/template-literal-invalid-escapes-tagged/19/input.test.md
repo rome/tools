@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 22
 			index: 22
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 22
 					index: 22
@@ -47,7 +47,7 @@ Program {
 			expression: TaggedTemplateExpression {
 				typeArguments: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 22
 						index: 22
@@ -60,10 +60,10 @@ Program {
 					}
 				}
 				tag: ReferenceIdentifier {
-					name: 'sampleTag'
+					name: "sampleTag"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'sampleTag'
+						filename: "input.js"
+						identifierName: "sampleTag"
 						end: Object {
 							column: 9
 							index: 9
@@ -78,7 +78,7 @@ Program {
 				}
 				quasi: TemplateLiteral {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 22
 							index: 22
@@ -95,7 +95,7 @@ Program {
 							value: 0
 							format: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 17
 									index: 17
@@ -111,11 +111,11 @@ Program {
 					]
 					quasis: Array [
 						TemplateElement {
-							cooked: 'left'
-							raw: 'left'
+							cooked: "left"
+							raw: "left"
 							tail: false
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 14
 									index: 14
@@ -129,11 +129,11 @@ Program {
 							}
 						}
 						TemplateElement {
-							cooked: '\\u0'
-							raw: '\\u0'
+							cooked: "\\u0"
+							raw: "\\u0"
 							tail: true
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 21
 									index: 21

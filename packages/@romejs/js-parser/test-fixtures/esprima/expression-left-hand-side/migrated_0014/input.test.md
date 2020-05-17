@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 21
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 20
 					index: 20
@@ -46,7 +46,7 @@ Program {
 			}
 			expression: MemberExpression {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 20
 						index: 20
@@ -59,10 +59,10 @@ Program {
 					}
 				}
 				object: ReferenceIdentifier {
-					name: 'universe'
+					name: "universe"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'universe'
+						filename: "input.js"
+						identifierName: "universe"
 						end: Object {
 							column: 8
 							index: 8
@@ -77,10 +77,10 @@ Program {
 				}
 				property: ComputedMemberProperty {
 					value: ReferenceIdentifier {
-						name: 'galaxyName'
+						name: "galaxyName"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'galaxyName'
+							filename: "input.js"
+							identifierName: "galaxyName"
 							end: Object {
 								column: 19
 								index: 19
@@ -94,7 +94,7 @@ Program {
 						}
 					}
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 20
 							index: 20

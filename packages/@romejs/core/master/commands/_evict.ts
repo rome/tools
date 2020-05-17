@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {MasterRequest} from '@romejs/core';
-import {commandCategories} from '../../common/commands';
-import {createMasterCommand} from '../commands';
+import {MasterRequest} from "@romejs/core";
+import {commandCategories} from "../../common/commands";
+import {createMasterCommand} from "../commands";
 
 export default createMasterCommand({
-	description: 'evict a file from the memory cache',
+	description: "evict a file from the memory cache",
 	category: commandCategories.INTERNAL,
-	usage: '',
+	usage: "",
 	examples: [],
 	defineFlags() {
 		return {};

@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSInterfaceDeclaration} from '@romejs/js-ast';
-import {Builder} from '@romejs/js-formatter';
-import {Token, concat, space} from '../../tokens';
-import {printCommaList} from '../utils';
+import {TSInterfaceDeclaration} from "@romejs/js-ast";
+import {Builder} from "@romejs/js-formatter";
+import {Token, concat, space} from "../../tokens";
+import {printCommaList} from "../utils";
 
 export default function TSInterfaceDeclaration(
 	builder: Builder,
@@ -17,11 +17,11 @@ export default function TSInterfaceDeclaration(
 	const tokens: Array<Token> = [];
 
 	if (node.declare) {
-		tokens.push('declare', space);
+		tokens.push("declare", space);
 	}
 
 	tokens.push(
-		'interface',
+		"interface",
 		space,
 		builder.tokenize(node.id, node),
 		builder.tokenize(node.typeParameters, node),
@@ -30,7 +30,7 @@ export default function TSInterfaceDeclaration(
 	if (node.extends) {
 		tokens.push(
 			space,
-			'extends',
+			"extends",
 			space,
 			printCommaList(builder, node.extends, node),
 		);

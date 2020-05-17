@@ -8,14 +8,14 @@
 Program {
 	corrupt: false
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 33
 			index: 33
@@ -29,10 +29,10 @@ Program {
 	}
 	comments: Array [
 		CommentLine {
-			id: '0'
-			value: ' Error'
+			id: "0"
+			value: " Error"
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 33
 					index: 33
@@ -48,16 +48,16 @@ Program {
 	]
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Only literal values are allowed as a constant type'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Only literal values are allowed as a constant type"}
 			}
 			location: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				mtime: undefined
-				sourceType: 'module'
+				sourceType: "module"
 				end: Object {
 					column: 13
 					index: 13
@@ -73,9 +73,9 @@ Program {
 	]
 	body: Array [
 		VariableDeclarationStatement {
-			trailingComments: Array ['0']
+			trailingComments: Array ["0"]
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 23
 					index: 23
@@ -88,10 +88,10 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'let'
+				kind: "let"
 				trailingComments: undefined
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 23
 						index: 23
@@ -106,10 +106,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'e'
+							name: "e"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'e'
+								filename: "input.ts"
+								identifierName: "e"
 								end: Object {
 									column: 5
 									index: 5
@@ -123,7 +123,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 22
 								index: 22
@@ -137,7 +137,7 @@ Program {
 						}
 						init: TSAsExpression {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 22
 									index: 22
@@ -152,7 +152,7 @@ Program {
 							typeAnnotation: TSTypeReference {
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 22
 										index: 22
@@ -165,10 +165,10 @@ Program {
 									}
 								}
 								typeName: ReferenceIdentifier {
-									name: 'const'
+									name: "const"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'const'
+										filename: "input.ts"
+										identifierName: "const"
 										end: Object {
 											column: 22
 											index: 22
@@ -184,7 +184,7 @@ Program {
 							}
 							expression: CallExpression {
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 13
 										index: 13
@@ -197,10 +197,10 @@ Program {
 									}
 								}
 								callee: ReferenceIdentifier {
-									name: 'id'
+									name: "id"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'id'
+										filename: "input.ts"
+										identifierName: "id"
 										end: Object {
 											column: 10
 											index: 10
@@ -218,7 +218,7 @@ Program {
 										value: 1
 										format: undefined
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 12
 												index: 12

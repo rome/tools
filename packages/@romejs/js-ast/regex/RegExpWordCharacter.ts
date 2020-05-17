@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type RegExpWordCharacter = JSNodeBase & {
-	type: 'RegExpWordCharacter';
+	type: "RegExpWordCharacter";
 };
 
 export const regExpWordCharacter = createBuilder<RegExpWordCharacter>(
-	'RegExpWordCharacter',
+	"RegExpWordCharacter",
 	{
 		bindingKeys: {},
 		visitorKeys: {},

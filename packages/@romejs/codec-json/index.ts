@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSONParserOptions, JSONValue, PathToComments, Tokens} from './types';
-import {createJSONParser} from './parse';
-import {Consumer, consume, consumeUnknown} from '@romejs/consume';
-import {stringifyRootConsumer} from './stringify';
-import {TokenValues} from '@romejs/parser-core';
+import {JSONParserOptions, JSONValue, PathToComments, Tokens} from "./types";
+import {createJSONParser} from "./parse";
+import {Consumer, consume, consumeUnknown} from "@romejs/consume";
+import {stringifyRootConsumer} from "./stringify";
+import {TokenValues} from "@romejs/parser-core";
 
 export {
 	JSONArray,
@@ -17,7 +17,7 @@ export {
 	JSONParserOptions,
 	JSONPropertyValue,
 	JSONValue,
-} from './types';
+} from "./types";
 
 export type ConsumeJSONResult = {
 	hasExtensions: boolean;
@@ -66,9 +66,9 @@ export function stringifyRJSONFromConsumer(
 }
 
 export function stringifyRJSON(value: unknown): string {
-	return stringifyRootConsumer(consumeUnknown(value, 'parse/json'), new Map());
+	return stringifyRootConsumer(consumeUnknown(value, "parse/json"), new Map());
 }
 
 export function stringifyJSON(value: unknown): string {
-	return JSON.stringify(value, null, '\t');
+	return JSON.stringify(value, null, "\t");
 }

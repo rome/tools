@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
+import {Scope} from "../../scopes";
 import {
 	AnyNode,
 	NumberKeywordTypeAnnotation,
 	numberKeywordTypeAnnotation,
-} from '@romejs/js-ast';
-import NumericT from '../../types/NumericT';
+} from "@romejs/js-ast";
+import NumericT from "../../types/NumericT";
 
 export default function NumberKeywordTypeAnnotation(node: AnyNode, scope: Scope) {
 	node = numberKeywordTypeAnnotation.assert(node);

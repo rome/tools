@@ -5,21 +5,21 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ExpressionNode} from './parse';
+import {ExpressionNode} from "./parse";
 
 export default function stringify(node: ExpressionNode): string {
 	// TODO parens
 	switch (node.type) {
-		case 'Or':
+		case "Or":
 			return `${stringify(node.left)} OR ${stringify(node.right)}`;
 
-		case 'And':
+		case "And":
 			return `${stringify(node.left)} AND ${stringify(node.right)}`;
 
-		case 'License': {
+		case "License": {
 			let str = node.id;
 			if (node.plus) {
-				str += '+';
+				str += "+";
 			}
 			if (node.exception !== undefined) {
 				str += ` WITH ${node.exception}`;

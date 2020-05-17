@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {testLintMultiple} from '../testHelpers';
-import {dedent} from '@romejs/string-utils';
+import {test} from "rome";
+import {testLintMultiple} from "../testHelpers";
+import {dedent} from "@romejs/string-utils";
 
 test(
-	'no delete',
+	"no delete",
 	async (t) => {
 		await testLintMultiple(
 			t,
@@ -24,7 +24,7 @@ test(
           delete obj.a.b.c;
         `,
 			],
-			{category: 'lint/noDelete'},
+			{category: "lint/noDelete"},
 		);
 	},
 );

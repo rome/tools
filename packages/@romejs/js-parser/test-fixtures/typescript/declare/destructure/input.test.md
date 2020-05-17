@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 50
@@ -33,7 +33,7 @@ Program {
 		VariableDeclarationStatement {
 			declare: true
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 49
 					index: 49
@@ -46,9 +46,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'const'
+				kind: "const"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 49
 						index: 49
@@ -65,7 +65,7 @@ Program {
 						id: BindingObjectPattern {
 							rest: undefined
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 48
 									index: 48
@@ -81,10 +81,10 @@ Program {
 								BindingObjectPatternProperty {
 									key: StaticPropertyKey {
 										value: Identifier {
-											name: 'x'
+											name: "x"
 											loc: Object {
-												filename: 'input.ts'
-												identifierName: 'x'
+												filename: "input.ts"
+												identifierName: "x"
 												end: Object {
 													column: 17
 													index: 17
@@ -98,7 +98,7 @@ Program {
 											}
 										}
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 17
 												index: 17
@@ -112,10 +112,10 @@ Program {
 										}
 									}
 									value: BindingIdentifier {
-										name: 'x'
+										name: "x"
 										loc: Object {
-											filename: 'input.ts'
-											identifierName: 'x'
+											filename: "input.ts"
+											identifierName: "x"
 											end: Object {
 												column: 17
 												index: 17
@@ -129,7 +129,7 @@ Program {
 										}
 									}
 									loc: Object {
-										filename: 'input.ts'
+										filename: "input.ts"
 										end: Object {
 											column: 17
 											index: 17
@@ -145,10 +145,10 @@ Program {
 								BindingObjectPatternProperty {
 									key: StaticPropertyKey {
 										value: Identifier {
-											name: 'y'
+											name: "y"
 											loc: Object {
-												filename: 'input.ts'
-												identifierName: 'y'
+												filename: "input.ts"
+												identifierName: "y"
 												end: Object {
 													column: 20
 													index: 20
@@ -162,7 +162,7 @@ Program {
 											}
 										}
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 20
 												index: 20
@@ -176,10 +176,10 @@ Program {
 										}
 									}
 									value: BindingIdentifier {
-										name: 'y'
+										name: "y"
 										loc: Object {
-											filename: 'input.ts'
-											identifierName: 'y'
+											filename: "input.ts"
+											identifierName: "y"
 											end: Object {
 												column: 20
 												index: 20
@@ -193,7 +193,7 @@ Program {
 										}
 									}
 									loc: Object {
-										filename: 'input.ts'
+										filename: "input.ts"
 										end: Object {
 											column: 20
 											index: 20
@@ -210,7 +210,7 @@ Program {
 							meta: PatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 48
 										index: 48
@@ -224,7 +224,7 @@ Program {
 								}
 								typeAnnotation: TSTypeLiteral {
 									loc: Object {
-										filename: 'input.ts'
+										filename: "input.ts"
 										end: Object {
 											column: 48
 											index: 48
@@ -240,10 +240,10 @@ Program {
 										TSPropertySignature {
 											key: StaticPropertyKey {
 												value: Identifier {
-													name: 'x'
+													name: "x"
 													loc: Object {
-														filename: 'input.ts'
-														identifierName: 'x'
+														filename: "input.ts"
+														identifierName: "x"
 														end: Object {
 															column: 27
 															index: 27
@@ -257,7 +257,7 @@ Program {
 													}
 												}
 												loc: Object {
-													filename: 'input.ts'
+													filename: "input.ts"
 													end: Object {
 														column: 27
 														index: 27
@@ -273,7 +273,7 @@ Program {
 											optional: false
 											readonly: false
 											loc: Object {
-												filename: 'input.ts'
+												filename: "input.ts"
 												end: Object {
 													column: 36
 													index: 36
@@ -287,7 +287,7 @@ Program {
 											}
 											typeAnnotation: NumberKeywordTypeAnnotation {
 												loc: Object {
-													filename: 'input.ts'
+													filename: "input.ts"
 													end: Object {
 														column: 35
 														index: 35
@@ -304,10 +304,10 @@ Program {
 										TSPropertySignature {
 											key: StaticPropertyKey {
 												value: Identifier {
-													name: 'y'
+													name: "y"
 													loc: Object {
-														filename: 'input.ts'
-														identifierName: 'y'
+														filename: "input.ts"
+														identifierName: "y"
 														end: Object {
 															column: 38
 															index: 38
@@ -321,7 +321,7 @@ Program {
 													}
 												}
 												loc: Object {
-													filename: 'input.ts'
+													filename: "input.ts"
 													end: Object {
 														column: 38
 														index: 38
@@ -337,7 +337,7 @@ Program {
 											optional: false
 											readonly: false
 											loc: Object {
-												filename: 'input.ts'
+												filename: "input.ts"
 												end: Object {
 													column: 46
 													index: 46
@@ -351,7 +351,7 @@ Program {
 											}
 											typeAnnotation: NumberKeywordTypeAnnotation {
 												loc: Object {
-													filename: 'input.ts'
+													filename: "input.ts"
 													end: Object {
 														column: 46
 														index: 46
@@ -371,7 +371,7 @@ Program {
 						}
 						init: undefined
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 48
 								index: 48

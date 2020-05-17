@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from '@romejs/js-ast';
-import {HydrateData, HydrateTypeFactory} from '../Evaluator';
-import T, {SerialTypeFactory, TypeCompatibilityReturn} from './T';
-import {Scope} from '../scopes';
-import {HumanBuilder} from '../Utils';
-import ObjPropT from './ObjPropT';
+import {AnyNode} from "@romejs/js-ast";
+import {HydrateData, HydrateTypeFactory} from "../Evaluator";
+import T, {SerialTypeFactory, TypeCompatibilityReturn} from "./T";
+import {Scope} from "../scopes";
+import {HumanBuilder} from "../Utils";
+import ObjPropT from "./ObjPropT";
 
 export default class ObjT extends T {
 	constructor(
@@ -28,7 +28,7 @@ export default class ObjT extends T {
 		this.proto = opts.proto;
 	}
 
-	static type = 'ObjT';
+	static type = "ObjT";
 	calls: Array<T>;
 	props: Array<T>;
 	proto: undefined | T;
@@ -36,7 +36,7 @@ export default class ObjT extends T {
 	serialize(addType: SerialTypeFactory): HydrateData {
 		if (this.constructor !== ObjT) {
 			throw new Error(
-				'Expected ObjT to be constructor, youve likely forgot to define this method in the type subclass',
+				"Expected ObjT to be constructor, youve likely forgot to define this method in the type subclass",
 			);
 		}
 
@@ -99,7 +99,7 @@ export default class ObjT extends T {
 			}
 
 			const compatibility = this.utils.checkCompability(ourProp, theirProp);
-			if (compatibility.type === 'incompatible') {
+			if (compatibility.type === "incompatible") {
 				return compatibility;
 			}
 		}
@@ -109,18 +109,18 @@ export default class ObjT extends T {
 
 	humanize(builder: HumanBuilder): string {
 		if (this.props.length === 0) {
-			return '{}';
+			return "{}";
 		} else {
 			return [
-				'{',
+				"{",
 				...this.props.map((prop) => {
 					const val = builder.humanize(prop);
-					let lines = val.split('\n');
+					let lines = val.split("\n");
 					lines = lines.map((line) => `  ${line}`);
-					return `${lines.join('\n')},`;
+					return `${lines.join("\n")},`;
 				}),
-				'}',
-			].join('\n');
+				"}",
+			].join("\n");
 		}
 	}
 }

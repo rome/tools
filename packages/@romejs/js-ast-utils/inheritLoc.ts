@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from '@romejs/js-ast';
-import {SourceLocation} from '@romejs/parser-core';
+import {AnyNode} from "@romejs/js-ast";
+import {SourceLocation} from "@romejs/parser-core";
 
 export default function inheritLoc(
 	node: AnyNode,
@@ -33,7 +33,7 @@ export default function inheritLoc(
 	// If this location has no identifierName and we're an Identifier then inherit it
 
 	// TODO maybe handle other identifier types? JSXIdentifier etc?
-	if (node.type === 'Identifier') {
+	if (node.type === "Identifier") {
 		return {
 			...loc,
 			identifierName: node.name,

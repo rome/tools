@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {DiagnosticLocation} from '@romejs/diagnostics';
-import {toKebabCase} from '@romejs/string-utils';
-import {ConsumeSourceLocationRequestTarget} from '@romejs/consume';
-import {Number0, ob1Coerce0, ob1Number0Neg1, ob1Number1} from '@romejs/ob1';
-import {Dict, RequiredProps} from '@romejs/typescript-helpers';
-import {FlagValue} from './Parser';
+import {DiagnosticLocation} from "@romejs/diagnostics";
+import {toKebabCase} from "@romejs/string-utils";
+import {ConsumeSourceLocationRequestTarget} from "@romejs/consume";
+import {Number0, ob1Coerce0, ob1Number0Neg1, ob1Number1} from "@romejs/ob1";
+import {Dict, RequiredProps} from "@romejs/typescript-helpers";
+import {FlagValue} from "./Parser";
 
 type SerializeCLIData = {
 	programName: undefined | string;
@@ -25,27 +25,27 @@ type SerializeCLIData = {
 
 export type SerializeCLITarget =
 	 | {
-			type: 'flag';
+			type: "flag";
 			key: string;
 			target?: ConsumeSourceLocationRequestTarget;
 		}
 	| {
-			type: 'arg';
+			type: "arg";
 			key: number;
 		}
 	| {
-			type: 'arg-range';
+			type: "arg-range";
 			from: number;
 			to?: number;
 		}
 	| {
-			type: 'none';
+			type: "none";
 		}
 	| {
-			type: 'command';
+			type: "command";
 		}
 	| {
-			type: 'program';
+			type: "program";
 		};
 
 export function serializeCLIFlags(
@@ -57,10 +57,10 @@ export function serializeCLIFlags(
 		defaultFlags = {},
 		shorthandFlags = new Set(),
 		incorrectCaseFlags = new Set(),
-		prefix = '$ ',
+		prefix = "$ ",
 	}: SerializeCLIData,
 	target: SerializeCLITarget,
-): RequiredProps<DiagnosticLocation, 'sourceText'> {
+): RequiredProps<DiagnosticLocation, "sourceText"> {
 	let startColumn: Number0 = ob1Number0Neg1;
 	let endColumn: Number0 = ob1Number0Neg1;
 	let code = prefix;
@@ -71,7 +71,7 @@ export function serializeCLIFlags(
 
 	function setEndColumn() {
 		// Never point to a space
-		if (code[code.length - 1] === ' ') {
+		if (code[code.length - 1] === " ") {
 			endColumn = ob1Coerce0(code.length - 1);
 		} else {
 			endColumn = ob1Coerce0(code.length);
@@ -79,25 +79,25 @@ export function serializeCLIFlags(
 	}
 
 	if (programName !== undefined) {
-		if (target.type === 'program') {
+		if (target.type === "program") {
 			setStartColumn();
 		}
 
 		code += `${programName} `;
 
-		if (target.type === 'program') {
+		if (target.type === "program") {
 			setEndColumn();
 		}
 	}
 
 	if (commandName !== undefined) {
-		if (target.type === 'command') {
+		if (target.type === "command") {
 			setStartColumn();
 		}
 
 		code += `${commandName} `;
 
-		if (target.type === 'command') {
+		if (target.type === "command") {
 			setEndColumn();
 		}
 	}
@@ -107,10 +107,10 @@ export function serializeCLIFlags(
 		const arg = args[i];
 
 		let isTarget = false;
-		if (target.type === 'arg' && i === target.key) {
+		if (target.type === "arg" && i === target.key) {
 			isTarget = true;
 		}
-		if (target.type === 'arg-range' && target.from === i) {
+		if (target.type === "arg-range" && target.from === i) {
 			isTarget = true;
 		}
 
@@ -124,7 +124,7 @@ export function serializeCLIFlags(
 
 		// We are the end target if we're within the from-to range or we're greater than from with no to
 		if (
-			target.type === 'arg-range' &&
+			target.type === "arg-range" &&
 			i > target.from &&
 			(target.to === undefined || target.to <= i)
 		) {
@@ -147,14 +147,14 @@ export function serializeCLIFlags(
 
 		const values = Array.isArray(val) ? val : [val];
 
-		const isTarget = target.type === 'flag' && key === target.key;
+		const isTarget = target.type === "flag" && key === target.key;
 
 		if (isTarget) {
 			setStartColumn();
 		}
 
 		for (const val of values) {
-			const flagPrefix = shorthandFlags.has(key) ? '-' : '--';
+			const flagPrefix = shorthandFlags.has(key) ? "-" : "--";
 			const kebabKey = incorrectCaseFlags.has(key) ? key : toKebabCase(key);
 			if (val === false) {
 				code += `${flagPrefix}no-${kebabKey} `;
@@ -163,12 +163,12 @@ export function serializeCLIFlags(
 			}
 
 			// Booleans are always indicated with just their flag
-			if (typeof val !== 'boolean') {
+			if (typeof val !== "boolean") {
 				// Only point to the value for flags that specify it
 				if (
 					isTarget &&
-					target.type === 'flag' &&
-					(target.target === 'value' || target.target === 'inner-value')
+					target.type === "flag" &&
+					(target.target === "value" || target.target === "inner-value")
 				) {
 					startColumn = ob1Coerce0(code.length);
 				}
@@ -189,10 +189,10 @@ export function serializeCLIFlags(
 	}
 
 	return {
-		language: 'shell',
+		language: "shell",
 		mtime: undefined,
 		sourceText: code,
-		filename: 'argv',
+		filename: "argv",
 		start: {
 			line: ob1Number1,
 			column: startColumn,

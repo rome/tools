@@ -10,17 +10,17 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array [
-		'jsx'
-		'ts'
+		"jsx"
+		"ts"
 	]
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 40
 			index: 40
@@ -35,7 +35,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 40
 					index: 40
@@ -49,9 +49,9 @@ Program {
 			}
 			expression: JSXElement {
 				name: JSXIdentifier {
-					name: 'a'
+					name: "a"
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 2
 							index: 2
@@ -68,7 +68,7 @@ Program {
 				selfClosing: true
 				typeArguments: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 40
 						index: 40
@@ -83,9 +83,9 @@ Program {
 				attributes: Array [
 					JSXAttribute {
 						name: JSXIdentifier {
-							name: 'b'
+							name: "b"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 4
 									index: 4
@@ -100,7 +100,7 @@ Program {
 						}
 						value: JSXExpressionContainer {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 10
 									index: 10
@@ -113,9 +113,9 @@ Program {
 								}
 							}
 							expression: StringLiteral {
-								value: ' '
+								value: " "
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 9
 										index: 9
@@ -130,7 +130,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 10
 								index: 10
@@ -145,9 +145,9 @@ Program {
 					}
 					JSXAttribute {
 						name: JSXIdentifier {
-							name: 'c'
+							name: "c"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 12
 									index: 12
@@ -161,9 +161,9 @@ Program {
 							}
 						}
 						value: StringLiteral {
-							value: ' '
+							value: " "
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 16
 									index: 16
@@ -177,7 +177,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 16
 								index: 16
@@ -192,9 +192,9 @@ Program {
 					}
 					JSXAttribute {
 						name: JSXIdentifier {
-							name: 'd'
+							name: "d"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 18
 									index: 18
@@ -208,9 +208,9 @@ Program {
 							}
 						}
 						value: StringLiteral {
-							value: '&'
+							value: "&"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 26
 									index: 26
@@ -224,7 +224,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 26
 								index: 26
@@ -239,9 +239,9 @@ Program {
 					}
 					JSXAttribute {
 						name: JSXIdentifier {
-							name: 'e'
+							name: "e"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 28
 									index: 28
@@ -255,9 +255,9 @@ Program {
 							}
 						}
 						value: StringLiteral {
-							value: '&ampr;'
+							value: "&ampr;"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 37
 									index: 37
@@ -271,7 +271,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 37
 								index: 37

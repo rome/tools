@@ -9,14 +9,14 @@ import {
 	WorkerAnalyzeDependencyResult,
 	WorkerCompileResult,
 	WorkerLintResult,
-} from '../common/bridges/WorkerBridge';
-import {ModuleSignature} from '@romejs/js-analysis';
-import Master from './Master';
-import {DEFAULT_PROJECT_CONFIG, ProjectDefinition} from '@romejs/project';
-import {VERSION} from '../common/constants';
-import {AbsoluteFilePath, AbsoluteFilePathMap} from '@romejs/path';
-import {createDirectory, readFileText, unlink, writeFile} from '@romejs/fs';
-import {stringifyJSON} from '@romejs/codec-json';
+} from "../common/bridges/WorkerBridge";
+import {ModuleSignature} from "@romejs/js-analysis";
+import Master from "./Master";
+import {DEFAULT_PROJECT_CONFIG, ProjectDefinition} from "@romejs/project";
+import {VERSION} from "../common/constants";
+import {AbsoluteFilePath, AbsoluteFilePathMap} from "@romejs/path";
+import {createDirectory, readFileText, unlink, writeFile} from "@romejs/fs";
+import {stringifyJSON} from "@romejs/codec-json";
 
 type CacheEntry = {
 	version: string;
@@ -57,7 +57,7 @@ export default class Cache {
 	constructor(master: Master) {
 		this.master = master;
 		this.loadedEntries = new AbsoluteFilePathMap();
-		this.disabled = process.env.ROME_CACHE === '0';
+		this.disabled = process.env.ROME_CACHE === "0";
 		this.cachePath = master.userConfig.cachePath;
 	}
 
@@ -90,7 +90,7 @@ export default class Cache {
 		const entry: CacheEntry = {
 			version: VERSION,
 			projectDir: project.folder.join(),
-			configHash: configHashes.join(';'),
+			configHash: configHashes.join(";"),
 			mtime: memoryFs.getMtime(path),
 			compile: {},
 			analyzeDependencies: undefined,
@@ -170,7 +170,7 @@ export default class Cache {
 	) {
 		const currEntry = await this.get(path);
 		const partialEntry: Partial<CacheEntry> =
-			typeof partialEntryCallback === 'function'
+			typeof partialEntryCallback === "function"
 				? partialEntryCallback(currEntry)
 				: partialEntryCallback;
 

@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ExportExternalDeclaration, ImportDeclaration} from '@romejs/js-ast';
-import Builder from '../../Builder';
+import {ExportExternalDeclaration, ImportDeclaration} from "@romejs/js-ast";
+import Builder from "../../Builder";
 import {
 	Token,
 	concat,
@@ -17,15 +17,15 @@ import {
 	lineOrSpace,
 	softline,
 	space,
-} from '../../tokens';
+} from "../../tokens";
 
 export default function ImportDeclaration(
 	builder: Builder,
 	node: ImportDeclaration,
 ): Token {
-	const tokens: Array<Token> = ['import', space];
+	const tokens: Array<Token> = ["import", space];
 
-	if (node.importKind === 'type' || node.importKind === 'typeof') {
+	if (node.importKind === "type" || node.importKind === "typeof") {
 		tokens.push(node.importKind);
 		tokens.push(space);
 	}
@@ -37,10 +37,10 @@ export default function ImportDeclaration(
 		namespaceSpecifier !== undefined ||
 		defaultSpecifier !== undefined
 	) {
-		tokens.push(printModuleSpecifiers(builder, node), space, 'from', space);
+		tokens.push(printModuleSpecifiers(builder, node), space, "from", space);
 	}
 
-	tokens.push(builder.tokenize(node.source, node), ';');
+	tokens.push(builder.tokenize(node.source, node), ";");
 
 	return group(concat(tokens));
 }
@@ -71,19 +71,19 @@ export function printModuleSpecifiers(
 		if (specifiers.length === 1) {
 			// Do not create insert softline tokens when there is a single specifier
 			// in order to keep the braces on the same line.
-			groups.push(concat(['{', specifiers[0], '}']));
+			groups.push(concat(["{", specifiers[0], "}"]));
 		} else {
 			groups.push(
 				concat([
-					'{',
-					indent(concat([softline, join(concat([',', lineOrSpace]), specifiers)])),
-					ifBreak(','),
+					"{",
+					indent(concat([softline, join(concat([",", lineOrSpace]), specifiers)])),
+					ifBreak(","),
 					softline,
-					'}',
+					"}",
 				]),
 			);
 		}
 	}
 
-	return join(concat([',', space]), groups);
+	return join(concat([",", space]), groups);
 }

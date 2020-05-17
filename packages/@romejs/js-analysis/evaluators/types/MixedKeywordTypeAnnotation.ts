@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
+import {Scope} from "../../scopes";
 import {
 	AnyNode,
 	MixedKeywordTypeAnnotation,
 	mixedKeywordTypeAnnotation,
-} from '@romejs/js-ast';
-import MixedT from '../../types/MixedT';
+} from "@romejs/js-ast";
+import MixedT from "../../types/MixedT";
 
 export default function MixedKeywordTypeAnnotation(node: AnyNode, scope: Scope) {
 	node = mixedKeywordTypeAnnotation.assert(node);

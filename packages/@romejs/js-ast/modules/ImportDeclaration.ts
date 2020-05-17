@@ -12,8 +12,8 @@ import {
 	ImportSpecifier,
 	JSNodeBase,
 	StringLiteral,
-} from '../index';
-import {createBuilder} from '../utils';
+} from "../index";
+import {createBuilder} from "../utils";
 
 export type AnyImportSpecifier =
 	 | ImportDefaultSpecifier
@@ -21,7 +21,7 @@ export type AnyImportSpecifier =
 	| ImportSpecifier;
 
 export type ImportDeclaration = JSNodeBase & {
-	type: 'ImportDeclaration';
+	type: "ImportDeclaration";
 	defaultSpecifier?: ImportDefaultSpecifier;
 	namespaceSpecifier?: ImportNamespaceSpecifier;
 	namedSpecifiers: Array<ImportSpecifier>;
@@ -30,7 +30,7 @@ export type ImportDeclaration = JSNodeBase & {
 };
 
 export const importDeclaration = createBuilder<ImportDeclaration>(
-	'ImportDeclaration',
+	"ImportDeclaration",
 	{
 		bindingKeys: {
 			defaultSpecifier: true,

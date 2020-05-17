@@ -39,10 +39,10 @@
  *   * Ecma International Standards hereafter means Ecma International Standards as well as Ecma Technical Reports
  */
 
-import '@romejs/string-markup';
-import {DiagnosticsError} from '@romejs/diagnostics';
-import {parseJSON} from '@romejs/codec-json';
-import {test} from 'rome';
+import "@romejs/string-markup";
+import {DiagnosticsError} from "@romejs/diagnostics";
+import {parseJSON} from "@romejs/codec-json";
+import {test} from "rome";
 
 function parse(input: string) {
 	return parseJSON({input});
@@ -50,77 +50,77 @@ function parse(input: string) {
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-	'The JSON lexical grammar treats whitespace as a token seperator',
+	"The JSON lexical grammar treats whitespace as a token seperator",
 	(t) => {
 		t.throws(function() {
-			parse('12\t\r\n 34'); // should produce a syntax error as whitespace results in two tokens
+			parse("12\t\r\n 34"); // should produce a syntax error as whitespace results in two tokens
 		});
 	},
 );
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-	'<VT> is not valid JSON whitespace as specified by the production JSONWhitespace.',
+	"<VT> is not valid JSON whitespace as specified by the production JSONWhitespace.",
 	(t) => {
 		t.throws(function() {
-			parse('\x0b1234'); // should produce a syntax error
+			parse("\x0b1234"); // should produce a syntax error
 		});
 	},
 );
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-	'<FF> is not valid JSON whitespace as specified by the production JSONWhitespace.',
+	"<FF> is not valid JSON whitespace as specified by the production JSONWhitespace.",
 	(t) => {
 		t.throws(function() {
-			parse('\f1234'); // should produce a syntax error
+			parse("\f1234"); // should produce a syntax error
 		});
 	},
 );
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-	'<NBSP> is not valid JSON whitespace as specified by the production JSONWhitespace.',
+	"<NBSP> is not valid JSON whitespace as specified by the production JSONWhitespace.",
 	(t) => {
 		t.throws(function() {
-			parse('\xa01234'); // should produce a syntax error
+			parse("\xa01234"); // should produce a syntax error
 		});
 	},
 );
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-	' <ZWSPP> is not valid JSON whitespace as specified by the production JSONWhitespace.',
+	" <ZWSPP> is not valid JSON whitespace as specified by the production JSONWhitespace.",
 	(t) => {
 		t.throws(function() {
-			parse('\u200b1234'); // should produce a syntax error
+			parse("\u200b1234"); // should produce a syntax error
 		});
 	},
 );
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-	'<BOM> is not valid JSON whitespace as specified by the production JSONWhitespace.',
+	"<BOM> is not valid JSON whitespace as specified by the production JSONWhitespace.",
 	(t) => {
 		t.throws(function() {
-			parse('\ufeff1234'); // should produce a syntax error a
+			parse("\ufeff1234"); // should produce a syntax error a
 		});
 	},
 );
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-	'U+2028 and U+2029 are not valid JSON whitespace as specified by the production JSONWhitespace.',
+	"U+2028 and U+2029 are not valid JSON whitespace as specified by the production JSONWhitespace.",
 	(t) => {
 		t.throws(function() {
-			parse('\u2028\u20291234'); // should produce a syntax error
+			parse("\u2028\u20291234"); // should produce a syntax error
 		});
 	},
 );
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-	'Whitespace characters can appear before/after any JSONtoken',
+	"Whitespace characters can appear before/after any JSONtoken",
 	() => {
 		parse(
 			`\t\r \n{\t\r \n"property"\t\r \n:\t\r \n{\t\r \n}\t\r \n,\t\r \n"prop2"\t\r \n:\t\r \n` +
@@ -131,78 +131,78 @@ test(
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-	'The JSON lexical grammar treats <TAB> as a whitespace character',
+	"The JSON lexical grammar treats <TAB> as a whitespace character",
 	(t) => {
-		t.is(parse('\t1234'), 1_234, '<TAB> should be ignored');
+		t.is(parse("\t1234"), 1_234, "<TAB> should be ignored");
 
 		t.throws(
 			function() {
-				parse('12\t34');
+				parse("12\t34");
 			},
 			DiagnosticsError,
-			'<TAB> should produce a syntax error as whitespace results in two tokens',
+			"<TAB> should produce a syntax error as whitespace results in two tokens",
 		);
 	},
 );
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-	'The JSON lexical grammar treats <CR> as a whitespace character',
+	"The JSON lexical grammar treats <CR> as a whitespace character",
 	(t) => {
-		t.is(parse('\r1234'), 1_234, '<cr> should be ignored');
+		t.is(parse("\r1234"), 1_234, "<cr> should be ignored");
 
 		t.throws(
 			function() {
-				parse('12\r34');
+				parse("12\r34");
 			},
 			DiagnosticsError,
-			'<CR> should produce a syntax error as whitespace results in two tokens',
+			"<CR> should produce a syntax error as whitespace results in two tokens",
 		);
 	},
 );
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-	'The JSON lexical grammar treats <LF> as a whitespace character',
+	"The JSON lexical grammar treats <LF> as a whitespace character",
 	(t) => {
-		t.is(parse('\n1234'), 1_234, '<LF> should be ignored');
+		t.is(parse("\n1234"), 1_234, "<LF> should be ignored");
 
 		t.throws(
 			function() {
-				parse('12\n34');
+				parse("12\n34");
 			},
 			DiagnosticsError,
-			'<LF> should produce a syntax error as whitespace results in two tokens',
+			"<LF> should produce a syntax error as whitespace results in two tokens",
 		);
 	},
 );
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-	'The JSON lexical grammar treats <SP> as a whitespace character',
+	"The JSON lexical grammar treats <SP> as a whitespace character",
 	(t) => {
-		t.is(parse(' 1234'), 1_234, '<SP> should be ignored');
+		t.is(parse(" 1234"), 1_234, "<SP> should be ignored");
 		t.throws(
 			function() {
-				parse('12 34');
+				parse("12 34");
 			},
 			DiagnosticsError,
-			'<SP> should produce a syntax error as whitespace results in two tokens',
+			"<SP> should produce a syntax error as whitespace results in two tokens",
 		);
 	},
 );
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-	'JSONStrings can be written using double quotes',
+	"JSONStrings can be written using double quotes",
 	(t) => {
-		t.is(parse('"abc"'), 'abc', "parse('\"abc\"'})");
+		t.is(parse('"abc"'), "abc", 'parse(\'"abc"\'})');
 	},
 );
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-	'A JSONString may not be delimited by single quotes',
+	"A JSONString may not be delimited by single quotes",
 	(t) => {
 		t.throws(function() {
 			parse("'abc'");
@@ -212,25 +212,25 @@ test(
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-	'A JSONString may not be delimited by Uncode escaped quotes',
+	"A JSONString may not be delimited by Uncode escaped quotes",
 	(t) => {
 		t.throws(function() {
-			parse('\\u0022abc\\u0022');
+			parse("\\u0022abc\\u0022");
 		});
 	},
 );
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-	'A JSONStrings can contain no JSONStringCharacters (Empty JSONStrings)',
+	"A JSONStrings can contain no JSONStringCharacters (Empty JSONStrings)",
 	(t) => {
-		t.is(parse('""'), '', "parse('\"\"'})");
+		t.is(parse('""'), "", 'parse(\'""\'})');
 	},
 );
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-	'The JSON lexical grammar does not allow a JSONStringCharacter to be any of the Unicode characters U+0000 thru U+0007',
+	"The JSON lexical grammar does not allow a JSONStringCharacter to be any of the Unicode characters U+0000 thru U+0007",
 	(t) => {
 		t.throws(function() {
 			parse('"\0\x01\x02\x03\x04\x05\x06\x07"'); // invalid string characters should produce a syntax error
@@ -240,7 +240,7 @@ test(
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-	'The JSON lexical grammar does not allow a JSONStringCharacter to be any of the Unicode characters U+0008 thru U+000F',
+	"The JSON lexical grammar does not allow a JSONStringCharacter to be any of the Unicode characters U+0008 thru U+000F",
 	(t) => {
 		t.throws(function() {
 			parse('"\b\t\n\x0b\f\r\x0e\x0f"'); // invalid string characters should produce a syntax error
@@ -250,7 +250,7 @@ test(
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-	'The JSON lexical grammar does not allow a JSONStringCharacter to be any of the Unicode characters U+0010 thru U+0017',
+	"The JSON lexical grammar does not allow a JSONStringCharacter to be any of the Unicode characters U+0010 thru U+0017",
 	(t) => {
 		t.throws(function() {
 			parse('"\x10\x11\x12\x13\x14\x15\x16\x17"'); // invalid string characters should produce a syntax error
@@ -260,7 +260,7 @@ test(
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-	'The JSON lexical grammar does not allow a JSONStringCharacter to be any of the Unicode characters U+0018 thru U+001F',
+	"The JSON lexical grammar does not allow a JSONStringCharacter to be any of the Unicode characters U+0018 thru U+001F",
 	(t) => {
 		t.throws(function() {
 			parse('"\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f"'); // invalid string characters should produce a syntax error
@@ -270,15 +270,15 @@ test(
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-	'The JSON lexical grammar allows Unicode escape sequences in a JSONString',
+	"The JSON lexical grammar allows Unicode escape sequences in a JSONString",
 	(t) => {
-		t.is(parse('"\\u0058"'), 'X', "parse('\"\\u0058\"'})");
+		t.is(parse('"\\u0058"'), "X", 'parse(\'"\\u0058"\'})');
 	},
 );
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-	'A JSONStringCharacter UnicodeEscape may not have fewer than 4 hex characters',
+	"A JSONStringCharacter UnicodeEscape may not have fewer than 4 hex characters",
 	(t) => {
 		t.throws(function() {
 			parse('"\\u005"');
@@ -288,7 +288,7 @@ test(
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-	'A JSONStringCharacter UnicodeEscape may not include any non=hex characters',
+	"A JSONStringCharacter UnicodeEscape may not include any non=hex characters",
 	(t) => {
 		t.throws(function() {
 			parse('"\\u0X50"');
@@ -300,7 +300,7 @@ test(
 test(
 	"The JSON lexical grammer allows '/' as a JSONEscapeCharacter after '' in a JSONString",
 	(t) => {
-		t.is(parse('"\\/"'), '/', "parse('\"\\/\"'})");
+		t.is(parse('"\\/"'), "/", 'parse(\'"\\/"\'})');
 	},
 );
 
@@ -308,7 +308,7 @@ test(
 test(
 	"The JSON lexical grammer allows '' as a JSONEscapeCharacter after '' in a JSONString",
 	(t) => {
-		t.is(parse('"\\\\"'), '\\', "parse('\"\\\\\"'})");
+		t.is(parse('"\\\\"'), "\\", 'parse(\'"\\\\"\'})');
 	},
 );
 
@@ -316,7 +316,7 @@ test(
 test(
 	"The JSON lexical grammer allows 'b' as a JSONEscapeCharacter after '' in a JSONString",
 	(t) => {
-		t.is(parse('"\\b"'), '\b', "parse('\"\\b\"'})");
+		t.is(parse('"\\b"'), "\b", 'parse(\'"\\b"\'})');
 	},
 );
 
@@ -324,7 +324,7 @@ test(
 test(
 	"The JSON lexical grammer allows 'f' as a JSONEscapeCharacter after '' in a JSONString",
 	(t) => {
-		t.is(parse('"\\f"'), '\f', "parse('\"\\f\"'})");
+		t.is(parse('"\\f"'), "\f", 'parse(\'"\\f"\'})');
 	},
 );
 
@@ -332,7 +332,7 @@ test(
 test(
 	"The JSON lexical grammer allows 'n' as a JSONEscapeCharacter after '' in a JSONString",
 	(t) => {
-		t.is(parse('"\\n"'), '\n', "parse('\"\\n\"'})");
+		t.is(parse('"\\n"'), "\n", 'parse(\'"\\n"\'})');
 	},
 );
 
@@ -340,7 +340,7 @@ test(
 test(
 	"The JSON lexical grammer allows 'r' as a JSONEscapeCharacter after '' in a JSONString",
 	(t) => {
-		t.is(parse('"\\r"'), '\r', "parse('\"\\r\"'})");
+		t.is(parse('"\\r"'), "\r", 'parse(\'"\\r"\'})');
 	},
 );
 
@@ -348,13 +348,13 @@ test(
 test(
 	"The JSON lexical grammer allows 't' as a JSONEscapeCharacter after '' in a JSONString",
 	(t) => {
-		t.is(parse('"\\t"'), '\t', "parse('\"\\t\"'})");
+		t.is(parse('"\\t"'), "\t", 'parse(\'"\\t"\'})');
 	},
 );
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-	'parse - parsing an object where property value middles with a null character',
+	"parse - parsing an object where property value middles with a null character",
 	(t) => {
 		let nullChars: Array<string> = [];
 		nullChars[0] = '"\0"';
@@ -403,7 +403,7 @@ test(
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-	'parse - parsing an object where property name is a null character',
+	"parse - parsing an object where property name is a null character",
 	(t) => {
 		let nullChars: Array<string> = [];
 		nullChars[0] = '"\0"';
@@ -452,7 +452,7 @@ test(
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-	'parse - parsing an object where property name starts with a null character',
+	"parse - parsing an object where property name starts with a null character",
 	(t) => {
 		let nullChars: Array<string> = [];
 		nullChars[0] = '"\0"';
@@ -500,7 +500,7 @@ test(
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-	'parse - parsing an object where property name ends with a null character',
+	"parse - parsing an object where property name ends with a null character",
 	(t) => {
 		let nullChars: Array<string> = [];
 		nullChars[0] = '"\0"';
@@ -549,7 +549,7 @@ test(
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-	'parse - parsing an object where property name starts and ends with a null character',
+	"parse - parsing an object where property name starts and ends with a null character",
 	(t) => {
 		let nullChars: Array<string> = [];
 		nullChars[0] = '"\0"';
@@ -597,7 +597,7 @@ test(
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-	'parse - parsing an object where property name middles with a null character',
+	"parse - parsing an object where property name middles with a null character",
 	(t) => {
 		let nullChars: Array<string> = [];
 		nullChars[0] = '"\0"';
@@ -645,7 +645,7 @@ test(
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-	'parse - parsing an object where property value is a null character',
+	"parse - parsing an object where property value is a null character",
 	(t) => {
 		let nullChars: Array<string> = [];
 		nullChars[0] = '"\0"';
@@ -693,7 +693,7 @@ test(
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-	'parse - parsing an object where property value starts with a null character',
+	"parse - parsing an object where property value starts with a null character",
 	(t) => {
 		let nullChars: Array<string> = [];
 		nullChars[0] = '"\0"';
@@ -741,7 +741,7 @@ test(
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-	'parse - parsing an object where property value ends with a null character',
+	"parse - parsing an object where property value ends with a null character",
 	(t) => {
 		let nullChars: Array<string> = [];
 		nullChars[0] = '"\0"';
@@ -789,7 +789,7 @@ test(
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-	'parse - parsing an object where property value starts and ends with a null character',
+	"parse - parsing an object where property value starts and ends with a null character",
 	(t) => {
 		let nullChars: Array<string> = [];
 		nullChars[0] = '"\0"';
@@ -837,134 +837,134 @@ test(
 
 // Copyright (c) 2012 Ecma International.  All rights reserved.
 test(
-	'Other category z spaces are not valid JSON whitespace as specified by the production JSONWhitespace.',
+	"Other category z spaces are not valid JSON whitespace as specified by the production JSONWhitespace.",
 	(t) => {
 		t.throws(
 			function() {
-				parse('\u16801');
+				parse("\u16801");
 			},
 			DiagnosticsError,
-			'\\u1680',
+			"\\u1680",
 		);
 
 		t.throws(
 			function() {
-				parse('\u180e1');
+				parse("\u180e1");
 			},
 			DiagnosticsError,
-			'\\u180e',
+			"\\u180e",
 		);
 
 		t.throws(
 			function() {
-				parse('\u20001');
+				parse("\u20001");
 			},
 			DiagnosticsError,
-			'\\u2000',
+			"\\u2000",
 		);
 
 		t.throws(
 			function() {
-				parse('\u20011');
+				parse("\u20011");
 			},
 			DiagnosticsError,
-			'\\u2001',
+			"\\u2001",
 		);
 
 		t.throws(
 			function() {
-				parse('\u20021');
+				parse("\u20021");
 			},
 			DiagnosticsError,
-			'\\u2002',
+			"\\u2002",
 		);
 
 		t.throws(
 			function() {
-				parse('\u20031');
+				parse("\u20031");
 			},
 			DiagnosticsError,
-			'\\u2003',
+			"\\u2003",
 		);
 
 		t.throws(
 			function() {
-				parse('\u20041');
+				parse("\u20041");
 			},
 			DiagnosticsError,
-			'\\u2004',
+			"\\u2004",
 		);
 
 		t.throws(
 			function() {
-				parse('\u20051');
+				parse("\u20051");
 			},
 			DiagnosticsError,
-			'\\u2005',
+			"\\u2005",
 		);
 
 		t.throws(
 			function() {
-				parse('\u20061');
+				parse("\u20061");
 			},
 			DiagnosticsError,
-			'\\u2006',
+			"\\u2006",
 		);
 
 		t.throws(
 			function() {
-				parse('\u20071');
+				parse("\u20071");
 			},
 			DiagnosticsError,
-			'\\u2007',
+			"\\u2007",
 		);
 
 		t.throws(
 			function() {
-				parse('\u20081');
+				parse("\u20081");
 			},
 			DiagnosticsError,
-			'\\u2008',
+			"\\u2008",
 		);
 
 		t.throws(
 			function() {
-				parse('\u20091');
+				parse("\u20091");
 			},
 			DiagnosticsError,
-			'\\u2009',
+			"\\u2009",
 		);
 
 		t.throws(
 			function() {
-				parse('\u200a1');
+				parse("\u200a1");
 			},
 			DiagnosticsError,
-			'\\u200a',
+			"\\u200a",
 		);
 
 		t.throws(
 			function() {
-				parse('\u202f1');
+				parse("\u202f1");
 			},
 			DiagnosticsError,
-			'\\u202f',
+			"\\u202f",
 		);
 
 		t.throws(
 			function() {
-				parse('\u205f1');
+				parse("\u205f1");
 			},
 			DiagnosticsError,
-			'\\u205f',
+			"\\u205f",
 		);
 
 		t.throws(
 			function() {
-				parse('\u30001');
+				parse("\u30001");
 			},
 			DiagnosticsError,
-			'\\u3000',
+			"\\u3000",
 		);
 	},
 );

@@ -11,8 +11,8 @@
  * http://opensource.org/licenses/BSD-3-Clause
  */
 
-import {Mapping} from './types';
-import {ob1Get0, ob1Get1} from '@romejs/ob1';
+import {Mapping} from "./types";
+import {ob1Get0, ob1Get1} from "@romejs/ob1";
 
 function strcmp(a: undefined | string, b: undefined | string): number {
 	if (a === b) {
@@ -83,11 +83,11 @@ export function compareByGeneratedPositionsInflated(
  * Make a path relative to a URL or another path.
  */
 export function toRelativeUrl(root: string, path: string): string {
-	if (root === '') {
-		root = '.';
+	if (root === "") {
+		root = ".";
 	}
 
-	root = root.replace(/\/$/, '');
+	root = root.replace(/\/$/, "");
 
 	// It is possible for the path to be above the root. In this case, simply
 
@@ -98,7 +98,7 @@ export function toRelativeUrl(root: string, path: string): string {
 	// a prefix that fits, or we run out of components to remove.
 	let level = 0;
 	while (path.indexOf(`${root}/`) !== 0) {
-		const index = root.lastIndexOf('/');
+		const index = root.lastIndexOf("/");
 		if (index < 0) {
 			return path;
 		}
@@ -118,5 +118,5 @@ export function toRelativeUrl(root: string, path: string): string {
 
 	// Make sure we add a '../' for each component we removed from the root.
 
-	return '../'.repeat(level) + path.substr(root.length + 1);
+	return "../".repeat(level) + path.substr(root.length + 1);
 }

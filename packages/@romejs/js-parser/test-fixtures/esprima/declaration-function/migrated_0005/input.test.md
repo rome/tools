@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 54
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		FunctionDeclaration {
 			id: BindingIdentifier {
-				name: 'eval'
+				name: "eval"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'eval'
+					filename: "input.js"
+					identifierName: "eval"
 					end: Object {
 						column: 13
 						index: 13
@@ -49,7 +49,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 53
 					index: 53
@@ -71,7 +71,7 @@ Program {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 15
 						index: 15
@@ -87,7 +87,7 @@ Program {
 			body: BlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 53
 						index: 53
@@ -102,10 +102,10 @@ Program {
 				body: Array [
 					FunctionDeclaration {
 						id: BindingIdentifier {
-							name: 'inner'
+							name: "inner"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'inner'
+								filename: "input.js"
+								identifierName: "inner"
 								end: Object {
 									column: 32
 									index: 32
@@ -119,7 +119,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 51
 								index: 51
@@ -141,7 +141,7 @@ Program {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 34
 									index: 34
@@ -157,7 +157,7 @@ Program {
 						body: BlockStatement {
 							body: Array []
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 51
 									index: 51
@@ -171,9 +171,9 @@ Program {
 							}
 							directives: Array [
 								Directive {
-									value: 'use strict'
+									value: "use strict"
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 49
 											index: 49

@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {MasterRequest} from '@romejs/core';
-import {createMasterCommand} from '../commands';
-import {commandCategories} from '../../common/commands';
-import {createUnknownFilePath} from '@romejs/path';
-import {Consumer} from '@romejs/consume';
+import {MasterRequest} from "@romejs/core";
+import {createMasterCommand} from "../commands";
+import {commandCategories} from "../../common/commands";
+import {createUnknownFilePath} from "@romejs/path";
+import {Consumer} from "@romejs/consume";
 
 type Flags = {
 	allowDiagnostics: boolean;
@@ -17,12 +17,12 @@ type Flags = {
 
 export default createMasterCommand({
 	category: commandCategories.INTERNAL,
-	description: 'TODO',
-	usage: '',
+	description: "TODO",
+	usage: "",
 	examples: [],
 	defineFlags(c: Consumer): Flags {
 		return {
-			allowDiagnostics: c.get('allowDiagnostics').asBoolean(false),
+			allowDiagnostics: c.get("allowDiagnostics").asBoolean(false),
 		};
 	},
 	async callback(req: MasterRequest, flags: Flags): Promise<undefined | string> {
@@ -35,7 +35,7 @@ export default createMasterCommand({
 				...req.getResolverOptionsFromFlags(),
 				source: createUnknownFilePath(args[0]),
 			},
-			{location: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})},
+			{location: req.getDiagnosticPointerFromFlags({type: "arg", key: 0})},
 		);
 
 		const res = await req.requestWorkerFormat(
@@ -46,7 +46,7 @@ export default createMasterCommand({
 		);
 
 		if (res === undefined) {
-			reporter.error('No formatter for this file');
+			reporter.error("No formatter for this file");
 			return undefined;
 		} else {
 			reporter.writeAll(res.formatted);

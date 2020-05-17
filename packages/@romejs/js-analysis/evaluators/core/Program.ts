@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {AnyNode, Program, program} from '@romejs/js-ast';
-import BlockStatement from '../statements/BlockStatement';
+import {Scope} from "../../scopes";
+import {AnyNode, Program, program} from "@romejs/js-ast";
+import BlockStatement from "../statements/BlockStatement";
 
 export default function Program(node: AnyNode, scope: Scope) {
 	node = program.assert(node);

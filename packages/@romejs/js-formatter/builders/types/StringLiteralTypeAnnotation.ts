@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token} from '../../tokens';
-import {AnyNode, StringLiteralTypeAnnotation} from '@romejs/js-ast';
-import StringLiteral from '../literals/StringLiteral';
+import Builder from "../../Builder";
+import {Token} from "../../tokens";
+import {AnyNode, StringLiteralTypeAnnotation} from "@romejs/js-ast";
+import StringLiteral from "../literals/StringLiteral";
 
 export default function StringLiteralTypeAnnotation(
 	builder: Builder,

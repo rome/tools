@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {CLI_SOCKET_PATH, Master, MasterBridge, SOCKET_PATH} from '@romejs/core';
-import {createBridgeFromSocket} from '@romejs/events';
-import setProcessTitle from './utils/setProcessTitle';
-import net = require('net');
+import {CLI_SOCKET_PATH, Master, MasterBridge, SOCKET_PATH} from "@romejs/core";
+import {createBridgeFromSocket} from "@romejs/events";
+import setProcessTitle from "./utils/setProcessTitle";
+import net = require("net");
 
-import {exists, unlink} from '@romejs/fs';
+import {exists, unlink} from "@romejs/fs";
 
 export default async function master() {
-	setProcessTitle('master');
+	setProcessTitle("master");
 
 	const master = new Master({
 		dedicated: true,
@@ -27,7 +27,7 @@ export default async function master() {
 			MasterBridge,
 			socket,
 			{
-				type: 'client',
+				type: "client",
 			},
 		);
 		master.attachToBridge(client);
@@ -48,7 +48,7 @@ export default async function master() {
 			);
 
 			socket.on(
-				'error',
+				"error",
 				(err) => {
 					// Socket error occured, cli could have died before it caught us
 					err;

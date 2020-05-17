@@ -8,23 +8,23 @@
 import {
 	AnyExpression,
 	AnyObjectPropertyKey,
-	AnyPrimaryType,
+	AnyTSPrimary,
 	ClassPropertyMeta,
 	JSNodeBase,
-} from '../index';
-import {createBuilder} from '../utils';
+} from "../index";
+import {createBuilder} from "../utils";
 
 export type ClassProperty = JSNodeBase & {
-	type: 'ClassProperty';
+	type: "ClassProperty";
 	key: AnyObjectPropertyKey;
 	meta: ClassPropertyMeta;
 	value?: AnyExpression;
-	typeAnnotation?: AnyPrimaryType;
+	typeAnnotation?: AnyTSPrimary;
 	definite?: boolean;
 };
 
 export const classProperty = createBuilder<ClassProperty>(
-	'ClassProperty',
+	"ClassProperty",
 	{
 		bindingKeys: {},
 		visitorKeys: {

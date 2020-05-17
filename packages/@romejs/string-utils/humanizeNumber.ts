@@ -7,7 +7,7 @@
 
 const SCIENTIFIC_NOTATION = /e/i;
 
-export function humanizeNumber(num: bigint | number, sep: string = '_'): string {
+export function humanizeNumber(num: bigint | number, sep: string = "_"): string {
 	let str = String(num);
 
 	if (num < 1_000) {
@@ -18,17 +18,17 @@ export function humanizeNumber(num: bigint | number, sep: string = '_'): string 
 		return str;
 	}
 
-	const decimals = str.split('.');
+	const decimals = str.split(".");
 
-	let intChars: Array<string> = String(decimals.shift()).split('');
+	let intChars: Array<string> = String(decimals.shift()).split("");
 	let intParts: Array<string> = [];
 
 	while (intChars.length > 0) {
-		const part = intChars.slice(-3).join('');
+		const part = intChars.slice(-3).join("");
 		intParts.unshift(part);
 
 		intChars = intChars.slice(0, -3);
 	}
 
-	return [intParts.join(sep), ...decimals].join('.');
+	return [intParts.join(sep), ...decimals].join(".");
 }

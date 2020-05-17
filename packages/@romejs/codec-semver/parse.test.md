@@ -37,7 +37,7 @@ AbsoluteVersion {
 	major: 1
 	minor: 2
 	patch: 3
-	prerelease: Array ['prerelease']
+	prerelease: Array ["prerelease"]
 	loc: Object {
 		filename: undefined
 		end: Object {
@@ -182,7 +182,7 @@ AbsoluteVersion {
 	major: 1
 	minor: 2
 	patch: 3
-	prerelease: Array ['prerelease']
+	prerelease: Array ["prerelease"]
 	loc: Object {
 		filename: undefined
 		end: Object {
@@ -333,7 +333,7 @@ AbsoluteVersion {
 	minor: 2
 	patch: 3
 	prerelease: Array [
-		'pre'
+		"pre"
 		2
 	]
 	loc: Object {
@@ -721,7 +721,7 @@ LogicalOr {
 
 ```javascript
 Comparator {
-	operator: '>='
+	operator: ">="
 	loc: Object {
 		filename: undefined
 		end: Object {
@@ -767,12 +767,12 @@ AbsoluteVersion {
 	minor: 2
 	patch: 3
 	prerelease: Array [
-		'pre'
+		"pre"
 		2
 		3
 		4
 		5
-		'foo'
+		"foo"
 	]
 	loc: Object {
 		filename: undefined
@@ -808,7 +808,7 @@ LogicalAnd {
 		}
 	}
 	left: Comparator {
-		operator: '>='
+		operator: ">="
 		loc: Object {
 			filename: undefined
 			end: Object {
@@ -844,7 +844,7 @@ LogicalAnd {
 		}
 	}
 	right: Comparator {
-		operator: '>='
+		operator: ">="
 		loc: Object {
 			filename: undefined
 			end: Object {
@@ -886,7 +886,7 @@ LogicalAnd {
 
 ```javascript
 Comparator {
-	operator: '<='
+	operator: "<="
 	loc: Object {
 		filename: undefined
 		end: Object {
@@ -941,7 +941,7 @@ LogicalAnd {
 		}
 	}
 	left: Comparator {
-		operator: '<='
+		operator: "<="
 		loc: Object {
 			filename: undefined
 			end: Object {
@@ -977,7 +977,7 @@ LogicalAnd {
 		}
 	}
 	right: Comparator {
-		operator: '<='
+		operator: "<="
 		loc: Object {
 			filename: undefined
 			end: Object {
@@ -1019,7 +1019,7 @@ LogicalAnd {
 
 ```javascript
 Comparator {
-	operator: '>'
+	operator: ">"
 	loc: Object {
 		filename: undefined
 		end: Object {
@@ -1074,7 +1074,7 @@ LogicalAnd {
 		}
 	}
 	left: Comparator {
-		operator: '>'
+		operator: ">"
 		loc: Object {
 			filename: undefined
 			end: Object {
@@ -1110,7 +1110,7 @@ LogicalAnd {
 		}
 	}
 	right: Comparator {
-		operator: '>'
+		operator: ">"
 		loc: Object {
 			filename: undefined
 			end: Object {
@@ -1152,7 +1152,7 @@ LogicalAnd {
 
 ```javascript
 Comparator {
-	operator: '<'
+	operator: "<"
 	loc: Object {
 		filename: undefined
 		end: Object {
@@ -1207,7 +1207,7 @@ LogicalAnd {
 		}
 	}
 	left: Comparator {
-		operator: '<'
+		operator: "<"
 		loc: Object {
 			filename: undefined
 			end: Object {
@@ -1243,7 +1243,7 @@ LogicalAnd {
 		}
 	}
 	right: Comparator {
-		operator: '<'
+		operator: "<"
 		loc: Object {
 			filename: undefined
 			end: Object {
@@ -1285,7 +1285,7 @@ LogicalAnd {
 
 ```javascript
 Comparator {
-	operator: '^'
+	operator: "^"
 	loc: Object {
 		filename: undefined
 		end: Object {
@@ -1340,7 +1340,7 @@ LogicalAnd {
 		}
 	}
 	left: Comparator {
-		operator: '^'
+		operator: "^"
 		loc: Object {
 			filename: undefined
 			end: Object {
@@ -1376,7 +1376,7 @@ LogicalAnd {
 		}
 	}
 	right: Comparator {
-		operator: '^'
+		operator: "^"
 		loc: Object {
 			filename: undefined
 			end: Object {
@@ -1418,7 +1418,7 @@ LogicalAnd {
 
 ```javascript
 Comparator {
-	operator: '~'
+	operator: "~"
 	loc: Object {
 		filename: undefined
 		end: Object {
@@ -1463,7 +1463,7 @@ AbsoluteVersion {
 	minor: 2
 	patch: 3
 	prerelease: Array []
-	build: Array ['build']
+	build: Array ["build"]
 	loc: Object {
 		filename: undefined
 		end: Object {
@@ -1498,7 +1498,7 @@ LogicalAnd {
 		}
 	}
 	left: Comparator {
-		operator: '~'
+		operator: "~"
 		loc: Object {
 			filename: undefined
 			end: Object {
@@ -1534,7 +1534,7 @@ LogicalAnd {
 		}
 	}
 	right: Comparator {
-		operator: '~'
+		operator: "~"
 		loc: Object {
 			filename: undefined
 			end: Object {
@@ -1576,7 +1576,7 @@ LogicalAnd {
 
 ```javascript
 Comparator {
-	operator: '>='
+	operator: ">="
 	loc: Object {
 		filename: undefined
 		end: Object {
@@ -1631,7 +1631,7 @@ LogicalAnd {
 		}
 	}
 	left: Comparator {
-		operator: '>='
+		operator: ">="
 		loc: Object {
 			filename: undefined
 			end: Object {
@@ -1667,7 +1667,7 @@ LogicalAnd {
 		}
 	}
 	right: Comparator {
-		operator: '>='
+		operator: ">="
 		loc: Object {
 			filename: undefined
 			end: Object {
@@ -1709,7 +1709,7 @@ LogicalAnd {
 
 ```javascript
 Comparator {
-	operator: '<='
+	operator: "<="
 	loc: Object {
 		filename: undefined
 		end: Object {
@@ -1764,7 +1764,7 @@ LogicalAnd {
 		}
 	}
 	left: Comparator {
-		operator: '<='
+		operator: "<="
 		loc: Object {
 			filename: undefined
 			end: Object {
@@ -1800,7 +1800,7 @@ LogicalAnd {
 		}
 	}
 	right: Comparator {
-		operator: '<='
+		operator: "<="
 		loc: Object {
 			filename: undefined
 			end: Object {
@@ -1842,7 +1842,7 @@ LogicalAnd {
 
 ```javascript
 Comparator {
-	operator: '>'
+	operator: ">"
 	loc: Object {
 		filename: undefined
 		end: Object {
@@ -1897,7 +1897,7 @@ LogicalAnd {
 		}
 	}
 	left: Comparator {
-		operator: '>'
+		operator: ">"
 		loc: Object {
 			filename: undefined
 			end: Object {
@@ -1933,7 +1933,7 @@ LogicalAnd {
 		}
 	}
 	right: Comparator {
-		operator: '>'
+		operator: ">"
 		loc: Object {
 			filename: undefined
 			end: Object {
@@ -1975,7 +1975,7 @@ LogicalAnd {
 
 ```javascript
 Comparator {
-	operator: '<'
+	operator: "<"
 	loc: Object {
 		filename: undefined
 		end: Object {
@@ -2030,7 +2030,7 @@ LogicalAnd {
 		}
 	}
 	left: Comparator {
-		operator: '<'
+		operator: "<"
 		loc: Object {
 			filename: undefined
 			end: Object {
@@ -2066,7 +2066,7 @@ LogicalAnd {
 		}
 	}
 	right: Comparator {
-		operator: '<'
+		operator: "<"
 		loc: Object {
 			filename: undefined
 			end: Object {
@@ -2108,7 +2108,7 @@ LogicalAnd {
 
 ```javascript
 Comparator {
-	operator: '^'
+	operator: "^"
 	loc: Object {
 		filename: undefined
 		end: Object {
@@ -2152,8 +2152,8 @@ AbsoluteVersion {
 	major: 1
 	minor: 2
 	patch: 3
-	build: Array ['build']
-	prerelease: Array ['prerelease']
+	build: Array ["build"]
+	prerelease: Array ["prerelease"]
 	loc: Object {
 		filename: undefined
 		end: Object {
@@ -2188,7 +2188,7 @@ LogicalAnd {
 		}
 	}
 	left: Comparator {
-		operator: '^'
+		operator: "^"
 		loc: Object {
 			filename: undefined
 			end: Object {
@@ -2224,7 +2224,7 @@ LogicalAnd {
 		}
 	}
 	right: Comparator {
-		operator: '^'
+		operator: "^"
 		loc: Object {
 			filename: undefined
 			end: Object {
@@ -2266,7 +2266,7 @@ LogicalAnd {
 
 ```javascript
 Comparator {
-	operator: '~'
+	operator: "~"
 	loc: Object {
 		filename: undefined
 		end: Object {
@@ -2321,7 +2321,7 @@ LogicalAnd {
 		}
 	}
 	left: Comparator {
-		operator: '~'
+		operator: "~"
 		loc: Object {
 			filename: undefined
 			end: Object {
@@ -2357,7 +2357,7 @@ LogicalAnd {
 		}
 	}
 	right: Comparator {
-		operator: '~'
+		operator: "~"
 		loc: Object {
 			filename: undefined
 			end: Object {
@@ -2399,7 +2399,7 @@ LogicalAnd {
 
 ```javascript
 Comparator {
-	operator: '>='
+	operator: ">="
 	loc: Object {
 		filename: undefined
 		end: Object {
@@ -2454,7 +2454,7 @@ LogicalAnd {
 		}
 	}
 	left: Comparator {
-		operator: '>='
+		operator: ">="
 		loc: Object {
 			filename: undefined
 			end: Object {
@@ -2490,7 +2490,7 @@ LogicalAnd {
 		}
 	}
 	right: Comparator {
-		operator: '>='
+		operator: ">="
 		loc: Object {
 			filename: undefined
 			end: Object {
@@ -2532,7 +2532,7 @@ LogicalAnd {
 
 ```javascript
 Comparator {
-	operator: '<='
+	operator: "<="
 	loc: Object {
 		filename: undefined
 		end: Object {
@@ -2587,7 +2587,7 @@ LogicalAnd {
 		}
 	}
 	left: Comparator {
-		operator: '<='
+		operator: "<="
 		loc: Object {
 			filename: undefined
 			end: Object {
@@ -2623,7 +2623,7 @@ LogicalAnd {
 		}
 	}
 	right: Comparator {
-		operator: '<='
+		operator: "<="
 		loc: Object {
 			filename: undefined
 			end: Object {
@@ -2665,7 +2665,7 @@ LogicalAnd {
 
 ```javascript
 Comparator {
-	operator: '>'
+	operator: ">"
 	loc: Object {
 		filename: undefined
 		end: Object {
@@ -2720,7 +2720,7 @@ LogicalAnd {
 		}
 	}
 	left: Comparator {
-		operator: '>'
+		operator: ">"
 		loc: Object {
 			filename: undefined
 			end: Object {
@@ -2756,7 +2756,7 @@ LogicalAnd {
 		}
 	}
 	right: Comparator {
-		operator: '>'
+		operator: ">"
 		loc: Object {
 			filename: undefined
 			end: Object {
@@ -2798,7 +2798,7 @@ LogicalAnd {
 
 ```javascript
 Comparator {
-	operator: '<'
+	operator: "<"
 	loc: Object {
 		filename: undefined
 		end: Object {
@@ -2842,9 +2842,9 @@ AbsoluteVersion {
 	major: 1
 	minor: 2
 	patch: 3
-	build: Array ['build']
+	build: Array ["build"]
 	prerelease: Array [
-		'pre'
+		"pre"
 		2
 	]
 	loc: Object {
@@ -2881,7 +2881,7 @@ LogicalAnd {
 		}
 	}
 	left: Comparator {
-		operator: '<'
+		operator: "<"
 		loc: Object {
 			filename: undefined
 			end: Object {
@@ -2917,7 +2917,7 @@ LogicalAnd {
 		}
 	}
 	right: Comparator {
-		operator: '<'
+		operator: "<"
 		loc: Object {
 			filename: undefined
 			end: Object {
@@ -2959,7 +2959,7 @@ LogicalAnd {
 
 ```javascript
 Comparator {
-	operator: '^'
+	operator: "^"
 	loc: Object {
 		filename: undefined
 		end: Object {
@@ -3014,7 +3014,7 @@ LogicalAnd {
 		}
 	}
 	left: Comparator {
-		operator: '^'
+		operator: "^"
 		loc: Object {
 			filename: undefined
 			end: Object {
@@ -3050,7 +3050,7 @@ LogicalAnd {
 		}
 	}
 	right: Comparator {
-		operator: '^'
+		operator: "^"
 		loc: Object {
 			filename: undefined
 			end: Object {
@@ -3092,7 +3092,7 @@ LogicalAnd {
 
 ```javascript
 Comparator {
-	operator: '~'
+	operator: "~"
 	loc: Object {
 		filename: undefined
 		end: Object {
@@ -3147,7 +3147,7 @@ LogicalAnd {
 		}
 	}
 	left: Comparator {
-		operator: '~'
+		operator: "~"
 		loc: Object {
 			filename: undefined
 			end: Object {
@@ -3183,7 +3183,7 @@ LogicalAnd {
 		}
 	}
 	right: Comparator {
-		operator: '~'
+		operator: "~"
 		loc: Object {
 			filename: undefined
 			end: Object {
@@ -3228,14 +3228,14 @@ AbsoluteVersion {
 	major: 1
 	minor: 2
 	patch: 3
-	build: Array ['build']
+	build: Array ["build"]
 	prerelease: Array [
-		'pre'
+		"pre"
 		2
 		3
 		4
 		5
-		'foo'
+		"foo"
 	]
 	loc: Object {
 		filename: undefined
@@ -3261,19 +3261,19 @@ AbsoluteVersion {
 	minor: 2
 	patch: 3
 	build: Array [
-		'build'
+		"build"
 		2
 		3
 		4
-		'foo'
+		"foo"
 	]
 	prerelease: Array [
-		'pre'
+		"pre"
 		2
 		3
 		4
 		5
-		'foo'
+		"foo"
 	]
 	loc: Object {
 		filename: undefined
@@ -3298,10 +3298,10 @@ AbsoluteVersion {
 	major: 1
 	minor: 2
 	patch: 3
-	build: Array ['45build']
+	build: Array ["45build"]
 	prerelease: Array [
-		'45pre'
-		'42yes'
+		"45pre"
+		"42yes"
 	]
 	loc: Object {
 		filename: undefined

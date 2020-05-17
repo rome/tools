@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {testLintMultiple} from '../testHelpers';
+import {test} from "rome";
+import {testLintMultiple} from "../testHelpers";
 
 test(
-	'import default basename',
+	"import default basename",
 	async (t) => {
 		await testLintMultiple(
 			t,
@@ -19,7 +19,7 @@ test(
 				// VALID
 				"import foo from './foo';",
 			],
-			{category: 'lint/importDefaultBasename'},
+			{category: "lint/importDefaultBasename"},
 		);
 	},
 );

@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {testLintMultiple} from '../testHelpers';
+import {test} from "rome";
+import {testLintMultiple} from "../testHelpers";
 
 test(
-	'no danger',
+	"no danger",
 	async (t) => {
 		await testLintMultiple(
 			t,
@@ -17,9 +17,9 @@ test(
 				// INVALID
 				'<div dangerouslySetInnerHTML={{ __html: "Hello World" }}></div>;',
 				// VALID
-				'<div>Hello World</div>;',
+				"<div>Hello World</div>;",
 			],
-			{category: 'lint/noDanger'},
+			{category: "lint/noDanger"},
 		);
 	},
 );

@@ -11,11 +11,11 @@
  * http://opensource.org/licenses/BSD-3-Clause
  */
 
-import {Mapping, Mappings, ParsedMappings, SourceMap} from './types';
-import * as base64 from './base64';
-import {compareByGeneratedPositionsInflated, toRelativeUrl} from './util';
-import ArraySet from './ArraySet';
-import MappingList from './MappingList';
+import {Mapping, Mappings, ParsedMappings, SourceMap} from "./types";
+import * as base64 from "./base64";
+import {compareByGeneratedPositionsInflated, toRelativeUrl} from "./util";
+import ArraySet from "./ArraySet";
+import MappingList from "./MappingList";
 import {
 	Number0,
 	Number1,
@@ -24,8 +24,8 @@ import {
 	ob1Inc,
 	ob1Number0,
 	ob1Number1,
-} from '@romejs/ob1';
-import SourceMapConsumer, {getParsedMappingKey} from './SourceMapConsumer';
+} from "@romejs/ob1";
+import SourceMapConsumer, {getParsedMappingKey} from "./SourceMapConsumer";
 
 type MaterializeCallback = () => void;
 
@@ -59,7 +59,7 @@ export default class SourceMapGenerator {
 	assertUnlocked() {
 		if (this.map !== undefined) {
 			throw new Error(
-				'Source map has already been materialized, serialize() should be your final call',
+				"Source map has already been materialized, serialize() should be your final call",
 			);
 		}
 	}
@@ -84,14 +84,14 @@ export default class SourceMapGenerator {
 		const {name, source} = mapping;
 
 		this.validatePosition(
-			'generated',
+			"generated",
 			mapping.generated.line,
 			mapping.generated.column,
 		);
 
 		if (mapping.original) {
 			this.validatePosition(
-				'original',
+				"original",
 				mapping.original.line,
 				mapping.original.column,
 			);
@@ -148,24 +148,24 @@ export default class SourceMapGenerator {
 		let previousOriginalLine: Number1 = ob1Number1;
 		let previousName: number = 0;
 		let previousSource: number = 0;
-		let result: string = '';
+		let result: string = "";
 
 		const mappings = this.mappings.toArray();
 		for (let i = 0; i < mappings.length; i++) {
 			const mapping = mappings[i];
-			let next = '';
+			let next = "";
 
 			if (mapping.generated.line !== previousGeneratedLine) {
 				previousGeneratedColumn = ob1Number0;
 				while (mapping.generated.line !== previousGeneratedLine) {
-					next += ';';
+					next += ";";
 					previousGeneratedLine = ob1Inc(previousGeneratedLine);
 				}
 			} else if (i > 0) {
 				if (!compareByGeneratedPositionsInflated(mapping, mappings[i - 1])) {
 					continue;
 				}
-				next += ',';
+				next += ",";
 			}
 
 			next += base64.encodeVLQ(
@@ -216,7 +216,7 @@ export default class SourceMapGenerator {
 			}
 			const content = this.sourcesContents.get(source);
 			if (content === undefined) {
-				throw new Error('Expected content');
+				throw new Error("Expected content");
 			}
 			return content;
 		});
@@ -254,7 +254,7 @@ export default class SourceMapGenerator {
 
 	toComment(): string {
 		const jsonMap = this.toJSON();
-		const base64Map = new Buffer(jsonMap).toString('base64');
+		const base64Map = new Buffer(jsonMap).toString("base64");
 		const comment = `//# sourceMappingURL=data:application/json;charset=utf-8;base64,${base64Map}`;
 		return comment;
 	}

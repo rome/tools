@@ -10,19 +10,19 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	trailingComments: Array []
 	innerComments: Array [
-		'0'
-		'1'
+		"0"
+		"1"
 	]
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 17
@@ -36,10 +36,10 @@ Program {
 	}
 	comments: Array [
 		CommentBlock {
-			id: '0'
-			value: ''
+			id: "0"
+			value: ""
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 4
 					index: 4
@@ -53,10 +53,10 @@ Program {
 			}
 		}
 		CommentLine {
-			id: '1'
-			value: ' comment'
+			id: "1"
+			value: " comment"
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 16
 					index: 16

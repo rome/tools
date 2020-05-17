@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from '@romejs/js-ast';
-import {Path} from '@romejs/js-compiler';
-import {descriptions} from '@romejs/diagnostics';
+import {AnyNode} from "@romejs/js-ast";
+import {Path} from "@romejs/js-compiler";
+import {descriptions} from "@romejs/diagnostics";
 
 export default {
-	name: 'noExplicitAny',
+	name: "noExplicitAny",
 	enter(path: Path): AnyNode {
 		const {context, node} = path;
 
-		if (node.type === 'AnyKeywordTypeAnnotation') {
+		if (node.type === "AnyKeywordTypeAnnotation") {
 			context.addNodeDiagnostic(node, descriptions.LINT.NO_EXPLICIT_ANY);
 		}
 

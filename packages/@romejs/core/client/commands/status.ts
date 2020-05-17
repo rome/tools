@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {commandCategories} from '../../common/commands';
-import {createLocalCommand} from '../commands';
-import ClientRequest from '../ClientRequest';
+import {commandCategories} from "../../common/commands";
+import {createLocalCommand} from "../commands";
+import ClientRequest from "../ClientRequest";
 
 export default createLocalCommand({
-	description: 'get the current daemon status',
+	description: "get the current daemon status",
 	category: commandCategories.PROCESS_MANAGEMENT,
-	usage: '',
+	usage: "",
 	examples: [],
 	defineFlags() {
 		return {};
@@ -23,18 +23,18 @@ export default createLocalCommand({
 		if (bridge) {
 			const status = await req.client.query(
 				{
-					commandName: 'status',
+					commandName: "status",
 				},
-				'master',
+				"master",
 			);
-			if (status.type === 'SUCCESS') {
+			if (status.type === "SUCCESS") {
 				reporter.inspect(status.data);
 				return true;
 			} else {
 				return false;
 			}
 		} else {
-			reporter.error('Server not running.');
+			reporter.error("Server not running.");
 			return false;
 		}
 	},

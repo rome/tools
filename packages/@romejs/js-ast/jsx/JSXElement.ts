@@ -18,11 +18,11 @@ import {
 	JSXSpreadChild,
 	JSXText,
 	TSTypeParameterInstantiation,
-} from '../index';
-import {createBuilder} from '../utils';
+} from "../index";
+import {createBuilder} from "../utils";
 
 export type JSXElement = JSNodeBase & {
-	type: 'JSXElement';
+	type: "JSXElement";
 	name:
 		 | JSXReferenceIdentifier
 		| JSXIdentifier
@@ -37,7 +37,7 @@ export type JSXElement = JSNodeBase & {
 };
 
 export const jsxElement = createBuilder<JSXElement>(
-	'JSXElement',
+	"JSXElement",
 	{
 		bindingKeys: {},
 		visitorKeys: {

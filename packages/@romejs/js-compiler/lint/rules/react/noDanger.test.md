@@ -24,7 +24,7 @@
 ### `0: formatted`
 
 ```
-<div dangerouslySetInnerHTML={{__html: 'Hello World'}}></div>;
+<div dangerouslySetInnerHTML={{__html: "Hello World"}}></div>;
 
 ```
 

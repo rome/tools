@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {DiagnosticDescription, descriptions} from '@romejs/diagnostics';
+import {DiagnosticDescription, descriptions} from "@romejs/diagnostics";
 
-const VALID_REGEX_FLAGS: Array<string> = 'gmsiyu'.split('');
+const VALID_REGEX_FLAGS: Array<string> = "gmsiyu".split("");
 
 // This is used by both rome-json and rome-js-parser to validate regex flags
 export function validateRegexFlags(
 	flags: string,
 	onUnexpected: (
-		metadata: Omit<DiagnosticDescription, 'category'>,
+		metadata: Omit<DiagnosticDescription, "category">,
 		index: number,
 	) => void,
 ): Set<string> {

@@ -10,17 +10,17 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array [
-		'jsx'
-		'ts'
+		"jsx"
+		"ts"
 	]
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 50
@@ -35,7 +35,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 3
 					index: 49
@@ -49,7 +49,7 @@ Program {
 			}
 			expression: JSXFragment {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 3
 						index: 49
@@ -63,9 +63,9 @@ Program {
 				}
 				children: Array [
 					JSXText {
-						value: '\n  '
+						value: "\n  "
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 2
 								index: 5
@@ -80,7 +80,7 @@ Program {
 					}
 					JSXFragment {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 5
 								index: 45
@@ -94,9 +94,9 @@ Program {
 						}
 						children: Array [
 							JSXText {
-								value: '\n    '
+								value: "\n    "
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 4
 										index: 12
@@ -111,7 +111,7 @@ Program {
 							}
 							JSXFragment {
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 7
 										index: 39
@@ -125,9 +125,9 @@ Program {
 								}
 								children: Array [
 									JSXText {
-										value: '\n      super deep\n    '
+										value: "\n      super deep\n    "
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 4
 												index: 36
@@ -143,9 +143,9 @@ Program {
 								]
 							}
 							JSXText {
-								value: '\n  '
+								value: "\n  "
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 2
 										index: 42
@@ -161,9 +161,9 @@ Program {
 						]
 					}
 					JSXText {
-						value: '\n'
+						value: "\n"
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 0
 								index: 46

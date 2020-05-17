@@ -15,20 +15,20 @@ import {
 	VERSION,
 	localCommands,
 	masterCommands,
-} from '@romejs/core';
-import setProcessTitle from './utils/setProcessTitle';
-import {parseCLIFlagsFromProcess} from '@romejs/cli-flags';
-import {UnknownFilePath, createAbsoluteFilePath} from '@romejs/path';
-import {Consumer} from '@romejs/consume';
+} from "@romejs/core";
+import setProcessTitle from "./utils/setProcessTitle";
+import {parseCLIFlagsFromProcess} from "@romejs/cli-flags";
+import {UnknownFilePath, createAbsoluteFilePath} from "@romejs/path";
+import {Consumer} from "@romejs/consume";
 import {
 	ClientProfileOptions,
 	getFilenameTimestamp,
-} from '@romejs/core/client/Client';
-import {commandCategories} from '@romejs/core/common/commands';
-import {writeFile} from '@romejs/fs';
-import fs = require('fs');
-import {markup} from '@romejs/string-markup';
-import {JSONObject, stringifyJSON} from '@romejs/codec-json';
+} from "@romejs/core/client/Client";
+import {commandCategories} from "@romejs/core/common/commands";
+import {writeFile} from "@romejs/fs";
+import fs = require("fs");
+import {markup} from "@romejs/string-markup";
+import {JSONObject, stringifyJSON} from "@romejs/codec-json";
 
 type CLIFlags = {
 	logs: boolean;
@@ -46,10 +46,10 @@ type CLIFlags = {
 };
 
 export default async function cli() {
-	setProcessTitle('cli');
+	setProcessTitle("cli");
 	const p = parseCLIFlagsFromProcess({
-		programName: process.env.ROME_DEV === '1' ? 'dev-rome' : 'rome',
-		usage: '[command] [flags]',
+		programName: process.env.ROME_DEV === "1" ? "dev-rome" : "rome",
+		usage: "[command] [flags]",
 		version: VERSION,
 		defineFlags(
 			c: Consumer,
@@ -62,24 +62,24 @@ export default async function cli() {
 			// We do the word `void ||` nonsense to avoid setting a default flag value
 			const cwd =
 				c.get(
-					'cwd',
+					"cwd",
 					{
-						description: 'Specify a different working directory',
+						description: "Specify a different working directory",
 					},
 				).asAbsoluteFilePathOrVoid() || createAbsoluteFilePath(process.cwd());
 
 			return {
 				clientFlags: {
-					clientName: 'cli',
+					clientName: "cli",
 					cwd,
 					verbose: c.get(
-						'verbose',
+						"verbose",
 						{
-							description: 'Output verbose logs',
+							description: "Output verbose logs",
 						},
 					).asBoolean(DEFAULT_CLIENT_FLAGS.verbose),
 					silent: c.get(
-						'silent',
+						"silent",
 						{
 							description: "Don't write anything to the console",
 						},
@@ -88,171 +88,171 @@ export default async function cli() {
 				},
 				cliFlags: {
 					markersPath: c.get(
-						'markersPath',
+						"markersPath",
 						{
-							description: 'Path where to write markers. When ommitted defaults to Marker-TIMESTAMP.json',
+							description: "Path where to write markers. When ommitted defaults to Marker-TIMESTAMP.json",
 						},
 					).asAbsoluteFilePathOrVoid(undefined, cwd),
 					profile: c.get(
-						'profile',
+						"profile",
 						{
-							description: 'Collect and write profile to disk. Includes profiles for all processes.',
+							description: "Collect and write profile to disk. Includes profiles for all processes.",
 						},
 					).asBoolean(false),
 					profilePath: c.get(
-						'profilePath',
+						"profilePath",
 						{
-							description: 'Path where to write profile. When omitted defaults to Profile-TIMESTAMP.json',
+							description: "Path where to write profile. When omitted defaults to Profile-TIMESTAMP.json",
 						},
 					).asAbsoluteFilePathOrVoid(undefined, cwd),
 					profileTimeout: c.get(
-						'profileTimeout',
+						"profileTimeout",
 						{
-							inputName: 'millisec',
-							description: 'Stop the profile after the milliseconds specified. When omitted the profile is of the whole command',
+							inputName: "millisec",
+							description: "Stop the profile after the milliseconds specified. When omitted the profile is of the whole command",
 						},
 					).asNumberOrVoid(),
 					profileWorkers: c.get(
-						'profileWorkers',
+						"profileWorkers",
 						{
-							description: 'Exclude workers from profile',
+							description: "Exclude workers from profile",
 						},
 					).asBoolean(true),
 					profileSampling: c.get(
-						'profileSampling',
+						"profileSampling",
 						{
-							description: 'Profiler sampling interval in microseconds',
-							inputName: 'microsec',
+							description: "Profiler sampling interval in microseconds",
+							inputName: "microsec",
 						},
 					).asNumber(100),
 					temporaryDaemon: c.get(
-						'temporaryDaemon',
+						"temporaryDaemon",
 						{
 							description: "Start a daemon, if one isn't already running, for the lifetime of this command",
 						},
 					).asBoolean(false),
 					rage: c.get(
-						'rage',
+						"rage",
 						{
-							description: 'Create a rage tarball of debug information',
+							description: "Create a rage tarball of debug information",
 						},
 					).asBoolean(false),
 					ragePath: c.get(
-						'ragePath',
+						"ragePath",
 						{
-							description: 'Path where to write rage tarball. When omitted defaults to Rage-TIMESTAMP.tgz',
+							description: "Path where to write rage tarball. When omitted defaults to Rage-TIMESTAMP.tgz",
 						},
 					).asAbsoluteFilePathOrVoid(undefined, cwd),
 					logs: c.get(
-						'logs',
+						"logs",
 						{
-							description: 'Output master logs',
+							description: "Output master logs",
 						},
 					).asBoolean(false),
 					logWorkers: c.get(
-						'logWorkers',
+						"logWorkers",
 						{
-							description: 'Output worker logs',
+							description: "Output worker logs",
 						},
 					).asBooleanOrVoid(),
 					logPath: c.get(
-						'logPath',
+						"logPath",
 						{
-							description: 'Path where to output logs. When omitted logs are not written anywhere',
+							description: "Path where to output logs. When omitted logs are not written anywhere",
 						},
 					).asAbsoluteFilePathOrVoid(undefined, cwd),
 					...overrideCLIFlags,
 				},
 				requestFlags: {
 					benchmark: c.get(
-						'benchmark',
+						"benchmark",
 						{
-							description: 'Run a command multiple times, calculating average',
+							description: "Run a command multiple times, calculating average",
 						},
 					).asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.benchmark),
 					benchmarkIterations: c.get(
-						'benchmarkIterations',
+						"benchmarkIterations",
 						{
-							description: 'The amount of benchmark iterations to perform',
+							description: "The amount of benchmark iterations to perform",
 						},
 					).asNumber(DEFAULT_CLIENT_REQUEST_FLAGS.benchmarkIterations),
 					collectMarkers: c.get(
-						'collectMarkers',
+						"collectMarkers",
 						{
-							description: 'Collect and write performance markers to disk',
+							description: "Collect and write performance markers to disk",
 						},
 					).asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.collectMarkers),
 					timing: c.get(
-						'timing',
+						"timing",
 						{
-							description: 'Dump timing information after running the command',
+							description: "Dump timing information after running the command",
 						},
 					).asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.timing),
 					review: c.get(
-						'review',
+						"review",
 						{
-							description: 'Display and perform actions on diagnostics. Only some commands support this.',
+							description: "Display and perform actions on diagnostics. Only some commands support this.",
 						},
 					).asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.review),
 					watch: c.get(
-						'watch',
+						"watch",
 						{
-							description: 'Keep running command and update on file changes. Only some commands support this.',
+							description: "Keep running command and update on file changes. Only some commands support this.",
 						},
 					).asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.watch),
 					fieri: c.get(
-						'fieri',
+						"fieri",
 						{
-							description: 'Head to flavortown',
+							description: "Head to flavortown",
 						},
 					).asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.fieri),
 					grep: c.get(
-						'grep',
+						"grep",
 						{
-							description: 'Only display diagnostics with messages containing this string',
+							description: "Only display diagnostics with messages containing this string",
 						},
 					).asString(DEFAULT_CLIENT_REQUEST_FLAGS.grep),
 					inverseGrep: c.get(
-						'inverseGrep',
+						"inverseGrep",
 						{
-							description: 'Flip grep match. Only display diagnostics with messages that do NOT contain the grep string',
+							description: "Flip grep match. Only display diagnostics with messages that do NOT contain the grep string",
 						},
 					).asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.inverseGrep),
 					maxDiagnostics: c.get(
-						'maxDiagnostics',
+						"maxDiagnostics",
 						{
-							description: 'Cap the amount of diagnostics displayed',
+							description: "Cap the amount of diagnostics displayed",
 						},
 					).asNumber(DEFAULT_CLIENT_REQUEST_FLAGS.maxDiagnostics),
 					verboseDiagnostics: c.get(
-						'verboseDiagnostics',
+						"verboseDiagnostics",
 						{
-							description: 'Display hidden and truncated diagnostic information',
+							description: "Display hidden and truncated diagnostic information",
 						},
 					).asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.verboseDiagnostics),
 					showAllDiagnostics: c.get(
-						'showAllDiagnostics',
+						"showAllDiagnostics",
 						{
-							description: 'Display all diagnostics ignoring caps',
+							description: "Display all diagnostics ignoring caps",
 						},
 					).asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.showAllDiagnostics),
 					resolverPlatform: c.get(
-						'resolverPlatform',
+						"resolverPlatform",
 						{
-							description: 'Specify the platform for module resolution',
-							inputName: 'platform',
+							description: "Specify the platform for module resolution",
+							inputName: "platform",
 						},
 					).asStringSetOrVoid(PLATFORMS),
 					resolverScale: c.get(
-						'resolverScale',
+						"resolverScale",
 						{
-							description: 'Specify the image scale for module resolution',
+							description: "Specify the image scale for module resolution",
 						},
 					).asNumberOrVoid(),
 					resolverMocks: c.get(
-						'resolverMocks',
+						"resolverMocks",
 						{
-							description: 'Enable mocks for module resolution',
+							description: "Enable mocks for module resolution",
 						},
 					).asBoolean(DEFAULT_CLIENT_REQUEST_FLAGS.resolverMocks),
 					...overrideRequestFlags,
@@ -261,7 +261,7 @@ export default async function cli() {
 		},
 	});
 
-	let command = '';
+	let command = "";
 	let overrideClientFlags: undefined | Partial<ClientFlags>;
 	let overrideRequestFlags: undefined | Partial<ClientRequestFlags>;
 	let overrideCLIFlags: Partial<CLIFlags> = {};
@@ -317,29 +317,29 @@ export default async function cli() {
 
 	// Mock `rage` command that just uses the master noop command and adds the --rage flag
 	p.command({
-		name: 'rage',
+		name: "rage",
 		category: commandCategories.INTERNAL,
-		description: 'TODO',
+		description: "TODO",
 		callback() {
 			overrideCLIFlags = {
 				rage: true,
 			};
 
-			command = '_noop';
+			command = "_noop";
 		},
 	});
 
 	// Mock `logs` command that just uses the master noop command and adds the --logs flag
 	p.command({
-		name: 'logs',
+		name: "logs",
 		category: commandCategories.INTERNAL,
-		description: 'TODO',
+		description: "TODO",
 		callback() {
 			overrideCLIFlags = {
 				logs: true,
 			};
 
-			command = '_noop';
+			command = "_noop";
 		},
 	});
 
@@ -448,7 +448,7 @@ export default async function cli() {
 	});
 	await client.end();
 
-	if (res.type === 'SUCCESS') {
+	if (res.type === "SUCCESS") {
 		// Write markers if we were collecting them
 		if (requestFlags.collectMarkers) {
 			const markersPath = clientFlags.cwd.resolve(
@@ -466,16 +466,16 @@ export default async function cli() {
 	}
 
 	switch (res.type) {
-		case 'ERROR': {
+		case "ERROR": {
 			if (!res.handled) {
-				console.error('Unhandled CLI query error');
+				console.error("Unhandled CLI query error");
 				console.error(res.stack);
 			}
 			process.exit(1);
 			break;
 		}
 
-		case 'INVALID_REQUEST': {
+		case "INVALID_REQUEST": {
 			if (res.showHelp) {
 				await p.showHelp();
 			}
@@ -483,17 +483,17 @@ export default async function cli() {
 			break;
 		}
 
-		case 'DIAGNOSTICS': {
+		case "DIAGNOSTICS": {
 			process.exit(res.diagnostics.length === 0 ? 0 : 1);
 			break;
 		}
 
-		case 'CANCELLED': {
+		case "CANCELLED": {
 			process.exit(0);
 			break;
 		}
 
-		case 'SUCCESS': {
+		case "SUCCESS": {
 			process.exit(0);
 			break;
 		}

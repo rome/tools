@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyExpression, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {AnyExpression, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type SequenceExpression = JSNodeBase & {
-	type: 'SequenceExpression';
+	type: "SequenceExpression";
 	expressions: Array<AnyExpression>;
 };
 
 export const sequenceExpression = createBuilder<SequenceExpression>(
-	'SequenceExpression',
+	"SequenceExpression",
 	{bindingKeys: {}, visitorKeys: {expressions: true}},
 );

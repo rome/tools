@@ -9,9 +9,9 @@ export function dedent(
 	literals: string | TemplateStringsArray,
 	...values: Array<string>
 ): string {
-	let string: string = '';
+	let string: string = "";
 
-	if (typeof literals === 'string') {
+	if (typeof literals === "string") {
 		string = literals;
 	} else {
 		const parts: Array<string> = [];
@@ -24,7 +24,7 @@ export function dedent(
 			}
 		}
 
-		string = parts.join('');
+		string = parts.join("");
 	}
 
 	// Find min indentation
@@ -36,5 +36,5 @@ export function dedent(
 	const indent = Math.min(...match.map((x) => x.length));
 
 	// Remove indentation
-	return string.replace(new RegExp(`^[ \\t]{${indent}}`, 'gm'), '').trim();
+	return string.replace(new RegExp(`^[ \\t]{${indent}}`, "gm"), "").trim();
 }

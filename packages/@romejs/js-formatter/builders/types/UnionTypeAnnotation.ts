@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
+import Builder from "../../Builder";
 import {
 	Token,
 	concat,
@@ -16,8 +16,8 @@ import {
 	join,
 	lineOrSpace,
 	space,
-} from '../../tokens';
-import {AnyNode, UnionTypeAnnotation} from '@romejs/js-ast';
+} from "../../tokens";
+import {AnyNode, UnionTypeAnnotation} from "@romejs/js-ast";
 
 export default function UnionTypeAnnotation(
 	builder: Builder,
@@ -26,14 +26,14 @@ export default function UnionTypeAnnotation(
 ): Token {
 	// Indentation may be handled by the parent node
 	const shouldIndent =
-		parent.type !== 'TSTypeAssertion' &&
-		parent.type !== 'TSTypeParameterDeclaration' &&
-		parent.type !== 'TSTypeParameterInstantiation';
+		parent.type !== "TSTypeAssertion" &&
+		parent.type !== "TSTypeParameterDeclaration" &&
+		parent.type !== "TSTypeParameterInstantiation";
 
 	const printed = concat([
-		ifBreak(concat([shouldIndent ? hardline : '', '|', space])),
+		ifBreak(concat([shouldIndent ? hardline : "", "|", space])),
 		join(
-			concat([lineOrSpace, '|', space]),
+			concat([lineOrSpace, "|", space]),
 			node.types.map((type) => indent(builder.tokenize(type, node))),
 		),
 	]);

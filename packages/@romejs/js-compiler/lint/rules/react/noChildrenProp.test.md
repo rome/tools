@@ -24,7 +24,7 @@
 ### `0: formatted`
 
 ```
-<MyComponent children={'foo'}></MyComponent>;
+<MyComponent children={"foo"}></MyComponent>;
 
 ```
 
@@ -48,7 +48,7 @@
 ### `1: formatted`
 
 ```
-React.createElement('div', {children: 'foo'});
+React.createElement("div", {children: "foo"});
 
 ```
 
@@ -76,7 +76,7 @@ React.createElement('div', {children: 'foo'});
 ### `3: formatted`
 
 ```
-React.createElement('div', {}, 'children');
+React.createElement("div", {}, "children");
 
 ```
 
@@ -90,6 +90,6 @@ React.createElement('div', {}, 'children');
 ### `4: formatted`
 
 ```
-React.createElement('div', child1, 'child2');
+React.createElement("div", child1, "child2");
 
 ```

@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Token} from '../../tokens';
+import {Token} from "../../tokens";
 
 export default function CommentBlock(): Token {
-	throw new Error('unimplemented');
+	throw new Error("unimplemented");
 }

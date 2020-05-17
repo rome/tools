@@ -12,11 +12,11 @@ import {
 	TSExpressionWithTypeArguments,
 	TSTypeParameterDeclaration,
 	TSTypeParameterInstantiation,
-} from '../index';
-import {createQuickBuilder} from '../utils';
+} from "../index";
+import {createQuickBuilder} from "../utils";
 
 export type ClassHead = JSNodeBase & {
-	type: 'ClassHead';
+	type: "ClassHead";
 	superClass?: AnyExpression;
 	body: Array<AnyClassMember>;
 	typeParameters?: TSTypeParameterDeclaration;
@@ -24,9 +24,9 @@ export type ClassHead = JSNodeBase & {
 	implements?: undefined | Array<TSExpressionWithTypeArguments>;
 };
 
-export const classHead = createQuickBuilder<ClassHead, 'body'>(
-	'ClassHead',
-	'body',
+export const classHead = createQuickBuilder<ClassHead, "body">(
+	"ClassHead",
+	"body",
 	{
 		bindingKeys: {},
 		visitorKeys: {

@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 56
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		ClassDeclaration {
 			id: BindingIdentifier {
-				name: 'Hotel'
+				name: "Hotel"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'Hotel'
+					filename: "input.js"
+					identifierName: "Hotel"
 					end: Object {
 						column: 11
 						index: 11
@@ -49,7 +49,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 1
 					index: 55
@@ -67,7 +67,7 @@ Program {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 1
 						index: 55
@@ -81,13 +81,13 @@ Program {
 				}
 				body: Array [
 					ClassPrivateMethod {
-						kind: 'method'
+						kind: "method"
 						key: PrivateName {
 							id: Identifier {
-								name: 'evil'
+								name: "evil"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'evil'
+									filename: "input.js"
+									identifierName: "evil"
 									end: Object {
 										column: 8
 										index: 22
@@ -101,7 +101,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 8
 									index: 22
@@ -115,7 +115,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 3
 								index: 53
@@ -137,7 +137,7 @@ Program {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 10
 									index: 24
@@ -163,7 +163,7 @@ Program {
 								line: 2
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 8
 									index: 22
@@ -179,7 +179,7 @@ Program {
 						body: BlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 3
 									index: 53
@@ -194,7 +194,7 @@ Program {
 							body: Array [
 								ExpressionStatement {
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 22
 											index: 49
@@ -209,7 +209,7 @@ Program {
 									expression: YieldExpression {
 										delegate: false
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 21
 												index: 48
@@ -224,7 +224,7 @@ Program {
 										argument: CallExpression {
 											arguments: Array []
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 21
 													index: 48
@@ -237,10 +237,10 @@ Program {
 												}
 											}
 											callee: ReferenceIdentifier {
-												name: 'notReally'
+												name: "notReally"
 												loc: Object {
-													filename: 'input.js'
-													identifierName: 'notReally'
+													filename: "input.js"
+													identifierName: "notReally"
 													end: Object {
 														column: 19
 														index: 46

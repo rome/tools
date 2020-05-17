@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 40
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 2
 					index: 39
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'const'
+				kind: "const"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 2
 						index: 39
@@ -62,10 +62,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'A'
+							name: "A"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'A'
+								filename: "input.js"
+								identifierName: "A"
 								end: Object {
 									column: 7
 									index: 7
@@ -79,7 +79,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 1
 								index: 38
@@ -94,7 +94,7 @@ Program {
 						init: FunctionExpression {
 							id: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 1
 									index: 38
@@ -116,7 +116,7 @@ Program {
 								thisType: undefined
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 20
 										index: 20
@@ -132,7 +132,7 @@ Program {
 							body: BlockStatement {
 								directives: Array []
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 1
 										index: 38
@@ -147,7 +147,7 @@ Program {
 								body: Array [
 									ExpressionStatement {
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 13
 												index: 36
@@ -161,7 +161,7 @@ Program {
 										}
 										expression: MetaProperty {
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 12
 													index: 35
@@ -174,10 +174,10 @@ Program {
 												}
 											}
 											meta: Identifier {
-												name: 'new'
+												name: "new"
 												loc: Object {
-													filename: 'input.js'
-													identifierName: 'new'
+													filename: "input.js"
+													identifierName: "new"
 													end: Object {
 														column: 5
 														index: 28
@@ -191,10 +191,10 @@ Program {
 												}
 											}
 											property: Identifier {
-												name: 'target'
+												name: "target"
 												loc: Object {
-													filename: 'input.js'
-													identifierName: 'target'
+													filename: "input.js"
+													identifierName: "target"
 													end: Object {
 														column: 12
 														index: 35

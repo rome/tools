@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Token} from '../../tokens';
+import {Token} from "../../tokens";
 
 export default function MixedKeywordTypeAnnotation(): Token {
-	return 'mixed';
+	return "mixed";
 }

@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 32
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 31
 					index: 31
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'var'
+				kind: "var"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 31
 						index: 31
@@ -64,7 +64,7 @@ Program {
 						id: BindingArrayPattern {
 							elements: Array []
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 17
 									index: 17
@@ -79,7 +79,7 @@ Program {
 							rest: BindingObjectPattern {
 								rest: undefined
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 16
 										index: 16
@@ -95,7 +95,7 @@ Program {
 									optional: undefined
 									typeAnnotation: undefined
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 16
 											index: 16
@@ -112,10 +112,10 @@ Program {
 									BindingObjectPatternProperty {
 										key: StaticPropertyKey {
 											value: Identifier {
-												name: 'length'
+												name: "length"
 												loc: Object {
-													filename: 'input.js'
-													identifierName: 'length'
+													filename: "input.js"
+													identifierName: "length"
 													end: Object {
 														column: 15
 														index: 15
@@ -129,7 +129,7 @@ Program {
 												}
 											}
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 15
 													index: 15
@@ -143,10 +143,10 @@ Program {
 											}
 										}
 										value: BindingIdentifier {
-											name: 'length'
+											name: "length"
 											loc: Object {
-												filename: 'input.js'
-												identifierName: 'length'
+												filename: "input.js"
+												identifierName: "length"
 												end: Object {
 													column: 15
 													index: 15
@@ -160,7 +160,7 @@ Program {
 											}
 										}
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 15
 												index: 15
@@ -177,7 +177,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 30
 								index: 30
@@ -191,7 +191,7 @@ Program {
 						}
 						init: ArrayExpression {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 30
 									index: 30
@@ -208,7 +208,7 @@ Program {
 									value: 1
 									format: undefined
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 23
 											index: 23
@@ -225,7 +225,7 @@ Program {
 									value: 2
 									format: undefined
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 26
 											index: 26
@@ -242,7 +242,7 @@ Program {
 									value: 3
 									format: undefined
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 29
 											index: 29

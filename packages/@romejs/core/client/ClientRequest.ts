@@ -8,19 +8,19 @@
 import {
 	MasterQueryResponse,
 	PartialMasterQueryRequest,
-} from '../common/bridges/MasterBridge';
-import {LocalCommand, localCommands} from './commands';
-import Client from './Client';
-import {consumeUnknown} from '@romejs/consume';
-import {BridgeError} from '@romejs/events';
-import review from './review';
+} from "../common/bridges/MasterBridge";
+import {LocalCommand, localCommands} from "./commands";
+import Client from "./Client";
+import {consumeUnknown} from "@romejs/consume";
+import {BridgeError} from "@romejs/events";
+import review from "./review";
 
-export type ClientRequestType = 'local' | 'master';
+export type ClientRequestType = "local" | "master";
 
 export default class ClientRequest {
 	constructor(
 		client: Client,
-		type: ClientRequestType = 'local',
+		type: ClientRequestType = "local",
 		query: PartialMasterQueryRequest,
 	) {
 		this.client = client;
@@ -46,7 +46,7 @@ export default class ClientRequest {
 			}
 		} catch (err) {
 			return {
-				type: 'ERROR',
+				type: "ERROR",
 				fatal: false,
 				handled: false,
 				name: err.name,
@@ -63,7 +63,7 @@ export default class ClientRequest {
 	async initCommand(): Promise<MasterQueryResponse> {
 		const localCommand = localCommands.get(this.query.commandName);
 
-		if (this.type === 'master' || localCommand === undefined) {
+		if (this.type === "master" || localCommand === undefined) {
 			return this.initFromMaster();
 		} else {
 			return this.initFromLocal(localCommand);
@@ -79,26 +79,26 @@ export default class ClientRequest {
 		let flags;
 		if (localCommand.defineFlags !== undefined) {
 			flags = localCommand.defineFlags(
-				consumeUnknown(query.commandFlags, 'flags/invalid'),
+				consumeUnknown(query.commandFlags, "flags/invalid"),
 			);
 		}
 
 		const res = await localCommand.callback(this, flags);
 		if (res === true) {
 			return {
-				type: 'SUCCESS',
+				type: "SUCCESS",
 				data: undefined,
 				hasData: false,
 				markers: [],
 			};
 		} else if (res === false) {
 			return {
-				type: 'ERROR',
+				type: "ERROR",
 				fatal: false,
 				// Local command would have printed something
 				handled: true,
-				name: 'Error',
-				message: 'Command was not successful',
+				name: "Error",
+				message: "Command was not successful",
 				stack: undefined,
 			};
 		} else {
@@ -115,11 +115,11 @@ export default class ClientRequest {
 		} catch (err) {
 			if (err instanceof BridgeError) {
 				return {
-					type: 'ERROR',
+					type: "ERROR",
 					fatal: true,
 					handled: false,
-					name: 'Error',
-					message: 'Server died while processing command. Results may be incomplete.',
+					name: "Error",
+					message: "Server died while processing command. Results may be incomplete.",
 					stack: undefined,
 				};
 			} else {

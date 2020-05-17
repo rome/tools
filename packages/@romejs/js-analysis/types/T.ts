@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Evaluator, {HydrateData, HydrateTypeFactory} from '../Evaluator';
-import {SourceLocation} from '@romejs/parser-core';
-import {AnyNode} from '@romejs/js-ast';
-import Graph from '../Graph';
-import {Scope} from '../scopes';
-import Hub from '../Hub';
-import Utils, {HumanBuilder} from '../Utils';
+import Evaluator, {HydrateData, HydrateTypeFactory} from "../Evaluator";
+import {SourceLocation} from "@romejs/parser-core";
+import {AnyNode} from "@romejs/js-ast";
+import Graph from "../Graph";
+import {Scope} from "../scopes";
+import Hub from "../Hub";
+import Utils, {HumanBuilder} from "../Utils";
 
 let counter = 0;
 
@@ -19,10 +19,10 @@ export type SerialTypeFactory = (type: T) => string;
 
 export type TypeCompatibilityReturn =
 	 | {
-			type: 'compatible';
+			type: "compatible";
 		}
 	| {
-			type: 'incompatible';
+			type: "incompatible";
 			lower: T;
 			upper: T;
 		};
@@ -49,7 +49,7 @@ export default class T {
 		this.compatibilityCache = new Map();
 	}
 
-	static type = 'T';
+	static type = "T";
 	utils: Utils;
 	evaluator: Evaluator;
 	graph: Graph<T>;
@@ -103,13 +103,13 @@ export default class T {
 		const data = this.serialize(addType);
 
 		const getType: HydrateTypeFactory = (id: unknown): T => {
-			if (typeof id !== 'string') {
-				throw new Error('Expected id to be a string');
+			if (typeof id !== "string") {
+				throw new Error("Expected id to be a string");
 			}
 
 			const type = idsToType.get(id);
 			if (type === undefined) {
-				throw new Error('Expected type');
+				throw new Error("Expected type");
 			}
 			return type;
 		};
@@ -144,7 +144,7 @@ export default class T {
 	humanize(builder: HumanBuilder): string {
 		const reduced = this.utils.reduce(this);
 		if (reduced === this) {
-			throw new Error('unimplemented');
+			throw new Error("unimplemented");
 		} else {
 			return builder.humanize(reduced);
 		}

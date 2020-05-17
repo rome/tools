@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Parser, {ParserInterface, ParserOptions} from './Parser';
-import {Reporter} from '@romejs/cli-reporter';
+import Parser, {ParserInterface, ParserOptions} from "./Parser";
+import {Reporter} from "@romejs/cli-reporter";
 
-export {FlagValue} from './Parser';
+export {FlagValue} from "./Parser";
 export {ParserInterface as FlagParser};
 
 export function parseCLIFlags<T>(
@@ -35,4 +35,4 @@ export function parseCLIFlagsFromProcess<T>(
 	);
 }
 
-export * from './serializeCLIFlags';
+export * from "./serializeCLIFlags";

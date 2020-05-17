@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
-	syntax: Array ['jsx']
+	sourceType: "script"
+	syntax: Array ["jsx"]
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 1
 			index: 223
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		FunctionDeclaration {
 			id: BindingIdentifier {
-				name: 'foo'
+				name: "foo"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'foo'
+					filename: "input.js"
+					identifierName: "foo"
 					end: Object {
 						column: 12
 						index: 12
@@ -49,7 +49,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 1
 					index: 223
@@ -71,7 +71,7 @@ Program {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 14
 						index: 14
@@ -87,7 +87,7 @@ Program {
 			body: BlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 1
 						index: 223
@@ -102,7 +102,7 @@ Program {
 				body: Array [
 					ReturnStatement {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 4
 								index: 221
@@ -116,9 +116,9 @@ Program {
 						}
 						argument: JSXElement {
 							name: JSXIdentifier {
-								name: 'nav'
+								name: "nav"
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 8
 										index: 36
@@ -135,7 +135,7 @@ Program {
 							selfClosing: false
 							typeArguments: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 10
 									index: 216
@@ -149,9 +149,9 @@ Program {
 							}
 							children: Array [
 								JSXText {
-									value: '\n      '
+									value: "\n      "
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 6
 											index: 44
@@ -166,9 +166,9 @@ Program {
 								}
 								JSXElement {
 									name: JSXReferenceIdentifier {
-										name: 'Home'
+										name: "Home"
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 11
 												index: 49
@@ -186,7 +186,7 @@ Program {
 									selfClosing: true
 									typeArguments: undefined
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 14
 											index: 52
@@ -200,9 +200,9 @@ Program {
 									}
 								}
 								JSXText {
-									value: '\n      '
+									value: "\n      "
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 6
 											index: 59
@@ -217,7 +217,7 @@ Program {
 								}
 								JSXExpressionContainer {
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 7
 											index: 205
@@ -231,7 +231,7 @@ Program {
 									}
 									expression: DoExpression {
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 9
 												index: 197
@@ -246,7 +246,7 @@ Program {
 										body: BlockStatement {
 											directives: Array []
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 9
 													index: 197
@@ -261,7 +261,7 @@ Program {
 											body: Array [
 												IfStatement {
 													loc: Object {
-														filename: 'input.js'
+														filename: "input.js"
 														end: Object {
 															column: 11
 															index: 187
@@ -274,10 +274,10 @@ Program {
 														}
 													}
 													test: ReferenceIdentifier {
-														name: 'loggedIn'
+														name: "loggedIn"
 														loc: Object {
-															filename: 'input.js'
-															identifierName: 'loggedIn'
+															filename: "input.js"
+															identifierName: "loggedIn"
 															end: Object {
 																column: 22
 																index: 96
@@ -293,7 +293,7 @@ Program {
 													alternate: BlockStatement {
 														directives: Array []
 														loc: Object {
-															filename: 'input.js'
+															filename: "input.js"
 															end: Object {
 																column: 11
 																index: 187
@@ -308,7 +308,7 @@ Program {
 														body: Array [
 															ExpressionStatement {
 																loc: Object {
-																	filename: 'input.js'
+																	filename: "input.js"
 																	end: Object {
 																		column: 27
 																		index: 175
@@ -322,9 +322,9 @@ Program {
 																}
 																expression: JSXElement {
 																	name: JSXReferenceIdentifier {
-																		name: 'LoginButton'
+																		name: "LoginButton"
 																		loc: Object {
-																			filename: 'input.js'
+																			filename: "input.js"
 																			end: Object {
 																				column: 24
 																				index: 172
@@ -342,7 +342,7 @@ Program {
 																	selfClosing: true
 																	typeArguments: undefined
 																	loc: Object {
-																		filename: 'input.js'
+																		filename: "input.js"
 																		end: Object {
 																			column: 27
 																			index: 175
@@ -361,7 +361,7 @@ Program {
 													consequent: BlockStatement {
 														directives: Array []
 														loc: Object {
-															filename: 'input.js'
+															filename: "input.js"
 															end: Object {
 																column: 11
 																index: 140
@@ -376,7 +376,7 @@ Program {
 														body: Array [
 															ExpressionStatement {
 																loc: Object {
-																	filename: 'input.js'
+																	filename: "input.js"
 																	end: Object {
 																		column: 28
 																		index: 128
@@ -390,9 +390,9 @@ Program {
 																}
 																expression: JSXElement {
 																	name: JSXReferenceIdentifier {
-																		name: 'LogoutButton'
+																		name: "LogoutButton"
 																		loc: Object {
-																			filename: 'input.js'
+																			filename: "input.js"
 																			end: Object {
 																				column: 25
 																				index: 125
@@ -410,7 +410,7 @@ Program {
 																	selfClosing: true
 																	typeArguments: undefined
 																	loc: Object {
-																		filename: 'input.js'
+																		filename: "input.js"
 																		end: Object {
 																			column: 28
 																			index: 128
@@ -432,9 +432,9 @@ Program {
 									}
 								}
 								JSXText {
-									value: '\n    '
+									value: "\n    "
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 4
 											index: 210

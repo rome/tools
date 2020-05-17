@@ -8,17 +8,17 @@
 Program {
 	corrupt: false
 	directives: Array []
-	filename: 'input.mjs'
+	filename: "input.mjs"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array [
-		'jsx'
-		'ts'
+		"jsx"
+		"ts"
 	]
 	loc: Object {
-		filename: 'input.mjs'
+		filename: "input.mjs"
 		end: Object {
 			column: 0
 			index: 116
@@ -32,10 +32,10 @@ Program {
 	}
 	comments: Array [
 		CommentBlock {
-			id: '0'
-			value: '* @jsx mdx '
+			id: "0"
+			value: "* @jsx mdx "
 			loc: Object {
-				filename: 'input.mjs'
+				filename: "input.mjs"
 				end: Object {
 					column: 15
 					index: 15
@@ -51,25 +51,25 @@ Program {
 	]
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: '<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module"}
 				advice: Array [
 					log {
-						category: 'info'
-						text: 'Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module'
+						category: "info"
+						text: "Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module"
 					}
 					log {
-						category: 'info'
-						text: 'Add <emphasis>"type": "module"</emphasis> to your <filelink emphasis target="package.json" />'
+						category: "info"
+						text: "Add <emphasis>\"type\": \"module\"</emphasis> to your <filelink emphasis target=\"package.json\" />"
 					}
 				]
 			}
 			location: Object {
-				filename: 'input.mjs'
+				filename: "input.mjs"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 35
 					index: 51
@@ -88,9 +88,9 @@ Program {
 			defaultSpecifier: undefined
 			importKind: undefined
 			namespaceSpecifier: undefined
-			leadingComments: Array ['0']
+			leadingComments: Array ["0"]
 			loc: Object {
-				filename: 'input.mjs'
+				filename: "input.mjs"
 				end: Object {
 					column: 35
 					index: 51
@@ -103,9 +103,9 @@ Program {
 				}
 			}
 			source: StringLiteral {
-				value: '@mdx-js/preact'
+				value: "@mdx-js/preact"
 				loc: Object {
-					filename: 'input.mjs'
+					filename: "input.mjs"
 					end: Object {
 						column: 34
 						index: 50
@@ -122,7 +122,7 @@ Program {
 				ImportSpecifier {
 					leadingComments: undefined
 					loc: Object {
-						filename: 'input.mjs'
+						filename: "input.mjs"
 						end: Object {
 							column: 11
 							index: 27
@@ -135,11 +135,11 @@ Program {
 						}
 					}
 					imported: Identifier {
-						name: 'mdx'
+						name: "mdx"
 						leadingComments: undefined
 						loc: Object {
-							filename: 'input.mjs'
-							identifierName: 'mdx'
+							filename: "input.mjs"
+							identifierName: "mdx"
 							end: Object {
 								column: 11
 								index: 27
@@ -154,13 +154,13 @@ Program {
 					}
 					local: ImportSpecifierLocal {
 						name: BindingIdentifier {
-							name: 'mdx'
+							name: "mdx"
 							innerComments: undefined
 							leadingComments: undefined
 							trailingComments: undefined
 							loc: Object {
-								filename: 'input.mjs'
-								identifierName: 'mdx'
+								filename: "input.mjs"
+								identifierName: "mdx"
 								end: Object {
 									column: 11
 									index: 27
@@ -176,7 +176,7 @@ Program {
 						importKind: undefined
 						leadingComments: undefined
 						loc: Object {
-							filename: 'input.mjs'
+							filename: "input.mjs"
 							end: Object {
 								column: 11
 								index: 27
@@ -194,7 +194,7 @@ Program {
 		}
 		ExportDefaultDeclaration {
 			loc: Object {
-				filename: 'input.mjs'
+				filename: "input.mjs"
 				end: Object {
 					column: 1
 					index: 115
@@ -208,10 +208,10 @@ Program {
 			}
 			declaration: FunctionDeclaration {
 				id: BindingIdentifier {
-					name: 'MDXContent'
+					name: "MDXContent"
 					loc: Object {
-						filename: 'input.mjs'
-						identifierName: 'MDXContent'
+						filename: "input.mjs"
+						identifierName: "MDXContent"
 						end: Object {
 							column: 34
 							index: 87
@@ -225,7 +225,7 @@ Program {
 					}
 				}
 				loc: Object {
-					filename: 'input.mjs'
+					filename: "input.mjs"
 					end: Object {
 						column: 1
 						index: 115
@@ -247,7 +247,7 @@ Program {
 					thisType: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: 'input.mjs'
+						filename: "input.mjs"
 						end: Object {
 							column: 36
 							index: 89
@@ -263,7 +263,7 @@ Program {
 				body: BlockStatement {
 					directives: Array []
 					loc: Object {
-						filename: 'input.mjs'
+						filename: "input.mjs"
 						end: Object {
 							column: 1
 							index: 115
@@ -278,7 +278,7 @@ Program {
 					body: Array [
 						ReturnStatement {
 							loc: Object {
-								filename: 'input.mjs'
+								filename: "input.mjs"
 								end: Object {
 									column: 21
 									index: 113
@@ -292,9 +292,9 @@ Program {
 							}
 							argument: JSXElement {
 								name: JSXIdentifier {
-									name: 'h1'
+									name: "h1"
 									loc: Object {
-										filename: 'input.mjs'
+										filename: "input.mjs"
 										end: Object {
 											column: 12
 											index: 104
@@ -311,7 +311,7 @@ Program {
 								selfClosing: false
 								typeArguments: undefined
 								loc: Object {
-									filename: 'input.mjs'
+									filename: "input.mjs"
 									end: Object {
 										column: 20
 										index: 112
@@ -325,9 +325,9 @@ Program {
 								}
 								children: Array [
 									JSXText {
-										value: 'hi'
+										value: "hi"
 										loc: Object {
-											filename: 'input.mjs'
+											filename: "input.mjs"
 											end: Object {
 												column: 15
 												index: 107

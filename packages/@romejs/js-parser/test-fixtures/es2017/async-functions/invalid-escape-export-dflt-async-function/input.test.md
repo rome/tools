@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 51
@@ -30,16 +30,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Expected a semicolon or a line terminator'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Expected a semicolon or a line terminator"}
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 25
 					index: 25
@@ -56,7 +56,7 @@ Program {
 	body: Array [
 		ExportDefaultDeclaration {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 25
 					index: 25
@@ -69,10 +69,10 @@ Program {
 				}
 			}
 			declaration: ReferenceIdentifier {
-				name: 'async'
+				name: "async"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'async'
+					filename: "input.js"
+					identifierName: "async"
 					end: Object {
 						column: 25
 						index: 25
@@ -88,10 +88,10 @@ Program {
 		}
 		FunctionDeclaration {
 			id: BindingIdentifier {
-				name: 'y'
+				name: "y"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'y'
+					filename: "input.js"
+					identifierName: "y"
 					end: Object {
 						column: 36
 						index: 36
@@ -105,7 +105,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 50
 					index: 50
@@ -127,7 +127,7 @@ Program {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 38
 						index: 38
@@ -143,7 +143,7 @@ Program {
 			body: BlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 50
 						index: 50
@@ -158,7 +158,7 @@ Program {
 				body: Array [
 					ExpressionStatement {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 46
 								index: 46
@@ -171,10 +171,10 @@ Program {
 							}
 						}
 						expression: ReferenceIdentifier {
-							name: 'await'
+							name: "await"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'await'
+								filename: "input.js"
+								identifierName: "await"
 								end: Object {
 									column: 46
 									index: 46
@@ -190,7 +190,7 @@ Program {
 					}
 					ExpressionStatement {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 48
 								index: 48
@@ -203,10 +203,10 @@ Program {
 							}
 						}
 						expression: ReferenceIdentifier {
-							name: 'x'
+							name: "x"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'x'
+								filename: "input.js"
+								identifierName: "x"
 								end: Object {
 									column: 48
 									index: 48

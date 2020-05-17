@@ -5,33 +5,33 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from '@romejs/js-compiler';
-import {AnyNode} from '@romejs/js-ast';
-import {descriptions} from '@romejs/diagnostics';
+import {Path} from "@romejs/js-compiler";
+import {AnyNode} from "@romejs/js-ast";
+import {descriptions} from "@romejs/diagnostics";
 
-const SUGGESTION_DESCRIPTION = 'This may be unsafe if you are relying on type coercion';
+const SUGGESTION_DESCRIPTION = "This may be unsafe if you are relying on type coercion";
 
 export default {
-	name: 'doubleEquals',
+	name: "doubleEquals",
 	enter(path: Path): AnyNode {
 		const {node, context} = path;
 
 		if (
-			node.type === 'BinaryExpression' &&
-			node.right.type !== 'NullLiteral' &&
-			node.left.type !== 'NullLiteral'
+			node.type === "BinaryExpression" &&
+			node.right.type !== "NullLiteral" &&
+			node.left.type !== "NullLiteral"
 		) {
-			if (node.operator === '!=') {
+			if (node.operator === "!=") {
 				context.addFixableDiagnostic(
 					{
 						old: node,
 						suggestions: [
 							{
-								title: 'Use !==',
+								title: "Use !==",
 								description: SUGGESTION_DESCRIPTION,
 								fixed: {
 									...node,
-									operator: '!==',
+									operator: "!==",
 								},
 							},
 						],
@@ -40,17 +40,17 @@ export default {
 				);
 			}
 
-			if (node.operator === '==') {
+			if (node.operator === "==") {
 				context.addFixableDiagnostic(
 					{
 						old: node,
 						suggestions: [
 							{
-								title: 'Use ===',
+								title: "Use ===",
 								description: SUGGESTION_DESCRIPTION,
 								fixed: {
 									...node,
-									operator: '===',
+									operator: "===",
 								},
 							},
 						],

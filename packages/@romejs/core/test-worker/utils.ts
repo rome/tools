@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import prettyFormat from '@romejs/pretty-format';
+import prettyFormat from "@romejs/pretty-format";
 
 export function format(value: unknown): string {
-	if (typeof value === 'string') {
+	if (typeof value === "string") {
 		return value;
 	} else {
 		return prettyFormat(value);

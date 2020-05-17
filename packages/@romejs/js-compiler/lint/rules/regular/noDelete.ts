@@ -5,23 +5,23 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, TransformExitResult} from '@romejs/js-compiler';
+import {Path, TransformExitResult} from "@romejs/js-compiler";
 import {
 	assignmentExpression,
 	memberExpression,
 	referenceIdentifier,
-} from '@romejs/js-ast';
-import {descriptions} from '@romejs/diagnostics';
+} from "@romejs/js-ast";
+import {descriptions} from "@romejs/diagnostics";
 
 export default {
-	name: 'noDelete',
+	name: "noDelete",
 	enter(path: Path): TransformExitResult {
 		const {context, node} = path;
 
 		if (
-			node.type === 'UnaryExpression' &&
-			node.operator === 'delete' &&
-			node.argument.type === 'MemberExpression'
+			node.type === "UnaryExpression" &&
+			node.operator === "delete" &&
+			node.argument.type === "MemberExpression"
 		) {
 			const left = node.argument;
 			return context.addFixableDiagnostic(
@@ -29,13 +29,13 @@ export default {
 					old: node,
 					fixed: assignmentExpression.create(
 						{
-							operator: '=',
+							operator: "=",
 							left: memberExpression.create({
 								object: left.object,
 								property: left.property,
 							}),
 							right: referenceIdentifier.create({
-								name: 'undefined',
+								name: "undefined",
 							}),
 						},
 						node,

@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 33
 			index: 33
@@ -30,16 +30,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/regex'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Range values reversed. Start char code is greater than end char code'}
+				category: "parse/regex"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Range values reversed. Start char code is greater than end char code"}
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 21
 					index: 21
@@ -56,7 +56,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 33
 					index: 33
@@ -76,7 +76,7 @@ Program {
 				sticky: false
 				unicode: true
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 33
 						index: 33
@@ -90,7 +90,7 @@ Program {
 				}
 				expression: RegExpSubExpression {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 30
 							index: 31
@@ -106,7 +106,7 @@ Program {
 						RegExpCharSet {
 							invert: false
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 30
 									index: 30
@@ -120,9 +120,9 @@ Program {
 							}
 							body: Array [
 								RegExpCharacter {
-									value: '\ud834'
+									value: "\ud834"
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 8
 											index: 8
@@ -137,7 +137,7 @@ Program {
 								}
 								RegExpCharSetRange {
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 21
 											index: 21
@@ -150,9 +150,9 @@ Program {
 										}
 									}
 									end: RegExpCharacter {
-										value: '\udf06'
+										value: "\udf06"
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 14
 												index: 14
@@ -166,9 +166,9 @@ Program {
 										}
 									}
 									start: RegExpCharacter {
-										value: '\ud834'
+										value: "\ud834"
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 21
 												index: 21
@@ -183,9 +183,9 @@ Program {
 									}
 								}
 								RegExpCharacter {
-									value: '\udf08'
+									value: "\udf08"
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 27
 											index: 27
@@ -200,7 +200,7 @@ Program {
 								}
 								RegExpCharSetRange {
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 30
 											index: 30
@@ -213,9 +213,9 @@ Program {
 										}
 									}
 									end: RegExpCharacter {
-										value: 'z'
+										value: "z"
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 30
 												index: 30
@@ -229,9 +229,9 @@ Program {
 										}
 									}
 									start: RegExpCharacter {
-										value: 'a'
+										value: "a"
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 28
 												index: 28

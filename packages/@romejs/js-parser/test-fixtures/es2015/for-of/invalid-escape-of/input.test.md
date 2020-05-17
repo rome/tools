@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 21
@@ -30,16 +30,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unexpected token, expected ;'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unexpected token, expected ;"}
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 14
 					index: 14
@@ -56,7 +56,7 @@ Program {
 	body: Array [
 		ForStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 20
 					index: 20
@@ -72,7 +72,7 @@ Program {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 20
 						index: 20
@@ -86,10 +86,10 @@ Program {
 				}
 			}
 			init: ReferenceIdentifier {
-				name: 'x'
+				name: "x"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'x'
+					filename: "input.js"
+					identifierName: "x"
 					end: Object {
 						column: 6
 						index: 6
@@ -103,10 +103,10 @@ Program {
 				}
 			}
 			test: ReferenceIdentifier {
-				name: 'of'
+				name: "of"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'of'
+					filename: "input.js"
+					identifierName: "of"
 					end: Object {
 						column: 14
 						index: 14
@@ -120,10 +120,10 @@ Program {
 				}
 			}
 			update: ReferenceIdentifier {
-				name: 'y'
+				name: "y"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'y'
+					filename: "input.js"
+					identifierName: "y"
 					end: Object {
 						column: 16
 						index: 16

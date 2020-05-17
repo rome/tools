@@ -10,12 +10,12 @@ import {
 	PatternPartNode,
 	PatternSegmentNode,
 	PatternSegments,
-} from './types';
-import {PathSegments} from '@romejs/path';
+} from "./types";
+import {PathSegments} from "@romejs/path";
 
 function matchSegment(path: string, patternSeg: PatternSegmentNode): boolean {
-	if (patternSeg.type !== 'Segment') {
-		throw new Error('Expected only plain segment');
+	if (patternSeg.type !== "Segment") {
+		throw new Error("Expected only plain segment");
 	}
 
 	const parts = [...patternSeg.parts];
@@ -27,13 +27,13 @@ function matchSegment(path: string, patternSeg: PatternSegmentNode): boolean {
 			return false;
 		}
 
-		if (part.type === 'Word') {
+		if (part.type === "Word") {
 			if (buffer.startsWith(part.value)) {
 				buffer = buffer.slice(part.value.length);
 			} else {
 				return false;
 			}
-		} else if (part.type === 'Wildcard') {
+		} else if (part.type === "Wildcard") {
 			const nextPart = parts.shift();
 
 			// If there's no other parts then a wildcard matches any buffer
@@ -60,7 +60,7 @@ function matchSegment(path: string, patternSeg: PatternSegmentNode): boolean {
 	while (parts.length > 0) {
 		const part = parts.shift();
 		if (part === undefined) {
-			throw new Error('parts.length checked above');
+			throw new Error("parts.length checked above");
 		}
 
 		if (matchPart(part) === false) {
@@ -87,12 +87,12 @@ export default function match(
 
 	// Quick optimization, check if the path contains all of the absolute names in the pattern
 	for (const seg of patternSegs) {
-		if (seg.type !== 'Segment' || seg.parts.length !== 1) {
+		if (seg.type !== "Segment" || seg.parts.length !== 1) {
 			continue;
 		}
 
 		const part = seg.parts[0];
-		if (part.type === 'Word' && !pathSegs.includes(part.value)) {
+		if (part.type === "Word" && !pathSegs.includes(part.value)) {
 			return false;
 		}
 	}
@@ -113,13 +113,13 @@ export default function match(
 		// Start removing all the path segments until we find one that matches the first pattern segment
 		const firstPatternSeg = patternSegs.shift();
 		if (firstPatternSeg === undefined) {
-			throw new Error('patternSegs.length already validated above');
+			throw new Error("patternSegs.length already validated above");
 		}
 
 		while (pathSegs.length > 0) {
 			const pathSeg = pathSegs.shift();
 			if (pathSeg === undefined) {
-				throw new Error('pathSegs.length already validated above');
+				throw new Error("pathSegs.length already validated above");
 			}
 
 			if (matchSegment(pathSeg, firstPatternSeg)) {
@@ -149,7 +149,7 @@ export default function match(
 		}
 
 		// When given a wildcard segment, keep popping off all the path segments until we find one that matches the next pattern segment
-		if (patternSeg.type === 'WildcardSegment') {
+		if (patternSeg.type === "WildcardSegment") {
 			const nextPattern = patternSegs[i + 1];
 			while (pathSegs.length > 0 && !matchSegment(pathSegs[0], nextPattern)) {
 				pathSegs.shift();
@@ -160,7 +160,7 @@ export default function match(
 		// Basic match
 		const pathSeg = pathSegs.shift();
 		if (pathSeg === undefined) {
-			throw new Error('pathSegs.length already validated above');
+			throw new Error("pathSegs.length already validated above");
 		}
 		if (matchSegment(pathSeg, patternSeg)) {
 			continue;

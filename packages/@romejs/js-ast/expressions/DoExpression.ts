@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {BlockStatement, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {BlockStatement, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type DoExpression = JSNodeBase & {
-	type: 'DoExpression';
+	type: "DoExpression";
 	body: BlockStatement;
 };
 
 export const doExpression = createBuilder<DoExpression>(
-	'DoExpression',
+	"DoExpression",
 	{
 		bindingKeys: {},
 		visitorKeys: {

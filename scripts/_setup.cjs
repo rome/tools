@@ -10,7 +10,7 @@ function red(str) {
 }
 
 // Format of node.version is "v12.6.0" so we want to slice off the v
-const versionParts = process.version.slice(1).split('.');
+const versionParts = process.version.slice(1).split(".");
 const major = Number(versionParts[0]);
 
 // Keep this updated alongside engines in package.json

@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 15
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		TypeAliasTypeAnnotation {
 			id: BindingIdentifier {
-				name: 'T'
+				name: "T"
 				loc: Object {
-					filename: 'input.ts'
-					identifierName: 'T'
+					filename: "input.ts"
+					identifierName: "T"
 					end: Object {
 						column: 6
 						index: 6
@@ -50,7 +50,7 @@ Program {
 			}
 			typeParameters: undefined
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 14
 					index: 14
@@ -64,7 +64,7 @@ Program {
 			}
 			right: TSParenthesizedType {
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 13
 						index: 13
@@ -79,7 +79,7 @@ Program {
 				typeAnnotation: TSTypeLiteral {
 					members: Array []
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 12
 							index: 12

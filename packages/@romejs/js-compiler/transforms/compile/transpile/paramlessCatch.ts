@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from '@romejs/js-compiler';
-import {AnyNode, bindingIdentifier} from '@romejs/js-ast';
+import {Path} from "@romejs/js-compiler";
+import {AnyNode, bindingIdentifier} from "@romejs/js-ast";
 
 export default {
-	name: 'paramlessCatch',
+	name: "paramlessCatch",
 	enter(path: Path): AnyNode {
 		const {node} = path;
 
-		if (node.type === 'CatchClause' && node.param === undefined) {
+		if (node.type === "CatchClause" && node.param === undefined) {
 			return {
 				...node,
 				param: bindingIdentifier.create({

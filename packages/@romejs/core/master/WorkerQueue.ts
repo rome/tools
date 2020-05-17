@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {WorkerContainer} from './WorkerManager';
-import Master from './Master';
-import {AbsoluteFilePath} from '@romejs/path';
+import {WorkerContainer} from "./WorkerManager";
+import Master from "./Master";
+import {AbsoluteFilePath} from "@romejs/path";
 
 type Queue<M> = Array<[AbsoluteFilePath, M]>;
 
@@ -40,11 +40,11 @@ export default class WorkerQueue<M> {
 
 	async pushQueue(path: AbsoluteFilePath, metadata: M) {
 		if (!this.open) {
-			throw new Error('WorkerQueue has already closed');
+			throw new Error("WorkerQueue has already closed");
 		}
 
 		if (this.callbacks.length === 0) {
-			throw new Error('No callbacks attached to queue');
+			throw new Error("No callbacks attached to queue");
 		}
 
 		const workerContainer = await this.master.fileAllocator.getOrAssignOwner(path);

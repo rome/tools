@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, MOCK_PARENT, Program} from '@romejs/js-ast';
-import {CompilerContext} from '@romejs/js-compiler';
-import {SCOPE_PRIVATE_PREFIX} from '../constants';
-import evaluators from './evaluators/index';
-import * as GLOBALS from './globals';
-import {Binding} from './bindings';
+import {AnyNode, MOCK_PARENT, Program} from "@romejs/js-ast";
+import {CompilerContext} from "@romejs/js-compiler";
+import {SCOPE_PRIVATE_PREFIX} from "../constants";
+import evaluators from "./evaluators/index";
+import * as GLOBALS from "./globals";
+import {Binding} from "./bindings";
 import {
 	isValidIdentifierName,
 	isVariableIdentifier,
-} from '@romejs/js-ast-utils';
-import Path from '../lib/Path';
+} from "@romejs/js-ast-utils";
+import Path from "../lib/Path";
 
 let scopeCounter = 0;
 
@@ -24,12 +24,12 @@ Error.stackTraceLimit = Infinity;
 type ScopeBindings = Map<string, Binding>;
 
 export type ScopeKind =
-	 | 'root'
-	| 'program'
-	| 'function'
-	| 'block'
-	| 'loop'
-	| 'class';
+	 | "root"
+	| "program"
+	| "function"
+	| "block"
+	| "loop"
+	| "class";
 
 export default class Scope {
 	constructor(
@@ -153,17 +153,17 @@ export default class Scope {
 
 	dump(root: boolean = true) {
 		if (root) {
-			console.log('START');
+			console.log("START");
 		}
-		console.log('------', this.id, this.kind);
+		console.log("------", this.id, this.kind);
 		for (const [name, binding] of this.bindings) {
-			console.log(' ', binding.id, '-', binding.constructor.name, name);
+			console.log(" ", binding.id, "-", binding.constructor.name, name);
 		}
 		if (this.parentScope !== undefined) {
 			this.parentScope.dump(false);
 		}
 		if (root) {
-			console.log('END');
+			console.log("END");
 		}
 	}
 
@@ -240,7 +240,7 @@ const GLOBAL_COMMENT_COLON = /:(.*?)$/;
 export class RootScope extends Scope {
 	constructor(context: CompilerContext, ast: Program) {
 		super({
-			kind: 'root',
+			kind: "root",
 			parentScope: undefined,
 			rootScope: undefined,
 			node: undefined,
@@ -276,10 +276,10 @@ export class RootScope extends Scope {
 			}
 
 			// Remove prefix
-			const clean = value.replace(GLOBAL_COMMENT_START, '');
+			const clean = value.replace(GLOBAL_COMMENT_START, "");
 
 			// Split by commas, supports comments like "foo, bar"
-			const parts = clean.split(',');
+			const parts = clean.split(",");
 
 			for (const part of parts) {
 				let name = part.trim();
@@ -288,11 +288,11 @@ export class RootScope extends Scope {
 				if (GLOBAL_COMMENT_COLON.test(name)) {
 					const match = part.match(GLOBAL_COMMENT_COLON);
 					if (match == null) {
-						throw new Error('Used RegExp.test already so know this will always match');
+						throw new Error("Used RegExp.test already so know this will always match");
 					}
 
 					// Remove everything after the colon
-					name = name.replace(GLOBAL_COMMENT_COLON, '');
+					name = name.replace(GLOBAL_COMMENT_COLON, "");
 
 					const value = match[1].trim();
 
@@ -301,7 +301,7 @@ export class RootScope extends Scope {
 					// We don't do that, we might want to later though?
 
 					// Also, we should maybe validate the value to only true/false
-					if (value === 'false') {
+					if (value === "false") {
 						break;
 					}
 				}
@@ -318,7 +318,7 @@ export class RootScope extends Scope {
 	}
 
 	generateUid(name?: string): string {
-		const prefixed = `${SCOPE_PRIVATE_PREFIX}${name === undefined ? '' : name}`;
+		const prefixed = `${SCOPE_PRIVATE_PREFIX}${name === undefined ? "" : name}`;
 
 		// Check for invalid names
 		if (name !== undefined && !isValidIdentifierName(name)) {
@@ -329,7 +329,7 @@ export class RootScope extends Scope {
 		let counter = 0;
 
 		while (true) {
-			const suffix = counter === 0 ? '' : String(counter);
+			const suffix = counter === 0 ? "" : String(counter);
 			const name = prefixed + suffix;
 
 			if (this.uids.has(name)) {
@@ -340,6 +340,6 @@ export class RootScope extends Scope {
 			}
 		}
 
-		throw new Error('Unreachable');
+		throw new Error("Unreachable");
 	}
 }

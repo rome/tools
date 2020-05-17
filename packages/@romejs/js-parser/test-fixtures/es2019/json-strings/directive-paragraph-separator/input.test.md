@@ -9,14 +9,14 @@ Program {
 	body: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 104
@@ -30,10 +30,10 @@ Program {
 	}
 	comments: Array [
 		CommentLine {
-			id: '0'
-			value: '     ^ That\'s a U+2029 PARAGRAPH SEPARATOR UTF-16 char (between \'before\' and \'after\')'
+			id: "0"
+			value: "     ^ That's a U+2029 PARAGRAPH SEPARATOR UTF-16 char (between 'before' and 'after')"
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 87
 					index: 103
@@ -49,10 +49,10 @@ Program {
 	]
 	directives: Array [
 		Directive {
-			value: 'before\u2029after'
-			trailingComments: Array ['0']
+			value: "before\u2029after"
+			trailingComments: Array ["0"]
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 15
 					index: 15

@@ -5,18 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from '@romejs/js-ast';
-import {Scope} from '../scopes';
-import {HydrateData, HydrateTypeFactory} from '../Evaluator';
-import T, {SerialTypeFactory} from './T';
-import ObjPropT from './ObjPropT';
-import UnknownPropE from './errors/UnknownPropE';
-import ObjIndexPropT from './ObjIndexPropT';
-import StringLiteralT from './StringLiteralT';
-import UnknownT from './UnknownT';
-import AnyT from './AnyT';
-import ObjT from './ObjT';
-import E from './errors/E';
+import {AnyNode} from "@romejs/js-ast";
+import {Scope} from "../scopes";
+import {HydrateData, HydrateTypeFactory} from "../Evaluator";
+import T, {SerialTypeFactory} from "./T";
+import ObjPropT from "./ObjPropT";
+import UnknownPropE from "./errors/UnknownPropE";
+import ObjIndexPropT from "./ObjIndexPropT";
+import StringLiteralT from "./StringLiteralT";
+import UnknownT from "./UnknownT";
+import AnyT from "./AnyT";
+import ObjT from "./ObjT";
+import E from "./errors/E";
 
 export default class GetPropT extends T {
 	constructor(
@@ -30,7 +30,7 @@ export default class GetPropT extends T {
 		this.property = property;
 	}
 
-	static type = 'GetPropT';
+	static type = "GetPropT";
 
 	object: T;
 	property: T;
@@ -123,7 +123,7 @@ export default class GetPropT extends T {
 		}
 
 		//
-		if (typeof key === 'string') {
+		if (typeof key === "string") {
 			return new UnknownPropE(
 				this.scope,
 				this.originNode,

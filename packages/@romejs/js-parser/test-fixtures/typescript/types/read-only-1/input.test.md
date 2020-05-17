@@ -8,14 +8,14 @@
 Program {
 	corrupt: false
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 37
 			index: 37
@@ -29,10 +29,10 @@ Program {
 	}
 	comments: Array [
 		CommentLine {
-			id: '0'
-			value: ' Error'
+			id: "0"
+			value: " Error"
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 37
 					index: 37
@@ -48,16 +48,16 @@ Program {
 	]
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: '\'readonly\' type modifier is only permitted on array and tuple literal types.'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "'readonly' type modifier is only permitted on array and tuple literal types."}
 			}
 			location: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				mtime: undefined
-				sourceType: 'module'
+				sourceType: "module"
 				end: Object {
 					column: 26
 					index: 26
@@ -74,10 +74,10 @@ Program {
 	body: Array [
 		TypeAliasTypeAnnotation {
 			id: BindingIdentifier {
-				name: 'T30'
+				name: "T30"
 				loc: Object {
-					filename: 'input.ts'
-					identifierName: 'T30'
+					filename: "input.ts"
+					identifierName: "T30"
 					end: Object {
 						column: 8
 						index: 8
@@ -91,9 +91,9 @@ Program {
 				}
 			}
 			typeParameters: undefined
-			trailingComments: Array ['0']
+			trailingComments: Array ["0"]
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 27
 					index: 27
@@ -106,9 +106,9 @@ Program {
 				}
 			}
 			right: TSTypeOperator {
-				operator: 'readonly'
+				operator: "readonly"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 26
 						index: 26
@@ -122,7 +122,7 @@ Program {
 				}
 				typeAnnotation: StringKeywordTypeAnnotation {
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 26
 							index: 26

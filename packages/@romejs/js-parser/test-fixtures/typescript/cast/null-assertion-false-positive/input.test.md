@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 5
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 1
 					index: 1
@@ -45,10 +45,10 @@ Program {
 				}
 			}
 			expression: ReferenceIdentifier {
-				name: 'a'
+				name: "a"
 				loc: Object {
-					filename: 'input.ts'
-					identifierName: 'a'
+					filename: "input.ts"
+					identifierName: "a"
 					end: Object {
 						column: 1
 						index: 1
@@ -64,7 +64,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 2
 					index: 4
@@ -77,10 +77,10 @@ Program {
 				}
 			}
 			expression: UnaryExpression {
-				operator: '!'
+				operator: "!"
 				prefix: true
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 2
 						index: 4
@@ -93,10 +93,10 @@ Program {
 					}
 				}
 				argument: ReferenceIdentifier {
-					name: 'b'
+					name: "b"
 					loc: Object {
-						filename: 'input.ts'
-						identifierName: 'b'
+						filename: "input.ts"
+						identifierName: "b"
 						end: Object {
 							column: 2
 							index: 4

@@ -8,14 +8,14 @@
 Program {
 	comments: Array []
 	corrupt: false
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 51
 			index: 51
@@ -29,9 +29,9 @@ Program {
 	}
 	directives: Array [
 		Directive {
-			value: 'use strict'
+			value: "use strict"
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -47,21 +47,21 @@ Program {
 	]
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'super() is only valid inside a class constructor of a subclass'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "super() is only valid inside a class constructor of a subclass"}
 				advice: Array [
 					log {
-						category: 'info'
-						text: 'Maybe a typo in the method name (\'constructor\') or not extending another class?'
+						category: "info"
+						text: "Maybe a typo in the method name ('constructor') or not extending another class?"
 					}
 				]
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 45
 					index: 45
@@ -78,7 +78,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 51
 					index: 51
@@ -92,10 +92,10 @@ Program {
 			}
 			expression: ClassExpression {
 				id: BindingIdentifier {
-					name: 'A'
+					name: "A"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'A'
+						filename: "input.js"
+						identifierName: "A"
 						end: Object {
 							column: 22
 							index: 22
@@ -109,7 +109,7 @@ Program {
 					}
 				}
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 50
 						index: 50
@@ -127,7 +127,7 @@ Program {
 					superTypeParameters: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 50
 							index: 50
@@ -141,13 +141,13 @@ Program {
 					}
 					body: Array [
 						ClassMethod {
-							kind: 'constructor'
+							kind: "constructor"
 							key: StaticPropertyKey {
 								value: Identifier {
-									name: 'constructor'
+									name: "constructor"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'constructor'
+										filename: "input.js"
+										identifierName: "constructor"
 										end: Object {
 											column: 35
 											index: 35
@@ -161,7 +161,7 @@ Program {
 									}
 								}
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 35
 										index: 35
@@ -175,7 +175,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 49
 									index: 49
@@ -197,7 +197,7 @@ Program {
 								thisType: undefined
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 37
 										index: 37
@@ -223,7 +223,7 @@ Program {
 									line: 1
 								}
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 35
 										index: 35
@@ -239,7 +239,7 @@ Program {
 							body: BlockStatement {
 								directives: Array []
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 49
 										index: 49
@@ -254,7 +254,7 @@ Program {
 								body: Array [
 									ExpressionStatement {
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 47
 												index: 47
@@ -269,7 +269,7 @@ Program {
 										expression: CallExpression {
 											arguments: Array []
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 47
 													index: 47
@@ -283,7 +283,7 @@ Program {
 											}
 											callee: Super {
 												loc: Object {
-													filename: 'input.js'
+													filename: "input.js"
 													end: Object {
 														column: 45
 														index: 45

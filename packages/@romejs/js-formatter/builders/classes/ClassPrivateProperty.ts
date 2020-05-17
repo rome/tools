@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {ClassPrivateProperty} from '@romejs/js-ast';
-import {Token, concat, group, space} from '../../tokens';
+import Builder from "../../Builder";
+import {ClassPrivateProperty} from "@romejs/js-ast";
+import {Token, concat, group, space} from "../../tokens";
 
 export default function ClassPrivateProperty(
 	builder: Builder,
@@ -19,17 +19,17 @@ export default function ClassPrivateProperty(
 	];
 
 	if (builder.options.typeAnnotations && node.typeAnnotation) {
-		tokens.push(':', space, builder.tokenize(node.typeAnnotation, node));
+		tokens.push(":", space, builder.tokenize(node.typeAnnotation, node));
 	}
 
 	if (node.value) {
 		tokens.push(space);
-		tokens.push('=');
+		tokens.push("=");
 		tokens.push(space);
 		tokens.push(builder.tokenize(node.value, node));
 	}
 
-	tokens.push(';');
+	tokens.push(";");
 
 	return group(concat(tokens));
 }

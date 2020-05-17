@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from '@romejs/js-ast';
-import {Scope} from '../scopes';
-import {HydrateData, HydrateTypeFactory} from '../Evaluator';
-import T, {SerialTypeFactory} from './T';
-import NumericLiteralT from './NumericLiteralT';
-import NumericT from './NumericT';
-import BooleanT from './BooleanT';
-import StringT from './StringT';
-import AnyT from './AnyT';
-import StringLiteralT from './StringLiteralT';
+import {AnyNode} from "@romejs/js-ast";
+import {Scope} from "../scopes";
+import {HydrateData, HydrateTypeFactory} from "../Evaluator";
+import T, {SerialTypeFactory} from "./T";
+import NumericLiteralT from "./NumericLiteralT";
+import NumericT from "./NumericT";
+import BooleanT from "./BooleanT";
+import StringT from "./StringT";
+import AnyT from "./AnyT";
+import StringLiteralT from "./StringLiteralT";
 
 function isNumber(t: T): boolean {
 	return t instanceof NumericT || t instanceof NumericLiteralT;
@@ -34,7 +34,7 @@ export default class BinaryOpT extends T {
 		this.right = right;
 	}
 
-	static type = 'BinaryOpT';
+	static type = "BinaryOpT";
 
 	operator: string;
 	left: T;
@@ -70,21 +70,21 @@ export default class BinaryOpT extends T {
 		// return type
 		switch (operator) {
 			case // returns booleans
-			'===':
-			case '==':
-			case '!=':
-			case '!==':
-			case '<':
-			case '<=':
-			case '>':
-			case '>=':
-			case 'in':
-			case 'instanceof':
+			"===":
+			case "==":
+			case "!=":
+			case "!==":
+			case "<":
+			case "<=":
+			case ">":
+			case ">=":
+			case "in":
+			case "instanceof":
 				// TODO return BooleanLiteralT in the cases whe we have all the info
 				return new BooleanT(scope, originNode);
 
 			// Returns a string or a number
-			case '+':
+			case "+":
 				if (left instanceof AnyT || right instanceof AnyT) {
 					return new AnyT(scope, originNode);
 				} else if (
@@ -101,22 +101,22 @@ export default class BinaryOpT extends T {
 				}
 
 			// returns a number
-			case '<<':
-			case '>>':
-			case '>>>':
-			case '-':
-			case '*':
-			case '/':
-			case '%':
-			case '**':
-			case '|':
-			case '^':
-			case '&':
+			case "<<":
+			case ">>":
+			case ">>>":
+			case "-":
+			case "*":
+			case "/":
+			case "%":
+			case "**":
+			case "|":
+			case "^":
+			case "&":
 				// TODO return NumericLiteralT if left/right are literals too
 				return new NumericT(scope, originNode);
 
 			default:
-				throw new Error('Unknown operator');
+				throw new Error("Unknown operator");
 		}
 	}
 }

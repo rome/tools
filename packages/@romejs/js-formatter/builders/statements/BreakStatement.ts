@@ -5,6 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {buildLabelStatementBuilder} from '../utils';
+import {buildLabelStatementBuilder} from "../utils";
 
-export default buildLabelStatementBuilder('break');
+export default buildLabelStatementBuilder("break");

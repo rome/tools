@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 18
 			index: 18
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 18
 					index: 18
@@ -47,7 +47,7 @@ Program {
 			expression: TaggedTemplateExpression {
 				typeArguments: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -60,10 +60,10 @@ Program {
 					}
 				}
 				tag: ReferenceIdentifier {
-					name: 'raw'
+					name: "raw"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'raw'
+						filename: "input.js"
+						identifierName: "raw"
 						end: Object {
 							column: 3
 							index: 3
@@ -78,7 +78,7 @@ Program {
 				}
 				quasi: TemplateLiteral {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 18
 							index: 18
@@ -92,10 +92,10 @@ Program {
 					}
 					expressions: Array [
 						ReferenceIdentifier {
-							name: 'name'
+							name: "name"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'name'
+								filename: "input.js"
+								identifierName: "name"
 								end: Object {
 									column: 16
 									index: 16
@@ -111,11 +111,11 @@ Program {
 					]
 					quasis: Array [
 						TemplateElement {
-							cooked: 'hello '
-							raw: 'hello '
+							cooked: "hello "
+							raw: "hello "
 							tail: false
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 10
 									index: 10
@@ -129,11 +129,11 @@ Program {
 							}
 						}
 						TemplateElement {
-							cooked: ''
-							raw: ''
+							cooked: ""
+							raw: ""
 							tail: true
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 17
 									index: 17

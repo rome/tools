@@ -5,25 +5,25 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from '@romejs/js-compiler';
-import {AnyExpression, UnaryExpression} from '@romejs/js-ast';
-import {descriptions} from '@romejs/diagnostics';
+import {Path} from "@romejs/js-compiler";
+import {AnyExpression, UnaryExpression} from "@romejs/js-ast";
+import {descriptions} from "@romejs/diagnostics";
 
 function isNegation(node: AnyExpression): node is UnaryExpression {
 	return (
-		node.type === 'UnaryExpression' &&
+		node.type === "UnaryExpression" &&
 		node.prefix === true &&
-		node.operator === '!'
+		node.operator === "!"
 	);
 }
 
 export default {
-	name: 'negationElse',
+	name: "negationElse",
 	enter(path: Path) {
 		const {node} = path;
 
 		if (
-			node.type === 'IfStatement' &&
+			node.type === "IfStatement" &&
 			node.alternate !== undefined &&
 			isNegation(node.test)
 		) {
@@ -41,7 +41,7 @@ export default {
 			);
 		}
 
-		if (node.type === 'ConditionalExpression' && isNegation(node.test)) {
+		if (node.type === "ConditionalExpression" && isNegation(node.test)) {
 			return path.context.addFixableDiagnostic(
 				{
 					old: node,

@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
+import {Scope} from "../../scopes";
 import {
 	AnyNode,
 	StringKeywordTypeAnnotation,
 	stringKeywordTypeAnnotation,
-} from '@romejs/js-ast';
-import StringT from '../../types/StringT';
+} from "@romejs/js-ast";
+import StringT from "../../types/StringT";
 
 export default function StringKeywordTypeAnnotation(node: AnyNode, scope: Scope) {
 	node = stringKeywordTypeAnnotation.assert(node);

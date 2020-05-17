@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 27
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ForInStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 26
 					index: 26
@@ -45,10 +45,10 @@ Program {
 				}
 			}
 			left: AssignmentIdentifier {
-				name: 'x'
+				name: "x"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'x'
+					filename: "input.js"
+					identifierName: "x"
 					end: Object {
 						column: 5
 						index: 5
@@ -62,10 +62,10 @@ Program {
 				}
 			}
 			right: ReferenceIdentifier {
-				name: 'list'
+				name: "list"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'list'
+					filename: "input.js"
+					identifierName: "list"
 					end: Object {
 						column: 13
 						index: 13
@@ -80,7 +80,7 @@ Program {
 			}
 			body: ExpressionStatement {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 26
 						index: 26
@@ -94,7 +94,7 @@ Program {
 				}
 				expression: CallExpression {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 25
 							index: 25
@@ -107,10 +107,10 @@ Program {
 						}
 					}
 					callee: ReferenceIdentifier {
-						name: 'process'
+						name: "process"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'process'
+							filename: "input.js"
+							identifierName: "process"
 							end: Object {
 								column: 22
 								index: 22
@@ -125,10 +125,10 @@ Program {
 					}
 					arguments: Array [
 						ReferenceIdentifier {
-							name: 'x'
+							name: "x"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'x'
+								filename: "input.js"
+								identifierName: "x"
 								end: Object {
 									column: 24
 									index: 24

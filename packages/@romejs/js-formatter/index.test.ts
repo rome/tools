@@ -1,41 +1,41 @@
-import {createFixtureTests} from '@romejs/test-helpers';
-import {parseJS} from '@romejs/js-parser';
-import {ConstProgramSyntax} from '@romejs/js-ast';
-import {removeCarriageReturn} from '@romejs/string-utils';
-import {FormatterOptions, formatJS} from '.';
+import {createFixtureTests} from "@romejs/test-helpers";
+import {parseJS} from "@romejs/js-parser";
+import {ConstProgramSyntax} from "@romejs/js-ast";
+import {removeCarriageReturn} from "@romejs/string-utils";
+import {FormatterOptions, formatJS} from ".";
 
 const promise = createFixtureTests(async (fixture, t) => {
 	const {options, files} = fixture;
 	// Get the input JS
 	const inputFile =
-		files.get('input.js') ||
-		files.get('input.mjs') ||
-		files.get('input.ts') ||
-		files.get('input.tsx');
+		files.get("input.js") ||
+		files.get("input.mjs") ||
+		files.get("input.ts") ||
+		files.get("input.tsx");
 	if (inputFile === undefined) {
 		throw new Error(
 			`The fixture ${fixture.dir} did not have an input.(mjs|js|ts|tsx)`,
 		);
 	}
 
-	const sourceTypeProp = options.get('sourceType');
-	const sourceType = sourceTypeProp.asString('script');
-	if (sourceType !== 'module' && sourceType !== 'script') {
+	const sourceTypeProp = options.get("sourceType");
+	const sourceType = sourceTypeProp.asString("script");
+	if (sourceType !== "module" && sourceType !== "script") {
 		throw sourceTypeProp.unexpected();
 	}
 
-	const allowReturnOutsideFunction = options.get('allowReturnOutsideFunction').asBoolean(
+	const allowReturnOutsideFunction = options.get("allowReturnOutsideFunction").asBoolean(
 		false,
 	);
 	const filename = inputFile.relative;
 
-	const syntax: Array<ConstProgramSyntax> = options.get('syntax').asArray(true).map((
+	const syntax: Array<ConstProgramSyntax> = options.get("syntax").asArray(true).map((
 		item,
 	) => {
-		return item.asStringSet(['jsx', 'ts']);
+		return item.asStringSet(["jsx", "ts"]);
 	});
 
-	const format = options.get('format').asStringSetOrVoid(['pretty', 'compact']);
+	const format = options.get("format").asStringSetOrVoid(["pretty", "compact"]);
 
 	const inputContent = removeCarriageReturn(inputFile.content.toString());
 
@@ -55,13 +55,13 @@ const promise = createFixtureTests(async (fixture, t) => {
 	};
 
 	t.addToAdvice({
-		type: 'log',
-		category: 'info',
-		text: 'Fomat options',
+		type: "log",
+		category: "info",
+		text: "Fomat options",
 	});
 
 	t.addToAdvice({
-		type: 'inspect',
+		type: "inspect",
 		data: {
 			...formatOptions,
 		},
@@ -74,22 +74,22 @@ const promise = createFixtureTests(async (fixture, t) => {
 	).join();
 
 	t.namedSnapshot(
-		'Input',
+		"Input",
 		inputContent,
 		undefined,
 		{
 			filename: snapshotFile,
-			language: 'javascript',
+			language: "javascript",
 		},
 	);
 
 	t.namedSnapshot(
-		'Output',
+		"Output",
 		printed.code,
 		undefined,
 		{
 			filename: snapshotFile,
-			language: 'javascript',
+			language: "javascript",
 		},
 	);
 });

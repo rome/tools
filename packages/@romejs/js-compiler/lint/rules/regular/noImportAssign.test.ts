@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {testLintMultiple} from '../testHelpers';
+import {test} from "rome";
+import {testLintMultiple} from "../testHelpers";
 
 test(
-	'no import assign',
+	"no import assign",
 	async (t) => {
 		await testLintMultiple(
 			t,
@@ -25,7 +25,7 @@ test(
 				'import * as x from "y";\nx=1;',
 				'import {x} from "y";\nx=1;',
 			],
-			{category: 'lint/noImportAssign'},
+			{category: "lint/noImportAssign"},
 		);
 	},
 );

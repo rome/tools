@@ -5,19 +5,19 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Number0, ob1Add, ob1Coerce0, ob1Inc, ob1Number0} from '@romejs/ob1';
+import {Number0, ob1Add, ob1Coerce0, ob1Inc, ob1Number0} from "@romejs/ob1";
 import {
 	DiagnosticDescriptionOptionalCategory,
 	descriptions,
-} from '@romejs/diagnostics';
-import {ManifestName} from './types';
+} from "@romejs/diagnostics";
+import {ManifestName} from "./types";
 
 type NormalizeNameUnexpected = (
 	opts: {
 		description: DiagnosticDescriptionOptionalCategory;
 		start?: Number0;
 		end?: Number0;
-		at?: 'prefix';
+		at?: "prefix";
 	},
 ) => void;
 
@@ -38,17 +38,17 @@ function validateNamePart(
 	{loose, unexpected}: NormalizeNameOptions,
 	{name, isOrg, isOrgPart, offset}: ValidateNamePartOptions,
 ) {
-	let normalizedName: string = '';
+	let normalizedName: string = "";
 
 	for (let i = 0; i < name.length; i++) {
 		const char = name[i];
 
-		if (isOrg && char === '@' && i === 0) {
+		if (isOrg && char === "@" && i === 0) {
 			unexpected({
 				description: descriptions.MANIFEST.REDUNDANT_ORG_NAME_START,
 				start: ob1Add(offset, i),
 			});
-		} else if (!isOrgPart && char === '/') {
+		} else if (!isOrgPart && char === "/") {
 			/*unexpected({
         at: 'prefix',
         message: `cannot contain any slashes`,
@@ -102,24 +102,24 @@ export function normalizeName(opts: NormalizeNameOptions): ManifestName {
 
 	if (name.length > 214) {
 		unexpected({
-			at: 'prefix',
+			at: "prefix",
 			description: descriptions.MANIFEST.NAME_EXCEEDS,
 		});
 		name = name.slice(0, 214);
 	}
 
-	if (name[0] === '.' || name[0] === '_') {
+	if (name[0] === "." || name[0] === "_") {
 		unexpected({
-			at: 'prefix',
+			at: "prefix",
 			description: descriptions.MANIFEST.INVALID_NAME_START,
 			start: ob1Number0,
 		});
 		name = name.slice(1);
 	}
 
-	if (name[0] === '@') {
+	if (name[0] === "@") {
 		// Validate org and package name separately
-		const [rawOrg, rawPackageName, ...other] = name.slice(1).split('/');
+		const [rawOrg, rawPackageName, ...other] = name.slice(1).split("/");
 
 		// Leading @
 		let offset: Number0 = ob1Coerce0(1);
@@ -139,7 +139,7 @@ export function normalizeName(opts: NormalizeNameOptions): ManifestName {
 
 		if (rawPackageName === undefined) {
 			unexpected({
-				at: 'prefix',
+				at: "prefix",
 				description: descriptions.MANIFEST.ORG_WITH_NO_PACKAGE_NAME,
 				start: offset,
 			});
@@ -162,7 +162,7 @@ export function normalizeName(opts: NormalizeNameOptions): ManifestName {
 			// Complain on excess separators
 			if (other.length > 0) {
 				unexpected({
-					at: 'prefix',
+					at: "prefix",
 					description: descriptions.MANIFEST.ORG_TOO_MANY_PARTS,
 					start: offset,
 				});

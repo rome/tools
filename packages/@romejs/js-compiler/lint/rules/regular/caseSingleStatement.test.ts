@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {testLintMultiple} from '../testHelpers';
-import {dedent} from '@romejs/string-utils';
+import {test} from "rome";
+import {testLintMultiple} from "../testHelpers";
+import {dedent} from "@romejs/string-utils";
 
 test(
-	'case single statement',
+	"case single statement",
 	async (t) => {
 		// VALID
 		await testLintMultiple(
@@ -39,7 +39,7 @@ test(
           }
         `,
 			],
-			{category: 'lint/caseSingleStatement'},
+			{category: "lint/caseSingleStatement"},
 		);
 
 		// INVALID
@@ -56,7 +56,7 @@ test(
           }
         `,
 			],
-			{category: 'lint/caseSingleStatement'},
+			{category: "lint/caseSingleStatement"},
 		);
 	},
 );

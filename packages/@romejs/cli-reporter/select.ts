@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ansiEscapes} from '@romejs/string-markup';
-import Reporter from './Reporter';
-import {SelectArguments, SelectOption, SelectOptions} from './types';
-import {onKeypress, setRawMode} from './util';
+import {ansiEscapes} from "@romejs/string-markup";
+import Reporter from "./Reporter";
+import {SelectArguments, SelectOption, SelectOptions} from "./types";
+import {onKeypress, setRawMode} from "./util";
 
 function formatShortcut({shortcut}: SelectOption): string {
 	if (shortcut === undefined) {
-		return '';
+		return "";
 	} else {
 		return ` <dim>(shortcut ${shortcut})</dim>`;
 	}
@@ -63,11 +63,11 @@ export default async function select<Options extends SelectOptions>(
 
 	if (radio) {
 		reporter.info(
-			'Use arrow keys and then <emphasis>enter</emphasis> to select an option',
+			"Use arrow keys and then <emphasis>enter</emphasis> to select an option",
 		);
 	} else {
 		reporter.info(
-			'Use arrow keys and <emphasis>space</emphasis> to select or deselect options and then <emphasis>enter</emphasis> to confirm',
+			"Use arrow keys and <emphasis>space</emphasis> to select or deselect options and then <emphasis>enter</emphasis> to confirm",
 		);
 	}
 
@@ -109,11 +109,11 @@ export default async function select<Options extends SelectOptions>(
 					? `<underline>${label}</underline>`
 					: label;
 
-			let symbol = '';
+			let symbol = "";
 			if (radio) {
-				symbol = selectedOptions.has(key) ? '\u25c9' : '\u25ef';
+				symbol = selectedOptions.has(key) ? "\u25c9" : "\u25ef";
 			} else {
-				symbol = selectedOptions.has(key) ? '\u2611' : '\u2610';
+				symbol = selectedOptions.has(key) ? "\u2611" : "\u2610";
 			}
 
 			reporter.logAll(
@@ -177,24 +177,24 @@ export default async function select<Options extends SelectOptions>(
 				}
 
 				switch (key.name) {
-					case 'up': {
+					case "up": {
 						activeOption--;
 						break;
 					}
 
-					case 'down': {
+					case "down": {
 						activeOption++;
 						break;
 					}
 
-					case 'space': {
+					case "space": {
 						if (!radio) {
 							toggleOption((optionNames[activeOption] as string));
 						}
 						break;
 					}
 
-					case 'return': {
+					case "return": {
 						finish();
 						return;
 					}
@@ -220,13 +220,13 @@ export default async function select<Options extends SelectOptions>(
 			reporter.writeAll(ansiEscapes.cursorUp());
 			reporter.writeAll(ansiEscapes.eraseLine);
 
-			prompt += ': ';
+			prompt += ": ";
 			if (selectedOptions.size > 0) {
 				prompt += Array.from(selectedOptions, (key) => options[key]!.label).join(
-					', ',
+					", ",
 				);
 			} else {
-				prompt += '<dim>none</dim>';
+				prompt += "<dim>none</dim>";
 			}
 			reporter.logAll(prompt);
 

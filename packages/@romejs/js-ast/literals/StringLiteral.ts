@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase} from '../index';
-import {createQuickBuilder} from '../utils';
+import {JSNodeBase} from "../index";
+import {createQuickBuilder} from "../utils";
 
 export type StringLiteral = JSNodeBase & {
-	type: 'StringLiteral';
+	type: "StringLiteral";
 	value: string;
 };
 
-export const stringLiteral = createQuickBuilder<StringLiteral, 'value'>(
-	'StringLiteral',
-	'value',
+export const stringLiteral = createQuickBuilder<StringLiteral, "value">(
+	"StringLiteral",
+	"value",
 	{
 		bindingKeys: {},
 		visitorKeys: {},

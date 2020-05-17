@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
+import {test} from "rome";
 
-import {testLintMultiple} from '../testHelpers';
+import {testLintMultiple} from "../testHelpers";
 
 test(
-	'disallow redundant alt descriptions on img tags',
+	"disallow redundant alt descriptions on img tags",
 	async (t) => {
 		await testLintMultiple(
 			t,
@@ -26,7 +26,7 @@ test(
 				'<img src="src" alt="alt" />',
 				'<img src="src" alt={photo} />',
 			],
-			{category: 'lint/jsxA11yImgRedundantAlt'},
+			{category: "lint/jsxA11yImgRedundantAlt"},
 		);
 	},
 );

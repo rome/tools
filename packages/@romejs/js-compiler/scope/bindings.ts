@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Scope from './Scope';
-import {AnyNode, ConstImportModuleKind} from '@romejs/js-ast';
+import Scope from "./Scope";
+import {AnyNode, ConstImportModuleKind} from "@romejs/js-ast";
 
 let id = 0;
 
@@ -18,7 +18,7 @@ type BindingOpts = {
 };
 
 export class Binding {
-	constructor(opts: BindingOpts, defaultKind: string = 'variable') {
+	constructor(opts: BindingOpts, defaultKind: string = "variable") {
 		this.isExported = false;
 		this.scope = opts.scope;
 		this.name = opts.name;
@@ -41,13 +41,13 @@ export class Binding {
 
 export type ImportBindingMeta =
 	 | {
-			type: 'name';
+			type: "name";
 			imported: string;
 			source: string;
 			kind: ConstImportModuleKind;
 		}
 	| {
-			type: 'namespace';
+			type: "namespace";
 			source: string;
 			kind: ConstImportModuleKind;
 		};
@@ -56,7 +56,7 @@ export class ConstBinding extends Binding {
 	constructor(
 		opts: BindingOpts,
 		value: undefined | AnyNode,
-		kind: string = 'constant',
+		kind: string = "constant",
 	) {
 		super(opts, kind);
 		this.value = value;
@@ -71,7 +71,7 @@ export class VarBinding extends Binding {}
 
 export class ImportBinding extends Binding {
 	constructor(opts: BindingOpts, meta: ImportBindingMeta) {
-		super(opts, 'import');
+		super(opts, "import");
 		this.meta = meta;
 	}
 
@@ -80,22 +80,22 @@ export class ImportBinding extends Binding {
 
 export class ArgumentsBinding extends Binding {
 	constructor(opts: BindingOpts) {
-		super(opts, 'arguments');
+		super(opts, "arguments");
 	}
 }
 
 export class FunctionBinding extends Binding {
 	constructor(opts: BindingOpts) {
-		super(opts, 'function');
+		super(opts, "function");
 	}
 }
 
 export type TypeBindingKind =
-	 | 'function'
-	| 'class'
-	| 'interface'
-	| 'typealias'
-	| 'parameter';
+	 | "function"
+	| "class"
+	| "interface"
+	| "typealias"
+	| "parameter";
 
 export class TypeBinding extends ConstBinding {
 	constructor(
@@ -103,7 +103,7 @@ export class TypeBinding extends ConstBinding {
 		valueNode: undefined | AnyNode,
 		kind: TypeBindingKind,
 	) {
-		super(opts, valueNode, 'type');
+		super(opts, valueNode, "type");
 		this.typeKind = kind;
 	}
 
@@ -112,6 +112,6 @@ export class TypeBinding extends ConstBinding {
 
 export class ClassBinding extends Binding {
 	constructor(opts: BindingOpts) {
-		super(opts, 'class');
+		super(opts, "class");
 	}
 }

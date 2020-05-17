@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {testLint} from './rules/testHelpers';
+import {test} from "rome";
+import {testLint} from "./rules/testHelpers";
 
 test(
-	'format disabled in project config should not regenerate the file',
+	"format disabled in project config should not regenerate the file",
 	async (t) => {
 		// Intentionally weird formatting
 		await testLint(t, 'foobar ( "yes" );', {category: undefined});
@@ -17,7 +17,7 @@ test(
 );
 
 test(
-	'format enabled in project config should result in regenerated file',
+	"format enabled in project config should result in regenerated file",
 	async (t) => {
 		await testLint(
 			t,

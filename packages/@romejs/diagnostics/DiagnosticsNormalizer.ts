@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Diagnostic, DiagnosticAdviceItem, DiagnosticLocation} from './types';
-import {SourceMapConsumerCollection} from '@romejs/codec-source-map';
+import {Diagnostic, DiagnosticAdviceItem, DiagnosticLocation} from "./types";
+import {SourceMapConsumerCollection} from "@romejs/codec-source-map";
 import {
 	MarkupFormatNormalizeOptions,
 	normalizeMarkup,
-} from '@romejs/string-markup';
-import {createBlessedDiagnosticMessage} from './descriptions';
+} from "@romejs/string-markup";
+import {createBlessedDiagnosticMessage} from "./descriptions";
 
 export default class DiagnosticsNormalizer {
 	constructor(
@@ -112,25 +112,25 @@ export default class DiagnosticsNormalizer {
 		const {sourceMaps} = this;
 
 		switch (item.type) {
-			case 'frame':
+			case "frame":
 				return {
 					...item,
 					location: this.normalizeLocation(item.location),
 				};
 
-			case 'list':
+			case "list":
 				return {
 					...item,
 					list: item.list.map((markup) => this.normalizeMarkup(markup)),
 				};
 
-			case 'log':
+			case "log":
 				return {
 					...item,
 					text: this.normalizeMarkup(item.text),
 				};
 
-			case 'action':
+			case "action":
 				if (this.markupOptions.stripPositions) {
 					return {
 						...item,
@@ -141,7 +141,7 @@ export default class DiagnosticsNormalizer {
 					return item;
 				}
 
-			case 'stacktrace':
+			case "stacktrace":
 				return {
 					...item,
 					frames: item.frames.map((frame) => {

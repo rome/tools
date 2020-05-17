@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {AnyNode, unaryExpression} from '@romejs/js-ast';
-import BooleanT from '../../types/BooleanT';
-import NumericT from '../../types/NumericT';
-import VoidT from '../../types/VoidT';
-import TypeofT from '../../types/TypeofT';
+import {Scope} from "../../scopes";
+import {AnyNode, unaryExpression} from "@romejs/js-ast";
+import BooleanT from "../../types/BooleanT";
+import NumericT from "../../types/NumericT";
+import VoidT from "../../types/VoidT";
+import TypeofT from "../../types/TypeofT";
 
 export default function UnaryExpression(node: AnyNode, scope: Scope) {
 	node = unaryExpression.assert(node);
@@ -18,26 +18,26 @@ export default function UnaryExpression(node: AnyNode, scope: Scope) {
 
 	switch (node.operator) {
 		case // booleans
-		'delete':
-		case '!':
+		"delete":
+		case "!":
 			return new BooleanT(scope, node);
 
 		// numbers
-		case '+':
-		case '-':
-		case '~':
+		case "+":
+		case "-":
+		case "~":
 			return new NumericT(scope, node);
 
 		// strings
-		case 'typeof':
+		case "typeof":
 			return new TypeofT(scope, node, argType);
 
 		// void
-		case 'void':
+		case "void":
 			return new VoidT(scope, node);
 
 		// empty!
-		case 'throw':
+		case "throw":
 			break;
 	}
 

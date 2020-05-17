@@ -10,14 +10,14 @@ Program {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 22
 			index: 22
@@ -31,9 +31,9 @@ Program {
 	}
 	directives: Array [
 		Directive {
-			value: '\\n\\r\\t\\v\\b\\f\\\\\\\'\\"\\0'
+			value: "\\n\\r\\t\\v\\b\\f\\\\\\'\\\"\\0"
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 22
 					index: 22

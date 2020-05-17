@@ -6,26 +6,26 @@
  */
 
 export type Platform =
-	 | 'ios'
-	| 'android'
-	| 'mobile'
-	| 'electron'
-	| 'web'
-	| 'node';
+	 | "ios"
+	| "android"
+	| "mobile"
+	| "electron"
+	| "web"
+	| "node";
 
 export const PLATFORMS: Array<Platform> = [
-	'ios',
-	'android',
-	'mobile',
-	'electron',
-	'web',
-	'node',
+	"ios",
+	"android",
+	"mobile",
+	"electron",
+	"web",
+	"node",
 ];
 
 export const PLATFORM_ALIASES = {
-	ios: ['mobile'],
-	android: ['mobile'],
-	electron: ['web'],
+	ios: ["mobile"],
+	android: ["mobile"],
+	electron: ["web"],
 	mobile: [],
 	node: [],
 	web: [],

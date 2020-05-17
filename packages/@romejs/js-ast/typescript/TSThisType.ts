@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type TSThisType = JSNodeBase & {
-	type: 'TSThisType';
+	type: "TSThisType";
 };
 
 export const tsThisType = createBuilder<TSThisType>(
-	'TSThisType',
+	"TSThisType",
 	{
 		bindingKeys: {},
 		visitorKeys: {},

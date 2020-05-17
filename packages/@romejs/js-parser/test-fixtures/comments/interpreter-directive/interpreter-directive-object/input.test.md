@@ -9,13 +9,13 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: true
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 46
@@ -28,9 +28,9 @@ Program {
 		}
 	}
 	interpreter: InterpreterDirective {
-		value: 'usr/bin/env babel-node'
+		value: "usr/bin/env babel-node"
 		loc: Object {
-			filename: 'input.js'
+			filename: "input.js"
 			end: Object {
 				column: 25
 				index: 25
@@ -45,10 +45,10 @@ Program {
 	}
 	comments: Array [
 		CommentLine {
-			id: '0'
-			value: 'usr/bin/env babel-node'
+			id: "0"
+			value: "usr/bin/env babel-node"
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 25
 					index: 25
@@ -64,9 +64,9 @@ Program {
 	]
 	body: Array [
 		VariableDeclarationStatement {
-			leadingComments: Array ['0']
+			leadingComments: Array ["0"]
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 18
 					index: 45
@@ -79,10 +79,10 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'var'
+				kind: "var"
 				leadingComments: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 18
 						index: 45
@@ -100,7 +100,7 @@ Program {
 							leadingComments: undefined
 							rest: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 13
 									index: 40
@@ -116,11 +116,11 @@ Program {
 								BindingObjectPatternProperty {
 									key: StaticPropertyKey {
 										value: Identifier {
-											name: 'spawn'
+											name: "spawn"
 											leadingComments: undefined
 											loc: Object {
-												filename: 'input.js'
-												identifierName: 'spawn'
+												filename: "input.js"
+												identifierName: "spawn"
 												end: Object {
 													column: 11
 													index: 38
@@ -135,7 +135,7 @@ Program {
 										}
 										leadingComments: undefined
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 11
 												index: 38
@@ -149,11 +149,11 @@ Program {
 										}
 									}
 									value: BindingIdentifier {
-										name: 'spawn'
+										name: "spawn"
 										leadingComments: undefined
 										loc: Object {
-											filename: 'input.js'
-											identifierName: 'spawn'
+											filename: "input.js"
+											identifierName: "spawn"
 											end: Object {
 												column: 11
 												index: 38
@@ -168,7 +168,7 @@ Program {
 									}
 									leadingComments: undefined
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 11
 											index: 38
@@ -185,7 +185,7 @@ Program {
 						}
 						leadingComments: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 17
 								index: 44
@@ -198,10 +198,10 @@ Program {
 							}
 						}
 						init: ReferenceIdentifier {
-							name: 'x'
+							name: "x"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'x'
+								filename: "input.js"
+								identifierName: "x"
 								end: Object {
 									column: 17
 									index: 44

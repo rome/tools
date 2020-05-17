@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import mod = require('module');
+import mod = require("module");
 
-import {AbsoluteFilePath, AbsoluteFilePathMap, CWD_PATH} from '@romejs/path';
+import {AbsoluteFilePath, AbsoluteFilePathMap, CWD_PATH} from "@romejs/path";
 
 // rome-ignore lint/noExplicitAny
 type RequireFunction = (name: string) => any;

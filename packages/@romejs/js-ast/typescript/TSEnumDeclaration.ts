@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {BindingIdentifier, JSNodeBase, TSEnumMember} from '../index';
-import {createBuilder} from '../utils';
+import {BindingIdentifier, JSNodeBase, TSEnumMember} from "../index";
+import {createBuilder} from "../utils";
 
 export type TSEnumDeclaration = JSNodeBase & {
-	type: 'TSEnumDeclaration';
+	type: "TSEnumDeclaration";
 	id: BindingIdentifier;
 	const?: boolean;
 	members: Array<TSEnumMember>;
@@ -17,7 +17,7 @@ export type TSEnumDeclaration = JSNodeBase & {
 };
 
 export const tsEnumDeclaration = createBuilder<TSEnumDeclaration>(
-	'TSEnumDeclaration',
+	"TSEnumDeclaration",
 	{
 		bindingKeys: {
 			id: true,

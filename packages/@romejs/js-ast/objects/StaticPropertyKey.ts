@@ -11,17 +11,17 @@ import {
 	NumericLiteral,
 	PrivateName,
 	StringLiteral,
-} from '../index';
-import {createQuickBuilder} from '../utils';
+} from "../index";
+import {createQuickBuilder} from "../utils";
 
 export type StaticPropertyKey = JSNodeBase & {
-	type: 'StaticPropertyKey';
+	type: "StaticPropertyKey";
 	value: Identifier | PrivateName | StringLiteral | NumericLiteral;
 };
 
-export const staticPropertyKey = createQuickBuilder<StaticPropertyKey, 'value'>(
-	'StaticPropertyKey',
-	'value',
+export const staticPropertyKey = createQuickBuilder<StaticPropertyKey, "value">(
+	"StaticPropertyKey",
+	"value",
 	{
 		bindingKeys: {},
 		visitorKeys: {

@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSMappedType} from '@romejs/js-ast';
-import {Builder} from '@romejs/js-formatter';
-import {Token, concat, group, indent, softline, space} from '../../tokens';
+import {TSMappedType} from "@romejs/js-ast";
+import {Builder} from "@romejs/js-formatter";
+import {Token, concat, group, indent, softline, space} from "../../tokens";
 
 export default function TSMappedType(
 	builder: Builder,
@@ -16,40 +16,40 @@ export default function TSMappedType(
 	const tokens: Array<Token> = [];
 
 	if (node.readonly) {
-		tokens.push(tokenIfPlusMinus(builder, node.readonly), 'readonly', space);
+		tokens.push(tokenIfPlusMinus(builder, node.readonly), "readonly", space);
 	}
 
 	const {typeParameter} = node;
 	tokens.push(
-		'[',
+		"[",
 		typeParameter.name,
 		space,
-		'in',
+		"in",
 		space,
 		builder.tokenize(typeParameter.constraint, typeParameter),
-		']',
+		"]",
 	);
 
 	if (node.optional) {
-		tokens.push(tokenIfPlusMinus(builder, node.optional), '?');
+		tokens.push(tokenIfPlusMinus(builder, node.optional), "?");
 	}
 
 	if (node.typeAnnotation) {
-		tokens.push(':', space, builder.tokenize(node.typeAnnotation, node));
+		tokens.push(":", space, builder.tokenize(node.typeAnnotation, node));
 	}
 
 	return group(
-		concat(['{', indent(concat([softline, concat(tokens)])), softline, '}']),
+		concat(["{", indent(concat([softline, concat(tokens)])), softline, "}"]),
 	);
 }
 
 function tokenIfPlusMinus(builder: Builder, token: string | true): Token {
 	switch (token) {
-		case '+':
-		case '-':
+		case "+":
+		case "-":
 			return token;
 
 		default:
-			return '';
+			return "";
 	}
 }

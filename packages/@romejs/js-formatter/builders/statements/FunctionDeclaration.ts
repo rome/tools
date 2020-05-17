@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token} from '../../tokens';
-import {FunctionDeclaration} from '@romejs/js-ast';
-import FunctionExpression from '../expressions/FunctionExpression';
+import Builder from "../../Builder";
+import {Token} from "../../tokens";
+import {FunctionDeclaration} from "@romejs/js-ast";
+import FunctionExpression from "../expressions/FunctionExpression";
 
 export default function FunctionDeclaration(
 	builder: Builder,

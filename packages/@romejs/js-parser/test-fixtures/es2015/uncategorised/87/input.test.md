@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
+	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 67
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		FunctionDeclaration {
 			id: BindingIdentifier {
-				name: 'encrypt'
+				name: "encrypt"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'encrypt'
+					filename: "input.js"
+					identifierName: "encrypt"
 					end: Object {
 						column: 16
 						index: 16
@@ -49,7 +49,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 22
 					index: 22
@@ -65,7 +65,7 @@ Program {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 22
 						index: 22
@@ -88,7 +88,7 @@ Program {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 19
 						index: 19
@@ -104,10 +104,10 @@ Program {
 		}
 		ClassDeclaration {
 			id: BindingIdentifier {
-				name: 'decrypt'
+				name: "decrypt"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'decrypt'
+					filename: "input.js"
+					identifierName: "decrypt"
 					end: Object {
 						column: 13
 						index: 36
@@ -121,7 +121,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 15
 					index: 38
@@ -140,7 +140,7 @@ Program {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 15
 						index: 38
@@ -156,9 +156,9 @@ Program {
 		}
 		ExportLocalDeclaration {
 			declaration: undefined
-			exportKind: 'value'
+			exportKind: "value"
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 27
 					index: 66
@@ -173,7 +173,7 @@ Program {
 			specifiers: Array [
 				ExportLocalSpecifier {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 16
 							index: 55
@@ -186,10 +186,10 @@ Program {
 						}
 					}
 					exported: Identifier {
-						name: 'encrypt'
+						name: "encrypt"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'encrypt'
+							filename: "input.js"
+							identifierName: "encrypt"
 							end: Object {
 								column: 16
 								index: 55
@@ -203,10 +203,10 @@ Program {
 						}
 					}
 					local: ReferenceIdentifier {
-						name: 'encrypt'
+						name: "encrypt"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'encrypt'
+							filename: "input.js"
+							identifierName: "encrypt"
 							end: Object {
 								column: 16
 								index: 55
@@ -222,7 +222,7 @@ Program {
 				}
 				ExportLocalSpecifier {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 25
 							index: 64
@@ -235,10 +235,10 @@ Program {
 						}
 					}
 					exported: Identifier {
-						name: 'decrypt'
+						name: "decrypt"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'decrypt'
+							filename: "input.js"
+							identifierName: "decrypt"
 							end: Object {
 								column: 25
 								index: 64
@@ -252,10 +252,10 @@ Program {
 						}
 					}
 					local: ReferenceIdentifier {
-						name: 'decrypt'
+						name: "decrypt"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'decrypt'
+							filename: "input.js"
+							identifierName: "decrypt"
 							end: Object {
 								column: 25
 								index: 64

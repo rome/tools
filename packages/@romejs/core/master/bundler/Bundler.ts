@@ -5,30 +5,30 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Master, MasterRequest} from '@romejs/core';
-import {Reporter} from '@romejs/cli-reporter';
+import {Master, MasterRequest} from "@romejs/core";
+import {Reporter} from "@romejs/cli-reporter";
 import {
 	BundleResult,
 	BundleResultBundle,
 	BundlerConfig,
 	BundlerFiles,
 	BundlerMode,
-} from '../../common/types/bundler';
-import DependencyGraph from '../dependencies/DependencyGraph';
-import BundleRequest, {BundleOptions} from './BundleRequest';
-import {AbsoluteFilePath, createUnknownFilePath} from '@romejs/path';
+} from "../../common/types/bundler";
+import DependencyGraph from "../dependencies/DependencyGraph";
+import BundleRequest, {BundleOptions} from "./BundleRequest";
+import {AbsoluteFilePath, createUnknownFilePath} from "@romejs/path";
 import {
 	JSONManifest,
 	ManifestDefinition,
 	convertManifestToJSON,
-} from '@romejs/codec-js-manifest';
-import {WorkerCompileResult} from '../../common/bridges/WorkerBridge';
-import {Dict} from '@romejs/typescript-helpers';
-import {readFile} from '@romejs/fs';
-import {flipPathPatterns} from '@romejs/path-match';
-import {markup} from '@romejs/string-markup';
-import Locker from '@romejs/core/common/utils/Locker';
-import {stringifyJSON} from '@romejs/codec-json';
+} from "@romejs/codec-js-manifest";
+import {WorkerCompileResult} from "../../common/bridges/WorkerBridge";
+import {Dict} from "@romejs/typescript-helpers";
+import {readFile} from "@romejs/fs";
+import {flipPathPatterns} from "@romejs/path-match";
+import {markup} from "@romejs/string-markup";
+import Locker from "@romejs/core/common/utils/Locker";
+import {stringifyJSON} from "@romejs/codec-json";
 
 export type BundlerEntryResoluton = {
 	manifestDef: undefined | ManifestDefinition;
@@ -76,11 +76,11 @@ export default class Bundler {
 		const manifestRootResolved = master.resolver.resolveLocal({
 			...this.config.resolver,
 			origin: cwd,
-			requestedType: 'package',
+			requestedType: "package",
 			source: createUnknownFilePath(unresolvedEntry),
 		});
 		const manifestRoot: undefined | AbsoluteFilePath =
-			manifestRootResolved.type === 'FOUND' ? manifestRootResolved.path : undefined;
+			manifestRootResolved.type === "FOUND" ? manifestRootResolved.path : undefined;
 		let manifestDef;
 		if (manifestRoot !== undefined) {
 			const def = master.memoryFs.getManifestDefinition(manifestRoot);
@@ -131,8 +131,8 @@ export default class Bundler {
 		const processor = this.request.createDiagnosticsProcessor({
 			origins: [
 				{
-					category: 'Bundler',
-					message: 'Analyzing dependencies for bundleMultiple',
+					category: "Bundler",
+					message: "Analyzing dependencies for bundleMultiple",
 				},
 			],
 		});
@@ -140,8 +140,8 @@ export default class Bundler {
 			this.master.projectManager.getUid(entry)
 		);
 		const analyzeProgress = this.reporter.progress({
-			name: `bundler:analyze:${entryUids.join(',')}`,
-			title: 'Analyzing',
+			name: `bundler:analyze:${entryUids.join(",")}`,
+			title: "Analyzing",
 		});
 		processor.setThrowAfter(100);
 		await this.graph.seed({
@@ -156,7 +156,7 @@ export default class Bundler {
 		// Now actually bundle them
 		const map: Map<AbsoluteFilePath, BundleResult> = new Map();
 
-		const progress = this.reporter.progress({title: 'Bundling'});
+		const progress = this.reporter.progress({title: "Bundling"});
 		progress.setTotal(entries.length);
 
 		const silentReporter = this.reporter.fork({
@@ -214,9 +214,9 @@ export default class Bundler {
 		//
 		const bundleBuddyStats = this.graph.getBundleBuddyStats(this.entries);
 		files.set(
-			'bundlebuddy.json',
+			"bundlebuddy.json",
 			{
-				kind: 'stats',
+				kind: "stats",
 				content: () => stringifyJSON(bundleBuddyStats),
 			},
 		);
@@ -232,7 +232,7 @@ export default class Bundler {
 						files.set(
 							relative,
 							{
-								kind: 'file',
+								kind: "file",
 								content: () => buffer,
 							},
 						);
@@ -248,9 +248,9 @@ export default class Bundler {
 
 			// Add a package.json with updated values
 			files.set(
-				'package.json',
+				"package.json",
 				{
-					kind: 'manifest',
+					kind: "manifest",
 					content: () => stringifyJSON(newManifest),
 				},
 			);
@@ -316,12 +316,12 @@ export default class Bundler {
 			const newBin: Dict<string> = {};
 			newManifest.bin = newBin;
 
-			const binConsumer = manifestDef.consumer.get('bin');
-			const isBinShorthand = typeof binConsumer.asUnknown() === 'string';
+			const binConsumer = manifestDef.consumer.get("bin");
+			const isBinShorthand = typeof binConsumer.asUnknown() === "string";
 
 			for (const [binName, relative] of manifest.bin) {
 				const location = (isBinShorthand ? binConsumer : binConsumer.get(binName)).getDiagnosticLocation(
-					'inner-value',
+					"inner-value",
 				);
 
 				const absolute = await this.master.resolver.resolveAssert(
@@ -339,7 +339,7 @@ export default class Bundler {
 					absolute.path,
 					{
 						prefix: `bin/${binName}`,
-						interpreter: '/usr/bin/env node',
+						interpreter: "/usr/bin/env node",
 					},
 				);
 				newBin[binName] = res.js.path;
@@ -370,10 +370,10 @@ export default class Bundler {
 		processor.maybeThrowDiagnosticsError();
 
 		if (res.cached) {
-			reporter.warn('Bundle was built completely from cache');
+			reporter.warn("Bundle was built completely from cache");
 		}
 
-		const prefix = options.prefix === undefined ? '' : `${options.prefix}/`;
+		const prefix = options.prefix === undefined ? "" : `${options.prefix}/`;
 		const jsPath = `${prefix}index.js`;
 		const mapPath = `${jsPath}.map`;
 
@@ -381,7 +381,7 @@ export default class Bundler {
 		files.set(
 			jsPath,
 			{
-				kind: 'entry',
+				kind: "entry",
 				content: () => res.content,
 			},
 		);
@@ -389,7 +389,7 @@ export default class Bundler {
 		files.set(
 			mapPath,
 			{
-				kind: 'sourcemap',
+				kind: "sourcemap",
 				content: () => res.sourceMap.toJSON(),
 			},
 		);
@@ -398,7 +398,7 @@ export default class Bundler {
 			files.set(
 				relative,
 				{
-					kind: 'asset',
+					kind: "asset",
 					content: () => buffer,
 				},
 			);

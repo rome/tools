@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 36
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		TSEnumDeclaration {
 			id: BindingIdentifier {
-				name: 'E'
+				name: "E"
 				loc: Object {
-					filename: 'input.ts'
-					identifierName: 'E'
+					filename: "input.ts"
+					identifierName: "E"
 					end: Object {
 						column: 6
 						index: 6
@@ -50,7 +50,7 @@ Program {
 			}
 			const: false
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 1
 					index: 35
@@ -65,9 +65,9 @@ Program {
 			members: Array [
 				TSEnumMember {
 					id: StringLiteral {
-						value: 'foo'
+						value: "foo"
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 9
 								index: 18
@@ -82,7 +82,7 @@ Program {
 					}
 					initializer: undefined
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 9
 							index: 18
@@ -97,9 +97,9 @@ Program {
 				}
 				TSEnumMember {
 					id: StringLiteral {
-						value: 'bar'
+						value: "bar"
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 9
 								index: 29
@@ -113,7 +113,7 @@ Program {
 						}
 					}
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 13
 							index: 33
@@ -129,7 +129,7 @@ Program {
 						value: 1
 						format: undefined
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 13
 								index: 33

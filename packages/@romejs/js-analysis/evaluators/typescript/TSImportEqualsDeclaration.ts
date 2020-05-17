@@ -9,9 +9,9 @@ import {
 	AnyNode,
 	TSImportEqualsDeclaration,
 	tsImportEqualsDeclaration,
-} from '@romejs/js-ast';
+} from "@romejs/js-ast";
 
 export default function TSImportEqualsDeclaration(node: AnyNode) {
 	node = tsImportEqualsDeclaration.assert(node);
-	throw new Error('unimplemented');
+	throw new Error("unimplemented");
 }

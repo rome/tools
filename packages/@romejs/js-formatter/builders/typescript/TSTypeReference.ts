@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSTypeReference} from '@romejs/js-ast';
-import {Builder} from '@romejs/js-formatter';
-import {Token, concat} from '../../tokens';
+import {TSTypeReference} from "@romejs/js-ast";
+import {Builder} from "@romejs/js-formatter";
+import {Token, concat} from "../../tokens";
 
 export default function TSTypeReference(
 	builder: Builder,

@@ -9,14 +9,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 40
@@ -30,10 +30,10 @@ Program {
 	}
 	comments: Array [
 		CommentLine {
-			id: '0'
-			value: ' ASI'
+			id: "0"
+			value: " ASI"
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 17
 					index: 30
@@ -51,7 +51,7 @@ Program {
 		IfStatement {
 			alternate: undefined
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 1
 					index: 39
@@ -66,7 +66,7 @@ Program {
 			test: BooleanLiteral {
 				value: false
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 9
 						index: 9
@@ -82,7 +82,7 @@ Program {
 			consequent: BlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 1
 						index: 39
@@ -96,9 +96,9 @@ Program {
 				}
 				body: Array [
 					LabeledStatement {
-						trailingComments: Array ['0']
+						trailingComments: Array ["0"]
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 10
 								index: 23
@@ -111,10 +111,10 @@ Program {
 							}
 						}
 						label: Identifier {
-							name: 'L'
+							name: "L"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'L'
+								filename: "input.js"
+								identifierName: "L"
 								end: Object {
 									column: 5
 									index: 18
@@ -130,7 +130,7 @@ Program {
 						body: ExpressionStatement {
 							trailingComments: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 10
 									index: 23
@@ -143,11 +143,11 @@ Program {
 								}
 							}
 							expression: ReferenceIdentifier {
-								name: 'let'
+								name: "let"
 								trailingComments: undefined
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'let'
+									filename: "input.js"
+									identifierName: "let"
 									end: Object {
 										column: 10
 										index: 23
@@ -165,9 +165,9 @@ Program {
 					BlockStatement {
 						body: Array []
 						directives: Array []
-						leadingComments: Array ['0']
+						leadingComments: Array ["0"]
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 6
 								index: 37

@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type JSXEmptyExpression = JSNodeBase & {
-	type: 'JSXEmptyExpression';
+	type: "JSXEmptyExpression";
 };
 
 export const jsxEmptyExpression = createBuilder<JSXEmptyExpression>(
-	'JSXEmptyExpression',
+	"JSXEmptyExpression",
 	{
 		bindingKeys: {},
 		visitorKeys: {},

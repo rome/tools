@@ -5,51 +5,51 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {parseJS} from '@romejs/js-parser';
-import {createFixtureTests} from '@romejs/test-helpers';
-import {ConstProgramSyntax} from '@romejs/js-ast';
-import {removeCarriageReturn} from '@romejs/string-utils';
+import {parseJS} from "@romejs/js-parser";
+import {createFixtureTests} from "@romejs/test-helpers";
+import {ConstProgramSyntax} from "@romejs/js-ast";
+import {removeCarriageReturn} from "@romejs/string-utils";
 
 const promise = createFixtureTests(async (fixture, t) => {
 	const {options, files} = fixture;
 
 	// Get the input JS
 	const inputFile =
-		files.get('input.js') ||
-		files.get('input.mjs') ||
-		files.get('input.ts') ||
-		files.get('input.tsx');
+		files.get("input.js") ||
+		files.get("input.mjs") ||
+		files.get("input.ts") ||
+		files.get("input.tsx");
 	if (inputFile === undefined) {
 		throw new Error(
 			`The fixture ${fixture.dir} did not have an input.(mjs|js|ts|tsx)`,
 		);
 	}
 
-	const sourceTypeProp = options.get('sourceType');
-	const sourceType = sourceTypeProp.asString('script');
-	if (sourceType !== 'module' && sourceType !== 'script') {
+	const sourceTypeProp = options.get("sourceType");
+	const sourceType = sourceTypeProp.asString("script");
+	if (sourceType !== "module" && sourceType !== "script") {
 		throw sourceTypeProp.unexpected();
 	}
 
-	const allowReturnOutsideFunction = options.get('allowReturnOutsideFunction').asBoolean(
+	const allowReturnOutsideFunction = options.get("allowReturnOutsideFunction").asBoolean(
 		false,
 	);
 	const filename = inputFile.relative;
 
-	const syntax: Array<ConstProgramSyntax> = options.get('syntax').asArray(true).map((
+	const syntax: Array<ConstProgramSyntax> = options.get("syntax").asArray(true).map((
 		item,
 	) => {
-		return item.asStringSet(['jsx', 'ts']);
+		return item.asStringSet(["jsx", "ts"]);
 	});
 
 	t.addToAdvice({
-		type: 'log',
-		category: 'info',
-		text: 'Parser options',
+		type: "log",
+		category: "info",
+		text: "Parser options",
 	});
 
 	t.addToAdvice({
-		type: 'inspect',
+		type: "inspect",
 		data: {
 			filename: filename.join(),
 			allowReturnOutsideFunction,

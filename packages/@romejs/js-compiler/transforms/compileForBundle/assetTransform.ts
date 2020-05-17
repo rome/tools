@@ -5,19 +5,19 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from '@romejs/js-compiler';
-import {getOptions} from './_utils';
-import {ASSET_EXPORT_TEMPORARY_VALUE} from '@romejs/core/common/file-handlers/index';
+import {Path} from "@romejs/js-compiler";
+import {getOptions} from "./_utils";
+import {ASSET_EXPORT_TEMPORARY_VALUE} from "@romejs/core/common/file-handlers/index";
 
 export default {
-	name: 'asset',
+	name: "asset",
 	enter(path: Path) {
 		const {node} = path;
 		const options = getOptions(path.context);
 
 		if (
-			node.type === 'ExportDefaultDeclaration' &&
-			node.declaration.type === 'StringLiteral' &&
+			node.type === "ExportDefaultDeclaration" &&
+			node.declaration.type === "StringLiteral" &&
 			node.declaration.value === ASSET_EXPORT_TEMPORARY_VALUE &&
 			options.assetPath !== undefined
 		) {

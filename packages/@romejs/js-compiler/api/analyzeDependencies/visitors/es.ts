@@ -5,22 +5,22 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ConstExportModuleKind, ConstImportModuleKind} from '@romejs/js-ast';
-import {ImportBinding, Path} from '@romejs/js-compiler';
-import {AnalyzeDependencyName} from '@romejs/core';
+import {ConstExportModuleKind, ConstImportModuleKind} from "@romejs/js-ast";
+import {ImportBinding, Path} from "@romejs/js-compiler";
+import {AnalyzeDependencyName} from "@romejs/core";
 import {
 	getBindingIdentifiers,
 	getImportSpecifiers,
 	isFunctionNode,
 	isInTypeAnnotation,
-} from '@romejs/js-ast-utils';
+} from "@romejs/js-ast-utils";
 import {
 	ESExportRecord,
 	ExportRecord,
 	ImportRecord,
 	ImportUsageRecord,
 	TopLevelAwaitRecord,
-} from '../records';
+} from "../records";
 import {
 	getAnalyzeExportValueType,
 	getDeclarationLoc,
@@ -29,20 +29,20 @@ import {
 	getKindWithSpecifiers,
 	isOptional,
 	maybeTypeBinding,
-} from '../utils';
+} from "../utils";
 
 export default {
-	name: 'analyzeDependenciesES',
+	name: "analyzeDependenciesES",
 	enter(path: Path) {
 		const {node, scope, context} = path;
 
 		// import('./bar');
-		if (node.type === 'ImportCall' && node.argument.type === 'StringLiteral') {
+		if (node.type === "ImportCall" && node.argument.type === "StringLiteral") {
 			context.record(
 				new ImportRecord({
-					type: 'es',
+					type: "es",
 					async: true,
-					kind: 'value',
+					kind: "value",
 					names: [],
 					loc: node.argument.loc,
 					source: node.argument.value,
@@ -56,13 +56,13 @@ export default {
 		// export const foo
 		// export function foo() {}
 		// export {};
-		if (node.type === 'ExportLocalDeclaration') {
+		if (node.type === "ExportLocalDeclaration") {
 			const valueType = getAnalyzeExportValueType(scope, node.declaration);
 			for (const id of getBindingIdentifiers(node)) {
 				const kind = maybeTypeBinding(getExportKind(node.exportKind), scope, id);
 				context.record(
 					new ExportRecord({
-						type: 'local',
+						type: "local",
 						valueType,
 						kind,
 						loc: getDeclarationLoc(scope, id),
@@ -82,7 +82,7 @@ export default {
 
 					context.record(
 						new ExportRecord({
-							type: 'local',
+							type: "local",
 							loc: getDeclarationLoc(scope, specifier.local),
 							valueType: getAnalyzeExportValueType(scope, specifier.local),
 							kind,
@@ -94,21 +94,21 @@ export default {
 		}
 
 		// export default
-		if (node.type === 'ExportDefaultDeclaration') {
+		if (node.type === "ExportDefaultDeclaration") {
 			context.record(
 				new ExportRecord({
-					type: 'local',
+					type: "local",
 					loc: getDeclarationLoc(scope, node.declaration),
 					valueType: getAnalyzeExportValueType(scope, node.declaration),
-					kind: 'value',
-					name: 'default',
+					kind: "value",
+					name: "default",
 				}),
 			);
 		}
 
 		// External binding exports:
 		// export {} from '';
-		if (node.type === 'ExportExternalDeclaration') {
+		if (node.type === "ExportExternalDeclaration") {
 			const {source} = node;
 			const specifiersKinds: Array<ConstImportModuleKind> = [];
 			const exportedNames: Array<AnalyzeDependencyName> = [];
@@ -118,10 +118,10 @@ export default {
 			if (defaultSpecifier !== undefined) {
 				context.record(
 					new ExportRecord({
-						type: 'external',
-						kind: 'value',
+						type: "external",
+						kind: "value",
 						loc: defaultSpecifier.loc,
-						imported: 'default',
+						imported: "default",
 						exported: defaultSpecifier.exported.name,
 						source: source.value,
 					}),
@@ -131,8 +131,8 @@ export default {
 			if (namespaceSpecifier !== undefined) {
 				context.record(
 					new ExportRecord({
-						type: 'externalNamespace',
-						kind: 'value',
+						type: "externalNamespace",
+						kind: "value",
 						loc: namespaceSpecifier.loc,
 						exported: namespaceSpecifier.exported.name,
 						source: source.value,
@@ -152,7 +152,7 @@ export default {
 
 				context.record(
 					new ExportRecord({
-						type: 'external',
+						type: "external",
 						kind,
 						loc: specifier.loc,
 						imported: specifier.local.name,
@@ -164,7 +164,7 @@ export default {
 
 			context.record(
 				new ImportRecord({
-					type: 'es',
+					type: "es",
 					async: false,
 					kind: getKindWithSpecifiers(node.exportKind, specifiersKinds),
 					names: exportedNames,
@@ -178,13 +178,13 @@ export default {
 
 		// TS: import A = require('B');
 		if (
-			node.type === 'TSImportEqualsDeclaration' &&
-			node.moduleReference.type === 'TSExternalModuleReference'
+			node.type === "TSImportEqualsDeclaration" &&
+			node.moduleReference.type === "TSExternalModuleReference"
 		) {
 			context.record(
 				new ImportRecord({
-					type: 'cjs',
-					kind: 'value',
+					type: "cjs",
+					kind: "value",
 					optional: isOptional(path),
 					loc: node.loc,
 					source: node.moduleReference.expression.value,
@@ -196,10 +196,10 @@ export default {
 		}
 
 		// export * from '';
-		if (node.type === 'ExportAllDeclaration') {
+		if (node.type === "ExportAllDeclaration") {
 			context.record(
 				new ImportRecord({
-					type: 'es',
+					type: "es",
 					async: false,
 					kind: getExportKind(node.exportKind),
 					optional: isOptional(path),
@@ -212,7 +212,7 @@ export default {
 
 			context.record(
 				new ExportRecord({
-					type: 'externalAll',
+					type: "externalAll",
 					loc: node.loc,
 					kind: getExportKind(node.exportKind),
 					source: node.source.value,
@@ -221,9 +221,9 @@ export default {
 		}
 
 		if (
-			node.type === 'ExportAllDeclaration' ||
-			node.type === 'ExportDefaultDeclaration' ||
-			node.type === 'ExportLocalDeclaration'
+			node.type === "ExportAllDeclaration" ||
+			node.type === "ExportDefaultDeclaration" ||
+			node.type === "ExportLocalDeclaration"
 		) {
 			context.record(new ESExportRecord(getExportKind(node.exportKind), node));
 		}
@@ -231,13 +231,13 @@ export default {
 		// import {} from '';
 
 		// import * as foo from '';
-		if (node.type === 'ImportDeclaration') {
+		if (node.type === "ImportDeclaration") {
 			let hasNamespaceSpecifier = false;
 			const specifierKinds: Array<ConstImportModuleKind> = [];
 			const names: Array<AnalyzeDependencyName> = [];
 
 			for (const specifier of getImportSpecifiers(node)) {
-				if (specifier.type === 'ImportNamespaceSpecifier') {
+				if (specifier.type === "ImportNamespaceSpecifier") {
 					hasNamespaceSpecifier = true;
 					break;
 				}
@@ -245,15 +245,15 @@ export default {
 				const kind: ConstImportModuleKind = getImportKind(node.importKind);
 				specifierKinds.push(kind);
 
-				if (specifier.type === 'ImportDefaultSpecifier') {
+				if (specifier.type === "ImportDefaultSpecifier") {
 					names.push({
 						kind,
 						loc: specifier.loc,
-						name: 'default',
+						name: "default",
 					});
 				}
 
-				if (specifier.type === 'ImportSpecifier') {
+				if (specifier.type === "ImportSpecifier") {
 					names.push({
 						kind,
 						loc: specifier.loc,
@@ -264,7 +264,7 @@ export default {
 
 			context.record(
 				new ImportRecord({
-					type: 'es',
+					type: "es",
 					async: false,
 					kind: getKindWithSpecifiers(node.importKind, specifierKinds),
 					loc: node.source.loc,
@@ -278,17 +278,17 @@ export default {
 
 		// Detect top level await
 		if (
-			node.type === 'AwaitExpression' &&
+			node.type === "AwaitExpression" &&
 			path.findAncestry((path) => isFunctionNode(path.node)) === undefined
 		) {
 			const {loc} = node;
 			if (loc === undefined) {
-				throw new Error('loc is undefined on AwaitExpression we want to mark');
+				throw new Error("loc is undefined on AwaitExpression we want to mark");
 			}
 			context.record(new TopLevelAwaitRecord(loc));
 		}
 
-		if (node.type === 'ReferenceIdentifier') {
+		if (node.type === "ReferenceIdentifier") {
 			const binding = path.scope.getBinding(node.name);
 
 			// Mark references to imports outside of functions
@@ -296,7 +296,7 @@ export default {
 				const {meta} = binding;
 
 				// We can skip this if it's referencing a namespace
-				if (meta.type !== 'name') {
+				if (meta.type !== "name") {
 					return node;
 				}
 
@@ -304,13 +304,13 @@ export default {
 
 				// (They could still be triggered with an actual function call but this is just for some basic analysis)
 				const deferredExecution = path.findAncestry((path) =>
-					isFunctionNode(path.node) || path.node.type === 'ClassProperty'
+					isFunctionNode(path.node) || path.node.type === "ClassProperty"
 				);
 				const isTop = deferredExecution === undefined;
 
 				let kind: ConstImportModuleKind = getImportKind(meta.kind);
 				if (isInTypeAnnotation(path)) {
-					kind = 'type';
+					kind = "type";
 				}
 
 				context.record(

@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from '@romejs/js-ast';
-import {HydrateData, HydrateTypeFactory} from '../Evaluator';
-import T, {SerialTypeFactory} from './T';
-import {Scope} from '../scopes';
-import {HumanBuilder} from '../Utils';
-import ObjT from './ObjT';
+import {AnyNode} from "@romejs/js-ast";
+import {HydrateData, HydrateTypeFactory} from "../Evaluator";
+import T, {SerialTypeFactory} from "./T";
+import {Scope} from "../scopes";
+import {HumanBuilder} from "../Utils";
+import ObjT from "./ObjT";
 
 export default class FunctionT extends ObjT {
 	constructor(
@@ -40,7 +40,7 @@ export default class FunctionT extends ObjT {
 		this.body = opts.body;
 	}
 
-	static type = 'FunctionT';
+	static type = "FunctionT";
 
 	params: Array<T>;
 	rest: undefined | T;
@@ -79,7 +79,7 @@ export default class FunctionT extends ObjT {
 	}
 
 	humanize(builder: HumanBuilder): string {
-		return `(${this.params.map((param) => builder.humanize(param)).join(', ')}) => ${builder.humanize(
+		return `(${this.params.map((param) => builder.humanize(param)).join(", ")}) => ${builder.humanize(
 			this.returns,
 		)}`;
 	}

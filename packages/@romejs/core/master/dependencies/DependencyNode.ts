@@ -5,39 +5,39 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import DependencyGraph from './DependencyGraph';
-import {BundleCompileResolvedImports} from '@romejs/js-compiler';
-import {ConstImportModuleKind} from '@romejs/js-ast';
-import {SourceLocation} from '@romejs/parser-core';
+import DependencyGraph from "./DependencyGraph";
+import {BundleCompileResolvedImports} from "@romejs/js-compiler";
+import {ConstImportModuleKind} from "@romejs/js-ast";
+import {SourceLocation} from "@romejs/parser-core";
 import {
 	Diagnostic,
 	DiagnosticLocation,
 	Diagnostics,
 	descriptions,
-} from '@romejs/diagnostics';
-import {ProjectDefinition} from '@romejs/project';
-import DependencyOrderer, {DependencyOrder} from './DependencyOrderer';
-import {WorkerAnalyzeDependencyResult} from '../../common/bridges/WorkerBridge';
-import {AbsoluteFilePath, AbsoluteFilePathMap} from '@romejs/path';
-import {getFileHandler} from '../../common/file-handlers/index';
-import {ExtensionHandler} from '../../common/file-handlers/types';
+} from "@romejs/diagnostics";
+import {ProjectDefinition} from "@romejs/project";
+import DependencyOrderer, {DependencyOrder} from "./DependencyOrderer";
+import {WorkerAnalyzeDependencyResult} from "../../common/bridges/WorkerBridge";
+import {AbsoluteFilePath, AbsoluteFilePathMap} from "@romejs/path";
+import {getFileHandler} from "../../common/file-handlers/index";
+import {ExtensionHandler} from "../../common/file-handlers/types";
 import {
 	AnalyzeDependency,
 	AnalyzeDependencyName,
 	AnalyzeExportLocal,
 	AnalyzeModuleType,
 	AnyAnalyzeExport,
-} from '@romejs/core';
-import {FileReference} from '@romejs/core/common/types/files';
+} from "@romejs/core";
+import {FileReference} from "@romejs/core/common/types/files";
 
 type ResolvedImportFound = {
-	type: 'FOUND';
+	type: "FOUND";
 	node: DependencyNode;
 	record: AnalyzeExportLocal;
 };
 
 type ResolvedImportNotFound = {
-	type: 'NOT_FOUND';
+	type: "NOT_FOUND";
 	node: DependencyNode;
 	loc: undefined | SourceLocation;
 	name: string;
@@ -51,21 +51,21 @@ function equalKind(
 ): boolean {
 	// Allow importing functions and classes as `type` and `typeof`
 	if (
-		producer.type === 'local' &&
-		(producer.valueType === 'class' || producer.valueType === 'function') &&
-		(consumerKind === 'type' || consumerKind === 'typeof')
+		producer.type === "local" &&
+		(producer.valueType === "class" || producer.valueType === "function") &&
+		(consumerKind === "type" || consumerKind === "typeof")
 	) {
 		return true;
 	}
 
 	// You can only import a type or a class as a type
-	if (producer.kind === 'type') {
-		return consumerKind === 'type';
+	if (producer.kind === "type") {
+		return consumerKind === "type";
 	}
 
 	// You can only import a value as a value or typeof
-	if (producer.kind === 'value') {
-		return consumerKind === 'typeof' || consumerKind === 'value';
+	if (producer.kind === "value") {
+		return consumerKind === "typeof" || consumerKind === "value";
 	}
 
 	return false;
@@ -134,7 +134,7 @@ export default class DependencyNode {
 
 	hasEscapedExports(): boolean {
 		for (const exp of this.analyze.exports) {
-			if (exp.type === 'local' && exp.name === '*') {
+			if (exp.type === "local" && exp.name === "*") {
 				return true;
 			}
 		}
@@ -169,7 +169,7 @@ export default class DependencyNode {
 	getDependencyInfoFromAbsolute(path: AbsoluteFilePath): DependencyNodeDependency {
 		const dep = this.absoluteToAnalyzeDependency.get(path);
 		if (dep === undefined) {
-			throw new Error('Expected dependency');
+			throw new Error("Expected dependency");
 		}
 		return dep;
 	}
@@ -194,7 +194,7 @@ export default class DependencyNode {
 		while (queue.length > 0) {
 			const node = queue.shift();
 			if (node === undefined) {
-				throw new Error('Already validated queue.length');
+				throw new Error("Already validated queue.length");
 			}
 
 			nodes.add(node);
@@ -225,7 +225,7 @@ export default class DependencyNode {
 		}
 
 		for (const exp of this.analyze.exports) {
-			if (exp.type === 'externalAll' && this.relativeToAbsolutePath.has(exp.source)) {
+			if (exp.type === "externalAll" && this.relativeToAbsolutePath.has(exp.source)) {
 				this.getNodeFromRelativeDependency(exp.source).getExportedModules(chain);
 			}
 		}
@@ -251,28 +251,28 @@ export default class DependencyNode {
 			}
 
 			switch (exp.type) {
-				case 'local': {
+				case "local": {
 					names.add(exp.name);
 					break;
 				}
 
-				case 'external': {
+				case "external": {
 					const resolved = this.getNodeFromRelativeDependency(exp.source).resolveImport(
 						exp.imported,
 						exp.loc,
 					);
-					if (resolved.type === 'FOUND' && equalKind(resolved.record, kind)) {
+					if (resolved.type === "FOUND" && equalKind(resolved.record, kind)) {
 						names.add(exp.exported);
 					}
 					break;
 				}
 
-				case 'externalNamespace': {
+				case "externalNamespace": {
 					names.add(exp.exported);
 					break;
 				}
 
-				case 'externalAll': {
+				case "externalAll": {
 					names = new Set([
 						...names,
 						...this.getNodeFromRelativeDependency(exp.source).getExportedNames(
@@ -331,7 +331,7 @@ export default class DependencyNode {
 				(name: string) => {
 					const exportInfo = resolved.node.resolveImport(name, undefined);
 
-					if (exportInfo.type === 'NOT_FOUND') {
+					if (exportInfo.type === "NOT_FOUND") {
 						throw new Error(
 							`mod.resolveImport returned NOT_FOUND for an export ${name} in ${exportInfo.node.path} despite being returned by getExportedNames`,
 						);
@@ -387,12 +387,12 @@ export default class DependencyNode {
 		const diagnostics: Diagnostics = [];
 
 		// Go through all of our dependencies and check if they have any external exports to forward
-		const allowTypeImportsAsValue = this.analyze.syntax.includes('ts');
+		const allowTypeImportsAsValue = this.analyze.syntax.includes("ts");
 		for (const absolute of this.relativeToAbsolutePath.values()) {
 			const mod = graph.getNode(absolute);
 
 			// We can't follow CJS names
-			if (mod.type === 'cjs') {
+			if (mod.type === "cjs") {
 				continue;
 			}
 
@@ -401,7 +401,7 @@ export default class DependencyNode {
 			// Try to resolve these exports
 			for (const nameInfo of usedNames) {
 				const {name, kind, loc} = nameInfo;
-				if (kind === 'type' || kind === 'typeof') {
+				if (kind === "type" || kind === "typeof") {
 					// Disable resolving typed imports for now as there's ridiculous code that hides some behind $FlowFixMe
 					continue;
 				}
@@ -409,7 +409,7 @@ export default class DependencyNode {
 				const resolved = mod.resolveImport(name, loc);
 
 				// Unknown import
-				if (resolved.type === 'NOT_FOUND') {
+				if (resolved.type === "NOT_FOUND") {
 					diagnostics.push(this.buildDiagnosticForUnknownExport(kind, resolved));
 					continue;
 				}
@@ -448,7 +448,7 @@ export default class DependencyNode {
 	): ResolvedImport {
 		if (ancestry.includes(this)) {
 			return {
-				type: 'NOT_FOUND',
+				type: "NOT_FOUND",
 				loc,
 				node: this,
 				name,
@@ -462,19 +462,19 @@ export default class DependencyNode {
 
 		for (const record of exports) {
 			// When resolving exportAll we never want to include the default export of those modules
-			if (record.type === 'local' && record.name === 'default' && ignoreDefault) {
+			if (record.type === "local" && record.name === "default" && ignoreDefault) {
 				continue;
 			}
 
-			if (record.type === 'local' && (record.name === name || record.name === '*')) {
+			if (record.type === "local" && (record.name === name || record.name === "*")) {
 				return {
-					type: 'FOUND',
+					type: "FOUND",
 					node: this,
 					record,
 				};
 			}
 
-			if (record.type === 'external' && record.exported === name) {
+			if (record.type === "external" && record.exported === name) {
 				return this.getNodeFromRelativeDependency(record.source).resolveImport(
 					record.imported,
 					record.loc,
@@ -483,7 +483,7 @@ export default class DependencyNode {
 				);
 			}
 
-			if (record.type === 'externalAll') {
+			if (record.type === "externalAll") {
 				const resolved = this.getNodeFromRelativeDependency(record.source).resolveImport(
 					name,
 					record.loc,
@@ -491,14 +491,14 @@ export default class DependencyNode {
 					subAncestry,
 				);
 
-				if (resolved.type === 'FOUND') {
+				if (resolved.type === "FOUND") {
 					return resolved;
 				}
 			}
 		}
 
 		return {
-			type: 'NOT_FOUND',
+			type: "NOT_FOUND",
 			loc,
 			node: this,
 			name,

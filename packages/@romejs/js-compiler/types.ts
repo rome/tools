@@ -9,19 +9,19 @@ import {
 	AnalyzeDependencyResult,
 	BundlerMode,
 	FileReference,
-} from '@romejs/core';
-import {Path, REDUCE_REMOVE} from '@romejs/js-compiler';
-import {AnyNode, Program} from '@romejs/js-ast';
-import {ProjectConfig} from '@romejs/project';
-import {REDUCE_SKIP_SUBTREE} from './constants';
-import CompilerContext from './lib/CompilerContext';
-import {AbsoluteFilePath} from '@romejs/path';
-import {SourceMap} from '@romejs/codec-source-map';
-import {Dict} from '@romejs/typescript-helpers';
-import {DiagnosticCategory} from '@romejs/diagnostics';
+} from "@romejs/core";
+import {Path, REDUCE_REMOVE} from "@romejs/js-compiler";
+import {AnyNode, Program} from "@romejs/js-ast";
+import {ProjectConfig} from "@romejs/project";
+import {REDUCE_SKIP_SUBTREE} from "./constants";
+import CompilerContext from "./lib/CompilerContext";
+import {AbsoluteFilePath} from "@romejs/path";
+import {SourceMap} from "@romejs/codec-source-map";
+import {Dict} from "@romejs/typescript-helpers";
+import {DiagnosticCategory} from "@romejs/diagnostics";
 
 //
-export type TransformStageName = 'pre' | 'compile' | 'compileForBundle';
+export type TransformStageName = "pre" | "compile" | "compileForBundle";
 
 export type TransformStageFactory = (
 	projectConfig: ProjectConfig,
@@ -103,7 +103,7 @@ export type LintCompilerOptions = {
 
 export type LintCompilerOptionsDecisions = Array<LintCompilerOptionsDecision>;
 
-export type LintCompilerOptionsDecisionAction = 'suppress' | 'fix' | 'ignore';
+export type LintCompilerOptionsDecisionAction = "suppress" | "fix" | "ignore";
 
 export type LintCompilerOptionsDecision = {
 	action: LintCompilerOptionsDecisionAction;

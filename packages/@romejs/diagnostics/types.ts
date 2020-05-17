@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Position, SourceLocation} from '@romejs/parser-core';
-import {Diffs} from '@romejs/string-diff';
-import {ConstSourceType} from '@romejs/js-ast';
-import {Number0, Number1} from '@romejs/ob1';
-import {JSONPropertyValue} from '@romejs/codec-json';
-import {DiagnosticCategory} from './categories';
-import {Dict} from '@romejs/typescript-helpers';
-import {ClientRequestFlags} from '@romejs/core';
+import {Position, SourceLocation} from "@romejs/parser-core";
+import {Diffs} from "@romejs/string-diff";
+import {ConstSourceType} from "@romejs/js-ast";
+import {Number0, Number1} from "@romejs/ob1";
+import {JSONPropertyValue} from "@romejs/codec-json";
+import {DiagnosticCategory} from "./categories";
+import {Dict} from "@romejs/typescript-helpers";
+import {ClientRequestFlags} from "@romejs/core";
 
 export type DiagnosticFilter = {
 	category?: DiagnosticCategory;
@@ -54,11 +54,11 @@ export type DiagnosticOrigin = {
 	message?: string;
 };
 
-export type DiagnosticLogCategory = 'none' | 'info' | 'warn' | 'error';
+export type DiagnosticLogCategory = "none" | "info" | "warn" | "error";
 
-export type DiagnosticLanguage = 'json' | 'js' | 'url' | 'shell' | 'unknown';
+export type DiagnosticLanguage = "json" | "js" | "url" | "shell" | "unknown";
 
-export type DiagnosticSourceType = 'unknown' | ConstSourceType;
+export type DiagnosticSourceType = "unknown" | ConstSourceType;
 
 export type DiagnosticsMeta = {
 	identifierName?: string;
@@ -94,7 +94,7 @@ export type DiagnosticDescriptionOptionalCategory = {
 
 // TS doesn't have opaque types so we need to use an intermediate object
 export type DiagnosticBlessedMessage = {
-	type: 'PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE';
+	type: "PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE";
 	value: string;
 };
 
@@ -110,19 +110,19 @@ export type DiagnosticAdviceItem =
 	| DiagnosticAdviceAction;
 
 export type DiagnosticAdviceCommand = {
-	type: 'command';
+	type: "command";
 	command: string;
 };
 
 export type DiagnosticAdviceLog = {
-	type: 'log';
+	type: "log";
 	category: DiagnosticLogCategory;
 	text: string;
 	compact?: boolean;
 };
 
 export type DiagnosticAdviceList = {
-	type: 'list';
+	type: "list";
 	list: Array<string>;
 	truncate?: boolean;
 	reverse?: boolean;
@@ -130,12 +130,12 @@ export type DiagnosticAdviceList = {
 };
 
 export type DiagnosticAdviceInspect = {
-	type: 'inspect';
+	type: "inspect";
 	data: JSONPropertyValue;
 };
 
 export type DiagnosticAdviceAction = {
-	type: 'action';
+	type: "action";
 	hidden?: boolean;
 	extra?: boolean;
 	shortcut?: string;
@@ -148,19 +148,19 @@ export type DiagnosticAdviceAction = {
 };
 
 export type DiagnosticAdviceCode = {
-	type: 'code';
+	type: "code";
 	code: string;
 	sourceType?: ConstSourceType;
 	language?: DiagnosticLanguage;
 };
 
 export type DiagnosticAdviceFrame = {
-	type: 'frame';
+	type: "frame";
 	location: DiagnosticLocation;
 };
 
 export type DiagnosticAdviceDiff = {
-	type: 'diff';
+	type: "diff";
 	diff: Diffs;
 	legend?: {
 		add: string;
@@ -169,7 +169,7 @@ export type DiagnosticAdviceDiff = {
 };
 
 export type DiagnosticAdviceStacktrace = {
-	type: 'stacktrace';
+	type: "stacktrace";
 	title?: string;
 	truncate?: boolean;
 	frames: Array<DiagnosticAdviceStackFrame>;

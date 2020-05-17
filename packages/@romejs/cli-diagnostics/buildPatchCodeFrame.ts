@@ -10,27 +10,27 @@ import {
 	CODE_FRAME_INDENT,
 	GUTTER,
 	MAX_PATCH_LINES,
-} from './constants';
-import {joinNoBreak, normalizeTabs, showInvisibles} from './utils';
-import {Diffs, diffConstants, groupDiffByLines} from '@romejs/string-diff';
-import {escapeMarkup, markup, markupTag} from '@romejs/string-markup';
-import {DiagnosticAdviceDiff} from '@romejs/diagnostics';
+} from "./constants";
+import {joinNoBreak, normalizeTabs, showInvisibles} from "./utils";
+import {Diffs, diffConstants, groupDiffByLines} from "@romejs/string-diff";
+import {escapeMarkup, markup, markupTag} from "@romejs/string-markup";
+import {DiagnosticAdviceDiff} from "@romejs/diagnostics";
 
 function formatDiffLine(diffs: Diffs) {
 	return diffs.map(([type, text]) => {
 		if (type === diffConstants.DELETE) {
-			return markupTag('error', escapeMarkup(showInvisibles(text)));
+			return markupTag("error", escapeMarkup(showInvisibles(text)));
 		} else if (type === diffConstants.ADD) {
-			return markupTag('success', escapeMarkup(showInvisibles(text)));
+			return markupTag("success", escapeMarkup(showInvisibles(text)));
 		} else {
 			// type === diffConstants.EQUAL
 			return escapeMarkup(normalizeTabs(text));
 		}
-	}).join('');
+	}).join("");
 }
 
-const DELETE_MARKER = markupTag('error', '-');
-const ADD_MARKER = markupTag('success', '+');
+const DELETE_MARKER = markupTag("error", "-");
+const ADD_MARKER = markupTag("success", "+");
 
 function formatSingleLineMarker(text: string): string {
 	return markup`<emphasis>${text}</emphasis>:`;
@@ -85,7 +85,7 @@ export default function buildPatchCodeFrame(
 	let truncated = false;
 	let lastDisplayedLine = -1;
 
-	const skippedLine = `<emphasis>${CODE_FRAME_INDENT}${'.'.repeat(lineLength)}${GUTTER}</emphasis>`;
+	const skippedLine = `<emphasis>${CODE_FRAME_INDENT}${".".repeat(lineLength)}${GUTTER}</emphasis>`;
 
 	// Build the actual frame
 	for (let i = 0; i < diffsByLine.length; i++) {
@@ -132,14 +132,14 @@ export default function buildPatchCodeFrame(
 			frame.push(skippedLine);
 		}
 
-		let gutterWithLine = '';
-		let gutterNoLine = '';
+		let gutterWithLine = "";
+		let gutterNoLine = "";
 		let deleteMarker = DELETE_MARKER;
 		let addMarker = ADD_MARKER;
 
 		if (!singleLine) {
 			gutterWithLine = `<emphasis>${CODE_FRAME_INDENT}<pad align="right" width="${lineLength}">${lineNo}</pad>${GUTTER}</emphasis>`;
-			gutterNoLine = `<emphasis>${CODE_FRAME_INDENT}${' '.repeat(lineLength)}${GUTTER}</emphasis>`;
+			gutterNoLine = `<emphasis>${CODE_FRAME_INDENT}${" ".repeat(lineLength)}${GUTTER}</emphasis>`;
 		}
 
 		if (singleLine && legend !== undefined) {
@@ -171,10 +171,10 @@ export default function buildPatchCodeFrame(
 	}
 
 	if (legend !== undefined && !singleLine) {
-		frame.push('');
+		frame.push("");
 		frame.push(`<error>- ${escapeMarkup(legend.delete)}</error>`);
 		frame.push(`<success>+ ${escapeMarkup(legend.add)}</success>`);
-		frame.push('');
+		frame.push("");
 	}
 
 	return {

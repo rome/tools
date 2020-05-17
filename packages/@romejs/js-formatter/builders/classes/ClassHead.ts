@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token, concat, group, indent, lineOrSpace, space} from '../../tokens';
-import {ClassHead} from '@romejs/js-ast';
-import {printCommaList} from '../utils';
+import Builder from "../../Builder";
+import {Token, concat, group, indent, lineOrSpace, space} from "../../tokens";
+import {ClassHead} from "@romejs/js-ast";
+import {printCommaList} from "../utils";
 
 export default function ClassHead(builder: Builder, node: ClassHead): Token {
 	const tokens: Array<Token> = [];
@@ -21,7 +21,7 @@ export default function ClassHead(builder: Builder, node: ClassHead): Token {
 			group(
 				concat([
 					lineOrSpace,
-					'extends',
+					"extends",
 					space,
 					builder.tokenize(node.superClass, node),
 					builder.tokenize(node.superTypeParameters, node),
@@ -37,7 +37,7 @@ export default function ClassHead(builder: Builder, node: ClassHead): Token {
 	) {
 		tokenGroups.push(
 			lineOrSpace,
-			'implements',
+			"implements",
 			group(
 				indent(
 					concat([lineOrSpace, printCommaList(builder, node.implements, node)]),

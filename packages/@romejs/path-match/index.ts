@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {PathPatternNode} from './types';
-import {parsePattern, parsePatternsFile} from './parse';
-import match from './match';
-import {AbsoluteFilePath, PathSegments} from '@romejs/path';
+import {PathPatternNode} from "./types";
+import {parsePattern, parsePatternsFile} from "./parse";
+import match from "./match";
+import {AbsoluteFilePath, PathSegments} from "@romejs/path";
 
 export type PathPatterns = Array<PathPatternNode>;
 
@@ -19,7 +19,7 @@ export {
 	parsePatternsFile as parsePathPatternsFile,
 };
 
-export {stringifyPathPattern} from './stringify';
+export {stringifyPathPattern} from "./stringify";
 
 export function flipPathPatterns(patterns: PathPatterns): PathPatterns {
 	return patterns.map((pattern) => {
@@ -52,7 +52,7 @@ function getGreater(pattern: PathPattern, num: number): number {
 	}
 }
 
-type MatchPatternResult = 'NO_MATCH' | 'IMPLICIT_MATCH' | 'EXPLICIT_MATCH';
+type MatchPatternResult = "NO_MATCH" | "IMPLICIT_MATCH" | "EXPLICIT_MATCH";
 
 export function matchPathPatterns(
 	path: AbsoluteFilePath,
@@ -61,7 +61,7 @@ export function matchPathPatterns(
 ): MatchPatternResult {
 	// Bail out if there are no patterns
 	if (patterns.length === 0) {
-		return 'NO_MATCH';
+		return "NO_MATCH";
 	}
 
 	let matches = 0;
@@ -93,17 +93,17 @@ export function matchPathPatterns(
 	// If we have a negate pattern, then we need to match more segments than it in order to qualify as a match
 	if (hasNegate) {
 		if (notMatches > matches) {
-			return 'NO_MATCH';
+			return "NO_MATCH";
 		} else if (matches > notMatches) {
-			return 'EXPLICIT_MATCH';
+			return "EXPLICIT_MATCH";
 		} else {
-			return 'IMPLICIT_MATCH';
+			return "IMPLICIT_MATCH";
 		}
 	}
 
 	if (matches > 0) {
-		return 'EXPLICIT_MATCH';
+		return "EXPLICIT_MATCH";
 	}
 
-	return 'NO_MATCH';
+	return "NO_MATCH";
 }

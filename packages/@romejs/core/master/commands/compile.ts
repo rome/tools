@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {MasterRequest} from '@romejs/core';
-import {WorkerCompileResult} from '../../common/bridges/WorkerBridge';
-import {commandCategories} from '../../common/commands';
-import {createMasterCommand} from '../commands';
-import {DiagnosticsError} from '@romejs/diagnostics';
-import {createUnknownFilePath} from '@romejs/path';
-import {Consumer} from '@romejs/consume';
-import Bundler from '../bundler/Bundler';
+import {MasterRequest} from "@romejs/core";
+import {WorkerCompileResult} from "../../common/bridges/WorkerBridge";
+import {commandCategories} from "../../common/commands";
+import {createMasterCommand} from "../commands";
+import {DiagnosticsError} from "@romejs/diagnostics";
+import {createUnknownFilePath} from "@romejs/path";
+import {Consumer} from "@romejs/consume";
+import Bundler from "../bundler/Bundler";
 
 type Flags = {
 	bundle: boolean;
@@ -20,12 +20,12 @@ type Flags = {
 
 export default createMasterCommand({
 	category: commandCategories.SOURCE_CODE,
-	description: 'compile a single file',
-	usage: '',
+	description: "compile a single file",
+	usage: "",
 	examples: [],
 	defineFlags(c: Consumer): Flags {
 		return {
-			bundle: c.get('bundle').asBoolean(false),
+			bundle: c.get("bundle").asBoolean(false),
 		};
 	},
 	async callback(req: MasterRequest, commandFlags: Flags): Promise<void> {
@@ -38,7 +38,7 @@ export default createMasterCommand({
 				...req.getResolverOptionsFromFlags(),
 				source: createUnknownFilePath(args[0]),
 			},
-			{location: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})},
+			{location: req.getDiagnosticPointerFromFlags({type: "arg", key: 0})},
 		);
 
 		let res: WorkerCompileResult;
@@ -46,13 +46,13 @@ export default createMasterCommand({
 			const bundler = Bundler.createFromMasterRequest(req);
 			res = await bundler.compile(resolved.path);
 		} else {
-			res = await req.requestWorkerCompile(resolved.path, 'compile', {}, {});
+			res = await req.requestWorkerCompile(resolved.path, "compile", {}, {});
 		}
 
 		const {compiledCode, diagnostics, suppressions}: WorkerCompileResult = res;
 
 		if (diagnostics.length > 0) {
-			throw new DiagnosticsError('Compile diagnostics', diagnostics, suppressions);
+			throw new DiagnosticsError("Compile diagnostics", diagnostics, suppressions);
 		}
 
 		reporter.writeAll(compiledCode);

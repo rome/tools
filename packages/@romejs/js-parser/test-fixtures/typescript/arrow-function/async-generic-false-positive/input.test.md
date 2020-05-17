@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 28
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 10
 					index: 10
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			expression: BinaryExpression {
-				operator: '<'
+				operator: "<"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 9
 						index: 9
@@ -60,10 +60,10 @@ Program {
 					}
 				}
 				left: ReferenceIdentifier {
-					name: 'async'
+					name: "async"
 					loc: Object {
-						filename: 'input.ts'
-						identifierName: 'async'
+						filename: "input.ts"
+						identifierName: "async"
 						end: Object {
 							column: 5
 							index: 5
@@ -80,7 +80,7 @@ Program {
 					value: 1
 					format: undefined
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 9
 							index: 9
@@ -97,7 +97,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 16
 					index: 27
@@ -110,9 +110,9 @@ Program {
 				}
 			}
 			expression: BinaryExpression {
-				operator: '=='
+				operator: "=="
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 15
 						index: 26
@@ -128,7 +128,7 @@ Program {
 					value: 0
 					format: undefined
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 15
 							index: 26
@@ -144,7 +144,7 @@ Program {
 				left: CallExpression {
 					arguments: Array []
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 10
 							index: 21
@@ -157,10 +157,10 @@ Program {
 						}
 					}
 					callee: ReferenceIdentifier {
-						name: 'async'
+						name: "async"
 						loc: Object {
-							filename: 'input.ts'
-							identifierName: 'async'
+							filename: "input.ts"
+							identifierName: "async"
 							end: Object {
 								column: 5
 								index: 16
@@ -175,7 +175,7 @@ Program {
 					}
 					typeArguments: TSTypeParameterInstantiation {
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 8
 								index: 19
@@ -191,7 +191,7 @@ Program {
 							TSTypeReference {
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 7
 										index: 18
@@ -204,10 +204,10 @@ Program {
 									}
 								}
 								typeName: ReferenceIdentifier {
-									name: 'T'
+									name: "T"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'T'
+										filename: "input.ts"
+										identifierName: "T"
 										end: Object {
 											column: 7
 											index: 18

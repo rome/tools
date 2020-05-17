@@ -5,50 +5,50 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import '@romejs/string-markup';
-import {PathPattern, parsePathPattern} from '@romejs/path-match';
-import {test} from 'rome';
+import "@romejs/string-markup";
+import {PathPattern, parsePathPattern} from "@romejs/path-match";
+import {test} from "rome";
 
 function _parsePathPattern(input: string): PathPattern {
 	return parsePathPattern({input});
 }
 
 test(
-	'pattern',
+	"pattern",
 	async (t) => {
 		// Negate and wildcard
-		t.snapshot(_parsePathPattern('!foo'));
-		t.snapshot(_parsePathPattern(''));
+		t.snapshot(_parsePathPattern("!foo"));
+		t.snapshot(_parsePathPattern(""));
 
 		// Trailing slash and wildcards
-		t.snapshot(_parsePathPattern('/foo/bar'));
-		t.snapshot(_parsePathPattern('*/foo/bar'));
-		t.snapshot(_parsePathPattern('**/foo/bar'));
-		t.snapshot(_parsePathPattern('**/*foo/bar'));
+		t.snapshot(_parsePathPattern("/foo/bar"));
+		t.snapshot(_parsePathPattern("*/foo/bar"));
+		t.snapshot(_parsePathPattern("**/foo/bar"));
+		t.snapshot(_parsePathPattern("**/*foo/bar"));
 
 		// Random
-		t.snapshot(_parsePathPattern('foo'));
-		t.snapshot(_parsePathPattern('foo/'));
-		t.snapshot(_parsePathPattern('foo/bar'));
-		t.snapshot(_parsePathPattern('foo//bar'));
-		t.snapshot(_parsePathPattern('foo/*/bar'));
-		t.snapshot(_parsePathPattern('foo/**/bar'));
-		t.snapshot(_parsePathPattern('foo/*bar'));
-		t.snapshot(_parsePathPattern('foo/bar*'));
-		t.snapshot(_parsePathPattern('foo/*bar*'));
-		t.snapshot(_parsePathPattern('foo/*bar*foob'));
+		t.snapshot(_parsePathPattern("foo"));
+		t.snapshot(_parsePathPattern("foo/"));
+		t.snapshot(_parsePathPattern("foo/bar"));
+		t.snapshot(_parsePathPattern("foo//bar"));
+		t.snapshot(_parsePathPattern("foo/*/bar"));
+		t.snapshot(_parsePathPattern("foo/**/bar"));
+		t.snapshot(_parsePathPattern("foo/*bar"));
+		t.snapshot(_parsePathPattern("foo/bar*"));
+		t.snapshot(_parsePathPattern("foo/*bar*"));
+		t.snapshot(_parsePathPattern("foo/*bar*foob"));
 
 		// Comments
-		t.snapshot(_parsePathPattern('# foobar'));
-		t.snapshot(_parsePathPattern('foo/bar # foobar'));
-		t.snapshot(_parsePathPattern('foo/bar\\#foobar'));
-		t.snapshot(_parsePathPattern('foo/\\#foobar'));
+		t.snapshot(_parsePathPattern("# foobar"));
+		t.snapshot(_parsePathPattern("foo/bar # foobar"));
+		t.snapshot(_parsePathPattern("foo/bar\\#foobar"));
+		t.snapshot(_parsePathPattern("foo/\\#foobar"));
 
 		// Windows separators
-		t.snapshot(_parsePathPattern('\\\\foo\\\\bar'));
-		t.snapshot(_parsePathPattern('*\\\\foo\\\\bar'));
-		t.snapshot(_parsePathPattern('**\\\\foo\\\\bar'));
-		t.snapshot(_parsePathPattern('**\\\\*foo\\\\bar'));
-		t.snapshot(_parsePathPattern('hello\\\\world'));
+		t.snapshot(_parsePathPattern("\\\\foo\\\\bar"));
+		t.snapshot(_parsePathPattern("*\\\\foo\\\\bar"));
+		t.snapshot(_parsePathPattern("**\\\\foo\\\\bar"));
+		t.snapshot(_parsePathPattern("**\\\\*foo\\\\bar"));
+		t.snapshot(_parsePathPattern("hello\\\\world"));
 	},
 );

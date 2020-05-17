@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {descriptions} from '@romejs/diagnostics';
-import {Scope} from '../../scopes';
-import T from '../T';
-import {orderBySimilarity} from '@romejs/string-utils';
-import E, {ErrorDefinition} from './E';
-import {AnyNode} from '@romejs/js-ast';
+import {descriptions} from "@romejs/diagnostics";
+import {Scope} from "../../scopes";
+import T from "../T";
+import {orderBySimilarity} from "@romejs/string-utils";
+import E, {ErrorDefinition} from "./E";
+import {AnyNode} from "@romejs/js-ast";
 
 export default class UnknownPropE extends E {
 	constructor(
@@ -33,7 +33,7 @@ export default class UnknownPropE extends E {
 		this.property = opts.property;
 	}
 
-	static type = 'UnknownPropE';
+	static type = "UnknownPropE";
 	allProps: Array<string>;
 	thisKeys: Array<string>;
 	protoKeys: Array<string>;

@@ -8,11 +8,11 @@
 // The algorithm used to determine whether a regexp can appear at a
 // given point in the program is loosely based on sweet.js' approach.
 // See https://github.com/mozilla/sweet.js/wiki/design
-import {JSParser} from '../parser';
-import {getCurContext, isBraceBlock, readTemplateToken} from './index';
-import {lineBreak} from '@romejs/js-parser-utils';
-import {types as tt} from './types';
-import {Dict} from '@romejs/typescript-helpers';
+import {JSParser} from "../parser";
+import {getCurContext, isBraceBlock, readTemplateToken} from "./index";
+import {lineBreak} from "@romejs/js-parser-utils";
+import {types as tt} from "./types";
+import {Dict} from "@romejs/typescript-helpers";
 
 type TokContextOverride = (p: JSParser) => void;
 
@@ -36,18 +36,18 @@ export class TokContext {
 }
 
 export const types: Dict<TokContext> = {
-	braceStatement: new TokContext('{', false),
-	braceExpression: new TokContext('{', true),
-	templateQuasi: new TokContext('${', false),
-	parenStatement: new TokContext('(', false),
-	parenExpression: new TokContext('(', true),
-	template: new TokContext('`', true, true, (p) => readTemplateToken(p)),
-	functionExpression: new TokContext('function', true),
-	functionStatement: new TokContext('function', false),
+	braceStatement: new TokContext("{", false),
+	braceExpression: new TokContext("{", true),
+	templateQuasi: new TokContext("${", false),
+	parenStatement: new TokContext("(", false),
+	parenExpression: new TokContext("(", true),
+	template: new TokContext("`", true, true, (p) => readTemplateToken(p)),
+	functionExpression: new TokContext("function", true),
+	functionStatement: new TokContext("function", false),
 	// JSX
-	jsxOpenTag: new TokContext('<tag', false),
-	jsxCloseTag: new TokContext('</tag', false),
-	jsxInner: new TokContext('<tag>...</tag>', true, true),
+	jsxOpenTag: new TokContext("<tag", false),
+	jsxCloseTag: new TokContext("</tag", false),
+	jsxInner: new TokContext("<tag>...</tag>", true, true),
 };
 
 // Token-specific context update code
@@ -60,13 +60,13 @@ tt.parenR.updateContext = tt.braceR.updateContext = function(parser) {
 	let out = parser.state.context.pop();
 	if (out === types.braceStatement) {
 		const context = getCurContext(parser);
-		if (context !== undefined && context.token === 'function') {
+		if (context !== undefined && context.token === "function") {
 			out = parser.state.context.pop();
 		}
 	}
 
 	if (out === undefined) {
-		throw new Error('No context found');
+		throw new Error("No context found");
 	}
 
 	parser.state.exprAllowed = !out.isExpr;
@@ -76,8 +76,8 @@ tt.name.updateContext = function(parser, prevType) {
 	let allowed = false;
 	if (prevType !== tt.dot) {
 		if (
-			(parser.state.tokenValue === 'of' && !parser.state.exprAllowed) ||
-			(parser.state.tokenValue === 'yield' && parser.inScope('GENERATOR'))
+			(parser.state.tokenValue === "of" && !parser.state.exprAllowed) ||
+			(parser.state.tokenValue === "yield" && parser.inScope("GENERATOR"))
 		) {
 			allowed = true;
 		}

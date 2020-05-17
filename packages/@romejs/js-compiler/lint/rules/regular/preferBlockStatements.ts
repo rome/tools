@@ -5,30 +5,30 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, TransformExitResult} from '@romejs/js-compiler';
-import {blockStatement} from '@romejs/js-ast';
-import {descriptions} from '@romejs/diagnostics';
-import {commentInjector} from '../../../transforms/defaultHooks';
+import {Path, TransformExitResult} from "@romejs/js-compiler";
+import {blockStatement} from "@romejs/js-ast";
+import {descriptions} from "@romejs/diagnostics";
+import {commentInjector} from "../../../transforms/defaultHooks";
 
 export default {
-	name: 'preferBlockStatements',
+	name: "preferBlockStatements",
 	enter(path: Path): TransformExitResult {
 		const {context, node} = path;
 
-		if (node.type === 'IfStatement') {
+		if (node.type === "IfStatement") {
 			let shouldFix = false;
 			let consequent = node.consequent;
 			let alternate = node.alternate;
 
-			if (node.consequent.type !== 'BlockStatement') {
+			if (node.consequent.type !== "BlockStatement") {
 				consequent = blockStatement.quick([node.consequent]);
 				shouldFix = true;
 			}
 
 			if (
 				node.alternate !== undefined &&
-				node.alternate.type !== 'BlockStatement' &&
-				node.alternate.type !== 'IfStatement'
+				node.alternate.type !== "BlockStatement" &&
+				node.alternate.type !== "IfStatement"
 			) {
 				alternate = blockStatement.quick([node.alternate]);
 				shouldFix = true;
@@ -48,19 +48,19 @@ export default {
 				);
 			}
 		} else if (
-			node.type === 'ForStatement' ||
-			node.type === 'ForInStatement' ||
-			node.type === 'ForOfStatement' ||
-			node.type === 'DoWhileStatement' ||
-			node.type === 'WhileStatement' ||
-			node.type === 'WithStatement'
+			node.type === "ForStatement" ||
+			node.type === "ForInStatement" ||
+			node.type === "ForOfStatement" ||
+			node.type === "DoWhileStatement" ||
+			node.type === "WhileStatement" ||
+			node.type === "WithStatement"
 		) {
-			if (node.body.type === 'EmptyStatement') {
+			if (node.body.type === "EmptyStatement") {
 				const id = path.callHook(
 					commentInjector,
 					{
-						type: 'CommentLine',
-						value: ' empty',
+						type: "CommentLine",
+						value: " empty",
 					},
 				);
 
@@ -79,7 +79,7 @@ export default {
 				);
 			}
 
-			if (node.body.type !== 'BlockStatement') {
+			if (node.body.type !== "BlockStatement") {
 				return context.addFixableDiagnostic(
 					{
 						old: node,

@@ -9,12 +9,12 @@ import {
 	TestWorkerPrepareTestOptions,
 	TestWorkerPrepareTestResult,
 	TestWorkerRunTestOptions,
-} from '../common/bridges/TestWorkerBridge';
-import {deriveDiagnosticFromError} from '@romejs/diagnostics';
-import {TestWorkerBridge} from '@romejs/core';
-import {createBridgeFromParentProcess} from '@romejs/events';
-import TestWorkerRunner, {TestWorkerFileResult} from './TestWorkerRunner';
-import inspector = require('inspector');
+} from "../common/bridges/TestWorkerBridge";
+import {deriveDiagnosticFromError} from "@romejs/diagnostics";
+import {TestWorkerBridge} from "@romejs/core";
+import {createBridgeFromParentProcess} from "@romejs/events";
+import TestWorkerRunner, {TestWorkerFileResult} from "./TestWorkerRunner";
+import inspector = require("inspector");
 
 export type TestWorkerFlags = {
 	inspectorPort: number;
@@ -39,12 +39,12 @@ export default class TestWorker {
 		const bridge = createBridgeFromParentProcess(
 			TestWorkerBridge,
 			{
-				type: 'server',
+				type: "server",
 			},
 		);
 
 		process.on(
-			'unhandledRejection',
+			"unhandledRejection",
 			(err) => {
 				bridge.testDiagnostic.send({
 					origin: undefined,
@@ -52,7 +52,7 @@ export default class TestWorker {
 						err,
 						{
 							description: {
-								category: 'tests/unhandledRejection',
+								category: "tests/unhandledRejection",
 							},
 						},
 					),

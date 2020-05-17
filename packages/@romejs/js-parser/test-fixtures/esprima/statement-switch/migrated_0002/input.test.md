@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 57
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		SwitchStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 56
 					index: 56
@@ -45,10 +45,10 @@ Program {
 				}
 			}
 			discriminant: ReferenceIdentifier {
-				name: 'answer'
+				name: "answer"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'answer'
+					filename: "input.js"
+					identifierName: "answer"
 					end: Object {
 						column: 14
 						index: 14
@@ -64,7 +64,7 @@ Program {
 			cases: Array [
 				SwitchCase {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 39
 							index: 39
@@ -80,7 +80,7 @@ Program {
 						value: 42
 						format: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 25
 								index: 25
@@ -96,7 +96,7 @@ Program {
 					consequent: Array [
 						ExpressionStatement {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 32
 									index: 32
@@ -111,7 +111,7 @@ Program {
 							expression: CallExpression {
 								arguments: Array []
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 31
 										index: 31
@@ -124,10 +124,10 @@ Program {
 									}
 								}
 								callee: ReferenceIdentifier {
-									name: 'hi'
+									name: "hi"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'hi'
+										filename: "input.js"
+										identifierName: "hi"
 										end: Object {
 											column: 29
 											index: 29
@@ -145,7 +145,7 @@ Program {
 						BreakStatement {
 							label: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 39
 									index: 39
@@ -163,7 +163,7 @@ Program {
 				SwitchCase {
 					test: undefined
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 54
 							index: 54
@@ -179,7 +179,7 @@ Program {
 						BreakStatement {
 							label: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 54
 									index: 54

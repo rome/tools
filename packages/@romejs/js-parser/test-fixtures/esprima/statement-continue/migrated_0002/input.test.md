@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 37
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		LabeledStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 36
 					index: 36
@@ -45,10 +45,10 @@ Program {
 				}
 			}
 			label: Identifier {
-				name: 'done'
+				name: "done"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'done'
+					filename: "input.js"
+					identifierName: "done"
 					end: Object {
 						column: 4
 						index: 4
@@ -63,7 +63,7 @@ Program {
 			}
 			body: WhileStatement {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 36
 						index: 36
@@ -78,7 +78,7 @@ Program {
 				test: BooleanLiteral {
 					value: true
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 17
 							index: 17
@@ -94,7 +94,7 @@ Program {
 				body: BlockStatement {
 					directives: Array []
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 36
 							index: 36
@@ -109,7 +109,7 @@ Program {
 					body: Array [
 						ContinueStatement {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 34
 									index: 34
@@ -122,10 +122,10 @@ Program {
 								}
 							}
 							label: Identifier {
-								name: 'done'
+								name: "done"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'done'
+									filename: "input.js"
+									identifierName: "done"
 									end: Object {
 										column: 34
 										index: 34

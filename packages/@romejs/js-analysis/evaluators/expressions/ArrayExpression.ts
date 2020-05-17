@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {AnyNode, ArrayExpression, arrayExpression} from '@romejs/js-ast';
-import InstanceT from '../../types/InstanceT';
-import OpenT from '../../types/OpenT';
+import {Scope} from "../../scopes";
+import {AnyNode, ArrayExpression, arrayExpression} from "@romejs/js-ast";
+import InstanceT from "../../types/InstanceT";
+import OpenT from "../../types/OpenT";
 
 export default function ArrayExpression(node: AnyNode, scope: Scope) {
 	node = arrayExpression.assert(node);

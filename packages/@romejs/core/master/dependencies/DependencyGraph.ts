@@ -5,26 +5,26 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Master from '../Master';
-import {SourceLocation} from '@romejs/parser-core';
-import {BundleBuddyStats} from '../../common/types/bundler';
-import {DiagnosticsProcessor, catchDiagnostics} from '@romejs/diagnostics';
-import {ResolverOptions} from '../fs/Resolver';
-import WorkerQueue from '../WorkerQueue';
-import DependencyNode from './DependencyNode';
-import {ReporterProgress} from '@romejs/cli-reporter';
-import Locker from '../../common/utils/Locker';
-import {DependencyOrder} from './DependencyOrderer';
-import {Event} from '@romejs/events';
-import {WorkerAnalyzeDependencyResult} from '../../common/bridges/WorkerBridge';
-import {MasterRequest} from '@romejs/core';
+import Master from "../Master";
+import {SourceLocation} from "@romejs/parser-core";
+import {BundleBuddyStats} from "../../common/types/bundler";
+import {DiagnosticsProcessor, catchDiagnostics} from "@romejs/diagnostics";
+import {ResolverOptions} from "../fs/Resolver";
+import WorkerQueue from "../WorkerQueue";
+import DependencyNode from "./DependencyNode";
+import {ReporterProgress} from "@romejs/cli-reporter";
+import Locker from "../../common/utils/Locker";
+import {DependencyOrder} from "./DependencyOrderer";
+import {Event} from "@romejs/events";
+import {WorkerAnalyzeDependencyResult} from "../../common/bridges/WorkerBridge";
+import {MasterRequest} from "@romejs/core";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	createUnknownFilePath,
-} from '@romejs/path';
-import {AnalyzeModuleType} from '../../common/types/analyzeDependencies';
-import {markup} from '@romejs/string-markup';
+} from "@romejs/path";
+import {AnalyzeModuleType} from "../../common/types/analyzeDependencies";
+import {markup} from "@romejs/string-markup";
 
 export type DependencyGraphSeedResult = {
 	node: DependencyNode;
@@ -33,41 +33,41 @@ export type DependencyGraphSeedResult = {
 };
 
 const BUILTINS = [
-	'electron',
-	'buffer',
-	'child_process',
-	'crypto',
-	'dgram',
-	'dns',
-	'fs',
-	'http',
-	'https',
-	'net',
-	'os',
-	'readline',
-	'stream',
-	'string_decoder',
-	'tls',
-	'tty',
-	'zlib',
-	'constants',
-	'events',
-	'url',
-	'assert',
-	'util',
-	'path',
-	'punycode',
-	'querystring',
-	'cluster',
-	'console',
-	'module',
-	'process',
-	'vm',
-	'domain',
-	'v8',
-	'repl',
-	'timers',
-	'inspector',
+	"electron",
+	"buffer",
+	"child_process",
+	"crypto",
+	"dgram",
+	"dns",
+	"fs",
+	"http",
+	"https",
+	"net",
+	"os",
+	"readline",
+	"stream",
+	"string_decoder",
+	"tls",
+	"tty",
+	"zlib",
+	"constants",
+	"events",
+	"url",
+	"assert",
+	"util",
+	"path",
+	"punycode",
+	"querystring",
+	"cluster",
+	"console",
+	"module",
+	"process",
+	"vm",
+	"domain",
+	"v8",
+	"repl",
+	"timers",
+	"inspector",
 ];
 
 type SeedQueueItem = {
@@ -88,7 +88,7 @@ export default class DependencyGraph {
 		this.resolverOpts = resolverOpts;
 
 		this.locker = new Locker();
-		this.closeEvent = new Event({name: 'DependencyGraph.closeEvent'});
+		this.closeEvent = new Event({name: "DependencyGraph.closeEvent"});
 	}
 
 	request: MasterRequest;
@@ -321,7 +321,7 @@ export default class DependencyGraph {
 										location: {
 											sourceText: undefined,
 											...dep.loc,
-											language: 'js',
+											language: "js",
 											mtime: undefined,
 										},
 									},
@@ -330,8 +330,8 @@ export default class DependencyGraph {
 						node.addDependency(source, resolved.path, dep);
 					},
 					{
-						category: 'DependencyGraph',
-						message: 'Caught by resolve',
+						category: "DependencyGraph",
+						message: "Caught by resolve",
 					},
 				);
 

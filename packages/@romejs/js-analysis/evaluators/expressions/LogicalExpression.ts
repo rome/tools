@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {AnyNode, LogicalExpression, logicalExpression} from '@romejs/js-ast';
-import T from '../../types/T';
-import UnionT from '../../types/UnionT';
+import {Scope} from "../../scopes";
+import {AnyNode, LogicalExpression, logicalExpression} from "@romejs/js-ast";
+import T from "../../types/T";
+import UnionT from "../../types/UnionT";
 
 function uniq(args: Array<string>): Array<string> {
 	return [...new Set(args)];
@@ -18,7 +18,7 @@ export default function LogicalExpression(node: AnyNode, scope: Scope) {
 	node = logicalExpression.assert(node);
 
 	switch (node.operator) {
-		case '||': {
+		case "||": {
 			const left = scope.refine().evaluate(node.left);
 			const right = scope.refine().evaluate(node.right);
 
@@ -45,13 +45,13 @@ export default function LogicalExpression(node: AnyNode, scope: Scope) {
 			return new UnionT(refinedScope, node, [left, right]);
 		}
 
-		case '&&': {
+		case "&&": {
 			const left = scope.evaluate(node.left);
 			const right = left.scope.evaluate(node.right);
 			return new UnionT(right.scope, node, [left, right]);
 		}
 
 		default:
-			throw new Error('Unknown operator');
+			throw new Error("Unknown operator");
 	}
 }

@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 52
@@ -31,10 +31,10 @@ Program {
 	}
 	body: Array [
 		ExportLocalDeclaration {
-			exportKind: 'type'
+			exportKind: "type"
 			specifiers: undefined
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 21
 					index: 21
@@ -48,10 +48,10 @@ Program {
 			}
 			declaration: TSInterfaceDeclaration {
 				id: BindingIdentifier {
-					name: 'I'
+					name: "I"
 					loc: Object {
-						filename: 'input.ts'
-						identifierName: 'I'
+						filename: "input.ts"
+						identifierName: "I"
 						end: Object {
 							column: 18
 							index: 18
@@ -67,7 +67,7 @@ Program {
 				extends: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 21
 						index: 21
@@ -82,7 +82,7 @@ Program {
 				body: TSInterfaceBody {
 					body: Array []
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 21
 							index: 21
@@ -99,7 +99,7 @@ Program {
 		}
 		ExportDefaultDeclaration {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 29
 					index: 51
@@ -113,10 +113,10 @@ Program {
 			}
 			declaration: TSInterfaceDeclaration {
 				id: BindingIdentifier {
-					name: 'A'
+					name: "A"
 					loc: Object {
-						filename: 'input.ts'
-						identifierName: 'A'
+						filename: "input.ts"
+						identifierName: "A"
 						end: Object {
 							column: 26
 							index: 48
@@ -132,7 +132,7 @@ Program {
 				extends: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 29
 						index: 51
@@ -147,7 +147,7 @@ Program {
 				body: TSInterfaceBody {
 					body: Array []
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 29
 							index: 51

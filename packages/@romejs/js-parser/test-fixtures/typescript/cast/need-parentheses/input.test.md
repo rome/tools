@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 29
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 10
 					index: 10
@@ -46,7 +46,7 @@ Program {
 			}
 			expression: MemberExpression {
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 9
 						index: 9
@@ -60,10 +60,10 @@ Program {
 				}
 				property: StaticMemberProperty {
 					value: Identifier {
-						name: 'y'
+						name: "y"
 						loc: Object {
-							filename: 'input.ts'
-							identifierName: 'y'
+							filename: "input.ts"
+							identifierName: "y"
 							end: Object {
 								column: 9
 								index: 9
@@ -77,8 +77,8 @@ Program {
 						}
 					}
 					loc: Object {
-						filename: 'input.ts'
-						identifierName: 'y'
+						filename: "input.ts"
+						identifierName: "y"
 						end: Object {
 							column: 9
 							index: 9
@@ -93,7 +93,7 @@ Program {
 				}
 				object: TSTypeAssertion {
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 6
 							index: 6
@@ -106,10 +106,10 @@ Program {
 						}
 					}
 					expression: ReferenceIdentifier {
-						name: 'x'
+						name: "x"
 						loc: Object {
-							filename: 'input.ts'
-							identifierName: 'x'
+							filename: "input.ts"
+							identifierName: "x"
 							end: Object {
 								column: 6
 								index: 6
@@ -125,7 +125,7 @@ Program {
 					typeAnnotation: TSTypeReference {
 						typeParameters: undefined
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 3
 								index: 3
@@ -138,10 +138,10 @@ Program {
 							}
 						}
 						typeName: ReferenceIdentifier {
-							name: 'T'
+							name: "T"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'T'
+								filename: "input.ts"
+								identifierName: "T"
 								end: Object {
 									column: 3
 									index: 3
@@ -160,7 +160,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 11
 					index: 22
@@ -174,7 +174,7 @@ Program {
 			}
 			expression: MemberExpression {
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 10
 						index: 21
@@ -188,10 +188,10 @@ Program {
 				}
 				property: StaticMemberProperty {
 					value: Identifier {
-						name: 'y'
+						name: "y"
 						loc: Object {
-							filename: 'input.ts'
-							identifierName: 'y'
+							filename: "input.ts"
+							identifierName: "y"
 							end: Object {
 								column: 10
 								index: 21
@@ -205,8 +205,8 @@ Program {
 						}
 					}
 					loc: Object {
-						filename: 'input.ts'
-						identifierName: 'y'
+						filename: "input.ts"
+						identifierName: "y"
 						end: Object {
 							column: 10
 							index: 21
@@ -221,7 +221,7 @@ Program {
 				}
 				object: TSAsExpression {
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 7
 							index: 18
@@ -234,10 +234,10 @@ Program {
 						}
 					}
 					expression: ReferenceIdentifier {
-						name: 'x'
+						name: "x"
 						loc: Object {
-							filename: 'input.ts'
-							identifierName: 'x'
+							filename: "input.ts"
+							identifierName: "x"
 							end: Object {
 								column: 2
 								index: 13
@@ -253,7 +253,7 @@ Program {
 					typeAnnotation: TSTypeReference {
 						typeParameters: undefined
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 7
 								index: 18
@@ -266,10 +266,10 @@ Program {
 							}
 						}
 						typeName: ReferenceIdentifier {
-							name: 'T'
+							name: "T"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'T'
+								filename: "input.ts"
+								identifierName: "T"
 								end: Object {
 									column: 7
 									index: 18
@@ -288,7 +288,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 5
 					index: 28
@@ -302,7 +302,7 @@ Program {
 			}
 			expression: MemberExpression {
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 4
 						index: 27
@@ -316,7 +316,7 @@ Program {
 				}
 				object: TSNonNullExpression {
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 2
 							index: 25
@@ -329,10 +329,10 @@ Program {
 						}
 					}
 					expression: ReferenceIdentifier {
-						name: 'x'
+						name: "x"
 						loc: Object {
-							filename: 'input.ts'
-							identifierName: 'x'
+							filename: "input.ts"
+							identifierName: "x"
 							end: Object {
 								column: 1
 								index: 24
@@ -348,10 +348,10 @@ Program {
 				}
 				property: StaticMemberProperty {
 					value: Identifier {
-						name: 'y'
+						name: "y"
 						loc: Object {
-							filename: 'input.ts'
-							identifierName: 'y'
+							filename: "input.ts"
+							identifierName: "y"
 							end: Object {
 								column: 4
 								index: 27
@@ -365,8 +365,8 @@ Program {
 						}
 					}
 					loc: Object {
-						filename: 'input.ts'
-						identifierName: 'y'
+						filename: "input.ts"
+						identifierName: "y"
 						end: Object {
 							column: 4
 							index: 27

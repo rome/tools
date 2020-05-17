@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Binding, Path, TransformExitResult} from '@romejs/js-compiler';
+import {Binding, Path, TransformExitResult} from "@romejs/js-compiler";
 import {
 	AnyNode,
 	ImportDeclaration,
@@ -17,24 +17,24 @@ import {
 	importSpecifierLocal,
 	jsxIdentifier,
 	referenceIdentifier,
-} from '@romejs/js-ast';
-import {isIdentifierish} from '@romejs/js-ast-utils';
+} from "@romejs/js-ast";
+import {isIdentifierish} from "@romejs/js-ast-utils";
 
 // TODO: Remove this. This contains React for the following reason:
 //   A user may write: import * as React from 'react';
 //   We will remove the namespace and have only the used specifiers
 //   But the JSX plugin inserts `React.createElement`. Oh no.
-const IGNORED_NAMES = ['React', 'react'];
+const IGNORED_NAMES = ["React", "react"];
 
 function getName(node: AnyNode): undefined | string {
-	if (node.type !== 'MemberExpression' && node.type !== 'JSXMemberExpression') {
+	if (node.type !== "MemberExpression" && node.type !== "JSXMemberExpression") {
 		return undefined;
 	}
 
 	const {property} = node;
 
-	if (property.type === 'ComputedMemberProperty') {
-		if (property.value.type === 'StringLiteral') {
+	if (property.type === "ComputedMemberProperty") {
+		if (property.value.type === "StringLiteral") {
 			return property.value.value;
 		}
 	} else {
@@ -47,11 +47,11 @@ function getName(node: AnyNode): undefined | string {
 }
 
 export default {
-	name: 'optimizeImports',
+	name: "optimizeImports",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 
-		if (node.type !== 'Program') {
+		if (node.type !== "Program") {
 			return node;
 		}
 
@@ -68,7 +68,7 @@ export default {
 		const wildcardImportNodeToLocal: Map<ImportDeclaration, string> = new Map();
 		for (const child of node.body) {
 			if (
-				child.type === 'ImportDeclaration' &&
+				child.type === "ImportDeclaration" &&
 				!IGNORED_NAMES.includes(child.source.value) &&
 				child.namespaceSpecifier !== undefined
 			) {
@@ -93,10 +93,10 @@ export default {
 
 		// - Remove the namespaces that have computed property access
 		path.traverse(
-			'optimizeImportsWildcardCollector',
+			"optimizeImportsWildcardCollector",
 			(path) => {
 				const {node, parent} = path;
-				if (node.type !== 'ReferenceIdentifier') {
+				if (node.type !== "ReferenceIdentifier") {
 					return;
 				}
 
@@ -112,11 +112,11 @@ export default {
 				}
 
 				const isComputed =
-					parent.type === 'MemberExpression' &&
+					parent.type === "MemberExpression" &&
 					parent.object === node &&
 					getName(parent) === undefined;
 				const isUnboxed =
-					parent.type !== 'MemberExpression' && parent.type !== 'JSXMemberExpression';
+					parent.type !== "MemberExpression" && parent.type !== "JSXMemberExpression";
 
 				if (isComputed || isUnboxed) {
 					// Deopt as we can't follow this
@@ -124,7 +124,7 @@ export default {
 				} else {
 					const name = getName(parent);
 					if (name === undefined) {
-						throw new Error('Expected name');
+						throw new Error("Expected name");
 					}
 					wildcardInfo.names.add(name);
 					wildcardInfo.references.add(parent);
@@ -143,28 +143,28 @@ export default {
 		}
 
 		return path.reduce({
-			name: 'optimizeImportWilcards',
+			name: "optimizeImportWilcards",
 			enter(path): AnyNode {
 				const {node} = path;
 
 				// Replace all member expressions with their uids
 				if (
-					(node.type === 'MemberExpression' || node.type === 'JSXMemberExpression') &&
+					(node.type === "MemberExpression" || node.type === "JSXMemberExpression") &&
 					isIdentifierish(node.object)
 				) {
 					const wildcardInfo = wildcardImports.get(node.object.name);
 					if (wildcardInfo !== undefined && wildcardInfo.references.has(node)) {
 						const name = getName(node);
 						if (name === undefined) {
-							throw new Error('Expected name');
+							throw new Error("Expected name");
 						}
 
 						const newName = wildcardInfo.mappings.get(name);
 						if (newName === undefined) {
-							throw new Error('Expected newName');
+							throw new Error("Expected newName");
 						}
 
-						if (node.type === 'JSXMemberExpression') {
+						if (node.type === "JSXMemberExpression") {
 							return jsxIdentifier.quick(newName);
 						} else {
 							return referenceIdentifier.quick(newName);
@@ -173,10 +173,10 @@ export default {
 				}
 
 				// Add new specifiers to wildcard import declarations
-				if (node.type === 'ImportDeclaration' && wildcardImportNodeToLocal.has(node)) {
+				if (node.type === "ImportDeclaration" && wildcardImportNodeToLocal.has(node)) {
 					const local = wildcardImportNodeToLocal.get(node);
 					if (local === undefined) {
-						throw new Error('Expected local');
+						throw new Error("Expected local");
 					}
 
 					const wildcardInfo = wildcardImports.get(local);

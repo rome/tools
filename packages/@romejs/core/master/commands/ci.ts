@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {DiagnosticsPrinter} from '@romejs/cli-diagnostics';
-import {MasterRequest} from '@romejs/core';
-import {commandCategories} from '../../common/commands';
-import {createMasterCommand} from '../commands';
-import lint from './lint';
-import test from './test';
-import {Consumer} from '@romejs/consume';
+import {DiagnosticsPrinter} from "@romejs/cli-diagnostics";
+import {MasterRequest} from "@romejs/core";
+import {commandCategories} from "../../common/commands";
+import {createMasterCommand} from "../commands";
+import lint from "./lint";
+import test from "./test";
+import {Consumer} from "@romejs/consume";
 
 async function runChildCommand(
 	req: MasterRequest,
@@ -40,18 +40,18 @@ type Flags = {
 
 export default createMasterCommand({
 	category: commandCategories.CODE_QUALITY,
-	description: 'run lint and tests',
-	usage: '',
+	description: "run lint and tests",
+	usage: "",
 	examples: [],
 	defineFlags(consumer: Consumer): Flags {
 		return {
-			fix: consumer.get('fix').asBoolean(false),
+			fix: consumer.get("fix").asBoolean(false),
 		};
 	},
 	async callback(req: MasterRequest, flags: Flags): Promise<void> {
 		const {reporter} = req;
 
-		reporter.heading('Running lint');
+		reporter.heading("Running lint");
 		await runChildCommand(
 			req,
 			async () => {
@@ -67,7 +67,7 @@ export default createMasterCommand({
 			},
 		);
 
-		reporter.heading('Running tests');
+		reporter.heading("Running tests");
 		await runChildCommand(
 			req,
 			async () => {

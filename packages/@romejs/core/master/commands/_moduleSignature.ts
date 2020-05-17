@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {MasterRequest} from '@romejs/core';
-import {commandCategories} from '../../common/commands';
-import {createMasterCommand} from '../commands';
-import {createUnknownFilePath} from '@romejs/path';
+import {MasterRequest} from "@romejs/core";
+import {commandCategories} from "../../common/commands";
+import {createMasterCommand} from "../commands";
+import {createUnknownFilePath} from "@romejs/path";
 
 export default createMasterCommand({
 	category: commandCategories.INTERNAL,
-	description: 'get the module type signature of a file',
-	usage: '',
+	description: "get the module type signature of a file",
+	usage: "",
 	examples: [],
 	defineFlags() {
 		return {};
@@ -28,7 +28,7 @@ export default createMasterCommand({
 				...req.getResolverOptionsFromFlags(),
 				source: createUnknownFilePath(args[0]),
 			},
-			{location: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})},
+			{location: req.getDiagnosticPointerFromFlags({type: "arg", key: 0})},
 		);
 		reporter.inspect(await req.requestWorkerModuleSignature(filename, {}));
 	},

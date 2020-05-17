@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {MasterRequest} from '@romejs/core';
-import {commandCategories} from '../../common/commands';
-import {createMasterCommand} from '../commands';
-import {Consumer} from '@romejs/consume';
-import {createUnknownFilePath} from '@romejs/path';
-import {SourceLocation} from '@romejs/parser-core';
+import {MasterRequest} from "@romejs/core";
+import {commandCategories} from "../../common/commands";
+import {createMasterCommand} from "../commands";
+import {Consumer} from "@romejs/consume";
+import {createUnknownFilePath} from "@romejs/path";
+import {SourceLocation} from "@romejs/parser-core";
 
 type Flags = {
 	focusSource: undefined | string;
@@ -19,7 +19,7 @@ type Flags = {
 
 function removeLoc<T extends {
 	loc?: SourceLocation;
-}>(obj: T): Omit<T, 'loc'> {
+}>(obj: T): Omit<T, "loc"> {
 	const {loc, ...locless} = obj;
 	loc;
 	return locless;
@@ -27,13 +27,13 @@ function removeLoc<T extends {
 
 export default createMasterCommand({
 	category: commandCategories.SOURCE_CODE,
-	description: 'analyze and dump the dependencies of a file',
-	usage: '',
+	description: "analyze and dump the dependencies of a file",
+	usage: "",
 	examples: [],
 	defineFlags(c: Consumer): Flags {
 		return {
-			compact: c.get('compact').asBoolean(false),
-			focusSource: c.get('focusSource').asStringOrVoid(),
+			compact: c.get("compact").asBoolean(false),
+			focusSource: c.get("focusSource").asStringOrVoid(),
 		};
 	},
 	async callback(req: MasterRequest, commandFlags: Flags): Promise<void> {
@@ -46,7 +46,7 @@ export default createMasterCommand({
 				...req.getResolverOptionsFromFlags(),
 				source: createUnknownFilePath(args[0]),
 			},
-			{location: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})},
+			{location: req.getDiagnosticPointerFromFlags({type: "arg", key: 0})},
 		);
 
 		let res = await req.requestWorkerAnalyzeDependencies(filename, {});
@@ -73,16 +73,16 @@ export default createMasterCommand({
 				exports: res.exports.map((exp) => {
 					// This weird switch is because TS only returns an object with the properties common amongst all
 					switch (exp.type) {
-						case 'local':
+						case "local":
 							return removeLoc(exp);
 
-						case 'external':
+						case "external":
 							return removeLoc(exp);
 
-						case 'externalAll':
+						case "externalAll":
 							return removeLoc(exp);
 
-						case 'externalNamespace':
+						case "externalNamespace":
 							return removeLoc(exp);
 					}
 				}),

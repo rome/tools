@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Program} from '@romejs/js-ast';
-import {Token, concat, hardline} from '../../tokens';
+import Builder from "../../Builder";
+import {Program} from "@romejs/js-ast";
+import {Token, concat, hardline} from "../../tokens";
 
 export default function Program(builder: Builder, node: Program): Token {
 	const tokens: Array<Token> = [

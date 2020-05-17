@@ -11,18 +11,18 @@ import {
 	SpreadElement,
 	Super,
 	TSTypeParameterInstantiation,
-} from '../index';
-import {createBuilder} from '../utils';
+} from "../index";
+import {createBuilder} from "../utils";
 
 export type OptionalCallExpression = JSNodeBase & {
-	type: 'OptionalCallExpression';
+	type: "OptionalCallExpression";
 	callee: AnyExpression | Super;
 	arguments: Array<AnyExpression | SpreadElement>;
 	typeArguments?: TSTypeParameterInstantiation;
 };
 
 export const optionalCallExpression = createBuilder<OptionalCallExpression>(
-	'OptionalCallExpression',
+	"OptionalCallExpression",
 	{
 		bindingKeys: {},
 		visitorKeys: {

@@ -6,23 +6,23 @@
  */
 
 import {
-	AnyPrimaryType,
+	AnyTSPrimary,
 	BindingIdentifier,
 	JSNodeBase,
 	TSTypeParameterDeclaration,
-} from '../index';
-import {createBuilder} from '../utils';
+} from "../index";
+import {createBuilder} from "../utils";
 
 export type TypeAliasTypeAnnotation = JSNodeBase & {
-	type: 'TypeAliasTypeAnnotation';
+	type: "TypeAliasTypeAnnotation";
 	id: BindingIdentifier;
 	typeParameters?: TSTypeParameterDeclaration;
-	right: AnyPrimaryType;
+	right: AnyTSPrimary;
 	declare?: boolean | undefined;
 };
 
 export const typeAliasTypeAnnotation = createBuilder<TypeAliasTypeAnnotation>(
-	'TypeAliasTypeAnnotation',
+	"TypeAliasTypeAnnotation",
 	{
 		bindingKeys: {
 			id: true,

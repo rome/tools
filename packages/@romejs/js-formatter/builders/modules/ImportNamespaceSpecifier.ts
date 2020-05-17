@@ -5,18 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token, concat, space} from '../../tokens';
-import {ImportNamespaceSpecifier} from '@romejs/js-ast';
+import Builder from "../../Builder";
+import {Token, concat, space} from "../../tokens";
+import {ImportNamespaceSpecifier} from "@romejs/js-ast";
 
 export default function ImportNamespaceSpecifier(
 	builder: Builder,
 	node: ImportNamespaceSpecifier,
 ): Token {
 	return concat([
-		'*',
+		"*",
 		space,
-		'as',
+		"as",
 		space,
 		builder.tokenize(node.local.name, node),
 	]);

@@ -11,7 +11,7 @@ export function hrTime(): number {
 	return ts;
 }
 
-const FILE_PROTOCOL = 'file://';
+const FILE_PROTOCOL = "file://";
 
 export function urlToFilename(url: string): string {
 	if (url.startsWith(FILE_PROTOCOL)) {

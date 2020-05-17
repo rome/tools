@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from '@romejs/js-compiler';
-import {AnyNode} from '@romejs/js-ast';
-import {descriptions} from '@romejs/diagnostics';
+import {Path} from "@romejs/js-compiler";
+import {AnyNode} from "@romejs/js-ast";
+import {descriptions} from "@romejs/diagnostics";
 
 export default {
-	name: 'noLabelVar',
+	name: "noLabelVar",
 	enter(path: Path): AnyNode {
 		const {node, scope} = path;
 
-		if (node.type === 'LabeledStatement') {
+		if (node.type === "LabeledStatement") {
 			const name = node.label.name;
 			const binding = scope.getBinding(name);
 			const isDefined =

@@ -10,7 +10,7 @@
 npm {
 	name: Object {
 		org: undefined
-		packageName: 'foo'
+		packageName: "foo"
 	}
 	range: undefined
 }
@@ -22,7 +22,7 @@ npm {
 npm {
 	name: Object {
 		org: undefined
-		packageName: '@foo/bar'
+		packageName: "@foo/bar"
 	}
 	range: undefined
 }
@@ -34,7 +34,7 @@ npm {
 npm {
 	name: Object {
 		org: undefined
-		packageName: 'foo'
+		packageName: "foo"
 	}
 	range: AbsoluteVersion {
 		build: Array []
@@ -65,7 +65,7 @@ npm {
 npm {
 	name: Object {
 		org: undefined
-		packageName: '@foo/bar'
+		packageName: "@foo/bar"
 	}
 	range: AbsoluteVersion {
 		build: Array []

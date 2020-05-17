@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 34
 			index: 34
@@ -33,7 +33,7 @@ Program {
 		TryStatement {
 			handler: undefined
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 34
 					index: 34
@@ -49,7 +49,7 @@ Program {
 				body: Array []
 				directives: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 7
 						index: 7
@@ -65,7 +65,7 @@ Program {
 			finalizer: BlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 34
 						index: 34
@@ -80,7 +80,7 @@ Program {
 				body: Array [
 					ExpressionStatement {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 32
 								index: 32
@@ -94,7 +94,7 @@ Program {
 						}
 						expression: CallExpression {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 32
 									index: 32
@@ -107,10 +107,10 @@ Program {
 								}
 							}
 							callee: ReferenceIdentifier {
-								name: 'cleanup'
+								name: "cleanup"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'cleanup'
+									filename: "input.js"
+									identifierName: "cleanup"
 									end: Object {
 										column: 25
 										index: 25
@@ -125,10 +125,10 @@ Program {
 							}
 							arguments: Array [
 								ReferenceIdentifier {
-									name: 'stuff'
+									name: "stuff"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'stuff'
+										filename: "input.js"
+										identifierName: "stuff"
 										end: Object {
 											column: 31
 											index: 31

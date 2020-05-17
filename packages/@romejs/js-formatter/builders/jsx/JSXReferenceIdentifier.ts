@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Token} from '../../tokens';
-import Builder from '../../Builder';
-import {JSXReferenceIdentifier} from '@romejs/js-ast';
+import {Token} from "../../tokens";
+import Builder from "../../Builder";
+import {JSXReferenceIdentifier} from "@romejs/js-ast";
 
 export default function JSXReferenceIdentifier(
 	builder: Builder,

@@ -14,16 +14,16 @@ import {
 	BridgeSuccessResponseMessage,
 	BridgeType,
 	EventSubscription,
-} from './types';
-import {JSONObject, JSONPropertyValue} from '@romejs/codec-json';
-import BridgeError from './BridgeError';
-import BridgeEvent, {BridgeEventOptions} from './BridgeEvent';
-import Event from './Event';
+} from "./types";
+import {JSONObject, JSONPropertyValue} from "@romejs/codec-json";
+import BridgeError from "./BridgeError";
+import BridgeEvent, {BridgeEventOptions} from "./BridgeEvent";
+import Event from "./Event";
 import {
 	ERROR_FRAMES_PROP,
 	StructuredError,
 	getErrorStructure,
-} from '@romejs/v8';
+} from "@romejs/v8";
 
 type ErrorJSON = {
 	serialize: (err: Error) => JSONObject;
@@ -42,10 +42,10 @@ export default class Bridge {
 		this.events = new Map();
 
 		this.hasHandshook = false;
-		this.handshakeEvent = new Event({name: 'Bridge.handshake'});
-		this.endEvent = new Event({name: 'Bridge.end', serial: true});
+		this.handshakeEvent = new Event({name: "Bridge.handshake"});
+		this.endEvent = new Event({name: "Bridge.end", serial: true});
 		this.updatedListenersEvent = new Event({
-			name: 'Bridge.updatedListenersEvent',
+			name: "Bridge.updatedListenersEvent",
 		});
 
 		// A Set of event names that are being listened to on the other end
@@ -59,11 +59,11 @@ export default class Bridge {
 		this.postHandshakeQueue = [];
 
 		this.heartbeatEvent = this.createEvent({
-			name: 'Bridge.heartbeat',
-			direction: 'server<->client',
+			name: "Bridge.heartbeat",
+			direction: "server<->client",
 		});
 
-		if (this.type !== 'server&client') {
+		if (this.type !== "server&client") {
 			this.heartbeatEvent.subscribe(() => {
 				return undefined;
 			});
@@ -110,7 +110,7 @@ export default class Bridge {
 	}
 
 	monitorHeartbeat(timeout: number, onExceeded: () => undefined | Promise<void>) {
-		if (this.type === 'server&client') {
+		if (this.type === "server&client") {
 			// No point in monitoring this since we're the same process
 			return;
 		}
@@ -152,7 +152,7 @@ export default class Bridge {
 		} = {},
 	): Promise<void> {
 		if (this.hasHandshook) {
-			throw new Error('Already performed handshake');
+			throw new Error("Already performed handshake");
 		}
 
 		const {timeout, second = false} = opts;
@@ -160,7 +160,7 @@ export default class Bridge {
 		// Send a handshake in case we were the first
 		if (!second) {
 			this.sendMessage({
-				type: 'handshake',
+				type: "handshake",
 				first: true,
 				subscriptions: this.getSubscriptions(),
 			});
@@ -172,7 +172,7 @@ export default class Bridge {
 		if (res.first) {
 			// Send the handshake again, as it wouldn't have received the first
 			this.sendMessage({
-				type: 'handshake',
+				type: "handshake",
 				first: false,
 				subscriptions: this.getSubscriptions(),
 			});
@@ -209,7 +209,7 @@ export default class Bridge {
 		// This is fine since we don't change subscriptions often and they aren't very large
 		// If we have a lot of subscriptions, or are changing them a lot in the future then this could be optimized
 		this.sendMessage({
-			type: 'subscriptions',
+			type: "subscriptions",
 			names: this.getSubscriptions(),
 		});
 	}
@@ -237,7 +237,7 @@ export default class Bridge {
 		opts: BridgeEventOptions,
 	): BridgeEvent<Param, Ret> {
 		if (this.events.has(opts.name)) {
-			throw new Error('Duplicate event');
+			throw new Error("Duplicate event");
 		}
 
 		const event = new BridgeEvent<Param, Ret>(opts, this);
@@ -248,7 +248,7 @@ export default class Bridge {
 	//# Connection death
 	assertAlive(): void {
 		if (this.alive === false) {
-			throw new Error('Bridge is dead');
+			throw new Error("Bridge is dead");
 		}
 	}
 
@@ -274,7 +274,7 @@ export default class Bridge {
 		this.endEvent.callSync(err);
 	}
 
-	end(message: string = 'Connection died') {
+	end(message: string = "Connection died") {
 		this.endWithError(new BridgeError(message, this));
 	}
 
@@ -285,7 +285,7 @@ export default class Bridge {
 			const err: Error & {
 				[ERROR_FRAMES_PROP]?: unknown;
 			} = new Error(struct.message);
-			err.name = struct.name || 'Error';
+			err.name = struct.name || "Error";
 			err.stack = struct.stack;
 			err[ERROR_FRAMES_PROP] = struct.frames;
 			return err;
@@ -310,8 +310,8 @@ export default class Bridge {
 		return {
 			id,
 			event,
-			type: 'response',
-			responseStatus: 'error',
+			type: "response",
+			responseStatus: "error",
 			value: getErrorStructure(err),
 			metadata,
 		};
@@ -325,14 +325,14 @@ export default class Bridge {
 	sendMessage(msg: BridgeMessage) {
 		// There's no try-catch gated around sendMessage because the call stack here will include some other error handler
 		// We need to be specific for handleMessage because it could come from anywhere
-		if (msg.type !== 'handshake' && !this.hasHandshook) {
+		if (msg.type !== "handshake" && !this.hasHandshook) {
 			this.postHandshakeQueue.push(msg);
 			return;
 		}
 
 		this.assertAlive();
 
-		if (msg.type === 'response') {
+		if (msg.type === "response") {
 			if (
 				this.prioritizedResponses.size > 0 &&
 				!this.prioritizedResponses.has(msg.id)
@@ -372,22 +372,22 @@ export default class Bridge {
 		try {
 			this.assertAlive();
 
-			if (msg.type === 'handshake') {
+			if (msg.type === "handshake") {
 				this.handshakeEvent.send({
 					subscriptions: msg.subscriptions,
 					first: msg.first,
 				});
 			}
 
-			if (msg.type === 'subscriptions') {
+			if (msg.type === "subscriptions") {
 				this.receivedSubscriptions(msg.names);
 			}
 
-			if (msg.type === 'request') {
+			if (msg.type === "request") {
 				this.handleMessageRequest(msg);
 			}
 
-			if (msg.type === 'response') {
+			if (msg.type === "response") {
 				this.handleMessageResponse(msg);
 			}
 		} catch (err) {
@@ -400,15 +400,15 @@ export default class Bridge {
 	) {
 		const {id, event} = data;
 		if (id === undefined) {
-			throw new Error('Expected id');
+			throw new Error("Expected id");
 		}
 		if (event === undefined) {
-			throw new Error('Expected event');
+			throw new Error("Expected event");
 		}
 
 		const eventHandler = this.events.get(event);
 		if (eventHandler === undefined) {
-			throw new Error('Unknown event');
+			throw new Error("Unknown event");
 		}
 
 		eventHandler.dispatchResponse(id, data);
@@ -417,7 +417,7 @@ export default class Bridge {
 	handleMessageRequest(data: BridgeRequestMessage) {
 		const {id, event, param, priority} = data;
 		if (event === undefined) {
-			throw new Error('Expected event in message request but received none');
+			throw new Error("Expected event in message request but received none");
 		}
 
 		const eventHandler = this.events.get(event);
@@ -438,8 +438,8 @@ export default class Bridge {
 				this.sendMessage({
 					event,
 					id,
-					type: 'response',
-					responseStatus: 'success',
+					type: "response",
+					responseStatus: "success",
 					value,
 				});
 			}).catch((err) => {

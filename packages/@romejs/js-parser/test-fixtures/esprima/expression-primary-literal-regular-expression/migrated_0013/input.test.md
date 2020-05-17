@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 18
 			index: 18
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 18
 					index: 18
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'var'
+				kind: "var"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 18
 						index: 18
@@ -62,10 +62,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'x'
+							name: "x"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'x'
+								filename: "input.js"
+								identifierName: "x"
 								end: Object {
 									column: 5
 									index: 5
@@ -79,7 +79,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 18
 								index: 18
@@ -93,7 +93,7 @@ Program {
 						}
 						init: MemberExpression {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 18
 									index: 18
@@ -107,10 +107,10 @@ Program {
 							}
 							property: StaticMemberProperty {
 								value: Identifier {
-									name: 'test'
+									name: "test"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'test'
+										filename: "input.js"
+										identifierName: "test"
 										end: Object {
 											column: 18
 											index: 18
@@ -124,8 +124,8 @@ Program {
 									}
 								}
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'test'
+									filename: "input.js"
+									identifierName: "test"
 									end: Object {
 										column: 18
 										index: 18
@@ -146,7 +146,7 @@ Program {
 								sticky: false
 								unicode: false
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 13
 										index: 13
@@ -160,7 +160,7 @@ Program {
 								}
 								expression: RegExpSubExpression {
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 11
 											index: 11
@@ -174,9 +174,9 @@ Program {
 									}
 									body: Array [
 										RegExpCharacter {
-											value: '4'
+											value: "4"
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 10
 													index: 10
@@ -190,9 +190,9 @@ Program {
 											}
 										}
 										RegExpCharacter {
-											value: '2'
+											value: "2"
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 11
 													index: 11

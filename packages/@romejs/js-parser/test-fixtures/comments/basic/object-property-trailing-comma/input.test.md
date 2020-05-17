@@ -9,14 +9,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 84
@@ -30,10 +30,10 @@ Program {
 	}
 	comments: Array [
 		CommentLine {
-			id: '0'
-			value: ' comment 1'
+			id: "0"
+			value: " comment 1"
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 22
 					index: 34
@@ -47,10 +47,10 @@ Program {
 			}
 		}
 		CommentLine {
-			id: '1'
-			value: ' comment 2'
+			id: "1"
+			value: " comment 2"
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 22
 					index: 57
@@ -64,10 +64,10 @@ Program {
 			}
 		}
 		CommentLine {
-			id: '2'
-			value: ' comment 3'
+			id: "2"
+			value: " comment 3"
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 22
 					index: 80
@@ -84,7 +84,7 @@ Program {
 	body: Array [
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 2
 					index: 83
@@ -97,9 +97,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'var'
+				kind: "var"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 2
 						index: 83
@@ -114,10 +114,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'obj'
+							name: "obj"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'obj'
+								filename: "input.js"
+								identifierName: "obj"
 								end: Object {
 									column: 7
 									index: 7
@@ -131,7 +131,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 1
 								index: 82
@@ -145,7 +145,7 @@ Program {
 						}
 						init: ObjectExpression {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 1
 									index: 82
@@ -161,10 +161,10 @@ Program {
 								ObjectProperty {
 									key: StaticPropertyKey {
 										value: Identifier {
-											name: 'a'
+											name: "a"
 											loc: Object {
-												filename: 'input.js'
-												identifierName: 'a'
+												filename: "input.js"
+												identifierName: "a"
 												end: Object {
 													column: 3
 													index: 15
@@ -178,7 +178,7 @@ Program {
 											}
 										}
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 3
 												index: 15
@@ -192,9 +192,9 @@ Program {
 										}
 									}
 									value: StringLiteral {
-										value: '1'
+										value: "1"
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 8
 												index: 20
@@ -208,7 +208,7 @@ Program {
 										}
 									}
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 8
 											index: 20
@@ -224,11 +224,11 @@ Program {
 								ObjectProperty {
 									key: StaticPropertyKey {
 										value: Identifier {
-											name: 'b'
+											name: "b"
 											leadingComments: undefined
 											loc: Object {
-												filename: 'input.js'
-												identifierName: 'b'
+												filename: "input.js"
+												identifierName: "b"
 												end: Object {
 													column: 3
 													index: 38
@@ -243,7 +243,7 @@ Program {
 										}
 										leadingComments: undefined
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 3
 												index: 38
@@ -257,9 +257,9 @@ Program {
 										}
 									}
 									value: StringLiteral {
-										value: '2'
+										value: "2"
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 8
 												index: 43
@@ -272,9 +272,9 @@ Program {
 											}
 										}
 									}
-									leadingComments: Array ['0']
+									leadingComments: Array ["0"]
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 8
 											index: 43
@@ -290,11 +290,11 @@ Program {
 								ObjectProperty {
 									key: StaticPropertyKey {
 										value: Identifier {
-											name: 'c'
+											name: "c"
 											leadingComments: undefined
 											loc: Object {
-												filename: 'input.js'
-												identifierName: 'c'
+												filename: "input.js"
+												identifierName: "c"
 												end: Object {
 													column: 3
 													index: 61
@@ -309,7 +309,7 @@ Program {
 										}
 										leadingComments: undefined
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 3
 												index: 61
@@ -323,9 +323,9 @@ Program {
 										}
 									}
 									value: StringLiteral {
-										value: '3'
+										value: "3"
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 8
 												index: 66
@@ -338,10 +338,10 @@ Program {
 											}
 										}
 									}
-									leadingComments: Array ['1']
-									trailingComments: Array ['2']
+									leadingComments: Array ["1"]
+									trailingComments: Array ["2"]
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 8
 											index: 66

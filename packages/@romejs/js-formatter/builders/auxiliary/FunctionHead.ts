@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {FunctionHead} from '@romejs/js-ast';
-import {Builder} from '@romejs/js-formatter';
-import {printBindingPatternParams} from '../utils';
-import {Token, concat, group, space} from '../../tokens';
+import {FunctionHead} from "@romejs/js-ast";
+import {Builder} from "@romejs/js-formatter";
+import {printBindingPatternParams} from "../utils";
+import {Token, concat, group, space} from "../../tokens";
 
 export default function FunctionHead(
 	builder: Builder,
@@ -27,10 +27,10 @@ export default function FunctionHead(
 		node.rest,
 	);
 
-	let printedReturnType: Token = '';
+	let printedReturnType: Token = "";
 	if (builder.options.typeAnnotations) {
 		if (node.returnType) {
-			const tokens: Array<Token> = [':'];
+			const tokens: Array<Token> = [":"];
 			tokens.push(space, builder.tokenize(node.returnType, node));
 			printedReturnType = concat(tokens);
 		}

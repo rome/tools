@@ -10,8 +10,8 @@ import {
 	ArrayExpression,
 	AssignmentArrayPattern,
 	BindingArrayPattern,
-} from '@romejs/js-ast';
-import Builder from '../../Builder';
+} from "@romejs/js-ast";
+import Builder from "../../Builder";
 import {
 	Token,
 	concat,
@@ -21,8 +21,8 @@ import {
 	join,
 	lineOrSpace,
 	softline,
-} from '../../tokens';
-import {hasInnerComments} from '../comments';
+} from "../../tokens";
+import {hasInnerComments} from "../comments";
 
 export default function ArrayExpression(
 	builder: Builder,
@@ -30,16 +30,16 @@ export default function ArrayExpression(
 ): Token {
 	const hasContents = node.elements.length > 0;
 	const hasRest =
-		(node.type === 'BindingArrayPattern' || node.type === 'AssignmentArrayPattern') &&
+		(node.type === "BindingArrayPattern" || node.type === "AssignmentArrayPattern") &&
 		node.rest !== undefined;
 
 	if (!hasContents && !hasRest) {
 		if (hasInnerComments(node)) {
 			return group(
-				concat(['[', builder.tokenizeInnerComments(node, true), softline, ']']),
+				concat(["[", builder.tokenizeInnerComments(node, true), softline, "]"]),
 			);
 		} else {
-			return '[]';
+			return "[]";
 		}
 	}
 
@@ -59,21 +59,21 @@ export default function ArrayExpression(
 			}
 		}
 
-		tokens.push(join(concat([',', lineOrSpace]), elements));
+		tokens.push(join(concat([",", lineOrSpace]), elements));
 
 		if (hasRest) {
-			tokens.push(',', lineOrSpace);
+			tokens.push(",", lineOrSpace);
 		} else {
 			// Add trailing comma
-			tokens.push(ifBreak(','));
+			tokens.push(ifBreak(","));
 		}
 	}
 
 	if (hasRest) {
-		tokens.push('...', builder.tokenize((node as AnyArrayPattern).rest, node));
+		tokens.push("...", builder.tokenize((node as AnyArrayPattern).rest, node));
 	}
 
 	return group(
-		concat(['[', indent(concat([softline, concat(tokens)])), softline, ']']),
+		concat(["[", indent(concat([softline, concat(tokens)])), softline, "]"]),
 	);
 }

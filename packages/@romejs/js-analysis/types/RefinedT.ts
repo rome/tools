@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from '@romejs/js-ast';
-import {Scope} from '../scopes';
-import MissingUnionE from './errors/MissingUnionE';
-import T from './T';
+import {AnyNode} from "@romejs/js-ast";
+import {Scope} from "../scopes";
+import MissingUnionE from "./errors/MissingUnionE";
+import T from "./T";
 
 export default class RefinedT extends T {
 	constructor(scope: Scope, originNode: undefined | AnyNode, root: T, remove: T) {
@@ -17,7 +17,7 @@ export default class RefinedT extends T {
 		this.remove = remove;
 	}
 
-	static type = 'RefinedT';
+	static type = "RefinedT";
 	root: T;
 	remove: T;
 

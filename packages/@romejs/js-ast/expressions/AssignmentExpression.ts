@@ -5,33 +5,33 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyAssignmentPattern, AnyExpression, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {AnyAssignmentPattern, AnyExpression, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type AssignmentExpression = JSNodeBase & {
-	type: 'AssignmentExpression';
+	type: "AssignmentExpression";
 	operator: AssignmentOperator;
 	left: AnyAssignmentPattern;
 	right: AnyExpression;
 };
 
 export type AssignmentOperator =
-	 | '='
-	| '+='
-	| '-='
-	| '*='
-	| '/='
-	| '%='
-	| '<<='
-	| '>>='
-	| '>>>='
-	| '|='
-	| '^='
-	| '&='
-	| '??=';
+	 | "="
+	| "+="
+	| "-="
+	| "*="
+	| "/="
+	| "%="
+	| "<<="
+	| ">>="
+	| ">>>="
+	| "|="
+	| "^="
+	| "&="
+	| "??=";
 
 export const assignmentExpression = createBuilder<AssignmentExpression>(
-	'AssignmentExpression',
+	"AssignmentExpression",
 	{
 		bindingKeys: {},
 		visitorKeys: {

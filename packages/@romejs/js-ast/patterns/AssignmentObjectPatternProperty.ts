@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyAssignmentPattern, AnyObjectPropertyKey, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {AnyAssignmentPattern, AnyObjectPropertyKey, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type AssignmentObjectPatternProperty = JSNodeBase & {
-	type: 'AssignmentObjectPatternProperty';
+	type: "AssignmentObjectPatternProperty";
 	key: AnyObjectPropertyKey;
 	value: AnyAssignmentPattern;
 };
 
 export const assignmentObjectPatternProperty = createBuilder<AssignmentObjectPatternProperty>(
-	'AssignmentObjectPatternProperty',
+	"AssignmentObjectPatternProperty",
 	{
 		bindingKeys: {},
 		visitorKeys: {

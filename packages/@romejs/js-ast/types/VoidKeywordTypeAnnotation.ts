@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type VoidKeywordTypeAnnotation = JSNodeBase & {
-	type: 'VoidKeywordTypeAnnotation';
+	type: "VoidKeywordTypeAnnotation";
 };
 
 export const voidKeywordTypeAnnotation = createBuilder<VoidKeywordTypeAnnotation>(
-	'VoidKeywordTypeAnnotation',
+	"VoidKeywordTypeAnnotation",
 	{
 		bindingKeys: {},
 		visitorKeys: {},

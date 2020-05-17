@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {MasterRequest} from '@romejs/core';
-import {WorkerStatus} from '../../common/bridges/WorkerBridge';
-import {commandCategories} from '../../common/commands';
-import {createMasterCommand} from '../commands';
+import {MasterRequest} from "@romejs/core";
+import {WorkerStatus} from "../../common/bridges/WorkerBridge";
+import {commandCategories} from "../../common/commands";
+import {createMasterCommand} from "../commands";
 
 type StatusResult = {
 	master: {
@@ -33,8 +33,8 @@ type StatusWorkerResult = {
 
 export default createMasterCommand({
 	category: commandCategories.PROCESS_MANAGEMENT,
-	description: 'dump memory and process info of master and workers',
-	usage: '',
+	description: "dump memory and process info of master and workers",
+	usage: "",
 	examples: [],
 	defineFlags() {
 		return {};

@@ -5,21 +5,21 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSONObject} from '@romejs/codec-json';
-import T from './types/T';
-import {AnyNode} from '@romejs/js-ast';
-import {ModuleSignature} from './index';
-import ImportT from './types/ImportT';
-import Intrinsics from './Intrinsics';
-import Graph from './Graph';
-import Hub from './Hub';
-import {Scope} from './scopes';
-import UnknownImportE from './types/errors/UnknownImportE';
-import EmptyT from './types/EmptyT';
-import OpenT from './types/OpenT';
-import types from './types/index';
-import evaluators from './evaluators/index';
-import {ModuleSignatureType} from './types';
+import {JSONObject} from "@romejs/codec-json";
+import T from "./types/T";
+import {AnyNode} from "@romejs/js-ast";
+import {ModuleSignature} from "./index";
+import ImportT from "./types/ImportT";
+import Intrinsics from "./Intrinsics";
+import Graph from "./Graph";
+import Hub from "./Hub";
+import {Scope} from "./scopes";
+import UnknownImportE from "./types/errors/UnknownImportE";
+import EmptyT from "./types/EmptyT";
+import OpenT from "./types/OpenT";
+import types from "./types/index";
+import evaluators from "./evaluators/index";
+import {ModuleSignatureType} from "./types";
 
 export type HydrateTypeFactory = (id: unknown) => T;
 
@@ -54,7 +54,7 @@ export class ModuleSignatureManager {
 
 	addAll(manager: ModuleSignatureManager) {
 		for (const [name, id] of manager.exportNamesToTypeId) {
-			if (name === 'default') {
+			if (name === "default") {
 				// ignore `default`
 				continue;
 			}
@@ -63,7 +63,7 @@ export class ModuleSignatureManager {
 
 			const openType = manager.openTypes.get(id);
 			if (openType === undefined) {
-				throw new Error('Expected an open type');
+				throw new Error("Expected an open type");
 			}
 			this.openTypes.set(id, openType);
 		}
@@ -83,11 +83,11 @@ export class ModuleSignatureManager {
 		// Create a factory to fetch the open ids
 		const getType: HydrateTypeFactory = (id: unknown): T => {
 			if (id === undefined) {
-				throw new Error('expected id');
+				throw new Error("expected id");
 			}
 
-			if (typeof id !== 'string') {
-				throw new Error('expected string id');
+			if (typeof id !== "string") {
+				throw new Error("expected string id");
 			}
 
 			const type = openTypes.get(id);
@@ -106,7 +106,7 @@ export class ModuleSignatureManager {
 		// Fetch the graphs of `export *` dependencies, future calls to `this.getModuleSignature` will fetch from 'cache
 		await Promise.all(
 			graph.exports.map((def) => {
-				if (def.type === 'all') {
+				if (def.type === "all") {
 					return this.getModuleSignature(def.source, graph.filename);
 				} else {
 					return undefined;
@@ -116,7 +116,7 @@ export class ModuleSignatureManager {
 
 		// Resolve all exports
 		for (const def of graph.exports) {
-			if (def.type === 'all') {
+			if (def.type === "all") {
 				const manager = await this.getModuleSignature(def.source, graph.filename);
 				if (manager !== undefined) {
 					this.addAll(manager);
@@ -135,13 +135,13 @@ export class ModuleSignatureManager {
 			// Retrieve the open type
 			const openT = openTypes.get(id);
 			if (openT === undefined) {
-				throw new Error('Expected an open type');
+				throw new Error("Expected an open type");
 			}
 
 			// Get the type constructor
 			const TConstructor = types.get(type);
 			if (TConstructor === undefined) {
-				throw new Error('Expected a valid internal type constructor name');
+				throw new Error("Expected a valid internal type constructor name");
 			}
 
 			// Create the type
@@ -185,7 +185,7 @@ export class ModuleSignatureManager {
 		// Retrieve the open type
 		const openT = this.openTypes.get(maybeExportId);
 		if (openT === undefined) {
-			throw new Error('Expected an open type');
+			throw new Error("Expected an open type");
 		}
 
 		// Link it to this type
@@ -195,12 +195,12 @@ export class ModuleSignatureManager {
 
 type Export =
 	 | {
-			type: 'local';
+			type: "local";
 			name: string;
 			value: T;
 		}
 	| {
-			type: 'all';
+			type: "all";
 			source: string;
 		};
 
@@ -246,7 +246,7 @@ export default class Evaluator {
 
 	evaluate(node: undefined | AnyNode, scope: Scope): T {
 		if (node === undefined) {
-			throw new Error('Expected node but received undefined');
+			throw new Error("Expected node but received undefined");
 		}
 
 		const evaluator = evaluators.get(node.type);
@@ -269,7 +269,7 @@ export default class Evaluator {
 		const type = this.nodeToType.get(node);
 		if (type === undefined) {
 			throw new Error(
-				'getTypeFromEvaluatedNode() called on a node that has not been validated yet',
+				"getTypeFromEvaluatedNode() called on a node that has not been validated yet",
 			);
 		} else {
 			return type;
@@ -278,7 +278,7 @@ export default class Evaluator {
 
 	addExport(name: string, type: T) {
 		this.exports.push({
-			type: 'local',
+			type: "local",
 			name,
 			value: type,
 		});
@@ -286,7 +286,7 @@ export default class Evaluator {
 
 	addExportAll(source: string) {
 		this.exports.push({
-			type: 'all',
+			type: "all",
 			source,
 		});
 	}

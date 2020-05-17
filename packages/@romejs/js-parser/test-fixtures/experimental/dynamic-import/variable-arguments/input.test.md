@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 67
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 30
 					index: 30
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'const'
+				kind: "const"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 30
 						index: 30
@@ -62,10 +62,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'testVarible'
+							name: "testVarible"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'testVarible'
+								filename: "input.js"
+								identifierName: "testVarible"
 								end: Object {
 									column: 17
 									index: 17
@@ -79,7 +79,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 29
 								index: 29
@@ -92,9 +92,9 @@ Program {
 							}
 						}
 						init: StringLiteral {
-							value: 'test.js'
+							value: "test.js"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 29
 									index: 29
@@ -113,7 +113,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 35
 					index: 66
@@ -127,7 +127,7 @@ Program {
 			}
 			expression: CallExpression {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 34
 						index: 65
@@ -142,7 +142,7 @@ Program {
 				arguments: Array [
 					ArrowFunctionExpression {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 33
 								index: 64
@@ -158,7 +158,7 @@ Program {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 33
 									index: 64
@@ -179,7 +179,7 @@ Program {
 							returnType: undefined
 							thisType: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 30
 									index: 61
@@ -196,7 +196,7 @@ Program {
 				]
 				callee: MemberExpression {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 24
 							index: 55
@@ -210,7 +210,7 @@ Program {
 					}
 					object: ImportCall {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 19
 								index: 50
@@ -223,10 +223,10 @@ Program {
 							}
 						}
 						argument: ReferenceIdentifier {
-							name: 'testVarible'
+							name: "testVarible"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'testVarible'
+								filename: "input.js"
+								identifierName: "testVarible"
 								end: Object {
 									column: 18
 									index: 49
@@ -242,10 +242,10 @@ Program {
 					}
 					property: StaticMemberProperty {
 						value: Identifier {
-							name: 'then'
+							name: "then"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'then'
+								filename: "input.js"
+								identifierName: "then"
 								end: Object {
 									column: 24
 									index: 55
@@ -259,8 +259,8 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'then'
+							filename: "input.js"
+							identifierName: "then"
 							end: Object {
 								column: 24
 								index: 55

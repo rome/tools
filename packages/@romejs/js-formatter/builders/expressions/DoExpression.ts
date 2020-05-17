@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token, concat, space} from '../../tokens';
-import {DoExpression} from '@romejs/js-ast';
+import Builder from "../../Builder";
+import {Token, concat, space} from "../../tokens";
+import {DoExpression} from "@romejs/js-ast";
 
 export default function DoExpression(
 	builder: Builder,
 	node: DoExpression,
 ): Token {
-	return concat(['do', space, builder.tokenize(node.body, node)]);
+	return concat(["do", space, builder.tokenize(node.body, node)]);
 }

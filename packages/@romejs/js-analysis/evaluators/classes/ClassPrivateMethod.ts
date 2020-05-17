@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {AnyNode, ClassPrivateMethod, classPrivateMethod} from '@romejs/js-ast';
+import {Scope} from "../../scopes";
+import {AnyNode, ClassPrivateMethod, classPrivateMethod} from "@romejs/js-ast";
 
 export default function ClassPrivateMethod(node: AnyNode, scope: Scope) {
 	node = classPrivateMethod.assert(node);
 	scope;
-	throw new Error('unimplemented');
+	throw new Error("unimplemented");
 }

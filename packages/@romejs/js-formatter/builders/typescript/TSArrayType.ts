@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSArrayType} from '@romejs/js-ast';
-import {Builder} from '@romejs/js-formatter';
-import {Token, concat} from '../../tokens';
+import {TSArrayType} from "@romejs/js-ast";
+import {Builder} from "@romejs/js-formatter";
+import {Token, concat} from "../../tokens";
 
 export default function TSArrayType(builder: Builder, node: TSArrayType): Token {
-	return concat([builder.tokenize(node.elementType, node), '[]']);
+	return concat([builder.tokenize(node.elementType, node), "[]"]);
 }

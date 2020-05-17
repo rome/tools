@@ -11,15 +11,15 @@ import {
 	RegExpQuantified,
 	RegExpSubExpression,
 	regExpQuantified,
-} from '@romejs/js-ast';
-import {CompilerContext, Path, TransformExitResult} from '@romejs/js-compiler';
-import {descriptions} from '@romejs/diagnostics';
+} from "@romejs/js-ast";
+import {CompilerContext, Path, TransformExitResult} from "@romejs/js-compiler";
+import {descriptions} from "@romejs/diagnostics";
 
 function isSpaceChar(
 	node: undefined | AnyRegExpBodyItem,
 ): node is RegExpCharacter {
 	return (
-		node !== undefined && node.type === 'RegExpCharacter' && node.value === ' '
+		node !== undefined && node.type === "RegExpCharacter" && node.value === " "
 	);
 }
 
@@ -80,11 +80,11 @@ function checkRegex(
 }
 
 export default {
-	name: 'noMultipleSpacesInRegularExpressionLiterals',
+	name: "noMultipleSpacesInRegularExpressionLiterals",
 	enter(path: Path): TransformExitResult {
 		const {context, node} = path;
 
-		if (node.type === 'RegExpSubExpression') {
+		if (node.type === "RegExpSubExpression") {
 			return checkRegex(node, context);
 		}
 

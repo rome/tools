@@ -9,9 +9,9 @@ import {
 	AnyNode,
 	RegExpNamedBackReference,
 	regExpNamedBackReference,
-} from '@romejs/js-ast';
+} from "@romejs/js-ast";
 
 export default function RegExpNamedBackReference(node: AnyNode) {
 	node = regExpNamedBackReference.assert(node);
-	throw new Error('unimplemented');
+	throw new Error("unimplemented");
 }

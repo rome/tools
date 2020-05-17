@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyExpression, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {AnyExpression, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type SpreadProperty = JSNodeBase & {
-	type: 'SpreadProperty';
+	type: "SpreadProperty";
 	argument: AnyExpression;
 };
 
 export const spreadProperty = createBuilder<SpreadProperty>(
-	'SpreadProperty',
+	"SpreadProperty",
 	{
 		bindingKeys: {},
 		visitorKeys: {

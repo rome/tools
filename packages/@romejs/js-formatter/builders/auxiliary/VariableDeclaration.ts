@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {VariableDeclaration} from '@romejs/js-ast';
-import {Token, concat, group, indent, lineOrSpace, space} from '../../tokens';
+import Builder from "../../Builder";
+import {VariableDeclaration} from "@romejs/js-ast";
+import {Token, concat, group, indent, lineOrSpace, space} from "../../tokens";
 
 export default function VariableDeclaration(
 	builder: Builder,
@@ -24,7 +24,7 @@ export default function VariableDeclaration(
 			declarations.shift()!,
 			indent(
 				concat(
-					declarations.map((declaration) => concat([',', lineOrSpace, declaration])),
+					declarations.map((declaration) => concat([",", lineOrSpace, declaration])),
 				),
 			),
 		]),

@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 32
 			index: 32
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 32
 					index: 32
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			expression: AssignmentExpression {
-				operator: '='
+				operator: "="
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 32
 						index: 32
@@ -60,10 +60,10 @@ Program {
 					}
 				}
 				left: AssignmentIdentifier {
-					name: 'x'
+					name: "x"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'x'
+						filename: "input.js"
+						identifierName: "x"
 						end: Object {
 							column: 1
 							index: 1
@@ -78,7 +78,7 @@ Program {
 				}
 				right: ObjectExpression {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 32
 							index: 32
@@ -92,13 +92,13 @@ Program {
 					}
 					properties: Array [
 						ObjectMethod {
-							kind: 'set'
+							kind: "set"
 							key: StaticPropertyKey {
 								value: NumericLiteral {
 									value: 10
 									format: undefined
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 12
 											index: 12
@@ -112,7 +112,7 @@ Program {
 									}
 								}
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 12
 										index: 12
@@ -126,7 +126,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 30
 									index: 30
@@ -147,7 +147,7 @@ Program {
 								thisType: undefined
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 15
 										index: 15
@@ -161,10 +161,10 @@ Program {
 								}
 								params: Array [
 									BindingIdentifier {
-										name: 'w'
+										name: "w"
 										loc: Object {
-											filename: 'input.js'
-											identifierName: 'w'
+											filename: "input.js"
+											identifierName: "w"
 											end: Object {
 												column: 14
 												index: 14
@@ -180,7 +180,7 @@ Program {
 											optional: undefined
 											typeAnnotation: undefined
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 14
 													index: 14
@@ -199,7 +199,7 @@ Program {
 							body: BlockStatement {
 								directives: Array []
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 30
 										index: 30
@@ -214,7 +214,7 @@ Program {
 								body: Array [
 									ExpressionStatement {
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 28
 												index: 28
@@ -227,9 +227,9 @@ Program {
 											}
 										}
 										expression: AssignmentExpression {
-											operator: '='
+											operator: "="
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 28
 													index: 28
@@ -242,10 +242,10 @@ Program {
 												}
 											}
 											left: AssignmentIdentifier {
-												name: 'm_null'
+												name: "m_null"
 												loc: Object {
-													filename: 'input.js'
-													identifierName: 'm_null'
+													filename: "input.js"
+													identifierName: "m_null"
 													end: Object {
 														column: 24
 														index: 24
@@ -259,10 +259,10 @@ Program {
 												}
 											}
 											right: ReferenceIdentifier {
-												name: 'w'
+												name: "w"
 												loc: Object {
-													filename: 'input.js'
-													identifierName: 'w'
+													filename: "input.js"
+													identifierName: "w"
 													end: Object {
 														column: 28
 														index: 28

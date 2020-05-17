@@ -5,45 +5,45 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token, concat} from '../../tokens';
-import {RegExpGroupNonCapture} from '@romejs/js-ast';
+import Builder from "../../Builder";
+import {Token, concat} from "../../tokens";
+import {RegExpGroupNonCapture} from "@romejs/js-ast";
 
 export default function RegExpGroupNonCapture(
 	builder: Builder,
 	node: RegExpGroupNonCapture,
 ): Token {
-	const tokens: Array<Token> = ['(?'];
+	const tokens: Array<Token> = ["(?"];
 
 	switch (node.kind) {
-		case 'positive-lookahead': {
-			tokens.push('=');
+		case "positive-lookahead": {
+			tokens.push("=");
 			break;
 		}
 
-		case 'negative-lookahead': {
-			tokens.push('!');
+		case "negative-lookahead": {
+			tokens.push("!");
 			break;
 		}
 
-		case 'positive-lookbehind': {
-			tokens.push('<!');
+		case "positive-lookbehind": {
+			tokens.push("<!");
 			break;
 		}
 
-		case 'negative-lookbehind': {
-			tokens.push('<=');
+		case "negative-lookbehind": {
+			tokens.push("<=");
 			break;
 		}
 
 		default: {
-			tokens.push(':');
+			tokens.push(":");
 			break;
 		}
 	}
 
 	tokens.push(builder.tokenize(node.expression, node));
-	tokens.push(')');
+	tokens.push(")");
 
 	return concat(tokens);
 }

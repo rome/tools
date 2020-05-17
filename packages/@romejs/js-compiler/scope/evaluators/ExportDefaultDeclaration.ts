@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Scope from '../Scope';
-import {AnyNode, ExportDefaultDeclaration} from '@romejs/js-ast';
+import Scope from "../Scope";
+import {AnyNode, ExportDefaultDeclaration} from "@romejs/js-ast";
 
 export default {
 	creator: false,
@@ -14,8 +14,8 @@ export default {
 		const {declaration} = node;
 		const newScope = scope.evaluate(declaration, node);
 		if (
-			declaration.type === 'ClassDeclaration' ||
-			declaration.type === 'FunctionDeclaration'
+			declaration.type === "ClassDeclaration" ||
+			declaration.type === "FunctionDeclaration"
 		) {
 			const id = declaration.id;
 			if (id !== undefined) {

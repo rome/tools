@@ -10,17 +10,17 @@ import {
 	ComputedPropertyKey,
 	JSNodeBase,
 	StaticPropertyKey,
-} from '../index';
-import {createBuilder} from '../utils';
+} from "../index";
+import {createBuilder} from "../utils";
 
 export type ObjectProperty = JSNodeBase & {
-	type: 'ObjectProperty';
+	type: "ObjectProperty";
 	key: StaticPropertyKey | ComputedPropertyKey;
 	value: AnyExpression;
 };
 
 export const objectProperty = createBuilder<ObjectProperty>(
-	'ObjectProperty',
+	"ObjectProperty",
 	{
 		bindingKeys: {},
 		visitorKeys: {

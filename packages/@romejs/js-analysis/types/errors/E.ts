@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {DiagnosticDescription} from '@romejs/diagnostics';
-import {AnyNode} from '@romejs/js-ast';
-import AnyT from '../AnyT';
-import T from '../T';
+import {Scope} from "../../scopes";
+import {DiagnosticDescription} from "@romejs/diagnostics";
+import {AnyNode} from "@romejs/js-ast";
+import AnyT from "../AnyT";
+import T from "../T";
 
 export type ErrorDefinition = {
 	description: DiagnosticDescription;
@@ -18,7 +18,7 @@ export type ErrorDefinition = {
 };
 
 export default class E extends T {
-	static type = 'E';
+	static type = "E";
 
 	static hydrate(scope: Scope, originNode: undefined | AnyNode): T {
 		return new AnyT(scope, originNode);
@@ -29,7 +29,7 @@ export default class E extends T {
 	}
 
 	getError(): ErrorDefinition {
-		throw new Error('unimplemented');
+		throw new Error("unimplemented");
 	}
 
 	compatibleWith(): boolean {

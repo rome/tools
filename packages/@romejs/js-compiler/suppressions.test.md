@@ -10,11 +10,11 @@ Object {
 		Object {
 			description: Object {
 				advice: Array []
-				category: 'suppressions/duplicate'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Duplicate suppression category <emphasis>dog</emphasis>'}
+				category: "suppressions/duplicate"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Duplicate suppression category <emphasis>dog</emphasis>"}
 			}
 			location: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 22
 					index: 22
@@ -30,11 +30,11 @@ Object {
 		Object {
 			description: Object {
 				advice: Array []
-				category: 'suppressions/duplicate'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Duplicate suppression category <emphasis>dog</emphasis>'}
+				category: "suppressions/duplicate"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Duplicate suppression category <emphasis>dog</emphasis>"}
 			}
 			location: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 26
 					index: 57
@@ -50,12 +50,12 @@ Object {
 	]
 	suppressions: Array [
 		Object {
-			category: 'dog'
+			category: "dog"
 			endLine: 2
-			filename: 'unknown'
+			filename: "unknown"
 			startLine: 2
 			commentLocation: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 22
 					index: 22
@@ -69,12 +69,12 @@ Object {
 			}
 		}
 		Object {
-			category: 'dog'
+			category: "dog"
 			endLine: 5
-			filename: 'unknown'
+			filename: "unknown"
 			startLine: 5
 			commentLocation: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 26
 					index: 57
@@ -88,12 +88,12 @@ Object {
 			}
 		}
 		Object {
-			category: 'cat'
+			category: "cat"
 			endLine: 5
-			filename: 'unknown'
+			filename: "unknown"
 			startLine: 5
 			commentLocation: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 26
 					index: 57
@@ -117,12 +117,12 @@ Object {
 	diagnostics: Array []
 	suppressions: Array [
 		Object {
-			category: 'foo'
+			category: "foo"
 			endLine: 2
-			filename: 'unknown'
+			filename: "unknown"
 			startLine: 2
 			commentLocation: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 22
 					index: 22
@@ -136,12 +136,12 @@ Object {
 			}
 		}
 		Object {
-			category: 'dog'
+			category: "dog"
 			endLine: 2
-			filename: 'unknown'
+			filename: "unknown"
 			startLine: 2
 			commentLocation: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 22
 					index: 22
@@ -155,12 +155,12 @@ Object {
 			}
 		}
 		Object {
-			category: 'bar'
+			category: "bar"
 			endLine: 5
-			filename: 'unknown'
+			filename: "unknown"
 			startLine: 5
 			commentLocation: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 26
 					index: 57
@@ -174,12 +174,12 @@ Object {
 			}
 		}
 		Object {
-			category: 'cat'
+			category: "cat"
 			endLine: 5
-			filename: 'unknown'
+			filename: "unknown"
 			startLine: 5
 			commentLocation: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 26
 					index: 57
@@ -193,12 +193,12 @@ Object {
 			}
 		}
 		Object {
-			category: 'yes'
+			category: "yes"
 			endLine: 10
-			filename: 'unknown'
+			filename: "unknown"
 			startLine: 10
 			commentLocation: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 3
 					index: 97
@@ -212,12 +212,12 @@ Object {
 			}
 		}
 		Object {
-			category: 'frog'
+			category: "frog"
 			endLine: 10
-			filename: 'unknown'
+			filename: "unknown"
 			startLine: 10
 			commentLocation: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 3
 					index: 97
@@ -231,12 +231,12 @@ Object {
 			}
 		}
 		Object {
-			category: 'wow'
+			category: "wow"
 			endLine: 16
-			filename: 'unknown'
+			filename: "unknown"
 			startLine: 16
 			commentLocation: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 3
 					index: 146
@@ -250,12 +250,12 @@ Object {
 			}
 		}
 		Object {
-			category: 'fish'
+			category: "fish"
 			endLine: 16
-			filename: 'unknown'
+			filename: "unknown"
 			startLine: 16
 			commentLocation: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 3
 					index: 146
@@ -279,12 +279,12 @@ Object {
 	diagnostics: Array []
 	suppressions: Array [
 		Object {
-			category: 'foo'
+			category: "foo"
 			endLine: 2
-			filename: 'unknown'
+			filename: "unknown"
 			startLine: 2
 			commentLocation: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 18
 					index: 18
@@ -298,12 +298,12 @@ Object {
 			}
 		}
 		Object {
-			category: 'bar'
+			category: "bar"
 			endLine: 5
-			filename: 'unknown'
+			filename: "unknown"
 			startLine: 5
 			commentLocation: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 22
 					index: 49
@@ -317,12 +317,12 @@ Object {
 			}
 		}
 		Object {
-			category: 'yes'
+			category: "yes"
 			endLine: 10
-			filename: 'unknown'
+			filename: "unknown"
 			startLine: 10
 			commentLocation: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 3
 					index: 84
@@ -336,12 +336,12 @@ Object {
 			}
 		}
 		Object {
-			category: 'wow'
+			category: "wow"
 			endLine: 16
-			filename: 'unknown'
+			filename: "unknown"
 			startLine: 16
 			commentLocation: Object {
-				filename: 'unknown'
+				filename: "unknown"
 				end: Object {
 					column: 3
 					index: 128

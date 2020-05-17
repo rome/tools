@@ -12,14 +12,14 @@ import {
 	Identifier,
 	Program,
 	StringLiteral,
-} from '@romejs/js-ast';
+} from "@romejs/js-ast";
 import {
 	ParserOptionsWithRequiredPath,
 	Position,
 	SourceLocation,
 	createParser,
-} from '@romejs/parser-core';
-import {JSParserOptions} from './options';
+} from "@romejs/parser-core";
+import {JSParserOptions} from "./options";
 import {
 	DiagnosticDescription,
 	DiagnosticFilter,
@@ -27,27 +27,27 @@ import {
 	Diagnostics,
 	DiagnosticsProcessor,
 	descriptions,
-} from '@romejs/diagnostics';
-import ParserBranchFinder from './ParserBranchFinder';
-import {Token, nextToken} from './tokenizer/index';
-import {TokenType, types as tt} from './tokenizer/types';
-import {lineBreak} from '@romejs/js-parser-utils';
-import {parseTopLevel} from './parser/index';
-import {State, createInitialState} from './tokenizer/state';
-import {Number0, ob1Number0, ob1Sub} from '@romejs/ob1';
-import {Dict, OptionalProps} from '@romejs/typescript-helpers';
-import {attachComments} from './parser/comments';
-import CommentsConsumer from './CommentsConsumer';
+} from "@romejs/diagnostics";
+import ParserBranchFinder from "./ParserBranchFinder";
+import {Token, nextToken} from "./tokenizer/index";
+import {TokenType, types as tt} from "./tokenizer/types";
+import {lineBreak} from "@romejs/js-parser-utils";
+import {parseTopLevel} from "./parser/index";
+import {State, createInitialState} from "./tokenizer/state";
+import {Number0, ob1Number0, ob1Sub} from "@romejs/ob1";
+import {Dict, OptionalProps} from "@romejs/typescript-helpers";
+import {attachComments} from "./parser/comments";
+import CommentsConsumer from "./CommentsConsumer";
 
 const TOKEN_MISTAKES: Dict<string> = {
-	';': ':',
-	',': '.',
+	";": ":",
+	",": ".",
 };
 
 export class DiagnosticsFatalError extends Error {
 	constructor() {
 		super(
-			'Diagnostics exceeded maxDiagnostics state cap, this error is expected to be handled by a try-catch in the call stack',
+			"Diagnostics exceeded maxDiagnostics state cap, this error is expected to be handled by a try-catch in the call stack",
 		);
 	}
 }
@@ -61,36 +61,36 @@ export type OpeningContext = {
 };
 
 export type ScopeType =
-	 | 'FUNCTION_LOC'
-	| 'NON_ARROW_FUNCTION'
-	| 'FUNCTION'
-	| 'GENERATOR'
-	| 'ASYNC'
-	| 'PROPERTY_NAME'
-	| 'CLASS_PROPERTY'
-	| 'PARAMETERS'
-	| 'METHOD'
-	| 'CLASS'
-	| 'TYPE'
-	| 'MAX_NEW_DIAGNOSTICS'
-	| 'STRICT'
-	| 'FLOW_COMMENT';
+	 | "FUNCTION_LOC"
+	| "NON_ARROW_FUNCTION"
+	| "FUNCTION"
+	| "GENERATOR"
+	| "ASYNC"
+	| "PROPERTY_NAME"
+	| "CLASS_PROPERTY"
+	| "PARAMETERS"
+	| "METHOD"
+	| "CLASS"
+	| "TYPE"
+	| "MAX_NEW_DIAGNOSTICS"
+	| "STRICT"
+	| "FLOW_COMMENT";
 
 const SCOPE_TYPES: Array<ScopeType> = [
-	'FUNCTION_LOC',
-	'NON_ARROW_FUNCTION',
-	'FUNCTION',
-	'GENERATOR',
-	'ASYNC',
-	'PROPERTY_NAME',
-	'CLASS_PROPERTY',
-	'PARAMETERS',
-	'METHOD',
-	'CLASS',
-	'TYPE',
-	'MAX_NEW_DIAGNOSTICS',
-	'STRICT',
-	'FLOW_COMMENT',
+	"FUNCTION_LOC",
+	"NON_ARROW_FUNCTION",
+	"FUNCTION",
+	"GENERATOR",
+	"ASYNC",
+	"PROPERTY_NAME",
+	"CLASS_PROPERTY",
+	"PARAMETERS",
+	"METHOD",
+	"CLASS",
+	"TYPE",
+	"MAX_NEW_DIAGNOSTICS",
+	"STRICT",
+	"FLOW_COMMENT",
 ];
 
 export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) => {
@@ -104,7 +104,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 				mtime: options.mtime,
 				input: options.input,
 			};
-			super(parserOpts, 'parse/js', state);
+			super(parserOpts, "parse/js", state);
 
 			this.isTrackingTokens = options.tokens;
 
@@ -113,8 +113,8 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			this.sourceType = options.sourceType;
 			this.options = options;
 			this.inModule =
-				this.options.sourceType === 'template' ||
-				this.options.sourceType === 'module';
+				this.options.sourceType === "template" ||
+				this.options.sourceType === "module";
 			this.parenthesized = new Set();
 			this.comments = new CommentsConsumer();
 
@@ -186,8 +186,8 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			// maxDiagnostics will be at -1 when it's own limit has been exceeded, in
 			// this case, we are likely replacing the State with another that's valid
 			// and doesn't exceed
-			const maxDiagnostics = this.getLastScope('MAX_NEW_DIAGNOSTICS');
-			if (typeof maxDiagnostics === 'number' && maxDiagnostics !== -1) {
+			const maxDiagnostics = this.getLastScope("MAX_NEW_DIAGNOSTICS");
+			if (typeof maxDiagnostics === "number" && maxDiagnostics !== -1) {
 				const diff = newState.diagnostics.length - this.state.diagnostics.length;
 				if (diff > maxDiagnostics) {
 					throw new DiagnosticsFatalError();
@@ -251,8 +251,8 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 		): Identifier {
 			this.state.corrupt = true;
 			return {
-				type: 'Identifier',
-				name: 'INVALID_PLACEHOLDER',
+				type: "Identifier",
+				name: "INVALID_PLACEHOLDER",
 				loc: this.finishLocAt(start, end),
 			};
 		}
@@ -264,14 +264,14 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 		): StringLiteral {
 			this.state.corrupt = true;
 			return {
-				type: 'StringLiteral',
-				value: 'INVALID_PLACEHOLDER',
+				type: "StringLiteral",
+				value: "INVALID_PLACEHOLDER",
 				loc: this.finishLocAt(start, end),
 			};
 		}
 
 		assertNoSpace(
-			_metadata: Omit<DiagnosticDescription, 'category'> = descriptions.JS_PARSER.UNEXPECTED_SPACE,
+			_metadata: Omit<DiagnosticDescription, "category"> = descriptions.JS_PARSER.UNEXPECTED_SPACE,
 		): void {
 			const {state} = this;
 
@@ -288,7 +288,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			const collector = new DiagnosticsProcessor({
 				origins: [
 					{
-						category: 'js-parser',
+						category: "js-parser",
 					},
 				],
 				//unique: ['start.line'],
@@ -334,7 +334,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			if (lastToken !== undefined) {
 				if (token.loc.start.index < lastToken.loc.end.index) {
 					throw new Error(
-						'Trying to push a token that appears before the last pushed token',
+						"Trying to push a token that appears before the last pushed token",
 					);
 				}
 			}
@@ -344,7 +344,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 
 		addDiagnostic(
 			opts: {
-				description: Omit<DiagnosticDescription, 'category'>;
+				description: Omit<DiagnosticDescription, "category">;
 				start?: Position;
 				end?: Position;
 				loc?: SourceLocation;
@@ -356,11 +356,11 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 				return;
 			}
 
-			let maxDiagnostics = this.getLastScope('MAX_NEW_DIAGNOSTICS');
-			if (typeof maxDiagnostics === 'number') {
+			let maxDiagnostics = this.getLastScope("MAX_NEW_DIAGNOSTICS");
+			if (typeof maxDiagnostics === "number") {
 				maxDiagnostics--;
-				this.popScope('MAX_NEW_DIAGNOSTICS');
-				this.pushScope('MAX_NEW_DIAGNOSTICS', maxDiagnostics);
+				this.popScope("MAX_NEW_DIAGNOSTICS");
+				this.pushScope("MAX_NEW_DIAGNOSTICS", maxDiagnostics);
 				if (maxDiagnostics < 0) {
 					throw new DiagnosticsFatalError();
 				}
@@ -403,7 +403,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 
 			this.state.diagnostics.push({
 				description: {
-					category: 'parse/js',
+					category: "parse/js",
 					...opts.description,
 				},
 				location: {
@@ -417,7 +417,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 		}
 
 		shouldTokenizeJSX(): boolean {
-			return !this.isSyntaxEnabled('ts') || this.isSyntaxEnabled('jsx');
+			return !this.isSyntaxEnabled("ts") || this.isSyntaxEnabled("jsx");
 		}
 
 		isSyntaxEnabled(syntax: ConstProgramSyntax): boolean {
@@ -432,11 +432,11 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			}
 		}
 
-		isRelational(op: '<' | '>'): boolean {
+		isRelational(op: "<" | ">"): boolean {
 			return this.match(tt.relational) && this.state.tokenValue === op;
 		}
 
-		expectRelational(op: '<' | '>'): boolean {
+		expectRelational(op: "<" | ">"): boolean {
 			if (this.eatRelational(op)) {
 				return true;
 			} else {
@@ -447,7 +447,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			}
 		}
 
-		isLookaheadRelational(op: '<' | '>'): boolean {
+		isLookaheadRelational(op: "<" | ">"): boolean {
 			const l = this.lookaheadState();
 			return l.tokenType === tt.relational && l.tokenValue === op;
 		}
@@ -462,7 +462,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 		}
 
 		// eat() for relational operators.
-		eatRelational(op: '<' | '>'): boolean {
+		eatRelational(op: "<" | ">"): boolean {
 			if (this.isRelational(op)) {
 				this.next();
 				return true;
@@ -502,7 +502,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 		// Asserts that following token is given contextual keyword.
 		expectContextual(
 			name: string,
-			_metadata: OptionalProps<DiagnosticDescription, 'category'> = descriptions.JS_PARSER.EXPECTED_KEYWORD(
+			_metadata: OptionalProps<DiagnosticDescription, "category"> = descriptions.JS_PARSER.EXPECTED_KEYWORD(
 				name,
 			),
 		): boolean {
@@ -622,12 +622,12 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 
 		unexpected(): never {
 			throw new Error(
-				'js-parser should never throw an exception, use addDiagnostic or unexpectedToken instead',
+				"js-parser should never throw an exception, use addDiagnostic or unexpectedToken instead",
 			);
 		}
 
 		tokenize(): never {
-			throw new Error('js-parser does not use the parser-core tokenizer');
+			throw new Error("js-parser does not use the parser-core tokenizer");
 		}
 
 		cloneNode<T extends AnyNode>(node: T): T {
@@ -701,7 +701,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 				// @ts-ignore
 				let val = state[key];
 
-				const shouldSlice = skipArrays === false || key === 'context';
+				const shouldSlice = skipArrays === false || key === "context";
 				if (shouldSlice && Array.isArray(val)) {
 					// @ts-ignore
 					state[key] = val.slice();
@@ -742,15 +742,15 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 
 		parse(): Program {
 			if (this.inModule) {
-				this.pushScope('ASYNC', true);
-				this.pushScope('STRICT', true);
+				this.pushScope("ASYNC", true);
+				this.pushScope("STRICT", true);
 			}
 
 			const program = parseTopLevel(this);
 
 			if (this.inModule) {
-				this.popScope('ASYNC');
-				this.popScope('STRICT');
+				this.popScope("ASYNC");
+				this.popScope("STRICT");
 			}
 
 			// Smoke test for unpopped scopes
@@ -764,7 +764,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 
 			// Smoke test for token exhaustion
 			if (!this.match(tt.eof)) {
-				throw new Error('Finish parsing but we arent at the end of the file');
+				throw new Error("Finish parsing but we arent at the end of the file");
 			}
 
 			return program;

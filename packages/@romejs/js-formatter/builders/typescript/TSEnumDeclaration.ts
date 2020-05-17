@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSEnumDeclaration} from '@romejs/js-ast';
-import {Builder} from '@romejs/js-formatter';
-import {Token, concat, space} from '../../tokens';
-import {printTSBraced} from '../utils';
+import {TSEnumDeclaration} from "@romejs/js-ast";
+import {Builder} from "@romejs/js-formatter";
+import {Token, concat, space} from "../../tokens";
+import {printTSBraced} from "../utils";
 
 export default function TSEnumDeclaration(
 	builder: Builder,
@@ -17,15 +17,15 @@ export default function TSEnumDeclaration(
 	const tokens: Array<Token> = [];
 
 	if (node.declare) {
-		tokens.push('declare', space);
+		tokens.push("declare", space);
 	}
 
 	if (node.const) {
-		tokens.push('const', space);
+		tokens.push("const", space);
 	}
 
 	tokens.push(
-		'enum',
+		"enum",
 		space,
 		builder.tokenize(node.id, node),
 		space,

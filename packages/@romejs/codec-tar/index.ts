@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import stream = require('stream');
+import stream = require("stream");
 
 type HeaderType =
-	 | 'file'
-	| 'link'
-	| 'symlink'
-	| 'directory'
-	| 'block-device'
-	| 'character-device'
-	| 'fifo'
-	| 'contiguous-file';
+	 | "file"
+	| "link"
+	| "symlink"
+	| "directory"
+	| "block-device"
+	| "character-device"
+	| "fifo"
+	| "contiguous-file";
 
 type Header = {
 	name: string;
@@ -47,10 +47,10 @@ type PartialHeader = {
 };
 
 const END_OF_TAR = Buffer.alloc(1_024);
-const ZEROS = '0000000000000000000';
-const SEVENS = '7777777777777777777';
-const ZERO_OFFSET = '0'.charCodeAt(0);
-const USTAR = 'ustar\x0000';
+const ZEROS = "0000000000000000000";
+const SEVENS = "7777777777777777777";
+const ZERO_OFFSET = "0".charCodeAt(0);
+const USTAR = "ustar\x0000";
 const MASK = 4_095;
 const DMODE = 493;
 const FMODE = 420;
@@ -77,21 +77,21 @@ function checksum(block: Buffer): number {
 
 function toTypeflag(type: HeaderType): number {
 	switch (type) {
-		case 'file':
+		case "file":
 			return 0;
-		case 'link':
+		case "link":
 			return 1;
-		case 'symlink':
+		case "symlink":
 			return 2;
-		case 'character-device':
+		case "character-device":
 			return 3;
-		case 'block-device':
+		case "block-device":
 			return 4;
-		case 'directory':
+		case "directory":
 			return 5;
-		case 'fifo':
+		case "fifo":
 			return 6;
-		case 'contiguous-file':
+		case "contiguous-file":
 			return 7;
 	}
 
@@ -102,19 +102,19 @@ function encodeHeader(header: Header): Buffer {
 	const buf = Buffer.alloc(512);
 
 	let name = header.name;
-	let prefix = '';
+	let prefix = "";
 
 	if (Buffer.byteLength(name) !== name.length) {
 		throw new Error(
-			'utf-8 filename is only supported in PAX, we only support USTAR',
+			"utf-8 filename is only supported in PAX, we only support USTAR",
 		);
 	}
 
 	// If a filename is over 100 characters then split it up if possible (requires a directory)
 	while (Buffer.byteLength(name) > 100) {
-		const i = name.indexOf('/');
+		const i = name.indexOf("/");
 		if (i === -1) {
-			throw new Error('filename is too long for USTAR and it was in no directory');
+			throw new Error("filename is too long for USTAR and it was in no directory");
 		}
 
 		prefix += prefix ? `/${name.slice(0, i)}` : name.slice(0, i);
@@ -122,15 +122,15 @@ function encodeHeader(header: Header): Buffer {
 	}
 
 	if (Buffer.byteLength(name) > 100) {
-		throw new Error('filename is too long for USTAR');
+		throw new Error("filename is too long for USTAR");
 	}
 
 	if (Buffer.byteLength(prefix) > 155) {
-		throw new Error('prefix is too long for USTAR');
+		throw new Error("prefix is too long for USTAR");
 	}
 
 	if (header.linkname !== undefined && Buffer.byteLength(header.linkname) > 100) {
-		throw new Error('linkname is too long for USTAR');
+		throw new Error("linkname is too long for USTAR");
 	}
 
 	buf.write(name);
@@ -156,7 +156,7 @@ function encodeHeader(header: Header): Buffer {
 	buf.write(encodeOct(header.devmajor || 0, 6), 329);
 	buf.write(encodeOct(header.devminor || 0, 6), 337);
 
-	if (prefix !== '') {
+	if (prefix !== "") {
 		buf.write(prefix, 345);
 	}
 
@@ -177,7 +177,7 @@ export class TarWriter {
 	static normalizeHeader(partial: PartialHeader, size: number): Header {
 		let mode = partial.mode;
 		if (mode === undefined) {
-			if (partial.type === 'directory') {
+			if (partial.type === "directory") {
 				mode = DMODE;
 			} else {
 				mode = FMODE;
@@ -189,7 +189,7 @@ export class TarWriter {
 			size,
 			mode,
 			mtime: partial.mtime === undefined ? new Date() : partial.mtime,
-			type: partial.type === undefined ? 'file' : partial.type,
+			type: partial.type === undefined ? "file" : partial.type,
 			linkname: partial.linkname,
 			uid: partial.uid === undefined ? 0 : partial.uid,
 			gid: partial.gid === undefined ? 0 : partial.gid,
@@ -209,7 +209,7 @@ export class TarWriter {
 
 	append(rawHeader: PartialHeader, rawBuffer: string | Buffer) {
 		if (this.finalized) {
-			throw new Error('Already finalized file');
+			throw new Error("Already finalized file");
 		}
 
 		const buffer: Buffer =
@@ -228,14 +228,14 @@ export class TarWriter {
 			const {stream} = this;
 
 			stream.on(
-				'close',
+				"close",
 				() => {
 					resolve();
 				},
 			);
 
 			stream.on(
-				'error',
+				"error",
 				(err) => {
 					reject(err);
 				},

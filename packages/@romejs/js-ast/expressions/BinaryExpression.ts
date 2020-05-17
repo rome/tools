@@ -5,42 +5,42 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyExpression, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {AnyExpression, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type BinaryExpression = JSNodeBase & {
-	type: 'BinaryExpression';
+	type: "BinaryExpression";
 	operator: BinaryOperator;
 	left: AnyExpression;
 	right: AnyExpression;
 };
 
 export type BinaryOperator =
-	 | '=='
-	| '!='
-	| '==='
-	| '**'
-	| '!=='
-	| '<'
-	| '<='
-	| '>'
-	| '>='
-	| '<<'
-	| '>>'
-	| '>>>'
-	| '+'
-	| '-'
-	| '*'
-	| '/'
-	| '%'
-	| '|'
-	| '^'
-	| '&'
-	| 'in'
-	| 'instanceof';
+	 | "=="
+	| "!="
+	| "==="
+	| "**"
+	| "!=="
+	| "<"
+	| "<="
+	| ">"
+	| ">="
+	| "<<"
+	| ">>"
+	| ">>>"
+	| "+"
+	| "-"
+	| "*"
+	| "/"
+	| "%"
+	| "|"
+	| "^"
+	| "&"
+	| "in"
+	| "instanceof";
 
 export const binaryExpression = createBuilder<BinaryExpression>(
-	'BinaryExpression',
+	"BinaryExpression",
 	{
 		bindingKeys: {},
 		visitorKeys: {

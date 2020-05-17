@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyExpression, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {AnyExpression, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type JSXSpreadAttribute = JSNodeBase & {
-	type: 'JSXSpreadAttribute';
+	type: "JSXSpreadAttribute";
 	argument: AnyExpression;
 };
 
 export const jsxSpreadAttribute = createBuilder<JSXSpreadAttribute>(
-	'JSXSpreadAttribute',
+	"JSXSpreadAttribute",
 	{
 		bindingKeys: {},
 		visitorKeys: {

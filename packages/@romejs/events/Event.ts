@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {EventOptions, EventSubscription} from './types';
+import {EventOptions, EventSubscription} from "./types";
 
 type Callback<Param, Ret> = (param: Param) => Ret | Promise<Ret>;
 
 function noPromise<Ret>(ret: Ret | Promise<Ret>): Ret {
 	if (ret instanceof Promise) {
-		throw new Error('Subscription returned promise for a callSync');
+		throw new Error("Subscription returned promise for a callSync");
 	} else {
 		return ret;
 	}
@@ -163,7 +163,7 @@ export default class Event<Param, Ret = void> {
 		}
 
 		if (this.rootSubscription === callback || this.subscriptions.has(callback)) {
-			throw new Error('Cannot double subscribe a callback');
+			throw new Error("Cannot double subscribe a callback");
 		}
 
 		if (this.rootSubscription === undefined) {

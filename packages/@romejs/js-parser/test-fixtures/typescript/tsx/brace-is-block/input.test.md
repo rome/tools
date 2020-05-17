@@ -9,17 +9,17 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.tsx'
+	filename: "input.tsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
+	sourceType: "module"
 	syntax: Array [
-		'jsx'
-		'ts'
+		"jsx"
+		"ts"
 	]
 	loc: Object {
-		filename: 'input.tsx'
+		filename: "input.tsx"
 		end: Object {
 			column: 0
 			index: 128
@@ -33,10 +33,10 @@ Program {
 	}
 	comments: Array [
 		CommentLine {
-			id: '0'
-			value: ' Regression test for tokenizer bug where the `{` after `<T>` was considered a JSX interpolation.'
+			id: "0"
+			value: " Regression test for tokenizer bug where the `{` after `<T>` was considered a JSX interpolation."
 			loc: Object {
-				filename: 'input.tsx'
+				filename: "input.tsx"
 				end: Object {
 					column: 98
 					index: 98
@@ -53,11 +53,11 @@ Program {
 	body: Array [
 		ClassDeclaration {
 			id: BindingIdentifier {
-				name: 'C'
+				name: "C"
 				leadingComments: undefined
 				loc: Object {
-					filename: 'input.tsx'
-					identifierName: 'C'
+					filename: "input.tsx"
+					identifierName: "C"
 					end: Object {
 						column: 7
 						index: 106
@@ -70,9 +70,9 @@ Program {
 					}
 				}
 			}
-			leadingComments: Array ['0']
+			leadingComments: Array ["0"]
 			loc: Object {
-				filename: 'input.tsx'
+				filename: "input.tsx"
 				end: Object {
 					column: 23
 					index: 122
@@ -90,7 +90,7 @@ Program {
 				leadingComments: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.tsx'
+					filename: "input.tsx"
 					end: Object {
 						column: 23
 						index: 122
@@ -103,10 +103,10 @@ Program {
 					}
 				}
 				superClass: ReferenceIdentifier {
-					name: 'D'
+					name: "D"
 					loc: Object {
-						filename: 'input.tsx'
-						identifierName: 'D'
+						filename: "input.tsx"
+						identifierName: "D"
 						end: Object {
 							column: 17
 							index: 116
@@ -121,7 +121,7 @@ Program {
 				}
 				superTypeParameters: TSTypeParameterInstantiation {
 					loc: Object {
-						filename: 'input.tsx'
+						filename: "input.tsx"
 						end: Object {
 							column: 20
 							index: 119
@@ -137,7 +137,7 @@ Program {
 						TSTypeReference {
 							typeParameters: undefined
 							loc: Object {
-								filename: 'input.tsx'
+								filename: "input.tsx"
 								end: Object {
 									column: 19
 									index: 118
@@ -150,10 +150,10 @@ Program {
 								}
 							}
 							typeName: ReferenceIdentifier {
-								name: 'T'
+								name: "T"
 								loc: Object {
-									filename: 'input.tsx'
-									identifierName: 'T'
+									filename: "input.tsx"
+									identifierName: "T"
 									end: Object {
 										column: 19
 										index: 118
@@ -173,7 +173,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.tsx'
+				filename: "input.tsx"
 				end: Object {
 					column: 4
 					index: 127
@@ -187,9 +187,9 @@ Program {
 			}
 			expression: JSXElement {
 				name: JSXReferenceIdentifier {
-					name: 'C'
+					name: "C"
 					loc: Object {
-						filename: 'input.tsx'
+						filename: "input.tsx"
 						end: Object {
 							column: 2
 							index: 125
@@ -207,7 +207,7 @@ Program {
 				selfClosing: true
 				typeArguments: undefined
 				loc: Object {
-					filename: 'input.tsx'
+					filename: "input.tsx"
 					end: Object {
 						column: 4
 						index: 127

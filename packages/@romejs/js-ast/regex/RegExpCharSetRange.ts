@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyRegExpEscapedCharacter, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {AnyRegExpEscapedCharacter, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type RegExpCharSetRange = JSNodeBase & {
-	type: 'RegExpCharSetRange';
+	type: "RegExpCharSetRange";
 	start: AnyRegExpEscapedCharacter;
 	end: AnyRegExpEscapedCharacter;
 };
 
 export const regExpCharSetRange = createBuilder<RegExpCharSetRange>(
-	'RegExpCharSetRange',
+	"RegExpCharSetRange",
 	{
 		bindingKeys: {},
 		visitorKeys: {

@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 17
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ForInStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 16
 					index: 16
@@ -46,7 +46,7 @@ Program {
 			}
 			body: EmptyStatement {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 16
 						index: 16
@@ -60,10 +60,10 @@ Program {
 				}
 			}
 			right: ReferenceIdentifier {
-				name: 'a'
+				name: "a"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'a'
+					filename: "input.js"
+					identifierName: "a"
 					end: Object {
 						column: 14
 						index: 14
@@ -78,7 +78,7 @@ Program {
 			}
 			left: MemberExpression {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 9
 						index: 9
@@ -91,10 +91,10 @@ Program {
 					}
 				}
 				object: ReferenceIdentifier {
-					name: 'a'
+					name: "a"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'a'
+						filename: "input.js"
+						identifierName: "a"
 						end: Object {
 							column: 6
 							index: 6
@@ -109,10 +109,10 @@ Program {
 				}
 				property: StaticMemberProperty {
 					value: Identifier {
-						name: 'in'
+						name: "in"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'in'
+							filename: "input.js"
+							identifierName: "in"
 							end: Object {
 								column: 9
 								index: 9
@@ -126,8 +126,8 @@ Program {
 						}
 					}
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'in'
+						filename: "input.js"
+						identifierName: "in"
 						end: Object {
 							column: 9
 							index: 9

@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Identifier, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {Identifier, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type TSNamespaceExportDeclaration = JSNodeBase & {
-	type: 'TSNamespaceExportDeclaration';
+	type: "TSNamespaceExportDeclaration";
 	id: Identifier;
 };
 
 export const tsNamespaceExportDeclaration = createBuilder<TSNamespaceExportDeclaration>(
-	'TSNamespaceExportDeclaration',
+	"TSNamespaceExportDeclaration",
 	{bindingKeys: {}, visitorKeys: {id: true}},
 );

@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {testLint} from '../testHelpers';
+import {test} from "rome";
+import {testLint} from "../testHelpers";
 
 test(
-	'sparse array',
+	"sparse array",
 	async (t) => {
-		await testLint(t, `[1,,2]`, {category: 'lint/sparseArray'});
+		await testLint(t, `[1,,2]`, {category: "lint/sparseArray"});
 	},
 );

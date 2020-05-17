@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Scope from '../Scope';
-import {FunctionBinding} from '@romejs/js-compiler';
-import {AnyNode, FunctionDeclaration} from '@romejs/js-ast';
+import Scope from "../Scope";
+import {FunctionBinding} from "@romejs/js-compiler";
+import {AnyNode, FunctionDeclaration} from "@romejs/js-ast";
 
 export default {
 	creator: false,

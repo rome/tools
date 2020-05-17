@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 38
 			index: 38
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 38
 					index: 38
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'var'
+				kind: "var"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 38
 						index: 38
@@ -62,10 +62,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'private'
+							name: "private"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'private'
+								filename: "input.js"
+								identifierName: "private"
 								end: Object {
 									column: 11
 									index: 11
@@ -80,7 +80,7 @@ Program {
 						}
 						init: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 11
 								index: 11
@@ -95,10 +95,10 @@ Program {
 					}
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'protected'
+							name: "protected"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'protected'
+								filename: "input.js"
+								identifierName: "protected"
 								end: Object {
 									column: 22
 									index: 22
@@ -113,7 +113,7 @@ Program {
 						}
 						init: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 22
 								index: 22
@@ -128,10 +128,10 @@ Program {
 					}
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'public'
+							name: "public"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'public'
+								filename: "input.js"
+								identifierName: "public"
 								end: Object {
 									column: 30
 									index: 30
@@ -146,7 +146,7 @@ Program {
 						}
 						init: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 30
 								index: 30
@@ -161,10 +161,10 @@ Program {
 					}
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'static'
+							name: "static"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'static'
+								filename: "input.js"
+								identifierName: "static"
 								end: Object {
 									column: 38
 									index: 38
@@ -179,7 +179,7 @@ Program {
 						}
 						init: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 38
 								index: 38

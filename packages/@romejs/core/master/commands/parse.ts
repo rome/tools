@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {MasterRequest} from '@romejs/core';
-import {Consumer} from '@romejs/consume';
-import {commandCategories} from '../../common/commands';
-import {createMasterCommand} from '../commands';
-import {createUnknownFilePath} from '@romejs/path';
-import {ConstSourceType, program} from '@romejs/js-ast';
-import {removeLoc} from '@romejs/js-ast-utils';
+import {MasterRequest} from "@romejs/core";
+import {Consumer} from "@romejs/consume";
+import {commandCategories} from "../../common/commands";
+import {createMasterCommand} from "../commands";
+import {createUnknownFilePath} from "@romejs/path";
+import {ConstSourceType, program} from "@romejs/js-ast";
+import {removeLoc} from "@romejs/js-ast-utils";
 
 type Flags = {
 	allowDiagnostics: boolean;
@@ -21,14 +21,14 @@ type Flags = {
 
 export default createMasterCommand({
 	category: commandCategories.SOURCE_CODE,
-	description: 'parse a single file and dump its ast',
-	usage: '',
+	description: "parse a single file and dump its ast",
+	usage: "",
 	examples: [],
 	defineFlags(c: Consumer): Flags {
 		return {
-			allowDiagnostics: c.get('allowDiagnostics').asBoolean(false),
-			compact: c.get('compact').asBoolean(true),
-			sourceType: c.get('sourceType').asStringSetOrVoid(['module', 'script']),
+			allowDiagnostics: c.get("allowDiagnostics").asBoolean(false),
+			compact: c.get("compact").asBoolean(true),
+			sourceType: c.get("sourceType").asStringSetOrVoid(["module", "script"]),
 		};
 	},
 	async callback(req: MasterRequest, flags: Flags): Promise<void> {
@@ -41,7 +41,7 @@ export default createMasterCommand({
 				...req.getResolverOptionsFromFlags(),
 				source: createUnknownFilePath(args[0]),
 			},
-			{location: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})},
+			{location: req.getDiagnosticPointerFromFlags({type: "arg", key: 0})},
 		);
 
 		let ast = await req.requestWorkerParse(

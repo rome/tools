@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from '@romejs/js-ast';
-import T, {SerialTypeFactory, TypeCompatibilityReturn} from './T';
-import {HydrateData, HydrateTypeFactory} from '../Evaluator';
-import {Scope} from '../scopes';
-import {HumanBuilder} from '../Utils';
-import StringLiteralT from './StringLiteralT';
-import GetPropT from './GetPropT';
-import ObjT from './ObjT';
+import {AnyNode} from "@romejs/js-ast";
+import T, {SerialTypeFactory, TypeCompatibilityReturn} from "./T";
+import {HydrateData, HydrateTypeFactory} from "../Evaluator";
+import {Scope} from "../scopes";
+import {HumanBuilder} from "../Utils";
+import StringLiteralT from "./StringLiteralT";
+import GetPropT from "./GetPropT";
+import ObjT from "./ObjT";
 
 export default class InstanceT extends ObjT {
 	constructor(
@@ -25,7 +25,7 @@ export default class InstanceT extends ObjT {
 			scope,
 			originNode,
 			target,
-			new StringLiteralT(scope, originNode, 'prototype'),
+			new StringLiteralT(scope, originNode, "prototype"),
 		);
 		super(
 			scope,
@@ -44,7 +44,7 @@ export default class InstanceT extends ObjT {
 	typeParameters: Array<T>;
 	target: T;
 
-	static type = 'InstanceT';
+	static type = "InstanceT";
 
 	serialize(addType: SerialTypeFactory): HydrateData {
 		return {
@@ -74,7 +74,7 @@ export default class InstanceT extends ObjT {
 			return name;
 		} else {
 			return `${name}<${typeParams.map((param) => builder.humanize(param)).join(
-				', ',
+				", ",
 			)}>`;
 		}
 	}

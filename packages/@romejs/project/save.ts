@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ProjectConfigMeta, ProjectConfigMetaHard} from './types';
-import {Consumer} from '@romejs/consume';
-import {readFileText, writeFile} from '@romejs/fs';
+import {ProjectConfigMeta, ProjectConfigMetaHard} from "./types";
+import {Consumer} from "@romejs/consume";
+import {readFileText, writeFile} from "@romejs/fs";
 import {
 	consumeJSONExtra,
 	stringifyJSON,
 	stringifyRJSONFromConsumer,
-} from '@romejs/codec-json';
-import {normalizeProjectConfig} from './load';
-import {DiagnosticsError, catchDiagnosticsSync} from '@romejs/diagnostics';
-import {assertHardMeta} from './utils';
+} from "@romejs/codec-json";
+import {normalizeProjectConfig} from "./load";
+import {DiagnosticsError, catchDiagnosticsSync} from "@romejs/diagnostics";
+import {assertHardMeta} from "./utils";
 
 export async function modifyProjectConfig(
 	softMeta: ProjectConfigMeta,
@@ -78,7 +78,7 @@ export async function modifyProjectConfig(
 		});
 
 		throw new DiagnosticsError(
-			'Diagnostics produced while testing new project config',
+			"Diagnostics produced while testing new project config",
 			diagnostics,
 		);
 	}

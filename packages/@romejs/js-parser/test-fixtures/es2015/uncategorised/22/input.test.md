@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 5
 			index: 22
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 5
 					index: 22
@@ -47,7 +47,7 @@ Program {
 			expression: TemplateLiteral {
 				expressions: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 5
 						index: 22
@@ -61,11 +61,11 @@ Program {
 				}
 				quasis: Array [
 					TemplateElement {
-						cooked: '\n\r\b\x0b\t\f\u2028\u2029'
-						raw: '\\n\\r\\b\\v\\t\\f\\\n\\\n\\\u2028\\\u2029'
+						cooked: "\n\r\b\x0b\t\f\u2028\u2029"
+						raw: "\\n\\r\\b\\v\\t\\f\\\n\\\n\\\u2028\\\u2029"
 						tail: true
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 4
 								index: 21

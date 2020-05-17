@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Reporter} from '@romejs/cli-reporter';
+import {Reporter} from "@romejs/cli-reporter";
 import {
 	Diagnostic,
 	DiagnosticAdviceAction,
@@ -19,20 +19,20 @@ import {
 	DiagnosticAdviceLog,
 	DiagnosticAdviceStacktrace,
 	diagnosticLocationToMarkupFilelink,
-} from '@romejs/diagnostics';
-import {Position} from '@romejs/parser-core';
-import {ToLines, showInvisibles, toLines} from './utils';
-import buildPatchCodeFrame from './buildPatchCodeFrame';
-import buildMessageCodeFrame from './buildMessageCodeFrame';
-import {escapeMarkup, markupTag} from '@romejs/string-markup';
-import {DiagnosticsPrinterFlags} from './types';
-import {ob1Number0Neg1} from '@romejs/ob1';
-import DiagnosticsPrinter, {DiagnosticsPrinterFileSources} from './DiagnosticsPrinter';
-import {AbsoluteFilePathSet} from '@romejs/path';
-import {RAW_CODE_MAX_LENGTH} from './constants';
-import {Diffs, diffConstants} from '@romejs/string-diff';
-import {removeCarriageReturn} from '@romejs/string-utils';
-import {serializeCLIFlags} from '@romejs/cli-flags';
+} from "@romejs/diagnostics";
+import {Position} from "@romejs/parser-core";
+import {ToLines, showInvisibles, toLines} from "./utils";
+import buildPatchCodeFrame from "./buildPatchCodeFrame";
+import buildMessageCodeFrame from "./buildMessageCodeFrame";
+import {escapeMarkup, markupTag} from "@romejs/string-markup";
+import {DiagnosticsPrinterFlags} from "./types";
+import {ob1Number0Neg1} from "@romejs/ob1";
+import DiagnosticsPrinter, {DiagnosticsPrinterFileSources} from "./DiagnosticsPrinter";
+import {AbsoluteFilePathSet} from "@romejs/path";
+import {RAW_CODE_MAX_LENGTH} from "./constants";
+import {Diffs, diffConstants} from "@romejs/string-diff";
+import {removeCarriageReturn} from "@romejs/string-utils";
+import {serializeCLIFlags} from "@romejs/cli-flags";
 
 type AdvicePrintOptions = {
 	printer: DiagnosticsPrinter;
@@ -63,31 +63,31 @@ export default function printAdvice(
 	opts: AdvicePrintOptions,
 ): PrintAdviceResult {
 	switch (item.type) {
-		case 'log':
+		case "log":
 			return printLog(item, opts);
 
-		case 'action':
+		case "action":
 			return printAction(item, opts);
 
-		case 'list':
+		case "list":
 			return printList(item, opts);
 
-		case 'diff':
+		case "diff":
 			return printDiff(item, opts);
 
-		case 'code':
+		case "code":
 			return printCode(item, opts);
 
-		case 'command':
+		case "command":
 			return printCommand(item, opts);
 
-		case 'frame':
+		case "frame":
 			return printFrame(item, opts);
 
-		case 'stacktrace':
+		case "stacktrace":
 			return printStacktrace(item, opts);
 
-		case 'inspect':
+		case "inspect":
 			return printInspect(item, opts);
 	}
 }
@@ -104,8 +104,8 @@ function printAction(
 
 	const command = serializeCLIFlags(
 		{
-			prefix: '',
-			programName: 'rome',
+			prefix: "",
+			programName: "rome",
 			commandName: item.command,
 			args: item.args,
 			flags: {
@@ -113,7 +113,7 @@ function printAction(
 				...item.requestFlags,
 			},
 		},
-		{type: 'none'},
+		{type: "none"},
 	).sourceText;
 	opts.reporter.command(command);
 	return DID_PRINT;
@@ -139,8 +139,8 @@ function printInspect(
 }
 
 function generateDiffHint(diffs: Diffs): undefined | DiagnosticAdviceItem {
-	let expected = '';
-	let received = '';
+	let expected = "";
+	let received = "";
 
 	for (const [type, text] of diffs) {
 		switch (type) {
@@ -164,27 +164,27 @@ function generateDiffHint(diffs: Diffs): undefined | DiagnosticAdviceItem {
 
 	if (expected.trim() === received.trim()) {
 		return {
-			type: 'log',
-			category: 'info',
-			text: 'Only difference is leading and trailing whitespace',
+			type: "log",
+			category: "info",
+			text: "Only difference is leading and trailing whitespace",
 		};
 	}
 
 	const receivedNoCRLF = removeCarriageReturn(received);
 	if (expected === receivedNoCRLF) {
 		return {
-			type: 'log',
-			category: 'info',
-			text: 'Identical except the received uses CRLF newlines, while the expected does not',
+			type: "log",
+			category: "info",
+			text: "Identical except the received uses CRLF newlines, while the expected does not",
 		};
 	}
 
 	const expectedNoCRLF = removeCarriageReturn(expected);
 	if (received === expectedNoCRLF) {
 		return {
-			type: 'log',
-			category: 'info',
-			text: 'Identical except the expected uses CRLF newlines, while the received does not',
+			type: "log",
+			category: "info",
+			text: "Identical except the expected uses CRLF newlines, while the received does not",
 		};
 	}
 
@@ -199,7 +199,7 @@ function printDiff(
 		item,
 		opts.flags.verboseDiagnostics,
 	);
-	if (frame === '') {
+	if (frame === "") {
 		return DID_NOT_PRINT;
 	}
 
@@ -251,11 +251,11 @@ function printCode(
 	let code = truncated ? item.code.slice(0, RAW_CODE_MAX_LENGTH) : item.code;
 
 	reporter.indent(() => {
-		if (code === '') {
-			reporter.logAll('<dim>empty input</dim>');
+		if (code === "") {
+			reporter.logAll("<dim>empty input</dim>");
 		} else {
 			// If it's a string with only whitespace then make it obvious
-			if (code.trim() === '') {
+			if (code.trim() === "") {
 				code = showInvisibles(code);
 			}
 
@@ -284,9 +284,9 @@ function printFrame(
 	let {sourceText} = item.location;
 	const path = opts.printer.createFilePath(filename);
 
-	let cleanMarker: string = '';
+	let cleanMarker: string = "";
 	if (marker !== undefined) {
-		cleanMarker = markupTag('emphasis', cleanMessage(marker));
+		cleanMarker = markupTag("emphasis", cleanMessage(marker));
 	}
 
 	let lines: ToLines = {
@@ -313,17 +313,17 @@ function printFrame(
 	) {
 		lines = {
 			length: 1,
-			raw: ['File does not exist'],
-			highlighted: ['<dim>File does not exist</dim>'],
+			raw: ["File does not exist"],
+			highlighted: ["<dim>File does not exist</dim>"],
 		};
 	}
 
 	if (sourceText === undefined) {
-		sourceText = '';
+		sourceText = "";
 	}
 
 	const frame = buildMessageCodeFrame(sourceText, lines, start, end, cleanMarker);
-	if (frame.trim() === '') {
+	if (frame.trim() === "") {
 		return DID_NOT_PRINT;
 	}
 
@@ -368,24 +368,24 @@ function printStacktrace(
 
 			// Add prefix
 			if (prefix !== undefined) {
-				logParts.push(markupTag('dim', escapeMarkup(prefix)));
+				logParts.push(markupTag("dim", escapeMarkup(prefix)));
 			}
 
 			// Build path
 			const objParts = [];
 			if (object !== undefined) {
-				objParts.push(markupTag('highlight', escapeMarkup(object), {i: 0}));
+				objParts.push(markupTag("highlight", escapeMarkup(object), {i: 0}));
 			}
 			if (property !== undefined) {
-				objParts.push(markupTag('highlight', escapeMarkup(property), {i: 1}));
+				objParts.push(markupTag("highlight", escapeMarkup(property), {i: 1}));
 			}
 			if (objParts.length > 0) {
-				logParts.push(objParts.join('.'));
+				logParts.push(objParts.join("."));
 			}
 
 			// Add suffix
 			if (suffix !== undefined) {
-				logParts.push(markupTag('success', escapeMarkup(suffix)));
+				logParts.push(markupTag("success", escapeMarkup(suffix)));
 			}
 
 			// Add source
@@ -406,7 +406,7 @@ function printStacktrace(
 				}
 			}
 
-			reporter.logAll(logParts.join(' '));
+			reporter.logAll(logParts.join(" "));
 
 			if (
 				shownCodeFrames < 2 &&
@@ -422,11 +422,11 @@ function printStacktrace(
 
 				const skipped = printFrame(
 					{
-						type: 'frame',
+						type: "frame",
 						location: {
 							language,
 							filename,
-							sourceType: 'module',
+							sourceType: "module",
 							start: pos,
 							end: pos,
 							sourceText: code,
@@ -461,22 +461,22 @@ function printLog(
 
 	if (message !== undefined) {
 		switch (category) {
-			case 'none': {
+			case "none": {
 				reporter.logAll(message);
 				break;
 			}
 
-			case 'warn': {
+			case "warn": {
 				reporter.warn(message);
 				break;
 			}
 
-			case 'info': {
+			case "info": {
 				reporter.info(message);
 				break;
 			}
 
-			case 'error': {
+			case "error": {
 				reporter.error(message);
 				break;
 			}
@@ -491,7 +491,7 @@ function printLog(
 
 function cleanMessage(msg: string): string {
 	msg = msg.trim();
-	if (msg.endsWith('.')) {
+	if (msg.endsWith(".")) {
 		msg = msg.slice(0, -1);
 	}
 	return msg;

@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from '@romejs/js-ast';
-import {descriptions} from '@romejs/diagnostics';
-import {Scope} from '../../scopes';
-import E, {ErrorDefinition} from './E';
+import {AnyNode} from "@romejs/js-ast";
+import {descriptions} from "@romejs/diagnostics";
+import {Scope} from "../../scopes";
+import E, {ErrorDefinition} from "./E";
 
 export default class UndeclaredVarE extends E {
 	constructor(scope: Scope, originNode: undefined | AnyNode, name: string) {
@@ -16,7 +16,7 @@ export default class UndeclaredVarE extends E {
 		this.name = name;
 	}
 
-	static type = 'UndeclaredVarE';
+	static type = "UndeclaredVarE";
 	name: string;
 
 	getError(): ErrorDefinition {

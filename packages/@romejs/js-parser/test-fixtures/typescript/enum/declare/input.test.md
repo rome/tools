@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 17
 			index: 17
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		TSEnumDeclaration {
 			id: BindingIdentifier {
-				name: 'E'
+				name: "E"
 				loc: Object {
-					filename: 'input.ts'
-					identifierName: 'E'
+					filename: "input.ts"
+					identifierName: "E"
 					end: Object {
 						column: 14
 						index: 14
@@ -52,7 +52,7 @@ Program {
 			declare: true
 			members: Array []
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 17
 					index: 17

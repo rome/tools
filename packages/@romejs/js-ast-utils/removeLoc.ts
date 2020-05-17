@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, MOCK_PROGRAM} from '@romejs/js-ast';
-import {DEFAULT_PROJECT_CONFIG} from '@romejs/project';
-import {CompilerContext, Path, TransformVisitors} from '@romejs/js-compiler';
-import {SourceLocation} from '@romejs/parser-core';
-import {JSNodeBase} from '@romejs/js-ast/base';
+import {AnyNode, MOCK_PROGRAM} from "@romejs/js-ast";
+import {DEFAULT_PROJECT_CONFIG} from "@romejs/project";
+import {CompilerContext, Path, TransformVisitors} from "@romejs/js-compiler";
+import {SourceLocation} from "@romejs/parser-core";
+import {JSNodeBase} from "@romejs/js-ast/base";
 
 function removeProp<T extends {
 	loc?: SourceLocation;
-}>(obj: T): Omit<T, 'loc'> {
+}>(obj: T): Omit<T, "loc"> {
 	const {loc, ...locless} = obj;
 	loc;
 	return locless;
@@ -21,7 +21,7 @@ function removeProp<T extends {
 
 const removeLocTransform: TransformVisitors = [
 	{
-		name: 'removeLocTransform',
+		name: "removeLocTransform",
 		enter(path: Path) {
 			const {node} = path;
 			if (node.loc === undefined) {
@@ -47,7 +47,7 @@ const removeLocTransform: TransformVisitors = [
 
 export default function removeLoc(ast: AnyNode) {
 	const context = new CompilerContext({
-		sourceText: '',
+		sourceText: "",
 		ast: MOCK_PROGRAM,
 		project: {
 			folder: undefined,

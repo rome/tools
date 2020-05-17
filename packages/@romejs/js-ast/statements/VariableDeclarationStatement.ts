@@ -5,22 +5,22 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase} from '../index';
-import {createQuickBuilder} from '../utils';
-import {VariableDeclaration} from '../auxiliary/VariableDeclaration';
+import {JSNodeBase} from "../index";
+import {createQuickBuilder} from "../utils";
+import {VariableDeclaration} from "../auxiliary/VariableDeclaration";
 
 export type VariableDeclarationStatement = JSNodeBase & {
-	type: 'VariableDeclarationStatement';
+	type: "VariableDeclarationStatement";
 	declaration: VariableDeclaration;
 	declare?: boolean;
 };
 
 export const variableDeclarationStatement = createQuickBuilder<
 	VariableDeclarationStatement,
-	'declaration'
+	"declaration"
 >(
-	'VariableDeclarationStatement',
-	'declaration',
+	"VariableDeclarationStatement",
+	"declaration",
 	{
 		bindingKeys: {
 			declaration: true,

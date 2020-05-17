@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from '@romejs/js-ast';
-import {Scope} from '../scopes';
-import T, {SerialTypeFactory} from './T';
-import {HydrateData, HydrateTypeFactory} from '../Evaluator';
-import StringLiteralT from './StringLiteralT';
-import GetPropT from './GetPropT';
-import ObjPropT from './ObjPropT';
-import OpenT from './OpenT';
-import ObjT from './ObjT';
+import {AnyNode} from "@romejs/js-ast";
+import {Scope} from "../scopes";
+import T, {SerialTypeFactory} from "./T";
+import {HydrateData, HydrateTypeFactory} from "../Evaluator";
+import StringLiteralT from "./StringLiteralT";
+import GetPropT from "./GetPropT";
+import ObjPropT from "./ObjPropT";
+import OpenT from "./OpenT";
+import ObjT from "./ObjT";
 
 export default class ClassT extends ObjT {
 	constructor(
@@ -35,7 +35,7 @@ export default class ClassT extends ObjT {
 				scope,
 				originNode,
 				opts.extends,
-				new StringLiteralT(scope, originNode, 'prototype'),
+				new StringLiteralT(scope, originNode, "prototype"),
 			);
 		}
 
@@ -44,7 +44,7 @@ export default class ClassT extends ObjT {
 		const constructorProp = new ObjPropT(
 			scope,
 			undefined,
-			'constructor',
+			"constructor",
 			constructorOpen,
 		);
 		const instances = [...opts.instances, constructorProp];
@@ -66,7 +66,7 @@ export default class ClassT extends ObjT {
 			{
 				props: [
 					...opts.statics,
-					new ObjPropT(scope, originNode, 'prototype', protoObj),
+					new ObjPropT(scope, originNode, "prototype", protoObj),
 				],
 				proto: opts.extends,
 				calls: opts.calls === undefined ? [] : opts.calls,
@@ -81,7 +81,7 @@ export default class ClassT extends ObjT {
 		this._extends = opts.extends;
 	}
 
-	static type = 'ClassT';
+	static type = "ClassT";
 
 	_statics: Array<T>;
 	_instances: Array<T>;

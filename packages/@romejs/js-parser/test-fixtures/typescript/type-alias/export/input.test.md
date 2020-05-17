@@ -9,14 +9,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 63
@@ -30,10 +30,10 @@ Program {
 	}
 	comments: Array [
 		CommentLine {
-			id: '0'
-			value: ' `export default type` is not valid.'
+			id: "0"
+			value: " `export default type` is not valid."
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 38
 					index: 62
@@ -49,11 +49,11 @@ Program {
 	]
 	body: Array [
 		ExportLocalDeclaration {
-			exportKind: 'type'
+			exportKind: "type"
 			specifiers: undefined
-			trailingComments: Array ['0']
+			trailingComments: Array ["0"]
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 23
 					index: 23
@@ -67,10 +67,10 @@ Program {
 			}
 			declaration: TypeAliasTypeAnnotation {
 				id: BindingIdentifier {
-					name: 'T'
+					name: "T"
 					loc: Object {
-						filename: 'input.ts'
-						identifierName: 'T'
+						filename: "input.ts"
+						identifierName: "T"
 						end: Object {
 							column: 13
 							index: 13
@@ -86,7 +86,7 @@ Program {
 				trailingComments: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 23
 						index: 23
@@ -100,7 +100,7 @@ Program {
 				}
 				right: NumberKeywordTypeAnnotation {
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 22
 							index: 22

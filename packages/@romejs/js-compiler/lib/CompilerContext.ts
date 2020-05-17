@@ -11,18 +11,18 @@ import {
 	ConstSourceType,
 	Program,
 	program,
-} from '@romejs/js-ast';
+} from "@romejs/js-ast";
 import {
 	SourceLocation,
 	extractSourceLocationRangeFromNodes,
-} from '@romejs/parser-core';
+} from "@romejs/parser-core";
 import {
 	CompilerOptions,
 	PathOptions,
 	TransformExitResult,
 	TransformVisitors,
 	Transforms,
-} from '@romejs/js-compiler';
+} from "@romejs/js-compiler";
 import {
 	Diagnostic,
 	DiagnosticCategory,
@@ -31,34 +31,34 @@ import {
 	DiagnosticOrigin,
 	DiagnosticSuppressions,
 	DiagnosticsProcessor,
-} from '@romejs/diagnostics';
-import Record from './Record';
-import {RootScope} from '../scope/Scope';
-import reduce from '../methods/reduce';
-import {UnknownFilePath, createUnknownFilePath} from '@romejs/path';
+} from "@romejs/diagnostics";
+import Record from "./Record";
+import {RootScope} from "../scope/Scope";
+import reduce from "../methods/reduce";
+import {UnknownFilePath, createUnknownFilePath} from "@romejs/path";
 import {
 	LintCompilerOptionsDecision,
 	TransformProjectDefinition,
 	TransformVisitor,
-} from '../types';
+} from "../types";
 import {
 	extractSuppressionsFromProgram,
 	matchesSuppression,
-} from '../suppressions';
-import CommentsConsumer from '@romejs/js-parser/CommentsConsumer';
-import {ob1Get0} from '@romejs/ob1';
-import {hookVisitors} from '../transforms';
-import stringDiff from '@romejs/string-diff';
-import {formatJS} from '@romejs/js-formatter';
-import {REDUCE_REMOVE} from '../constants';
-import {FileReference} from '@romejs/core';
-import {DEFAULT_PROJECT_CONFIG} from '@romejs/project';
+} from "../suppressions";
+import CommentsConsumer from "@romejs/js-parser/CommentsConsumer";
+import {ob1Get0} from "@romejs/ob1";
+import {hookVisitors} from "../transforms";
+import stringDiff from "@romejs/string-diff";
+import {formatJS} from "@romejs/js-formatter";
+import {REDUCE_REMOVE} from "../constants";
+import {FileReference} from "@romejs/core";
+import {DEFAULT_PROJECT_CONFIG} from "@romejs/project";
 import {
 	buildLintDecisionAdviceAction,
 	buildLintDecisionGlobalString,
 	buildLintDecisionString,
 	deriveDecisionPositionKey,
-} from '../lint/decisions';
+} from "../lint/decisions";
 
 export type ContextArg = {
 	ast: Program;
@@ -78,7 +78,7 @@ type AddDiagnosticResult = {
 };
 
 // We only want a Context to create diagnostics that belong to itself
-type ContextDiagnostic = Omit<Diagnostic, 'location' | 'description'> & {
+type ContextDiagnostic = Omit<Diagnostic, "location" | "description"> & {
 	marker?: string;
 };
 
@@ -94,9 +94,9 @@ type DiagnosticTarget =
 function getFormattedCodeFromExitResult(result: TransformExitResult): string {
 	if (Array.isArray(result)) {
 		// TODO?
-		return '';
+		return "";
 	} else if (result === REDUCE_REMOVE) {
-		return '';
+		return "";
 	} else {
 		return formatJS(result).code;
 	}
@@ -110,7 +110,7 @@ export default class CompilerContext {
 			ref,
 			frozen = false,
 			options = {},
-			sourceText = '',
+			sourceText = "",
 			project = {
 				folder: undefined,
 				config: DEFAULT_PROJECT_CONFIG,
@@ -166,7 +166,7 @@ export default class CompilerContext {
 	async normalizeTransforms(transforms: Transforms): Promise<TransformVisitors> {
 		return Promise.all(
 			transforms.map(async (visitor) => {
-				if (typeof visitor === 'function') {
+				if (typeof visitor === "function") {
 					return await visitor(this);
 				} else {
 					return visitor;
@@ -199,7 +199,7 @@ export default class CompilerContext {
 	getRootScope(): RootScope {
 		const {rootScope} = this;
 		if (rootScope === undefined) {
-			throw new Error('Expected root scope');
+			throw new Error("Expected root scope");
 		}
 		return rootScope;
 	}
@@ -291,7 +291,7 @@ export default class CompilerContext {
 		const loc = this.getLoc(target);
 		const oldCode =
 			loc === undefined
-				? ''
+				? ""
 				: this.sourceText.slice(ob1Get0(loc.start.index), ob1Get0(loc.end.index));
 
 		let fixed: undefined | New = defaultFixed;
@@ -299,43 +299,43 @@ export default class CompilerContext {
 		// Add recommended fix
 		if (defaultFixed !== undefined) {
 			advice.push({
-				type: 'log',
-				category: 'info',
-				text: 'Recommended fix',
+				type: "log",
+				category: "info",
+				text: "Recommended fix",
 			});
 
 			advice.push({
-				type: 'diff',
+				type: "diff",
 				diff: stringDiff(oldCode, getFormattedCodeFromExitResult(defaultFixed)),
 			});
 			if (loc === undefined) {
 				advice.push({
-					type: 'log',
-					category: 'error',
-					text: 'Unable to find target location',
+					type: "log",
+					category: "error",
+					text: "Unable to find target location",
 				});
 			} else {
 				advice.push(
 					buildLintDecisionAdviceAction({
 						filename: this.displayFilename,
 						decision: buildLintDecisionString({
-							action: 'fix',
+							action: "fix",
 							filename: this.displayFilename,
 							category,
 							start: loc.start,
 						}),
-						shortcut: 'f',
-						noun: 'Apply fix',
-						instruction: 'To apply this fix run',
+						shortcut: "f",
+						noun: "Apply fix",
+						instruction: "To apply this fix run",
 					}),
 				);
 
 				advice.push(
 					buildLintDecisionAdviceAction({
 						extra: true,
-						noun: 'Apply fix for ALL files with this category',
-						instruction: 'To apply fix for ALL files with this category run',
-						decision: buildLintDecisionGlobalString('fix', category),
+						noun: "Apply fix for ALL files with this category",
+						instruction: "To apply fix for ALL files with this category run",
+						decision: buildLintDecisionGlobalString("fix", category),
 					}),
 				);
 			}
@@ -345,12 +345,12 @@ export default class CompilerContext {
 			// If we have lint decisions then find the fix that corresponds with this suggestion
 			if (this.hasLintDecisions()) {
 				const decisions = this.getLintDecisions(
-					deriveDecisionPositionKey('fix', loc),
+					deriveDecisionPositionKey("fix", loc),
 				);
 				for (const decision of decisions) {
 					if (
 						decision.category === category &&
-						decision.action === 'fix' &&
+						decision.action === "fix" &&
 						decision.id !== undefined
 					) {
 						const suggestion = suggestions[decision.id];
@@ -367,42 +367,42 @@ export default class CompilerContext {
 				const num = index + 1;
 
 				const titlePrefix =
-					suggestions.length === 1 ? 'Suggested fix' : `Suggested fix #${num}`;
+					suggestions.length === 1 ? "Suggested fix" : `Suggested fix #${num}`;
 				advice.push({
-					type: 'log',
-					category: 'none',
+					type: "log",
+					category: "none",
 					text: `<emphasis>${titlePrefix}:</emphasis> ${suggestion.title}`,
 				});
 
 				advice.push({
-					type: 'diff',
+					type: "diff",
 					diff: stringDiff(oldCode, getFormattedCodeFromExitResult(suggestion.fixed)),
 				});
 
 				advice.push({
-					type: 'log',
-					category: 'info',
+					type: "log",
+					category: "info",
 					text: suggestion.description,
 				});
 
 				if (loc === undefined) {
 					advice.push({
-						type: 'log',
-						category: 'error',
-						text: 'Unable to find target location',
+						type: "log",
+						category: "error",
+						text: "Unable to find target location",
 					});
 				} else {
 					advice.push(
 						buildLintDecisionAdviceAction({
 							noun: suggestions.length === 1
-								? 'Apply suggested fix'
+								? "Apply suggested fix"
 								: `Apply suggested fix "${suggestion.title}"`,
 							shortcut: String(num),
-							instruction: 'To apply this fix run',
+							instruction: "To apply this fix run",
 							filename: this.displayFilename,
 							decision: buildLintDecisionString({
 								filename: this.displayFilename,
-								action: 'fix',
+								action: "fix",
 								category,
 								start: loc.start,
 								id: index,
@@ -457,13 +457,13 @@ export default class CompilerContext {
 		if (loc !== undefined && loc.start !== undefined) {
 			advice.push(
 				buildLintDecisionAdviceAction({
-					noun: 'Add suppression comment',
-					shortcut: 's',
-					instruction: 'To suppress this error run',
+					noun: "Add suppression comment",
+					shortcut: "s",
+					instruction: "To suppress this error run",
 					filename: this.displayFilename,
 					decision: buildLintDecisionString({
 						filename: this.displayFilename,
-						action: 'suppress',
+						action: "suppress",
 						category,
 						start: loc.start,
 					}),
@@ -473,9 +473,9 @@ export default class CompilerContext {
 			advice.push(
 				buildLintDecisionAdviceAction({
 					extra: true,
-					noun: 'Add suppression comments for ALL files with this category',
-					instruction: 'To add suppression comments for ALL files with this category run',
-					decision: buildLintDecisionGlobalString('suppress', category),
+					noun: "Add suppression comments for ALL files with this category",
+					instruction: "To add suppression comments for ALL files with this category run",
+					decision: buildLintDecisionGlobalString("suppress", category),
 				}),
 			);
 		}
@@ -493,7 +493,7 @@ export default class CompilerContext {
 				filename: this.filename,
 				start: loc === undefined ? undefined : loc.start,
 				end: loc === undefined ? undefined : loc.end,
-				language: 'js',
+				language: "js",
 				sourceType: this.sourceType,
 			},
 			origins,
@@ -507,10 +507,10 @@ export default class CompilerContext {
 			suppressed = true;
 
 			const decisions = this.getLintDecisions(
-				deriveDecisionPositionKey('fix', loc),
+				deriveDecisionPositionKey("fix", loc),
 			);
 			for (const {category, action} of decisions) {
-				if (category === diagCategory && action === 'fix') {
+				if (category === diagCategory && action === "fix") {
 					suppressed = false;
 				}
 			}

@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 16
 			index: 16
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 16
 					index: 16
@@ -46,7 +46,7 @@ Program {
 			}
 			expression: CallExpression {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 15
 						index: 15
@@ -59,10 +59,10 @@ Program {
 					}
 				}
 				callee: ReferenceIdentifier {
-					name: 'log'
+					name: "log"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'log'
+						filename: "input.js"
+						identifierName: "log"
 						end: Object {
 							column: 3
 							index: 3
@@ -77,10 +77,10 @@ Program {
 				}
 				arguments: Array [
 					ReferenceIdentifier {
-						name: 'n'
+						name: "n"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'n'
+							filename: "input.js"
+							identifierName: "n"
 							end: Object {
 								column: 5
 								index: 5
@@ -94,9 +94,9 @@ Program {
 						}
 					}
 					StringLiteral {
-						value: '='
+						value: "="
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 10
 								index: 10
@@ -113,7 +113,7 @@ Program {
 						value: 2
 						format: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 13
 								index: 13

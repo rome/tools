@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSQualifiedName} from '@romejs/js-ast';
-import {Builder} from '@romejs/js-formatter';
-import {Token, concat} from '../../tokens';
+import {TSQualifiedName} from "@romejs/js-ast";
+import {Builder} from "@romejs/js-formatter";
+import {Token, concat} from "../../tokens";
 
 export default function TSQualifiedName(
 	builder: Builder,
@@ -15,7 +15,7 @@ export default function TSQualifiedName(
 ): Token {
 	return concat([
 		builder.tokenize(node.left, node),
-		'.',
+		".",
 		builder.tokenize(node.right, node),
 	]);
 }

@@ -9,9 +9,9 @@ import {
 	AnyNode,
 	RegExpNonDigitCharacter,
 	regExpNonDigitCharacter,
-} from '@romejs/js-ast';
+} from "@romejs/js-ast";
 
 export default function RegExpNonDigitCharacter(node: AnyNode) {
 	node = regExpNonDigitCharacter.assert(node);
-	throw new Error('unimplemented');
+	throw new Error("unimplemented");
 }

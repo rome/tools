@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Consumer, consumeUnknown} from '@romejs/consume';
+import {Consumer, consumeUnknown} from "@romejs/consume";
 import {
 	LSPDiagnostic,
 	LSPDiagnosticRelatedInformation,
@@ -13,47 +13,47 @@ import {
 	LSPRange,
 	LSPResponseMessage,
 	LSPTextEdit,
-} from './types';
-import Master, {MasterClient} from '../Master';
+} from "./types";
+import Master, {MasterClient} from "../Master";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathMap,
 	AbsoluteFilePathSet,
 	createAbsoluteFilePath,
-} from '@romejs/path';
-import {DiagnosticLocation, Diagnostics} from '@romejs/diagnostics';
-import {Position} from '@romejs/parser-core';
-import {Number0, ob1Coerce1To0, ob1Inc, ob1Number0} from '@romejs/ob1';
-import {markupToPlainTextString} from '@romejs/string-markup';
+} from "@romejs/path";
+import {DiagnosticLocation, Diagnostics} from "@romejs/diagnostics";
+import {Position} from "@romejs/parser-core";
+import {Number0, ob1Coerce1To0, ob1Inc, ob1Number0} from "@romejs/ob1";
+import {markupToPlainTextString} from "@romejs/string-markup";
 import {
 	MasterQueryResponse,
 	PartialMasterQueryRequest,
-} from '@romejs/core/common/bridges/MasterBridge';
-import Linter from '../linter/Linter';
-import MasterRequest, {EMPTY_SUCCESS_RESPONSE} from '../MasterRequest';
-import {DEFAULT_CLIENT_REQUEST_FLAGS} from '@romejs/core/common/types/client';
-import stringDiff, {Diffs, diffConstants} from '@romejs/string-diff';
-import {JSONObject, JSONPropertyValue} from '@romejs/codec-json';
+} from "@romejs/core/common/bridges/MasterBridge";
+import Linter from "../linter/Linter";
+import MasterRequest, {EMPTY_SUCCESS_RESPONSE} from "../MasterRequest";
+import {DEFAULT_CLIENT_REQUEST_FLAGS} from "@romejs/core/common/types/client";
+import stringDiff, {Diffs, diffConstants} from "@romejs/string-diff";
+import {JSONObject, JSONPropertyValue} from "@romejs/codec-json";
 import {
 	Reporter,
 	ReporterProgress,
 	ReporterProgressBase,
 	ReporterProgressOptions,
-} from '@romejs/cli-reporter';
+} from "@romejs/cli-reporter";
 
-type Status = 'IDLE' | 'WAITING_FOR_HEADERS_END' | 'WAITING_FOR_RESPONSE_END';
+type Status = "IDLE" | "WAITING_FOR_HEADERS_END" | "WAITING_FOR_RESPONSE_END";
 
 type Headers = {
 	length: number;
 	extra: Map<string, string>;
 };
 
-const HEADERS_END = '\r\n\r\n';
+const HEADERS_END = "\r\n\r\n";
 
 function parseHeaders(buffer: string): Headers {
 	const headers: Map<string, string> = new Map();
 
-	for (const line of buffer.split('\n')) {
+	for (const line of buffer.split("\n")) {
 		const clean = line.trim();
 		const match = clean.match(/^(.*?): (.*?)$/);
 		if (match == null) {
@@ -64,11 +64,11 @@ function parseHeaders(buffer: string): Headers {
 		headers.set(key.toLowerCase(), value);
 	}
 
-	const length = headers.get('content-length');
+	const length = headers.get("content-length");
 	if (length === undefined) {
-		throw new Error('Expected Content-Length');
+		throw new Error("Expected Content-Length");
 	}
-	headers.delete('content-length');
+	headers.delete("content-length");
 
 	return {
 		length: Number(length),
@@ -113,9 +113,9 @@ function convertDiagnosticsToLSP(
 			const item = advice[i];
 			const nextItem = advice[i + 1];
 			if (
-				item.type === 'log' &&
+				item.type === "log" &&
 				nextItem !== undefined &&
-				nextItem.type === 'frame'
+				nextItem.type === "frame"
 			) {
 				const abs = master.projectManager.getFilePathFromUidOrAbsolute(
 					nextItem.location.filename,
@@ -137,7 +137,7 @@ function convertDiagnosticsToLSP(
 			range: convertDiagnosticLocationToLSPRange(location),
 			message: markupToPlainTextString(description.message.value),
 			code: description.category,
-			source: 'rome',
+			source: "rome",
 			relatedInformation,
 		});
 	}
@@ -146,7 +146,7 @@ function convertDiagnosticsToLSP(
 }
 
 function getPathFromTextDocument(consumer: Consumer): AbsoluteFilePath {
-	return createAbsoluteFilePath(consumer.get('uri').asString());
+	return createAbsoluteFilePath(consumer.get("uri").asString());
 }
 
 function diffTextEdits(original: string, desired: string): Array<LSPTextEdit> {
@@ -159,7 +159,7 @@ function diffTextEdits(original: string, desired: string): Array<LSPTextEdit> {
 
 	function advance(str: string) {
 		for (const char of str) {
-			if (char === '\n') {
+			if (char === "\n") {
 				currLine = ob1Inc(currLine);
 				currChar = ob1Number0;
 			} else {
@@ -198,7 +198,7 @@ function diffTextEdits(original: string, desired: string): Array<LSPTextEdit> {
 						start,
 						end,
 					},
-					newText: '',
+					newText: "",
 				});
 				break;
 			}
@@ -224,14 +224,14 @@ class LSPProgress extends ReporterProgressBase {
 		super(reporter, opts);
 		this.server = server;
 		this.token = progressTokenCounter++;
-		this.lastRenderKey = '';
+		this.lastRenderKey = "";
 
 		server.write({
-			type: '$/progress',
+			type: "$/progress",
 			params: {
 				token: this.token,
 				value: {
-					kind: 'begin',
+					kind: "begin",
 					cancellable: false,
 					title: this.title,
 					percentage: 0,
@@ -256,11 +256,11 @@ class LSPProgress extends ReporterProgressBase {
 
 		this.lastRenderKey = renderKey;
 		this.server.write({
-			type: '$/progress',
+			type: "$/progress",
 			params: {
 				token: this.token,
 				value: {
-					kind: 'report',
+					kind: "report",
 					cancellable: false,
 					message: this.text,
 					percentage,
@@ -271,11 +271,11 @@ class LSPProgress extends ReporterProgressBase {
 
 	end() {
 		this.server.write({
-			type: '$/progress',
+			type: "$/progress",
 			params: {
 				token: this.token,
 				value: {
-					kind: 'end',
+					kind: "end",
 				},
 			},
 		});
@@ -284,8 +284,8 @@ class LSPProgress extends ReporterProgressBase {
 
 export default class LSPServer {
 	constructor(request: MasterRequest) {
-		this.status = 'IDLE';
-		this.buffer = '';
+		this.status = "IDLE";
+		this.buffer = "";
 		this.nextHeaders = undefined;
 
 		this.request = request;
@@ -362,7 +362,7 @@ export default class LSPServer {
 			return;
 		}
 
-		const req = this.createFakeMasterRequest('lsp_project', [path.join()]);
+		const req = this.createFakeMasterRequest("lsp_project", [path.join()]);
 		await req.init();
 
 		const linter = new Linter(
@@ -389,12 +389,12 @@ export default class LSPServer {
 					// We want to filter pendingFixes because we'll autoformat the file on save if necessary and it's just noise
 					const processor = this.request.createDiagnosticsProcessor();
 					processor.addFilter({
-						category: 'lint/pendingFixes',
+						category: "lint/pendingFixes",
 					});
 					processor.addDiagnostics(diagnostics);
 
 					this.write({
-						method: 'textDocument/publishDiagnostics',
+						method: "textDocument/publishDiagnostics",
 						params: {
 							uri: `file://${ref.real.join()}`,
 							diagnostics: convertDiagnosticsToLSP(
@@ -439,13 +439,13 @@ export default class LSPServer {
 		params: Consumer,
 	): Promise<JSONPropertyValue> {
 		switch (method) {
-			case 'initialize': {
-				const rootUri = params.get('rootUri');
+			case "initialize": {
+				const rootUri = params.get("rootUri");
 				if (rootUri.exists()) {
 					this.watchProject(createAbsoluteFilePath(rootUri.asString()));
 				}
 
-				const workspaceFolders = params.get('workspaceFolders');
+				const workspaceFolders = params.get("workspaceFolders");
 				if (workspaceFolders.exists()) {
 					for (const elem of workspaceFolders.asArray()) {
 						this.watchProject(getPathFromTextDocument(elem));
@@ -466,13 +466,13 @@ export default class LSPServer {
 						},
 					},
 					serverInfo: {
-						name: 'rome',
+						name: "rome",
 					},
 				};
 			}
 
-			case 'textDocument/formatting': {
-				const path = getPathFromTextDocument(params.get('textDocument'));
+			case "textDocument/formatting": {
+				const path = getPathFromTextDocument(params.get("textDocument"));
 
 				const project = this.master.projectManager.findProjectExisting(path);
 				if (project === undefined) {
@@ -489,7 +489,7 @@ export default class LSPServer {
 				return diffTextEdits(res.original, res.formatted);
 			}
 
-			case 'shutdown': {
+			case "shutdown": {
 				this.shutdown();
 				break;
 			}
@@ -500,19 +500,19 @@ export default class LSPServer {
 
 	async handleNotification(method: string, params: Consumer): Promise<void> {
 		switch (method) {
-			case 'workspace/didChangeWorkspaceFolders': {
-				for (const elem of params.get('added').asArray()) {
+			case "workspace/didChangeWorkspaceFolders": {
+				for (const elem of params.get("added").asArray()) {
 					this.watchProject(getPathFromTextDocument(elem));
 				}
-				for (const elem of params.get('removed').asArray()) {
+				for (const elem of params.get("removed").asArray()) {
 					this.unwatchProject(getPathFromTextDocument(elem));
 				}
 				break;
 			}
 
-			case 'textDocument/didChange': {
-				const path = getPathFromTextDocument(params.get('textDocument'));
-				const content = params.get('contentChanges').asArray()[0].get('text').asString();
+			case "textDocument/didChange": {
+				const path = getPathFromTextDocument(params.get("textDocument"));
+				const content = params.get("contentChanges").asArray()[0].get("text").asString();
 				await this.request.requestWorkerUpdateBuffer(path, content);
 				break;
 			}
@@ -522,11 +522,11 @@ export default class LSPServer {
 	normalizeMessage(content: string): undefined | Consumer {
 		try {
 			const data = JSON.parse(content);
-			const consumer = consumeUnknown(data, 'lsp/parse');
+			const consumer = consumeUnknown(data, "lsp/parse");
 			return consumer;
 		} catch (err) {
 			if (err instanceof SyntaxError) {
-				console.error('JSON parse error', content);
+				console.error("JSON parse error", content);
 				return undefined;
 			} else {
 				throw err;
@@ -540,16 +540,16 @@ export default class LSPServer {
 			return;
 		}
 
-		if (!consumer.has('method')) {
-			console.error('NO METHOD', content);
+		if (!consumer.has("method")) {
+			console.error("NO METHOD", content);
 			return;
 		}
 
-		const method: string = consumer.get('method').asString();
-		const params = consumer.get('params');
+		const method: string = consumer.get("method").asString();
+		const params = consumer.get("params");
 
-		if (consumer.has('id')) {
-			const id = consumer.get('id').asNumber();
+		if (consumer.has("id")) {
+			const id = consumer.get("id").asNumber();
 
 			try {
 				const res: LSPResponseMessage = {
@@ -574,15 +574,15 @@ export default class LSPServer {
 
 	process() {
 		switch (this.status) {
-			case 'IDLE': {
+			case "IDLE": {
 				if (this.buffer.length > 0) {
-					this.status = 'WAITING_FOR_HEADERS_END';
+					this.status = "WAITING_FOR_HEADERS_END";
 					this.process();
 				}
 				break;
 			}
 
-			case 'WAITING_FOR_HEADERS_END': {
+			case "WAITING_FOR_HEADERS_END": {
 				const endIndex = this.buffer.indexOf(HEADERS_END);
 				if (endIndex !== -1) {
 					// Parse headers
@@ -590,17 +590,17 @@ export default class LSPServer {
 					this.nextHeaders = parseHeaders(rawHeaders);
 
 					// Process rest of the buffer
-					this.status = 'WAITING_FOR_RESPONSE_END';
+					this.status = "WAITING_FOR_RESPONSE_END";
 					this.buffer = this.buffer.slice(endIndex + HEADERS_END.length);
 					this.process();
 				}
 				break;
 			}
 
-			case 'WAITING_FOR_RESPONSE_END': {
+			case "WAITING_FOR_RESPONSE_END": {
 				const headers = this.nextHeaders;
 				if (headers === undefined) {
-					throw new Error('Expected headers due to our status');
+					throw new Error("Expected headers due to our status");
 				}
 				if (this.buffer.length >= headers.length) {
 					const content = this.buffer.slice(0, headers.length);
@@ -611,7 +611,7 @@ export default class LSPServer {
 					this.buffer = this.buffer.slice(headers.length);
 
 					// Process rest of the buffer
-					this.status = 'IDLE';
+					this.status = "IDLE";
 					this.process();
 				}
 				break;

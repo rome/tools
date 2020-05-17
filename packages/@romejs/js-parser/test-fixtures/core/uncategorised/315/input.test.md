@@ -9,14 +9,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 18
 			index: 44
@@ -30,10 +30,10 @@ Program {
 	}
 	comments: Array [
 		CommentBlock {
-			id: '0'
-			value: ' Multiline\nComment '
+			id: "0"
+			value: " Multiline\nComment "
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 10
 					index: 36
@@ -51,7 +51,7 @@ Program {
 		BlockStatement {
 			directives: Array []
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 18
 					index: 44
@@ -65,9 +65,9 @@ Program {
 			}
 			body: Array [
 				ThrowStatement {
-					trailingComments: Array ['0']
+					trailingComments: Array ["0"]
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 13
 							index: 13
@@ -80,11 +80,11 @@ Program {
 						}
 					}
 					argument: ReferenceIdentifier {
-						name: 'error'
+						name: "error"
 						trailingComments: undefined
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'error'
+							filename: "input.js"
+							identifierName: "error"
 							end: Object {
 								column: 13
 								index: 13
@@ -99,9 +99,9 @@ Program {
 					}
 				}
 				ExpressionStatement {
-					leadingComments: Array ['0']
+					leadingComments: Array ["0"]
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 16
 							index: 42
@@ -114,11 +114,11 @@ Program {
 						}
 					}
 					expression: ReferenceIdentifier {
-						name: 'error'
+						name: "error"
 						leadingComments: undefined
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'error'
+							filename: "input.js"
+							identifierName: "error"
 							end: Object {
 								column: 15
 								index: 41

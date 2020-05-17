@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type BooleanKeywordTypeAnnotation = JSNodeBase & {
-	type: 'BooleanKeywordTypeAnnotation';
+	type: "BooleanKeywordTypeAnnotation";
 };
 
 export const booleanKeywordTypeAnnotation = createBuilder<BooleanKeywordTypeAnnotation>(
-	'BooleanKeywordTypeAnnotation',
+	"BooleanKeywordTypeAnnotation",
 	{
 		bindingKeys: {},
 		visitorKeys: {},

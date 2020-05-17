@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyExpression, AnyStatement, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {AnyExpression, AnyStatement, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type DoWhileStatement = JSNodeBase & {
-	type: 'DoWhileStatement';
+	type: "DoWhileStatement";
 	body: AnyStatement;
 	test: AnyExpression;
 };
 
 export const doWhileStatement = createBuilder<DoWhileStatement>(
-	'DoWhileStatement',
+	"DoWhileStatement",
 	{
 		bindingKeys: {},
 		visitorKeys: {

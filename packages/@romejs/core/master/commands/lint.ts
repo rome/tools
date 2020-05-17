@@ -5,21 +5,21 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {MasterRequest} from '@romejs/core';
+import {MasterRequest} from "@romejs/core";
 import Linter, {
 	LinterCompilerOptionsPerFile,
 	LinterOptions,
-} from '../linter/Linter';
-import {markup} from '@romejs/string-markup';
-import {createMasterCommand} from '../commands';
+} from "../linter/Linter";
+import {markup} from "@romejs/string-markup";
+import {createMasterCommand} from "../commands";
 import {
 	LintCompilerOptionsDecisions,
 	parseDecisionStrings,
-} from '@romejs/js-compiler';
-import {Consumer} from '@romejs/consume';
-import {commandCategories} from '@romejs/core/common/commands';
-import {createUnknownFilePath} from '@romejs/path';
-import {LINTABLE_EXTENSIONS} from '@romejs/core/common/file-handlers';
+} from "@romejs/js-compiler";
+import {Consumer} from "@romejs/consume";
+import {commandCategories} from "@romejs/core/common/commands";
+import {createUnknownFilePath} from "@romejs/path";
+import {LINTABLE_EXTENSIONS} from "@romejs/core/common/file-handlers";
 
 type Flags = {
 	decisions: Array<string>;
@@ -30,18 +30,18 @@ type Flags = {
 
 export default createMasterCommand<Flags>({
 	category: commandCategories.CODE_QUALITY,
-	description: 'run lint against a set of files',
-	allowRequestFlags: ['watch', 'review'],
-	usage: '',
+	description: "run lint against a set of files",
+	allowRequestFlags: ["watch", "review"],
+	usage: "",
 	examples: [],
 	defineFlags(consumer: Consumer): Flags {
 		return {
-			decisions: consumer.get('decisions').asImplicitArray().map((item) =>
+			decisions: consumer.get("decisions").asImplicitArray().map((item) =>
 				item.asString()
 			),
-			save: consumer.get('save').asBoolean(false),
-			formatOnly: consumer.get('formatOnly').asBoolean(false),
-			changed: consumer.get('changed').asStringOrVoid(),
+			save: consumer.get("save").asBoolean(false),
+			formatOnly: consumer.get("formatOnly").asBoolean(false),
+			changed: consumer.get("changed").asStringOrVoid(),
 		};
 	},
 	async callback(req: MasterRequest, flags: Flags): Promise<void> {
@@ -57,7 +57,7 @@ export default createMasterCommand<Flags>({
 				(description) => {
 					throw req.throwDiagnosticFlagError({
 						description,
-						target: {type: 'flag', key: 'decisions'},
+						target: {type: "flag", key: "decisions"},
 					});
 				},
 			));
@@ -70,7 +70,7 @@ export default createMasterCommand<Flags>({
 			req.expectArgumentLength(0);
 
 			const client = await req.getVCSClient();
-			const target = flags.changed === '' ? client.trunkBranch : flags.changed;
+			const target = flags.changed === "" ? client.trunkBranch : flags.changed;
 			args = await client.getModifiedFiles(target);
 
 			// Only include lintable files

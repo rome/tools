@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
+import {test} from "rome";
 
-import {testLintMultiple} from '../testHelpers';
+import {testLintMultiple} from "../testHelpers";
 
 test(
-	'disallow children with dangerouslySetInnerHTML',
+	"disallow children with dangerouslySetInnerHTML",
 	async (t) => {
 		await testLintMultiple(
 			t,
@@ -31,11 +31,11 @@ test(
 				'React.createElement("Invalid", { dangerouslySetInnerHTML: { __html: "HTML" } }, ["children"])',
 				// VALID
 				'<div dangerouslySetInnerHTML={{ __html: "HTML" }} />',
-				'<div>children</div>',
+				"<div>children</div>",
 				'<div children={"children"} />',
 				'<div children={["children"]} />',
 				'<Valid dangerouslySetInnerHTML={{ __html: "HTML" }} />',
-				'<Valid>children</Valid>',
+				"<Valid>children</Valid>",
 				'<Valid children={"children"} />',
 				'<Valid children={["children"]} />',
 				'React.createElement("div", { dangerouslySetInnerHTML: { __html: "HTML" } })',
@@ -49,7 +49,7 @@ test(
 				'React.createElement("Valid", { children: "children" })',
 				'React.createElement("Valid", { children: ["children"] })',
 			],
-			{category: 'lint/noDangerWithChildren'},
+			{category: "lint/noDangerWithChildren"},
 		);
 	},
 );

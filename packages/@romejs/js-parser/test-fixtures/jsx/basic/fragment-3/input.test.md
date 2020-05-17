@@ -10,17 +10,17 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array [
-		'jsx'
-		'ts'
+		"jsx"
+		"ts"
 	]
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 51
@@ -35,7 +35,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 3
 					index: 50
@@ -49,7 +49,7 @@ Program {
 			}
 			expression: JSXFragment {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 3
 						index: 50
@@ -63,9 +63,9 @@ Program {
 				}
 				children: Array [
 					JSXText {
-						value: '\n  '
+						value: "\n  "
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 2
 								index: 6
@@ -80,9 +80,9 @@ Program {
 					}
 					JSXElement {
 						name: JSXIdentifier {
-							name: 'span'
+							name: "span"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 7
 									index: 11
@@ -99,7 +99,7 @@ Program {
 						selfClosing: false
 						typeArguments: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 9
 								index: 29
@@ -113,9 +113,9 @@ Program {
 						}
 						children: Array [
 							JSXText {
-								value: '\n    hi\n  '
+								value: "\n    hi\n  "
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 2
 										index: 22
@@ -131,9 +131,9 @@ Program {
 						]
 					}
 					JSXText {
-						value: '\n  '
+						value: "\n  "
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 2
 								index: 32
@@ -148,9 +148,9 @@ Program {
 					}
 					JSXElement {
 						name: JSXIdentifier {
-							name: 'div'
+							name: "div"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 6
 									index: 36
@@ -167,7 +167,7 @@ Program {
 						selfClosing: false
 						typeArguments: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 16
 								index: 46
@@ -181,9 +181,9 @@ Program {
 						}
 						children: Array [
 							JSXText {
-								value: 'bye'
+								value: "bye"
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 10
 										index: 40
@@ -199,9 +199,9 @@ Program {
 						]
 					}
 					JSXText {
-						value: '\n'
+						value: "\n"
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 0
 								index: 47

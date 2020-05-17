@@ -5,18 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyTSPrimary, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {AnyTSPrimary, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type TSTypeParameter = JSNodeBase & {
-	type: 'TSTypeParameter';
+	type: "TSTypeParameter";
 	name: string;
 	default?: AnyTSPrimary;
 	constraint?: AnyTSPrimary;
 };
 
 export const tsTypeParameter = createBuilder<TSTypeParameter>(
-	'TSTypeParameter',
+	"TSTypeParameter",
 	{
 		bindingKeys: {},
 		visitorKeys: {

@@ -11,16 +11,16 @@ import {
 	AnyNode,
 	AnyStatement,
 	program,
-} from '@romejs/js-ast';
-import {CompilerContext, Path} from '@romejs/js-compiler';
-import removeLoc from './removeLoc';
-import {parseJS} from '@romejs/js-parser';
-import {createUnknownFilePath} from '@romejs/path';
-import isIdentifierish from './isIdentifierish';
-import {Dict} from '@romejs/typescript-helpers';
+} from "@romejs/js-ast";
+import {CompilerContext, Path} from "@romejs/js-compiler";
+import removeLoc from "./removeLoc";
+import {parseJS} from "@romejs/js-parser";
+import {createUnknownFilePath} from "@romejs/path";
+import isIdentifierish from "./isIdentifierish";
+import {Dict} from "@romejs/typescript-helpers";
 
 type Placeholder = {
-	type: AnyIdentifier['type'];
+	type: AnyIdentifier["type"];
 	path: Array<string>;
 };
 
@@ -52,7 +52,7 @@ function getTemplate(strs: TemplateStringsArray): BuiltTemplate {
 	}
 
 	// interpolate placeholders and original code
-	let code = '';
+	let code = "";
 	for (let i = 0; i < strs.length; i++) {
 		// add original part of code
 		code += strs[i];
@@ -67,8 +67,8 @@ function getTemplate(strs: TemplateStringsArray): BuiltTemplate {
 	// parse the interpolated code
 	let ast = parseJS({
 		input: code,
-		sourceType: 'template',
-		path: createUnknownFilePath('template'),
+		sourceType: "template",
+		path: createUnknownFilePath("template"),
 	});
 
 	// remove `loc` properties
@@ -91,10 +91,10 @@ function getTemplate(strs: TemplateStringsArray): BuiltTemplate {
 	});
 	context.reduce(
 		ast,
-		[{name: 'collectPlaceholderPaths', enter: collectPlaceholderPaths}],
+		[{name: "collectPlaceholderPaths", enter: collectPlaceholderPaths}],
 	);
 
-	const placeholderPaths: BuiltTemplate['placeholderPaths'] = [];
+	const placeholderPaths: BuiltTemplate["placeholderPaths"] = [];
 	for (const id in placeholders) {
 		const path = placeholders[id];
 		if (path === undefined) {
@@ -111,9 +111,9 @@ type TemplateSubstitions = Array<AnyNode | string>;
 
 function createIdentifier(
 	substitute: AnyNode | string,
-	expectedIdType: Placeholder['type'],
+	expectedIdType: Placeholder["type"],
 ): AnyNode {
-	if (typeof substitute === 'string') {
+	if (typeof substitute === "string") {
 		// @ts-ignore: No idea why this error exists
 		return {
 			type: expectedIdType,
@@ -137,7 +137,7 @@ export default function template(
 
 	// this case should never be hit
 	if (placeholderPaths.length !== substitutions.length) {
-		throw new Error('Expected subtituions to be the same length as paths');
+		throw new Error("Expected subtituions to be the same length as paths");
 	}
 
 	const newAst = {...ast};
@@ -178,8 +178,8 @@ template.expression = (
 	const first = template.statement(strs, ...substitutions);
 
 	// Ensure that the single statement is an ExpressionStatement
-	if (first.type !== 'ExpressionStatement') {
-		throw new Error('Single statement should be an ExpressionStatement');
+	if (first.type !== "ExpressionStatement") {
+		throw new Error("Single statement should be an ExpressionStatement");
 	}
 
 	return first.expression;

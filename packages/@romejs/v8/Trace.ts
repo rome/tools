@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Profile, TraceEvent} from './types';
-import sourceMapManager from './sourceMapManager';
-import {urlToFilename} from './utils';
-import {ob1Coerce0, ob1Coerce0To1, ob1Coerce1To0, ob1Get0} from '@romejs/ob1';
+import {Profile, TraceEvent} from "./types";
+import sourceMapManager from "./sourceMapManager";
+import {urlToFilename} from "./utils";
+import {ob1Coerce0, ob1Coerce0To1, ob1Coerce1To0, ob1Get0} from "@romejs/ob1";
 
 export default class Trace {
 	constructor() {
@@ -64,18 +64,18 @@ export default class Trace {
 		this.events.push({
 			...common,
 			ts: 0,
-			ph: 'M',
-			cat: '__metadata',
-			name: 'thread_name',
+			ph: "M",
+			cat: "__metadata",
+			name: "thread_name",
 			args: {name},
 		});
 
 		this.events.push({
 			...common,
-			ph: 'P',
-			name: 'CpuProfile',
+			ph: "P",
+			name: "CpuProfile",
 			id: this.getEventId(),
-			cat: 'disabled-by-default-v8.cpu_profiler',
+			cat: "disabled-by-default-v8.cpu_profiler",
 			ts: endTime,
 			args: {
 				data: {
@@ -86,18 +86,18 @@ export default class Trace {
 
 		this.events.push({
 			...common,
-			ph: 'X',
-			name: 'EvaluateScript',
+			ph: "X",
+			name: "EvaluateScript",
 			id: this.getEventId(),
-			cat: 'devtools.timeline',
+			cat: "devtools.timeline",
 			ts: startTime,
 			dur: endTime - startTime,
 			args: {
 				data: {
-					url: 'rome.js',
+					url: "rome.js",
 					lineNumber: 1,
 					columnNumber: 1,
-					frame: '0xFFF',
+					frame: "0xFFF",
 				},
 			},
 		});
@@ -106,15 +106,15 @@ export default class Trace {
 			this.events.push({
 				...common,
 				ts: time,
-				ph: 'I',
-				cat: 'disabled-by-default-devtools.timeline',
-				name: 'UpdateCounters',
+				ph: "I",
+				cat: "disabled-by-default-devtools.timeline",
+				name: "UpdateCounters",
 				args: {
 					data: {
 						jsHeapSizeUsed: size,
 					},
 				},
-				s: 't',
+				s: "t",
 			});
 		}
 	}

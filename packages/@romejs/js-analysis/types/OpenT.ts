@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {HumanBuilder} from '../Utils';
-import UnknownT from './UnknownT';
-import T from './T';
+import {HumanBuilder} from "../Utils";
+import UnknownT from "./UnknownT";
+import T from "./T";
 
 export default class OpenT extends T {
-	static type = 'OpenT';
+	static type = "OpenT";
 
 	humanize(builder: HumanBuilder): string {
 		const type = this.utils.reduce(this);
 		if (type === this) {
-			return 'open';
+			return "open";
 		} else {
 			return builder.humanize(type);
 		}

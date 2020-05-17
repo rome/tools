@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope, ThisScope} from '../../scopes';
-import {AnyNode, thisExpression} from '@romejs/js-ast';
-import OpenT from '../../types/OpenT';
+import {Scope, ThisScope} from "../../scopes";
+import {AnyNode, thisExpression} from "@romejs/js-ast";
+import OpenT from "../../types/OpenT";
 
 export default function ThisExpression(node: AnyNode, scope: Scope) {
 	node = thisExpression.assert(node);

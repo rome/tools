@@ -10,11 +10,11 @@ import {
 	JSXIdentifier,
 	JSXNamespacedName,
 	JSXReferenceIdentifier,
-} from '../index';
-import {createBuilder} from '../utils';
+} from "../index";
+import {createBuilder} from "../utils";
 
 export type JSXMemberExpression = JSNodeBase & {
-	type: 'JSXMemberExpression';
+	type: "JSXMemberExpression";
 	object:
 		 | JSXMemberExpression
 		| JSXIdentifier
@@ -24,7 +24,7 @@ export type JSXMemberExpression = JSNodeBase & {
 };
 
 export const jsxMemberExpression = createBuilder<JSXMemberExpression>(
-	'JSXMemberExpression',
+	"JSXMemberExpression",
 	{
 		bindingKeys: {},
 		visitorKeys: {

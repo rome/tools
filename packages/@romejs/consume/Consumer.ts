@@ -16,14 +16,14 @@ import {
 	createBlessedDiagnosticMessage,
 	createSingleDiagnosticError,
 	descriptions,
-} from '@romejs/diagnostics';
-import {UnknownObject, isPlainObject} from '@romejs/typescript-helpers';
+} from "@romejs/diagnostics";
+import {UnknownObject, isPlainObject} from "@romejs/typescript-helpers";
 import {
 	JSONArray,
 	JSONObject,
 	JSONPropertyValue,
 	JSONValue,
-} from '@romejs/codec-json';
+} from "@romejs/codec-json";
 import {
 	ConsumeContext,
 	ConsumeKey,
@@ -37,8 +37,8 @@ import {
 	ConsumerHandleUnexpected,
 	ConsumerOnDefinition,
 	ConsumerOptions,
-} from './types';
-import {SourceLocation, UNKNOWN_POSITION} from '@romejs/parser-core';
+} from "./types";
+import {SourceLocation, UNKNOWN_POSITION} from "@romejs/parser-core";
 import {
 	Number0,
 	Number1,
@@ -47,9 +47,9 @@ import {
 	ob1Coerce0,
 	ob1Coerce1,
 	ob1Get,
-} from '@romejs/ob1';
-import {isValidIdentifierName} from '@romejs/js-ast-utils';
-import {escapeString} from '@romejs/string-escape';
+} from "@romejs/ob1";
+import {isValidIdentifierName} from "@romejs/js-ast-utils";
+import {escapeString} from "@romejs/string-escape";
 import {
 	AbsoluteFilePath,
 	RelativeFilePath,
@@ -58,17 +58,17 @@ import {
 	createAbsoluteFilePath,
 	createURLFilePath,
 	createUnknownFilePath,
-} from '@romejs/path';
+} from "@romejs/path";
 
 type UnexpectedConsumerOptions = {
 	loc?: SourceLocation;
 	target?: ConsumeSourceLocationRequestTarget;
-	at?: 'suffix' | 'prefix' | 'none';
+	at?: "suffix" | "prefix" | "none";
 	atParent?: boolean;
 };
 
 function isComputedPart(part: ConsumeKey): boolean {
-	return typeof part === 'number' || !isValidIdentifierName(part);
+	return typeof part === "number" || !isValidIdentifierName(part);
 }
 
 export default class Consumer {
@@ -136,7 +136,7 @@ export default class Consumer {
 		const {diagnostics, consumer} = await this.capture();
 		const result = await callback(consumer);
 		if (result === undefined || diagnostics.length > 0) {
-			throw new DiagnosticsError('Captured diagnostics', diagnostics);
+			throw new DiagnosticsError("Captured diagnostics", diagnostics);
 		}
 		return result;
 	}
@@ -157,9 +157,9 @@ export default class Consumer {
 
 	declareDefinition(
 		partialDef:
-			 | Omit<ConsumePropertyStringDefinition, 'objectPath' | 'metadata'>
-			| Omit<ConsumePropertyPrimitiveDefinition, 'objectPath' | 'metadata'>
-			| Omit<ConsumePropertyNumberDefinition, 'objectPath' | 'metadata'>,
+			 | Omit<ConsumePropertyStringDefinition, "objectPath" | "metadata">
+			| Omit<ConsumePropertyPrimitiveDefinition, "objectPath" | "metadata">
+			| Omit<ConsumePropertyNumberDefinition, "objectPath" | "metadata">,
 		inputName?: string,
 	) {
 		if (this.declared) {
@@ -187,7 +187,7 @@ export default class Consumer {
 	}
 
 	getDiagnosticLocation(
-		target: ConsumeSourceLocationRequestTarget = 'all',
+		target: ConsumeSourceLocationRequestTarget = "all",
 	): DiagnosticLocation {
 		const {getDiagnosticPointer} = this.context;
 		if (getDiagnosticPointer === undefined) {
@@ -256,7 +256,7 @@ export default class Consumer {
 
 	getKey(): Consumer {
 		return this.clone({
-			forceDiagnosticTarget: 'key',
+			forceDiagnosticTarget: "key",
 			value: this.getParentKey(),
 		});
 	}
@@ -281,13 +281,13 @@ export default class Consumer {
 
 	getKeyPathString(path: ConsumePath = this.keyPath): string {
 		const {normalizeKey} = this.context;
-		let str = '';
+		let str = "";
 
 		for (let i = 0; i < path.length; i++) {
 			let part = path[i];
 			const nextPart = path[i + 1];
 
-			if (typeof part === 'string' && normalizeKey !== undefined) {
+			if (typeof part === "string" && normalizeKey !== undefined) {
 				part = normalizeKey(part);
 			}
 
@@ -295,7 +295,7 @@ export default class Consumer {
 			// We allow a computed part at the beginning of a path
 			if (isComputedPart(part) && i > 0) {
 				const inner =
-					typeof part === 'number'
+					typeof part === "number"
 						? String(part)
 						: escapeString(
 								part,
@@ -319,7 +319,7 @@ export default class Consumer {
 	}
 
 	generateUnexpectedMessage(msg: string, opts: UnexpectedConsumerOptions): string {
-		const {at = 'suffix', atParent = false} = opts;
+		const {at = "suffix", atParent = false} = opts;
 		const {parent} = this;
 
 		let target: Consumer = this;
@@ -333,7 +333,7 @@ export default class Consumer {
 			}
 		}
 
-		if (at === 'suffix') {
+		if (at === "suffix") {
 			msg += ` at <emphasis>${target.getKeyPathString()}</emphasis>`;
 		} else {
 			msg = `<emphasis>${target.getKeyPathString()}</emphasis> ${msg}`;
@@ -346,7 +346,7 @@ export default class Consumer {
 		description: DiagnosticDescriptionOptionalCategory = descriptions.CONSUME.INVALID,
 		opts: UnexpectedConsumerOptions = {},
 	): DiagnosticsError {
-		const {target = 'value'} = opts;
+		const {target = "value"} = opts;
 
 		const {filename} = this;
 		let location = this.getDiagnosticLocation(target);
@@ -367,9 +367,9 @@ export default class Consumer {
 		if (fromSource) {
 			if (this.hasChangedFromSource()) {
 				advice.push({
-					type: 'log',
-					category: 'warn',
-					text: 'Our internal value has been modified since we read the original source',
+					type: "log",
+					category: "warn",
+					text: "Our internal value has been modified since we read the original source",
 				});
 			}
 		} else {
@@ -393,8 +393,8 @@ export default class Consumer {
 			// Warn that we didn't find this value in the source if it's parent wasn't either
 			if (this.parent === undefined || !this.parent.wasInSource()) {
 				advice.push({
-					type: 'log',
-					category: 'warn',
+					type: "log",
+					category: "warn",
 					text: `This value was expected to be found at <emphasis>${this.getKeyPathString()}</emphasis> but was not in the original source`,
 				});
 			}
@@ -531,7 +531,7 @@ export default class Consumer {
 		if (
 			parentValue === undefined ||
 			parentValue === null ||
-			typeof parentValue !== 'object'
+			typeof parentValue !== "object"
 		) {
 			throw parent.unexpected(descriptions.CONSUME.SET_PROPERTY_NON_OBJECT);
 		}
@@ -563,7 +563,7 @@ export default class Consumer {
 		this.usedNames.add(name);
 	}
 
-	enforceUsedProperties(type: string = 'property', recursive: boolean = true) {
+	enforceUsedProperties(type: string = "property", recursive: boolean = true) {
 		if (!this.isObject()) {
 			return;
 		}
@@ -584,8 +584,8 @@ export default class Consumer {
 						knownProperties,
 					),
 					{
-						target: 'key',
-						at: 'suffix',
+						target: "key",
+						at: "suffix",
 						atParent: true,
 					},
 				);
@@ -598,7 +598,7 @@ export default class Consumer {
 	}
 
 	asPossibleParsedJSON(): Consumer {
-		if (typeof this.asUnknown() === 'string') {
+		if (typeof this.asUnknown() === "string") {
 			return this.clone({
 				value: JSON.parse(this.asString()),
 			});
@@ -612,9 +612,9 @@ export default class Consumer {
 		const {value} = this;
 
 		switch (typeof value) {
-			case 'number':
-			case 'string':
-			case 'boolean':
+			case "number":
+			case "string":
+			case "boolean":
 				return value;
 		}
 
@@ -631,7 +631,7 @@ export default class Consumer {
 		}
 
 		this.unexpected(descriptions.CONSUME.EXPECTED_JSON_VALUE);
-		return '';
+		return "";
 	}
 
 	asJSONArray(): JSONArray {
@@ -665,13 +665,13 @@ export default class Consumer {
 	isObject(): boolean {
 		const {value} = this;
 		return (
-			typeof value === 'object' && value !== null && value.constructor === Object
+			typeof value === "object" && value !== null && value.constructor === Object
 		);
 	}
 
 	asUnknownObject(optional: boolean = false): UnknownObject {
 		this.declareDefinition({
-			type: 'object',
+			type: "object",
 			default: undefined,
 			required: !optional,
 		});
@@ -697,7 +697,7 @@ export default class Consumer {
 
 	asMap(optional?: boolean, markUsed = true): Map<string, Consumer> {
 		this.declareDefinition({
-			type: 'object',
+			type: "object",
 			default: undefined,
 			required: !optional,
 		});
@@ -715,7 +715,7 @@ export default class Consumer {
 
 	asPlainArray(optional: boolean = false): Array<unknown> {
 		this.declareDefinition({
-			type: 'array',
+			type: "array",
 			default: undefined,
 			required: !optional,
 		});
@@ -754,7 +754,7 @@ export default class Consumer {
 
 	asDateOrVoid(def?: Date): undefined | Date {
 		this.declareDefinition({
-			type: 'date',
+			type: "date",
 			default: def,
 			required: false,
 		});
@@ -767,7 +767,7 @@ export default class Consumer {
 
 	asDate(def?: Date): Date {
 		this.declareDefinition({
-			type: 'date',
+			type: "date",
 			default: def,
 			required: def === undefined,
 		});
@@ -785,7 +785,7 @@ export default class Consumer {
 
 	asBooleanOrVoid(def?: boolean): undefined | boolean {
 		this.declareDefinition({
-			type: 'boolean',
+			type: "boolean",
 			default: def,
 			required: false,
 		});
@@ -798,7 +798,7 @@ export default class Consumer {
 
 	asBoolean(def?: boolean): boolean {
 		this.declareDefinition({
-			type: 'boolean',
+			type: "boolean",
 			default: def,
 			required: def === undefined,
 		});
@@ -807,7 +807,7 @@ export default class Consumer {
 
 	asUndeclaredBoolean(def?: boolean): boolean {
 		const value = this.getValue(def);
-		if (typeof value !== 'boolean') {
+		if (typeof value !== "boolean") {
 			this.unexpected(descriptions.CONSUME.EXPECTED_BOOLEAN);
 			return false;
 		}
@@ -816,7 +816,7 @@ export default class Consumer {
 
 	asStringOrVoid(def?: string): undefined | string {
 		this.declareDefinition({
-			type: 'string',
+			type: "string",
 			default: def,
 			required: false,
 		});
@@ -830,7 +830,7 @@ export default class Consumer {
 
 	asString(def?: string): string {
 		this.declareDefinition({
-			type: 'string',
+			type: "string",
 			default: def,
 			required: def === undefined,
 		});
@@ -839,9 +839,9 @@ export default class Consumer {
 
 	asUndeclaredString(def?: string): string {
 		const value = this.getValue(def);
-		if (typeof value !== 'string') {
+		if (typeof value !== "string") {
 			this.unexpected(descriptions.CONSUME.EXPECTED_STRING);
-			return '';
+			return "";
 		}
 		return value;
 	}
@@ -851,7 +851,7 @@ export default class Consumer {
 		def?: ValidValue,
 	): ValidValue {
 		this.declareDefinition({
-			type: 'string',
+			type: "string",
 			default: def,
 			required: def === undefined,
 			allowedValues: validValues,
@@ -877,7 +877,7 @@ export default class Consumer {
 					((validValues as any) as Array<string>),
 				),
 				{
-					target: 'value',
+					target: "value",
 				},
 			);
 			return validValues[0];
@@ -889,7 +889,7 @@ export default class Consumer {
 		def?: ValidValue,
 	): undefined | ValidValue {
 		this.declareDefinition({
-			type: 'string',
+			type: "string",
 			default: def,
 			required: false,
 			allowedValues: validValues,
@@ -904,7 +904,7 @@ export default class Consumer {
 
 	asBigIntOrVoid(def?: number | bigint): undefined | bigint {
 		this.declareDefinition({
-			type: 'bigint',
+			type: "bigint",
 			default: def,
 			required: false,
 		});
@@ -917,7 +917,7 @@ export default class Consumer {
 
 	asBigInt(def?: number | bigint): bigint {
 		this.declareDefinition({
-			type: 'bigint',
+			type: "bigint",
 			default: def,
 			required: def === undefined,
 		});
@@ -927,26 +927,26 @@ export default class Consumer {
 	asUndeclaredBigInt(def?: number | bigint): bigint {
 		const value = this.getValue(def);
 
-		if (typeof value === 'number') {
+		if (typeof value === "number") {
 			return BigInt(value);
 		}
 
-		if (typeof value === 'bigint') {
+		if (typeof value === "bigint") {
 			return value;
 		}
 
 		this.unexpected(descriptions.CONSUME.EXPECTED_BIGINT);
-		return BigInt('0');
+		return BigInt("0");
 	}
 
 	_declareOptionalFilePath(def?: string) {
 		this.declareDefinition(
 			{
-				type: 'string',
+				type: "string",
 				default: def,
 				required: false,
 			},
-			'path',
+			"path",
 		);
 	}
 
@@ -956,7 +956,7 @@ export default class Consumer {
 			return path.assertURL();
 		} else {
 			this.unexpected(descriptions.CONSUME.EXPECTED_URL);
-			return createURLFilePath('unknown://').append(path);
+			return createURLFilePath("unknown://").append(path);
 		}
 	}
 
@@ -972,11 +972,11 @@ export default class Consumer {
 	asUnknownFilePath(def?: string): UnknownFilePath {
 		this.declareDefinition(
 			{
-				type: 'string',
+				type: "string",
 				default: def,
 				required: def === undefined,
 			},
-			'path',
+			"path",
 		);
 
 		return createUnknownFilePath(this.asUndeclaredString(def));
@@ -999,7 +999,7 @@ export default class Consumer {
 			return cwd.resolve(path);
 		} else {
 			this.unexpected(descriptions.CONSUME.EXPECTED_ABSOLUTE_PATH);
-			return createAbsoluteFilePath('/').append(path);
+			return createAbsoluteFilePath("/").append(path);
 		}
 	}
 
@@ -1056,7 +1056,7 @@ export default class Consumer {
 
 	asNumberOrVoid(def?: number): undefined | number {
 		this.declareDefinition({
-			type: 'number',
+			type: "number",
 			default: def,
 			required: false,
 		});
@@ -1078,7 +1078,7 @@ export default class Consumer {
 
 	asNumberFromString(def?: number): number {
 		this.declareDefinition({
-			type: 'number',
+			type: "number",
 			default: def,
 			required: def === undefined,
 		});
@@ -1087,7 +1087,7 @@ export default class Consumer {
 
 	asNumberFromStringOrVoid(def?: number): undefined | number {
 		this.declareDefinition({
-			type: 'number',
+			type: "number",
 			default: def,
 			required: false,
 		});
@@ -1116,7 +1116,7 @@ export default class Consumer {
 
 	asNumber(def?: number): number {
 		this.declareDefinition({
-			type: 'number',
+			type: "number",
 			default: def,
 			required: def === undefined,
 		});
@@ -1159,7 +1159,7 @@ export default class Consumer {
 		const max = ob1Get(opts.max);
 
 		this.declareDefinition({
-			type: 'number',
+			type: "number",
 			default: opts.default,
 			required: opts.default !== undefined,
 			min,
@@ -1185,7 +1185,7 @@ export default class Consumer {
 
 	asUndeclaredNumber(def?: UnknownNumber): number {
 		const value = this.getValue(def);
-		if (typeof value !== 'number') {
+		if (typeof value !== "number") {
 			this.unexpected(descriptions.CONSUME.EXPECTED_NUMBER);
 			return 0;
 		}

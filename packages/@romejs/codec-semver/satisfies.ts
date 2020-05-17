@@ -11,8 +11,8 @@ import {
 	RangeNode,
 	VersionNode,
 	WildcardNode,
-} from './types';
-import {compareFromAst} from './compare';
+} from "./types";
+import {compareFromAst} from "./compare";
 
 function buildVersion(
 	major: undefined | number,
@@ -20,7 +20,7 @@ function buildVersion(
 	patch: undefined | number,
 ): VersionNode {
 	return {
-		type: 'WildcardVersion',
+		type: "WildcardVersion",
 		major,
 		minor,
 		patch,
@@ -34,29 +34,29 @@ function compareOp(
 	version: AbsoluteVersionNode,
 	range: WildcardNode | VersionNode,
 ): boolean {
-	if (range.type === 'Wildcard') {
+	if (range.type === "Wildcard") {
 		return true;
 	}
 
 	switch (op) {
-		case '=':
+		case "=":
 			return compareFromAst(version, range) === 0;
 
-		case '<':
+		case "<":
 			return compareFromAst(version, range) < 0;
 
-		case '>':
+		case ">":
 			return compareFromAst(version, range) > 0;
 
-		case '>=':
+		case ">=":
 			return compareFromAst(version, range) >= 0;
 
-		case '<=':
+		case "<=":
 			return compareFromAst(version, range) <= 0;
 
-		case '^': {
+		case "^": {
 			// Make sure that the version isn't less than the range
-			if (compareOp('>=', version, range) === false) {
+			if (compareOp(">=", version, range) === false) {
 				return false;
 			}
 
@@ -67,24 +67,24 @@ function compareOp(
 				if (minor === 0) {
 					// ^0.0.3 := >=0.0.3 <0.0.4
 					// @ts-ignore
-					return compareOp('<', version, buildVersion(0, 0, patch + 1));
+					return compareOp("<", version, buildVersion(0, 0, patch + 1));
 				} else {
 					// ^0.2.3 := >=0.2.3 <0.3.0
 					// @ts-ignore
-					return compareOp('<', version, buildVersion(0, minor + 1, 0));
+					return compareOp("<", version, buildVersion(0, minor + 1, 0));
 				}
 			}
 
 			// ^1.2.3 := >=1.2.3 <2.0.0
 
 			// @ts-ignore
-			return compareOp('<', version, buildVersion(major + 1, 0, 0));
+			return compareOp("<", version, buildVersion(major + 1, 0, 0));
 		}
 
-		case '~>':
-		case '~': {
+		case "~>":
+		case "~": {
 			// Make sure that the version isn't less than the range
-			if (compareOp('>=', version, range) === false) {
+			if (compareOp(">=", version, range) === false) {
 				return false;
 			}
 
@@ -94,11 +94,11 @@ function compareOp(
 			if (minor === undefined) {
 				// ~1 := >=1.0.0 <(1+1).0.0 := >=1.0.0 <2.0.0 (Same as 1.x)
 				// @ts-ignore
-				return compareOp('<', version, buildVersion(major + 1, minor, 0));
+				return compareOp("<", version, buildVersion(major + 1, minor, 0));
 			}
 
 			// ~1.2.3 := >=1.2.3 <1.(2+1).0 := >=1.2.3 <1.3.0
-			return compareOp('<', version, buildVersion(major, minor + 1, 0));
+			return compareOp("<", version, buildVersion(major, minor + 1, 0));
 		}
 
 		default:
@@ -111,32 +111,32 @@ function inRange(
 	left: WildcardNode | VersionNode,
 	right: WildcardNode | VersionNode,
 ): boolean {
-	if (left.type === 'Wildcard' || right.type === 'Wildcard') {
+	if (left.type === "Wildcard" || right.type === "Wildcard") {
 		return true;
 	}
 
-	return compareOp('>=', version, left) && compareOp('<=', version, right);
+	return compareOp(">=", version, left) && compareOp("<=", version, right);
 }
 
 function collectVersions(range: RangeNode): Array<VersionNode> {
 	switch (range.type) {
-		case 'AbsoluteVersion':
-		case 'WildcardVersion':
+		case "AbsoluteVersion":
+		case "WildcardVersion":
 			return [range];
 
-		case 'Wildcard':
+		case "Wildcard":
 			return [];
 
-		case 'Comparator':
+		case "Comparator":
 			return collectVersions(range.version);
 
-		case 'LogicalAnd':
-		case 'LogicalOr':
-		case 'VersionRange':
+		case "LogicalAnd":
+		case "LogicalOr":
+		case "VersionRange":
 			return [...collectVersions(range.left), ...collectVersions(range.right)];
 
 		default:
-			throw new Error('Unknown range type');
+			throw new Error("Unknown range type");
 	}
 }
 
@@ -178,27 +178,27 @@ export function satisfiesFromAst(
 
 function satisfiesSub(version: AbsoluteVersionNode, range: RangeNode): boolean {
 	switch (range.type) {
-		case 'AbsoluteVersion':
-		case 'WildcardVersion':
-			return compareOp('=', version, range);
+		case "AbsoluteVersion":
+		case "WildcardVersion":
+			return compareOp("=", version, range);
 
-		case 'Wildcard':
+		case "Wildcard":
 			return true;
 
-		case 'Comparator':
+		case "Comparator":
 			return compareOp(range.operator, version, range.version);
 
-		case 'LogicalAnd':
+		case "LogicalAnd":
 			return (
 				satisfiesSub(version, range.left) && satisfiesSub(version, range.right)
 			);
 
-		case 'LogicalOr':
+		case "LogicalOr":
 			return (
 				satisfiesSub(version, range.left) || satisfiesSub(version, range.right)
 			);
 
-		case 'VersionRange':
+		case "VersionRange":
 			return (
 				inRange(version, range.left, range.right) ||
 				inRange(version, range.right, range.left)

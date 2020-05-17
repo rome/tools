@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 26
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 25
 					index: 25
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'let'
+				kind: "let"
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 25
 						index: 25
@@ -62,9 +62,9 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'x'
+							name: "x"
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 24
 									index: 24
@@ -79,7 +79,7 @@ Program {
 							meta: PatternMeta {
 								definite: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 24
 										index: 24
@@ -93,7 +93,7 @@ Program {
 								}
 								typeAnnotation: TSTypeReference {
 									loc: Object {
-										filename: 'input.ts'
+										filename: "input.ts"
 										end: Object {
 											column: 24
 											index: 24
@@ -106,10 +106,10 @@ Program {
 										}
 									}
 									typeName: ReferenceIdentifier {
-										name: 'Array'
+										name: "Array"
 										loc: Object {
-											filename: 'input.ts'
-											identifierName: 'Array'
+											filename: "input.ts"
+											identifierName: "Array"
 											end: Object {
 												column: 12
 												index: 12
@@ -124,7 +124,7 @@ Program {
 									}
 									typeParameters: TSTypeParameterInstantiation {
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 24
 												index: 24
@@ -139,7 +139,7 @@ Program {
 										params: Array [
 											TSFunctionType {
 												loc: Object {
-													filename: 'input.ts'
+													filename: "input.ts"
 													end: Object {
 														column: 23
 														index: 23
@@ -153,7 +153,7 @@ Program {
 												}
 												typeAnnotation: VoidKeywordTypeAnnotation {
 													loc: Object {
-														filename: 'input.ts'
+														filename: "input.ts"
 														end: Object {
 															column: 23
 															index: 23
@@ -171,7 +171,7 @@ Program {
 													rest: undefined
 													typeParameters: undefined
 													loc: Object {
-														filename: 'input.ts'
+														filename: "input.ts"
 														end: Object {
 															column: 23
 															index: 23
@@ -192,7 +192,7 @@ Program {
 						}
 						init: undefined
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 24
 								index: 24

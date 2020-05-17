@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {orderBySimilarity} from './orderBySimilarity';
+import {orderBySimilarity} from "./orderBySimilarity";
 
 export function findClosestStringMatch(
 	name: string,

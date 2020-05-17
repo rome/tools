@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 35
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		TSInterfaceDeclaration {
 			id: BindingIdentifier {
-				name: 'I'
+				name: "I"
 				loc: Object {
-					filename: 'input.ts'
-					identifierName: 'I'
+					filename: "input.ts"
+					identifierName: "I"
 					end: Object {
 						column: 11
 						index: 11
@@ -51,7 +51,7 @@ Program {
 			extends: undefined
 			typeParameters: undefined
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 1
 					index: 34
@@ -65,7 +65,7 @@ Program {
 			}
 			body: TSInterfaceBody {
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 1
 						index: 34
@@ -81,10 +81,10 @@ Program {
 					TSMethodSignature {
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'catch'
+								name: "catch"
 								loc: Object {
-									filename: 'input.ts'
-									identifierName: 'catch'
+									filename: "input.ts"
+									identifierName: "catch"
 									end: Object {
 										column: 9
 										index: 23
@@ -98,7 +98,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 9
 									index: 23
@@ -113,7 +113,7 @@ Program {
 						}
 						optional: false
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 18
 								index: 32
@@ -127,7 +127,7 @@ Program {
 						}
 						returnType: VoidKeywordTypeAnnotation {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 17
 									index: 31
@@ -145,7 +145,7 @@ Program {
 							rest: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 17
 									index: 31

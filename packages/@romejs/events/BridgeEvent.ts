@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSONPropertyValue} from '@romejs/codec-json';
+import {JSONPropertyValue} from "@romejs/codec-json";
 import {
 	BridgeErrorResponseMessage,
 	BridgeSuccessResponseMessage,
 	BridgeType,
 	EventOptions,
-} from './types';
-import Bridge from './Bridge';
-import BridgeError from './BridgeError';
-import Event from './Event';
+} from "./types";
+import Bridge from "./Bridge";
+import BridgeError from "./BridgeError";
+import Event from "./Event";
 
 type CallOptions = {
 	timeout?: number;
@@ -22,9 +22,9 @@ type CallOptions = {
 };
 
 export type BridgeEventDirection =
-	 | 'server->client'
-	| 'server<-client'
-	| 'server<->client';
+	 | "server->client"
+	| "server<-client"
+	| "server<->client";
 
 export type BridgeEventOptions = EventOptions & {
 	direction: BridgeEventDirection;
@@ -36,7 +36,7 @@ function validateDirection(
 	invalidDirections: Array<[BridgeEventDirection, BridgeType]>,
 	verb: string,
 ) {
-	invalidDirections.push(['server<->client', 'server&client']);
+	invalidDirections.push(["server<->client", "server&client"]);
 
 	for (const [eventDirection, bridgeType] of invalidDirections) {
 		if (event.direction === eventDirection && event.bridge.type === bridgeType) {
@@ -84,8 +84,8 @@ export default class BridgeEvent<
 	onSubscriptionChange() {
 		validateDirection(
 			this,
-			[['server->client', 'client'], ['server<-client', 'server']],
-			'subscribed',
+			[["server->client", "client"], ["server<-client", "server"]],
+			"subscribed",
 		);
 		this.bridge.sendSubscriptions();
 	}
@@ -106,10 +106,10 @@ export default class BridgeEvent<
 
 		this.requestCallbacks.delete(id);
 
-		if (data.responseStatus === 'success') {
+		if (data.responseStatus === "success") {
 			// @ts-ignore
 			callbacks.resolve(data.value);
-		} else if (data.responseStatus === 'error') {
+		} else if (data.responseStatus === "error") {
 			try {
 				callbacks.reject(this.bridge.buildError(data.value, data.metadata));
 			} catch (err) {
@@ -131,8 +131,8 @@ export default class BridgeEvent<
 	validateCanSend(): void {
 		validateDirection(
 			this,
-			[['server<-client', 'client'], ['server->client', 'server']],
-			'called',
+			[["server<-client", "client"], ["server->client", "server"]],
+			"called",
 		);
 	}
 
@@ -145,7 +145,7 @@ export default class BridgeEvent<
 		this.validateCanSend();
 		this.bridge.assertAlive();
 		this.bridge.sendMessage({
-			type: 'request',
+			type: "request",
 			event: this.name,
 			param,
 			priority: false,
@@ -201,7 +201,7 @@ export default class BridgeEvent<
 					id,
 					event: this.name,
 					param,
-					type: 'request',
+					type: "request",
 					priority,
 				});
 			});

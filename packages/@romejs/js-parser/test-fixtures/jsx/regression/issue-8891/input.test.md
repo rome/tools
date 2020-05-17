@@ -10,17 +10,17 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array [
-		'jsx'
-		'ts'
+		"jsx"
+		"ts"
 	]
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 154
@@ -35,7 +35,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 3
 					index: 153
@@ -49,7 +49,7 @@ Program {
 			}
 			expression: JSXFragment {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 3
 						index: 153
@@ -63,9 +63,9 @@ Program {
 				}
 				children: Array [
 					JSXText {
-						value: '\n'
+						value: "\n"
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 0
 								index: 3
@@ -80,9 +80,9 @@ Program {
 					}
 					JSXElement {
 						name: JSXReferenceIdentifier {
-							name: 'Select'
+							name: "Select"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 7
 									index: 10
@@ -99,7 +99,7 @@ Program {
 						selfClosing: true
 						typeArguments: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 38
 								index: 41
@@ -114,9 +114,9 @@ Program {
 						attributes: Array [
 							JSXAttribute {
 								name: JSXIdentifier {
-									name: 'prop'
+									name: "prop"
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 12
 											index: 15
@@ -131,7 +131,7 @@ Program {
 								}
 								value: JSXExpressionContainer {
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 35
 											index: 38
@@ -145,7 +145,7 @@ Program {
 									}
 									expression: ObjectExpression {
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 34
 												index: 37
@@ -161,10 +161,10 @@ Program {
 											ObjectProperty {
 												key: StaticPropertyKey {
 													value: Identifier {
-														name: 'function'
+														name: "function"
 														loc: Object {
-															filename: 'input.js'
-															identifierName: 'function'
+															filename: "input.js"
+															identifierName: "function"
 															end: Object {
 																column: 24
 																index: 27
@@ -178,7 +178,7 @@ Program {
 														}
 													}
 													loc: Object {
-														filename: 'input.js'
+														filename: "input.js"
 														end: Object {
 															column: 24
 															index: 27
@@ -192,9 +192,9 @@ Program {
 													}
 												}
 												value: StringLiteral {
-													value: 'test'
+													value: "test"
 													loc: Object {
-														filename: 'input.js'
+														filename: "input.js"
 														end: Object {
 															column: 32
 															index: 35
@@ -208,7 +208,7 @@ Program {
 													}
 												}
 												loc: Object {
-													filename: 'input.js'
+													filename: "input.js"
 													end: Object {
 														column: 32
 														index: 35
@@ -225,7 +225,7 @@ Program {
 									}
 								}
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 35
 										index: 38
@@ -241,9 +241,9 @@ Program {
 						]
 					}
 					JSXText {
-						value: '\n'
+						value: "\n"
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 0
 								index: 42
@@ -258,9 +258,9 @@ Program {
 					}
 					JSXElement {
 						name: JSXReferenceIdentifier {
-							name: 'Select'
+							name: "Select"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 7
 									index: 49
@@ -277,7 +277,7 @@ Program {
 						selfClosing: true
 						typeArguments: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 35
 								index: 77
@@ -292,9 +292,9 @@ Program {
 						attributes: Array [
 							JSXAttribute {
 								name: JSXIdentifier {
-									name: 'prop'
+									name: "prop"
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 12
 											index: 54
@@ -309,7 +309,7 @@ Program {
 								}
 								value: JSXExpressionContainer {
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 32
 											index: 74
@@ -323,7 +323,7 @@ Program {
 									}
 									expression: ObjectExpression {
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 31
 												index: 73
@@ -339,10 +339,10 @@ Program {
 											ObjectProperty {
 												key: StaticPropertyKey {
 													value: Identifier {
-														name: 'class'
+														name: "class"
 														loc: Object {
-															filename: 'input.js'
-															identifierName: 'class'
+															filename: "input.js"
+															identifierName: "class"
 															end: Object {
 																column: 21
 																index: 63
@@ -356,7 +356,7 @@ Program {
 														}
 													}
 													loc: Object {
-														filename: 'input.js'
+														filename: "input.js"
 														end: Object {
 															column: 21
 															index: 63
@@ -370,9 +370,9 @@ Program {
 													}
 												}
 												value: StringLiteral {
-													value: 'test'
+													value: "test"
 													loc: Object {
-														filename: 'input.js'
+														filename: "input.js"
 														end: Object {
 															column: 29
 															index: 71
@@ -386,7 +386,7 @@ Program {
 													}
 												}
 												loc: Object {
-													filename: 'input.js'
+													filename: "input.js"
 													end: Object {
 														column: 29
 														index: 71
@@ -403,7 +403,7 @@ Program {
 									}
 								}
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 32
 										index: 74
@@ -419,9 +419,9 @@ Program {
 						]
 					}
 					JSXText {
-						value: '\n'
+						value: "\n"
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 0
 								index: 78
@@ -436,9 +436,9 @@ Program {
 					}
 					JSXElement {
 						name: JSXReferenceIdentifier {
-							name: 'Select'
+							name: "Select"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 7
 									index: 85
@@ -455,7 +455,7 @@ Program {
 						selfClosing: true
 						typeArguments: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 36
 								index: 114
@@ -470,9 +470,9 @@ Program {
 						attributes: Array [
 							JSXAttribute {
 								name: JSXIdentifier {
-									name: 'prop'
+									name: "prop"
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 12
 											index: 90
@@ -487,7 +487,7 @@ Program {
 								}
 								value: JSXExpressionContainer {
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 33
 											index: 111
@@ -501,7 +501,7 @@ Program {
 									}
 									expression: ObjectExpression {
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 32
 												index: 110
@@ -517,10 +517,10 @@ Program {
 											ObjectProperty {
 												key: StaticPropertyKey {
 													value: Identifier {
-														name: 'delete'
+														name: "delete"
 														loc: Object {
-															filename: 'input.js'
-															identifierName: 'delete'
+															filename: "input.js"
+															identifierName: "delete"
 															end: Object {
 																column: 22
 																index: 100
@@ -534,7 +534,7 @@ Program {
 														}
 													}
 													loc: Object {
-														filename: 'input.js'
+														filename: "input.js"
 														end: Object {
 															column: 22
 															index: 100
@@ -548,9 +548,9 @@ Program {
 													}
 												}
 												value: StringLiteral {
-													value: 'test'
+													value: "test"
 													loc: Object {
-														filename: 'input.js'
+														filename: "input.js"
 														end: Object {
 															column: 30
 															index: 108
@@ -564,7 +564,7 @@ Program {
 													}
 												}
 												loc: Object {
-													filename: 'input.js'
+													filename: "input.js"
 													end: Object {
 														column: 30
 														index: 108
@@ -581,7 +581,7 @@ Program {
 									}
 								}
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 33
 										index: 111
@@ -597,9 +597,9 @@ Program {
 						]
 					}
 					JSXText {
-						value: '\n'
+						value: "\n"
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 0
 								index: 115
@@ -614,9 +614,9 @@ Program {
 					}
 					JSXElement {
 						name: JSXReferenceIdentifier {
-							name: 'Select'
+							name: "Select"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 7
 									index: 122
@@ -633,7 +633,7 @@ Program {
 						selfClosing: true
 						typeArguments: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 34
 								index: 149
@@ -648,9 +648,9 @@ Program {
 						attributes: Array [
 							JSXAttribute {
 								name: JSXIdentifier {
-									name: 'prop'
+									name: "prop"
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 12
 											index: 127
@@ -665,7 +665,7 @@ Program {
 								}
 								value: JSXExpressionContainer {
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 31
 											index: 146
@@ -679,7 +679,7 @@ Program {
 									}
 									expression: ObjectExpression {
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 30
 												index: 145
@@ -695,10 +695,10 @@ Program {
 											ObjectProperty {
 												key: StaticPropertyKey {
 													value: Identifier {
-														name: 'enum'
+														name: "enum"
 														loc: Object {
-															filename: 'input.js'
-															identifierName: 'enum'
+															filename: "input.js"
+															identifierName: "enum"
 															end: Object {
 																column: 20
 																index: 135
@@ -712,7 +712,7 @@ Program {
 														}
 													}
 													loc: Object {
-														filename: 'input.js'
+														filename: "input.js"
 														end: Object {
 															column: 20
 															index: 135
@@ -726,9 +726,9 @@ Program {
 													}
 												}
 												value: StringLiteral {
-													value: 'test'
+													value: "test"
 													loc: Object {
-														filename: 'input.js'
+														filename: "input.js"
 														end: Object {
 															column: 28
 															index: 143
@@ -742,7 +742,7 @@ Program {
 													}
 												}
 												loc: Object {
-													filename: 'input.js'
+													filename: "input.js"
 													end: Object {
 														column: 28
 														index: 143
@@ -759,7 +759,7 @@ Program {
 									}
 								}
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 31
 										index: 146
@@ -775,9 +775,9 @@ Program {
 						]
 					}
 					JSXText {
-						value: '\n'
+						value: "\n"
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 0
 								index: 150

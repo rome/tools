@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from '@romejs/js-compiler';
+import {Path} from "@romejs/js-compiler";
 import {
 	AnyNode,
 	ConditionalExpression,
@@ -13,29 +13,29 @@ import {
 	ForStatement,
 	IfStatement,
 	WhileStatement,
-} from '@romejs/js-ast';
-import {descriptions} from '@romejs/diagnostics';
+} from "@romejs/js-ast";
+import {descriptions} from "@romejs/diagnostics";
 
 function isBooleanConstructorCall(node: AnyNode) {
 	return (
-		node.type === 'NewExpression' &&
-		node.callee.type === 'ReferenceIdentifier' &&
-		node.callee.name === 'Boolean'
+		node.type === "NewExpression" &&
+		node.callee.type === "ReferenceIdentifier" &&
+		node.callee.name === "Boolean"
 	);
 }
 
 function isConditionalStatement(node: AnyNode): node is ConditionalExpression {
-	return node.type === 'ConditionalExpression';
+	return node.type === "ConditionalExpression";
 }
 
 function isInBooleanContext(
 	node: AnyNode,
 ): node is IfStatement | DoWhileStatement | WhileStatement | ForStatement {
 	return (
-		node.type === 'IfStatement' ||
-		node.type === 'DoWhileStatement' ||
-		node.type === 'WhileStatement' ||
-		node.type === 'ForStatement'
+		node.type === "IfStatement" ||
+		node.type === "DoWhileStatement" ||
+		node.type === "WhileStatement" ||
+		node.type === "ForStatement"
 	);
 }
 
@@ -43,7 +43,7 @@ function getNode(path: Path): undefined | AnyNode {
 	let {node} = path;
 
 	if (isBooleanConstructorCall(node)) {
-		if (node.type === 'NewExpression' && node.arguments.length > 0) {
+		if (node.type === "NewExpression" && node.arguments.length > 0) {
 			return node.arguments[0];
 		}
 	}
@@ -56,7 +56,7 @@ function getNode(path: Path): undefined | AnyNode {
 }
 
 export default {
-	name: 'noExtraBooleanCast',
+	name: "noExtraBooleanCast",
 	enter(path: Path): AnyNode {
 		const {context} = path;
 
@@ -64,13 +64,13 @@ export default {
 
 		if (node !== undefined) {
 			if (
-				(node.type === 'UnaryExpression' &&
-				node.operator === '!' &&
-				node.argument.type === 'UnaryExpression' &&
-				node.argument.operator === '!') ||
-				(node.type === 'CallExpression' &&
-				node.callee.type === 'ReferenceIdentifier' &&
-				node.callee.name === 'Boolean')
+				(node.type === "UnaryExpression" &&
+				node.operator === "!" &&
+				node.argument.type === "UnaryExpression" &&
+				node.argument.operator === "!") ||
+				(node.type === "CallExpression" &&
+				node.callee.type === "ReferenceIdentifier" &&
+				node.callee.name === "Boolean")
 			) {
 				context.addNodeDiagnostic(node, descriptions.LINT.NO_EXTRA_BOOLEAN_CAST);
 			}

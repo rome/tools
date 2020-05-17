@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 21
 			index: 21
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 21
 					index: 21
@@ -46,7 +46,7 @@ Program {
 			}
 			expression: MemberExpression {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 21
 						index: 21
@@ -60,10 +60,10 @@ Program {
 				}
 				property: StaticMemberProperty {
 					value: Identifier {
-						name: 'galaxies'
+						name: "galaxies"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'galaxies'
+							filename: "input.js"
+							identifierName: "galaxies"
 							end: Object {
 								column: 21
 								index: 21
@@ -77,8 +77,8 @@ Program {
 						}
 					}
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'galaxies'
+						filename: "input.js"
+						identifierName: "galaxies"
 						end: Object {
 							column: 21
 							index: 21
@@ -93,7 +93,7 @@ Program {
 				}
 				object: CallExpression {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 12
 							index: 12
@@ -106,10 +106,10 @@ Program {
 						}
 					}
 					callee: ReferenceIdentifier {
-						name: 'universe'
+						name: "universe"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'universe'
+							filename: "input.js"
+							identifierName: "universe"
 							end: Object {
 								column: 8
 								index: 8
@@ -127,7 +127,7 @@ Program {
 							value: 42
 							format: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 11
 									index: 11

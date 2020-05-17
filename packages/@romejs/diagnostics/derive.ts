@@ -11,18 +11,18 @@ import {
 	DiagnosticDescription,
 	DiagnosticOrigin,
 	Diagnostics,
-} from './types';
-import {escapeMarkup} from '@romejs/string-markup';
+} from "./types";
+import {escapeMarkup} from "@romejs/string-markup";
 import {
 	ErrorFrames,
 	StructuredError,
 	getErrorStructure,
 	getSourceLocationFromErrorFrame,
-} from '@romejs/v8';
-import {createBlessedDiagnosticMessage} from './descriptions';
-import DiagnosticsNormalizer from './DiagnosticsNormalizer';
-import {diagnosticLocationToMarkupFilelink} from './helpers';
-import {RequiredProps} from '@romejs/typescript-helpers';
+} from "@romejs/v8";
+import {createBlessedDiagnosticMessage} from "./descriptions";
+import DiagnosticsNormalizer from "./DiagnosticsNormalizer";
+import {diagnosticLocationToMarkupFilelink} from "./helpers";
+import {RequiredProps} from "@romejs/typescript-helpers";
 
 function normalizeArray<T>(val: undefined | Array<T>): Array<T> {
 	if (Array.isArray(val)) {
@@ -107,29 +107,29 @@ export function deriveRootAdviceFromDiagnostic(
 
 	if (opts.includeHeaderInAdvice === true) {
 		advice.push({
-			type: 'log',
-			category: 'none',
+			type: "log",
+			category: "none",
 			text: header,
 		});
 	}
 
 	advice.push({
-		type: 'log',
-		category: 'error',
+		type: "log",
+		category: "error",
 		text: description.message.value,
 	});
 
 	if (opts.skipFrame === false) {
 		if (location.start !== undefined && location.end !== undefined) {
 			advice.push({
-				type: 'frame',
+				type: "frame",
 				location: diag.location,
 			});
 		} else if (location.marker !== undefined) {
 			// If we have no start/end, but we do have a marker then output is a log error
 			advice.push({
-				type: 'log',
-				category: 'error',
+				type: "log",
+				category: "error",
 				text: location.marker,
 			});
 		}
@@ -139,7 +139,7 @@ export function deriveRootAdviceFromDiagnostic(
 }
 
 type DeriveErrorDiagnosticOpts = {
-	description: RequiredProps<Partial<DiagnosticDescription>, 'category'>;
+	description: RequiredProps<Partial<DiagnosticDescription>, "category">;
 	label?: string;
 	filename?: string;
 	cleanFrames?: (frames: ErrorFrames) => ErrorFrames;
@@ -155,7 +155,7 @@ export function deriveDiagnosticFromErrorStructure(
 	let targetCode = undefined;
 	let targetLoc = undefined;
 
-	let {frames, message = 'Unknown error'} = struct;
+	let {frames, message = "Unknown error"} = struct;
 
 	const {cleanFrames} = opts;
 	if (cleanFrames !== undefined) {
@@ -212,8 +212,8 @@ export function getErrorStackAdvice(
 		// Just in case we didn't get the frames for some reason
 		if (title !== undefined) {
 			advice.push({
-				type: 'log',
-				category: 'info',
+				type: "log",
+				category: "info",
 				text: title,
 			});
 		}
@@ -227,14 +227,14 @@ export function getErrorStackAdvice(
 		cleanStack = cleanStack.trim();
 
 		advice.push({
-			type: 'log',
-			category: 'warn',
-			text: 'Raw stack trace is being displayed as we did not receive any frames',
+			type: "log",
+			category: "warn",
+			text: "Raw stack trace is being displayed as we did not receive any frames",
 		});
 
 		advice.push({
-			type: 'list',
-			list: cleanStack.split('\n').map((line) => escapeMarkup(line.trim())),
+			type: "list",
+			list: cleanStack.split("\n").map((line) => escapeMarkup(line.trim())),
 		});
 	} else {
 		const adviceFrames = frames.map((frame) => {
@@ -253,18 +253,18 @@ export function getErrorStackAdvice(
 
 			const prefixes = [];
 			if (isAsync) {
-				prefixes.push('await');
+				prefixes.push("await");
 			}
 			if (isEval) {
-				prefixes.push('eval');
+				prefixes.push("eval");
 			}
 			if (isConstructor) {
-				prefixes.push('new');
+				prefixes.push("new");
 			}
-			const prefix = prefixes.length === 0 ? undefined : prefixes.join(' ');
+			const prefix = prefixes.length === 0 ? undefined : prefixes.join(" ");
 
 			let object = typeName;
-			let property = '<anonymous>';
+			let property = "<anonymous>";
 			if (functionName !== undefined) {
 				property = functionName;
 			}
@@ -274,7 +274,7 @@ export function getErrorStackAdvice(
 
 			let suffix;
 			if (isNative) {
-				suffix = 'native';
+				suffix = "native";
 			}
 
 			return {
@@ -289,7 +289,7 @@ export function getErrorStackAdvice(
 		});
 
 		advice.push({
-			type: 'stacktrace',
+			type: "stacktrace",
 			title,
 			frames: adviceFrames,
 		});

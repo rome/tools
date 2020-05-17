@@ -5,51 +5,51 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {SourceLocation} from '@romejs/parser-core';
+import {SourceLocation} from "@romejs/parser-core";
 
 export type SpaceToken = {
-	type: 'Space';
+	type: "Space";
 };
 
 export type LineToken = {
-	type: 'Line';
-	mode: 'space' | 'soft' | 'hard';
+	type: "Line";
+	mode: "space" | "soft" | "hard";
 };
 
 export type LineSuffixToken = {
-	type: 'LineSuffix';
+	type: "LineSuffix";
 	contents: Token;
 };
 
 export type IndentToken = {
-	type: 'Indent';
+	type: "Indent";
 	contents: Token;
 };
 
 export type GroupToken = {
-	type: 'Group';
+	type: "Group";
 	contents: Token;
 	shouldBreak: boolean;
 };
 
 export type CommentToken = {
-	type: 'Comment';
+	type: "Comment";
 	value: Token;
 };
 
 export type PositionMarkerToken = {
-	type: 'PositionMarker';
+	type: "PositionMarker";
 	loc: SourceLocation;
-	prop: 'start' | 'end';
+	prop: "start" | "end";
 };
 
 export type ConcatToken = {
-	type: 'Concat';
+	type: "Concat";
 	parts: Array<Token>;
 };
 
 export type IfBreakToken = {
-	type: 'IfBreak';
+	type: "IfBreak";
 	breakContents: Token;
 	flatContents: Token | undefined;
 };
@@ -67,27 +67,27 @@ export type Token =
 	| SpaceToken;
 
 export const lineOrSpace: LineToken = {
-	type: 'Line',
-	mode: 'space',
+	type: "Line",
+	mode: "space",
 };
 
 export const softline: LineToken = {
-	type: 'Line',
-	mode: 'soft',
+	type: "Line",
+	mode: "soft",
 };
 
 export const hardline: LineToken = {
-	type: 'Line',
-	mode: 'hard',
+	type: "Line",
+	mode: "hard",
 };
 
 export const space: SpaceToken = {
-	type: 'Space',
+	type: "Space",
 };
 
 export function group(contents: Token, shouldBreak: boolean = false): GroupToken {
 	return {
-		type: 'Group',
+		type: "Group",
 		contents,
 		shouldBreak,
 	};
@@ -95,24 +95,24 @@ export function group(contents: Token, shouldBreak: boolean = false): GroupToken
 
 export function comment(value: Token): CommentToken {
 	return {
-		type: 'Comment',
+		type: "Comment",
 		value,
 	};
 }
 
 export function indent(contents: Token): IndentToken {
 	return {
-		type: 'Indent',
+		type: "Indent",
 		contents,
 	};
 }
 
 export function mark(
 	loc: SourceLocation,
-	prop: 'start' | 'end',
+	prop: "start" | "end",
 ): PositionMarkerToken {
 	return {
-		type: 'PositionMarker',
+		type: "PositionMarker",
 		loc,
 		prop,
 	};
@@ -120,7 +120,7 @@ export function mark(
 
 export function concat(parts: Array<Token>): Token {
 	if (parts.length === 0) {
-		return '';
+		return "";
 	}
 
 	if (parts.length === 1) {
@@ -128,7 +128,7 @@ export function concat(parts: Array<Token>): Token {
 	}
 
 	return {
-		type: 'Concat',
+		type: "Concat",
 		parts,
 	};
 }
@@ -138,7 +138,7 @@ export function ifBreak(
 	flatContents?: Token,
 ): IfBreakToken {
 	return {
-		type: 'IfBreak',
+		type: "IfBreak",
 		breakContents,
 		flatContents,
 	};
@@ -146,7 +146,7 @@ export function ifBreak(
 
 export function join(separator: Token, tokens: Array<Token>): Token {
 	if (tokens.length === 0) {
-		return '';
+		return "";
 	}
 
 	if (tokens.length === 1) {
@@ -167,7 +167,7 @@ export function join(separator: Token, tokens: Array<Token>): Token {
 
 export function lineSuffix(contents: Token): LineSuffixToken {
 	return {
-		type: 'LineSuffix',
+		type: "LineSuffix",
 		contents,
 	};
 }

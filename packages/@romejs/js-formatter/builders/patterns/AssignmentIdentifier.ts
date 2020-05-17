@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token} from '../../tokens';
-import {AssignmentIdentifier} from '@romejs/js-ast';
-import Identifier from '../auxiliary/Identifier';
+import Builder from "../../Builder";
+import {Token} from "../../tokens";
+import {AssignmentIdentifier} from "@romejs/js-ast";
+import Identifier from "../auxiliary/Identifier";
 
 export default function AssignmentIdentifier(
 	builder: Builder,

@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-'use strict';
+"use strict";
 
 // Which Unicode version should be used?
-const version = '10.0.0';
+const version = "10.0.0";
 
 const start = require(
 	`unicode-${version}/Binary_Property/ID_Start/code-points.js`,
@@ -51,7 +51,7 @@ function esc(code) {
 
 function generate(chars) {
 	const astral = [];
-	let re = '';
+	let re = "";
 	for (let i = 0, at = 65_536; i < chars.length; i++) {
 		const from = chars[i];
 		let to = from;

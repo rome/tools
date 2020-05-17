@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Dict} from '@romejs/typescript-helpers';
-import {MarkupTagName} from './types';
+import {Dict} from "@romejs/typescript-helpers";
+import {MarkupTagName} from "./types";
 
 // A tagged template literal helper that will escape all interpolated strings, ensuring only markup works
 export function markup(
 	strs: TemplateStringsArray,
 	...values: Array<unknown>
 ): string {
-	let out = '';
+	let out = "";
 
 	for (let i = 0; i < strs.length; i++) {
 		const str = strs[i];
@@ -48,14 +48,14 @@ export function safeMarkup(input: string): SafeMarkup {
 
 // Escape all \ and >
 export function escapeMarkup(input: string): string {
-	let escaped = '';
+	let escaped = "";
 	for (let i = 0; i < input.length; i++) {
 		const char = input[i];
 
-		if (char === '<') {
-			escaped += '\\<';
-		} else if (char === '\\') {
-			escaped += '\\\\';
+		if (char === "<") {
+			escaped += "\\<";
+		} else if (char === "\\") {
+			escaped += "\\\\";
 		} else {
 			escaped += char;
 		}
@@ -85,16 +85,16 @@ export function markupTag(
 }
 
 export function unescapeTextValue(str: string): string {
-	let unescaped = '';
+	let unescaped = "";
 
 	for (let i = 0; i < str.length; i++) {
 		const char = str[i];
 
 		// Unescape \\< to just <
 		// Unescape \\\\ to just \\
-		if (char === '\\') {
+		if (char === "\\") {
 			const nextChar = str[i + 1];
-			if (nextChar === '<' || nextChar === '\\') {
+			if (nextChar === "<" || nextChar === "\\") {
 				i++;
 				unescaped += nextChar;
 				continue;

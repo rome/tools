@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {MemorySamples, Profile} from './types';
-import {hrTime} from './utils';
-import inspector = require('inspector');
+import {MemorySamples, Profile} from "./types";
+import {hrTime} from "./utils";
+import inspector = require("inspector");
 
 export default class Profiler {
 	constructor() {
@@ -35,20 +35,20 @@ export default class Profiler {
 
 		await Promise.all([
 			this.sendCommand(
-				'Profiler.setSamplingInterval',
+				"Profiler.setSamplingInterval",
 				{
 					interval: samplingInterval,
 				},
 			),
-			this.sendCommand('Profiler.enable'),
-			this.sendCommand('Profiler.start'),
+			this.sendCommand("Profiler.enable"),
+			this.sendCommand("Profiler.start"),
 		]);
 	}
 
 	async sendCommand(method: string, params?: Object): Promise<void> {
 		const {session} = this;
 		if (session === undefined) {
-			return Promise.reject(new Error('No current profiler session'));
+			return Promise.reject(new Error("No current profiler session"));
 		} else {
 			return new Promise((resolve, reject) => {
 				session.post(
@@ -80,7 +80,7 @@ export default class Profiler {
 	async stopProfiling(): Promise<Profile> {
 		const {session} = this;
 		if (session === undefined) {
-			return Promise.reject(new Error('No current profiler session'));
+			return Promise.reject(new Error("No current profiler session"));
 		}
 
 		const {memorySamples} = this;
@@ -90,7 +90,7 @@ export default class Profiler {
 			reject,
 		) => {
 			session.post(
-				'Profiler.stop',
+				"Profiler.stop",
 				(err, params) => {
 					if (err === null) {
 						resolve(params);

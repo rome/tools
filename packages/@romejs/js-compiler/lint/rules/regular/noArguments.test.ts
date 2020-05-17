@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {testLint} from '../testHelpers';
-import {dedent} from '@romejs/string-utils';
+import {test} from "rome";
+import {testLint} from "../testHelpers";
+import {dedent} from "@romejs/string-utils";
 
 test(
-	'no arguments',
+	"no arguments",
 	async (t) => {
 		await testLint(
 			t,
@@ -19,7 +19,7 @@ test(
           console.log(arguments);
         }
       `,
-			{category: 'lint/noArguments'},
+			{category: "lint/noArguments"},
 		);
 
 		await testLint(
@@ -29,7 +29,7 @@ test(
           console.log(arguments);
         })();
       `,
-			{category: 'lint/noArguments'},
+			{category: "lint/noArguments"},
 		);
 
 		await testLint(
@@ -41,7 +41,7 @@ test(
           }
         }
       `,
-			{category: 'lint/noArguments'},
+			{category: "lint/noArguments"},
 		);
 
 		await testLint(
@@ -53,7 +53,7 @@ test(
           },
         };
       `,
-			{category: 'lint/noArguments'},
+			{category: "lint/noArguments"},
 		);
 	},
 );

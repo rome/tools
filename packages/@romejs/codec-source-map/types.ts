@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Number0, Number1} from '@romejs/ob1';
+import {Number0, Number1} from "@romejs/ob1";
 
 export type Mappings = Array<Mapping>;
 
@@ -22,8 +22,8 @@ export type ParsedMapping = {
 	name: undefined | string;
 };
 
-export type Mapping = Omit<ParsedMapping, 'generated'> & {
-	generated: ParsedMapping['generated'] & {
+export type Mapping = Omit<ParsedMapping, "generated"> & {
+	generated: ParsedMapping["generated"] & {
 		index: Number0;
 	};
 };

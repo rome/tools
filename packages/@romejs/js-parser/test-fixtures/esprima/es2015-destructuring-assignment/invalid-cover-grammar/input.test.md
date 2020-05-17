@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: true
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 46
@@ -30,16 +30,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unexpected token, expected ,'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unexpected token, expected ,"}
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 23
 					index: 23
@@ -56,7 +56,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 45
 					index: 45
@@ -70,7 +70,7 @@ Program {
 			}
 			expression: ArrayExpression {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 45
 						index: 45
@@ -85,7 +85,7 @@ Program {
 				elements: Array [
 					ArrayExpression {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 44
 								index: 44
@@ -100,7 +100,7 @@ Program {
 						elements: Array [
 							ArrayExpression {
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 43
 										index: 43
@@ -115,7 +115,7 @@ Program {
 								elements: Array [
 									ArrayExpression {
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 42
 												index: 42
@@ -130,7 +130,7 @@ Program {
 										elements: Array [
 											ArrayExpression {
 												loc: Object {
-													filename: 'input.js'
+													filename: "input.js"
 													end: Object {
 														column: 41
 														index: 41
@@ -145,7 +145,7 @@ Program {
 												elements: Array [
 													ArrayExpression {
 														loc: Object {
-															filename: 'input.js'
+															filename: "input.js"
 															end: Object {
 																column: 40
 																index: 40
@@ -160,7 +160,7 @@ Program {
 														elements: Array [
 															ArrayExpression {
 																loc: Object {
-																	filename: 'input.js'
+																	filename: "input.js"
 																	end: Object {
 																		column: 39
 																		index: 39
@@ -175,7 +175,7 @@ Program {
 																elements: Array [
 																	ArrayExpression {
 																		loc: Object {
-																			filename: 'input.js'
+																			filename: "input.js"
 																			end: Object {
 																				column: 38
 																				index: 38
@@ -190,7 +190,7 @@ Program {
 																		elements: Array [
 																			ArrayExpression {
 																				loc: Object {
-																					filename: 'input.js'
+																					filename: "input.js"
 																					end: Object {
 																						column: 37
 																						index: 37
@@ -205,7 +205,7 @@ Program {
 																				elements: Array [
 																					ArrayExpression {
 																						loc: Object {
-																							filename: 'input.js'
+																							filename: "input.js"
 																							end: Object {
 																								column: 36
 																								index: 36
@@ -220,7 +220,7 @@ Program {
 																						elements: Array [
 																							ArrayExpression {
 																								loc: Object {
-																									filename: 'input.js'
+																									filename: "input.js"
 																									end: Object {
 																										column: 35
 																										index: 35
@@ -235,7 +235,7 @@ Program {
 																								elements: Array [
 																									ArrayExpression {
 																										loc: Object {
-																											filename: 'input.js'
+																											filename: "input.js"
 																											end: Object {
 																												column: 34
 																												index: 34
@@ -250,7 +250,7 @@ Program {
 																										elements: Array [
 																											ArrayExpression {
 																												loc: Object {
-																													filename: 'input.js'
+																													filename: "input.js"
 																													end: Object {
 																														column: 33
 																														index: 33
@@ -265,7 +265,7 @@ Program {
 																												elements: Array [
 																													ArrayExpression {
 																														loc: Object {
-																															filename: 'input.js'
+																															filename: "input.js"
 																															end: Object {
 																																column: 32
 																																index: 32
@@ -280,7 +280,7 @@ Program {
 																														elements: Array [
 																															ArrayExpression {
 																																loc: Object {
-																																	filename: 'input.js'
+																																	filename: "input.js"
 																																	end: Object {
 																																		column: 31
 																																		index: 31
@@ -295,7 +295,7 @@ Program {
 																																elements: Array [
 																																	ArrayExpression {
 																																		loc: Object {
-																																			filename: 'input.js'
+																																			filename: "input.js"
 																																			end: Object {
 																																				column: 30
 																																				index: 30
@@ -310,7 +310,7 @@ Program {
 																																		elements: Array [
 																																			ArrayExpression {
 																																				loc: Object {
-																																					filename: 'input.js'
+																																					filename: "input.js"
 																																					end: Object {
 																																						column: 29
 																																						index: 29
@@ -325,7 +325,7 @@ Program {
 																																				elements: Array [
 																																					ArrayExpression {
 																																						loc: Object {
-																																							filename: 'input.js'
+																																							filename: "input.js"
 																																							end: Object {
 																																								column: 28
 																																								index: 28
@@ -340,7 +340,7 @@ Program {
 																																						elements: Array [
 																																							ArrayExpression {
 																																								loc: Object {
-																																									filename: 'input.js'
+																																									filename: "input.js"
 																																									end: Object {
 																																										column: 27
 																																										index: 27
@@ -355,7 +355,7 @@ Program {
 																																								elements: Array [
 																																									ArrayExpression {
 																																										loc: Object {
-																																											filename: 'input.js'
+																																											filename: "input.js"
 																																											end: Object {
 																																												column: 26
 																																												index: 26
@@ -369,9 +369,9 @@ Program {
 																																										}
 																																										elements: Array [
 																																											AssignmentExpression {
-																																												operator: '='
+																																												operator: "="
 																																												loc: Object {
-																																													filename: 'input.js'
+																																													filename: "input.js"
 																																													end: Object {
 																																														column: 24
 																																														index: 24
@@ -384,10 +384,10 @@ Program {
 																																													}
 																																												}
 																																												right: ReferenceIdentifier {
-																																													name: 'b'
+																																													name: "b"
 																																													loc: Object {
-																																														filename: 'input.js'
-																																														identifierName: 'b'
+																																														filename: "input.js"
+																																														identifierName: "b"
 																																														end: Object {
 																																															column: 24
 																																															index: 24
@@ -403,7 +403,7 @@ Program {
 																																												left: AssignmentObjectPattern {
 																																													rest: undefined
 																																													loc: Object {
-																																														filename: 'input.js'
+																																														filename: "input.js"
 																																														end: Object {
 																																															column: 22
 																																															index: 22
@@ -419,10 +419,10 @@ Program {
 																																														AssignmentObjectPatternProperty {
 																																															key: StaticPropertyKey {
 																																																value: Identifier {
-																																																	name: 'a'
+																																																	name: "a"
 																																																	loc: Object {
-																																																		filename: 'input.js'
-																																																		identifierName: 'a'
+																																																		filename: "input.js"
+																																																		identifierName: "a"
 																																																		end: Object {
 																																																			column: 22
 																																																			index: 22
@@ -436,7 +436,7 @@ Program {
 																																																	}
 																																																}
 																																																loc: Object {
-																																																	filename: 'input.js'
+																																																	filename: "input.js"
 																																																	end: Object {
 																																																		column: 22
 																																																		index: 22
@@ -450,10 +450,10 @@ Program {
 																																																}
 																																															}
 																																															value: AssignmentIdentifier {
-																																																name: 'a'
+																																																name: "a"
 																																																loc: Object {
-																																																	filename: 'input.js'
-																																																	identifierName: 'a'
+																																																	filename: "input.js"
+																																																	identifierName: "a"
 																																																	end: Object {
 																																																		column: 22
 																																																		index: 22
@@ -467,7 +467,7 @@ Program {
 																																																}
 																																															}
 																																															loc: Object {
-																																																filename: 'input.js'
+																																																filename: "input.js"
 																																																end: Object {
 																																																	column: 22
 																																																	index: 22
@@ -484,9 +484,9 @@ Program {
 																																												}
 																																											}
 																																											ReferenceIdentifier {
-																																												name: 'INVALID_PLACEHOLDER'
+																																												name: "INVALID_PLACEHOLDER"
 																																												loc: Object {
-																																													filename: 'input.js'
+																																													filename: "input.js"
 																																													end: Object {
 																																														column: 25
 																																														index: 25

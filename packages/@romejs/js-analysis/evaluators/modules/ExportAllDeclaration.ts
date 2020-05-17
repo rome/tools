@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
+import {Scope} from "../../scopes";
 import {
 	AnyNode,
 	ExportAllDeclaration,
 	exportAllDeclaration,
-} from '@romejs/js-ast';
-import Hub from '../../Hub';
+} from "@romejs/js-ast";
+import Hub from "../../Hub";
 
 export default function ExportAllDeclaration(
 	node: AnyNode,

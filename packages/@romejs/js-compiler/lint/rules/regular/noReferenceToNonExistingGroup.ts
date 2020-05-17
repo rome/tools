@@ -5,22 +5,22 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from '@romejs/js-compiler';
-import {AnyNode, RegExpGroupCapture} from '@romejs/js-ast';
-import {descriptions} from '@romejs/diagnostics';
+import {Path} from "@romejs/js-compiler";
+import {AnyNode, RegExpGroupCapture} from "@romejs/js-ast";
+import {descriptions} from "@romejs/diagnostics";
 
 function findCaptureGroups(path: Path): Array<RegExpGroupCapture> | undefined {
 	const regexLiteral = path.findAncestry((path) =>
-		path.node.type === 'RegExpLiteral'
+		path.node.type === "RegExpLiteral"
 	);
 	if (regexLiteral === undefined) {
 		return regexLiteral;
 	}
 	let captureGroups: Array<RegExpGroupCapture> = [];
 	regexLiteral.traverse(
-		'RegExpLiteral',
+		"RegExpLiteral",
 		(path) => {
-			if (path.node.type === 'RegExpGroupCapture') {
+			if (path.node.type === "RegExpGroupCapture") {
 				captureGroups.push(path.node);
 			}
 		},
@@ -29,11 +29,11 @@ function findCaptureGroups(path: Path): Array<RegExpGroupCapture> | undefined {
 }
 
 export default {
-	name: 'noReferenceToNonExistingGroup',
+	name: "noReferenceToNonExistingGroup",
 	enter(path: Path): AnyNode {
 		const {node, context} = path;
 
-		if (node.type === 'RegExpNumericBackReference') {
+		if (node.type === "RegExpNumericBackReference") {
 			const allCaptureGroups = findCaptureGroups(path);
 			if (allCaptureGroups === undefined) {
 				context.addNodeDiagnostic(

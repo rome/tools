@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 19
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 18
 					index: 18
@@ -48,7 +48,7 @@ Program {
 				optional: undefined
 				typeArguments: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -61,10 +61,10 @@ Program {
 					}
 				}
 				callee: ReferenceIdentifier {
-					name: 'f'
+					name: "f"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'f'
+						filename: "input.js"
+						identifierName: "f"
 						end: Object {
 							column: 5
 							index: 5
@@ -80,7 +80,7 @@ Program {
 				arguments: Array [
 					SpreadElement {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 10
 								index: 10
@@ -93,10 +93,10 @@ Program {
 							}
 						}
 						argument: ReferenceIdentifier {
-							name: 'x'
+							name: "x"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'x'
+								filename: "input.js"
+								identifierName: "x"
 								end: Object {
 									column: 10
 									index: 10
@@ -111,10 +111,10 @@ Program {
 						}
 					}
 					ReferenceIdentifier {
-						name: 'y'
+						name: "y"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'y'
+							filename: "input.js"
+							identifierName: "y"
 							end: Object {
 								column: 13
 								index: 13
@@ -128,10 +128,10 @@ Program {
 						}
 					}
 					ReferenceIdentifier {
-						name: 'z'
+						name: "z"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'z'
+							filename: "input.js"
+							identifierName: "z"
 							end: Object {
 								column: 16
 								index: 16

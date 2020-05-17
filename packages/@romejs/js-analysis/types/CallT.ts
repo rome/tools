@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from '@romejs/js-ast';
-import {Scope} from '../scopes';
-import NotCallableE from './errors/NotCallableE';
-import FunctionT from './FunctionT';
-import ObjT from './ObjT';
-import AnyT from './AnyT';
-import E from './errors/E';
-import T from './T';
+import {AnyNode} from "@romejs/js-ast";
+import {Scope} from "../scopes";
+import NotCallableE from "./errors/NotCallableE";
+import FunctionT from "./FunctionT";
+import ObjT from "./ObjT";
+import AnyT from "./AnyT";
+import E from "./errors/E";
+import T from "./T";
 
 export default class CallT extends T {
 	constructor(
@@ -26,7 +26,7 @@ export default class CallT extends T {
 		this.args = args;
 	}
 
-	static type = 'CallT';
+	static type = "CallT";
 
 	callee: T;
 	args: Array<T>;

@@ -9,9 +9,9 @@ import {
 	AnyNode,
 	TSConstructSignatureDeclaration,
 	tsConstructSignatureDeclaration,
-} from '@romejs/js-ast';
+} from "@romejs/js-ast";
 
 export default function TSConstructSignatureDeclaration(node: AnyNode) {
 	node = tsConstructSignatureDeclaration.assert(node);
-	throw new Error('unimplemented');
+	throw new Error("unimplemented");
 }

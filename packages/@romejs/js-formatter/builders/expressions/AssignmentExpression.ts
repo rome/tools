@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token, concat, space} from '../../tokens';
-import {AssignmentExpression} from '@romejs/js-ast';
-import {printAssignment} from '../utils';
+import Builder from "../../Builder";
+import {Token, concat, space} from "../../tokens";
+import {AssignmentExpression} from "@romejs/js-ast";
+import {printAssignment} from "../utils";
 
 export default function AssignmentExpression(
 	builder: Builder,

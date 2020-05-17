@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {DiagnosticSuppressions, Diagnostics} from '@romejs/diagnostics';
-import {LintRequest} from '../types';
-import {lintTransforms} from './rules/index';
-import {Cache, CompilerContext} from '@romejs/js-compiler';
-import {formatJS} from '@romejs/js-formatter';
-import {addSuppressions} from './suppressions';
+import {DiagnosticSuppressions, Diagnostics} from "@romejs/diagnostics";
+import {LintRequest} from "../types";
+import {lintTransforms} from "./rules/index";
+import {Cache, CompilerContext} from "@romejs/js-compiler";
+import {formatJS} from "@romejs/js-formatter";
+import {addSuppressions} from "./suppressions";
 
 export type LintResult = {
 	diagnostics: Diagnostics;
@@ -38,7 +38,7 @@ export default async function lint(req: LintRequest): Promise<LintResult> {
 		project,
 		frozen: false,
 		origin: {
-			category: 'lint',
+			category: "lint",
 		},
 	});
 
@@ -52,7 +52,7 @@ export default async function lint(req: LintRequest): Promise<LintResult> {
 		{
 			typeAnnotations: true,
 			sourceMaps: true,
-			format: 'pretty',
+			format: "pretty",
 			sourceText,
 		},
 	).code;
@@ -65,7 +65,7 @@ export default async function lint(req: LintRequest): Promise<LintResult> {
 		project,
 		options,
 		origin: {
-			category: 'lint',
+			category: "lint",
 		},
 		frozen: true,
 	});

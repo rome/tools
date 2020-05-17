@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Reporter from './Reporter';
-import {ReporterProgress, ReporterProgressOptions} from './types';
+import Reporter from "./Reporter";
+import {ReporterProgress, ReporterProgressOptions} from "./types";
 
 const DEFAULT_PROGRESS_OPTIONS: ReporterProgressOptions = {
 	name: undefined,
@@ -74,7 +74,7 @@ export default class ProgressBase implements ReporterProgress {
 
 	getText(): undefined | string {
 		const {text} = this;
-		if (text === undefined || text === '') {
+		if (text === undefined || text === "") {
 			return undefined;
 		} else {
 			return this.reporter.stripMarkup(text);
@@ -114,7 +114,7 @@ export default class ProgressBase implements ReporterProgress {
 
 		// Set last
 		const last: undefined | string = textStack[textStack.length - 1];
-		this.setText(last === undefined ? '' : last);
+		this.setText(last === undefined ? "" : last);
 	}
 
 	tick() {

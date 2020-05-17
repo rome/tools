@@ -5,21 +5,21 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, TransformExitResult} from '@romejs/js-compiler';
+import {Path, TransformExitResult} from "@romejs/js-compiler";
 import {
 	VariableDeclarationStatement,
 	variableDeclaration,
 	variableDeclarationStatement,
-} from '@romejs/js-ast';
-import {descriptions} from '@romejs/diagnostics';
+} from "@romejs/js-ast";
+import {descriptions} from "@romejs/diagnostics";
 
 export default {
-	name: 'singleVarDeclarator',
+	name: "singleVarDeclarator",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 
 		if (
-			node.type === 'VariableDeclarationStatement' &&
+			node.type === "VariableDeclarationStatement" &&
 			node.declaration.declarations.length > 1
 		) {
 			const fixed: Array<VariableDeclarationStatement> = [];

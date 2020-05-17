@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 10
 			index: 10
@@ -30,16 +30,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'new.target can only be used in functions or class properties'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "new.target can only be used in functions or class properties"}
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'script'
+				sourceType: "script"
 				end: Object {
 					column: 10
 					index: 10
@@ -56,7 +56,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 10
 					index: 10
@@ -70,7 +70,7 @@ Program {
 			}
 			expression: MetaProperty {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 10
 						index: 10
@@ -83,10 +83,10 @@ Program {
 					}
 				}
 				meta: Identifier {
-					name: 'new'
+					name: "new"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'new'
+						filename: "input.js"
+						identifierName: "new"
 						end: Object {
 							column: 3
 							index: 3
@@ -100,10 +100,10 @@ Program {
 					}
 				}
 				property: Identifier {
-					name: 'target'
+					name: "target"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'target'
+						filename: "input.js"
+						identifierName: "target"
 						end: Object {
 							column: 10
 							index: 10

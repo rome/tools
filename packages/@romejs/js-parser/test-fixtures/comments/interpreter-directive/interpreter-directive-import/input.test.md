@@ -9,13 +9,13 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	mtime: undefined
-	sourceType: 'module'
+	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 57
@@ -28,9 +28,9 @@ Program {
 		}
 	}
 	interpreter: InterpreterDirective {
-		value: 'usr/bin/env babel-node'
+		value: "usr/bin/env babel-node"
 		loc: Object {
-			filename: 'input.js'
+			filename: "input.js"
 			end: Object {
 				column: 25
 				index: 25
@@ -45,10 +45,10 @@ Program {
 	}
 	comments: Array [
 		CommentLine {
-			id: '0'
-			value: 'usr/bin/env babel-node'
+			id: "0"
+			value: "usr/bin/env babel-node"
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 25
 					index: 25
@@ -67,9 +67,9 @@ Program {
 			defaultSpecifier: undefined
 			importKind: undefined
 			namespaceSpecifier: undefined
-			leadingComments: Array ['0']
+			leadingComments: Array ["0"]
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 29
 					index: 56
@@ -82,9 +82,9 @@ Program {
 				}
 			}
 			source: StringLiteral {
-				value: 'foobar'
+				value: "foobar"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 28
 						index: 55
@@ -101,7 +101,7 @@ Program {
 				ImportSpecifier {
 					leadingComments: undefined
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 13
 							index: 40
@@ -114,11 +114,11 @@ Program {
 						}
 					}
 					imported: Identifier {
-						name: 'spawn'
+						name: "spawn"
 						leadingComments: undefined
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'spawn'
+							filename: "input.js"
+							identifierName: "spawn"
 							end: Object {
 								column: 13
 								index: 40
@@ -133,13 +133,13 @@ Program {
 					}
 					local: ImportSpecifierLocal {
 						name: BindingIdentifier {
-							name: 'spawn'
+							name: "spawn"
 							innerComments: undefined
 							leadingComments: undefined
 							trailingComments: undefined
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'spawn'
+								filename: "input.js"
+								identifierName: "spawn"
 								end: Object {
 									column: 13
 									index: 40
@@ -155,7 +155,7 @@ Program {
 						importKind: undefined
 						leadingComments: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 13
 								index: 40

@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Consumer} from '@romejs/consume';
-import {Dict} from '@romejs/typescript-helpers';
+import {Consumer} from "@romejs/consume";
+import {Dict} from "@romejs/typescript-helpers";
 
 export type SharedCommand<Flags extends Dict<unknown>> = {
 	category: string;
@@ -18,14 +18,14 @@ export type SharedCommand<Flags extends Dict<unknown>> = {
 		command: string;
 	}>;
 	ignoreFlags?: Array<string>;
-	allowRequestFlags?: Array<'review' | 'watch'>;
+	allowRequestFlags?: Array<"review" | "watch">;
 };
 
 export const commandCategories = {
-	PROCESS_MANAGEMENT: 'Process Management',
-	CODE_QUALITY: 'Code Quality',
-	SOURCE_CODE: 'Source Code',
-	PROJECT_MANAGEMENT: 'Project Management',
-	SOURCE_CONTROL: 'Source Control',
-	INTERNAL: 'Internal',
+	PROCESS_MANAGEMENT: "Process Management",
+	CODE_QUALITY: "Code Quality",
+	SOURCE_CODE: "Source Code",
+	PROJECT_MANAGEMENT: "Project Management",
+	SOURCE_CONTROL: "Source Control",
+	INTERNAL: "Internal",
 };

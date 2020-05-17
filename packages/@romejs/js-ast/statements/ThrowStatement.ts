@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyExpression, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {AnyExpression, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type ThrowStatement = JSNodeBase & {
-	type: 'ThrowStatement';
+	type: "ThrowStatement";
 	argument: AnyExpression;
 };
 
 export const throwStatement = createBuilder<ThrowStatement>(
-	'ThrowStatement',
+	"ThrowStatement",
 	{
 		bindingKeys: {},
 		visitorKeys: {

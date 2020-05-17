@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type EmptyStatement = JSNodeBase & {
-	type: 'EmptyStatement';
+	type: "EmptyStatement";
 };
 
 export const emptyStatement = createBuilder<EmptyStatement>(
-	'EmptyStatement',
+	"EmptyStatement",
 	{
 		bindingKeys: {},
 		visitorKeys: {},

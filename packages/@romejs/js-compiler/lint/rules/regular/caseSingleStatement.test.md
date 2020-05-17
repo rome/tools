@@ -17,7 +17,7 @@
 switch (foo) {
 	case true:
 	case false:
-		return 'yes';
+		return "yes";
 }
 
 ```
@@ -76,7 +76,8 @@ switch (foo) {
 
       │ - :⏎··  
     1 │ + case false: {
-    2 │ + ↹let foo = '';
+      │ - let foo = '';
+    2 │ + ↹let foo = "";
       │ - ····foo;
     3 │ + ↹foo;
     4 │ + }
@@ -93,7 +94,7 @@ switch (foo) {
 switch (foo) {
 	case true:
 	case false: {
-		let foo = '';
+		let foo = "";
 		foo;
 	}
 }

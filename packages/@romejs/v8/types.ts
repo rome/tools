@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Position} from '@romejs/parser-core';
-import {Number0, Number1} from '@romejs/ob1';
-import {JSONPropertyValue} from '@romejs/codec-json';
-import inspector = require('inspector');
+import {Position} from "@romejs/parser-core";
+import {Number0, Number1} from "@romejs/ob1";
+import {JSONPropertyValue} from "@romejs/codec-json";
+import inspector = require("inspector");
 
-import {InterfaceToObject} from '@romejs/typescript-helpers';
+import {InterfaceToObject} from "@romejs/typescript-helpers";
 
 export type CPUProfile = InterfaceToObject<inspector.Profiler.Profile>;
 
@@ -39,7 +39,7 @@ export type CoverageRangeWithMetadata = inspector.Profiler.CoverageRange & {
 	kind: LocationRangeKind;
 };
 
-export type LocationRangeKind = 'branch' | 'function' | 'expression';
+export type LocationRangeKind = "branch" | "function" | "expression";
 
 export type CoverageLocationRange = {
 	filename: string;

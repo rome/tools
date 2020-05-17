@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 79
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		TSInterfaceDeclaration {
 			id: BindingIdentifier {
-				name: 'I'
+				name: "I"
 				loc: Object {
-					filename: 'input.ts'
-					identifierName: 'I'
+					filename: "input.ts"
+					identifierName: "I"
 					end: Object {
 						column: 11
 						index: 11
@@ -51,7 +51,7 @@ Program {
 			extends: undefined
 			typeParameters: undefined
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 1
 					index: 78
@@ -65,7 +65,7 @@ Program {
 			}
 			body: TSInterfaceBody {
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 1
 						index: 78
@@ -82,7 +82,7 @@ Program {
 						key: ComputedPropertyKey {
 							value: MemberExpression {
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 20
 										index: 34
@@ -95,10 +95,10 @@ Program {
 									}
 								}
 								object: ReferenceIdentifier {
-									name: 'Symbol'
+									name: "Symbol"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'Symbol'
+										filename: "input.ts"
+										identifierName: "Symbol"
 										end: Object {
 											column: 11
 											index: 25
@@ -113,10 +113,10 @@ Program {
 								}
 								property: StaticMemberProperty {
 									value: Identifier {
-										name: 'iterator'
+										name: "iterator"
 										loc: Object {
-											filename: 'input.ts'
-											identifierName: 'iterator'
+											filename: "input.ts"
+											identifierName: "iterator"
 											end: Object {
 												column: 20
 												index: 34
@@ -130,8 +130,8 @@ Program {
 										}
 									}
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'iterator'
+										filename: "input.ts"
+										identifierName: "iterator"
 										end: Object {
 											column: 20
 											index: 34
@@ -146,7 +146,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 21
 									index: 35
@@ -162,7 +162,7 @@ Program {
 						optional: false
 						readonly: false
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 30
 								index: 44
@@ -176,7 +176,7 @@ Program {
 						}
 						typeAnnotation: NumberKeywordTypeAnnotation {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 29
 									index: 43
@@ -194,7 +194,7 @@ Program {
 						key: ComputedPropertyKey {
 							value: MemberExpression {
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 20
 										index: 65
@@ -207,10 +207,10 @@ Program {
 									}
 								}
 								object: ReferenceIdentifier {
-									name: 'Symbol'
+									name: "Symbol"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'Symbol'
+										filename: "input.ts"
+										identifierName: "Symbol"
 										end: Object {
 											column: 11
 											index: 56
@@ -225,10 +225,10 @@ Program {
 								}
 								property: StaticMemberProperty {
 									value: Identifier {
-										name: 'iterator'
+										name: "iterator"
 										loc: Object {
-											filename: 'input.ts'
-											identifierName: 'iterator'
+											filename: "input.ts"
+											identifierName: "iterator"
 											end: Object {
 												column: 20
 												index: 65
@@ -242,8 +242,8 @@ Program {
 										}
 									}
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'iterator'
+										filename: "input.ts"
+										identifierName: "iterator"
 										end: Object {
 											column: 20
 											index: 65
@@ -258,7 +258,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 21
 									index: 66
@@ -274,7 +274,7 @@ Program {
 						optional: true
 						readonly: false
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 31
 								index: 76
@@ -288,7 +288,7 @@ Program {
 						}
 						typeAnnotation: NumberKeywordTypeAnnotation {
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 30
 									index: 75

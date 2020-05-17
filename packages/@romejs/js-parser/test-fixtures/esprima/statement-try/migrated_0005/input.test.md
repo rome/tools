@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 39
@@ -33,7 +33,7 @@ Program {
 		TryStatement {
 			finalizer: undefined
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 38
 					index: 38
@@ -48,7 +48,7 @@ Program {
 			block: BlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 17
 						index: 17
@@ -63,7 +63,7 @@ Program {
 				body: Array [
 					ExpressionStatement {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 15
 								index: 15
@@ -78,7 +78,7 @@ Program {
 						expression: CallExpression {
 							arguments: Array []
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 14
 									index: 14
@@ -91,10 +91,10 @@ Program {
 								}
 							}
 							callee: ReferenceIdentifier {
-								name: 'doThat'
+								name: "doThat"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'doThat'
+									filename: "input.js"
+									identifierName: "doThat"
 									end: Object {
 										column: 12
 										index: 12
@@ -113,7 +113,7 @@ Program {
 			}
 			handler: CatchClause {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 38
 						index: 38
@@ -126,10 +126,10 @@ Program {
 					}
 				}
 				param: BindingIdentifier {
-					name: 'e'
+					name: "e"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'e'
+						filename: "input.js"
+						identifierName: "e"
 						end: Object {
 							column: 26
 							index: 26
@@ -145,7 +145,7 @@ Program {
 				body: BlockStatement {
 					directives: Array []
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 38
 							index: 38
@@ -160,7 +160,7 @@ Program {
 					body: Array [
 						ExpressionStatement {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 36
 									index: 36
@@ -174,7 +174,7 @@ Program {
 							}
 							expression: CallExpression {
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 36
 										index: 36
@@ -187,10 +187,10 @@ Program {
 									}
 								}
 								callee: ReferenceIdentifier {
-									name: 'say'
+									name: "say"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'say'
+										filename: "input.js"
+										identifierName: "say"
 										end: Object {
 											column: 33
 											index: 33
@@ -205,10 +205,10 @@ Program {
 								}
 								arguments: Array [
 									ReferenceIdentifier {
-										name: 'e'
+										name: "e"
 										loc: Object {
-											filename: 'input.js'
-											identifierName: 'e'
+											filename: "input.js"
+											identifierName: "e"
 											end: Object {
 												column: 35
 												index: 35

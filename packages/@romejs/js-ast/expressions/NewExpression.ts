@@ -11,11 +11,11 @@ import {
 	SpreadElement,
 	Super,
 	TSTypeParameterInstantiation,
-} from '../index';
-import {createBuilder} from '../utils';
+} from "../index";
+import {createBuilder} from "../utils";
 
 export type NewExpression = JSNodeBase & {
-	type: 'NewExpression';
+	type: "NewExpression";
 	callee: AnyExpression | Super;
 	arguments: Array<AnyExpression | SpreadElement>;
 	typeArguments?: undefined | TSTypeParameterInstantiation;
@@ -23,7 +23,7 @@ export type NewExpression = JSNodeBase & {
 };
 
 export const newExpression = createBuilder<NewExpression>(
-	'NewExpression',
+	"NewExpression",
 	{
 		bindingKeys: {},
 		visitorKeys: {

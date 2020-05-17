@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Consumer} from '@romejs/consume';
-import {SemverVersionNode, parseSemverVersion} from '@romejs/codec-semver';
-import {SPDXExpressionNode, parseSPDXLicense} from '@romejs/codec-spdx-license';
-import {normalizeDependencies, parseGitDependencyPattern} from './dependencies';
+import {Consumer} from "@romejs/consume";
+import {SemverVersionNode, parseSemverVersion} from "@romejs/codec-semver";
+import {SPDXExpressionNode, parseSPDXLicense} from "@romejs/codec-spdx-license";
+import {normalizeDependencies, parseGitDependencyPattern} from "./dependencies";
 import {
 	MBoolean,
 	MString,
@@ -19,36 +19,36 @@ import {
 	ManifestName,
 	ManifestPerson,
 	ManifestRepository,
-} from './types';
-import {tryParseWithOptionalOffsetPosition} from '@romejs/parser-core';
-import {normalizeName} from './name';
-import {Diagnostics, descriptions} from '@romejs/diagnostics';
+} from "./types";
+import {tryParseWithOptionalOffsetPosition} from "@romejs/parser-core";
+import {normalizeName} from "./name";
+import {Diagnostics, descriptions} from "@romejs/diagnostics";
 import {
 	AbsoluteFilePath,
 	RelativeFilePathMap,
 	createRelativeFilePath,
-} from '@romejs/path';
-import {toCamelCase} from '@romejs/string-utils';
-import {PathPatterns, parsePathPattern} from '@romejs/path-match';
+} from "@romejs/path";
+import {toCamelCase} from "@romejs/string-utils";
+import {PathPatterns, parsePathPattern} from "@romejs/path-match";
 
-export * from './types';
+export * from "./types";
 
-export * from './convert';
+export * from "./convert";
 
-export {manifestNameToString} from './name';
+export {manifestNameToString} from "./name";
 
 const TYPO_KEYS: Map<string, string> = new Map([
-	['autohr', 'author'],
-	['autor', 'author'],
-	['contributers', 'contributors'],
-	['depends', 'dependencies'],
-	['hampage', 'homepage'],
-	['hompage', 'homepage'],
-	['prefereGlobal', 'preferGlobal'],
-	['publicationConfig', 'publishConfig'],
-	['repo', 'repository'],
-	['repostitory', 'repository'],
-	['script', 'scripts'],
+	["autohr", "author"],
+	["autor", "author"],
+	["contributers", "contributors"],
+	["depends", "dependencies"],
+	["hampage", "homepage"],
+	["hompage", "homepage"],
+	["prefereGlobal", "preferGlobal"],
+	["publicationConfig", "publishConfig"],
+	["repo", "repository"],
+	["repostitory", "repository"],
+	["script", "scripts"],
 ]);
 
 function normalizeBoolean(consumer: Consumer, key: string): MBoolean {
@@ -81,7 +81,7 @@ function normalizeStringArray(consumer: Consumer, loose: boolean): Array<string>
 		if (loose) {
 			const val = consumer.asUnknown();
 
-			if (typeof val === 'string') {
+			if (typeof val === "string") {
 				return [consumer.asString()];
 			}
 
@@ -117,7 +117,7 @@ function normalizeStringMap(
 
 	for (const [name, value] of consumer.asMap()) {
 		// In loose mode let's be really generous
-		if (loose && typeof value.asUnknown() !== 'string') {
+		if (loose && typeof value.asUnknown() !== "string") {
 			continue;
 		}
 
@@ -133,13 +133,13 @@ function normalizeBin(
 	loose: boolean,
 ): ManifestMap {
 	const map: ManifestMap = new Map();
-	if (!consumer.has('bin')) {
+	if (!consumer.has("bin")) {
 		return map;
 	}
 
 	// Allow a `bin` string
-	const obj = consumer.get('bin');
-	if (typeof obj.asUnknown() === 'string') {
+	const obj = consumer.get("bin");
+	if (typeof obj.asUnknown() === "string") {
 		if (name === undefined) {
 			obj.unexpected(descriptions.MANIFEST.STRING_BIN_WITHOUT_NAME);
 		} else {
@@ -149,38 +149,38 @@ function normalizeBin(
 	}
 
 	// Otherwise expect it to be an object
-	return normalizeStringMap(consumer, 'bin', loose);
+	return normalizeStringMap(consumer, "bin", loose);
 }
 
 function extractLicenseFromObjectConsumer(
 	consumer: Consumer,
 ): [string, Consumer] {
-	const prop = consumer.get('type');
+	const prop = consumer.get("type");
 	const value = prop.asString();
 	return [value, prop];
 }
 
 // These are all licenses I found that are wrong, we should eventually remove this as we update those deps
 const INVALID_IGNORE_LICENSES = [
-	'UNLICENSED',
-	'none',
-	'Facebook Platform License',
-	'BSD',
-	'MIT/X11',
-	'Public Domain',
-	'MIT License',
-	'BSD-like',
+	"UNLICENSED",
+	"none",
+	"Facebook Platform License",
+	"BSD",
+	"MIT/X11",
+	"Public Domain",
+	"MIT License",
+	"BSD-like",
 ];
 
 function normalizeLicense(
 	consumer: Consumer,
 	loose: boolean,
 ): undefined | SPDXExpressionNode {
-	if (!consumer.has('license')) {
+	if (!consumer.has("license")) {
 		return undefined;
 	}
 
-	let licenseProp = consumer.get('license');
+	let licenseProp = consumer.get("license");
 
 	let licenseId;
 
@@ -190,15 +190,15 @@ function normalizeLicense(
 		const licenseIds = licenseProp.asArray().map((consumer) =>
 			extractLicenseFromObjectConsumer(consumer)[0]
 		);
-		licenseId = `(${licenseIds.join(' OR ')})`;
-	} else if (loose && typeof raw === 'object') {
+		licenseId = `(${licenseIds.join(" OR ")})`;
+	} else if (loose && typeof raw === "object") {
 		[licenseId, licenseProp] = extractLicenseFromObjectConsumer(licenseProp);
 	} else {
 		licenseId = licenseProp.asString();
 	}
 
 	// Allow referring to a custom license
-	if (licenseId.startsWith('SEE LICENSE IN ')) {
+	if (licenseId.startsWith("SEE LICENSE IN ")) {
 		return undefined;
 	}
 
@@ -215,7 +215,7 @@ function normalizeLicense(
 			input: licenseId,
 		},
 		{
-			getOffsetPosition: () => licenseProp.getLocation('inner-value').start,
+			getOffsetPosition: () => licenseProp.getLocation("inner-value").start,
 			parse: (opts) => parseSPDXLicense(opts),
 		},
 	);
@@ -225,15 +225,15 @@ function normalizeVersion(
 	consumer: Consumer,
 	loose: boolean,
 ): undefined | SemverVersionNode {
-	if (!consumer.has('version')) {
+	if (!consumer.has("version")) {
 		return undefined;
 	}
 
-	const prop = consumer.get('version');
+	const prop = consumer.get("version");
 	const rawVersion = prop.asString();
 
 	// Used in some package.json templates
-	if (rawVersion === 'VERSION_STRING') {
+	if (rawVersion === "VERSION_STRING") {
 		return undefined;
 	}
 
@@ -246,7 +246,7 @@ function normalizeVersion(
 			loose,
 		},
 		{
-			getOffsetPosition: () => prop.getLocation('inner-value').start,
+			getOffsetPosition: () => prop.getLocation("inner-value").start,
 			parse: (opts) => parseSemverVersion(opts),
 		},
 	);
@@ -254,7 +254,7 @@ function normalizeVersion(
 }
 
 function normalizePerson(consumer: Consumer, loose: boolean): ManifestPerson {
-	if (typeof consumer.asUnknown() === 'string') {
+	if (typeof consumer.asUnknown() === "string") {
 		// Parse the string. Format: name (url) <email>
 		const str = consumer.asString();
 
@@ -285,32 +285,32 @@ function normalizePerson(consumer: Consumer, loose: boolean): ManifestPerson {
 		return person;
 	} else {
 		// Validate as an object
-		let url: string | undefined = consumer.get('url').asStringOrVoid();
+		let url: string | undefined = consumer.get("url").asStringOrVoid();
 
 		// Some packages use "web" or "website" instead of "url"
 		if (loose) {
 			if (url === undefined) {
-				url = consumer.get('web').asStringOrVoid();
+				url = consumer.get("web").asStringOrVoid();
 			}
 
 			if (url === undefined) {
-				url = consumer.get('website').asStringOrVoid();
+				url = consumer.get("website").asStringOrVoid();
 			}
 		}
 
-		let github = consumer.get('github').asStringOrVoid();
+		let github = consumer.get("github").asStringOrVoid();
 
 		if (loose && github === undefined) {
 			// Some rando packages use this
 			github =
-				consumer.get('githubUsername').asStringOrVoid() ||
-				consumer.get('github-username').asStringOrVoid();
+				consumer.get("githubUsername").asStringOrVoid() ||
+				consumer.get("github-username").asStringOrVoid();
 		}
 
 		const person: ManifestPerson = {
-			name: consumer.get('name').asString(loose ? '' : undefined),
-			email: consumer.get('email').asStringOrVoid(),
-			twitter: consumer.get('twitter').asStringOrVoid(),
+			name: consumer.get("name").asString(loose ? "" : undefined),
+			email: consumer.get("email").asStringOrVoid(),
+			twitter: consumer.get("twitter").asStringOrVoid(),
 			github,
 			url,
 		};
@@ -356,17 +356,17 @@ function normalizeRepo(
 		return;
 	}
 
-	if (typeof consumer.asUnknown() === 'string') {
+	if (typeof consumer.asUnknown() === "string") {
 		let url = consumer.asString();
 
 		// If this is a hosted git shorthand then explode it
 		const parsed = parseGitDependencyPattern(consumer);
-		if (parsed?.type === 'hosted-git') {
+		if (parsed?.type === "hosted-git") {
 			url = parsed.url;
 		}
 
 		return {
-			type: 'git',
+			type: "git",
 			url,
 			directory: undefined,
 		};
@@ -376,35 +376,35 @@ function normalizeRepo(
 
 		if (loose) {
 			// A lot of packages omit the "type"
-			type = consumer.get('type').asString('git');
+			type = consumer.get("type").asString("git");
 
 			// thanks i hate it
-			consumer.markUsedProperty('web');
-			consumer.markUsedProperty('git');
-			consumer.markUsedProperty('dist');
+			consumer.markUsedProperty("web");
+			consumer.markUsedProperty("git");
+			consumer.markUsedProperty("dist");
 
 			// Some gross packages use "repository" instead of "url"
-			let looseUrl = consumer.get('url').asStringOrVoid();
+			let looseUrl = consumer.get("url").asStringOrVoid();
 
 			if (looseUrl === undefined) {
-				looseUrl = consumer.get('repository').asStringOrVoid();
+				looseUrl = consumer.get("repository").asStringOrVoid();
 			}
 
 			if (looseUrl === undefined) {
 				consumer.unexpected(descriptions.MANIFEST.MISSING_REPO_URL);
-				url = '';
+				url = "";
 			} else {
 				url = looseUrl;
 			}
 		} else {
-			url = consumer.get('url').asString();
-			type = consumer.get('type').asString();
+			url = consumer.get("url").asString();
+			type = consumer.get("type").asString();
 		}
 
-		const repo: Manifest['repository'] = {
+		const repo: Manifest["repository"] = {
 			type,
 			url,
-			directory: consumer.get('directory').asStringOrVoid(),
+			directory: consumer.get("directory").asStringOrVoid(),
 		};
 		if (!loose) {
 			consumer.enforceUsedProperties();
@@ -417,7 +417,7 @@ function normalizeExports(consumer: Consumer): boolean | ManifestExports {
 	const unknown = consumer.asUnknown();
 
 	// "exports": false
-	if (typeof unknown === 'boolean') {
+	if (typeof unknown === "boolean") {
 		return consumer.asBoolean();
 	}
 
@@ -428,12 +428,12 @@ function normalizeExports(consumer: Consumer): boolean | ManifestExports {
 	const exports: ManifestExports = new RelativeFilePathMap();
 
 	// "exports": "./index.js"
-	if (typeof unknown === 'string') {
+	if (typeof unknown === "string") {
 		exports.set(
-			createRelativeFilePath('.'),
+			createRelativeFilePath("."),
 			new Map([
 				[
-					'default',
+					"default",
 					{
 						consumer,
 						relative: consumer.asExplicitRelativeFilePath(),
@@ -448,7 +448,7 @@ function normalizeExports(consumer: Consumer): boolean | ManifestExports {
 
 	for (const [relative, value] of consumer.asMap()) {
 		// If it's not a relative path then it's a platform for the root
-		if (relative[0] !== '.') {
+		if (relative[0] !== ".") {
 			if (exports.size > 0) {
 				value.unexpected(descriptions.MANIFEST.MIXED_EXPORTS_PATHS);
 			}
@@ -472,7 +472,7 @@ function normalizeExports(consumer: Consumer): boolean | ManifestExports {
 	}
 
 	if (dotConditions.size > 0) {
-		exports.set(createRelativeFilePath('.'), dotConditions);
+		exports.set(createRelativeFilePath("."), dotConditions);
 	}
 
 	return exports;
@@ -482,9 +482,9 @@ function normalizeExportsConditions(value: Consumer): ManifestExportConditions {
 	const conditions: ManifestExportConditions = new Map();
 	const unknown = value.asUnknown();
 
-	if (typeof unknown === 'string') {
+	if (typeof unknown === "string") {
 		conditions.set(
-			'default',
+			"default",
 			{
 				consumer: value,
 				relative: value.asExplicitRelativeFilePath(),
@@ -517,30 +517,30 @@ function normalizeExportsConditions(value: Consumer): ManifestExportConditions {
 function normalizeBugs(
 	consumer: Consumer,
 	loose: boolean,
-): undefined | Manifest['bugs'] {
+): undefined | Manifest["bugs"] {
 	if (!consumer.exists()) {
 		return;
 	}
 
-	if (typeof consumer.asUnknown() === 'string') {
+	if (typeof consumer.asUnknown() === "string") {
 		return {
 			email: undefined,
 			url: consumer.asString(),
 		};
 	} else {
-		let email = consumer.get('email').asStringOrVoid();
+		let email = consumer.get("email").asStringOrVoid();
 
 		// Some use a `mail` property
 		if (loose && email === undefined) {
-			email = consumer.get('mail').asStringOrVoid();
+			email = consumer.get("mail").asStringOrVoid();
 		}
 
 		// TODO remove this
-		consumer.markUsedProperty('type');
+		consumer.markUsedProperty("type");
 
-		const bugs: Manifest['bugs'] = {
+		const bugs: Manifest["bugs"] = {
 			email,
-			url: consumer.get('url').asStringOrVoid(),
+			url: consumer.get("url").asStringOrVoid(),
 		};
 		if (!loose) {
 			consumer.enforceUsedProperties();
@@ -550,14 +550,14 @@ function normalizeBugs(
 }
 
 function normalizeRootName(consumer: Consumer, loose: boolean): ManifestName {
-	if (!consumer.has('name')) {
+	if (!consumer.has("name")) {
 		return {
 			packageName: undefined,
 			org: undefined,
 		};
 	}
 
-	const prop = consumer.get('name');
+	const prop = consumer.get("name");
 
 	return normalizeName({
 		name: prop.asString(),
@@ -569,26 +569,26 @@ function normalizeRootName(consumer: Consumer, loose: boolean): ManifestName {
 					at,
 					loc: start === undefined
 						? undefined
-						: prop.getLocationRange(start, end, 'inner-value'),
+						: prop.getLocationRange(start, end, "inner-value"),
 				},
 			);
 		},
 	});
 }
 
-const DEPENDENCIES_KEYS = ['', 'dev', 'peer', 'optional'];
+const DEPENDENCIES_KEYS = ["", "dev", "peer", "optional"];
 
 const INCORRECT_DEPENDENCIES_SUFFIXES = [
-	'depdenencies',
-	'dependancies',
-	'dependecies',
+	"depdenencies",
+	"dependancies",
+	"dependecies",
 ];
 
 function checkDependencyKeyTypo(key: string, prop: Consumer) {
 	for (const depPrefixKey of DEPENDENCIES_KEYS) {
 		// Ignore if the key is a valid dependency key
 		const depKey =
-			depPrefixKey === '' ? 'dependencies' : `${depPrefixKey}Dependencies`;
+			depPrefixKey === "" ? "dependencies" : `${depPrefixKey}Dependencies`;
 		if (key === depKey) {
 			return;
 		}
@@ -620,12 +620,12 @@ export async function normalizeManifest(
 	manifest: Manifest;
 	diagnostics: Diagnostics;
 }> {
-	const loose = path.getSegments().includes('node_modules');
+	const loose = path.getSegments().includes("node_modules");
 
 	const {consumer, diagnostics} = rawConsumer.capture();
 
 	// FIXME: There's this ridiculous node module that includes it's tests... which deliberately includes an invalid package.json
-	if (path.join().includes('resolve/test/resolver/invalid_main')) {
+	if (path.join().includes("resolve/test/resolver/invalid_main")) {
 		consumer.setValue({});
 	}
 
@@ -648,42 +648,42 @@ export async function normalizeManifest(
 	const manifest: Manifest = {
 		name,
 		version: normalizeVersion(consumer, loose),
-		private: normalizeBoolean(consumer, 'private') === true,
-		description: normalizeString(consumer, 'description'),
+		private: normalizeBoolean(consumer, "private") === true,
+		description: normalizeString(consumer, "description"),
 		license: normalizeLicense(consumer, loose),
-		type: consumer.get('type').asStringSetOrVoid(['module', 'commonjs']),
+		type: consumer.get("type").asStringSetOrVoid(["module", "commonjs"]),
 		bin: normalizeBin(consumer, name.packageName, loose),
-		scripts: normalizeStringMap(consumer, 'scripts', loose),
-		homepage: normalizeString(consumer, 'homepage'),
-		repository: normalizeRepo(consumer.get('repository'), loose),
-		bugs: normalizeBugs(consumer.get('bugs'), loose),
-		engines: normalizeStringMap(consumer, 'engines', loose),
-		files: normalizePathPatterns(consumer.get('files'), loose),
-		keywords: normalizeStringArray(consumer.get('keywords'), loose),
-		cpu: normalizeStringArray(consumer.get('cpu'), loose),
-		os: normalizeStringArray(consumer.get('os'), loose),
-		main: normalizeString(consumer, 'main'),
-		exports: normalizeExports(consumer.get('exports')),
+		scripts: normalizeStringMap(consumer, "scripts", loose),
+		homepage: normalizeString(consumer, "homepage"),
+		repository: normalizeRepo(consumer.get("repository"), loose),
+		bugs: normalizeBugs(consumer.get("bugs"), loose),
+		engines: normalizeStringMap(consumer, "engines", loose),
+		files: normalizePathPatterns(consumer.get("files"), loose),
+		keywords: normalizeStringArray(consumer.get("keywords"), loose),
+		cpu: normalizeStringArray(consumer.get("cpu"), loose),
+		os: normalizeStringArray(consumer.get("os"), loose),
+		main: normalizeString(consumer, "main"),
+		exports: normalizeExports(consumer.get("exports")),
 		// Dependency fields
-		dependencies: normalizeDependencies(consumer, 'dependencies', loose),
-		devDependencies: normalizeDependencies(consumer, 'devDependencies', loose),
+		dependencies: normalizeDependencies(consumer, "dependencies", loose),
+		devDependencies: normalizeDependencies(consumer, "devDependencies", loose),
 		optionalDependencies: normalizeDependencies(
 			consumer,
-			'optionalDependencies',
+			"optionalDependencies",
 			loose,
 		),
-		peerDependencies: normalizeDependencies(consumer, 'peerDependencies', loose),
+		peerDependencies: normalizeDependencies(consumer, "peerDependencies", loose),
 		bundledDependencies: [
-			...normalizeStringArray(consumer.get('bundledDependencies'), loose),
+			...normalizeStringArray(consumer.get("bundledDependencies"), loose),
 			// Common misspelling. We error on the existence of this for strict manifests already.
-			...normalizeStringArray(consumer.get('bundleDependencies'), loose),
+			...normalizeStringArray(consumer.get("bundleDependencies"), loose),
 		],
 		// People fields
-		author: consumer.has('author')
-			? normalizePerson(consumer.get('author'), loose)
+		author: consumer.has("author")
+			? normalizePerson(consumer.get("author"), loose)
 			: undefined,
-		contributors: normalizePeople(consumer.get('contributors'), loose),
-		maintainers: normalizePeople(consumer.get('maintainers'), loose),
+		contributors: normalizePeople(consumer.get("contributors"), loose),
+		maintainers: normalizePeople(consumer.get("maintainers"), loose),
 		raw: consumer.asJSONObject(),
 	};
 

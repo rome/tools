@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyExpression, JSNodeBase, SwitchCase} from '../index';
-import {createBuilder} from '../utils';
+import {AnyExpression, JSNodeBase, SwitchCase} from "../index";
+import {createBuilder} from "../utils";
 
 export type SwitchStatement = JSNodeBase & {
-	type: 'SwitchStatement';
+	type: "SwitchStatement";
 	discriminant: AnyExpression;
 	cases: Array<SwitchCase>;
 };
 
 export const switchStatement = createBuilder<SwitchStatement>(
-	'SwitchStatement',
+	"SwitchStatement",
 	{
 		bindingKeys: {},
 		visitorKeys: {

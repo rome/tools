@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyTSPrimary, AnyTargetAssignmentPattern, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {AnyTSPrimary, AnyTargetAssignmentPattern, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type TSAssignmentAsExpression = JSNodeBase & {
-	type: 'TSAssignmentAsExpression';
+	type: "TSAssignmentAsExpression";
 	typeAnnotation: AnyTSPrimary;
 	expression: AnyTargetAssignmentPattern;
 };
 
 export const tsAssignmentAsExpression = createBuilder<TSAssignmentAsExpression>(
-	'TSAssignmentAsExpression',
+	"TSAssignmentAsExpression",
 	{
 		bindingKeys: {},
 		visitorKeys: {expression: true, typeAnnotation: true},

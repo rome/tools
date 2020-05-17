@@ -5,18 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {dedent} from '@romejs/string-utils';
-import {testLintMultiple} from '../testHelpers';
+import {test} from "rome";
+import {dedent} from "@romejs/string-utils";
+import {testLintMultiple} from "../testHelpers";
 
 test(
-	'jsx key',
+	"jsx key",
 	async (t) => {
 		await testLintMultiple(
 			t,
 			[
 				// INVALID
-				'const a = [<div />, <div />]',
+				"const a = [<div />, <div />]",
 				dedent(
 					`
           const a = [1, 2].map(x => <div>{x}</div>);
@@ -58,7 +58,7 @@ test(
         `,
 				),
 			],
-			{category: 'lint/jsxKey'},
+			{category: "lint/jsxKey"},
 		);
 	},
 );

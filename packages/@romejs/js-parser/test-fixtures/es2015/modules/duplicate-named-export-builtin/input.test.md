@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
+	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 42
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 19
 					index: 19
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'const'
+				kind: "const"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 19
 						index: 19
@@ -62,10 +62,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'toString'
+							name: "toString"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'toString'
+								filename: "input.js"
+								identifierName: "toString"
 								end: Object {
 									column: 14
 									index: 14
@@ -79,7 +79,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 18
 								index: 18
@@ -95,7 +95,7 @@ Program {
 							value: 1
 							format: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 18
 									index: 18
@@ -114,9 +114,9 @@ Program {
 		}
 		ExportLocalDeclaration {
 			declaration: undefined
-			exportKind: 'value'
+			exportKind: "value"
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 20
 					index: 41
@@ -131,7 +131,7 @@ Program {
 			specifiers: Array [
 				ExportLocalSpecifier {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 17
 							index: 38
@@ -144,10 +144,10 @@ Program {
 						}
 					}
 					exported: Identifier {
-						name: 'toString'
+						name: "toString"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'toString'
+							filename: "input.js"
+							identifierName: "toString"
 							end: Object {
 								column: 17
 								index: 38
@@ -161,10 +161,10 @@ Program {
 						}
 					}
 					local: ReferenceIdentifier {
-						name: 'toString'
+						name: "toString"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'toString'
+							filename: "input.js"
+							identifierName: "toString"
 							end: Object {
 								column: 17
 								index: 38

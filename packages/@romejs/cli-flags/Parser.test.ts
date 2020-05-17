@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TestHelper, test} from 'rome';
-import Parser from './Parser';
-import {Reporter} from '@romejs/cli-reporter';
-import {Consumer} from '@romejs/consume';
-import {catchDiagnostics} from '@romejs/diagnostics';
-import {printDiagnostics} from '@romejs/cli-diagnostics';
+import {TestHelper, test} from "rome";
+import Parser from "./Parser";
+import {Reporter} from "@romejs/cli-reporter";
+import {Consumer} from "@romejs/consume";
+import {catchDiagnostics} from "@romejs/diagnostics";
+import {printDiagnostics} from "@romejs/cli-diagnostics";
 
 async function testParser<T>(
 	t: TestHelper,
@@ -30,7 +30,7 @@ async function testParser<T>(
 	const parser = new Parser(
 		reporter,
 		{
-			programName: 'test',
+			programName: "test",
 			defineFlags,
 		},
 		args,
@@ -38,7 +38,7 @@ async function testParser<T>(
 
 	const {diagnostics} = await catchDiagnostics(async () => {
 		const flags = await parser.init();
-		t.namedSnapshot('flags', flags);
+		t.namedSnapshot("flags", flags);
 		if (callback !== undefined) {
 			callback(parser, flags);
 		}
@@ -54,82 +54,82 @@ async function testParser<T>(
 		});
 	}
 
-	t.namedSnapshot('output', stream.read());
+	t.namedSnapshot("output", stream.read());
 
 	const helpStream = reporter.attachCaptureStream();
 	await parser.showHelp();
-	t.namedSnapshot('help', helpStream.read());
+	t.namedSnapshot("help", helpStream.read());
 }
 
 test(
-	'does not allow shorthands',
+	"does not allow shorthands",
 	async (t) => {
 		await testParser(
 			t,
 			{
 				defineFlags: () => {},
-				args: ['-f'],
+				args: ["-f"],
 			},
 		);
 	},
 );
 
 test(
-	'does not allow camel case',
+	"does not allow camel case",
 	async (t) => {
 		await testParser(
 			t,
 			{
 				defineFlags: () => {},
-				args: ['--fooBar'],
+				args: ["--fooBar"],
 			},
 		);
 	},
 );
 
 test(
-	'flag value equals',
+	"flag value equals",
 	async (t) => {
 		await testParser(
 			t,
 			{
 				defineFlags: (c) => {
 					return {
-						name: c.get('name').asString(),
+						name: c.get("name").asString(),
 					};
 				},
-				args: ['--name=sebastian'],
+				args: ["--name=sebastian"],
 			},
 		);
 	},
 );
 
 test(
-	'required flag',
+	"required flag",
 	async (t) => {
 		await testParser(
 			t,
 			{
 				defineFlags: (c) => {
 					return {
-						name: c.get('name').asString(),
+						name: c.get("name").asString(),
 					};
 				},
-				args: ['--name', 'sebastian'],
+				args: ["--name", "sebastian"],
 			},
 		);
 	},
 );
 
 test(
-	'required flag omitted',
+	"required flag omitted",
 	async (t) => {
 		await testParser(
 			t,
 			{
 				defineFlags: (c) => {
 					return {
-						name: c.get('name').asString(),
+						name: c.get("name").asString(),
 					};
 				},
 				args: [],
@@ -139,31 +139,31 @@ test(
 );
 
 test(
-	'optional flag',
+	"optional flag",
 	async (t) => {
 		await testParser(
 			t,
 			{
 				defineFlags: (c) => {
 					return {
-						name: c.get('name').asStringOrVoid(),
+						name: c.get("name").asStringOrVoid(),
 					};
 				},
-				args: ['--name', 'sebastian'],
+				args: ["--name", "sebastian"],
 			},
 		);
 	},
 );
 
 test(
-	'optional flag omitted',
+	"optional flag omitted",
 	async (t) => {
 		await testParser(
 			t,
 			{
 				defineFlags: (c) => {
 					return {
-						name: c.get('name').asStringOrVoid(),
+						name: c.get("name").asStringOrVoid(),
 					};
 				},
 				args: [],
@@ -173,7 +173,7 @@ test(
 );
 
 test(
-	'flag with description',
+	"flag with description",
 	async (t) => {
 		await testParser(
 			t,
@@ -181,99 +181,99 @@ test(
 				defineFlags: (c) => {
 					return {
 						name: c.get(
-							'name',
+							"name",
 							{
-								description: 'the name of the coolest person in the world',
+								description: "the name of the coolest person in the world",
 							},
 						).asStringOrVoid(),
 					};
 				},
-				args: ['--name', 'sebastian'],
+				args: ["--name", "sebastian"],
 			},
 		);
 	},
 );
 
 test(
-	'optional boolean flag',
+	"optional boolean flag",
 	async (t) => {
 		await testParser(
 			t,
 			{
 				defineFlags: (c) => {
 					return {
-						run: c.get('run').asBooleanOrVoid(),
+						run: c.get("run").asBooleanOrVoid(),
 					};
 				},
-				args: ['--run'],
+				args: ["--run"],
 			},
 		);
 	},
 );
 
 test(
-	'optional boolean flag omitted',
+	"optional boolean flag omitted",
 	async (t) => {
 		await testParser(
 			t,
 			{
 				defineFlags: (c) => {
 					return {
-						run: c.get('run').asBooleanOrVoid(),
+						run: c.get("run").asBooleanOrVoid(),
 					};
 				},
-				args: ['--run'],
+				args: ["--run"],
 			},
 		);
 	},
 );
 
 test(
-	'required boolean flag',
+	"required boolean flag",
 	async (t) => {
 		await testParser(
 			t,
 			{
 				defineFlags: (c) => {
 					return {
-						run: c.get('run').asBoolean(),
+						run: c.get("run").asBoolean(),
 					};
 				},
-				args: ['--run'],
+				args: ["--run"],
 			},
 		);
 	},
 );
 
 test(
-	'required boolean flag omitted',
+	"required boolean flag omitted",
 	async (t) => {
 		await testParser(
 			t,
 			{
 				defineFlags: (c) => {
 					return {
-						run: c.get('run').asBoolean(),
+						run: c.get("run").asBoolean(),
 					};
 				},
-				args: ['--run'],
+				args: ["--run"],
 			},
 		);
 	},
 );
 
 test(
-	'flip boolean flag',
+	"flip boolean flag",
 	async (t) => {
 		await testParser(
 			t,
 			{
 				defineFlags: (c) => {
 					return {
-						run: c.get('run').asBoolean(),
+						run: c.get("run").asBoolean(),
 					};
 				},
-				args: ['--no-run'],
+				args: ["--no-run"],
 			},
 		);
 	},

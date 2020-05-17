@@ -9,9 +9,9 @@ import {
 	AnyNode,
 	NeverKeywordTypeAnnotation,
 	neverKeywordTypeAnnotation,
-} from '@romejs/js-ast';
+} from "@romejs/js-ast";
 
 export default function NeverKeywordTypeAnnotation(node: AnyNode) {
 	node = neverKeywordTypeAnnotation.assert(node);
-	throw new Error('unimplemented');
+	throw new Error("unimplemented");
 }

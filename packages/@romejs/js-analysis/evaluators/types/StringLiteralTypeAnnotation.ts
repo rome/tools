@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
+import {Scope} from "../../scopes";
 import {
 	AnyNode,
 	StringLiteralTypeAnnotation,
 	stringLiteralTypeAnnotation,
-} from '@romejs/js-ast';
+} from "@romejs/js-ast";
 
 export default function StringLiteralTypeAnnotation(node: AnyNode, scope: Scope) {
 	node = stringLiteralTypeAnnotation.assert(node);
 	scope;
-	throw new Error('unimplemented');
+	throw new Error("unimplemented");
 }

@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Scope from '../Scope';
-import {ImportBinding, ImportBindingMeta} from '@romejs/js-compiler';
+import Scope from "../Scope";
+import {ImportBinding, ImportBindingMeta} from "@romejs/js-compiler";
 import {
 	AnyNode,
 	ConstImportModuleKind,
 	ImportDeclaration,
-} from '@romejs/js-ast';
-import {getImportSpecifiers} from '@romejs/js-ast-utils';
+} from "@romejs/js-ast";
+import {getImportSpecifiers} from "@romejs/js-ast-utils";
 
 export default {
 	creator: false,
@@ -20,26 +20,26 @@ export default {
 		const source = node.source.value;
 
 		for (const specifier of getImportSpecifiers(node)) {
-			let kind: ConstImportModuleKind = node.importKind || 'value';
+			let kind: ConstImportModuleKind = node.importKind || "value";
 			let meta: undefined | ImportBindingMeta;
 
-			if (specifier.type === 'ImportNamespaceSpecifier') {
+			if (specifier.type === "ImportNamespaceSpecifier") {
 				meta = {
 					kind,
-					type: 'namespace',
+					type: "namespace",
 					source,
 				};
-			} else if (specifier.type === 'ImportDefaultSpecifier') {
+			} else if (specifier.type === "ImportDefaultSpecifier") {
 				meta = {
 					kind,
-					type: 'name',
-					imported: 'default',
+					type: "name",
+					imported: "default",
 					source,
 				};
-			} else if (specifier.type === 'ImportSpecifier') {
+			} else if (specifier.type === "ImportSpecifier") {
 				meta = {
 					kind,
-					type: 'name',
+					type: "name",
 					imported: specifier.imported.name,
 					source,
 				};

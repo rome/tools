@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Master} from '@romejs/core';
-import {modules} from './runtime-modules';
-import {AbsoluteFilePath} from '@romejs/path';
-import {createDirectory, writeFile} from '@romejs/fs';
+import {Master} from "@romejs/core";
+import {modules} from "./runtime-modules";
+import {AbsoluteFilePath} from "@romejs/path";
+import {createDirectory, writeFile} from "@romejs/fs";
 import {
 	DEFAULT_PROJECT_CONFIG,
 	DEFAULT_PROJECT_CONFIG_META,
 	ProjectConfig,
-} from '@romejs/project';
+} from "@romejs/project";
 
 export default class VirtualModules {
 	constructor(master: Master) {
@@ -42,7 +42,7 @@ export default class VirtualModules {
 		// Initialize as project
 		const projectConfig: ProjectConfig = {
 			...DEFAULT_PROJECT_CONFIG,
-			name: 'rome-runtime',
+			name: "rome-runtime",
 		};
 		await this.master.projectManager.addProjectWithConfig({
 			projectFolder: runtimeModulesPath,

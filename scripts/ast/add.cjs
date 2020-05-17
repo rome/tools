@@ -5,23 +5,23 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-require('../_setup.cjs');
+require("../_setup.cjs");
 
-const path = require('path');
-const fs = require('fs');
+const path = require("path");
+const fs = require("fs");
 
 const {
 	formatterFolder,
 	analysisFolder,
 	astFolder,
-} = require('../_constants.cjs');
+} = require("../_constants.cjs");
 
-const {write, getBuilderName} = require('../_utils.cjs');
+const {write, getBuilderName} = require("../_utils.cjs");
 
 const nodeType = process.argv[2];
 const category = process.argv[3];
 if (nodeType === undefined || category === undefined) {
-	console.error('node scripts/ast/add.cjs [node-type] [category]');
+	console.error("node scripts/ast/add.cjs [node-type] [category]");
 	process.exit(1);
 }
 
@@ -35,21 +35,21 @@ let file = `/**
 * LICENSE file in the root directory of this source tree.
 */
 
-import {JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type ${nodeType} = JSNodeBase & {
-	type: '${nodeType}';
+	type: "${nodeType}";
 };
 
-export const ${builderName} = createBuilder<${nodeType}>('${nodeType}', {
+export const ${builderName} = createBuilder<${nodeType}>("${nodeType}", {
 	bindingKeys: {},
 	visitorKeys: {},
 });
 `;
 const fileLoc = path.join(astFolder, category, `${nodeType}.ts`);
-if (fs.existsSync(fileLoc, 'utf8')) {
-	console.log('Already have', nodeType);
+if (fs.existsSync(fileLoc, "utf8")) {
+	console.log("Already have", nodeType);
 	process.exit();
 }
 write(fileLoc, file);
@@ -63,12 +63,12 @@ const builderContent = `/**
 * LICENSE file in the root directory of this source tree.
 */
 
-import Builder from '../../Builder';
-import {AnyNode, ${nodeType}} from '@romejs/js-ast';
-import {Token} from '../../tokens';
+import Builder from "../../Builder";
+import {AnyNode, ${nodeType}} from "@romejs/js-ast";
+import {Token} from "../../tokens";
 
 export default function ${nodeType}(builder: Builder, node: ${nodeType}): Token {
-	throw new Error('unimplemented');
+	throw new Error("unimplemented");
 }
 `;
 write(builderDefFile, builderContent);
@@ -82,13 +82,13 @@ const analysisContent = `/**
 * LICENSE file in the root directory of this source tree.
 */
 
-import {AnyNode, ${nodeType}, ${builderName}} from '@romejs/js-ast';
+import {AnyNode, ${nodeType}, ${builderName}} from "@romejs/js-ast";
 
 export default function ${nodeType}(node: AnyNode) {
 	node = ${builderName}.assert(node);
-	throw new Error('unimplemented');
+	throw new Error("unimplemented");
 }
  `;
 write(analysisDefFile, analysisContent);
 
-require('./update.cjs');
+require("./update.cjs");

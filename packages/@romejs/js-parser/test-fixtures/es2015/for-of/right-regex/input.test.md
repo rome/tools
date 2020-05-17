@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: true
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 26
 			index: 50
@@ -33,7 +33,7 @@ Program {
 		ForOfStatement {
 			await: false
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 22
 					index: 22
@@ -47,7 +47,7 @@ Program {
 			}
 			body: EmptyStatement {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 22
 						index: 22
@@ -61,9 +61,9 @@ Program {
 				}
 			}
 			left: VariableDeclaration {
-				kind: 'var'
+				kind: "var"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 10
 						index: 10
@@ -78,10 +78,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'x'
+							name: "x"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'x'
+								filename: "input.js"
+								identifierName: "x"
 								end: Object {
 									column: 10
 									index: 10
@@ -96,7 +96,7 @@ Program {
 						}
 						init: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 10
 								index: 10
@@ -119,7 +119,7 @@ Program {
 				sticky: false
 				unicode: false
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 20
 						index: 20
@@ -133,7 +133,7 @@ Program {
 				}
 				expression: RegExpSubExpression {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 18
 							index: 18
@@ -147,9 +147,9 @@ Program {
 					}
 					body: Array [
 						RegExpCharacter {
-							value: 'f'
+							value: "f"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 16
 									index: 16
@@ -163,9 +163,9 @@ Program {
 							}
 						}
 						RegExpCharacter {
-							value: 'o'
+							value: "o"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 17
 									index: 17
@@ -179,9 +179,9 @@ Program {
 							}
 						}
 						RegExpCharacter {
-							value: 'o'
+							value: "o"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 18
 									index: 18
@@ -202,7 +202,7 @@ Program {
 			test: undefined
 			update: undefined
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 26
 					index: 50
@@ -216,7 +216,7 @@ Program {
 			}
 			body: EmptyStatement {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 26
 						index: 50
@@ -230,9 +230,9 @@ Program {
 				}
 			}
 			init: VariableDeclaration {
-				kind: 'var'
+				kind: "var"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 22
 						index: 46
@@ -247,10 +247,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'x'
+							name: "x"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'x'
+								filename: "input.js"
+								identifierName: "x"
 								end: Object {
 									column: 10
 									index: 34
@@ -264,7 +264,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 22
 								index: 46
@@ -277,9 +277,9 @@ Program {
 							}
 						}
 						init: BinaryExpression {
-							operator: '/'
+							operator: "/"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 22
 									index: 46
@@ -292,10 +292,10 @@ Program {
 								}
 							}
 							right: ReferenceIdentifier {
-								name: 'g'
+								name: "g"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'g'
+									filename: "input.js"
+									identifierName: "g"
 									end: Object {
 										column: 22
 										index: 46
@@ -309,9 +309,9 @@ Program {
 								}
 							}
 							left: BinaryExpression {
-								operator: '/'
+								operator: "/"
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 20
 										index: 44
@@ -324,10 +324,10 @@ Program {
 									}
 								}
 								left: ReferenceIdentifier {
-									name: 'of'
+									name: "of"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'of'
+										filename: "input.js"
+										identifierName: "of"
 										end: Object {
 											column: 15
 											index: 39
@@ -341,10 +341,10 @@ Program {
 									}
 								}
 								right: ReferenceIdentifier {
-									name: 'foo'
+									name: "foo"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'foo'
+										filename: "input.js"
+										identifierName: "foo"
 										end: Object {
 											column: 20
 											index: 44

@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSAsExpression} from '@romejs/js-ast';
-import {Builder} from '@romejs/js-formatter';
-import {Token, concat, space} from '../../tokens';
+import {TSAsExpression} from "@romejs/js-ast";
+import {Builder} from "@romejs/js-formatter";
+import {Token, concat, space} from "../../tokens";
 
 export default function TSAsExpression(
 	builder: Builder,
@@ -17,7 +17,7 @@ export default function TSAsExpression(
 		return concat([
 			builder.tokenize(node.expression, node),
 			space,
-			'as',
+			"as",
 			space,
 			builder.tokenize(node.typeAnnotation, node),
 		]);

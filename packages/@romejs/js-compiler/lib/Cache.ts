@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TransformProjectDefinition, TransformRequest} from '../types';
-import {Program} from '@romejs/js-ast';
-import {JSONObject} from '@romejs/codec-json';
+import {TransformProjectDefinition, TransformRequest} from "../types";
+import {Program} from "@romejs/js-ast";
+import {JSONObject} from "@romejs/codec-json";
 
 type CacheQuery = {
 	key: string;
@@ -51,7 +51,7 @@ export default class Cache<Result> {
 
 		return {
 			ast,
-			key: keyParts.join(';'),
+			key: keyParts.join(";"),
 		};
 	}
 

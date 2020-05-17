@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type JSXReferenceIdentifier = JSNodeBase & {
-	type: 'JSXReferenceIdentifier';
+	type: "JSXReferenceIdentifier";
 	name: string;
 };
 
 export const jsxReferenceIdentifier = createBuilder<JSXReferenceIdentifier>(
-	'JSXReferenceIdentifier',
+	"JSXReferenceIdentifier",
 	{
 		bindingKeys: {},
 		visitorKeys: {},

@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from '@romejs/js-compiler';
-import {descriptions} from '@romejs/diagnostics';
+import {Path} from "@romejs/js-compiler";
+import {descriptions} from "@romejs/diagnostics";
 
 export default {
-	name: 'noTemplateCurlyInString',
+	name: "noTemplateCurlyInString",
 	enter(path: Path) {
 		const {node, context} = path;
 
-		if (node.type === 'StringLiteral') {
+		if (node.type === "StringLiteral") {
 			const regex = /\$\{[^}]+\}/u;
 
 			if (regex.test(node.value)) {

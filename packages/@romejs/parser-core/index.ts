@@ -17,7 +17,7 @@ import {
 	TokenBase,
 	TokensShape,
 	ValueToken,
-} from './types';
+} from "./types";
 import {
 	Diagnostic,
 	DiagnosticCategory,
@@ -26,7 +26,7 @@ import {
 	catchDiagnosticsSync,
 	createSingleDiagnosticError,
 	descriptions,
-} from '@romejs/diagnostics';
+} from "@romejs/diagnostics";
 import {
 	Number0,
 	Number1,
@@ -37,12 +37,12 @@ import {
 	ob1Number0,
 	ob1Number1,
 	ob1Sub,
-} from '@romejs/ob1';
-import {UnknownFilePath, createUnknownFilePath} from '@romejs/path';
-import {Class, OptionalProps} from '@romejs/typescript-helpers';
-import {removeCarriageReturn} from '@romejs/string-utils';
+} from "@romejs/ob1";
+import {UnknownFilePath, createUnknownFilePath} from "@romejs/path";
+import {Class, OptionalProps} from "@romejs/typescript-helpers";
+import {removeCarriageReturn} from "@romejs/string-utils";
 
-export * from './types';
+export * from "./types";
 
 export type ParserOptions = {
 	retainCarriageReturn?: boolean;
@@ -52,12 +52,12 @@ export type ParserOptions = {
 	offsetPosition?: Position;
 };
 
-export type ParserOptionsWithRequiredPath = Omit<ParserOptions, 'path'> & {
-	path: NonNullable<ParserOptions['path']>;
+export type ParserOptionsWithRequiredPath = Omit<ParserOptions, "path"> & {
+	path: NonNullable<ParserOptions["path"]>;
 };
 
 export type ParserUnexpectedOptions = {
-	description?: OptionalProps<DiagnosticDescription, 'category'>;
+	description?: OptionalProps<DiagnosticDescription, "category">;
 	loc?: SourceLocation;
 	start?: Position;
 	end?: Position;
@@ -88,14 +88,14 @@ export function tryParseWithOptionalOffsetPosition<
 			...parserOpts,
 			offsetPosition: opts.getOffsetPosition(),
 		});
-		throw new Error('Expected error');
+		throw new Error("Expected error");
 	} else {
 		return value;
 	}
 }
 
 const SOF_TOKEN: SOFToken = {
-	type: 'SOF',
+	type: "SOF",
 	start: ob1Number0,
 	end: ob1Number0,
 };
@@ -111,7 +111,7 @@ function normalizeInput(opts: ParserOptions): string {
 	const {input} = opts;
 
 	if (input === undefined) {
-		return '';
+		return "";
 	} else if (opts.retainCarriageReturn) {
 		return input;
 	} else {
@@ -135,7 +135,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
 		this.length = ob1Coerce0(this.input.length);
 
 		this.eofToken = {
-			type: 'EOF',
+			type: "EOF",
 			start: ob1Coerce0(this.input.length),
 			end: ob1Coerce0(this.input.length),
 		};
@@ -184,7 +184,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
 	getPathAssert(): UnknownFilePath {
 		const {path} = this;
 		if (path === undefined) {
-			throw new Error('Path expected but none was passed to this Parser');
+			throw new Error("Path expected but none was passed to this Parser");
 		} else {
 			return path;
 		}
@@ -193,7 +193,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
 	getFilenameAssert(): string {
 		const {filename} = this;
 		if (filename === undefined) {
-			throw new Error('Filename expected but none was passed to this Parser');
+			throw new Error("Filename expected but none was passed to this Parser");
 		} else {
 			return filename;
 		}
@@ -204,7 +204,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
 		const tokens: Array<TokenValues<Tokens>> = [];
 
 		const {diagnostics} = catchDiagnosticsSync(() => {
-			while (!this.matchToken('EOF')) {
+			while (!this.matchToken("EOF")) {
 				tokens.push(this.getToken());
 				this.nextToken();
 			}
@@ -212,7 +212,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
 
 		if (diagnostics !== undefined) {
 			tokens.push({
-				type: 'Invalid',
+				type: "Invalid",
 				start: this.nextTokenIndex,
 				end: this.length,
 			});
@@ -223,7 +223,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
 
 	// Tokenize method that must be implemented by subclasses
 	tokenize(index: Number0, input: string): undefined | TokenValues<Tokens> {
-		throw new Error('Unimplemented');
+		throw new Error("Unimplemented");
 	}
 
 	// Alternate tokenize method to allow that allows the use of state
@@ -257,10 +257,10 @@ export class ParserCore<Tokens extends TokensShape, State> {
 			} {
 		if (this.ignoreWhitespaceTokens) {
 			switch (input[ob1Get0(index)]) {
-				case ' ':
-				case '\t':
-				case '\r':
-				case '\n':
+				case " ":
+				case "\t":
+				case "\r":
+				case "\n":
 					return this.lookahead(ob1Inc(index));
 			}
 		}
@@ -533,7 +533,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
 		callback?: (char: string, index: Number0, input: string) => boolean,
 	): [string, Number0, boolean] {
 		const {input} = this;
-		let value = '';
+		let value = "";
 
 		while (true) {
 			if (ob1Get0(index) >= input.length) {
@@ -559,7 +559,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
 	//# Utility methods to make it easy to construct nodes or tokens
 	getLoc(node: undefined | NodeBase): SourceLocation {
 		if (node === undefined || node.loc === undefined) {
-			throw new Error('Tried to fetch node loc start but none found');
+			throw new Error("Tried to fetch node loc start but none found");
 		} else {
 			return node.loc;
 		}
@@ -622,7 +622,7 @@ export class ParserCore<Tokens extends TokensShape, State> {
 	}
 
 	finalize(): void {
-		if (!this.eatToken('EOF')) {
+		if (!this.eatToken("EOF")) {
 			throw this.unexpected({
 				description: descriptions.PARSER_CORE.EXPECTED_EOF,
 			});
@@ -713,7 +713,7 @@ export class PositionTracker {
 		for (let i = indexSearchWithoutOffset; i < ob1Get0(index); i++) {
 			const char = this.input[i];
 
-			if (char === '\n') {
+			if (char === "\n") {
 				line = ob1Inc(line);
 				column = ob1Number0;
 			} else {
@@ -758,7 +758,7 @@ export function isESIdentifierStart(char: undefined | string): boolean {
 }
 
 export function readUntilLineBreak(char: string): boolean {
-	return char !== '\n';
+	return char !== "\n";
 }
 
 // Lazy initialize a ParserCore subclass... Circular dependencies are wild and necessitate this as ParserCore may not be available

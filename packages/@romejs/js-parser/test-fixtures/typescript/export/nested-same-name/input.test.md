@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 67
@@ -31,10 +31,10 @@ Program {
 	}
 	body: Array [
 		ExportLocalDeclaration {
-			exportKind: 'value'
+			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 19
 					index: 19
@@ -48,7 +48,7 @@ Program {
 			}
 			declaration: VariableDeclarationStatement {
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 19
 						index: 19
@@ -61,9 +61,9 @@ Program {
 					}
 				}
 				declaration: VariableDeclaration {
-					kind: 'const'
+					kind: "const"
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 19
 							index: 19
@@ -78,10 +78,10 @@ Program {
 					declarations: Array [
 						VariableDeclarator {
 							id: BindingIdentifier {
-								name: 'x'
+								name: "x"
 								loc: Object {
-									filename: 'input.ts'
-									identifierName: 'x'
+									filename: "input.ts"
+									identifierName: "x"
 									end: Object {
 										column: 14
 										index: 14
@@ -95,7 +95,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 18
 									index: 18
@@ -111,7 +111,7 @@ Program {
 								value: 0
 								format: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 18
 										index: 18
@@ -130,10 +130,10 @@ Program {
 			}
 		}
 		ExportLocalDeclaration {
-			exportKind: 'value'
+			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 1
 					index: 66
@@ -147,10 +147,10 @@ Program {
 			}
 			declaration: TSModuleDeclaration {
 				id: BindingIdentifier {
-					name: 'N'
+					name: "N"
 					loc: Object {
-						filename: 'input.ts'
-						identifierName: 'N'
+						filename: "input.ts"
+						identifierName: "N"
 						end: Object {
 							column: 18
 							index: 38
@@ -164,7 +164,7 @@ Program {
 					}
 				}
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 1
 						index: 66
@@ -178,7 +178,7 @@ Program {
 				}
 				body: TSModuleBlock {
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 1
 							index: 66
@@ -192,10 +192,10 @@ Program {
 					}
 					body: Array [
 						ExportLocalDeclaration {
-							exportKind: 'value'
+							exportKind: "value"
 							specifiers: undefined
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 23
 									index: 64
@@ -209,7 +209,7 @@ Program {
 							}
 							declaration: VariableDeclarationStatement {
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 23
 										index: 64
@@ -222,9 +222,9 @@ Program {
 									}
 								}
 								declaration: VariableDeclaration {
-									kind: 'const'
+									kind: "const"
 									loc: Object {
-										filename: 'input.ts'
+										filename: "input.ts"
 										end: Object {
 											column: 23
 											index: 64
@@ -239,10 +239,10 @@ Program {
 									declarations: Array [
 										VariableDeclarator {
 											id: BindingIdentifier {
-												name: 'x'
+												name: "x"
 												loc: Object {
-													filename: 'input.ts'
-													identifierName: 'x'
+													filename: "input.ts"
+													identifierName: "x"
 													end: Object {
 														column: 18
 														index: 59
@@ -256,7 +256,7 @@ Program {
 												}
 											}
 											loc: Object {
-												filename: 'input.ts'
+												filename: "input.ts"
 												end: Object {
 													column: 22
 													index: 63
@@ -272,7 +272,7 @@ Program {
 												value: 1
 												format: undefined
 												loc: Object {
-													filename: 'input.ts'
+													filename: "input.ts"
 													end: Object {
 														column: 22
 														index: 63

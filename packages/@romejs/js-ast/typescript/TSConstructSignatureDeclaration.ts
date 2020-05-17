@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyTSPrimary, JSNodeBase, TSSignatureDeclarationMeta} from '../index';
-import {createBuilder} from '../utils';
+import {AnyTSPrimary, JSNodeBase, TSSignatureDeclarationMeta} from "../index";
+import {createBuilder} from "../utils";
 
 export type TSConstructSignatureDeclaration = JSNodeBase & {
-	type: 'TSConstructSignatureDeclaration';
+	type: "TSConstructSignatureDeclaration";
 	meta: TSSignatureDeclarationMeta;
 	typeAnnotation?: AnyTSPrimary;
 };
 
 export const tsConstructSignatureDeclaration = createBuilder<TSConstructSignatureDeclaration>(
-	'TSConstructSignatureDeclaration',
+	"TSConstructSignatureDeclaration",
 	{
 		bindingKeys: {},
 		visitorKeys: {

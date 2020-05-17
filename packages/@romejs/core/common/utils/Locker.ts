@@ -30,7 +30,7 @@ class Lock<Key> {
 		} else {
 			const resolve = resolves.shift();
 			if (resolve === undefined) {
-				throw new Error('Already validated resolved.length aboved');
+				throw new Error("Already validated resolved.length aboved");
 			}
 			resolve(this);
 		}
@@ -50,7 +50,7 @@ export default class Locker<Key> {
 
 	getNewLock(key: Key): Lock<Key> {
 		if (this.locks.has(key)) {
-			throw new Error('Expected no lock to exist');
+			throw new Error("Expected no lock to exist");
 		}
 
 		const lock = new Lock(this, key);

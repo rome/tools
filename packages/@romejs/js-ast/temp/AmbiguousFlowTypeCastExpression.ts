@@ -5,18 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {
-	AnyExpression,
-	AnyPrimaryType,
-	JSNodeBase,
-	SpreadElement,
-} from '../index';
-import {createBuilder} from '../utils';
+import {AnyExpression, AnyTSPrimary, JSNodeBase, SpreadElement} from "../index";
+import {createBuilder} from "../utils";
 
 export type AmbiguousFlowTypeCastExpression = JSNodeBase & {
-	type: 'AmbiguousFlowTypeCastExpression';
+	type: "AmbiguousFlowTypeCastExpression";
 	expression: AnyExpression | SpreadElement;
-	typeAnnotation?: AnyPrimaryType;
+	typeAnnotation?: AnyTSPrimary;
 
 	// This is for js-parser so that we can convert type casts to parameters
 
@@ -25,7 +20,7 @@ export type AmbiguousFlowTypeCastExpression = JSNodeBase & {
 };
 
 export const ambiguousFlowTypeCastExpression = createBuilder<AmbiguousFlowTypeCastExpression>(
-	'AmbiguousFlowTypeCastExpression',
+	"AmbiguousFlowTypeCastExpression",
 	{
 		bindingKeys: {},
 		visitorKeys: {

@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 48
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		LabeledStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 47
 					index: 47
@@ -45,10 +45,10 @@ Program {
 				}
 			}
 			label: Identifier {
-				name: '__proto__'
+				name: "__proto__"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: '__proto__'
+					filename: "input.js"
+					identifierName: "__proto__"
 					end: Object {
 						column: 9
 						index: 9
@@ -63,7 +63,7 @@ Program {
 			}
 			body: WhileStatement {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 47
 						index: 47
@@ -78,7 +78,7 @@ Program {
 				test: BooleanLiteral {
 					value: true
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 22
 							index: 22
@@ -94,7 +94,7 @@ Program {
 				body: BlockStatement {
 					directives: Array []
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 47
 							index: 47
@@ -109,7 +109,7 @@ Program {
 					body: Array [
 						ContinueStatement {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 45
 									index: 45
@@ -122,10 +122,10 @@ Program {
 								}
 							}
 							label: Identifier {
-								name: '__proto__'
+								name: "__proto__"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: '__proto__'
+									filename: "input.js"
+									identifierName: "__proto__"
 									end: Object {
 										column: 44
 										index: 44

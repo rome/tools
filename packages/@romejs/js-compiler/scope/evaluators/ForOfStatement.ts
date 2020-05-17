@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Scope from '../Scope';
-import {AnyNode, ForOfStatement} from '@romejs/js-ast';
+import Scope from "../Scope";
+import {AnyNode, ForOfStatement} from "@romejs/js-ast";
 
 export default {
 	creator: true,
 	build(node: ForOfStatement, parent: AnyNode, scope: Scope) {
-		const newScope = scope.fork('loop', node);
+		const newScope = scope.fork("loop", node);
 		newScope.evaluate(node.left, node);
 		return newScope;
 	},

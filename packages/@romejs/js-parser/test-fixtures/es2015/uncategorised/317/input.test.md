@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 22
 			index: 22
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 22
 					index: 22
@@ -46,7 +46,7 @@ Program {
 			}
 			expression: TemplateLiteral {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 22
 						index: 22
@@ -60,11 +60,11 @@ Program {
 				}
 				quasis: Array [
 					TemplateElement {
-						cooked: ''
-						raw: ''
+						cooked: ""
+						raw: ""
 						tail: false
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 1
 								index: 1
@@ -78,11 +78,11 @@ Program {
 						}
 					}
 					TemplateElement {
-						cooked: ''
-						raw: ''
+						cooked: ""
+						raw: ""
 						tail: true
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 21
 								index: 21
@@ -99,7 +99,7 @@ Program {
 				expressions: Array [
 					MemberExpression {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 20
 								index: 20
@@ -116,7 +116,7 @@ Program {
 								value: 0
 								format: undefined
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 19
 										index: 19
@@ -130,7 +130,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 20
 									index: 20
@@ -145,7 +145,7 @@ Program {
 						}
 						object: CallExpression {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 17
 									index: 17
@@ -159,9 +159,9 @@ Program {
 							}
 							arguments: Array [
 								StringLiteral {
-									value: '1'
+									value: "1"
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 16
 											index: 16
@@ -177,7 +177,7 @@ Program {
 							]
 							callee: MemberExpression {
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 12
 										index: 12
@@ -191,10 +191,10 @@ Program {
 								}
 								property: StaticMemberProperty {
 									value: Identifier {
-										name: 'exec'
+										name: "exec"
 										loc: Object {
-											filename: 'input.js'
-											identifierName: 'exec'
+											filename: "input.js"
+											identifierName: "exec"
 											end: Object {
 												column: 12
 												index: 12
@@ -208,8 +208,8 @@ Program {
 										}
 									}
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'exec'
+										filename: "input.js"
+										identifierName: "exec"
 										end: Object {
 											column: 12
 											index: 12
@@ -230,7 +230,7 @@ Program {
 									sticky: false
 									unicode: false
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 7
 											index: 7
@@ -244,7 +244,7 @@ Program {
 									}
 									expression: RegExpSubExpression {
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 6
 												index: 6
@@ -259,7 +259,7 @@ Program {
 										body: Array [
 											RegExpDigitCharacter {
 												loc: Object {
-													filename: 'input.js'
+													filename: "input.js"
 													end: Object {
 														column: 6
 														index: 6

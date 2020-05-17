@@ -10,8 +10,8 @@ import {
 	ParsedMappings,
 	ResolvedLocation,
 	SourceMap,
-} from './types';
-import {decodeVLQ} from './base64';
+} from "./types";
+import {decodeVLQ} from "./base64";
 import {
 	Number0,
 	Number1,
@@ -21,8 +21,8 @@ import {
 	ob1Inc,
 	ob1Number0,
 	ob1Number1,
-} from '@romejs/ob1';
-import {Dict} from '@romejs/typescript-helpers';
+} from "@romejs/ob1";
+import {Dict} from "@romejs/typescript-helpers";
 
 export function getParsedMappingKey(line: Number1, column: Number0): string {
 	return `${String(line)}:${String(column)}`;
@@ -43,7 +43,7 @@ export default class SourceMapConsumer {
 
 	static charIsMappingSeparator(str: string, index: number): boolean {
 		const c = str.charAt(index);
-		return c === ';' || c === ',';
+		return c === ";" || c === ",";
 	}
 
 	static fromJSON(sourceMap: SourceMap): SourceMapConsumer {
@@ -80,11 +80,11 @@ export default class SourceMapConsumer {
 
 		while (index < length) {
 			const char = rawStr[index];
-			if (char === ';') {
+			if (char === ";") {
 				generatedLine = ob1Inc(generatedLine);
 				index++;
 				previousGeneratedColumn = ob1Number0;
-			} else if (char === ',') {
+			} else if (char === ",") {
 				index++;
 			} else {
 				const mapping: ParsedMapping = {
@@ -124,11 +124,11 @@ export default class SourceMapConsumer {
 					}
 
 					if (segment.length === 2) {
-						throw new Error('Found a source, but no line and column');
+						throw new Error("Found a source, but no line and column");
 					}
 
 					if (segment.length === 3) {
-						throw new Error('Found a source and line, but no column');
+						throw new Error("Found a source and line, but no column");
 					}
 
 					cachedSegments[str] = segment;
@@ -215,7 +215,7 @@ export default class SourceMapConsumer {
 
 		const source = mapping.source === undefined ? this.file : mapping.source;
 		if (source === undefined) {
-			throw new Error('Mapping provided unknown source');
+			throw new Error("Mapping provided unknown source");
 		}
 
 		return {

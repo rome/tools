@@ -9,9 +9,9 @@ import {
 	Diagnostic,
 	DiagnosticCategory,
 	DiagnosticLocation,
-} from '@romejs/diagnostics';
-import Consumer from './Consumer';
-import {UnknownFilePath} from '@romejs/path';
+} from "@romejs/diagnostics";
+import Consumer from "./Consumer";
+import {UnknownFilePath} from "@romejs/path";
 
 export type ConsumeComments = Array<string>;
 
@@ -20,10 +20,10 @@ export type ConsumeKey = number | string;
 export type ConsumePath = Array<ConsumeKey>;
 
 export type ConsumeSourceLocationRequestTarget =
-	 | 'all'
-	| 'key'
-	| 'value'
-	| 'inner-value';
+	 | "all"
+	| "key"
+	| "value"
+	| "inner-value";
 
 export type ConsumeContext = {
 	category: DiagnosticCategory;
@@ -48,16 +48,16 @@ type ConsumePropertyDefinitionBase = {
 };
 
 export type ConsumePropertyPrimitiveDefinition = ConsumePropertyDefinitionBase & {
-	type: 'boolean' | 'bigint' | 'date' | 'array' | 'object';
+	type: "boolean" | "bigint" | "date" | "array" | "object";
 };
 
 export type ConsumePropertyStringDefinition = ConsumePropertyDefinitionBase & {
-	type: 'string';
+	type: "string";
 	allowedValues?: Array<string>;
 };
 
 export type ConsumePropertyNumberDefinition = ConsumePropertyDefinitionBase & {
-	type: 'number';
+	type: "number";
 	min?: number;
 	max?: number;
 };

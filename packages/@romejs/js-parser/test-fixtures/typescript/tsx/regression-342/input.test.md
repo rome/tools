@@ -10,17 +10,17 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.tsx'
+	filename: "input.tsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
+	sourceType: "module"
 	syntax: Array [
-		'jsx'
-		'ts'
+		"jsx"
+		"ts"
 	]
 	loc: Object {
-		filename: 'input.tsx'
+		filename: "input.tsx"
 		end: Object {
 			column: 27
 			index: 27
@@ -35,7 +35,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.tsx'
+				filename: "input.tsx"
 				end: Object {
 					column: 27
 					index: 27
@@ -49,7 +49,7 @@ Program {
 			}
 			expression: ConditionalExpression {
 				loc: Object {
-					filename: 'input.tsx'
+					filename: "input.tsx"
 					end: Object {
 						column: 27
 						index: 27
@@ -65,7 +65,7 @@ Program {
 					value: 0
 					format: undefined
 					loc: Object {
-						filename: 'input.tsx'
+						filename: "input.tsx"
 						end: Object {
 							column: 1
 							index: 1
@@ -80,9 +80,9 @@ Program {
 				}
 				alternate: JSXElement {
 					name: JSXIdentifier {
-						name: 'b'
+						name: "b"
 						loc: Object {
-							filename: 'input.tsx'
+							filename: "input.tsx"
 							end: Object {
 								column: 20
 								index: 20
@@ -99,7 +99,7 @@ Program {
 					selfClosing: false
 					typeArguments: undefined
 					loc: Object {
-						filename: 'input.tsx'
+						filename: "input.tsx"
 						end: Object {
 							column: 26
 							index: 26
@@ -113,9 +113,9 @@ Program {
 					}
 					children: Array [
 						JSXText {
-							value: '0'
+							value: "0"
 							loc: Object {
-								filename: 'input.tsx'
+								filename: "input.tsx"
 								end: Object {
 									column: 22
 									index: 22
@@ -132,9 +132,9 @@ Program {
 				}
 				consequent: JSXElement {
 					name: JSXIdentifier {
-						name: 'b'
+						name: "b"
 						loc: Object {
-							filename: 'input.tsx'
+							filename: "input.tsx"
 							end: Object {
 								column: 7
 								index: 7
@@ -151,7 +151,7 @@ Program {
 					selfClosing: false
 					typeArguments: undefined
 					loc: Object {
-						filename: 'input.tsx'
+						filename: "input.tsx"
 						end: Object {
 							column: 13
 							index: 13
@@ -165,9 +165,9 @@ Program {
 					}
 					children: Array [
 						JSXText {
-							value: '0'
+							value: "0"
 							loc: Object {
-								filename: 'input.tsx'
+								filename: "input.tsx"
 								end: Object {
 									column: 9
 									index: 9

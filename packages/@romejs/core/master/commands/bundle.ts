@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {MasterRequest} from '@romejs/core';
-import {commandCategories} from '../../common/commands';
-import {createMasterCommand} from '../commands';
-import Bundler from '../bundler/Bundler';
-import {createDirectory, writeFile} from '@romejs/fs';
-import {Consumer} from '@romejs/consume';
-import {markup} from '@romejs/string-markup';
+import {MasterRequest} from "@romejs/core";
+import {commandCategories} from "../../common/commands";
+import {createMasterCommand} from "../commands";
+import Bundler from "../bundler/Bundler";
+import {createDirectory, writeFile} from "@romejs/fs";
+import {Consumer} from "@romejs/consume";
+import {markup} from "@romejs/string-markup";
 
 type Flags = {
 	quiet: boolean;
@@ -19,12 +19,12 @@ type Flags = {
 
 export default createMasterCommand<Flags>({
 	category: commandCategories.SOURCE_CODE,
-	description: 'build a standalone js bundle for a package',
-	usage: '',
+	description: "build a standalone js bundle for a package",
+	usage: "",
 	examples: [],
 	defineFlags(consumer: Consumer): Flags {
 		return {
-			quiet: consumer.get('quiet').asBoolean(false),
+			quiet: consumer.get("quiet").asBoolean(false),
 		};
 	},
 	async callback(req: MasterRequest, commandFlags: Flags): Promise<void> {

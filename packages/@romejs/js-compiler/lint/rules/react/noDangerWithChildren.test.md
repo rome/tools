@@ -24,7 +24,7 @@
 ### `0: formatted`
 
 ```
-<div dangerouslySetInnerHTML={{__html: 'HTML'}}>children</div>;
+<div dangerouslySetInnerHTML={{__html: "HTML"}}>children</div>;
 
 ```
 
@@ -66,8 +66,8 @@
 
 ```
 React.createElement(
-	'Invalid',
-	{dangerouslySetInnerHTML: {__html: 'HTML'}, children: ['children']},
+	"Invalid",
+	{dangerouslySetInnerHTML: {__html: "HTML"}, children: ["children"]},
 );
 
 ```
@@ -93,9 +93,9 @@ React.createElement(
 
 ```
 React.createElement(
-	'Invalid',
-	{dangerouslySetInnerHTML: {__html: 'HTML'}},
-	'children',
+	"Invalid",
+	{dangerouslySetInnerHTML: {__html: "HTML"}},
+	"children",
 );
 
 ```
@@ -121,9 +121,9 @@ React.createElement(
 
 ```
 React.createElement(
-	'Invalid',
-	{dangerouslySetInnerHTML: {__html: 'HTML'}},
-	['children'],
+	"Invalid",
+	{dangerouslySetInnerHTML: {__html: "HTML"}},
+	["children"],
 );
 
 ```
@@ -138,7 +138,7 @@ React.createElement(
 ### `13: formatted`
 
 ```
-<div dangerouslySetInnerHTML={{__html: 'HTML'}} />;
+<div dangerouslySetInnerHTML={{__html: "HTML"}} />;
 
 ```
 
@@ -166,7 +166,7 @@ React.createElement(
 ### `15: formatted`
 
 ```
-<div children={'children'} />;
+<div children={"children"} />;
 
 ```
 
@@ -180,7 +180,7 @@ React.createElement(
 ### `16: formatted`
 
 ```
-<div children={['children']} />;
+<div children={["children"]} />;
 
 ```
 
@@ -194,7 +194,7 @@ React.createElement(
 ### `17: formatted`
 
 ```
-<Valid dangerouslySetInnerHTML={{__html: 'HTML'}} />;
+<Valid dangerouslySetInnerHTML={{__html: "HTML"}} />;
 
 ```
 
@@ -222,14 +222,14 @@ React.createElement(
 ### `19: formatted`
 
 ```
-<Valid children={'children'} />;
+<Valid children={"children"} />;
 
 ```
 
 ### `1: formatted`
 
 ```
-<div dangerouslySetInnerHTML={{__html: 'HTML'}} children={'children'} />;
+<div dangerouslySetInnerHTML={{__html: "HTML"}} children={"children"} />;
 
 ```
 
@@ -260,7 +260,7 @@ React.createElement(
 ### `20: formatted`
 
 ```
-<Valid children={['children']} />;
+<Valid children={["children"]} />;
 
 ```
 
@@ -274,7 +274,7 @@ React.createElement(
 ### `21: formatted`
 
 ```
-React.createElement('div', {dangerouslySetInnerHTML: {__html: 'HTML'}});
+React.createElement("div", {dangerouslySetInnerHTML: {__html: "HTML"}});
 
 ```
 
@@ -288,7 +288,7 @@ React.createElement('div', {dangerouslySetInnerHTML: {__html: 'HTML'}});
 ### `22: formatted`
 
 ```
-React.createElement('div', {}, 'children');
+React.createElement("div", {}, "children");
 
 ```
 
@@ -302,7 +302,7 @@ React.createElement('div', {}, 'children');
 ### `23: formatted`
 
 ```
-React.createElement('div', {}, ['children']);
+React.createElement("div", {}, ["children"]);
 
 ```
 
@@ -316,7 +316,7 @@ React.createElement('div', {}, ['children']);
 ### `24: formatted`
 
 ```
-React.createElement('div', {children: 'children'});
+React.createElement("div", {children: "children"});
 
 ```
 
@@ -330,7 +330,7 @@ React.createElement('div', {children: 'children'});
 ### `25: formatted`
 
 ```
-React.createElement('div', {children: ['children']});
+React.createElement("div", {children: ["children"]});
 
 ```
 
@@ -344,7 +344,7 @@ React.createElement('div', {children: ['children']});
 ### `26: formatted`
 
 ```
-React.createElement('Valid', {dangerouslySetInnerHTML: {__html: 'HTML'}});
+React.createElement("Valid", {dangerouslySetInnerHTML: {__html: "HTML"}});
 
 ```
 
@@ -358,7 +358,7 @@ React.createElement('Valid', {dangerouslySetInnerHTML: {__html: 'HTML'}});
 ### `27: formatted`
 
 ```
-React.createElement('Valid', {}, 'children');
+React.createElement("Valid", {}, "children");
 
 ```
 
@@ -372,7 +372,7 @@ React.createElement('Valid', {}, 'children');
 ### `28: formatted`
 
 ```
-React.createElement('Valid', {}, ['children']);
+React.createElement("Valid", {}, ["children"]);
 
 ```
 
@@ -386,14 +386,14 @@ React.createElement('Valid', {}, ['children']);
 ### `29: formatted`
 
 ```
-React.createElement('Valid', {children: 'children'});
+React.createElement("Valid", {children: "children"});
 
 ```
 
 ### `2: formatted`
 
 ```
-<div dangerouslySetInnerHTML={{__html: 'HTML'}} children={['children']} />;
+<div dangerouslySetInnerHTML={{__html: "HTML"}} children={["children"]} />;
 
 ```
 
@@ -424,14 +424,14 @@ React.createElement('Valid', {children: 'children'});
 ### `30: formatted`
 
 ```
-React.createElement('Valid', {children: ['children']});
+React.createElement("Valid", {children: ["children"]});
 
 ```
 
 ### `3: formatted`
 
 ```
-<Invalid dangerouslySetInnerHTML={{__html: 'HTML'}}>children</Invalid>;
+<Invalid dangerouslySetInnerHTML={{__html: "HTML"}}>children</Invalid>;
 
 ```
 
@@ -455,7 +455,7 @@ React.createElement('Valid', {children: ['children']});
 ### `4: formatted`
 
 ```
-<Invalid dangerouslySetInnerHTML={{__html: 'HTML'}} children={'children'} />;
+<Invalid dangerouslySetInnerHTML={{__html: "HTML"}} children={"children"} />;
 
 ```
 
@@ -480,9 +480,9 @@ React.createElement('Valid', {children: ['children']});
 
 ```
 React.createElement(
-	'div',
-	{dangerouslySetInnerHTML: {__html: 'HTML'}},
-	'children',
+	"div",
+	{dangerouslySetInnerHTML: {__html: "HTML"}},
+	"children",
 );
 
 ```
@@ -508,9 +508,9 @@ React.createElement(
 
 ```
 React.createElement(
-	'div',
-	{dangerouslySetInnerHTML: {__html: 'HTML'}},
-	['children'],
+	"div",
+	{dangerouslySetInnerHTML: {__html: "HTML"}},
+	["children"],
 );
 
 ```
@@ -536,8 +536,8 @@ React.createElement(
 
 ```
 React.createElement(
-	'div',
-	{dangerouslySetInnerHTML: {__html: 'HTML'}, children: 'children'},
+	"div",
+	{dangerouslySetInnerHTML: {__html: "HTML"}, children: "children"},
 );
 
 ```
@@ -563,8 +563,8 @@ React.createElement(
 
 ```
 React.createElement(
-	'div',
-	{dangerouslySetInnerHTML: {__html: 'HTML'}, children: ['children']},
+	"div",
+	{dangerouslySetInnerHTML: {__html: "HTML"}, children: ["children"]},
 );
 
 ```
@@ -590,8 +590,8 @@ React.createElement(
 
 ```
 React.createElement(
-	'Invalid',
-	{dangerouslySetInnerHTML: {__html: 'HTML'}, children: 'children'},
+	"Invalid",
+	{dangerouslySetInnerHTML: {__html: "HTML"}, children: "children"},
 );
 
 ```

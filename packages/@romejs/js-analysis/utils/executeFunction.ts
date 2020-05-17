@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyFunction} from '@romejs/js-ast';
-import {FunctionScope, Scope} from '../scopes';
-import T from '../types/T';
-import executeAtom from './executeAtom';
-import FunctionT from '../types/FunctionT';
-import MaybeT from '../types/MaybeT';
-import VoidT from '../types/VoidT';
-import OpenT from '../types/OpenT';
+import {AnyFunction} from "@romejs/js-ast";
+import {FunctionScope, Scope} from "../scopes";
+import T from "../types/T";
+import executeAtom from "./executeAtom";
+import FunctionT from "../types/FunctionT";
+import MaybeT from "../types/MaybeT";
+import VoidT from "../types/VoidT";
+import OpenT from "../types/OpenT";
 
 export default function executeFunction(
 	node: AnyFunction,
@@ -45,7 +45,7 @@ export default function executeFunction(
 	for (let paramNode of head.params) {
 		let optional =
 			paramNode.meta !== undefined && paramNode.meta.optional === true;
-		if (paramNode.type === 'BindingAssignmentPattern') {
+		if (paramNode.type === "BindingAssignmentPattern") {
 			optional = false;
 			paramNode = paramNode.left;
 		}

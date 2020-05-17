@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from '@romejs/js-ast';
-import {HydrateData} from '../Evaluator';
-import {Scope} from '../scopes';
-import T from './T';
-import NumericT from './NumericT';
-import ObjT from './ObjT';
+import {AnyNode} from "@romejs/js-ast";
+import {HydrateData} from "../Evaluator";
+import {Scope} from "../scopes";
+import T from "./T";
+import NumericT from "./NumericT";
+import ObjT from "./ObjT";
 
 export default class NumericLiteralT extends ObjT {
 	constructor(scope: Scope, originNode: undefined | AnyNode, value: number) {
@@ -26,7 +26,7 @@ export default class NumericLiteralT extends ObjT {
 		this.value = value;
 	}
 
-	static type = 'NumericLiteralT';
+	static type = "NumericLiteralT";
 
 	value: number;
 

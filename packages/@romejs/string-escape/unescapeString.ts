@@ -5,28 +5,28 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {isHexDigit} from '@romejs/parser-core';
-import {DiagnosticDescription, descriptions} from '@romejs/diagnostics';
+import {isHexDigit} from "@romejs/parser-core";
+import {DiagnosticDescription, descriptions} from "@romejs/diagnostics";
 
 function unescapeChar(modifier: string): string {
 	switch (modifier) {
-		case 'b':
-			return '\b';
+		case "b":
+			return "\b";
 
-		case 'f':
-			return '\f';
+		case "f":
+			return "\f";
 
-		case 'n':
-			return '\n';
+		case "n":
+			return "\n";
 
-		case 'r':
-			return '\r';
+		case "r":
+			return "\r";
 
-		case 't':
-			return '\t';
+		case "t":
+			return "\t";
 
-		case 'v':
-			return '\x0b';
+		case "v":
+			return "\x0b";
 
 		default:
 			return modifier;
@@ -34,12 +34,12 @@ function unescapeChar(modifier: string): string {
 }
 
 type UnescapeStringUnexpected = (
-	metadata: Omit<DiagnosticDescription, 'category'>,
+	metadata: Omit<DiagnosticDescription, "category">,
 	index: number,
 ) => void;
 
 const UNEXPECTED_DEFAULT_THROWER: UnescapeStringUnexpected = (
-	metadata: Omit<DiagnosticDescription, 'category'>,
+	metadata: Omit<DiagnosticDescription, "category">,
 	index: number,
 ) => {
 	throw new TypeError(`${metadata.message.value} (${String(index)})`);
@@ -49,7 +49,7 @@ export default function unescapeString(
 	input: string,
 	unexpected: UnescapeStringUnexpected = UNEXPECTED_DEFAULT_THROWER,
 ): string {
-	let buffer = '';
+	let buffer = "";
 
 	let index = 0;
 
@@ -57,14 +57,14 @@ export default function unescapeString(
 		const char = input[index];
 		const prevChar = input[index - 1];
 		const prevPrevChar = input[index - 2];
-		const isEscaped = prevChar === '\\' && prevPrevChar !== '\\';
+		const isEscaped = prevChar === "\\" && prevPrevChar !== "\\";
 
 		// It's verbatim if it's an escaped backslash or not a backslash
-		if ((isEscaped && char === '\\') || char !== '\\') {
+		if ((isEscaped && char === "\\") || char !== "\\") {
 			// Validate that this is a valid character
 			const codePoint = char.codePointAt(0);
 			if (codePoint === undefined) {
-				throw new Error('Already validated that this index exists');
+				throw new Error("Already validated that this index exists");
 			}
 			if (codePoint >= 0 && codePoint <= 31) {
 				throw unexpected(descriptions.STRING_ESCAPE.INVALID_STRING_CHARACTER, index);
@@ -79,7 +79,7 @@ export default function unescapeString(
 		const modifierIndex = index + 1;
 		const modifier = input[modifierIndex];
 
-		if (modifier === 'u') {
+		if (modifier === "u") {
 			// Get the next 4 characters as the code point
 			const codeStartIndex = modifierIndex + 1;
 			const rawCode = input.slice(codeStartIndex, codeStartIndex + 4);

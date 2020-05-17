@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AbsoluteVersionNode, VersionNode} from './types';
+import {AbsoluteVersionNode, VersionNode} from "./types";
 
 // -1: Lesser
 // 0: Equal
@@ -21,7 +21,7 @@ function compareIdentifiers(
 		return 0;
 	}
 
-	if (typeof a === 'string' || typeof b === 'string') {
+	if (typeof a === "string" || typeof b === "string") {
 		// @ts-ignore: built-in def is not restrictive enough
 		return String(a).localeCompare(String(b));
 	}
@@ -82,7 +82,7 @@ function comparePre(
 		}
 	} while (++i);
 
-	throw new Error('Unreachable');
+	throw new Error("Unreachable");
 }
 
 export function compareFromAst(

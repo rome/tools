@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import isValidIdentifierName from './isValidIdentifierName';
+import isValidIdentifierName from "./isValidIdentifierName";
 import {
 	Identifier,
 	StringLiteral,
 	identifier,
 	stringLiteral,
-} from '@romejs/js-ast';
+} from "@romejs/js-ast";
 
 export default function createPropertyKey(
 	name: string,

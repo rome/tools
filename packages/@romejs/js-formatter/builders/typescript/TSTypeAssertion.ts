@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSTypeAssertion} from '@romejs/js-ast';
-import {Builder} from '@romejs/js-formatter';
-import {Token, concat, group, indent, softline} from '../../tokens';
+import {TSTypeAssertion} from "@romejs/js-ast";
+import {Builder} from "@romejs/js-formatter";
+import {Token, concat, group, indent, softline} from "../../tokens";
 
 export default function TSTypeAssertion(
 	builder: Builder,
@@ -18,10 +18,10 @@ export default function TSTypeAssertion(
 			concat([
 				group(
 					concat([
-						'<',
+						"<",
 						indent(concat([softline, builder.tokenize(node.typeAnnotation, node)])),
 						softline,
-						'>',
+						">",
 					]),
 				),
 				builder.tokenize(node.expression, node),

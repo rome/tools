@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSTypeLiteral} from '@romejs/js-ast';
-import {Builder} from '@romejs/js-formatter';
-import {Token} from '../../tokens';
-import {printTSBraced} from '../utils';
+import {TSTypeLiteral} from "@romejs/js-ast";
+import {Builder} from "@romejs/js-formatter";
+import {Token} from "../../tokens";
+import {printTSBraced} from "../utils";
 
 export default function TSTypeLiteral(
 	builder: Builder,

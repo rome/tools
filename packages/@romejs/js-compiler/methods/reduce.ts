@@ -13,12 +13,12 @@ import {
 	REDUCE_SKIP_SUBTREE,
 	TransformExitResult,
 	TransformVisitors,
-} from '@romejs/js-compiler';
-import {AnyNode, visitorKeys as allVisitorKeys} from '@romejs/js-ast';
-import {isNodeLike} from '@romejs/js-ast-utils';
+} from "@romejs/js-compiler";
+import {AnyNode, visitorKeys as allVisitorKeys} from "@romejs/js-ast";
+import {isNodeLike} from "@romejs/js-ast-utils";
 
-const BAIL_EXIT: 'BAIL' = 'BAIL';
-const KEEP_EXIT: 'KEEP' = 'KEEP';
+const BAIL_EXIT: "BAIL" = "BAIL";
+const KEEP_EXIT: "KEEP" = "KEEP";
 
 /**
  * Validate the return value of an enter or exit transform
@@ -34,19 +34,19 @@ function validateTransformReturn(
 	}
 
 	// If this function hits a symbol then it's invalid as we would have dealt with it before if it were a valid constant
-	if (typeof node === 'symbol') {
+	if (typeof node === "symbol") {
 		throw new Error(
 			`Returned a symbol from transform ${transformName} that doesn't correspond to any reduce constant`,
 		);
 	}
 
 	// Verify common mistake of forgetting to return something
-	if (typeof node === 'undefined') {
+	if (typeof node === "undefined") {
 		throw new Error(
-			'Returned `undefined` from transform ' +
+			"Returned `undefined` from transform " +
 			transformName +
-			'. If you meant to delete this node then use `return' +
-			' REDUCE_REMOVE`, otherwise if you want to keep it then use `return path.node;`',
+			". If you meant to delete this node then use `return" +
+			" REDUCE_REMOVE`, otherwise if you want to keep it then use `return path.node;`",
 		);
 	}
 

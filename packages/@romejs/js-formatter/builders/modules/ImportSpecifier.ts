@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token, concat, space} from '../../tokens';
-import {ImportSpecifier} from '@romejs/js-ast';
+import Builder from "../../Builder";
+import {Token, concat, space} from "../../tokens";
+import {ImportSpecifier} from "@romejs/js-ast";
 
 export default function ImportSpecifier(
 	builder: Builder,
@@ -18,7 +18,7 @@ export default function ImportSpecifier(
 	tokens.push(builder.tokenize(node.imported, node));
 
 	if (node.local.name.name !== node.imported.name) {
-		tokens.push(space, 'as', space, builder.tokenize(node.local.name, node));
+		tokens.push(space, "as", space, builder.tokenize(node.local.name, node));
 	}
 
 	return concat(tokens);

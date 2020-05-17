@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, ConditionalExpression} from '@romejs/js-ast';
-import Builder from '../../Builder';
-import {Token, concat, group, indent, lineOrSpace, space} from '../../tokens';
+import {AnyNode, ConditionalExpression} from "@romejs/js-ast";
+import Builder from "../../Builder";
+import {Token, concat, group, indent, lineOrSpace, space} from "../../tokens";
 
 export default function ConditionalExpression(
 	builder: Builder,
@@ -26,7 +26,7 @@ export default function ConditionalExpression(
 
 function isConditionalExpression(node: AnyNode): boolean {
 	return (
-		node.type === 'ConditionalExpression' || node.type === 'TSConditionalType'
+		node.type === "ConditionalExpression" || node.type === "TSConditionalType"
 	);
 }
 
@@ -43,7 +43,7 @@ export function printConditionalExpression(
 		indent(
 			concat([
 				lineOrSpace,
-				'?',
+				"?",
 				space,
 				isConditionalExpression(consequentNode) ? consequent : indent(consequent),
 			]),
@@ -51,7 +51,7 @@ export function printConditionalExpression(
 		indent(
 			concat([
 				lineOrSpace,
-				':',
+				":",
 				space,
 				isConditionalExpression(alternateNode) ? alternate : indent(alternate),
 			]),

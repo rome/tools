@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {testLintMultiple} from '../testHelpers';
+import {test} from "rome";
+import {testLintMultiple} from "../testHelpers";
 
 test(
-	'enforce single var declarator',
+	"enforce single var declarator",
 	async (t) => {
 		await testLintMultiple(
 			t,
@@ -27,7 +27,7 @@ test(
 				`export {b as A, a as C, B};`,
 				`export {c, b as b2, b as b1, b};`,
 			],
-			{category: 'lint/sortImportExportSpecifiers'},
+			{category: "lint/sortImportExportSpecifiers"},
 		);
 	},
 );

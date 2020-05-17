@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type CommentLine = JSNodeBase & {
-	type: 'CommentLine';
+	type: "CommentLine";
 	value: string;
 	id: string;
 };
 
 export const commentLine = createBuilder<CommentLine>(
-	'CommentLine',
+	"CommentLine",
 	{
 		bindingKeys: {},
 		visitorKeys: {},

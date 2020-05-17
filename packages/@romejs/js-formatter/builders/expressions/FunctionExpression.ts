@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token, concat, space} from '../../tokens';
-import {FunctionDeclaration, FunctionExpression} from '@romejs/js-ast';
+import Builder from "../../Builder";
+import {Token, concat, space} from "../../tokens";
+import {FunctionDeclaration, FunctionExpression} from "@romejs/js-ast";
 
 export default function FunctionExpression(
 	builder: Builder,
@@ -16,14 +16,14 @@ export default function FunctionExpression(
 	const tokens: Array<Token> = [];
 
 	if (node.head.async === true) {
-		tokens.push('async');
+		tokens.push("async");
 		tokens.push(space);
 	}
 
-	tokens.push('function');
+	tokens.push("function");
 
 	if (node.head.generator === true) {
-		tokens.push('*');
+		tokens.push("*");
 	}
 
 	if (node.id) {

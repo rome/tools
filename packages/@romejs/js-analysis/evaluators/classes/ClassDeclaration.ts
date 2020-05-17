@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {AnyNode, ClassDeclaration, classDeclaration} from '@romejs/js-ast';
-import ClassExpression from './ClassExpression';
+import {Scope} from "../../scopes";
+import {AnyNode, ClassDeclaration, classDeclaration} from "@romejs/js-ast";
+import ClassExpression from "./ClassExpression";
 
 export default function ClassDeclaration(node: AnyNode, scope: Scope) {
 	node = classDeclaration.assert(node);

@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Program} from '@romejs/js-ast';
-import {DiagnosticSuppressions, Diagnostics} from '@romejs/diagnostics';
-import {TransformRequest, TransformVisitors} from '../types';
-import {stageOrder, stageTransforms} from '../transforms/index';
-import {Cache} from '@romejs/js-compiler';
-import CompilerContext from '../lib/CompilerContext';
+import {Program} from "@romejs/js-ast";
+import {DiagnosticSuppressions, Diagnostics} from "@romejs/diagnostics";
+import {TransformRequest, TransformVisitors} from "../types";
+import {stageOrder, stageTransforms} from "../transforms/index";
+import {Cache} from "@romejs/js-compiler";
+import CompilerContext from "../lib/CompilerContext";
 
 type TransformResult = {
 	ast: Program;
@@ -26,7 +26,7 @@ const transformCaches: Array<Cache<TransformResult>> = stageOrder.map(() =>
 export default async function transform(
 	req: TransformRequest,
 ): Promise<TransformResult> {
-	const stage = req.stage === undefined ? 'compile' : req.stage;
+	const stage = req.stage === undefined ? "compile" : req.stage;
 
 	const {options, project} = req;
 	let ast: Program = req.ast;
@@ -63,7 +63,7 @@ export default async function transform(
 		project,
 		options,
 		origin: {
-			category: 'transform',
+			category: "transform",
 		},
 	});
 

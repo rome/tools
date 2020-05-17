@@ -5,29 +5,29 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Master, MasterRequest} from '@romejs/core';
-import {LINTABLE_EXTENSIONS} from '@romejs/core/common/file-handlers/index';
+import {Master, MasterRequest} from "@romejs/core";
+import {LINTABLE_EXTENSIONS} from "@romejs/core/common/file-handlers/index";
 import {
 	DiagnosticSuppressions,
 	Diagnostics,
 	DiagnosticsProcessor,
-} from '@romejs/diagnostics';
-import {FileReference} from '@romejs/core/common/types/files';
-import {EventSubscription} from '@romejs/events';
-import {MasterRequestGetFilesOptions} from '../MasterRequest';
-import {AbsoluteFilePathMap, AbsoluteFilePathSet} from '@romejs/path';
-import {DiagnosticsPrinter} from '@romejs/cli-diagnostics';
-import DependencyGraph from '../dependencies/DependencyGraph';
-import {ReporterProgress, ReporterProgressOptions} from '@romejs/cli-reporter';
-import DependencyNode from '../dependencies/DependencyNode';
+} from "@romejs/diagnostics";
+import {FileReference} from "@romejs/core/common/types/files";
+import {EventSubscription} from "@romejs/events";
+import {MasterRequestGetFilesOptions} from "../MasterRequest";
+import {AbsoluteFilePathMap, AbsoluteFilePathSet} from "@romejs/path";
+import {DiagnosticsPrinter} from "@romejs/cli-diagnostics";
+import DependencyGraph from "../dependencies/DependencyGraph";
+import {ReporterProgress, ReporterProgressOptions} from "@romejs/cli-reporter";
+import DependencyNode from "../dependencies/DependencyNode";
 import {
 	LintCompilerOptions,
 	LintCompilerOptionsDecisions,
 	areAnalyzeDependencyResultsEqual,
-} from '@romejs/js-compiler';
-import {markup} from '@romejs/string-markup';
-import WorkerQueue from '../WorkerQueue';
-import {Dict} from '@romejs/typescript-helpers';
+} from "@romejs/js-compiler";
+import {markup} from "@romejs/string-markup";
+import WorkerQueue from "../WorkerQueue";
+import {Dict} from "@romejs/typescript-helpers";
 
 type LintWatchChanges = Array<{
 	filename: undefined | string;
@@ -88,11 +88,11 @@ function createDiagnosticsPrinter(
 
 			if (hasPendingFixes) {
 				reporter.info(
-					'Fixes available. To apply recommended fixes and formatting run',
+					"Fixes available. To apply recommended fixes and formatting run",
 				);
-				reporter.command('rome lint --save');
-				reporter.info('To choose fix suggestions run');
-				reporter.command('rome lint --review');
+				reporter.command("rome lint --save");
+				reporter.info("To choose fix suggestions run");
+				reporter.command("rome lint --review");
 			}
 		}
 
@@ -104,7 +104,7 @@ function createDiagnosticsPrinter(
 
 		if (!isError) {
 			if (totalCount === 0) {
-				reporter.warn('No files linted');
+				reporter.warn("No files linted");
 			} else {
 				reporter.info(
 					`<number emphasis>${totalCount}</number> <grammarNumber plural="files" singular="file">${totalCount}</grammarNumber> linted`,
@@ -170,7 +170,7 @@ class LintRunner {
 
 		const queue: WorkerQueue<void> = new WorkerQueue(master);
 
-		const progress = this.events.createProgress({title: 'Linting'});
+		const progress = this.events.createProgress({title: "Linting"});
 		progress.setTotal(evictedPaths.size);
 
 		queue.addCallback(async (path) => {
@@ -254,7 +254,7 @@ class LintRunner {
 
 		// Refresh only the evicted paths
 		const progress = this.events.createProgress({
-			title: firstRun ? 'Analyzing files' : 'Analyzing changed files',
+			title: firstRun ? "Analyzing files" : "Analyzing changed files",
 		});
 		await graph.seed({
 			paths: Array.from(evictedPaths),
@@ -299,7 +299,7 @@ class LintRunner {
 		// Revalidate dependents
 		if (validatedDependencyPathDependents.size > 0) {
 			const progress = this.events.createProgress({
-				title: 'Analyzing dependents',
+				title: "Analyzing dependents",
 			});
 
 			await graph.seed({
@@ -422,11 +422,11 @@ export default class Linter {
 	getFileArgOptions(): MasterRequestGetFilesOptions {
 		return {
 			args: this.options.args,
-			noun: 'lint',
-			verb: 'linting',
-			configCategory: 'lint',
+			noun: "lint",
+			verb: "linting",
+			configCategory: "lint",
 			extensions: LINTABLE_EXTENSIONS,
-			disabledDiagnosticCategory: 'lint/disabled',
+			disabledDiagnosticCategory: "lint/disabled",
 		};
 	}
 
@@ -437,13 +437,13 @@ export default class Linter {
 		const processor = this.request.createDiagnosticsProcessor({
 			origins: [
 				{
-					category: 'lint',
-					message: 'Dispatched',
+					category: "lint",
+					message: "Dispatched",
 				},
 			],
 		});
 
-		processor.addAllowedUnusedSuppressionPrefix('bundler');
+		processor.addAllowedUnusedSuppressionPrefix("bundler");
 
 		// Only display files that aren't absolute, are in the changed paths, or have had previous compiler diagnostics
 
@@ -545,7 +545,7 @@ export default class Linter {
 			watchEvent.unsubscribe();
 
 			if (printer === undefined) {
-				throw new Error('Expected a printer');
+				throw new Error("Expected a printer");
 			}
 
 			throw printer;

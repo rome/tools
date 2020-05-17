@@ -28,4 +28,4 @@ export const OPCODES = {
 	PONG: 10,
 };
 
-export const GUID = '258EAFA5-E914-47DA-95CA-C5AB0DC85B11';
+export const GUID = "258EAFA5-E914-47DA-95CA-C5AB0DC85B11";

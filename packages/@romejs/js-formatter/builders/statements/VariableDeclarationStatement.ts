@@ -5,23 +5,23 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {VariableDeclarationStatement} from '@romejs/js-ast';
-import {Token, concat, space} from '../../tokens';
+import Builder from "../../Builder";
+import {VariableDeclarationStatement} from "@romejs/js-ast";
+import {Token, concat, space} from "../../tokens";
 
 export default function VariableDeclarationStatement(
 	builder: Builder,
 	node: VariableDeclarationStatement,
 ): Token {
 	if (node.declare === true && !builder.options.typeAnnotations) {
-		return '';
+		return "";
 	}
 
 	const tokens: Array<Token> = [];
 
 	if (node.declare) {
-		tokens.push('declare', space);
+		tokens.push("declare", space);
 	}
 
-	return concat([concat(tokens), builder.tokenize(node.declaration, node), ';']);
+	return concat([concat(tokens), builder.tokenize(node.declaration, node), ";"]);
 }

@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Diagnostics, DiagnosticsProcessor} from '@romejs/diagnostics';
-import {printDiagnosticsToString} from '@romejs/cli-diagnostics';
-import {Diagnostic, DiagnosticSuppressions} from './types';
+import {Diagnostics, DiagnosticsProcessor} from "@romejs/diagnostics";
+import {printDiagnosticsToString} from "@romejs/cli-diagnostics";
+import {Diagnostic, DiagnosticSuppressions} from "./types";
 
 export class DiagnosticsError extends Error {
 	constructor(
@@ -16,16 +16,16 @@ export class DiagnosticsError extends Error {
 		suppressions: DiagnosticSuppressions = [],
 	) {
 		if (diagnostics.length === 0) {
-			throw new Error('No diagnostics');
+			throw new Error("No diagnostics");
 		}
 
-		message += '\n';
+		message += "\n";
 		message += printDiagnosticsToString({diagnostics, suppressions});
 
 		super(message);
 		this.diagnostics = diagnostics;
 		this.suppressions = suppressions;
-		this.name = 'DiagnosticsError';
+		this.name = "DiagnosticsError";
 	}
 
 	diagnostics: Diagnostics;

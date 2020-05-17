@@ -9,18 +9,18 @@
 	ArrayHole,
 	JSNodeBase,
 	PatternMeta,
-} from '../index';
-import {createBuilder} from '../utils';
+} from "../index";
+import {createBuilder} from "../utils";
 
 export type BindingArrayPattern = JSNodeBase & {
-	type: 'BindingArrayPattern';
+	type: "BindingArrayPattern";
 	meta?: PatternMeta;
 	elements: Array<ArrayHole | AnyParamBindingPattern>;
 	rest: undefined | AnyTargetBindingPattern;
 };
 
 export const bindingArrayPattern = createBuilder<BindingArrayPattern>(
-	'BindingArrayPattern',
+	"BindingArrayPattern",
 	{
 		bindingKeys: {
 			elements: true,

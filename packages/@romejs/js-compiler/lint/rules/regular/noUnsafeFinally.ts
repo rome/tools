@@ -5,25 +5,25 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from '@romejs/js-compiler';
-import {AnyNode} from '@romejs/js-ast';
-import {descriptions} from '@romejs/diagnostics';
+import {Path} from "@romejs/js-compiler";
+import {AnyNode} from "@romejs/js-ast";
+import {descriptions} from "@romejs/diagnostics";
 
 export default {
-	name: 'noUnsafeFinally',
+	name: "noUnsafeFinally",
 	enter(path: Path): AnyNode {
 		const {node, context} = path;
 
-		if (node.type === 'TryStatement') {
+		if (node.type === "TryStatement") {
 			const {finalizer} = node;
 
-			if (finalizer && finalizer.type === 'BlockStatement') {
+			if (finalizer && finalizer.type === "BlockStatement") {
 				for (const statement of finalizer.body) {
 					if (
-						statement.type === 'ThrowStatement' ||
-						statement.type === 'ContinueStatement' ||
-						statement.type === 'BreakStatement' ||
-						statement.type === 'ReturnStatement'
+						statement.type === "ThrowStatement" ||
+						statement.type === "ContinueStatement" ||
+						statement.type === "BreakStatement" ||
+						statement.type === "ReturnStatement"
 					) {
 						context.addNodeDiagnostic(
 							statement,

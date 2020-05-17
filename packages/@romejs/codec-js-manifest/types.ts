@@ -5,18 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ManifestDependencies} from './dependencies';
-import {SPDXExpressionNode} from '@romejs/codec-spdx-license';
-import {SemverVersionNode} from '@romejs/codec-semver';
-import {Consumer} from '@romejs/consume';
+import {ManifestDependencies} from "./dependencies";
+import {SPDXExpressionNode} from "@romejs/codec-spdx-license";
+import {SemverVersionNode} from "@romejs/codec-semver";
+import {Consumer} from "@romejs/consume";
 import {
 	AbsoluteFilePath,
 	RelativeFilePath,
 	RelativeFilePathMap,
-} from '@romejs/path';
-import {JSONObject, JSONPropertyValue} from '@romejs/codec-json';
-import {Dict} from '@romejs/typescript-helpers';
-import {PathPatterns} from '@romejs/path-match';
+} from "@romejs/path";
+import {JSONObject, JSONPropertyValue} from "@romejs/codec-json";
+import {Dict} from "@romejs/typescript-helpers";
+import {PathPatterns} from "@romejs/path-match";
 
 export type StringObject = Dict<string>;
 
@@ -70,7 +70,7 @@ export type Manifest = {
 	version: undefined | SemverVersionNode;
 	license: undefined | SPDXExpressionNode;
 	private: boolean;
-	type: undefined | 'module' | 'commonjs';
+	type: undefined | "module" | "commonjs";
 	homepage: MString;
 	repository: undefined | ManifestRepository;
 	bugs: undefined | ManifestBugs;
@@ -97,19 +97,19 @@ export type Manifest = {
 // Serialized version of a Manifest
 export type JSONManifest = {
 	name: MString;
-	description: Manifest['description'];
+	description: Manifest["description"];
 	version: MString;
 	license: MString;
-	private: Manifest['private'];
-	type: Manifest['type'];
-	homepage: Manifest['homepage'];
-	repository: Manifest['repository'];
-	bugs: Manifest['bugs'];
-	main: Manifest['main'];
+	private: Manifest["private"];
+	type: Manifest["type"];
+	homepage: Manifest["homepage"];
+	repository: Manifest["repository"];
+	bugs: Manifest["bugs"];
+	main: Manifest["main"];
 	exports: undefined | false | JSONManifestExports;
-	author: Manifest['author'];
-	contributors: Manifest['contributors'];
-	maintainers: Manifest['maintainers'];
+	author: Manifest["author"];
+	contributors: Manifest["contributors"];
+	maintainers: Manifest["maintainers"];
 	files: MStringArray;
 	keywords: MStringArray;
 	cpu: MStringArray;

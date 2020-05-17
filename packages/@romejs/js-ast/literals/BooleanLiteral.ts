@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase} from '../index';
-import {createQuickBuilder} from '../utils';
+import {JSNodeBase} from "../index";
+import {createQuickBuilder} from "../utils";
 
 export type BooleanLiteral = JSNodeBase & {
-	type: 'BooleanLiteral';
+	type: "BooleanLiteral";
 	value: boolean;
 };
 
-export const booleanLiteral = createQuickBuilder<BooleanLiteral, 'value'>(
-	'BooleanLiteral',
-	'value',
+export const booleanLiteral = createQuickBuilder<BooleanLiteral, "value">(
+	"BooleanLiteral",
+	"value",
 	{
 		bindingKeys: {},
 		visitorKeys: {},

@@ -5,18 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type TemplateElement = JSNodeBase & {
-	type: 'TemplateElement';
+	type: "TemplateElement";
 	tail?: boolean;
 	cooked: string;
 	raw: string;
 };
 
 export const templateElement = createBuilder<TemplateElement>(
-	'TemplateElement',
+	"TemplateElement",
 	{
 		bindingKeys: {},
 		visitorKeys: {},

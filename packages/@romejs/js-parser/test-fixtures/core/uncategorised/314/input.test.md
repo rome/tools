@@ -9,14 +9,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 8
 			index: 32
@@ -30,10 +30,10 @@ Program {
 	}
 	comments: Array [
 		CommentLine {
-			id: '0'
-			value: ' Comment'
+			id: "0"
+			value: " Comment"
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 23
 					index: 23
@@ -51,7 +51,7 @@ Program {
 		BlockStatement {
 			directives: Array []
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 8
 					index: 32
@@ -65,9 +65,9 @@ Program {
 			}
 			body: Array [
 				ThrowStatement {
-					trailingComments: Array ['0']
+					trailingComments: Array ["0"]
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 13
 							index: 13
@@ -80,11 +80,11 @@ Program {
 						}
 					}
 					argument: ReferenceIdentifier {
-						name: 'error'
+						name: "error"
 						trailingComments: undefined
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'error'
+							filename: "input.js"
+							identifierName: "error"
 							end: Object {
 								column: 13
 								index: 13
@@ -99,9 +99,9 @@ Program {
 					}
 				}
 				ExpressionStatement {
-					leadingComments: Array ['0']
+					leadingComments: Array ["0"]
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 6
 							index: 30
@@ -114,11 +114,11 @@ Program {
 						}
 					}
 					expression: ReferenceIdentifier {
-						name: 'error'
+						name: "error"
 						leadingComments: undefined
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'error'
+							filename: "input.js"
+							identifierName: "error"
 							end: Object {
 								column: 5
 								index: 29

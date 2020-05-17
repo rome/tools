@@ -5,21 +5,21 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from '@romejs/js-ast';
-import {ob1Get0, ob1Get1} from '@romejs/ob1';
-import {SourceLocation} from '@romejs/parser-core';
-import parentheses from './parentheses';
+import {AnyNode} from "@romejs/js-ast";
+import {ob1Get0, ob1Get1} from "@romejs/ob1";
+import {SourceLocation} from "@romejs/parser-core";
+import parentheses from "./parentheses";
 
 function isOrHasCallExpression(node: AnyNode): boolean {
-	if (node.type === 'CallExpression') {
+	if (node.type === "CallExpression") {
 		return true;
 	}
 
-	if (node.type === 'ComputedMemberProperty') {
+	if (node.type === "ComputedMemberProperty") {
 		return isOrHasCallExpression(node.value);
 	}
 
-	if (node.type === 'MemberExpression') {
+	if (node.type === "MemberExpression") {
 		return (
 			isOrHasCallExpression(node.object) || isOrHasCallExpression(node.property)
 		);
@@ -57,7 +57,7 @@ export function needsParens(
 		return false;
 	}
 
-	if (parent.type === 'NewExpression' && parent.callee === node) {
+	if (parent.type === "NewExpression" && parent.callee === node) {
 		if (isOrHasCallExpression(node)) {
 			return true;
 		}

@@ -5,18 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyExpression, AnyStatement, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {AnyExpression, AnyStatement, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type IfStatement = JSNodeBase & {
-	type: 'IfStatement';
+	type: "IfStatement";
 	test: AnyExpression;
 	consequent: AnyStatement;
 	alternate?: AnyStatement;
 };
 
 export const ifStatement = createBuilder<IfStatement>(
-	'IfStatement',
+	"IfStatement",
 	{
 		bindingKeys: {},
 		visitorKeys: {

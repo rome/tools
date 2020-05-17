@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {testLint} from '../testHelpers';
+import {test} from "rome";
+import {testLint} from "../testHelpers";
 
 test(
-	'restricted globals',
+	"restricted globals",
 	async (t) => {
 		await testLint(
 			t,
-			'console.log(event);',
+			"console.log(event);",
 			{
-				category: 'lint/restrictedGlobals',
+				category: "lint/restrictedGlobals",
 			},
 		);
 
@@ -30,7 +30,7 @@ test(
     // invalid, event is used as a global.
     foo(event)
     `,
-			{category: 'lint/restrictedGlobals'},
+			{category: "lint/restrictedGlobals"},
 		);
 	},
 );

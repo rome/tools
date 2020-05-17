@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 10
 			index: 64
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 8
 					index: 8
@@ -47,7 +47,7 @@ Program {
 			expression: OptionalCallExpression {
 				arguments: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 8
 						index: 8
@@ -60,10 +60,10 @@ Program {
 					}
 				}
 				callee: ReferenceIdentifier {
-					name: 'func'
+					name: "func"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'func'
+						filename: "input.js"
+						identifierName: "func"
 						end: Object {
 							column: 4
 							index: 4
@@ -80,7 +80,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 12
 					index: 22
@@ -94,7 +94,7 @@ Program {
 			}
 			expression: OptionalCallExpression {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 12
 						index: 22
@@ -107,10 +107,10 @@ Program {
 					}
 				}
 				callee: ReferenceIdentifier {
-					name: 'func'
+					name: "func"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'func'
+						filename: "input.js"
+						identifierName: "func"
 						end: Object {
 							column: 4
 							index: 14
@@ -125,10 +125,10 @@ Program {
 				}
 				arguments: Array [
 					ReferenceIdentifier {
-						name: 'a'
+						name: "a"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'a'
+							filename: "input.js"
+							identifierName: "a"
 							end: Object {
 								column: 8
 								index: 18
@@ -142,10 +142,10 @@ Program {
 						}
 					}
 					ReferenceIdentifier {
-						name: 'b'
+						name: "b"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'b'
+							filename: "input.js"
+							identifierName: "b"
 							end: Object {
 								column: 11
 								index: 21
@@ -163,7 +163,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 11
 					index: 35
@@ -178,7 +178,7 @@ Program {
 			expression: OptionalCallExpression {
 				arguments: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 11
 						index: 35
@@ -192,7 +192,7 @@ Program {
 				}
 				callee: MemberExpression {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 7
 							index: 31
@@ -205,10 +205,10 @@ Program {
 						}
 					}
 					object: ReferenceIdentifier {
-						name: 'a'
+						name: "a"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'a'
+							filename: "input.js"
+							identifierName: "a"
 							end: Object {
 								column: 1
 								index: 25
@@ -223,10 +223,10 @@ Program {
 					}
 					property: StaticMemberProperty {
 						value: Identifier {
-							name: 'func'
+							name: "func"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'func'
+								filename: "input.js"
+								identifierName: "func"
 								end: Object {
 									column: 7
 									index: 31
@@ -241,8 +241,8 @@ Program {
 						}
 						optional: true
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'func'
+							filename: "input.js"
+							identifierName: "func"
 							end: Object {
 								column: 7
 								index: 31
@@ -260,7 +260,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 15
 					index: 52
@@ -274,7 +274,7 @@ Program {
 			}
 			expression: OptionalCallExpression {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 15
 						index: 52
@@ -288,10 +288,10 @@ Program {
 				}
 				arguments: Array [
 					ReferenceIdentifier {
-						name: 'a'
+						name: "a"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'a'
+							filename: "input.js"
+							identifierName: "a"
 							end: Object {
 								column: 11
 								index: 48
@@ -305,10 +305,10 @@ Program {
 						}
 					}
 					ReferenceIdentifier {
-						name: 'b'
+						name: "b"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'b'
+							filename: "input.js"
+							identifierName: "b"
 							end: Object {
 								column: 14
 								index: 51
@@ -324,7 +324,7 @@ Program {
 				]
 				callee: MemberExpression {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 7
 							index: 44
@@ -337,10 +337,10 @@ Program {
 						}
 					}
 					object: ReferenceIdentifier {
-						name: 'a'
+						name: "a"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'a'
+							filename: "input.js"
+							identifierName: "a"
 							end: Object {
 								column: 1
 								index: 38
@@ -355,10 +355,10 @@ Program {
 					}
 					property: StaticMemberProperty {
 						value: Identifier {
-							name: 'func'
+							name: "func"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'func'
+								filename: "input.js"
+								identifierName: "func"
 								end: Object {
 									column: 7
 									index: 44
@@ -373,8 +373,8 @@ Program {
 						}
 						optional: true
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'func'
+							filename: "input.js"
+							identifierName: "func"
 							end: Object {
 								column: 7
 								index: 44
@@ -392,7 +392,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 10
 					index: 64
@@ -407,7 +407,7 @@ Program {
 			expression: OptionalCallExpression {
 				arguments: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 10
 						index: 64
@@ -421,7 +421,7 @@ Program {
 				}
 				callee: MemberExpression {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 6
 							index: 60
@@ -434,10 +434,10 @@ Program {
 						}
 					}
 					object: ReferenceIdentifier {
-						name: 'a'
+						name: "a"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'a'
+							filename: "input.js"
+							identifierName: "a"
 							end: Object {
 								column: 1
 								index: 55
@@ -452,10 +452,10 @@ Program {
 					}
 					property: StaticMemberProperty {
 						value: Identifier {
-							name: 'func'
+							name: "func"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'func'
+								filename: "input.js"
+								identifierName: "func"
 								end: Object {
 									column: 6
 									index: 60
@@ -469,8 +469,8 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'func'
+							filename: "input.js"
+							identifierName: "func"
 							end: Object {
 								column: 6
 								index: 60

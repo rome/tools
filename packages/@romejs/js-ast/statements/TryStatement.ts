@@ -5,18 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {BlockStatement, CatchClause, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {BlockStatement, CatchClause, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type TryStatement = JSNodeBase & {
-	type: 'TryStatement';
+	type: "TryStatement";
 	block: BlockStatement;
 	handler: undefined | CatchClause;
 	finalizer: undefined | BlockStatement;
 };
 
 export const tryStatement = createBuilder<TryStatement>(
-	'TryStatement',
+	"TryStatement",
 	{
 		bindingKeys: {},
 		visitorKeys: {

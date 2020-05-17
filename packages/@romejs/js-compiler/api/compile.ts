@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Mappings, SourceMapConsumer} from '@romejs/codec-source-map';
-import {DiagnosticSuppressions, Diagnostics} from '@romejs/diagnostics';
-import {Cache} from '@romejs/js-compiler';
-import {formatJS} from '@romejs/js-formatter';
-import {CompileRequest} from '../types';
-import transform from '../methods/transform';
+import {Mappings, SourceMapConsumer} from "@romejs/codec-source-map";
+import {DiagnosticSuppressions, Diagnostics} from "@romejs/diagnostics";
+import {Cache} from "@romejs/js-compiler";
+import {formatJS} from "@romejs/js-formatter";
+import {CompileRequest} from "../types";
+import transform from "../methods/transform";
 
 export type CompileResult = {
 	mappings: Mappings;
@@ -45,7 +45,7 @@ export default async function compile(
 		transformedAst,
 		{
 			typeAnnotations: false,
-			indent: req.stage === 'compileForBundle' ? 1 : 0,
+			indent: req.stage === "compileForBundle" ? 1 : 0,
 			sourceMaps: true,
 			sourceText,
 		},

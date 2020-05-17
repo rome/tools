@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 258
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		ClassDeclaration {
 			id: BindingIdentifier {
-				name: 'X'
+				name: "X"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'X'
+					filename: "input.js"
+					identifierName: "X"
 					end: Object {
 						column: 7
 						index: 7
@@ -49,7 +49,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 1
 					index: 257
@@ -67,7 +67,7 @@ Program {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 1
 						index: 257
@@ -83,10 +83,10 @@ Program {
 					ClassProperty {
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'a'
+								name: "a"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'a'
+									filename: "input.js"
+									identifierName: "a"
 									end: Object {
 										column: 10
 										index: 20
@@ -100,7 +100,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 10
 									index: 20
@@ -115,7 +115,7 @@ Program {
 						}
 						value: MetaProperty {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 23
 									index: 33
@@ -128,10 +128,10 @@ Program {
 								}
 							}
 							meta: Identifier {
-								name: 'new'
+								name: "new"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'new'
+									filename: "input.js"
+									identifierName: "new"
 									end: Object {
 										column: 16
 										index: 26
@@ -145,10 +145,10 @@ Program {
 								}
 							}
 							property: Identifier {
-								name: 'target'
+								name: "target"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'target'
+									filename: "input.js"
+									identifierName: "target"
 									end: Object {
 										column: 23
 										index: 33
@@ -165,7 +165,7 @@ Program {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 24
 								index: 34
@@ -190,7 +190,7 @@ Program {
 								line: 2
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 10
 									index: 20
@@ -207,10 +207,10 @@ Program {
 					ClassProperty {
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'b'
+								name: "b"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'b'
+									filename: "input.js"
+									identifierName: "b"
 									end: Object {
 										column: 10
 										index: 45
@@ -224,7 +224,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 10
 									index: 45
@@ -238,9 +238,9 @@ Program {
 							}
 						}
 						value: AssignmentExpression {
-							operator: '='
+							operator: "="
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 39
 									index: 74
@@ -253,10 +253,10 @@ Program {
 								}
 							}
 							left: AssignmentIdentifier {
-								name: 'foo'
+								name: "foo"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'foo'
+									filename: "input.js"
+									identifierName: "foo"
 									end: Object {
 										column: 17
 										index: 52
@@ -270,9 +270,9 @@ Program {
 								}
 							}
 							right: BinaryExpression {
-								operator: '+'
+								operator: "+"
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 39
 										index: 74
@@ -288,7 +288,7 @@ Program {
 									value: 1
 									format: undefined
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 21
 											index: 56
@@ -303,7 +303,7 @@ Program {
 								}
 								right: CallExpression {
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 39
 											index: 74
@@ -316,10 +316,10 @@ Program {
 										}
 									}
 									callee: ReferenceIdentifier {
-										name: 'bar'
+										name: "bar"
 										loc: Object {
-											filename: 'input.js'
-											identifierName: 'bar'
+											filename: "input.js"
+											identifierName: "bar"
 											end: Object {
 												column: 27
 												index: 62
@@ -335,7 +335,7 @@ Program {
 									arguments: Array [
 										MetaProperty {
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 38
 													index: 73
@@ -348,10 +348,10 @@ Program {
 												}
 											}
 											meta: Identifier {
-												name: 'new'
+												name: "new"
 												loc: Object {
-													filename: 'input.js'
-													identifierName: 'new'
+													filename: "input.js"
+													identifierName: "new"
 													end: Object {
 														column: 31
 														index: 66
@@ -365,10 +365,10 @@ Program {
 												}
 											}
 											property: Identifier {
-												name: 'target'
+												name: "target"
 												loc: Object {
-													filename: 'input.js'
-													identifierName: 'target'
+													filename: "input.js"
+													identifierName: "target"
 													end: Object {
 														column: 38
 														index: 73
@@ -389,7 +389,7 @@ Program {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 41
 								index: 76
@@ -414,7 +414,7 @@ Program {
 								line: 3
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 10
 									index: 45
@@ -431,10 +431,10 @@ Program {
 					ClassProperty {
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'c'
+								name: "c"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'c'
+									filename: "input.js"
+									identifierName: "c"
 									end: Object {
 										column: 10
 										index: 87
@@ -448,7 +448,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 10
 									index: 87
@@ -463,7 +463,7 @@ Program {
 						}
 						value: ArrowFunctionExpression {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 29
 									index: 106
@@ -483,7 +483,7 @@ Program {
 								returnType: undefined
 								thisType: undefined
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 18
 										index: 95
@@ -498,7 +498,7 @@ Program {
 							}
 							body: MetaProperty {
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 29
 										index: 106
@@ -511,10 +511,10 @@ Program {
 									}
 								}
 								meta: Identifier {
-									name: 'new'
+									name: "new"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'new'
+										filename: "input.js"
+										identifierName: "new"
 										end: Object {
 											column: 22
 											index: 99
@@ -528,10 +528,10 @@ Program {
 									}
 								}
 								property: Identifier {
-									name: 'target'
+									name: "target"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'target'
+										filename: "input.js"
+										identifierName: "target"
 										end: Object {
 											column: 29
 											index: 106
@@ -549,7 +549,7 @@ Program {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 30
 								index: 107
@@ -574,7 +574,7 @@ Program {
 								line: 4
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 10
 									index: 87
@@ -591,10 +591,10 @@ Program {
 					ClassProperty {
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'd'
+								name: "d"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'd'
+									filename: "input.js"
+									identifierName: "d"
 									end: Object {
 										column: 10
 										index: 118
@@ -608,7 +608,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 10
 									index: 118
@@ -623,7 +623,7 @@ Program {
 						}
 						value: ArrowFunctionExpression {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 37
 									index: 145
@@ -639,7 +639,7 @@ Program {
 								body: Array []
 								directives: Array []
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 37
 										index: 145
@@ -659,7 +659,7 @@ Program {
 								returnType: undefined
 								thisType: undefined
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 34
 										index: 142
@@ -673,9 +673,9 @@ Program {
 								}
 								params: Array [
 									BindingAssignmentPattern {
-										operator: '='
+										operator: "="
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 30
 												index: 138
@@ -688,10 +688,10 @@ Program {
 											}
 										}
 										left: BindingIdentifier {
-											name: 'foo'
+											name: "foo"
 											loc: Object {
-												filename: 'input.js'
-												identifierName: 'foo'
+												filename: "input.js"
+												identifierName: "foo"
 												end: Object {
 													column: 17
 													index: 125
@@ -706,7 +706,7 @@ Program {
 										}
 										right: MetaProperty {
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 30
 													index: 138
@@ -719,10 +719,10 @@ Program {
 												}
 											}
 											meta: Identifier {
-												name: 'new'
+												name: "new"
 												loc: Object {
-													filename: 'input.js'
-													identifierName: 'new'
+													filename: "input.js"
+													identifierName: "new"
 													end: Object {
 														column: 23
 														index: 131
@@ -736,10 +736,10 @@ Program {
 												}
 											}
 											property: Identifier {
-												name: 'target'
+												name: "target"
 												loc: Object {
-													filename: 'input.js'
-													identifierName: 'target'
+													filename: "input.js"
+													identifierName: "target"
 													end: Object {
 														column: 30
 														index: 138
@@ -760,7 +760,7 @@ Program {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 38
 								index: 146
@@ -785,7 +785,7 @@ Program {
 								line: 5
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 10
 									index: 118
@@ -802,10 +802,10 @@ Program {
 					ClassProperty {
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'e'
+								name: "e"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'e'
+									filename: "input.js"
+									identifierName: "e"
 									end: Object {
 										column: 3
 										index: 150
@@ -819,7 +819,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 3
 									index: 150
@@ -834,7 +834,7 @@ Program {
 						}
 						value: MetaProperty {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 16
 									index: 163
@@ -847,10 +847,10 @@ Program {
 								}
 							}
 							meta: Identifier {
-								name: 'new'
+								name: "new"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'new'
+									filename: "input.js"
+									identifierName: "new"
 									end: Object {
 										column: 9
 										index: 156
@@ -864,10 +864,10 @@ Program {
 								}
 							}
 							property: Identifier {
-								name: 'target'
+								name: "target"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'target'
+									filename: "input.js"
+									identifierName: "target"
 									end: Object {
 										column: 16
 										index: 163
@@ -884,7 +884,7 @@ Program {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 17
 								index: 164
@@ -909,7 +909,7 @@ Program {
 								line: 6
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 3
 									index: 150
@@ -926,10 +926,10 @@ Program {
 					ClassProperty {
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'f'
+								name: "f"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'f'
+									filename: "input.js"
+									identifierName: "f"
 									end: Object {
 										column: 3
 										index: 168
@@ -943,7 +943,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 3
 									index: 168
@@ -957,9 +957,9 @@ Program {
 							}
 						}
 						value: AssignmentExpression {
-							operator: '='
+							operator: "="
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 32
 									index: 197
@@ -972,10 +972,10 @@ Program {
 								}
 							}
 							left: AssignmentIdentifier {
-								name: 'foo'
+								name: "foo"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'foo'
+									filename: "input.js"
+									identifierName: "foo"
 									end: Object {
 										column: 10
 										index: 175
@@ -989,9 +989,9 @@ Program {
 								}
 							}
 							right: BinaryExpression {
-								operator: '+'
+								operator: "+"
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 32
 										index: 197
@@ -1007,7 +1007,7 @@ Program {
 									value: 1
 									format: undefined
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 14
 											index: 179
@@ -1022,7 +1022,7 @@ Program {
 								}
 								right: CallExpression {
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 32
 											index: 197
@@ -1035,10 +1035,10 @@ Program {
 										}
 									}
 									callee: ReferenceIdentifier {
-										name: 'bar'
+										name: "bar"
 										loc: Object {
-											filename: 'input.js'
-											identifierName: 'bar'
+											filename: "input.js"
+											identifierName: "bar"
 											end: Object {
 												column: 20
 												index: 185
@@ -1054,7 +1054,7 @@ Program {
 									arguments: Array [
 										MetaProperty {
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 31
 													index: 196
@@ -1067,10 +1067,10 @@ Program {
 												}
 											}
 											meta: Identifier {
-												name: 'new'
+												name: "new"
 												loc: Object {
-													filename: 'input.js'
-													identifierName: 'new'
+													filename: "input.js"
+													identifierName: "new"
 													end: Object {
 														column: 24
 														index: 189
@@ -1084,10 +1084,10 @@ Program {
 												}
 											}
 											property: Identifier {
-												name: 'target'
+												name: "target"
 												loc: Object {
-													filename: 'input.js'
-													identifierName: 'target'
+													filename: "input.js"
+													identifierName: "target"
 													end: Object {
 														column: 31
 														index: 196
@@ -1108,7 +1108,7 @@ Program {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 34
 								index: 199
@@ -1133,7 +1133,7 @@ Program {
 								line: 7
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 3
 									index: 168
@@ -1150,10 +1150,10 @@ Program {
 					ClassProperty {
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'g'
+								name: "g"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'g'
+									filename: "input.js"
+									identifierName: "g"
 									end: Object {
 										column: 3
 										index: 203
@@ -1167,7 +1167,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 3
 									index: 203
@@ -1182,7 +1182,7 @@ Program {
 						}
 						value: ArrowFunctionExpression {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 22
 									index: 222
@@ -1202,7 +1202,7 @@ Program {
 								returnType: undefined
 								thisType: undefined
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 11
 										index: 211
@@ -1217,7 +1217,7 @@ Program {
 							}
 							body: MetaProperty {
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 22
 										index: 222
@@ -1230,10 +1230,10 @@ Program {
 									}
 								}
 								meta: Identifier {
-									name: 'new'
+									name: "new"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'new'
+										filename: "input.js"
+										identifierName: "new"
 										end: Object {
 											column: 15
 											index: 215
@@ -1247,10 +1247,10 @@ Program {
 									}
 								}
 								property: Identifier {
-									name: 'target'
+									name: "target"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'target'
+										filename: "input.js"
+										identifierName: "target"
 										end: Object {
 											column: 22
 											index: 222
@@ -1268,7 +1268,7 @@ Program {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 23
 								index: 223
@@ -1293,7 +1293,7 @@ Program {
 								line: 8
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 3
 									index: 203
@@ -1310,10 +1310,10 @@ Program {
 					ClassProperty {
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'h'
+								name: "h"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'h'
+									filename: "input.js"
+									identifierName: "h"
 									end: Object {
 										column: 3
 										index: 227
@@ -1327,7 +1327,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 3
 									index: 227
@@ -1342,7 +1342,7 @@ Program {
 						}
 						value: ArrowFunctionExpression {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 30
 									index: 254
@@ -1358,7 +1358,7 @@ Program {
 								body: Array []
 								directives: Array []
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 30
 										index: 254
@@ -1378,7 +1378,7 @@ Program {
 								returnType: undefined
 								thisType: undefined
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 27
 										index: 251
@@ -1392,9 +1392,9 @@ Program {
 								}
 								params: Array [
 									BindingAssignmentPattern {
-										operator: '='
+										operator: "="
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 23
 												index: 247
@@ -1407,10 +1407,10 @@ Program {
 											}
 										}
 										left: BindingIdentifier {
-											name: 'foo'
+											name: "foo"
 											loc: Object {
-												filename: 'input.js'
-												identifierName: 'foo'
+												filename: "input.js"
+												identifierName: "foo"
 												end: Object {
 													column: 10
 													index: 234
@@ -1425,7 +1425,7 @@ Program {
 										}
 										right: MetaProperty {
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 23
 													index: 247
@@ -1438,10 +1438,10 @@ Program {
 												}
 											}
 											meta: Identifier {
-												name: 'new'
+												name: "new"
 												loc: Object {
-													filename: 'input.js'
-													identifierName: 'new'
+													filename: "input.js"
+													identifierName: "new"
 													end: Object {
 														column: 16
 														index: 240
@@ -1455,10 +1455,10 @@ Program {
 												}
 											}
 											property: Identifier {
-												name: 'target'
+												name: "target"
 												loc: Object {
-													filename: 'input.js'
-													identifierName: 'target'
+													filename: "input.js"
+													identifierName: "target"
 													end: Object {
 														column: 23
 														index: 247
@@ -1479,7 +1479,7 @@ Program {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 31
 								index: 255
@@ -1504,7 +1504,7 @@ Program {
 								line: 9
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 3
 									index: 227

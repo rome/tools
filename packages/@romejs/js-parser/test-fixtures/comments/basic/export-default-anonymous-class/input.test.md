@@ -9,14 +9,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
+	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 122
@@ -30,10 +30,10 @@ Program {
 	}
 	comments: Array [
 		CommentBlock {
-			id: '0'
-			value: '*\n * this is anonymous class.\n '
+			id: "0"
+			value: "*\n * this is anonymous class.\n "
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 3
 					index: 35
@@ -47,10 +47,10 @@ Program {
 			}
 		}
 		CommentBlock {
-			id: '1'
-			value: '*\n     * this is method1.\n     '
+			id: "1"
+			value: "*\n     * this is method1.\n     "
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 7
 					index: 98
@@ -66,9 +66,9 @@ Program {
 	]
 	body: Array [
 		ExportDefaultDeclaration {
-			leadingComments: Array ['0']
+			leadingComments: Array ["0"]
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 1
 					index: 121
@@ -82,9 +82,9 @@ Program {
 			}
 			declaration: ClassDeclaration {
 				id: BindingIdentifier {
-					name: '*default*'
+					name: "*default*"
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 1
 							index: 121
@@ -99,7 +99,7 @@ Program {
 				}
 				leadingComments: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 1
 						index: 121
@@ -118,7 +118,7 @@ Program {
 					superTypeParameters: undefined
 					typeParameters: undefined
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 1
 							index: 121
@@ -132,14 +132,14 @@ Program {
 					}
 					body: Array [
 						ClassMethod {
-							kind: 'method'
+							kind: "method"
 							key: StaticPropertyKey {
 								value: Identifier {
-									name: 'method1'
+									name: "method1"
 									leadingComments: undefined
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'method1'
+										filename: "input.js"
+										identifierName: "method1"
 										end: Object {
 											column: 11
 											index: 110
@@ -154,7 +154,7 @@ Program {
 								}
 								leadingComments: undefined
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 11
 										index: 110
@@ -167,9 +167,9 @@ Program {
 									}
 								}
 							}
-							leadingComments: Array ['1']
+							leadingComments: Array ["1"]
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 5
 									index: 119
@@ -185,7 +185,7 @@ Program {
 								body: Array []
 								directives: Array []
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 5
 										index: 119
@@ -208,7 +208,7 @@ Program {
 								thisType: undefined
 								typeParameters: undefined
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 13
 										index: 112
@@ -235,7 +235,7 @@ Program {
 									line: 8
 								}
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 11
 										index: 110

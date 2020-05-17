@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {testLintMultiple} from '../testHelpers';
+import {test} from "rome";
+import {testLintMultiple} from "../testHelpers";
 
 test(
-	'Dangling backslash in regex',
+	"Dangling backslash in regex",
 	async (t) => {
 		await testLintMultiple(
 			t,
@@ -39,7 +39,7 @@ test(
 				String.raw`let foo = /(([abc])\19)+=\28/;foo;`,
 				String.raw`let foo = /([abc]+)=\199/;foo;`,
 			],
-			{category: 'lint/noReferenceToNonExistingGroup'},
+			{category: "lint/noReferenceToNonExistingGroup"},
 		);
 	},
 );

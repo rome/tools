@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Consumer} from '@romejs/consume';
-import {PathPatterns, parsePathPattern} from '@romejs/path-match';
-import {AbsoluteFilePath, AbsoluteFilePathSet} from '@romejs/path';
-import {ProjectConfigMeta, ProjectConfigMetaHard} from './types';
-import {ROME_CONFIG_FILENAMES} from './constants';
+import {Consumer} from "@romejs/consume";
+import {PathPatterns, parsePathPattern} from "@romejs/path-match";
+import {AbsoluteFilePath, AbsoluteFilePathSet} from "@romejs/path";
+import {ProjectConfigMeta, ProjectConfigMetaHard} from "./types";
+import {ROME_CONFIG_FILENAMES} from "./constants";
 
 export function assertHardMeta(meta: ProjectConfigMeta): ProjectConfigMetaHard {
 	const {configPath, projectFolder: folder, consumer} = meta;
 	if (configPath === undefined || folder === undefined || consumer === undefined) {
-		throw new Error('This is not a disk project');
+		throw new Error("This is not a disk project");
 	}
 
 	return {
@@ -39,7 +39,7 @@ export function arrayOfPatterns(consumer: Consumer): PathPatterns {
 		return parsePathPattern({
 			path: consumer.filename,
 			input: item.asString(),
-			offsetPosition: item.getLocation('inner-value').start,
+			offsetPosition: item.getLocation("inner-value").start,
 		});
 	});
 }
@@ -81,7 +81,7 @@ export function getParentConfigDependencies(
 	const deps: AbsoluteFilePathSet = new AbsoluteFilePathSet();
 
 	for (const folder of path.getChain()) {
-		deps.add(folder.append('package.json'));
+		deps.add(folder.append("package.json"));
 
 		for (const configFilename of ROME_CONFIG_FILENAMES) {
 			deps.add(folder.append(configFilename));

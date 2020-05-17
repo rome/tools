@@ -5,16 +5,16 @@
 * LICENSE file in the root directory of this source tree.
 */
 
-import {JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type RegExpNamedBackReference = JSNodeBase & {
-	type: 'RegExpNamedBackReference';
+	type: "RegExpNamedBackReference";
 	name: string;
 };
 
 export const regExpNamedBackReference = createBuilder<RegExpNamedBackReference>(
-	'RegExpNamedBackReference',
+	"RegExpNamedBackReference",
 	{
 		bindingKeys: {},
 		visitorKeys: {},

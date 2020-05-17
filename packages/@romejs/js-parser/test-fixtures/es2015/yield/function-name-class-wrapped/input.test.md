@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 47
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		FunctionDeclaration {
 			id: BindingIdentifier {
-				name: 'wrap'
+				name: "wrap"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'wrap'
+					filename: "input.js"
+					identifierName: "wrap"
 					end: Object {
 						column: 14
 						index: 14
@@ -49,7 +49,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 1
 					index: 46
@@ -71,7 +71,7 @@ Program {
 				thisType: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 16
 						index: 16
@@ -87,7 +87,7 @@ Program {
 			body: BlockStatement {
 				directives: Array []
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 1
 						index: 46
@@ -102,10 +102,10 @@ Program {
 				body: Array [
 					ClassDeclaration {
 						id: BindingIdentifier {
-							name: 'A'
+							name: "A"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'A'
+								filename: "input.js"
+								identifierName: "A"
 								end: Object {
 									column: 11
 									index: 30
@@ -119,7 +119,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 25
 								index: 44
@@ -137,7 +137,7 @@ Program {
 							superTypeParameters: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 25
 									index: 44
@@ -151,13 +151,13 @@ Program {
 							}
 							body: Array [
 								ClassMethod {
-									kind: 'method'
+									kind: "method"
 									key: StaticPropertyKey {
 										value: Identifier {
-											name: 'yield'
+											name: "yield"
 											loc: Object {
-												filename: 'input.js'
-												identifierName: 'yield'
+												filename: "input.js"
+												identifierName: "yield"
 												end: Object {
 													column: 19
 													index: 38
@@ -171,7 +171,7 @@ Program {
 											}
 										}
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 19
 												index: 38
@@ -185,7 +185,7 @@ Program {
 										}
 									}
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 24
 											index: 43
@@ -201,7 +201,7 @@ Program {
 										body: Array []
 										directives: Array []
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 24
 												index: 43
@@ -224,7 +224,7 @@ Program {
 										thisType: undefined
 										typeParameters: undefined
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 21
 												index: 40
@@ -250,7 +250,7 @@ Program {
 											line: 2
 										}
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 19
 												index: 38

@@ -5,21 +5,21 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from '@romejs/js-compiler';
-import {AnyNode} from '@romejs/js-ast';
-import {isInTypeAnnotation} from '@romejs/js-ast-utils';
-import {descriptions} from '@romejs/diagnostics';
+import {Path} from "@romejs/js-compiler";
+import {AnyNode} from "@romejs/js-ast";
+import {isInTypeAnnotation} from "@romejs/js-ast-utils";
+import {descriptions} from "@romejs/diagnostics";
 
-const RESTRICTED_GLOBALS = ['event', 'error'];
+const RESTRICTED_GLOBALS = ["event", "error"];
 
 export default {
-	name: 'restrictedGlobal',
+	name: "restrictedGlobal",
 	enter(path: Path): AnyNode {
 		const {node, scope} = path;
 
 		if (
-			(node.type === 'ReferenceIdentifier' ||
-			node.type === 'JSXReferenceIdentifier') &&
+			(node.type === "ReferenceIdentifier" ||
+			node.type === "JSXReferenceIdentifier") &&
 			!isInTypeAnnotation(path)
 		) {
 			const {name} = node;

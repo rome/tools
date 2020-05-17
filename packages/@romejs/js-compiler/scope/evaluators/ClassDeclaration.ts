@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Scope from '../Scope';
-import {ClassBinding} from '@romejs/js-compiler';
-import {AnyNode, ClassDeclaration} from '@romejs/js-ast';
-import ClassExpression from './ClassExpression';
+import Scope from "../Scope";
+import {ClassBinding} from "@romejs/js-compiler";
+import {AnyNode, ClassDeclaration} from "@romejs/js-ast";
+import ClassExpression from "./ClassExpression";
 
 export default {
 	creator: false,

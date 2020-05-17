@@ -9,14 +9,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 258
@@ -30,10 +30,10 @@ Program {
 	}
 	comments: Array [
 		CommentLine {
-			id: '0'
-			value: ' Also works on AssignmentPattern'
+			id: "0"
+			value: " Also works on AssignmentPattern"
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 42
 					index: 197
@@ -50,10 +50,10 @@ Program {
 	body: Array [
 		ClassDeclaration {
 			id: BindingIdentifier {
-				name: 'C'
+				name: "C"
 				loc: Object {
-					filename: 'input.ts'
-					identifierName: 'C'
+					filename: "input.ts"
+					identifierName: "C"
 					end: Object {
 						column: 7
 						index: 7
@@ -67,7 +67,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 1
 					index: 257
@@ -85,7 +85,7 @@ Program {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 1
 						index: 257
@@ -99,13 +99,13 @@ Program {
 				}
 				body: Array [
 					ClassMethod {
-						kind: 'constructor'
+						kind: "constructor"
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'constructor'
+								name: "constructor"
 								loc: Object {
-									filename: 'input.ts'
-									identifierName: 'constructor'
+									filename: "input.ts"
+									identifierName: "constructor"
 									end: Object {
 										column: 15
 										index: 25
@@ -119,7 +119,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 15
 									index: 25
@@ -133,7 +133,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 33
 								index: 255
@@ -149,7 +149,7 @@ Program {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 33
 									index: 255
@@ -175,7 +175,7 @@ Program {
 								line: 2
 							}
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 15
 									index: 25
@@ -197,7 +197,7 @@ Program {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 30
 									index: 252
@@ -211,9 +211,9 @@ Program {
 							}
 							params: Array [
 								BindingIdentifier {
-									name: 'r'
+									name: "r"
 									loc: Object {
-										filename: 'input.ts'
+										filename: "input.ts"
 										end: Object {
 											column: 18
 											index: 45
@@ -229,7 +229,7 @@ Program {
 										accessibility: undefined
 										readonly: true
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 18
 												index: 45
@@ -244,9 +244,9 @@ Program {
 									}
 								}
 								BindingIdentifier {
-									name: 'pu'
+									name: "pu"
 									loc: Object {
-										filename: 'input.ts'
+										filename: "input.ts"
 										end: Object {
 											column: 25
 											index: 72
@@ -259,10 +259,10 @@ Program {
 										}
 									}
 									meta: PatternMeta {
-										accessibility: 'public'
+										accessibility: "public"
 										readonly: false
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 25
 												index: 72
@@ -277,9 +277,9 @@ Program {
 									}
 								}
 								BindingIdentifier {
-									name: 'po'
+									name: "po"
 									loc: Object {
-										filename: 'input.ts'
+										filename: "input.ts"
 										end: Object {
 											column: 21
 											index: 95
@@ -292,10 +292,10 @@ Program {
 										}
 									}
 									meta: PatternMeta {
-										accessibility: 'protected'
+										accessibility: "protected"
 										readonly: false
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 21
 												index: 95
@@ -310,9 +310,9 @@ Program {
 									}
 								}
 								BindingIdentifier {
-									name: 'pi'
+									name: "pi"
 									loc: Object {
-										filename: 'input.ts'
+										filename: "input.ts"
 										end: Object {
 											column: 27
 											index: 124
@@ -325,10 +325,10 @@ Program {
 										}
 									}
 									meta: PatternMeta {
-										accessibility: 'private'
+										accessibility: "private"
 										readonly: false
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 27
 												index: 124
@@ -343,9 +343,9 @@ Program {
 									}
 								}
 								BindingIdentifier {
-									name: 'pur'
+									name: "pur"
 									loc: Object {
-										filename: 'input.ts'
+										filename: "input.ts"
 										end: Object {
 											column: 27
 											index: 153
@@ -358,10 +358,10 @@ Program {
 										}
 									}
 									meta: PatternMeta {
-										accessibility: 'public'
+										accessibility: "public"
 										readonly: true
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 27
 												index: 153
@@ -376,9 +376,9 @@ Program {
 									}
 								}
 								BindingAssignmentPattern {
-									leadingComments: Array ['0']
+									leadingComments: Array ["0"]
 									loc: Object {
-										filename: 'input.ts'
+										filename: "input.ts"
 										end: Object {
 											column: 22
 											index: 220
@@ -394,7 +394,7 @@ Program {
 										value: 0
 										format: undefined
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 22
 												index: 220
@@ -412,7 +412,7 @@ Program {
 										leadingComments: undefined
 										readonly: true
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 22
 												index: 220
@@ -426,11 +426,11 @@ Program {
 										}
 									}
 									left: BindingIdentifier {
-										name: 'x'
+										name: "x"
 										leadingComments: undefined
 										loc: Object {
-											filename: 'input.ts'
-											identifierName: 'x'
+											filename: "input.ts"
+											identifierName: "x"
 											end: Object {
 												column: 18
 												index: 216
@@ -447,7 +447,7 @@ Program {
 											optional: undefined
 											typeAnnotation: undefined
 											loc: Object {
-												filename: 'input.ts'
+												filename: "input.ts"
 												end: Object {
 													column: 18
 													index: 216
@@ -464,7 +464,7 @@ Program {
 								}
 								BindingAssignmentPattern {
 									loc: Object {
-										filename: 'input.ts'
+										filename: "input.ts"
 										end: Object {
 											column: 29
 											index: 251
@@ -477,10 +477,10 @@ Program {
 										}
 									}
 									meta: PatternMeta {
-										accessibility: 'public'
+										accessibility: "public"
 										readonly: false
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 29
 												index: 251
@@ -497,7 +497,7 @@ Program {
 										value: 0
 										format: undefined
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 29
 												index: 251
@@ -511,10 +511,10 @@ Program {
 										}
 									}
 									left: BindingIdentifier {
-										name: 'y'
+										name: "y"
 										loc: Object {
-											filename: 'input.ts'
-											identifierName: 'y'
+											filename: "input.ts"
+											identifierName: "y"
 											end: Object {
 												column: 16
 												index: 238
@@ -529,7 +529,7 @@ Program {
 										meta: PatternMeta {
 											optional: true
 											loc: Object {
-												filename: 'input.ts'
+												filename: "input.ts"
 												end: Object {
 													column: 25
 													index: 247
@@ -543,7 +543,7 @@ Program {
 											}
 											typeAnnotation: NumberKeywordTypeAnnotation {
 												loc: Object {
-													filename: 'input.ts'
+													filename: "input.ts"
 													end: Object {
 														column: 25
 														index: 247

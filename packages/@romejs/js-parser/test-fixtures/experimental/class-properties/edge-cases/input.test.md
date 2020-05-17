@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 1
 			index: 381
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		ClassDeclaration {
 			id: BindingIdentifier {
-				name: 'A1'
+				name: "A1"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'A1'
+					filename: "input.js"
+					identifierName: "A1"
 					end: Object {
 						column: 8
 						index: 8
@@ -49,7 +49,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 1
 					index: 34
@@ -67,7 +67,7 @@ Program {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 1
 						index: 34
@@ -83,10 +83,10 @@ Program {
 					ClassProperty {
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'a'
+								name: "a"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'a'
+									filename: "input.js"
+									identifierName: "a"
 									end: Object {
 										column: 3
 										index: 23
@@ -100,7 +100,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 3
 									index: 23
@@ -117,7 +117,7 @@ Program {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 3
 								index: 23
@@ -142,7 +142,7 @@ Program {
 								line: 2
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 3
 									index: 23
@@ -159,10 +159,10 @@ Program {
 					ClassProperty {
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'static'
+								name: "static"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'static'
+									filename: "input.js"
+									identifierName: "static"
 									end: Object {
 										column: 8
 										index: 32
@@ -176,8 +176,8 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'static'
+								filename: "input.js"
+								identifierName: "static"
 								end: Object {
 									column: 8
 									index: 32
@@ -194,7 +194,7 @@ Program {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 8
 								index: 32
@@ -214,7 +214,7 @@ Program {
 							static: false
 							typeAnnotation: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 8
 									index: 32
@@ -233,10 +233,10 @@ Program {
 		}
 		ClassDeclaration {
 			id: BindingIdentifier {
-				name: 'A2'
+				name: "A2"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'A2'
+					filename: "input.js"
+					identifierName: "A2"
 					end: Object {
 						column: 8
 						index: 44
@@ -250,7 +250,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 14
 					index: 50
@@ -268,7 +268,7 @@ Program {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 14
 						index: 50
@@ -284,10 +284,10 @@ Program {
 					ClassProperty {
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'a'
+								name: "a"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'a'
+									filename: "input.js"
+									identifierName: "a"
 									end: Object {
 										column: 12
 										index: 48
@@ -301,7 +301,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 12
 									index: 48
@@ -318,7 +318,7 @@ Program {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 12
 								index: 48
@@ -343,7 +343,7 @@ Program {
 								line: 7
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 12
 									index: 48
@@ -362,10 +362,10 @@ Program {
 		}
 		ClassDeclaration {
 			id: BindingIdentifier {
-				name: 'A3'
+				name: "A3"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'A3'
+					filename: "input.js"
+					identifierName: "A3"
 					end: Object {
 						column: 8
 						index: 59
@@ -379,7 +379,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 16
 					index: 67
@@ -397,7 +397,7 @@ Program {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 16
 						index: 67
@@ -413,10 +413,10 @@ Program {
 					ClassProperty {
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'get'
+								name: "get"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'get'
+									filename: "input.js"
+									identifierName: "get"
 									end: Object {
 										column: 14
 										index: 65
@@ -430,7 +430,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 14
 									index: 65
@@ -447,7 +447,7 @@ Program {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 14
 								index: 65
@@ -472,7 +472,7 @@ Program {
 								line: 8
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 14
 									index: 65
@@ -491,10 +491,10 @@ Program {
 		}
 		ClassDeclaration {
 			id: BindingIdentifier {
-				name: 'A4'
+				name: "A4"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'A4'
+					filename: "input.js"
+					identifierName: "A4"
 					end: Object {
 						column: 8
 						index: 76
@@ -508,7 +508,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 16
 					index: 84
@@ -526,7 +526,7 @@ Program {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 16
 						index: 84
@@ -542,10 +542,10 @@ Program {
 					ClassProperty {
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'set'
+								name: "set"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'set'
+									filename: "input.js"
+									identifierName: "set"
 									end: Object {
 										column: 14
 										index: 82
@@ -559,7 +559,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 14
 									index: 82
@@ -576,7 +576,7 @@ Program {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 14
 								index: 82
@@ -601,7 +601,7 @@ Program {
 								line: 9
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 14
 									index: 82
@@ -620,10 +620,10 @@ Program {
 		}
 		ClassDeclaration {
 			id: BindingIdentifier {
-				name: 'A5'
+				name: "A5"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'A5'
+					filename: "input.js"
+					identifierName: "A5"
 					end: Object {
 						column: 8
 						index: 93
@@ -637,7 +637,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 19
 					index: 104
@@ -655,7 +655,7 @@ Program {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 19
 						index: 104
@@ -671,10 +671,10 @@ Program {
 					ClassProperty {
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'static'
+								name: "static"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'static'
+									filename: "input.js"
+									identifierName: "static"
 									end: Object {
 										column: 17
 										index: 102
@@ -688,8 +688,8 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'static'
+								filename: "input.js"
+								identifierName: "static"
 								end: Object {
 									column: 17
 									index: 102
@@ -706,7 +706,7 @@ Program {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 17
 								index: 102
@@ -726,7 +726,7 @@ Program {
 							static: false
 							typeAnnotation: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 17
 									index: 102
@@ -745,10 +745,10 @@ Program {
 		}
 		ClassDeclaration {
 			id: BindingIdentifier {
-				name: 'A6'
+				name: "A6"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'A6'
+					filename: "input.js"
+					identifierName: "A6"
 					end: Object {
 						column: 8
 						index: 113
@@ -762,7 +762,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 18
 					index: 123
@@ -780,7 +780,7 @@ Program {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 18
 						index: 123
@@ -796,10 +796,10 @@ Program {
 					ClassProperty {
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'async'
+								name: "async"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'async'
+									filename: "input.js"
+									identifierName: "async"
 									end: Object {
 										column: 16
 										index: 121
@@ -813,7 +813,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 16
 									index: 121
@@ -830,7 +830,7 @@ Program {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 16
 								index: 121
@@ -855,7 +855,7 @@ Program {
 								line: 11
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 16
 									index: 121
@@ -874,10 +874,10 @@ Program {
 		}
 		ClassDeclaration {
 			id: BindingIdentifier {
-				name: 'A7'
+				name: "A7"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'A7'
+					filename: "input.js"
+					identifierName: "A7"
 					end: Object {
 						column: 8
 						index: 133
@@ -891,7 +891,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 1
 					index: 152
@@ -909,7 +909,7 @@ Program {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 1
 						index: 152
@@ -925,10 +925,10 @@ Program {
 					ClassProperty {
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'get'
+								name: "get"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'get'
+									filename: "input.js"
+									identifierName: "get"
 									end: Object {
 										column: 5
 										index: 141
@@ -942,7 +942,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 5
 									index: 141
@@ -959,7 +959,7 @@ Program {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 5
 								index: 141
@@ -984,7 +984,7 @@ Program {
 								line: 14
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 5
 									index: 141
@@ -999,13 +999,13 @@ Program {
 						}
 					}
 					ClassMethod {
-						kind: 'method'
+						kind: "method"
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'a'
+								name: "a"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'a'
+									filename: "input.js"
+									identifierName: "a"
 									end: Object {
 										column: 4
 										index: 146
@@ -1019,7 +1019,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 4
 									index: 146
@@ -1033,7 +1033,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 8
 								index: 150
@@ -1049,7 +1049,7 @@ Program {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 8
 									index: 150
@@ -1072,7 +1072,7 @@ Program {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 6
 									index: 148
@@ -1098,7 +1098,7 @@ Program {
 								line: 15
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 4
 									index: 146
@@ -1117,10 +1117,10 @@ Program {
 		}
 		ClassDeclaration {
 			id: BindingIdentifier {
-				name: 'A8'
+				name: "A8"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'A8'
+					filename: "input.js"
+					identifierName: "A8"
 					end: Object {
 						column: 8
 						index: 162
@@ -1134,7 +1134,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 1
 					index: 184
@@ -1152,7 +1152,7 @@ Program {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 1
 						index: 184
@@ -1166,13 +1166,13 @@ Program {
 				}
 				body: Array [
 					ClassMethod {
-						kind: 'method'
+						kind: "method"
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'a'
+								name: "a"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'a'
+									filename: "input.js"
+									identifierName: "a"
 									end: Object {
 										column: 4
 										index: 178
@@ -1186,7 +1186,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 4
 									index: 178
@@ -1200,7 +1200,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 8
 								index: 182
@@ -1216,7 +1216,7 @@ Program {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 8
 									index: 182
@@ -1239,7 +1239,7 @@ Program {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 6
 									index: 180
@@ -1265,7 +1265,7 @@ Program {
 								line: 19
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 4
 									index: 178
@@ -1284,10 +1284,10 @@ Program {
 		}
 		ClassDeclaration {
 			id: BindingIdentifier {
-				name: 'A9'
+				name: "A9"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'A9'
+					filename: "input.js"
+					identifierName: "A9"
 					end: Object {
 						column: 8
 						index: 194
@@ -1301,7 +1301,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 1
 					index: 214
@@ -1319,7 +1319,7 @@ Program {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 1
 						index: 214
@@ -1335,10 +1335,10 @@ Program {
 					ClassProperty {
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'async'
+								name: "async"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'async'
+									filename: "input.js"
+									identifierName: "async"
 									end: Object {
 										column: 7
 										index: 204
@@ -1352,7 +1352,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 7
 									index: 204
@@ -1369,7 +1369,7 @@ Program {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 7
 								index: 204
@@ -1394,7 +1394,7 @@ Program {
 								line: 24
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 7
 									index: 204
@@ -1409,13 +1409,13 @@ Program {
 						}
 					}
 					ClassMethod {
-						kind: 'method'
+						kind: "method"
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'a'
+								name: "a"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'a'
+									filename: "input.js"
+									identifierName: "a"
 									end: Object {
 										column: 3
 										index: 208
@@ -1429,7 +1429,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 3
 									index: 208
@@ -1443,7 +1443,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 7
 								index: 212
@@ -1459,7 +1459,7 @@ Program {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 7
 									index: 212
@@ -1482,7 +1482,7 @@ Program {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 5
 									index: 210
@@ -1508,7 +1508,7 @@ Program {
 								line: 25
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 3
 									index: 208
@@ -1527,10 +1527,10 @@ Program {
 		}
 		ClassDeclaration {
 			id: BindingIdentifier {
-				name: 'A10'
+				name: "A10"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'A10'
+					filename: "input.js"
+					identifierName: "A10"
 					end: Object {
 						column: 9
 						index: 225
@@ -1544,7 +1544,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 1
 					index: 250
@@ -1562,7 +1562,7 @@ Program {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 1
 						index: 250
@@ -1578,10 +1578,10 @@ Program {
 					ClassProperty {
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'async'
+								name: "async"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'async'
+									filename: "input.js"
+									identifierName: "async"
 									end: Object {
 										column: 7
 										index: 244
@@ -1595,7 +1595,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 7
 									index: 244
@@ -1612,7 +1612,7 @@ Program {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 7
 								index: 244
@@ -1637,7 +1637,7 @@ Program {
 								line: 29
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 7
 									index: 244
@@ -1654,10 +1654,10 @@ Program {
 					ClassProperty {
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'a'
+								name: "a"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'a'
+									filename: "input.js"
+									identifierName: "a"
 									end: Object {
 										column: 3
 										index: 248
@@ -1671,7 +1671,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 3
 									index: 248
@@ -1688,7 +1688,7 @@ Program {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 3
 								index: 248
@@ -1713,7 +1713,7 @@ Program {
 								line: 31
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 3
 									index: 248
@@ -1732,10 +1732,10 @@ Program {
 		}
 		ClassDeclaration {
 			id: BindingIdentifier {
-				name: 'A11'
+				name: "A11"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'A11'
+					filename: "input.js"
+					identifierName: "A11"
 					end: Object {
 						column: 9
 						index: 261
@@ -1749,7 +1749,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 21
 					index: 273
@@ -1767,7 +1767,7 @@ Program {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 21
 						index: 273
@@ -1783,10 +1783,10 @@ Program {
 					ClassProperty {
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'static'
+								name: "static"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'static'
+									filename: "input.js"
+									identifierName: "static"
 									end: Object {
 										column: 18
 										index: 270
@@ -1800,8 +1800,8 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'static'
+								filename: "input.js"
+								identifierName: "static"
 								end: Object {
 									column: 18
 									index: 270
@@ -1818,7 +1818,7 @@ Program {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 19
 								index: 271
@@ -1838,7 +1838,7 @@ Program {
 							static: false
 							typeAnnotation: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 18
 									index: 270
@@ -1857,10 +1857,10 @@ Program {
 		}
 		ClassDeclaration {
 			id: BindingIdentifier {
-				name: 'A12'
+				name: "A12"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'A12'
+					filename: "input.js"
+					identifierName: "A12"
 					end: Object {
 						column: 9
 						index: 284
@@ -1874,7 +1874,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 1
 					index: 302
@@ -1892,7 +1892,7 @@ Program {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 1
 						index: 302
@@ -1908,10 +1908,10 @@ Program {
 					ClassProperty {
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'static'
+								name: "static"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'static'
+									filename: "input.js"
+									identifierName: "static"
 									end: Object {
 										column: 8
 										index: 295
@@ -1925,8 +1925,8 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'static'
+								filename: "input.js"
+								identifierName: "static"
 								end: Object {
 									column: 8
 									index: 295
@@ -1943,7 +1943,7 @@ Program {
 							value: 0
 							format: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 12
 									index: 299
@@ -1959,7 +1959,7 @@ Program {
 						definite: undefined
 						typeAnnotation: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 13
 								index: 300
@@ -1979,7 +1979,7 @@ Program {
 							static: false
 							typeAnnotation: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 8
 									index: 295
@@ -1998,10 +1998,10 @@ Program {
 		}
 		ClassDeclaration {
 			id: BindingIdentifier {
-				name: 'A13'
+				name: "A13"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'A13'
+					filename: "input.js"
+					identifierName: "A13"
 					end: Object {
 						column: 9
 						index: 313
@@ -2015,7 +2015,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 1
 					index: 335
@@ -2033,7 +2033,7 @@ Program {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 1
 						index: 335
@@ -2047,12 +2047,12 @@ Program {
 				}
 				body: Array [
 					ClassMethod {
-						kind: 'get'
+						kind: "get"
 						key: ComputedPropertyKey {
 							value: StringLiteral {
-								value: 'a'
+								value: "a"
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 6
 										index: 328
@@ -2066,7 +2066,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 7
 									index: 329
@@ -2080,7 +2080,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 11
 								index: 333
@@ -2096,7 +2096,7 @@ Program {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 11
 									index: 333
@@ -2119,7 +2119,7 @@ Program {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 9
 									index: 331
@@ -2145,7 +2145,7 @@ Program {
 								line: 41
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 7
 									index: 329
@@ -2164,10 +2164,10 @@ Program {
 		}
 		ClassDeclaration {
 			id: BindingIdentifier {
-				name: 'A14'
+				name: "A14"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'A14'
+					filename: "input.js"
+					identifierName: "A14"
 					end: Object {
 						column: 9
 						index: 346
@@ -2181,7 +2181,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 1
 					index: 381
@@ -2199,7 +2199,7 @@ Program {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 1
 						index: 381
@@ -2213,13 +2213,13 @@ Program {
 				}
 				body: Array [
 					ClassMethod {
-						kind: 'get'
+						kind: "get"
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'static'
+								name: "static"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'static'
+									filename: "input.js"
+									identifierName: "static"
 									end: Object {
 										column: 8
 										index: 372
@@ -2233,7 +2233,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 8
 									index: 372
@@ -2247,7 +2247,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 6
 								index: 379
@@ -2263,7 +2263,7 @@ Program {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 6
 									index: 379
@@ -2286,7 +2286,7 @@ Program {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 4
 									index: 377
@@ -2312,7 +2312,7 @@ Program {
 								line: 46
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 8
 									index: 372

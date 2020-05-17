@@ -9,17 +9,17 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
+	sourceType: "module"
 	syntax: Array [
-		'jsx'
-		'ts'
+		"jsx"
+		"ts"
 	]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 80
@@ -33,10 +33,10 @@ Program {
 	}
 	comments: Array [
 		CommentLine {
-			id: '0'
-			value: ' Same as `generic`. Verify that JSX doesn\'t change things.'
+			id: "0"
+			value: " Same as `generic`. Verify that JSX doesn't change things."
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 60
 					index: 60
@@ -52,9 +52,9 @@ Program {
 	]
 	body: Array [
 		ExpressionStatement {
-			leadingComments: Array ['0']
+			leadingComments: Array ["0"]
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 18
 					index: 79
@@ -68,7 +68,7 @@ Program {
 			}
 			expression: ArrowFunctionExpression {
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 17
 						index: 78
@@ -81,10 +81,10 @@ Program {
 					}
 				}
 				body: ReferenceIdentifier {
-					name: 'a'
+					name: "a"
 					loc: Object {
-						filename: 'input.ts'
-						identifierName: 'a'
+						filename: "input.ts"
+						identifierName: "a"
 						end: Object {
 							column: 17
 							index: 78
@@ -100,7 +100,7 @@ Program {
 				typeParameters: TSTypeParameterDeclaration {
 					leadingComments: undefined
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 3
 							index: 64
@@ -114,12 +114,12 @@ Program {
 					}
 					params: Array [
 						TSTypeParameter {
-							name: 'T'
+							name: "T"
 							constraint: undefined
 							default: undefined
 							leadingComments: undefined
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 2
 									index: 63
@@ -140,7 +140,7 @@ Program {
 					rest: undefined
 					thisType: undefined
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 15
 							index: 76
@@ -155,7 +155,7 @@ Program {
 					returnType: TSTypeReference {
 						typeParameters: undefined
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 12
 								index: 73
@@ -168,10 +168,10 @@ Program {
 							}
 						}
 						typeName: ReferenceIdentifier {
-							name: 'T'
+							name: "T"
 							loc: Object {
-								filename: 'input.ts'
-								identifierName: 'T'
+								filename: "input.ts"
+								identifierName: "T"
 								end: Object {
 									column: 12
 									index: 73
@@ -187,9 +187,9 @@ Program {
 					}
 					params: Array [
 						BindingIdentifier {
-							name: 'a'
+							name: "a"
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 15
 									index: 76
@@ -204,7 +204,7 @@ Program {
 							meta: PatternMeta {
 								optional: undefined
 								loc: Object {
-									filename: 'input.ts'
+									filename: "input.ts"
 									end: Object {
 										column: 15
 										index: 76
@@ -219,7 +219,7 @@ Program {
 								typeAnnotation: TSTypeReference {
 									typeParameters: undefined
 									loc: Object {
-										filename: 'input.ts'
+										filename: "input.ts"
 										end: Object {
 											column: 8
 											index: 69
@@ -232,10 +232,10 @@ Program {
 										}
 									}
 									typeName: ReferenceIdentifier {
-										name: 'T'
+										name: "T"
 										loc: Object {
-											filename: 'input.ts'
-											identifierName: 'T'
+											filename: "input.ts"
+											identifierName: "T"
 											end: Object {
 												column: 8
 												index: 69

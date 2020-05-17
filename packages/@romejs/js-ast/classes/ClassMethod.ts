@@ -10,12 +10,12 @@ import {
 	ClassPropertyMeta,
 	FunctionHead,
 	JSNodeBase,
-} from '../index';
-import {createBuilder} from '../utils';
-import {AnyObjectPropertyKey} from '../unions';
+} from "../index";
+import {createBuilder} from "../utils";
+import {AnyObjectPropertyKey} from "../unions";
 
 export type ClassMethod = JSNodeBase & {
-	type: 'ClassMethod';
+	type: "ClassMethod";
 	meta: ClassPropertyMeta;
 	key: AnyObjectPropertyKey;
 	kind: ClassMethodKind;
@@ -23,10 +23,10 @@ export type ClassMethod = JSNodeBase & {
 	body: BlockStatement;
 };
 
-export type ClassMethodKind = 'constructor' | 'method' | 'get' | 'set';
+export type ClassMethodKind = "constructor" | "method" | "get" | "set";
 
 export const classMethod = createBuilder<ClassMethod>(
-	'ClassMethod',
+	"ClassMethod",
 	{
 		bindingKeys: {},
 		visitorKeys: {

@@ -5,44 +5,44 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ProjectConfig} from '@romejs/project';
+import {ProjectConfig} from "@romejs/project";
 import {
 	CompilerOptions,
 	TransformStageFactories,
 	TransformStageName,
 	TransformVisitors,
 	Transforms,
-} from '../types';
-import classProperties from './compile/transpile/classProperties';
-import paramlessCatch from './compile/transpile/paramlessCatch';
-import optionalChaining from './compile/transpile/optionalChaining';
-import nullishCoalescing from './compile/transpile/nullishCoalescing';
-import callSpread from './compile/transpile/callSpread';
-import templateLiterals from './compile/transpile/templateLiterals';
-import objectSpread from './compile/transpile/objectSpread';
-import optimizeImports from './compile/validation/optimizeImports';
-import optimizeExports from './compile/validation/optimizeExports';
-import jsx from './compile/jsx';
-import assetTransform from './compileForBundle/assetTransform';
-import cjsRootTransform from './compileForBundle/modern/cjsRootTransform';
-import esToRefTransform from './compileForBundle/modern/esToRefTransform';
-import requireRewriteTransform from './compileForBundle/modern/requireRewriteTransform';
-import magicCJSTransform from './compileForBundle/legacy/magicCJSTransform';
-import inlineRequiresTransform from './compileForBundle/legacy/inlineRequiresTransform';
-import esToCJSTransform from './compileForBundle/legacy/esToCJSTransform';
-import metaPropertyTransform from './compileForBundle/metaPropertyTransform';
-import scopedRomeTransform from './compileForBundle/scopedRomeTransform';
-import asyncImportTransform from './compileForBundle/asyncImportTransform';
-import inlineEnv from './compileForBundle/inlineEnv';
+} from "../types";
+import classProperties from "./compile/transpile/classProperties";
+import paramlessCatch from "./compile/transpile/paramlessCatch";
+import optionalChaining from "./compile/transpile/optionalChaining";
+import nullishCoalescing from "./compile/transpile/nullishCoalescing";
+import callSpread from "./compile/transpile/callSpread";
+import templateLiterals from "./compile/transpile/templateLiterals";
+import objectSpread from "./compile/transpile/objectSpread";
+import optimizeImports from "./compile/validation/optimizeImports";
+import optimizeExports from "./compile/validation/optimizeExports";
+import jsx from "./compile/jsx";
+import assetTransform from "./compileForBundle/assetTransform";
+import cjsRootTransform from "./compileForBundle/modern/cjsRootTransform";
+import esToRefTransform from "./compileForBundle/modern/esToRefTransform";
+import requireRewriteTransform from "./compileForBundle/modern/requireRewriteTransform";
+import magicCJSTransform from "./compileForBundle/legacy/magicCJSTransform";
+import inlineRequiresTransform from "./compileForBundle/legacy/inlineRequiresTransform";
+import esToCJSTransform from "./compileForBundle/legacy/esToCJSTransform";
+import metaPropertyTransform from "./compileForBundle/metaPropertyTransform";
+import scopedRomeTransform from "./compileForBundle/scopedRomeTransform";
+import asyncImportTransform from "./compileForBundle/asyncImportTransform";
+import inlineEnv from "./compileForBundle/inlineEnv";
 import {
 	commentInjectorVisitor,
 	variableInjectorVisitor,
-} from './defaultHooks/index';
+} from "./defaultHooks/index";
 
 export const stageOrder: Array<TransformStageName> = [
-	'pre',
-	'compile',
-	'compileForBundle',
+	"pre",
+	"compile",
+	"compileForBundle",
 ];
 
 export const hookVisitors: TransformVisitors = [
@@ -65,7 +65,7 @@ export const stageTransforms: TransformStageFactories = {
 	compileForBundle: (projectConfig: ProjectConfig, options: CompilerOptions) => {
 		const opts = options.bundle;
 		if (opts === undefined) {
-			throw new Error('Expected bundle options for compileForBundle stage');
+			throw new Error("Expected bundle options for compileForBundle stage");
 		}
 
 		const transforms: Transforms = [];
@@ -78,10 +78,10 @@ export const stageTransforms: TransformStageFactories = {
 		transforms.push(scopedRomeTransform);
 		transforms.push(inlineEnv);
 
-		if (opts.mode === 'modern') {
+		if (opts.mode === "modern") {
 			transforms.push(requireRewriteTransform);
 			transforms.push(
-				opts.analyze.moduleType === 'cjs' ? cjsRootTransform : esToRefTransform,
+				opts.analyze.moduleType === "cjs" ? cjsRootTransform : esToRefTransform,
 			);
 		} else {
 			transforms.push(inlineRequiresTransform);

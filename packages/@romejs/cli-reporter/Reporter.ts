@@ -11,7 +11,7 @@ import {
 	markupTag,
 	markupToAnsi,
 	markupToPlainText,
-} from '@romejs/string-markup';
+} from "@romejs/string-markup";
 import {
 	RemoteReporterClientMessage,
 	RemoteReporterReceiveMessage as RemoteReporterServerMessage,
@@ -23,21 +23,21 @@ import {
 	ReporterTableField,
 	SelectArguments,
 	SelectOptions,
-} from './types';
-import {removeSuffix} from '@romejs/string-utils';
-import Progress from './Progress';
-import prettyFormat from '@romejs/pretty-format';
-import stream = require('stream');
-import {CWD_PATH} from '@romejs/path';
-import {Event} from '@romejs/events';
-import readline = require('readline');
+} from "./types";
+import {removeSuffix} from "@romejs/string-utils";
+import Progress from "./Progress";
+import prettyFormat from "@romejs/pretty-format";
+import stream = require("stream");
+import {CWD_PATH} from "@romejs/path";
+import {Event} from "@romejs/events";
+import readline = require("readline");
 import {
 	MarkupFormatGridOptions,
 	MarkupTagName,
-} from '@romejs/string-markup/types';
-import select from './select';
-import {MarkupLinesAndWidth} from '@romejs/string-markup/format';
-import {onKeypress} from './util';
+} from "@romejs/string-markup/types";
+import select from "./select";
+import {MarkupLinesAndWidth} from "@romejs/string-markup/format";
+import {onKeypress} from "./util";
 
 type ListOptions = {
 	reverse?: boolean;
@@ -92,16 +92,16 @@ type Stdout = stream.Writable & {
 	columns?: number;
 };
 
-function getStreamFormat(stdout: undefined | Stdout): ReporterStream['format'] {
-	return stdout !== undefined && stdout.isTTY === true ? 'ansi' : 'none';
+function getStreamFormat(stdout: undefined | Stdout): ReporterStream["format"] {
+	return stdout !== undefined && stdout.isTTY === true ? "ansi" : "none";
 }
 
 export default class Reporter {
 	constructor(opts: ReporterOptions = {}) {
-		this.programName = opts.programName === undefined ? 'rome' : opts.programName;
+		this.programName = opts.programName === undefined ? "rome" : opts.programName;
 		this.programVersion = opts.programVersion;
 
-		this.noProgress = process.env.CI === '1';
+		this.noProgress = process.env.CI === "1";
 		this.isVerbose = Boolean(opts.verbose);
 
 		this.startTime = opts.startTime === undefined ? Date.now() : opts.startTime;
@@ -109,7 +109,7 @@ export default class Reporter {
 			opts.hasClearScreen === undefined ? true : opts.hasClearScreen;
 		this.activeElements = new Set();
 		this.indentLevel = 0;
-		this.indentString = '';
+		this.indentString = "";
 		this.enabled = opts.disabled === true ? 0 : 1;
 		this.markupOptions =
 			opts.markupOptions === undefined ? {} : opts.markupOptions;
@@ -124,10 +124,10 @@ export default class Reporter {
 		this.remoteServerProgressBars = new Map();
 
 		this.sendRemoteServerMessage = new Event({
-			name: 'sendRemoteServerMessage',
+			name: "sendRemoteServerMessage",
 		});
 		this.sendRemoteClientMessage = new Event({
-			name: 'sendRemoteClientMessage',
+			name: "sendRemoteClientMessage",
 		});
 
 		this.isRemote = opts.useRemoteProgressBars === true;
@@ -152,14 +152,14 @@ export default class Reporter {
 				: stdout.columns;
 
 		const columnsUpdated: Event<number, void> = new Event({
-			name: 'columnsUpdated',
+			name: "columnsUpdated",
 		});
 
 		// Windows terminals are awful
-		const unicode = process.platform !== 'win32';
+		const unicode = process.platform !== "win32";
 
 		const outStream: ReporterStream = {
-			type: 'out',
+			type: "out",
 			format: getStreamFormat(stdout),
 			columns,
 			unicode,
@@ -172,7 +172,7 @@ export default class Reporter {
 		};
 
 		const errStream: ReporterStream = {
-			type: 'error',
+			type: "error",
 			format: getStreamFormat(stderr),
 			columns,
 			unicode,
@@ -184,7 +184,7 @@ export default class Reporter {
 		};
 
 		// Watch for resizing
-		if (outStream.format === 'ansi' && stdout !== undefined) {
+		if (outStream.format === "ansi" && stdout !== undefined) {
 			const onStdoutResize = () => {
 				if (stdout?.columns !== undefined) {
 					const {columns} = stdout;
@@ -194,10 +194,10 @@ export default class Reporter {
 			};
 
 			outStream.teardown = () => {
-				stdout.off('resize', onStdoutResize);
+				stdout.off("resize", onStdoutResize);
 			};
 
-			stdout.on('resize', onStdoutResize);
+			stdout.on("resize", onStdoutResize);
 		}
 
 		this.addStream(outStream);
@@ -211,16 +211,16 @@ export default class Reporter {
 	}
 
 	attachCaptureStream(
-		format: ReporterStream['format'] = 'none',
+		format: ReporterStream["format"] = "none",
 	): {
 		read: () => string;
 		remove: () => void;
 	} {
-		let buff = '';
+		let buff = "";
 
 		const stream: ReporterStream = {
 			format,
-			type: 'all',
+			type: "all",
 			columns: Reporter.DEFAULT_COLUMNS,
 			unicode: true,
 			write(chunk) {
@@ -294,14 +294,14 @@ export default class Reporter {
 	}>;
 
 	processRemoteClientMessage(msg: RemoteReporterClientMessage) {
-		if (msg.type === 'PROGRESS_CREATE') {
+		if (msg.type === "PROGRESS_CREATE") {
 			this.remoteClientProgressBars.set(
 				msg.id,
 				this.progressLocal(
 					msg.opts,
 					() => {
 						this.sendRemoteServerMessage.call({
-							type: 'ENDED',
+							type: "ENDED",
 							id: msg.id,
 						});
 					},
@@ -319,7 +319,7 @@ export default class Reporter {
 
 		bar.processRemoteClientMessage(msg);
 
-		if (msg.type === 'PROGRESS_END') {
+		if (msg.type === "PROGRESS_END") {
 			this.remoteClientProgressBars.delete(msg.id);
 		}
 	}
@@ -327,7 +327,7 @@ export default class Reporter {
 	receivedRemoteServerMessage(msg: RemoteReporterServerMessage) {
 		// Currently the only message a remote Reporter can send is that it has ended
 		switch (msg.type) {
-			case 'ENDED': {
+			case "ENDED": {
 				const progress = this.remoteServerProgressBars.get(msg.id);
 				if (progress !== undefined) {
 					progress.end();
@@ -337,12 +337,12 @@ export default class Reporter {
 	}
 
 	getMessagePrefix(): string {
-		return '';
+		return "";
 	}
 
 	normalizeMessage(stream: ReporterStream, tty: string, opts: LogOptions): string {
 		let msg =
-			stream.format !== 'none' || opts.nonTTY === undefined ? tty : opts.nonTTY;
+			stream.format !== "none" || opts.nonTTY === undefined ? tty : opts.nonTTY;
 
 		if (opts.noPrefix !== true) {
 			msg = this.getMessagePrefix() + msg;
@@ -352,8 +352,8 @@ export default class Reporter {
 		const {indentString} = this;
 		if (
 			this.streamsWithNewlineEnd.has(stream) &&
-			indentString !== '' &&
-			msg !== ''
+			indentString !== "" &&
+			msg !== ""
 		) {
 			// Indent each line, leaving out the indentation for empty lines
 			msg = indentString + msg.replace(/\n([^\n])/g, `\n${indentString}$1`);
@@ -388,11 +388,11 @@ export default class Reporter {
 		this.streamsWithNewlineEnd.add(stream);
 		this.streams.add(stream);
 
-		if (stream.type === 'error' || stream.type === 'all') {
+		if (stream.type === "error" || stream.type === "all") {
 			this.errStreams.add(stream);
 		}
 
-		if (stream.type === 'out' || stream.type === 'all') {
+		if (stream.type === "out" || stream.type === "all") {
 			this.outStreams.add(stream);
 		}
 	}
@@ -410,14 +410,14 @@ export default class Reporter {
 	getStdin(): NodeJS.ReadStream {
 		const {stdin} = this;
 		if (stdin === undefined) {
-			throw new Error('This operation expected a stdin but we have none');
+			throw new Error("This operation expected a stdin but we have none");
 		}
 		return stdin;
 	}
 
 	async question(
 		message: string,
-		{hint, default: def = '', yes = false}: QuestionOptions = {},
+		{hint, default: def = "", yes = false}: QuestionOptions = {},
 	): Promise<string> {
 		if (yes) {
 			return def;
@@ -430,10 +430,10 @@ export default class Reporter {
 		if (hint !== undefined) {
 			prompt += ` <dim>${hint}</dim>`;
 		}
-		if (def !== '') {
+		if (def !== "") {
 			prompt += ` (${def})`;
 		}
-		prompt += ': ';
+		prompt += ": ";
 		this.logAll(
 			prompt,
 			{
@@ -454,20 +454,20 @@ export default class Reporter {
 
 		return new Promise((resolve) => {
 			rl.on(
-				'line',
+				"line",
 				(line) => {
 					rl.close();
 
-					const normalized = line === '' ? def : line;
+					const normalized = line === "" ? def : line;
 
 					// Replace initial prompt
 					this.writeAll(ansiEscapes.cursorUp());
 					this.writeAll(ansiEscapes.eraseLine);
 
 					let prompt = origPrompt;
-					prompt += ': ';
-					if (normalized === '') {
-						prompt += '<dim>empty</dim>';
+					prompt += ": ";
+					if (normalized === "") {
+						prompt += "<dim>empty</dim>";
 					} else {
 						prompt += normalized;
 					}
@@ -482,7 +482,7 @@ export default class Reporter {
 	async questionValidate<T>(
 		message: string,
 		validate: (value: string) => QuestionValidateResult<T>,
-		options: Omit<QuestionOptions, 'normalize'> = {},
+		options: Omit<QuestionOptions, "normalize"> = {},
 	): Promise<T> {
 		while (true) {
 			let res: undefined | QuestionValidateResult<T>;
@@ -494,7 +494,7 @@ export default class Reporter {
 					normalize: (value: string): string => {
 						res = validate(value);
 
-						if (res[0] === true && typeof res[1] === 'string') {
+						if (res[0] === true && typeof res[1] === "string") {
 							return res[1];
 						} else {
 							return value;
@@ -504,7 +504,7 @@ export default class Reporter {
 			);
 
 			if (res === undefined) {
-				throw new Error('normalize should have been called');
+				throw new Error("normalize should have been called");
 			}
 
 			if (res[0] === false) {
@@ -522,20 +522,20 @@ export default class Reporter {
 			{
 				options: {
 					yes: {
-						label: 'Yes',
-						shortcut: 'y',
+						label: "Yes",
+						shortcut: "y",
 					},
 					no: {
-						label: 'No',
-						shortcut: 'n',
+						label: "No",
+						shortcut: "n",
 					},
 				},
 			},
 		);
-		return answer === 'yes';
+		return answer === "yes";
 	}
 
-	async confirm(message: string = 'Press any key to continue'): Promise<void> {
+	async confirm(message: string = "Press any key to continue"): Promise<void> {
 		this.logAll(`<dim>${message}</dim>`, {newline: false});
 
 		await new Promise((resolve) => {
@@ -549,7 +549,7 @@ export default class Reporter {
 		});
 
 		// Newline
-		this.logAll('');
+		this.logAll("");
 	}
 
 	async radio<Options extends SelectOptions>(
@@ -597,7 +597,7 @@ export default class Reporter {
 
 		return () => {
 			if (alreadyDisabled) {
-				throw new Error('Already disabled Reporter');
+				throw new Error("Already disabled Reporter");
 			}
 
 			this.enabled--;
@@ -647,7 +647,7 @@ export default class Reporter {
 	}
 
 	updateIndent() {
-		this.indentString = '  '.repeat(this.indentLevel);
+		this.indentString = "  ".repeat(this.indentLevel);
 	}
 
 	//# INTERNAL
@@ -657,7 +657,7 @@ export default class Reporter {
 		emoji: string,
 		fallback?: string,
 	): string {
-		if (stream.format === 'none') {
+		if (stream.format === "none") {
 			return `${emoji} ${msg}`;
 		} else {
 			if (fallback === undefined) {
@@ -673,30 +673,30 @@ export default class Reporter {
 		head: Array<ReporterTableField>,
 		rawBody: Array<Array<ReporterTableField>>,
 	) {
-		let body = '';
+		let body = "";
 
 		if (head.length > 0) {
-			body += '<tr>';
+			body += "<tr>";
 			for (const field of head) {
 				body += `<td><emphasis>${field}</emphasis></td>`;
 			}
-			body += '</tr>';
+			body += "</tr>";
 		}
 
 		for (const row of rawBody) {
-			body += '<tr>';
+			body += "<tr>";
 			for (let field of row) {
-				if (typeof field === 'string' || typeof field === 'number') {
-					field = {align: 'left', value: field};
+				if (typeof field === "string" || typeof field === "number") {
+					field = {align: "left", value: field};
 				}
 
 				let {value, align} = field;
-				if (typeof value === 'number') {
+				if (typeof value === "number") {
 					value = `<number>${value}</number>`;
 				}
 				body += `<td align="${align}">${value}</td>`;
 			}
-			body += '</tr>';
+			body += "</tr>";
 		}
 
 		this.logAll(`<table>${body}</table>`);
@@ -715,7 +715,7 @@ export default class Reporter {
 
 		let formatted = value;
 
-		if (typeof formatted !== 'number' && typeof formatted !== 'string') {
+		if (typeof formatted !== "number" && typeof formatted !== "string") {
 			formatted = prettyFormat(formatted, {markup: true});
 		}
 
@@ -747,7 +747,7 @@ export default class Reporter {
 
 		this.hasClearScreen = false;
 
-		if (stream.format === 'ansi' && this.activeElements.size > 0) {
+		if (stream.format === "ansi" && this.activeElements.size > 0) {
 			// A progress bar is active and has probably drawn to the screen
 			this.clearLineSpecific(stream);
 		}
@@ -762,7 +762,7 @@ export default class Reporter {
 
 	clearScreen() {
 		for (const stream of this.getStreams(false)) {
-			if (stream.format === 'ansi') {
+			if (stream.format === "ansi") {
 				stream.write(ansiEscapes.clearScreen);
 			}
 		}
@@ -789,7 +789,7 @@ export default class Reporter {
 		});
 	}
 
-	hr(text: string = '') {
+	hr(text: string = "") {
 		const {hasClearScreen} = this;
 
 		this.br();
@@ -824,7 +824,7 @@ export default class Reporter {
 			// If a step doesn't produce any output, or just progress bars that are cleared, we can safely remove the previous `step` message line
 			if (clear && this.hasClearScreen) {
 				for (const stream of this.getStreams(false)) {
-					if (stream.format === 'ansi') {
+					if (stream.format === "ansi") {
 						stream.write(ansiEscapes.cursorTo(0));
 						stream.write(ansiEscapes.cursorUp());
 						stream.write(ansiEscapes.eraseLine);
@@ -835,10 +835,10 @@ export default class Reporter {
 	}
 
 	step(current: number, total: number, msg: string) {
-		if (msg.endsWith('?')) {
-			msg = `${removeSuffix(msg, '?')}...?`;
+		if (msg.endsWith("?")) {
+			msg = `${removeSuffix(msg, "?")}...?`;
 		} else {
-			msg += '...';
+			msg += "...";
 		}
 
 		this.logAll(`<dim>[${current}/${total}]</dim> ${msg}`);
@@ -847,7 +847,7 @@ export default class Reporter {
 	br(force: boolean = false) {
 		for (const stream of this.getStreams(false)) {
 			if (!this.streamsWithDoubleNewlineEnd.has(stream) || force) {
-				this.logOne(stream, '');
+				this.logOne(stream, "");
 			}
 		}
 	}
@@ -862,7 +862,7 @@ export default class Reporter {
 	};
 
 	stripMarkup(str: string): string {
-		return markupToPlainText(str, this.markupOptions).lines.join('\n');
+		return markupToPlainText(str, this.markupOptions).lines.join("\n");
 	}
 
 	markupify(
@@ -870,8 +870,8 @@ export default class Reporter {
 		str: string,
 		viewportShrink: number = 0,
 	): MarkupLinesAndWidth {
-		if (str === '') {
-			return {lines: [''], width: 0};
+		if (str === "") {
+			return {lines: [""], width: 0};
 		}
 
 		const gridMarkupOptions: MarkupFormatGridOptions = {
@@ -880,17 +880,17 @@ export default class Reporter {
 		};
 
 		switch (stream.format) {
-			case 'ansi':
+			case "ansi":
 				return markupToAnsi(str, gridMarkupOptions);
 
-			case 'html':
+			case "html":
 				// TODO
 				return markupToPlainText(str, gridMarkupOptions);
 
-			case 'none':
+			case "none":
 				return markupToPlainText(str, gridMarkupOptions);
 
-			case 'markup':
+			case "markup":
 				return {
 					width: 0,
 					lines: [str],
@@ -912,7 +912,7 @@ export default class Reporter {
 
 	logOne(stream: ReporterStream, tty: string, opts: LogOptions = {}) {
 		const msg =
-			stream.format !== 'none' || opts.nonTTY === undefined ? tty : opts.nonTTY;
+			stream.format !== "none" || opts.nonTTY === undefined ? tty : opts.nonTTY;
 		const {lines} = this.markupify(stream, msg);
 		for (const line of lines) {
 			this.logOneNoMarkup(stream, line, opts);
@@ -926,17 +926,17 @@ export default class Reporter {
 
 		let msg = this.normalizeMessage(stream, tty, opts);
 		if (opts.newline !== false) {
-			msg += '\n';
+			msg += "\n";
 		}
 
 		// Track if there's going to be a completely empty line
-		const hasDoubleNewline = msg === '\n' || msg.endsWith('\n\n');
+		const hasDoubleNewline = msg === "\n" || msg.endsWith("\n\n");
 		if (hasDoubleNewline) {
 			this.streamsWithDoubleNewlineEnd.add(stream);
 		} else {
 			this.streamsWithDoubleNewlineEnd.delete(stream);
 		}
-		if (msg.endsWith('\n')) {
+		if (msg.endsWith("\n")) {
 			this.streamsWithNewlineEnd.add(stream);
 		} else {
 			this.streamsWithNewlineEnd.delete(stream);
@@ -960,7 +960,7 @@ export default class Reporter {
 			// Format the prefix, selecting it depending on if we're a unicode stream
 			const prefixInner = stream.unicode ? opts.unicodePrefix : opts.rawPrefix;
 			const prefix = markupTag(
-				'emphasis',
+				"emphasis",
 				markupTag(opts.markupTag, this.getMessagePrefix() + prefixInner),
 			);
 
@@ -971,7 +971,7 @@ export default class Reporter {
 			);
 			const prefixLine = prefixLines[0];
 			if (prefixLines.length !== 1) {
-				throw new Error('Expected 1 prefix line');
+				throw new Error("Expected 1 prefix line");
 			}
 
 			const {lines} = this.markupify(stream, inner, prefixWidth);
@@ -980,7 +980,7 @@ export default class Reporter {
 				if (i === 0) {
 					line = `${prefixLine}${line}`;
 				} else {
-					line = `${' '.repeat(prefixWidth)}${line}`;
+					line = `${" ".repeat(prefixWidth)}${line}`;
 				}
 				this.logOneNoMarkup(
 					stream,
@@ -999,9 +999,9 @@ export default class Reporter {
 			msg,
 			args,
 			{
-				unicodePrefix: '\u2714 ',
-				rawPrefix: '\u221a ',
-				markupTag: 'success',
+				unicodePrefix: "\u2714 ",
+				rawPrefix: "\u221a ",
+				markupTag: "success",
 			},
 		);
 	}
@@ -1011,16 +1011,16 @@ export default class Reporter {
 			msg,
 			args,
 			{
-				markupTag: 'error',
-				unicodePrefix: '\u2716 ',
-				rawPrefix: '\xd7 ',
+				markupTag: "error",
+				unicodePrefix: "\u2716 ",
+				rawPrefix: "\xd7 ",
 				stderr: true,
 			},
 		);
 	}
 
 	errorObj(err: Error) {
-		this.error(err.stack || err.message || err.name || 'Unknown Error');
+		this.error(err.stack || err.message || err.name || "Unknown Error");
 	}
 
 	info(msg: string, ...args: Array<unknown>) {
@@ -1028,9 +1028,9 @@ export default class Reporter {
 			msg,
 			args,
 			{
-				unicodePrefix: '\u2139 ',
-				rawPrefix: 'i ',
-				markupTag: 'info',
+				unicodePrefix: "\u2139 ",
+				rawPrefix: "i ",
+				markupTag: "info",
 			},
 		);
 	}
@@ -1040,9 +1040,9 @@ export default class Reporter {
 			msg,
 			args,
 			{
-				unicodePrefix: '\u26a0 ',
-				rawPrefix: '! ',
-				markupTag: 'warn',
+				unicodePrefix: "\u26a0 ",
+				rawPrefix: "! ",
+				markupTag: "warn",
 				stderr: true,
 			},
 		);
@@ -1059,9 +1059,9 @@ export default class Reporter {
 			msg,
 			args,
 			{
-				unicodePrefix: '\u26a1 ',
-				rawPrefix: '* ',
-				markupTag: 'dim',
+				unicodePrefix: "\u26a1 ",
+				rawPrefix: "* ",
+				markupTag: "dim",
 			},
 		);
 	}
@@ -1096,20 +1096,20 @@ export default class Reporter {
 			start += truncatedCount;
 		}
 
-		let buff = '';
+		let buff = "";
 
 		for (const item of items) {
 			const reporter = this.fork({
 				streams: [],
 			});
-			const stream = reporter.attachCaptureStream('markup');
+			const stream = reporter.attachCaptureStream("markup");
 			callback(reporter, item);
 			stream.remove();
 			buff += `<li>${stream.read()}</li>`;
 		}
 
 		if (opts.ordered) {
-			this.logAll(markupTag('ol', buff, {start, reversed: opts.reverse}));
+			this.logAll(markupTag("ol", buff, {start, reversed: opts.reverse}));
 		} else {
 			this.logAll(`<ul>${buff}</ul>`);
 		}
@@ -1159,7 +1159,7 @@ export default class Reporter {
 		const id: string = `${process.pid}:${remoteProgressIdCounter++}`;
 
 		this.sendRemoteClientMessage.send({
-			type: 'PROGRESS_CREATE',
+			type: "PROGRESS_CREATE",
 			opts,
 			id,
 		});
@@ -1185,14 +1185,14 @@ export default class Reporter {
 			},
 			setCurrent: (current: number) => {
 				dispatch({
-					type: 'PROGRESS_SET_CURRENT',
+					type: "PROGRESS_SET_CURRENT",
 					current,
 					id,
 				});
 			},
 			setTotal: (total: number, approximate: boolean = false) => {
 				dispatch({
-					type: 'PROGRESS_SET_TOTAL',
+					type: "PROGRESS_SET_TOTAL",
 					total,
 					approximate,
 					id,
@@ -1200,53 +1200,53 @@ export default class Reporter {
 			},
 			setText: (text: string) => {
 				dispatch({
-					type: 'PROGRESS_SET_TEXT',
+					type: "PROGRESS_SET_TEXT",
 					text,
 					id,
 				});
 			},
 			setApproximateETA: (duration: number) => {
 				dispatch({
-					type: 'PROGRESS_SET_APPROXIMATE_ETA',
+					type: "PROGRESS_SET_APPROXIMATE_ETA",
 					duration,
 					id,
 				});
 			},
 			pushText: (text: string) => {
 				dispatch({
-					type: 'PROGRESS_PUSH_TEXT',
+					type: "PROGRESS_PUSH_TEXT",
 					text,
 					id,
 				});
 			},
 			popText: (text: string) => {
 				dispatch({
-					type: 'PROGRESS_POP_TEXT',
+					type: "PROGRESS_POP_TEXT",
 					text,
 					id,
 				});
 			},
 			tick: () => {
 				dispatch({
-					type: 'PROGRESS_TICK',
+					type: "PROGRESS_TICK",
 					id,
 				});
 			},
 			end: () => {
 				dispatch({
-					type: 'PROGRESS_END',
+					type: "PROGRESS_END",
 					id,
 				});
 			},
 			pause: () => {
 				dispatch({
-					type: 'PROGRESS_PAUSE',
+					type: "PROGRESS_PAUSE",
 					id,
 				});
 			},
 			resume: () => {
 				dispatch({
-					type: 'PROGRESS_RESUME',
+					type: "PROGRESS_RESUME",
 					id,
 				});
 			},

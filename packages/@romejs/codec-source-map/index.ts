@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export {default as SourceMapGenerator} from './SourceMapGenerator';
-export {default as SourceMapConsumer} from './SourceMapConsumer';
-export {default as SourceMapConsumerCollection} from './SourceMapConsumerCollection';
-export {Mapping, Mappings, SourceMap} from './types';
+export {default as SourceMapGenerator} from "./SourceMapGenerator";
+export {default as SourceMapConsumer} from "./SourceMapConsumer";
+export {default as SourceMapConsumerCollection} from "./SourceMapConsumerCollection";
+export {Mapping, Mappings, SourceMap} from "./types";

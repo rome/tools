@@ -5,34 +5,34 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from '@romejs/js-compiler';
+import {Path} from "@romejs/js-compiler";
 import {
 	TemplateLiteral,
 	templateElement,
 	templateLiteral,
-} from '@romejs/js-ast';
-import {descriptions} from '@romejs/diagnostics';
-import {TransformExitResult} from '@romejs/js-compiler/types';
-import {removeShallowLoc} from '@romejs/js-ast-utils';
+} from "@romejs/js-ast";
+import {descriptions} from "@romejs/diagnostics";
+import {TransformExitResult} from "@romejs/js-compiler/types";
+import {removeShallowLoc} from "@romejs/js-ast-utils";
 
 export default {
-	name: 'preferTemplate',
+	name: "preferTemplate",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 
 		if (
-			node.type === 'BinaryExpression' &&
-			node.operator === '+' &&
-			((node.left.type === 'StringLiteral' && !node.left.value.includes('`')) ||
-			(node.right.type === 'StringLiteral' && !node.right.value.includes('`')))
+			node.type === "BinaryExpression" &&
+			node.operator === "+" &&
+			((node.left.type === "StringLiteral" && !node.left.value.includes("`")) ||
+			(node.right.type === "StringLiteral" && !node.right.value.includes("`")))
 		) {
 			let autofix: undefined | TemplateLiteral;
 
-			if (node.right.type === 'StringLiteral') {
+			if (node.right.type === "StringLiteral") {
 				const quasis = [
 					templateElement.create({
-						raw: '',
-						cooked: '',
+						raw: "",
+						cooked: "",
 					}),
 					templateElement.create({
 						raw: node.right.value,
@@ -47,15 +47,15 @@ export default {
 				});
 			}
 
-			if (node.left.type === 'StringLiteral') {
+			if (node.left.type === "StringLiteral") {
 				const quasis = [
 					templateElement.create({
 						raw: node.left.value,
 						cooked: node.left.value,
 					}),
 					templateElement.create({
-						raw: '',
-						cooked: '',
+						raw: "",
+						cooked: "",
 					}),
 				];
 

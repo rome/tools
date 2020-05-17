@@ -28,12 +28,12 @@
 ### `0: formatted`
 
 ```
-import foo, {bar} from './testdummy.ts';
+import foo, {bar} from "./testdummy.ts";
 
-import type {fooType} from './testdummy.ts';
+import type {fooType} from "./testdummy.ts";
 
 const typedFoo: fooType = {
-	type: 'foo',
+	type: "foo",
 };
 
 ```

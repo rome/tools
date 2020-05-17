@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 47
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 46
 					index: 46
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			expression: LogicalExpression {
-				operator: '||'
+				operator: "||"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 46
 						index: 46
@@ -60,10 +60,10 @@ Program {
 					}
 				}
 				left: ReferenceIdentifier {
-					name: 'a'
+					name: "a"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'a'
+						filename: "input.js"
+						identifierName: "a"
 						end: Object {
 							column: 1
 							index: 1
@@ -77,9 +77,9 @@ Program {
 					}
 				}
 				right: LogicalExpression {
-					operator: '&&'
+					operator: "&&"
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 46
 							index: 46
@@ -92,10 +92,10 @@ Program {
 						}
 					}
 					left: ReferenceIdentifier {
-						name: 'b'
+						name: "b"
 						loc: Object {
-							filename: 'input.js'
-							identifierName: 'b'
+							filename: "input.js"
+							identifierName: "b"
 							end: Object {
 								column: 6
 								index: 6
@@ -109,9 +109,9 @@ Program {
 						}
 					}
 					right: BinaryExpression {
-						operator: '|'
+						operator: "|"
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 46
 								index: 46
@@ -124,10 +124,10 @@ Program {
 							}
 						}
 						left: ReferenceIdentifier {
-							name: 'c'
+							name: "c"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'c'
+								filename: "input.js"
+								identifierName: "c"
 								end: Object {
 									column: 11
 									index: 11
@@ -141,9 +141,9 @@ Program {
 							}
 						}
 						right: BinaryExpression {
-							operator: '^'
+							operator: "^"
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 46
 									index: 46
@@ -156,10 +156,10 @@ Program {
 								}
 							}
 							left: ReferenceIdentifier {
-								name: 'd'
+								name: "d"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'd'
+									filename: "input.js"
+									identifierName: "d"
 									end: Object {
 										column: 15
 										index: 15
@@ -173,9 +173,9 @@ Program {
 								}
 							}
 							right: BinaryExpression {
-								operator: '&'
+								operator: "&"
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 46
 										index: 46
@@ -188,10 +188,10 @@ Program {
 									}
 								}
 								left: ReferenceIdentifier {
-									name: 'e'
+									name: "e"
 									loc: Object {
-										filename: 'input.js'
-										identifierName: 'e'
+										filename: "input.js"
+										identifierName: "e"
 										end: Object {
 											column: 19
 											index: 19
@@ -205,9 +205,9 @@ Program {
 									}
 								}
 								right: BinaryExpression {
-									operator: '=='
+									operator: "=="
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 46
 											index: 46
@@ -220,10 +220,10 @@ Program {
 										}
 									}
 									left: ReferenceIdentifier {
-										name: 'f'
+										name: "f"
 										loc: Object {
-											filename: 'input.js'
-											identifierName: 'f'
+											filename: "input.js"
+											identifierName: "f"
 											end: Object {
 												column: 23
 												index: 23
@@ -237,9 +237,9 @@ Program {
 										}
 									}
 									right: BinaryExpression {
-										operator: '<'
+										operator: "<"
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 46
 												index: 46
@@ -252,10 +252,10 @@ Program {
 											}
 										}
 										left: ReferenceIdentifier {
-											name: 'g'
+											name: "g"
 											loc: Object {
-												filename: 'input.js'
-												identifierName: 'g'
+												filename: "input.js"
+												identifierName: "g"
 												end: Object {
 													column: 28
 													index: 28
@@ -269,9 +269,9 @@ Program {
 											}
 										}
 										right: BinaryExpression {
-											operator: '>>>'
+											operator: ">>>"
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 46
 													index: 46
@@ -284,10 +284,10 @@ Program {
 												}
 											}
 											left: ReferenceIdentifier {
-												name: 'h'
+												name: "h"
 												loc: Object {
-													filename: 'input.js'
-													identifierName: 'h'
+													filename: "input.js"
+													identifierName: "h"
 													end: Object {
 														column: 32
 														index: 32
@@ -301,9 +301,9 @@ Program {
 												}
 											}
 											right: BinaryExpression {
-												operator: '+'
+												operator: "+"
 												loc: Object {
-													filename: 'input.js'
+													filename: "input.js"
 													end: Object {
 														column: 46
 														index: 46
@@ -316,10 +316,10 @@ Program {
 													}
 												}
 												left: ReferenceIdentifier {
-													name: 'i'
+													name: "i"
 													loc: Object {
-														filename: 'input.js'
-														identifierName: 'i'
+														filename: "input.js"
+														identifierName: "i"
 														end: Object {
 															column: 38
 															index: 38
@@ -333,9 +333,9 @@ Program {
 													}
 												}
 												right: BinaryExpression {
-													operator: '*'
+													operator: "*"
 													loc: Object {
-														filename: 'input.js'
+														filename: "input.js"
 														end: Object {
 															column: 46
 															index: 46
@@ -348,10 +348,10 @@ Program {
 														}
 													}
 													left: ReferenceIdentifier {
-														name: 'j'
+														name: "j"
 														loc: Object {
-															filename: 'input.js'
-															identifierName: 'j'
+															filename: "input.js"
+															identifierName: "j"
 															end: Object {
 																column: 42
 																index: 42
@@ -365,10 +365,10 @@ Program {
 														}
 													}
 													right: ReferenceIdentifier {
-														name: 'k'
+														name: "k"
 														loc: Object {
-															filename: 'input.js'
-															identifierName: 'k'
+															filename: "input.js"
+															identifierName: "k"
 															end: Object {
 																column: 46
 																index: 46

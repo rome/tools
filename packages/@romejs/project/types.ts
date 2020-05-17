@@ -5,18 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ManifestDefinition} from '@romejs/codec-js-manifest';
-import {PathPatterns} from '@romejs/path-match';
-import {BundlerMode} from '@romejs/core';
+import {ManifestDefinition} from "@romejs/codec-js-manifest";
+import {PathPatterns} from "@romejs/path-match";
+import {BundlerMode} from "@romejs/core";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathSet,
 	TEMP_PATH,
 	createAbsoluteFilePath,
-} from '@romejs/path';
-import {Consumer} from '@romejs/consume';
-import {Dict, RequiredProps} from '@romejs/typescript-helpers';
-import {SemverRangeNode} from '@romejs/codec-semver';
+} from "@romejs/path";
+import {Consumer} from "@romejs/consume";
+import {Dict, RequiredProps} from "@romejs/typescript-helpers";
+import {SemverRangeNode} from "@romejs/codec-semver";
 
 // Project wrapper that contains some other metadata
 export type ProjectDefinition = {
@@ -66,7 +66,7 @@ export type ProjectConfigObjects = {
 	targets: Map<string, ProjectConfigTarget>;
 };
 
-export type ProjectConfigCategoriesWithIgnore = 'tests' | 'lint';
+export type ProjectConfigCategoriesWithIgnore = "tests" | "lint";
 
 export type ProjectConfigTarget = {
 	constraints: Array<string>;
@@ -82,7 +82,7 @@ export type ProjectConfigJSON = ProjectConfigJSONObjectReducer<ProjectConfigBase
 
 // Weird way to get the value type from a map
 // rome-ignore lint/noExplicitAny
-type MapValue<T extends Map<string, any>> = NonNullable<ReturnType<T['get']>>;
+type MapValue<T extends Map<string, any>> = NonNullable<ReturnType<T["get"]>>;
 
 // Turn any file paths into strings
 // Turn maps into objects
@@ -137,7 +137,7 @@ export type ProjectConfigMeta = {
 
 export type ProjectConfigMetaHard = RequiredProps<
 	ProjectConfigMeta,
-	'consumer' | 'projectFolder' | 'configPath'
+	"consumer" | "projectFolder" | "configPath"
 >;
 
 // Final project config
@@ -154,7 +154,7 @@ export const DEFAULT_PROJECT_CONFIG_META: ProjectConfigMeta = {
 };
 
 export const DEFAULT_PROJECT_CONFIG: ProjectConfig = {
-	name: 'unknown',
+	name: "unknown",
 	root: false,
 	version: undefined,
 	cache: {},
@@ -162,7 +162,7 @@ export const DEFAULT_PROJECT_CONFIG: ProjectConfig = {
 		serveStatic: true,
 	},
 	bundler: {
-		mode: 'modern',
+		mode: "modern",
 	},
 	compiler: {},
 	resolver: {},
@@ -182,7 +182,7 @@ export const DEFAULT_PROJECT_CONFIG: ProjectConfig = {
 		ignore: [],
 	},
 	vcs: {
-		root: createAbsoluteFilePath('/'),
+		root: createAbsoluteFilePath("/"),
 	},
 	files: {
 		vendorPath: TEMP_PATH.append(`rome-remote`),

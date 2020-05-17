@@ -5,26 +5,26 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Consumer, consumeUnknown} from '@romejs/consume';
-import {consumeJSON} from '@romejs/codec-json';
-import {TestHelper, test, testOptions} from '@romejs-runtime/rome';
+import {Consumer, consumeUnknown} from "@romejs/consume";
+import {consumeJSON} from "@romejs/codec-json";
+import {TestHelper, test, testOptions} from "@romejs-runtime/rome";
 
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathSet,
 	UnknownFilePath,
 	createAbsoluteFilePath,
-} from '@romejs/path';
-import {exists, lstat, readFile, readFileText, readdir} from '@romejs/fs';
+} from "@romejs/path";
+import {exists, lstat, readFile, readFileText, readdir} from "@romejs/fs";
 
-const dirname = testOptions.dirname === undefined ? '' : testOptions.dirname;
+const dirname = testOptions.dirname === undefined ? "" : testOptions.dirname;
 
 async function isFile(path: AbsoluteFilePath): Promise<boolean> {
 	return (await lstat(path)).isFile();
 }
 
 async function getOptions(dir: AbsoluteFilePath): Promise<Consumer> {
-	const optionsLoc = dir.append('options.json');
+	const optionsLoc = dir.append("options.json");
 	const input = await readFileText(optionsLoc);
 	return consumeJSON({
 		input,
@@ -61,7 +61,7 @@ async function _getFixtures(
 	}
 
 	// If the name starts with a dot then we're hidden
-	if (name !== undefined && name[0] === '.') {
+	if (name !== undefined && name[0] === ".") {
 		return [];
 	}
 
@@ -70,7 +70,7 @@ async function _getFixtures(
 
 	// Get options for this folder
 	let ownOptions;
-	if (filenames.has(dir.append('options.json'))) {
+	if (filenames.has(dir.append("options.json"))) {
 		ownOptions = await getOptions(dir);
 	}
 
@@ -83,7 +83,7 @@ async function _getFixtures(
 						...inheritOptions.asUnknownObject(),
 						...ownOptions.asUnknownObject(),
 					},
-					'tests/fixtureOptions',
+					"tests/fixtureOptions",
 				);
 
 	// An array of folders names that lead to this fixture
@@ -145,9 +145,9 @@ async function _getFixtures(
 export async function getFixtures(dir: string): Promise<Array<Fixture>> {
 	return _getFixtures({
 		name: undefined,
-		dir: createAbsoluteFilePath(dir).append('test-fixtures'),
+		dir: createAbsoluteFilePath(dir).append("test-fixtures"),
 		parts: [],
-		options: consumeUnknown({}, 'tests/fixtureOptions'),
+		options: consumeUnknown({}, "tests/fixtureOptions"),
 	});
 }
 
@@ -161,24 +161,24 @@ export async function createFixtureTests(
 			{},
 			async (t) => {
 				t.addToAdvice({
-					type: 'log',
-					category: 'info',
-					text: 'Fixture options',
+					type: "log",
+					category: "info",
+					text: "Fixture options",
 				});
 
 				t.addToAdvice({
-					type: 'inspect',
+					type: "inspect",
 					data: fixture.options.asJSONPropertyValue(),
 				});
 
 				t.addToAdvice({
-					type: 'log',
-					category: 'info',
-					text: 'Fixture files',
+					type: "log",
+					category: "info",
+					text: "Fixture files",
 				});
 
 				t.addToAdvice({
-					type: 'list',
+					type: "list",
 					list: Array.from(
 						fixture.files,
 						([basename, info]) =>

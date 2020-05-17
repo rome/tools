@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 14
@@ -33,7 +33,7 @@ Program {
 		ForOfStatement {
 			await: false
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 13
 					index: 13
@@ -47,7 +47,7 @@ Program {
 			}
 			body: EmptyStatement {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 13
 						index: 13
@@ -61,10 +61,10 @@ Program {
 				}
 			}
 			left: AssignmentIdentifier {
-				name: 'p'
+				name: "p"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'p'
+					filename: "input.js"
+					identifierName: "p"
 					end: Object {
 						column: 6
 						index: 6
@@ -78,10 +78,10 @@ Program {
 				}
 			}
 			right: ReferenceIdentifier {
-				name: 'q'
+				name: "q"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'q'
+					filename: "input.js"
+					identifierName: "q"
 					end: Object {
 						column: 11
 						index: 11

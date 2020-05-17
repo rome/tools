@@ -34,13 +34,13 @@ export type UnknownObject = Dict<unknown>;
 export function isPlainObject<T = UnknownObject>(
 	obj: unknown,
 ): obj is UnknownObject & T {
-	return typeof obj === 'object' && obj !== null && !Array.isArray(obj);
+	return typeof obj === "object" && obj !== null && !Array.isArray(obj);
 }
 
 export function isIterable(obj: unknown): obj is Iterable<unknown> {
-	if (typeof obj === 'object' && obj != null) {
+	if (typeof obj === "object" && obj != null) {
 		// @ts-ignore
-		return typeof obj[Symbol.iterator] === 'function';
+		return typeof obj[Symbol.iterator] === "function";
 	} else {
 		return false;
 	}

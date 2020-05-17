@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, ConstImportModuleKind} from '@romejs/js-ast';
-import {SourceLocation} from '@romejs/parser-core';
-import {TransformRequest} from '../../types';
+import {AnyNode, ConstImportModuleKind} from "@romejs/js-ast";
+import {SourceLocation} from "@romejs/parser-core";
+import {TransformRequest} from "../../types";
 import {
 	CJSExportRecord,
 	CJSVarRefRecord,
@@ -17,10 +17,10 @@ import {
 	ImportRecord,
 	ImportUsageRecord,
 	TopLevelAwaitRecord,
-} from './records';
-import {Cache, CompilerContext} from '@romejs/js-compiler';
-import transform from '../../methods/transform';
-import visitors from './visitors/index';
+} from "./records";
+import {Cache, CompilerContext} from "@romejs/js-compiler";
+import transform from "../../methods/transform";
+import visitors from "./visitors/index";
 import {
 	AnalyzeDependency,
 	AnalyzeDependencyImportFirstUsage,
@@ -29,8 +29,8 @@ import {
 	AnalyzeDependencyTopLevelLocalBindings,
 	AnalyzeModuleType,
 	AnyAnalyzeExport,
-} from '@romejs/core';
-import {descriptions} from '@romejs/diagnostics';
+} from "@romejs/core";
+import {descriptions} from "@romejs/diagnostics";
 
 const analyzeCache: Cache<AnalyzeDependencyResult> = new Cache();
 
@@ -51,10 +51,10 @@ export default async function analyzeDependencies(
 		ast,
 		project,
 		origin: {
-			category: 'analyzeDependencies',
+			category: "analyzeDependencies",
 		},
 	});
-	({ast} = await transform({...req, stage: 'pre'}));
+	({ast} = await transform({...req, stage: "pre"}));
 	context.reduce(ast, visitors);
 
 	//
@@ -86,13 +86,13 @@ export default async function analyzeDependencies(
 		}
 
 		// This has to be a separate if or else TS wont refine it...
-		if (record instanceof ExportRecord && record.data.type !== 'local') {
+		if (record instanceof ExportRecord && record.data.type !== "local") {
 			data = record.data;
 		}
 
 		if (data !== undefined) {
 			const {kind, source} = data;
-			if (kind === 'type') {
+			if (kind === "type") {
 				sourcesUsedAsType.add(source);
 			} else {
 				sourcesUsedAsValue.add(source);
@@ -107,11 +107,11 @@ export default async function analyzeDependencies(
 	for (const record of context.records) {
 		if (record instanceof EscapedCJSRefRecord) {
 			exports.push({
-				type: 'local',
+				type: "local",
 				loc: record.node.loc,
-				kind: 'value',
-				valueType: 'other',
-				name: '*',
+				kind: "value",
+				valueType: "other",
+				name: "*",
 			});
 		}
 
@@ -120,8 +120,8 @@ export default async function analyzeDependencies(
 
 			// If this source was only ever used as a type then convert us to a value
 			if (
-				data.type === 'es' &&
-				data.kind === 'value' &&
+				data.type === "es" &&
+				data.kind === "value" &&
 				sourcesUsedAsType.has(data.source)
 			) {
 				const names: Array<AnalyzeDependencyName> = [];
@@ -129,11 +129,11 @@ export default async function analyzeDependencies(
 				for (const name of data.names) {
 					names.push({
 						...name,
-						kind: 'type',
+						kind: "type",
 					});
 				}
 
-				data = {...data, kind: 'type', names};
+				data = {...data, kind: "type", names};
 			}
 
 			// If we have multiple import records for this file, then merge them together
@@ -145,11 +145,11 @@ export default async function analyzeDependencies(
 				if (data.kind === existing.kind) {
 					kind = data.kind;
 				} else {
-					kind = 'value';
+					kind = "value";
 				}
 
 				const combinedRecord: AnalyzeDependency = {
-					type: data.type === 'es' && existing.type === 'es' ? 'es' : 'cjs',
+					type: data.type === "es" && existing.type === "es" ? "es" : "cjs",
 					kind,
 					optional: existing.optional && data.optional,
 					async: existing.async || data.async,
@@ -163,7 +163,7 @@ export default async function analyzeDependencies(
 				// then we don't want to place our combined record in that position, it should be at the end.
 				// Inserting a type import statement at the top of the file shouldn't change the execution order
 				// if it was imported later
-				if (existing.kind === 'type' && data.kind === 'value') {
+				if (existing.kind === "type" && data.kind === "value") {
 					dependenciesBySource.delete(data.source);
 				}
 
@@ -177,7 +177,7 @@ export default async function analyzeDependencies(
 			cjsExports.push(record.node);
 		} else if (record instanceof ESExportRecord) {
 			// No point checking for ES imported in CJS because it would have been a syntax error
-			if (record.kind === 'value') {
+			if (record.kind === "value") {
 				esValueExports.push(record.node);
 			}
 		} else if (record instanceof TopLevelAwaitRecord) {
@@ -187,7 +187,7 @@ export default async function analyzeDependencies(
 		} else if (
 			record instanceof ImportUsageRecord &&
 			record.isTop &&
-			record.data.kind === 'value'
+			record.data.kind === "value"
 		) {
 			// Track the first reference to a value import that's not in a function
 			// This is used to detect module cycles
@@ -208,25 +208,25 @@ export default async function analyzeDependencies(
 	);
 
 	// Infer the module type
-	let moduleType: AnalyzeModuleType = ast.sourceType === 'script' ? 'cjs' : 'es';
+	let moduleType: AnalyzeModuleType = ast.sourceType === "script" ? "cjs" : "es";
 
 	// Infer module type in legacy mode
-	if (project.config.bundler.mode === 'legacy') {
+	if (project.config.bundler.mode === "legacy") {
 		if (cjsExports.length > 0) {
-			moduleType = 'cjs';
+			moduleType = "cjs";
 		} else if (esValueExports.length > 0) {
-			moduleType = 'es';
+			moduleType = "es";
 		} else if (hasCJSRef) {
-			moduleType = 'cjs';
+			moduleType = "cjs";
 		} else {
-			moduleType = 'unknown';
+			moduleType = "unknown";
 		}
 	}
 
 	//
 	for (const record of context.records) {
 		if (record instanceof CJSVarRefRecord) {
-			if (project.config.bundler.mode === 'modern' && moduleType === 'es') {
+			if (project.config.bundler.mode === "modern" && moduleType === "es") {
 				/*context.addNodeDiagnostic(record.node, {
           category: 'analyzeDependencies',
           message: `CommonJS variable <emphasis>${
@@ -235,7 +235,7 @@ export default async function analyzeDependencies(
         });*/
 			}
 		} else if (record instanceof CJSExportRecord) {
-			if (moduleType === 'es') {
+			if (moduleType === "es") {
 				context.addNodeDiagnostic(
 					record.node,
 					descriptions.ANALYZE_DEPENDENCIES.CJS_EXPORT_IN_ES,
@@ -245,13 +245,13 @@ export default async function analyzeDependencies(
 	}
 
 	// Add an implicit default import for CJS if there is none
-	if (moduleType === 'cjs' && !hasDefaultExport) {
+	if (moduleType === "cjs" && !hasDefaultExport) {
 		exports.push({
-			type: 'local',
+			type: "local",
 			loc: undefined,
-			kind: 'value',
-			valueType: 'other',
-			name: 'default',
+			kind: "value",
+			valueType: "other",
+			name: "default",
 		});
 	}
 
@@ -284,15 +284,15 @@ export function mergeAnalyzeDependencies(
 
 	// Take only local type exports
 	for (const exp of second.exports) {
-		if (exp.type === 'local' && exp.kind === 'type') {
+		if (exp.type === "local" && exp.kind === "type") {
 			exports.push(exp);
 		}
 
 		// Ensure that all external exports are only reachable with `type`
-		if (exp.type === 'external' || exp.type === 'externalAll') {
+		if (exp.type === "external" || exp.type === "externalAll") {
 			exports.push({
 				...exp,
-				kind: 'type',
+				kind: "type",
 			});
 		}
 	}

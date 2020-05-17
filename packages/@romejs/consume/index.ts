@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ConsumerOptions} from './types';
-import Consumer from './Consumer';
-import {RequiredProps} from '@romejs/typescript-helpers';
-import {DiagnosticCategory} from '@romejs/diagnostics';
+import {ConsumerOptions} from "./types";
+import Consumer from "./Consumer";
+import {RequiredProps} from "@romejs/typescript-helpers";
+import {DiagnosticCategory} from "@romejs/diagnostics";
 
-const EMPTY_CONSUME_OPTIONS: Omit<ConsumerOptions, 'context'> = {
+const EMPTY_CONSUME_OPTIONS: Omit<ConsumerOptions, "context"> = {
 	propertyMetadata: undefined,
 	value: undefined,
 	handleUnexpectedDiagnostic: undefined,
@@ -21,7 +21,7 @@ const EMPTY_CONSUME_OPTIONS: Omit<ConsumerOptions, 'context'> = {
 };
 
 export function consume(
-	opts: RequiredProps<Partial<ConsumerOptions>, 'context'>,
+	opts: RequiredProps<Partial<ConsumerOptions>, "context">,
 ): Consumer {
 	return new Consumer({
 		...EMPTY_CONSUME_OPTIONS,
@@ -44,4 +44,4 @@ export function consumeUnknown(
 
 export {Consumer};
 
-export * from './types';
+export * from "./types";

@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Bridge} from '@romejs/events';
-import {WebMasterClient, WebMasterRequest} from '../../master/web';
+import {Bridge} from "@romejs/events";
+import {WebMasterClient, WebMasterRequest} from "../../master/web";
 
 export default class WebBridge extends Bridge {
 	requests = this.createEvent<
@@ -16,7 +16,7 @@ export default class WebBridge extends Bridge {
 		},
 		void
 	>({
-		name: 'WebBridge.requests',
-		direction: 'server->client',
+		name: "WebBridge.requests",
+		direction: "server->client",
 	});
 }

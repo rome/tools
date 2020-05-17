@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from '@romejs/js-ast';
-import {HydrateData} from '../Evaluator';
-import {Scope} from '../scopes';
-import T from './T';
+import {AnyNode} from "@romejs/js-ast";
+import {HydrateData} from "../Evaluator";
+import {Scope} from "../scopes";
+import T from "./T";
 
 export default class MixedT extends T {
-	static type = 'MixedT';
+	static type = "MixedT";
 
 	serialize(): HydrateData {
 		return {};
@@ -26,6 +26,6 @@ export default class MixedT extends T {
 	}
 
 	humanize(): string {
-		return 'mixed';
+		return "mixed";
 	}
 }

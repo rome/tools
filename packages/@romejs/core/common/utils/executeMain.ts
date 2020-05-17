@@ -5,22 +5,22 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {UnknownObject} from '@romejs/typescript-helpers';
-import {SourceMapConsumer} from '@romejs/codec-source-map';
-import {sourceMapManager} from '@romejs/v8';
-import internalModule = require('module');
+import {UnknownObject} from "@romejs/typescript-helpers";
+import {SourceMapConsumer} from "@romejs/codec-source-map";
+import {sourceMapManager} from "@romejs/v8";
+import internalModule = require("module");
 
-import vm = require('vm');
+import vm = require("vm");
 
 import {
 	Diagnostic,
 	INTERNAL_ERROR_LOG_ADVICE,
 	descriptions,
 	truncateSourceText,
-} from '@romejs/diagnostics';
-import {AbsoluteFilePath} from '@romejs/path';
-import {Position} from '@romejs/parser-core';
-import {ob1Coerce1, ob1Number0, ob1Number0Neg1} from '@romejs/ob1';
+} from "@romejs/diagnostics";
+import {AbsoluteFilePath} from "@romejs/path";
+import {Position} from "@romejs/parser-core";
+import {ob1Coerce1, ob1Number0, ob1Number0Neg1} from "@romejs/ob1";
 
 type ExecuteMainOptions = {
 	path: AbsoluteFilePath;

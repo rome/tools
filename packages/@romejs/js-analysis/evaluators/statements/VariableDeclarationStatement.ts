@@ -9,9 +9,9 @@ import {
 	AnyNode,
 	VariableDeclarationStatement,
 	variableDeclarationStatement,
-} from '@romejs/js-ast';
+} from "@romejs/js-ast";
 
 export default function VariableDeclarationStatement(node: AnyNode) {
 	node = variableDeclarationStatement.assert(node);
-	throw new Error('unimplemented');
+	throw new Error("unimplemented");
 }

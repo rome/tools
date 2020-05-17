@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token} from '../../tokens';
-import {escapeString} from '@romejs/string-escape';
+import Builder from "../../Builder";
+import {Token} from "../../tokens";
+import {escapeString} from "@romejs/string-escape";
 import {
 	AnyNode,
 	Directive,
 	StringLiteral,
 	StringLiteralTypeAnnotation,
-} from '@romejs/js-ast';
-import {escapeXHTMLEntities} from '@romejs/js-parser';
+} from "@romejs/js-ast";
+import {escapeXHTMLEntities} from "@romejs/js-parser";
 
 export default function StringLiteral(
 	builder: Builder,
@@ -23,10 +23,10 @@ export default function StringLiteral(
 ): Token {
 	// JSX Attribute strings have ridiculous alternate semantics, should probably be a distinct AST node
 	const quotes =
-		parent.type === 'JSXAttribute' || node.value.includes("'") ? '"' : "'";
+		parent.type === "JSXAttribute" || node.value.includes('"') ? "'" : '"';
 
 	const value =
-		parent.type === 'JSXAttribute' ? escapeXHTMLEntities(node.value) : node.value;
+		parent.type === "JSXAttribute" ? escapeXHTMLEntities(node.value) : node.value;
 
 	return escapeString(value, {quote: quotes});
 }

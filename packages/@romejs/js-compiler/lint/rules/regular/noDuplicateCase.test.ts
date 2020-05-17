@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {testLint} from '../testHelpers';
-import {dedent} from '@romejs/string-utils';
+import {test} from "rome";
+import {testLint} from "../testHelpers";
+import {dedent} from "@romejs/string-utils";
 
 test(
-	'no duplicated switch cases allowed',
+	"no duplicated switch cases allowed",
 	async (t) => {
 		await testLint(
 			t,
@@ -31,7 +31,7 @@ test(
             break;
         }
       `,
-			{category: 'lint/noDuplicateCase'},
+			{category: "lint/noDuplicateCase"},
 		);
 	},
 );

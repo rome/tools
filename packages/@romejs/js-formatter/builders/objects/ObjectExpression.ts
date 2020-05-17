@@ -10,8 +10,8 @@ import {
 	AssignmentObjectPattern,
 	BindingObjectPattern,
 	ObjectExpression,
-} from '@romejs/js-ast';
-import Builder from '../../Builder';
+} from "@romejs/js-ast";
+import Builder from "../../Builder";
 import {
 	Token,
 	concat,
@@ -21,8 +21,8 @@ import {
 	join,
 	lineOrSpace,
 	softline,
-} from '../../tokens';
-import {hasInnerComments} from '../comments';
+} from "../../tokens";
+import {hasInnerComments} from "../comments";
 
 export default function ObjectExpression(
 	builder: Builder,
@@ -30,7 +30,7 @@ export default function ObjectExpression(
 ): Token {
 	if (hasInnerComments(node)) {
 		return group(
-			concat(['{', builder.tokenizeInnerComments(node, true), softline, '}']),
+			concat(["{", builder.tokenizeInnerComments(node, true), softline, "}"]),
 		);
 	}
 
@@ -39,7 +39,7 @@ export default function ObjectExpression(
 
 	tokens.push(
 		join(
-			concat([',', lineOrSpace]),
+			concat([",", lineOrSpace]),
 			props.map((prop, index) => {
 				const printed = builder.tokenize(prop, node);
 				if (index > 0 && builder.getLinesBetween(props[index - 1], prop) > 1) {
@@ -52,21 +52,21 @@ export default function ObjectExpression(
 	);
 
 	if (
-		(node.type === 'BindingObjectPattern' ||
-		node.type === 'AssignmentObjectPattern') &&
+		(node.type === "BindingObjectPattern" ||
+		node.type === "AssignmentObjectPattern") &&
 		node.rest !== undefined
 	) {
 		if (props.length > 0) {
-			tokens.push(',', lineOrSpace);
+			tokens.push(",", lineOrSpace);
 			if (builder.getLinesBetween(props[props.length - 1], node.rest) > 1) {
 				tokens.push(softline);
 			}
 		}
 
-		tokens.push('...', builder.tokenize(node.rest, node));
+		tokens.push("...", builder.tokenize(node.rest, node));
 	} else if (props.length > 0) {
 		// Add trailing comma
-		tokens.push(ifBreak(','));
+		tokens.push(ifBreak(","));
 	}
 
 	// If the first property is not one the same line as the opening brace,
@@ -78,7 +78,7 @@ export default function ObjectExpression(
 		props[0].loc.start.line !== node.loc.start.line;
 
 	return group(
-		concat(['{', indent(concat([softline, concat(tokens)])), softline, '}']),
+		concat(["{", indent(concat([softline, concat(tokens)])), softline, "}"]),
 		shouldBreak,
 	);
 }

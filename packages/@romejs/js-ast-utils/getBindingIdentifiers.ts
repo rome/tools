@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, BindingIdentifier, bindingKeys} from '@romejs/js-ast';
+import {AnyNode, BindingIdentifier, bindingKeys} from "@romejs/js-ast";
 
 export default function getBindingIdentifiers(
 	node: AnyNode | Array<AnyNode>,
@@ -21,7 +21,7 @@ export default function getBindingIdentifiers(
 			continue;
 		}
 
-		if (node.type === 'BindingIdentifier') {
+		if (node.type === "BindingIdentifier") {
 			ids.push(node);
 			continue;
 		}

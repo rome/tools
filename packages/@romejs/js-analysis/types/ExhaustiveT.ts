@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from '@romejs/js-ast';
-import {Scope} from '../scopes';
-import {HydrateData, HydrateTypeFactory} from '../Evaluator';
-import T, {SerialTypeFactory} from './T';
-import {HumanBuilder} from '../Utils';
-import E, {ErrorDefinition} from './errors/E';
-import AnyT from './AnyT';
-import {descriptions} from '@romejs/diagnostics';
+import {AnyNode} from "@romejs/js-ast";
+import {Scope} from "../scopes";
+import {HydrateData, HydrateTypeFactory} from "../Evaluator";
+import T, {SerialTypeFactory} from "./T";
+import {HumanBuilder} from "../Utils";
+import E, {ErrorDefinition} from "./errors/E";
+import AnyT from "./AnyT";
+import {descriptions} from "@romejs/diagnostics";
 
 class ENotExhaustive extends E {
 	constructor(
@@ -32,7 +32,7 @@ class ENotExhaustive extends E {
 	only: T;
 	extraenous: Array<T>;
 
-	static type = 'ENotExhaustive';
+	static type = "ENotExhaustive";
 
 	getError(): ErrorDefinition {
 		return {
@@ -55,7 +55,7 @@ export default class ExhaustiveT extends T {
 	target: T;
 	only: T;
 
-	static type = 'ExhaustiveT';
+	static type = "ExhaustiveT";
 
 	serialize(addType: SerialTypeFactory): HydrateData {
 		return {

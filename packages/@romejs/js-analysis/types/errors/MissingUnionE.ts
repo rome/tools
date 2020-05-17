@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import E, {ErrorDefinition} from './E';
-import T from '../T';
-import {AnyNode} from '@romejs/js-ast';
-import {descriptions} from '@romejs/diagnostics';
+import {Scope} from "../../scopes";
+import E, {ErrorDefinition} from "./E";
+import T from "../T";
+import {AnyNode} from "@romejs/js-ast";
+import {descriptions} from "@romejs/diagnostics";
 
 export default class MissingUnionE extends E {
 	constructor(
@@ -25,7 +25,7 @@ export default class MissingUnionE extends E {
 		this.missing = missing;
 	}
 
-	static type = 'MissingUnionE';
+	static type = "MissingUnionE";
 	target: T;
 	union: T;
 	missing: Array<T>;

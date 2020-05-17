@@ -294,7 +294,7 @@ greet();
 ### `7: formatted`
 
 ```
-const age: any = 'seventeen';
+const age: any = "seventeen";
 age;
 
 ```
@@ -319,7 +319,7 @@ age;
 ### `8: formatted`
 
 ```
-const ages: Array<any> = ['seventeen'];
+const ages: Array<any> = ["seventeen"];
 ages;
 
 ```
@@ -344,7 +344,7 @@ ages;
 ### `9: formatted`
 
 ```
-const ages: Array<any> = ['seventeen'];
+const ages: Array<any> = ["seventeen"];
 ages;
 
 ```

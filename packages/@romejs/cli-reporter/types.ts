@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Event} from '@romejs/events';
+import {Event} from "@romejs/events";
 
 export type SelectOption = {
 	label: string;
@@ -32,15 +32,15 @@ export type ReporterTableField =
 	 | number
 	| string
 	| {
-			align: 'left' | 'right';
+			align: "left" | "right";
 			value: number | string;
 		};
 
 export type ReporterStreamMeta = {
-	type: 'out' | 'error' | 'all';
+	type: "out" | "error" | "all";
 	columns: number;
 	unicode: boolean;
-	format: 'markup' | 'ansi' | 'html' | 'none';
+	format: "markup" | "ansi" | "html" | "none";
 };
 
 export type ReporterStream = ReporterStreamMeta & {
@@ -78,60 +78,60 @@ export type ReporterProgress = {
 };
 
 export type RemoteReporterReceiveMessage = {
-	type: 'ENDED';
+	type: "ENDED";
 	id: string;
 };
 
 export type RemoteReporterClientMessage =
 	 | {
-			type: 'PROGRESS_CREATE';
+			type: "PROGRESS_CREATE";
 			id: string;
 			opts: undefined | ReporterProgressOptions;
 		}
 	| {
-			type: 'PROGRESS_SET_CURRENT';
+			type: "PROGRESS_SET_CURRENT";
 			current: number;
 			id: string;
 		}
 	| {
-			type: 'PROGRESS_SET_APPROXIMATE_ETA';
+			type: "PROGRESS_SET_APPROXIMATE_ETA";
 			duration: number;
 			id: string;
 		}
 	| {
-			type: 'PROGRESS_SET_TOTAL';
+			type: "PROGRESS_SET_TOTAL";
 			total: number;
 			id: string;
 			approximate: boolean;
 		}
 	| {
-			type: 'PROGRESS_SET_TEXT';
+			type: "PROGRESS_SET_TEXT";
 			text: string;
 			id: string;
 		}
 	| {
-			type: 'PROGRESS_PUSH_TEXT';
+			type: "PROGRESS_PUSH_TEXT";
 			text: string;
 			id: string;
 		}
 	| {
-			type: 'PROGRESS_POP_TEXT';
+			type: "PROGRESS_POP_TEXT";
 			text: string;
 			id: string;
 		}
 	| {
-			type: 'PROGRESS_TICK';
+			type: "PROGRESS_TICK";
 			id: string;
 		}
 	| {
-			type: 'PROGRESS_END';
+			type: "PROGRESS_END";
 			id: string;
 		}
 	| {
-			type: 'PROGRESS_PAUSE';
+			type: "PROGRESS_PAUSE";
 			id: string;
 		}
 	| {
-			type: 'PROGRESS_RESUME';
+			type: "PROGRESS_RESUME";
 			id: string;
 		};

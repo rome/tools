@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {testLint} from '../testHelpers';
-import {dedent} from '@romejs/string-utils';
+import {test} from "rome";
+import {testLint} from "../testHelpers";
+import {dedent} from "@romejs/string-utils";
 
 test(
-	'no debugger',
+	"no debugger",
 	async (t) => {
 		await testLint(
 			t,
@@ -18,7 +18,7 @@ test(
         const test = { debugger: 1 };
         test.debugger;
       `,
-			{category: 'lint/noDebugger'},
+			{category: "lint/noDebugger"},
 		);
 
 		await testLint(
@@ -26,7 +26,7 @@ test(
 			dedent`
         debugger;
       `,
-			{category: 'lint/noDebugger'},
+			{category: "lint/noDebugger"},
 		);
 	},
 );

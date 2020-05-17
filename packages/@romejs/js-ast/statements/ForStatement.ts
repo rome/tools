@@ -10,11 +10,11 @@ import {
 	AnyStatement,
 	JSNodeBase,
 	VariableDeclaration,
-} from '../index';
-import {createBuilder} from '../utils';
+} from "../index";
+import {createBuilder} from "../utils";
 
 export type ForStatement = JSNodeBase & {
-	type: 'ForStatement';
+	type: "ForStatement";
 	init?: VariableDeclaration | AnyExpression;
 	test?: AnyExpression;
 	update?: AnyExpression;
@@ -22,7 +22,7 @@ export type ForStatement = JSNodeBase & {
 };
 
 export const forStatement = createBuilder<ForStatement>(
-	'ForStatement',
+	"ForStatement",
 	{
 		bindingKeys: {},
 		visitorKeys: {

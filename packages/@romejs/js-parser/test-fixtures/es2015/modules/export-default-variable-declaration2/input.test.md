@@ -9,14 +9,14 @@ Program {
 	comments: Array []
 	corrupt: false
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
+	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 1
 			index: 76
@@ -30,16 +30,16 @@ Program {
 	}
 	diagnostics: Array [
 		Object {
-			origins: Array [Object {category: 'js-parser'}]
+			origins: Array [Object {category: "js-parser"}]
 			description: Object {
 				advice: Array []
-				category: 'parse/js'
-				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Only expressions, functions or classes are allowed as the `default` export.'}
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Only expressions, functions or classes are allowed as the `default` export."}
 			}
 			location: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				mtime: undefined
-				sourceType: 'module'
+				sourceType: "module"
 				end: Object {
 					column: 14
 					index: 14
@@ -56,7 +56,7 @@ Program {
 	body: Array [
 		ExportDefaultDeclaration {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 18
 					index: 18
@@ -69,10 +69,10 @@ Program {
 				}
 			}
 			declaration: ReferenceIdentifier {
-				name: 'let'
+				name: "let"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'let'
+					filename: "input.js"
+					identifierName: "let"
 					end: Object {
 						column: 18
 						index: 18
@@ -88,7 +88,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 1
 					index: 76
@@ -101,9 +101,9 @@ Program {
 				}
 			}
 			expression: AssignmentExpression {
-				operator: '='
+				operator: "="
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 1
 						index: 76
@@ -116,10 +116,10 @@ Program {
 					}
 				}
 				left: AssignmentIdentifier {
-					name: 'Foo'
+					name: "Foo"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'Foo'
+						filename: "input.js"
+						identifierName: "Foo"
 						end: Object {
 							column: 22
 							index: 22
@@ -134,7 +134,7 @@ Program {
 				}
 				right: ArrowFunctionExpression {
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 1
 							index: 76
@@ -154,7 +154,7 @@ Program {
 						returnType: undefined
 						thisType: undefined
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 30
 								index: 30
@@ -170,7 +170,7 @@ Program {
 					body: BlockStatement {
 						directives: Array []
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 1
 								index: 76
@@ -185,7 +185,7 @@ Program {
 						body: Array [
 							ReturnStatement {
 								loc: Object {
-									filename: 'input.js'
+									filename: "input.js"
 									end: Object {
 										column: 41
 										index: 74
@@ -200,7 +200,7 @@ Program {
 								argument: TemplateLiteral {
 									expressions: Array []
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 40
 											index: 73
@@ -214,11 +214,11 @@ Program {
 									}
 									quasis: Array [
 										TemplateElement {
-											cooked: '<div class="bar">Hola</div>'
-											raw: '<div class="bar">Hola</div>'
+											cooked: "<div class=\"bar\">Hola</div>"
+											raw: "<div class=\"bar\">Hola</div>"
 											tail: true
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 39
 													index: 72

@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 24
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		VariableDeclarationStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 23
 					index: 23
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			declaration: VariableDeclaration {
-				kind: 'const'
+				kind: "const"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 23
 						index: 23
@@ -62,10 +62,10 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingIdentifier {
-							name: 'x'
+							name: "x"
 							loc: Object {
-								filename: 'input.js'
-								identifierName: 'x'
+								filename: "input.js"
+								identifierName: "x"
 								end: Object {
 									column: 7
 									index: 7
@@ -79,7 +79,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 22
 								index: 22
@@ -93,7 +93,7 @@ Program {
 						}
 						init: ObjectExpression {
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 22
 									index: 22
@@ -109,10 +109,10 @@ Program {
 								ObjectProperty {
 									key: StaticPropertyKey {
 										value: Identifier {
-											name: 'async'
+											name: "async"
 											loc: Object {
-												filename: 'input.js'
-												identifierName: 'async'
+												filename: "input.js"
+												identifierName: "async"
 												end: Object {
 													column: 16
 													index: 16
@@ -126,8 +126,8 @@ Program {
 											}
 										}
 										loc: Object {
-											filename: 'input.js'
-											identifierName: 'async'
+											filename: "input.js"
+											identifierName: "async"
 											end: Object {
 												column: 16
 												index: 16
@@ -141,10 +141,10 @@ Program {
 										}
 									}
 									value: ReferenceIdentifier {
-										name: 'async'
+										name: "async"
 										loc: Object {
-											filename: 'input.js'
-											identifierName: 'async'
+											filename: "input.js"
+											identifierName: "async"
 											end: Object {
 												column: 16
 												index: 16
@@ -158,7 +158,7 @@ Program {
 										}
 									}
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 16
 											index: 16
@@ -174,10 +174,10 @@ Program {
 								ObjectProperty {
 									key: StaticPropertyKey {
 										value: Identifier {
-											name: 'bar'
+											name: "bar"
 											loc: Object {
-												filename: 'input.js'
-												identifierName: 'bar'
+												filename: "input.js"
+												identifierName: "bar"
 												end: Object {
 													column: 21
 													index: 21
@@ -191,7 +191,7 @@ Program {
 											}
 										}
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 21
 												index: 21
@@ -205,10 +205,10 @@ Program {
 										}
 									}
 									value: ReferenceIdentifier {
-										name: 'bar'
+										name: "bar"
 										loc: Object {
-											filename: 'input.js'
-											identifierName: 'bar'
+											filename: "input.js"
+											identifierName: "bar"
 											end: Object {
 												column: 21
 												index: 21
@@ -222,7 +222,7 @@ Program {
 										}
 									}
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 21
 											index: 21

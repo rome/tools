@@ -13,11 +13,11 @@ import {
 	JSXIdentifier,
 	JSXNamespacedName,
 	StringLiteral,
-} from '../index';
-import {createBuilder} from '../utils';
+} from "../index";
+import {createBuilder} from "../utils";
 
 export type JSXAttribute = JSNodeBase & {
-	type: 'JSXAttribute';
+	type: "JSXAttribute";
 	name: JSXIdentifier | JSXNamespacedName;
 	value?:
 		 | undefined
@@ -28,7 +28,7 @@ export type JSXAttribute = JSNodeBase & {
 };
 
 export const jsxAttribute = createBuilder<JSXAttribute>(
-	'JSXAttribute',
+	"JSXAttribute",
 	{
 		bindingKeys: {},
 		visitorKeys: {

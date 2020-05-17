@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 61
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		ClassDeclaration {
 			id: BindingIdentifier {
-				name: 'A'
+				name: "A"
 				loc: Object {
-					filename: 'input.js'
-					identifierName: 'A'
+					filename: "input.js"
+					identifierName: "A"
 					end: Object {
 						column: 7
 						index: 7
@@ -49,7 +49,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 1
 					index: 60
@@ -66,7 +66,7 @@ Program {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 1
 						index: 60
@@ -79,10 +79,10 @@ Program {
 					}
 				}
 				superClass: ReferenceIdentifier {
-					name: 'B'
+					name: "B"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'B'
+						filename: "input.js"
+						identifierName: "B"
 						end: Object {
 							column: 17
 							index: 17
@@ -97,13 +97,13 @@ Program {
 				}
 				body: Array [
 					ClassMethod {
-						kind: 'method'
+						kind: "method"
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'X'
+								name: "X"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'X'
+									filename: "input.js"
+									identifierName: "X"
 									end: Object {
 										column: 5
 										index: 25
@@ -117,7 +117,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 5
 									index: 25
@@ -131,7 +131,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 5
 								index: 58
@@ -153,7 +153,7 @@ Program {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 7
 									index: 27
@@ -179,7 +179,7 @@ Program {
 								line: 2
 							}
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 5
 									index: 25
@@ -195,7 +195,7 @@ Program {
 						body: BlockStatement {
 							directives: Array []
 							loc: Object {
-								filename: 'input.js'
+								filename: "input.js"
 								end: Object {
 									column: 5
 									index: 58
@@ -210,7 +210,7 @@ Program {
 							body: Array [
 								ReturnStatement {
 									loc: Object {
-										filename: 'input.js'
+										filename: "input.js"
 										end: Object {
 											column: 22
 											index: 52
@@ -224,7 +224,7 @@ Program {
 									}
 									argument: MemberExpression {
 										loc: Object {
-											filename: 'input.js'
+											filename: "input.js"
 											end: Object {
 												column: 22
 												index: 52
@@ -238,7 +238,7 @@ Program {
 										}
 										object: Super {
 											loc: Object {
-												filename: 'input.js'
+												filename: "input.js"
 												end: Object {
 													column: 20
 													index: 50
@@ -253,10 +253,10 @@ Program {
 										}
 										property: StaticMemberProperty {
 											value: Identifier {
-												name: 'y'
+												name: "y"
 												loc: Object {
-													filename: 'input.js'
-													identifierName: 'y'
+													filename: "input.js"
+													identifierName: "y"
 													end: Object {
 														column: 22
 														index: 52
@@ -270,8 +270,8 @@ Program {
 												}
 											}
 											loc: Object {
-												filename: 'input.js'
-												identifierName: 'y'
+												filename: "input.js"
+												identifierName: "y"
 												end: Object {
 													column: 22
 													index: 52

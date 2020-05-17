@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type BooleanLiteralTypeAnnotation = JSNodeBase & {
-	type: 'BooleanLiteralTypeAnnotation';
+	type: "BooleanLiteralTypeAnnotation";
 	value: boolean;
 };
 
 export const booleanLiteralTypeAnnotation = createBuilder<BooleanLiteralTypeAnnotation>(
-	'BooleanLiteralTypeAnnotation',
+	"BooleanLiteralTypeAnnotation",
 	{
 		bindingKeys: {},
 		visitorKeys: {},

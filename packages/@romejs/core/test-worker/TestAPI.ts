@@ -13,15 +13,15 @@ import {
 	deriveDiagnosticFromErrorStructure,
 	descriptions,
 	getErrorStackAdvice,
-} from '@romejs/diagnostics';
-import SnapshotManager from './SnapshotManager';
-import {TestMasterRunnerOptions} from '../master/testing/types';
-import {Event} from '@romejs/events';
-import stringDiff from '@romejs/string-diff';
-import {getErrorStructure} from '@romejs/v8';
-import prettyFormat from '@romejs/pretty-format';
-import {FileReference} from '../common/types/files';
-import {escapeMarkup, markup} from '@romejs/string-markup';
+} from "@romejs/diagnostics";
+import SnapshotManager from "./SnapshotManager";
+import {TestMasterRunnerOptions} from "../master/testing/types";
+import {Event} from "@romejs/events";
+import stringDiff from "@romejs/string-diff";
+import {getErrorStructure} from "@romejs/v8";
+import prettyFormat from "@romejs/pretty-format";
+import {FileReference} from "../common/types/files";
+import {escapeMarkup, markup} from "@romejs/string-markup";
 import {
 	AsyncFunc,
 	ExpectedError,
@@ -29,10 +29,10 @@ import {
 	TestDiagnosticAdviceItem,
 	TestHelper,
 	TestSnapshotOptions,
-} from '@romejs-runtime/rome/test';
+} from "@romejs-runtime/rome/test";
 
 function formatExpectedError(expected: ExpectedError): string {
-	if (typeof expected === 'string') {
+	if (typeof expected === "string") {
 		return JSON.stringify(expected);
 	}
 
@@ -40,11 +40,11 @@ function formatExpectedError(expected: ExpectedError): string {
 		return String(expected);
 	}
 
-	if (typeof expected === 'function') {
+	if (typeof expected === "function") {
 		return expected.name;
 	}
 
-	return 'unknown';
+	return "unknown";
 }
 
 function matchExpectedError(error: Error, expected: ExpectedError): boolean {
@@ -52,7 +52,7 @@ function matchExpectedError(error: Error, expected: ExpectedError): boolean {
 		return true;
 	}
 
-	if (typeof expected === 'string') {
+	if (typeof expected === "string") {
 		return error.message.includes(expected);
 	}
 
@@ -60,7 +60,7 @@ function matchExpectedError(error: Error, expected: ExpectedError): boolean {
 		return expected.test(error.message);
 	}
 
-	if (typeof expected === 'function') {
+	if (typeof expected === "function") {
 		return error instanceof expected;
 	}
 
@@ -101,7 +101,7 @@ export default class TestAPI implements TestHelper {
 		this.snapshotManager = snapshotManager;
 		this.snapshotCounter = 0;
 		this.file = file;
-		this.teardownEvent = new Event({name: 'TestAPI.teardown'});
+		this.teardownEvent = new Event({name: "TestAPI.teardown"});
 		this.startTime = Date.now();
 		this.onTimeout = onTimeout;
 		this.emitDiagnostic = emitDiagnostic;
@@ -142,7 +142,7 @@ export default class TestAPI implements TestHelper {
 	): DiagnosticAdvice {
 		let expectedFormat;
 		let receivedFormat;
-		if (typeof received === 'string' && typeof expected === 'string') {
+		if (typeof received === "string" && typeof expected === "string") {
 			expectedFormat = expected;
 			receivedFormat = received;
 		} else {
@@ -155,20 +155,20 @@ export default class TestAPI implements TestHelper {
 		if (expectedFormat === receivedFormat) {
 			// Better error message when both values are visually identical
 			advice.push({
-				type: 'log',
-				category: 'info',
+				type: "log",
+				category: "info",
 				text: `Both the received and expected values are visually identical`,
 			});
 
 			advice.push({
-				type: 'code',
+				type: "code",
 				code: expectedFormat,
 			});
 
 			if (visualMethod !== undefined) {
 				advice.push({
-					type: 'log',
-					category: 'info',
+					type: "log",
+					category: "info",
 					text: `Try using t.${visualMethod} if you wanted a visual match`,
 				});
 			}
@@ -178,40 +178,40 @@ export default class TestAPI implements TestHelper {
 
 			if (!bothSingleLine) {
 				advice.push({
-					type: 'log',
-					category: 'info',
+					type: "log",
+					category: "info",
 					text: `Expected to receive`,
 				});
 
 				advice.push({
-					type: 'code',
+					type: "code",
 					code: expectedFormat,
 				});
 
 				advice.push({
-					type: 'log',
-					category: 'info',
+					type: "log",
+					category: "info",
 					text: `But got`,
 				});
 
 				advice.push({
-					type: 'code',
+					type: "code",
 					code: receivedFormat,
 				});
 
 				advice.push({
-					type: 'log',
-					category: 'info',
-					text: 'Diff',
+					type: "log",
+					category: "info",
+					text: "Diff",
 				});
 			}
 
 			advice.push({
-				type: 'diff',
+				type: "diff",
 				diff: stringDiff(expectedFormat, receivedFormat),
 				legend: {
-					add: receivedAlias ? receivedAlias : 'Received',
-					delete: expectedAlias ? expectedAlias : 'Expected',
+					add: receivedAlias ? receivedAlias : "Received",
+					delete: expectedAlias ? expectedAlias : "Expected",
 				},
 			});
 		}
@@ -243,7 +243,7 @@ export default class TestAPI implements TestHelper {
 	extendTimeout(time: number): void {
 		const {timeoutMax, timeoutStart} = this;
 		if (timeoutMax === undefined || timeoutStart === undefined) {
-			throw new Error('No timeout set');
+			throw new Error("No timeout set");
 		}
 
 		const elapsed = Date.now() - timeoutStart;
@@ -278,7 +278,7 @@ export default class TestAPI implements TestHelper {
 	}
 
 	fail(
-		message: string = 'Test failure triggered by t.fail()',
+		message: string = "Test failure triggered by t.fail()",
 		advice: DiagnosticAdvice = [],
 		framesToShift: number = 0,
 	): never {
@@ -286,7 +286,7 @@ export default class TestAPI implements TestHelper {
 			getErrorStructure(new Error(), framesToShift + 1),
 			{
 				description: {
-					category: 'tests/failure',
+					category: "tests/failure",
 					message: createBlessedDiagnosticMessage(message),
 					advice,
 				},
@@ -295,18 +295,18 @@ export default class TestAPI implements TestHelper {
 		throw createSingleDiagnosticError(diag);
 	}
 
-	truthy(value: unknown, message: string = 'Expected value to be truthy'): void {
+	truthy(value: unknown, message: string = "Expected value to be truthy"): void {
 		if (Boolean(value) === false) {
 			this.fail(
 				message,
 				[
 					{
-						type: 'log',
-						category: 'info',
+						type: "log",
+						category: "info",
 						text: `Received`,
 					},
 					{
-						type: 'code',
+						type: "code",
 						code: prettyFormat(value),
 					},
 				],
@@ -315,18 +315,18 @@ export default class TestAPI implements TestHelper {
 		}
 	}
 
-	falsy(value: unknown, message: string = 'Expected value to be falsy'): void {
+	falsy(value: unknown, message: string = "Expected value to be falsy"): void {
 		if (Boolean(value) === true) {
 			this.fail(
 				message,
 				[
 					{
-						type: 'log',
-						category: 'info',
+						type: "log",
+						category: "info",
 						text: `Received`,
 					},
 					{
-						type: 'code',
+						type: "code",
 						code: prettyFormat(value),
 					},
 				],
@@ -335,18 +335,18 @@ export default class TestAPI implements TestHelper {
 		}
 	}
 
-	true(value: unknown, message: string = 'Expected value to be true'): void {
+	true(value: unknown, message: string = "Expected value to be true"): void {
 		if (value !== true) {
 			this.fail(
 				message,
 				[
 					{
-						type: 'log',
-						category: 'info',
+						type: "log",
+						category: "info",
 						text: `Received`,
 					},
 					{
-						type: 'code',
+						type: "code",
 						code: prettyFormat(value),
 					},
 				],
@@ -355,18 +355,18 @@ export default class TestAPI implements TestHelper {
 		}
 	}
 
-	false(value: unknown, message: string = 'Expected value to be false'): void {
+	false(value: unknown, message: string = "Expected value to be false"): void {
 		if (value !== false) {
 			this.fail(
 				message,
 				[
 					{
-						type: 'log',
-						category: 'info',
+						type: "log",
+						category: "info",
 						text: `Received`,
 					},
 					{
-						type: 'code',
+						type: "code",
 						code: prettyFormat(value),
 					},
 				],
@@ -378,7 +378,7 @@ export default class TestAPI implements TestHelper {
 	is(
 		received: unknown,
 		expected: unknown,
-		message: string = 't.is() failed, using Object.is semantics',
+		message: string = "t.is() failed, using Object.is semantics",
 	): void {
 		if (Object.is(received, expected) !== true) {
 			this.fail(
@@ -387,7 +387,7 @@ export default class TestAPI implements TestHelper {
 					received,
 					expected,
 					{
-						visualMethod: 'looksLike',
+						visualMethod: "looksLike",
 					},
 				),
 				1,
@@ -398,7 +398,7 @@ export default class TestAPI implements TestHelper {
 	not(
 		received: unknown,
 		expected: unknown,
-		message: string = 't.not() failed, using !Object.is() semantics',
+		message: string = "t.not() failed, using !Object.is() semantics",
 	): void {
 		if (Object.is(received, expected) === true) {
 			this.fail(
@@ -407,7 +407,7 @@ export default class TestAPI implements TestHelper {
 					received,
 					expected,
 					{
-						visualMethod: 'notLooksLike',
+						visualMethod: "notLooksLike",
 					},
 				),
 				1,
@@ -418,7 +418,7 @@ export default class TestAPI implements TestHelper {
 	looksLike(
 		received: unknown,
 		expected: unknown,
-		message: string = 't.looksLike() failed, using prettyFormat semantics',
+		message: string = "t.looksLike() failed, using prettyFormat semantics",
 	): void {
 		const actualInspect = prettyFormat(received);
 		const expectedInspect = prettyFormat(expected);
@@ -431,7 +431,7 @@ export default class TestAPI implements TestHelper {
 	notLooksLike(
 		received: unknown,
 		expected: unknown,
-		message: string = 't.notLooksLike() failed, using !prettyFormat semantics',
+		message: string = "t.notLooksLike() failed, using !prettyFormat semantics",
 	): void {
 		const actualInspect = prettyFormat(received);
 		const expectedInspect = prettyFormat(expected);
@@ -444,7 +444,7 @@ export default class TestAPI implements TestHelper {
 	throws(
 		thrower: SyncThrower,
 		expected?: ExpectedError,
-		message: string = 't.throws() failed, callback did not throw an error',
+		message: string = "t.throws() failed, callback did not throw an error",
 	): void {
 		try {
 			thrower();
@@ -456,7 +456,7 @@ export default class TestAPI implements TestHelper {
 					`t.throws() expected an error to be thrown that matches ${formatExpectedError(
 						expected,
 					)} but got ${err.name}: ${JSON.stringify(err.message)}`,
-					getErrorStackAdvice(getErrorStructure(err), 'Incorrect error stack trace'),
+					getErrorStackAdvice(getErrorStructure(err), "Incorrect error stack trace"),
 					1,
 				);
 			}
@@ -468,7 +468,7 @@ export default class TestAPI implements TestHelper {
 	async throwsAsync(
 		thrower: AsyncFunc,
 		expected?: ExpectedError,
-		message: string = 't.throws() failed, callback did not throw an error',
+		message: string = "t.throws() failed, callback did not throw an error",
 	): Promise<void> {
 		try {
 			await thrower();
@@ -480,7 +480,7 @@ export default class TestAPI implements TestHelper {
 					`t.throws() expected an error to be thrown that matches ${formatExpectedError(
 						expected,
 					)} but got ${err.name}: ${JSON.stringify(err.message)}`,
-					getErrorStackAdvice(getErrorStructure(err), 'Incorrect error stack trace'),
+					getErrorStackAdvice(getErrorStructure(err), "Incorrect error stack trace"),
 					1,
 				);
 			}
@@ -490,7 +490,7 @@ export default class TestAPI implements TestHelper {
 
 	notThrows(
 		nonThrower: SyncThrower,
-		message: string = 't.notThrows() failed, callback threw an error',
+		message: string = "t.notThrows() failed, callback threw an error",
 	): void {
 		try {
 			nonThrower();
@@ -507,7 +507,7 @@ export default class TestAPI implements TestHelper {
 
 	async notThrowsAsync(
 		nonThrower: AsyncFunc,
-		message: string = 't.notThrowsAsync failed, callback threw an error',
+		message: string = "t.notThrowsAsync failed, callback threw an error",
 	): Promise<void> {
 		try {
 			await nonThrower();
@@ -525,28 +525,28 @@ export default class TestAPI implements TestHelper {
 	regex(
 		contents: string,
 		regex: RegExp,
-		message: string = 't.regex failed, using RegExp.test semantics',
+		message: string = "t.regex failed, using RegExp.test semantics",
 	): void {
 		if (!regex.test(contents)) {
 			this.fail(
 				message,
 				[
 					{
-						type: 'log',
-						category: 'info',
+						type: "log",
+						category: "info",
 						text: `Expected`,
 					},
 					{
-						type: 'code',
+						type: "code",
 						code: prettyFormat(contents),
 					},
 					{
-						type: 'log',
-						category: 'info',
+						type: "log",
+						category: "info",
 						text: `to match pattern`,
 					},
 					{
-						type: 'code',
+						type: "code",
 						code: prettyFormat(regex.source),
 					},
 				],
@@ -558,28 +558,28 @@ export default class TestAPI implements TestHelper {
 	notRegex(
 		contents: string,
 		regex: RegExp,
-		message: string = 't.regex failed, using RegExp.test semantics',
+		message: string = "t.regex failed, using RegExp.test semantics",
 	): void {
 		if (regex.test(contents)) {
 			this.fail(
 				message,
 				[
 					{
-						type: 'log',
-						category: 'info',
+						type: "log",
+						category: "info",
 						text: `Expected`,
 					},
 					{
-						type: 'code',
+						type: "code",
 						code: prettyFormat(contents),
 					},
 					{
-						type: 'log',
-						category: 'info',
+						type: "log",
+						category: "info",
 						text: `to not match pattern`,
 					},
 					{
-						type: 'code',
+						type: "code",
 						code: prettyFormat(regex.source),
 					},
 				],
@@ -599,7 +599,7 @@ export default class TestAPI implements TestHelper {
 				snapshot,
 			);
 
-			if (status === 'UPDATE' && this.options.freezeSnapshots) {
+			if (status === "UPDATE" && this.options.freezeSnapshots) {
 				await this.emitDiagnostic(
 					deriveDiagnosticFromErrorStructure(
 						callError,
@@ -610,7 +610,7 @@ export default class TestAPI implements TestHelper {
 				);
 			}
 
-			if (status === 'NO_MATCH') {
+			if (status === "NO_MATCH") {
 				await this.emitDiagnostic(
 					deriveDiagnosticFromErrorStructure(
 						callError,
@@ -621,8 +621,8 @@ export default class TestAPI implements TestHelper {
 									received,
 									snapshot,
 									{
-										receivedAlias: 'What the code gave us',
-										expectedAlias: 'Existing inline snapshot',
+										receivedAlias: "What the code gave us",
+										expectedAlias: "Existing inline snapshot",
 									},
 								),
 							},
@@ -671,11 +671,11 @@ export default class TestAPI implements TestHelper {
 	): string {
 		let language: undefined | string = opts.language;
 
-		let formatted = '';
-		if (typeof expected === 'string') {
+		let formatted = "";
+		if (typeof expected === "string") {
 			formatted = expected;
 		} else {
-			language = 'javascript';
+			language = "javascript";
 			formatted = prettyFormat(expected);
 		}
 
@@ -717,8 +717,8 @@ export default class TestAPI implements TestHelper {
 					formatted,
 					existingSnapshot,
 					{
-						receivedAlias: 'What the code gave us',
-						expectedAlias: 'Existing snapshot',
+						receivedAlias: "What the code gave us",
+						expectedAlias: "Existing snapshot",
 					},
 				);
 
@@ -728,15 +728,15 @@ export default class TestAPI implements TestHelper {
 					message = escapeMarkup(message);
 
 					advice.push({
-						type: 'log',
-						category: 'info',
+						type: "log",
+						category: "info",
 						text: markup`Snapshot can be found at <filelink emphasis target="${this.snapshotManager.defaultSnapshotPath.join()}" />`,
 					});
 				}
 
 				advice.push({
-					type: 'log',
-					category: 'info',
+					type: "log",
+					category: "info",
 					text: markup`Run <command>rome test <filelink target="${this.file.uid}" /> --update-snapshots</command> to update this snapshot`,
 				});
 
@@ -745,7 +745,7 @@ export default class TestAPI implements TestHelper {
 						callError,
 						{
 							description: {
-								category: 'tests/snapshots/incorrect',
+								category: "tests/snapshots/incorrect",
 								message: createBlessedDiagnosticMessage(message),
 								advice,
 							},

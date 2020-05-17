@@ -9,9 +9,9 @@ import {
 	AnyNode,
 	RegExpSubExpression,
 	regExpSubExpression,
-} from '@romejs/js-ast';
+} from "@romejs/js-ast";
 
 export default function RegExpSubExpression(node: AnyNode) {
 	node = regExpSubExpression.assert(node);
-	throw new Error('unimplemented');
+	throw new Error("unimplemented");
 }

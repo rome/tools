@@ -5,23 +5,23 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, TransformExitResult} from '@romejs/js-compiler';
-import {toCamelCase} from '@romejs/string-utils';
-import {Binding} from '@romejs/js-compiler/scope/bindings';
-import {descriptions} from '@romejs/diagnostics';
+import {Path, TransformExitResult} from "@romejs/js-compiler";
+import {toCamelCase} from "@romejs/string-utils";
+import {Binding} from "@romejs/js-compiler/scope/bindings";
+import {descriptions} from "@romejs/diagnostics";
 import {
 	isIdentifierish,
 	isValidIdentifierName,
 	isVariableIdentifier,
 	renameBindings,
-} from '@romejs/js-ast-utils';
+} from "@romejs/js-ast-utils";
 
 function normalizeCamelCase(name: string): undefined | string {
 	if (!isValidIdentifierName(name)) {
 		return undefined;
 	}
 
-	if (name === '') {
+	if (name === "") {
 		return undefined;
 	}
 
@@ -38,8 +38,8 @@ export function toVariableCamelCase(
 		return normalizeCamelCase(name);
 	}
 
-	let prefix = '';
-	let suffix = '';
+	let prefix = "";
+	let suffix = "";
 
 	const prefixDashes = name.match(/^_+/);
 	if (prefixDashes != null) {
@@ -62,7 +62,7 @@ export function toVariableCamelCase(
 }
 
 export default {
-	name: 'camelCase',
+	name: "camelCase",
 	enter(path: Path): TransformExitResult {
 		const {node, scope, context} = path;
 
@@ -99,8 +99,8 @@ export default {
 						old: node,
 						suggestions: [
 							{
-								title: 'Convert to camelCase',
-								description: 'This may not be safe. Are you passing this into a third party module?',
+								title: "Convert to camelCase",
+								description: "This may not be safe. Are you passing this into a third party module?",
 								fixed: {...node, name: camelName},
 							},
 						],

@@ -5,30 +5,30 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Bundler from './Bundler';
-import DependencyNode from '../dependencies/DependencyNode';
-import {Mappings, SourceMapGenerator} from '@romejs/codec-source-map';
-import {BundleRequestResult, BundlerMode} from '../../common/types/bundler';
+import Bundler from "./Bundler";
+import DependencyNode from "../dependencies/DependencyNode";
+import {Mappings, SourceMapGenerator} from "@romejs/codec-source-map";
+import {BundleRequestResult, BundlerMode} from "../../common/types/bundler";
 import {
 	WorkerBundleCompileOptions,
 	WorkerCompileResult,
-} from '../../common/bridges/WorkerBridge';
-import {DependencyOrder} from '../dependencies/DependencyOrderer';
+} from "../../common/bridges/WorkerBridge";
+import {DependencyOrder} from "../dependencies/DependencyOrderer";
 import {
 	BundleCompileResolvedImports,
 	CompileResult,
 	getPrefixedBundleNamespace,
-} from '@romejs/js-compiler';
+} from "@romejs/js-compiler";
 
-import {DiagnosticsProcessor, descriptions} from '@romejs/diagnostics';
-import {AbsoluteFilePath} from '@romejs/path';
-import {ob1Add} from '@romejs/ob1';
-import {readFile} from '@romejs/fs';
-import crypto = require('crypto');
+import {DiagnosticsProcessor, descriptions} from "@romejs/diagnostics";
+import {AbsoluteFilePath} from "@romejs/path";
+import {ob1Add} from "@romejs/ob1";
+import {readFile} from "@romejs/fs";
+import crypto = require("crypto");
 
-import {Dict} from '@romejs/typescript-helpers';
-import {Reporter} from '@romejs/cli-reporter';
-import WorkerQueue from '../WorkerQueue';
+import {Dict} from "@romejs/typescript-helpers";
+import {Reporter} from "@romejs/cli-reporter";
+import WorkerQueue from "../WorkerQueue";
 
 export type BundleOptions = {
 	prefix?: string;
@@ -64,12 +64,12 @@ export default class BundleRequest {
 		this.diagnostics = bundler.request.createDiagnosticsProcessor({
 			origins: [
 				{
-					category: 'bundler',
+					category: "bundler",
 					message: `Requested bundle for <filelink target="${this.resolvedEntryUid}" />`,
 				},
 			],
 		});
-		this.diagnostics.addAllowedUnusedSuppressionPrefix('lint');
+		this.diagnostics.addAllowedUnusedSuppressionPrefix("lint");
 
 		this.compiles = new Map();
 		this.assets = new Map();
@@ -97,7 +97,7 @@ export default class BundleRequest {
 
 		const analyzeProgress = reporter.progress({
 			name: `bundler:analyze:${this.resolvedEntryUid}`,
-			title: 'Analyzing',
+			title: "Analyzing",
 		});
 		this.diagnostics.setThrowAfter(100);
 		try {
@@ -121,7 +121,7 @@ export default class BundleRequest {
 
 		const compilingSpinner = reporter.progress({
 			name: `bundler:compile:${this.resolvedEntryUid}`,
-			title: 'Compiling',
+			title: "Compiling",
 		});
 		compilingSpinner.setTotal(paths.length);
 
@@ -165,7 +165,7 @@ export default class BundleRequest {
 			const buffer = await readFile(mod.path);
 
 			// Asset path in the form of: BASENAME-SHA1HASH.EXTENSIONS
-			const hash = crypto.createHash('sha1').update(buffer).digest('hex');
+			const hash = crypto.createHash("sha1").update(buffer).digest("hex");
 			const basename = mod.path.getExtensionlessBasename();
 			const exts = mod.path.getExtensions();
 
@@ -186,7 +186,7 @@ export default class BundleRequest {
 
 		const res: WorkerCompileResult = await this.bundler.request.requestWorkerCompile(
 			path,
-			'compileForBundle',
+			"compileForBundle",
 			{
 				bundle: opts,
 			},
@@ -226,15 +226,15 @@ export default class BundleRequest {
 			});
 		}
 
-		let content: string = '';
+		let content: string = "";
 		let lineOffset: number = 0;
 
 		function push(str: string) {
-			str += '\n';
+			str += "\n";
 			content += str;
 			if (!deferredSourceMaps) {
 				for (let cha of str) {
-					if (cha === '\n') {
+					if (cha === "\n") {
 						lineOffset++;
 					}
 				}
@@ -269,7 +269,7 @@ export default class BundleRequest {
 
 		// add on bootstrap
 		if (order.firstTopAwaitLocations.length > 0) {
-			if (mode === 'legacy') {
+			if (mode === "legacy") {
 				for (const {loc, mtime} of order.firstTopAwaitLocations) {
 					this.diagnostics.addDiagnostic({
 						description: descriptions.BUNDLER.TOP_LEVEL_AWAIT_IN_LEGACY,
@@ -286,7 +286,7 @@ export default class BundleRequest {
 			push(`(function(global) {`);
 		}
 
-		if (mode === 'modern') {
+		if (mode === "modern") {
 			push(`  'use strict';`);
 		}
 
@@ -309,7 +309,7 @@ export default class BundleRequest {
     */
 		const declaredCJS: Set<DependencyNode> = new Set();
 		function declareCJS(module: DependencyNode) {
-			if (mode !== 'modern' || module.type !== 'cjs' || declaredCJS.has(module)) {
+			if (mode !== "modern" || module.type !== "cjs" || declaredCJS.has(module)) {
 				return;
 			}
 
@@ -329,11 +329,11 @@ export default class BundleRequest {
 			const compileResult = this.compiles.get(source.join());
 			if (compileResult === undefined) {
 				continue;
-				throw new Error('Expected compile result');
+				throw new Error("Expected compile result");
 			}
 
 			// Only do this in modern mode, the module id will already be in the wrapper otherwise
-			if (mode === 'modern') {
+			if (mode === "modern") {
 				push(`  // ${module.uid}`);
 			}
 
@@ -341,12 +341,12 @@ export default class BundleRequest {
 
 			addMappings(module.uid, compileResult.sourceText, compileResult.mappings);
 			push(compileResult.compiledCode);
-			push('');
+			push("");
 		}
 
 		// push on initial entry require
 		const entryModule = graph.getNode(resolvedEntry);
-		if (mode === 'modern') {
+		if (mode === "modern") {
 			push(`  return ${getPrefixedBundleNamespace(entryModule.uid)};`);
 		} else {
 			push(`  return Rome.requireNamespace("${entryModule.uid}");`);
@@ -381,7 +381,7 @@ export default class BundleRequest {
 	abort(): BundleRequestResult {
 		return {
 			sourceMap: this.sourceMap,
-			content: '',
+			content: "",
 			diagnostics: this.diagnostics.getDiagnostics(),
 			cached: false,
 			assets: this.assets,

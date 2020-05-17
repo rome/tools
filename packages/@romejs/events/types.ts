@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {StructuredError} from '@romejs/v8';
-import {JSONObject} from '@romejs/codec-json';
+import {StructuredError} from "@romejs/v8";
+import {JSONObject} from "@romejs/codec-json";
 
 export type BridgeCreatorOptions = {
 	type: BridgeType;
 	onSendMessage?: (msg: BridgeMessage) => void;
 };
 
-export type BridgeType = 'server' | 'client' | 'server&client';
+export type BridgeType = "server" | "client" | "server&client";
 
 export type BridgeOptions = BridgeCreatorOptions & {
 	sendMessage: (msg: BridgeMessage) => void;
@@ -31,13 +31,13 @@ export type EventSubscription = {
 };
 
 export type BridgeHandshakeMessage = {
-	type: 'handshake';
+	type: "handshake";
 	first: boolean;
 	subscriptions: Array<string>;
 };
 
 export type BridgeSubscriptionsMessage = {
-	type: 'subscriptions';
+	type: "subscriptions";
 	names: Array<string>;
 };
 
@@ -45,7 +45,7 @@ export type BridgeRequestMessage = {
 	id?: number;
 	event: string;
 	param: unknown;
-	type: 'request';
+	type: "request";
 	priority: boolean;
 };
 
@@ -53,15 +53,15 @@ export type BridgeSuccessResponseMessage = {
 	id: number;
 	event: string;
 	value: unknown;
-	type: 'response';
-	responseStatus: 'success';
+	type: "response";
+	responseStatus: "success";
 };
 
 export type BridgeErrorResponseMessage = {
 	id: number;
 	event: string;
-	type: 'response';
-	responseStatus: 'error';
+	type: "response";
+	responseStatus: "error";
 	value: StructuredError;
 	metadata: JSONObject;
 };

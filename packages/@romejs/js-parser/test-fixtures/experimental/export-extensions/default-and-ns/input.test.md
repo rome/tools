@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
+	sourceType: "module"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 30
@@ -34,7 +34,7 @@ Program {
 			exportKind: undefined
 			namedSpecifiers: Array []
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 29
 					index: 29
@@ -47,9 +47,9 @@ Program {
 				}
 			}
 			source: StringLiteral {
-				value: 'test'
+				value: "test"
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 28
 						index: 28
@@ -64,7 +64,7 @@ Program {
 			}
 			defaultSpecifier: ExportDefaultSpecifier {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 8
 						index: 8
@@ -77,10 +77,10 @@ Program {
 					}
 				}
 				exported: Identifier {
-					name: 'B'
+					name: "B"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'B'
+						filename: "input.js"
+						identifierName: "B"
 						end: Object {
 							column: 8
 							index: 8
@@ -96,7 +96,7 @@ Program {
 			}
 			namespaceSpecifier: ExportNamespaceSpecifier {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 16
 						index: 16
@@ -109,10 +109,10 @@ Program {
 					}
 				}
 				exported: Identifier {
-					name: 'A'
+					name: "A"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'A'
+						filename: "input.js"
+						identifierName: "A"
 						end: Object {
 							column: 16
 							index: 16

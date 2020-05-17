@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 25
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		TSImportEqualsDeclaration {
 			id: BindingIdentifier {
-				name: 'a'
+				name: "a"
 				loc: Object {
-					filename: 'input.ts'
-					identifierName: 'a'
+					filename: "input.ts"
+					identifierName: "a"
 					end: Object {
 						column: 8
 						index: 8
@@ -50,7 +50,7 @@ Program {
 			}
 			isExport: false
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 24
 					index: 24
@@ -64,7 +64,7 @@ Program {
 			}
 			moduleReference: TSExternalModuleReference {
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 23
 						index: 23
@@ -77,9 +77,9 @@ Program {
 					}
 				}
 				expression: StringLiteral {
-					value: 'a'
+					value: "a"
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 22
 							index: 22

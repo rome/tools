@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Number0, Number1, ob1Coerce1, ob1Number0Neg1} from '@romejs/ob1';
+import {Number0, Number1, ob1Coerce1, ob1Number0Neg1} from "@romejs/ob1";
 
 //# Node types
 export type NodeBase = {
@@ -55,11 +55,11 @@ export type ValueToken<Type extends string, Value> = TokenBase & {
 	value: Value;
 };
 
-export type EOFToken = SimpleToken<'EOF'>;
+export type EOFToken = SimpleToken<"EOF">;
 
-export type SOFToken = SimpleToken<'SOF'>;
+export type SOFToken = SimpleToken<"SOF">;
 
-export type InvalidToken = SimpleToken<'Invalid'>;
+export type InvalidToken = SimpleToken<"Invalid">;
 
 export type BaseTokens = {
 	Invalid: InvalidToken;

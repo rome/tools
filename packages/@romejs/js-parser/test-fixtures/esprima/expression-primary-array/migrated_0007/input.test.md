@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 8
 			index: 8
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 8
 					index: 8
@@ -45,9 +45,9 @@ Program {
 				}
 			}
 			expression: AssignmentExpression {
-				operator: '='
+				operator: "="
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 8
 						index: 8
@@ -62,7 +62,7 @@ Program {
 				right: ArrayExpression {
 					elements: Array []
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 8
 							index: 8
@@ -76,10 +76,10 @@ Program {
 					}
 				}
 				left: AssignmentIdentifier {
-					name: '\u65e5\u672c\u8a9e'
+					name: "\u65e5\u672c\u8a9e"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: '\u65e5\u672c\u8a9e'
+						filename: "input.js"
+						identifierName: "\u65e5\u672c\u8a9e"
 						end: Object {
 							column: 3
 							index: 3

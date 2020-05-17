@@ -5,21 +5,21 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {DiagnosticSuppressions, Diagnostics} from '@romejs/diagnostics';
-import {DiagnosticsPrinterOptions} from './types';
-import {Reporter, ReporterStream} from '@romejs/cli-reporter';
-import DiagnosticsPrinter from './DiagnosticsPrinter';
+import {DiagnosticSuppressions, Diagnostics} from "@romejs/diagnostics";
+import {DiagnosticsPrinterOptions} from "./types";
+import {Reporter, ReporterStream} from "@romejs/cli-reporter";
+import DiagnosticsPrinter from "./DiagnosticsPrinter";
 
-export {toLines} from './utils';
+export {toLines} from "./utils";
 export {
 	DEFAULT_PRINTER_FLAGS,
 	readDiagnosticsFileLocal,
-} from './DiagnosticsPrinter';
+} from "./DiagnosticsPrinter";
 export {DiagnosticsPrinter};
 
-export * from './constants';
+export * from "./constants";
 
-export * from './types';
+export * from "./types";
 
 export function printDiagnostics(
 	{
@@ -49,7 +49,7 @@ export function printDiagnosticsToString(
 		diagnostics: Diagnostics;
 		suppressions: DiagnosticSuppressions;
 		printerOptions?: DiagnosticsPrinterOptions;
-		format?: ReporterStream['format'];
+		format?: ReporterStream["format"];
 		excludeFooter?: boolean;
 	},
 ): string {

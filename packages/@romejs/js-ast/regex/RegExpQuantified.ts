@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyRegExpBodyItem, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {AnyRegExpBodyItem, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type RegExpQuantified = JSNodeBase & {
-	type: 'RegExpQuantified';
+	type: "RegExpQuantified";
 	target: AnyRegExpBodyItem;
 	lazy?: boolean;
 	min: number;
@@ -17,7 +17,7 @@ export type RegExpQuantified = JSNodeBase & {
 };
 
 export const regExpQuantified = createBuilder<RegExpQuantified>(
-	'RegExpQuantified',
+	"RegExpQuantified",
 	{
 		bindingKeys: {},
 		visitorKeys: {

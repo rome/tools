@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {BindingIdentifier, ClassHead, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {BindingIdentifier, ClassHead, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type ClassDeclaration = JSNodeBase & {
-	type: 'ClassDeclaration';
+	type: "ClassDeclaration";
 	id: BindingIdentifier;
 	meta: ClassHead;
 	abstract?: boolean;
@@ -17,7 +17,7 @@ export type ClassDeclaration = JSNodeBase & {
 };
 
 export const classDeclaration = createBuilder<ClassDeclaration>(
-	'ClassDeclaration',
+	"ClassDeclaration",
 	{
 		bindingKeys: {
 			id: true,

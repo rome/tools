@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
+import {Scope} from "../../scopes";
 import {
 	AnyNode,
 	IntersectionTypeAnnotation,
 	intersectionTypeAnnotation,
-} from '@romejs/js-ast';
-import IntersectionT from '../../types/IntersectionT';
+} from "@romejs/js-ast";
+import IntersectionT from "../../types/IntersectionT";
 
 export default function IntersectionTypeAnnotation(node: AnyNode, scope: Scope) {
 	node = intersectionTypeAnnotation.assert(node);

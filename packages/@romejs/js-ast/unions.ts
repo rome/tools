@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import * as n from './index';
-import {OptionalProps} from '@romejs/typescript-helpers';
+import * as n from "./index";
+import {OptionalProps} from "@romejs/typescript-helpers";
 
 export type AnyTSEntityName = n.ReferenceIdentifier | n.TSQualifiedName;
 
@@ -115,8 +115,8 @@ export type AnyAuxiliary =
 export type AnyComment = n.CommentBlock | n.CommentLine;
 
 export type AnyCommentOptionalId =
-	 | OptionalProps<n.CommentBlock, 'id'>
-	| OptionalProps<n.CommentLine, 'id'>;
+	 | OptionalProps<n.CommentBlock, "id">
+	| OptionalProps<n.CommentLine, "id">;
 
 export type AnyIdentifier =
 	 | n.Identifier
@@ -252,38 +252,17 @@ export type AnyDeclaration =
 	| n.TSDeclareFunction
 	| n.TSModuleDeclaration;
 
-export type AnyFlowPrimary =
-	 | n.IntersectionTypeAnnotation
-	| n.UnionTypeAnnotation
-	| n.IntersectionTypeAnnotation
-	| n.UnionTypeAnnotation
-	| n.IntersectionTypeAnnotation
-	| n.UnionTypeAnnotation
-	| n.NullKeywordTypeAnnotation
-	| AnyLiteralTypeAnnotation
-	| AnyFlowKeywordTypeAnnotation;
-
 export type AnyLiteralTypeAnnotation =
 	 | n.StringLiteralTypeAnnotation
 	| n.BooleanLiteralTypeAnnotation
 	| n.NumericLiteralTypeAnnotation;
 
-// Keyword type annotations that both Flow and TS share
-export type AnySharedKeywordTypeAnnotation =
+export type AnyTSKeywordTypeAnnotation =
 	 | n.AnyKeywordTypeAnnotation
 	| n.BooleanKeywordTypeAnnotation
 	| n.NumberKeywordTypeAnnotation
 	| n.StringKeywordTypeAnnotation
-	| n.BigIntKeywordTypeAnnotation;
-
-export type AnyFlowKeywordTypeAnnotation =
-	 | AnySharedKeywordTypeAnnotation
-	| n.VoidKeywordTypeAnnotation
-	| n.MixedKeywordTypeAnnotation
-	| n.EmptyKeywordTypeAnnotation;
-
-export type AnyTSKeywordTypeAnnotation =
-	 | AnySharedKeywordTypeAnnotation
+	| n.BigIntKeywordTypeAnnotation
 	| n.NeverKeywordTypeAnnotation
 	| n.NumberKeywordTypeAnnotation
 	| n.ObjectKeywordTypeAnnotation
@@ -314,8 +293,6 @@ export type AnyTSPrimary =
 	| n.TemplateLiteralTypeAnnotation
 	| AnyLiteralTypeAnnotation
 	| AnyTSKeywordTypeAnnotation;
-
-export type AnyPrimaryType = AnyFlowPrimary | AnyTSPrimary;
 
 export type AnyRegExpEscapedCharacter =
 	 | n.RegExpCharacter

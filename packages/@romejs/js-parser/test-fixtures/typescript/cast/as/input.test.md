@@ -9,14 +9,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 107
@@ -30,10 +30,10 @@ Program {
 	}
 	comments: Array [
 		CommentLine {
-			id: '0'
-			value: ' (x < y) as boolean;'
+			id: "0"
+			value: " (x < y) as boolean;"
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 40
 					index: 48
@@ -47,10 +47,10 @@ Program {
 			}
 		}
 		CommentLine {
-			id: '1'
-			value: ' x === (1 as number);'
+			id: "1"
+			value: " x === (1 as number);"
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 42
 					index: 91
@@ -67,7 +67,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 7
 					index: 7
@@ -81,7 +81,7 @@ Program {
 			}
 			expression: TSAsExpression {
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 6
 						index: 6
@@ -94,10 +94,10 @@ Program {
 					}
 				}
 				expression: ReferenceIdentifier {
-					name: 'x'
+					name: "x"
 					loc: Object {
-						filename: 'input.ts'
-						identifierName: 'x'
+						filename: "input.ts"
+						identifierName: "x"
 						end: Object {
 							column: 1
 							index: 1
@@ -113,7 +113,7 @@ Program {
 				typeAnnotation: TSTypeReference {
 					typeParameters: undefined
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 6
 							index: 6
@@ -126,10 +126,10 @@ Program {
 						}
 					}
 					typeName: ReferenceIdentifier {
-						name: 'T'
+						name: "T"
 						loc: Object {
-							filename: 'input.ts'
-							identifierName: 'T'
+							filename: "input.ts"
+							identifierName: "T"
 							end: Object {
 								column: 6
 								index: 6
@@ -146,9 +146,9 @@ Program {
 			}
 		}
 		ExpressionStatement {
-			trailingComments: Array ['0']
+			trailingComments: Array ["0"]
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 17
 					index: 25
@@ -162,7 +162,7 @@ Program {
 			}
 			expression: TSAsExpression {
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 16
 						index: 24
@@ -176,7 +176,7 @@ Program {
 				}
 				typeAnnotation: BooleanKeywordTypeAnnotation {
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 16
 							index: 24
@@ -190,9 +190,9 @@ Program {
 					}
 				}
 				expression: BinaryExpression {
-					operator: '<'
+					operator: "<"
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 5
 							index: 13
@@ -205,10 +205,10 @@ Program {
 						}
 					}
 					left: ReferenceIdentifier {
-						name: 'x'
+						name: "x"
 						loc: Object {
-							filename: 'input.ts'
-							identifierName: 'x'
+							filename: "input.ts"
+							identifierName: "x"
 							end: Object {
 								column: 1
 								index: 9
@@ -222,10 +222,10 @@ Program {
 						}
 					}
 					right: ReferenceIdentifier {
-						name: 'y'
+						name: "y"
 						loc: Object {
-							filename: 'input.ts'
-							identifierName: 'y'
+							filename: "input.ts"
+							identifierName: "y"
 							end: Object {
 								column: 5
 								index: 13
@@ -242,10 +242,10 @@ Program {
 			}
 		}
 		ExpressionStatement {
-			leadingComments: Array ['0']
-			trailingComments: Array ['1']
+			leadingComments: Array ["0"]
+			trailingComments: Array ["1"]
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 18
 					index: 67
@@ -259,9 +259,9 @@ Program {
 			}
 			expression: BinaryExpression {
 				leadingComments: undefined
-				operator: '==='
+				operator: "==="
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 17
 						index: 66
@@ -274,11 +274,11 @@ Program {
 					}
 				}
 				left: ReferenceIdentifier {
-					name: 'x'
+					name: "x"
 					leadingComments: undefined
 					loc: Object {
-						filename: 'input.ts'
-						identifierName: 'x'
+						filename: "input.ts"
+						identifierName: "x"
 						end: Object {
 							column: 1
 							index: 50
@@ -293,7 +293,7 @@ Program {
 				}
 				right: TSAsExpression {
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 17
 							index: 66
@@ -307,7 +307,7 @@ Program {
 					}
 					typeAnnotation: NumberKeywordTypeAnnotation {
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 17
 								index: 66
@@ -324,7 +324,7 @@ Program {
 						value: 1
 						format: undefined
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 7
 								index: 56
@@ -341,9 +341,9 @@ Program {
 			}
 		}
 		ExpressionStatement {
-			leadingComments: Array ['1']
+			leadingComments: Array ["1"]
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 14
 					index: 106
@@ -358,7 +358,7 @@ Program {
 			expression: TSAsExpression {
 				leadingComments: undefined
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 13
 						index: 105
@@ -373,7 +373,7 @@ Program {
 				typeAnnotation: TSTypeReference {
 					typeParameters: undefined
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 13
 							index: 105
@@ -386,10 +386,10 @@ Program {
 						}
 					}
 					typeName: ReferenceIdentifier {
-						name: 'T'
+						name: "T"
 						loc: Object {
-							filename: 'input.ts'
-							identifierName: 'T'
+							filename: "input.ts"
+							identifierName: "T"
 							end: Object {
 								column: 13
 								index: 105
@@ -406,7 +406,7 @@ Program {
 				expression: TSAsExpression {
 					leadingComments: undefined
 					loc: Object {
-						filename: 'input.ts'
+						filename: "input.ts"
 						end: Object {
 							column: 8
 							index: 100
@@ -420,7 +420,7 @@ Program {
 					}
 					typeAnnotation: AnyKeywordTypeAnnotation {
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 8
 								index: 100
@@ -434,11 +434,11 @@ Program {
 						}
 					}
 					expression: ReferenceIdentifier {
-						name: 'x'
+						name: "x"
 						leadingComments: undefined
 						loc: Object {
-							filename: 'input.ts'
-							identifierName: 'x'
+							filename: "input.ts"
+							identifierName: "x"
 							end: Object {
 								column: 1
 								index: 93

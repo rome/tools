@@ -10,18 +10,18 @@ import {
 	AnyTargetBindingPattern,
 	JSNodeBase,
 	PatternMeta,
-} from '../index';
-import {createBuilder} from '../utils';
+} from "../index";
+import {createBuilder} from "../utils";
 
 export type BindingAssignmentPattern = JSNodeBase & {
-	type: 'BindingAssignmentPattern';
+	type: "BindingAssignmentPattern";
 	left: AnyTargetBindingPattern;
 	right: AnyExpression;
 	meta?: PatternMeta;
 };
 
 export const bindingAssignmentPattern = createBuilder<BindingAssignmentPattern>(
-	'BindingAssignmentPattern',
+	"BindingAssignmentPattern",
 	{
 		bindingKeys: {
 			left: true,

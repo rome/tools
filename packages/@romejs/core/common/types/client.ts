@@ -8,12 +8,12 @@
 import {
 	DEFAULT_PRINTER_FLAGS,
 	DiagnosticsPrinterFlags,
-} from '@romejs/cli-diagnostics';
-import {Platform} from './platform';
-import {AbsoluteFilePath, CWD_PATH} from '@romejs/path';
+} from "@romejs/cli-diagnostics";
+import {Platform} from "./platform";
+import {AbsoluteFilePath, CWD_PATH} from "@romejs/path";
 
 export const DEFAULT_CLIENT_FLAGS: ClientFlags = {
-	clientName: 'unknown',
+	clientName: "unknown",
 	cwd: CWD_PATH,
 	silent: false,
 	verbose: false,
@@ -56,6 +56,6 @@ export type ClientFlags = {
 	verbose: boolean;
 };
 
-export type ClientFlagsJSON = Omit<ClientFlags, 'cwd'> & {
+export type ClientFlagsJSON = Omit<ClientFlags, "cwd"> & {
 	cwd: string;
 };

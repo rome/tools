@@ -5,18 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Diagnostics} from '@romejs/diagnostics';
-import {DEFAULT_PROJECT_CONFIG} from '@romejs/project';
-import {test} from 'rome';
-import {check} from '@romejs/js-analysis';
-import {parseJS} from '@romejs/js-parser';
-import {createUnknownFilePath} from '@romejs/path';
+import {Diagnostics} from "@romejs/diagnostics";
+import {DEFAULT_PROJECT_CONFIG} from "@romejs/project";
+import {test} from "rome";
+import {check} from "@romejs/js-analysis";
+import {parseJS} from "@romejs/js-parser";
+import {createUnknownFilePath} from "@romejs/path";
 
 async function testCheck(code: string): Promise<Diagnostics> {
 	const ast = parseJS({
 		input: code,
-		sourceType: 'module',
-		path: createUnknownFilePath('unknown'),
+		sourceType: "module",
+		path: createUnknownFilePath("unknown"),
 	});
 
 	return check({
@@ -27,7 +27,7 @@ async function testCheck(code: string): Promise<Diagnostics> {
 		},
 		provider: {
 			getExportTypes() {
-				return Promise.reject('unsupported');
+				return Promise.reject("unsupported");
 			},
 		},
 	});

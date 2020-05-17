@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Position, SourceLocation} from '@romejs/parser-core';
-import {ErrorFrame, ErrorFrames} from './types';
-import {isPlainObject} from '@romejs/typescript-helpers';
-import {ob1Number0, ob1Number0Neg1, ob1Number1} from '@romejs/ob1';
+import {Position, SourceLocation} from "@romejs/parser-core";
+import {ErrorFrame, ErrorFrames} from "./types";
+import {isPlainObject} from "@romejs/typescript-helpers";
+import {ob1Number0, ob1Number0Neg1, ob1Number1} from "@romejs/ob1";
 
-export * from './types';
+export * from "./types";
 
 export const ERROR_FRAMES_PROP = Symbol();
 
@@ -25,8 +25,8 @@ export function getErrorStructure(
 	err: unknown,
 	framesToShift: number = 0,
 ): StructuredError {
-	let name = 'Error';
-	let message = 'Unknown message';
+	let name = "Error";
+	let message = "Unknown message";
 	let stack = undefined;
 	let frames: ErrorFrames = [];
 	let looksLikeValidError = false;
@@ -36,17 +36,17 @@ export function getErrorStructure(
 			[ERROR_FRAMES_PROP]: unknown;
 		}>(err)
 	) {
-		if (typeof err.name === 'string') {
+		if (typeof err.name === "string") {
 			looksLikeValidError = true;
 			name = err.name;
 		}
 
-		if (typeof err.message === 'string') {
+		if (typeof err.message === "string") {
 			looksLikeValidError = true;
 			message = err.message;
 		}
 
-		if (typeof err.stack === 'string') {
+		if (typeof err.stack === "string") {
 			looksLikeValidError = true;
 			stack = err.stack;
 		}
@@ -81,7 +81,7 @@ export function getSourceLocationFromErrorFrame(
 	};
 
 	return {
-		filename: frame.filename === undefined ? 'unknown' : frame.filename,
+		filename: frame.filename === undefined ? "unknown" : frame.filename,
 		start: pos,
 		end: pos,
 	};

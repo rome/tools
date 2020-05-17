@@ -10,13 +10,13 @@ import {
 	assignmentExpression,
 	assignmentIdentifier,
 	identifier,
-} from '@romejs/js-ast';
-import {Path} from '@romejs/js-compiler';
-import {doesNodeMatchPattern, inheritLoc, template} from '@romejs/js-ast-utils';
-import {getOptions, getPrefixedNamespace} from '../_utils';
+} from "@romejs/js-ast";
+import {Path} from "@romejs/js-compiler";
+import {doesNodeMatchPattern, inheritLoc, template} from "@romejs/js-ast-utils";
+import {getOptions, getPrefixedNamespace} from "../_utils";
 
 export default {
-	name: 'requireRewriteTransform',
+	name: "requireRewriteTransform",
 	enter(path: Path): AnyNode {
 		const {node, context} = path;
 
@@ -24,25 +24,25 @@ export default {
 
 		// Replace all references to module.exports to the correct version
 		if (
-			node.type === 'MemberExpression' &&
-			doesNodeMatchPattern(node, 'module.exports')
+			node.type === "MemberExpression" &&
+			doesNodeMatchPattern(node, "module.exports")
 		) {
 			return identifier.create({
 				name: getPrefixedNamespace(moduleId),
-				loc: inheritLoc(node, 'module.exports'),
+				loc: inheritLoc(node, "module.exports"),
 			});
 		}
 
 		// Replace all assignments of module.exports to the correct version
 		if (
-			node.type === 'AssignmentExpression' &&
-			doesNodeMatchPattern(node.left, 'module.exports')
+			node.type === "AssignmentExpression" &&
+			doesNodeMatchPattern(node.left, "module.exports")
 		) {
 			return assignmentExpression.create({
 				operator: node.operator,
 				left: assignmentIdentifier.create({
 					name: getPrefixedNamespace(moduleId),
-					loc: inheritLoc(node, 'module.exports'),
+					loc: inheritLoc(node, "module.exports"),
 				}),
 				right: node.right,
 			});
@@ -50,33 +50,33 @@ export default {
 
 		// Replace import foo = require('module');
 		if (
-			node.type === 'TSImportEqualsDeclaration' &&
-			node.moduleReference.type === 'TSExternalModuleReference'
+			node.type === "TSImportEqualsDeclaration" &&
+			node.moduleReference.type === "TSExternalModuleReference"
 		) {
 			return template.statement`const ${node.id} = require(${node.moduleReference.expression});`;
 		}
 
 		// Now handle normal `require('module')`
-		if (node.type !== 'CallExpression') {
+		if (node.type !== "CallExpression") {
 			return node;
 		}
 
 		const {callee} = node;
-		if (callee.type !== 'ReferenceIdentifier' || callee.name !== 'require') {
+		if (callee.type !== "ReferenceIdentifier" || callee.name !== "require") {
 			return node;
 		}
 
 		const sourceArg = node.arguments[0];
-		if (sourceArg.type !== 'StringLiteral') {
+		if (sourceArg.type !== "StringLiteral") {
 			return node;
 		}
 
-		if (path.scope.hasBinding('require')) {
+		if (path.scope.hasBinding("require")) {
 			return node;
 		}
 
 		const replacement = relativeSourcesToModuleId[sourceArg.value];
-		if (typeof replacement === 'string') {
+		if (typeof replacement === "string") {
 			return identifier.create({
 				name: getPrefixedNamespace(replacement),
 			});

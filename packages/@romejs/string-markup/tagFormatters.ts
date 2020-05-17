@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {MarkupFormatOptions, TagAttributes} from './types';
-import {humanizeNumber} from '@romejs/string-utils';
-import {createUnknownFilePath} from '@romejs/path';
+import {MarkupFormatOptions, TagAttributes} from "./types";
+import {humanizeNumber} from "@romejs/string-utils";
+import {createUnknownFilePath} from "@romejs/path";
 
 export function humanizeMarkupFilename(
 	filename: string,
@@ -36,7 +36,7 @@ export function getFileLinkText(
 
 		const column = attributes.column;
 		// Ignore a 0 column and just target the line
-		if (column !== undefined && column !== '0') {
+		if (column !== undefined && column !== "0") {
 			text += `:${column}`;
 		}
 	}
@@ -48,7 +48,7 @@ export function getFileLinkFilename(
 	attributes: TagAttributes,
 	opts: MarkupFormatOptions,
 ): string {
-	let filename = attributes.target || '';
+	let filename = attributes.target || "";
 	if (opts.normalizeFilename !== undefined) {
 		filename = opts.normalizeFilename(filename);
 	}
@@ -56,7 +56,7 @@ export function getFileLinkFilename(
 }
 
 export function formatApprox(attributes: TagAttributes, value: string) {
-	if (attributes.approx === 'true') {
+	if (attributes.approx === "true") {
 		return `~${value}`;
 	} else {
 		return value;
@@ -81,7 +81,7 @@ export function formatGrammarNumber(attributes: TagAttributes, value: string) {
 		return plural;
 	}
 
-	return '';
+	return "";
 }
 
 export function formatNumber(attributes: TagAttributes, value: string) {

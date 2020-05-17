@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from '@romejs/js-ast';
-import {HydrateData} from '../Evaluator';
-import {Scope} from '../scopes';
-import T from './T';
+import {AnyNode} from "@romejs/js-ast";
+import {HydrateData} from "../Evaluator";
+import {Scope} from "../scopes";
+import T from "./T";
 
 export default class OpaqueT extends T {
 	constructor(scope: Scope, originNode: undefined | AnyNode, name: string) {
@@ -16,7 +16,7 @@ export default class OpaqueT extends T {
 		this.name = name;
 	}
 
-	static type = 'OpaqueT';
+	static type = "OpaqueT";
 	name: string;
 
 	serialize(): HydrateData {

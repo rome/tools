@@ -30,7 +30,7 @@
 ```
 function greet1() {
 	try {
-		throw new Error('Try');
+		throw new Error("Try");
 	} catch (err) {
 		throw err;
 	} finally {
@@ -66,7 +66,7 @@ function greet1() {
 ```
 function greet2() {
 	try {
-		throw new Error('Try');
+		throw new Error("Try");
 	} catch (err) {
 		throw err;
 	} finally {
@@ -102,7 +102,7 @@ function greet2() {
 ```
 function greet3() {
 	try {
-		throw new Error('Try');
+		throw new Error("Try");
 	} catch (err) {
 		throw err;
 	} finally {
@@ -138,11 +138,11 @@ function greet3() {
 ```
 function greet4() {
 	try {
-		throw new Error('Try');
+		throw new Error("Try");
 	} catch (err) {
 		throw err;
 	} finally {
-		throw new Error('Finally');
+		throw new Error("Finally");
 	}
 }
 

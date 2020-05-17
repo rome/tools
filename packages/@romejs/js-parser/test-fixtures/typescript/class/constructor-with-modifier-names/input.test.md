@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.ts'
+	filename: "input.ts"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
-	syntax: Array ['ts']
+	sourceType: "module"
+	syntax: Array ["ts"]
 	loc: Object {
-		filename: 'input.ts'
+		filename: "input.ts"
 		end: Object {
 			column: 0
 			index: 92
@@ -32,10 +32,10 @@ Program {
 	body: Array [
 		ClassDeclaration {
 			id: BindingIdentifier {
-				name: 'Foo'
+				name: "Foo"
 				loc: Object {
-					filename: 'input.ts'
-					identifierName: 'Foo'
+					filename: "input.ts"
+					identifierName: "Foo"
 					end: Object {
 						column: 9
 						index: 9
@@ -49,7 +49,7 @@ Program {
 				}
 			}
 			loc: Object {
-				filename: 'input.ts'
+				filename: "input.ts"
 				end: Object {
 					column: 1
 					index: 91
@@ -67,7 +67,7 @@ Program {
 				superTypeParameters: undefined
 				typeParameters: undefined
 				loc: Object {
-					filename: 'input.ts'
+					filename: "input.ts"
 					end: Object {
 						column: 1
 						index: 91
@@ -81,13 +81,13 @@ Program {
 				}
 				body: Array [
 					ClassMethod {
-						kind: 'constructor'
+						kind: "constructor"
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'constructor'
+								name: "constructor"
 								loc: Object {
-									filename: 'input.ts'
-									identifierName: 'constructor'
+									filename: "input.ts"
+									identifierName: "constructor"
 									end: Object {
 										column: 13
 										index: 25
@@ -101,7 +101,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 13
 									index: 25
@@ -115,7 +115,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 31
 								index: 43
@@ -131,7 +131,7 @@ Program {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 31
 									index: 43
@@ -157,7 +157,7 @@ Program {
 								line: 2
 							}
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 13
 									index: 25
@@ -179,7 +179,7 @@ Program {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 28
 									index: 40
@@ -193,10 +193,10 @@ Program {
 							}
 							params: Array [
 								BindingIdentifier {
-									name: 'set'
+									name: "set"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'set'
+										filename: "input.ts"
+										identifierName: "set"
 										end: Object {
 											column: 17
 											index: 29
@@ -212,7 +212,7 @@ Program {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 17
 												index: 29
@@ -227,10 +227,10 @@ Program {
 									}
 								}
 								BindingIdentifier {
-									name: 'readonly'
+									name: "readonly"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'readonly'
+										filename: "input.ts"
+										identifierName: "readonly"
 										end: Object {
 											column: 27
 											index: 39
@@ -246,7 +246,7 @@ Program {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 27
 												index: 39
@@ -264,13 +264,13 @@ Program {
 						}
 					}
 					ClassMethod {
-						kind: 'constructor'
+						kind: "constructor"
 						key: StaticPropertyKey {
 							value: Identifier {
-								name: 'constructor'
+								name: "constructor"
 								loc: Object {
-									filename: 'input.ts'
-									identifierName: 'constructor'
+									filename: "input.ts"
+									identifierName: "constructor"
 									end: Object {
 										column: 13
 										index: 57
@@ -284,7 +284,7 @@ Program {
 								}
 							}
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 13
 									index: 57
@@ -298,7 +298,7 @@ Program {
 							}
 						}
 						loc: Object {
-							filename: 'input.ts'
+							filename: "input.ts"
 							end: Object {
 								column: 45
 								index: 89
@@ -314,7 +314,7 @@ Program {
 							body: Array []
 							directives: Array []
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 45
 									index: 89
@@ -340,7 +340,7 @@ Program {
 								line: 3
 							}
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 13
 									index: 57
@@ -362,7 +362,7 @@ Program {
 							thisType: undefined
 							typeParameters: undefined
 							loc: Object {
-								filename: 'input.ts'
+								filename: "input.ts"
 								end: Object {
 									column: 42
 									index: 86
@@ -376,10 +376,10 @@ Program {
 							}
 							params: Array [
 								BindingIdentifier {
-									name: 'set'
+									name: "set"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'set'
+										filename: "input.ts"
+										identifierName: "set"
 										end: Object {
 											column: 17
 											index: 61
@@ -394,7 +394,7 @@ Program {
 									meta: PatternMeta {
 										optional: undefined
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 22
 												index: 66
@@ -408,7 +408,7 @@ Program {
 										}
 										typeAnnotation: AnyKeywordTypeAnnotation {
 											loc: Object {
-												filename: 'input.ts'
+												filename: "input.ts"
 												end: Object {
 													column: 22
 													index: 66
@@ -424,10 +424,10 @@ Program {
 									}
 								}
 								BindingIdentifier {
-									name: 'readonly'
+									name: "readonly"
 									loc: Object {
-										filename: 'input.ts'
-										identifierName: 'readonly'
+										filename: "input.ts"
+										identifierName: "readonly"
 										end: Object {
 											column: 32
 											index: 76
@@ -442,7 +442,7 @@ Program {
 									meta: PatternMeta {
 										optional: undefined
 										loc: Object {
-											filename: 'input.ts'
+											filename: "input.ts"
 											end: Object {
 												column: 41
 												index: 85
@@ -456,7 +456,7 @@ Program {
 										}
 										typeAnnotation: BooleanKeywordTypeAnnotation {
 											loc: Object {
-												filename: 'input.ts'
+												filename: "input.ts"
 												end: Object {
 													column: 41
 													index: 85

@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token, concat} from '../../tokens';
-import {JSXAttribute} from '@romejs/js-ast';
+import Builder from "../../Builder";
+import {Token, concat} from "../../tokens";
+import {JSXAttribute} from "@romejs/js-ast";
 
 export default function JSXAttribute(
 	builder: Builder,
@@ -16,7 +16,7 @@ export default function JSXAttribute(
 	const tokens: Array<Token> = [builder.tokenize(node.name, node)];
 
 	if (node.value) {
-		return concat([concat(tokens), '=', builder.tokenize(node.value, node)]);
+		return concat([concat(tokens), "=", builder.tokenize(node.value, node)]);
 	} else {
 		return concat(tokens);
 	}

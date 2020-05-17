@@ -31,7 +31,7 @@
 class p {
 	set name(value) {
 		if (!value) {
-			return 'wrong';
+			return "wrong";
 		}
 	}
 }
@@ -65,7 +65,7 @@ class p {
 class p {
 	static set name(value) {
 		if (!value) {
-			return 'wrong';
+			return "wrong";
 		}
 	}
 }
@@ -99,7 +99,7 @@ class p {
 let p = {
 	set name(value) {
 		if (!value) {
-			return 'wrong';
+			return "wrong";
 		}
 	},
 };

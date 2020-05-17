@@ -12,17 +12,17 @@ import {
 	FunctionExpression,
 	program,
 	stringLiteral,
-} from '@romejs/js-ast';
+} from "@romejs/js-ast";
 import {
 	getBindingIdentifiers,
 	getImportSpecifiers,
 	template,
-} from '@romejs/js-ast-utils';
-import {getModuleId, getOptions} from '../_utils';
-import {FunctionBinding, Path} from '@romejs/js-compiler';
+} from "@romejs/js-ast-utils";
+import {getModuleId, getOptions} from "../_utils";
+import {FunctionBinding, Path} from "@romejs/js-compiler";
 
 export default {
-	name: 'esToCJSTransform',
+	name: "esToCJSTransform",
 	enter(path: Path): AnyNode {
 		const {node} = path;
 		if (!program.is(node)) {
@@ -35,8 +35,8 @@ export default {
 		const bottomBody: Array<AnyStatement> = [];
 
 		for (const bodyNode of node.body) {
-			if (bodyNode.type === 'ImportDeclaration') {
-				if (bodyNode.importKind === 'type' || bodyNode.importKind === 'typeof') {
+			if (bodyNode.type === "ImportDeclaration") {
+				if (bodyNode.importKind === "type" || bodyNode.importKind === "typeof") {
 					continue;
 				}
 
@@ -54,15 +54,15 @@ export default {
 					topBody.push(template.statement`Rome.requireNamespace(${source});`);
 				} else {
 					for (const specifier of specifiers) {
-						if (specifier.type === 'ImportSpecifier') {
+						if (specifier.type === "ImportSpecifier") {
 							topBody.push(
 								template.statement`const ${specifier.local.name} = Rome.requireNamespace(${source}).${specifier.imported};`,
 							);
-						} else if (specifier.type === 'ImportNamespaceSpecifier') {
+						} else if (specifier.type === "ImportNamespaceSpecifier") {
 							topBody.push(
 								template.statement`const ${specifier.local.name} = Rome.requireNamespace(${source});`,
 							);
-						} else if (specifier.type === 'ImportDefaultSpecifier') {
+						} else if (specifier.type === "ImportDefaultSpecifier") {
 							topBody.push(
 								template.statement`const ${specifier.local.name} = Rome.requireDefault(${source});`,
 							);
@@ -72,13 +72,13 @@ export default {
 				continue;
 			}
 
-			if (bodyNode.type === 'ExportAllDeclaration') {
+			if (bodyNode.type === "ExportAllDeclaration") {
 				// TODO
 				continue;
 			}
 
-			if (bodyNode.type === 'ExportExternalDeclaration') {
-				if (bodyNode.exportKind === 'type') {
+			if (bodyNode.type === "ExportExternalDeclaration") {
+				if (bodyNode.exportKind === "type") {
 					continue;
 				}
 
@@ -98,8 +98,8 @@ export default {
 				}
 			}
 
-			if (bodyNode.type === 'ExportLocalDeclaration') {
-				if (bodyNode.exportKind === 'type') {
+			if (bodyNode.type === "ExportLocalDeclaration") {
+				if (bodyNode.exportKind === "type") {
 					continue;
 				}
 
@@ -107,7 +107,7 @@ export default {
 
 				if (declaration !== undefined) {
 					// Hoist function declarations
-					if (declaration.type === 'FunctionDeclaration') {
+					if (declaration.type === "FunctionDeclaration") {
 						topBody.push(
 							template.statement`exports.${declaration.id} = ${declaration.id}`,
 						);
@@ -117,11 +117,11 @@ export default {
 
 					// Handle type declarations (these have no runtime ordering implications)
 					if (
-						declaration.type === 'TSModuleDeclaration' ||
-						declaration.type === 'TSEnumDeclaration' ||
-						declaration.type === 'TypeAliasTypeAnnotation' ||
-						declaration.type === 'TSInterfaceDeclaration' ||
-						declaration.type === 'TSDeclareFunction'
+						declaration.type === "TSModuleDeclaration" ||
+						declaration.type === "TSEnumDeclaration" ||
+						declaration.type === "TypeAliasTypeAnnotation" ||
+						declaration.type === "TSInterfaceDeclaration" ||
+						declaration.type === "TSDeclareFunction"
 					) {
 						bottomBody.push(declaration);
 						continue;
@@ -129,8 +129,8 @@ export default {
 
 					// Handle variables and classes
 					if (
-						declaration.type === 'VariableDeclarationStatement' ||
-						declaration.type === 'ClassDeclaration'
+						declaration.type === "VariableDeclarationStatement" ||
+						declaration.type === "ClassDeclaration"
 					) {
 						bottomBody.push(declaration);
 
@@ -163,16 +163,16 @@ export default {
 				continue;
 			}
 
-			if (bodyNode.type === 'ExportDefaultDeclaration') {
+			if (bodyNode.type === "ExportDefaultDeclaration") {
 				const {declaration} = bodyNode;
 
 				// Hoist function declarations
-				if (declaration.type === 'FunctionDeclaration') {
+				if (declaration.type === "FunctionDeclaration") {
 					// If it has an id then there's no way that anything in the program can refer to it, so inline it as a function expression
 					if (declaration.id === undefined) {
 						const expr: FunctionExpression = {
 							...declaration,
-							type: 'FunctionExpression',
+							type: "FunctionExpression",
 						};
 						topBody.push(template.statement`exports.default = ${expr};`);
 					} else {
@@ -183,13 +183,13 @@ export default {
 				}
 
 				// Handle classes
-				if (declaration.type === 'ClassDeclaration') {
+				if (declaration.type === "ClassDeclaration") {
 					// Technically we could hoist these if they have no super class, but we don't as it's not spec compliant
 					topBody.push(template.statement`exports.default = undefined;`);
 					if (declaration.id === undefined) {
 						const expr: ClassExpression = {
 							...declaration,
-							type: 'ClassExpression',
+							type: "ClassExpression",
 						};
 						bottomBody.push(template.statement`exports.default = ${expr};`);
 					} else {
@@ -201,8 +201,8 @@ export default {
 
 				// Handle type declarations (these have no runtime ordering implications)
 				if (
-					declaration.type === 'TSInterfaceDeclaration' ||
-					declaration.type === 'TSDeclareFunction'
+					declaration.type === "TSInterfaceDeclaration" ||
+					declaration.type === "TSDeclareFunction"
 				) {
 					// Maybe we should keep them? Not sure what they would desugar to
 					continue;

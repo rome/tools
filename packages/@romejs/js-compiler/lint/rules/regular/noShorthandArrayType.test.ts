@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {testLint} from '../testHelpers';
-import {dedent} from '@romejs/string-utils';
+import {test} from "rome";
+import {testLint} from "../testHelpers";
+import {dedent} from "@romejs/string-utils";
 
 test(
-	'no shorthand array type',
+	"no shorthand array type",
 	async (t) => {
 		// TypeScript
 		await testLint(
@@ -19,7 +19,7 @@ test(
         let valid: Array<foo>;
         let invalid: bar[];
       `,
-			{category: 'lint/noShorthandArrayType', syntax: ['ts']},
+			{category: "lint/noShorthandArrayType", syntax: ["ts"]},
 		);
 	},
 );

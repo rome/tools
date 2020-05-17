@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from '@romejs/js-ast';
-import {HydrateData} from '../Evaluator';
-import {Scope} from '../scopes';
-import T from './T';
+import {AnyNode} from "@romejs/js-ast";
+import {HydrateData} from "../Evaluator";
+import {Scope} from "../scopes";
+import T from "./T";
 
 export default class NullT extends T {
-	static type = 'NullT';
+	static type = "NullT";
 
 	serialize(): HydrateData {
 		return {};
@@ -22,6 +22,6 @@ export default class NullT extends T {
 	}
 
 	humanize(): string {
-		return 'null';
+		return "null";
 	}
 }

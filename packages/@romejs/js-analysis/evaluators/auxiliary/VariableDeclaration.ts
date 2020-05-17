@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
+import {Scope} from "../../scopes";
 import {
 	AnyNode,
 	VariableDeclaration,
 	variableDeclaration,
-} from '@romejs/js-ast';
-import OpenT from '../../types/OpenT';
-import VoidT from '../../types/VoidT';
-import executeAtom from '../../utils/executeAtom';
+} from "@romejs/js-ast";
+import OpenT from "../../types/OpenT";
+import VoidT from "../../types/VoidT";
+import executeAtom from "../../utils/executeAtom";
 
 export default function VariableDeclaration(node: AnyNode, scope: Scope) {
 	node = variableDeclaration.assert(node);

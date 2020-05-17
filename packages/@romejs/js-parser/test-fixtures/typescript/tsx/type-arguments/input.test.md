@@ -10,17 +10,17 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.tsx'
+	filename: "input.tsx"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'module'
+	sourceType: "module"
 	syntax: Array [
-		'jsx'
-		'ts'
+		"jsx"
+		"ts"
 	]
 	loc: Object {
-		filename: 'input.tsx'
+		filename: "input.tsx"
 		end: Object {
 			column: 14
 			index: 34
@@ -35,7 +35,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.tsx'
+				filename: "input.tsx"
 				end: Object {
 					column: 7
 					index: 7
@@ -50,7 +50,7 @@ Program {
 			expression: CallExpression {
 				arguments: Array []
 				loc: Object {
-					filename: 'input.tsx'
+					filename: "input.tsx"
 					end: Object {
 						column: 6
 						index: 6
@@ -63,10 +63,10 @@ Program {
 					}
 				}
 				callee: ReferenceIdentifier {
-					name: 'f'
+					name: "f"
 					loc: Object {
-						filename: 'input.tsx'
-						identifierName: 'f'
+						filename: "input.tsx"
+						identifierName: "f"
 						end: Object {
 							column: 1
 							index: 1
@@ -81,7 +81,7 @@ Program {
 				}
 				typeArguments: TSTypeParameterInstantiation {
 					loc: Object {
-						filename: 'input.tsx'
+						filename: "input.tsx"
 						end: Object {
 							column: 4
 							index: 4
@@ -97,7 +97,7 @@ Program {
 						TSTypeReference {
 							typeParameters: undefined
 							loc: Object {
-								filename: 'input.tsx'
+								filename: "input.tsx"
 								end: Object {
 									column: 3
 									index: 3
@@ -110,10 +110,10 @@ Program {
 								}
 							}
 							typeName: ReferenceIdentifier {
-								name: 'T'
+								name: "T"
 								loc: Object {
-									filename: 'input.tsx'
-									identifierName: 'T'
+									filename: "input.tsx"
+									identifierName: "T"
 									end: Object {
 										column: 3
 										index: 3
@@ -133,7 +133,7 @@ Program {
 		}
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.tsx'
+				filename: "input.tsx"
 				end: Object {
 					column: 11
 					index: 19
@@ -149,7 +149,7 @@ Program {
 				arguments: Array []
 				optional: undefined
 				loc: Object {
-					filename: 'input.tsx'
+					filename: "input.tsx"
 					end: Object {
 						column: 10
 						index: 18
@@ -162,10 +162,10 @@ Program {
 					}
 				}
 				callee: ReferenceIdentifier {
-					name: 'C'
+					name: "C"
 					loc: Object {
-						filename: 'input.tsx'
-						identifierName: 'C'
+						filename: "input.tsx"
+						identifierName: "C"
 						end: Object {
 							column: 5
 							index: 13
@@ -180,7 +180,7 @@ Program {
 				}
 				typeArguments: TSTypeParameterInstantiation {
 					loc: Object {
-						filename: 'input.tsx'
+						filename: "input.tsx"
 						end: Object {
 							column: 8
 							index: 16
@@ -196,7 +196,7 @@ Program {
 						TSTypeReference {
 							typeParameters: undefined
 							loc: Object {
-								filename: 'input.tsx'
+								filename: "input.tsx"
 								end: Object {
 									column: 7
 									index: 15
@@ -209,10 +209,10 @@ Program {
 								}
 							}
 							typeName: ReferenceIdentifier {
-								name: 'T'
+								name: "T"
 								loc: Object {
-									filename: 'input.tsx'
-									identifierName: 'T'
+									filename: "input.tsx"
+									identifierName: "T"
 									end: Object {
 										column: 7
 										index: 15
@@ -232,10 +232,10 @@ Program {
 		}
 		TypeAliasTypeAnnotation {
 			id: BindingIdentifier {
-				name: 'A'
+				name: "A"
 				loc: Object {
-					filename: 'input.tsx'
-					identifierName: 'A'
+					filename: "input.tsx"
+					identifierName: "A"
 					end: Object {
 						column: 6
 						index: 26
@@ -250,7 +250,7 @@ Program {
 			}
 			typeParameters: undefined
 			loc: Object {
-				filename: 'input.tsx'
+				filename: "input.tsx"
 				end: Object {
 					column: 14
 					index: 34
@@ -264,7 +264,7 @@ Program {
 			}
 			right: TSTypeReference {
 				loc: Object {
-					filename: 'input.tsx'
+					filename: "input.tsx"
 					end: Object {
 						column: 13
 						index: 33
@@ -277,10 +277,10 @@ Program {
 					}
 				}
 				typeName: ReferenceIdentifier {
-					name: 'T'
+					name: "T"
 					loc: Object {
-						filename: 'input.tsx'
-						identifierName: 'T'
+						filename: "input.tsx"
+						identifierName: "T"
 						end: Object {
 							column: 10
 							index: 30
@@ -295,7 +295,7 @@ Program {
 				}
 				typeParameters: TSTypeParameterInstantiation {
 					loc: Object {
-						filename: 'input.tsx'
+						filename: "input.tsx"
 						end: Object {
 							column: 13
 							index: 33
@@ -311,7 +311,7 @@ Program {
 						TSTypeReference {
 							typeParameters: undefined
 							loc: Object {
-								filename: 'input.tsx'
+								filename: "input.tsx"
 								end: Object {
 									column: 12
 									index: 32
@@ -324,10 +324,10 @@ Program {
 								}
 							}
 							typeName: ReferenceIdentifier {
-								name: 'T'
+								name: "T"
 								loc: Object {
-									filename: 'input.tsx'
-									identifierName: 'T'
+									filename: "input.tsx"
+									identifierName: "T"
 									end: Object {
 										column: 12
 										index: 32

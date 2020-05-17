@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, TransformExitResult} from '@romejs/js-compiler';
+import {Path, TransformExitResult} from "@romejs/js-compiler";
 import {
 	AnyNode,
 	AnyObjectMember,
@@ -25,12 +25,12 @@ import {
 	variableDeclaration,
 	variableDeclarationStatement,
 	variableDeclarator,
-} from '@romejs/js-ast';
-import {template} from '@romejs/js-ast-utils';
+} from "@romejs/js-ast";
+import {template} from "@romejs/js-ast-utils";
 
 function hasSpreadProperty(props: Array<AnyNode>): boolean {
 	for (const prop of props) {
-		if (prop.type === 'SpreadProperty') {
+		if (prop.type === "SpreadProperty") {
 			return true;
 		}
 	}
@@ -50,13 +50,13 @@ function getRestProperty(
 	}
 
 	switch (node.type) {
-		case 'VariableDeclarator':
+		case "VariableDeclarator":
 			return getRestProperty(node.id);
 
-		case 'VariableDeclarationStatement':
+		case "VariableDeclarationStatement":
 			return getRestProperty(node.declaration);
 
-		case 'VariableDeclaration': {
+		case "VariableDeclaration": {
 			for (const declarator of node.declarations) {
 				const rest = getRestProperty(declarator);
 				if (rest !== undefined) {
@@ -66,7 +66,7 @@ function getRestProperty(
 			return undefined;
 		}
 
-		case 'BindingObjectPattern':
+		case "BindingObjectPattern":
 			return node.rest;
 	}
 
@@ -91,7 +91,7 @@ function transformSpreadProperty(
 	}
 
 	for (const prop of node.properties) {
-		if (prop.type === 'SpreadProperty') {
+		if (prop.type === "SpreadProperty") {
 			pushProps();
 			assignArgs.push(prop.argument);
 		} else {
@@ -116,7 +116,7 @@ function transformRestProperty(
 	for (const declarator of node.declarations) {
 		const restElem = getRestProperty(declarator);
 
-		if (restElem === undefined || declarator.id.type !== 'BindingObjectPattern') {
+		if (restElem === undefined || declarator.id.type !== "BindingObjectPattern") {
 			nodes.push(
 				variableDeclarationStatement.quick(
 					variableDeclaration.create({
@@ -150,12 +150,12 @@ function transformRestProperty(
 		// fetch all the previous prop names
 		const removeProps = [];
 		for (const prop of declarator.id.properties) {
-			if (prop.type === 'BindingObjectPatternProperty') {
+			if (prop.type === "BindingObjectPatternProperty") {
 				if (
-					prop.key.type === 'ComputedPropertyKey' ||
-					prop.key.value.type !== 'Identifier'
+					prop.key.type === "ComputedPropertyKey" ||
+					prop.key.value.type !== "Identifier"
 				) {
-					throw new Error('unimplemented');
+					throw new Error("unimplemented");
 				} else {
 					removeProps.push(prop.key.value.name);
 				}
@@ -206,18 +206,18 @@ function transformRestProperty(
 }
 
 export default {
-	name: 'objectSpread',
+	name: "objectSpread",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 
 		if (
-			node.type === 'VariableDeclarationStatement' &&
+			node.type === "VariableDeclarationStatement" &&
 			getRestProperty(node) !== undefined
 		) {
 			return transformRestProperty(path, node.declaration);
 		}
 
-		if (node.type === 'ObjectExpression' && hasSpreadProperty(node.properties)) {
+		if (node.type === "ObjectExpression" && hasSpreadProperty(node.properties)) {
 			return transformSpreadProperty(path, node);
 		}
 

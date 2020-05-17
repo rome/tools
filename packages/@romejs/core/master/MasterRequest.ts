@@ -8,8 +8,8 @@
 import {
 	DEFAULT_CLIENT_FLAGS,
 	DEFAULT_CLIENT_REQUEST_FLAGS,
-} from '../common/types/client';
-import {JSONFileReference} from '../common/types/files';
+} from "../common/types/client";
+import {JSONFileReference} from "../common/types/files";
 import {
 	Diagnostic,
 	DiagnosticAdvice,
@@ -23,40 +23,40 @@ import {
 	deriveDiagnosticFromError,
 	descriptions,
 	getDiagnosticsFromError,
-} from '@romejs/diagnostics';
+} from "@romejs/diagnostics";
 import {
 	DiagnosticsPrinter,
 	DiagnosticsPrinterFlags,
-} from '@romejs/cli-diagnostics';
+} from "@romejs/cli-diagnostics";
 import {
 	ProjectConfigCategoriesWithIgnore,
 	ProjectDefinition,
-} from '@romejs/project';
-import {ResolverOptions, ResolverQueryResponseFound} from './fs/Resolver';
-import {BundlerConfig} from '../common/types/bundler';
+} from "@romejs/project";
+import {ResolverOptions, ResolverQueryResponseFound} from "./fs/Resolver";
+import {BundlerConfig} from "../common/types/bundler";
 import MasterBridge, {
 	MasterQueryRequest,
 	MasterQueryResponse,
 	MasterQueryResponseSuccess,
-} from '../common/bridges/MasterBridge';
+} from "../common/bridges/MasterBridge";
 import Master, {
 	MasterClient,
 	MasterMarker,
 	MasterUnfinishedMarker,
-} from './Master';
-import {Reporter} from '@romejs/cli-reporter';
+} from "./Master";
+import {Reporter} from "@romejs/cli-reporter";
 import {
 	Event,
 	EventSubscription,
 	mergeEventSubscriptions,
-} from '@romejs/events';
+} from "@romejs/events";
 import {
 	FlagValue,
 	SerializeCLITarget,
 	serializeCLIFlags,
-} from '@romejs/cli-flags';
-import {Program} from '@romejs/js-ast';
-import {TransformStageName} from '@romejs/js-compiler';
+} from "@romejs/cli-flags";
+import {Program} from "@romejs/js-ast";
+import {TransformStageName} from "@romejs/js-compiler";
 import WorkerBridge, {
 	PrefetchedModuleSignatures,
 	WorkerAnalyzeDependencyResult,
@@ -66,24 +66,24 @@ import WorkerBridge, {
 	WorkerLintOptions,
 	WorkerLintResult,
 	WorkerParseOptions,
-} from '../common/bridges/WorkerBridge';
-import {ModuleSignature} from '@romejs/js-analysis';
+} from "../common/bridges/WorkerBridge";
+import {ModuleSignature} from "@romejs/js-analysis";
 import {
 	AbsoluteFilePath,
 	AbsoluteFilePathSet,
 	UnknownFilePath,
 	createAbsoluteFilePath,
 	createUnknownFilePath,
-} from '@romejs/path';
-import crypto = require('crypto');
-import {Dict, RequiredProps} from '@romejs/typescript-helpers';
-import {ob1Coerce0, ob1Number0, ob1Number1} from '@romejs/ob1';
-import {MemoryFSGlobOptions} from './fs/MemoryFileSystem';
-import {markup} from '@romejs/string-markup';
-import {DiagnosticsProcessorOptions} from '@romejs/diagnostics/DiagnosticsProcessor';
-import {JSONObject} from '@romejs/codec-json';
-import {VCSClient} from '@romejs/vcs';
-import {InlineSnapshotUpdates} from '../test-worker/SnapshotManager';
+} from "@romejs/path";
+import crypto = require("crypto");
+import {Dict, RequiredProps} from "@romejs/typescript-helpers";
+import {ob1Coerce0, ob1Number0, ob1Number1} from "@romejs/ob1";
+import {MemoryFSGlobOptions} from "./fs/MemoryFileSystem";
+import {markup} from "@romejs/string-markup";
+import {DiagnosticsProcessorOptions} from "@romejs/diagnostics/DiagnosticsProcessor";
+import {JSONObject} from "@romejs/codec-json";
+import {VCSClient} from "@romejs/vcs";
+import {InlineSnapshotUpdates} from "../test-worker/SnapshotManager";
 
 type MasterRequestOptions = {
 	master: Master;
@@ -107,7 +107,7 @@ type ResolvedArg = {
 type ResolvedArgs = Array<ResolvedArg>;
 
 export const EMPTY_SUCCESS_RESPONSE: MasterQueryResponseSuccess = {
-	type: 'SUCCESS',
+	type: "SUCCESS",
 	hasData: false,
 	data: undefined,
 	markers: [],
@@ -119,7 +119,7 @@ type GetFilesTryAlternateArg = (
 
 export type MasterRequestGetFilesOptions = Omit<
 	MemoryFSGlobOptions,
-	'getProjectIgnore'
+	"getProjectIgnore"
 > & {
 	tryAlternateArg?: GetFilesTryAlternateArg;
 	ignoreArgumentMisses?: boolean;
@@ -148,14 +148,14 @@ export class MasterRequestInvalid extends DiagnosticsError {
 
 function hash(val: JSONObject): string {
 	return val === undefined || Object.keys(val).length === 0
-		? 'none'
-		: crypto.createHash('sha256').update(JSON.stringify(val)).digest('hex');
+		? "none"
+		: crypto.createHash("sha256").update(JSON.stringify(val)).digest("hex");
 }
 
 export class MasterRequestCancelled extends Error {
 	constructor() {
 		super(
-			'MasterRequest has been cancelled. This error is meant to be seen by Master',
+			"MasterRequest has been cancelled. This error is meant to be seen by Master",
 		);
 	}
 }
@@ -169,11 +169,11 @@ export default class MasterRequest {
 		this.cancelled = false;
 		this.toredown = false;
 		this.markerEvent = new Event({
-			name: 'MasterRequest.marker',
+			name: "MasterRequest.marker",
 			onError: this.master.onFatalErrorBound,
 		});
 		this.endEvent = new Event({
-			name: 'MasterRequest.teardown',
+			name: "MasterRequest.teardown",
 			onError: this.master.onFatalErrorBound,
 			serial: true,
 		});
@@ -221,7 +221,7 @@ export default class MasterRequest {
 	cancel() {
 		this.cancelled = true;
 		this.teardown({
-			type: 'CANCELLED',
+			type: "CANCELLED",
 		});
 	}
 
@@ -244,19 +244,19 @@ export default class MasterRequest {
 		if (res !== undefined) {
 			// If the query asked for no data then strip all diagnostics and data values
 			if (this.query.noData) {
-				if (res.type === 'SUCCESS') {
+				if (res.type === "SUCCESS") {
 					res = {
 						...EMPTY_SUCCESS_RESPONSE,
 						hasData: res.data !== undefined,
 					};
-				} else if (res.type === 'DIAGNOSTICS') {
+				} else if (res.type === "DIAGNOSTICS") {
 					res = {
-						type: 'DIAGNOSTICS',
+						type: "DIAGNOSTICS",
 						diagnostics: [],
 					};
-				} else if (res.type === 'INVALID_REQUEST') {
+				} else if (res.type === "INVALID_REQUEST") {
 					res = {
-						type: 'INVALID_REQUEST',
+						type: "INVALID_REQUEST",
 						diagnostics: [],
 						showHelp: res.showHelp,
 					};
@@ -264,7 +264,7 @@ export default class MasterRequest {
 			}
 
 			// Add on markers
-			if (res.type === 'SUCCESS') {
+			if (res.type === "SUCCESS") {
 				res = {
 					...res,
 					markers: this.markers,
@@ -315,7 +315,7 @@ export default class MasterRequest {
 		processor: DiagnosticsProcessor = this.createDiagnosticsProcessor(),
 	): DiagnosticsPrinter {
 		processor.unshiftOrigin({
-			category: 'master',
+			category: "master",
 			message: `${this.query.commandName} command was dispatched`,
 		});
 
@@ -368,7 +368,7 @@ export default class MasterRequest {
 		if (message !== undefined) {
 			this.throwDiagnosticFlagError({
 				target: {
-					type: 'arg-range',
+					type: "arg-range",
 					from: min,
 					to: max,
 				},
@@ -380,10 +380,10 @@ export default class MasterRequest {
 	throwDiagnosticFlagError(
 		{
 			description,
-			target = {type: 'none'},
+			target = {type: "none"},
 			showHelp = true,
 		}: {
-			description: RequiredProps<Partial<DiagnosticDescription>, 'message'>;
+			description: RequiredProps<Partial<DiagnosticDescription>, "message">;
 			target?: SerializeCLITarget;
 			showHelp?: boolean;
 		},
@@ -393,9 +393,9 @@ export default class MasterRequest {
 		let {category} = description;
 		if (category === undefined) {
 			category =
-				target.type === 'arg' || target.type === 'arg-range'
-					? 'args/invalid'
-					: 'flags/invalid';
+				target.type === "arg" || target.type === "arg-range"
+					? "args/invalid"
+					: "flags/invalid";
 		}
 
 		const diag: Diagnostic = {
@@ -424,7 +424,7 @@ export default class MasterRequest {
 				line: ob1Number1,
 				column: ob1Coerce0(cwd.length),
 			},
-			filename: 'cwd',
+			filename: "cwd",
 		};
 	}
 
@@ -454,7 +454,7 @@ export default class MasterRequest {
 
 		return serializeCLIFlags(
 			{
-				programName: 'rome',
+				programName: "rome",
 				commandName: query.commandName,
 				flags,
 				args: query.args,
@@ -466,7 +466,7 @@ export default class MasterRequest {
 		);
 	}
 
-	getResolverOptionsFromFlags(): RequiredProps<ResolverOptions, 'origin'> {
+	getResolverOptionsFromFlags(): RequiredProps<ResolverOptions, "origin"> {
 		const {requestFlags} = this.query;
 		return {
 			origin: this.client.flags.cwd,
@@ -518,7 +518,7 @@ export default class MasterRequest {
 				const arg = rawArgs[i];
 
 				const location = this.getDiagnosticPointerFromFlags({
-					type: 'arg',
+					type: "arg",
 					key: i,
 				});
 
@@ -531,9 +531,9 @@ export default class MasterRequest {
 						const resolvedAlternate = await this.master.resolver.resolveEntry({
 							origin: cwd,
 							source: alternateSource,
-							requestedType: 'folder',
+							requestedType: "folder",
 						});
-						if (resolvedAlternate.type === 'FOUND') {
+						if (resolvedAlternate.type === "FOUND") {
 							resolved = resolvedAlternate;
 						}
 					}
@@ -544,7 +544,7 @@ export default class MasterRequest {
 						{
 							origin: cwd,
 							source,
-							requestedType: 'folder',
+							requestedType: "folder",
 						},
 						{
 							location,
@@ -703,7 +703,7 @@ export default class MasterRequest {
 			const diagnostics: Diagnostics = [];
 
 			for (const {path, project, location} of noArgMatches) {
-				let category: DiagnosticCategory = 'args/fileNotFound';
+				let category: DiagnosticCategory = "args/fileNotFound";
 
 				let advice: DiagnosticAdvice = [...(opts.advice || [])];
 
@@ -721,13 +721,13 @@ export default class MasterRequest {
 
 					if (withoutIgnore.size > 0) {
 						advice.push({
-							type: 'log',
-							category: 'info',
-							text: 'The following files were ignored',
+							type: "log",
+							category: "info",
+							text: "The following files were ignored",
 						});
 
 						advice.push({
-							type: 'list',
+							type: "list",
 							list: Array.from(
 								withoutIgnore,
 								(path) => `<filelink target="${path.join()}" />`,
@@ -739,21 +739,21 @@ export default class MasterRequest {
 							project,
 							(consumer) =>
 								consumer.has(configCategory) &&
-								consumer.get(configCategory).get('ignore')
+								consumer.get(configCategory).get("ignore")
 							,
 						);
 
 						if (ignoreSource.value !== undefined) {
-							const ignorePointer = ignoreSource.value.getDiagnosticLocation('value');
+							const ignorePointer = ignoreSource.value.getDiagnosticLocation("value");
 
 							advice.push({
-								type: 'log',
-								category: 'info',
-								text: 'Ignore patterns were defined here',
+								type: "log",
+								category: "info",
+								text: "Ignore patterns were defined here",
 							});
 
 							advice.push({
-								type: 'frame',
+								type: "frame",
 								location: ignorePointer,
 							});
 						}
@@ -774,7 +774,7 @@ export default class MasterRequest {
 			}
 
 			throw new DiagnosticsError(
-				'MasterRequest.getFilesFromArgs: Some arguments did not resolve to any files',
+				"MasterRequest.getFilesFromArgs: Some arguments did not resolve to any files",
 				diagnostics,
 			);
 		}
@@ -795,9 +795,9 @@ export default class MasterRequest {
 	}
 
 	startMarker(
-		opts: Omit<MasterUnfinishedMarker, 'start'>,
+		opts: Omit<MasterUnfinishedMarker, "start">,
 	): MasterUnfinishedMarker {
-		this.master.logger.info('Started marker %s', opts.label);
+		this.master.logger.info("Started marker %s", opts.label);
 		return {
 			...opts,
 			start: Date.now(),
@@ -809,7 +809,7 @@ export default class MasterRequest {
 			...startMarker,
 			end: Date.now(),
 		};
-		this.master.logger.info('Finished marker %s', startMarker.label);
+		this.master.logger.info("Finished marker %s", startMarker.label);
 		this.markerEvent.send(endMarker);
 		return endMarker;
 	}
@@ -841,7 +841,7 @@ export default class MasterRequest {
 					err,
 					{
 						description: {
-							category: 'internalError/request',
+							category: "internalError/request",
 						},
 					},
 				);
@@ -853,8 +853,8 @@ export default class MasterRequest {
 						advice: [
 							...diag.description.advice,
 							{
-								type: 'log',
-								category: 'info',
+								type: "log",
+								category: "info",
 								text: markup`Error occurred while requesting <emphasis>${method}</emphasis> for <filelink emphasis target="${ref.uid}" />`,
 							},
 						],
@@ -874,7 +874,7 @@ export default class MasterRequest {
 		this.checkCancelled();
 
 		await this.wrapRequestDiagnostic(
-			'updateBuffer',
+			"updateBuffer",
 			path,
 			(bridge, file) => bridge.updateBuffer.call({file, content}),
 		);
@@ -888,7 +888,7 @@ export default class MasterRequest {
 		this.checkCancelled();
 
 		return this.wrapRequestDiagnostic(
-			'parse',
+			"parse",
 			path,
 			(bridge, file) => bridge.parseJS.call({file, options: opts}),
 		);
@@ -902,7 +902,7 @@ export default class MasterRequest {
 		this.checkCancelled();
 
 		return this.wrapRequestDiagnostic(
-			'updateInlineSnapshots',
+			"updateInlineSnapshots",
 			path,
 			(bridge, file) =>
 				bridge.updateInlineSnapshots.call({file, updates, parseOptions})
@@ -912,7 +912,7 @@ export default class MasterRequest {
 
 	async requestWorkerLint(
 		path: AbsoluteFilePath,
-		optionsWithoutModSigs: Omit<WorkerLintOptions, 'prefetchedModuleSignatures'>,
+		optionsWithoutModSigs: Omit<WorkerLintOptions, "prefetchedModuleSignatures">,
 	): Promise<WorkerLintResult> {
 		this.checkCancelled();
 
@@ -935,7 +935,7 @@ export default class MasterRequest {
 		};
 
 		const res = await this.wrapRequestDiagnostic(
-			'lint',
+			"lint",
 			path,
 			(bridge, file) => bridge.lint.call({file, options, parseOptions: {}}),
 		);
@@ -960,7 +960,7 @@ export default class MasterRequest {
 		this.checkCancelled();
 
 		return await this.wrapRequestDiagnostic(
-			'format',
+			"format",
 			path,
 			(bridge, file) => bridge.format.call({file, parseOptions}),
 		);
@@ -988,7 +988,7 @@ export default class MasterRequest {
 		}
 
 		const compileRes = await this.wrapRequestDiagnostic(
-			'compile',
+			"compile",
 			path,
 			(bridge, file) => {
 				// We allow options to be passed in as undefined so we can compute an easy cache key
@@ -1036,7 +1036,7 @@ export default class MasterRequest {
 		}
 
 		const res = await this.wrapRequestDiagnostic(
-			'analyzeDependencies',
+			"analyzeDependencies",
 			path,
 			(bridge, file) => bridge.analyzeDependencies.call({file, parseOptions}),
 		);
@@ -1070,7 +1070,7 @@ export default class MasterRequest {
 		}
 
 		const res = await this.wrapRequestDiagnostic(
-			'moduleSignature',
+			"moduleSignature",
 			path,
 			(bridge, file) => bridge.moduleSignatureJS.call({file, parseOptions}),
 		);

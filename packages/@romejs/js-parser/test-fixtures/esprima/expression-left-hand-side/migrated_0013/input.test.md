@@ -10,14 +10,14 @@ Program {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
-	filename: 'input.js'
+	filename: "input.js"
 	hasHoistedVars: false
 	interpreter: undefined
 	mtime: undefined
-	sourceType: 'script'
+	sourceType: "script"
 	syntax: Array []
 	loc: Object {
-		filename: 'input.js'
+		filename: "input.js"
 		end: Object {
 			column: 0
 			index: 39
@@ -32,7 +32,7 @@ Program {
 	body: Array [
 		ExpressionStatement {
 			loc: Object {
-				filename: 'input.js'
+				filename: "input.js"
 				end: Object {
 					column: 38
 					index: 38
@@ -46,7 +46,7 @@ Program {
 			}
 			expression: MemberExpression {
 				loc: Object {
-					filename: 'input.js'
+					filename: "input.js"
 					end: Object {
 						column: 38
 						index: 38
@@ -59,10 +59,10 @@ Program {
 					}
 				}
 				object: ReferenceIdentifier {
-					name: 'universe'
+					name: "universe"
 					loc: Object {
-						filename: 'input.js'
-						identifierName: 'universe'
+						filename: "input.js"
+						identifierName: "universe"
 						end: Object {
 							column: 8
 							index: 8
@@ -78,7 +78,7 @@ Program {
 				property: ComputedMemberProperty {
 					value: SequenceExpression {
 						loc: Object {
-							filename: 'input.js'
+							filename: "input.js"
 							end: Object {
 								column: 37
 								index: 37
@@ -92,10 +92,10 @@ Program {
 						}
 						expressions: Array [
 							ReferenceIdentifier {
-								name: 'galaxyName'
+								name: "galaxyName"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'galaxyName'
+									filename: "input.js"
+									identifierName: "galaxyName"
 									end: Object {
 										column: 19
 										index: 19
@@ -109,10 +109,10 @@ Program {
 								}
 							}
 							ReferenceIdentifier {
-								name: 'otherUselessName'
+								name: "otherUselessName"
 								loc: Object {
-									filename: 'input.js'
-									identifierName: 'otherUselessName'
+									filename: "input.js"
+									identifierName: "otherUselessName"
 									end: Object {
 										column: 37
 										index: 37
@@ -128,7 +128,7 @@ Program {
 						]
 					}
 					loc: Object {
-						filename: 'input.js'
+						filename: "input.js"
 						end: Object {
 							column: 38
 							index: 38

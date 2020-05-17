@@ -10,7 +10,7 @@ import {
 	RelativeFilePath,
 	createAbsoluteFilePath,
 	createRelativeFilePath,
-} from '@romejs/path';
+} from "@romejs/path";
 export type FileReference = {
 	project: number;
 	manifest: undefined | number;
@@ -20,7 +20,7 @@ export type FileReference = {
 	remote: boolean;
 };
 
-export type JSONFileReference = Omit<FileReference, 'real' | 'relative'> & {
+export type JSONFileReference = Omit<FileReference, "real" | "relative"> & {
 	real: string;
 	relative: string;
 };

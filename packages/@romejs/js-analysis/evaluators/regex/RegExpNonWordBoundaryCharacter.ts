@@ -9,9 +9,9 @@ import {
 	AnyNode,
 	RegExpNonWordBoundaryCharacter,
 	regExpNonWordBoundaryCharacter,
-} from '@romejs/js-ast';
+} from "@romejs/js-ast";
 
 export default function RegExpNonWordBoundaryCharacter(node: AnyNode) {
 	node = regExpNonWordBoundaryCharacter.assert(node);
-	throw new Error('unimplemented');
+	throw new Error("unimplemented");
 }

@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {testLint} from '../testHelpers';
+import {test} from "rome";
+import {testLint} from "../testHelpers";
 
 test(
 	'"React" in scope when using JSX',
@@ -19,7 +19,7 @@ test(
                 </div>;
             }`,
 			{
-				category: 'lint/reactInJsxScope',
+				category: "lint/reactInJsxScope",
 			},
 		);
 	},

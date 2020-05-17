@@ -21,7 +21,7 @@ export function humanizeTime(
 		}
 	}
 
-	let buf = '';
+	let buf = "";
 	if (h > 0) {
 		buf += `${String(h)}h`;
 	}

@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyTSTypeElement, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {AnyTSTypeElement, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type TSInterfaceBody = JSNodeBase & {
-	type: 'TSInterfaceBody';
+	type: "TSInterfaceBody";
 	body: Array<AnyTSTypeElement>;
 };
 
 export const tsInterfaceBody = createBuilder<TSInterfaceBody>(
-	'TSInterfaceBody',
+	"TSInterfaceBody",
 	{
 		bindingKeys: {},
 		visitorKeys: {

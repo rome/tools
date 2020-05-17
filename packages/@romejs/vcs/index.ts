@@ -5,27 +5,27 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AbsoluteFilePath} from '@romejs/path';
-import {exists} from '@romejs/fs';
-import childProcess = require('child_process');
+import {AbsoluteFilePath} from "@romejs/path";
+import {exists} from "@romejs/fs";
+import childProcess = require("child_process");
 
 const TIMEOUT = 10_000;
 
 async function exec(command: string, args: Array<string>): Promise<string> {
 	return new Promise((resolve, reject) => {
 		const proc = childProcess.spawn(command, args, {timeout: TIMEOUT});
-		let stderr = '';
-		let stdout = '';
+		let stderr = "";
+		let stdout = "";
 
 		proc.stdout.on(
-			'data',
+			"data",
 			(data) => {
 				stdout += data;
 			},
 		);
 
 		proc.stderr.on(
-			'data',
+			"data",
 			(data) => {
 				stderr += data;
 			},
@@ -34,15 +34,15 @@ async function exec(command: string, args: Array<string>): Promise<string> {
 		function error(message: string) {
 			reject(
 				new Error(
-					`Error while running ${command} ${args.join(' ')}: ${message}. stderr: ${stderr}`,
+					`Error while running ${command} ${args.join(" ")}: ${message}. stderr: ${stderr}`,
 				),
 			);
 		}
 
 		proc.on(
-			'error',
+			"error",
 			(err: NodeJS.ErrnoException) => {
-				if (err.code === 'ETIMEDOUT') {
+				if (err.code === "ETIMEDOUT") {
 					error(`Timed out after ${TIMEOUT}ms`);
 				} else {
 					error(err.message);
@@ -51,7 +51,7 @@ async function exec(command: string, args: Array<string>): Promise<string> {
 		);
 
 		proc.on(
-			'close',
+			"close",
 			(code) => {
 				if (code === 0) {
 					resolve(stdout);
@@ -64,7 +64,7 @@ async function exec(command: string, args: Array<string>): Promise<string> {
 }
 
 function extractFileList(out: string): Array<string> {
-	const lines = out.trim().split('\n');
+	const lines = out.trim().split("\n");
 
 	const files: Array<string> = [];
 
@@ -81,34 +81,34 @@ function extractFileList(out: string): Array<string> {
 export class VCSClient {
 	constructor(root: AbsoluteFilePath) {
 		this.root = root;
-		this.trunkBranch = 'unknown';
+		this.trunkBranch = "unknown";
 	}
 
 	root: AbsoluteFilePath;
 	trunkBranch: string;
 
 	getModifiedFiles(branch: string): Promise<Array<string>> {
-		throw new Error('unimplemented');
+		throw new Error("unimplemented");
 	}
 
 	getUncommittedFiles(): Promise<Array<string>> {
-		throw new Error('unimplemented');
+		throw new Error("unimplemented");
 	}
 }
 
 class GitVCSClient extends VCSClient {
 	constructor(root: AbsoluteFilePath) {
 		super(root);
-		this.trunkBranch = 'master';
+		this.trunkBranch = "master";
 	}
 
 	async getUncommittedFiles(): Promise<Array<string>> {
-		const out = await exec('git', ['status', '--short']);
+		const out = await exec("git", ["status", "--short"]);
 		return extractFileList(out);
 	}
 
 	async getModifiedFiles(branch: string): Promise<Array<string>> {
-		const out = await exec('git', ['diff', '--name-status', branch]);
+		const out = await exec("git", ["diff", "--name-status", branch]);
 		return extractFileList(out);
 	}
 }
@@ -116,7 +116,7 @@ class GitVCSClient extends VCSClient {
 export async function getVCSClient(
 	root: AbsoluteFilePath,
 ): Promise<undefined | VCSClient> {
-	if (await exists(root.append('.git'))) {
+	if (await exists(root.append(".git"))) {
 		return new GitVCSClient(root);
 	}
 
