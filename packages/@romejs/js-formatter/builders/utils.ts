@@ -10,6 +10,7 @@ import {
 	AnyNode,
 	BreakStatement,
 	ClassMethod,
+	ClassPrivateMethod,
 	ContinueStatement,
 	ObjectMethod,
 	PatternMeta,
@@ -86,7 +87,7 @@ export function buildThrowAndReturnStatementBuilder(
 
 export function printMethod(
 	builder: Builder,
-	node: TSDeclareMethod | ClassMethod | ObjectMethod,
+	node: TSDeclareMethod | ClassMethod | ObjectMethod | ClassPrivateMethod,
 ): Token {
 	const kind = node.kind;
 

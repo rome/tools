@@ -6,7 +6,13 @@
  */
 
 import {Token} from "../../tokens";
+import {Builder} from "@romejs/js-formatter";
+import {TSTemplateLiteralTypeAnnotation} from "@romejs/js-ast";
+import {escapeString} from "@romejs/string-escape";
 
-export default function TSTemplateLiteralTypeAnnotation(): Token {
-	throw new Error("unimplemented");
+export default function TSTemplateLiteralTypeAnnotation(
+	builder: Builder,
+	node: TSTemplateLiteralTypeAnnotation,
+): Token {
+	return escapeString(node.value, {quote: "`"});
 }
