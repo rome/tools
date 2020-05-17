@@ -28,14 +28,7 @@ if (nodeType === undefined || category === undefined) {
 const builderName = getBuilderName(nodeType);
 
 // Write AST def
-let file = `/**
-* Copyright (c) Facebook, Inc. and its affiliates.
-*
-* This source code is licensed under the MIT license found in the
-* LICENSE file in the root directory of this source tree.
-*/
-
-import {JSNodeBase} from "../index";
+let file = `import {JSNodeBase} from "../index";
 import {createBuilder} from "../utils";
 
 export type ${nodeType} = JSNodeBase & {
@@ -56,14 +49,7 @@ write(fileLoc, file);
 
 // Write builder
 const builderDefFile = path.join(formatterFolder, category, `${nodeType}.ts`);
-const builderContent = `/**
-* Copyright (c) Facebook, Inc. and its affiliates.
-*
-* This source code is licensed under the MIT license found in the
-* LICENSE file in the root directory of this source tree.
-*/
-
-import Builder from "../../Builder";
+const builderContent = `import Builder from "../../Builder";
 import {AnyNode, ${nodeType}} from "@romejs/js-ast";
 import {Token} from "../../tokens";
 
@@ -75,14 +61,7 @@ write(builderDefFile, builderContent);
 
 // Write analysis
 const analysisDefFile = path.join(analysisFolder, category, `${nodeType}.ts`);
-const analysisContent = `/**
-* Copyright (c) Facebook, Inc. and its affiliates.
-*
-* This source code is licensed under the MIT license found in the
-* LICENSE file in the root directory of this source tree.
-*/
-
-import {AnyNode, ${nodeType}, ${builderName}} from "@romejs/js-ast";
+const analysisContent = `import {AnyNode, ${nodeType}, ${builderName}} from "@romejs/js-ast";
 
 export default function ${nodeType}(node: AnyNode) {
 	node = ${builderName}.assert(node);
