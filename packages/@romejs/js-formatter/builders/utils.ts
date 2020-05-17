@@ -16,6 +16,7 @@ import {
   ReturnStatement,
   TSDeclareMethod,
   ThrowStatement,
+  ClassPrivateMethod,
 } from '@romejs/js-ast';
 import {isBinary} from '@romejs/js-ast-utils';
 import Builder, {BuilderMethod} from '../Builder';
@@ -86,7 +87,7 @@ export function buildThrowAndReturnStatementBuilder(
 
 export function printMethod(
   builder: Builder,
-  node: TSDeclareMethod | ClassMethod | ObjectMethod,
+  node: TSDeclareMethod | ClassMethod | ObjectMethod | ClassPrivateMethod,
 ): Token {
   const kind = node.kind;
 
