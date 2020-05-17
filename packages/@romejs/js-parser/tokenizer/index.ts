@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyComment, NumericLiteral, InterpreterDirective} from "@romejs/js-ast";
+import {AnyComment, InterpreterDirective, NumericLiteral} from "@romejs/js-ast";
 import {Position, SourceLocation} from "@romejs/parser-core";
 import {JSParser} from "../parser";
 import {xhtmlEntityNameToChar} from "../xhtmlEntities";
@@ -410,7 +410,10 @@ export function skipLineComment(parser: JSParser, startSkip: number): AnyComment
 	);
 }
 
-export function skipInterpreterDirective(parser: JSParser, startSkip: number): InterpreterDirective {
+export function skipInterpreterDirective(
+	parser: JSParser,
+	startSkip: number,
+): InterpreterDirective {
 	const startIndex = parser.state.index;
 	const startPos = parser.getPositionFromState();
 	parser.state.index = ob1Add(parser.state.index, startSkip);
@@ -429,13 +432,10 @@ export function skipInterpreterDirective(parser: JSParser, startSkip: number): I
 	const loc = parser.finishLocAt(startPos, parser.getPositionFromState());
 
 	return {
-		type: 'InterpreterDirective',
-		value: parser.getRawInput(
-			ob1Add(startIndex, startSkip),
-			parser.state.index,
-		),
+		type: "InterpreterDirective",
+		value: parser.getRawInput(ob1Add(startIndex, startSkip), parser.state.index),
 		loc,
-	}
+	};
 }
 
 // Called at the start of the parse and after every token. Skips

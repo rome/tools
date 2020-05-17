@@ -6,12 +6,12 @@
  */
 
 import {Token, concat, hardline} from "../../tokens";
-import { Builder } from "@romejs/js-formatter";
-import { InterpreterDirective } from "@romejs/js-ast";
+import {Builder} from "@romejs/js-formatter";
+import {InterpreterDirective} from "@romejs/js-ast";
 
 export default function InterpreterDirective(
-  builder: Builder,
-  node: InterpreterDirective
+	builder: Builder,
+	node: InterpreterDirective,
 ): Token {
 	return concat([`#!${node.value}`, hardline, hardline]);
 }

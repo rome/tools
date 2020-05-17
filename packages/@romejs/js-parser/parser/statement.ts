@@ -62,7 +62,11 @@ import {
 	WithStatement,
 } from "@romejs/js-ast";
 import * as charCodes from "@romejs/string-charcodes";
-import {nextToken, setStrict, skipInterpreterDirective} from "../tokenizer/index";
+import {
+	nextToken,
+	setStrict,
+	skipInterpreterDirective,
+} from "../tokenizer/index";
 import {
 	ParseExportResult,
 	ParseImportResult,
