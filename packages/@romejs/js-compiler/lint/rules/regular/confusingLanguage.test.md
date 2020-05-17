@@ -15,7 +15,7 @@
     // the blacklist
          ^^^^^^^^^
 
-  ℹ See  for a more detailed explanation
+  ℹ See https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6148600/ for a more detailed explanation
 
   ℹ Consider using denylist instead
 
@@ -44,7 +44,7 @@
   > 2 │ blacklist */
       │ ^^^^^^^^^
 
-  ℹ See  for a more detailed explanation
+  ℹ See https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6148600/ for a more detailed explanation
 
   ℹ Consider using denylist instead
 
@@ -73,7 +73,7 @@ blacklist */
     blacklist;
     ^^^^^^^^^
 
-  ℹ See  for a more detailed explanation
+  ℹ See https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6148600/ for a more detailed explanation
 
   ℹ Consider using denylist instead
 
@@ -101,7 +101,7 @@ blacklist;
     BLACKLIST;
     ^^^^^^^^^
 
-  ℹ See  for a more detailed explanation
+  ℹ See https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6148600/ for a more detailed explanation
 
   ℹ Consider using DENYLIST instead
 
@@ -129,7 +129,7 @@ BLACKLIST;
     someBlacklist;
         ^^^^^^^^^
 
-  ℹ See  for a more detailed explanation
+  ℹ See https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6148600/ for a more detailed explanation
 
   ℹ Consider using Denylist instead
 
@@ -157,7 +157,7 @@ someBlacklist;
     SOME_BLACKLIST;
          ^^^^^^^^^
 
-  ℹ See  for a more detailed explanation
+  ℹ See https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6148600/ for a more detailed explanation
 
   ℹ Consider using DENYLIST instead
 
