@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyFlowPrimary, AnyTSPrimary, JSNodeBase} from "../index";
+import {AnyTSPrimary, JSNodeBase} from "../index";
 import {createBuilder} from "../utils";
 
 export type UnionTypeAnnotation = JSNodeBase & {
 	type: "UnionTypeAnnotation";
-	types: Array<AnyFlowPrimary | AnyTSPrimary>;
+	types: Array<AnyTSPrimary>;
 };
 
 export const unionTypeAnnotation = createBuilder<UnionTypeAnnotation>(

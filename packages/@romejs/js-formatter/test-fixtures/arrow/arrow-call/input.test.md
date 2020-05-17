@@ -61,31 +61,31 @@ const testResults = results.testResults.map((testResult) =>
 );
 
 it(
-	'mocks regexp instances',
+	"mocks regexp instances",
 	() => {
 		expect(() => moduleMocker.generateFromMetadata(moduleMocker.getMetadata(/a/))).not.toThrow();
 	},
 );
 
-expect(() => asyncRequest({url: '/test-endpoint'})).toThrowError(
+expect(() => asyncRequest({url: "/test-endpoint"})).toThrowError(
 	/Required parameter/,
 );
 
-expect(() => asyncRequest({url: '/test-endpoint-but-with-a-long-url'})).toThrowError(
+expect(() => asyncRequest({url: "/test-endpoint-but-with-a-long-url"})).toThrowError(
 	/Required parameter/,
 );
 
 expect(() =>
-	asyncRequest({url: '/test-endpoint-but-with-a-suuuuuuuuper-long-url'})
+	asyncRequest({url: "/test-endpoint-but-with-a-suuuuuuuuper-long-url"})
 ).toThrowError(/Required parameter/);
 
-expect(() => asyncRequest({type: 'foo', url: '/test-endpoint'})).not.toThrowError();
+expect(() => asyncRequest({type: "foo", url: "/test-endpoint"})).not.toThrowError();
 
 expect(() =>
-	asyncRequest({type: 'foo', url: '/test-endpoint-but-with-a-long-url'})
+	asyncRequest({type: "foo", url: "/test-endpoint-but-with-a-long-url"})
 ).not.toThrowError();
 
-const a = Observable.fromPromise(axiosInstance.post('/carts/mine')).map((
+const a = Observable.fromPromise(axiosInstance.post("/carts/mine")).map((
 	response,
 ) => response.data);
 
@@ -108,8 +108,8 @@ const composition = (ViewComponent, ContainerComponent) =>
 
 promise.then((result) =>
 	result.veryLongVariable.veryLongPropertyName > someOtherVariable
-		? 'ok'
-		: 'fail'
+		? "ok"
+		: "fail"
 );
 
 ```
