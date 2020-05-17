@@ -503,6 +503,24 @@ Object {
 		local {
 			kind: "value"
 			name: "default"
+			valueType: "other"
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 30
+					index: 30
+					line: 1
+				}
+				start: Object {
+					column: 17
+					index: 17
+					line: 1
+				}
+			}
+		}
+		local {
+			kind: "value"
+			name: "default"
 			loc: undefined
 			valueType: "other"
 		}
