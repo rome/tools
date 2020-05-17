@@ -21,8 +21,11 @@ import jsxA11YHeadingHasContent from "./react/jsxA11yHeadingHasContent";
 import jsxA11YHTMLHasLang from "./react/jsxA11yHTMLHasLang";
 import jsxA11YIframeHasTitle from "./react/jsxA11yIframeHasTitle";
 import jsxA11YImgRedundantAlt from "./react/jsxA11yImgRedundantAlt";
+import jsxA11YNoAccessKey from "./react/jsxA11yNoAccessKey";
+import jsxA11YNoAutofocus from "./react/jsxA11yNoAutofocus";
 import jsxA11YNoDistractingElements from "./react/jsxA11yNoDistractingElements";
 import jsxA11YNoTargetBlank from "./react/jsxA11yNoTargetBlank";
+import jsxA11YScope from "./react/jsxA11yScope";
 import jsxKey from "./react/jsxKey";
 import jsxNoCommentText from "./react/jsxNoCommentText";
 import negationElse from "./regular/negationElse";
@@ -90,8 +93,11 @@ export const lintTransforms = [
 	jsxA11YHTMLHasLang,
 	jsxA11YIframeHasTitle,
 	jsxA11YImgRedundantAlt,
+	jsxA11YNoAccessKey,
+	jsxA11YNoAutofocus,
 	jsxA11YNoDistractingElements,
 	jsxA11YNoTargetBlank,
+	jsxA11YScope,
 	jsxKey,
 	jsxNoCommentText,
 	negationElse,
