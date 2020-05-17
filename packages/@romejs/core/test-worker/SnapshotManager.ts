@@ -66,6 +66,14 @@ export type SnapshotCounts = {
 	created: number;
 };
 
+function stringOrPrettyFormat(value: unknown): string {
+	if (typeof value === "string") {
+		return value;
+	} else {
+		return prettyFormat(value);
+	}
+}
+
 export default class SnapshotManager {
 	constructor(runner: TestWorkerRunner, testPath: AbsoluteFilePath) {
 		this.defaultSnapshotPath = testPath.getParent().append(
@@ -314,14 +322,8 @@ export default class SnapshotManager {
 	): {
 		status: "MATCH" | "NO_MATCH" | "UPDATE";
 	} {
-		let receivedFormat = prettyFormat(received);
-
-		let expectedFormat;
-		if (typeof expected === "string") {
-			expectedFormat = expected;
-		} else {
-			expectedFormat = prettyFormat(expected);
-		}
+		let receivedFormat = stringOrPrettyFormat(received);
+		let expectedFormat = stringOrPrettyFormat(expected);
 
 		// Matches, no need to do anything
 		if (receivedFormat === expectedFormat) {
