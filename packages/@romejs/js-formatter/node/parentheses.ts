@@ -338,7 +338,7 @@ function needsParenUnionTypeAnnotation(
 	parent: AnyNode,
 ) {
 	return (
-		parent.type === "IntersectionTypeAnnotation" ||
+		parent.type === "TSIntersectionTypeAnnotation" ||
 		parent.type === "UnionTypeAnnotation" ||
 		parent.type === "TSArrayType" ||
 		parent.type === "TSOptionalType"
@@ -346,7 +346,7 @@ function needsParenUnionTypeAnnotation(
 }
 
 parens.set("UnionTypeAnnotation", needsParenUnionTypeAnnotation);
-parens.set("IntersectionTypeAnnotation", needsParenUnionTypeAnnotation);
+parens.set("TSIntersectionTypeAnnotation", needsParenUnionTypeAnnotation);
 
 parens.set(
 	"TSInferType",

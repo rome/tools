@@ -12,13 +12,13 @@ import {
 	AnyNode,
 	Directive,
 	StringLiteral,
-	StringLiteralTypeAnnotation,
+	TSStringLiteralTypeAnnotation,
 } from "@romejs/js-ast";
 import {escapeXHTMLEntities} from "@romejs/js-parser";
 
 export default function StringLiteral(
 	builder: Builder,
-	node: Directive | StringLiteral | StringLiteralTypeAnnotation,
+	node: Directive | StringLiteral | TSStringLiteralTypeAnnotation,
 	parent: AnyNode,
 ): Token {
 	// JSX Attribute strings have ridiculous alternate semantics, should probably be a distinct AST node

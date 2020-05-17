@@ -207,7 +207,7 @@ Program {
 												line: 2
 											}
 										}
-										typeAnnotation: NumberKeywordTypeAnnotation {
+										typeAnnotation: TSNumberKeywordTypeAnnotation {
 											loc: Object {
 												filename: "input.ts"
 												end: Object {
@@ -255,7 +255,7 @@ Program {
 												line: 2
 											}
 										}
-										typeAnnotation: NumberKeywordTypeAnnotation {
+										typeAnnotation: TSNumberKeywordTypeAnnotation {
 											loc: Object {
 												filename: "input.ts"
 												end: Object {
@@ -402,7 +402,7 @@ Program {
 												line: 3
 											}
 										}
-										typeAnnotation: StringKeywordTypeAnnotation {
+										typeAnnotation: TSStringKeywordTypeAnnotation {
 											loc: Object {
 												filename: "input.ts"
 												end: Object {
@@ -450,7 +450,7 @@ Program {
 												line: 3
 											}
 										}
-										typeAnnotation: StringKeywordTypeAnnotation {
+										typeAnnotation: TSStringKeywordTypeAnnotation {
 											loc: Object {
 												filename: "input.ts"
 												end: Object {
@@ -613,7 +613,7 @@ Program {
 												line: 4
 											}
 										}
-										typeAnnotation: AnyKeywordTypeAnnotation {
+										typeAnnotation: TSAnyKeywordTypeAnnotation {
 											loc: Object {
 												filename: "input.ts"
 												end: Object {
@@ -661,7 +661,7 @@ Program {
 												line: 4
 											}
 										}
-										typeAnnotation: AnyKeywordTypeAnnotation {
+										typeAnnotation: TSAnyKeywordTypeAnnotation {
 											loc: Object {
 												filename: "input.ts"
 												end: Object {

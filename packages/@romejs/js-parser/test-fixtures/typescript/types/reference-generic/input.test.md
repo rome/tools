@@ -137,7 +137,7 @@ Program {
 											}
 										}
 										params: Array [
-											NumberKeywordTypeAnnotation {
+											TSNumberKeywordTypeAnnotation {
 												loc: Object {
 													filename: "input.ts"
 													end: Object {

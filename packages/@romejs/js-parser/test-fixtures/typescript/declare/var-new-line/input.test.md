@@ -221,7 +221,7 @@ Program {
 										line: 5
 									}
 								}
-								typeAnnotation: AnyKeywordTypeAnnotation {
+								typeAnnotation: TSAnyKeywordTypeAnnotation {
 									loc: Object {
 										filename: "input.ts"
 										end: Object {

@@ -253,20 +253,20 @@ export type AnyDeclaration =
 	| n.TSModuleDeclaration;
 
 export type AnyLiteralTypeAnnotation =
-	 | n.StringLiteralTypeAnnotation
-	| n.BooleanLiteralTypeAnnotation
-	| n.NumericLiteralTypeAnnotation;
+	 | n.TSStringLiteralTypeAnnotation
+	| n.TSBooleanLiteralTypeAnnotation
+	| n.TSNumericLiteralTypeAnnotation;
 
 export type AnyTSKeywordTypeAnnotation =
-	 | n.AnyKeywordTypeAnnotation
-	| n.BooleanKeywordTypeAnnotation
-	| n.NumberKeywordTypeAnnotation
-	| n.StringKeywordTypeAnnotation
-	| n.BigIntKeywordTypeAnnotation
-	| n.NeverKeywordTypeAnnotation
-	| n.NumberKeywordTypeAnnotation
-	| n.ObjectKeywordTypeAnnotation
-	| n.SymbolKeywordTypeAnnotation
+	 | n.TSAnyKeywordTypeAnnotation
+	| n.TSBooleanKeywordTypeAnnotation
+	| n.TSNumberKeywordTypeAnnotation
+	| n.TSStringKeywordTypeAnnotation
+	| n.TSBigIntKeywordTypeAnnotation
+	| n.TSNeverKeywordTypeAnnotation
+	| n.TSNumberKeywordTypeAnnotation
+	| n.TSObjectKeywordTypeAnnotation
+	| n.TSSymbolKeywordTypeAnnotation
 	| n.UndefinedKeywordTypeAnnotation
 	| n.UnknownKeywordTypeAnnotation;
 
@@ -289,8 +289,8 @@ export type AnyTSPrimary =
 	| n.TSFunctionType
 	| n.TSImportType
 	| n.TSConstructorType
-	| n.IntersectionTypeAnnotation
-	| n.TemplateLiteralTypeAnnotation
+	| n.TSIntersectionTypeAnnotation
+	| n.TSTemplateLiteralTypeAnnotation
 	| AnyLiteralTypeAnnotation
 	| AnyTSKeywordTypeAnnotation;
 
@@ -336,7 +336,6 @@ export type AnyRegExpExpression = n.RegExpSubExpression | n.RegExpAlternation;
 
 export type AnyNode =
 	 | n.AmbiguousFlowTypeCastExpression
-	| n.AnyKeywordTypeAnnotation
 	| n.ArrayExpression
 	| n.ArrayHole
 	| n.ArrowFunctionExpression
@@ -347,7 +346,6 @@ export type AnyNode =
 	| n.AssignmentObjectPattern
 	| n.AssignmentObjectPatternProperty
 	| n.AwaitExpression
-	| n.BigIntKeywordTypeAnnotation
 	| n.BigIntLiteral
 	| n.BinaryExpression
 	| n.BindingArrayPattern
@@ -356,9 +354,7 @@ export type AnyNode =
 	| n.BindingObjectPattern
 	| n.BindingObjectPatternProperty
 	| n.BlockStatement
-	| n.BooleanKeywordTypeAnnotation
 	| n.BooleanLiteral
-	| n.BooleanLiteralTypeAnnotation
 	| n.BreakStatement
 	| n.CallExpression
 	| n.CatchClause
@@ -380,7 +376,6 @@ export type AnyNode =
 	| n.Directive
 	| n.DoExpression
 	| n.DoWhileStatement
-	| n.EmptyKeywordTypeAnnotation
 	| n.EmptyStatement
 	| n.ExportAllDeclaration
 	| n.ExportDefaultDeclaration
@@ -406,7 +401,6 @@ export type AnyNode =
 	| n.ImportSpecifier
 	| n.ImportSpecifierLocal
 	| n.InterpreterDirective
-	| n.IntersectionTypeAnnotation
 	| n.JSXAttribute
 	| n.JSXElement
 	| n.JSXEmptyExpression
@@ -423,17 +417,11 @@ export type AnyNode =
 	| n.LogicalExpression
 	| n.MemberExpression
 	| n.MetaProperty
-	| n.MixedKeywordTypeAnnotation
 	| n.MockParent
-	| n.NeverKeywordTypeAnnotation
 	| n.NewExpression
-	| n.NullKeywordTypeAnnotation
 	| n.NullLiteral
-	| n.NumberKeywordTypeAnnotation
 	| n.NumericLiteral
-	| n.NumericLiteralTypeAnnotation
 	| n.ObjectExpression
-	| n.ObjectKeywordTypeAnnotation
 	| n.ObjectMethod
 	| n.ObjectProperty
 	| n.OptionalCallExpression
@@ -470,31 +458,32 @@ export type AnyNode =
 	| n.SpreadProperty
 	| n.StaticMemberProperty
 	| n.StaticPropertyKey
-	| n.StringKeywordTypeAnnotation
 	| n.StringLiteral
-	| n.StringLiteralTypeAnnotation
 	| n.Super
 	| n.SwitchCase
 	| n.SwitchStatement
-	| n.SymbolKeywordTypeAnnotation
 	| n.TaggedTemplateExpression
 	| n.TemplateElement
 	| n.TemplateLiteral
-	| n.TemplateLiteralTypeAnnotation
 	| n.ThisExpression
 	| n.ThrowStatement
 	| n.TryStatement
+	| n.TSAnyKeywordTypeAnnotation
 	| n.TSArrayType
 	| n.TSAsExpression
 	| n.TSAssignmentAsExpression
 	| n.TSAssignmentNonNullExpression
 	| n.TSAssignmentTypeAssertion
+	| n.TSBigIntKeywordTypeAnnotation
+	| n.TSBooleanKeywordTypeAnnotation
+	| n.TSBooleanLiteralTypeAnnotation
 	| n.TSCallSignatureDeclaration
 	| n.TSConditionalType
 	| n.TSConstructorType
 	| n.TSConstructSignatureDeclaration
 	| n.TSDeclareFunction
 	| n.TSDeclareMethod
+	| n.TSEmptyKeywordTypeAnnotation
 	| n.TSEnumDeclaration
 	| n.TSEnumMember
 	| n.TSExportAssignment
@@ -508,17 +497,28 @@ export type AnyNode =
 	| n.TSInferType
 	| n.TSInterfaceBody
 	| n.TSInterfaceDeclaration
+	| n.TSIntersectionTypeAnnotation
 	| n.TSMappedType
 	| n.TSMethodSignature
+	| n.TSMixedKeywordTypeAnnotation
 	| n.TSModuleBlock
 	| n.TSModuleDeclaration
 	| n.TSNamespaceExportDeclaration
+	| n.TSNeverKeywordTypeAnnotation
 	| n.TSNonNullExpression
+	| n.TSNullKeywordTypeAnnotation
+	| n.TSNumberKeywordTypeAnnotation
+	| n.TSNumericLiteralTypeAnnotation
+	| n.TSObjectKeywordTypeAnnotation
 	| n.TSOptionalType
 	| n.TSParenthesizedType
 	| n.TSPropertySignature
 	| n.TSQualifiedName
 	| n.TSSignatureDeclarationMeta
+	| n.TSStringKeywordTypeAnnotation
+	| n.TSStringLiteralTypeAnnotation
+	| n.TSSymbolKeywordTypeAnnotation
+	| n.TSTemplateLiteralTypeAnnotation
 	| n.TSThisType
 	| n.TSTupleType
 	| n.TSTypeAssertion

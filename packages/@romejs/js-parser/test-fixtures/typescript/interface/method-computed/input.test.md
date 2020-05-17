@@ -302,7 +302,7 @@ Program {
 								line: 3
 							}
 						}
-						returnType: NumberKeywordTypeAnnotation {
+						returnType: TSNumberKeywordTypeAnnotation {
 							loc: Object {
 								filename: "input.ts"
 								end: Object {

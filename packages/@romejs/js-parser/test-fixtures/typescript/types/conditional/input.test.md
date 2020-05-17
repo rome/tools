@@ -105,7 +105,7 @@ Program {
 											line: 1
 										}
 									}
-									checkType: NumberKeywordTypeAnnotation {
+									checkType: TSNumberKeywordTypeAnnotation {
 										loc: Object {
 											filename: "input.ts"
 											end: Object {
@@ -120,7 +120,7 @@ Program {
 											}
 										}
 									}
-									extendsType: StringKeywordTypeAnnotation {
+									extendsType: TSStringKeywordTypeAnnotation {
 										loc: Object {
 											filename: "input.ts"
 											end: Object {
@@ -135,7 +135,7 @@ Program {
 											}
 										}
 									}
-									falseType: NullKeywordTypeAnnotation {
+									falseType: TSNullKeywordTypeAnnotation {
 										loc: Object {
 											filename: "input.ts"
 											end: Object {
@@ -150,7 +150,7 @@ Program {
 											}
 										}
 									}
-									trueType: BooleanKeywordTypeAnnotation {
+									trueType: TSBooleanKeywordTypeAnnotation {
 										loc: Object {
 											filename: "input.ts"
 											end: Object {

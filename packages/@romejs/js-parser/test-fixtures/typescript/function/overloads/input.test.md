@@ -97,7 +97,7 @@ Program {
 							line: 1
 						}
 					}
-					returnType: NumberKeywordTypeAnnotation {
+					returnType: TSNumberKeywordTypeAnnotation {
 						loc: Object {
 							filename: "input.ts"
 							end: Object {
@@ -144,7 +144,7 @@ Program {
 										line: 1
 									}
 								}
-								typeAnnotation: NumberKeywordTypeAnnotation {
+								typeAnnotation: TSNumberKeywordTypeAnnotation {
 									loc: Object {
 										filename: "input.ts"
 										end: Object {
@@ -232,7 +232,7 @@ Program {
 							line: 2
 						}
 					}
-					returnType: StringKeywordTypeAnnotation {
+					returnType: TSStringKeywordTypeAnnotation {
 						loc: Object {
 							filename: "input.ts"
 							end: Object {
@@ -279,7 +279,7 @@ Program {
 										line: 2
 									}
 								}
-								typeAnnotation: StringKeywordTypeAnnotation {
+								typeAnnotation: TSStringKeywordTypeAnnotation {
 									loc: Object {
 										filename: "input.ts"
 										end: Object {

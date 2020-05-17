@@ -76,6 +76,7 @@ import {
 	TSParenthesizedType,
 	TSPropertySignature,
 	TSSignatureDeclarationMeta,
+	TSTemplateLiteralTypeAnnotation,
 	TSThisType,
 	TSTupleType,
 	TSTypeAssertion,
@@ -87,7 +88,6 @@ import {
 	TSTypePredicate,
 	TSTypeQuery,
 	TSTypeReference,
-	TemplateLiteralTypeAnnotation,
 	TypeAliasTypeAnnotation,
 	VariableDeclarationKind,
 	VariableDeclarationStatement,
@@ -109,28 +109,28 @@ function keywordTypeFromName(
 ): AnyTSKeywordTypeAnnotation["type"] | undefined {
 	switch (value) {
 		case "any":
-			return "AnyKeywordTypeAnnotation";
+			return "TSAnyKeywordTypeAnnotation";
 
 		case "boolean":
-			return "BooleanKeywordTypeAnnotation";
+			return "TSBooleanKeywordTypeAnnotation";
 
 		case "bigint":
-			return "BigIntKeywordTypeAnnotation";
+			return "TSBigIntKeywordTypeAnnotation";
 
 		case "never":
-			return "NeverKeywordTypeAnnotation";
+			return "TSNeverKeywordTypeAnnotation";
 
 		case "number":
-			return "NumberKeywordTypeAnnotation";
+			return "TSNumberKeywordTypeAnnotation";
 
 		case "object":
-			return "ObjectKeywordTypeAnnotation";
+			return "TSObjectKeywordTypeAnnotation";
 
 		case "string":
-			return "StringKeywordTypeAnnotation";
+			return "TSStringKeywordTypeAnnotation";
 
 		case "symbol":
-			return "SymbolKeywordTypeAnnotation";
+			return "TSSymbolKeywordTypeAnnotation";
 
 		case "undefined":
 			return "UndefinedKeywordTypeAnnotation";
@@ -1095,7 +1095,7 @@ function parseTSConstructorType(parser: JSParser): TSConstructorType {
 
 function parseTSTemplateLiteralType(
 	parser: JSParser,
-): TemplateLiteralTypeAnnotation {
+): TSTemplateLiteralTypeAnnotation {
 	const templateNode = parseTemplate(parser, false);
 
 	if (templateNode.expressions.length > 0) {
@@ -1106,7 +1106,7 @@ function parseTSTemplateLiteralType(
 	}
 
 	return {
-		type: "TemplateLiteralTypeAnnotation",
+		type: "TSTemplateLiteralTypeAnnotation",
 		value: templateNode.quasis[0].raw,
 		loc: templateNode.loc,
 	};
@@ -1121,11 +1121,11 @@ function parseTSNonArrayType(parser: JSParser): AnyTSPrimary {
 				 | undefined
 				| AnyTSKeywordTypeAnnotation["type"]
 				| "VoidKeywordTypeAnnotation"
-				| "NullKeywordTypeAnnotation";
+				| "TSNullKeywordTypeAnnotation";
 			if (parser.match(tt._void)) {
 				type = "VoidKeywordTypeAnnotation";
 			} else if (parser.match(tt._null)) {
-				type = "NullKeywordTypeAnnotation";
+				type = "TSNullKeywordTypeAnnotation";
 			} else {
 				type = keywordTypeFromName(String(parser.state.tokenValue));
 			}
@@ -1211,7 +1211,7 @@ function parseTSTypeLiteralAnnotation(
 			return parser.finishNode(
 				start,
 				{
-					type: "StringLiteralTypeAnnotation",
+					type: "TSStringLiteralTypeAnnotation",
 					value,
 				},
 			);
@@ -1228,7 +1228,7 @@ function parseTSTypeLiteralAnnotation(
 			return parser.finishNode(
 				start,
 				{
-					type: "NumericLiteralTypeAnnotation",
+					type: "TSNumericLiteralTypeAnnotation",
 					value,
 					format,
 				},
@@ -1242,7 +1242,7 @@ function parseTSTypeLiteralAnnotation(
 			return parser.finishNode(
 				start,
 				{
-					type: "BooleanLiteralTypeAnnotation",
+					type: "TSBooleanLiteralTypeAnnotation",
 					value,
 				},
 			);
@@ -1261,7 +1261,7 @@ function parseTSTypeLiteralAnnotation(
 					return parser.finishNode(
 						start,
 						{
-							type: "NumericLiteralTypeAnnotation",
+							type: "TSNumericLiteralTypeAnnotation",
 							value: 0,
 						},
 					);
@@ -1277,7 +1277,7 @@ function parseTSTypeLiteralAnnotation(
 				return parser.finishNode(
 					start,
 					{
-						type: "NumericLiteralTypeAnnotation",
+						type: "TSNumericLiteralTypeAnnotation",
 						value: -value,
 						format,
 					},
@@ -1296,7 +1296,7 @@ function parseTSTypeLiteralAnnotation(
 					return parser.finishNode(
 						start,
 						{
-							type: "NumericLiteralTypeAnnotation",
+							type: "TSNumericLiteralTypeAnnotation",
 							value: 0,
 						},
 					);
@@ -1437,7 +1437,7 @@ function parseTSTypeOperatorOrHigher(parser: JSParser): AnyTSPrimary {
 
 function parseTSUnionOrIntersectionType(
 	parser: JSParser,
-	kind: "UnionTypeAnnotation" | "IntersectionTypeAnnotation",
+	kind: "UnionTypeAnnotation" | "TSIntersectionTypeAnnotation",
 	parseConstituentType: ParserCallback<AnyTSPrimary>,
 	operator: TokenType,
 ): AnyTSPrimary {
@@ -1459,11 +1459,11 @@ function parseTSUnionOrIntersectionType(
 					types,
 				},
 			);
-		} else if (kind === "IntersectionTypeAnnotation") {
+		} else if (kind === "TSIntersectionTypeAnnotation") {
 			type = parser.finishNode(
 				start,
 				{
-					type: "IntersectionTypeAnnotation",
+					type: "TSIntersectionTypeAnnotation",
 					types,
 				},
 			);
@@ -1473,10 +1473,12 @@ function parseTSUnionOrIntersectionType(
 	return type;
 }
 
-function parseIntersectionTypeAnnotationOrHigher(parser: JSParser): AnyTSPrimary {
+function parseTSIntersectionTypeAnnotationOrHigher(
+	parser: JSParser,
+): AnyTSPrimary {
 	return parseTSUnionOrIntersectionType(
 		parser,
-		"IntersectionTypeAnnotation",
+		"TSIntersectionTypeAnnotation",
 		parseTSTypeOperatorOrHigher,
 		tt.bitwiseAND,
 	);
@@ -1486,7 +1488,7 @@ function parseUnionTypeAnnotationOrHigher(parser: JSParser) {
 	return parseTSUnionOrIntersectionType(
 		parser,
 		"UnionTypeAnnotation",
-		parseIntersectionTypeAnnotationOrHigher,
+		parseTSIntersectionTypeAnnotationOrHigher,
 		tt.bitwiseOR,
 	);
 }

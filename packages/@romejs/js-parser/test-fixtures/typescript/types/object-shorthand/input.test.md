@@ -372,7 +372,7 @@ Program {
 																		line: 2
 																	}
 																}
-																typeAnnotation: StringKeywordTypeAnnotation {
+																typeAnnotation: TSStringKeywordTypeAnnotation {
 																	loc: Object {
 																		filename: "input.ts"
 																		end: Object {

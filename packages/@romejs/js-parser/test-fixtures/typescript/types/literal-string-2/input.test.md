@@ -115,7 +115,7 @@ Program {
 										line: 1
 									}
 								}
-								typeAnnotation: TemplateLiteralTypeAnnotation {
+								typeAnnotation: TSTemplateLiteralTypeAnnotation {
 									value: "foo-"
 									loc: Object {
 										filename: "input.ts"
