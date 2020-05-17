@@ -102,6 +102,7 @@ type LintDiagnosticCategory =
 	| "lint/emptyMatches"
 	| "lint/getterReturn"
 	| "lint/importDefaultBasename"
+	| "lint/jsxA11yHeadingHasContent"
 	| "lint/jsxA11yHTMLHasLang"
 	| "lint/jsxA11yIframeHasTitle"
 	| "lint/jsxA11yImgRedundantAlt"

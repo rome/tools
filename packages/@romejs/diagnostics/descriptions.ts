@@ -290,6 +290,10 @@ export const descriptions = createMessages({
 	},
 	// @romejs/js-compiler
 	LINT: {
+		JSX_A11Y_HEADING_HAS_CONTENT: {
+			category: "lint/jsxA11yHeadingHasContent",
+			message: "Headings must have content and the content must be accessible by a screen reader.",
+		},
 		JSX_A11Y_NO_DISTRACTING_ELEMENTS: (element: string) => ({
 			category: "lint/jsxA11yNoDistractingElements",
 			message: `Do not use ${element} elements as they can create visual accessibility issues and are deprecated.`,
