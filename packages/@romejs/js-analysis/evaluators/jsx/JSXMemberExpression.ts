@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
+import {Scope} from "../../scopes";
 import {
-  AnyNode,
-  JSXMemberExpression,
-  jsxMemberExpression,
-} from '@romejs/js-ast';
+	AnyNode,
+	JSXMemberExpression,
+	jsxMemberExpression,
+} from "@romejs/js-ast";
 
 export default function JSXMemberExpression(node: AnyNode, scope: Scope) {
-  node = jsxMemberExpression.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = jsxMemberExpression.assert(node);
+	scope;
+	throw new Error("unimplemented");
 }

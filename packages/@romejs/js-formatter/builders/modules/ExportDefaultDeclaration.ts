@@ -5,20 +5,20 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ExportDefaultDeclaration} from '@romejs/js-ast';
-import Builder from '../../Builder';
-import {Token, concat, space} from '../../tokens';
-import {printExportDeclaration} from './ExportLocalDeclaration';
+import {ExportDefaultDeclaration} from "@romejs/js-ast";
+import Builder from "../../Builder";
+import {Token, concat, space} from "../../tokens";
+import {printExportDeclaration} from "./ExportLocalDeclaration";
 
 export default function ExportDefaultDeclaration(
-  builder: Builder,
-  node: ExportDefaultDeclaration,
+	builder: Builder,
+	node: ExportDefaultDeclaration,
 ): Token {
-  return concat([
-    'export',
-    space,
-    'default',
-    space,
-    printExportDeclaration(builder, node),
-  ]);
+	return concat([
+		"export",
+		space,
+		"default",
+		space,
+		printExportDeclaration(builder, node),
+	]);
 }

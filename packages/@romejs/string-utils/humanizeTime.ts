@@ -6,28 +6,28 @@
  */
 
 export function humanizeTime(
-  ms: number,
-  allowMilliseconds: boolean = false,
+	ms: number,
+	allowMilliseconds: boolean = false,
 ): string {
-  const s = Math.floor(ms / 1_000);
-  const m = Math.floor(s / 60);
-  const h = Math.floor(m / 60);
+	const s = Math.floor(ms / 1_000);
+	const m = Math.floor(s / 60);
+	const h = Math.floor(m / 60);
 
-  if (h === 0 && m === 0 && s === 0) {
-    if (allowMilliseconds) {
-      return `${ms}ms`;
-    } else {
-      return `${(ms / 1_000).toFixed(2)}s`;
-    }
-  }
+	if (h === 0 && m === 0 && s === 0) {
+		if (allowMilliseconds) {
+			return `${ms}ms`;
+		} else {
+			return `${(ms / 1_000).toFixed(2)}s`;
+		}
+	}
 
-  let buf = '';
-  if (h > 0) {
-    buf += `${String(h)}h`;
-  }
-  if (m > 0) {
-    buf += `${String(m % 60)}m`;
-  }
-  buf += `${String(s % 60)}s`;
-  return buf;
+	let buf = "";
+	if (h > 0) {
+		buf += `${String(h)}h`;
+	}
+	if (m > 0) {
+		buf += `${String(m % 60)}m`;
+	}
+	buf += `${String(s % 60)}s`;
+	return buf;
 }

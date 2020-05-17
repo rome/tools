@@ -86,7 +86,7 @@
 ### `2: formatted`
 
 ```
-<iframe title="" />;
+<iframe title='' />;
 
 ```
 
@@ -110,24 +110,14 @@
 ### `3: formatted`
 
 ```
-<iframe title={''} />;
+<iframe title={""} />;
 
 ```
 
 ### `4`
 
 ```
-
- unknown:1 lint/jsxA11yIframeHasTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ iframe elements should have a title prop.
-
-    <iframe title={``} />
-    ^^^^^^^^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
+✔ No known problems!
 
 ```
 
@@ -165,17 +155,7 @@
 ### `6`
 
 ```
-
- unknown:1 lint/jsxA11yIframeHasTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ iframe elements should have a title prop.
-
-    <iframe title={false} />
-    ^^^^^^^^^^^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
+✔ No known problems!
 
 ```
 
@@ -189,17 +169,7 @@
 ### `7`
 
 ```
-
- unknown:1 lint/jsxA11yIframeHasTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ iframe elements should have a title prop.
-
-    <iframe title={true} />
-    ^^^^^^^^^^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
+✔ No known problems!
 
 ```
 
@@ -213,17 +183,7 @@
 ### `8`
 
 ```
-
- unknown:1 lint/jsxA11yIframeHasTitle ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ iframe elements should have a title prop.
-
-    <iframe title={42} />
-    ^^^^^^^^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
+✔ No known problems!
 
 ```
 
@@ -244,6 +204,6 @@
 ### `9: formatted`
 
 ```
-<iframe title="title" />;
+<iframe title='title' />;
 
 ```

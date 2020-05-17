@@ -5,36 +5,36 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token, concat, group, space} from '../../tokens';
-import {ClassProperty} from '@romejs/js-ast';
+import Builder from "../../Builder";
+import {Token, concat, group, space} from "../../tokens";
+import {ClassProperty} from "@romejs/js-ast";
 
 export default function ClassProperty(
-  builder: Builder,
-  node: ClassProperty,
+	builder: Builder,
+	node: ClassProperty,
 ): Token {
-  if (node.value === undefined && !builder.options.typeAnnotations) {
-    // A ClassProperty with no value is a type annotation
-    return '';
-  }
+	if (node.value === undefined && !builder.options.typeAnnotations) {
+		// A ClassProperty with no value is a type annotation
+		return "";
+	}
 
-  const tokens: Array<Token> = [
-    builder.tokenize(node.meta, node),
-    builder.tokenize(node.key, node),
-  ];
+	const tokens: Array<Token> = [
+		builder.tokenize(node.meta, node),
+		builder.tokenize(node.key, node),
+	];
 
-  if (builder.options.typeAnnotations && node.typeAnnotation) {
-    tokens.push(':', space, builder.tokenize(node.typeAnnotation, node));
-  }
+	if (builder.options.typeAnnotations && node.typeAnnotation) {
+		tokens.push(":", space, builder.tokenize(node.typeAnnotation, node));
+	}
 
-  if (node.value) {
-    tokens.push(space);
-    tokens.push('=');
-    tokens.push(space);
-    tokens.push(builder.tokenize(node.value, node));
-  }
+	if (node.value) {
+		tokens.push(space);
+		tokens.push("=");
+		tokens.push(space);
+		tokens.push(builder.tokenize(node.value, node));
+	}
 
-  tokens.push(';');
+	tokens.push(";");
 
-  return group(concat(tokens));
+	return group(concat(tokens));
 }

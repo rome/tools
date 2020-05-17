@@ -6,49 +6,49 @@
 
 ```javascript
 Program {
-  body: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  trailingComments: Array []
-  innerComments: Array ['0']
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 2
-      index: 2
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  comments: Array [
-    CommentLine {
-      id: '0'
-      value: ''
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 2
-          index: 2
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-    }
-  ]
+	body: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	trailingComments: Array []
+	innerComments: Array ["0"]
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 2
+			index: 2
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	comments: Array [
+		CommentLine {
+			id: "0"
+			value: ""
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 2
+					index: 2
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+		}
+	]
 }
 ```

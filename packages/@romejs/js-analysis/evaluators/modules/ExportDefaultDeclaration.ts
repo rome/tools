@@ -5,23 +5,23 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
+import {Scope} from "../../scopes";
 import {
-  AnyNode,
-  ExportDefaultDeclaration,
-  exportDefaultDeclaration,
-} from '@romejs/js-ast';
-import Hub from '../../Hub';
+	AnyNode,
+	ExportDefaultDeclaration,
+	exportDefaultDeclaration,
+} from "@romejs/js-ast";
+import Hub from "../../Hub";
 
 export default function ExportDefaultDeclaration(
-  node: AnyNode,
-  scope: Scope,
-  {evaluator}: Hub,
+	node: AnyNode,
+	scope: Scope,
+	{evaluator}: Hub,
 ) {
-  node = exportDefaultDeclaration.assert(node);
+	node = exportDefaultDeclaration.assert(node);
 
-  const decl = node.declaration;
-  const declType = scope.evaluate(decl);
-  evaluator.addExport('default', declType);
-  return declType;
+	const decl = node.declaration;
+	const declType = scope.evaluate(decl);
+	evaluator.addExport("default", declType);
+	return declType;
 }

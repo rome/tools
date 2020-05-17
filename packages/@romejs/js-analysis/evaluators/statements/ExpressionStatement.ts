@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
+import {Scope} from "../../scopes";
 import {
-  AnyNode,
-  ExpressionStatement,
-  expressionStatement,
-} from '@romejs/js-ast';
+	AnyNode,
+	ExpressionStatement,
+	expressionStatement,
+} from "@romejs/js-ast";
 
 export default function ExpressionStatement(node: AnyNode, scope: Scope) {
-  node = expressionStatement.assert(node);
+	node = expressionStatement.assert(node);
 
-  return scope.evaluate(node.expression);
+	return scope.evaluate(node.expression);
 }

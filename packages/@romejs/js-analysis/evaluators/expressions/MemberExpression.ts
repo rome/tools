@@ -5,25 +5,25 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {AnyNode, MemberExpression, memberExpression} from '@romejs/js-ast';
-import StringLiteralT from '../../types/StringLiteralT';
-import GetPropT from '../../types/GetPropT';
+import {Scope} from "../../scopes";
+import {AnyNode, MemberExpression, memberExpression} from "@romejs/js-ast";
+import StringLiteralT from "../../types/StringLiteralT";
+import GetPropT from "../../types/GetPropT";
 
 export default function MemberExpression(node: AnyNode, scope: Scope) {
-  node = memberExpression.assert(node);
-  if (node.property.type === 'ComputedMemberProperty') {
-    throw new Error('Computed properties not supportd yet');
-  }
+	node = memberExpression.assert(node);
+	if (node.property.type === "ComputedMemberProperty") {
+		throw new Error("Computed properties not supportd yet");
+	}
 
-  if (node.property.value.type === 'PrivateName') {
-    throw new Error('PrivateName in static member not supported yet');
-  }
+	if (node.property.value.type === "PrivateName") {
+		throw new Error("PrivateName in static member not supported yet");
+	}
 
-  const prop = new StringLiteralT(
-    scope,
-    node.property.value,
-    node.property.value.name,
-  );
-  return new GetPropT(scope, node, scope.evaluate(node.object), prop);
+	const prop = new StringLiteralT(
+		scope,
+		node.property.value,
+		node.property.value.name,
+	);
+	return new GetPropT(scope, node, scope.evaluate(node.object), prop);
 }

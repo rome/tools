@@ -6,208 +6,208 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 25
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ForInStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 24
-          index: 24
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      body: EmptyStatement {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 24
-            index: 24
-            line: 1
-          }
-          start: Object {
-            column: 23
-            index: 23
-            line: 1
-          }
-        }
-      }
-      right: ReferenceIdentifier {
-        name: 'd'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'd'
-          end: Object {
-            column: 22
-            index: 22
-            line: 1
-          }
-          start: Object {
-            column: 21
-            index: 21
-            line: 1
-          }
-        }
-      }
-      left: MemberExpression {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 17
-            index: 17
-            line: 1
-          }
-          start: Object {
-            column: 5
-            index: 5
-            line: 1
-          }
-        }
-        property: ComputedMemberProperty {
-          value: NumericLiteral {
-            value: 0
-            format: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 16
-                index: 16
-                line: 1
-              }
-              start: Object {
-                column: 15
-                index: 15
-                line: 1
-              }
-            }
-          }
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 17
-              index: 17
-              line: 1
-            }
-            start: Object {
-              column: 14
-              index: 14
-              line: 1
-            }
-          }
-        }
-        object: CallExpression {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 14
-              index: 14
-              line: 1
-            }
-            start: Object {
-              column: 5
-              index: 5
-              line: 1
-            }
-          }
-          callee: ReferenceIdentifier {
-            name: 'a'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'a'
-              end: Object {
-                column: 6
-                index: 6
-                line: 1
-              }
-              start: Object {
-                column: 5
-                index: 5
-                line: 1
-              }
-            }
-          }
-          arguments: Array [
-            BinaryExpression {
-              operator: 'in'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 13
-                  index: 13
-                  line: 1
-                }
-                start: Object {
-                  column: 7
-                  index: 7
-                  line: 1
-                }
-              }
-              left: ReferenceIdentifier {
-                name: 'b'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'b'
-                  end: Object {
-                    column: 8
-                    index: 8
-                    line: 1
-                  }
-                  start: Object {
-                    column: 7
-                    index: 7
-                    line: 1
-                  }
-                }
-              }
-              right: ReferenceIdentifier {
-                name: 'c'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'c'
-                  end: Object {
-                    column: 13
-                    index: 13
-                    line: 1
-                  }
-                  start: Object {
-                    column: 12
-                    index: 12
-                    line: 1
-                  }
-                }
-              }
-            }
-          ]
-        }
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 25
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		ForInStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 24
+					index: 24
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			body: EmptyStatement {
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 24
+						index: 24
+						line: 1
+					}
+					start: Object {
+						column: 23
+						index: 23
+						line: 1
+					}
+				}
+			}
+			right: ReferenceIdentifier {
+				name: "d"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "d"
+					end: Object {
+						column: 22
+						index: 22
+						line: 1
+					}
+					start: Object {
+						column: 21
+						index: 21
+						line: 1
+					}
+				}
+			}
+			left: MemberExpression {
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 17
+						index: 17
+						line: 1
+					}
+					start: Object {
+						column: 5
+						index: 5
+						line: 1
+					}
+				}
+				property: ComputedMemberProperty {
+					value: NumericLiteral {
+						value: 0
+						format: undefined
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 16
+								index: 16
+								line: 1
+							}
+							start: Object {
+								column: 15
+								index: 15
+								line: 1
+							}
+						}
+					}
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 17
+							index: 17
+							line: 1
+						}
+						start: Object {
+							column: 14
+							index: 14
+							line: 1
+						}
+					}
+				}
+				object: CallExpression {
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 14
+							index: 14
+							line: 1
+						}
+						start: Object {
+							column: 5
+							index: 5
+							line: 1
+						}
+					}
+					callee: ReferenceIdentifier {
+						name: "a"
+						loc: Object {
+							filename: "input.js"
+							identifierName: "a"
+							end: Object {
+								column: 6
+								index: 6
+								line: 1
+							}
+							start: Object {
+								column: 5
+								index: 5
+								line: 1
+							}
+						}
+					}
+					arguments: Array [
+						BinaryExpression {
+							operator: "in"
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 13
+									index: 13
+									line: 1
+								}
+								start: Object {
+									column: 7
+									index: 7
+									line: 1
+								}
+							}
+							left: ReferenceIdentifier {
+								name: "b"
+								loc: Object {
+									filename: "input.js"
+									identifierName: "b"
+									end: Object {
+										column: 8
+										index: 8
+										line: 1
+									}
+									start: Object {
+										column: 7
+										index: 7
+										line: 1
+									}
+								}
+							}
+							right: ReferenceIdentifier {
+								name: "c"
+								loc: Object {
+									filename: "input.js"
+									identifierName: "c"
+									end: Object {
+										column: 13
+										index: 13
+										line: 1
+									}
+									start: Object {
+										column: 12
+										index: 12
+										line: 1
+									}
+								}
+							}
+						}
+					]
+				}
+			}
+		}
+	]
 }
 ```

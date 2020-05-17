@@ -5,25 +5,25 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {testLintMultiple} from '../testHelpers';
+import {test} from "rome";
+import {testLintMultiple} from "../testHelpers";
 
 test(
-  'no async promise executor',
-  async (t) => {
-    await testLintMultiple(
-      t,
-      [
-        // VALID
-        'new Promise(() => {})',
-        'new Promise(() => {}, async function unrelated() {})',
-        'class Foo {} new Foo(async () => {})',
-        // INVALID
-        'new Promise(async function foo() {})',
-        'new Promise(async () => {})',
-        'new Promise(((((async () => {})))))',
-      ],
-      {category: 'lint/noAsyncPromiseExecutor'},
-    );
-  },
+	"no async promise executor",
+	async (t) => {
+		await testLintMultiple(
+			t,
+			[
+				// VALID
+				"new Promise(() => {})",
+				"new Promise(() => {}, async function unrelated() {})",
+				"class Foo {} new Foo(async () => {})",
+				// INVALID
+				"new Promise(async function foo() {})",
+				"new Promise(async () => {})",
+				"new Promise(((((async () => {})))))",
+			],
+			{category: "lint/noAsyncPromiseExecutor"},
+		);
+	},
 );

@@ -5,21 +5,21 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type MockParent = JSNodeBase & {
-  type: 'MockParent';
+	type: "MockParent";
 };
 
 export const mockParent = createBuilder<MockParent>(
-  'MockParent',
-  {
-    bindingKeys: {},
-    visitorKeys: {},
-  },
+	"MockParent",
+	{
+		bindingKeys: {},
+		visitorKeys: {},
+	},
 );
 
 export const MOCK_PARENT: MockParent = {
-  type: 'MockParent',
+	type: "MockParent",
 };

@@ -6,34 +6,34 @@
  */
 
 import {
-  BlockStatement,
-  ClassPropertyMeta,
-  FunctionHead,
-  JSNodeBase,
-} from '../index';
-import {createBuilder} from '../utils';
-import {AnyObjectPropertyKey} from '../unions';
+	BlockStatement,
+	ClassPropertyMeta,
+	FunctionHead,
+	JSNodeBase,
+} from "../index";
+import {createBuilder} from "../utils";
+import {AnyObjectPropertyKey} from "../unions";
 
 export type ClassMethod = JSNodeBase & {
-  type: 'ClassMethod';
-  meta: ClassPropertyMeta;
-  key: AnyObjectPropertyKey;
-  kind: ClassMethodKind;
-  head: FunctionHead;
-  body: BlockStatement;
+	type: "ClassMethod";
+	meta: ClassPropertyMeta;
+	key: AnyObjectPropertyKey;
+	kind: ClassMethodKind;
+	head: FunctionHead;
+	body: BlockStatement;
 };
 
-export type ClassMethodKind = 'constructor' | 'method' | 'get' | 'set';
+export type ClassMethodKind = "constructor" | "method" | "get" | "set";
 
 export const classMethod = createBuilder<ClassMethod>(
-  'ClassMethod',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      key: true,
-      meta: true,
-      head: true,
-      body: true,
-    },
-  },
+	"ClassMethod",
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			key: true,
+			meta: true,
+			head: true,
+			body: true,
+		},
+	},
 );

@@ -5,18 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type Directive = JSNodeBase & {
-  type: 'Directive';
-  value: string;
+	type: "Directive";
+	value: string;
 };
 
 export const directive = createBuilder<Directive>(
-  'Directive',
-  {
-    bindingKeys: {},
-    visitorKeys: {},
-  },
+	"Directive",
+	{
+		bindingKeys: {},
+		visitorKeys: {},
+	},
 );

@@ -6,127 +6,127 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 29
-      line: 3
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    WhileStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 14
-          index: 28
-          line: 2
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      test: NumericLiteral {
-        value: 0
-        format: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 8
-            index: 8
-            line: 1
-          }
-          start: Object {
-            column: 7
-            index: 7
-            line: 1
-          }
-        }
-      }
-      body: ExpressionStatement {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 14
-            index: 28
-            line: 2
-          }
-          start: Object {
-            column: 10
-            index: 10
-            line: 1
-          }
-        }
-        expression: BinaryExpression {
-          operator: 'instanceof'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 14
-              index: 28
-              line: 2
-            }
-            start: Object {
-              column: 10
-              index: 10
-              line: 1
-            }
-          }
-          left: ReferenceIdentifier {
-            name: 'let'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'let'
-              end: Object {
-                column: 13
-                index: 13
-                line: 1
-              }
-              start: Object {
-                column: 10
-                index: 10
-                line: 1
-              }
-            }
-          }
-          right: ReferenceIdentifier {
-            name: 'Foo'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'Foo'
-              end: Object {
-                column: 14
-                index: 28
-                line: 2
-              }
-              start: Object {
-                column: 11
-                index: 25
-                line: 2
-              }
-            }
-          }
-        }
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 29
+			line: 3
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		WhileStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 14
+					index: 28
+					line: 2
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			test: NumericLiteral {
+				value: 0
+				format: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 8
+						index: 8
+						line: 1
+					}
+					start: Object {
+						column: 7
+						index: 7
+						line: 1
+					}
+				}
+			}
+			body: ExpressionStatement {
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 14
+						index: 28
+						line: 2
+					}
+					start: Object {
+						column: 10
+						index: 10
+						line: 1
+					}
+				}
+				expression: BinaryExpression {
+					operator: "instanceof"
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 14
+							index: 28
+							line: 2
+						}
+						start: Object {
+							column: 10
+							index: 10
+							line: 1
+						}
+					}
+					left: ReferenceIdentifier {
+						name: "let"
+						loc: Object {
+							filename: "input.js"
+							identifierName: "let"
+							end: Object {
+								column: 13
+								index: 13
+								line: 1
+							}
+							start: Object {
+								column: 10
+								index: 10
+								line: 1
+							}
+						}
+					}
+					right: ReferenceIdentifier {
+						name: "Foo"
+						loc: Object {
+							filename: "input.js"
+							identifierName: "Foo"
+							end: Object {
+								column: 14
+								index: 28
+								line: 2
+							}
+							start: Object {
+								column: 11
+								index: 25
+								line: 2
+							}
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

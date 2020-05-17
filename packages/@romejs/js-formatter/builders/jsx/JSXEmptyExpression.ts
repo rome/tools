@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token} from '../../tokens';
-import {JSXEmptyExpression} from '@romejs/js-ast';
+import Builder from "../../Builder";
+import {Token} from "../../tokens";
+import {JSXEmptyExpression} from "@romejs/js-ast";
 
 export default function JSXEmptyExpression(
-  builder: Builder,
-  node: JSXEmptyExpression,
+	builder: Builder,
+	node: JSXEmptyExpression,
 ): Token {
-  return builder.tokenizeInnerComments(node, false);
+	return builder.tokenizeInnerComments(node, false);
 }

@@ -6,115 +6,115 @@
 
 ```javascript
 Program {
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 4
-      index: 16
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  comments: Array [
-    CommentLine {
-      id: '0'
-      value: 'bar'
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 11
-          index: 11
-          line: 1
-        }
-        start: Object {
-          column: 4
-          index: 4
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 4
-          index: 16
-          line: 2
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: BinaryExpression {
-        operator: '+'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 4
-            index: 16
-            line: 2
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        left: ReferenceIdentifier {
-          name: 'foo'
-          trailingComments: Array ['0']
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'foo'
-            end: Object {
-              column: 3
-              index: 3
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
-        right: ReferenceIdentifier {
-          name: 'baz'
-          leadingComments: Array ['0']
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'baz'
-            end: Object {
-              column: 4
-              index: 16
-              line: 2
-            }
-            start: Object {
-              column: 1
-              index: 13
-              line: 2
-            }
-          }
-        }
-      }
-    }
-  ]
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 4
+			index: 16
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	comments: Array [
+		CommentLine {
+			id: "0"
+			value: "bar"
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 11
+					index: 11
+					line: 1
+				}
+				start: Object {
+					column: 4
+					index: 4
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		ExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 4
+					index: 16
+					line: 2
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: BinaryExpression {
+				operator: "+"
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 4
+						index: 16
+						line: 2
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				left: ReferenceIdentifier {
+					name: "foo"
+					trailingComments: Array ["0"]
+					loc: Object {
+						filename: "input.js"
+						identifierName: "foo"
+						end: Object {
+							column: 3
+							index: 3
+							line: 1
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+				}
+				right: ReferenceIdentifier {
+					name: "baz"
+					leadingComments: Array ["0"]
+					loc: Object {
+						filename: "input.js"
+						identifierName: "baz"
+						end: Object {
+							column: 4
+							index: 16
+							line: 2
+						}
+						start: Object {
+							column: 1
+							index: 13
+							line: 2
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

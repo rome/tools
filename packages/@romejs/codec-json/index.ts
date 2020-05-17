@@ -5,66 +5,70 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSONParserOptions, JSONValue, PathToComments, Tokens} from './types';
-import {createJSONParser} from './parse';
-import {Consumer, consume, consumeUnknown} from '@romejs/consume';
-import {stringifyRootConsumer} from './stringify';
-import {TokenValues} from '@romejs/parser-core';
+import {JSONParserOptions, JSONValue, PathToComments, Tokens} from "./types";
+import {createJSONParser} from "./parse";
+import {Consumer, consume, consumeUnknown} from "@romejs/consume";
+import {stringifyRootConsumer} from "./stringify";
+import {TokenValues} from "@romejs/parser-core";
 
 export {
-  JSONArray,
-  JSONObject,
-  JSONParserOptions,
-  JSONPropertyValue,
-  JSONValue,
-} from './types';
+	JSONArray,
+	JSONObject,
+	JSONParserOptions,
+	JSONPropertyValue,
+	JSONValue,
+} from "./types";
 
 export type ConsumeJSONResult = {
-  hasExtensions: boolean;
-  consumer: Consumer;
-  comments: PathToComments;
+	hasExtensions: boolean;
+	consumer: Consumer;
+	comments: PathToComments;
 };
 
 export function consumeJSON(opts: JSONParserOptions): Consumer {
-  return consumeJSONExtra(opts).consumer;
+	return consumeJSONExtra(opts).consumer;
 }
 
 export function consumeJSONExtra(opts: JSONParserOptions): ConsumeJSONResult {
-  const parser = createJSONParser(opts);
-  const {value, context} = parser.parse();
+	const parser = createJSONParser(opts);
+	const {value, context} = parser.parse();
 
-  return {
-    hasExtensions: parser.hasExtensions,
-    consumer: consume({
-      filePath: parser.path,
-      context,
-      objectPath: [],
-      value,
-      parent: undefined,
-    }),
-    comments: parser.pathToComments,
-  };
+	return {
+		hasExtensions: parser.hasExtensions,
+		consumer: consume({
+			filePath: parser.path,
+			context,
+			objectPath: [],
+			value,
+			parent: undefined,
+		}),
+		comments: parser.pathToComments,
+	};
 }
 
 export function parseJSON(opts: JSONParserOptions): JSONValue {
-  return createJSONParser(opts).parse().value;
+	return createJSONParser(opts).parse().value;
 }
 
 export function tokenizeJSON(
-  opts: JSONParserOptions,
+	opts: JSONParserOptions,
 ): Array<TokenValues<Tokens>> {
-  return createJSONParser(opts).tokenizeAll();
+	return createJSONParser(opts).tokenizeAll();
 }
 
 export function stringifyRJSONFromConsumer(
-  opts: {
-    consumer: Consumer;
-    comments: PathToComments;
-  },
+	opts: {
+		consumer: Consumer;
+		comments: PathToComments;
+	},
 ): string {
-  return stringifyRootConsumer(opts.consumer, opts.comments);
+	return stringifyRootConsumer(opts.consumer, opts.comments);
 }
 
 export function stringifyRJSON(value: unknown): string {
-  return stringifyRootConsumer(consumeUnknown(value, 'parse/json'), new Map());
+	return stringifyRootConsumer(consumeUnknown(value, "parse/json"), new Map());
+}
+
+export function stringifyJSON(value: unknown): string {
+	return JSON.stringify(value, null, "\t");
 }

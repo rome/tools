@@ -6,5 +6,5 @@
  */
 
 export default function setProcessTitle(title: string) {
-  process.title = `rome-${title}`;
+	process.title = `rome-${title}`;
 }

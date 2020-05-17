@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token} from '../../tokens';
-import {StaticPropertyKey} from '@romejs/js-ast';
+import Builder from "../../Builder";
+import {Token} from "../../tokens";
+import {StaticPropertyKey} from "@romejs/js-ast";
 
 export default function StaticPropertyKey(
-  builder: Builder,
-  node: StaticPropertyKey,
+	builder: Builder,
+	node: StaticPropertyKey,
 ): Token {
-  return builder.tokenize(node.value, node);
+	return builder.tokenize(node.value, node);
 }

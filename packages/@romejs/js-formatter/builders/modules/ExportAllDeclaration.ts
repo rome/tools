@@ -5,32 +5,32 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ExportAllDeclaration} from '@romejs/js-ast';
-import Builder from '../../Builder';
-import {Token, concat, space} from '../../tokens';
+import {ExportAllDeclaration} from "@romejs/js-ast";
+import Builder from "../../Builder";
+import {Token, concat, space} from "../../tokens";
 
 export default function ExportAllDeclaration(
-  builder: Builder,
-  node: ExportAllDeclaration,
+	builder: Builder,
+	node: ExportAllDeclaration,
 ): Token {
-  const tokens: Array<Token> = ['export', space];
+	const tokens: Array<Token> = ["export", space];
 
-  if (node.exportKind === 'type') {
-    if (!builder.options.typeAnnotations) {
-      return '';
-    }
+	if (node.exportKind === "type") {
+		if (!builder.options.typeAnnotations) {
+			return "";
+		}
 
-    tokens.push('type', space);
-  }
+		tokens.push("type", space);
+	}
 
-  tokens.push(
-    '*',
-    space,
-    'from',
-    space,
-    builder.tokenize(node.source, node),
-    ';',
-  );
+	tokens.push(
+		"*",
+		space,
+		"from",
+		space,
+		builder.tokenize(node.source, node),
+		";",
+	);
 
-  return concat(tokens);
+	return concat(tokens);
 }

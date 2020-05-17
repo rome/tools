@@ -6,38 +6,38 @@
  */
 
 function sprintf(msg: string, ...args: Array<unknown>): string {
-  return msg.replace(
-    /\$(\d+)/g,
-    (match, num) => {
-      return String(args[num]);
-    },
-  );
+	return msg.replace(
+		/\$(\d+)/g,
+		(match, num) => {
+			return String(args[num]);
+		},
+	);
 }
 
 type MessagesShape = {
-  [key: string]: string;
+	[key: string]: string;
 };
 
 type Factory = (...args: Array<unknown>) => string;
 
 type FactoryObject<Messages extends MessagesShape> = {
-  [P in keyof Messages]: Factory
+	[P in keyof Messages]: Factory
 };
 
 export function createMessageFactory<Messages extends MessagesShape>(
-  messages: Messages,
+	messages: Messages,
 ): FactoryObject<Messages> {
-  // @ts-ignore: TS complains about {} not being full of the possible properties in message... which is true
-  // but they will be filled it by the time we return
-  const obj: FactoryObject<Messages> = {};
+	// @ts-ignore: TS complains about {} not being full of the possible properties in message... which is true
+	// but they will be filled it by the time we return
+	const obj: FactoryObject<Messages> = {};
 
-  for (const key in messages) {
-    const msg = messages[key];
+	for (const key in messages) {
+		const msg = messages[key];
 
-    obj[key] = (...args: Array<unknown>) => {
-      return sprintf(msg, ...args);
-    };
-  }
+		obj[key] = (...args: Array<unknown>) => {
+			return sprintf(msg, ...args);
+		};
+	}
 
-  return obj;
+	return obj;
 }

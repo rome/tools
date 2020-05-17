@@ -5,20 +5,20 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {testLint} from '../testHelpers';
-import {dedent} from '@romejs/string-utils';
+import {test} from "rome";
+import {testLint} from "../testHelpers";
+import {dedent} from "@romejs/string-utils";
 
 test(
-  'no delete vars',
-  async (t) => {
-    await testLint(
-      t,
-      dedent`
+	"no delete vars",
+	async (t) => {
+		await testLint(
+			t,
+			dedent`
         const foo = "test";
         delete foo;
       `,
-      {category: 'lint/noDeleteVars', sourceType: 'script'},
-    );
-  },
+			{category: "lint/noDeleteVars", sourceType: "script"},
+		);
+	},
 );

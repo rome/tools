@@ -6,261 +6,261 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 1
-      index: 52
-      line: 3
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'await is not allowed in async function parameters'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 18
-          index: 40
-          line: 2
-        }
-        start: Object {
-          column: 18
-          index: 40
-          line: 2
-        }
-      }
-    }
-  ]
-  body: Array [
-    FunctionDeclaration {
-      id: BindingIdentifier {
-        name: 'fn'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'fn'
-          end: Object {
-            column: 17
-            index: 17
-            line: 1
-          }
-          start: Object {
-            column: 15
-            index: 15
-            line: 1
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 1
-          index: 52
-          line: 3
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      head: FunctionHead {
-        async: true
-        generator: false
-        hasHoistedVars: false
-        params: Array []
-        rest: undefined
-        returnType: undefined
-        thisType: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 19
-            index: 19
-            line: 1
-          }
-          start: Object {
-            column: 17
-            index: 17
-            line: 1
-          }
-        }
-      }
-      body: BlockStatement {
-        directives: Array []
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 1
-            index: 52
-            line: 3
-          }
-          start: Object {
-            column: 20
-            index: 20
-            line: 1
-          }
-        }
-        body: Array [
-          ExpressionStatement {
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 28
-                index: 50
-                line: 2
-              }
-              start: Object {
-                column: 2
-                index: 24
-                line: 2
-              }
-            }
-            expression: ArrowFunctionExpression {
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 27
-                  index: 49
-                  line: 2
-                }
-                start: Object {
-                  column: 2
-                  index: 24
-                  line: 2
-                }
-              }
-              body: BlockStatement {
-                body: Array []
-                directives: Array []
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 27
-                    index: 49
-                    line: 2
-                  }
-                  start: Object {
-                    column: 25
-                    index: 47
-                    line: 2
-                  }
-                }
-              }
-              head: FunctionHead {
-                async: true
-                hasHoistedVars: false
-                rest: undefined
-                returnType: undefined
-                thisType: undefined
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 24
-                    index: 46
-                    line: 2
-                  }
-                  start: Object {
-                    column: 2
-                    index: 24
-                    line: 2
-                  }
-                }
-                params: Array [
-                  BindingAssignmentPattern {
-                    operator: '='
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 20
-                        index: 42
-                        line: 2
-                      }
-                      start: Object {
-                        column: 9
-                        index: 31
-                        line: 2
-                      }
-                    }
-                    left: BindingIdentifier {
-                      name: 'x'
-                      loc: Object {
-                        filename: 'input.js'
-                        identifierName: 'x'
-                        end: Object {
-                          column: 10
-                          index: 32
-                          line: 2
-                        }
-                        start: Object {
-                          column: 9
-                          index: 31
-                          line: 2
-                        }
-                      }
-                    }
-                    right: AwaitExpression {
-                      loc: Object {
-                        filename: 'input.js'
-                        end: Object {
-                          column: 20
-                          index: 42
-                          line: 2
-                        }
-                        start: Object {
-                          column: 13
-                          index: 35
-                          line: 2
-                        }
-                      }
-                      argument: NumericLiteral {
-                        value: 2
-                        format: undefined
-                        loc: Object {
-                          filename: 'input.js'
-                          end: Object {
-                            column: 20
-                            index: 42
-                            line: 2
-                          }
-                          start: Object {
-                            column: 19
-                            index: 41
-                            line: 2
-                          }
-                        }
-                      }
-                    }
-                  }
-                ]
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 1
+			index: 52
+			line: 3
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "await is not allowed in async function parameters"}
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "script"
+				end: Object {
+					column: 18
+					index: 40
+					line: 2
+				}
+				start: Object {
+					column: 18
+					index: 40
+					line: 2
+				}
+			}
+		}
+	]
+	body: Array [
+		FunctionDeclaration {
+			id: BindingIdentifier {
+				name: "fn"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "fn"
+					end: Object {
+						column: 17
+						index: 17
+						line: 1
+					}
+					start: Object {
+						column: 15
+						index: 15
+						line: 1
+					}
+				}
+			}
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 1
+					index: 52
+					line: 3
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			head: FunctionHead {
+				async: true
+				generator: false
+				hasHoistedVars: false
+				params: Array []
+				rest: undefined
+				returnType: undefined
+				thisType: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 19
+						index: 19
+						line: 1
+					}
+					start: Object {
+						column: 17
+						index: 17
+						line: 1
+					}
+				}
+			}
+			body: BlockStatement {
+				directives: Array []
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 1
+						index: 52
+						line: 3
+					}
+					start: Object {
+						column: 20
+						index: 20
+						line: 1
+					}
+				}
+				body: Array [
+					ExpressionStatement {
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 28
+								index: 50
+								line: 2
+							}
+							start: Object {
+								column: 2
+								index: 24
+								line: 2
+							}
+						}
+						expression: ArrowFunctionExpression {
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 27
+									index: 49
+									line: 2
+								}
+								start: Object {
+									column: 2
+									index: 24
+									line: 2
+								}
+							}
+							body: BlockStatement {
+								body: Array []
+								directives: Array []
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 27
+										index: 49
+										line: 2
+									}
+									start: Object {
+										column: 25
+										index: 47
+										line: 2
+									}
+								}
+							}
+							head: FunctionHead {
+								async: true
+								hasHoistedVars: false
+								rest: undefined
+								returnType: undefined
+								thisType: undefined
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 24
+										index: 46
+										line: 2
+									}
+									start: Object {
+										column: 2
+										index: 24
+										line: 2
+									}
+								}
+								params: Array [
+									BindingAssignmentPattern {
+										operator: "="
+										loc: Object {
+											filename: "input.js"
+											end: Object {
+												column: 20
+												index: 42
+												line: 2
+											}
+											start: Object {
+												column: 9
+												index: 31
+												line: 2
+											}
+										}
+										left: BindingIdentifier {
+											name: "x"
+											loc: Object {
+												filename: "input.js"
+												identifierName: "x"
+												end: Object {
+													column: 10
+													index: 32
+													line: 2
+												}
+												start: Object {
+													column: 9
+													index: 31
+													line: 2
+												}
+											}
+										}
+										right: AwaitExpression {
+											loc: Object {
+												filename: "input.js"
+												end: Object {
+													column: 20
+													index: 42
+													line: 2
+												}
+												start: Object {
+													column: 13
+													index: 35
+													line: 2
+												}
+											}
+											argument: NumericLiteral {
+												value: 2
+												format: undefined
+												loc: Object {
+													filename: "input.js"
+													end: Object {
+														column: 20
+														index: 42
+														line: 2
+													}
+													start: Object {
+														column: 19
+														index: 41
+														line: 2
+													}
+												}
+											}
+										}
+									}
+								]
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

@@ -52,7 +52,7 @@ console.log(event);
 ```
 // valid use of event into the function scope.
 function foo(event) {
-  console.info(event);
+	console.info(event);
 }
 
 // invalid, event is used as a global.

@@ -5,22 +5,22 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ConstExportModuleKind, JSNodeBase, StringLiteral} from '../index';
-import {createBuilder} from '../utils';
+import {ConstExportModuleKind, JSNodeBase, StringLiteral} from "../index";
+import {createBuilder} from "../utils";
 
 export type ExportAllDeclaration = JSNodeBase & {
-  type: 'ExportAllDeclaration';
-  source: StringLiteral;
-  exportKind?: ConstExportModuleKind;
-  declare?: boolean;
+	type: "ExportAllDeclaration";
+	source: StringLiteral;
+	exportKind?: ConstExportModuleKind;
+	declare?: boolean;
 };
 
 export const exportAllDeclaration = createBuilder<ExportAllDeclaration>(
-  'ExportAllDeclaration',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      source: true,
-    },
-  },
+	"ExportAllDeclaration",
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			source: true,
+		},
+	},
 );

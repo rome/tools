@@ -6,26 +6,26 @@
  */
 
 import {
-  AnyExpression,
-  ComputedPropertyKey,
-  JSNodeBase,
-  StaticPropertyKey,
-} from '../index';
-import {createBuilder} from '../utils';
+	AnyExpression,
+	ComputedPropertyKey,
+	JSNodeBase,
+	StaticPropertyKey,
+} from "../index";
+import {createBuilder} from "../utils";
 
 export type ObjectProperty = JSNodeBase & {
-  type: 'ObjectProperty';
-  key: StaticPropertyKey | ComputedPropertyKey;
-  value: AnyExpression;
+	type: "ObjectProperty";
+	key: StaticPropertyKey | ComputedPropertyKey;
+	value: AnyExpression;
 };
 
 export const objectProperty = createBuilder<ObjectProperty>(
-  'ObjectProperty',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      key: true,
-      value: true,
-    },
-  },
+	"ObjectProperty",
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			key: true,
+			value: true,
+		},
+	},
 );

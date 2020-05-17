@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, RegExpGroupCapture, regExpGroupCapture} from '@romejs/js-ast';
+import {AnyNode, RegExpGroupCapture, regExpGroupCapture} from "@romejs/js-ast";
 
 export default function RegExpGroupCapture(node: AnyNode) {
-  node = regExpGroupCapture.assert(node);
-  throw new Error('unimplemented');
+	node = regExpGroupCapture.assert(node);
+	throw new Error("unimplemented");
 }

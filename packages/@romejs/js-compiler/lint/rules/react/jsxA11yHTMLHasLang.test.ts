@@ -5,30 +5,30 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
+import {test} from "rome";
 
-import {testLintMultiple} from '../testHelpers';
+import {testLintMultiple} from "../testHelpers";
 
 test(
-  'require a lang attribute on <html> JSX elements',
-  async (t) => {
-    await testLintMultiple(
-      t,
-      [
-        // INVALID
-        '<html></html>',
-        '<html {...props}></html>',
-        '<html lang=""></html>',
-        '<html lang={""}></html>',
-        '<html lang={undefined}></html>',
-        '<html lang={false}></html>',
-        '<html lang={true}></html>',
-        '<html lang={42}></html>',
-        // VALID
-        '<html lang="en"></html>',
-        '<html lang={language}></html>',
-      ],
-      {category: 'lint/jsxA11yHTMLHasLang'},
-    );
-  },
+	"require a lang attribute on <html> JSX elements",
+	async (t) => {
+		await testLintMultiple(
+			t,
+			[
+				// INVALID
+				"<html></html>",
+				"<html {...props}></html>",
+				'<html lang=""></html>',
+				'<html lang={""}></html>',
+				"<html lang={undefined}></html>",
+				"<html lang={false}></html>",
+				"<html lang={true}></html>",
+				"<html lang={42}></html>",
+				// VALID
+				'<html lang="en"></html>',
+				"<html lang={language}></html>",
+			],
+			{category: "lint/jsxA11yHTMLHasLang"},
+		);
+	},
 );

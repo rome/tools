@@ -147,7 +147,7 @@ greet();
 
 ```
 function greet(param: Array<any>): string {
-  return param;
+	return param;
 }
 greet();
 
@@ -181,7 +181,7 @@ greet();
 
 ```
 function greet(param: Array<any>): Array<any> {
-  return param;
+	return param;
 }
 greet();
 
@@ -251,7 +251,7 @@ greet();
 
 ```
 function greet(param: Array<string>): string {
-  return param;
+	return param;
 }
 greet();
 
@@ -268,7 +268,7 @@ greet();
 
 ```
 function greet(param: Array<string>): Array<string> {
-  return param;
+	return param;
 }
 greet();
 
@@ -294,7 +294,7 @@ greet();
 ### `7: formatted`
 
 ```
-const age: any = 'seventeen';
+const age: any = "seventeen";
 age;
 
 ```
@@ -319,7 +319,7 @@ age;
 ### `8: formatted`
 
 ```
-const ages: Array<any> = ['seventeen'];
+const ages: Array<any> = ["seventeen"];
 ages;
 
 ```
@@ -344,7 +344,7 @@ ages;
 ### `9: formatted`
 
 ```
-const ages: Array<any> = ['seventeen'];
+const ages: Array<any> = ["seventeen"];
 ages;
 
 ```

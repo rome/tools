@@ -29,11 +29,11 @@
 
 ```
 class p {
-  set name(value) {
-    if (!value) {
-      return 'wrong';
-    }
-  }
+	set name(value) {
+		if (!value) {
+			return "wrong";
+		}
+	}
 }
 
 ```
@@ -63,11 +63,11 @@ class p {
 
 ```
 class p {
-  static set name(value) {
-    if (!value) {
-      return 'wrong';
-    }
-  }
+	static set name(value) {
+		if (!value) {
+			return "wrong";
+		}
+	}
 }
 
 ```
@@ -97,11 +97,11 @@ class p {
 
 ```
 let p = {
-  set name(value) {
-    if (!value) {
-      return 'wrong';
-    }
-  },
+	set name(value) {
+		if (!value) {
+			return "wrong";
+		}
+	},
 };
 
 ```
@@ -117,11 +117,11 @@ let p = {
 
 ```
 class p {
-  set name(value) {
-    if (!value) {
-      return;
-    }
-  }
+	set name(value) {
+		if (!value) {
+			return;
+		}
+	}
 }
 
 ```

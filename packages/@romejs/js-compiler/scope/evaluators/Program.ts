@@ -5,20 +5,20 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Scope from '../Scope';
-import {addVarBindings} from '../utils';
-import {AnyNode, Program} from '@romejs/js-ast';
+import Scope from "../Scope";
+import {addVarBindings} from "../utils";
+import {AnyNode, Program} from "@romejs/js-ast";
 
 export default {
-  creator: true,
-  build(node: Program, parent: AnyNode, scope: Scope) {
-    const newScope = scope.fork('program', node);
-    if (node.hasHoistedVars) {
-      addVarBindings(newScope, node);
-    }
-    for (const child of node.body) {
-      newScope.evaluate(child, node);
-    }
-    return newScope;
-  },
+	creator: true,
+	build(node: Program, parent: AnyNode, scope: Scope) {
+		const newScope = scope.fork("program", node);
+		if (node.hasHoistedVars) {
+			addVarBindings(newScope, node);
+		}
+		for (const child of node.body) {
+			newScope.evaluate(child, node);
+		}
+		return newScope;
+	},
 };

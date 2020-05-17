@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type ThisExpression = JSNodeBase & {
-  type: 'ThisExpression';
+	type: "ThisExpression";
 };
 
 export const thisExpression = createBuilder<ThisExpression>(
-  'ThisExpression',
-  {
-    bindingKeys: {},
-    visitorKeys: {},
-  },
+	"ThisExpression",
+	{
+		bindingKeys: {},
+		visitorKeys: {},
+	},
 );

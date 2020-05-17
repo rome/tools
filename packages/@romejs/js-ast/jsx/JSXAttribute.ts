@@ -6,34 +6,34 @@
  */
 
 import {
-  JSNodeBase,
-  JSXElement,
-  JSXExpressionContainer,
-  JSXFragment,
-  JSXIdentifier,
-  JSXNamespacedName,
-  StringLiteral,
-} from '../index';
-import {createBuilder} from '../utils';
+	JSNodeBase,
+	JSXElement,
+	JSXExpressionContainer,
+	JSXFragment,
+	JSXIdentifier,
+	JSXNamespacedName,
+	StringLiteral,
+} from "../index";
+import {createBuilder} from "../utils";
 
 export type JSXAttribute = JSNodeBase & {
-  type: 'JSXAttribute';
-  name: JSXIdentifier | JSXNamespacedName;
-  value?:
-    | undefined
-    | JSXElement
-    | JSXFragment
-    | StringLiteral
-    | JSXExpressionContainer;
+	type: "JSXAttribute";
+	name: JSXIdentifier | JSXNamespacedName;
+	value?:
+		 | undefined
+		| JSXElement
+		| JSXFragment
+		| StringLiteral
+		| JSXExpressionContainer;
 };
 
 export const jsxAttribute = createBuilder<JSXAttribute>(
-  'JSXAttribute',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      name: true,
-      value: true,
-    },
-  },
+	"JSXAttribute",
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			name: true,
+			value: true,
+		},
+	},
 );

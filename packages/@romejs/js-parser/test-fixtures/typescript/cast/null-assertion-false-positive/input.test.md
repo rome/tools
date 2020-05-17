@@ -6,111 +6,111 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.ts'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array ['ts']
-  loc: Object {
-    filename: 'input.ts'
-    end: Object {
-      column: 0
-      index: 5
-      line: 3
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 1
-          index: 1
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: ReferenceIdentifier {
-        name: 'a'
-        loc: Object {
-          filename: 'input.ts'
-          identifierName: 'a'
-          end: Object {
-            column: 1
-            index: 1
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-      }
-    }
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 2
-          index: 4
-          line: 2
-        }
-        start: Object {
-          column: 0
-          index: 2
-          line: 2
-        }
-      }
-      expression: UnaryExpression {
-        operator: '!'
-        prefix: true
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 2
-            index: 4
-            line: 2
-          }
-          start: Object {
-            column: 0
-            index: 2
-            line: 2
-          }
-        }
-        argument: ReferenceIdentifier {
-          name: 'b'
-          loc: Object {
-            filename: 'input.ts'
-            identifierName: 'b'
-            end: Object {
-              column: 2
-              index: 4
-              line: 2
-            }
-            start: Object {
-              column: 1
-              index: 3
-              line: 2
-            }
-          }
-        }
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.ts"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "module"
+	syntax: Array ["ts"]
+	loc: Object {
+		filename: "input.ts"
+		end: Object {
+			column: 0
+			index: 5
+			line: 3
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		ExpressionStatement {
+			loc: Object {
+				filename: "input.ts"
+				end: Object {
+					column: 1
+					index: 1
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: ReferenceIdentifier {
+				name: "a"
+				loc: Object {
+					filename: "input.ts"
+					identifierName: "a"
+					end: Object {
+						column: 1
+						index: 1
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+			}
+		}
+		ExpressionStatement {
+			loc: Object {
+				filename: "input.ts"
+				end: Object {
+					column: 2
+					index: 4
+					line: 2
+				}
+				start: Object {
+					column: 0
+					index: 2
+					line: 2
+				}
+			}
+			expression: UnaryExpression {
+				operator: "!"
+				prefix: true
+				loc: Object {
+					filename: "input.ts"
+					end: Object {
+						column: 2
+						index: 4
+						line: 2
+					}
+					start: Object {
+						column: 0
+						index: 2
+						line: 2
+					}
+				}
+				argument: ReferenceIdentifier {
+					name: "b"
+					loc: Object {
+						filename: "input.ts"
+						identifierName: "b"
+						end: Object {
+							column: 2
+							index: 4
+							line: 2
+						}
+						start: Object {
+							column: 1
+							index: 3
+							line: 2
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

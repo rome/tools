@@ -5,19 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Builder} from '@romejs/js-formatter';
-import {TSConstructorType} from '@romejs/js-ast';
-import {Token, concat, space} from '../../tokens';
+import {Token} from "../../tokens";
 
-export default function TSConstructorType(
-  builder: Builder,
-  node: TSConstructorType,
-): Token {
-  const tokens: Array<Token> = ['new', space, builder.tokenize(node.meta, node)];
-
-  if (node.typeAnnotation) {
-    tokens.push(space, '=>', space, builder.tokenize(node.typeAnnotation, node));
-  }
-
-  return concat(tokens);
+export default function TSConstructorType(): Token {
+	throw new Error("unimplemented");
 }

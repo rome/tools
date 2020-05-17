@@ -6,34 +6,34 @@
  */
 
 import {
-  BindingIdentifier,
-  JSNodeBase,
-  TSExpressionWithTypeArguments,
-  TSInterfaceBody,
-  TSTypeParameterDeclaration,
-} from '../index';
-import {createBuilder} from '../utils';
+	BindingIdentifier,
+	JSNodeBase,
+	TSExpressionWithTypeArguments,
+	TSInterfaceBody,
+	TSTypeParameterDeclaration,
+} from "../index";
+import {createBuilder} from "../utils";
 
 export type TSInterfaceDeclaration = JSNodeBase & {
-  type: 'TSInterfaceDeclaration';
-  id: BindingIdentifier;
-  body: TSInterfaceBody;
-  typeParameters?: TSTypeParameterDeclaration;
-  extends?: Array<TSExpressionWithTypeArguments>;
-  declare?: boolean;
+	type: "TSInterfaceDeclaration";
+	id: BindingIdentifier;
+	body: TSInterfaceBody;
+	typeParameters?: TSTypeParameterDeclaration;
+	extends?: Array<TSExpressionWithTypeArguments>;
+	declare?: boolean;
 };
 
 export const tsInterfaceDeclaration = createBuilder<TSInterfaceDeclaration>(
-  'TSInterfaceDeclaration',
-  {
-    bindingKeys: {
-      id: true,
-    },
-    visitorKeys: {
-      id: true,
-      body: true,
-      typeParameters: true,
-      extends: true,
-    },
-  },
+	"TSInterfaceDeclaration",
+	{
+		bindingKeys: {
+			id: true,
+		},
+		visitorKeys: {
+			id: true,
+			body: true,
+			typeParameters: true,
+			extends: true,
+		},
+	},
 );

@@ -86,7 +86,7 @@
 ### `2: formatted`
 
 ```
-<html lang=""></html>;
+<html lang=''></html>;
 
 ```
 
@@ -110,35 +110,11 @@
 ### `3: formatted`
 
 ```
-<html lang={''}></html>;
+<html lang={""}></html>;
 
 ```
 
 ### `4`
-
-```
-
- unknown:1 lint/jsxA11yHTMLHasLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ html elements must have a lang prop.
-
-    <html lang={``}></html>
-    ^^^^^^^^^^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `4: formatted`
-
-```
-<html lang={``}></html>;
-
-```
-
-### `5`
 
 ```
 
@@ -155,82 +131,66 @@
 
 ```
 
-### `5: formatted`
+### `4: formatted`
 
 ```
 <html lang={undefined}></html>;
 
 ```
 
-### `6`
+### `5`
+
+```
+✔ No known problems!
 
 ```
 
- unknown:1 lint/jsxA11yHTMLHasLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ html elements must have a lang prop.
-
-    <html lang={false}></html>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `6: formatted`
+### `5: formatted`
 
 ```
 <html lang={false}></html>;
 
 ```
 
-### `7`
+### `6`
+
+```
+✔ No known problems!
 
 ```
 
- unknown:1 lint/jsxA11yHTMLHasLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ html elements must have a lang prop.
-
-    <html lang={true}></html>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `7: formatted`
+### `6: formatted`
 
 ```
 <html lang={true}></html>;
 
 ```
 
-### `8`
+### `7`
+
+```
+✔ No known problems!
 
 ```
 
- unknown:1 lint/jsxA11yHTMLHasLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+### `7: formatted`
 
-  ✖ html elements must have a lang prop.
+```
+<html lang={42}></html>;
 
-    <html lang={42}></html>
-    ^^^^^^^^^^^^^^^^^^^^^^^
+```
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+### `8`
 
-✖ Found 1 problem
+```
+✔ No known problems!
 
 ```
 
 ### `8: formatted`
 
 ```
-<html lang={42}></html>;
+<html lang='en'></html>;
 
 ```
 
@@ -244,6 +204,6 @@
 ### `9: formatted`
 
 ```
-<html lang="en"></html>;
+<html lang={language}></html>;
 
 ```

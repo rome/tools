@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token, concat} from '../../tokens';
-import {RegExpSubExpression} from '@romejs/js-ast';
+import Builder from "../../Builder";
+import {Token, concat} from "../../tokens";
+import {RegExpSubExpression} from "@romejs/js-ast";
 
 export default function RegExpSubExpression(
-  builder: Builder,
-  node: RegExpSubExpression,
+	builder: Builder,
+	node: RegExpSubExpression,
 ): Token {
-  return concat(node.body.map((item) => builder.tokenize(item, node)));
+	return concat(node.body.map((item) => builder.tokenize(item, node)));
 }

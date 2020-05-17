@@ -6,82 +6,82 @@
 
 ```javascript
 Program {
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 12
-      line: 3
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  comments: Array [
-    CommentBlock {
-      id: '0'
-      value: 'a\nb'
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 3
-          index: 7
-          line: 2
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    ExpressionStatement {
-      leadingComments: Array ['0']
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 7
-          index: 11
-          line: 2
-        }
-        start: Object {
-          column: 4
-          index: 8
-          line: 2
-        }
-      }
-      expression: NumericLiteral {
-        value: 42
-        format: undefined
-        leadingComments: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 6
-            index: 10
-            line: 2
-          }
-          start: Object {
-            column: 4
-            index: 8
-            line: 2
-          }
-        }
-      }
-    }
-  ]
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 12
+			line: 3
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	comments: Array [
+		CommentBlock {
+			id: "0"
+			value: "a\nb"
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 3
+					index: 7
+					line: 2
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		ExpressionStatement {
+			leadingComments: Array ["0"]
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 7
+					index: 11
+					line: 2
+				}
+				start: Object {
+					column: 4
+					index: 8
+					line: 2
+				}
+			}
+			expression: NumericLiteral {
+				value: 42
+				format: undefined
+				leadingComments: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 6
+						index: 10
+						line: 2
+					}
+					start: Object {
+						column: 4
+						index: 8
+						line: 2
+					}
+				}
+			}
+		}
+	]
 }
 ```

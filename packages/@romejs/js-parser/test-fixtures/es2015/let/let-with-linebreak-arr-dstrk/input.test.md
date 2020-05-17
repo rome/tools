@@ -6,164 +6,164 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 19
-      line: 3
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    VariableDeclarationStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 14
-          index: 18
-          line: 2
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      declaration: VariableDeclaration {
-        kind: 'let'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 14
-            index: 18
-            line: 2
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        declarations: Array [
-          VariableDeclarator {
-            id: BindingArrayPattern {
-              rest: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 7
-                  index: 11
-                  line: 2
-                }
-                start: Object {
-                  column: 4
-                  index: 8
-                  line: 2
-                }
-              }
-              elements: Array [
-                BindingIdentifier {
-                  name: 'a'
-                  loc: Object {
-                    filename: 'input.js'
-                    identifierName: 'a'
-                    end: Object {
-                      column: 6
-                      index: 10
-                      line: 2
-                    }
-                    start: Object {
-                      column: 5
-                      index: 9
-                      line: 2
-                    }
-                  }
-                  meta: PatternMeta {
-                    optional: undefined
-                    typeAnnotation: undefined
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 6
-                        index: 10
-                        line: 2
-                      }
-                      start: Object {
-                        column: 5
-                        index: 9
-                        line: 2
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 13
-                index: 17
-                line: 2
-              }
-              start: Object {
-                column: 4
-                index: 8
-                line: 2
-              }
-            }
-            init: ArrayExpression {
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 13
-                  index: 17
-                  line: 2
-                }
-                start: Object {
-                  column: 10
-                  index: 14
-                  line: 2
-                }
-              }
-              elements: Array [
-                NumericLiteral {
-                  value: 1
-                  format: undefined
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 12
-                      index: 16
-                      line: 2
-                    }
-                    start: Object {
-                      column: 11
-                      index: 15
-                      line: 2
-                    }
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 19
+			line: 3
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		VariableDeclarationStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 14
+					index: 18
+					line: 2
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			declaration: VariableDeclaration {
+				kind: "let"
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 14
+						index: 18
+						line: 2
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				declarations: Array [
+					VariableDeclarator {
+						id: BindingArrayPattern {
+							rest: undefined
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 7
+									index: 11
+									line: 2
+								}
+								start: Object {
+									column: 4
+									index: 8
+									line: 2
+								}
+							}
+							elements: Array [
+								BindingIdentifier {
+									name: "a"
+									loc: Object {
+										filename: "input.js"
+										identifierName: "a"
+										end: Object {
+											column: 6
+											index: 10
+											line: 2
+										}
+										start: Object {
+											column: 5
+											index: 9
+											line: 2
+										}
+									}
+									meta: PatternMeta {
+										optional: undefined
+										typeAnnotation: undefined
+										loc: Object {
+											filename: "input.js"
+											end: Object {
+												column: 6
+												index: 10
+												line: 2
+											}
+											start: Object {
+												column: 5
+												index: 9
+												line: 2
+											}
+										}
+									}
+								}
+							]
+						}
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 13
+								index: 17
+								line: 2
+							}
+							start: Object {
+								column: 4
+								index: 8
+								line: 2
+							}
+						}
+						init: ArrayExpression {
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 13
+									index: 17
+									line: 2
+								}
+								start: Object {
+									column: 10
+									index: 14
+									line: 2
+								}
+							}
+							elements: Array [
+								NumericLiteral {
+									value: 1
+									format: undefined
+									loc: Object {
+										filename: "input.js"
+										end: Object {
+											column: 12
+											index: 16
+											line: 2
+										}
+										start: Object {
+											column: 11
+											index: 15
+											line: 2
+										}
+									}
+								}
+							]
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

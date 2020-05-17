@@ -6,218 +6,218 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 44
-      index: 44
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 44
-          index: 44
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: CallExpression {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 44
-            index: 44
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        callee: ReferenceIdentifier {
-          name: 'f'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'f'
-            end: Object {
-              column: 1
-              index: 1
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
-        arguments: Array [
-          FunctionExpression {
-            id: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 43
-                index: 43
-                line: 1
-              }
-              start: Object {
-                column: 2
-                index: 2
-                line: 1
-              }
-            }
-            head: FunctionHead {
-              async: true
-              generator: false
-              hasHoistedVars: false
-              rest: undefined
-              returnType: undefined
-              thisType: undefined
-              typeParameters: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 25
-                  index: 25
-                  line: 1
-                }
-                start: Object {
-                  column: 16
-                  index: 16
-                  line: 1
-                }
-              }
-              params: Array [
-                BindingIdentifier {
-                  name: 'promise'
-                  loc: Object {
-                    filename: 'input.js'
-                    identifierName: 'promise'
-                    end: Object {
-                      column: 24
-                      index: 24
-                      line: 1
-                    }
-                    start: Object {
-                      column: 17
-                      index: 17
-                      line: 1
-                    }
-                  }
-                  meta: PatternMeta {
-                    optional: undefined
-                    typeAnnotation: undefined
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 24
-                        index: 24
-                        line: 1
-                      }
-                      start: Object {
-                        column: 17
-                        index: 17
-                        line: 1
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-            body: BlockStatement {
-              directives: Array []
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 43
-                  index: 43
-                  line: 1
-                }
-                start: Object {
-                  column: 26
-                  index: 26
-                  line: 1
-                }
-              }
-              body: Array [
-                ExpressionStatement {
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 41
-                      index: 41
-                      line: 1
-                    }
-                    start: Object {
-                      column: 28
-                      index: 28
-                      line: 1
-                    }
-                  }
-                  expression: AwaitExpression {
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 41
-                        index: 41
-                        line: 1
-                      }
-                      start: Object {
-                        column: 28
-                        index: 28
-                        line: 1
-                      }
-                    }
-                    argument: ReferenceIdentifier {
-                      name: 'promise'
-                      loc: Object {
-                        filename: 'input.js'
-                        identifierName: 'promise'
-                        end: Object {
-                          column: 41
-                          index: 41
-                          line: 1
-                        }
-                        start: Object {
-                          column: 34
-                          index: 34
-                          line: 1
-                        }
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 44
+			index: 44
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		ExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 44
+					index: 44
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: CallExpression {
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 44
+						index: 44
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				callee: ReferenceIdentifier {
+					name: "f"
+					loc: Object {
+						filename: "input.js"
+						identifierName: "f"
+						end: Object {
+							column: 1
+							index: 1
+							line: 1
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+				}
+				arguments: Array [
+					FunctionExpression {
+						id: undefined
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 43
+								index: 43
+								line: 1
+							}
+							start: Object {
+								column: 2
+								index: 2
+								line: 1
+							}
+						}
+						head: FunctionHead {
+							async: true
+							generator: false
+							hasHoistedVars: false
+							rest: undefined
+							returnType: undefined
+							thisType: undefined
+							typeParameters: undefined
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 25
+									index: 25
+									line: 1
+								}
+								start: Object {
+									column: 16
+									index: 16
+									line: 1
+								}
+							}
+							params: Array [
+								BindingIdentifier {
+									name: "promise"
+									loc: Object {
+										filename: "input.js"
+										identifierName: "promise"
+										end: Object {
+											column: 24
+											index: 24
+											line: 1
+										}
+										start: Object {
+											column: 17
+											index: 17
+											line: 1
+										}
+									}
+									meta: PatternMeta {
+										optional: undefined
+										typeAnnotation: undefined
+										loc: Object {
+											filename: "input.js"
+											end: Object {
+												column: 24
+												index: 24
+												line: 1
+											}
+											start: Object {
+												column: 17
+												index: 17
+												line: 1
+											}
+										}
+									}
+								}
+							]
+						}
+						body: BlockStatement {
+							directives: Array []
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 43
+									index: 43
+									line: 1
+								}
+								start: Object {
+									column: 26
+									index: 26
+									line: 1
+								}
+							}
+							body: Array [
+								ExpressionStatement {
+									loc: Object {
+										filename: "input.js"
+										end: Object {
+											column: 41
+											index: 41
+											line: 1
+										}
+										start: Object {
+											column: 28
+											index: 28
+											line: 1
+										}
+									}
+									expression: AwaitExpression {
+										loc: Object {
+											filename: "input.js"
+											end: Object {
+												column: 41
+												index: 41
+												line: 1
+											}
+											start: Object {
+												column: 28
+												index: 28
+												line: 1
+											}
+										}
+										argument: ReferenceIdentifier {
+											name: "promise"
+											loc: Object {
+												filename: "input.js"
+												identifierName: "promise"
+												end: Object {
+													column: 41
+													index: 41
+													line: 1
+												}
+												start: Object {
+													column: 34
+													index: 34
+													line: 1
+												}
+											}
+										}
+									}
+								}
+							]
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

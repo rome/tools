@@ -5,8 +5,8 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Token} from '../../tokens';
+import {Token} from "../../tokens";
 
 export default function RegExpWhiteSpaceCharacter(): Token {
-  return '\\s';
+	return "\\s";
 }

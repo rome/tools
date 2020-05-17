@@ -27,7 +27,7 @@
 
 ```
 for (let i = 1; i = 10; i++) {
-  console.log('foo');
+	console.log("foo");
 }
 
 ```
@@ -54,8 +54,8 @@ for (let i = 1; i = 10; i++) {
 ### `1: formatted`
 
 ```
-if (foo = 'bar') {
-  console.log('foo');
+if (foo = "bar") {
+	console.log("foo");
 }
 
 ```
@@ -82,8 +82,8 @@ if (foo = 'bar') {
 ### `2: formatted`
 
 ```
-while (foo = 'bar') {
-  console.log('foo');
+while (foo = "bar") {
+	console.log("foo");
 }
 
 ```
@@ -111,7 +111,7 @@ while (foo = 'bar') {
 
 ```
 do {
-  console.log('foo');
-} while (foo = 'bar');
+	console.log("foo");
+} while (foo = "bar");
 
 ```

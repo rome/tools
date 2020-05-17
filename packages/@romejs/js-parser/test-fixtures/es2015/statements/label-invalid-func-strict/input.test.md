@@ -6,248 +6,248 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 54
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'In strict mode code, functions can only be declared at top level or inside a block'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 34
-          index: 34
-          line: 1
-        }
-        start: Object {
-          column: 35
-          index: 35
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    FunctionDeclaration {
-      id: BindingIdentifier {
-        name: 'foo'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'foo'
-          end: Object {
-            column: 12
-            index: 12
-            line: 1
-          }
-          start: Object {
-            column: 9
-            index: 9
-            line: 1
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 53
-          index: 53
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      head: FunctionHead {
-        async: false
-        generator: false
-        hasHoistedVars: false
-        params: Array []
-        rest: undefined
-        returnType: undefined
-        thisType: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 14
-            index: 14
-            line: 1
-          }
-          start: Object {
-            column: 12
-            index: 12
-            line: 1
-          }
-        }
-      }
-      body: BlockStatement {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 53
-            index: 53
-            line: 1
-          }
-          start: Object {
-            column: 15
-            index: 15
-            line: 1
-          }
-        }
-        directives: Array [
-          Directive {
-            value: 'use strict'
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 29
-                index: 29
-                line: 1
-              }
-              start: Object {
-                column: 16
-                index: 16
-                line: 1
-              }
-            }
-          }
-        ]
-        body: Array [
-          LabeledStatement {
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 52
-                index: 52
-                line: 1
-              }
-              start: Object {
-                column: 30
-                index: 30
-                line: 1
-              }
-            }
-            label: Identifier {
-              name: 'bar'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'bar'
-                end: Object {
-                  column: 33
-                  index: 33
-                  line: 1
-                }
-                start: Object {
-                  column: 30
-                  index: 30
-                  line: 1
-                }
-              }
-            }
-            body: FunctionDeclaration {
-              id: BindingIdentifier {
-                name: 'baz'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'baz'
-                  end: Object {
-                    column: 47
-                    index: 47
-                    line: 1
-                  }
-                  start: Object {
-                    column: 44
-                    index: 44
-                    line: 1
-                  }
-                }
-              }
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 52
-                  index: 52
-                  line: 1
-                }
-                start: Object {
-                  column: 35
-                  index: 35
-                  line: 1
-                }
-              }
-              body: BlockStatement {
-                body: Array []
-                directives: Array []
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 52
-                    index: 52
-                    line: 1
-                  }
-                  start: Object {
-                    column: 50
-                    index: 50
-                    line: 1
-                  }
-                }
-              }
-              head: FunctionHead {
-                async: false
-                generator: false
-                hasHoistedVars: false
-                params: Array []
-                rest: undefined
-                returnType: undefined
-                thisType: undefined
-                typeParameters: undefined
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 49
-                    index: 49
-                    line: 1
-                  }
-                  start: Object {
-                    column: 47
-                    index: 47
-                    line: 1
-                  }
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 54
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "In strict mode code, functions can only be declared at top level or inside a block"}
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "script"
+				end: Object {
+					column: 34
+					index: 34
+					line: 1
+				}
+				start: Object {
+					column: 35
+					index: 35
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		FunctionDeclaration {
+			id: BindingIdentifier {
+				name: "foo"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "foo"
+					end: Object {
+						column: 12
+						index: 12
+						line: 1
+					}
+					start: Object {
+						column: 9
+						index: 9
+						line: 1
+					}
+				}
+			}
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 53
+					index: 53
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			head: FunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: Array []
+				rest: undefined
+				returnType: undefined
+				thisType: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 14
+						index: 14
+						line: 1
+					}
+					start: Object {
+						column: 12
+						index: 12
+						line: 1
+					}
+				}
+			}
+			body: BlockStatement {
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 53
+						index: 53
+						line: 1
+					}
+					start: Object {
+						column: 15
+						index: 15
+						line: 1
+					}
+				}
+				directives: Array [
+					Directive {
+						value: "use strict"
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 29
+								index: 29
+								line: 1
+							}
+							start: Object {
+								column: 16
+								index: 16
+								line: 1
+							}
+						}
+					}
+				]
+				body: Array [
+					LabeledStatement {
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 52
+								index: 52
+								line: 1
+							}
+							start: Object {
+								column: 30
+								index: 30
+								line: 1
+							}
+						}
+						label: Identifier {
+							name: "bar"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "bar"
+								end: Object {
+									column: 33
+									index: 33
+									line: 1
+								}
+								start: Object {
+									column: 30
+									index: 30
+									line: 1
+								}
+							}
+						}
+						body: FunctionDeclaration {
+							id: BindingIdentifier {
+								name: "baz"
+								loc: Object {
+									filename: "input.js"
+									identifierName: "baz"
+									end: Object {
+										column: 47
+										index: 47
+										line: 1
+									}
+									start: Object {
+										column: 44
+										index: 44
+										line: 1
+									}
+								}
+							}
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 52
+									index: 52
+									line: 1
+								}
+								start: Object {
+									column: 35
+									index: 35
+									line: 1
+								}
+							}
+							body: BlockStatement {
+								body: Array []
+								directives: Array []
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 52
+										index: 52
+										line: 1
+									}
+									start: Object {
+										column: 50
+										index: 50
+										line: 1
+									}
+								}
+							}
+							head: FunctionHead {
+								async: false
+								generator: false
+								hasHoistedVars: false
+								params: Array []
+								rest: undefined
+								returnType: undefined
+								thisType: undefined
+								typeParameters: undefined
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 49
+										index: 49
+										line: 1
+									}
+									start: Object {
+										column: 47
+										index: 47
+										line: 1
+									}
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

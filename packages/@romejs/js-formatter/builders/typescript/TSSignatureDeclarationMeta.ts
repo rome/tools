@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token, concat} from '../../tokens';
-import {TSSignatureDeclarationMeta} from '@romejs/js-ast';
-import {printBindingPatternParams} from '../utils';
+import Builder from "../../Builder";
+import {Token, concat} from "../../tokens";
+import {TSSignatureDeclarationMeta} from "@romejs/js-ast";
+import {printBindingPatternParams} from "../utils";
 
 export default function TSSignatureDeclarationMeta(
-  builder: Builder,
-  node: TSSignatureDeclarationMeta,
+	builder: Builder,
+	node: TSSignatureDeclarationMeta,
 ): Token {
-  return concat([
-    builder.tokenize(node.typeParameters, node),
-    printBindingPatternParams(builder, node, node.parameters, node.rest),
-  ]);
+	return concat([
+		builder.tokenize(node.typeParameters, node),
+		printBindingPatternParams(builder, node, node.parameters, node.rest),
+	]);
 }

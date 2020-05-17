@@ -5,38 +5,38 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
+import {Scope} from "../../scopes";
 import {
-  AnyNode,
-  VariableDeclaration,
-  variableDeclaration,
-} from '@romejs/js-ast';
-import OpenT from '../../types/OpenT';
-import VoidT from '../../types/VoidT';
-import executeAtom from '../../utils/executeAtom';
+	AnyNode,
+	VariableDeclaration,
+	variableDeclaration,
+} from "@romejs/js-ast";
+import OpenT from "../../types/OpenT";
+import VoidT from "../../types/VoidT";
+import executeAtom from "../../utils/executeAtom";
 
 export default function VariableDeclaration(node: AnyNode, scope: Scope) {
-  node = variableDeclaration.assert(node);
+	node = variableDeclaration.assert(node);
 
-  for (const declarator of node.declarations) {
-    const {id, init} = declarator;
-    let inferredType;
+	for (const declarator of node.declarations) {
+		const {id, init} = declarator;
+		let inferredType;
 
-    if (init === undefined) {
-      inferredType = new OpenT(scope, declarator);
-      inferredType.shouldMatch(new VoidT(scope, declarator));
-    } else {
-      inferredType = scope.evaluate(init);
-    }
+		if (init === undefined) {
+			inferredType = new OpenT(scope, declarator);
+			inferredType.shouldMatch(new VoidT(scope, declarator));
+		} else {
+			inferredType = scope.evaluate(init);
+		}
 
-    let actualType = inferredType;
+		let actualType = inferredType;
 
-    if (id.meta !== undefined && id.meta.typeAnnotation !== undefined) {
-      const annotatedType = scope.evaluate(id.meta.typeAnnotation);
-      inferredType.shouldMatch(annotatedType);
-      actualType = annotatedType;
-    }
+		if (id.meta !== undefined && id.meta.typeAnnotation !== undefined) {
+			const annotatedType = scope.evaluate(id.meta.typeAnnotation);
+			inferredType.shouldMatch(annotatedType);
+			actualType = annotatedType;
+		}
 
-    executeAtom(id, actualType, scope);
-  }
+		executeAtom(id, actualType, scope);
+	}
 }

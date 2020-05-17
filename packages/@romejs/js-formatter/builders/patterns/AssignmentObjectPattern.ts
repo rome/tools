@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token} from '../../tokens';
-import {AssignmentObjectPattern} from '@romejs/js-ast';
-import ObjectExpression from '../objects/ObjectExpression';
+import Builder from "../../Builder";
+import {Token} from "../../tokens";
+import {AssignmentObjectPattern} from "@romejs/js-ast";
+import ObjectExpression from "../objects/ObjectExpression";
 
 export default function AssignmentObjectPattern(
-  builder: Builder,
-  node: AssignmentObjectPattern,
+	builder: Builder,
+	node: AssignmentObjectPattern,
 ): Token {
-  return ObjectExpression(builder, node);
+	return ObjectExpression(builder, node);
 }

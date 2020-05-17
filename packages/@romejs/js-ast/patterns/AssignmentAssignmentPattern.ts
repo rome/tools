@@ -6,28 +6,28 @@
  */
 
 import {
-  AnyExpression,
-  AnyTargetAssignmentPattern,
-  JSNodeBase,
-  PatternMeta,
-} from '../index';
-import {createBuilder} from '../utils';
+	AnyExpression,
+	AnyTargetAssignmentPattern,
+	JSNodeBase,
+	PatternMeta,
+} from "../index";
+import {createBuilder} from "../utils";
 
 export type AssignmentAssignmentPattern = JSNodeBase & {
-  type: 'AssignmentAssignmentPattern';
-  left: AnyTargetAssignmentPattern;
-  right: AnyExpression;
-  meta?: PatternMeta;
+	type: "AssignmentAssignmentPattern";
+	left: AnyTargetAssignmentPattern;
+	right: AnyExpression;
+	meta?: PatternMeta;
 };
 
 export const assignmentAssignmentPattern = createBuilder<AssignmentAssignmentPattern>(
-  'AssignmentAssignmentPattern',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      left: true,
-      right: true,
-      meta: true,
-    },
-  },
+	"AssignmentAssignmentPattern",
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			left: true,
+			right: true,
+			meta: true,
+		},
+	},
 );

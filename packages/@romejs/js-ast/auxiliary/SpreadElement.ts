@@ -5,21 +5,21 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyExpression, JSNodeBase} from '../index';
-import {createQuickBuilder} from '../utils';
+import {AnyExpression, JSNodeBase} from "../index";
+import {createQuickBuilder} from "../utils";
 
 export type SpreadElement = JSNodeBase & {
-  type: 'SpreadElement';
-  argument: AnyExpression;
+	type: "SpreadElement";
+	argument: AnyExpression;
 };
 
-export const spreadElement = createQuickBuilder<SpreadElement, 'argument'>(
-  'SpreadElement',
-  'argument',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      argument: true,
-    },
-  },
+export const spreadElement = createQuickBuilder<SpreadElement, "argument">(
+	"SpreadElement",
+	"argument",
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			argument: true,
+		},
+	},
 );

@@ -29,9 +29,9 @@
 
 ```
 class p {
-  get name() {
-    console.log('hello');
-  }
+	get name() {
+		console.log("hello");
+	}
 }
 
 ```
@@ -61,9 +61,9 @@ class p {
 
 ```
 let p = {
-  get name() {
-    console.log('hello');
-  },
+	get name() {
+		console.log("hello");
+	},
 };
 
 ```
@@ -80,12 +80,12 @@ let p = {
 ```
 let p = {};
 Object.defineProperty(
-  p,
-  {
-    get: function() {
-      console.log('hello');
-    },
-  },
+	p,
+	{
+		get: function() {
+			console.log("hello");
+		},
+	},
 );
 
 ```

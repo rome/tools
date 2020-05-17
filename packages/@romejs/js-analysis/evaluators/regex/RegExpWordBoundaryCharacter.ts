@@ -6,12 +6,12 @@
  */
 
 import {
-  AnyNode,
-  RegExpWordBoundaryCharacter,
-  regExpWordBoundaryCharacter,
-} from '@romejs/js-ast';
+	AnyNode,
+	RegExpWordBoundaryCharacter,
+	regExpWordBoundaryCharacter,
+} from "@romejs/js-ast";
 
 export default function RegExpWordBoundaryCharacter(node: AnyNode) {
-  node = regExpWordBoundaryCharacter.assert(node);
-  throw new Error('unimplemented');
+	node = regExpWordBoundaryCharacter.assert(node);
+	throw new Error("unimplemented");
 }

@@ -5,24 +5,24 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, ObjectProperties} from '../index';
-import {createQuickBuilder} from '../utils';
+import {JSNodeBase, ObjectProperties} from "../index";
+import {createQuickBuilder} from "../utils";
 
 export type ObjectExpression = JSNodeBase & {
-  type: 'ObjectExpression';
-  properties: ObjectProperties;
+	type: "ObjectExpression";
+	properties: ObjectProperties;
 };
 
 export const objectExpression = createQuickBuilder<
-  ObjectExpression,
-  'properties'
+	ObjectExpression,
+	"properties"
 >(
-  'ObjectExpression',
-  'properties',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      properties: true,
-    },
-  },
+	"ObjectExpression",
+	"properties",
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			properties: true,
+		},
+	},
 );

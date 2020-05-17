@@ -6,256 +6,256 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 1
-      index: 31
-      line: 3
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'getter should have no parameters'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 19
-          index: 29
-          line: 2
-        }
-        start: Object {
-          column: 2
-          index: 12
-          line: 2
-        }
-      }
-    }
-  ]
-  body: Array [
-    ClassDeclaration {
-      id: BindingIdentifier {
-        name: 'A'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'A'
-          end: Object {
-            column: 7
-            index: 7
-            line: 1
-          }
-          start: Object {
-            column: 6
-            index: 6
-            line: 1
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 1
-          index: 31
-          line: 3
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      meta: ClassHead {
-        implements: undefined
-        superClass: undefined
-        superTypeParameters: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 1
-            index: 31
-            line: 3
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        body: Array [
-          ClassMethod {
-            kind: 'get'
-            key: StaticPropertyKey {
-              value: Identifier {
-                name: 'prop'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'prop'
-                  end: Object {
-                    column: 10
-                    index: 20
-                    line: 2
-                  }
-                  start: Object {
-                    column: 6
-                    index: 16
-                    line: 2
-                  }
-                }
-              }
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 10
-                  index: 20
-                  line: 2
-                }
-                start: Object {
-                  column: 6
-                  index: 16
-                  line: 2
-                }
-              }
-            }
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 19
-                index: 29
-                line: 2
-              }
-              start: Object {
-                column: 2
-                index: 12
-                line: 2
-              }
-            }
-            body: BlockStatement {
-              body: Array []
-              directives: Array []
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 19
-                  index: 29
-                  line: 2
-                }
-                start: Object {
-                  column: 17
-                  index: 27
-                  line: 2
-                }
-              }
-            }
-            meta: ClassPropertyMeta {
-              abstract: false
-              accessibility: undefined
-              optional: false
-              readonly: false
-              static: false
-              typeAnnotation: undefined
-              start: Object {
-                column: 2
-                index: 12
-                line: 2
-              }
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 10
-                  index: 20
-                  line: 2
-                }
-                start: Object {
-                  column: 2
-                  index: 12
-                  line: 2
-                }
-              }
-            }
-            head: FunctionHead {
-              async: false
-              generator: false
-              hasHoistedVars: false
-              rest: undefined
-              returnType: undefined
-              thisType: undefined
-              typeParameters: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 16
-                  index: 26
-                  line: 2
-                }
-                start: Object {
-                  column: 11
-                  index: 21
-                  line: 2
-                }
-              }
-              params: Array [
-                BindingIdentifier {
-                  name: 'arg'
-                  loc: Object {
-                    filename: 'input.js'
-                    identifierName: 'arg'
-                    end: Object {
-                      column: 15
-                      index: 25
-                      line: 2
-                    }
-                    start: Object {
-                      column: 12
-                      index: 22
-                      line: 2
-                    }
-                  }
-                  meta: PatternMeta {
-                    optional: undefined
-                    typeAnnotation: undefined
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 15
-                        index: 25
-                        line: 2
-                      }
-                      start: Object {
-                        column: 12
-                        index: 22
-                        line: 2
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 1
+			index: 31
+			line: 3
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "getter should have no parameters"}
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "script"
+				end: Object {
+					column: 19
+					index: 29
+					line: 2
+				}
+				start: Object {
+					column: 2
+					index: 12
+					line: 2
+				}
+			}
+		}
+	]
+	body: Array [
+		ClassDeclaration {
+			id: BindingIdentifier {
+				name: "A"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "A"
+					end: Object {
+						column: 7
+						index: 7
+						line: 1
+					}
+					start: Object {
+						column: 6
+						index: 6
+						line: 1
+					}
+				}
+			}
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 1
+					index: 31
+					line: 3
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			meta: ClassHead {
+				implements: undefined
+				superClass: undefined
+				superTypeParameters: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 1
+						index: 31
+						line: 3
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				body: Array [
+					ClassMethod {
+						kind: "get"
+						key: StaticPropertyKey {
+							value: Identifier {
+								name: "prop"
+								loc: Object {
+									filename: "input.js"
+									identifierName: "prop"
+									end: Object {
+										column: 10
+										index: 20
+										line: 2
+									}
+									start: Object {
+										column: 6
+										index: 16
+										line: 2
+									}
+								}
+							}
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 10
+									index: 20
+									line: 2
+								}
+								start: Object {
+									column: 6
+									index: 16
+									line: 2
+								}
+							}
+						}
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 19
+								index: 29
+								line: 2
+							}
+							start: Object {
+								column: 2
+								index: 12
+								line: 2
+							}
+						}
+						body: BlockStatement {
+							body: Array []
+							directives: Array []
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 19
+									index: 29
+									line: 2
+								}
+								start: Object {
+									column: 17
+									index: 27
+									line: 2
+								}
+							}
+						}
+						meta: ClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							start: Object {
+								column: 2
+								index: 12
+								line: 2
+							}
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 10
+									index: 20
+									line: 2
+								}
+								start: Object {
+									column: 2
+									index: 12
+									line: 2
+								}
+							}
+						}
+						head: FunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							rest: undefined
+							returnType: undefined
+							thisType: undefined
+							typeParameters: undefined
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 16
+									index: 26
+									line: 2
+								}
+								start: Object {
+									column: 11
+									index: 21
+									line: 2
+								}
+							}
+							params: Array [
+								BindingIdentifier {
+									name: "arg"
+									loc: Object {
+										filename: "input.js"
+										identifierName: "arg"
+										end: Object {
+											column: 15
+											index: 25
+											line: 2
+										}
+										start: Object {
+											column: 12
+											index: 22
+											line: 2
+										}
+									}
+									meta: PatternMeta {
+										optional: undefined
+										typeAnnotation: undefined
+										loc: Object {
+											filename: "input.js"
+											end: Object {
+												column: 15
+												index: 25
+												line: 2
+											}
+											start: Object {
+												column: 12
+												index: 22
+												line: 2
+											}
+										}
+									}
+								}
+							]
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

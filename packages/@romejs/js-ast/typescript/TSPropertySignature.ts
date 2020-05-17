@@ -5,24 +5,24 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyObjectPropertyKey, AnyPrimaryType, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {AnyObjectPropertyKey, AnyTSPrimary, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type TSPropertySignature = JSNodeBase & {
-  type: 'TSPropertySignature';
-  key: AnyObjectPropertyKey;
-  optional?: boolean;
-  readonly?: boolean;
-  typeAnnotation?: AnyPrimaryType;
+	type: "TSPropertySignature";
+	key: AnyObjectPropertyKey;
+	optional?: boolean;
+	readonly?: boolean;
+	typeAnnotation?: AnyTSPrimary;
 };
 
 export const tsPropertySignature = createBuilder<TSPropertySignature>(
-  'TSPropertySignature',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      key: true,
-      typeAnnotation: true,
-    },
-  },
+	"TSPropertySignature",
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			key: true,
+			typeAnnotation: true,
+		},
+	},
 );

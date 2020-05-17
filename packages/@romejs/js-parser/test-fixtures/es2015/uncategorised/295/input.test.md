@@ -6,224 +6,224 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 37
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 14
-          index: 14
-          line: 1
-        }
-        start: Object {
-          column: 14
-          index: 14
-          line: 1
-        }
-      }
-      description: Object {
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unclosed switch body'}
-        advice: Array [
-          log {
-            category: 'info'
-            text: 'We expected to find the closing character <emphasis>}</emphasis> here'
-          }
-          frame {
-            location: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 0
-                index: 37
-                line: 2
-              }
-              start: Object {
-                column: 0
-                index: 37
-                line: 2
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
-  body: Array [
-    SwitchStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 36
-          index: 36
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      discriminant: ReferenceIdentifier {
-        name: 'cond'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'cond'
-          end: Object {
-            column: 12
-            index: 12
-            line: 1
-          }
-          start: Object {
-            column: 8
-            index: 8
-            line: 1
-          }
-        }
-      }
-      cases: Array [
-        SwitchCase {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 36
-              index: 36
-              line: 1
-            }
-            start: Object {
-              column: 23
-              index: 23
-              line: 1
-            }
-          }
-          test: NumericLiteral {
-            value: 10
-            format: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 23
-                index: 23
-                line: 1
-              }
-              start: Object {
-                column: 21
-                index: 21
-                line: 1
-              }
-            }
-          }
-          consequent: Array [
-            VariableDeclarationStatement {
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 36
-                  index: 36
-                  line: 1
-                }
-                start: Object {
-                  column: 25
-                  index: 25
-                  line: 1
-                }
-              }
-              declaration: VariableDeclaration {
-                kind: 'let'
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 36
-                    index: 36
-                    line: 1
-                  }
-                  start: Object {
-                    column: 25
-                    index: 25
-                    line: 1
-                  }
-                }
-                declarations: Array [
-                  VariableDeclarator {
-                    id: BindingIdentifier {
-                      name: 'a'
-                      loc: Object {
-                        filename: 'input.js'
-                        identifierName: 'a'
-                        end: Object {
-                          column: 30
-                          index: 30
-                          line: 1
-                        }
-                        start: Object {
-                          column: 29
-                          index: 29
-                          line: 1
-                        }
-                      }
-                    }
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 35
-                        index: 35
-                        line: 1
-                      }
-                      start: Object {
-                        column: 29
-                        index: 29
-                        line: 1
-                      }
-                    }
-                    init: NumericLiteral {
-                      value: 20
-                      format: undefined
-                      loc: Object {
-                        filename: 'input.js'
-                        end: Object {
-                          column: 35
-                          index: 35
-                          line: 1
-                        }
-                        start: Object {
-                          column: 33
-                          index: 33
-                          line: 1
-                        }
-                      }
-                    }
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      ]
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 37
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "script"
+				end: Object {
+					column: 14
+					index: 14
+					line: 1
+				}
+				start: Object {
+					column: 14
+					index: 14
+					line: 1
+				}
+			}
+			description: Object {
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unclosed switch body"}
+				advice: Array [
+					log {
+						category: "info"
+						text: "We expected to find the closing character <emphasis>}</emphasis> here"
+					}
+					frame {
+						location: Object {
+							filename: "input.js"
+							end: Object {
+								column: 0
+								index: 37
+								line: 2
+							}
+							start: Object {
+								column: 0
+								index: 37
+								line: 2
+							}
+						}
+					}
+				]
+			}
+		}
+	]
+	body: Array [
+		SwitchStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 36
+					index: 36
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			discriminant: ReferenceIdentifier {
+				name: "cond"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "cond"
+					end: Object {
+						column: 12
+						index: 12
+						line: 1
+					}
+					start: Object {
+						column: 8
+						index: 8
+						line: 1
+					}
+				}
+			}
+			cases: Array [
+				SwitchCase {
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 36
+							index: 36
+							line: 1
+						}
+						start: Object {
+							column: 23
+							index: 23
+							line: 1
+						}
+					}
+					test: NumericLiteral {
+						value: 10
+						format: undefined
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 23
+								index: 23
+								line: 1
+							}
+							start: Object {
+								column: 21
+								index: 21
+								line: 1
+							}
+						}
+					}
+					consequent: Array [
+						VariableDeclarationStatement {
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 36
+									index: 36
+									line: 1
+								}
+								start: Object {
+									column: 25
+									index: 25
+									line: 1
+								}
+							}
+							declaration: VariableDeclaration {
+								kind: "let"
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 36
+										index: 36
+										line: 1
+									}
+									start: Object {
+										column: 25
+										index: 25
+										line: 1
+									}
+								}
+								declarations: Array [
+									VariableDeclarator {
+										id: BindingIdentifier {
+											name: "a"
+											loc: Object {
+												filename: "input.js"
+												identifierName: "a"
+												end: Object {
+													column: 30
+													index: 30
+													line: 1
+												}
+												start: Object {
+													column: 29
+													index: 29
+													line: 1
+												}
+											}
+										}
+										loc: Object {
+											filename: "input.js"
+											end: Object {
+												column: 35
+												index: 35
+												line: 1
+											}
+											start: Object {
+												column: 29
+												index: 29
+												line: 1
+											}
+										}
+										init: NumericLiteral {
+											value: 20
+											format: undefined
+											loc: Object {
+												filename: "input.js"
+												end: Object {
+													column: 35
+													index: 35
+													line: 1
+												}
+												start: Object {
+													column: 33
+													index: 33
+													line: 1
+												}
+											}
+										}
+									}
+								]
+							}
+						}
+					]
+				}
+			]
+		}
+	]
 }
 ```

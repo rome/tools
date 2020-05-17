@@ -5,19 +5,19 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
+import {Scope} from "../../scopes";
 import {
-  AnyNode,
-  ExportAllDeclaration,
-  exportAllDeclaration,
-} from '@romejs/js-ast';
-import Hub from '../../Hub';
+	AnyNode,
+	ExportAllDeclaration,
+	exportAllDeclaration,
+} from "@romejs/js-ast";
+import Hub from "../../Hub";
 
 export default function ExportAllDeclaration(
-  node: AnyNode,
-  scope: Scope,
-  {evaluator}: Hub,
+	node: AnyNode,
+	scope: Scope,
+	{evaluator}: Hub,
 ) {
-  node = exportAllDeclaration.assert(node);
-  evaluator.addExportAll(node.source.value);
+	node = exportAllDeclaration.assert(node);
+	evaluator.addExportAll(node.source.value);
 }

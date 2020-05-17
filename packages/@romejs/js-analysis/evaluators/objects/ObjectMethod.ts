@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {AnyNode, ObjectMethod, objectMethod} from '@romejs/js-ast';
+import {Scope} from "../../scopes";
+import {AnyNode, ObjectMethod, objectMethod} from "@romejs/js-ast";
 
 export default function ObjectMethod(node: AnyNode, scope: Scope) {
-  node = objectMethod.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = objectMethod.assert(node);
+	scope;
+	throw new Error("unimplemented");
 }

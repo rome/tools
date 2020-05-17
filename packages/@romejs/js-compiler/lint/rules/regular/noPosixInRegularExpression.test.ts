@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {testLintMultiple} from '../testHelpers';
+import {test} from "rome";
+import {testLintMultiple} from "../testHelpers";
 
 test(
-  'no POSIX in regular expression',
-  async (t) => {
-    testLintMultiple(
-      t,
-      ['const pattern = /[[:alpha:]]/', 'const pattern = /[[.ch.]]/'],
-      {category: 'lint/noPosixInRegularExpression'},
-    );
-  },
+	"no POSIX in regular expression",
+	async (t) => {
+		testLintMultiple(
+			t,
+			["const pattern = /[[:alpha:]]/", "const pattern = /[[.ch.]]/"],
+			{category: "lint/noPosixInRegularExpression"},
+		);
+	},
 );

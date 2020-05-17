@@ -6,453 +6,453 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array ['jsx']
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 1
-      index: 223
-      line: 16
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    FunctionDeclaration {
-      id: BindingIdentifier {
-        name: 'foo'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'foo'
-          end: Object {
-            column: 12
-            index: 12
-            line: 1
-          }
-          start: Object {
-            column: 9
-            index: 9
-            line: 1
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 1
-          index: 223
-          line: 16
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      head: FunctionHead {
-        async: false
-        generator: false
-        hasHoistedVars: false
-        params: Array []
-        rest: undefined
-        returnType: undefined
-        thisType: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 14
-            index: 14
-            line: 1
-          }
-          start: Object {
-            column: 12
-            index: 12
-            line: 1
-          }
-        }
-      }
-      body: BlockStatement {
-        directives: Array []
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 1
-            index: 223
-            line: 16
-          }
-          start: Object {
-            column: 15
-            index: 15
-            line: 1
-          }
-        }
-        body: Array [
-          ReturnStatement {
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 4
-                index: 221
-                line: 15
-              }
-              start: Object {
-                column: 2
-                index: 19
-                line: 2
-              }
-            }
-            argument: JSXElement {
-              name: JSXIdentifier {
-                name: 'nav'
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 8
-                    index: 36
-                    line: 3
-                  }
-                  start: Object {
-                    column: 5
-                    index: 33
-                    line: 3
-                  }
-                }
-              }
-              attributes: Array []
-              selfClosing: false
-              typeArguments: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 10
-                  index: 216
-                  line: 14
-                }
-                start: Object {
-                  column: 4
-                  index: 32
-                  line: 3
-                }
-              }
-              children: Array [
-                JSXText {
-                  value: '\n      '
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 6
-                      index: 44
-                      line: 4
-                    }
-                    start: Object {
-                      column: 9
-                      index: 37
-                      line: 3
-                    }
-                  }
-                }
-                JSXElement {
-                  name: JSXReferenceIdentifier {
-                    name: 'Home'
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 11
-                        index: 49
-                        line: 4
-                      }
-                      start: Object {
-                        column: 7
-                        index: 45
-                        line: 4
-                      }
-                    }
-                  }
-                  attributes: Array []
-                  children: Array []
-                  selfClosing: true
-                  typeArguments: undefined
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 14
-                      index: 52
-                      line: 4
-                    }
-                    start: Object {
-                      column: 6
-                      index: 44
-                      line: 4
-                    }
-                  }
-                }
-                JSXText {
-                  value: '\n      '
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 6
-                      index: 59
-                      line: 5
-                    }
-                    start: Object {
-                      column: 14
-                      index: 52
-                      line: 4
-                    }
-                  }
-                }
-                JSXExpressionContainer {
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 7
-                      index: 205
-                      line: 13
-                    }
-                    start: Object {
-                      column: 6
-                      index: 59
-                      line: 5
-                    }
-                  }
-                  expression: DoExpression {
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 9
-                        index: 197
-                        line: 12
-                      }
-                      start: Object {
-                        column: 8
-                        index: 69
-                        line: 6
-                      }
-                    }
-                    body: BlockStatement {
-                      directives: Array []
-                      loc: Object {
-                        filename: 'input.js'
-                        end: Object {
-                          column: 9
-                          index: 197
-                          line: 12
-                        }
-                        start: Object {
-                          column: 11
-                          index: 72
-                          line: 6
-                        }
-                      }
-                      body: Array [
-                        IfStatement {
-                          loc: Object {
-                            filename: 'input.js'
-                            end: Object {
-                              column: 11
-                              index: 187
-                              line: 11
-                            }
-                            start: Object {
-                              column: 10
-                              index: 84
-                              line: 7
-                            }
-                          }
-                          test: ReferenceIdentifier {
-                            name: 'loggedIn'
-                            loc: Object {
-                              filename: 'input.js'
-                              identifierName: 'loggedIn'
-                              end: Object {
-                                column: 22
-                                index: 96
-                                line: 7
-                              }
-                              start: Object {
-                                column: 14
-                                index: 88
-                                line: 7
-                              }
-                            }
-                          }
-                          alternate: BlockStatement {
-                            directives: Array []
-                            loc: Object {
-                              filename: 'input.js'
-                              end: Object {
-                                column: 11
-                                index: 187
-                                line: 11
-                              }
-                              start: Object {
-                                column: 17
-                                index: 146
-                                line: 9
-                              }
-                            }
-                            body: Array [
-                              ExpressionStatement {
-                                loc: Object {
-                                  filename: 'input.js'
-                                  end: Object {
-                                    column: 27
-                                    index: 175
-                                    line: 10
-                                  }
-                                  start: Object {
-                                    column: 12
-                                    index: 160
-                                    line: 10
-                                  }
-                                }
-                                expression: JSXElement {
-                                  name: JSXReferenceIdentifier {
-                                    name: 'LoginButton'
-                                    loc: Object {
-                                      filename: 'input.js'
-                                      end: Object {
-                                        column: 24
-                                        index: 172
-                                        line: 10
-                                      }
-                                      start: Object {
-                                        column: 13
-                                        index: 161
-                                        line: 10
-                                      }
-                                    }
-                                  }
-                                  attributes: Array []
-                                  children: Array []
-                                  selfClosing: true
-                                  typeArguments: undefined
-                                  loc: Object {
-                                    filename: 'input.js'
-                                    end: Object {
-                                      column: 27
-                                      index: 175
-                                      line: 10
-                                    }
-                                    start: Object {
-                                      column: 12
-                                      index: 160
-                                      line: 10
-                                    }
-                                  }
-                                }
-                              }
-                            ]
-                          }
-                          consequent: BlockStatement {
-                            directives: Array []
-                            loc: Object {
-                              filename: 'input.js'
-                              end: Object {
-                                column: 11
-                                index: 140
-                                line: 9
-                              }
-                              start: Object {
-                                column: 24
-                                index: 98
-                                line: 7
-                              }
-                            }
-                            body: Array [
-                              ExpressionStatement {
-                                loc: Object {
-                                  filename: 'input.js'
-                                  end: Object {
-                                    column: 28
-                                    index: 128
-                                    line: 8
-                                  }
-                                  start: Object {
-                                    column: 12
-                                    index: 112
-                                    line: 8
-                                  }
-                                }
-                                expression: JSXElement {
-                                  name: JSXReferenceIdentifier {
-                                    name: 'LogoutButton'
-                                    loc: Object {
-                                      filename: 'input.js'
-                                      end: Object {
-                                        column: 25
-                                        index: 125
-                                        line: 8
-                                      }
-                                      start: Object {
-                                        column: 13
-                                        index: 113
-                                        line: 8
-                                      }
-                                    }
-                                  }
-                                  attributes: Array []
-                                  children: Array []
-                                  selfClosing: true
-                                  typeArguments: undefined
-                                  loc: Object {
-                                    filename: 'input.js'
-                                    end: Object {
-                                      column: 28
-                                      index: 128
-                                      line: 8
-                                    }
-                                    start: Object {
-                                      column: 12
-                                      index: 112
-                                      line: 8
-                                    }
-                                  }
-                                }
-                              }
-                            ]
-                          }
-                        }
-                      ]
-                    }
-                  }
-                }
-                JSXText {
-                  value: '\n    '
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 4
-                      index: 210
-                      line: 14
-                    }
-                    start: Object {
-                      column: 7
-                      index: 205
-                      line: 13
-                    }
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array ["jsx"]
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 1
+			index: 223
+			line: 16
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		FunctionDeclaration {
+			id: BindingIdentifier {
+				name: "foo"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "foo"
+					end: Object {
+						column: 12
+						index: 12
+						line: 1
+					}
+					start: Object {
+						column: 9
+						index: 9
+						line: 1
+					}
+				}
+			}
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 1
+					index: 223
+					line: 16
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			head: FunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: Array []
+				rest: undefined
+				returnType: undefined
+				thisType: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 14
+						index: 14
+						line: 1
+					}
+					start: Object {
+						column: 12
+						index: 12
+						line: 1
+					}
+				}
+			}
+			body: BlockStatement {
+				directives: Array []
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 1
+						index: 223
+						line: 16
+					}
+					start: Object {
+						column: 15
+						index: 15
+						line: 1
+					}
+				}
+				body: Array [
+					ReturnStatement {
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 4
+								index: 221
+								line: 15
+							}
+							start: Object {
+								column: 2
+								index: 19
+								line: 2
+							}
+						}
+						argument: JSXElement {
+							name: JSXIdentifier {
+								name: "nav"
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 8
+										index: 36
+										line: 3
+									}
+									start: Object {
+										column: 5
+										index: 33
+										line: 3
+									}
+								}
+							}
+							attributes: Array []
+							selfClosing: false
+							typeArguments: undefined
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 10
+									index: 216
+									line: 14
+								}
+								start: Object {
+									column: 4
+									index: 32
+									line: 3
+								}
+							}
+							children: Array [
+								JSXText {
+									value: "\n      "
+									loc: Object {
+										filename: "input.js"
+										end: Object {
+											column: 6
+											index: 44
+											line: 4
+										}
+										start: Object {
+											column: 9
+											index: 37
+											line: 3
+										}
+									}
+								}
+								JSXElement {
+									name: JSXReferenceIdentifier {
+										name: "Home"
+										loc: Object {
+											filename: "input.js"
+											end: Object {
+												column: 11
+												index: 49
+												line: 4
+											}
+											start: Object {
+												column: 7
+												index: 45
+												line: 4
+											}
+										}
+									}
+									attributes: Array []
+									children: Array []
+									selfClosing: true
+									typeArguments: undefined
+									loc: Object {
+										filename: "input.js"
+										end: Object {
+											column: 14
+											index: 52
+											line: 4
+										}
+										start: Object {
+											column: 6
+											index: 44
+											line: 4
+										}
+									}
+								}
+								JSXText {
+									value: "\n      "
+									loc: Object {
+										filename: "input.js"
+										end: Object {
+											column: 6
+											index: 59
+											line: 5
+										}
+										start: Object {
+											column: 14
+											index: 52
+											line: 4
+										}
+									}
+								}
+								JSXExpressionContainer {
+									loc: Object {
+										filename: "input.js"
+										end: Object {
+											column: 7
+											index: 205
+											line: 13
+										}
+										start: Object {
+											column: 6
+											index: 59
+											line: 5
+										}
+									}
+									expression: DoExpression {
+										loc: Object {
+											filename: "input.js"
+											end: Object {
+												column: 9
+												index: 197
+												line: 12
+											}
+											start: Object {
+												column: 8
+												index: 69
+												line: 6
+											}
+										}
+										body: BlockStatement {
+											directives: Array []
+											loc: Object {
+												filename: "input.js"
+												end: Object {
+													column: 9
+													index: 197
+													line: 12
+												}
+												start: Object {
+													column: 11
+													index: 72
+													line: 6
+												}
+											}
+											body: Array [
+												IfStatement {
+													loc: Object {
+														filename: "input.js"
+														end: Object {
+															column: 11
+															index: 187
+															line: 11
+														}
+														start: Object {
+															column: 10
+															index: 84
+															line: 7
+														}
+													}
+													test: ReferenceIdentifier {
+														name: "loggedIn"
+														loc: Object {
+															filename: "input.js"
+															identifierName: "loggedIn"
+															end: Object {
+																column: 22
+																index: 96
+																line: 7
+															}
+															start: Object {
+																column: 14
+																index: 88
+																line: 7
+															}
+														}
+													}
+													alternate: BlockStatement {
+														directives: Array []
+														loc: Object {
+															filename: "input.js"
+															end: Object {
+																column: 11
+																index: 187
+																line: 11
+															}
+															start: Object {
+																column: 17
+																index: 146
+																line: 9
+															}
+														}
+														body: Array [
+															ExpressionStatement {
+																loc: Object {
+																	filename: "input.js"
+																	end: Object {
+																		column: 27
+																		index: 175
+																		line: 10
+																	}
+																	start: Object {
+																		column: 12
+																		index: 160
+																		line: 10
+																	}
+																}
+																expression: JSXElement {
+																	name: JSXReferenceIdentifier {
+																		name: "LoginButton"
+																		loc: Object {
+																			filename: "input.js"
+																			end: Object {
+																				column: 24
+																				index: 172
+																				line: 10
+																			}
+																			start: Object {
+																				column: 13
+																				index: 161
+																				line: 10
+																			}
+																		}
+																	}
+																	attributes: Array []
+																	children: Array []
+																	selfClosing: true
+																	typeArguments: undefined
+																	loc: Object {
+																		filename: "input.js"
+																		end: Object {
+																			column: 27
+																			index: 175
+																			line: 10
+																		}
+																		start: Object {
+																			column: 12
+																			index: 160
+																			line: 10
+																		}
+																	}
+																}
+															}
+														]
+													}
+													consequent: BlockStatement {
+														directives: Array []
+														loc: Object {
+															filename: "input.js"
+															end: Object {
+																column: 11
+																index: 140
+																line: 9
+															}
+															start: Object {
+																column: 24
+																index: 98
+																line: 7
+															}
+														}
+														body: Array [
+															ExpressionStatement {
+																loc: Object {
+																	filename: "input.js"
+																	end: Object {
+																		column: 28
+																		index: 128
+																		line: 8
+																	}
+																	start: Object {
+																		column: 12
+																		index: 112
+																		line: 8
+																	}
+																}
+																expression: JSXElement {
+																	name: JSXReferenceIdentifier {
+																		name: "LogoutButton"
+																		loc: Object {
+																			filename: "input.js"
+																			end: Object {
+																				column: 25
+																				index: 125
+																				line: 8
+																			}
+																			start: Object {
+																				column: 13
+																				index: 113
+																				line: 8
+																			}
+																		}
+																	}
+																	attributes: Array []
+																	children: Array []
+																	selfClosing: true
+																	typeArguments: undefined
+																	loc: Object {
+																		filename: "input.js"
+																		end: Object {
+																			column: 28
+																			index: 128
+																			line: 8
+																		}
+																		start: Object {
+																			column: 12
+																			index: 112
+																			line: 8
+																		}
+																	}
+																}
+															}
+														]
+													}
+												}
+											]
+										}
+									}
+								}
+								JSXText {
+									value: "\n    "
+									loc: Object {
+										filename: "input.js"
+										end: Object {
+											column: 4
+											index: 210
+											line: 14
+										}
+										start: Object {
+											column: 7
+											index: 205
+											line: 13
+										}
+									}
+								}
+							]
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

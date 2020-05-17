@@ -5,23 +5,23 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase} from '../index';
-import {createQuickBuilder} from '../utils';
+import {JSNodeBase} from "../index";
+import {createQuickBuilder} from "../utils";
 
 export type AssignmentIdentifier = JSNodeBase & {
-  type: 'AssignmentIdentifier';
-  name: string;
-  definite?: boolean;
+	type: "AssignmentIdentifier";
+	name: string;
+	definite?: boolean;
 };
 
 export const assignmentIdentifier = createQuickBuilder<
-  AssignmentIdentifier,
-  'name'
+	AssignmentIdentifier,
+	"name"
 >(
-  'AssignmentIdentifier',
-  'name',
-  {
-    bindingKeys: {},
-    visitorKeys: {},
-  },
+	"AssignmentIdentifier",
+	"name",
+	{
+		bindingKeys: {},
+		visitorKeys: {},
+	},
 );

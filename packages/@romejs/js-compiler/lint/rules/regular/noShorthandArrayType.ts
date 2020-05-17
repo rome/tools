@@ -5,35 +5,35 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from '@romejs/js-compiler';
-import {TransformExitResult} from '@romejs/js-compiler/types';
+import {Path} from "@romejs/js-compiler";
+import {TransformExitResult} from "@romejs/js-compiler/types";
 import {
-  referenceIdentifier,
-  tsTypeParameterInstantiation,
-  tsTypeReference,
-} from '@romejs/js-ast';
-import {descriptions} from '@romejs/diagnostics';
+	referenceIdentifier,
+	tsTypeParameterInstantiation,
+	tsTypeReference,
+} from "@romejs/js-ast";
+import {descriptions} from "@romejs/diagnostics";
 
 export default {
-  name: 'noShorthandArrayType',
-  enter(path: Path): TransformExitResult {
-    const {node, context} = path;
+	name: "noShorthandArrayType",
+	enter(path: Path): TransformExitResult {
+		const {node, context} = path;
 
-    if (node.type === 'TSArrayType') {
-      return context.addFixableDiagnostic(
-        {
-          old: node,
-          fixed: tsTypeReference.create({
-            typeName: referenceIdentifier.quick('Array'),
-            typeParameters: tsTypeParameterInstantiation.create({
-              params: [node.elementType],
-            }),
-          }),
-        },
-        descriptions.LINT.NO_SHORTHAND_ARRAY_TYPE,
-      );
-    }
+		if (node.type === "TSArrayType") {
+			return context.addFixableDiagnostic(
+				{
+					old: node,
+					fixed: tsTypeReference.create({
+						typeName: referenceIdentifier.quick("Array"),
+						typeParameters: tsTypeParameterInstantiation.create({
+							params: [node.elementType],
+						}),
+					}),
+				},
+				descriptions.LINT.NO_SHORTHAND_ARRAY_TYPE,
+			);
+		}
 
-    return node;
-  },
+		return node;
+	},
 };

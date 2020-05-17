@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token, concat} from '../../tokens';
-import {JSXSpreadAttribute} from '@romejs/js-ast';
+import Builder from "../../Builder";
+import {Token, concat} from "../../tokens";
+import {JSXSpreadAttribute} from "@romejs/js-ast";
 
 export default function JSXSpreadAttribute(
-  builder: Builder,
-  node: JSXSpreadAttribute,
+	builder: Builder,
+	node: JSXSpreadAttribute,
 ): Token {
-  return concat(['{', '...', builder.tokenize(node.argument, node), '}']);
+	return concat(["{", "...", builder.tokenize(node.argument, node), "}"]);
 }

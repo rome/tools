@@ -5,34 +5,34 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Parser, {ParserInterface, ParserOptions} from './Parser';
-import {Reporter} from '@romejs/cli-reporter';
+import Parser, {ParserInterface, ParserOptions} from "./Parser";
+import {Reporter} from "@romejs/cli-reporter";
 
-export {FlagValue} from './Parser';
+export {FlagValue} from "./Parser";
 export {ParserInterface as FlagParser};
 
 export function parseCLIFlags<T>(
-  reporter: Reporter,
-  args: Array<string>,
-  opts: ParserOptions<T>,
+	reporter: Reporter,
+	args: Array<string>,
+	opts: ParserOptions<T>,
 ): ParserInterface<T> {
-  const parser = new Parser(reporter, opts, args);
-  return parser.getInterface();
+	const parser = new Parser(reporter, opts, args);
+	return parser.getInterface();
 }
 
 export function parseCLIFlagsFromProcess<T>(
-  opts: ParserOptions<T>,
+	opts: ParserOptions<T>,
 ): ParserInterface<T> {
-  return parseCLIFlags(
-    Reporter.fromProcess(),
-    process.argv.slice(2),
-    {
-      ...opts,
-      programName: opts.programName === undefined
-        ? process.argv[1]
-        : opts.programName,
-    },
-  );
+	return parseCLIFlags(
+		Reporter.fromProcess(),
+		process.argv.slice(2),
+		{
+			...opts,
+			programName: opts.programName === undefined
+				? process.argv[1]
+				: opts.programName,
+		},
+	);
 }
 
-export * from './serializeCLIFlags';
+export * from "./serializeCLIFlags";

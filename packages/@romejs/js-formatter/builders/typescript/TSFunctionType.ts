@@ -5,21 +5,21 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TSFunctionType} from '@romejs/js-ast';
-import {Builder} from '@romejs/js-formatter';
-import {Token, concat, group, space} from '../../tokens';
+import {TSFunctionType} from "@romejs/js-ast";
+import {Builder} from "@romejs/js-formatter";
+import {Token, concat, group, space} from "../../tokens";
 
 export default function TSFunctionType(
-  builder: Builder,
-  node: TSFunctionType,
+	builder: Builder,
+	node: TSFunctionType,
 ): Token {
-  return group(
-    concat([
-      builder.tokenize(node.meta, node),
-      space,
-      '=>',
-      space,
-      builder.tokenize(node.typeAnnotation, node),
-    ]),
-  );
+	return group(
+		concat([
+			builder.tokenize(node.meta, node),
+			space,
+			"=>",
+			space,
+			builder.tokenize(node.typeAnnotation, node),
+		]),
+	);
 }

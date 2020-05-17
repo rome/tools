@@ -6,82 +6,82 @@
 
 ```javascript
 Program {
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 13
-      index: 44
-      line: 5
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  comments: Array [
-    CommentBlock {
-      id: '0'
-      value: ' multiline\ncomment\nshould\nbe\nignored '
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 10
-          index: 41
-          line: 5
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    ExpressionStatement {
-      leadingComments: Array ['0']
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 13
-          index: 44
-          line: 5
-        }
-        start: Object {
-          column: 11
-          index: 42
-          line: 5
-        }
-      }
-      expression: NumericLiteral {
-        value: 42
-        format: undefined
-        leadingComments: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 13
-            index: 44
-            line: 5
-          }
-          start: Object {
-            column: 11
-            index: 42
-            line: 5
-          }
-        }
-      }
-    }
-  ]
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 13
+			index: 44
+			line: 5
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	comments: Array [
+		CommentBlock {
+			id: "0"
+			value: " multiline\ncomment\nshould\nbe\nignored "
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 10
+					index: 41
+					line: 5
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		ExpressionStatement {
+			leadingComments: Array ["0"]
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 13
+					index: 44
+					line: 5
+				}
+				start: Object {
+					column: 11
+					index: 42
+					line: 5
+				}
+			}
+			expression: NumericLiteral {
+				value: 42
+				format: undefined
+				leadingComments: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 13
+						index: 44
+						line: 5
+					}
+					start: Object {
+						column: 11
+						index: 42
+						line: 5
+					}
+				}
+			}
+		}
+	]
 }
 ```

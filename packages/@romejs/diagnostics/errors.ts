@@ -5,51 +5,51 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Diagnostics, DiagnosticsProcessor} from '@romejs/diagnostics';
-import {printDiagnosticsToString} from '@romejs/cli-diagnostics';
-import {Diagnostic, DiagnosticSuppressions} from './types';
+import {Diagnostics, DiagnosticsProcessor} from "@romejs/diagnostics";
+import {printDiagnosticsToString} from "@romejs/cli-diagnostics";
+import {Diagnostic, DiagnosticSuppressions} from "./types";
 
 export class DiagnosticsError extends Error {
-  constructor(
-    message: string,
-    diagnostics: Diagnostics,
-    suppressions: DiagnosticSuppressions = [],
-  ) {
-    if (diagnostics.length === 0) {
-      throw new Error('No diagnostics');
-    }
+	constructor(
+		message: string,
+		diagnostics: Diagnostics,
+		suppressions: DiagnosticSuppressions = [],
+	) {
+		if (diagnostics.length === 0) {
+			throw new Error("No diagnostics");
+		}
 
-    message += '\n';
-    message += printDiagnosticsToString({diagnostics, suppressions});
+		message += "\n";
+		message += printDiagnosticsToString({diagnostics, suppressions});
 
-    super(message);
-    this.diagnostics = diagnostics;
-    this.suppressions = suppressions;
-    this.name = 'DiagnosticsError';
-  }
+		super(message);
+		this.diagnostics = diagnostics;
+		this.suppressions = suppressions;
+		this.name = "DiagnosticsError";
+	}
 
-  diagnostics: Diagnostics;
-  suppressions: DiagnosticSuppressions;
+	diagnostics: Diagnostics;
+	suppressions: DiagnosticSuppressions;
 }
 
 export function createSingleDiagnosticError(
-  diag: Diagnostic,
-  suppressions?: DiagnosticSuppressions,
+	diag: Diagnostic,
+	suppressions?: DiagnosticSuppressions,
 ): DiagnosticsError {
-  return new DiagnosticsError(
-    diag.description.message.value,
-    [diag],
-    suppressions,
-  );
+	return new DiagnosticsError(
+		diag.description.message.value,
+		[diag],
+		suppressions,
+	);
 }
 
 export function getDiagnosticsFromError(err: Error): undefined | Diagnostics {
-  if (err instanceof DiagnosticsError) {
-    const processor = new DiagnosticsProcessor({});
-    processor.addSuppressions(err.suppressions);
-    processor.addDiagnostics(err.diagnostics);
-    return processor.getDiagnostics();
-  }
+	if (err instanceof DiagnosticsError) {
+		const processor = new DiagnosticsProcessor({});
+		processor.addSuppressions(err.suppressions);
+		processor.addDiagnostics(err.diagnostics);
+		return processor.getDiagnostics();
+	}
 
-  return undefined;
+	return undefined;
 }

@@ -6,254 +6,254 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 32
-      index: 32
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 32
-          index: 32
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: CallExpression {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 32
-            index: 32
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        callee: ReferenceIdentifier {
-          name: 'doSmth'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'doSmth'
-            end: Object {
-              column: 6
-              index: 6
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
-        arguments: Array [
-          TemplateLiteral {
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 31
-                index: 31
-                line: 1
-              }
-              start: Object {
-                column: 7
-                index: 7
-                line: 1
-              }
-            }
-            quasis: Array [
-              TemplateElement {
-                cooked: ''
-                raw: ''
-                tail: false
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 8
-                    index: 8
-                    line: 1
-                  }
-                  start: Object {
-                    column: 8
-                    index: 8
-                    line: 1
-                  }
-                }
-              }
-              TemplateElement {
-                cooked: ' + '
-                raw: ' + '
-                tail: false
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 15
-                    index: 15
-                    line: 1
-                  }
-                  start: Object {
-                    column: 12
-                    index: 12
-                    line: 1
-                  }
-                }
-              }
-              TemplateElement {
-                cooked: ' = '
-                raw: ' = '
-                tail: false
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 22
-                    index: 22
-                    line: 1
-                  }
-                  start: Object {
-                    column: 19
-                    index: 19
-                    line: 1
-                  }
-                }
-              }
-              TemplateElement {
-                cooked: ''
-                raw: ''
-                tail: true
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 30
-                    index: 30
-                    line: 1
-                  }
-                  start: Object {
-                    column: 30
-                    index: 30
-                    line: 1
-                  }
-                }
-              }
-            ]
-            expressions: Array [
-              ReferenceIdentifier {
-                name: 'x'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'x'
-                  end: Object {
-                    column: 11
-                    index: 11
-                    line: 1
-                  }
-                  start: Object {
-                    column: 10
-                    index: 10
-                    line: 1
-                  }
-                }
-              }
-              ReferenceIdentifier {
-                name: 'y'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'y'
-                  end: Object {
-                    column: 18
-                    index: 18
-                    line: 1
-                  }
-                  start: Object {
-                    column: 17
-                    index: 17
-                    line: 1
-                  }
-                }
-              }
-              BinaryExpression {
-                operator: '+'
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 29
-                    index: 29
-                    line: 1
-                  }
-                  start: Object {
-                    column: 24
-                    index: 24
-                    line: 1
-                  }
-                }
-                left: ReferenceIdentifier {
-                  name: 'x'
-                  loc: Object {
-                    filename: 'input.js'
-                    identifierName: 'x'
-                    end: Object {
-                      column: 25
-                      index: 25
-                      line: 1
-                    }
-                    start: Object {
-                      column: 24
-                      index: 24
-                      line: 1
-                    }
-                  }
-                }
-                right: ReferenceIdentifier {
-                  name: 'y'
-                  loc: Object {
-                    filename: 'input.js'
-                    identifierName: 'y'
-                    end: Object {
-                      column: 29
-                      index: 29
-                      line: 1
-                    }
-                    start: Object {
-                      column: 28
-                      index: 28
-                      line: 1
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        ]
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 32
+			index: 32
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		ExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 32
+					index: 32
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: CallExpression {
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 32
+						index: 32
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				callee: ReferenceIdentifier {
+					name: "doSmth"
+					loc: Object {
+						filename: "input.js"
+						identifierName: "doSmth"
+						end: Object {
+							column: 6
+							index: 6
+							line: 1
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+				}
+				arguments: Array [
+					TemplateLiteral {
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 31
+								index: 31
+								line: 1
+							}
+							start: Object {
+								column: 7
+								index: 7
+								line: 1
+							}
+						}
+						quasis: Array [
+							TemplateElement {
+								cooked: ""
+								raw: ""
+								tail: false
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 8
+										index: 8
+										line: 1
+									}
+									start: Object {
+										column: 8
+										index: 8
+										line: 1
+									}
+								}
+							}
+							TemplateElement {
+								cooked: " + "
+								raw: " + "
+								tail: false
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 15
+										index: 15
+										line: 1
+									}
+									start: Object {
+										column: 12
+										index: 12
+										line: 1
+									}
+								}
+							}
+							TemplateElement {
+								cooked: " = "
+								raw: " = "
+								tail: false
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 22
+										index: 22
+										line: 1
+									}
+									start: Object {
+										column: 19
+										index: 19
+										line: 1
+									}
+								}
+							}
+							TemplateElement {
+								cooked: ""
+								raw: ""
+								tail: true
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 30
+										index: 30
+										line: 1
+									}
+									start: Object {
+										column: 30
+										index: 30
+										line: 1
+									}
+								}
+							}
+						]
+						expressions: Array [
+							ReferenceIdentifier {
+								name: "x"
+								loc: Object {
+									filename: "input.js"
+									identifierName: "x"
+									end: Object {
+										column: 11
+										index: 11
+										line: 1
+									}
+									start: Object {
+										column: 10
+										index: 10
+										line: 1
+									}
+								}
+							}
+							ReferenceIdentifier {
+								name: "y"
+								loc: Object {
+									filename: "input.js"
+									identifierName: "y"
+									end: Object {
+										column: 18
+										index: 18
+										line: 1
+									}
+									start: Object {
+										column: 17
+										index: 17
+										line: 1
+									}
+								}
+							}
+							BinaryExpression {
+								operator: "+"
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 29
+										index: 29
+										line: 1
+									}
+									start: Object {
+										column: 24
+										index: 24
+										line: 1
+									}
+								}
+								left: ReferenceIdentifier {
+									name: "x"
+									loc: Object {
+										filename: "input.js"
+										identifierName: "x"
+										end: Object {
+											column: 25
+											index: 25
+											line: 1
+										}
+										start: Object {
+											column: 24
+											index: 24
+											line: 1
+										}
+									}
+								}
+								right: ReferenceIdentifier {
+									name: "y"
+									loc: Object {
+										filename: "input.js"
+										identifierName: "y"
+										end: Object {
+											column: 29
+											index: 29
+											line: 1
+										}
+										start: Object {
+											column: 28
+											index: 28
+											line: 1
+										}
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		}
+	]
 }
 ```

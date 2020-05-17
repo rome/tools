@@ -5,20 +5,20 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyExpression, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {AnyExpression, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type TSNonNullExpression = JSNodeBase & {
-  type: 'TSNonNullExpression';
-  expression: AnyExpression;
+	type: "TSNonNullExpression";
+	expression: AnyExpression;
 };
 
 export const tsNonNullExpression = createBuilder<TSNonNullExpression>(
-  'TSNonNullExpression',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      expression: true,
-    },
-  },
+	"TSNonNullExpression",
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			expression: true,
+		},
+	},
 );

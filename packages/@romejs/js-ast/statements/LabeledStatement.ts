@@ -5,22 +5,22 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyStatement, Identifier, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {AnyStatement, Identifier, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type LabeledStatement = JSNodeBase & {
-  type: 'LabeledStatement';
-  label: Identifier;
-  body: AnyStatement;
+	type: "LabeledStatement";
+	label: Identifier;
+	body: AnyStatement;
 };
 
 export const labeledStatement = createBuilder<LabeledStatement>(
-  'LabeledStatement',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      label: true,
-      body: true,
-    },
-  },
+	"LabeledStatement",
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			label: true,
+			body: true,
+		},
+	},
 );

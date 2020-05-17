@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
+import {Scope} from "../../scopes";
 import {
-  AnyNode,
-  AssignmentObjectPattern,
-  assignmentObjectPattern,
-} from '@romejs/js-ast';
+	AnyNode,
+	AssignmentObjectPattern,
+	assignmentObjectPattern,
+} from "@romejs/js-ast";
 
 export default function AssignmentObjectPattern(node: AnyNode, scope: Scope) {
-  node = assignmentObjectPattern.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = assignmentObjectPattern.assert(node);
+	scope;
+	throw new Error("unimplemented");
 }

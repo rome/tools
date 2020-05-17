@@ -5,22 +5,22 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ImportSpecifierLocal, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {ImportSpecifierLocal, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type ImportDefaultSpecifier = JSNodeBase & {
-  type: 'ImportDefaultSpecifier';
-  local: ImportSpecifierLocal;
+	type: "ImportDefaultSpecifier";
+	local: ImportSpecifierLocal;
 };
 
 export const importDefaultSpecifier = createBuilder<ImportDefaultSpecifier>(
-  'ImportDefaultSpecifier',
-  {
-    bindingKeys: {
-      local: true,
-    },
-    visitorKeys: {
-      local: true,
-    },
-  },
+	"ImportDefaultSpecifier",
+	{
+		bindingKeys: {
+			local: true,
+		},
+		visitorKeys: {
+			local: true,
+		},
+	},
 );

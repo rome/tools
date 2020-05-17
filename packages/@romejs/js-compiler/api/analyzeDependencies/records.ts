@@ -6,94 +6,94 @@
  */
 
 import {
-  AnyNode,
-  ConstExportModuleKind,
-  ReferenceIdentifier,
-} from '@romejs/js-ast';
-import {SourceLocation} from '@romejs/parser-core';
+	AnyNode,
+	ConstExportModuleKind,
+	ReferenceIdentifier,
+} from "@romejs/js-ast";
+import {SourceLocation} from "@romejs/parser-core";
 import {
-  AnalyzeDependency,
-  AnalyzeDependencyImportUsageItem,
-  AnyAnalyzeExport,
-} from '@romejs/core';
-import {Record} from '@romejs/js-compiler';
+	AnalyzeDependency,
+	AnalyzeDependencyImportUsageItem,
+	AnyAnalyzeExport,
+} from "@romejs/core";
+import {Record} from "@romejs/js-compiler";
 
 export class ImportRecord extends Record {
-  constructor(data: AnalyzeDependency) {
-    super();
-    this.data = data;
-  }
+	constructor(data: AnalyzeDependency) {
+		super();
+		this.data = data;
+	}
 
-  data: AnalyzeDependency;
+	data: AnalyzeDependency;
 }
 
 export class ExportRecord extends Record {
-  constructor(data: AnyAnalyzeExport) {
-    super();
-    this.data = data;
-  }
+	constructor(data: AnyAnalyzeExport) {
+		super();
+		this.data = data;
+	}
 
-  data: AnyAnalyzeExport;
+	data: AnyAnalyzeExport;
 }
 
 // Whenever we encounter a reference to CJS module or exports
 export class EscapedCJSRefRecord extends Record {
-  constructor(node: AnyNode) {
-    super();
-    this.node = node;
-  }
+	constructor(node: AnyNode) {
+		super();
+		this.node = node;
+	}
 
-  node: AnyNode;
+	node: AnyNode;
 }
 
 // Whenever we encounter a exports or module.exports assignment
 export class CJSExportRecord extends Record {
-  constructor(node: AnyNode) {
-    super();
-    this.node = node;
-  }
+	constructor(node: AnyNode) {
+		super();
+		this.node = node;
+	}
 
-  node: AnyNode;
+	node: AnyNode;
 }
 
 export class CJSVarRefRecord extends Record {
-  constructor(node: ReferenceIdentifier) {
-    super();
-    this.node = node;
-  }
+	constructor(node: ReferenceIdentifier) {
+		super();
+		this.node = node;
+	}
 
-  node: ReferenceIdentifier;
+	node: ReferenceIdentifier;
 }
 
 export class ESExportRecord extends Record {
-  constructor(kind: ConstExportModuleKind, node: AnyNode) {
-    super();
-    this.node = node;
-    this.kind = kind;
-  }
+	constructor(kind: ConstExportModuleKind, node: AnyNode) {
+		super();
+		this.node = node;
+		this.kind = kind;
+	}
 
-  node: AnyNode;
-  kind: ConstExportModuleKind;
+	node: AnyNode;
+	kind: ConstExportModuleKind;
 }
 
 // Whenever we encounter a top level await
 export class TopLevelAwaitRecord extends Record {
-  constructor(loc: SourceLocation) {
-    super();
-    this.loc = loc;
-  }
+	constructor(loc: SourceLocation) {
+		super();
+		this.loc = loc;
+	}
 
-  loc: SourceLocation;
+	loc: SourceLocation;
 }
 
 // Whenever we encounter the first reference to an import
 export class ImportUsageRecord extends Record {
-  constructor(isTop: boolean, data: AnalyzeDependencyImportUsageItem) {
-    super();
-    this.isTop = isTop;
-    this.data = data;
-  }
+	constructor(isTop: boolean, data: AnalyzeDependencyImportUsageItem) {
+		super();
+		this.isTop = isTop;
+		this.data = data;
+	}
 
-  isTop: boolean;
-  data: AnalyzeDependencyImportUsageItem;
+	isTop: boolean;
+	data: AnalyzeDependencyImportUsageItem;
 }

@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
+import {Scope} from "../../scopes";
 import {
-  AnyNode,
-  InterpreterDirective,
-  interpreterDirective,
-} from '@romejs/js-ast';
+	AnyNode,
+	InterpreterDirective,
+	interpreterDirective,
+} from "@romejs/js-ast";
 
 export default function InterpreterDirective(node: AnyNode, scope: Scope) {
-  node = interpreterDirective.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = interpreterDirective.assert(node);
+	scope;
+	throw new Error("unimplemented");
 }

@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {SpreadElement} from '@romejs/js-ast';
-import {Token, concat} from '../../tokens';
+import Builder from "../../Builder";
+import {SpreadElement} from "@romejs/js-ast";
+import {Token, concat} from "../../tokens";
 
 export default function SpreadElement(
-  builder: Builder,
-  node: SpreadElement,
+	builder: Builder,
+	node: SpreadElement,
 ): Token {
-  return concat(['...', builder.tokenize(node.argument, node)]);
+	return concat(["...", builder.tokenize(node.argument, node)]);
 }

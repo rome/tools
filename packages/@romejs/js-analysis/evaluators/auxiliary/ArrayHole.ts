@@ -5,9 +5,9 @@
 * LICENSE file in the root directory of this source tree.
 */
 
-import {AnyNode, ArrayHole, arrayHole} from '@romejs/js-ast';
+import {AnyNode, ArrayHole, arrayHole} from "@romejs/js-ast";
 
 export default function ArrayHole(node: AnyNode) {
-  node = arrayHole.assert(node);
-  throw new Error('unimplemented');
+	node = arrayHole.assert(node);
+	throw new Error("unimplemented");
 }

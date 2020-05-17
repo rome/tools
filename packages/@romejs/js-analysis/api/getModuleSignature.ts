@@ -6,109 +6,109 @@
  */
 
 import {
-  CheckProvider,
-  ModuleSignature,
-  ModuleSignatureExport,
-  ModuleSignatureType,
-} from '../types';
-import {Program} from '@romejs/js-ast';
-import buildGraph from './buildGraph';
-import T from '../types/T';
-import E from '../types/errors/E';
-import {TransformProjectDefinition} from '@romejs/js-compiler';
-import {Dict} from '@romejs/typescript-helpers';
+	CheckProvider,
+	ModuleSignature,
+	ModuleSignatureExport,
+	ModuleSignatureType,
+} from "../types";
+import {Program} from "@romejs/js-ast";
+import buildGraph from "./buildGraph";
+import T from "../types/T";
+import E from "../types/errors/E";
+import {TransformProjectDefinition} from "@romejs/js-compiler";
+import {Dict} from "@romejs/typescript-helpers";
 
 const exportsCache: WeakMap<Program, ModuleSignature> = new WeakMap();
 
 export default async function getModuleSignature(
-  opts: {
-    ast: Program;
-    project: TransformProjectDefinition;
-    provider: CheckProvider;
-  },
+	opts: {
+		ast: Program;
+		project: TransformProjectDefinition;
+		provider: CheckProvider;
+	},
 ): Promise<ModuleSignature> {
-  const {ast, provider} = opts;
-  const {filename} = ast;
+	const {ast, provider} = opts;
+	const {filename} = ast;
 
-  if (filename.includes('node_modules')) {
-    return {
-      filename,
-      exports: [],
-      types: {},
-    };
-  }
+	if (filename.includes("node_modules")) {
+		return {
+			filename,
+			exports: [],
+			types: {},
+		};
+	}
 
-  const cached = exportsCache.get(ast);
-  if (cached !== undefined) {
-    return cached;
-  }
+	const cached = exportsCache.get(ast);
+	if (cached !== undefined) {
+		return cached;
+	}
 
-  const {
-    evaluator: {exports},
-    utils,
-  } = await buildGraph({
-    ast,
-    project: opts.project,
-    connected: false,
-    provider,
-  });
-  const types: Dict<ModuleSignatureType> = {};
-  const exportMap: Array<ModuleSignatureExport> = [];
+	const {
+		evaluator: {exports},
+		utils,
+	} = await buildGraph({
+		ast,
+		project: opts.project,
+		connected: false,
+		provider,
+	});
+	const types: Dict<ModuleSignatureType> = {};
+	const exportMap: Array<ModuleSignatureExport> = [];
 
-  const added: Set<T> = new Set();
+	const added: Set<T> = new Set();
 
-  function addType(type: T): string {
-    const reducedType = utils.reduce(type);
-    if (added.has(reducedType)) {
-      return reducedType.id;
-    } else {
-      added.add(reducedType);
-    }
+	function addType(type: T): string {
+		const reducedType = utils.reduce(type);
+		if (added.has(reducedType)) {
+			return reducedType.id;
+		} else {
+			added.add(reducedType);
+		}
 
-    // export errors as any types to suppress errors
-    if (reducedType instanceof E) {
-      types[reducedType.id] = {
-        human: undefined,
-        origin: reducedType.originLoc,
-        type: 'AnyT',
-        data: {},
-      };
-      return reducedType.id;
-    }
+		// export errors as any types to suppress errors
+		if (reducedType instanceof E) {
+			types[reducedType.id] = {
+				human: undefined,
+				origin: reducedType.originLoc,
+				type: "AnyT",
+				data: {},
+			};
+			return reducedType.id;
+		}
 
-    const data = reducedType.serialize(addType);
+		const data = reducedType.serialize(addType);
 
-    types[reducedType.id] = {
-      human: reducedType.human,
-      origin: reducedType.originLoc,
-      type: reducedType.getConstructor().type,
-      data,
-    };
-    return reducedType.id;
-  }
+		types[reducedType.id] = {
+			human: reducedType.human,
+			origin: reducedType.originLoc,
+			type: reducedType.getConstructor().type,
+			data,
+		};
+		return reducedType.id;
+	}
 
-  for (const def of exports) {
-    if (def.type === 'all') {
-      exportMap.push({
-        type: 'all',
-        source: def.source,
-      });
-    } else if (def.type === 'local') {
-      exportMap.push({
-        type: 'local',
-        name: def.name,
-        value: addType(def.value),
-      });
-    } else {
-      throw new Error('unknown export def type');
-    }
-  }
+	for (const def of exports) {
+		if (def.type === "all") {
+			exportMap.push({
+				type: "all",
+				source: def.source,
+			});
+		} else if (def.type === "local") {
+			exportMap.push({
+				type: "local",
+				name: def.name,
+				value: addType(def.value),
+			});
+		} else {
+			throw new Error("unknown export def type");
+		}
+	}
 
-  const result: ModuleSignature = {
-    filename,
-    exports: exportMap,
-    types,
-  };
-  exportsCache.set(ast, result);
-  return result;
+	const result: ModuleSignature = {
+		filename,
+		exports: exportMap,
+		types,
+	};
+	exportsCache.set(ast, result);
+	return result;
 }

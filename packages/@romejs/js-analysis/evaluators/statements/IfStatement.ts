@@ -5,29 +5,29 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {RefineScope, Scope} from '../../scopes';
-import {AnyNode, IfStatement, ifStatement} from '@romejs/js-ast';
-import BooleanT from '../../types/BooleanT';
-import ExhaustiveT from '../../types/ExhaustiveT';
-import UnionT from '../../types/UnionT';
+import {RefineScope, Scope} from "../../scopes";
+import {AnyNode, IfStatement, ifStatement} from "@romejs/js-ast";
+import BooleanT from "../../types/BooleanT";
+import ExhaustiveT from "../../types/ExhaustiveT";
+import UnionT from "../../types/UnionT";
 
 export default function IfStatement(node: AnyNode, scope: Scope) {
-  node = node.type === 'ConditionalExpression' ? node : ifStatement.assert(node);
+	node = node.type === "ConditionalExpression" ? node : ifStatement.assert(node);
 
-  const test = scope.evaluate(node.test);
-  new ExhaustiveT(scope, node, test, new BooleanT(scope, undefined));
+	const test = scope.evaluate(node.test);
+	new ExhaustiveT(scope, node, test, new BooleanT(scope, undefined));
 
-  const hasRefinedTest: boolean = test.scope instanceof RefineScope;
+	const hasRefinedTest: boolean = test.scope instanceof RefineScope;
 
-  const consequentScope: Scope = hasRefinedTest ? test.scope : scope;
-  const consequent = consequentScope.evaluate(node.consequent);
+	const consequentScope: Scope = hasRefinedTest ? test.scope : scope;
+	const consequent = consequentScope.evaluate(node.consequent);
 
-  if (node.alternate === undefined) {
-    return consequent;
-  } else {
-    const alternateScope = scope.fork();
+	if (node.alternate === undefined) {
+		return consequent;
+	} else {
+		const alternateScope = scope.fork();
 
-    /*if (hasRefinedTest) {
+		/*if (hasRefinedTest) {
       // get bindings from 'test.scope and flip them
       for (const name of test.scope.getOwnBindingNames()) {
         const outerBinding = scope.getBinding(name);
@@ -40,10 +40,10 @@ export default function IfStatement(node: AnyNode, scope: Scope) {
         alternateScope.addBinding(name, opposite);
       }
     }*/
-    return new UnionT(
-      scope,
-      undefined,
-      [consequent, alternateScope.evaluate(node.alternate)],
-    );
-  }
+		return new UnionT(
+			scope,
+			undefined,
+			[consequent, alternateScope.evaluate(node.alternate)],
+		);
+	}
 }

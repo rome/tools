@@ -48,7 +48,7 @@
 ### `1: formatted`
 
 ```
-<div style="color: &apos;red&apos;" />;
+<div style='color: &apos;red&apos;' />;
 
 ```
 
@@ -86,6 +86,6 @@
 ### `3: formatted`
 
 ```
-<div style={{color: 'red'}} />;
+<div style={{color: "red"}} />;
 
 ```

@@ -5,42 +5,39 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ClassDeclaration, ClassExpression} from '@romejs/js-ast';
-import Builder from '../../Builder';
-import {Token, concat, hardline, indent, space} from '../../tokens';
-import {hasInnerComments} from '../comments';
+import {ClassDeclaration, ClassExpression} from "@romejs/js-ast";
+import Builder from "../../Builder";
+import {Token, concat, hardline, indent, space} from "../../tokens";
+import {hasInnerComments} from "../comments";
 
 export default function ClassDeclaration(
-  builder: Builder,
-  node: ClassDeclaration | ClassExpression,
+	builder: Builder,
+	node: ClassDeclaration | ClassExpression,
 ): Token {
-  const tokens: Array<Token> = ['class'];
+	const tokens: Array<Token> = ["class"];
 
-  if (node.id) {
-    tokens.push(space, builder.tokenize(node.id, node));
-  }
+	if (node.id) {
+		tokens.push(space, builder.tokenize(node.id, node));
+	}
 
-  tokens.push(builder.tokenize(node.meta, node), space, '{');
+	tokens.push(builder.tokenize(node.meta, node), space, "{");
 
-  if (hasInnerComments(node.meta)) {
-    tokens.push(builder.tokenizeInnerComments(node.meta, true), hardline);
-  }
+	if (hasInnerComments(node.meta)) {
+		tokens.push(builder.tokenizeInnerComments(node.meta, true), hardline);
+	}
 
-  if (node.meta.body.length > 0) {
-    tokens.push(
-      concat([
-        indent(
-          concat([
-            hardline,
-            builder.tokenizeStatementList(node.meta.body, node.meta),
-          ]),
-        ),
-        hardline,
-      ]),
-    );
-  }
+	if (node.meta.body.length > 0) {
+		tokens.push(
+			concat([
+				indent(
+					concat([hardline, builder.tokenizeStatementList(node.meta.body, node.meta)]),
+				),
+				hardline,
+			]),
+		);
+	}
 
-  tokens.push('}');
+	tokens.push("}");
 
-  return concat(tokens);
+	return concat(tokens);
 }

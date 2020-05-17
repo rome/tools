@@ -5,19 +5,19 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type CommentBlock = JSNodeBase & {
-  type: 'CommentBlock';
-  value: string;
-  id: string;
+	type: "CommentBlock";
+	value: string;
+	id: string;
 };
 
 export const commentBlock = createBuilder<CommentBlock>(
-  'CommentBlock',
-  {
-    bindingKeys: {},
-    visitorKeys: {},
-  },
+	"CommentBlock",
+	{
+		bindingKeys: {},
+		visitorKeys: {},
+	},
 );

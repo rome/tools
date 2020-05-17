@@ -5,49 +5,49 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {testLintMultiple} from '../testHelpers';
-import {dedent} from '@romejs/string-utils';
+import {test} from "rome";
+import {testLintMultiple} from "../testHelpers";
+import {dedent} from "@romejs/string-utils";
 
 test(
-  'case single statement',
-  async (t) => {
-    // VALID
-    await testLintMultiple(
-      t,
-      [
-        // Single statement
-        dedent`
+	"case single statement",
+	async (t) => {
+		// VALID
+		await testLintMultiple(
+			t,
+			[
+				// Single statement
+				dedent`
           switch (foo) {
             case true:
             case false:
               return 'yes';
           }
         `,
-        // Single block
-        dedent`
+				// Single block
+				dedent`
           switch (foo) {
             case true: {
               // empty
             }
           }
         `,
-        // Nothing
-        dedent`
+				// Nothing
+				dedent`
           switch (foo) {
             case true:
           }
         `,
-      ],
-      {category: 'lint/caseSingleStatement'},
-    );
+			],
+			{category: "lint/caseSingleStatement"},
+		);
 
-    // INVALID
-    await testLintMultiple(
-      t,
-      [
-        // Multiple statements
-        dedent`
+		// INVALID
+		await testLintMultiple(
+			t,
+			[
+				// Multiple statements
+				dedent`
           switch (foo) {
             case true:
             case false:
@@ -55,8 +55,8 @@ test(
               foo;
           }
         `,
-      ],
-      {category: 'lint/caseSingleStatement'},
-    );
-  },
+			],
+			{category: "lint/caseSingleStatement"},
+		);
+	},
 );

@@ -6,12 +6,12 @@
  */
 
 import {
-  AnyNode,
-  RegExpWordCharacter,
-  regExpWordCharacter,
-} from '@romejs/js-ast';
+	AnyNode,
+	RegExpWordCharacter,
+	regExpWordCharacter,
+} from "@romejs/js-ast";
 
 export default function RegExpWordCharacter(node: AnyNode) {
-  node = regExpWordCharacter.assert(node);
-  throw new Error('unimplemented');
+	node = regExpWordCharacter.assert(node);
+	throw new Error("unimplemented");
 }

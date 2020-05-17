@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {AnyNode, assignmentIdentifier} from '@romejs/js-ast';
+import {Scope} from "../../scopes";
+import {AnyNode, assignmentIdentifier} from "@romejs/js-ast";
 
 export default function AssignmentIdentifier(node: AnyNode, scope: Scope) {
-  node = assignmentIdentifier.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = assignmentIdentifier.assert(node);
+	scope;
+	throw new Error("unimplemented");
 }

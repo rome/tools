@@ -14,6 +14,7 @@
 
     1 │ export function HelloWorldComponent() {
   > 2 │                 return <div>
+      │                        ^^^^^
   > 3 │                     Hello World!!!
   > 4 │                 </div>;
       │ ^^^^^^^^^^^^^^^^^^^^^^
@@ -29,7 +30,7 @@
 
 ```
 export function HelloWorldComponent() {
-  return <div>
+	return <div>
                     Hello World!!!
                 </div>;
 }

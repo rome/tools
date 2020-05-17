@@ -6,56 +6,56 @@
  */
 
 import {
-  AnyComment,
-  AnyStatement,
-  ConstProgramSyntax,
-  ConstSourceType,
-  Directive,
-  InterpreterDirective,
-  JSNodeBase,
-} from '../index';
-import {Diagnostics} from '@romejs/diagnostics';
-import {createBuilder} from '../utils';
+	AnyComment,
+	AnyStatement,
+	ConstProgramSyntax,
+	ConstSourceType,
+	Directive,
+	InterpreterDirective,
+	JSNodeBase,
+} from "../index";
+import {Diagnostics} from "@romejs/diagnostics";
+import {createBuilder} from "../utils";
 
 export type Program = JSNodeBase & {
-  type: 'Program';
-  directives: Array<Directive>;
-  body: Array<AnyStatement>;
-  filename: string;
-  interpreter: undefined | InterpreterDirective;
-  mtime: undefined | number;
-  corrupt: boolean;
-  sourceType: ConstSourceType;
-  diagnostics: Diagnostics;
-  comments: Array<AnyComment>;
-  syntax: Array<ConstProgramSyntax>;
-  hasHoistedVars: boolean;
+	type: "Program";
+	directives: Array<Directive>;
+	body: Array<AnyStatement>;
+	filename: string;
+	interpreter: undefined | InterpreterDirective;
+	mtime: undefined | number;
+	corrupt: boolean;
+	sourceType: ConstSourceType;
+	diagnostics: Diagnostics;
+	comments: Array<AnyComment>;
+	syntax: Array<ConstProgramSyntax>;
+	hasHoistedVars: boolean;
 };
 
 export const MOCK_PROGRAM: Program = {
-  type: 'Program',
-  directives: [],
-  body: [],
-  filename: 'unknown',
-  mtime: undefined,
-  interpreter: undefined,
-  corrupt: false,
-  sourceType: 'module',
-  diagnostics: [],
-  comments: [],
-  syntax: [],
-  hasHoistedVars: false,
+	type: "Program",
+	directives: [],
+	body: [],
+	filename: "unknown",
+	mtime: undefined,
+	interpreter: undefined,
+	corrupt: false,
+	sourceType: "module",
+	diagnostics: [],
+	comments: [],
+	syntax: [],
+	hasHoistedVars: false,
 };
 
 export const program = createBuilder<Program>(
-  'Program',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      interpreter: true,
-      directives: true,
-      body: true,
-      comments: true,
-    },
-  },
+	"Program",
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			interpreter: true,
+			directives: true,
+			body: true,
+			comments: true,
+		},
+	},
 );

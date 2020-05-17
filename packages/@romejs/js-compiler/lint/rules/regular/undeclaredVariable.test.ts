@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {testLint} from '../testHelpers';
+import {test} from "rome";
+import {testLint} from "../testHelpers";
 
 test(
-  'undeclared variable',
-  async (t) => {
-    await testLint(t, 'foobar;', {category: 'lint/undeclaredVariables'});
-  },
+	"undeclared variable",
+	async (t) => {
+		await testLint(t, "foobar;", {category: "lint/undeclaredVariables"});
+	},
 );

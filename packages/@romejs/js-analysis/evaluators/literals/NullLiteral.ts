@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {AnyNode, NullLiteral, nullLiteral} from '@romejs/js-ast';
-import NullT from '../../types/NullT';
+import {Scope} from "../../scopes";
+import {AnyNode, NullLiteral, nullLiteral} from "@romejs/js-ast";
+import NullT from "../../types/NullT";
 
 export default function NullLiteral(node: AnyNode, scope: Scope) {
-  node = node = nullLiteral.assert(node);
-  return new NullT(scope, node);
+	node = node = nullLiteral.assert(node);
+	return new NullT(scope, node);
 }

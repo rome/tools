@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {testLint} from '../testHelpers';
-import {dedent} from '@romejs/string-utils';
+import {test} from "rome";
+import {testLint} from "../testHelpers";
+import {dedent} from "@romejs/string-utils";
 
 test(
-  'duplicate import source',
-  async (t) => {
-    await testLint(
-      t,
-      dedent`
+	"duplicate import source",
+	async (t) => {
+		await testLint(
+			t,
+			dedent`
         import foo from './testdummy.ts';
         import {bar} from './testdummy.ts';
         import type {fooType} from './testdummy.ts';
@@ -23,7 +23,7 @@ test(
           type: 'foo'
         };
       `,
-      {category: 'lint/duplicateImportSource'},
-    );
-  },
+			{category: "lint/duplicateImportSource"},
+		);
+	},
 );

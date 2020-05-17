@@ -6,239 +6,239 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 50
-      index: 50
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Octal literal in strict mode'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 38
-          index: 38
-          line: 1
-        }
-        start: Object {
-          column: 38
-          index: 38
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    FunctionDeclaration {
-      id: BindingIdentifier {
-        name: 'hello'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'hello'
-          end: Object {
-            column: 14
-            index: 14
-            line: 1
-          }
-          start: Object {
-            column: 9
-            index: 9
-            line: 1
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 50
-          index: 50
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      head: FunctionHead {
-        async: false
-        generator: false
-        hasHoistedVars: false
-        params: Array []
-        rest: undefined
-        returnType: undefined
-        thisType: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 16
-            index: 16
-            line: 1
-          }
-          start: Object {
-            column: 14
-            index: 14
-            line: 1
-          }
-        }
-      }
-      body: BlockStatement {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 50
-            index: 50
-            line: 1
-          }
-          start: Object {
-            column: 17
-            index: 17
-            line: 1
-          }
-        }
-        directives: Array [
-          Directive {
-            value: 'use strict'
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 32
-                index: 32
-                line: 1
-              }
-              start: Object {
-                column: 19
-                index: 19
-                line: 1
-              }
-            }
-          }
-        ]
-        body: Array [
-          ExpressionStatement {
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 48
-                index: 48
-                line: 1
-              }
-              start: Object {
-                column: 33
-                index: 33
-                line: 1
-              }
-            }
-            expression: ObjectExpression {
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 46
-                  index: 46
-                  line: 1
-                }
-                start: Object {
-                  column: 34
-                  index: 34
-                  line: 1
-                }
-              }
-              properties: Array [
-                ObjectProperty {
-                  key: StaticPropertyKey {
-                    value: StringLiteral {
-                      value: '\x01'
-                      loc: Object {
-                        filename: 'input.js'
-                        end: Object {
-                          column: 40
-                          index: 40
-                          line: 1
-                        }
-                        start: Object {
-                          column: 36
-                          index: 36
-                          line: 1
-                        }
-                      }
-                    }
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 40
-                        index: 40
-                        line: 1
-                      }
-                      start: Object {
-                        column: 36
-                        index: 36
-                        line: 1
-                      }
-                    }
-                  }
-                  value: NumericLiteral {
-                    value: 42
-                    format: undefined
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 44
-                        index: 44
-                        line: 1
-                      }
-                      start: Object {
-                        column: 42
-                        index: 42
-                        line: 1
-                      }
-                    }
-                  }
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 44
-                      index: 44
-                      line: 1
-                    }
-                    start: Object {
-                      column: 36
-                      index: 36
-                      line: 1
-                    }
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 50
+			index: 50
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Octal literal in strict mode"}
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "script"
+				end: Object {
+					column: 38
+					index: 38
+					line: 1
+				}
+				start: Object {
+					column: 38
+					index: 38
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		FunctionDeclaration {
+			id: BindingIdentifier {
+				name: "hello"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "hello"
+					end: Object {
+						column: 14
+						index: 14
+						line: 1
+					}
+					start: Object {
+						column: 9
+						index: 9
+						line: 1
+					}
+				}
+			}
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 50
+					index: 50
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			head: FunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: Array []
+				rest: undefined
+				returnType: undefined
+				thisType: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 16
+						index: 16
+						line: 1
+					}
+					start: Object {
+						column: 14
+						index: 14
+						line: 1
+					}
+				}
+			}
+			body: BlockStatement {
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 50
+						index: 50
+						line: 1
+					}
+					start: Object {
+						column: 17
+						index: 17
+						line: 1
+					}
+				}
+				directives: Array [
+					Directive {
+						value: "use strict"
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 32
+								index: 32
+								line: 1
+							}
+							start: Object {
+								column: 19
+								index: 19
+								line: 1
+							}
+						}
+					}
+				]
+				body: Array [
+					ExpressionStatement {
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 48
+								index: 48
+								line: 1
+							}
+							start: Object {
+								column: 33
+								index: 33
+								line: 1
+							}
+						}
+						expression: ObjectExpression {
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 46
+									index: 46
+									line: 1
+								}
+								start: Object {
+									column: 34
+									index: 34
+									line: 1
+								}
+							}
+							properties: Array [
+								ObjectProperty {
+									key: StaticPropertyKey {
+										value: StringLiteral {
+											value: "\x01"
+											loc: Object {
+												filename: "input.js"
+												end: Object {
+													column: 40
+													index: 40
+													line: 1
+												}
+												start: Object {
+													column: 36
+													index: 36
+													line: 1
+												}
+											}
+										}
+										loc: Object {
+											filename: "input.js"
+											end: Object {
+												column: 40
+												index: 40
+												line: 1
+											}
+											start: Object {
+												column: 36
+												index: 36
+												line: 1
+											}
+										}
+									}
+									value: NumericLiteral {
+										value: 42
+										format: undefined
+										loc: Object {
+											filename: "input.js"
+											end: Object {
+												column: 44
+												index: 44
+												line: 1
+											}
+											start: Object {
+												column: 42
+												index: 42
+												line: 1
+											}
+										}
+									}
+									loc: Object {
+										filename: "input.js"
+										end: Object {
+											column: 44
+											index: 44
+											line: 1
+										}
+										start: Object {
+											column: 36
+											index: 36
+											line: 1
+										}
+									}
+								}
+							]
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

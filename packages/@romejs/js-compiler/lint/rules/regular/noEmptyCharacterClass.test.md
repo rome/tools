@@ -126,9 +126,9 @@ foo;
 ### `14: formatted`
 
 ```
-let foo = '';
+let foo = "";
 if (foo.match(/^abc/)) {
-  foo;
+	foo;
 }
 
 ```
@@ -211,7 +211,7 @@ foo;
 ### `1: formatted`
 
 ```
-let regExp = new RegExp('^abc[]');
+let regExp = new RegExp("^abc[]");
 regExp;
 
 ```

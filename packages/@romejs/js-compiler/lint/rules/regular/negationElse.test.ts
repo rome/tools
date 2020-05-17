@@ -5,23 +5,23 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {testLintMultiple} from '../testHelpers';
+import {test} from "rome";
+import {testLintMultiple} from "../testHelpers";
 
 test(
-  'negation else',
-  async (t) => {
-    await testLintMultiple(
-      t,
-      [
-        // INVALID
-        'if (!true) {consequent;} else {alternate;}',
-        '!true ? consequent : alternate',
-        // VALID
-        'if (!true) {consequent;}',
-        'true ? consequent : alternate',
-      ],
-      {category: 'lint/negationElse'},
-    );
-  },
+	"negation else",
+	async (t) => {
+		await testLintMultiple(
+			t,
+			[
+				// INVALID
+				"if (!true) {consequent;} else {alternate;}",
+				"!true ? consequent : alternate",
+				// VALID
+				"if (!true) {consequent;}",
+				"true ? consequent : alternate",
+			],
+			{category: "lint/negationElse"},
+		);
+	},
 );

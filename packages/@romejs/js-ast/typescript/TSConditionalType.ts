@@ -5,26 +5,26 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyTSPrimary, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {AnyTSPrimary, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type TSConditionalType = JSNodeBase & {
-  type: 'TSConditionalType';
-  checkType: AnyTSPrimary;
-  extendsType: AnyTSPrimary;
-  trueType: AnyTSPrimary;
-  falseType: AnyTSPrimary;
+	type: "TSConditionalType";
+	checkType: AnyTSPrimary;
+	extendsType: AnyTSPrimary;
+	trueType: AnyTSPrimary;
+	falseType: AnyTSPrimary;
 };
 
 export const tsConditionalType = createBuilder<TSConditionalType>(
-  'TSConditionalType',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      checkType: true,
-      extendsType: true,
-      trueType: true,
-      falseType: true,
-    },
-  },
+	"TSConditionalType",
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			checkType: true,
+			extendsType: true,
+			trueType: true,
+			falseType: true,
+		},
+	},
 );

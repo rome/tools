@@ -5,18 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type InterpreterDirective = JSNodeBase & {
-  type: 'InterpreterDirective';
-  value: string;
+	type: "InterpreterDirective";
+	value: string;
 };
 
 export const interpreterDirective = createBuilder<InterpreterDirective>(
-  'InterpreterDirective',
-  {
-    bindingKeys: {},
-    visitorKeys: {},
-  },
+	"InterpreterDirective",
+	{
+		bindingKeys: {},
+		visitorKeys: {},
+	},
 );

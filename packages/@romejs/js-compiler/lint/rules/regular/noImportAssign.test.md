@@ -14,6 +14,7 @@
 
     1 │ import x from "y";
   > 2 │ x=1;
+      │ ^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -24,7 +25,7 @@
 ### `0: formatted`
 
 ```
-import x from 'y';
+import x from "y";
 x = 1;
 
 ```
@@ -50,7 +51,7 @@ x = 1;
 ### `1: formatted`
 
 ```
-import x from 'y';
+import x from "y";
 [x] = 1;
 
 ```
@@ -76,7 +77,7 @@ import x from 'y';
 ### `2: formatted`
 
 ```
-import x from 'y';
+import x from "y";
 ({x} = 1);
 
 ```
@@ -91,6 +92,7 @@ import x from 'y';
 
     1 │ import x from "y";
   > 2 │ x++
+      │ ^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -101,7 +103,7 @@ import x from 'y';
 ### `3: formatted`
 
 ```
-import x from 'y';
+import x from "y";
 x++;
 
 ```
@@ -127,7 +129,7 @@ x++;
 ### `4: formatted`
 
 ```
-import x from 'y';
+import x from "y";
 [...x] = 1;
 
 ```
@@ -153,7 +155,7 @@ import x from 'y';
 ### `5: formatted`
 
 ```
-import x from 'y';
+import x from "y";
 ({...x} = 1);
 
 ```
@@ -179,9 +181,9 @@ import x from 'y';
 ### `6: formatted`
 
 ```
-import x from 'y';
+import x from "y";
 for (x in y) {
-  // empty
+	// empty
 }
 
 ```
@@ -196,6 +198,7 @@ for (x in y) {
 
     1 │ import x from "y";
   > 2 │ x+=1
+      │ ^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -206,7 +209,7 @@ for (x in y) {
 ### `7: formatted`
 
 ```
-import x from 'y';
+import x from "y";
 x += 1;
 
 ```
@@ -221,6 +224,7 @@ x += 1;
 
     1 │ import * as x from "y";
   > 2 │ x=1;
+      │ ^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -231,7 +235,7 @@ x += 1;
 ### `8: formatted`
 
 ```
-import * as x from 'y';
+import * as x from "y";
 x = 1;
 
 ```
@@ -246,6 +250,7 @@ x = 1;
 
     1 │ import {x} from "y";
   > 2 │ x=1;
+      │ ^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -256,7 +261,7 @@ x = 1;
 ### `9: formatted`
 
 ```
-import {x} from 'y';
+import {x} from "y";
 x = 1;
 
 ```

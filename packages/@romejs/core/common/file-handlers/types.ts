@@ -5,50 +5,50 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {FileReference} from '@romejs/core';
-import {WorkerLintOptions, WorkerParseOptions} from '../bridges/WorkerBridge';
-import Worker from '../../worker/Worker';
-import {DiagnosticSuppressions, Diagnostics} from '@romejs/diagnostics';
-import * as compiler from '@romejs/js-compiler';
-import {ConstProgramSyntax, ConstSourceType} from '@romejs/js-ast';
-import {AnalyzeDependencyResult} from '../types/analyzeDependencies';
+import {FileReference} from "@romejs/core";
+import {WorkerLintOptions, WorkerParseOptions} from "../bridges/WorkerBridge";
+import Worker from "../../worker/Worker";
+import {DiagnosticSuppressions, Diagnostics} from "@romejs/diagnostics";
+import * as compiler from "@romejs/js-compiler";
+import {ConstProgramSyntax, ConstSourceType} from "@romejs/js-ast";
+import {AnalyzeDependencyResult} from "../types/analyzeDependencies";
 
 export type ExtensionLintInfo = ExtensionHandlerMethodInfo & {
-  options: WorkerLintOptions;
+	options: WorkerLintOptions;
 };
 
 export type ExtensionLintResult = {
-  sourceText: string;
-  diagnostics: Diagnostics;
-  formatted: string;
-  suppressions: DiagnosticSuppressions;
+	sourceText: string;
+	diagnostics: Diagnostics;
+	formatted: string;
+	suppressions: DiagnosticSuppressions;
 };
 
 export type ExtensionHandlerMethodInfo = {
-  parseOptions: WorkerParseOptions;
-  file: FileReference;
-  project: compiler.TransformProjectDefinition;
-  worker: Worker;
+	parseOptions: WorkerParseOptions;
+	file: FileReference;
+	project: compiler.TransformProjectDefinition;
+	worker: Worker;
 };
 
 export type PartialExtensionHandler = {
-  sourceType?: ConstSourceType;
-  syntax?: Array<ConstProgramSyntax>;
-  isAsset?: boolean;
-  canHaveScale?: boolean;
-  lint?: (info: ExtensionLintInfo) => Promise<ExtensionLintResult>;
-  format?: (info: ExtensionHandlerMethodInfo) => Promise<ExtensionLintResult>;
-  toJavaScript?: (
-    opts: ExtensionHandlerMethodInfo,
-  ) => Promise<{
-    generated: boolean;
-    sourceText: string;
-  }>;
-  analyzeDependencies?: (
-    opts: ExtensionHandlerMethodInfo,
-  ) => Promise<AnalyzeDependencyResult>;
+	sourceType?: ConstSourceType;
+	syntax?: Array<ConstProgramSyntax>;
+	isAsset?: boolean;
+	canHaveScale?: boolean;
+	lint?: (info: ExtensionLintInfo) => Promise<ExtensionLintResult>;
+	format?: (info: ExtensionHandlerMethodInfo) => Promise<ExtensionLintResult>;
+	toJavaScript?: (
+		opts: ExtensionHandlerMethodInfo,
+	) => Promise<{
+		generated: boolean;
+		sourceText: string;
+	}>;
+	analyzeDependencies?: (
+		opts: ExtensionHandlerMethodInfo,
+	) => Promise<AnalyzeDependencyResult>;
 };
 
 export type ExtensionHandler = PartialExtensionHandler & {
-  ext: string;
+	ext: string;
 };

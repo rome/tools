@@ -5,44 +5,44 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, BindingIdentifier, bindingKeys} from '@romejs/js-ast';
+import {AnyNode, BindingIdentifier, bindingKeys} from "@romejs/js-ast";
 
 export default function getBindingIdentifiers(
-  node: AnyNode | Array<AnyNode>,
+	node: AnyNode | Array<AnyNode>,
 ): Array<BindingIdentifier> {
-  const ids: Array<BindingIdentifier> = [];
-  let queue: Array<undefined | AnyNode> = Array.isArray(node)
-    ? [...node]
-    : [node];
+	const ids: Array<BindingIdentifier> = [];
+	let queue: Array<undefined | AnyNode> = Array.isArray(node)
+		? [...node]
+		: [node];
 
-  while (queue.length) {
-    const node = queue.pop();
-    if (node === undefined) {
-      continue;
-    }
+	while (queue.length) {
+		const node = queue.pop();
+		if (node === undefined) {
+			continue;
+		}
 
-    if (node.type === 'BindingIdentifier') {
-      ids.push(node);
-      continue;
-    }
+		if (node.type === "BindingIdentifier") {
+			ids.push(node);
+			continue;
+		}
 
-    const keys: undefined | Array<string> = bindingKeys.get(node.type);
-    if (keys === undefined) {
-      continue;
-    }
+		const keys: undefined | Array<string> = bindingKeys.get(node.type);
+		if (keys === undefined) {
+			continue;
+		}
 
-    for (const key of keys) {
-      // rome-ignore lint/noExplicitAny
-      const val = (node as any)[key];
-      if (val === undefined) {
-        continue;
-      } else if (Array.isArray(val)) {
-        queue = queue.concat(val);
-      } else {
-        queue.push(val);
-      }
-    }
-  }
+		for (const key of keys) {
+			// rome-ignore lint/noExplicitAny
+			const val = (node as any)[key];
+			if (val === undefined) {
+				continue;
+			} else if (Array.isArray(val)) {
+				queue = queue.concat(val);
+			} else {
+				queue.push(val);
+			}
+		}
+	}
 
-  return ids;
+	return ids;
 }

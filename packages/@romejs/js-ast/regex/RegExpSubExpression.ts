@@ -5,20 +5,20 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyRegExpBodyItem, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {AnyRegExpBodyItem, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type RegExpSubExpression = JSNodeBase & {
-  type: 'RegExpSubExpression';
-  body: Array<AnyRegExpBodyItem>;
+	type: "RegExpSubExpression";
+	body: Array<AnyRegExpBodyItem>;
 };
 
 export const regExpSubExpression = createBuilder<RegExpSubExpression>(
-  'RegExpSubExpression',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      body: true,
-    },
-  },
+	"RegExpSubExpression",
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			body: true,
+		},
+	},
 );

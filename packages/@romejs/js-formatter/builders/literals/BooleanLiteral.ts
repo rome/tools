@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token} from '../../tokens';
-import {BooleanLiteral} from '@romejs/js-ast';
+import Builder from "../../Builder";
+import {Token} from "../../tokens";
+import {BooleanLiteral} from "@romejs/js-ast";
 
 export default function BooleanLiteral(
-  builder: Builder,
-  node: BooleanLiteral,
+	builder: Builder,
+	node: BooleanLiteral,
 ): Token {
-  return node.value ? 'true' : 'false';
+	return node.value ? "true" : "false";
 }

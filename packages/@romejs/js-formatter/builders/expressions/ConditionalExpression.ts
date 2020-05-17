@@ -5,62 +5,60 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, ConditionalExpression} from '@romejs/js-ast';
-import Builder from '../../Builder';
-import {Token, concat, group, indent, lineOrSpace, space} from '../../tokens';
+import {AnyNode, ConditionalExpression} from "@romejs/js-ast";
+import Builder from "../../Builder";
+import {Token, concat, group, indent, lineOrSpace, space} from "../../tokens";
 
 export default function ConditionalExpression(
-  builder: Builder,
-  node: ConditionalExpression,
-  parent: AnyNode,
+	builder: Builder,
+	node: ConditionalExpression,
+	parent: AnyNode,
 ): Token {
-  return printConditionalExpression(
-    builder.tokenize(node.test, node),
-    builder.tokenize(node.consequent, node),
-    builder.tokenize(node.alternate, node),
-    parent,
-    node.consequent,
-    node.alternate,
-  );
+	return printConditionalExpression(
+		builder.tokenize(node.test, node),
+		builder.tokenize(node.consequent, node),
+		builder.tokenize(node.alternate, node),
+		parent,
+		node.consequent,
+		node.alternate,
+	);
 }
 
 function isConditionalExpression(node: AnyNode): boolean {
-  return (
-    node.type === 'ConditionalExpression' || node.type === 'TSConditionalType'
-  );
+	return (
+		node.type === "ConditionalExpression" || node.type === "TSConditionalType"
+	);
 }
 
 export function printConditionalExpression(
-  test: Token,
-  consequent: Token,
-  alternate: Token,
-  parentNode: AnyNode,
-  consequentNode: AnyNode,
-  alternateNode: AnyNode,
+	test: Token,
+	consequent: Token,
+	alternate: Token,
+	parentNode: AnyNode,
+	consequentNode: AnyNode,
+	alternateNode: AnyNode,
 ): Token {
-  const printed = concat([
-    test,
-    indent(
-      concat([
-        lineOrSpace,
-        '?',
-        space,
-        isConditionalExpression(consequentNode)
-          ? consequent
-          : indent(consequent),
-      ]),
-    ),
-    indent(
-      concat([
-        lineOrSpace,
-        ':',
-        space,
-        isConditionalExpression(alternateNode) ? alternate : indent(alternate),
-      ]),
-    ),
-  ]);
+	const printed = concat([
+		test,
+		indent(
+			concat([
+				lineOrSpace,
+				"?",
+				space,
+				isConditionalExpression(consequentNode) ? consequent : indent(consequent),
+			]),
+		),
+		indent(
+			concat([
+				lineOrSpace,
+				":",
+				space,
+				isConditionalExpression(alternateNode) ? alternate : indent(alternate),
+			]),
+		),
+	]);
 
-  // Do not group nested conditional expressions. By doing so, if a conditional
-  // expression breaks, the hole chain breaks.
-  return isConditionalExpression(parentNode) ? printed : group(printed);
+	// Do not group nested conditional expressions. By doing so, if a conditional
+	// expression breaks, the hole chain breaks.
+	return isConditionalExpression(parentNode) ? printed : group(printed);
 }

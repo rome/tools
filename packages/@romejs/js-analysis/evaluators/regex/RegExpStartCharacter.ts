@@ -6,12 +6,12 @@
  */
 
 import {
-  AnyNode,
-  RegExpStartCharacter,
-  regExpStartCharacter,
-} from '@romejs/js-ast';
+	AnyNode,
+	RegExpStartCharacter,
+	regExpStartCharacter,
+} from "@romejs/js-ast";
 
 export default function RegExpStartCharacter(node: AnyNode) {
-  node = regExpStartCharacter.assert(node);
-  throw new Error('unimplemented');
+	node = regExpStartCharacter.assert(node);
+	throw new Error("unimplemented");
 }

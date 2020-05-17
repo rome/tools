@@ -6,197 +6,197 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 40
-      line: 3
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExportLocalDeclaration {
-      declaration: undefined
-      exportKind: 'value'
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 15
-          index: 15
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      specifiers: Array [
-        ExportLocalSpecifier {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 12
-              index: 12
-              line: 1
-            }
-            start: Object {
-              column: 9
-              index: 9
-              line: 1
-            }
-          }
-          exported: Identifier {
-            name: 'foo'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'foo'
-              end: Object {
-                column: 12
-                index: 12
-                line: 1
-              }
-              start: Object {
-                column: 9
-                index: 9
-                line: 1
-              }
-            }
-          }
-          local: ReferenceIdentifier {
-            name: 'foo'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'foo'
-              end: Object {
-                column: 12
-                index: 12
-                line: 1
-              }
-              start: Object {
-                column: 9
-                index: 9
-                line: 1
-              }
-            }
-          }
-        }
-      ]
-    }
-    ExportLocalDeclaration {
-      exportKind: 'value'
-      specifiers: undefined
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 23
-          index: 39
-          line: 2
-        }
-        start: Object {
-          column: 0
-          index: 16
-          line: 2
-        }
-      }
-      declaration: VariableDeclarationStatement {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 23
-            index: 39
-            line: 2
-          }
-          start: Object {
-            column: 7
-            index: 23
-            line: 2
-          }
-        }
-        declaration: VariableDeclaration {
-          kind: 'const'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 23
-              index: 39
-              line: 2
-            }
-            start: Object {
-              column: 7
-              index: 23
-              line: 2
-            }
-          }
-          declarations: Array [
-            VariableDeclarator {
-              id: BindingIdentifier {
-                name: 'foo'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'foo'
-                  end: Object {
-                    column: 16
-                    index: 32
-                    line: 2
-                  }
-                  start: Object {
-                    column: 13
-                    index: 29
-                    line: 2
-                  }
-                }
-              }
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 22
-                  index: 38
-                  line: 2
-                }
-                start: Object {
-                  column: 13
-                  index: 29
-                  line: 2
-                }
-              }
-              init: ReferenceIdentifier {
-                name: 'bar'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'bar'
-                  end: Object {
-                    column: 22
-                    index: 38
-                    line: 2
-                  }
-                  start: Object {
-                    column: 19
-                    index: 35
-                    line: 2
-                  }
-                }
-              }
-            }
-          ]
-        }
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "module"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 40
+			line: 3
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		ExportLocalDeclaration {
+			declaration: undefined
+			exportKind: "value"
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 15
+					index: 15
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			specifiers: Array [
+				ExportLocalSpecifier {
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 12
+							index: 12
+							line: 1
+						}
+						start: Object {
+							column: 9
+							index: 9
+							line: 1
+						}
+					}
+					exported: Identifier {
+						name: "foo"
+						loc: Object {
+							filename: "input.js"
+							identifierName: "foo"
+							end: Object {
+								column: 12
+								index: 12
+								line: 1
+							}
+							start: Object {
+								column: 9
+								index: 9
+								line: 1
+							}
+						}
+					}
+					local: ReferenceIdentifier {
+						name: "foo"
+						loc: Object {
+							filename: "input.js"
+							identifierName: "foo"
+							end: Object {
+								column: 12
+								index: 12
+								line: 1
+							}
+							start: Object {
+								column: 9
+								index: 9
+								line: 1
+							}
+						}
+					}
+				}
+			]
+		}
+		ExportLocalDeclaration {
+			exportKind: "value"
+			specifiers: undefined
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 23
+					index: 39
+					line: 2
+				}
+				start: Object {
+					column: 0
+					index: 16
+					line: 2
+				}
+			}
+			declaration: VariableDeclarationStatement {
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 23
+						index: 39
+						line: 2
+					}
+					start: Object {
+						column: 7
+						index: 23
+						line: 2
+					}
+				}
+				declaration: VariableDeclaration {
+					kind: "const"
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 23
+							index: 39
+							line: 2
+						}
+						start: Object {
+							column: 7
+							index: 23
+							line: 2
+						}
+					}
+					declarations: Array [
+						VariableDeclarator {
+							id: BindingIdentifier {
+								name: "foo"
+								loc: Object {
+									filename: "input.js"
+									identifierName: "foo"
+									end: Object {
+										column: 16
+										index: 32
+										line: 2
+									}
+									start: Object {
+										column: 13
+										index: 29
+										line: 2
+									}
+								}
+							}
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 22
+									index: 38
+									line: 2
+								}
+								start: Object {
+									column: 13
+									index: 29
+									line: 2
+								}
+							}
+							init: ReferenceIdentifier {
+								name: "bar"
+								loc: Object {
+									filename: "input.js"
+									identifierName: "bar"
+									end: Object {
+										column: 22
+										index: 38
+										line: 2
+									}
+									start: Object {
+										column: 19
+										index: 35
+										line: 2
+									}
+								}
+							}
+						}
+					]
+				}
+			}
+		}
+	]
 }
 ```

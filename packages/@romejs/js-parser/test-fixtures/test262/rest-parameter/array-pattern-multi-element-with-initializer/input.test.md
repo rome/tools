@@ -6,302 +6,302 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 62
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    FunctionDeclaration {
-      id: BindingIdentifier {
-        name: 'multiElementWithInitializer'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'multiElementWithInitializer'
-          end: Object {
-            column: 36
-            index: 36
-            line: 1
-          }
-          start: Object {
-            column: 9
-            index: 9
-            line: 1
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 61
-          index: 61
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      body: BlockStatement {
-        body: Array []
-        directives: Array []
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 61
-            index: 61
-            line: 1
-          }
-          start: Object {
-            column: 59
-            index: 59
-            line: 1
-          }
-        }
-      }
-      head: FunctionHead {
-        async: false
-        generator: false
-        hasHoistedVars: false
-        params: Array []
-        returnType: undefined
-        thisType: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 58
-            index: 58
-            line: 1
-          }
-          start: Object {
-            column: 36
-            index: 36
-            line: 1
-          }
-        }
-        rest: BindingArrayPattern {
-          rest: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 57
-              index: 57
-              line: 1
-            }
-            start: Object {
-              column: 40
-              index: 40
-              line: 1
-            }
-          }
-          meta: PatternMeta {
-            optional: undefined
-            typeAnnotation: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 57
-                index: 57
-                line: 1
-              }
-              start: Object {
-                column: 40
-                index: 40
-                line: 1
-              }
-            }
-          }
-          elements: Array [
-            BindingAssignmentPattern {
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 46
-                  index: 46
-                  line: 1
-                }
-                start: Object {
-                  column: 41
-                  index: 41
-                  line: 1
-                }
-              }
-              right: NumericLiteral {
-                value: 0
-                format: undefined
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 46
-                    index: 46
-                    line: 1
-                  }
-                  start: Object {
-                    column: 45
-                    index: 45
-                    line: 1
-                  }
-                }
-              }
-              left: BindingIdentifier {
-                name: 'a'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'a'
-                  end: Object {
-                    column: 42
-                    index: 42
-                    line: 1
-                  }
-                  start: Object {
-                    column: 41
-                    index: 41
-                    line: 1
-                  }
-                }
-                meta: PatternMeta {
-                  optional: undefined
-                  typeAnnotation: undefined
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 42
-                      index: 42
-                      line: 1
-                    }
-                    start: Object {
-                      column: 41
-                      index: 41
-                      line: 1
-                    }
-                  }
-                }
-              }
-            }
-            BindingIdentifier {
-              name: 'b'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'b'
-                end: Object {
-                  column: 49
-                  index: 49
-                  line: 1
-                }
-                start: Object {
-                  column: 48
-                  index: 48
-                  line: 1
-                }
-              }
-              meta: PatternMeta {
-                optional: undefined
-                typeAnnotation: undefined
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 49
-                    index: 49
-                    line: 1
-                  }
-                  start: Object {
-                    column: 48
-                    index: 48
-                    line: 1
-                  }
-                }
-              }
-            }
-            BindingAssignmentPattern {
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 56
-                  index: 56
-                  line: 1
-                }
-                start: Object {
-                  column: 51
-                  index: 51
-                  line: 1
-                }
-              }
-              right: NumericLiteral {
-                value: 1
-                format: undefined
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 56
-                    index: 56
-                    line: 1
-                  }
-                  start: Object {
-                    column: 55
-                    index: 55
-                    line: 1
-                  }
-                }
-              }
-              left: BindingIdentifier {
-                name: 'c'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'c'
-                  end: Object {
-                    column: 52
-                    index: 52
-                    line: 1
-                  }
-                  start: Object {
-                    column: 51
-                    index: 51
-                    line: 1
-                  }
-                }
-                meta: PatternMeta {
-                  optional: undefined
-                  typeAnnotation: undefined
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 52
-                      index: 52
-                      line: 1
-                    }
-                    start: Object {
-                      column: 51
-                      index: 51
-                      line: 1
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        }
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 62
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		FunctionDeclaration {
+			id: BindingIdentifier {
+				name: "multiElementWithInitializer"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "multiElementWithInitializer"
+					end: Object {
+						column: 36
+						index: 36
+						line: 1
+					}
+					start: Object {
+						column: 9
+						index: 9
+						line: 1
+					}
+				}
+			}
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 61
+					index: 61
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			body: BlockStatement {
+				body: Array []
+				directives: Array []
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 61
+						index: 61
+						line: 1
+					}
+					start: Object {
+						column: 59
+						index: 59
+						line: 1
+					}
+				}
+			}
+			head: FunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: Array []
+				returnType: undefined
+				thisType: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 58
+						index: 58
+						line: 1
+					}
+					start: Object {
+						column: 36
+						index: 36
+						line: 1
+					}
+				}
+				rest: BindingArrayPattern {
+					rest: undefined
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 57
+							index: 57
+							line: 1
+						}
+						start: Object {
+							column: 40
+							index: 40
+							line: 1
+						}
+					}
+					meta: PatternMeta {
+						optional: undefined
+						typeAnnotation: undefined
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 57
+								index: 57
+								line: 1
+							}
+							start: Object {
+								column: 40
+								index: 40
+								line: 1
+							}
+						}
+					}
+					elements: Array [
+						BindingAssignmentPattern {
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 46
+									index: 46
+									line: 1
+								}
+								start: Object {
+									column: 41
+									index: 41
+									line: 1
+								}
+							}
+							right: NumericLiteral {
+								value: 0
+								format: undefined
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 46
+										index: 46
+										line: 1
+									}
+									start: Object {
+										column: 45
+										index: 45
+										line: 1
+									}
+								}
+							}
+							left: BindingIdentifier {
+								name: "a"
+								loc: Object {
+									filename: "input.js"
+									identifierName: "a"
+									end: Object {
+										column: 42
+										index: 42
+										line: 1
+									}
+									start: Object {
+										column: 41
+										index: 41
+										line: 1
+									}
+								}
+								meta: PatternMeta {
+									optional: undefined
+									typeAnnotation: undefined
+									loc: Object {
+										filename: "input.js"
+										end: Object {
+											column: 42
+											index: 42
+											line: 1
+										}
+										start: Object {
+											column: 41
+											index: 41
+											line: 1
+										}
+									}
+								}
+							}
+						}
+						BindingIdentifier {
+							name: "b"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "b"
+								end: Object {
+									column: 49
+									index: 49
+									line: 1
+								}
+								start: Object {
+									column: 48
+									index: 48
+									line: 1
+								}
+							}
+							meta: PatternMeta {
+								optional: undefined
+								typeAnnotation: undefined
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 49
+										index: 49
+										line: 1
+									}
+									start: Object {
+										column: 48
+										index: 48
+										line: 1
+									}
+								}
+							}
+						}
+						BindingAssignmentPattern {
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 56
+									index: 56
+									line: 1
+								}
+								start: Object {
+									column: 51
+									index: 51
+									line: 1
+								}
+							}
+							right: NumericLiteral {
+								value: 1
+								format: undefined
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 56
+										index: 56
+										line: 1
+									}
+									start: Object {
+										column: 55
+										index: 55
+										line: 1
+									}
+								}
+							}
+							left: BindingIdentifier {
+								name: "c"
+								loc: Object {
+									filename: "input.js"
+									identifierName: "c"
+									end: Object {
+										column: 52
+										index: 52
+										line: 1
+									}
+									start: Object {
+										column: 51
+										index: 51
+										line: 1
+									}
+								}
+								meta: PatternMeta {
+									optional: undefined
+									typeAnnotation: undefined
+									loc: Object {
+										filename: "input.js"
+										end: Object {
+											column: 52
+											index: 52
+											line: 1
+										}
+										start: Object {
+											column: 51
+											index: 51
+											line: 1
+										}
+									}
+								}
+							}
+						}
+					]
+				}
+			}
+		}
+	]
 }
 ```

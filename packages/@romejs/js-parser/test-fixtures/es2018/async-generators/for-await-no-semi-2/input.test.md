@@ -6,241 +6,241 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 55
-      line: 4
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Can\'t have an await on a regular for loop'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 11
-          index: 32
-          line: 2
-        }
-        start: Object {
-          column: 11
-          index: 32
-          line: 2
-        }
-      }
-    }
-  ]
-  body: Array [
-    FunctionDeclaration {
-      id: BindingIdentifier {
-        name: 'f'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'f'
-          end: Object {
-            column: 16
-            index: 16
-            line: 1
-          }
-          start: Object {
-            column: 15
-            index: 15
-            line: 1
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 1
-          index: 54
-          line: 3
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      head: FunctionHead {
-        async: true
-        generator: false
-        hasHoistedVars: false
-        params: Array []
-        rest: undefined
-        returnType: undefined
-        thisType: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 18
-            index: 18
-            line: 1
-          }
-          start: Object {
-            column: 16
-            index: 16
-            line: 1
-          }
-        }
-      }
-      body: BlockStatement {
-        directives: Array []
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 1
-            index: 54
-            line: 3
-          }
-          start: Object {
-            column: 19
-            index: 19
-            line: 1
-          }
-        }
-        body: Array [
-          ForStatement {
-            update: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 31
-                index: 52
-                line: 2
-              }
-              start: Object {
-                column: 2
-                index: 23
-                line: 2
-              }
-            }
-            body: EmptyStatement {
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 31
-                  index: 52
-                  line: 2
-                }
-                start: Object {
-                  column: 30
-                  index: 51
-                  line: 2
-                }
-              }
-            }
-            test: BooleanLiteral {
-              value: false
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 28
-                  index: 49
-                  line: 2
-                }
-                start: Object {
-                  column: 23
-                  index: 44
-                  line: 2
-                }
-              }
-            }
-            init: VariableDeclaration {
-              kind: 'let'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 22
-                  index: 43
-                  line: 2
-                }
-                start: Object {
-                  column: 13
-                  index: 34
-                  line: 2
-                }
-              }
-              declarations: Array [
-                VariableDeclarator {
-                  id: BindingIdentifier {
-                    name: 'i'
-                    loc: Object {
-                      filename: 'input.js'
-                      identifierName: 'i'
-                      end: Object {
-                        column: 18
-                        index: 39
-                        line: 2
-                      }
-                      start: Object {
-                        column: 17
-                        index: 38
-                        line: 2
-                      }
-                    }
-                  }
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 22
-                      index: 43
-                      line: 2
-                    }
-                    start: Object {
-                      column: 17
-                      index: 38
-                      line: 2
-                    }
-                  }
-                  init: NumericLiteral {
-                    value: 0
-                    format: undefined
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 22
-                        index: 43
-                        line: 2
-                      }
-                      start: Object {
-                        column: 21
-                        index: 42
-                        line: 2
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 55
+			line: 4
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Can't have an await on a regular for loop"}
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "script"
+				end: Object {
+					column: 11
+					index: 32
+					line: 2
+				}
+				start: Object {
+					column: 11
+					index: 32
+					line: 2
+				}
+			}
+		}
+	]
+	body: Array [
+		FunctionDeclaration {
+			id: BindingIdentifier {
+				name: "f"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "f"
+					end: Object {
+						column: 16
+						index: 16
+						line: 1
+					}
+					start: Object {
+						column: 15
+						index: 15
+						line: 1
+					}
+				}
+			}
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 1
+					index: 54
+					line: 3
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			head: FunctionHead {
+				async: true
+				generator: false
+				hasHoistedVars: false
+				params: Array []
+				rest: undefined
+				returnType: undefined
+				thisType: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 18
+						index: 18
+						line: 1
+					}
+					start: Object {
+						column: 16
+						index: 16
+						line: 1
+					}
+				}
+			}
+			body: BlockStatement {
+				directives: Array []
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 1
+						index: 54
+						line: 3
+					}
+					start: Object {
+						column: 19
+						index: 19
+						line: 1
+					}
+				}
+				body: Array [
+					ForStatement {
+						update: undefined
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 31
+								index: 52
+								line: 2
+							}
+							start: Object {
+								column: 2
+								index: 23
+								line: 2
+							}
+						}
+						body: EmptyStatement {
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 31
+									index: 52
+									line: 2
+								}
+								start: Object {
+									column: 30
+									index: 51
+									line: 2
+								}
+							}
+						}
+						test: BooleanLiteral {
+							value: false
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 28
+									index: 49
+									line: 2
+								}
+								start: Object {
+									column: 23
+									index: 44
+									line: 2
+								}
+							}
+						}
+						init: VariableDeclaration {
+							kind: "let"
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 22
+									index: 43
+									line: 2
+								}
+								start: Object {
+									column: 13
+									index: 34
+									line: 2
+								}
+							}
+							declarations: Array [
+								VariableDeclarator {
+									id: BindingIdentifier {
+										name: "i"
+										loc: Object {
+											filename: "input.js"
+											identifierName: "i"
+											end: Object {
+												column: 18
+												index: 39
+												line: 2
+											}
+											start: Object {
+												column: 17
+												index: 38
+												line: 2
+											}
+										}
+									}
+									loc: Object {
+										filename: "input.js"
+										end: Object {
+											column: 22
+											index: 43
+											line: 2
+										}
+										start: Object {
+											column: 17
+											index: 38
+											line: 2
+										}
+									}
+									init: NumericLiteral {
+										value: 0
+										format: undefined
+										loc: Object {
+											filename: "input.js"
+											end: Object {
+												column: 22
+												index: 43
+												line: 2
+											}
+											start: Object {
+												column: 21
+												index: 42
+												line: 2
+											}
+										}
+									}
+								}
+							]
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

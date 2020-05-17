@@ -6,147 +6,147 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.ts'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array ['ts']
-  loc: Object {
-    filename: 'input.ts'
-    end: Object {
-      column: 0
-      index: 28
-      line: 5
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    TSEnumDeclaration {
-      id: BindingIdentifier {
-        name: 'E'
-        loc: Object {
-          filename: 'input.ts'
-          identifierName: 'E'
-          end: Object {
-            column: 6
-            index: 6
-            line: 1
-          }
-          start: Object {
-            column: 5
-            index: 5
-            line: 1
-          }
-        }
-      }
-      const: false
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 1
-          index: 27
-          line: 4
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      members: Array [
-        TSEnumMember {
-          id: Identifier {
-            name: 'A'
-            loc: Object {
-              filename: 'input.ts'
-              identifierName: 'A'
-              end: Object {
-                column: 5
-                index: 14
-                line: 2
-              }
-              start: Object {
-                column: 4
-                index: 13
-                line: 2
-              }
-            }
-          }
-          initializer: undefined
-          loc: Object {
-            filename: 'input.ts'
-            end: Object {
-              column: 5
-              index: 14
-              line: 2
-            }
-            start: Object {
-              column: 4
-              index: 13
-              line: 2
-            }
-          }
-        }
-        TSEnumMember {
-          id: Identifier {
-            name: 'B'
-            loc: Object {
-              filename: 'input.ts'
-              identifierName: 'B'
-              end: Object {
-                column: 5
-                index: 21
-                line: 3
-              }
-              start: Object {
-                column: 4
-                index: 20
-                line: 3
-              }
-            }
-          }
-          loc: Object {
-            filename: 'input.ts'
-            end: Object {
-              column: 9
-              index: 25
-              line: 3
-            }
-            start: Object {
-              column: 4
-              index: 20
-              line: 3
-            }
-          }
-          initializer: NumericLiteral {
-            value: 0
-            format: undefined
-            loc: Object {
-              filename: 'input.ts'
-              end: Object {
-                column: 9
-                index: 25
-                line: 3
-              }
-              start: Object {
-                column: 8
-                index: 24
-                line: 3
-              }
-            }
-          }
-        }
-      ]
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.ts"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "module"
+	syntax: Array ["ts"]
+	loc: Object {
+		filename: "input.ts"
+		end: Object {
+			column: 0
+			index: 28
+			line: 5
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		TSEnumDeclaration {
+			id: BindingIdentifier {
+				name: "E"
+				loc: Object {
+					filename: "input.ts"
+					identifierName: "E"
+					end: Object {
+						column: 6
+						index: 6
+						line: 1
+					}
+					start: Object {
+						column: 5
+						index: 5
+						line: 1
+					}
+				}
+			}
+			const: false
+			loc: Object {
+				filename: "input.ts"
+				end: Object {
+					column: 1
+					index: 27
+					line: 4
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			members: Array [
+				TSEnumMember {
+					id: Identifier {
+						name: "A"
+						loc: Object {
+							filename: "input.ts"
+							identifierName: "A"
+							end: Object {
+								column: 5
+								index: 14
+								line: 2
+							}
+							start: Object {
+								column: 4
+								index: 13
+								line: 2
+							}
+						}
+					}
+					initializer: undefined
+					loc: Object {
+						filename: "input.ts"
+						end: Object {
+							column: 5
+							index: 14
+							line: 2
+						}
+						start: Object {
+							column: 4
+							index: 13
+							line: 2
+						}
+					}
+				}
+				TSEnumMember {
+					id: Identifier {
+						name: "B"
+						loc: Object {
+							filename: "input.ts"
+							identifierName: "B"
+							end: Object {
+								column: 5
+								index: 21
+								line: 3
+							}
+							start: Object {
+								column: 4
+								index: 20
+								line: 3
+							}
+						}
+					}
+					loc: Object {
+						filename: "input.ts"
+						end: Object {
+							column: 9
+							index: 25
+							line: 3
+						}
+						start: Object {
+							column: 4
+							index: 20
+							line: 3
+						}
+					}
+					initializer: NumericLiteral {
+						value: 0
+						format: undefined
+						loc: Object {
+							filename: "input.ts"
+							end: Object {
+								column: 9
+								index: 25
+								line: 3
+							}
+							start: Object {
+								column: 8
+								index: 24
+								line: 3
+							}
+						}
+					}
+				}
+			]
+		}
+	]
 }
 ```

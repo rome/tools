@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {EventSubscription} from './types';
+import {EventSubscription} from "./types";
 
 export function mergeEventSubscriptions(
-  subs: Array<EventSubscription>,
+	subs: Array<EventSubscription>,
 ): EventSubscription {
-  return {
-    unsubscribe() {
-      for (const sub of subs) {
-        sub.unsubscribe();
-      }
-    },
-  };
+	return {
+		unsubscribe() {
+			for (const sub of subs) {
+				sub.unsubscribe();
+			}
+		},
+	};
 }

@@ -5,57 +5,57 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from '@romejs/js-compiler';
-import {AnyExpression, UnaryExpression} from '@romejs/js-ast';
-import {descriptions} from '@romejs/diagnostics';
+import {Path} from "@romejs/js-compiler";
+import {AnyExpression, UnaryExpression} from "@romejs/js-ast";
+import {descriptions} from "@romejs/diagnostics";
 
 function isNegation(node: AnyExpression): node is UnaryExpression {
-  return (
-    node.type === 'UnaryExpression' &&
-    node.prefix === true &&
-    node.operator === '!'
-  );
+	return (
+		node.type === "UnaryExpression" &&
+		node.prefix === true &&
+		node.operator === "!"
+	);
 }
 
 export default {
-  name: 'negationElse',
-  enter(path: Path) {
-    const {node} = path;
+	name: "negationElse",
+	enter(path: Path) {
+		const {node} = path;
 
-    if (
-      node.type === 'IfStatement' &&
-      node.alternate !== undefined &&
-      isNegation(node.test)
-    ) {
-      return path.context.addFixableDiagnostic(
-        {
-          old: node,
-          fixed: {
-            ...node,
-            test: node.test.argument,
-            consequent: node.alternate,
-            alternate: node.consequent,
-          },
-        },
-        descriptions.LINT.NEGATION_ELSE,
-      );
-    }
+		if (
+			node.type === "IfStatement" &&
+			node.alternate !== undefined &&
+			isNegation(node.test)
+		) {
+			return path.context.addFixableDiagnostic(
+				{
+					old: node,
+					fixed: {
+						...node,
+						test: node.test.argument,
+						consequent: node.alternate,
+						alternate: node.consequent,
+					},
+				},
+				descriptions.LINT.NEGATION_ELSE,
+			);
+		}
 
-    if (node.type === 'ConditionalExpression' && isNegation(node.test)) {
-      return path.context.addFixableDiagnostic(
-        {
-          old: node,
-          fixed: {
-            ...node,
-            test: node.test.argument,
-            consequent: node.alternate,
-            alternate: node.consequent,
-          },
-        },
-        descriptions.LINT.NEGATION_ELSE,
-      );
-    }
+		if (node.type === "ConditionalExpression" && isNegation(node.test)) {
+			return path.context.addFixableDiagnostic(
+				{
+					old: node,
+					fixed: {
+						...node,
+						test: node.test.argument,
+						consequent: node.alternate,
+						alternate: node.consequent,
+					},
+				},
+				descriptions.LINT.NEGATION_ELSE,
+			);
+		}
 
-    return node;
-  },
+		return node;
+	},
 };

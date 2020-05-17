@@ -6,178 +6,178 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.ts'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array ['ts']
-  loc: Object {
-    filename: 'input.ts'
-    end: Object {
-      column: 0
-      index: 43
-      line: 4
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    TSInterfaceDeclaration {
-      id: BindingIdentifier {
-        name: 'I'
-        loc: Object {
-          filename: 'input.ts'
-          identifierName: 'I'
-          end: Object {
-            column: 11
-            index: 11
-            line: 1
-          }
-          start: Object {
-            column: 10
-            index: 10
-            line: 1
-          }
-        }
-      }
-      extends: undefined
-      typeParameters: undefined
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 1
-          index: 42
-          line: 3
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      body: TSInterfaceBody {
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 1
-            index: 42
-            line: 3
-          }
-          start: Object {
-            column: 12
-            index: 12
-            line: 1
-          }
-        }
-        body: Array [
-          TSConstructSignatureDeclaration {
-            loc: Object {
-              filename: 'input.ts'
-              end: Object {
-                column: 26
-                index: 40
-                line: 2
-              }
-              start: Object {
-                column: 4
-                index: 18
-                line: 2
-              }
-            }
-            typeAnnotation: VoidKeywordTypeAnnotation {
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 25
-                  index: 39
-                  line: 2
-                }
-                start: Object {
-                  column: 21
-                  index: 35
-                  line: 2
-                }
-              }
-            }
-            meta: TSSignatureDeclarationMeta {
-              rest: undefined
-              typeParameters: undefined
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 25
-                  index: 39
-                  line: 2
-                }
-                start: Object {
-                  column: 8
-                  index: 22
-                  line: 2
-                }
-              }
-              parameters: Array [
-                BindingIdentifier {
-                  name: 'x'
-                  loc: Object {
-                    filename: 'input.ts'
-                    identifierName: 'x'
-                    end: Object {
-                      column: 10
-                      index: 24
-                      line: 2
-                    }
-                    start: Object {
-                      column: 9
-                      index: 23
-                      line: 2
-                    }
-                  }
-                  meta: PatternMeta {
-                    optional: undefined
-                    loc: Object {
-                      filename: 'input.ts'
-                      end: Object {
-                        column: 18
-                        index: 32
-                        line: 2
-                      }
-                      start: Object {
-                        column: 9
-                        index: 23
-                        line: 2
-                      }
-                    }
-                    typeAnnotation: NumberKeywordTypeAnnotation {
-                      loc: Object {
-                        filename: 'input.ts'
-                        end: Object {
-                          column: 18
-                          index: 32
-                          line: 2
-                        }
-                        start: Object {
-                          column: 12
-                          index: 26
-                          line: 2
-                        }
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.ts"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "module"
+	syntax: Array ["ts"]
+	loc: Object {
+		filename: "input.ts"
+		end: Object {
+			column: 0
+			index: 43
+			line: 4
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		TSInterfaceDeclaration {
+			id: BindingIdentifier {
+				name: "I"
+				loc: Object {
+					filename: "input.ts"
+					identifierName: "I"
+					end: Object {
+						column: 11
+						index: 11
+						line: 1
+					}
+					start: Object {
+						column: 10
+						index: 10
+						line: 1
+					}
+				}
+			}
+			extends: undefined
+			typeParameters: undefined
+			loc: Object {
+				filename: "input.ts"
+				end: Object {
+					column: 1
+					index: 42
+					line: 3
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			body: TSInterfaceBody {
+				loc: Object {
+					filename: "input.ts"
+					end: Object {
+						column: 1
+						index: 42
+						line: 3
+					}
+					start: Object {
+						column: 12
+						index: 12
+						line: 1
+					}
+				}
+				body: Array [
+					TSConstructSignatureDeclaration {
+						loc: Object {
+							filename: "input.ts"
+							end: Object {
+								column: 26
+								index: 40
+								line: 2
+							}
+							start: Object {
+								column: 4
+								index: 18
+								line: 2
+							}
+						}
+						typeAnnotation: VoidKeywordTypeAnnotation {
+							loc: Object {
+								filename: "input.ts"
+								end: Object {
+									column: 25
+									index: 39
+									line: 2
+								}
+								start: Object {
+									column: 21
+									index: 35
+									line: 2
+								}
+							}
+						}
+						meta: TSSignatureDeclarationMeta {
+							rest: undefined
+							typeParameters: undefined
+							loc: Object {
+								filename: "input.ts"
+								end: Object {
+									column: 25
+									index: 39
+									line: 2
+								}
+								start: Object {
+									column: 8
+									index: 22
+									line: 2
+								}
+							}
+							parameters: Array [
+								BindingIdentifier {
+									name: "x"
+									loc: Object {
+										filename: "input.ts"
+										identifierName: "x"
+										end: Object {
+											column: 10
+											index: 24
+											line: 2
+										}
+										start: Object {
+											column: 9
+											index: 23
+											line: 2
+										}
+									}
+									meta: PatternMeta {
+										optional: undefined
+										loc: Object {
+											filename: "input.ts"
+											end: Object {
+												column: 18
+												index: 32
+												line: 2
+											}
+											start: Object {
+												column: 9
+												index: 23
+												line: 2
+											}
+										}
+										typeAnnotation: TSNumberKeywordTypeAnnotation {
+											loc: Object {
+												filename: "input.ts"
+												end: Object {
+													column: 18
+													index: 32
+													line: 2
+												}
+												start: Object {
+													column: 12
+													index: 26
+													line: 2
+												}
+											}
+										}
+									}
+								}
+							]
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

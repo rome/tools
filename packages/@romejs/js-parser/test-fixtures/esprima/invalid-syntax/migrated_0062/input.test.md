@@ -6,188 +6,188 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: true
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: true
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 12
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unterminated regular expression'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 9
-          index: 9
-          line: 1
-        }
-        start: Object {
-          column: 9
-          index: 9
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    VariableDeclarationStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 0
-          index: 12
-          line: 2
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      declaration: VariableDeclaration {
-        kind: 'var'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 0
-            index: 12
-            line: 2
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        declarations: Array [
-          VariableDeclarator {
-            id: BindingIdentifier {
-              name: 'x'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'x'
-                end: Object {
-                  column: 5
-                  index: 5
-                  line: 1
-                }
-                start: Object {
-                  column: 4
-                  index: 4
-                  line: 1
-                }
-              }
-            }
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 0
-                index: 12
-                line: 2
-              }
-              start: Object {
-                column: 4
-                index: 4
-                line: 1
-              }
-            }
-            init: BinaryExpression {
-              operator: '/'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 0
-                  index: 12
-                  line: 2
-                }
-                start: Object {
-                  column: 8
-                  index: 8
-                  line: 1
-                }
-              }
-              right: ReferenceIdentifier {
-                name: 'INVALID_PLACEHOLDER'
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 0
-                    index: 12
-                    line: 2
-                  }
-                  start: Object {
-                    column: 0
-                    index: 12
-                    line: 2
-                  }
-                }
-              }
-              left: RegExpLiteral {
-                global: false
-                insensitive: false
-                multiline: false
-                noDotNewline: false
-                sticky: false
-                unicode: false
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 10
-                    index: 10
-                    line: 1
-                  }
-                  start: Object {
-                    column: 8
-                    index: 8
-                    line: 1
-                  }
-                }
-                expression: RegExpSubExpression {
-                  body: Array []
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 9
-                      index: 9
-                      line: 1
-                    }
-                    start: Object {
-                      column: 9
-                      index: 9
-                      line: 1
-                    }
-                  }
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: true
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: true
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 12
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unterminated regular expression"}
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "script"
+				end: Object {
+					column: 9
+					index: 9
+					line: 1
+				}
+				start: Object {
+					column: 9
+					index: 9
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		VariableDeclarationStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 0
+					index: 12
+					line: 2
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			declaration: VariableDeclaration {
+				kind: "var"
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 0
+						index: 12
+						line: 2
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				declarations: Array [
+					VariableDeclarator {
+						id: BindingIdentifier {
+							name: "x"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "x"
+								end: Object {
+									column: 5
+									index: 5
+									line: 1
+								}
+								start: Object {
+									column: 4
+									index: 4
+									line: 1
+								}
+							}
+						}
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 0
+								index: 12
+								line: 2
+							}
+							start: Object {
+								column: 4
+								index: 4
+								line: 1
+							}
+						}
+						init: BinaryExpression {
+							operator: "/"
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 0
+									index: 12
+									line: 2
+								}
+								start: Object {
+									column: 8
+									index: 8
+									line: 1
+								}
+							}
+							right: ReferenceIdentifier {
+								name: "INVALID_PLACEHOLDER"
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 0
+										index: 12
+										line: 2
+									}
+									start: Object {
+										column: 0
+										index: 12
+										line: 2
+									}
+								}
+							}
+							left: RegExpLiteral {
+								global: false
+								insensitive: false
+								multiline: false
+								noDotNewline: false
+								sticky: false
+								unicode: false
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 10
+										index: 10
+										line: 1
+									}
+									start: Object {
+										column: 8
+										index: 8
+										line: 1
+									}
+								}
+								expression: RegExpSubExpression {
+									body: Array []
+									loc: Object {
+										filename: "input.js"
+										end: Object {
+											column: 9
+											index: 9
+											line: 1
+										}
+										start: Object {
+											column: 9
+											index: 9
+											line: 1
+										}
+									}
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

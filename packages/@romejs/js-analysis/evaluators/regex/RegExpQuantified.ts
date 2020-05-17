@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, RegExpQuantified, regExpQuantified} from '@romejs/js-ast';
+import {AnyNode, RegExpQuantified, regExpQuantified} from "@romejs/js-ast";
 
 export default function RegExpQuantified(node: AnyNode) {
-  node = regExpQuantified.assert(node);
-  throw new Error('unimplemented');
+	node = regExpQuantified.assert(node);
+	throw new Error("unimplemented");
 }

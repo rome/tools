@@ -6,30 +6,30 @@
  */
 
 import {
-  AnyExpression,
-  AnyStatement,
-  AnyTargetAssignmentPattern,
-  JSNodeBase,
-  VariableDeclaration,
-} from '../index';
-import {createBuilder} from '../utils';
+	AnyExpression,
+	AnyStatement,
+	AnyTargetAssignmentPattern,
+	JSNodeBase,
+	VariableDeclaration,
+} from "../index";
+import {createBuilder} from "../utils";
 
 export type ForOfStatement = JSNodeBase & {
-  type: 'ForOfStatement';
-  await?: boolean;
-  left: VariableDeclaration | AnyTargetAssignmentPattern;
-  right: AnyExpression;
-  body: AnyStatement;
+	type: "ForOfStatement";
+	await?: boolean;
+	left: VariableDeclaration | AnyTargetAssignmentPattern;
+	right: AnyExpression;
+	body: AnyStatement;
 };
 
 export const forOfStatement = createBuilder<ForOfStatement>(
-  'ForOfStatement',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      left: true,
-      right: true,
-      body: true,
-    },
-  },
+	"ForOfStatement",
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			left: true,
+			right: true,
+			body: true,
+		},
+	},
 );

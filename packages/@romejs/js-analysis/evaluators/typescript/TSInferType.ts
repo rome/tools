@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {AnyNode, TSInferType, tsInferType} from '@romejs/js-ast';
+import {Scope} from "../../scopes";
+import {AnyNode, TSInferType, tsInferType} from "@romejs/js-ast";
 
 export default function TSInferType(node: AnyNode, scope: Scope) {
-  node = tsInferType.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = tsInferType.assert(node);
+	scope;
+	throw new Error("unimplemented");
 }

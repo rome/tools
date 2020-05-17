@@ -6,38 +6,38 @@
  */
 
 import {
-  ConstExportModuleKind,
-  ExportDefaultSpecifier,
-  ExportExternalSpecifier,
-  ExportNamespaceSpecifier,
-  JSNodeBase,
-  StringLiteral,
-} from '../index';
-import {createBuilder} from '../utils';
+	ConstExportModuleKind,
+	ExportDefaultSpecifier,
+	ExportExternalSpecifier,
+	ExportNamespaceSpecifier,
+	JSNodeBase,
+	StringLiteral,
+} from "../index";
+import {createBuilder} from "../utils";
 
 export type AnyExportExternalSpecifier =
-  | ExportNamespaceSpecifier
-  | ExportDefaultSpecifier
-  | ExportExternalSpecifier;
+	 | ExportNamespaceSpecifier
+	| ExportDefaultSpecifier
+	| ExportExternalSpecifier;
 
 export type ExportExternalDeclaration = JSNodeBase & {
-  type: 'ExportExternalDeclaration';
-  defaultSpecifier?: ExportDefaultSpecifier;
-  namespaceSpecifier?: ExportNamespaceSpecifier;
-  namedSpecifiers: Array<ExportExternalSpecifier>;
-  source: StringLiteral;
-  exportKind?: ConstExportModuleKind;
+	type: "ExportExternalDeclaration";
+	defaultSpecifier?: ExportDefaultSpecifier;
+	namespaceSpecifier?: ExportNamespaceSpecifier;
+	namedSpecifiers: Array<ExportExternalSpecifier>;
+	source: StringLiteral;
+	exportKind?: ConstExportModuleKind;
 };
 
 export const exportExternalDeclaration = createBuilder<ExportExternalDeclaration>(
-  'ExportExternalDeclaration',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      defaultSpecifier: true,
-      namespaceSpecifier: true,
-      namedSpecifiers: true,
-      source: true,
-    },
-  },
+	"ExportExternalDeclaration",
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			defaultSpecifier: true,
+			namespaceSpecifier: true,
+			namedSpecifiers: true,
+			source: true,
+		},
+	},
 );

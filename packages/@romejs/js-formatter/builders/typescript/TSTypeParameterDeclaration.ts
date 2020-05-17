@@ -6,35 +6,35 @@
  */
 
 import {
-  TSTypeParameterDeclaration,
-  TSTypeParameterInstantiation,
-} from '@romejs/js-ast';
-import {Builder} from '@romejs/js-formatter';
-import {Token, concat, group, indent, softline} from '../../tokens';
-import {printCommaList} from '../utils';
+	TSTypeParameterDeclaration,
+	TSTypeParameterInstantiation,
+} from "@romejs/js-ast";
+import {Builder} from "@romejs/js-formatter";
+import {Token, concat, group, indent, softline} from "../../tokens";
+import {printCommaList} from "../utils";
 
 export default function TSTypeParameterDeclaration(
-  builder: Builder,
-  node: TSTypeParameterDeclaration | TSTypeParameterInstantiation,
+	builder: Builder,
+	node: TSTypeParameterDeclaration | TSTypeParameterInstantiation,
 ): Token {
-  const params = node.params;
-  const shouldInline =
-    params.length === 1 &&
-    params[0].type !== 'IntersectionTypeAnnotation' &&
-    params[0].type !== 'UnionTypeAnnotation' &&
-    params[0].type !== 'TSIndexedAccessType' &&
-    params[0].type !== 'TSMappedType';
+	const params = node.params;
+	const shouldInline =
+		params.length === 1 &&
+		params[0].type !== "TSIntersectionTypeAnnotation" &&
+		params[0].type !== "UnionTypeAnnotation" &&
+		params[0].type !== "TSIndexedAccessType" &&
+		params[0].type !== "TSMappedType";
 
-  if (shouldInline) {
-    return concat(['<', builder.tokenize(params[0], node), '>']);
-  } else {
-    return group(
-      concat([
-        '<',
-        indent(concat([softline, printCommaList(builder, params, node)])),
-        softline,
-        '>',
-      ]),
-    );
-  }
+	if (shouldInline) {
+		return concat(["<", builder.tokenize(params[0], node), ">"]);
+	} else {
+		return group(
+			concat([
+				"<",
+				indent(concat([softline, printCommaList(builder, params, node)])),
+				softline,
+				">",
+			]),
+		);
+	}
 }

@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token} from '../../tokens';
-import {ExportDefaultSpecifier} from '@romejs/js-ast';
+import Builder from "../../Builder";
+import {Token} from "../../tokens";
+import {ExportDefaultSpecifier} from "@romejs/js-ast";
 
 export default function ExportDefaultSpecifier(
-  builder: Builder,
-  node: ExportDefaultSpecifier,
+	builder: Builder,
+	node: ExportDefaultSpecifier,
 ): Token {
-  return builder.tokenize(node.exported, node);
+	return builder.tokenize(node.exported, node);
 }

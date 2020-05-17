@@ -5,18 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyTSPrimary, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {AnyTSPrimary, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type TSArrayType = JSNodeBase & {
-  type: 'TSArrayType';
-  elementType: AnyTSPrimary;
+	type: "TSArrayType";
+	elementType: AnyTSPrimary;
 };
 
 export const tsArrayType = createBuilder<TSArrayType>(
-  'TSArrayType',
-  {
-    bindingKeys: {},
-    visitorKeys: {elementType: true},
-  },
+	"TSArrayType",
+	{
+		bindingKeys: {},
+		visitorKeys: {elementType: true},
+	},
 );

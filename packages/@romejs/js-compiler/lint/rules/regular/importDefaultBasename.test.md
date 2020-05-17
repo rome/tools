@@ -28,7 +28,7 @@
 ### `0: formatted`
 
 ```
-import foo from './bar';
+import foo from "./bar";
 
 ```
 
@@ -42,6 +42,6 @@ import foo from './bar';
 ### `1: formatted`
 
 ```
-import foo from './foo';
+import foo from "./foo";
 
 ```

@@ -5,19 +5,19 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token, concat, space} from '../../tokens';
-import {TSAssignmentTypeAssertion} from '@romejs/js-ast';
+import Builder from "../../Builder";
+import {Token, concat, space} from "../../tokens";
+import {TSAssignmentTypeAssertion} from "@romejs/js-ast";
 
 export default function TSAssignmentTypeAssertion(
-  builder: Builder,
-  node: TSAssignmentTypeAssertion,
+	builder: Builder,
+	node: TSAssignmentTypeAssertion,
 ): Token {
-  return concat([
-    '<',
-    builder.tokenize(node.typeAnnotation, node),
-    '>',
-    space,
-    builder.tokenize(node.expression, node),
-  ]);
+	return concat([
+		"<",
+		builder.tokenize(node.typeAnnotation, node),
+		">",
+		space,
+		builder.tokenize(node.expression, node),
+	]);
 }

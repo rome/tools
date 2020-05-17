@@ -6,387 +6,387 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.ts'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array ['ts']
-  loc: Object {
-    filename: 'input.ts'
-    end: Object {
-      column: 0
-      index: 50
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    VariableDeclarationStatement {
-      declare: true
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 49
-          index: 49
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      declaration: VariableDeclaration {
-        kind: 'const'
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 49
-            index: 49
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        declarations: Array [
-          VariableDeclarator {
-            id: BindingObjectPattern {
-              rest: undefined
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 48
-                  index: 48
-                  line: 1
-                }
-                start: Object {
-                  column: 14
-                  index: 14
-                  line: 1
-                }
-              }
-              properties: Array [
-                BindingObjectPatternProperty {
-                  key: StaticPropertyKey {
-                    value: Identifier {
-                      name: 'x'
-                      loc: Object {
-                        filename: 'input.ts'
-                        identifierName: 'x'
-                        end: Object {
-                          column: 17
-                          index: 17
-                          line: 1
-                        }
-                        start: Object {
-                          column: 16
-                          index: 16
-                          line: 1
-                        }
-                      }
-                    }
-                    loc: Object {
-                      filename: 'input.ts'
-                      end: Object {
-                        column: 17
-                        index: 17
-                        line: 1
-                      }
-                      start: Object {
-                        column: 16
-                        index: 16
-                        line: 1
-                      }
-                    }
-                  }
-                  value: BindingIdentifier {
-                    name: 'x'
-                    loc: Object {
-                      filename: 'input.ts'
-                      identifierName: 'x'
-                      end: Object {
-                        column: 17
-                        index: 17
-                        line: 1
-                      }
-                      start: Object {
-                        column: 16
-                        index: 16
-                        line: 1
-                      }
-                    }
-                  }
-                  loc: Object {
-                    filename: 'input.ts'
-                    end: Object {
-                      column: 17
-                      index: 17
-                      line: 1
-                    }
-                    start: Object {
-                      column: 16
-                      index: 16
-                      line: 1
-                    }
-                  }
-                }
-                BindingObjectPatternProperty {
-                  key: StaticPropertyKey {
-                    value: Identifier {
-                      name: 'y'
-                      loc: Object {
-                        filename: 'input.ts'
-                        identifierName: 'y'
-                        end: Object {
-                          column: 20
-                          index: 20
-                          line: 1
-                        }
-                        start: Object {
-                          column: 19
-                          index: 19
-                          line: 1
-                        }
-                      }
-                    }
-                    loc: Object {
-                      filename: 'input.ts'
-                      end: Object {
-                        column: 20
-                        index: 20
-                        line: 1
-                      }
-                      start: Object {
-                        column: 19
-                        index: 19
-                        line: 1
-                      }
-                    }
-                  }
-                  value: BindingIdentifier {
-                    name: 'y'
-                    loc: Object {
-                      filename: 'input.ts'
-                      identifierName: 'y'
-                      end: Object {
-                        column: 20
-                        index: 20
-                        line: 1
-                      }
-                      start: Object {
-                        column: 19
-                        index: 19
-                        line: 1
-                      }
-                    }
-                  }
-                  loc: Object {
-                    filename: 'input.ts'
-                    end: Object {
-                      column: 20
-                      index: 20
-                      line: 1
-                    }
-                    start: Object {
-                      column: 19
-                      index: 19
-                      line: 1
-                    }
-                  }
-                }
-              ]
-              meta: PatternMeta {
-                definite: undefined
-                loc: Object {
-                  filename: 'input.ts'
-                  end: Object {
-                    column: 48
-                    index: 48
-                    line: 1
-                  }
-                  start: Object {
-                    column: 14
-                    index: 14
-                    line: 1
-                  }
-                }
-                typeAnnotation: TSTypeLiteral {
-                  loc: Object {
-                    filename: 'input.ts'
-                    end: Object {
-                      column: 48
-                      index: 48
-                      line: 1
-                    }
-                    start: Object {
-                      column: 24
-                      index: 24
-                      line: 1
-                    }
-                  }
-                  members: Array [
-                    TSPropertySignature {
-                      key: StaticPropertyKey {
-                        value: Identifier {
-                          name: 'x'
-                          loc: Object {
-                            filename: 'input.ts'
-                            identifierName: 'x'
-                            end: Object {
-                              column: 27
-                              index: 27
-                              line: 1
-                            }
-                            start: Object {
-                              column: 26
-                              index: 26
-                              line: 1
-                            }
-                          }
-                        }
-                        loc: Object {
-                          filename: 'input.ts'
-                          end: Object {
-                            column: 27
-                            index: 27
-                            line: 1
-                          }
-                          start: Object {
-                            column: 26
-                            index: 26
-                            line: 1
-                          }
-                        }
-                      }
-                      optional: false
-                      readonly: false
-                      loc: Object {
-                        filename: 'input.ts'
-                        end: Object {
-                          column: 36
-                          index: 36
-                          line: 1
-                        }
-                        start: Object {
-                          column: 26
-                          index: 26
-                          line: 1
-                        }
-                      }
-                      typeAnnotation: NumberKeywordTypeAnnotation {
-                        loc: Object {
-                          filename: 'input.ts'
-                          end: Object {
-                            column: 35
-                            index: 35
-                            line: 1
-                          }
-                          start: Object {
-                            column: 29
-                            index: 29
-                            line: 1
-                          }
-                        }
-                      }
-                    }
-                    TSPropertySignature {
-                      key: StaticPropertyKey {
-                        value: Identifier {
-                          name: 'y'
-                          loc: Object {
-                            filename: 'input.ts'
-                            identifierName: 'y'
-                            end: Object {
-                              column: 38
-                              index: 38
-                              line: 1
-                            }
-                            start: Object {
-                              column: 37
-                              index: 37
-                              line: 1
-                            }
-                          }
-                        }
-                        loc: Object {
-                          filename: 'input.ts'
-                          end: Object {
-                            column: 38
-                            index: 38
-                            line: 1
-                          }
-                          start: Object {
-                            column: 37
-                            index: 37
-                            line: 1
-                          }
-                        }
-                      }
-                      optional: false
-                      readonly: false
-                      loc: Object {
-                        filename: 'input.ts'
-                        end: Object {
-                          column: 46
-                          index: 46
-                          line: 1
-                        }
-                        start: Object {
-                          column: 37
-                          index: 37
-                          line: 1
-                        }
-                      }
-                      typeAnnotation: NumberKeywordTypeAnnotation {
-                        loc: Object {
-                          filename: 'input.ts'
-                          end: Object {
-                            column: 46
-                            index: 46
-                            line: 1
-                          }
-                          start: Object {
-                            column: 40
-                            index: 40
-                            line: 1
-                          }
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-            init: undefined
-            loc: Object {
-              filename: 'input.ts'
-              end: Object {
-                column: 48
-                index: 48
-                line: 1
-              }
-              start: Object {
-                column: 14
-                index: 14
-                line: 1
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.ts"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "module"
+	syntax: Array ["ts"]
+	loc: Object {
+		filename: "input.ts"
+		end: Object {
+			column: 0
+			index: 50
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		VariableDeclarationStatement {
+			declare: true
+			loc: Object {
+				filename: "input.ts"
+				end: Object {
+					column: 49
+					index: 49
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			declaration: VariableDeclaration {
+				kind: "const"
+				loc: Object {
+					filename: "input.ts"
+					end: Object {
+						column: 49
+						index: 49
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				declarations: Array [
+					VariableDeclarator {
+						id: BindingObjectPattern {
+							rest: undefined
+							loc: Object {
+								filename: "input.ts"
+								end: Object {
+									column: 48
+									index: 48
+									line: 1
+								}
+								start: Object {
+									column: 14
+									index: 14
+									line: 1
+								}
+							}
+							properties: Array [
+								BindingObjectPatternProperty {
+									key: StaticPropertyKey {
+										value: Identifier {
+											name: "x"
+											loc: Object {
+												filename: "input.ts"
+												identifierName: "x"
+												end: Object {
+													column: 17
+													index: 17
+													line: 1
+												}
+												start: Object {
+													column: 16
+													index: 16
+													line: 1
+												}
+											}
+										}
+										loc: Object {
+											filename: "input.ts"
+											end: Object {
+												column: 17
+												index: 17
+												line: 1
+											}
+											start: Object {
+												column: 16
+												index: 16
+												line: 1
+											}
+										}
+									}
+									value: BindingIdentifier {
+										name: "x"
+										loc: Object {
+											filename: "input.ts"
+											identifierName: "x"
+											end: Object {
+												column: 17
+												index: 17
+												line: 1
+											}
+											start: Object {
+												column: 16
+												index: 16
+												line: 1
+											}
+										}
+									}
+									loc: Object {
+										filename: "input.ts"
+										end: Object {
+											column: 17
+											index: 17
+											line: 1
+										}
+										start: Object {
+											column: 16
+											index: 16
+											line: 1
+										}
+									}
+								}
+								BindingObjectPatternProperty {
+									key: StaticPropertyKey {
+										value: Identifier {
+											name: "y"
+											loc: Object {
+												filename: "input.ts"
+												identifierName: "y"
+												end: Object {
+													column: 20
+													index: 20
+													line: 1
+												}
+												start: Object {
+													column: 19
+													index: 19
+													line: 1
+												}
+											}
+										}
+										loc: Object {
+											filename: "input.ts"
+											end: Object {
+												column: 20
+												index: 20
+												line: 1
+											}
+											start: Object {
+												column: 19
+												index: 19
+												line: 1
+											}
+										}
+									}
+									value: BindingIdentifier {
+										name: "y"
+										loc: Object {
+											filename: "input.ts"
+											identifierName: "y"
+											end: Object {
+												column: 20
+												index: 20
+												line: 1
+											}
+											start: Object {
+												column: 19
+												index: 19
+												line: 1
+											}
+										}
+									}
+									loc: Object {
+										filename: "input.ts"
+										end: Object {
+											column: 20
+											index: 20
+											line: 1
+										}
+										start: Object {
+											column: 19
+											index: 19
+											line: 1
+										}
+									}
+								}
+							]
+							meta: PatternMeta {
+								definite: undefined
+								loc: Object {
+									filename: "input.ts"
+									end: Object {
+										column: 48
+										index: 48
+										line: 1
+									}
+									start: Object {
+										column: 14
+										index: 14
+										line: 1
+									}
+								}
+								typeAnnotation: TSTypeLiteral {
+									loc: Object {
+										filename: "input.ts"
+										end: Object {
+											column: 48
+											index: 48
+											line: 1
+										}
+										start: Object {
+											column: 24
+											index: 24
+											line: 1
+										}
+									}
+									members: Array [
+										TSPropertySignature {
+											key: StaticPropertyKey {
+												value: Identifier {
+													name: "x"
+													loc: Object {
+														filename: "input.ts"
+														identifierName: "x"
+														end: Object {
+															column: 27
+															index: 27
+															line: 1
+														}
+														start: Object {
+															column: 26
+															index: 26
+															line: 1
+														}
+													}
+												}
+												loc: Object {
+													filename: "input.ts"
+													end: Object {
+														column: 27
+														index: 27
+														line: 1
+													}
+													start: Object {
+														column: 26
+														index: 26
+														line: 1
+													}
+												}
+											}
+											optional: false
+											readonly: false
+											loc: Object {
+												filename: "input.ts"
+												end: Object {
+													column: 36
+													index: 36
+													line: 1
+												}
+												start: Object {
+													column: 26
+													index: 26
+													line: 1
+												}
+											}
+											typeAnnotation: TSNumberKeywordTypeAnnotation {
+												loc: Object {
+													filename: "input.ts"
+													end: Object {
+														column: 35
+														index: 35
+														line: 1
+													}
+													start: Object {
+														column: 29
+														index: 29
+														line: 1
+													}
+												}
+											}
+										}
+										TSPropertySignature {
+											key: StaticPropertyKey {
+												value: Identifier {
+													name: "y"
+													loc: Object {
+														filename: "input.ts"
+														identifierName: "y"
+														end: Object {
+															column: 38
+															index: 38
+															line: 1
+														}
+														start: Object {
+															column: 37
+															index: 37
+															line: 1
+														}
+													}
+												}
+												loc: Object {
+													filename: "input.ts"
+													end: Object {
+														column: 38
+														index: 38
+														line: 1
+													}
+													start: Object {
+														column: 37
+														index: 37
+														line: 1
+													}
+												}
+											}
+											optional: false
+											readonly: false
+											loc: Object {
+												filename: "input.ts"
+												end: Object {
+													column: 46
+													index: 46
+													line: 1
+												}
+												start: Object {
+													column: 37
+													index: 37
+													line: 1
+												}
+											}
+											typeAnnotation: TSNumberKeywordTypeAnnotation {
+												loc: Object {
+													filename: "input.ts"
+													end: Object {
+														column: 46
+														index: 46
+														line: 1
+													}
+													start: Object {
+														column: 40
+														index: 40
+														line: 1
+													}
+												}
+											}
+										}
+									]
+								}
+							}
+						}
+						init: undefined
+						loc: Object {
+							filename: "input.ts"
+							end: Object {
+								column: 48
+								index: 48
+								line: 1
+							}
+							start: Object {
+								column: 14
+								index: 14
+								line: 1
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

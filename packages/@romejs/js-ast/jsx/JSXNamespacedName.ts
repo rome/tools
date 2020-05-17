@@ -5,22 +5,22 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, JSXIdentifier} from '../index';
-import {createBuilder} from '../utils';
+import {JSNodeBase, JSXIdentifier} from "../index";
+import {createBuilder} from "../utils";
 
 export type JSXNamespacedName = JSNodeBase & {
-  type: 'JSXNamespacedName';
-  namespace: JSXIdentifier;
-  name: JSXIdentifier;
+	type: "JSXNamespacedName";
+	namespace: JSXIdentifier;
+	name: JSXIdentifier;
 };
 
 export const jsxNamespacedName = createBuilder<JSXNamespacedName>(
-  'JSXNamespacedName',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      namespace: true,
-      name: true,
-    },
-  },
+	"JSXNamespacedName",
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			namespace: true,
+			name: true,
+		},
+	},
 );

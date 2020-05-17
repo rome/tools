@@ -6,12 +6,12 @@
  */
 
 import {
-  AnyNode,
-  TSTypeParameterInstantiation,
-  tsTypeParameterInstantiation,
-} from '@romejs/js-ast';
+	AnyNode,
+	TSTypeParameterInstantiation,
+	tsTypeParameterInstantiation,
+} from "@romejs/js-ast";
 
 export default function TSTypeParameterInstantiation(node: AnyNode) {
-  node = tsTypeParameterInstantiation.assert(node);
-  throw new Error('unimplemented');
+	node = tsTypeParameterInstantiation.assert(node);
+	throw new Error("unimplemented");
 }

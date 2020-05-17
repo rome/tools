@@ -6,290 +6,290 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: true
-  directives: Array []
-  filename: 'input.ts'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array ['ts']
-  loc: Object {
-    filename: 'input.ts'
-    end: Object {
-      column: 0
-      index: 32
-      line: 4
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Expected a semicolon or a line terminator'}
-      }
-      location: Object {
-        filename: 'input.ts'
-        mtime: undefined
-        sourceType: 'module'
-        end: Object {
-          column: 14
-          index: 24
-          line: 2
-        }
-        start: Object {
-          column: 14
-          index: 24
-          line: 2
-        }
-      }
-    }
-  ]
-  body: Array [
-    ClassDeclaration {
-      id: BindingIdentifier {
-        name: 'C'
-        loc: Object {
-          filename: 'input.ts'
-          identifierName: 'C'
-          end: Object {
-            column: 7
-            index: 7
-            line: 1
-          }
-          start: Object {
-            column: 6
-            index: 6
-            line: 1
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 19
-          index: 29
-          line: 2
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      meta: ClassHead {
-        implements: undefined
-        superClass: undefined
-        superTypeParameters: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 19
-            index: 29
-            line: 2
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        body: Array [
-          ClassProperty {
-            key: StaticPropertyKey {
-              value: Identifier {
-                name: 'm'
-                loc: Object {
-                  filename: 'input.ts'
-                  identifierName: 'm'
-                  end: Object {
-                    column: 14
-                    index: 24
-                    line: 2
-                  }
-                  start: Object {
-                    column: 13
-                    index: 23
-                    line: 2
-                  }
-                }
-              }
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 14
-                  index: 24
-                  line: 2
-                }
-                start: Object {
-                  column: 13
-                  index: 23
-                  line: 2
-                }
-              }
-            }
-            value: undefined
-            definite: undefined
-            typeAnnotation: undefined
-            loc: Object {
-              filename: 'input.ts'
-              end: Object {
-                column: 14
-                index: 24
-                line: 2
-              }
-              start: Object {
-                column: 4
-                index: 14
-                line: 2
-              }
-            }
-            meta: ClassPropertyMeta {
-              abstract: false
-              accessibility: undefined
-              optional: false
-              readonly: true
-              static: false
-              typeAnnotation: undefined
-              start: Object {
-                column: 4
-                index: 14
-                line: 2
-              }
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 14
-                  index: 24
-                  line: 2
-                }
-                start: Object {
-                  column: 4
-                  index: 14
-                  line: 2
-                }
-              }
-            }
-          }
-          ClassProperty {
-            key: StaticPropertyKey {
-              value: Identifier {
-                name: ''
-                loc: Object {
-                  filename: 'input.ts'
-                  identifierName: ''
-                  end: Object {
-                    column: 18
-                    index: 28
-                    line: 2
-                  }
-                  start: Object {
-                    column: 17
-                    index: 27
-                    line: 2
-                  }
-                }
-              }
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 18
-                  index: 28
-                  line: 2
-                }
-                start: Object {
-                  column: 17
-                  index: 27
-                  line: 2
-                }
-              }
-            }
-            value: undefined
-            definite: undefined
-            typeAnnotation: undefined
-            loc: Object {
-              filename: 'input.ts'
-              end: Object {
-                column: 18
-                index: 28
-                line: 2
-              }
-              start: Object {
-                column: 17
-                index: 27
-                line: 2
-              }
-            }
-            meta: ClassPropertyMeta {
-              abstract: false
-              accessibility: undefined
-              optional: false
-              readonly: false
-              static: false
-              typeAnnotation: undefined
-              start: Object {
-                column: 17
-                index: 27
-                line: 2
-              }
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 18
-                  index: 28
-                  line: 2
-                }
-                start: Object {
-                  column: 17
-                  index: 27
-                  line: 2
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 1
-          index: 31
-          line: 3
-        }
-        start: Object {
-          column: 0
-          index: 30
-          line: 3
-        }
-      }
-      expression: ReferenceIdentifier {
-        name: 'INVALID_PLACEHOLDER'
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 1
-            index: 31
-            line: 3
-          }
-          start: Object {
-            column: 0
-            index: 30
-            line: 3
-          }
-        }
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: true
+	directives: Array []
+	filename: "input.ts"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "module"
+	syntax: Array ["ts"]
+	loc: Object {
+		filename: "input.ts"
+		end: Object {
+			column: 0
+			index: 32
+			line: 4
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Expected a semicolon or a line terminator"}
+			}
+			location: Object {
+				filename: "input.ts"
+				mtime: undefined
+				sourceType: "module"
+				end: Object {
+					column: 14
+					index: 24
+					line: 2
+				}
+				start: Object {
+					column: 14
+					index: 24
+					line: 2
+				}
+			}
+		}
+	]
+	body: Array [
+		ClassDeclaration {
+			id: BindingIdentifier {
+				name: "C"
+				loc: Object {
+					filename: "input.ts"
+					identifierName: "C"
+					end: Object {
+						column: 7
+						index: 7
+						line: 1
+					}
+					start: Object {
+						column: 6
+						index: 6
+						line: 1
+					}
+				}
+			}
+			loc: Object {
+				filename: "input.ts"
+				end: Object {
+					column: 19
+					index: 29
+					line: 2
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			meta: ClassHead {
+				implements: undefined
+				superClass: undefined
+				superTypeParameters: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: "input.ts"
+					end: Object {
+						column: 19
+						index: 29
+						line: 2
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				body: Array [
+					ClassProperty {
+						key: StaticPropertyKey {
+							value: Identifier {
+								name: "m"
+								loc: Object {
+									filename: "input.ts"
+									identifierName: "m"
+									end: Object {
+										column: 14
+										index: 24
+										line: 2
+									}
+									start: Object {
+										column: 13
+										index: 23
+										line: 2
+									}
+								}
+							}
+							loc: Object {
+								filename: "input.ts"
+								end: Object {
+									column: 14
+									index: 24
+									line: 2
+								}
+								start: Object {
+									column: 13
+									index: 23
+									line: 2
+								}
+							}
+						}
+						value: undefined
+						definite: undefined
+						typeAnnotation: undefined
+						loc: Object {
+							filename: "input.ts"
+							end: Object {
+								column: 14
+								index: 24
+								line: 2
+							}
+							start: Object {
+								column: 4
+								index: 14
+								line: 2
+							}
+						}
+						meta: ClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: true
+							static: false
+							typeAnnotation: undefined
+							start: Object {
+								column: 4
+								index: 14
+								line: 2
+							}
+							loc: Object {
+								filename: "input.ts"
+								end: Object {
+									column: 14
+									index: 24
+									line: 2
+								}
+								start: Object {
+									column: 4
+									index: 14
+									line: 2
+								}
+							}
+						}
+					}
+					ClassProperty {
+						key: StaticPropertyKey {
+							value: Identifier {
+								name: ""
+								loc: Object {
+									filename: "input.ts"
+									identifierName: ""
+									end: Object {
+										column: 18
+										index: 28
+										line: 2
+									}
+									start: Object {
+										column: 17
+										index: 27
+										line: 2
+									}
+								}
+							}
+							loc: Object {
+								filename: "input.ts"
+								end: Object {
+									column: 18
+									index: 28
+									line: 2
+								}
+								start: Object {
+									column: 17
+									index: 27
+									line: 2
+								}
+							}
+						}
+						value: undefined
+						definite: undefined
+						typeAnnotation: undefined
+						loc: Object {
+							filename: "input.ts"
+							end: Object {
+								column: 18
+								index: 28
+								line: 2
+							}
+							start: Object {
+								column: 17
+								index: 27
+								line: 2
+							}
+						}
+						meta: ClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							start: Object {
+								column: 17
+								index: 27
+								line: 2
+							}
+							loc: Object {
+								filename: "input.ts"
+								end: Object {
+									column: 18
+									index: 28
+									line: 2
+								}
+								start: Object {
+									column: 17
+									index: 27
+									line: 2
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+		ExpressionStatement {
+			loc: Object {
+				filename: "input.ts"
+				end: Object {
+					column: 1
+					index: 31
+					line: 3
+				}
+				start: Object {
+					column: 0
+					index: 30
+					line: 3
+				}
+			}
+			expression: ReferenceIdentifier {
+				name: "INVALID_PLACEHOLDER"
+				loc: Object {
+					filename: "input.ts"
+					end: Object {
+						column: 1
+						index: 31
+						line: 3
+					}
+					start: Object {
+						column: 0
+						index: 30
+						line: 3
+					}
+				}
+			}
+		}
+	]
 }
 ```

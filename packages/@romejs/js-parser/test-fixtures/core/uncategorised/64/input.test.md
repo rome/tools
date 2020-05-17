@@ -6,150 +6,150 @@
 
 ```javascript
 Program {
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 11
-      index: 36
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  comments: Array [
-    CommentLine {
-      id: '0'
-      value: ' Some comment'
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 24
-          index: 24
-          line: 1
-        }
-        start: Object {
-          column: 9
-          index: 9
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    IfStatement {
-      alternate: undefined
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 11
-          index: 36
-          line: 2
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      test: ReferenceIdentifier {
-        name: 'x'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'x'
-          end: Object {
-            column: 5
-            index: 5
-            line: 1
-          }
-          start: Object {
-            column: 4
-            index: 4
-            line: 1
-          }
-        }
-      }
-      consequent: BlockStatement {
-        directives: Array []
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 11
-            index: 36
-            line: 2
-          }
-          start: Object {
-            column: 7
-            index: 7
-            line: 1
-          }
-        }
-        body: Array [
-          ExpressionStatement {
-            leadingComments: Array ['0']
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 9
-                index: 34
-                line: 2
-              }
-              start: Object {
-                column: 0
-                index: 25
-                line: 2
-              }
-            }
-            expression: CallExpression {
-              arguments: Array []
-              leadingComments: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 8
-                  index: 33
-                  line: 2
-                }
-                start: Object {
-                  column: 0
-                  index: 25
-                  line: 2
-                }
-              }
-              callee: ReferenceIdentifier {
-                name: 'doThat'
-                leadingComments: undefined
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'doThat'
-                  end: Object {
-                    column: 6
-                    index: 31
-                    line: 2
-                  }
-                  start: Object {
-                    column: 0
-                    index: 25
-                    line: 2
-                  }
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 11
+			index: 36
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	comments: Array [
+		CommentLine {
+			id: "0"
+			value: " Some comment"
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 24
+					index: 24
+					line: 1
+				}
+				start: Object {
+					column: 9
+					index: 9
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		IfStatement {
+			alternate: undefined
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 11
+					index: 36
+					line: 2
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			test: ReferenceIdentifier {
+				name: "x"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "x"
+					end: Object {
+						column: 5
+						index: 5
+						line: 1
+					}
+					start: Object {
+						column: 4
+						index: 4
+						line: 1
+					}
+				}
+			}
+			consequent: BlockStatement {
+				directives: Array []
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 11
+						index: 36
+						line: 2
+					}
+					start: Object {
+						column: 7
+						index: 7
+						line: 1
+					}
+				}
+				body: Array [
+					ExpressionStatement {
+						leadingComments: Array ["0"]
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 9
+								index: 34
+								line: 2
+							}
+							start: Object {
+								column: 0
+								index: 25
+								line: 2
+							}
+						}
+						expression: CallExpression {
+							arguments: Array []
+							leadingComments: undefined
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 8
+									index: 33
+									line: 2
+								}
+								start: Object {
+									column: 0
+									index: 25
+									line: 2
+								}
+							}
+							callee: ReferenceIdentifier {
+								name: "doThat"
+								leadingComments: undefined
+								loc: Object {
+									filename: "input.js"
+									identifierName: "doThat"
+									end: Object {
+										column: 6
+										index: 31
+										line: 2
+									}
+									start: Object {
+										column: 0
+										index: 25
+										line: 2
+									}
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

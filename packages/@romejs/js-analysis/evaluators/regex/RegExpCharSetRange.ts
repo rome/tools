@@ -5,9 +5,9 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, RegExpCharSetRange, regExpCharSetRange} from '@romejs/js-ast';
+import {AnyNode, RegExpCharSetRange, regExpCharSetRange} from "@romejs/js-ast";
 
 export default function RegExpCharSetRange(node: AnyNode) {
-  node = regExpCharSetRange.assert(node);
-  throw new Error('unimplemented');
+	node = regExpCharSetRange.assert(node);
+	throw new Error("unimplemented");
 }

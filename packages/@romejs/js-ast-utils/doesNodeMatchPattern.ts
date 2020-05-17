@@ -5,129 +5,134 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from '@romejs/js-ast';
-import getNodeReferenceParts from './getNodeReferenceParts';
-import isIdentifierish from './isIdentifierish';
+import {AnyNode} from "@romejs/js-ast";
+import getNodeReferenceParts from "./getNodeReferenceParts";
+import isIdentifierish from "./isIdentifierish";
 
 const splitCache: Map<string, SplitResult> = new Map();
 
 type SplitResult = {
-  hasDoubleStar: boolean;
-  parts: Array<string>;
+	hasDoubleStar: boolean;
+	parts: Array<string>;
 };
 
 function split(str: string): SplitResult {
-  const cached = splitCache.get(str);
-  if (cached !== undefined) {
-    return cached;
-  }
+	const cached = splitCache.get(str);
+	if (cached !== undefined) {
+		return cached;
+	}
 
-  const parts = str.split('.');
+	const parts = str.split(".");
 
-  let hasDoubleStar = false;
-  for (const part of parts) {
-    if (part === '**') {
-      hasDoubleStar = true;
-      break;
-    }
-  }
+	let hasDoubleStar = false;
+	for (const part of parts) {
+		if (part === "**") {
+			hasDoubleStar = true;
+			break;
+		}
+	}
 
-  const result: SplitResult = {parts, hasDoubleStar};
-  splitCache.set(str, result);
-  return result;
+	const result: SplitResult = {parts, hasDoubleStar};
+	splitCache.set(str, result);
+	return result;
 }
 
 export default function doesNodeMatchPattern(
-  node: undefined | AnyNode,
-  match: string,
+	node: undefined | AnyNode,
+	match: string,
 ): boolean {
-  if (node === undefined) {
-    return false;
-  }
+	if (node === undefined) {
+		return false;
+	}
 
-  // Not a member expression
-  if (node.type !== 'MemberExpression' && !isIdentifierish(node)) {
-    return false;
-  }
+	// Not a member expression
+	if (node.type !== "MemberExpression" && !isIdentifierish(node)) {
+		return false;
+	}
 
-  const {parts: expectedParts, hasDoubleStar} = split(match);
+	const {parts: expectedParts, hasDoubleStar} = split(match);
 
-  const {bailed, parts: actualParts} = getNodeReferenceParts(node);
+	// Fast path for single part pattern matching
+	if (expectedParts.length && expectedParts[0] !== '*' && !hasDoubleStar) {
+		return isIdentifierish(node) && node.name === expectedParts[0];
+	}
 
-  // Bailed will be true if we were unable to derive a name for one of the parts
-  if (bailed && !hasDoubleStar) {
-    return false;
-  }
+	const {bailed, parts: actualParts} = getNodeReferenceParts(node);
 
-  // If there's less parts than the amount we expect then it's never going to match
-  if (actualParts.length < expectedParts.length) {
-    return false;
-  }
+	// Bailed will be true if we were unable to derive a name for one of the parts
+	if (bailed && !hasDoubleStar) {
+		return false;
+	}
 
-  // I there's more parts than we expect then it's never going to match either
-  if (!hasDoubleStar && actualParts.length > expectedParts.length) {
-    return false;
-  }
+	// If there's less parts than the amount we expect then it's never going to match
+	if (actualParts.length < expectedParts.length) {
+		return false;
+	}
 
-  let nextActualIndex = 0;
-  let nextExpectedIndex = 0;
+	// I there's more parts than we expect then it's never going to match either
+	if (!hasDoubleStar && actualParts.length > expectedParts.length) {
+		return false;
+	}
 
-  // Loop over the parts we received and match them
-  while (nextActualIndex < actualParts.length) {
-    // If we have no more expected parts then we can't possibly match it
-    if (nextActualIndex >= expectedParts.length) {
-      return false;
-    }
+	let nextActualIndex = 0;
+	let nextExpectedIndex = 0;
 
-    const actual = actualParts[nextActualIndex].value;
-    nextActualIndex++;
+	// Loop over the parts we received and match them
+	while (nextActualIndex < actualParts.length) {
+		// If we have no more expected parts then we can't possibly match it
+		if (nextActualIndex >= expectedParts.length) {
+			return false;
+		}
 
-    const expected = expectedParts[nextExpectedIndex];
-    nextExpectedIndex++;
+		const actual = actualParts[nextActualIndex].value;
+		nextActualIndex++;
 
-    // A star part can accept anything
-    if (expected === '*') {
-      continue;
-    }
+		const expected = expectedParts[nextExpectedIndex];
+		nextExpectedIndex++;
 
-    if (expected === '**') {
-      // Ran out of matches but we've accepted the current part
-      if (nextExpectedIndex >= expectedParts.length) {
-        return true;
-      }
+		// A star part can accept anything
+		if (expected === "*") {
+			continue;
+		}
 
-      const next = expectedParts[nextExpectedIndex];
-      nextExpectedIndex++;
+		if (expected === "**") {
+			// Ran out of matches but we've accepted the current part
+			if (nextExpectedIndex >= expectedParts.length) {
+				return true;
+			}
 
-      if (next === '*' || next === '**') {
-        throw new Error(
-          `The next expected part was ${next} but this isn't allowed since we're processing a double star`,
-        );
-      }
+			const next = expectedParts[nextExpectedIndex];
+			nextExpectedIndex++;
 
-      let found = false;
+			if (next === "*" || next === "**") {
+				throw new Error(
+					`The next expected part was ${next} but this isn't allowed since we're processing a double star`,
+				);
+			}
 
-      // Eat as many parts until we find the next expected part
-      while (nextActualIndex < actualParts.length) {
-        const actual = actualParts[nextActualIndex].value;
-        nextActualIndex++;
-        if (actual === next) {
-          found = true;
-          break;
-        }
-      }
+			let found = false;
 
-      if (found) {
-        continue;
-      } else {
-        return false;
-      }
-    }
+			// Eat as many parts until we find the next expected part
+			while (nextActualIndex < actualParts.length) {
+				const actual = actualParts[nextActualIndex].value;
+				nextActualIndex++;
+				if (actual === next) {
+					found = true;
+					break;
+				}
+			}
 
-    if (expected !== actual) {
-      return false;
-    }
-  }
+			if (found) {
+				continue;
+			} else {
+				return false;
+			}
+		}
 
-  return true;
+		if (expected !== actual) {
+			return false;
+		}
+	}
+
+	return true;
 }

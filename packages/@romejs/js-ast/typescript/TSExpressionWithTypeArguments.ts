@@ -6,25 +6,25 @@
  */
 
 import {
-  AnyTSEntityName,
-  JSNodeBase,
-  TSTypeParameterInstantiation,
-} from '../index';
-import {createBuilder} from '../utils';
+	AnyTSEntityName,
+	JSNodeBase,
+	TSTypeParameterInstantiation,
+} from "../index";
+import {createBuilder} from "../utils";
 
 export type TSExpressionWithTypeArguments = JSNodeBase & {
-  type: 'TSExpressionWithTypeArguments';
-  expression: AnyTSEntityName;
-  typeParameters?: TSTypeParameterInstantiation;
+	type: "TSExpressionWithTypeArguments";
+	expression: AnyTSEntityName;
+	typeParameters?: TSTypeParameterInstantiation;
 };
 
 export const tsExpressionWithTypeArguments = createBuilder<TSExpressionWithTypeArguments>(
-  'TSExpressionWithTypeArguments',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      expression: true,
-      typeParameters: true,
-    },
-  },
+	"TSExpressionWithTypeArguments",
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			expression: true,
+			typeParameters: true,
+		},
+	},
 );

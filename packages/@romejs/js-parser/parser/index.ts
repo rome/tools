@@ -5,18 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export * from './comments';
+export * from "./comments";
 
-export * from './expression';
+export * from "./expression";
 
-export * from './lval';
+export * from "./lval";
 
-export * from './statement';
+export * from "./statement";
 
-export * from './jsx';
+export * from "./jsx";
 
-export * from './typescript';
+export * from "./typescript";
 
-export * from './classes';
+export * from "./classes";
 
-export * from './modules';
+export * from "./modules";

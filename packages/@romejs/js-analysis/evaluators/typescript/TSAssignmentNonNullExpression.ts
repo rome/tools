@@ -6,12 +6,12 @@
  */
 
 import {
-  AnyNode,
-  TSAssignmentNonNullExpression,
-  tsAssignmentNonNullExpression,
-} from '@romejs/js-ast';
+	AnyNode,
+	TSAssignmentNonNullExpression,
+	tsAssignmentNonNullExpression,
+} from "@romejs/js-ast";
 
 export default function TSAssignmentNonNullExpression(node: AnyNode) {
-  node = tsAssignmentNonNullExpression.assert(node);
-  throw new Error('unimplemented');
+	node = tsAssignmentNonNullExpression.assert(node);
+	throw new Error("unimplemented");
 }

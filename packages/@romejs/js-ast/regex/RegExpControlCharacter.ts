@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type RegExpControlCharacter = JSNodeBase & {
-  type: 'RegExpControlCharacter';
+	type: "RegExpControlCharacter";
 };
 
 export const regExpControlCharacter = createBuilder<RegExpControlCharacter>(
-  'RegExpControlCharacter',
-  {
-    bindingKeys: {},
-    visitorKeys: {},
-  },
+	"RegExpControlCharacter",
+	{
+		bindingKeys: {},
+		visitorKeys: {},
+	},
 );

@@ -18,6 +18,7 @@
   ℹ Recommended fix
 
   - <br className={'dont-remove-class'}>invalid children</br>
+  + <br className={"dont-remove-class"} />
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -28,7 +29,7 @@
 ### `0: formatted`
 
 ```
-<br className={'dont-remove-class'} />;
+<br className={"dont-remove-class"} />;
 
 ```
 
@@ -168,7 +169,7 @@
 ### `6: formatted`
 
 ```
-<div children="Children" />;
+<div children='Children' />;
 
 ```
 
@@ -182,7 +183,7 @@
 ### `7: formatted`
 
 ```
-<div dangerouslySetInnerHTML={{__html: ''}} />;
+<div dangerouslySetInnerHTML={{__html: ""}} />;
 
 ```
 
@@ -196,6 +197,6 @@
 ### `8: formatted`
 
 ```
-<br className="valid" />;
+<br className='valid' />;
 
 ```

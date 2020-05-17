@@ -6,17 +6,17 @@
  */
 
 export function hrTime(): number {
-  const hrtime = process.hrtime(); // [seconds, nanoseconds]
-  const ts = hrtime[0] * 1_000_000 + Math.round(hrtime[1] / 1_000); // microseconds
-  return ts;
+	const hrtime = process.hrtime(); // [seconds, nanoseconds]
+	const ts = hrtime[0] * 1_000_000 + Math.round(hrtime[1] / 1_000); // microseconds
+	return ts;
 }
 
-const FILE_PROTOCOL = 'file://';
+const FILE_PROTOCOL = "file://";
 
 export function urlToFilename(url: string): string {
-  if (url.startsWith(FILE_PROTOCOL)) {
-    return url.slice(FILE_PROTOCOL.length);
-  } else {
-    return url;
-  }
+	if (url.startsWith(FILE_PROTOCOL)) {
+		return url.slice(FILE_PROTOCOL.length);
+	} else {
+		return url;
+	}
 }

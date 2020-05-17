@@ -6,482 +6,482 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.ts'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array ['ts']
-  loc: Object {
-    filename: 'input.ts'
-    end: Object {
-      column: 0
-      index: 90
-      line: 4
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    VariableDeclarationStatement {
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 28
-          index: 28
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      declaration: VariableDeclaration {
-        kind: 'let'
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 28
-            index: 28
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        declarations: Array [
-          VariableDeclarator {
-            id: BindingIdentifier {
-              name: 'x'
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 27
-                  index: 27
-                  line: 1
-                }
-                start: Object {
-                  column: 4
-                  index: 4
-                  line: 1
-                }
-              }
-              meta: PatternMeta {
-                definite: undefined
-                loc: Object {
-                  filename: 'input.ts'
-                  end: Object {
-                    column: 27
-                    index: 27
-                    line: 1
-                  }
-                  start: Object {
-                    column: 4
-                    index: 4
-                    line: 1
-                  }
-                }
-                typeAnnotation: TSTypeQuery {
-                  loc: Object {
-                    filename: 'input.ts'
-                    end: Object {
-                      column: 27
-                      index: 27
-                      line: 1
-                    }
-                    start: Object {
-                      column: 7
-                      index: 7
-                      line: 1
-                    }
-                  }
-                  exprName: TSImportType {
-                    qualifier: undefined
-                    typeParameters: undefined
-                    loc: Object {
-                      filename: 'input.ts'
-                      end: Object {
-                        column: 27
-                        index: 27
-                        line: 1
-                      }
-                      start: Object {
-                        column: 14
-                        index: 14
-                        line: 1
-                      }
-                    }
-                    argument: StringLiteral {
-                      value: './x'
-                      loc: Object {
-                        filename: 'input.ts'
-                        end: Object {
-                          column: 26
-                          index: 26
-                          line: 1
-                        }
-                        start: Object {
-                          column: 21
-                          index: 21
-                          line: 1
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-            init: undefined
-            loc: Object {
-              filename: 'input.ts'
-              end: Object {
-                column: 27
-                index: 27
-                line: 1
-              }
-              start: Object {
-                column: 4
-                index: 4
-                line: 1
-              }
-            }
-          }
-        ]
-      }
-    }
-    VariableDeclarationStatement {
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 23
-          index: 52
-          line: 2
-        }
-        start: Object {
-          column: 0
-          index: 29
-          line: 2
-        }
-      }
-      declaration: VariableDeclaration {
-        kind: 'let'
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 23
-            index: 52
-            line: 2
-          }
-          start: Object {
-            column: 0
-            index: 29
-            line: 2
-          }
-        }
-        declarations: Array [
-          VariableDeclarator {
-            id: BindingIdentifier {
-              name: 'Y'
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 22
-                  index: 51
-                  line: 2
-                }
-                start: Object {
-                  column: 4
-                  index: 33
-                  line: 2
-                }
-              }
-              meta: PatternMeta {
-                definite: undefined
-                loc: Object {
-                  filename: 'input.ts'
-                  end: Object {
-                    column: 22
-                    index: 51
-                    line: 2
-                  }
-                  start: Object {
-                    column: 4
-                    index: 33
-                    line: 2
-                  }
-                }
-                typeAnnotation: TSImportType {
-                  typeParameters: undefined
-                  loc: Object {
-                    filename: 'input.ts'
-                    end: Object {
-                      column: 22
-                      index: 51
-                      line: 2
-                    }
-                    start: Object {
-                      column: 7
-                      index: 36
-                      line: 2
-                    }
-                  }
-                  argument: StringLiteral {
-                    value: './y'
-                    loc: Object {
-                      filename: 'input.ts'
-                      end: Object {
-                        column: 19
-                        index: 48
-                        line: 2
-                      }
-                      start: Object {
-                        column: 14
-                        index: 43
-                        line: 2
-                      }
-                    }
-                  }
-                  qualifier: ReferenceIdentifier {
-                    name: 'Y'
-                    loc: Object {
-                      filename: 'input.ts'
-                      identifierName: 'Y'
-                      end: Object {
-                        column: 22
-                        index: 51
-                        line: 2
-                      }
-                      start: Object {
-                        column: 21
-                        index: 50
-                        line: 2
-                      }
-                    }
-                  }
-                }
-              }
-            }
-            init: undefined
-            loc: Object {
-              filename: 'input.ts'
-              end: Object {
-                column: 22
-                index: 51
-                line: 2
-              }
-              start: Object {
-                column: 4
-                index: 33
-                line: 2
-              }
-            }
-          }
-        ]
-      }
-    }
-    VariableDeclarationStatement {
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 36
-          index: 89
-          line: 3
-        }
-        start: Object {
-          column: 0
-          index: 53
-          line: 3
-        }
-      }
-      declaration: VariableDeclaration {
-        kind: 'let'
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 36
-            index: 89
-            line: 3
-          }
-          start: Object {
-            column: 0
-            index: 53
-            line: 3
-          }
-        }
-        declarations: Array [
-          VariableDeclarator {
-            id: BindingIdentifier {
-              name: 'z'
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 35
-                  index: 88
-                  line: 3
-                }
-                start: Object {
-                  column: 4
-                  index: 57
-                  line: 3
-                }
-              }
-              meta: PatternMeta {
-                definite: undefined
-                loc: Object {
-                  filename: 'input.ts'
-                  end: Object {
-                    column: 35
-                    index: 88
-                    line: 3
-                  }
-                  start: Object {
-                    column: 4
-                    index: 57
-                    line: 3
-                  }
-                }
-                typeAnnotation: TSImportType {
-                  loc: Object {
-                    filename: 'input.ts'
-                    end: Object {
-                      column: 35
-                      index: 88
-                      line: 3
-                    }
-                    start: Object {
-                      column: 7
-                      index: 60
-                      line: 3
-                    }
-                  }
-                  argument: StringLiteral {
-                    value: '/z'
-                    loc: Object {
-                      filename: 'input.ts'
-                      end: Object {
-                        column: 18
-                        index: 71
-                        line: 3
-                      }
-                      start: Object {
-                        column: 14
-                        index: 67
-                        line: 3
-                      }
-                    }
-                  }
-                  typeParameters: TSTypeParameterInstantiation {
-                    loc: Object {
-                      filename: 'input.ts'
-                      end: Object {
-                        column: 35
-                        index: 88
-                        line: 3
-                      }
-                      start: Object {
-                        column: 27
-                        index: 80
-                        line: 3
-                      }
-                    }
-                    params: Array [
-                      StringKeywordTypeAnnotation {
-                        loc: Object {
-                          filename: 'input.ts'
-                          end: Object {
-                            column: 34
-                            index: 87
-                            line: 3
-                          }
-                          start: Object {
-                            column: 28
-                            index: 81
-                            line: 3
-                          }
-                        }
-                      }
-                    ]
-                  }
-                  qualifier: TSQualifiedName {
-                    loc: Object {
-                      filename: 'input.ts'
-                      end: Object {
-                        column: 27
-                        index: 80
-                        line: 3
-                      }
-                      start: Object {
-                        column: 20
-                        index: 73
-                        line: 3
-                      }
-                    }
-                    left: ReferenceIdentifier {
-                      name: 'foo'
-                      loc: Object {
-                        filename: 'input.ts'
-                        identifierName: 'foo'
-                        end: Object {
-                          column: 23
-                          index: 76
-                          line: 3
-                        }
-                        start: Object {
-                          column: 20
-                          index: 73
-                          line: 3
-                        }
-                      }
-                    }
-                    right: Identifier {
-                      name: 'bar'
-                      loc: Object {
-                        filename: 'input.ts'
-                        identifierName: 'bar'
-                        end: Object {
-                          column: 27
-                          index: 80
-                          line: 3
-                        }
-                        start: Object {
-                          column: 24
-                          index: 77
-                          line: 3
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-            init: undefined
-            loc: Object {
-              filename: 'input.ts'
-              end: Object {
-                column: 35
-                index: 88
-                line: 3
-              }
-              start: Object {
-                column: 4
-                index: 57
-                line: 3
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.ts"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "module"
+	syntax: Array ["ts"]
+	loc: Object {
+		filename: "input.ts"
+		end: Object {
+			column: 0
+			index: 90
+			line: 4
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		VariableDeclarationStatement {
+			loc: Object {
+				filename: "input.ts"
+				end: Object {
+					column: 28
+					index: 28
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			declaration: VariableDeclaration {
+				kind: "let"
+				loc: Object {
+					filename: "input.ts"
+					end: Object {
+						column: 28
+						index: 28
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				declarations: Array [
+					VariableDeclarator {
+						id: BindingIdentifier {
+							name: "x"
+							loc: Object {
+								filename: "input.ts"
+								end: Object {
+									column: 27
+									index: 27
+									line: 1
+								}
+								start: Object {
+									column: 4
+									index: 4
+									line: 1
+								}
+							}
+							meta: PatternMeta {
+								definite: undefined
+								loc: Object {
+									filename: "input.ts"
+									end: Object {
+										column: 27
+										index: 27
+										line: 1
+									}
+									start: Object {
+										column: 4
+										index: 4
+										line: 1
+									}
+								}
+								typeAnnotation: TSTypeQuery {
+									loc: Object {
+										filename: "input.ts"
+										end: Object {
+											column: 27
+											index: 27
+											line: 1
+										}
+										start: Object {
+											column: 7
+											index: 7
+											line: 1
+										}
+									}
+									exprName: TSImportType {
+										qualifier: undefined
+										typeParameters: undefined
+										loc: Object {
+											filename: "input.ts"
+											end: Object {
+												column: 27
+												index: 27
+												line: 1
+											}
+											start: Object {
+												column: 14
+												index: 14
+												line: 1
+											}
+										}
+										argument: StringLiteral {
+											value: "./x"
+											loc: Object {
+												filename: "input.ts"
+												end: Object {
+													column: 26
+													index: 26
+													line: 1
+												}
+												start: Object {
+													column: 21
+													index: 21
+													line: 1
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+						init: undefined
+						loc: Object {
+							filename: "input.ts"
+							end: Object {
+								column: 27
+								index: 27
+								line: 1
+							}
+							start: Object {
+								column: 4
+								index: 4
+								line: 1
+							}
+						}
+					}
+				]
+			}
+		}
+		VariableDeclarationStatement {
+			loc: Object {
+				filename: "input.ts"
+				end: Object {
+					column: 23
+					index: 52
+					line: 2
+				}
+				start: Object {
+					column: 0
+					index: 29
+					line: 2
+				}
+			}
+			declaration: VariableDeclaration {
+				kind: "let"
+				loc: Object {
+					filename: "input.ts"
+					end: Object {
+						column: 23
+						index: 52
+						line: 2
+					}
+					start: Object {
+						column: 0
+						index: 29
+						line: 2
+					}
+				}
+				declarations: Array [
+					VariableDeclarator {
+						id: BindingIdentifier {
+							name: "Y"
+							loc: Object {
+								filename: "input.ts"
+								end: Object {
+									column: 22
+									index: 51
+									line: 2
+								}
+								start: Object {
+									column: 4
+									index: 33
+									line: 2
+								}
+							}
+							meta: PatternMeta {
+								definite: undefined
+								loc: Object {
+									filename: "input.ts"
+									end: Object {
+										column: 22
+										index: 51
+										line: 2
+									}
+									start: Object {
+										column: 4
+										index: 33
+										line: 2
+									}
+								}
+								typeAnnotation: TSImportType {
+									typeParameters: undefined
+									loc: Object {
+										filename: "input.ts"
+										end: Object {
+											column: 22
+											index: 51
+											line: 2
+										}
+										start: Object {
+											column: 7
+											index: 36
+											line: 2
+										}
+									}
+									argument: StringLiteral {
+										value: "./y"
+										loc: Object {
+											filename: "input.ts"
+											end: Object {
+												column: 19
+												index: 48
+												line: 2
+											}
+											start: Object {
+												column: 14
+												index: 43
+												line: 2
+											}
+										}
+									}
+									qualifier: ReferenceIdentifier {
+										name: "Y"
+										loc: Object {
+											filename: "input.ts"
+											identifierName: "Y"
+											end: Object {
+												column: 22
+												index: 51
+												line: 2
+											}
+											start: Object {
+												column: 21
+												index: 50
+												line: 2
+											}
+										}
+									}
+								}
+							}
+						}
+						init: undefined
+						loc: Object {
+							filename: "input.ts"
+							end: Object {
+								column: 22
+								index: 51
+								line: 2
+							}
+							start: Object {
+								column: 4
+								index: 33
+								line: 2
+							}
+						}
+					}
+				]
+			}
+		}
+		VariableDeclarationStatement {
+			loc: Object {
+				filename: "input.ts"
+				end: Object {
+					column: 36
+					index: 89
+					line: 3
+				}
+				start: Object {
+					column: 0
+					index: 53
+					line: 3
+				}
+			}
+			declaration: VariableDeclaration {
+				kind: "let"
+				loc: Object {
+					filename: "input.ts"
+					end: Object {
+						column: 36
+						index: 89
+						line: 3
+					}
+					start: Object {
+						column: 0
+						index: 53
+						line: 3
+					}
+				}
+				declarations: Array [
+					VariableDeclarator {
+						id: BindingIdentifier {
+							name: "z"
+							loc: Object {
+								filename: "input.ts"
+								end: Object {
+									column: 35
+									index: 88
+									line: 3
+								}
+								start: Object {
+									column: 4
+									index: 57
+									line: 3
+								}
+							}
+							meta: PatternMeta {
+								definite: undefined
+								loc: Object {
+									filename: "input.ts"
+									end: Object {
+										column: 35
+										index: 88
+										line: 3
+									}
+									start: Object {
+										column: 4
+										index: 57
+										line: 3
+									}
+								}
+								typeAnnotation: TSImportType {
+									loc: Object {
+										filename: "input.ts"
+										end: Object {
+											column: 35
+											index: 88
+											line: 3
+										}
+										start: Object {
+											column: 7
+											index: 60
+											line: 3
+										}
+									}
+									argument: StringLiteral {
+										value: "/z"
+										loc: Object {
+											filename: "input.ts"
+											end: Object {
+												column: 18
+												index: 71
+												line: 3
+											}
+											start: Object {
+												column: 14
+												index: 67
+												line: 3
+											}
+										}
+									}
+									typeParameters: TSTypeParameterInstantiation {
+										loc: Object {
+											filename: "input.ts"
+											end: Object {
+												column: 35
+												index: 88
+												line: 3
+											}
+											start: Object {
+												column: 27
+												index: 80
+												line: 3
+											}
+										}
+										params: Array [
+											TSStringKeywordTypeAnnotation {
+												loc: Object {
+													filename: "input.ts"
+													end: Object {
+														column: 34
+														index: 87
+														line: 3
+													}
+													start: Object {
+														column: 28
+														index: 81
+														line: 3
+													}
+												}
+											}
+										]
+									}
+									qualifier: TSQualifiedName {
+										loc: Object {
+											filename: "input.ts"
+											end: Object {
+												column: 27
+												index: 80
+												line: 3
+											}
+											start: Object {
+												column: 20
+												index: 73
+												line: 3
+											}
+										}
+										left: ReferenceIdentifier {
+											name: "foo"
+											loc: Object {
+												filename: "input.ts"
+												identifierName: "foo"
+												end: Object {
+													column: 23
+													index: 76
+													line: 3
+												}
+												start: Object {
+													column: 20
+													index: 73
+													line: 3
+												}
+											}
+										}
+										right: Identifier {
+											name: "bar"
+											loc: Object {
+												filename: "input.ts"
+												identifierName: "bar"
+												end: Object {
+													column: 27
+													index: 80
+													line: 3
+												}
+												start: Object {
+													column: 24
+													index: 77
+													line: 3
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+						init: undefined
+						loc: Object {
+							filename: "input.ts"
+							end: Object {
+								column: 35
+								index: 88
+								line: 3
+							}
+							start: Object {
+								column: 4
+								index: 57
+								line: 3
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

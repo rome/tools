@@ -5,28 +5,28 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {testLintMultiple} from '../testHelpers';
-import {dedent} from '@romejs/string-utils';
+import {test} from "rome";
+import {testLintMultiple} from "../testHelpers";
+import {dedent} from "@romejs/string-utils";
 
 test(
-  'prefer while',
-  async (t) => {
-    await testLintMultiple(
-      t,
-      [
-        dedent`
+	"prefer while",
+	async (t) => {
+		await testLintMultiple(
+			t,
+			[
+				dedent`
           for (; x.running;) {
             x.step();
           }
         `,
-        dedent`
+				dedent`
           for (;;) {
             doSomething();
           }
         `,
-      ],
-      {category: 'lint/preferWhile'},
-    );
-  },
+			],
+			{category: "lint/preferWhile"},
+		);
+	},
 );

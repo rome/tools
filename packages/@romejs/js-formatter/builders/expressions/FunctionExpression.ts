@@ -5,36 +5,36 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token, concat, space} from '../../tokens';
-import {FunctionDeclaration, FunctionExpression} from '@romejs/js-ast';
+import Builder from "../../Builder";
+import {Token, concat, space} from "../../tokens";
+import {FunctionDeclaration, FunctionExpression} from "@romejs/js-ast";
 
 export default function FunctionExpression(
-  builder: Builder,
-  node: FunctionDeclaration | FunctionExpression,
+	builder: Builder,
+	node: FunctionDeclaration | FunctionExpression,
 ): Token {
-  const tokens: Array<Token> = [];
+	const tokens: Array<Token> = [];
 
-  if (node.head.async === true) {
-    tokens.push('async');
-    tokens.push(space);
-  }
+	if (node.head.async === true) {
+		tokens.push("async");
+		tokens.push(space);
+	}
 
-  tokens.push('function');
+	tokens.push("function");
 
-  if (node.head.generator === true) {
-    tokens.push('*');
-  }
+	if (node.head.generator === true) {
+		tokens.push("*");
+	}
 
-  if (node.id) {
-    tokens.push(space, builder.tokenize(node.id, node));
-  }
+	if (node.id) {
+		tokens.push(space, builder.tokenize(node.id, node));
+	}
 
-  tokens.push(
-    builder.tokenize(node.head, node),
-    space,
-    builder.tokenize(node.body, node),
-  );
+	tokens.push(
+		builder.tokenize(node.head, node),
+		space,
+		builder.tokenize(node.body, node),
+	);
 
-  return concat(tokens);
+	return concat(tokens);
 }

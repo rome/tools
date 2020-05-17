@@ -5,17 +5,17 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Scope from '../Scope';
-import {AnyNode, ExportLocalDeclaration} from '@romejs/js-ast';
-import {getBindingIdentifiers} from '@romejs/js-ast-utils';
+import Scope from "../Scope";
+import {AnyNode, ExportLocalDeclaration} from "@romejs/js-ast";
+import {getBindingIdentifiers} from "@romejs/js-ast-utils";
 
 export default {
-  creator: false,
-  build(node: ExportLocalDeclaration, parent: AnyNode, scope: Scope) {
-    const newScope = scope.evaluate(node.declaration, node);
-    for (const id of getBindingIdentifiers(node)) {
-      newScope.getBindingAssert(id.name).setExported(true);
-    }
-    return newScope;
-  },
+	creator: false,
+	build(node: ExportLocalDeclaration, parent: AnyNode, scope: Scope) {
+		const newScope = scope.evaluate(node.declaration, node);
+		for (const id of getBindingIdentifiers(node)) {
+			newScope.getBindingAssert(id.name).setExported(true);
+		}
+		return newScope;
+	},
 };

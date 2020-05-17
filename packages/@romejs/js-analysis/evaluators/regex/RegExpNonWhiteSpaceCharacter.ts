@@ -6,12 +6,12 @@
  */
 
 import {
-  AnyNode,
-  RegExpNonWhiteSpaceCharacter,
-  regExpNonWhiteSpaceCharacter,
-} from '@romejs/js-ast';
+	AnyNode,
+	RegExpNonWhiteSpaceCharacter,
+	regExpNonWhiteSpaceCharacter,
+} from "@romejs/js-ast";
 
 export default function RegExpNonWhiteSpaceCharacter(node: AnyNode) {
-  node = regExpNonWhiteSpaceCharacter.assert(node);
-  throw new Error('unimplemented');
+	node = regExpNonWhiteSpaceCharacter.assert(node);
+	throw new Error("unimplemented");
 }

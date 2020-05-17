@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {AnyNode, SpreadElement, spreadElement} from '@romejs/js-ast';
+import {Scope} from "../../scopes";
+import {AnyNode, SpreadElement, spreadElement} from "@romejs/js-ast";
 
 export default function SpreadElement(node: AnyNode, scope: Scope) {
-  node = spreadElement.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = spreadElement.assert(node);
+	scope;
+	throw new Error("unimplemented");
 }

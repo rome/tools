@@ -6,45 +6,45 @@
  */
 
 import {
-  JSNodeBase,
-  JSXAttribute,
-  JSXExpressionContainer,
-  JSXFragment,
-  JSXIdentifier,
-  JSXMemberExpression,
-  JSXNamespacedName,
-  JSXReferenceIdentifier,
-  JSXSpreadAttribute,
-  JSXSpreadChild,
-  JSXText,
-  TSTypeParameterInstantiation,
-} from '../index';
-import {createBuilder} from '../utils';
+	JSNodeBase,
+	JSXAttribute,
+	JSXExpressionContainer,
+	JSXFragment,
+	JSXIdentifier,
+	JSXMemberExpression,
+	JSXNamespacedName,
+	JSXReferenceIdentifier,
+	JSXSpreadAttribute,
+	JSXSpreadChild,
+	JSXText,
+	TSTypeParameterInstantiation,
+} from "../index";
+import {createBuilder} from "../utils";
 
 export type JSXElement = JSNodeBase & {
-  type: 'JSXElement';
-  name:
-    | JSXReferenceIdentifier
-    | JSXIdentifier
-    | JSXNamespacedName
-    | JSXMemberExpression;
-  typeArguments?: TSTypeParameterInstantiation;
-  attributes: Array<JSXSpreadAttribute | JSXAttribute>;
-  selfClosing: boolean;
-  children: Array<
-    JSXText | JSXExpressionContainer | JSXSpreadChild | JSXElement | JSXFragment
-  >;
+	type: "JSXElement";
+	name:
+		 | JSXReferenceIdentifier
+		| JSXIdentifier
+		| JSXNamespacedName
+		| JSXMemberExpression;
+	typeArguments?: TSTypeParameterInstantiation;
+	attributes: Array<JSXSpreadAttribute | JSXAttribute>;
+	selfClosing: boolean;
+	children: Array<
+		JSXText | JSXExpressionContainer | JSXSpreadChild | JSXElement | JSXFragment
+	>;
 };
 
 export const jsxElement = createBuilder<JSXElement>(
-  'JSXElement',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      name: true,
-      typeArguments: true,
-      attributes: true,
-      children: true,
-    },
-  },
+	"JSXElement",
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			name: true,
+			typeArguments: true,
+			attributes: true,
+			children: true,
+		},
+	},
 );

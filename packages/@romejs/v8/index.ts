@@ -5,18 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import * as sourceMapManager from './sourceMapManager';
-export {sourceMapManager};
+import sourceMapManager, {initErrorHooks} from "./sourceMapManager";
+export {initErrorHooks, sourceMapManager};
 
-export * from './errors';
+export * from "./errors";
 
-export * from './utils';
+export * from "./utils";
 
-export {default as Profiler} from './Profiler';
-export {default as Trace} from './Trace';
+export {default as Profiler} from "./Profiler";
+export {default as Trace} from "./Trace";
 export {
-  InspectorClientCloseError,
-  default as InspectorClient,
-} from './InspectorClient';
-export {default as CoverageCollector} from './CoverageCollector';
-export * from './types';
+	InspectorClientCloseError,
+	default as InspectorClient,
+} from "./InspectorClient";
+export {default as CoverageCollector} from "./CoverageCollector";
+export * from "./types";

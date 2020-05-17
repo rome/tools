@@ -5,23 +5,23 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Scope from '../Scope';
-import {AnyNode, TSInterfaceDeclaration} from '@romejs/js-ast';
-import {TypeBinding} from '@romejs/js-compiler';
+import Scope from "../Scope";
+import {AnyNode, TSInterfaceDeclaration} from "@romejs/js-ast";
+import {TypeBinding} from "@romejs/js-compiler";
 
 export default {
-  creator: false,
-  build(node: TSInterfaceDeclaration, parent: AnyNode, scope: Scope) {
-    scope.addBinding(
-      new TypeBinding(
-        {
-          node: node.id,
-          name: node.id.name,
-          scope,
-        },
-        node,
-        'interface',
-      ),
-    );
-  },
+	creator: false,
+	build(node: TSInterfaceDeclaration, parent: AnyNode, scope: Scope) {
+		scope.addBinding(
+			new TypeBinding(
+				{
+					node: node.id,
+					name: node.id.name,
+					scope,
+				},
+				node,
+				"interface",
+			),
+		);
+	},
 };

@@ -6,239 +6,239 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 50
-      index: 50
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unknown label <emphasis>x</emphasis>'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 33
-          index: 33
-          line: 1
-        }
-        start: Object {
-          column: 33
-          index: 33
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    LabeledStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 50
-          index: 50
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      label: Identifier {
-        name: 'x'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'x'
-          end: Object {
-            column: 1
-            index: 1
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-      }
-      body: WhileStatement {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 50
-            index: 50
-            line: 1
-          }
-          start: Object {
-            column: 3
-            index: 3
-            line: 1
-          }
-        }
-        test: BooleanLiteral {
-          value: true
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 14
-              index: 14
-              line: 1
-            }
-            start: Object {
-              column: 10
-              index: 10
-              line: 1
-            }
-          }
-        }
-        body: BlockStatement {
-          directives: Array []
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 50
-              index: 50
-              line: 1
-            }
-            start: Object {
-              column: 16
-              index: 16
-              line: 1
-            }
-          }
-          body: Array [
-            ExpressionStatement {
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 48
-                  index: 48
-                  line: 1
-                }
-                start: Object {
-                  column: 18
-                  index: 18
-                  line: 1
-                }
-              }
-              expression: FunctionExpression {
-                id: undefined
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 46
-                    index: 46
-                    line: 1
-                  }
-                  start: Object {
-                    column: 19
-                    index: 19
-                    line: 1
-                  }
-                }
-                head: FunctionHead {
-                  async: false
-                  generator: false
-                  hasHoistedVars: false
-                  params: Array []
-                  rest: undefined
-                  returnType: undefined
-                  thisType: undefined
-                  typeParameters: undefined
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 30
-                      index: 30
-                      line: 1
-                    }
-                    start: Object {
-                      column: 28
-                      index: 28
-                      line: 1
-                    }
-                  }
-                }
-                body: BlockStatement {
-                  directives: Array []
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 46
-                      index: 46
-                      line: 1
-                    }
-                    start: Object {
-                      column: 31
-                      index: 31
-                      line: 1
-                    }
-                  }
-                  body: Array [
-                    ContinueStatement {
-                      loc: Object {
-                        filename: 'input.js'
-                        end: Object {
-                          column: 44
-                          index: 44
-                          line: 1
-                        }
-                        start: Object {
-                          column: 33
-                          index: 33
-                          line: 1
-                        }
-                      }
-                      label: Identifier {
-                        name: 'x'
-                        loc: Object {
-                          filename: 'input.js'
-                          identifierName: 'x'
-                          end: Object {
-                            column: 43
-                            index: 43
-                            line: 1
-                          }
-                          start: Object {
-                            column: 42
-                            index: 42
-                            line: 1
-                          }
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            }
-          ]
-        }
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 50
+			index: 50
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unknown label <emphasis>x</emphasis>"}
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "script"
+				end: Object {
+					column: 33
+					index: 33
+					line: 1
+				}
+				start: Object {
+					column: 33
+					index: 33
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		LabeledStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 50
+					index: 50
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			label: Identifier {
+				name: "x"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "x"
+					end: Object {
+						column: 1
+						index: 1
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+			}
+			body: WhileStatement {
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 50
+						index: 50
+						line: 1
+					}
+					start: Object {
+						column: 3
+						index: 3
+						line: 1
+					}
+				}
+				test: BooleanLiteral {
+					value: true
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 14
+							index: 14
+							line: 1
+						}
+						start: Object {
+							column: 10
+							index: 10
+							line: 1
+						}
+					}
+				}
+				body: BlockStatement {
+					directives: Array []
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 50
+							index: 50
+							line: 1
+						}
+						start: Object {
+							column: 16
+							index: 16
+							line: 1
+						}
+					}
+					body: Array [
+						ExpressionStatement {
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 48
+									index: 48
+									line: 1
+								}
+								start: Object {
+									column: 18
+									index: 18
+									line: 1
+								}
+							}
+							expression: FunctionExpression {
+								id: undefined
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 46
+										index: 46
+										line: 1
+									}
+									start: Object {
+										column: 19
+										index: 19
+										line: 1
+									}
+								}
+								head: FunctionHead {
+									async: false
+									generator: false
+									hasHoistedVars: false
+									params: Array []
+									rest: undefined
+									returnType: undefined
+									thisType: undefined
+									typeParameters: undefined
+									loc: Object {
+										filename: "input.js"
+										end: Object {
+											column: 30
+											index: 30
+											line: 1
+										}
+										start: Object {
+											column: 28
+											index: 28
+											line: 1
+										}
+									}
+								}
+								body: BlockStatement {
+									directives: Array []
+									loc: Object {
+										filename: "input.js"
+										end: Object {
+											column: 46
+											index: 46
+											line: 1
+										}
+										start: Object {
+											column: 31
+											index: 31
+											line: 1
+										}
+									}
+									body: Array [
+										ContinueStatement {
+											loc: Object {
+												filename: "input.js"
+												end: Object {
+													column: 44
+													index: 44
+													line: 1
+												}
+												start: Object {
+													column: 33
+													index: 33
+													line: 1
+												}
+											}
+											label: Identifier {
+												name: "x"
+												loc: Object {
+													filename: "input.js"
+													identifierName: "x"
+													end: Object {
+														column: 43
+														index: 43
+														line: 1
+													}
+													start: Object {
+														column: 42
+														index: 42
+														line: 1
+													}
+												}
+											}
+										}
+									]
+								}
+							}
+						}
+					]
+				}
+			}
+		}
+	]
 }
 ```

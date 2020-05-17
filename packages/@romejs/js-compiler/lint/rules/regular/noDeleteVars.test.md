@@ -25,7 +25,7 @@
 ### `0: formatted`
 
 ```
-const foo = 'test';
+const foo = "test";
 delete foo;
 
 ```

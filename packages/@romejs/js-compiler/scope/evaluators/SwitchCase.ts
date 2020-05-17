@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Scope from '../Scope';
-import {AnyNode, SwitchCase} from '@romejs/js-ast';
+import Scope from "../Scope";
+import {AnyNode, SwitchCase} from "@romejs/js-ast";
 
 export default {
-  creator: false,
-  build(node: SwitchCase, parent: AnyNode, scope: Scope) {
-    for (const child of node.consequent) {
-      scope.evaluate(child, node);
-    }
-  },
+	creator: false,
+	build(node: SwitchCase, parent: AnyNode, scope: Scope) {
+		for (const child of node.consequent) {
+			scope.evaluate(child, node);
+		}
+	},
 };

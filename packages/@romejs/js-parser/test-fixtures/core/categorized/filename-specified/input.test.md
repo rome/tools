@@ -6,133 +6,133 @@
 
 ```javascript
 Program {
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: true
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 100
-      line: 3
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  comments: Array [
-    CommentLine {
-      id: '0'
-      value: ' This comment should have a filename prop attached to loc'
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 59
-          index: 59
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    VariableDeclarationStatement {
-      leadingComments: Array ['0']
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 39
-          index: 99
-          line: 2
-        }
-        start: Object {
-          column: 0
-          index: 60
-          line: 2
-        }
-      }
-      declaration: VariableDeclaration {
-        kind: 'var'
-        leadingComments: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 39
-            index: 99
-            line: 2
-          }
-          start: Object {
-            column: 0
-            index: 60
-            line: 2
-          }
-        }
-        declarations: Array [
-          VariableDeclarator {
-            id: BindingIdentifier {
-              name: 'node'
-              leadingComments: undefined
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'node'
-                end: Object {
-                  column: 8
-                  index: 68
-                  line: 2
-                }
-                start: Object {
-                  column: 4
-                  index: 64
-                  line: 2
-                }
-              }
-            }
-            leadingComments: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 38
-                index: 98
-                line: 2
-              }
-              start: Object {
-                column: 4
-                index: 64
-                line: 2
-              }
-            }
-            init: StringLiteral {
-              value: 'shouldHaveFilenameLocProp'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 38
-                  index: 98
-                  line: 2
-                }
-                start: Object {
-                  column: 11
-                  index: 71
-                  line: 2
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: true
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 100
+			line: 3
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	comments: Array [
+		CommentLine {
+			id: "0"
+			value: " This comment should have a filename prop attached to loc"
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 59
+					index: 59
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		VariableDeclarationStatement {
+			leadingComments: Array ["0"]
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 39
+					index: 99
+					line: 2
+				}
+				start: Object {
+					column: 0
+					index: 60
+					line: 2
+				}
+			}
+			declaration: VariableDeclaration {
+				kind: "var"
+				leadingComments: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 39
+						index: 99
+						line: 2
+					}
+					start: Object {
+						column: 0
+						index: 60
+						line: 2
+					}
+				}
+				declarations: Array [
+					VariableDeclarator {
+						id: BindingIdentifier {
+							name: "node"
+							leadingComments: undefined
+							loc: Object {
+								filename: "input.js"
+								identifierName: "node"
+								end: Object {
+									column: 8
+									index: 68
+									line: 2
+								}
+								start: Object {
+									column: 4
+									index: 64
+									line: 2
+								}
+							}
+						}
+						leadingComments: undefined
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 38
+								index: 98
+								line: 2
+							}
+							start: Object {
+								column: 4
+								index: 64
+								line: 2
+							}
+						}
+						init: StringLiteral {
+							value: "shouldHaveFilenameLocProp"
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 38
+									index: 98
+									line: 2
+								}
+								start: Object {
+									column: 11
+									index: 71
+									line: 2
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

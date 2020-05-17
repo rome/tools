@@ -5,44 +5,44 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from '@romejs/js-compiler';
-import {AnyNode} from '@romejs/js-ast';
-import {descriptions} from '@romejs/diagnostics';
+import {Path} from "@romejs/js-compiler";
+import {AnyNode} from "@romejs/js-ast";
+import {descriptions} from "@romejs/diagnostics";
 
 function isAssignment(path: Path): boolean {
-  switch (path.parentPath.node.type) {
-    case 'AssignmentExpression':
-    case 'AssignmentArrayPattern':
-    case 'AssignmentObjectPatternProperty':
-    case 'UpdateExpression':
-    case 'AssignmentObjectPattern':
-    case 'ForInStatement':
-      return true;
+	switch (path.parentPath.node.type) {
+		case "AssignmentExpression":
+		case "AssignmentArrayPattern":
+		case "AssignmentObjectPatternProperty":
+		case "UpdateExpression":
+		case "AssignmentObjectPattern":
+		case "ForInStatement":
+			return true;
 
-    default:
-      return false;
-  }
+		default:
+			return false;
+	}
 }
 
 export default {
-  name: 'noImportAssign',
-  enter(path: Path): AnyNode {
-    const {node, scope} = path;
+	name: "noImportAssign",
+	enter(path: Path): AnyNode {
+		const {node, scope} = path;
 
-    if (
-      (node.type === 'AssignmentIdentifier' && isAssignment(path)) ||
-      (node.type === 'ReferenceIdentifier' &&
-      path.parentPath.node.type === 'UpdateExpression')
-    ) {
-      const binding = scope.getBinding(node.name);
-      if (binding !== undefined && binding.kind === 'import') {
-        path.context.addNodeDiagnostic(
-          node,
-          descriptions.LINT.NO_IMPORT_ASSIGN(node.name),
-        );
-      }
-    }
+		if (
+			(node.type === "AssignmentIdentifier" && isAssignment(path)) ||
+			(node.type === "ReferenceIdentifier" &&
+			path.parentPath.node.type === "UpdateExpression")
+		) {
+			const binding = scope.getBinding(node.name);
+			if (binding !== undefined && binding.kind === "import") {
+				path.context.addNodeDiagnostic(
+					node,
+					descriptions.LINT.NO_IMPORT_ASSIGN(node.name),
+				);
+			}
+		}
 
-    return node;
-  },
+		return node;
+	},
 };

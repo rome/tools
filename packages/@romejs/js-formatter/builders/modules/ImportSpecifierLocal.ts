@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token} from '../../tokens';
-import {ImportSpecifierLocal} from '@romejs/js-ast';
+import Builder from "../../Builder";
+import {Token} from "../../tokens";
+import {ImportSpecifierLocal} from "@romejs/js-ast";
 
 export default function ImportSpecifierLocal(
-  builder: Builder,
-  node: ImportSpecifierLocal,
+	builder: Builder,
+	node: ImportSpecifierLocal,
 ): Token {
-  throw new Error('unimplemented');
+	throw new Error("unimplemented");
 }

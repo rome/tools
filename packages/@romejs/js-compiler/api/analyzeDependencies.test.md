@@ -6,80 +6,80 @@
 
 ```javascript
 Object {
-  dependencies: Array []
-  firstTopAwaitLocation: undefined
-  importFirstUsage: Array []
-  moduleType: 'es'
-  syntax: Array []
-  topLevelLocalBindings: Object {}
-  exports: Array [
-    local {
-      kind: 'value'
-      name: 'foo'
-      valueType: 'other'
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 19
-          index: 19
-          line: 1
-        }
-        start: Object {
-          column: 14
-          index: 14
-          line: 1
-        }
-      }
-    }
-  ]
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'analyzeDependencies'}]
-      location: Object {
-        filename: 'unknown'
-        language: 'js'
-        marker: undefined
-        mtime: undefined
-        sourceType: 'module'
-        end: Object {
-          column: 19
-          index: 19
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      description: Object {
-        category: 'analyzeDependencies/cjsExportInES'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'You cannot use CommonJS exports in an ES module'}
-        advice: Array [
-          action {
-            command: 'lint'
-            extra: undefined
-            hidden: true
-            instruction: 'To suppress this error run'
-            noun: 'Add suppression comment'
-            shortcut: 's'
-            args: Array ['unknown']
-            commandFlags: Object {decisions: Array ['suppress-analyzeDependencies/cjsExportInES-unknown-1']}
-          }
-          action {
-            args: Array []
-            command: 'lint'
-            extra: true
-            hidden: true
-            instruction: 'To add suppression comments for ALL files with this category run'
-            noun: 'Add suppression comments for ALL files with this category'
-            shortcut: undefined
-            commandFlags: Object {decisions: Array ['global-suppress-analyzeDependencies/cjsExportInES']}
-          }
-        ]
-      }
-    }
-  ]
+	dependencies: Array []
+	firstTopAwaitLocation: undefined
+	importFirstUsage: Array []
+	moduleType: "es"
+	syntax: Array []
+	topLevelLocalBindings: Object {}
+	exports: Array [
+		local {
+			kind: "value"
+			name: "foo"
+			valueType: "other"
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 19
+					index: 19
+					line: 1
+				}
+				start: Object {
+					column: 14
+					index: 14
+					line: 1
+				}
+			}
+		}
+	]
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "analyzeDependencies"}]
+			location: Object {
+				filename: "unknown"
+				language: "js"
+				marker: undefined
+				mtime: undefined
+				sourceType: "module"
+				end: Object {
+					column: 19
+					index: 19
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			description: Object {
+				category: "analyzeDependencies/cjsExportInES"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "You cannot use CommonJS exports in an ES module"}
+				advice: Array [
+					action {
+						command: "lint"
+						extra: undefined
+						hidden: true
+						instruction: "To suppress this error run"
+						noun: "Add suppression comment"
+						shortcut: "s"
+						args: Array ["unknown"]
+						commandFlags: Object {decisions: Array ["suppress-analyzeDependencies/cjsExportInES-unknown-1"]}
+					}
+					action {
+						args: Array []
+						command: "lint"
+						extra: true
+						hidden: true
+						instruction: "To add suppression comments for ALL files with this category run"
+						noun: "Add suppression comments for ALL files with this category"
+						shortcut: undefined
+						commandFlags: Object {decisions: Array ["global-suppress-analyzeDependencies/cjsExportInES"]}
+					}
+				]
+			}
+		}
+	]
 }
 ```
 
@@ -87,49 +87,49 @@ Object {
 
 ```javascript
 Object {
-  dependencies: Array []
-  diagnostics: Array []
-  firstTopAwaitLocation: undefined
-  importFirstUsage: Array []
-  moduleType: 'es'
-  syntax: Array []
-  topLevelLocalBindings: Object {
-    foo: Object {
-      filename: 'unknown'
-      identifierName: 'foo'
-      end: Object {
-        column: 16
-        index: 16
-        line: 1
-      }
-      start: Object {
-        column: 13
-        index: 13
-        line: 1
-      }
-    }
-  }
-  exports: Array [
-    local {
-      kind: 'value'
-      name: 'foo'
-      valueType: 'other'
-      loc: Object {
-        filename: 'unknown'
-        identifierName: 'foo'
-        end: Object {
-          column: 16
-          index: 16
-          line: 1
-        }
-        start: Object {
-          column: 13
-          index: 13
-          line: 1
-        }
-      }
-    }
-  ]
+	dependencies: Array []
+	diagnostics: Array []
+	firstTopAwaitLocation: undefined
+	importFirstUsage: Array []
+	moduleType: "es"
+	syntax: Array []
+	topLevelLocalBindings: Object {
+		foo: Object {
+			filename: "unknown"
+			identifierName: "foo"
+			end: Object {
+				column: 16
+				index: 16
+				line: 1
+			}
+			start: Object {
+				column: 13
+				index: 13
+				line: 1
+			}
+		}
+	}
+	exports: Array [
+		local {
+			kind: "value"
+			name: "foo"
+			valueType: "other"
+			loc: Object {
+				filename: "unknown"
+				identifierName: "foo"
+				end: Object {
+					column: 16
+					index: 16
+					line: 1
+				}
+				start: Object {
+					column: 13
+					index: 13
+					line: 1
+				}
+			}
+		}
+	]
 }
 ```
 
@@ -137,36 +137,36 @@ Object {
 
 ```javascript
 Object {
-  diagnostics: Array []
-  exports: Array []
-  firstTopAwaitLocation: undefined
-  importFirstUsage: Array []
-  moduleType: 'es'
-  syntax: Array []
-  topLevelLocalBindings: Object {}
-  dependencies: Array [
-    es {
-      kind: 'value'
-      all: false
-      async: false
-      names: Array []
-      optional: false
-      source: 'bar'
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 12
-          index: 12
-          line: 1
-        }
-        start: Object {
-          column: 7
-          index: 7
-          line: 1
-        }
-      }
-    }
-  ]
+	diagnostics: Array []
+	exports: Array []
+	firstTopAwaitLocation: undefined
+	importFirstUsage: Array []
+	moduleType: "es"
+	syntax: Array []
+	topLevelLocalBindings: Object {}
+	dependencies: Array [
+		es {
+			kind: "value"
+			all: false
+			async: false
+			names: Array []
+			optional: false
+			source: "bar"
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 12
+					index: 12
+					line: 1
+				}
+				start: Object {
+					column: 7
+					index: 7
+					line: 1
+				}
+			}
+		}
+	]
 }
 ```
 
@@ -174,14 +174,14 @@ Object {
 
 ```javascript
 Object {
-  dependencies: Array []
-  diagnostics: Array []
-  exports: Array []
-  firstTopAwaitLocation: undefined
-  importFirstUsage: Array []
-  moduleType: 'es'
-  syntax: Array []
-  topLevelLocalBindings: Object {}
+	dependencies: Array []
+	diagnostics: Array []
+	exports: Array []
+	firstTopAwaitLocation: undefined
+	importFirstUsage: Array []
+	moduleType: "es"
+	syntax: Array []
+	topLevelLocalBindings: Object {}
 }
 ```
 
@@ -189,82 +189,82 @@ Object {
 
 ```javascript
 Object {
-  diagnostics: Array []
-  exports: Array []
-  firstTopAwaitLocation: undefined
-  importFirstUsage: Array []
-  moduleType: 'es'
-  syntax: Array []
-  topLevelLocalBindings: Object {
-    bar: Object {
-      filename: 'unknown'
-      identifierName: 'bar'
-      end: Object {
-        column: 11
-        index: 11
-        line: 1
-      }
-      start: Object {
-        column: 8
-        index: 8
-        line: 1
-      }
-    }
-    foo: Object {
-      filename: 'unknown'
-      identifierName: 'foo'
-      end: Object {
-        column: 9
-        index: 34
-        line: 2
-      }
-      start: Object {
-        column: 6
-        index: 31
-        line: 2
-      }
-    }
-  }
-  dependencies: Array [
-    es {
-      kind: 'value'
-      all: false
-      async: false
-      optional: false
-      source: 'foo'
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 23
-          index: 23
-          line: 1
-        }
-        start: Object {
-          column: 18
-          index: 18
-          line: 1
-        }
-      }
-      names: Array [
-        value {
-          name: 'bar'
-          loc: Object {
-            filename: 'unknown'
-            end: Object {
-              column: 11
-              index: 11
-              line: 1
-            }
-            start: Object {
-              column: 8
-              index: 8
-              line: 1
-            }
-          }
-        }
-      ]
-    }
-  ]
+	diagnostics: Array []
+	exports: Array []
+	firstTopAwaitLocation: undefined
+	importFirstUsage: Array []
+	moduleType: "es"
+	syntax: Array []
+	topLevelLocalBindings: Object {
+		bar: Object {
+			filename: "unknown"
+			identifierName: "bar"
+			end: Object {
+				column: 11
+				index: 11
+				line: 1
+			}
+			start: Object {
+				column: 8
+				index: 8
+				line: 1
+			}
+		}
+		foo: Object {
+			filename: "unknown"
+			identifierName: "foo"
+			end: Object {
+				column: 9
+				index: 34
+				line: 2
+			}
+			start: Object {
+				column: 6
+				index: 31
+				line: 2
+			}
+		}
+	}
+	dependencies: Array [
+		es {
+			kind: "value"
+			all: false
+			async: false
+			optional: false
+			source: "foo"
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 23
+					index: 23
+					line: 1
+				}
+				start: Object {
+					column: 18
+					index: 18
+					line: 1
+				}
+			}
+			names: Array [
+				value {
+					name: "bar"
+					loc: Object {
+						filename: "unknown"
+						end: Object {
+							column: 11
+							index: 11
+							line: 1
+						}
+						start: Object {
+							column: 8
+							index: 8
+							line: 1
+						}
+					}
+				}
+			]
+		}
+	]
 }
 ```
 
@@ -272,106 +272,106 @@ Object {
 
 ```javascript
 Object {
-  dependencies: Array []
-  firstTopAwaitLocation: undefined
-  importFirstUsage: Array []
-  moduleType: 'cjs'
-  syntax: Array []
-  topLevelLocalBindings: Object {
-    foo: Object {
-      filename: 'unknown'
-      identifierName: 'foo'
-      end: Object {
-        column: 16
-        index: 16
-        line: 1
-      }
-      start: Object {
-        column: 13
-        index: 13
-        line: 1
-      }
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: '<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module'}
-        advice: Array [
-          log {
-            category: 'info'
-            text: 'Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module'
-          }
-          log {
-            category: 'info'
-            text: 'Add <emphasis>"type": "module"</emphasis> to your <filelink emphasis target="package.json" />'
-          }
-        ]
-      }
-      location: Object {
-        filename: 'unknown'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 25
-          index: 25
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-    }
-  ]
-  exports: Array [
-    local {
-      kind: 'value'
-      name: 'foo'
-      valueType: 'other'
-      loc: Object {
-        filename: 'unknown'
-        identifierName: 'foo'
-        end: Object {
-          column: 16
-          index: 16
-          line: 1
-        }
-        start: Object {
-          column: 13
-          index: 13
-          line: 1
-        }
-      }
-    }
-    local {
-      kind: 'value'
-      name: 'bar'
-      valueType: 'other'
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 19
-          index: 45
-          line: 2
-        }
-        start: Object {
-          column: 14
-          index: 40
-          line: 2
-        }
-      }
-    }
-    local {
-      kind: 'value'
-      name: 'default'
-      loc: undefined
-      valueType: 'other'
-    }
-  ]
+	dependencies: Array []
+	firstTopAwaitLocation: undefined
+	importFirstUsage: Array []
+	moduleType: "cjs"
+	syntax: Array []
+	topLevelLocalBindings: Object {
+		foo: Object {
+			filename: "unknown"
+			identifierName: "foo"
+			end: Object {
+				column: 16
+				index: 16
+				line: 1
+			}
+			start: Object {
+				column: 13
+				index: 13
+				line: 1
+			}
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module"}
+				advice: Array [
+					log {
+						category: "info"
+						text: "Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module"
+					}
+					log {
+						category: "info"
+						text: "Add <emphasis>\"type\": \"module\"</emphasis> to your <filelink emphasis target=\"package.json\" />"
+					}
+				]
+			}
+			location: Object {
+				filename: "unknown"
+				mtime: undefined
+				sourceType: "script"
+				end: Object {
+					column: 25
+					index: 25
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+		}
+	]
+	exports: Array [
+		local {
+			kind: "value"
+			name: "foo"
+			valueType: "other"
+			loc: Object {
+				filename: "unknown"
+				identifierName: "foo"
+				end: Object {
+					column: 16
+					index: 16
+					line: 1
+				}
+				start: Object {
+					column: 13
+					index: 13
+					line: 1
+				}
+			}
+		}
+		local {
+			kind: "value"
+			name: "bar"
+			valueType: "other"
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 19
+					index: 45
+					line: 2
+				}
+				start: Object {
+					column: 14
+					index: 40
+					line: 2
+				}
+			}
+		}
+		local {
+			kind: "value"
+			name: "default"
+			loc: undefined
+			valueType: "other"
+		}
+	]
 }
 ```
 
@@ -379,72 +379,72 @@ Object {
 
 ```javascript
 Object {
-  diagnostics: Array []
-  exports: Array []
-  firstTopAwaitLocation: undefined
-  importFirstUsage: Array []
-  moduleType: 'es'
-  syntax: Array []
-  topLevelLocalBindings: Object {
-    yes: Object {
-      filename: 'unknown'
-      identifierName: 'yes'
-      end: Object {
-        column: 12
-        index: 30
-        line: 3
-      }
-      start: Object {
-        column: 9
-        index: 27
-        line: 3
-      }
-    }
-  }
-  dependencies: Array [
-    es {
-      kind: 'value'
-      all: true
-      async: true
-      names: Array []
-      optional: false
-      source: './foo'
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 14
-          index: 14
-          line: 1
-        }
-        start: Object {
-          column: 7
-          index: 7
-          line: 1
-        }
-      }
-    }
-    es {
-      kind: 'value'
-      all: true
-      async: true
-      names: Array []
-      optional: false
-      source: './bar'
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 16
-          index: 51
-          line: 4
-        }
-        start: Object {
-          column: 9
-          index: 44
-          line: 4
-        }
-      }
-    }
-  ]
+	diagnostics: Array []
+	exports: Array []
+	firstTopAwaitLocation: undefined
+	importFirstUsage: Array []
+	moduleType: "es"
+	syntax: Array []
+	topLevelLocalBindings: Object {
+		yes: Object {
+			filename: "unknown"
+			identifierName: "yes"
+			end: Object {
+				column: 12
+				index: 30
+				line: 3
+			}
+			start: Object {
+				column: 9
+				index: 27
+				line: 3
+			}
+		}
+	}
+	dependencies: Array [
+		es {
+			kind: "value"
+			all: true
+			async: true
+			names: Array []
+			optional: false
+			source: "./foo"
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 14
+					index: 14
+					line: 1
+				}
+				start: Object {
+					column: 7
+					index: 7
+					line: 1
+				}
+			}
+		}
+		es {
+			kind: "value"
+			all: true
+			async: true
+			names: Array []
+			optional: false
+			source: "./bar"
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 16
+					index: 51
+					line: 4
+				}
+				start: Object {
+					column: 9
+					index: 44
+					line: 4
+				}
+			}
+		}
+	]
 }
 ```
 
@@ -452,39 +452,39 @@ Object {
 
 ```javascript
 Object {
-  dependencies: Array []
-  diagnostics: Array []
-  firstTopAwaitLocation: undefined
-  importFirstUsage: Array []
-  moduleType: 'cjs'
-  syntax: Array []
-  topLevelLocalBindings: Object {}
-  exports: Array [
-    local {
-      kind: 'value'
-      name: 'yes'
-      valueType: 'other'
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 27
-          index: 27
-          line: 1
-        }
-        start: Object {
-          column: 14
-          index: 14
-          line: 1
-        }
-      }
-    }
-    local {
-      kind: 'value'
-      name: 'default'
-      loc: undefined
-      valueType: 'other'
-    }
-  ]
+	dependencies: Array []
+	diagnostics: Array []
+	firstTopAwaitLocation: undefined
+	importFirstUsage: Array []
+	moduleType: "cjs"
+	syntax: Array []
+	topLevelLocalBindings: Object {}
+	exports: Array [
+		local {
+			kind: "value"
+			name: "yes"
+			valueType: "other"
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 27
+					index: 27
+					line: 1
+				}
+				start: Object {
+					column: 14
+					index: 14
+					line: 1
+				}
+			}
+		}
+		local {
+			kind: "value"
+			name: "default"
+			loc: undefined
+			valueType: "other"
+		}
+	]
 }
 ```
 
@@ -492,39 +492,39 @@ Object {
 
 ```javascript
 Object {
-  dependencies: Array []
-  diagnostics: Array []
-  firstTopAwaitLocation: undefined
-  importFirstUsage: Array []
-  moduleType: 'cjs'
-  syntax: Array []
-  topLevelLocalBindings: Object {}
-  exports: Array [
-    local {
-      kind: 'value'
-      name: 'default'
-      valueType: 'other'
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 30
-          index: 30
-          line: 1
-        }
-        start: Object {
-          column: 17
-          index: 17
-          line: 1
-        }
-      }
-    }
-    local {
-      kind: 'value'
-      name: 'default'
-      loc: undefined
-      valueType: 'other'
-    }
-  ]
+	dependencies: Array []
+	diagnostics: Array []
+	firstTopAwaitLocation: undefined
+	importFirstUsage: Array []
+	moduleType: "cjs"
+	syntax: Array []
+	topLevelLocalBindings: Object {}
+	exports: Array [
+		local {
+			kind: "value"
+			name: "default"
+			valueType: "other"
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 30
+					index: 30
+					line: 1
+				}
+				start: Object {
+					column: 17
+					index: 17
+					line: 1
+				}
+			}
+		}
+		local {
+			kind: "value"
+			name: "default"
+			loc: undefined
+			valueType: "other"
+		}
+	]
 }
 ```
 
@@ -532,115 +532,115 @@ Object {
 
 ```javascript
 Object {
-  dependencies: Array []
-  diagnostics: Array []
-  firstTopAwaitLocation: undefined
-  importFirstUsage: Array []
-  moduleType: 'es'
-  syntax: Array []
-  topLevelLocalBindings: Object {
-    Bar: Object {
-      filename: 'unknown'
-      identifierName: 'Bar'
-      end: Object {
-        column: 16
-        index: 64
-        line: 3
-      }
-      start: Object {
-        column: 13
-        index: 61
-        line: 3
-      }
-    }
-    foo: Object {
-      filename: 'unknown'
-      identifierName: 'foo'
-      end: Object {
-        column: 19
-        index: 42
-        line: 2
-      }
-      start: Object {
-        column: 16
-        index: 39
-        line: 2
-      }
-    }
-    yes: Object {
-      filename: 'unknown'
-      identifierName: 'yes'
-      end: Object {
-        column: 16
-        index: 16
-        line: 1
-      }
-      start: Object {
-        column: 13
-        index: 13
-        line: 1
-      }
-    }
-  }
-  exports: Array [
-    local {
-      kind: 'value'
-      name: 'yes'
-      valueType: 'other'
-      loc: Object {
-        filename: 'unknown'
-        identifierName: 'yes'
-        end: Object {
-          column: 16
-          index: 16
-          line: 1
-        }
-        start: Object {
-          column: 13
-          index: 13
-          line: 1
-        }
-      }
-    }
-    local {
-      kind: 'value'
-      name: 'foo'
-      valueType: 'function'
-      loc: Object {
-        filename: 'unknown'
-        identifierName: 'foo'
-        end: Object {
-          column: 19
-          index: 42
-          line: 2
-        }
-        start: Object {
-          column: 16
-          index: 39
-          line: 2
-        }
-      }
-    }
-    local {
-      kind: 'value'
-      name: 'Bar'
-      valueType: 'class'
-      loc: Object {
-        filename: 'unknown'
-        identifierName: 'Bar'
-        end: Object {
-          column: 16
-          index: 64
-          line: 3
-        }
-        start: Object {
-          column: 13
-          index: 61
-          line: 3
-        }
-      }
-    }
-  ]
+	dependencies: Array []
+	diagnostics: Array []
+	firstTopAwaitLocation: undefined
+	importFirstUsage: Array []
+	moduleType: "es"
+	syntax: Array []
+	topLevelLocalBindings: Object {
+		Bar: Object {
+			filename: "unknown"
+			identifierName: "Bar"
+			end: Object {
+				column: 16
+				index: 64
+				line: 3
+			}
+			start: Object {
+				column: 13
+				index: 61
+				line: 3
+			}
+		}
+		foo: Object {
+			filename: "unknown"
+			identifierName: "foo"
+			end: Object {
+				column: 19
+				index: 42
+				line: 2
+			}
+			start: Object {
+				column: 16
+				index: 39
+				line: 2
+			}
+		}
+		yes: Object {
+			filename: "unknown"
+			identifierName: "yes"
+			end: Object {
+				column: 16
+				index: 16
+				line: 1
+			}
+			start: Object {
+				column: 13
+				index: 13
+				line: 1
+			}
+		}
+	}
+	exports: Array [
+		local {
+			kind: "value"
+			name: "yes"
+			valueType: "other"
+			loc: Object {
+				filename: "unknown"
+				identifierName: "yes"
+				end: Object {
+					column: 16
+					index: 16
+					line: 1
+				}
+				start: Object {
+					column: 13
+					index: 13
+					line: 1
+				}
+			}
+		}
+		local {
+			kind: "value"
+			name: "foo"
+			valueType: "function"
+			loc: Object {
+				filename: "unknown"
+				identifierName: "foo"
+				end: Object {
+					column: 19
+					index: 42
+					line: 2
+				}
+				start: Object {
+					column: 16
+					index: 39
+					line: 2
+				}
+			}
+		}
+		local {
+			kind: "value"
+			name: "Bar"
+			valueType: "class"
+			loc: Object {
+				filename: "unknown"
+				identifierName: "Bar"
+				end: Object {
+					column: 16
+					index: 64
+					line: 3
+				}
+				start: Object {
+					column: 13
+					index: 61
+					line: 3
+				}
+			}
+		}
+	]
 }
 ```
 
@@ -648,33 +648,33 @@ Object {
 
 ```javascript
 Object {
-  dependencies: Array []
-  diagnostics: Array []
-  firstTopAwaitLocation: undefined
-  importFirstUsage: Array []
-  moduleType: 'es'
-  syntax: Array []
-  topLevelLocalBindings: Object {}
-  exports: Array [
-    local {
-      kind: 'value'
-      name: 'default'
-      valueType: 'other'
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 20
-          index: 20
-          line: 1
-        }
-        start: Object {
-          column: 15
-          index: 15
-          line: 1
-        }
-      }
-    }
-  ]
+	dependencies: Array []
+	diagnostics: Array []
+	firstTopAwaitLocation: undefined
+	importFirstUsage: Array []
+	moduleType: "es"
+	syntax: Array []
+	topLevelLocalBindings: Object {}
+	exports: Array [
+		local {
+			kind: "value"
+			name: "default"
+			valueType: "other"
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 20
+					index: 20
+					line: 1
+				}
+				start: Object {
+					column: 15
+					index: 15
+					line: 1
+				}
+			}
+		}
+	]
 }
 ```
 
@@ -682,178 +682,178 @@ Object {
 
 ```javascript
 Object {
-  diagnostics: Array []
-  firstTopAwaitLocation: undefined
-  importFirstUsage: Array []
-  moduleType: 'es'
-  syntax: Array []
-  topLevelLocalBindings: Object {}
-  exports: Array [
-    external {
-      kind: 'value'
-      exported: 'foo'
-      imported: 'foo'
-      source: 'foobar'
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 11
-          index: 11
-          line: 1
-        }
-        start: Object {
-          column: 8
-          index: 8
-          line: 1
-        }
-      }
-    }
-    external {
-      kind: 'value'
-      exported: 'bar'
-      imported: 'bar'
-      source: 'foobar'
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 16
-          index: 16
-          line: 1
-        }
-        start: Object {
-          column: 13
-          index: 13
-          line: 1
-        }
-      }
-    }
-    external {
-      kind: 'value'
-      exported: 'no'
-      imported: 'default'
-      source: 'foobar'
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 31
-          index: 31
-          line: 1
-        }
-        start: Object {
-          column: 18
-          index: 18
-          line: 1
-        }
-      }
-    }
-    external {
-      kind: 'value'
-      exported: 'noo'
-      imported: 'boo'
-      source: 'foobar'
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 43
-          index: 43
-          line: 1
-        }
-        start: Object {
-          column: 33
-          index: 33
-          line: 1
-        }
-      }
-    }
-  ]
-  dependencies: Array [
-    es {
-      kind: 'value'
-      all: false
-      async: false
-      optional: false
-      source: 'foobar'
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 58
-          index: 58
-          line: 1
-        }
-        start: Object {
-          column: 50
-          index: 50
-          line: 1
-        }
-      }
-      names: Array [
-        value {
-          name: 'foo'
-          loc: Object {
-            filename: 'unknown'
-            end: Object {
-              column: 11
-              index: 11
-              line: 1
-            }
-            start: Object {
-              column: 8
-              index: 8
-              line: 1
-            }
-          }
-        }
-        value {
-          name: 'bar'
-          loc: Object {
-            filename: 'unknown'
-            end: Object {
-              column: 16
-              index: 16
-              line: 1
-            }
-            start: Object {
-              column: 13
-              index: 13
-              line: 1
-            }
-          }
-        }
-        value {
-          name: 'default'
-          loc: Object {
-            filename: 'unknown'
-            end: Object {
-              column: 31
-              index: 31
-              line: 1
-            }
-            start: Object {
-              column: 18
-              index: 18
-              line: 1
-            }
-          }
-        }
-        value {
-          name: 'boo'
-          loc: Object {
-            filename: 'unknown'
-            end: Object {
-              column: 43
-              index: 43
-              line: 1
-            }
-            start: Object {
-              column: 33
-              index: 33
-              line: 1
-            }
-          }
-        }
-      ]
-    }
-  ]
+	diagnostics: Array []
+	firstTopAwaitLocation: undefined
+	importFirstUsage: Array []
+	moduleType: "es"
+	syntax: Array []
+	topLevelLocalBindings: Object {}
+	exports: Array [
+		external {
+			kind: "value"
+			exported: "foo"
+			imported: "foo"
+			source: "foobar"
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 11
+					index: 11
+					line: 1
+				}
+				start: Object {
+					column: 8
+					index: 8
+					line: 1
+				}
+			}
+		}
+		external {
+			kind: "value"
+			exported: "bar"
+			imported: "bar"
+			source: "foobar"
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 16
+					index: 16
+					line: 1
+				}
+				start: Object {
+					column: 13
+					index: 13
+					line: 1
+				}
+			}
+		}
+		external {
+			kind: "value"
+			exported: "no"
+			imported: "default"
+			source: "foobar"
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 31
+					index: 31
+					line: 1
+				}
+				start: Object {
+					column: 18
+					index: 18
+					line: 1
+				}
+			}
+		}
+		external {
+			kind: "value"
+			exported: "noo"
+			imported: "boo"
+			source: "foobar"
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 43
+					index: 43
+					line: 1
+				}
+				start: Object {
+					column: 33
+					index: 33
+					line: 1
+				}
+			}
+		}
+	]
+	dependencies: Array [
+		es {
+			kind: "value"
+			all: false
+			async: false
+			optional: false
+			source: "foobar"
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 58
+					index: 58
+					line: 1
+				}
+				start: Object {
+					column: 50
+					index: 50
+					line: 1
+				}
+			}
+			names: Array [
+				value {
+					name: "foo"
+					loc: Object {
+						filename: "unknown"
+						end: Object {
+							column: 11
+							index: 11
+							line: 1
+						}
+						start: Object {
+							column: 8
+							index: 8
+							line: 1
+						}
+					}
+				}
+				value {
+					name: "bar"
+					loc: Object {
+						filename: "unknown"
+						end: Object {
+							column: 16
+							index: 16
+							line: 1
+						}
+						start: Object {
+							column: 13
+							index: 13
+							line: 1
+						}
+					}
+				}
+				value {
+					name: "default"
+					loc: Object {
+						filename: "unknown"
+						end: Object {
+							column: 31
+							index: 31
+							line: 1
+						}
+						start: Object {
+							column: 18
+							index: 18
+							line: 1
+						}
+					}
+				}
+				value {
+					name: "boo"
+					loc: Object {
+						filename: "unknown"
+						end: Object {
+							column: 43
+							index: 43
+							line: 1
+						}
+						start: Object {
+							column: 33
+							index: 33
+							line: 1
+						}
+					}
+				}
+			]
+		}
+	]
 }
 ```
 
@@ -861,54 +861,54 @@ Object {
 
 ```javascript
 Object {
-  diagnostics: Array []
-  firstTopAwaitLocation: undefined
-  importFirstUsage: Array []
-  moduleType: 'es'
-  syntax: Array []
-  topLevelLocalBindings: Object {}
-  exports: Array [
-    externalAll {
-      kind: 'value'
-      source: 'foobar'
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 23
-          index: 23
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-    }
-  ]
-  dependencies: Array [
-    es {
-      kind: 'value'
-      all: true
-      async: false
-      names: Array []
-      optional: false
-      source: 'foobar'
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 22
-          index: 22
-          line: 1
-        }
-        start: Object {
-          column: 14
-          index: 14
-          line: 1
-        }
-      }
-    }
-  ]
+	diagnostics: Array []
+	firstTopAwaitLocation: undefined
+	importFirstUsage: Array []
+	moduleType: "es"
+	syntax: Array []
+	topLevelLocalBindings: Object {}
+	exports: Array [
+		externalAll {
+			kind: "value"
+			source: "foobar"
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 23
+					index: 23
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+		}
+	]
+	dependencies: Array [
+		es {
+			kind: "value"
+			all: true
+			async: false
+			names: Array []
+			optional: false
+			source: "foobar"
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 22
+					index: 22
+					line: 1
+				}
+				start: Object {
+					column: 14
+					index: 14
+					line: 1
+				}
+			}
+		}
+	]
 }
 ```
 
@@ -916,68 +916,68 @@ Object {
 
 ```javascript
 Object {
-  diagnostics: Array []
-  exports: Array []
-  firstTopAwaitLocation: undefined
-  importFirstUsage: Array []
-  moduleType: 'es'
-  syntax: Array []
-  topLevelLocalBindings: Object {
-    bar: Object {
-      filename: 'unknown'
-      identifierName: 'bar'
-      end: Object {
-        column: 10
-        index: 10
-        line: 1
-      }
-      start: Object {
-        column: 7
-        index: 7
-        line: 1
-      }
-    }
-  }
-  dependencies: Array [
-    es {
-      kind: 'value'
-      all: false
-      async: false
-      optional: false
-      source: 'foobar'
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 24
-          index: 24
-          line: 1
-        }
-        start: Object {
-          column: 16
-          index: 16
-          line: 1
-        }
-      }
-      names: Array [
-        value {
-          name: 'default'
-          loc: Object {
-            filename: 'unknown'
-            end: Object {
-              column: 10
-              index: 10
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
-      ]
-    }
-  ]
+	diagnostics: Array []
+	exports: Array []
+	firstTopAwaitLocation: undefined
+	importFirstUsage: Array []
+	moduleType: "es"
+	syntax: Array []
+	topLevelLocalBindings: Object {
+		bar: Object {
+			filename: "unknown"
+			identifierName: "bar"
+			end: Object {
+				column: 10
+				index: 10
+				line: 1
+			}
+			start: Object {
+				column: 7
+				index: 7
+				line: 1
+			}
+		}
+	}
+	dependencies: Array [
+		es {
+			kind: "value"
+			all: false
+			async: false
+			optional: false
+			source: "foobar"
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 24
+					index: 24
+					line: 1
+				}
+				start: Object {
+					column: 16
+					index: 16
+					line: 1
+				}
+			}
+			names: Array [
+				value {
+					name: "default"
+					loc: Object {
+						filename: "unknown"
+						end: Object {
+							column: 10
+							index: 10
+							line: 1
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+				}
+			]
+		}
+	]
 }
 ```
 
@@ -985,158 +985,158 @@ Object {
 
 ```javascript
 Object {
-  diagnostics: Array []
-  exports: Array []
-  firstTopAwaitLocation: undefined
-  importFirstUsage: Array []
-  moduleType: 'es'
-  syntax: Array []
-  topLevelLocalBindings: Object {
-    bar: Object {
-      filename: 'unknown'
-      identifierName: 'bar'
-      end: Object {
-        column: 11
-        index: 11
-        line: 1
-      }
-      start: Object {
-        column: 8
-        index: 8
-        line: 1
-      }
-    }
-    foo: Object {
-      filename: 'unknown'
-      identifierName: 'foo'
-      end: Object {
-        column: 16
-        index: 16
-        line: 1
-      }
-      start: Object {
-        column: 13
-        index: 13
-        line: 1
-      }
-    }
-    lol: Object {
-      filename: 'unknown'
-      identifierName: 'lol'
-      end: Object {
-        column: 32
-        index: 32
-        line: 1
-      }
-      start: Object {
-        column: 29
-        index: 29
-        line: 1
-      }
-    }
-    to: Object {
-      filename: 'unknown'
-      identifierName: 'to'
-      end: Object {
-        column: 42
-        index: 42
-        line: 1
-      }
-      start: Object {
-        column: 40
-        index: 40
-        line: 1
-      }
-    }
-  }
-  dependencies: Array [
-    es {
-      kind: 'value'
-      all: false
-      async: false
-      optional: false
-      source: 'foobar'
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 57
-          index: 57
-          line: 1
-        }
-        start: Object {
-          column: 49
-          index: 49
-          line: 1
-        }
-      }
-      names: Array [
-        value {
-          name: 'bar'
-          loc: Object {
-            filename: 'unknown'
-            end: Object {
-              column: 11
-              index: 11
-              line: 1
-            }
-            start: Object {
-              column: 8
-              index: 8
-              line: 1
-            }
-          }
-        }
-        value {
-          name: 'foo'
-          loc: Object {
-            filename: 'unknown'
-            end: Object {
-              column: 16
-              index: 16
-              line: 1
-            }
-            start: Object {
-              column: 13
-              index: 13
-              line: 1
-            }
-          }
-        }
-        value {
-          name: 'default'
-          loc: Object {
-            filename: 'unknown'
-            end: Object {
-              column: 32
-              index: 32
-              line: 1
-            }
-            start: Object {
-              column: 18
-              index: 18
-              line: 1
-            }
-          }
-        }
-        value {
-          name: 'ya'
-          loc: Object {
-            filename: 'unknown'
-            end: Object {
-              column: 42
-              index: 42
-              line: 1
-            }
-            start: Object {
-              column: 34
-              index: 34
-              line: 1
-            }
-          }
-        }
-      ]
-    }
-  ]
+	diagnostics: Array []
+	exports: Array []
+	firstTopAwaitLocation: undefined
+	importFirstUsage: Array []
+	moduleType: "es"
+	syntax: Array []
+	topLevelLocalBindings: Object {
+		bar: Object {
+			filename: "unknown"
+			identifierName: "bar"
+			end: Object {
+				column: 11
+				index: 11
+				line: 1
+			}
+			start: Object {
+				column: 8
+				index: 8
+				line: 1
+			}
+		}
+		foo: Object {
+			filename: "unknown"
+			identifierName: "foo"
+			end: Object {
+				column: 16
+				index: 16
+				line: 1
+			}
+			start: Object {
+				column: 13
+				index: 13
+				line: 1
+			}
+		}
+		lol: Object {
+			filename: "unknown"
+			identifierName: "lol"
+			end: Object {
+				column: 32
+				index: 32
+				line: 1
+			}
+			start: Object {
+				column: 29
+				index: 29
+				line: 1
+			}
+		}
+		to: Object {
+			filename: "unknown"
+			identifierName: "to"
+			end: Object {
+				column: 42
+				index: 42
+				line: 1
+			}
+			start: Object {
+				column: 40
+				index: 40
+				line: 1
+			}
+		}
+	}
+	dependencies: Array [
+		es {
+			kind: "value"
+			all: false
+			async: false
+			optional: false
+			source: "foobar"
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 57
+					index: 57
+					line: 1
+				}
+				start: Object {
+					column: 49
+					index: 49
+					line: 1
+				}
+			}
+			names: Array [
+				value {
+					name: "bar"
+					loc: Object {
+						filename: "unknown"
+						end: Object {
+							column: 11
+							index: 11
+							line: 1
+						}
+						start: Object {
+							column: 8
+							index: 8
+							line: 1
+						}
+					}
+				}
+				value {
+					name: "foo"
+					loc: Object {
+						filename: "unknown"
+						end: Object {
+							column: 16
+							index: 16
+							line: 1
+						}
+						start: Object {
+							column: 13
+							index: 13
+							line: 1
+						}
+					}
+				}
+				value {
+					name: "default"
+					loc: Object {
+						filename: "unknown"
+						end: Object {
+							column: 32
+							index: 32
+							line: 1
+						}
+						start: Object {
+							column: 18
+							index: 18
+							line: 1
+						}
+					}
+				}
+				value {
+					name: "ya"
+					loc: Object {
+						filename: "unknown"
+						end: Object {
+							column: 42
+							index: 42
+							line: 1
+						}
+						start: Object {
+							column: 34
+							index: 34
+							line: 1
+						}
+					}
+				}
+			]
+		}
+	]
 }
 ```
 
@@ -1144,36 +1144,36 @@ Object {
 
 ```javascript
 Object {
-  diagnostics: Array []
-  exports: Array []
-  firstTopAwaitLocation: undefined
-  importFirstUsage: Array []
-  moduleType: 'es'
-  syntax: Array []
-  topLevelLocalBindings: Object {}
-  dependencies: Array [
-    es {
-      kind: 'value'
-      all: false
-      async: false
-      names: Array []
-      optional: false
-      source: 'foobar'
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 29
-          index: 29
-          line: 1
-        }
-        start: Object {
-          column: 21
-          index: 21
-          line: 1
-        }
-      }
-    }
-  ]
+	diagnostics: Array []
+	exports: Array []
+	firstTopAwaitLocation: undefined
+	importFirstUsage: Array []
+	moduleType: "es"
+	syntax: Array []
+	topLevelLocalBindings: Object {}
+	dependencies: Array [
+		es {
+			kind: "value"
+			all: false
+			async: false
+			names: Array []
+			optional: false
+			source: "foobar"
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 29
+					index: 29
+					line: 1
+				}
+				start: Object {
+					column: 21
+					index: 21
+					line: 1
+				}
+			}
+		}
+	]
 }
 ```
 
@@ -1181,72 +1181,72 @@ Object {
 
 ```javascript
 Object {
-  dependencies: Array []
-  diagnostics: Array []
-  firstTopAwaitLocation: undefined
-  importFirstUsage: Array []
-  moduleType: 'es'
-  syntax: Array []
-  topLevelLocalBindings: Object {}
-  exports: Array [
-    local {
-      kind: 'value'
-      name: 'foo'
-      valueType: 'other'
-      loc: Object {
-        filename: 'unknown'
-        identifierName: 'foo'
-        end: Object {
-          column: 11
-          index: 11
-          line: 1
-        }
-        start: Object {
-          column: 8
-          index: 8
-          line: 1
-        }
-      }
-    }
-    local {
-      kind: 'value'
-      name: 'bar'
-      valueType: 'other'
-      loc: Object {
-        filename: 'unknown'
-        identifierName: 'bar'
-        end: Object {
-          column: 16
-          index: 16
-          line: 1
-        }
-        start: Object {
-          column: 13
-          index: 13
-          line: 1
-        }
-      }
-    }
-    local {
-      kind: 'value'
-      name: 'no'
-      valueType: 'other'
-      loc: Object {
-        filename: 'unknown'
-        identifierName: 'yes'
-        end: Object {
-          column: 21
-          index: 21
-          line: 1
-        }
-        start: Object {
-          column: 18
-          index: 18
-          line: 1
-        }
-      }
-    }
-  ]
+	dependencies: Array []
+	diagnostics: Array []
+	firstTopAwaitLocation: undefined
+	importFirstUsage: Array []
+	moduleType: "es"
+	syntax: Array []
+	topLevelLocalBindings: Object {}
+	exports: Array [
+		local {
+			kind: "value"
+			name: "foo"
+			valueType: "other"
+			loc: Object {
+				filename: "unknown"
+				identifierName: "foo"
+				end: Object {
+					column: 11
+					index: 11
+					line: 1
+				}
+				start: Object {
+					column: 8
+					index: 8
+					line: 1
+				}
+			}
+		}
+		local {
+			kind: "value"
+			name: "bar"
+			valueType: "other"
+			loc: Object {
+				filename: "unknown"
+				identifierName: "bar"
+				end: Object {
+					column: 16
+					index: 16
+					line: 1
+				}
+				start: Object {
+					column: 13
+					index: 13
+					line: 1
+				}
+			}
+		}
+		local {
+			kind: "value"
+			name: "no"
+			valueType: "other"
+			loc: Object {
+				filename: "unknown"
+				identifierName: "yes"
+				end: Object {
+					column: 21
+					index: 21
+					line: 1
+				}
+				start: Object {
+					column: 18
+					index: 18
+					line: 1
+				}
+			}
+		}
+	]
 }
 ```
 
@@ -1254,72 +1254,72 @@ Object {
 
 ```javascript
 Object {
-  diagnostics: Array []
-  exports: Array []
-  firstTopAwaitLocation: undefined
-  importFirstUsage: Array []
-  moduleType: 'es'
-  syntax: Array []
-  topLevelLocalBindings: Object {
-    yeah: Object {
-      filename: 'unknown'
-      identifierName: 'yeah'
-      end: Object {
-        column: 13
-        index: 42
-        line: 3
-      }
-      start: Object {
-        column: 9
-        index: 38
-        line: 3
-      }
-    }
-  }
-  dependencies: Array [
-    es {
-      kind: 'value'
-      all: false
-      async: false
-      names: Array []
-      optional: false
-      source: 'foo'
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 26
-          index: 26
-          line: 1
-        }
-        start: Object {
-          column: 21
-          index: 21
-          line: 1
-        }
-      }
-    }
-    cjs {
-      kind: 'value'
-      all: true
-      async: false
-      names: Array []
-      optional: false
-      source: 'bar'
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 16
-          index: 63
-          line: 4
-        }
-        start: Object {
-          column: 2
-          index: 49
-          line: 4
-        }
-      }
-    }
-  ]
+	diagnostics: Array []
+	exports: Array []
+	firstTopAwaitLocation: undefined
+	importFirstUsage: Array []
+	moduleType: "es"
+	syntax: Array []
+	topLevelLocalBindings: Object {
+		yeah: Object {
+			filename: "unknown"
+			identifierName: "yeah"
+			end: Object {
+				column: 13
+				index: 42
+				line: 3
+			}
+			start: Object {
+				column: 9
+				index: 38
+				line: 3
+			}
+		}
+	}
+	dependencies: Array [
+		es {
+			kind: "value"
+			all: false
+			async: false
+			names: Array []
+			optional: false
+			source: "foo"
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 26
+					index: 26
+					line: 1
+				}
+				start: Object {
+					column: 21
+					index: 21
+					line: 1
+				}
+			}
+		}
+		cjs {
+			kind: "value"
+			all: true
+			async: false
+			names: Array []
+			optional: false
+			source: "bar"
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 16
+					index: 63
+					line: 4
+				}
+				start: Object {
+					column: 2
+					index: 49
+					line: 4
+				}
+			}
+		}
+	]
 }
 ```
 
@@ -1327,26 +1327,26 @@ Object {
 
 ```javascript
 Object {
-  dependencies: Array []
-  diagnostics: Array []
-  exports: Array []
-  importFirstUsage: Array []
-  moduleType: 'es'
-  syntax: Array []
-  topLevelLocalBindings: Object {}
-  firstTopAwaitLocation: Object {
-    filename: 'unknown'
-    end: Object {
-      column: 14
-      index: 14
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
+	dependencies: Array []
+	diagnostics: Array []
+	exports: Array []
+	importFirstUsage: Array []
+	moduleType: "es"
+	syntax: Array []
+	topLevelLocalBindings: Object {}
+	firstTopAwaitLocation: Object {
+		filename: "unknown"
+		end: Object {
+			column: 14
+			index: 14
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
 }
 ```
 
@@ -1354,36 +1354,36 @@ Object {
 
 ```javascript
 Object {
-  dependencies: Array []
-  diagnostics: Array []
-  firstTopAwaitLocation: undefined
-  importFirstUsage: Array []
-  moduleType: 'cjs'
-  syntax: Array []
-  exports: Array [
-    local {
-      kind: 'value'
-      name: 'default'
-      loc: undefined
-      valueType: 'other'
-    }
-  ]
-  topLevelLocalBindings: Object {
-    yes: Object {
-      filename: 'unknown'
-      identifierName: 'yes'
-      end: Object {
-        column: 12
-        index: 59
-        line: 6
-      }
-      start: Object {
-        column: 9
-        index: 56
-        line: 6
-      }
-    }
-  }
+	dependencies: Array []
+	diagnostics: Array []
+	firstTopAwaitLocation: undefined
+	importFirstUsage: Array []
+	moduleType: "cjs"
+	syntax: Array []
+	exports: Array [
+		local {
+			kind: "value"
+			name: "default"
+			loc: undefined
+			valueType: "other"
+		}
+	]
+	topLevelLocalBindings: Object {
+		yes: Object {
+			filename: "unknown"
+			identifierName: "yes"
+			end: Object {
+				column: 12
+				index: 59
+				line: 6
+			}
+			start: Object {
+				column: 9
+				index: 56
+				line: 6
+			}
+		}
+	}
 }
 ```
 
@@ -1391,13 +1391,13 @@ Object {
 
 ```javascript
 Object {
-  dependencies: Array []
-  diagnostics: Array []
-  exports: Array []
-  firstTopAwaitLocation: undefined
-  importFirstUsage: Array []
-  moduleType: 'es'
-  syntax: Array []
-  topLevelLocalBindings: Object {}
+	dependencies: Array []
+	diagnostics: Array []
+	exports: Array []
+	firstTopAwaitLocation: undefined
+	importFirstUsage: Array []
+	moduleType: "es"
+	syntax: Array []
+	topLevelLocalBindings: Object {}
 }
 ```

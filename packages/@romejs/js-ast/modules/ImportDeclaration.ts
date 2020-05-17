@@ -6,42 +6,42 @@
  */
 
 import {
-  ConstImportModuleKind,
-  ImportDefaultSpecifier,
-  ImportNamespaceSpecifier,
-  ImportSpecifier,
-  JSNodeBase,
-  StringLiteral,
-} from '../index';
-import {createBuilder} from '../utils';
+	ConstImportModuleKind,
+	ImportDefaultSpecifier,
+	ImportNamespaceSpecifier,
+	ImportSpecifier,
+	JSNodeBase,
+	StringLiteral,
+} from "../index";
+import {createBuilder} from "../utils";
 
 export type AnyImportSpecifier =
-  | ImportDefaultSpecifier
-  | ImportNamespaceSpecifier
-  | ImportSpecifier;
+	 | ImportDefaultSpecifier
+	| ImportNamespaceSpecifier
+	| ImportSpecifier;
 
 export type ImportDeclaration = JSNodeBase & {
-  type: 'ImportDeclaration';
-  defaultSpecifier?: ImportDefaultSpecifier;
-  namespaceSpecifier?: ImportNamespaceSpecifier;
-  namedSpecifiers: Array<ImportSpecifier>;
-  source: StringLiteral;
-  importKind?: ConstImportModuleKind;
+	type: "ImportDeclaration";
+	defaultSpecifier?: ImportDefaultSpecifier;
+	namespaceSpecifier?: ImportNamespaceSpecifier;
+	namedSpecifiers: Array<ImportSpecifier>;
+	source: StringLiteral;
+	importKind?: ConstImportModuleKind;
 };
 
 export const importDeclaration = createBuilder<ImportDeclaration>(
-  'ImportDeclaration',
-  {
-    bindingKeys: {
-      defaultSpecifier: true,
-      namespaceSpecifier: true,
-      namedSpecifiers: true,
-    },
-    visitorKeys: {
-      defaultSpecifier: true,
-      namespaceSpecifier: true,
-      namedSpecifiers: true,
-      source: true,
-    },
-  },
+	"ImportDeclaration",
+	{
+		bindingKeys: {
+			defaultSpecifier: true,
+			namespaceSpecifier: true,
+			namedSpecifiers: true,
+		},
+		visitorKeys: {
+			defaultSpecifier: true,
+			namespaceSpecifier: true,
+			namedSpecifiers: true,
+			source: true,
+		},
+	},
 );

@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token, concat} from '../../tokens';
-import {TaggedTemplateExpression} from '@romejs/js-ast';
+import Builder from "../../Builder";
+import {Token, concat} from "../../tokens";
+import {TaggedTemplateExpression} from "@romejs/js-ast";
 
 export default function TaggedTemplateExpression(
-  builder: Builder,
-  node: TaggedTemplateExpression,
+	builder: Builder,
+	node: TaggedTemplateExpression,
 ): Token {
-  return concat([
-    builder.tokenize(node.tag, node),
-    builder.tokenize(node.quasi, node),
-  ]);
+	return concat([
+		builder.tokenize(node.tag, node),
+		builder.tokenize(node.quasi, node),
+	]);
 }

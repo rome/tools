@@ -6,31 +6,31 @@
  */
 
 import {
-  BindingIdentifier,
-  BlockStatement,
-  FunctionHead,
-  JSNodeBase,
-} from '../index';
-import {createBuilder} from '../utils';
+	BindingIdentifier,
+	BlockStatement,
+	FunctionHead,
+	JSNodeBase,
+} from "../index";
+import {createBuilder} from "../utils";
 
 export type FunctionDeclaration = JSNodeBase & {
-  type: 'FunctionDeclaration';
-  id: BindingIdentifier;
-  declare?: boolean;
-  head: FunctionHead;
-  body: BlockStatement;
+	type: "FunctionDeclaration";
+	id: BindingIdentifier;
+	declare?: boolean;
+	head: FunctionHead;
+	body: BlockStatement;
 };
 
 export const functionDeclaration = createBuilder<FunctionDeclaration>(
-  'FunctionDeclaration',
-  {
-    bindingKeys: {
-      id: true,
-    },
-    visitorKeys: {
-      head: true,
-      id: true,
-      body: true,
-    },
-  },
+	"FunctionDeclaration",
+	{
+		bindingKeys: {
+			id: true,
+		},
+		visitorKeys: {
+			head: true,
+			id: true,
+			body: true,
+		},
+	},
 );

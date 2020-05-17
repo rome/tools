@@ -6,12 +6,12 @@
  */
 
 import {
-  AnyNode,
-  AssignmentAssignmentPattern,
-  assignmentAssignmentPattern,
-} from '@romejs/js-ast';
+	AnyNode,
+	AssignmentAssignmentPattern,
+	assignmentAssignmentPattern,
+} from "@romejs/js-ast";
 
 export default function AssignmentAssignmentPattern(node: AnyNode) {
-  node = assignmentAssignmentPattern.assert(node);
-  throw new Error('unimplemented');
+	node = assignmentAssignmentPattern.assert(node);
+	throw new Error("unimplemented");
 }

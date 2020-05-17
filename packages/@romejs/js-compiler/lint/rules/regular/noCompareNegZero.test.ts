@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {testLint} from '../testHelpers';
+import {test} from "rome";
+import {testLint} from "../testHelpers";
 
 test(
-  'disallows comparing negative zero',
-  async (t) => {
-    await testLint(t, '(1 >= -0)', {category: 'lint/noCompareNegZero'});
-    await testLint(t, '(1 >= 0)', {category: 'lint/noCompareNegZero'});
-  },
+	"disallows comparing negative zero",
+	async (t) => {
+		await testLint(t, "(1 >= -0)", {category: "lint/noCompareNegZero"});
+		await testLint(t, "(1 >= 0)", {category: "lint/noCompareNegZero"});
+	},
 );

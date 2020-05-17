@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {PrivateName} from '@romejs/js-ast';
-import {Token, concat} from '../../tokens';
+import Builder from "../../Builder";
+import {PrivateName} from "@romejs/js-ast";
+import {Token, concat} from "../../tokens";
 
 export default function PrivateName(builder: Builder, node: PrivateName): Token {
-  return concat(['#', builder.tokenize(node.id, node)]);
+	return concat(["#", builder.tokenize(node.id, node)]);
 }

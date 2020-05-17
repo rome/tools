@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Scope from '../Scope';
-import {AnyNode, ArrowFunctionExpression} from '@romejs/js-ast';
+import Scope from "../Scope";
+import {AnyNode, ArrowFunctionExpression} from "@romejs/js-ast";
 
 export default {
-  creator: true,
-  build(node: ArrowFunctionExpression, parent: AnyNode, scope: Scope) {
-    return scope.evaluate(node.head, node, true);
-  },
+	creator: true,
+	build(node: ArrowFunctionExpression, parent: AnyNode, scope: Scope) {
+		return scope.evaluate(node.head, node, true);
+	},
 };

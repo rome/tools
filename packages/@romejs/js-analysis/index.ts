@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export {default as getModuleSignature} from './api/getModuleSignature';
-export {default as buildGraph} from './api/buildGraph';
-export {default as check} from './api/check';
+export {default as getModuleSignature} from "./api/getModuleSignature";
+export {default as buildGraph} from "./api/buildGraph";
+export {default as check} from "./api/check";
 
-export * from './types/index';
+export * from "./types/index";
 
-export * from './types';
+export * from "./types";

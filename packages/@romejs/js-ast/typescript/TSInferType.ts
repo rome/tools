@@ -5,20 +5,20 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSNodeBase, TSTypeParameter} from '../index';
-import {createBuilder} from '../utils';
+import {JSNodeBase, TSTypeParameter} from "../index";
+import {createBuilder} from "../utils";
 
 export type TSInferType = JSNodeBase & {
-  type: 'TSInferType';
-  typeParameter: TSTypeParameter;
+	type: "TSInferType";
+	typeParameter: TSTypeParameter;
 };
 
 export const tsInferType = createBuilder<TSInferType>(
-  'TSInferType',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      typeParameter: true,
-    },
-  },
+	"TSInferType",
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			typeParameter: true,
+		},
+	},
 );

@@ -29,7 +29,7 @@
 ### `0: formatted`
 
 ```
-const foo = 'bar';
+const foo = "bar";
 console.log(`${foo}baz`);
 
 ```

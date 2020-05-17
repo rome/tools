@@ -6,12 +6,12 @@
  */
 
 import {
-  AnyNode,
-  ExportExternalDeclaration,
-  exportExternalDeclaration,
-} from '@romejs/js-ast';
+	AnyNode,
+	ExportExternalDeclaration,
+	exportExternalDeclaration,
+} from "@romejs/js-ast";
 
 export default function ExportExternalDeclaration(node: AnyNode) {
-  node = exportExternalDeclaration.assert(node);
-  throw new Error('unimplemented');
+	node = exportExternalDeclaration.assert(node);
+	throw new Error("unimplemented");
 }

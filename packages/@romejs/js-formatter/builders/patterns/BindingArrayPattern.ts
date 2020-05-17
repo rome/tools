@@ -5,18 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token, concat} from '../../tokens';
-import {BindingArrayPattern} from '@romejs/js-ast';
-import ArrayExpression from '../expressions/ArrayExpression';
-import {printPatternMeta} from '../utils';
+import Builder from "../../Builder";
+import {Token, concat} from "../../tokens";
+import {BindingArrayPattern} from "@romejs/js-ast";
+import ArrayExpression from "../expressions/ArrayExpression";
+import {printPatternMeta} from "../utils";
 
 export default function BindingArrayPattern(
-  builder: Builder,
-  node: BindingArrayPattern,
+	builder: Builder,
+	node: BindingArrayPattern,
 ): Token {
-  return concat([
-    ArrayExpression(builder, node),
-    printPatternMeta(builder, node, node.meta),
-  ]);
+	return concat([
+		ArrayExpression(builder, node),
+		printPatternMeta(builder, node, node.meta),
+	]);
 }

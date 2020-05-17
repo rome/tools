@@ -76,6 +76,6 @@ const a = <div>{ /* comment */}</div>;
 ### `3: formatted`
 
 ```
-const a = <div className={'cls' /* comment */}></div>;
+const a = <div className={"cls" /* comment */}></div>;
 
 ```

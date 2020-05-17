@@ -5,28 +5,28 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {BindingIdentifier, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
-import {FunctionHead} from '../auxiliary/FunctionHead';
+import {BindingIdentifier, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
+import {FunctionHead} from "../auxiliary/FunctionHead";
 
 export type TSDeclareFunction = JSNodeBase & {
-  type: 'TSDeclareFunction';
-  id: BindingIdentifier;
-  head: FunctionHead;
+	type: "TSDeclareFunction";
+	id: BindingIdentifier;
+	head: FunctionHead;
 
-  // For consistency with FunctionDeclaration, this can mostly be ignored
-  declare?: boolean;
+	// For consistency with FunctionDeclaration, this can mostly be ignored
+	declare?: boolean;
 };
 
 export const tsDeclareFunction = createBuilder<TSDeclareFunction>(
-  'TSDeclareFunction',
-  {
-    bindingKeys: {
-      id: true,
-    },
-    visitorKeys: {
-      id: true,
-      head: true,
-    },
-  },
+	"TSDeclareFunction",
+	{
+		bindingKeys: {
+			id: true,
+		},
+		visitorKeys: {
+			id: true,
+			head: true,
+		},
+	},
 );

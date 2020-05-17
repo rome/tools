@@ -6,115 +6,115 @@
 
 ```javascript
 Program {
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 27
-      line: 5
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  comments: Array [
-    CommentLine {
-      id: '0'
-      value: 'comment'
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 13
-          index: 24
-          line: 3
-        }
-        start: Object {
-          column: 4
-          index: 15
-          line: 3
-        }
-      }
-    }
-  ]
-  body: Array [
-    BlockStatement {
-      directives: Array []
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 1
-          index: 26
-          line: 4
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      body: Array [
-        ExpressionStatement {
-          trailingComments: Array ['0']
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 8
-              index: 10
-              line: 2
-            }
-            start: Object {
-              column: 4
-              index: 6
-              line: 2
-            }
-          }
-          expression: CallExpression {
-            arguments: Array []
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 7
-                index: 9
-                line: 2
-              }
-              start: Object {
-                column: 4
-                index: 6
-                line: 2
-              }
-            }
-            callee: ReferenceIdentifier {
-              name: 'a'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'a'
-                end: Object {
-                  column: 5
-                  index: 7
-                  line: 2
-                }
-                start: Object {
-                  column: 4
-                  index: 6
-                  line: 2
-                }
-              }
-            }
-          }
-        }
-      ]
-    }
-  ]
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 27
+			line: 5
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	comments: Array [
+		CommentLine {
+			id: "0"
+			value: "comment"
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 13
+					index: 24
+					line: 3
+				}
+				start: Object {
+					column: 4
+					index: 15
+					line: 3
+				}
+			}
+		}
+	]
+	body: Array [
+		BlockStatement {
+			directives: Array []
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 1
+					index: 26
+					line: 4
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			body: Array [
+				ExpressionStatement {
+					trailingComments: Array ["0"]
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 8
+							index: 10
+							line: 2
+						}
+						start: Object {
+							column: 4
+							index: 6
+							line: 2
+						}
+					}
+					expression: CallExpression {
+						arguments: Array []
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 7
+								index: 9
+								line: 2
+							}
+							start: Object {
+								column: 4
+								index: 6
+								line: 2
+							}
+						}
+						callee: ReferenceIdentifier {
+							name: "a"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "a"
+								end: Object {
+									column: 5
+									index: 7
+									line: 2
+								}
+								start: Object {
+									column: 4
+									index: 6
+									line: 2
+								}
+							}
+						}
+					}
+				}
+			]
+		}
+	]
 }
 ```

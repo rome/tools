@@ -5,55 +5,55 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {testLint} from '../testHelpers';
-import {dedent} from '@romejs/string-utils';
+import {test} from "rome";
+import {testLint} from "../testHelpers";
+import {dedent} from "@romejs/string-utils";
 
 test(
-  'no arguments',
-  async (t) => {
-    await testLint(
-      t,
-      dedent`
+	"no arguments",
+	async (t) => {
+		await testLint(
+			t,
+			dedent`
         function f() {
           console.log(arguments);
         }
       `,
-      {category: 'lint/noArguments'},
-    );
+			{category: "lint/noArguments"},
+		);
 
-    await testLint(
-      t,
-      dedent`
+		await testLint(
+			t,
+			dedent`
         (function () {
           console.log(arguments);
         })();
       `,
-      {category: 'lint/noArguments'},
-    );
+			{category: "lint/noArguments"},
+		);
 
-    await testLint(
-      t,
-      dedent`
+		await testLint(
+			t,
+			dedent`
         class C {
           fn() {
             console.log(arguments);
           }
         }
       `,
-      {category: 'lint/noArguments'},
-    );
+			{category: "lint/noArguments"},
+		);
 
-    await testLint(
-      t,
-      dedent`
+		await testLint(
+			t,
+			dedent`
         const o = {
           fn() {
             console.log(arguments);
           },
         };
       `,
-      {category: 'lint/noArguments'},
-    );
-  },
+			{category: "lint/noArguments"},
+		);
+	},
 );

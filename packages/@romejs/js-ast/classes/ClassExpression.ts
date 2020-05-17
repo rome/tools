@@ -5,24 +5,24 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {BindingIdentifier, ClassHead, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {BindingIdentifier, ClassHead, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type ClassExpression = JSNodeBase & {
-  type: 'ClassExpression';
-  id?: BindingIdentifier;
-  meta: ClassHead;
+	type: "ClassExpression";
+	id?: BindingIdentifier;
+	meta: ClassHead;
 };
 
 export const classExpression = createBuilder<ClassExpression>(
-  'ClassExpression',
-  {
-    bindingKeys: {
-      id: true,
-    },
-    visitorKeys: {
-      id: true,
-      meta: true,
-    },
-  },
+	"ClassExpression",
+	{
+		bindingKeys: {
+			id: true,
+		},
+		visitorKeys: {
+			id: true,
+			meta: true,
+		},
+	},
 );

@@ -5,39 +5,39 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path, TransformExitResult} from '@romejs/js-compiler';
+import {Path, TransformExitResult} from "@romejs/js-compiler";
 
 export type HookDescriptor<State, CallArg, CallReturn> = {
-  name: string;
-  initialState: State extends void ? never : State;
-  call?: (
-    path: Path,
-    state: State,
-    arg: CallArg,
-  ) => {
-    bubble?: boolean;
-    value: CallReturn;
-    state: State;
-  };
-  exit?: (path: Path, state: State) => TransformExitResult;
+	name: string;
+	initialState: State extends void ? never : State;
+	call?: (
+		path: Path,
+		state: State,
+		arg: CallArg,
+	) => {
+		bubble?: boolean;
+		value: CallReturn;
+		state: State;
+	};
+	exit?: (path: Path, state: State) => TransformExitResult;
 };
 
 // rome-ignore lint/noExplicitAny
 export type AnyHookDescriptor = HookDescriptor<any, any, any>;
 
 export type HookInstance = {
-  // rome-ignore lint/noExplicitAny
-  state: any;
-  // rome-ignore lint/noExplicitAny
-  descriptor: HookDescriptor<any, any, any>;
+	// rome-ignore lint/noExplicitAny
+	state: any;
+	// rome-ignore lint/noExplicitAny
+	descriptor: HookDescriptor<any, any, any>;
 };
 
 export default function createHook<
-  State = void,
-  CallArg = void,
-  CallReturn = void
+	State = void,
+	CallArg = void,
+	CallReturn = void
 >(
-  descriptor: HookDescriptor<State, CallArg, CallReturn>,
+	descriptor: HookDescriptor<State, CallArg, CallReturn>,
 ): HookDescriptor<State, CallArg, CallReturn> {
-  return descriptor;
+	return descriptor;
 }

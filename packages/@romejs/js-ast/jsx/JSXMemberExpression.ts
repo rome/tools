@@ -6,30 +6,30 @@
  */
 
 import {
-  JSNodeBase,
-  JSXIdentifier,
-  JSXNamespacedName,
-  JSXReferenceIdentifier,
-} from '../index';
-import {createBuilder} from '../utils';
+	JSNodeBase,
+	JSXIdentifier,
+	JSXNamespacedName,
+	JSXReferenceIdentifier,
+} from "../index";
+import {createBuilder} from "../utils";
 
 export type JSXMemberExpression = JSNodeBase & {
-  type: 'JSXMemberExpression';
-  object:
-    | JSXMemberExpression
-    | JSXIdentifier
-    | JSXReferenceIdentifier
-    | JSXNamespacedName;
-  property: JSXIdentifier;
+	type: "JSXMemberExpression";
+	object:
+		 | JSXMemberExpression
+		| JSXIdentifier
+		| JSXReferenceIdentifier
+		| JSXNamespacedName;
+	property: JSXIdentifier;
 };
 
 export const jsxMemberExpression = createBuilder<JSXMemberExpression>(
-  'JSXMemberExpression',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      object: true,
-      property: true,
-    },
-  },
+	"JSXMemberExpression",
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			object: true,
+			property: true,
+		},
+	},
 );

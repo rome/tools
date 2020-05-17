@@ -5,25 +5,25 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyBindingPattern, AnyObjectPropertyKey, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {AnyBindingPattern, AnyObjectPropertyKey, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type BindingObjectPatternProperty = JSNodeBase & {
-  type: 'BindingObjectPatternProperty';
-  key: AnyObjectPropertyKey;
-  value: AnyBindingPattern;
-  meta?: undefined;
+	type: "BindingObjectPatternProperty";
+	key: AnyObjectPropertyKey;
+	value: AnyBindingPattern;
+	meta?: undefined;
 };
 
 export const bindingObjectPatternProperty = createBuilder<BindingObjectPatternProperty>(
-  'BindingObjectPatternProperty',
-  {
-    bindingKeys: {
-      value: true,
-    },
-    visitorKeys: {
-      key: true,
-      value: true,
-    },
-  },
+	"BindingObjectPatternProperty",
+	{
+		bindingKeys: {
+			value: true,
+		},
+		visitorKeys: {
+			key: true,
+			value: true,
+		},
+	},
 );

@@ -5,6 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {buildThrowAndReturnStatementBuilder} from '../utils';
+import {buildThrowAndReturnStatementBuilder} from "../utils";
 
-export default buildThrowAndReturnStatementBuilder('return');
+export default buildThrowAndReturnStatementBuilder("return");

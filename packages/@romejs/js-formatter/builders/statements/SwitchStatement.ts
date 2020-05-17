@@ -5,47 +5,43 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
+import Builder from "../../Builder";
 import {
-  Token,
-  concat,
-  group,
-  hardline,
-  indent,
-  softline,
-  space,
-} from '../../tokens';
-import {SwitchStatement} from '@romejs/js-ast';
+	Token,
+	concat,
+	group,
+	hardline,
+	indent,
+	softline,
+	space,
+} from "../../tokens";
+import {SwitchStatement} from "@romejs/js-ast";
 
 export default function SwitchStatement(
-  builder: Builder,
-  node: SwitchStatement,
+	builder: Builder,
+	node: SwitchStatement,
 ): Token {
-  return concat([
-    group(
-      concat([
-        'switch',
-        space,
-        '(',
-        group(
-          concat([
-            indent(
-              concat([softline, builder.tokenize(node.discriminant, node)]),
-            ),
-            softline,
-          ]),
-        ),
-        ')',
-      ]),
-    ),
-    space,
-    '{',
-    node.cases.length > 0
-      ? indent(
-          concat([hardline, builder.tokenizeStatementList(node.cases, node)]),
-        )
-      : '',
-    hardline,
-    '}',
-  ]);
+	return concat([
+		group(
+			concat([
+				"switch",
+				space,
+				"(",
+				group(
+					concat([
+						indent(concat([softline, builder.tokenize(node.discriminant, node)])),
+						softline,
+					]),
+				),
+				")",
+			]),
+		),
+		space,
+		"{",
+		node.cases.length > 0
+			? indent(concat([hardline, builder.tokenizeStatementList(node.cases, node)]))
+			: "",
+		hardline,
+		"}",
+	]);
 }

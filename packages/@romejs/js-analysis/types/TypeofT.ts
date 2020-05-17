@@ -5,78 +5,76 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from '@romejs/js-ast';
-import {Scope} from '../scopes';
-import StringLiteralT from './StringLiteralT';
-import NumericLiteralT from './NumericLiteralT';
-import BooleanLiteralT from './BooleanLiteralT';
-import StringT from './StringT';
-import BooleanT from './BooleanT';
-import NumericT from './NumericT';
-import NullT from './NullT';
-import ObjT from './ObjT';
-import VoidT from './VoidT';
-import T from './T';
+import {AnyNode} from "@romejs/js-ast";
+import {Scope} from "../scopes";
+import StringLiteralT from "./StringLiteralT";
+import NumericLiteralT from "./NumericLiteralT";
+import BooleanLiteralT from "./BooleanLiteralT";
+import StringT from "./StringT";
+import BooleanT from "./BooleanT";
+import NumericT from "./NumericT";
+import NullT from "./NullT";
+import ObjT from "./ObjT";
+import VoidT from "./VoidT";
+import T from "./T";
 
 export default class TypeofT extends T {
-  constructor(scope: Scope, node: undefined | AnyNode, obj: T) {
-    super(scope, node);
-    this.obj = obj;
-  }
+	constructor(scope: Scope, node: undefined | AnyNode, obj: T) {
+		super(scope, node);
+		this.obj = obj;
+	}
 
-  static type = 'TypeofT';
-  obj: T;
+	static type = "TypeofT";
+	obj: T;
 
-  reduce(): T {
-    const types = this.utils.explodeUnion(this.obj);
+	reduce(): T {
+		const types = this.utils.explodeUnion(this.obj);
 
-    const possibleTypes = [];
-    for (const rawType of types) {
-      const type = this.utils.reduce(rawType);
-      let typeStr;
+		const possibleTypes = [];
+		for (const rawType of types) {
+			const type = this.utils.reduce(rawType);
+			let typeStr;
 
-      if (type instanceof StringT || type instanceof StringLiteralT) {
-        typeStr = 'string';
-      }
+			if (type instanceof StringT || type instanceof StringLiteralT) {
+				typeStr = "string";
+			}
 
-      if (type instanceof NumericT || type instanceof NumericLiteralT) {
-        typeStr = 'number';
-      }
+			if (type instanceof NumericT || type instanceof NumericLiteralT) {
+				typeStr = "number";
+			}
 
-      if (type instanceof BooleanT || type instanceof BooleanLiteralT) {
-        typeStr = 'boolean';
-      }
+			if (type instanceof BooleanT || type instanceof BooleanLiteralT) {
+				typeStr = "boolean";
+			}
 
-      if (type instanceof VoidT) {
-        typeStr = 'undefined';
-      }
+			if (type instanceof VoidT) {
+				typeStr = "undefined";
+			}
 
-      if (type instanceof ObjT) {
-        if (type.calls.length === 0) {
-          typeStr = 'object';
-        } else {
-          typeStr = 'function';
-        }
-      }
+			if (type instanceof ObjT) {
+				if (type.calls.length === 0) {
+					typeStr = "object";
+				} else {
+					typeStr = "function";
+				}
+			}
 
-      if (type instanceof NullT) {
-        typeStr = 'object';
-      }
+			if (type instanceof NullT) {
+				typeStr = "object";
+			}
 
-      // TODO symbol
+			// TODO symbol
 
-      // TODO bigint
-      if (typeStr !== undefined) {
-        possibleTypes.push(
-          new StringLiteralT(this.scope, this.originNode, typeStr),
-        );
-      }
-    }
+			// TODO bigint
+			if (typeStr !== undefined) {
+				possibleTypes.push(new StringLiteralT(this.scope, this.originNode, typeStr));
+			}
+		}
 
-    if (possibleTypes.length === 0) {
-      return new StringT(this.scope, this.originNode);
-    } else {
-      return this.scope.createUnion(possibleTypes, this.originNode);
-    }
-  }
+		if (possibleTypes.length === 0) {
+			return new StringT(this.scope, this.originNode);
+		} else {
+			return this.scope.createUnion(possibleTypes, this.originNode);
+		}
+	}
 }

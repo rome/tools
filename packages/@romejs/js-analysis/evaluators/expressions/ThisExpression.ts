@@ -5,19 +5,19 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope, ThisScope} from '../../scopes';
-import {AnyNode, thisExpression} from '@romejs/js-ast';
-import OpenT from '../../types/OpenT';
+import {Scope, ThisScope} from "../../scopes";
+import {AnyNode, thisExpression} from "@romejs/js-ast";
+import OpenT from "../../types/OpenT";
 
 export default function ThisExpression(node: AnyNode, scope: Scope) {
-  node = thisExpression.assert(node);
-  const thisScope = scope.find(ThisScope);
-  if (thisScope === undefined) {
-    // TODO complain
-    return undefined;
-  } else {
-    const type = new OpenT(scope, node);
-    type.shouldMatch(thisScope.context);
-    return type;
-  }
+	node = thisExpression.assert(node);
+	const thisScope = scope.find(ThisScope);
+	if (thisScope === undefined) {
+		// TODO complain
+		return undefined;
+	} else {
+		const type = new OpenT(scope, node);
+		type.shouldMatch(thisScope.context);
+		return type;
+	}
 }

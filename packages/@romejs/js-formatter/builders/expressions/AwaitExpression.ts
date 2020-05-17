@@ -5,13 +5,13 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token, concat, space} from '../../tokens';
-import {AwaitExpression} from '@romejs/js-ast';
+import Builder from "../../Builder";
+import {Token, concat, space} from "../../tokens";
+import {AwaitExpression} from "@romejs/js-ast";
 
 export default function AwaitExpression(
-  builder: Builder,
-  node: AwaitExpression,
+	builder: Builder,
+	node: AwaitExpression,
 ): Token {
-  return concat(['await', space, builder.tokenize(node.argument, node)]);
+	return concat(["await", space, builder.tokenize(node.argument, node)]);
 }

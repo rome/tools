@@ -6,206 +6,206 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 49
-      line: 3
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'module'
-        end: Object {
-          column: 28
-          index: 47
-          line: 2
-        }
-        start: Object {
-          column: 15
-          index: 34
-          line: 2
-        }
-      }
-      description: Object {
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Only one default export allowed per module.'}
-        advice: Array [
-          log {
-            category: 'info'
-            text: 'Defined already here'
-          }
-          frame {
-            location: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 17
-                index: 17
-                line: 1
-              }
-              start: Object {
-                column: 15
-                index: 15
-                line: 1
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
-  body: Array [
-    ExportDefaultDeclaration {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 18
-          index: 18
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      declaration: ObjectExpression {
-        properties: Array []
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 17
-            index: 17
-            line: 1
-          }
-          start: Object {
-            column: 15
-            index: 15
-            line: 1
-          }
-        }
-      }
-    }
-    ExportDefaultDeclaration {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 28
-          index: 47
-          line: 2
-        }
-        start: Object {
-          column: 0
-          index: 19
-          line: 2
-        }
-      }
-      declaration: FunctionDeclaration {
-        id: BindingIdentifier {
-          name: '*default*'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 28
-              index: 47
-              line: 2
-            }
-            start: Object {
-              column: 15
-              index: 34
-              line: 2
-            }
-          }
-        }
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 28
-            index: 47
-            line: 2
-          }
-          start: Object {
-            column: 15
-            index: 34
-            line: 2
-          }
-        }
-        body: BlockStatement {
-          body: Array []
-          directives: Array []
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 28
-              index: 47
-              line: 2
-            }
-            start: Object {
-              column: 26
-              index: 45
-              line: 2
-            }
-          }
-        }
-        head: FunctionHead {
-          async: false
-          generator: false
-          hasHoistedVars: false
-          params: Array []
-          rest: undefined
-          returnType: undefined
-          thisType: undefined
-          typeParameters: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 25
-              index: 44
-              line: 2
-            }
-            start: Object {
-              column: 23
-              index: 42
-              line: 2
-            }
-          }
-        }
-      }
-    }
-    EmptyStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 29
-          index: 48
-          line: 2
-        }
-        start: Object {
-          column: 28
-          index: 47
-          line: 2
-        }
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "module"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 49
+			line: 3
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "module"
+				end: Object {
+					column: 28
+					index: 47
+					line: 2
+				}
+				start: Object {
+					column: 15
+					index: 34
+					line: 2
+				}
+			}
+			description: Object {
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Only one default export allowed per module."}
+				advice: Array [
+					log {
+						category: "info"
+						text: "Defined already here"
+					}
+					frame {
+						location: Object {
+							filename: "input.js"
+							end: Object {
+								column: 17
+								index: 17
+								line: 1
+							}
+							start: Object {
+								column: 15
+								index: 15
+								line: 1
+							}
+						}
+					}
+				]
+			}
+		}
+	]
+	body: Array [
+		ExportDefaultDeclaration {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 18
+					index: 18
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			declaration: ObjectExpression {
+				properties: Array []
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 17
+						index: 17
+						line: 1
+					}
+					start: Object {
+						column: 15
+						index: 15
+						line: 1
+					}
+				}
+			}
+		}
+		ExportDefaultDeclaration {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 28
+					index: 47
+					line: 2
+				}
+				start: Object {
+					column: 0
+					index: 19
+					line: 2
+				}
+			}
+			declaration: FunctionDeclaration {
+				id: BindingIdentifier {
+					name: "*default*"
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 28
+							index: 47
+							line: 2
+						}
+						start: Object {
+							column: 15
+							index: 34
+							line: 2
+						}
+					}
+				}
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 28
+						index: 47
+						line: 2
+					}
+					start: Object {
+						column: 15
+						index: 34
+						line: 2
+					}
+				}
+				body: BlockStatement {
+					body: Array []
+					directives: Array []
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 28
+							index: 47
+							line: 2
+						}
+						start: Object {
+							column: 26
+							index: 45
+							line: 2
+						}
+					}
+				}
+				head: FunctionHead {
+					async: false
+					generator: false
+					hasHoistedVars: false
+					params: Array []
+					rest: undefined
+					returnType: undefined
+					thisType: undefined
+					typeParameters: undefined
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 25
+							index: 44
+							line: 2
+						}
+						start: Object {
+							column: 23
+							index: 42
+							line: 2
+						}
+					}
+				}
+			}
+		}
+		EmptyStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 29
+					index: 48
+					line: 2
+				}
+				start: Object {
+					column: 28
+					index: 47
+					line: 2
+				}
+			}
+		}
+	]
 }
 ```

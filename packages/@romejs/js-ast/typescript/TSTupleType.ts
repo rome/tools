@@ -5,22 +5,22 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyTSPrimary, JSNodeBase, TSOptionalType} from '../index';
-import {createBuilder} from '../utils';
+import {AnyTSPrimary, JSNodeBase, TSOptionalType} from "../index";
+import {createBuilder} from "../utils";
 
 export type TSTupleType = JSNodeBase & {
-  type: 'TSTupleType';
-  elementTypes: Array<AnyTSPrimary | TSOptionalType>;
-  rest?: AnyTSPrimary;
+	type: "TSTupleType";
+	elementTypes: Array<AnyTSPrimary | TSOptionalType>;
+	rest?: AnyTSPrimary;
 };
 
 export const tsTupleType = createBuilder<TSTupleType>(
-  'TSTupleType',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      elementTypes: true,
-      rest: true,
-    },
-  },
+	"TSTupleType",
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			elementTypes: true,
+			rest: true,
+		},
+	},
 );

@@ -28,20 +28,20 @@
 ### `0: formatted`
 
 ```
-const expr = 'a';
+const expr = "a";
 switch (expr) {
-  case 'a':
-    break;
-  case 'b':
-    break;
-  case 'c':
-    break;
-  case 'd':
-    break;
-  case 'c':
-    break;
-  default:
-    break;
+	case "a":
+		break;
+	case "b":
+		break;
+	case "c":
+		break;
+	case "d":
+		break;
+	case "c":
+		break;
+	default:
+		break;
 }
 
 ```

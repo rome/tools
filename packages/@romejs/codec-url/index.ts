@@ -5,45 +5,45 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Consumer, consume, consumeUnknown} from '@romejs/consume';
-import url = require('url');
+import {Consumer, consume, consumeUnknown} from "@romejs/consume";
+import url = require("url");
 
-import {ob1Coerce0, ob1Number0, ob1Number1} from '@romejs/ob1';
+import {ob1Coerce0, ob1Number0, ob1Number1} from "@romejs/ob1";
 
 export type ConsumableUrl = {
-  path: Consumer;
-  query: Consumer;
+	path: Consumer;
+	query: Consumer;
 };
 
 export function consumeUrl(rawUrl: string): ConsumableUrl {
-  const parts = url.parse(rawUrl, true);
+	const parts = url.parse(rawUrl, true);
 
-  const query = consumeUnknown({...parts.query}, 'parse/url/query');
+	const query = consumeUnknown({...parts.query}, "parse/url/query");
 
-  const path = consume({
-    value: parts.pathname,
-    context: {
-      category: 'parse/url',
-      getDiagnosticPointer() {
-        return {
-          language: 'url',
-          mtime: undefined,
-          sourceText: rawUrl,
-          filename: 'url',
-          start: {
-            index: ob1Number0,
-            line: ob1Number1,
-            column: ob1Number0,
-          },
-          end: {
-            index: ob1Coerce0(rawUrl.length - 1),
-            line: ob1Number1,
-            column: ob1Coerce0(rawUrl.length - 1),
-          },
-        };
-      },
-    },
-  });
+	const path = consume({
+		value: parts.pathname,
+		context: {
+			category: "parse/url",
+			getDiagnosticPointer() {
+				return {
+					language: "url",
+					mtime: undefined,
+					sourceText: rawUrl,
+					filename: "url",
+					start: {
+						index: ob1Number0,
+						line: ob1Number1,
+						column: ob1Number0,
+					},
+					end: {
+						index: ob1Coerce0(rawUrl.length - 1),
+						line: ob1Number1,
+						column: ob1Coerce0(rawUrl.length - 1),
+					},
+				};
+			},
+		},
+	});
 
-  return {query, path};
+	return {query, path};
 }

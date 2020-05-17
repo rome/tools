@@ -5,21 +5,21 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyRegExpExpression, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {AnyRegExpExpression, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type RegExpGroupCapture = JSNodeBase & {
-  type: 'RegExpGroupCapture';
-  expression: AnyRegExpExpression;
-  name?: string;
+	type: "RegExpGroupCapture";
+	expression: AnyRegExpExpression;
+	name?: string;
 };
 
 export const regExpGroupCapture = createBuilder<RegExpGroupCapture>(
-  'RegExpGroupCapture',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      expression: true,
-    },
-  },
+	"RegExpGroupCapture",
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			expression: true,
+		},
+	},
 );

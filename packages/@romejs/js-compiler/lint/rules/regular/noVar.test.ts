@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {testLint} from '../testHelpers';
+import {test} from "rome";
+import {testLint} from "../testHelpers";
 
 test(
-  'disallow var',
-  async (t) => {
-    await testLint(t, 'var foobar;\nfoobar', {category: 'lint/noVar'});
-  },
+	"disallow var",
+	async (t) => {
+		await testLint(t, "var foobar;\nfoobar", {category: "lint/noVar"});
+	},
 );

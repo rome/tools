@@ -5,51 +5,51 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {testLint} from '../testHelpers';
-import {dedent} from '@romejs/string-utils';
+import {test} from "rome";
+import {testLint} from "../testHelpers";
+import {dedent} from "@romejs/string-utils";
 
 test(
-  'no cond assign',
-  async (t) => {
-    await testLint(
-      t,
-      dedent`
+	"no cond assign",
+	async (t) => {
+		await testLint(
+			t,
+			dedent`
         for (let i = 1; i = 10; i++) {
           console.log('foo');
         }
       `,
-      {category: 'lint/noCondAssign'},
-    );
+			{category: "lint/noCondAssign"},
+		);
 
-    await testLint(
-      t,
-      dedent`
+		await testLint(
+			t,
+			dedent`
         if (foo = 'bar') {
           console.log('foo');
         }
       `,
-      {category: 'lint/noCondAssign'},
-    );
+			{category: "lint/noCondAssign"},
+		);
 
-    await testLint(
-      t,
-      dedent`
+		await testLint(
+			t,
+			dedent`
         while (foo = 'bar') {
           console.log('foo');
         }
       `,
-      {category: 'lint/noCondAssign'},
-    );
+			{category: "lint/noCondAssign"},
+		);
 
-    await testLint(
-      t,
-      dedent`
+		await testLint(
+			t,
+			dedent`
         do {
           console.log('foo');
         } while (foo = 'bar')
       `,
-      {category: 'lint/noCondAssign'},
-    );
-  },
+			{category: "lint/noCondAssign"},
+		);
+	},
 );

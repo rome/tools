@@ -6,148 +6,148 @@
 
 ```javascript
 Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array [
-    'jsx'
-    'ts'
-  ]
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 10
-      index: 51
-      line: 5
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 10
-          index: 51
-          line: 5
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: JSXElement {
-        name: JSXReferenceIdentifier {
-          name: 'AbC-def'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 8
-              index: 8
-              line: 1
-            }
-            start: Object {
-              column: 1
-              index: 1
-              line: 1
-            }
-          }
-        }
-        selfClosing: false
-        typeArguments: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 10
-            index: 51
-            line: 5
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        children: Array [
-          JSXText {
-            value: '\nbar\nbaz\n'
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 0
-                index: 41
-                line: 5
-              }
-              start: Object {
-                column: 23
-                index: 32
-                line: 2
-              }
-            }
-          }
-        ]
-        attributes: Array [
-          JSXAttribute {
-            name: JSXIdentifier {
-              name: 'test'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 6
-                  index: 15
-                  line: 2
-                }
-                start: Object {
-                  column: 2
-                  index: 11
-                  line: 2
-                }
-              }
-            }
-            value: StringLiteral {
-              value: '&&'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 22
-                  index: 31
-                  line: 2
-                }
-                start: Object {
-                  column: 7
-                  index: 16
-                  line: 2
-                }
-              }
-            }
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 22
-                index: 31
-                line: 2
-              }
-              start: Object {
-                column: 2
-                index: 11
-                line: 2
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array [
+		"jsx"
+		"ts"
+	]
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 10
+			index: 51
+			line: 5
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		ExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 10
+					index: 51
+					line: 5
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSXElement {
+				name: JSXReferenceIdentifier {
+					name: "AbC-def"
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 8
+							index: 8
+							line: 1
+						}
+						start: Object {
+							column: 1
+							index: 1
+							line: 1
+						}
+					}
+				}
+				selfClosing: false
+				typeArguments: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 10
+						index: 51
+						line: 5
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				children: Array [
+					JSXText {
+						value: "\nbar\nbaz\n"
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 0
+								index: 41
+								line: 5
+							}
+							start: Object {
+								column: 23
+								index: 32
+								line: 2
+							}
+						}
+					}
+				]
+				attributes: Array [
+					JSXAttribute {
+						name: JSXIdentifier {
+							name: "test"
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 6
+									index: 15
+									line: 2
+								}
+								start: Object {
+									column: 2
+									index: 11
+									line: 2
+								}
+							}
+						}
+						value: StringLiteral {
+							value: "&&"
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 22
+									index: 31
+									line: 2
+								}
+								start: Object {
+									column: 7
+									index: 16
+									line: 2
+								}
+							}
+						}
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 22
+								index: 31
+								line: 2
+							}
+							start: Object {
+								column: 2
+								index: 11
+								line: 2
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

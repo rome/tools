@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
+import {Scope} from "../../scopes";
 import {
-  AnyNode,
-  ComputedMemberProperty,
-  computedMemberProperty,
-} from '@romejs/js-ast';
+	AnyNode,
+	ComputedMemberProperty,
+	computedMemberProperty,
+} from "@romejs/js-ast";
 
 export default function ComputedMemberProperty(node: AnyNode, scope: Scope) {
-  node = computedMemberProperty.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = computedMemberProperty.assert(node);
+	scope;
+	throw new Error("unimplemented");
 }

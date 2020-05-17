@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {AnyNode, PrivateName, privateName} from '@romejs/js-ast';
+import {Scope} from "../../scopes";
+import {AnyNode, PrivateName, privateName} from "@romejs/js-ast";
 
 export default function PrivateName(node: AnyNode, scope: Scope) {
-  node = privateName.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = privateName.assert(node);
+	scope;
+	throw new Error("unimplemented");
 }

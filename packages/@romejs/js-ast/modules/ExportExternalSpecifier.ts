@@ -5,23 +5,23 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ConstExportModuleKind, Identifier, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {ConstExportModuleKind, Identifier, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type ExportExternalSpecifier = JSNodeBase & {
-  type: 'ExportExternalSpecifier';
-  exported: Identifier;
-  local: Identifier;
-  exportKind?: ConstExportModuleKind;
+	type: "ExportExternalSpecifier";
+	exported: Identifier;
+	local: Identifier;
+	exportKind?: ConstExportModuleKind;
 };
 
 export const exportExternalSpecifier = createBuilder<ExportExternalSpecifier>(
-  'ExportExternalSpecifier',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      exported: true,
-      local: true,
-    },
-  },
+	"ExportExternalSpecifier",
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			exported: true,
+			local: true,
+		},
+	},
 );

@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Builder from '../../Builder';
-import {Token, concat} from '../../tokens';
-import {AnyNode, Directive} from '@romejs/js-ast';
-import StringLiteral from '../literals/StringLiteral';
+import Builder from "../../Builder";
+import {Token, concat} from "../../tokens";
+import {AnyNode, Directive} from "@romejs/js-ast";
+import StringLiteral from "../literals/StringLiteral";
 
 export default function Directive(
-  builder: Builder,
-  node: Directive,
-  parent: AnyNode,
+	builder: Builder,
+	node: Directive,
+	parent: AnyNode,
 ): Token {
-  return concat([StringLiteral(builder, node, parent), ';']);
+	return concat([StringLiteral(builder, node, parent), ";"]);
 }

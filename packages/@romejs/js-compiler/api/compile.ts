@@ -5,92 +5,92 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Mappings, SourceMapConsumer} from '@romejs/codec-source-map';
-import {DiagnosticSuppressions, Diagnostics} from '@romejs/diagnostics';
-import {Cache} from '@romejs/js-compiler';
-import {formatJS} from '@romejs/js-formatter';
-import {CompileRequest} from '../types';
-import transform from '../methods/transform';
+import {Mappings, SourceMapConsumer} from "@romejs/codec-source-map";
+import {DiagnosticSuppressions, Diagnostics} from "@romejs/diagnostics";
+import {Cache} from "@romejs/js-compiler";
+import {formatJS} from "@romejs/js-formatter";
+import {CompileRequest} from "../types";
+import transform from "../methods/transform";
 
 export type CompileResult = {
-  mappings: Mappings;
-  diagnostics: Diagnostics;
-  suppressions: DiagnosticSuppressions;
-  cacheDependencies: Array<string>;
-  compiledCode: string;
-  sourceText: string;
+	mappings: Mappings;
+	diagnostics: Diagnostics;
+	suppressions: DiagnosticSuppressions;
+	cacheDependencies: Array<string>;
+	compiledCode: string;
+	sourceText: string;
 };
 
 const compileCache: Cache<CompileResult> = new Cache();
 
 export default async function compile(
-  req: CompileRequest,
+	req: CompileRequest,
 ): Promise<CompileResult> {
-  const {sourceText, ast} = req;
+	const {sourceText, ast} = req;
 
-  const query = Cache.buildQuery(req);
-  const cached: undefined | CompileResult = compileCache.get(query);
-  if (cached) {
-    return cached;
-  }
+	const query = Cache.buildQuery(req);
+	const cached: undefined | CompileResult = compileCache.get(query);
+	if (cached) {
+		return cached;
+	}
 
-  const {
-    ast: transformedAst,
-    diagnostics,
-    suppressions,
-    cacheDependencies,
-  } = await transform(req);
+	const {
+		ast: transformedAst,
+		diagnostics,
+		suppressions,
+		cacheDependencies,
+	} = await transform(req);
 
-  const formatted = formatJS(
-    transformedAst,
-    {
-      typeAnnotations: false,
-      indent: req.stage === 'compileForBundle' ? 1 : 0,
-      sourceMaps: true,
-      sourceText,
-    },
-  );
+	const formatted = formatJS(
+		transformedAst,
+		{
+			typeAnnotations: false,
+			indent: req.stage === "compileForBundle" ? 1 : 0,
+			sourceMaps: true,
+			sourceText,
+		},
+	);
 
-  if (req.inputSourceMap !== undefined) {
-    const inputSourceMap = SourceMapConsumer.fromJSON(req.inputSourceMap);
-    const mappings: Mappings = [];
+	if (req.inputSourceMap !== undefined) {
+		const inputSourceMap = SourceMapConsumer.fromJSON(req.inputSourceMap);
+		const mappings: Mappings = [];
 
-    for (const mapping of formatted.mappings) {
-      const actual = inputSourceMap.exactOriginalPositionFor(
-        mapping.original.line,
-        mapping.original.column,
-      );
+		for (const mapping of formatted.mappings) {
+			const actual = inputSourceMap.exactOriginalPositionFor(
+				mapping.original.line,
+				mapping.original.column,
+			);
 
-      if (actual !== undefined) {
-        if (
-          mapping.original.line !== actual.line ||
-          mapping.original.column !== actual.column
-        ) {
-          mappings.push({
-            ...mapping,
-            original: {
-              line: actual.line,
-              column: actual.column,
-            },
-          });
-        } else {
-          mappings.push(mapping);
-        }
-      }
-    }
+			if (actual !== undefined) {
+				if (
+					mapping.original.line !== actual.line ||
+					mapping.original.column !== actual.column
+				) {
+					mappings.push({
+						...mapping,
+						original: {
+							line: actual.line,
+							column: actual.column,
+						},
+					});
+				} else {
+					mappings.push(mapping);
+				}
+			}
+		}
 
-    formatted.mappings = mappings;
-  }
+		formatted.mappings = mappings;
+	}
 
-  const res: CompileResult = {
-    compiledCode: formatted.code,
-    mappings: formatted.mappings,
-    diagnostics: [...ast.diagnostics, ...diagnostics],
-    cacheDependencies,
-    suppressions,
-    sourceText,
-  };
+	const res: CompileResult = {
+		compiledCode: formatted.code,
+		mappings: formatted.mappings,
+		diagnostics: [...ast.diagnostics, ...diagnostics],
+		cacheDependencies,
+		suppressions,
+		sourceText,
+	};
 
-  compileCache.set(query, res);
-  return res;
+	compileCache.set(query, res);
+	return res;
 }

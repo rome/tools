@@ -15,9 +15,9 @@
 
 ```
 switch (foo) {
-  case true:
-  case false:
-    return 'yes';
+	case true:
+	case false:
+		return "yes";
 }
 
 ```
@@ -33,9 +33,9 @@ switch (foo) {
 
 ```
 switch (foo) {
-  case true: {
-    // empty
-  }
+	case true: {
+		// empty
+	}
 }
 
 ```
@@ -51,7 +51,7 @@ switch (foo) {
 
 ```
 switch (foo) {
-  case true:
+	case true:
 }
 
 ```
@@ -74,10 +74,12 @@ switch (foo) {
 
   ℹ Recommended fix
 
-      │ - :⏎  
+      │ - :⏎··  
     1 │ + case false: {
-    2 │ +   let foo = '';
-    3 │ -   ··foo;
+      │ - let foo = '';
+    2 │ + ↹let foo = "";
+      │ - ····foo;
+    3 │ + ↹foo;
     4 │ + }
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -90,11 +92,11 @@ switch (foo) {
 
 ```
 switch (foo) {
-  case true:
-  case false: {
-    let foo = '';
-    foo;
-  }
+	case true:
+	case false: {
+		let foo = "";
+		foo;
+	}
 }
 
 ```

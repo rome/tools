@@ -5,57 +5,57 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {MasterRequest} from '@romejs/core';
-import {Consumer} from '@romejs/consume';
-import {commandCategories} from '../../common/commands';
-import {createMasterCommand} from '../commands';
-import {createUnknownFilePath} from '@romejs/path';
-import {ConstSourceType, program} from '@romejs/js-ast';
-import {removeLoc} from '@romejs/js-ast-utils';
+import {MasterRequest} from "@romejs/core";
+import {Consumer} from "@romejs/consume";
+import {commandCategories} from "../../common/commands";
+import {createMasterCommand} from "../commands";
+import {createUnknownFilePath} from "@romejs/path";
+import {ConstSourceType, program} from "@romejs/js-ast";
+import {removeLoc} from "@romejs/js-ast-utils";
 
 type Flags = {
-  allowDiagnostics: boolean;
-  compact: boolean;
-  sourceType: undefined | ConstSourceType;
+	allowDiagnostics: boolean;
+	compact: boolean;
+	sourceType: undefined | ConstSourceType;
 };
 
 export default createMasterCommand({
-  category: commandCategories.SOURCE_CODE,
-  description: 'parse a single file and dump its ast',
-  usage: '',
-  examples: [],
-  defineFlags(c: Consumer): Flags {
-    return {
-      allowDiagnostics: c.get('allowDiagnostics').asBoolean(false),
-      compact: c.get('compact').asBoolean(true),
-      sourceType: c.get('sourceType').asStringSetOrVoid(['module', 'script']),
-    };
-  },
-  async callback(req: MasterRequest, flags: Flags): Promise<void> {
-    const {master, reporter} = req;
-    const {args} = req.query;
-    req.expectArgumentLength(1);
+	category: commandCategories.SOURCE_CODE,
+	description: "parse a single file and dump its ast",
+	usage: "",
+	examples: [],
+	defineFlags(c: Consumer): Flags {
+		return {
+			allowDiagnostics: c.get("allowDiagnostics").asBoolean(false),
+			compact: c.get("compact").asBoolean(true),
+			sourceType: c.get("sourceType").asStringSetOrVoid(["module", "script"]),
+		};
+	},
+	async callback(req: MasterRequest, flags: Flags): Promise<void> {
+		const {master, reporter} = req;
+		const {args} = req.query;
+		req.expectArgumentLength(1);
 
-    const filename = await master.resolver.resolveEntryAssertPath(
-      {
-        ...req.getResolverOptionsFromFlags(),
-        source: createUnknownFilePath(args[0]),
-      },
-      {location: req.getDiagnosticPointerFromFlags({type: 'arg', key: 0})},
-    );
+		const filename = await master.resolver.resolveEntryAssertPath(
+			{
+				...req.getResolverOptionsFromFlags(),
+				source: createUnknownFilePath(args[0]),
+			},
+			{location: req.getDiagnosticPointerFromFlags({type: "arg", key: 0})},
+		);
 
-    let ast = await req.requestWorkerParse(
-      filename,
-      {
-        sourceType: flags.sourceType,
-        allowParserDiagnostics: flags.allowDiagnostics,
-      },
-    );
+		let ast = await req.requestWorkerParse(
+			filename,
+			{
+				sourceType: flags.sourceType,
+				allowParserDiagnostics: flags.allowDiagnostics,
+			},
+		);
 
-    if (flags.compact) {
-      ast = program.assert(removeLoc(ast));
-    }
+		if (flags.compact) {
+			ast = program.assert(removeLoc(ast));
+		}
 
-    reporter.inspect(ast);
-  },
+		reporter.inspect(ast);
+	},
 });

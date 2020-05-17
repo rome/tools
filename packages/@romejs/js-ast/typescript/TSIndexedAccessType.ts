@@ -5,22 +5,22 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyTSPrimary, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {AnyTSPrimary, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type TSIndexedAccessType = JSNodeBase & {
-  type: 'TSIndexedAccessType';
-  objectType: AnyTSPrimary;
-  indexType: AnyTSPrimary;
+	type: "TSIndexedAccessType";
+	objectType: AnyTSPrimary;
+	indexType: AnyTSPrimary;
 };
 
 export const tsIndexedAccessType = createBuilder<TSIndexedAccessType>(
-  'TSIndexedAccessType',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      objectType: true,
-      indexType: true,
-    },
-  },
+	"TSIndexedAccessType",
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			objectType: true,
+			indexType: true,
+		},
+	},
 );

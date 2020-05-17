@@ -6,41 +6,41 @@
  */
 
 import {
-  AnyParamBindingPattern,
-  AnyPrimaryType,
-  AnyTargetBindingPattern,
-  BindingIdentifier,
-  JSNodeBase,
-  TSTypeParameterDeclaration,
-} from '../index';
-import {createQuickBuilder} from '../utils';
+	AnyParamBindingPattern,
+	AnyTSPrimary,
+	AnyTargetBindingPattern,
+	BindingIdentifier,
+	JSNodeBase,
+	TSTypeParameterDeclaration,
+} from "../index";
+import {createQuickBuilder} from "../utils";
 
 export type FunctionHead = JSNodeBase & {
-  type: 'FunctionHead';
-  params: Array<AnyParamBindingPattern>;
-  rest?: AnyTargetBindingPattern;
-  thisType?: BindingIdentifier;
-  hasHoistedVars?: boolean;
-  generator?: boolean;
-  async?: boolean;
-  typeParameters?: TSTypeParameterDeclaration;
-  returnType?: AnyPrimaryType;
+	type: "FunctionHead";
+	params: Array<AnyParamBindingPattern>;
+	rest?: AnyTargetBindingPattern;
+	thisType?: BindingIdentifier;
+	hasHoistedVars?: boolean;
+	generator?: boolean;
+	async?: boolean;
+	typeParameters?: TSTypeParameterDeclaration;
+	returnType?: AnyTSPrimary;
 };
 
-export const functionHead = createQuickBuilder<FunctionHead, 'params'>(
-  'FunctionHead',
-  'params',
-  {
-    bindingKeys: {
-      params: true,
-      rest: true,
-    },
-    visitorKeys: {
-      params: true,
-      thisType: true,
-      rest: true,
-      returnType: true,
-      typeParameters: true,
-    },
-  },
+export const functionHead = createQuickBuilder<FunctionHead, "params">(
+	"FunctionHead",
+	"params",
+	{
+		bindingKeys: {
+			params: true,
+			rest: true,
+		},
+		visitorKeys: {
+			params: true,
+			thisType: true,
+			rest: true,
+			returnType: true,
+			typeParameters: true,
+		},
+	},
 );

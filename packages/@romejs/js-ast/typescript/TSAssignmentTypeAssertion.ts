@@ -5,19 +5,19 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyTSPrimary, AnyTargetAssignmentPattern, JSNodeBase} from '../index';
-import {createBuilder} from '../utils';
+import {AnyTSPrimary, AnyTargetAssignmentPattern, JSNodeBase} from "../index";
+import {createBuilder} from "../utils";
 
 export type TSAssignmentTypeAssertion = JSNodeBase & {
-  type: 'TSAssignmentTypeAssertion';
-  typeAnnotation: AnyTSPrimary;
-  expression: AnyTargetAssignmentPattern;
+	type: "TSAssignmentTypeAssertion";
+	typeAnnotation: AnyTSPrimary;
+	expression: AnyTargetAssignmentPattern;
 };
 
 export const tsAssignmentTypeAssertion = createBuilder<TSAssignmentTypeAssertion>(
-  'TSAssignmentTypeAssertion',
-  {
-    bindingKeys: {},
-    visitorKeys: {expression: true, typeAnnotation: true},
-  },
+	"TSAssignmentTypeAssertion",
+	{
+		bindingKeys: {},
+		visitorKeys: {expression: true, typeAnnotation: true},
+	},
 );

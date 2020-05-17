@@ -5,23 +5,23 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Path} from '@romejs/js-compiler';
-import {AnyNode} from '@romejs/js-ast';
-import {descriptions} from '@romejs/diagnostics';
+import {Path} from "@romejs/js-compiler";
+import {AnyNode} from "@romejs/js-ast";
+import {descriptions} from "@romejs/diagnostics";
 
 export default {
-  name: 'noCatchAssign',
-  enter(path: Path): AnyNode {
-    const {node, context, scope} = path;
+	name: "noCatchAssign",
+	enter(path: Path): AnyNode {
+		const {node, context, scope} = path;
 
-    if (node.type === 'AssignmentIdentifier') {
-      const binding = scope.getBinding(node.name);
+		if (node.type === "AssignmentIdentifier") {
+			const binding = scope.getBinding(node.name);
 
-      if (binding !== undefined && binding.kind === 'catch') {
-        context.addNodeDiagnostic(node, descriptions.LINT.NO_CATCH_ASSIGN);
-      }
-    }
+			if (binding !== undefined && binding.kind === "catch") {
+				context.addNodeDiagnostic(node, descriptions.LINT.NO_CATCH_ASSIGN);
+			}
+		}
 
-    return node;
-  },
+		return node;
+	},
 };

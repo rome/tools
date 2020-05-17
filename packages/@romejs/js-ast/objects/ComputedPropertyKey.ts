@@ -5,24 +5,24 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyExpression, JSNodeBase} from '../index';
-import {createQuickBuilder} from '../utils';
+import {AnyExpression, JSNodeBase} from "../index";
+import {createQuickBuilder} from "../utils";
 
 export type ComputedPropertyKey = JSNodeBase & {
-  type: 'ComputedPropertyKey';
-  value: AnyExpression;
+	type: "ComputedPropertyKey";
+	value: AnyExpression;
 };
 
 export const computedPropertyKey = createQuickBuilder<
-  ComputedPropertyKey,
-  'value'
+	ComputedPropertyKey,
+	"value"
 >(
-  'ComputedPropertyKey',
-  'value',
-  {
-    bindingKeys: {},
-    visitorKeys: {
-      value: true,
-    },
-  },
+	"ComputedPropertyKey",
+	"value",
+	{
+		bindingKeys: {},
+		visitorKeys: {
+			value: true,
+		},
+	},
 );

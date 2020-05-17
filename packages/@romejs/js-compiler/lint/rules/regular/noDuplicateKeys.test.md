@@ -30,9 +30,9 @@
 
 ```
 const foo = {
-  test: true,
-  test2: true,
-  test: false,
+	test: true,
+	test2: true,
+	test: false,
 };
 
 ```

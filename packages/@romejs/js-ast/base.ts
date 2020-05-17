@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {NodeBase} from '@romejs/parser-core';
+import {NodeBase} from "@romejs/parser-core";
 
 export type JSNodeBase = NodeBase & {
-  leadingComments?: Array<string>;
-  trailingComments?: Array<string>;
-  innerComments?: Array<string>;
+	leadingComments?: Array<string>;
+	trailingComments?: Array<string>;
+	innerComments?: Array<string>;
 };
