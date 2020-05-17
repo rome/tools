@@ -33,7 +33,7 @@ export type AnalyzeExportLocal = {
 };
 
 export type AnyAnalyzeExport =
-	 | AnalyzeExportLocal
+	| AnalyzeExportLocal
 	| {
 			type: "externalNamespace";
 			kind: ConstImportModuleKind;

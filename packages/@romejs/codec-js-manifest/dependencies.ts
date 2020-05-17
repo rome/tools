@@ -19,7 +19,7 @@ import {descriptions} from "@romejs/diagnostics";
 import {ManifestName} from "./types";
 
 export type DependencyPattern =
-	 | HostedGitPattern
+	| HostedGitPattern
 	| HTTPTarballPattern
 	| SemverPattern
 	| GitPattern

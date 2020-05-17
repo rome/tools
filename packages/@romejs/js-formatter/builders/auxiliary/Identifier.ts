@@ -17,7 +17,7 @@ import {
 export default function Identifier(
 	builder: Builder,
 	node:
-		 | AssignmentIdentifier
+		| AssignmentIdentifier
 		| BindingIdentifier
 		| Identifier
 		| ReferenceIdentifier,

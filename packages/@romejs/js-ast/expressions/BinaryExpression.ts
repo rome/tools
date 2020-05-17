@@ -16,7 +16,7 @@ export type BinaryExpression = JSNodeBase & {
 };
 
 export type BinaryOperator =
-	 | "=="
+	| "=="
 	| "!="
 	| "==="
 	| "**"

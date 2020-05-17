@@ -8,7 +8,7 @@
 import stream = require("stream");
 
 type HeaderType =
-	 | "file"
+	| "file"
 	| "link"
 	| "symlink"
 	| "directory"

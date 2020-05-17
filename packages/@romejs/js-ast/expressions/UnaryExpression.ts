@@ -16,7 +16,7 @@ export type UnaryExpression = JSNodeBase & {
 };
 
 export type UnaryOperator =
-	 | "-"
+	| "-"
 	| "+"
 	| "!"
 	| "~"

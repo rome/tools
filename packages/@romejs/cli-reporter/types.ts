@@ -29,7 +29,7 @@ export type Package = {
 };
 
 export type ReporterTableField =
-	 | number
+	| number
 	| string
 	| {
 			align: "left" | "right";
@@ -83,7 +83,7 @@ export type RemoteReporterReceiveMessage = {
 };
 
 export type RemoteReporterClientMessage =
-	 | {
+	| {
 			type: "PROGRESS_CREATE";
 			id: string;
 			opts: undefined | ReporterProgressOptions;

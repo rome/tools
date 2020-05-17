@@ -43,7 +43,7 @@ export type PatternWordSegmentNode = ComplexNode<
 export type PatternWildcardSegmentNode = SimpleNode<"WildcardSegment">;
 
 export type PatternSegmentNode =
-	 | PatternWordSegmentNode
+	| PatternWordSegmentNode
 	| PatternWildcardSegmentNode;
 
 export type PatternSegments = Array<PatternSegmentNode>;

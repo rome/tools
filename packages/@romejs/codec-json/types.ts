@@ -61,7 +61,7 @@ export type Tokens = BaseTokens & {
 
 //
 export type JSONValue =
-	 | null
+	| null
 	| string
 	| number
 	| boolean

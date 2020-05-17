@@ -194,7 +194,7 @@ export class ModuleSignatureManager {
 }
 
 type Export =
-	 | {
+	| {
 			type: "local";
 			name: string;
 			value: T;
