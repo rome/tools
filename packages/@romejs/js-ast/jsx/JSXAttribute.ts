@@ -20,7 +20,7 @@ export type JSXAttribute = JSNodeBase & {
 	type: "JSXAttribute";
 	name: JSXIdentifier | JSXNamespacedName;
 	value?:
-		 | undefined
+		| undefined
 		| JSXElement
 		| JSXFragment
 		| StringLiteral

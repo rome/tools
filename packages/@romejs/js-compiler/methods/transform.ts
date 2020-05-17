@@ -70,7 +70,9 @@ export default async function transform(
 	const transformFactory = stageTransforms[stage];
 	const transforms = transformFactory(project.config, options);
 
-	let visitors: TransformVisitors = await context.normalizeTransforms(transforms);
+	let visitors: TransformVisitors = await context.normalizeTransforms(
+		transforms,
+	);
 
 	const compiledAst = context.reduceRoot(ast, visitors);
 
@@ -80,7 +82,10 @@ export default async function transform(
 			...prevStageDiagnostics,
 			...context.diagnostics.getDiagnostics(),
 		],
-		cacheDependencies: [...prevStageCacheDeps, ...context.getCacheDependencies()],
+		cacheDependencies: [
+			...prevStageCacheDeps,
+			...context.getCacheDependencies(),
+		],
 		ast: compiledAst,
 	};
 	stageCache.set(cacheQuery, res);

@@ -99,7 +99,7 @@ export type DiagnosticBlessedMessage = {
 };
 
 export type DiagnosticAdviceItem =
-	 | DiagnosticAdviceLog
+	| DiagnosticAdviceLog
 	| DiagnosticAdviceList
 	| DiagnosticAdviceInspect
 	| DiagnosticAdviceCode

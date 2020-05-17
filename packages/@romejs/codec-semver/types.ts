@@ -48,7 +48,7 @@ export type WildcardNode = SimpleNode<"Wildcard">;
 
 // >=1.2.3
 export type ComparatorOperator =
-	 | "<"
+	| "<"
 	| ">"
 	| ">="
 	| "<="
@@ -93,7 +93,7 @@ export type VersionRangeNode = ComplexNode<
 >;
 
 export type RangeNode =
-	 | LogicalAndNode
+	| LogicalAndNode
 	| VersionRangeNode
 	| LogicalOrNode
 	| ComparatorNode

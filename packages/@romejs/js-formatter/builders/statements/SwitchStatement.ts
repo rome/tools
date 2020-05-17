@@ -29,7 +29,9 @@ export default function SwitchStatement(
 				"(",
 				group(
 					concat([
-						indent(concat([softline, builder.tokenize(node.discriminant, node)])),
+						indent(
+							concat([softline, builder.tokenize(node.discriminant, node)]),
+						),
 						softline,
 					]),
 				),
@@ -39,7 +41,9 @@ export default function SwitchStatement(
 		space,
 		"{",
 		node.cases.length > 0
-			? indent(concat([hardline, builder.tokenizeStatementList(node.cases, node)]))
+			? indent(
+					concat([hardline, builder.tokenizeStatementList(node.cases, node)]),
+				)
 			: "",
 		hardline,
 		"}",

@@ -202,7 +202,9 @@ export const descriptions = createMessages({
 			message: `Unknown action ${action}`,
 		}),
 		NO_FILES_FOUND: (noun: undefined | string) => ({
-			message: noun === undefined ? "No files found" : `No files to ${noun} found`,
+			message: noun === undefined
+				? "No files found"
+				: `No files to ${noun} found`,
 		}),
 	},
 	// @romejs/parser-core
@@ -293,6 +295,17 @@ export const descriptions = createMessages({
 		NO_DID_UPDATE_SET_STATE: {
 			category: "lint/noDidUpdateSetState",
 			message: "Avoid this.setState in componentDidUpdate",
+		JSX_A11Y_HEADING_HAS_CONTENT: {
+			category: "lint/jsxA11yHeadingHasContent",
+			message: "Headings must have content and the content must be accessible by a screen reader.",
+		},
+		JSX_A11Y_NO_DISTRACTING_ELEMENTS: (element: string) => ({
+			category: "lint/jsxA11yNoDistractingElements",
+			message: `Do not use ${element} elements as they can create visual accessibility issues and are deprecated.`,
+		}),
+		JSX_A11Y_ALT_TEXT: {
+			category: "lint/jsxA11yAltText",
+			message: "<emphasis>img</emphasis>, <emphasis>area</emphasis>, <emphasis>input type='image'</emphasis>, <emphasis>object</emphasis> must have alt text",
 		},
 		NO_DANGER: {
 			category: "lint/noDanger",
@@ -340,7 +353,11 @@ export const descriptions = createMessages({
 			category: "lint/noFindDOMNode",
 			message: "Do not use findDOMNode",
 		},
-		PENDING_FIXES: (relativeFilename: string, original: string, formatted: string) => ({
+		PENDING_FIXES: (
+			relativeFilename: string,
+			original: string,
+			formatted: string,
+		) => ({
 			category: "lint/pendingFixes",
 			message: "Pending formatting and recommended autofixes",
 			advice: [
@@ -1382,7 +1399,10 @@ export const descriptions = createMessages({
 			message: `Expected a corresponding JSX closing tag for <emphasis>${name}</emphasis>`,
 			advice: buildJSXOpeningAdvice(name, openingLoc),
 		}),
-		JSX_EXPECTED_CLOSING_FRAGMENT_TAG: (name: string, openingLoc: SourceLocation) => ({
+		JSX_EXPECTED_CLOSING_FRAGMENT_TAG: (
+			name: string,
+			openingLoc: SourceLocation,
+		) => ({
 			message: "Expected JSX closing fragment tag",
 			advice: buildJSXOpeningAdvice(name, openingLoc),
 		}),

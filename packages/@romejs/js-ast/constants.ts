@@ -12,7 +12,7 @@ export type ConstExportModuleKind = "type" | "value";
 export type ConstImportModuleKind = "typeof" | ConstExportModuleKind;
 
 export type ConstTSModifier =
-	 | "readonly"
+	| "readonly"
 	| "abstract"
 	| "static"
 	| "public"

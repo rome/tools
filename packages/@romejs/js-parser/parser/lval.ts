@@ -55,7 +55,7 @@ import {ob1Get0} from "@romejs/ob1";
 const VALID_REST_ARGUMENT_TYPES = ["Identifier", "MemberExpression"];
 
 type ToAssignmentPatternNode =
-	 | AnyExpression
+	| AnyExpression
 	| AnyAssignmentPattern
 	| AnyTargetBindingPattern
 	| AnyAuxiliary;
@@ -597,7 +597,7 @@ export function toReferencedListOptional(
 }
 
 export type ToReferencedItem =
-	 | AmbiguousFlowTypeCastExpression
+	| AmbiguousFlowTypeCastExpression
 	| SpreadElement
 	| AnyExpression;
 
@@ -685,7 +685,11 @@ export function toReferencedListDeepOptional(
 	exprList: Array<ArrayHole | ToReferencedItem>,
 	isParenthesizedExpr?: boolean,
 ): Array<ArrayHole | AnyExpression | SpreadElement> {
-	const refList = toReferencedListOptional(parser, exprList, isParenthesizedExpr);
+	const refList = toReferencedListOptional(
+		parser,
+		exprList,
+		isParenthesizedExpr,
+	);
 	toReferencedListDeepItems(parser, refList);
 	return refList;
 }
@@ -1104,7 +1108,13 @@ export function checkLVal(
 		}
 
 		case "BindingAssignmentPattern": {
-			checkLVal(parser, expr.left, isBinding, checkClashes, "assignment pattern");
+			checkLVal(
+				parser,
+				expr.left,
+				isBinding,
+				checkClashes,
+				"assignment pattern",
+			);
 			break;
 		}
 	}

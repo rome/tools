@@ -226,7 +226,7 @@ export function isLetStart(parser: JSParser, context?: string): boolean {
 }
 
 type StatementContext =
-	 | undefined
+	| undefined
 	| "if"
 	| "label"
 	| "do"
@@ -343,7 +343,9 @@ export function parseStatement(
 		case tt._const:
 		case tt._var: {
 			kind =
-				kind === undefined ? assertVarKind(String(parser.state.tokenValue)) : kind;
+				kind === undefined
+					? assertVarKind(String(parser.state.tokenValue))
+					: kind;
 			if (context !== undefined && kind !== "var") {
 				parser.addDiagnostic({
 					description: descriptions.JS_PARSER.LEXICAL_DECLARATION_IN_SINGLE_STATEMENT_CONTEXT,
@@ -730,7 +732,7 @@ export function parseSwitchStatement(
 		// nodes. `cur` is used to keep the node that we are currently
 		// adding statements to.
 		let cur:
-			 | undefined
+			| undefined
 			| {
 					start: Position;
 					test: undefined | AnyExpression;
@@ -987,7 +989,10 @@ export function parseLabeledStatement(
 		if (label.name === maybeName) {
 			parser.addDiagnostic({
 				loc: expr.loc,
-				description: descriptions.JS_PARSER.DUPLICATE_LABEL(maybeName, label.loc),
+				description: descriptions.JS_PARSER.DUPLICATE_LABEL(
+					maybeName,
+					label.loc,
+				),
 			});
 		}
 	}
@@ -1306,7 +1311,10 @@ export function parseVar(
 		if (parser.eat(tt.eq)) {
 			init = parseMaybeAssign(parser, "var init", isFor);
 		} else {
-			if (kind === "const" && !(parser.match(tt._in) || parser.isContextual("of"))) {
+			if (
+				kind === "const" &&
+				!(parser.match(tt._in) || parser.isContextual("of"))
+			) {
 				// `const` with no initializer is allowed in TypeScript.
 				// It could be a declaration like `const x: number;`.
 				if (!parser.isSyntaxEnabled("ts")) {

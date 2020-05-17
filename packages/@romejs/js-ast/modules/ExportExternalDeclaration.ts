@@ -16,7 +16,7 @@ import {
 import {createBuilder} from "../utils";
 
 export type AnyExportExternalSpecifier =
-	 | ExportNamespaceSpecifier
+	| ExportNamespaceSpecifier
 	| ExportDefaultSpecifier
 	| ExportExternalSpecifier;
 

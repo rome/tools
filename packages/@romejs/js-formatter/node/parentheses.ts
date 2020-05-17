@@ -257,7 +257,7 @@ parens.set(
 
 function needsParenUnaryExpression(
 	node:
-		 | UnaryExpression
+		| UnaryExpression
 		| ArrowFunctionExpression
 		| AssignmentExpression
 		| ConditionalExpression

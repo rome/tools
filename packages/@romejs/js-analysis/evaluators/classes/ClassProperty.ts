@@ -19,7 +19,10 @@ export default function ClassProperty(node: AnyNode, scope: Scope) {
 	}
 
 	const classScope = scope.find(ClassScope);
-	const funcScope = new ThisScope({parentScope: scope}, classScope.meta.instance);
+	const funcScope = new ThisScope(
+		{parentScope: scope},
+		classScope.meta.instance,
+	);
 
 	let annotatedType;
 	let inferredType;

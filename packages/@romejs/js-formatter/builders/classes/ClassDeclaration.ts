@@ -30,7 +30,10 @@ export default function ClassDeclaration(
 		tokens.push(
 			concat([
 				indent(
-					concat([hardline, builder.tokenizeStatementList(node.meta.body, node.meta)]),
+					concat([
+						hardline,
+						builder.tokenizeStatementList(node.meta.body, node.meta),
+					]),
 				),
 				hardline,
 			]),

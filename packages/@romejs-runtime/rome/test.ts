@@ -45,7 +45,7 @@ export type TestDiagnosticAdviceLog = {
 };
 
 export type TestDiagnosticAdviceItem =
-	 | TestDiagnosticAdviceInspect
+	| TestDiagnosticAdviceInspect
 	| TestDiagnosticAdviceCode
 	| TestDiagnosticAdviceLog
 	| TestDiagnosticAdviceList;
@@ -66,7 +66,11 @@ export interface TestHelper {
 	not(received: unknown, expected: unknown, message?: string): void;
 	looksLike(received: unknown, expected: unknown, message?: string): void;
 	notLooksLike(received: unknown, expected: unknown, message?: string): void;
-	throws(thrower: SyncThrower, expected?: ExpectedError, message?: string): void;
+	throws(
+		thrower: SyncThrower,
+		expected?: ExpectedError,
+		message?: string,
+	): void;
 	throwsAsync(
 		thrower: AsyncFunc,
 		expected?: ExpectedError,
@@ -95,7 +99,7 @@ export type TestName = string | Array<string>;
 declare const __ROME__TEST_OPTIONS__: GlobalTestOptions;
 
 export type GlobalTestOptions =
-	 | undefined
+	| undefined
 	| {
 			dirname?: string;
 			register?: (err: Error, opts: TestOptions, callback: TestCallback) => void;
@@ -170,7 +174,7 @@ function splitArgs(
 }
 
 type TestRegisterFunctionArgs =
-	 | [TestName, TestCallback]
+	| [TestName, TestCallback]
 	| [TestName, NamelessTestOptions, TestCallback];
 
 type TestRegisterFunction = (...args: TestRegisterFunctionArgs) => void;

@@ -54,6 +54,242 @@ AbsoluteVersion {
 }
 ```
 
+### `2`
+
+```javascript
+AbsoluteVersion {
+	build: Array []
+	major: 1
+	minor: 2
+	patch: 3
+	prerelease: Array [
+		"pre"
+		2
+	]
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 10
+			index: 10
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+}
+```
+
+### `3`
+
+```javascript
+AbsoluteVersion {
+	build: Array []
+	major: 1
+	minor: 2
+	patch: 3
+	prerelease: Array [
+		"pre"
+		2
+		3
+		4
+		5
+		"foo"
+	]
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 18
+			index: 18
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+}
+```
+
+### `4`
+
+```javascript
+AbsoluteVersion {
+	major: 1
+	minor: 2
+	patch: 3
+	prerelease: Array []
+	build: Array ["build"]
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 6
+			index: 6
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+}
+```
+
+### `5`
+
+```javascript
+AbsoluteVersion {
+	major: 1
+	minor: 2
+	patch: 3
+	build: Array ["build"]
+	prerelease: Array ["prerelease"]
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 17
+			index: 17
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+}
+```
+
+### `6`
+
+```javascript
+AbsoluteVersion {
+	major: 1
+	minor: 2
+	patch: 3
+	build: Array ["build"]
+	prerelease: Array [
+		"pre"
+		2
+	]
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 12
+			index: 12
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+}
+```
+
+### `7`
+
+```javascript
+AbsoluteVersion {
+	major: 1
+	minor: 2
+	patch: 3
+	build: Array ["build"]
+	prerelease: Array [
+		"pre"
+		2
+		3
+		4
+		5
+		"foo"
+	]
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 22
+			index: 22
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+}
+```
+
+### `8`
+
+```javascript
+AbsoluteVersion {
+	major: 1
+	minor: 2
+	patch: 3
+	build: Array [
+		"build"
+		2
+		3
+		4
+		"foo"
+	]
+	prerelease: Array [
+		"pre"
+		2
+		3
+		4
+		5
+		"foo"
+	]
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 34
+			index: 34
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+}
+```
+
+### `9`
+
+```javascript
+AbsoluteVersion {
+	major: 1
+	minor: 2
+	patch: 3
+	build: Array ["45build"]
+	prerelease: Array [
+		"45pre"
+		"42yes"
+	]
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 20
+			index: 20
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+}
+```
+
 ### `10`
 
 ```javascript
@@ -313,34 +549,6 @@ WildcardVersion {
 		end: Object {
 			column: 4
 			index: 4
-			line: 1
-		}
-		start: Object {
-			column: 0
-			index: 0
-			line: 1
-		}
-	}
-}
-```
-
-### `2`
-
-```javascript
-AbsoluteVersion {
-	build: Array []
-	major: 1
-	minor: 2
-	patch: 3
-	prerelease: Array [
-		"pre"
-		2
-	]
-	loc: Object {
-		filename: undefined
-		end: Object {
-			column: 10
-			index: 10
 			line: 1
 		}
 		start: Object {
@@ -753,38 +961,6 @@ Comparator {
 				index: 2
 				line: 1
 			}
-		}
-	}
-}
-```
-
-### `3`
-
-```javascript
-AbsoluteVersion {
-	build: Array []
-	major: 1
-	minor: 2
-	patch: 3
-	prerelease: Array [
-		"pre"
-		2
-		3
-		4
-		5
-		"foo"
-	]
-	loc: Object {
-		filename: undefined
-		end: Object {
-			column: 18
-			index: 18
-			line: 1
-		}
-		start: Object {
-			column: 0
-			index: 0
-			line: 1
 		}
 	}
 }
@@ -1455,31 +1631,6 @@ Comparator {
 }
 ```
 
-### `4`
-
-```javascript
-AbsoluteVersion {
-	major: 1
-	minor: 2
-	patch: 3
-	prerelease: Array []
-	build: Array ["build"]
-	loc: Object {
-		filename: undefined
-		end: Object {
-			column: 6
-			index: 6
-			line: 1
-		}
-		start: Object {
-			column: 0
-			index: 0
-			line: 1
-		}
-	}
-}
-```
-
 ### `40`
 
 ```javascript
@@ -2140,31 +2291,6 @@ Comparator {
 				index: 1
 				line: 1
 			}
-		}
-	}
-}
-```
-
-### `5`
-
-```javascript
-AbsoluteVersion {
-	major: 1
-	minor: 2
-	patch: 3
-	build: Array ["build"]
-	prerelease: Array ["prerelease"]
-	loc: Object {
-		filename: undefined
-		end: Object {
-			column: 17
-			index: 17
-			line: 1
-		}
-		start: Object {
-			column: 0
-			index: 0
-			line: 1
 		}
 	}
 }
@@ -2835,34 +2961,6 @@ Comparator {
 }
 ```
 
-### `6`
-
-```javascript
-AbsoluteVersion {
-	major: 1
-	minor: 2
-	patch: 3
-	build: Array ["build"]
-	prerelease: Array [
-		"pre"
-		2
-	]
-	loc: Object {
-		filename: undefined
-		end: Object {
-			column: 12
-			index: 12
-			line: 1
-		}
-		start: Object {
-			column: 0
-			index: 0
-			line: 1
-		}
-	}
-}
-```
-
 ### `60`
 
 ```javascript
@@ -3216,104 +3314,6 @@ LogicalAnd {
 					line: 1
 				}
 			}
-		}
-	}
-}
-```
-
-### `7`
-
-```javascript
-AbsoluteVersion {
-	major: 1
-	minor: 2
-	patch: 3
-	build: Array ["build"]
-	prerelease: Array [
-		"pre"
-		2
-		3
-		4
-		5
-		"foo"
-	]
-	loc: Object {
-		filename: undefined
-		end: Object {
-			column: 22
-			index: 22
-			line: 1
-		}
-		start: Object {
-			column: 0
-			index: 0
-			line: 1
-		}
-	}
-}
-```
-
-### `8`
-
-```javascript
-AbsoluteVersion {
-	major: 1
-	minor: 2
-	patch: 3
-	build: Array [
-		"build"
-		2
-		3
-		4
-		"foo"
-	]
-	prerelease: Array [
-		"pre"
-		2
-		3
-		4
-		5
-		"foo"
-	]
-	loc: Object {
-		filename: undefined
-		end: Object {
-			column: 34
-			index: 34
-			line: 1
-		}
-		start: Object {
-			column: 0
-			index: 0
-			line: 1
-		}
-	}
-}
-```
-
-### `9`
-
-```javascript
-AbsoluteVersion {
-	major: 1
-	minor: 2
-	patch: 3
-	build: Array ["45build"]
-	prerelease: Array [
-		"45pre"
-		"42yes"
-	]
-	loc: Object {
-		filename: undefined
-		end: Object {
-			column: 20
-			index: 20
-			line: 1
-		}
-		start: Object {
-			column: 0
-			index: 0
-			line: 1
 		}
 	}
 }

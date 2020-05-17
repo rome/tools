@@ -107,7 +107,10 @@ test(
 test(
 	"iterables",
 	(t) => {
-		t.inlineSnapshot(prettyFormat(new Set([1, 2, 3])), "Set [\n\t1\n\t2\n\t3\n]");
+		t.inlineSnapshot(
+			prettyFormat(new Set([1, 2, 3])),
+			"Set [\n\t1\n\t2\n\t3\n]",
+		);
 		t.inlineSnapshot(
 			prettyFormat(new Map([["a", 1], ["b", 2], ["c", 3]])),
 			"Map [\n\ta => 1\n\tb => 2\n\tc => 3\n]",

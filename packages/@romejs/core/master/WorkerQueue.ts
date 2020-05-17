@@ -47,7 +47,9 @@ export default class WorkerQueue<M> {
 			throw new Error("No callbacks attached to queue");
 		}
 
-		const workerContainer = await this.master.fileAllocator.getOrAssignOwner(path);
+		const workerContainer = await this.master.fileAllocator.getOrAssignOwner(
+			path,
+		);
 
 		// Populate the worker queue for this item
 		let worker = this.workers.get(workerContainer);

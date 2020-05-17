@@ -106,7 +106,7 @@ const createStringMarkupParser = createParser((ParserCore) =>
 			input: string,
 			state: State,
 		):
-			 | undefined
+			| undefined
 			| {
 					token: TokenValues<Tokens>;
 					state: State;
@@ -157,7 +157,11 @@ const createStringMarkupParser = createParser((ParserCore) =>
 					const end = ob1Add(stringValueEnd, 1);
 					return {
 						state,
-						token: this.finishValueToken("String", unescapeTextValue(value), end),
+						token: this.finishValueToken(
+							"String",
+							unescapeTextValue(value),
+							end,
+						),
 					};
 				}
 
@@ -260,7 +264,10 @@ const createStringMarkupParser = createParser((ParserCore) =>
 				if (keyToken.type === "Word") {
 					key = keyToken.value;
 
-					if (!allowedAttributes.includes(key) && !globalAttributes.includes(key)) {
+					if (
+						!allowedAttributes.includes(key) &&
+						!globalAttributes.includes(key)
+					) {
 						throw this.unexpected({
 							description: descriptions.STRING_MARKUP.INVALID_ATTRIBUTE_NAME_FOR_TAG(
 								tagName,

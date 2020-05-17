@@ -98,7 +98,10 @@ export const createSnapshotParser = createParser((ParserCore) =>
 
 						let language: undefined | string;
 						if (input[ob1Get0(codeOffset)] !== "\n") {
-							[language, codeOffset] = this.readInputFrom(codeOffset, isntNewline);
+							[language, codeOffset] = this.readInputFrom(
+								codeOffset,
+								isntNewline,
+							);
 						}
 
 						// Expect the first offset character to be a newline

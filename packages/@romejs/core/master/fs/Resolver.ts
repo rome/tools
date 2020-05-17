@@ -111,14 +111,14 @@ export type ResolverLocalQuery = Omit<ResolverRemoteQuery, "origin"> & {
 };
 
 export type ResolverQuerySource =
-	 | undefined
+	| undefined
 	| {
 			source?: string;
 			location?: DiagnosticLocation;
 		};
 
 type ResolverQueryResponseFoundType =
-	 | "package"
+	| "package"
 	| "mock"
 	| "virtual"
 	| "implicitPlatform"
@@ -162,12 +162,12 @@ const QUERY_RESPONSE_MISSING: ResolverQueryResponseMissing = {
 };
 
 export type ResolverQueryResponseNotFound =
-	 | ResolverQueryResponseMissing
+	| ResolverQueryResponseMissing
 	| ResolverQueryResponseFetchError
 	| ResolverQueryResponseUnsupported;
 
 export type ResolverQueryResponse =
-	 | ResolverQueryResponseFound
+	| ResolverQueryResponseFound
 	| ResolverQueryResponseNotFound;
 
 function shouldReturnQueryResponse(res: ResolverQueryResponse): boolean {
@@ -309,7 +309,9 @@ export default class Resolver {
 	async findProjectFromQuery(query: ResolverRemoteQuery) {
 		// If we were passed an absolute path then we should find and add the project it belongs to
 		if (query.source.isAbsolute()) {
-			await this.master.projectManager.findProject(query.source.assertAbsolute());
+			await this.master.projectManager.findProject(
+				query.source.assertAbsolute(),
+			);
 		} else if (query.origin.isAbsolute()) {
 			const origin = query.origin.assertAbsolute();
 			await this.master.projectManager.findProject(origin);
@@ -353,7 +355,9 @@ export default class Resolver {
 		}
 	}
 
-	async resolveRemote(query: ResolverRemoteQuery): Promise<ResolverQueryResponse> {
+	async resolveRemote(
+		query: ResolverRemoteQuery,
+	): Promise<ResolverQueryResponse> {
 		const {origin, source} = query;
 
 		if (source.isURL()) {
@@ -390,7 +394,10 @@ export default class Resolver {
 					return {
 						type: "FOUND",
 						types: [],
-						ref: this.master.projectManager.getURLFileReference(remotePath, sourceURL),
+						ref: this.master.projectManager.getURLFileReference(
+							remotePath,
+							sourceURL,
+						),
 						path: remotePath,
 					};
 				}

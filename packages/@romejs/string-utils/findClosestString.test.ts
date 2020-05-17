@@ -21,7 +21,11 @@ test(
 		);
 
 		t.is(
-			findClosestStringMatch("french", ["quebec", "123", "france", "frenc"], 0.9),
+			findClosestStringMatch(
+				"french",
+				["quebec", "123", "france", "frenc"],
+				0.9,
+			),
 			undefined,
 		);
 		t.is(

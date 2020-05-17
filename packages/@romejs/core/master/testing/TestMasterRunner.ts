@@ -275,7 +275,9 @@ export default class TestMasterRunner {
 				const {focusedTests} = await bridge.prepareTest.call({
 					id,
 					options: opts,
-					projectFolder: req.master.projectManager.assertProjectExisting(ref.real).folder.join(),
+					projectFolder: req.master.projectManager.assertProjectExisting(
+						ref.real,
+					).folder.join(),
 					file: req.master.projectManager.getTransportFileReference(ref.real),
 					cwd: flags.cwd.join(),
 					code,
@@ -311,7 +313,9 @@ export default class TestMasterRunner {
 				if (inspector !== undefined) {
 					if (opts.coverage) {
 						if (inspector.alive) {
-							const profile = await inspector.call("Profiler.takePreciseCoverage");
+							const profile = await inspector.call(
+								"Profiler.takePreciseCoverage",
+							);
 							this.coverageCollector.addCoverage(profile.get("result").asAny());
 
 							// Not really necessary but let's clean up anyway for completeness
@@ -392,7 +396,9 @@ export default class TestMasterRunner {
 					return;
 				}
 
-				if (str.startsWith("For help, see: https://nodejs.org/en/docs/inspector")) {
+				if (
+					str.startsWith("For help, see: https://nodejs.org/en/docs/inspector")
+				) {
 					return;
 				}
 
@@ -451,7 +457,9 @@ export default class TestMasterRunner {
 			containerPromises.push(this.spawnWorker({inspectorPort}));
 		}
 
-		const containers: TestWorkerContainers = await Promise.all(containerPromises);
+		const containers: TestWorkerContainers = await Promise.all(
+			containerPromises,
+		);
 
 		// Every 5 seconds, ping the worker and wait a max of 5 seconds, if we receive no response then consider the worker dead
 		for (const container of containers) {
@@ -477,7 +485,9 @@ export default class TestMasterRunner {
 		});
 		progress.setTotal(this.sourcesQueue.length);
 		const callbacks = await Promise.all(
-			workerContainers.map((container) => this.prepareWorker(container, progress)),
+			workerContainers.map((container) =>
+				this.prepareWorker(container, progress)
+			),
 		);
 		progress.end();
 
@@ -870,7 +880,9 @@ export default class TestMasterRunner {
 				let absolute = file.filename;
 
 				// Exchange any UIDs
-				const absolutePath = master.projectManager.getFilePathFromUid(file.filename);
+				const absolutePath = master.projectManager.getFilePathFromUid(
+					file.filename,
+				);
 				if (absolutePath !== undefined) {
 					absolute = absolutePath.join();
 				}

@@ -98,7 +98,8 @@ function getStreamFormat(stdout: undefined | Stdout): ReporterStream["format"] {
 
 export default class Reporter {
 	constructor(opts: ReporterOptions = {}) {
-		this.programName = opts.programName === undefined ? "rome" : opts.programName;
+		this.programName =
+			opts.programName === undefined ? "rome" : opts.programName;
 		this.programVersion = opts.programVersion;
 
 		this.noProgress = process.env.CI === "1";
@@ -340,7 +341,11 @@ export default class Reporter {
 		return "";
 	}
 
-	normalizeMessage(stream: ReporterStream, tty: string, opts: LogOptions): string {
+	normalizeMessage(
+		stream: ReporterStream,
+		tty: string,
+		opts: LogOptions,
+	): string {
 		let msg =
 			stream.format !== "none" || opts.nonTTY === undefined ? tty : opts.nonTTY;
 

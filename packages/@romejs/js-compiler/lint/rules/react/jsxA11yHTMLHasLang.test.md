@@ -45,20 +45,6 @@
 
 ```
 
-### `10`
-
-```
-✔ No known problems!
-
-```
-
-### `10: formatted`
-
-```
-<html lang={language}></html>;
-
-```
-
 ### `1: formatted`
 
 ```
@@ -202,6 +188,20 @@
 ```
 
 ### `9: formatted`
+
+```
+<html lang={language}></html>;
+
+```
+
+### `10`
+
+```
+✔ No known problems!
+
+```
+
+### `10: formatted`
 
 ```
 <html lang={language}></html>;

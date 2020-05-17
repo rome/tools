@@ -20,7 +20,7 @@ export type DeltaBundle = {
 };
 
 export type BundleVariant =
-	 | ({
+	| ({
 			base: true;
 			revisionId: string;
 		} & Bundle)
@@ -70,7 +70,7 @@ export type HmrServerErrorMessage = {
 export type HmrClientLogMessage = {
 	type: "log";
 	level:
-		 | "trace"
+		| "trace"
 		| "info"
 		| "warn"
 		| "log"
@@ -82,7 +82,7 @@ export type HmrClientLogMessage = {
 };
 
 export type HmrClientMessage =
-	 | {
+	| {
 			type: "register-entrypoints";
 			entryPoints: Array<string>;
 		}
@@ -92,7 +92,7 @@ export type HmrClientMessage =
 		};
 
 export type HmrServerMessage =
-	 | {
+	| {
 			type: "bundle-registered";
 		}
 	| {

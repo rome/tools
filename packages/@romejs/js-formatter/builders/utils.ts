@@ -10,6 +10,7 @@ import {
 	AnyNode,
 	BreakStatement,
 	ClassMethod,
+	ClassPrivateMethod,
 	ContinueStatement,
 	ObjectMethod,
 	PatternMeta,
@@ -86,7 +87,7 @@ export function buildThrowAndReturnStatementBuilder(
 
 export function printMethod(
 	builder: Builder,
-	node: TSDeclareMethod | ClassMethod | ObjectMethod,
+	node: TSDeclareMethod | ClassMethod | ObjectMethod | ClassPrivateMethod,
 ): Token {
 	const kind = node.kind;
 
@@ -127,7 +128,12 @@ export function printBindingPatternParams(
 ): Token {
 	if (params.length === 0 && rest === undefined) {
 		if (hasInnerComments(node)) {
-			return concat(["(", builder.tokenizeInnerComments(node, true), hardline, ")"]);
+			return concat([
+				"(",
+				builder.tokenizeInnerComments(node, true),
+				hardline,
+				")",
+			]);
 		} else {
 			return "()";
 		}
@@ -176,7 +182,10 @@ export function printTSBraced(
 						hardline,
 						members.map((member, index) => {
 							const printed = builder.tokenize(member, node);
-							if (index > 0 && builder.getLinesBetween(members[index - 1], member) > 1) {
+							if (
+								index > 0 &&
+								builder.getLinesBetween(members[index - 1], member) > 1
+							) {
 								return concat([hardline, printed]);
 							} else {
 								return printed;

@@ -137,7 +137,10 @@ function transformClass(
 									return node;
 								}
 
-								if (isSuperCall(node) && path.parent.type !== "ExpressionStatement") {
+								if (
+									isSuperCall(node) &&
+									path.parent.type !== "ExpressionStatement"
+								) {
 									visited.add(node);
 
 									// TODO retain proper value of super()
@@ -146,10 +149,16 @@ function transformClass(
 									});
 								}
 
-								if (node.type === "ExpressionStatement" && isSuperCall(node.expression)) {
+								if (
+									node.type === "ExpressionStatement" &&
+									isSuperCall(node.expression)
+								) {
 									visited.add(node);
 
-									return ([node, ...toExpressionStatements(constructorAssignments)] as Array<AnyNode>);
+									return ([
+										node,
+										...toExpressionStatements(constructorAssignments),
+									] as Array<AnyNode>);
 								}
 
 								return node;

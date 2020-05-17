@@ -117,7 +117,10 @@ export class ModuleSignatureManager {
 		// Resolve all exports
 		for (const def of graph.exports) {
 			if (def.type === "all") {
-				const manager = await this.getModuleSignature(def.source, graph.filename);
+				const manager = await this.getModuleSignature(
+					def.source,
+					graph.filename,
+				);
 				if (manager !== undefined) {
 					this.addAll(manager);
 				}
@@ -194,7 +197,7 @@ export class ModuleSignatureManager {
 }
 
 type Export =
-	 | {
+	| {
 			type: "local";
 			name: string;
 			value: T;

@@ -33,11 +33,17 @@ export default {
 
 		if (node.type === "IfStatement") {
 			if (isEmpty(node.consequent)) {
-				context.addNodeDiagnostic(node.consequent, descriptions.LINT.EMPTY_BLOCKS);
+				context.addNodeDiagnostic(
+					node.consequent,
+					descriptions.LINT.EMPTY_BLOCKS,
+				);
 			}
 
 			if (node.alternate !== undefined && isEmpty(node.alternate)) {
-				context.addNodeDiagnostic(node.alternate, descriptions.LINT.EMPTY_BLOCKS);
+				context.addNodeDiagnostic(
+					node.alternate,
+					descriptions.LINT.EMPTY_BLOCKS,
+				);
 			}
 		}
 

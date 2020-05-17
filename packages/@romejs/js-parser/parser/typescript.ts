@@ -97,7 +97,7 @@ import {NumberTokenValue} from "../tokenizer";
 import {toTargetAssignmentPattern} from "./lval";
 
 type ParsingContext =
-	 | "EnumMembers"
+	| "EnumMembers"
 	| "HeritageClauseElement"
 	| "TupleElementTypes"
 	| "TypeMembers"
@@ -791,7 +791,10 @@ function parseTSTypeMember(parser: JSParser): AnyTSTypeElement {
 		return parseTSCallSignatureDeclaration(parser);
 	}
 
-	if (parser.match(tt._new) && lookaheadTS(parser, tsIsStartOfConstructSignature)) {
+	if (
+		parser.match(tt._new) &&
+		lookaheadTS(parser, tsIsStartOfConstructSignature)
+	) {
 		return parseTSConstructSignatureDeclaration(parser);
 	}
 
@@ -1118,7 +1121,7 @@ function parseTSNonArrayType(parser: JSParser): AnyTSPrimary {
 		case tt._void:
 		case tt._null: {
 			let type:
-				 | undefined
+				| undefined
 				| AnyTSKeywordTypeAnnotation["type"]
 				| "VoidKeywordTypeAnnotation"
 				| "TSNullKeywordTypeAnnotation";
@@ -2105,7 +2108,7 @@ function tryTSParse<T>(
 }
 
 export type TSDeclareNode =
-	 | TSEnumDeclaration
+	| TSEnumDeclaration
 	| FunctionDeclaration
 	| ClassDeclaration
 	| VariableDeclarationStatement
@@ -2152,7 +2155,9 @@ export function parseTSDeclare(parser: JSParser, start: Position): TSDeclareNode
 		case tt._const:
 		case tt._var: {
 			kind =
-				kind === undefined ? assertVarKind(String(parser.state.tokenValue)) : kind;
+				kind === undefined
+					? assertVarKind(String(parser.state.tokenValue))
+					: kind;
 			return {
 				declare: true,
 				...parseVarStatement(parser, start, kind),
@@ -2228,7 +2233,7 @@ export function parseTSTypeExpressionStatement(
 	start: Position,
 	expr: AnyExpression,
 ):
-	 | undefined
+	| undefined
 	| TSDeclareNode
 	| TypeAliasTypeAnnotation
 	| TypeAliasTypeAnnotation
@@ -2361,7 +2366,11 @@ export function parseTSTypeArguments(
 		parser,
 		() => {
 			parser.expectRelational("<");
-			return parseTSDelimitedList(parser, "TypeParametersOrArguments", parseTSType);
+			return parseTSDelimitedList(
+				parser,
+				"TypeParametersOrArguments",
+				parseTSType,
+			);
 		},
 	);
 
@@ -2415,7 +2424,7 @@ export function parseTSExport(
 	parser: JSParser,
 	start: Position,
 ):
-	 | undefined
+	| undefined
 	| TSNamespaceExportDeclaration
 	| TSExportAssignment
 	| TSImportEqualsDeclaration {

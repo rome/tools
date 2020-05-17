@@ -34,7 +34,7 @@ import {Diagnostics, descriptions} from "@romejs/diagnostics";
 import {Number0, ob1Add, ob1Coerce0, ob1Get0} from "@romejs/ob1";
 
 type Operator =
-	 | "^"
+	| "^"
 	| "$"
 	| "."
 	| "["
@@ -78,7 +78,7 @@ type Tokens = BaseTokens & {
 };
 
 type GroupModifiers =
-	 | {
+	| {
 			type: "NON_CAPTURE";
 			kind: RegExpGroupNonCapture["kind"];
 		}
@@ -309,7 +309,11 @@ export const createRegExpParser = createParser((ParserCore) =>
 						);
 
 					case "0": {
-						const {octalValue, end: octalEnd} = readOctalCode(input, index, nextChar);
+						const {octalValue, end: octalEnd} = readOctalCode(
+							input,
+							index,
+							nextChar,
+						);
 						if (octalValue !== undefined && isOct(octalValue.toString())) {
 							const octal = parseInt(octalValue.toString(), 8);
 							return this.finishComplexToken(
@@ -332,7 +336,10 @@ export const createRegExpParser = createParser((ParserCore) =>
 					}
 
 					case "x": {
-						const possibleHex = input.slice(ob1Get0(index) + 1, ob1Get0(index) + 3);
+						const possibleHex = input.slice(
+							ob1Get0(index) + 1,
+							ob1Get0(index) + 3,
+						);
 
 						// \xhh
 						if (possibleHex.length === 2 && isHex(possibleHex)) {
@@ -360,7 +367,10 @@ export const createRegExpParser = createParser((ParserCore) =>
 
 					case "u": {
 						// Get the next 4 characters after \u
-						const possibleHex = input.slice(ob1Get0(index) + 2, ob1Get0(index) + 6);
+						const possibleHex = input.slice(
+							ob1Get0(index) + 2,
+							ob1Get0(index) + 6,
+						);
 
 						// \uhhhh
 						if (possibleHex.length === 4 && isHex(possibleHex)) {
@@ -563,7 +573,10 @@ export const createRegExpParser = createParser((ParserCore) =>
 									skipCount++;
 								}
 
-								if (targetToken.type === "Character" && targetToken.value === ">") {
+								if (
+									targetToken.type === "Character" &&
+									targetToken.value === ">"
+								) {
 									// Skip through all the name tokens including >
 									skipCount++;
 
@@ -858,7 +871,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 		}
 
 		parseQuantifier():
-			 | undefined
+			| undefined
 			| {
 					min: number;
 					max?: number;
@@ -1128,7 +1141,10 @@ export const createRegExpParser = createParser((ParserCore) =>
 						type: "RegExpAlternation",
 						left: expression,
 						right: sub,
-						loc: this.finishLocAt(this.getLoc(expression).start, alternation.end),
+						loc: this.finishLocAt(
+							this.getLoc(expression).start,
+							alternation.end,
+						),
 					};
 
 					expression = alternationNode;

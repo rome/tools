@@ -223,7 +223,8 @@ export default class DependencyGraph {
 	): boolean {
 		const resolvedImports = node.resolveImports();
 		return (
-			diagnosticsProcessor.addDiagnostics(resolvedImports.diagnostics).length > 0
+			diagnosticsProcessor.addDiagnostics(resolvedImports.diagnostics).length >
+			0
 		);
 	}
 

@@ -26,167 +26,6 @@ age;
 
 ```
 
-### `10`
-
-```
-
- unknown:1:18 lint/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Unexpected any. Specify a different type.
-
-    function greet(): any {};greet();
-                      ^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `10: formatted`
-
-```
-function greet(): any {}
-greet();
-
-```
-
-### `11`
-
-```
-
- unknown:1:18 lint/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Unexpected any. Specify a different type.
-
-    function greet(): any[] {};greet();
-                      ^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `11: formatted`
-
-```
-function greet(): Array<any> {}
-greet();
-
-```
-
-### `12`
-
-```
-
- unknown:1:24 lint/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Unexpected any. Specify a different type.
-
-    function greet(): Array<any> {};greet();
-                            ^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `12: formatted`
-
-```
-function greet(): Array<any> {}
-greet();
-
-```
-
-### `13`
-
-```
-
- unknown:1:30 lint/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Unexpected any. Specify a different type.
-
-    function greet(): Array<Array<any>> {};greet();
-                                  ^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `13: formatted`
-
-```
-function greet(): Array<Array<any>> {}
-greet();
-
-```
-
-### `14`
-
-```
-
- unknown:1:28 lint/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Unexpected any. Specify a different type.
-
-    function greet(param: Array<any>): string { return param; };greet();
-                                ^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `14: formatted`
-
-```
-function greet(param: Array<any>): string {
-	return param;
-}
-greet();
-
-```
-
-### `15`
-
-```
-
- unknown:1:28 lint/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Unexpected any. Specify a different type.
-
-    function greet(param: Array<any>): Array<any> { return param; };greet();
-                                ^^^
-
- unknown:1:41 lint/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ Unexpected any. Specify a different type.
-
-    function greet(param: Array<any>): Array<any> { return param; };greet();
-                                             ^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 2 problems
-
-```
-
-### `15: formatted`
-
-```
-function greet(param: Array<any>): Array<any> {
-	return param;
-}
-greet();
-
-```
-
 ### `1: formatted`
 
 ```
@@ -346,5 +185,166 @@ ages;
 ```
 const ages: Array<any> = ["seventeen"];
 ages;
+
+```
+
+### `10`
+
+```
+
+ unknown:1:18 lint/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Unexpected any. Specify a different type.
+
+    function greet(): any {};greet();
+                      ^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `10: formatted`
+
+```
+function greet(): any {}
+greet();
+
+```
+
+### `11`
+
+```
+
+ unknown:1:18 lint/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Unexpected any. Specify a different type.
+
+    function greet(): any[] {};greet();
+                      ^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `11: formatted`
+
+```
+function greet(): Array<any> {}
+greet();
+
+```
+
+### `12`
+
+```
+
+ unknown:1:24 lint/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Unexpected any. Specify a different type.
+
+    function greet(): Array<any> {};greet();
+                            ^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `12: formatted`
+
+```
+function greet(): Array<any> {}
+greet();
+
+```
+
+### `13`
+
+```
+
+ unknown:1:30 lint/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Unexpected any. Specify a different type.
+
+    function greet(): Array<Array<any>> {};greet();
+                                  ^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `13: formatted`
+
+```
+function greet(): Array<Array<any>> {}
+greet();
+
+```
+
+### `14`
+
+```
+
+ unknown:1:28 lint/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Unexpected any. Specify a different type.
+
+    function greet(param: Array<any>): string { return param; };greet();
+                                ^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `14: formatted`
+
+```
+function greet(param: Array<any>): string {
+	return param;
+}
+greet();
+
+```
+
+### `15`
+
+```
+
+ unknown:1:28 lint/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Unexpected any. Specify a different type.
+
+    function greet(param: Array<any>): Array<any> { return param; };greet();
+                                ^^^
+
+ unknown:1:41 lint/noExplicitAny ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ Unexpected any. Specify a different type.
+
+    function greet(param: Array<any>): Array<any> { return param; };greet();
+                                             ^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 2 problems
+
+```
+
+### `15: formatted`
+
+```
+function greet(param: Array<any>): Array<any> {
+	return param;
+}
+greet();
 
 ```

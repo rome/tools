@@ -10,7 +10,7 @@ import {addOriginsToDiagnostics} from "./derive";
 import {getDiagnosticsFromError} from "./errors";
 
 type WrapResult<T> =
-	 | {
+	| {
 			readonly value: T;
 			readonly diagnostics: undefined;
 		}

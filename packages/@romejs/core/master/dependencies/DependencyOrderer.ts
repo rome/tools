@@ -56,7 +56,8 @@ export default class DependencyOrderer {
 
 			// We want to get the shortest cycle path since it's likely the most easily resolved
 			const isShortestCycle =
-				existingCycle === undefined || existingCycle.length > ourCyclePath.length;
+				existingCycle === undefined ||
+				existingCycle.length > ourCyclePath.length;
 			if (isShortestCycle) {
 				this.possibleCyclePaths.set(node, ourCyclePath);
 			}

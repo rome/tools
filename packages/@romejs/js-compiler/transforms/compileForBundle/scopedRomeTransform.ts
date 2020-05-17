@@ -14,7 +14,10 @@ export default {
 		const {node, scope} = path;
 
 		if (scope.node === node && scope.hasBinding("Rome")) {
-			return renameBindings(path, new Map([["Rome", scope.generateUid("Rome")]]));
+			return renameBindings(
+				path,
+				new Map([["Rome", scope.generateUid("Rome")]]),
+			);
 		}
 
 		return node;

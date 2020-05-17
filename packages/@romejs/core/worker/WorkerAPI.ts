@@ -136,7 +136,10 @@ export default class WorkerAPI {
 						}
 
 						for (const update of pendingUpdates) {
-							if (loc.start.column === update.column && loc.start.line === update.line) {
+							if (
+								loc.start.column === update.column &&
+								loc.start.line === update.line
+							) {
 								matchedUpdate = update;
 								break;
 							}
@@ -149,7 +152,10 @@ export default class WorkerAPI {
 
 					if (matchedUpdate !== undefined) {
 						if (appliedUpdatesToCallees.has(callee)) {
-							context.addNodeDiagnostic(node, descriptions.SNAPSHOTS.INLINE_COLLISION);
+							context.addNodeDiagnostic(
+								node,
+								descriptions.SNAPSHOTS.INLINE_COLLISION,
+							);
 							return node;
 						}
 
