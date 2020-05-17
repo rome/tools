@@ -5,8 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
+import { TemplateLiteralTypeAnnotation} from '@romejs/js-ast';
+import { Builder } from '@romejs/js-formatter';
 import {Token} from '../../tokens';
+import { escapeString } from '@romejs/string-escape';
 
-export default function TemplateLiteralTypeAnnotation(): Token {
-  throw new Error('unimplemented');
+export default function TemplateLiteralTypeAnnotation(
+  builder: Builder,
+  node: TemplateLiteralTypeAnnotation
+): Token {
+  return escapeString(node.value, {quote: '`'});
 }
