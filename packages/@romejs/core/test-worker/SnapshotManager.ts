@@ -55,7 +55,7 @@ function buildEntriesKey(testName: string, entryName: string): string {
 export type InlineSnapshotUpdate = {
 	line: Number1;
 	column: Number0;
-	snapshot: boolean | number | string | null | undefined;
+	snapshot: boolean | number | string | null;
 };
 
 export type InlineSnapshotUpdates = Array<InlineSnapshotUpdate>;
@@ -343,7 +343,6 @@ export default class SnapshotManager {
 					typeof received === "string" ||
 					typeof received === "number" ||
 					typeof received === "boolean" ||
-					received === undefined ||
 					received === null
 				) {
 					snapshot = received;
