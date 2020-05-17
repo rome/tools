@@ -17,10 +17,15 @@ import emptyMatches from "./regular/emptyMatches";
 import getterReturn from "./regular/getterReturn";
 import importDefaultBasename from "./regular/importDefaultBasename";
 import jsxA11YAltText from "./react/jsxA11yAltText";
+import jsxA11YHeadingHasContent from "./react/jsxA11yHeadingHasContent";
 import jsxA11YHTMLHasLang from "./react/jsxA11yHTMLHasLang";
 import jsxA11YIframeHasTitle from "./react/jsxA11yIframeHasTitle";
 import jsxA11YImgRedundantAlt from "./react/jsxA11yImgRedundantAlt";
+import jsxA11YNoAccessKey from "./react/jsxA11yNoAccessKey";
+import jsxA11YNoAutofocus from "./react/jsxA11yNoAutofocus";
+import jsxA11YNoDistractingElements from "./react/jsxA11yNoDistractingElements";
 import jsxA11YNoTargetBlank from "./react/jsxA11yNoTargetBlank";
+import jsxA11YScope from "./react/jsxA11yScope";
 import jsxKey from "./react/jsxKey";
 import jsxNoCommentText from "./react/jsxNoCommentText";
 import negationElse from "./regular/negationElse";
@@ -36,6 +41,7 @@ import noDangerWithChildren from "./react/noDangerWithChildren";
 import noDebugger from "./regular/noDebugger";
 import noDelete from "./regular/noDelete";
 import noDeleteVars from "./regular/noDeleteVars";
+import noDidUpdateSetState from "./react/noDidUpdateSetState";
 import noDupeArgs from "./regular/noDupeArgs";
 import noDuplicateCase from "./regular/noDuplicateCase";
 import noDuplicateGroupNamesInRegularExpressions from "./regular/noDuplicateGroupNamesInRegularExpressions";
@@ -83,10 +89,15 @@ export const lintTransforms = [
 	getterReturn,
 	importDefaultBasename,
 	jsxA11YAltText,
+	jsxA11YHeadingHasContent,
 	jsxA11YHTMLHasLang,
 	jsxA11YIframeHasTitle,
 	jsxA11YImgRedundantAlt,
+	jsxA11YNoAccessKey,
+	jsxA11YNoAutofocus,
+	jsxA11YNoDistractingElements,
 	jsxA11YNoTargetBlank,
+	jsxA11YScope,
 	jsxKey,
 	jsxNoCommentText,
 	negationElse,
@@ -102,6 +113,7 @@ export const lintTransforms = [
 	noDebugger,
 	noDelete,
 	noDeleteVars,
+	noDidUpdateSetState,
 	noDupeArgs,
 	noDuplicateCase,
 	noDuplicateGroupNamesInRegularExpressions,

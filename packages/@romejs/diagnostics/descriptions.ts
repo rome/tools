@@ -292,6 +292,18 @@ export const descriptions = createMessages({
 	},
 	// @romejs/js-compiler
 	LINT: {
+		NO_DID_UPDATE_SET_STATE: {
+			category: "lint/noDidUpdateSetState",
+			message: "Avoid this.setState in componentDidUpdate",
+		},
+		JSX_A11Y_HEADING_HAS_CONTENT: {
+			category: "lint/jsxA11yHeadingHasContent",
+			message: "Headings must have content and the content must be accessible by a screen reader.",
+		},
+		JSX_A11Y_NO_DISTRACTING_ELEMENTS: (element: string) => ({
+			category: "lint/jsxA11yNoDistractingElements",
+			message: `Do not use ${element} elements as they can create visual accessibility issues and are deprecated.`,
+		}),
 		JSX_A11Y_ALT_TEXT: {
 			category: "lint/jsxA11yAltText",
 			message: "<emphasis>img</emphasis>, <emphasis>area</emphasis>, <emphasis>input type='image'</emphasis>, <emphasis>object</emphasis> must have alt text",
@@ -442,6 +454,18 @@ export const descriptions = createMessages({
 		REACT_JSX_A11Y_IFRAME_HAS_TITLE: {
 			category: "lint/jsxA11yIframeHasTitle",
 			message: `<emphasis>iframe</emphasis> elements should have a <emphasis>title prop</emphasis>.`,
+		},
+		REACT_JSX_NO_ACCESS_KEY: {
+			category: "lint/jsxA11yNoAccessKey",
+			message: "The <emphasis>accessKey</emphasis> prop is not allowed. Inconsistencies between keyboard shortcuts and keyboard comments used by screenreader and keyboard only users create a11y complications.",
+		},
+		REACT_JSX_NO_AUTOFOCUS: {
+			category: "lint/jsxA11yNoAutofocus",
+			message: "The <emphasis>autoFocus</emphasis> prop should not be used, as it can reduce usability and accessibility for users.",
+		},
+		REACT_JSX_NO_SCOPE: {
+			category: "lint/jsxA11yScope",
+			message: "The <emphasis>scope</emphasis> prop can only be used on <emphasis>th</emphasis> elements.",
 		},
 		REACT_JSX_KEY: (origin: string) => ({
 			category: "lint/jsxKey",

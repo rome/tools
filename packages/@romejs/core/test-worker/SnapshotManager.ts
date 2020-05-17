@@ -18,7 +18,7 @@ import {createSnapshotParser} from "./SnapshotParser";
 import {ErrorFrame} from "@romejs/v8";
 import {Number0, Number1} from "@romejs/ob1";
 import prettyFormat from "@romejs/pretty-format";
-import {naturalCompare} from '@romejs/string-utils';
+import {naturalCompare} from "@romejs/string-utils";
 
 function cleanHeading(key: string): string {
 	if (key[0] === "`") {
@@ -55,7 +55,7 @@ function buildEntriesKey(testName: string, entryName: string): string {
 export type InlineSnapshotUpdate = {
 	line: Number1;
 	column: Number0;
-	snapshot: boolean | number | string | null | undefined;
+	snapshot: boolean | number | string | null;
 };
 
 export type InlineSnapshotUpdates = Array<InlineSnapshotUpdate>;
@@ -65,6 +65,14 @@ export type SnapshotCounts = {
 	updated: number;
 	created: number;
 };
+
+function stringOrPrettyFormat(value: unknown): string {
+	if (typeof value === "string") {
+		return value;
+	} else {
+		return prettyFormat(value);
+	}
+}
 
 export default class SnapshotManager {
 	constructor(runner: TestWorkerRunner, testPath: AbsoluteFilePath) {
@@ -314,14 +322,8 @@ export default class SnapshotManager {
 	): {
 		status: "MATCH" | "NO_MATCH" | "UPDATE";
 	} {
-		let receivedFormat = prettyFormat(received);
-
-		let expectedFormat;
-		if (typeof expected === "string") {
-			expectedFormat = expected;
-		} else {
-			expectedFormat = prettyFormat(expected);
-		}
+		let receivedFormat = stringOrPrettyFormat(received);
+		let expectedFormat = stringOrPrettyFormat(expected);
 
 		// Matches, no need to do anything
 		if (receivedFormat === expectedFormat) {
@@ -341,7 +343,6 @@ export default class SnapshotManager {
 					typeof received === "string" ||
 					typeof received === "number" ||
 					typeof received === "boolean" ||
-					received === undefined ||
 					received === null
 				) {
 					snapshot = received;
