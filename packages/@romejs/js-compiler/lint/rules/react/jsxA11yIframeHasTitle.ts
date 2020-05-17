@@ -6,27 +6,12 @@
 */
 
 import {descriptions} from "@romejs/diagnostics";
+import {hasJSXAttribute, isJSXElement} from "@romejs/js-ast-utils";
 import {AnyNode} from "@romejs/js-ast";
 import {Path} from "@romejs/js-compiler";
 
 function jsxIframeMissingTitle(node: AnyNode) {
-	return (
-		node.type === "JSXElement" &&
-		node.name.type === "JSXIdentifier" &&
-		node.name.name === "iframe" &&
-		!node.attributes.some((attribute) =>
-			attribute.type === "JSXAttribute" &&
-			attribute.name.name === "title" &&
-			attribute.value &&
-			((attribute.value.type === "StringLiteral" &&
-			attribute.value.value.length > 0) ||
-			(attribute.value.type === "JSXExpressionContainer" &&
-			((attribute.value.expression.type === "ReferenceIdentifier" &&
-			attribute.value.expression.name !== "undefined") ||
-			(attribute.value.expression.type === "StringLiteral" &&
-			attribute.value.expression.value.length > 0))))
-		)
-	);
+	return isJSXElement(node, "iframe") && !hasJSXAttribute(node, "title");
 }
 
 export default {

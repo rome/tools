@@ -8,25 +8,10 @@
 import {descriptions} from "@romejs/diagnostics";
 import {AnyNode} from "@romejs/js-ast";
 import {Path} from "@romejs/js-compiler";
+import {hasJSXAttribute, isJSXElement} from "@romejs/js-ast-utils";
 
 function jsxHTMLMissingLang(node: AnyNode) {
-	return (
-		node.type === "JSXElement" &&
-		node.name.type === "JSXIdentifier" &&
-		node.name.name === "html" &&
-		!node.attributes.some((attribute) =>
-			attribute.type === "JSXAttribute" &&
-			attribute.name.name === "lang" &&
-			attribute.value &&
-			((attribute.value.type === "StringLiteral" &&
-			attribute.value.value.length > 0) ||
-			(attribute.value.type === "JSXExpressionContainer" &&
-			((attribute.value.expression.type === "ReferenceIdentifier" &&
-			attribute.value.expression.name !== "undefined") ||
-			(attribute.value.expression.type === "StringLiteral" &&
-			attribute.value.expression.value.length > 0))))
-		)
-	);
+	return isJSXElement(node, "html") && !hasJSXAttribute(node, "lang");
 }
 
 export default {
