@@ -53,7 +53,7 @@ export default function doesNodeMatchPattern(
 	const {parts: expectedParts, hasDoubleStar} = split(match);
 
 	// Fast path for single part pattern matching
-	if (expectedParts.length && expectedParts[0] !== '*' && !hasDoubleStar) {
+	if (expectedParts.length && expectedParts[0] !== "*" && !hasDoubleStar) {
 		return isIdentifierish(node) && node.name === expectedParts[0];
 	}
 

@@ -10,13 +10,13 @@ import {
 	AnyNode,
 	BreakStatement,
 	ClassMethod,
+	ClassPrivateMethod,
 	ContinueStatement,
 	ObjectMethod,
 	PatternMeta,
 	ReturnStatement,
 	TSDeclareMethod,
 	ThrowStatement,
-  ClassPrivateMethod,
 } from "@romejs/js-ast";
 import {isBinary} from "@romejs/js-ast-utils";
 import Builder, {BuilderMethod} from "../Builder";
