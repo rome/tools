@@ -19,7 +19,9 @@ export default function TSTypeAssertion(
 				group(
 					concat([
 						"<",
-						indent(concat([softline, builder.tokenize(node.typeAnnotation, node)])),
+						indent(
+							concat([softline, builder.tokenize(node.typeAnnotation, node)]),
+						),
 						softline,
 						">",
 					]),

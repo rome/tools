@@ -835,7 +835,10 @@ export default class Master {
 			);
 			if (masterCommand) {
 				// Warn about disabled disk caching
-				if (process.env.ROME_CACHE === "0" && !this.warnedCacheClients.has(bridge)) {
+				if (
+					process.env.ROME_CACHE === "0" &&
+					!this.warnedCacheClients.has(bridge)
+				) {
 					reporter.warn(
 						"Disk caching has been disabled due to the <emphasis>ROME_CACHE=0</emphasis> environment variable",
 					);
@@ -871,7 +874,10 @@ export default class Master {
 				throw new Error(`Unknown command ${String(query.commandName)}`);
 			}
 		} catch (err) {
-			let diagnostics: undefined | Diagnostics = this.handleRequestError(req, err);
+			let diagnostics: undefined | Diagnostics = this.handleRequestError(
+				req,
+				err,
+			);
 
 			if (diagnostics === undefined) {
 				return {

@@ -57,7 +57,7 @@ function promisifyVoid(
 export function watch(
 	path: AbsoluteFilePath,
 	options:
-		 | {
+		| {
 				encoding?: BufferEncoding | null;
 				persistent?: boolean;
 				recursive?: boolean;

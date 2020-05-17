@@ -249,7 +249,9 @@ export default class DiagnosticsPrinter extends Error {
 		}
 	}
 
-	getDependenciesFromDiagnostics(diagnostics: Diagnostics): Array<FileDependency> {
+	getDependenciesFromDiagnostics(
+		diagnostics: Diagnostics,
+	): Array<FileDependency> {
 		const deps: Array<FileDependency> = [];
 
 		for (const {
@@ -280,7 +282,10 @@ export default class DiagnosticsPrinter extends Error {
 			for (const item of advice) {
 				if (item.type === "frame") {
 					const {location} = item;
-					if (location.filename !== undefined && location.sourceText === undefined) {
+					if (
+						location.filename !== undefined &&
+						location.sourceText === undefined
+					) {
 						deps.push({
 							type: "reference",
 							path: this.createFilePath(location.filename),

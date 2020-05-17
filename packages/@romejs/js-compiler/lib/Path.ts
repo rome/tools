@@ -143,7 +143,7 @@ export default class Path {
 		descriptor: AnyHookDescriptor,
 		requiredDepth: number = 0,
 	):
-		 | undefined
+		| undefined
 		| {
 				ref: HookInstance;
 				depth: number;

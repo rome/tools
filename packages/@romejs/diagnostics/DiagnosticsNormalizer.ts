@@ -108,7 +108,9 @@ export default class DiagnosticsNormalizer {
 		return markup === undefined ? undefined : this.normalizeMarkup(markup);
 	}
 
-	normalizeDiagnosticAdviceItem(item: DiagnosticAdviceItem): DiagnosticAdviceItem {
+	normalizeDiagnosticAdviceItem(
+		item: DiagnosticAdviceItem,
+	): DiagnosticAdviceItem {
 		const {sourceMaps} = this;
 
 		switch (item.type) {

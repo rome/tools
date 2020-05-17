@@ -204,7 +204,9 @@ export default class WebRequest {
 	): Promise<boolean> {
 		project;
 
-		const possibleStaticPath = await this.server.pathnameToAbsolutePath(pathname);
+		const possibleStaticPath = await this.server.pathnameToAbsolutePath(
+			pathname,
+		);
 
 		// TODO check if it is a file
 		if (

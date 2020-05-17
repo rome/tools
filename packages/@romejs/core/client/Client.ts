@@ -129,7 +129,9 @@ export default class Client {
 
 	setFlags(flags: Partial<ClientFlags>) {
 		if (this.bridgeStatus !== undefined) {
-			throw new Error("Already connected to bridge. Cannot change client flags.");
+			throw new Error(
+				"Already connected to bridge. Cannot change client flags.",
+			);
 		}
 
 		this.flags = {
@@ -329,7 +331,10 @@ export default class Client {
 				const {request, response} = responses[i];
 				const dirname = `requests/${i}-${request.commandName}`;
 				writer.append({name: `${dirname}/request.json`}, stringifyJSON(request));
-				writer.append({name: `${dirname}/response.json`}, stringifyJSON(response));
+				writer.append(
+					{name: `${dirname}/response.json`},
+					stringifyJSON(response),
+				);
 			}
 
 			// Add client flags
@@ -608,7 +613,10 @@ export default class Client {
 	}
 
 	async tryConnectToExistingDaemon(): Promise<undefined | MasterBridge> {
-		const promise: Promise<undefined | net.Socket> = new Promise((resolve, reject) => {
+		const promise: Promise<undefined | net.Socket> = new Promise((
+			resolve,
+			reject,
+		) => {
 			const socket = net.createConnection(
 				{
 					path: SOCKET_PATH.join(),

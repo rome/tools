@@ -116,7 +116,8 @@ export default {
 					parent.object === node &&
 					getName(parent) === undefined;
 				const isUnboxed =
-					parent.type !== "MemberExpression" && parent.type !== "JSXMemberExpression";
+					parent.type !== "MemberExpression" &&
+					parent.type !== "JSXMemberExpression";
 
 				if (isComputed || isUnboxed) {
 					// Deopt as we can't follow this
@@ -149,7 +150,8 @@ export default {
 
 				// Replace all member expressions with their uids
 				if (
-					(node.type === "MemberExpression" || node.type === "JSXMemberExpression") &&
+					(node.type === "MemberExpression" ||
+					node.type === "JSXMemberExpression") &&
 					isIdentifierish(node.object)
 				) {
 					const wildcardInfo = wildcardImports.get(node.object.name);
@@ -173,7 +175,10 @@ export default {
 				}
 
 				// Add new specifiers to wildcard import declarations
-				if (node.type === "ImportDeclaration" && wildcardImportNodeToLocal.has(node)) {
+				if (
+					node.type === "ImportDeclaration" &&
+					wildcardImportNodeToLocal.has(node)
+				) {
 					const local = wildcardImportNodeToLocal.get(node);
 					if (local === undefined) {
 						throw new Error("Expected local");
@@ -195,7 +200,9 @@ export default {
 						namedSpecifiers.push(
 							importSpecifier.create({
 								imported: identifier.quick(imported),
-								local: importSpecifierLocal.quick(bindingIdentifier.quick(local)),
+								local: importSpecifierLocal.quick(
+									bindingIdentifier.quick(local),
+								),
 							}),
 						);
 					}

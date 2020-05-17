@@ -767,7 +767,9 @@ export function isIdentifierStart(code: undefined | number): boolean {
 	}
 
 	if (code <= 65_535) {
-		return code >= 170 && nonASCIIidentifierStart.test(String.fromCharCode(code));
+		return (
+			code >= 170 && nonASCIIidentifierStart.test(String.fromCharCode(code))
+		);
 	}
 
 	return isInAstralSet(code, astralIdentifierStartCodes);

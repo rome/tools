@@ -26,7 +26,9 @@ export default function StringLiteral(
 		parent.type === "JSXAttribute" || node.value.includes('"') ? "'" : '"';
 
 	const value =
-		parent.type === "JSXAttribute" ? escapeXHTMLEntities(node.value) : node.value;
+		parent.type === "JSXAttribute"
+			? escapeXHTMLEntities(node.value)
+			: node.value;
 
 	return escapeString(value, {quote: quotes});
 }

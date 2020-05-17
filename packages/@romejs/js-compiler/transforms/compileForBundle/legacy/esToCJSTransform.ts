@@ -177,7 +177,9 @@ export default {
 						topBody.push(template.statement`exports.default = ${expr};`);
 					} else {
 						topBody.push(declaration);
-						topBody.push(template.statement`exports.default = ${declaration.id};`);
+						topBody.push(
+							template.statement`exports.default = ${declaration.id};`,
+						);
 					}
 					continue;
 				}
@@ -194,7 +196,9 @@ export default {
 						bottomBody.push(template.statement`exports.default = ${expr};`);
 					} else {
 						bottomBody.push(declaration);
-						bottomBody.push(template.statement`exports.default = ${declaration.id};`);
+						bottomBody.push(
+							template.statement`exports.default = ${declaration.id};`,
+						);
 					}
 					continue;
 				}

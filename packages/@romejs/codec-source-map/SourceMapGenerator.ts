@@ -267,7 +267,10 @@ export default class SourceMapGenerator {
 
 				for (const mapping of this.getMappings()) {
 					parsedMappings.set(
-						getParsedMappingKey(mapping.generated.line, mapping.generated.column),
+						getParsedMappingKey(
+							mapping.generated.line,
+							mapping.generated.column,
+						),
 						mapping,
 					);
 				}

@@ -91,10 +91,17 @@ export default class BinaryOpT extends T {
 					left instanceof NumericLiteralT &&
 					right instanceof NumericLiteralT
 				) {
-					return new NumericLiteralT(scope, originNode, left.value + right.value);
+					return new NumericLiteralT(
+						scope,
+						originNode,
+						left.value + right.value,
+					);
 				} else if (isNumber(left) && isNumber(right)) {
 					return new NumericT(scope, originNode);
-				} else if (left instanceof StringLiteralT && right instanceof StringLiteralT) {
+				} else if (
+					left instanceof StringLiteralT &&
+					right instanceof StringLiteralT
+				) {
 					return new StringLiteralT(scope, originNode, left.value + right.value);
 				} else {
 					return new StringT(scope, originNode);

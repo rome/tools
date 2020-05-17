@@ -26,6 +26,134 @@ foo;
 
 ```
 
+### `1: formatted`
+
+```
+let regExp = new RegExp("^abc[]");
+regExp;
+
+```
+
+### `2`
+
+```
+✔ No known problems!
+
+```
+
+### `2: formatted`
+
+```
+let foo = /^abc/;
+foo;
+
+```
+
+### `3`
+
+```
+✔ No known problems!
+
+```
+
+### `3: formatted`
+
+```
+let foo = /[[]/;
+foo;
+
+```
+
+### `4`
+
+```
+✔ No known problems!
+
+```
+
+### `4: formatted`
+
+```
+let foo = /[]]/;
+foo;
+
+```
+
+### `5`
+
+```
+✔ No known problems!
+
+```
+
+### `5: formatted`
+
+```
+let foo = /[a-zA-Z[]/;
+foo;
+
+```
+
+### `6`
+
+```
+✔ No known problems!
+
+```
+
+### `6: formatted`
+
+```
+let foo = /[[]/;
+foo;
+
+```
+
+### `7`
+
+```
+✔ No known problems!
+
+```
+
+### `7: formatted`
+
+```
+let foo = /[[a-z[]\]/;
+foo;
+
+```
+
+### `8`
+
+```
+✔ No known problems!
+
+```
+
+### `8: formatted`
+
+```
+let foo = /[\-[]\/{}()*+?.\\^$|]/g;
+foo;
+
+```
+
+### `9`
+
+```
+✔ No known problems!
+
+```
+
+### `9: formatted`
+
+```
+let foo = /[]]/yu;
+foo;
+
+```
+
 ### `10`
 
 ```
@@ -204,134 +332,6 @@ foo;
 
 ```
 let foo = /\[\[\]a-z/;
-foo;
-
-```
-
-### `1: formatted`
-
-```
-let regExp = new RegExp("^abc[]");
-regExp;
-
-```
-
-### `2`
-
-```
-✔ No known problems!
-
-```
-
-### `2: formatted`
-
-```
-let foo = /^abc/;
-foo;
-
-```
-
-### `3`
-
-```
-✔ No known problems!
-
-```
-
-### `3: formatted`
-
-```
-let foo = /[[]/;
-foo;
-
-```
-
-### `4`
-
-```
-✔ No known problems!
-
-```
-
-### `4: formatted`
-
-```
-let foo = /[]]/;
-foo;
-
-```
-
-### `5`
-
-```
-✔ No known problems!
-
-```
-
-### `5: formatted`
-
-```
-let foo = /[a-zA-Z[]/;
-foo;
-
-```
-
-### `6`
-
-```
-✔ No known problems!
-
-```
-
-### `6: formatted`
-
-```
-let foo = /[[]/;
-foo;
-
-```
-
-### `7`
-
-```
-✔ No known problems!
-
-```
-
-### `7: formatted`
-
-```
-let foo = /[[a-z[]\]/;
-foo;
-
-```
-
-### `8`
-
-```
-✔ No known problems!
-
-```
-
-### `8: formatted`
-
-```
-let foo = /[\-[]\/{}()*+?.\\^$|]/g;
-foo;
-
-```
-
-### `9`
-
-```
-✔ No known problems!
-
-```
-
-### `9: formatted`
-
-```
-let foo = /[]]/yu;
 foo;
 
 ```

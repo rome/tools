@@ -456,7 +456,10 @@ export default class TestAPI implements TestHelper {
 					`t.throws() expected an error to be thrown that matches ${formatExpectedError(
 						expected,
 					)} but got ${err.name}: ${JSON.stringify(err.message)}`,
-					getErrorStackAdvice(getErrorStructure(err), "Incorrect error stack trace"),
+					getErrorStackAdvice(
+						getErrorStructure(err),
+						"Incorrect error stack trace",
+					),
 					1,
 				);
 			}
@@ -480,7 +483,10 @@ export default class TestAPI implements TestHelper {
 					`t.throws() expected an error to be thrown that matches ${formatExpectedError(
 						expected,
 					)} but got ${err.name}: ${JSON.stringify(err.message)}`,
-					getErrorStackAdvice(getErrorStructure(err), "Incorrect error stack trace"),
+					getErrorStackAdvice(
+						getErrorStructure(err),
+						"Incorrect error stack trace",
+					),
 					1,
 				);
 			}

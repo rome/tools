@@ -28,7 +28,7 @@ export type ModuleSignatureType = {
 };
 
 export type ModuleSignatureExport =
-	 | {
+	| {
 			type: "local";
 			name: string;
 			value: string;

@@ -39,7 +39,9 @@ export default function JSXElement(builder: Builder, node: JSXElement): Token {
 	} else {
 		return concat([
 			group(concat([concat(tokens), ">"])),
-			indent(concat(node.children.map((child) => builder.tokenize(child, node)))),
+			indent(
+				concat(node.children.map((child) => builder.tokenize(child, node))),
+			),
 			"</",
 			builder.tokenize(node.name, node),
 			">",

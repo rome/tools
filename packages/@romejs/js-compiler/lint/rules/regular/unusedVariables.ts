@@ -109,7 +109,9 @@ export default {
 				node.type === "ClassMethod" ||
 				node.type === "ArrowFunctionExpression"
 			) {
-				for (const {name} of getBindingIdentifiers(node.head.params.slice(0, -1))) {
+				for (const {name} of getBindingIdentifiers(
+					node.head.params.slice(0, -1),
+				)) {
 					usedBindings[name] = true;
 				}
 

@@ -16,7 +16,12 @@ export default function TSTypeParameter(
 	const tokens: Array<Token> = [node.name];
 
 	if (node.constraint) {
-		tokens.push(space, "extends", space, builder.tokenize(node.constraint, node));
+		tokens.push(
+			space,
+			"extends",
+			space,
+			builder.tokenize(node.constraint, node),
+		);
 	}
 
 	if (node.default) {

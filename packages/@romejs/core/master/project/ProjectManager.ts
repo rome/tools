@@ -255,7 +255,9 @@ export default class ProjectManager {
 		// Verify we didn't already generate this uid for another file
 		const collided = this.uidToFilename.get(uid);
 		if (collided !== undefined && !collided.equal(path)) {
-			throw new Error(`UID collision between ${filename} and ${collided}: ${uid}`);
+			throw new Error(
+				`UID collision between ${filename} and ${collided}: ${uid}`,
+			);
 		}
 
 		this.uidToFilename.set(uid, path);
@@ -671,7 +673,9 @@ export default class ProjectManager {
 						name,
 						existingPackage.path.join(),
 					),
-					location: def.consumer.get("name").getDiagnosticLocation("inner-value"),
+					location: def.consumer.get("name").getDiagnosticLocation(
+						"inner-value",
+					),
 				});
 				return;
 			}
@@ -716,7 +720,9 @@ export default class ProjectManager {
 		const promises = [];
 
 		for (const worker of workers) {
-			promises.push(worker.bridge.updateProjects.call({projects: projectsSerial}));
+			promises.push(
+				worker.bridge.updateProjects.call({projects: projectsSerial}),
+			);
 			promises.push(
 				worker.bridge.updateManifests.call({
 					manifests: manifestsSerial,
@@ -816,7 +822,9 @@ export default class ProjectManager {
 
 				const project = this.projects.get(cached.projectId);
 				if (project === undefined) {
-					throw new Error("Expected project from project id found in fileToProject");
+					throw new Error(
+						"Expected project from project id found in fileToProject",
+					);
 				}
 				return project;
 			}

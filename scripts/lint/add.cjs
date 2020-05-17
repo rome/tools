@@ -28,14 +28,7 @@ const testLoc = path.join(lintRulesFolder, category, `${ruleName}.test.ts`);
 
 write(
 	ruleLoc,
-	`/**
-* Copyright (c) Facebook, Inc. and its affiliates.
-*
-* This source code is licensed under the MIT license found in the
-* LICENSE file in the root directory of this source tree.
-*/
-
-import {Path, TransformExitResult} from "@romejs/js-compiler";
+	`import {Path, TransformExitResult} from "@romejs/js-compiler";
 import {descriptions} from "@romejs/diagnostics";
 
 export default {
@@ -58,14 +51,7 @@ export default {
 
 write(
 	testLoc,
-	`/**
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-import {test} from "rome";
+	`import {test} from "rome";
 import {testLintMultiple} from "../testHelpers";
 
 test(

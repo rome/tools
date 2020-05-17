@@ -136,7 +136,9 @@ function addErrorFrames(
 			filename: noNull(filename),
 			lineNumber: lineNumber == null ? undefined : ob1Coerce1(lineNumber),
 			// Rome expects 0-indexed columns, V8 provides 1-indexed
-			columnNumber: columnNumber == null ? undefined : ob1Coerce1To0(columnNumber),
+			columnNumber: columnNumber == null
+				? undefined
+				: ob1Coerce1To0(columnNumber),
 		};
 
 		if (
@@ -152,7 +154,9 @@ function addErrorFrames(
 
 			return {
 				...frame,
-				functionName: frame.functionName === undefined ? name : frame.functionName,
+				functionName: frame.functionName === undefined
+					? name
+					: frame.functionName,
 				methodName: frame.methodName === undefined ? name : frame.methodName,
 				resolvedLocation: found,
 				lineNumber: line,

@@ -24,7 +24,7 @@ type SerializeCLIData = {
 };
 
 export type SerializeCLITarget =
-	 | {
+	| {
 			type: "flag";
 			key: string;
 			target?: ConsumeSourceLocationRequestTarget;

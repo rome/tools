@@ -68,7 +68,7 @@ export type MasterQueryResponseCancelled = {
 };
 
 export type MasterQueryResponse =
-	 | MasterQueryResponseInvalid
+	| MasterQueryResponseInvalid
 	| MasterQueryResponseSuccess
 	| MasterQueryResponseError
 	| MasterQueryResponseCancelled

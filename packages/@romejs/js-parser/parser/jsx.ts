@@ -463,7 +463,10 @@ function parseJSXElementAt(
 
 		// Validate element names: Element open, element close
 		if (openingDef.name !== undefined && closingName !== undefined) {
-			if (getQualifiedJSXName(closingName) !== getQualifiedJSXName(openingDef.name)) {
+			if (
+				getQualifiedJSXName(closingName) !==
+				getQualifiedJSXName(openingDef.name)
+			) {
 				parser.addDiagnostic({
 					loc: openingDef.loc,
 					description: descriptions.JS_PARSER.JSX_EXPECTED_CLOSING_TAG(

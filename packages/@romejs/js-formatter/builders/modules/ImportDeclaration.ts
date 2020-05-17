@@ -76,7 +76,9 @@ export function printModuleSpecifiers(
 			groups.push(
 				concat([
 					"{",
-					indent(concat([softline, join(concat([",", lineOrSpace]), specifiers)])),
+					indent(
+						concat([softline, join(concat([",", lineOrSpace]), specifiers)]),
+					),
 					ifBreak(","),
 					softline,
 					"}",

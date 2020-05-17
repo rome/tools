@@ -83,7 +83,7 @@ type ContextDiagnostic = Omit<Diagnostic, "location" | "description"> & {
 };
 
 type DiagnosticTarget =
-	 | undefined
+	| undefined
 	| {
 			loc?: SourceLocation;
 		}
@@ -123,7 +123,8 @@ export default class CompilerContext {
 		this.path = createUnknownFilePath(ast.filename);
 		this.filename = ast.filename;
 		this.sourceText = sourceText;
-		this.displayFilename = ref === undefined ? ast.filename : ref.relative.join();
+		this.displayFilename =
+			ref === undefined ? ast.filename : ref.relative.join();
 		this.frozen = frozen;
 		this.mtime = ast.mtime;
 		this.project = project;
@@ -137,7 +138,10 @@ export default class CompilerContext {
 		this.diagnostics = new DiagnosticsProcessor();
 
 		if (suppressions === undefined) {
-			const {suppressions, diagnostics} = extractSuppressionsFromProgram(this, ast);
+			const {suppressions, diagnostics} = extractSuppressionsFromProgram(
+				this,
+				ast,
+			);
 			this.suppressions = suppressions;
 			this.diagnostics.addDiagnostics(diagnostics);
 		} else {
@@ -188,7 +192,10 @@ export default class CompilerContext {
 		}
 
 		for (const suppression of this.suppressions) {
-			if (suppression.category === category && matchesSuppression(loc, suppression)) {
+			if (
+				suppression.category === category &&
+				matchesSuppression(loc, suppression)
+			) {
 				return true;
 			}
 		}
@@ -292,7 +299,10 @@ export default class CompilerContext {
 		const oldCode =
 			loc === undefined
 				? ""
-				: this.sourceText.slice(ob1Get0(loc.start.index), ob1Get0(loc.end.index));
+				: this.sourceText.slice(
+						ob1Get0(loc.start.index),
+						ob1Get0(loc.end.index),
+					);
 
 		let fixed: undefined | New = defaultFixed;
 
@@ -376,7 +386,10 @@ export default class CompilerContext {
 
 				advice.push({
 					type: "diff",
-					diff: stringDiff(oldCode, getFormattedCodeFromExitResult(suggestion.fixed)),
+					diff: stringDiff(
+						oldCode,
+						getFormattedCodeFromExitResult(suggestion.fixed),
+					),
 				});
 
 				advice.push({

@@ -16,7 +16,7 @@ export const visitorKeys: Map<string, Array<string>> = new Map();
 export const nodeNames: Set<string> = new Set();
 
 type JustNodeKeysProp<K, V> = V extends
-	 | NodeBase
+	| NodeBase
 	| Array<NodeBase>
 	| Array<undefined | NodeBase>
 	? K
@@ -119,7 +119,11 @@ class Builder<Node extends AnyNode> {
 }
 
 class QuickBuilder<Node extends AnyNode, Arg> extends Builder<Node> {
-	constructor(type: string, visitorKeys: VisitorKeys<Node>, quickKey: keyof Node) {
+	constructor(
+		type: string,
+		visitorKeys: VisitorKeys<Node>,
+		quickKey: keyof Node,
+	) {
 		super(type, visitorKeys);
 		this.quickKey = quickKey;
 	}

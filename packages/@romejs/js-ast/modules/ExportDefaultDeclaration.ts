@@ -18,7 +18,7 @@ import {TSDeclareFunction} from "../typescript/TSDeclareFunction";
 export type ExportDefaultDeclaration = JSNodeBase & {
 	type: "ExportDefaultDeclaration";
 	declaration:
-		 | FunctionDeclaration
+		| FunctionDeclaration
 		| ClassDeclaration
 		| TSInterfaceDeclaration
 		| TSDeclareFunction

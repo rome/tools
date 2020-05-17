@@ -62,7 +62,7 @@ import {descriptions} from "@romejs/diagnostics";
 import {State} from "../tokenizer/state";
 
 export type ParseExportResult =
-	 | AnyStatement
+	| AnyStatement
 	| ExportAllDeclaration
 	| ExportLocalDeclaration
 	| ExportExternalDeclaration
@@ -158,7 +158,9 @@ export function parseExport(
 
 		if (source !== undefined) {
 			if (declaration !== undefined) {
-				throw new Error("When there's a source we don't also expect a declaration");
+				throw new Error(
+					"When there's a source we don't also expect a declaration",
+				);
 			}
 
 			return createExportExternalDeclaration(
@@ -383,10 +385,13 @@ function parseExportDeclaration(
 }
 
 function isExportDefaultSpecifier(parser: JSParser): boolean {
+	// export Foo from "mod"
+	// export Foo, {Bar} from "mod"
 	const lookahead = parser.lookaheadState();
 	if (
-		lookahead.tokenType === tt.comma ||
-		(lookahead.tokenType === tt.name && lookahead.tokenValue === "from")
+		parser.match(tt.name) &&
+		(lookahead.tokenType === tt.comma ||
+		(lookahead.tokenType === tt.name && lookahead.tokenValue === "from"))
 	) {
 		return true;
 	}
@@ -475,7 +480,8 @@ function parseExportFrom(
 function shouldParseExportStar(parser: JSParser): boolean {
 	return (
 		parser.match(tt.star) ||
-		(parser.isContextual("type") && parser.lookaheadState().tokenType === tt.star)
+		(parser.isContextual("type") &&
+		parser.lookaheadState().tokenType === tt.star)
 	);
 }
 
@@ -635,7 +641,13 @@ function checkExport(
 				const {local} = specifier;
 				if (local !== undefined) {
 					// check for keywords used as local names
-					checkReservedWord(parser, local.name, parser.getLoc(local), true, false);
+					checkReservedWord(
+						parser,
+						local.name,
+						parser.getLoc(local),
+						true,
+						false,
+					);
 				}
 			}
 		}
