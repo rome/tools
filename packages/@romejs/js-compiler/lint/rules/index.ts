@@ -17,10 +17,10 @@ import emptyBlocks from "./regular/emptyBlocks";
 import emptyMatches from "./regular/emptyMatches";
 import getterReturn from "./regular/getterReturn";
 import importDefaultBasename from "./regular/importDefaultBasename";
-import jsxA11yHTMLHasLang from "./react/jsxA11yHTMLHasLang";
-import jsxA11yIframeHasTitle from "./react/jsxA11yIframeHasTitle";
-import jsxA11yImgRedundantAlt from "./react/jsxA11yImgRedundantAlt";
-import jsxA11yNoTargetBlank from "./react/jsxA11yNoTargetBlank";
+import jsxA11YHTMLHasLang from "./react/jsxA11yHTMLHasLang";
+import jsxA11YIframeHasTitle from "./react/jsxA11yIframeHasTitle";
+import jsxA11YImgRedundantAlt from "./react/jsxA11yImgRedundantAlt";
+import jsxA11YNoTargetBlank from "./react/jsxA11yNoTargetBlank";
 import jsxKey from "./react/jsxKey";
 import jsxNoCommentText from "./react/jsxNoCommentText";
 import negationElse from "./regular/negationElse";
@@ -83,10 +83,10 @@ export const lintTransforms = [
 	emptyMatches,
 	getterReturn,
 	importDefaultBasename,
-	jsxA11yHTMLHasLang,
-	jsxA11yIframeHasTitle,
-	jsxA11yImgRedundantAlt,
-	jsxA11yNoTargetBlank,
+	jsxA11YHTMLHasLang,
+	jsxA11YIframeHasTitle,
+	jsxA11YImgRedundantAlt,
+	jsxA11YNoTargetBlank,
 	jsxKey,
 	jsxNoCommentText,
 	negationElse,
