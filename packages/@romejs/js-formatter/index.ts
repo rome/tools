@@ -18,6 +18,7 @@ export type FormatterOptions = {
 	comments?: Array<AnyComment>;
 	sourceMaps?: boolean;
 	sourceText?: string;
+	allowInterpreterDirective?: boolean,
 };
 
 export function formatJS(
@@ -28,6 +29,7 @@ export function formatJS(
 		sourceMaps = false,
 		comments,
 		indent = 0,
+		allowInterpreterDirective = true,
 	}: FormatterOptions = {},
 ): PrinterOutput {
 	const builder = new Builder(
@@ -35,6 +37,7 @@ export function formatJS(
 			format,
 			sourceMaps,
 			typeAnnotations,
+			allowInterpreterDirective,
 		},
 		ast.type === "Program" ? ast.comments : comments,
 	);

@@ -18,7 +18,7 @@ export default function Program(builder: Builder, node: Program): Token {
 		tokens.push(hardline);
 	}
 
-	if (node.interpreter) {
+	if (node.interpreter && builder.options.allowInterpreterDirective) {
 		tokens.push(builder.tokenize(node.interpreter, node));
 	}
 

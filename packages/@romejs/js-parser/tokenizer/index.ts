@@ -406,14 +406,14 @@ function parseLineComment(parser: JSParser, startSkip: number): { startPos: Posi
 }
 
 export function skipLineComment(parser: JSParser, startSkip: number): AnyComment {
-	const commentLine = parseLineComment(parser, startSkip);
+	const lineComment = parseLineComment(parser, startSkip);
 	return pushComment(
 		parser,
 		{
 			block: false,
-			text: commentLine.text,
-			startPos: commentLine.startPos,
-			endPos: commentLine.endPos,
+			text: lineComment.text,
+			startPos: lineComment.startPos,
+			endPos: lineComment.endPos,
 		},
 	);
 }
@@ -422,11 +422,11 @@ export function skipInterpreterDirective(
 	parser: JSParser,
 	startSkip: number,
 ): InterpreterDirective {
-	const commentLine = parseLineComment(parser, startSkip);
-	const loc = parser.finishLocAt(commentLine.startPos, commentLine.endPos);
+	const lineComment = parseLineComment(parser, startSkip);
+	const loc = parser.finishLocAt(lineComment.startPos, lineComment.endPos);
 	return {
 		type: "InterpreterDirective",
-		value: commentLine.text,
+		value: lineComment.text,
 		loc,
 	};
 }

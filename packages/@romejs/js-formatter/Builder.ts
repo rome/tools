@@ -29,6 +29,7 @@ export type BuilderOptions = {
 	format?: "pretty" | "compact";
 	sourceMaps?: boolean;
 	sourceText?: string;
+	allowInterpreterDirective: boolean;
 };
 
 export default class Builder {
