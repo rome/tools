@@ -124,6 +124,7 @@ type LintDiagnosticCategory =
 	| "lint/noDebugger"
 	| "lint/noDelete"
 	| "lint/noDeleteVars"
+	| "lint/noDidUpdateSetState"
 	| "lint/noDupeArgs"
 	| "lint/noDuplicateCase"
 	| "lint/noDuplicateGroupNamesInRegularExpressions"

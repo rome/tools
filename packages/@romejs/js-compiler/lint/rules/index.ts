@@ -38,6 +38,7 @@ import noDangerWithChildren from "./react/noDangerWithChildren";
 import noDebugger from "./regular/noDebugger";
 import noDelete from "./regular/noDelete";
 import noDeleteVars from "./regular/noDeleteVars";
+import noDidUpdateSetState from "./react/noDidUpdateSetState";
 import noDupeArgs from "./regular/noDupeArgs";
 import noDuplicateCase from "./regular/noDuplicateCase";
 import noDuplicateGroupNamesInRegularExpressions from "./regular/noDuplicateGroupNamesInRegularExpressions";
@@ -106,6 +107,7 @@ export const lintTransforms = [
 	noDebugger,
 	noDelete,
 	noDeleteVars,
+	noDidUpdateSetState,
 	noDupeArgs,
 	noDuplicateCase,
 	noDuplicateGroupNamesInRegularExpressions,
