@@ -254,6 +254,7 @@ export default class MasterRequest {
 				} else if (res.type === "DIAGNOSTICS") {
 					res = {
 						type: "DIAGNOSTICS",
+						hasDiagnostics: res.hasDiagnostics,
 						diagnostics: [],
 					};
 				} else if (res.type === "INVALID_REQUEST") {
