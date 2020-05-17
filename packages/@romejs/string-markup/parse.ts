@@ -51,7 +51,6 @@ tags.set("highlight", ["i"]);
 tags.set("table", []);
 tags.set("tr", []);
 tags.set("td", ["align"]);
-tags.set("th", []);
 tags.set("hr", []);
 tags.set("pad", ["width", "align"]);
 tags.set("nobr", []);
@@ -62,7 +61,7 @@ tags.set("ol", ["reversed", "start"]);
 // Tags that only support certain other tags as their children
 const tagsToOnlyChildren: Map<MarkupTagName, Array<MarkupTagName>> = new Map();
 tagsToOnlyChildren.set("table", ["tr"]);
-tagsToOnlyChildren.set("tr", ["th", "td"]);
+tagsToOnlyChildren.set("tr", ["td"]);
 tagsToOnlyChildren.set("ol", ["li"]);
 tagsToOnlyChildren.set("ul", ["li"]);
 
@@ -70,7 +69,6 @@ tagsToOnlyChildren.set("ul", ["li"]);
 const tagsToOnlyParent: Map<MarkupTagName, Array<MarkupTagName>> = new Map();
 tagsToOnlyParent.set("tr", ["table"]);
 tagsToOnlyParent.set("td", ["tr"]);
-tagsToOnlyParent.set("th", ["tr"]);
 tagsToOnlyParent.set("li", ["ol", "ul"]);
 
 //
