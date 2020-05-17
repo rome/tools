@@ -295,6 +295,7 @@ export const descriptions = createMessages({
 		NO_DID_UPDATE_SET_STATE: {
 			category: "lint/noDidUpdateSetState",
 			message: "Avoid this.setState in componentDidUpdate",
+		},
 		JSX_A11Y_HEADING_HAS_CONTENT: {
 			category: "lint/jsxA11yHeadingHasContent",
 			message: "Headings must have content and the content must be accessible by a screen reader.",

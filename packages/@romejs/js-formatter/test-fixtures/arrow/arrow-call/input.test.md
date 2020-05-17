@@ -63,7 +63,9 @@ const testResults = results.testResults.map((testResult) =>
 it(
 	"mocks regexp instances",
 	() => {
-		expect(() => moduleMocker.generateFromMetadata(moduleMocker.getMetadata(/a/))).not.toThrow();
+		expect(() =>
+			moduleMocker.generateFromMetadata(moduleMocker.getMetadata(/a/))
+		).not.toThrow();
 	},
 );
 

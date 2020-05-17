@@ -10,7 +10,7 @@
 
  unknown:1 lint/jsxA11yHeadingHasContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ INSERT MESSAGE HERE
+  ✖ Headings must have content and the content must be accessible by a screen reader.
 
     <h1 />
     ^^^^^^
@@ -34,7 +34,7 @@
 
  unknown:1 lint/jsxA11yHeadingHasContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ INSERT MESSAGE HERE
+  ✖ Headings must have content and the content must be accessible by a screen reader.
 
     <h1><TextWrapper aria-hidden /></h1>
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -58,7 +58,7 @@
 
  unknown:1 lint/jsxA11yHeadingHasContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ INSERT MESSAGE HERE
+  ✖ Headings must have content and the content must be accessible by a screen reader.
 
     <h1><div aria-hidden /></h1>
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^

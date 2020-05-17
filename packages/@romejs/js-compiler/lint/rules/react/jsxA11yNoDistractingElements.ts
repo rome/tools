@@ -10,9 +10,9 @@ export default {
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 
-		const distractingType = isJSXElement(node) && DISTRACTING_TYPES.find((name) =>
-			isJSXElement(node, name)
-		);
+		const distractingType =
+			isJSXElement(node) &&
+			DISTRACTING_TYPES.find((name) => isJSXElement(node, name));
 
 		if (distractingType) {
 			path.context.addNodeDiagnostic(

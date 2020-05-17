@@ -18,7 +18,7 @@ import {createSnapshotParser} from "./SnapshotParser";
 import {ErrorFrame} from "@romejs/v8";
 import {Number0, Number1} from "@romejs/ob1";
 import prettyFormat from "@romejs/pretty-format";
-import {naturalCompare} from '@romejs/string-utils';
+import {naturalCompare} from "@romejs/string-utils";
 
 function cleanHeading(key: string): string {
 	if (key[0] === "`") {

@@ -45,6 +45,205 @@
 
 ```
 
+### `1: formatted`
+
+```
+<img {...props} />;
+
+```
+
+### `2`
+
+```
+
+ unknown:1 lint/jsxA11yAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ img, area, input type='image', object must have alt text
+
+    <img {...props} alt />
+    ^^^^^^^^^^^^^^^^^^^^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `2: formatted`
+
+```
+<img {...props} alt />;
+
+```
+
+### `3`
+
+```
+
+ unknown:1 lint/jsxA11yAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ img, area, input type='image', object must have alt text
+
+    <img {...props} alt={undefined} />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `3: formatted`
+
+```
+<img {...props} alt={undefined} />;
+
+```
+
+### `4`
+
+```
+
+ unknown:1 lint/jsxA11yAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ img, area, input type='image', object must have alt text
+
+    <img {...props} alt={`${undefined}`} />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `4: formatted`
+
+```
+<img {...props} alt={`${undefined}`} />;
+
+```
+
+### `5`
+
+```
+
+ unknown:1 lint/jsxA11yAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ img, area, input type='image', object must have alt text
+
+    <img src='foo' role='presentation' />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `5: formatted`
+
+```
+<img src='foo' role='presentation' />;
+
+```
+
+### `6`
+
+```
+
+ unknown:1 lint/jsxA11yAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ img, area, input type='image', object must have alt text
+
+    <img src='foo' role='none' />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `6: formatted`
+
+```
+<img src='foo' role='none' />;
+
+```
+
+### `7`
+
+```
+
+ unknown:1 lint/jsxA11yAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ img, area, input type='image', object must have alt text
+
+    <object {...props} />
+    ^^^^^^^^^^^^^^^^^^^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `7: formatted`
+
+```
+<object {...props} />;
+
+```
+
+### `8`
+
+```
+
+ unknown:1 lint/jsxA11yAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ img, area, input type='image', object must have alt text
+
+    <object aria-label />
+    ^^^^^^^^^^^^^^^^^^^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `8: formatted`
+
+```
+<object aria-label />;
+
+```
+
+### `9`
+
+```
+
+ unknown:1 lint/jsxA11yAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ img, area, input type='image', object must have alt text
+
+    <object aria-label={undefined} />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `9: formatted`
+
+```
+<object aria-label={undefined} />;
+
+```
+
 ### `10`
 
 ```
@@ -275,30 +474,6 @@
 
 ```
 
-### `1: formatted`
-
-```
-<img {...props} />;
-
-```
-
-### `2`
-
-```
-
- unknown:1 lint/jsxA11yAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ img, area, input type='image', object must have alt text
-
-    <img {...props} alt />
-    ^^^^^^^^^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
 ### `20`
 
 ```
@@ -439,30 +614,6 @@
 
 ```
 
-### `2: formatted`
-
-```
-<img {...props} alt />;
-
-```
-
-### `3`
-
-```
-
- unknown:1 lint/jsxA11yAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ img, area, input type='image', object must have alt text
-
-    <img {...props} alt={undefined} />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
 ### `30`
 
 ```
@@ -530,156 +681,5 @@
 
 ```
 <input type='image' aria-labelledby='id1' />;
-
-```
-
-### `3: formatted`
-
-```
-<img {...props} alt={undefined} />;
-
-```
-
-### `4`
-
-```
-
- unknown:1 lint/jsxA11yAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ img, area, input type='image', object must have alt text
-
-    <img {...props} alt={`${undefined}`} />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `4: formatted`
-
-```
-<img {...props} alt={`${undefined}`} />;
-
-```
-
-### `5`
-
-```
-
- unknown:1 lint/jsxA11yAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ img, area, input type='image', object must have alt text
-
-    <img src='foo' role='presentation' />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `5: formatted`
-
-```
-<img src='foo' role='presentation' />;
-
-```
-
-### `6`
-
-```
-
- unknown:1 lint/jsxA11yAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ img, area, input type='image', object must have alt text
-
-    <img src='foo' role='none' />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `6: formatted`
-
-```
-<img src='foo' role='none' />;
-
-```
-
-### `7`
-
-```
-
- unknown:1 lint/jsxA11yAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ img, area, input type='image', object must have alt text
-
-    <object {...props} />
-    ^^^^^^^^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `7: formatted`
-
-```
-<object {...props} />;
-
-```
-
-### `8`
-
-```
-
- unknown:1 lint/jsxA11yAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ img, area, input type='image', object must have alt text
-
-    <object aria-label />
-    ^^^^^^^^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `8: formatted`
-
-```
-<object aria-label />;
-
-```
-
-### `9`
-
-```
-
- unknown:1 lint/jsxA11yAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ img, area, input type='image', object must have alt text
-
-    <object aria-label={undefined} />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `9: formatted`
-
-```
-<object aria-label={undefined} />;
 
 ```

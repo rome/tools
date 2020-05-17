@@ -14,8 +14,8 @@ test(
 		await testLintMultiple(
 			t,
 			[
-        // INVALID
-        `
+				// INVALID
+				`
         class Hello extends React.Component {
           componentDidUpdate() {
             this.setState({
@@ -24,7 +24,7 @@ test(
           }
         }
         `,
-        `
+				`
         class Hello extends React.Component {
           componentDidUpdate() {
             foo();
@@ -34,7 +34,7 @@ test(
           }
         }
         `,
-        `
+				`
         class Hello extends Component {
           componentDidUpdate() {
             this.setState({
@@ -43,7 +43,7 @@ test(
           }
         }
         `,
-        `
+				`
         class Hello extends Component {
           componentDidUpdate() {
             foo();
@@ -53,8 +53,8 @@ test(
           }
         }
         `,
-        // VALID
-        `
+				// VALID
+				`
         class Hello extends React.Component {
           componentDidUpdate() {
             if (condition) {
