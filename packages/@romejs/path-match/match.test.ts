@@ -39,7 +39,10 @@ test(
 		);
 		t.false(matchPath(createAbsoluteFilePath(DOCUMENTS), _parsePathPattern("")));
 		t.false(
-			matchPath(createAbsoluteFilePath(DOCUMENTS), _parsePathPattern("# comment")),
+			matchPath(
+				createAbsoluteFilePath(DOCUMENTS),
+				_parsePathPattern("# comment"),
+			),
 		);
 		t.true(
 			matchPath(createAbsoluteFilePath(DOCUMENTS), _parsePathPattern("sebmck")),

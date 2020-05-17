@@ -81,7 +81,11 @@ export type FlagValue = _FlagValue | Array<_FlagValue>;
 type SupportedAutocompleteShells = "bash" | "fish";
 
 export default class Parser<T> {
-	constructor(reporter: Reporter, opts: ParserOptions<T>, rawArgs: Array<string>) {
+	constructor(
+		reporter: Reporter,
+		opts: ParserOptions<T>,
+		rawArgs: Array<string>,
+	) {
 		this.reporter = reporter;
 		this.opts = opts;
 
@@ -399,7 +403,10 @@ export default class Parser<T> {
 			const rootFlags = this.opts.defineFlags(consumer);
 
 			for (const [key, command] of this.commands) {
-				const definedFlags = await this.maybeDefineCommandFlags(command, consumer);
+				const definedFlags = await this.maybeDefineCommandFlags(
+					command,
+					consumer,
+				);
 				if (definedFlags !== undefined) {
 					this.currentCommand = key;
 					definedCommand = {flags: definedFlags, command};
@@ -513,7 +520,11 @@ export default class Parser<T> {
 		]);
 	}
 
-	showUsageHelp(description?: string, usage: string = "[flags]", prefix?: string) {
+	showUsageHelp(
+		description?: string,
+		usage: string = "[flags]",
+		prefix?: string,
+	) {
 		const {reporter} = this;
 		const {programName} = this.opts;
 
@@ -792,7 +803,8 @@ export default class Parser<T> {
 
 					reporter.list(
 						commands.map((cmd) => {
-							return `<emphasis>${cmd.name}</emphasis> ${cmd.description === undefined
+							return `<emphasis>${cmd.name}</emphasis> ${cmd.description ===
+							undefined
 								? ""
 								: cmd.description}`;
 						}),

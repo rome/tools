@@ -54,7 +54,8 @@ export default {
 			// Function or arrow function with block statement
 			if (
 				fn &&
-				(fn.type === "FunctionExpression" || fn.type === "ArrowFunctionExpression") &&
+				(fn.type === "FunctionExpression" ||
+				fn.type === "ArrowFunctionExpression") &&
 				fn.body.type === "BlockStatement"
 			) {
 				fn.body.body.forEach((statement) => {

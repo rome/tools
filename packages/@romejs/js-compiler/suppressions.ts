@@ -148,7 +148,11 @@ export function extractSuppressionsFromProgram(
 	);
 
 	for (const comment of comments) {
-		const result = extractSuppressionsFromComment(context, comment, nodeToComment);
+		const result = extractSuppressionsFromComment(
+			context,
+			comment,
+			nodeToComment,
+		);
 		if (result !== undefined) {
 			diagnostics = diagnostics.concat(result.diagnostics);
 			suppressions = suppressions.concat(result.suppressions);

@@ -51,7 +51,12 @@ export default function CallExpression(
 function printArguments(builder: Builder, node: AnyCallableExpression): Token {
 	if (node.arguments.length === 0) {
 		if (hasInnerComments(node)) {
-			return concat(["(", builder.tokenizeInnerComments(node, true), hardline, ")"]);
+			return concat([
+				"(",
+				builder.tokenizeInnerComments(node, true),
+				hardline,
+				")",
+			]);
 		} else {
 			return "()";
 		}

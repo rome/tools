@@ -46,7 +46,9 @@ export default function ArrowFunctionExpression(
 	if (node.body.type === "SequenceExpression") {
 		return concat([
 			concat(tokens),
-			group(concat([space, "(", indent(concat([softline, body])), softline, ")"])),
+			group(
+				concat([space, "(", indent(concat([softline, body])), softline, ")"]),
+			),
 		]);
 	}
 

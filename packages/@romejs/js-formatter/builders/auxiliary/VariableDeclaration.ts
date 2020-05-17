@@ -24,7 +24,9 @@ export default function VariableDeclaration(
 			declarations.shift()!,
 			indent(
 				concat(
-					declarations.map((declaration) => concat([",", lineOrSpace, declaration])),
+					declarations.map((declaration) =>
+						concat([",", lineOrSpace, declaration])
+					),
 				),
 			),
 		]),

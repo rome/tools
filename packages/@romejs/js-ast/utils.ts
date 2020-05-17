@@ -119,7 +119,11 @@ class Builder<Node extends AnyNode> {
 }
 
 class QuickBuilder<Node extends AnyNode, Arg> extends Builder<Node> {
-	constructor(type: string, visitorKeys: VisitorKeys<Node>, quickKey: keyof Node) {
+	constructor(
+		type: string,
+		visitorKeys: VisitorKeys<Node>,
+		quickKey: keyof Node,
+	) {
 		super(type, visitorKeys);
 		this.quickKey = quickKey;
 	}

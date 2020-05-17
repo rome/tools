@@ -24,7 +24,9 @@ export default function SwitchCase(builder: Builder, node: SwitchCase): Token {
 		tokens.push(builder.tokenize(consequent[0], node));
 	} else if (consequent.length > 0) {
 		tokens.push(
-			indent(concat([hardline, builder.tokenizeStatementList(consequent, node)])),
+			indent(
+				concat([hardline, builder.tokenizeStatementList(consequent, node)]),
+			),
 		);
 	}
 

@@ -79,7 +79,10 @@ export default {
 								getPrefixedName(specifier.imported.name, moduleId, opts),
 							);
 						} else if (specifier.type === "ImportNamespaceSpecifier") {
-							mappings.set(specifier.local.name.name, getPrefixedNamespace(moduleId));
+							mappings.set(
+								specifier.local.name.name,
+								getPrefixedNamespace(moduleId),
+							);
 						} else if (specifier.type === "ImportDefaultSpecifier") {
 							mappings.set(
 								specifier.local.name.name,
@@ -117,7 +120,8 @@ export default {
 				if (child.type === "ExportDefaultDeclaration") {
 					const {declaration: decl} = child;
 					if (
-						(decl.type === "FunctionDeclaration" || decl.type === "ClassDeclaration") &&
+						(decl.type === "FunctionDeclaration" ||
+						decl.type === "ClassDeclaration") &&
 						decl.id !== undefined
 					) {
 						mappings.set(
@@ -131,7 +135,11 @@ export default {
 			const newProgram = program.assert(renameBindings(path, mappings));
 
 			// Get new scope with updated bindings. TODO Maybe `renameBindings` should return the path?
-			const newScope = scope.getRootScope().evaluate(newProgram, undefined, true);
+			const newScope = scope.getRootScope().evaluate(
+				newProgram,
+				undefined,
+				true,
+			);
 
 			if (opts.moduleAll === true) {
 				// Get all the export names
@@ -155,7 +163,11 @@ export default {
 								continue;
 							}
 
-							const local = getPrefixedName(specifier.local.name, moduleId, opts);
+							const local = getPrefixedName(
+								specifier.local.name,
+								moduleId,
+								opts,
+							);
 
 							exportNames.set(specifier.exported.name, local);
 						}
@@ -310,7 +322,11 @@ export default {
 									declarations: [
 										variableDeclarator.create({
 											id: bindingIdentifier.create({
-												name: getPrefixedName(specifier.exported.name, opts.moduleId, opts),
+												name: getPrefixedName(
+													specifier.exported.name,
+													opts.moduleId,
+													opts,
+												),
 											}),
 											init: referenceIdentifier.quick(specifier.local.name),
 										}),

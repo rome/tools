@@ -120,7 +120,10 @@ export default function renameBindings(
 				}
 
 				// Retain the correct exported names for `export const`
-				if (node.type === "ExportLocalDeclaration" && node.declaration !== undefined) {
+				if (
+					node.type === "ExportLocalDeclaration" &&
+					node.declaration !== undefined
+				) {
 					const bindings = getBindingIdentifiers(node.declaration);
 					let includesAny = false;
 					for (const node of bindings) {

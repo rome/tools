@@ -24,7 +24,9 @@ export default {
 					old: node,
 					fixed: whileStatement.create(
 						{
-							test: node.test !== undefined ? node.test : booleanLiteral.quick(true),
+							test: node.test !== undefined
+								? node.test
+								: booleanLiteral.quick(true),
 							body: node.body,
 							leadingComments: node.leadingComments,
 							trailingComments: node.trailingComments,

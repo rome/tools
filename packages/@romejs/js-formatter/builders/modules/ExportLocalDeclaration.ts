@@ -71,7 +71,9 @@ export function printExportDeclaration(
 				group(
 					concat([
 						"{",
-						indent(concat([softline, printCommaList(builder, specifiers, node)])),
+						indent(
+							concat([softline, printCommaList(builder, specifiers, node)]),
+						),
 						ifBreak(","),
 						softline,
 						"}",

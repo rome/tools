@@ -65,7 +65,10 @@ export default {
 					type: "CallExpression",
 					loc: node.loc,
 					callee: template.expression`${func}.apply`,
-					arguments: [object, arrayExpression.create({elements: node.arguments})],
+					arguments: [
+						object,
+						arrayExpression.create({elements: node.arguments}),
+					],
 				};
 
 				if (prepend === undefined) {

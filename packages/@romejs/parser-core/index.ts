@@ -521,7 +521,10 @@ export class ParserCore<Tokens extends TokensShape, State> {
 		} else {
 			throw this.unexpected({
 				description: _metadata === undefined
-					? descriptions.PARSER_CORE.EXPECTED_TOKEN(token.type, (type as string))
+					? descriptions.PARSER_CORE.EXPECTED_TOKEN(
+							token.type,
+							(type as string),
+						)
 					: _metadata,
 			});
 		}
@@ -540,7 +543,10 @@ export class ParserCore<Tokens extends TokensShape, State> {
 				return [value, index, true];
 			}
 
-			if (callback === undefined || callback(input[ob1Get0(index)], index, input)) {
+			if (
+				callback === undefined ||
+				callback(input[ob1Get0(index)], index, input)
+			) {
 				value += input[ob1Get0(index)];
 				index = ob1Inc(index);
 			} else {
@@ -706,7 +712,9 @@ export class PositionTracker {
 		} else if (latestPosition.index < indexWithOffset) {
 			line = latestPosition.line;
 			column = latestPosition.column;
-			indexSearchWithoutOffset = ob1Get0(this.removeOffset(latestPosition.index));
+			indexSearchWithoutOffset = ob1Get0(
+				this.removeOffset(latestPosition.index),
+			);
 		}
 
 		// Read the rest of the input until we hit the index

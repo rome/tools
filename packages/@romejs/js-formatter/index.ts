@@ -44,6 +44,7 @@ export function formatJS(
 		{
 			printWidth: format === "pretty" ? 80 : Infinity,
 			rootIndent: indent,
+			tabWidth: 2,
 		},
 	);
 

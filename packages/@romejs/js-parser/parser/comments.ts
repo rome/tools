@@ -269,8 +269,11 @@ export function attachComments(parser: JSParser, node: AnyNode) {
 		if (hasComments(lastChild.leadingComments)) {
 			if (
 				lastChild !== node &&
-				end(parser.comments.assertGetCommentFromId(last(lastChild.leadingComments))) <=
-				start(node)
+				end(
+					parser.comments.assertGetCommentFromId(
+						last(lastChild.leadingComments),
+					),
+				) <= start(node)
 			) {
 				setComments(
 					node,
@@ -284,7 +287,11 @@ export function attachComments(parser: JSParser, node: AnyNode) {
 				// See also: https://github.com/eslint/espree/issues/158
 				for (let i = lastChild.leadingComments.length - 2; i >= 0; --i) {
 					if (
-						end(parser.comments.assertGetCommentFromId(lastChild.leadingComments[i])) <=
+						end(
+							parser.comments.assertGetCommentFromId(
+								lastChild.leadingComments[i],
+							),
+						) <=
 						start(node)
 					) {
 						setComments(

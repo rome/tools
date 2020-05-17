@@ -51,7 +51,11 @@ type ProgressFactory = (opts: ReporterProgressOptions) => ReporterProgress;
 type WatchEvents = {
 	onRunStart: () => void;
 	createProgress: ProgressFactory;
-	onChanges: (result: WatchResults, initial: boolean, runner: LintRunner) => void;
+	onChanges: (
+		result: WatchResults,
+		initial: boolean,
+		runner: LintRunner,
+	) => void;
 };
 
 type WatchResults = {

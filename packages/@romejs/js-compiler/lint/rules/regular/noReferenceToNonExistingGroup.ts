@@ -38,13 +38,17 @@ export default {
 			if (allCaptureGroups === undefined) {
 				context.addNodeDiagnostic(
 					node,
-					descriptions.LINT.NO_REFERENCE_TO_NON_EXISTING_GROUP(String(node.value)),
+					descriptions.LINT.NO_REFERENCE_TO_NON_EXISTING_GROUP(
+						String(node.value),
+					),
 				);
 			} else {
 				if (node.value > allCaptureGroups.length) {
 					context.addNodeDiagnostic(
 						node,
-						descriptions.LINT.NO_REFERENCE_TO_NON_EXISTING_GROUP(String(node.value)),
+						descriptions.LINT.NO_REFERENCE_TO_NON_EXISTING_GROUP(
+							String(node.value),
+						),
 					);
 				}
 			}

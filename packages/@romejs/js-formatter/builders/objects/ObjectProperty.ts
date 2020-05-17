@@ -50,6 +50,11 @@ export default function ObjectProperty(
 	} else if (isShorthand(node.key, node.value)) {
 		return concat(tokens);
 	} else {
-		return concat([concat(tokens), ":", space, builder.tokenize(node.value, node)]);
+		return concat([
+			concat(tokens),
+			":",
+			space,
+			builder.tokenize(node.value, node),
+		]);
 	}
 }

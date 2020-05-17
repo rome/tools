@@ -23,7 +23,10 @@ test(
 			stringifySemver(parseSemverRange({input: "1.2.3-prerelease"})),
 			"1.2.3-prerelease",
 		);
-		t.is(stringifySemver(parseSemverRange({input: "1.2.3+build"})), "1.2.3+build");
+		t.is(
+			stringifySemver(parseSemverRange({input: "1.2.3+build"})),
+			"1.2.3+build",
+		);
 		t.is(
 			stringifySemver(parseSemverRange({input: "1.2.3-prerelease+build"})),
 			"1.2.3-prerelease+build",

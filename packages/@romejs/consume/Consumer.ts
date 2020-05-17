@@ -318,7 +318,10 @@ export default class Consumer {
 		return str;
 	}
 
-	generateUnexpectedMessage(msg: string, opts: UnexpectedConsumerOptions): string {
+	generateUnexpectedMessage(
+		msg: string,
+		opts: UnexpectedConsumerOptions,
+	): string {
 		const {at = "suffix", atParent = false} = opts;
 		const {parent} = this;
 
@@ -665,7 +668,9 @@ export default class Consumer {
 	isObject(): boolean {
 		const {value} = this;
 		return (
-			typeof value === "object" && value !== null && value.constructor === Object
+			typeof value === "object" &&
+			value !== null &&
+			value.constructor === Object
 		);
 	}
 

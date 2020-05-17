@@ -519,7 +519,9 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 		// Test whether a semicolon can be inserted at the current position.
 		canInsertSemicolon(): boolean {
 			return (
-				this.match(tt.eof) || this.match(tt.braceR) || this.hasPrecedingLineBreak()
+				this.match(tt.eof) ||
+				this.match(tt.braceR) ||
+				this.hasPrecedingLineBreak()
 			);
 		}
 
@@ -556,7 +558,11 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			}
 		}
 
-		expectOpening(open: TokenType, close: TokenType, name: string): OpeningContext {
+		expectOpening(
+			open: TokenType,
+			close: TokenType,
+			name: string,
+		): OpeningContext {
 			const pos = this.getPosition();
 			const indent = this.state.indentLevel;
 			this.expect(open);

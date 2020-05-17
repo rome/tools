@@ -13,7 +13,11 @@ export default function TryStatement(
 	builder: Builder,
 	node: TryStatement,
 ): Token {
-	const tokens: Array<Token> = ["try", space, builder.tokenize(node.block, node)];
+	const tokens: Array<Token> = [
+		"try",
+		space,
+		builder.tokenize(node.block, node),
+	];
 
 	if (node.handler) {
 		tokens.push(space, builder.tokenize(node.handler, node));

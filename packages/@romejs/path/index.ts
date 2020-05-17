@@ -226,7 +226,8 @@ class BaseFilePath<Super extends UnknownFilePath> {
 
 	isWindows(): boolean {
 		return (
-			this.absoluteType === "windows-drive" || this.absoluteType === "windows-unc"
+			this.absoluteType === "windows-drive" ||
+			this.absoluteType === "windows-unc"
 		);
 	}
 
@@ -285,7 +286,9 @@ class BaseFilePath<Super extends UnknownFilePath> {
 	}
 
 	hasExtension(ext: string): boolean {
-		return this.hasEndExtension(ext) || this.getExtensions().includes(`.${ext}.`);
+		return (
+			this.hasEndExtension(ext) || this.getExtensions().includes(`.${ext}.`)
+		);
 	}
 
 	getExtensions(): string {

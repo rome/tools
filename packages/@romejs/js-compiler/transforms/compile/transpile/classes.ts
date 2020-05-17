@@ -129,7 +129,8 @@ function transformClass(
 					if (classMethod2 === undefined) {
 						throw new Error("Expected to find class method here");
 					}
-					const isStatic = classMethod.assert(classMethod2.node).meta.static === true;
+					const isStatic =
+						classMethod.assert(classMethod2.node).meta.static === true;
 
 					const {property} = node;
 
@@ -162,7 +163,8 @@ function transformClass(
 					if (classMethod2 === undefined) {
 						throw new Error("Expected to find class method here");
 					}
-					const isStatic = classMethod.assert(classMethod2.node).meta.static === true;
+					const isStatic =
+						classMethod.assert(classMethod2.node).meta.static === true;
 
 					const args = node.arguments;
 					const {property} = node.callee;

@@ -67,7 +67,10 @@ export default function unescapeString(
 				throw new Error("Already validated that this index exists");
 			}
 			if (codePoint >= 0 && codePoint <= 31) {
-				throw unexpected(descriptions.STRING_ESCAPE.INVALID_STRING_CHARACTER, index);
+				throw unexpected(
+					descriptions.STRING_ESCAPE.INVALID_STRING_CHARACTER,
+					index,
+				);
 			}
 
 			// Add it verbatim

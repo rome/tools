@@ -114,7 +114,9 @@ function encodeHeader(header: Header): Buffer {
 	while (Buffer.byteLength(name) > 100) {
 		const i = name.indexOf("/");
 		if (i === -1) {
-			throw new Error("filename is too long for USTAR and it was in no directory");
+			throw new Error(
+				"filename is too long for USTAR and it was in no directory",
+			);
 		}
 
 		prefix += prefix ? `/${name.slice(0, i)}` : name.slice(0, i);

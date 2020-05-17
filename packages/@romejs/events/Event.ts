@@ -124,7 +124,9 @@ export default class Event<Param, Ret = void> {
 					() => {
 						timedOut = true;
 						listener.unsubscribe();
-						reject(new Error(`Timed out after waiting ${timeout}ms for ${this.name}`));
+						reject(
+							new Error(`Timed out after waiting ${timeout}ms for ${this.name}`),
+						);
 					},
 					timeout,
 				);

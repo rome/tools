@@ -656,7 +656,14 @@ export function parseExpressionOp(
 				);
 			}
 
-			return parseExpressionOp(parser, context, node, leftStartPos, minPrec, noIn);
+			return parseExpressionOp(
+				parser,
+				context,
+				node,
+				leftStartPos,
+				minPrec,
+				noIn,
+			);
 		}
 	}
 
@@ -1632,7 +1639,9 @@ export function parseExpressionAtom(
 		default: {
 			const start = parser.getPosition();
 			parser.addDiagnostic({
-				description: descriptions.JS_PARSER.UNKNOWN_EXPRESSION_ATOM_START(context),
+				description: descriptions.JS_PARSER.UNKNOWN_EXPRESSION_ATOM_START(
+					context,
+				),
 			});
 			parser.next();
 			return toReferenceIdentifier(
@@ -1836,7 +1845,10 @@ export function parseParenAndDistinguishExpression(
 				parseParenItem(parser, parseSpread(parser), spreadNodeStartPos),
 			);
 
-			if (parser.match(tt.comma) && parser.lookaheadState().tokenType === tt.parenR) {
+			if (
+				parser.match(tt.comma) &&
+				parser.lookaheadState().tokenType === tt.parenR
+			) {
 				raiseRestNotLast(parser);
 				parser.eat(tt.comma);
 			}
@@ -2068,7 +2080,10 @@ export function parseNew(parser: JSParser): NewExpression | MetaProperty {
 	if (parser.eat(tt.dot)) {
 		const metaProp = parseMetaProperty(parser, start, meta, "target");
 
-		if (!parser.inScope("NON_ARROW_FUNCTION") && !parser.inScope("CLASS_PROPERTY")) {
+		if (
+			!parser.inScope("NON_ARROW_FUNCTION") &&
+			!parser.inScope("CLASS_PROPERTY")
+		) {
 			parser.addDiagnostic({
 				loc: metaProp.loc,
 				description: descriptions.JS_PARSER.NEW_TARGET_OUTSIDE_CLASS,
@@ -2114,7 +2129,11 @@ export function parseNew(parser: JSParser): NewExpression | MetaProperty {
 
 	let args: Array<AnyExpression | SpreadElement> = [];
 	if (parser.match(tt.parenL)) {
-		const openContext = parser.expectOpening(tt.parenL, tt.parenR, "new argument");
+		const openContext = parser.expectOpening(
+			tt.parenL,
+			tt.parenR,
+			"new argument",
+		);
 		args = parseExpressionListNonEmpty(
 			parser,
 			"new expression argument",
@@ -2409,7 +2428,10 @@ export function parseObjectPattern(
 				break;
 			}
 
-			if (parser.match(tt.comma) && parser.lookaheadState().tokenType === tt.braceR) {
+			if (
+				parser.match(tt.comma) &&
+				parser.lookaheadState().tokenType === tt.braceR
+			) {
 				parser.addDiagnostic({
 					description: descriptions.JS_PARSER.TRAILING_COMMA_AFTER_REST,
 				});
@@ -3103,7 +3125,11 @@ export function parseFunctionBodyAndFinish(
 		),
 	);
 
-	if (opts.allowBodiless && !parser.match(tt.braceL) && parser.isLineTerminator()) {
+	if (
+		opts.allowBodiless &&
+		!parser.match(tt.braceL) &&
+		parser.isLineTerminator()
+	) {
 		return {
 			head,
 			body: undefined,

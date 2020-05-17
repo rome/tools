@@ -791,7 +791,10 @@ function parseTSTypeMember(parser: JSParser): AnyTSTypeElement {
 		return parseTSCallSignatureDeclaration(parser);
 	}
 
-	if (parser.match(tt._new) && lookaheadTS(parser, tsIsStartOfConstructSignature)) {
+	if (
+		parser.match(tt._new) &&
+		lookaheadTS(parser, tsIsStartOfConstructSignature)
+	) {
 		return parseTSConstructSignatureDeclaration(parser);
 	}
 
@@ -2152,7 +2155,9 @@ export function parseTSDeclare(parser: JSParser, start: Position): TSDeclareNode
 		case tt._const:
 		case tt._var: {
 			kind =
-				kind === undefined ? assertVarKind(String(parser.state.tokenValue)) : kind;
+				kind === undefined
+					? assertVarKind(String(parser.state.tokenValue))
+					: kind;
 			return {
 				declare: true,
 				...parseVarStatement(parser, start, kind),
@@ -2361,7 +2366,11 @@ export function parseTSTypeArguments(
 		parser,
 		() => {
 			parser.expectRelational("<");
-			return parseTSDelimitedList(parser, "TypeParametersOrArguments", parseTSType);
+			return parseTSDelimitedList(
+				parser,
+				"TypeParametersOrArguments",
+				parseTSType,
+			);
 		},
 	);
 

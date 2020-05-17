@@ -6,19 +6,13 @@
  */
 
 import {Mapping} from "@romejs/codec-source-map";
-import {
-	Number0,
-	Number1,
-	ob1Get0,
-	ob1Inc,
-	ob1Number0,
-	ob1Number1,
-} from "@romejs/ob1";
+import {Number0, Number1, ob1Inc, ob1Number0, ob1Number1} from "@romejs/ob1";
 import {Token} from "./tokens";
 
 export type PrinterOptions = {
 	printWidth: number;
 	rootIndent: number;
+	tabWidth: number;
 };
 
 export type PrinterOutput = {
@@ -37,6 +31,7 @@ type State = {
 	buffer: Array<string>;
 	mappings: Array<Mapping>;
 	lineSuffixes: Array<[Token, State]>;
+	lineWidth: Box<number>;
 };
 
 class BreakError extends Error {
@@ -66,6 +61,7 @@ function forkState(parent: State, callback: (state: State) => void): void {
 		generatedColumn: new Box(parent.generatedColumn.value),
 		pendingSpaces: new Box(parent.pendingSpaces.value),
 		pendingTabs: new Box(parent.pendingTabs.value),
+		lineWidth: new Box(parent.lineWidth.value),
 	};
 
 	try {
@@ -90,16 +86,23 @@ function forkState(parent: State, callback: (state: State) => void): void {
 	parent.generatedColumn.value = state.generatedColumn.value;
 	parent.pendingSpaces.value = state.pendingSpaces.value;
 	parent.pendingTabs.value = state.pendingTabs.value;
+	parent.lineWidth.value = state.lineWidth.value;
 }
 
-function write(str: string, state: State): void {
+function write(str: string, state: State, options: PrinterOptions): void {
 	for (const ch of str) {
 		state.generatedIndex.value = ob1Inc(state.generatedIndex.value);
 		if (ch === "\n") {
 			state.generatedLine.value = ob1Inc(state.generatedLine.value);
 			state.generatedColumn.value = ob1Number0;
+			state.lineWidth.value = 0;
 		} else {
 			state.generatedColumn.value = ob1Inc(state.generatedColumn.value);
+			if (ch === "\t") {
+				state.lineWidth.value += options.tabWidth;
+			} else {
+				state.lineWidth.value++;
+			}
 		}
 	}
 	state.buffer.push(str);
@@ -115,23 +118,23 @@ function print(token: Token, state: State, options: PrinterOptions): void {
 			if (token !== "") {
 				// Print pending tabs
 				if (state.pendingTabs.value > 0) {
-					write("\t".repeat(state.pendingTabs.value), state);
+					write("\t".repeat(state.pendingTabs.value), state, options);
 					state.pendingTabs.value = 0;
 				}
 
 				// Print pending spaces
 				if (state.pendingSpaces.value > 0) {
-					write(" ".repeat(state.pendingSpaces.value), state);
+					write(" ".repeat(state.pendingSpaces.value), state, options);
 					state.pendingSpaces.value = 0;
 				}
 
 				let currentLine = state.generatedLine.value;
 
-				write(token, state);
+				write(token, state, options);
 
 				if (state.flat) {
 					// If the line is too long, break the group
-					if (ob1Get0(state.generatedColumn.value) > options.printWidth) {
+					if (state.lineWidth.value > options.printWidth) {
 						throw new BreakError();
 					}
 
@@ -237,7 +240,7 @@ function print(token: Token, state: State, options: PrinterOptions): void {
 								stack.push(state.lineSuffixes.pop()!);
 							}
 						} else {
-							write("\n", state);
+							write("\n", state, options);
 
 							// Enqueue the indentation
 							state.pendingSpaces.value = 0;
@@ -305,6 +308,7 @@ export function printTokenToString(
 		buffer: [],
 		mappings: [],
 		lineSuffixes: [],
+		lineWidth: new Box(0),
 	};
 
 	print(token, state, options);

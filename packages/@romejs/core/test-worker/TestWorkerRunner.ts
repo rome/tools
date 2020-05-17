@@ -85,7 +85,8 @@ function cleanFrames(frames: ErrorFrames): ErrorFrames {
 	if (latestTestWorkerFrame === undefined) {
 		latestTestWorkerFrame = frames.find((frame) => {
 			return (
-				frame.typeName !== undefined && frame.typeName.includes("$TestWorkerRunner")
+				frame.typeName !== undefined &&
+				frame.typeName.includes("$TestWorkerRunner")
 			);
 		});
 	}
@@ -149,7 +150,10 @@ export default class TestWorkerRunner {
 	pendingDiagnostics: Array<Diagnostic>;
 
 	createConsole(): Partial<Console> {
-		const addDiagnostic = (category: DiagnosticLogCategory, args: Array<unknown>) => {
+		const addDiagnostic = (
+			category: DiagnosticLogCategory,
+			args: Array<unknown>,
+		) => {
 			let textParts: Array<string> = [];
 			if (args.length === 1 && typeof args[0] === "string") {
 				textParts.push(escapeMarkup(args[0]));
@@ -226,7 +230,11 @@ export default class TestWorkerRunner {
 	getEnvironment(): UnknownObject {
 		const testOptions: GlobalTestOptions = {
 			dirname: this.file.real.getParent().join(),
-			register: (callsiteError: Error, opts: TestOptions, callback: TestCallback) => {
+			register: (
+				callsiteError: Error,
+				opts: TestOptions,
+				callback: TestCallback,
+			) => {
 				this.registerTest(callsiteError, opts, callback);
 			},
 		};

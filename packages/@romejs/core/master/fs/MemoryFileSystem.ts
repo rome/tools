@@ -669,7 +669,12 @@ export default class MemoryFileSystem {
 		const {projectManager} = this.master;
 		const project = projectManager.findProjectExisting(path);
 		if (project !== undefined) {
-			projectManager.declareManifest(project, isProjectPackage, def, diagnostics);
+			projectManager.declareManifest(
+				project,
+				isProjectPackage,
+				def,
+				diagnostics,
+			);
 		}
 
 		// Tell all workers of our discovery

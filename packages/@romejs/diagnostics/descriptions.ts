@@ -202,7 +202,9 @@ export const descriptions = createMessages({
 			message: `Unknown action ${action}`,
 		}),
 		NO_FILES_FOUND: (noun: undefined | string) => ({
-			message: noun === undefined ? "No files found" : `No files to ${noun} found`,
+			message: noun === undefined
+				? "No files found"
+				: `No files to ${noun} found`,
 		}),
 	},
 	// @romejs/parser-core
@@ -336,7 +338,11 @@ export const descriptions = createMessages({
 			category: "lint/noFindDOMNode",
 			message: "Do not use findDOMNode",
 		},
-		PENDING_FIXES: (relativeFilename: string, original: string, formatted: string) => ({
+		PENDING_FIXES: (
+			relativeFilename: string,
+			original: string,
+			formatted: string,
+		) => ({
 			category: "lint/pendingFixes",
 			message: "Pending formatting and recommended autofixes",
 			advice: [
@@ -1378,7 +1384,10 @@ export const descriptions = createMessages({
 			message: `Expected a corresponding JSX closing tag for <emphasis>${name}</emphasis>`,
 			advice: buildJSXOpeningAdvice(name, openingLoc),
 		}),
-		JSX_EXPECTED_CLOSING_FRAGMENT_TAG: (name: string, openingLoc: SourceLocation) => ({
+		JSX_EXPECTED_CLOSING_FRAGMENT_TAG: (
+			name: string,
+			openingLoc: SourceLocation,
+		) => ({
 			message: "Expected JSX closing fragment tag",
 			advice: buildJSXOpeningAdvice(name, openingLoc),
 		}),
