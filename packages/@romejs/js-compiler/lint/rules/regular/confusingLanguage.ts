@@ -10,13 +10,20 @@ import {AnyNode} from "@romejs/js-ast";
 import {PositionTracker, SourceLocation} from "@romejs/parser-core";
 import {ob1Coerce0} from "@romejs/ob1";
 import {isIdentifierish} from "@romejs/js-ast-utils";
-import {descriptions} from "@romejs/diagnostics";
-import inconsiderateLanguage from "./inconsiderateLanguage.json";
+import {DiagnosticAdvice, descriptions} from "@romejs/diagnostics";
+import confusingLanguage from "./confusingLanguage.json";
 import {preserveCasing} from "@romejs/string-utils";
+
+type ConfusingLanguage = Array<{
+	description: string;
+	word: string;
+	suggestion: string;
+	advice: DiagnosticAdvice;
+}>;
 
 // Fast regex for checking if we need to validate a string
 const regex = new RegExp(
-	inconsiderateLanguage.map((term) => term.word).join("|"),
+	confusingLanguage.map((term) => term.word).join("|"),
 	"gi",
 );
 
@@ -27,6 +34,7 @@ type CheckResult = {
 	suggestion: string;
 	startIndex: number;
 	endIndex: number;
+	advice: DiagnosticAdvice;
 };
 
 function check(
@@ -52,7 +60,7 @@ function check(
 	for (let i = 0; i < lower.length; i++) {
 		const char = lower[i];
 
-		for (const {word, description, suggestion} of inconsiderateLanguage) {
+		for (const {advice, word, description, suggestion} of (confusingLanguage as ConfusingLanguage)) {
 			if (char === word[0] && lower.startsWith(word, i)) {
 				const wordWithSourceCasing = input.slice(i, i + word.length);
 
@@ -60,6 +68,7 @@ function check(
 					// We want to preserve the original casing
 					word: wordWithSourceCasing,
 					description,
+					advice,
 					suggestion: preserveCasing(wordWithSourceCasing, suggestion),
 					startIndex: i,
 					endIndex: i + word.length,
@@ -113,10 +122,15 @@ export default {
 				// Produce diagnostics
 				const {results, fixed} = check(loc, value);
 				let suppressed = false;
-				for (const {loc, word, description, suggestion} of results) {
+				for (const {loc, word, description, suggestion, advice} of results) {
 					({suppressed} = context.addLocDiagnostic(
 						loc,
-						descriptions.LINT.INCONSIDERATE_LANGUAGE(description, word, suggestion),
+						descriptions.LINT.CONFUSING_LANGUAGE(
+							description,
+							word,
+							suggestion,
+							advice,
+						),
 						{fixable: true},
 					));
 

@@ -461,18 +461,20 @@ export const descriptions = createMessages({
 			category: "lint/caseSingleStatement",
 			message: "A switch case should only have a single statement. If you want more then wrap it in a block.",
 		},
-		INCONSIDERATE_LANGUAGE: (
+		CONFUSING_LANGUAGE: (
 			description: string,
 			word: string,
 			suggestion: string,
+			advice: DiagnosticAdvice,
 		) => ({
-			category: "lint/inconsiderateLanguage",
+			category: "lint/confusingLanguage",
 			message: description,
 			advice: [
+				...advice,
 				{
 					type: "log",
 					category: "info",
-					text: markup`Instead of <emphasis>${word}</emphasis> use <emphasis>${suggestion}</emphasis>`,
+					text: markup`Consider using <emphasis>${suggestion}</emphasis> instead`,
 				},
 			],
 		}),

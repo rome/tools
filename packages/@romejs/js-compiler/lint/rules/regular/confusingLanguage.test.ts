@@ -9,7 +9,7 @@ import {test} from "rome";
 import {testLintMultiple} from "../testHelpers";
 
 test(
-	"inconsiderate language",
+	"confusing language",
 	async (t) => {
 		await testLintMultiple(
 			t,
@@ -21,7 +21,7 @@ test(
 				"someBlacklist;",
 				"SOME_BLACKLIST;",
 			],
-			{category: "lint/inconsiderateLanguage"},
+			{category: "lint/confusingLanguage"},
 		);
 	},
 );

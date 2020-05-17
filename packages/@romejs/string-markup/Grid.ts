@@ -790,6 +790,13 @@ export default class Grid {
 						],
 					},
 				];
+			} else if (tag.name === "hyperlink") {
+				return [
+					{
+						...tag,
+						children: [{type: "Text", value: tag.attributes.target || ""}],
+					},
+				];
 			}
 		}
 
@@ -890,18 +897,7 @@ function ansiFormatText(
 ): string {
 	switch (tagName) {
 		case "hyperlink": {
-			let text = value;
-			let hyperlink = attributes.target;
-
-			if (hyperlink === undefined) {
-				hyperlink = text;
-			}
-
-			if (text === "") {
-				text = hyperlink;
-			}
-
-			return formatAnsi.hyperlink(text, hyperlink);
+			return formatAnsi.hyperlink(attributes.target || "", value);
 		}
 
 		case "filelink": {
