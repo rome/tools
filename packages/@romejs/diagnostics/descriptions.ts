@@ -302,7 +302,7 @@ export const descriptions = createMessages({
 		},
 		JSX_A11Y_HTML_INVALID_LANG: {
 			category: "lint/jsxA11yLang",
-			message: `the <emphasis>html</emphasis> attribute <emphasis>lang</emphasis> is not supported.`,
+			message: `The <emphasis>lang</emphasis> attribute must have a valid value.`,
 		},
 		NO_DID_UPDATE_SET_STATE: {
 			category: "lint/noDidUpdateSetState",
