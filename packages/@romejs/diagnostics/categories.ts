@@ -149,6 +149,7 @@ type LintDiagnosticCategory =
 	| "lint/noTemplateCurlyInString"
 	| "lint/noUnsafeFinally"
 	| "lint/noVar"
+	| "lint/noWillUpdateSetState"
 	| "lint/preferBlockStatements"
 	| "lint/preferFunctionDeclarations"
 	| "lint/preferTemplate"

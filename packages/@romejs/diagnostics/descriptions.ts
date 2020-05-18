@@ -292,6 +292,9 @@ export const descriptions = createMessages({
 	},
 	// @romejs/js-compiler
 	LINT: {
+		NO_WILL_UPDATE_SET_STATE: {
+			category: "lint/noWillUpdateSetState",
+			message: "Avoid <emphasis>this.setState</emphasis> in <emphasis>componentWillUpdate</emphasis>",
 		JSX_A11Y_ANCHOR_HAS_CONTENT: {
 			category: "lint/jsxA11yAnchorHasContent",
 			message: "Anchor must have content and the content must be accessible by a screen reader.",
