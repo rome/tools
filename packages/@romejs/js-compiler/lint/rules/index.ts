@@ -62,6 +62,7 @@ import noShorthandArrayType from "./regular/noShorthandArrayType";
 import noTemplateCurlyInString from "./regular/noTemplateCurlyInString";
 import noUnsafeFinally from "./regular/noUnsafeFinally";
 import noVar from "./regular/noVar";
+import noWillUpdateSetState from "./react/noWillUpdateSetState";
 import preferBlockStatements from "./regular/preferBlockStatements";
 import preferFunctionDeclarations from "./regular/preferFunctionDeclarations";
 import preferTemplate from "./regular/preferTemplate";
@@ -134,6 +135,7 @@ export const lintTransforms = [
 	noTemplateCurlyInString,
 	noUnsafeFinally,
 	noVar,
+	noWillUpdateSetState,
 	preferBlockStatements,
 	preferFunctionDeclarations,
 	preferTemplate,
