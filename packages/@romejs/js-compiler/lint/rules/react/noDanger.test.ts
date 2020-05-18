@@ -19,7 +19,7 @@ test(
 				// VALID
 				"<div>Hello World</div>;",
 			],
-			{category: "lint/noDanger"},
+			{category: "lint/react/noDanger"},
 		);
 	},
 );

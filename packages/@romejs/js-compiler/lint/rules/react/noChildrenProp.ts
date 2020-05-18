@@ -42,7 +42,10 @@ export default {
 			node.arguments[1].type === "ObjectExpression" &&
 			node.arguments[1].properties.find(isCreateElementPassingChildrenProp))
 		) {
-			path.context.addNodeDiagnostic(node, descriptions.LINT.NO_CHILDREN_PROP);
+			path.context.addNodeDiagnostic(
+				node,
+				descriptions.LINT.REACT_NO_CHILDREN_PROP,
+			);
 		}
 
 		return node;

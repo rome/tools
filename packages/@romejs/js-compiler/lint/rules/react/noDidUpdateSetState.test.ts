@@ -66,7 +66,7 @@ test(
         }
         `,
 			],
-			{category: "lint/noDidUpdateSetState"},
+			{category: "lint/react/noDidUpdateSetState"},
 		);
 	},
 );

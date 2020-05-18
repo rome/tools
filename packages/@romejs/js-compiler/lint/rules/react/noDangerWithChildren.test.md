@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1 lint/noDangerWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Only set one of children or props.dangerouslySetInnerHTML.
 
@@ -32,7 +32,7 @@
 
 ```
 
- unknown:1 lint/noDangerWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Only set one of children or props.dangerouslySetInnerHTML.
 
@@ -56,7 +56,7 @@
 
 ```
 
- unknown:1 lint/noDangerWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Only set one of children or props.dangerouslySetInnerHTML.
 
@@ -80,7 +80,7 @@
 
 ```
 
- unknown:1 lint/noDangerWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Only set one of children or props.dangerouslySetInnerHTML.
 
@@ -104,7 +104,7 @@
 
 ```
 
- unknown:1 lint/noDangerWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Only set one of children or props.dangerouslySetInnerHTML.
 
@@ -128,7 +128,7 @@
 
 ```
 
- unknown:1 lint/noDangerWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Only set one of children or props.dangerouslySetInnerHTML.
 
@@ -156,7 +156,7 @@ React.createElement(
 
 ```
 
- unknown:1 lint/noDangerWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Only set one of children or props.dangerouslySetInnerHTML.
 
@@ -184,7 +184,7 @@ React.createElement(
 
 ```
 
- unknown:1 lint/noDangerWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Only set one of children or props.dangerouslySetInnerHTML.
 
@@ -211,7 +211,7 @@ React.createElement(
 
 ```
 
- unknown:1 lint/noDangerWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Only set one of children or props.dangerouslySetInnerHTML.
 
@@ -238,7 +238,7 @@ React.createElement(
 
 ```
 
- unknown:1 lint/noDangerWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Only set one of children or props.dangerouslySetInnerHTML.
 
@@ -265,7 +265,7 @@ React.createElement(
 
 ```
 
- unknown:1 lint/noDangerWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Only set one of children or props.dangerouslySetInnerHTML.
 
@@ -292,7 +292,7 @@ React.createElement(
 
 ```
 
- unknown:1 lint/noDangerWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Only set one of children or props.dangerouslySetInnerHTML.
 
@@ -320,7 +320,7 @@ React.createElement(
 
 ```
 
- unknown:1 lint/noDangerWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/react/noDangerWithChildren ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Only set one of children or props.dangerouslySetInnerHTML.
 

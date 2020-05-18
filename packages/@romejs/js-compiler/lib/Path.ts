@@ -94,7 +94,7 @@ export default class Path {
 	listKey: undefined | number;
 
 	callHook<CallArg, CallReturn>(
-		// rome-ignore lint/noExplicitAny
+		// rome-ignore lint/javascript/noExplicitAny
 		descriptor: HookDescriptor<any, CallArg, CallReturn>,
 		arg: CallArg,
 		optionalRet?: CallReturn,
@@ -124,7 +124,7 @@ export default class Path {
 	}
 
 	provideHook<State>(
-		// rome-ignore lint/noExplicitAny
+		// rome-ignore lint/javascript/noExplicitAny
 		descriptor: HookDescriptor<State, any, any>,
 		state?: State,
 	): AnyNode {
@@ -173,7 +173,7 @@ export default class Path {
 	}
 
 	getChildPath(key: string): Path {
-		// rome-ignore lint/noExplicitAny
+		// rome-ignore lint/javascript/noExplicitAny
 		const node = (this.node as any)[key];
 		if (node === undefined) {
 			throw new Error(
@@ -193,7 +193,7 @@ export default class Path {
 	}
 
 	getChildPaths(key: string): Array<Path> {
-		// rome-ignore lint/noExplicitAny
+		// rome-ignore lint/javascript/noExplicitAny
 		const nodes = (this.node as any)[key];
 
 		if (nodes === undefined) {

@@ -53,7 +53,7 @@ test(
         }
         `,
 			],
-			{category: "lint/noWillUpdateSetState"},
+			{category: "lint/react/noWillUpdateSetState"},
 		);
 	},
 );

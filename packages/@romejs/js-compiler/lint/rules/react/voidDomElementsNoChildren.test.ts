@@ -26,7 +26,7 @@ test(
 				"<div dangerouslySetInnerHTML={{ __html: '' }} />",
 				"<br className='valid' />",
 			],
-			{category: "lint/voidDomElementsNoChildren"},
+			{category: "lint/react/voidDomElementsNoChildren"},
 		);
 	},
 );

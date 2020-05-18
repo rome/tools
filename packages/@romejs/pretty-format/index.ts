@@ -175,7 +175,7 @@ function formatFunction(val: Function, opts: FormatOptions): string {
 		return label;
 	}
 
-	// rome-ignore lint/noExplicitAny
+	// rome-ignore lint/javascript/noExplicitAny
 	return formatObject(label, (val as any), opts, []);
 }
 

@@ -8,7 +8,7 @@
 
 ```
 
- unknown:2:23 lint/reactInJsxScope ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:2:23 lint/react/reactInJsxScope ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ React must be in scope when using JSX
 

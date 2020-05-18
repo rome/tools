@@ -33,7 +33,7 @@ export default {
 		) {
 			path.context.addNodeDiagnostic(
 				node,
-				descriptions.LINT.NO_DID_UPDATE_SET_STATE,
+				descriptions.LINT.REACT_NO_DID_UPDATE_SET_STATE,
 			);
 		}
 

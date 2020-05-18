@@ -7,10 +7,10 @@
 
 import {DiagnosticSuppressions, Diagnostics} from "@romejs/diagnostics";
 import {LintRequest} from "../types";
-import {lintTransforms} from "./rules/index";
 import {Cache, CompilerContext} from "@romejs/js-compiler";
 import {formatJS} from "@romejs/js-formatter";
 import {addSuppressions} from "./suppressions";
+import {lintTransforms} from "./rules/index";
 
 export type LintResult = {
 	diagnostics: Diagnostics;

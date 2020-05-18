@@ -25,7 +25,7 @@ export default {
 		) {
 			path.context.addNodeDiagnostic(
 				node,
-				descriptions.LINT.NO_WILL_UPDATE_SET_STATE,
+				descriptions.LINT.REACT_NO_WILL_UPDATE_SET_STATE,
 			);
 		}
 

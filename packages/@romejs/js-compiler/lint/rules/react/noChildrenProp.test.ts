@@ -22,7 +22,7 @@ test(
 				`React.createElement('div', {}, 'children')`,
 				`React.createElement('div', child1, 'child2')`,
 			],
-			{category: "lint/noChildrenProp"},
+			{category: "lint/react/noChildrenProp"},
 		);
 	},
 );

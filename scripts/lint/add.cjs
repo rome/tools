@@ -21,8 +21,11 @@ if (ruleName === undefined || category === undefined) {
 
 const camelCasedName = toCamelCase(ruleName);
 const spacedName = camelCasedName.replace(/([A-Z+])/g, " $1").trim().toLowerCase();
-const descriptionKey = spacedName.toUpperCase().replace(/ /g, "_");
-const categoryName = `lint/${camelCasedName}`;
+const descriptionKey = `${category}_${spacedName}`.toUpperCase().replace(
+	/[\s\-]/g,
+	"_",
+);
+const categoryName = `lint/${category}/${camelCasedName}`;
 
 const ruleLoc = path.join(lintRulesFolder, category, `${camelCasedName}.ts`);
 const testLoc = path.join(

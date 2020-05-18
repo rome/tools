@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1 lint/voidDomElementsNoChildren FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/react/voidDomElementsNoChildren FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ br is a void element tag and must not have children.
 
@@ -37,7 +37,7 @@
 
 ```
 
- unknown:1 lint/voidDomElementsNoChildren FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/react/voidDomElementsNoChildren FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ img is a void element tag and must not have children.
 
@@ -65,7 +65,7 @@
 
 ```
 
- unknown:1 lint/voidDomElementsNoChildren FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/react/voidDomElementsNoChildren FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ hr is a void element tag and must not have children.
 
@@ -93,7 +93,7 @@
 
 ```
 
- unknown:1 lint/voidDomElementsNoChildren FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/react/voidDomElementsNoChildren FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ area is a void element tag and must not have dangerouslySetInnerHTML.
 
@@ -121,7 +121,7 @@
 
 ```
 
- unknown:1 lint/voidDomElementsNoChildren FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1 lint/react/voidDomElementsNoChildren FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ img is a void element tag and must not have children, or dangerouslySetInnerHTML.
 

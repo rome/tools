@@ -31,7 +31,10 @@ export default {
 		const {node} = path;
 
 		if (hasFindMemberProperty(node) || hasFindCallExpression(node)) {
-			path.context.addNodeDiagnostic(node, descriptions.LINT.NO_FIND_DOM_NODE);
+			path.context.addNodeDiagnostic(
+				node,
+				descriptions.LINT.REACT_NO_FIND_DOM_NODE,
+			);
 		}
 
 		return node;

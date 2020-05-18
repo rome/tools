@@ -32,7 +32,7 @@ import {AnyNode} from "@romejs/js-ast";
 type ScopeEvaluator = {
 	creator: boolean;
 
-	// rome-ignore lint/noExplicitAny
+	// rome-ignore lint/javascript/noExplicitAny
 	build: (node: any, parent: AnyNode, scope: Scope) => void | Scope;
 };
 

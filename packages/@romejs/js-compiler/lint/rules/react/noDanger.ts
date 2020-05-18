@@ -26,7 +26,7 @@ export default {
 		const {node} = path;
 
 		if (jsxDanger(node)) {
-			path.context.addNodeDiagnostic(node, descriptions.LINT.NO_DANGER);
+			path.context.addNodeDiagnostic(node, descriptions.LINT.REACT_NO_DANGER);
 		}
 
 		return node;

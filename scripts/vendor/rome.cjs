@@ -6785,7 +6785,7 @@ function ___R$$priv$project$rome$$romejs$string$escape$unescapeString_ts$unescap
 			return label;
 		}
 
-		// rome-ignore lint/noExplicitAny
+		// rome-ignore lint/javascript/noExplicitAny
 		return ___R$$priv$project$rome$$romejs$pretty$format$index_ts$formatObject(
 			label,
 			(val),
@@ -7341,7 +7341,7 @@ class ___R$project$rome$$romejs$events$BridgeError_ts$default extends Error {
 
 
 	function ___R$$priv$project$rome$$romejs$events$BridgeEvent_ts$validateDirection(
-		// rome-ignore lint/noExplicitAny
+		// rome-ignore lint/javascript/noExplicitAny
 		event,
 		invalidDirections,
 		verb,
@@ -18261,7 +18261,7 @@ function ___R$project$rome$$romejs$js$ast$utils$getBindingIdentifiers_ts$default
 			}
 
 			for (const key of keys) {
-				// rome-ignore lint/noExplicitAny
+				// rome-ignore lint/javascript/noExplicitAny
 				const val = (node)[key];
 				if (val === undefined) {
 					continue;
@@ -25451,7 +25451,7 @@ const ___R$$priv$project$rome$$romejs$js$compiler$methods$reduce_ts$BAIL_EXIT = 
 
 			// Reduce the children
 			for (const key of visitorKeys) {
-				// rome-ignore lint/noExplicitAny
+				// rome-ignore lint/javascript/noExplicitAny
 				const oldVal = (node)[key];
 
 				if (Array.isArray(oldVal)) {
@@ -60203,7 +60203,7 @@ const ___R$$priv$project$rome$$romejs$js$parser$parser_ts$TOKEN_MISTAKES = {
 		ParserCore,
 		ParserWithRequiredPath,
 	) => {
-		// rome-ignore lint/noExplicitAny
+		// rome-ignore lint/javascript/noExplicitAny
 		class JSParser extends ParserWithRequiredPath {
 			constructor(options) {
 				const state = ___R$project$rome$$romejs$js$parser$tokenizer$state_ts$createInitialState();
@@ -64339,7 +64339,7 @@ function ___R$project$rome$$romejs$js$formatter$builders$expressions$YieldExpres
 
 
   // project-rome/@romejs/js-formatter/builders/index.ts
-// rome-ignore lint/noExplicitAny
+// rome-ignore lint/javascript/noExplicitAny
 	const ___R$$priv$project$rome$$romejs$js$formatter$builders$index_ts$builders = new Map();
 	const ___R$project$rome$$romejs$js$formatter$builders$index_ts$default = ___R$$priv$project$rome$$romejs$js$formatter$builders$index_ts$builders;
 	___R$$priv$project$rome$$romejs$js$formatter$builders$index_ts$builders.set(
@@ -69571,7 +69571,7 @@ const ___R$project$rome$$romejs$js$compiler$lint$decisions_ts = {
 		}
 
 		callHook(
-			// rome-ignore lint/noExplicitAny
+			// rome-ignore lint/javascript/noExplicitAny
 			descriptor,
 			arg,
 			optionalRet,
@@ -69601,7 +69601,7 @@ const ___R$project$rome$$romejs$js$compiler$lint$decisions_ts = {
 		}
 
 		provideHook(
-			// rome-ignore lint/noExplicitAny
+			// rome-ignore lint/javascript/noExplicitAny
 			descriptor,
 			state,
 		) {
@@ -69639,7 +69639,7 @@ const ___R$project$rome$$romejs$js$compiler$lint$decisions_ts = {
 		}
 
 		getChildPath(key) {
-			// rome-ignore lint/noExplicitAny
+			// rome-ignore lint/javascript/noExplicitAny
 			const node = (this.node)[key];
 			if (node === undefined) {
 				throw new Error(
@@ -69659,7 +69659,7 @@ const ___R$project$rome$$romejs$js$compiler$lint$decisions_ts = {
 		}
 
 		getChildPaths(key) {
-			// rome-ignore lint/noExplicitAny
+			// rome-ignore lint/javascript/noExplicitAny
 			const nodes = (this.node)[key];
 
 			if (nodes === undefined) {
@@ -75626,11 +75626,11 @@ function ___R$$priv$project$rome$$romejs$js$ast$utils$removeLoc_ts$removeProp(
 					);
 
 					// Also remove any `undefined` properties
-					// rome-ignore lint/noExplicitAny
+					// rome-ignore lint/javascript/noExplicitAny
 					const escaped = newNode;
 					for (const key in newNode) {
 						if (escaped[key] === undefined) {
-							// rome-ignore lint/noDelete
+							// rome-ignore lint/javascript/noDelete
 							delete escaped[key];
 						}
 					}
@@ -75996,7 +75996,7 @@ function ___R$project$rome$$romejs$js$ast$utils$renameBindings_ts$default(
 				substitutions[i],
 				type,
 			);
-			// rome-ignore lint/noExplicitAny
+			// rome-ignore lint/javascript/noExplicitAny
 			let target = newAst;
 
 			for (let i = 0; i < path.length; i++) {
@@ -77107,7 +77107,7 @@ function ___R$project$rome$$romejs$js$ast$utils$isJSXElement_ts$default(
 				this.unexpected(
 					___R$project$rome$$romejs$diagnostics$descriptions_ts$descriptions.CONSUME.INVALID_STRING_SET_VALUE(
 						value,
-						// rome-ignore lint/noExplicitAny
+						// rome-ignore lint/javascript/noExplicitAny
 						((validValues)),
 					),
 					{
@@ -77433,7 +77433,7 @@ function ___R$project$rome$$romejs$js$ast$utils$isJSXElement_ts$default(
 			return this.value;
 		}
 
-		// rome-ignore lint/noExplicitAny
+		// rome-ignore lint/javascript/noExplicitAny
 		asAny() {
 			return this.value;
 		}
@@ -95934,7 +95934,7 @@ const ___R$project$rome$$romejs$diagnostics$descriptions_ts = {
 		return items.map((item) => "<emphasis>" + item + "</emphasis>");
 	}
 
-	// rome-ignore lint/AEciilnnoptxy;
+	// rome-ignore lint/javascript/noExplicitAny;
 
 
 
@@ -95954,11 +95954,11 @@ const ___R$project$rome$$romejs$diagnostics$descriptions_ts = {
 	function ___R$$priv$project$rome$$romejs$diagnostics$descriptions_ts$createMessages(
 		messages,
 	) {
-		// rome-ignore lint/noExplicitAny
+		// rome-ignore lint/javascript/noExplicitAny
 		const out = ({});
 
 		for (const categoryName in messages) {
-			// rome-ignore lint/noExplicitAny
+			// rome-ignore lint/javascript/noExplicitAny
 			const category = {};
 			out[categoryName] = category;
 
@@ -95974,7 +95974,7 @@ const ___R$project$rome$$romejs$diagnostics$descriptions_ts = {
 						),
 					};
 				} else if (typeof value === "function") {
-					// rome-ignore lint/noExplicitAny
+					// rome-ignore lint/javascript/noExplicitAny
 					const callback = (value);
 
 					category[key] = function(...params) {
@@ -96168,17 +96168,17 @@ const ___R$project$rome$$romejs$diagnostics$descriptions_ts = {
 				message: "Avoid this.setState in componentDidUpdate",
 			},
 			JSX_A11Y_HEADING_HAS_CONTENT: {
-				category: "lint/jsxA11yHeadingHasContent",
+				category: "lint/javascript/xA11yHeadingHasContent",
 				message: "Headings must have content and the content must be accessible by a screen reader.",
 			},
 			JSX_A11Y_NO_DISTRACTING_ELEMENTS: (element) => ({
-				category: "lint/jsxA11yNoDistractingElements",
+				category: "lint/javascript/xA11yNoDistractingElements",
 				message: "Do not use " +
 				element +
 				" elements as they can create visual accessibility issues and are deprecated.",
 			}),
 			JSX_A11Y_ALT_TEXT: {
-				category: "lint/jsxA11yAltText",
+				category: "lint/javascript/xA11yAltText",
 				message: "<emphasis>img</emphasis>, <emphasis>area</emphasis>, <emphasis>input type='image'</emphasis>, <emphasis>object</emphasis> must have alt text",
 			},
 			NO_DANGER: {
@@ -96299,11 +96299,11 @@ const ___R$project$rome$$romejs$diagnostics$descriptions_ts = {
 				message: "<emphasis>React</emphasis> must be in scope when using JSX",
 			},
 			REACT_JSX_A11Y_HTML_HAS_LANG: {
-				category: "lint/jsxA11yHTMLHasLang",
+				category: "lint/javascript/xA11yHTMLHasLang",
 				message: "<emphasis>html</emphasis> elements must have a <emphasis>lang prop</emphasis>.",
 			},
 			REACT_JSX_A11Y_IMG_REDUNDANT_ALT: {
-				category: "lint/jsxA11yImgRedundantAlt",
+				category: "lint/javascript/xA11yImgRedundantAlt",
 				message: '<emphasis>img</emphasis> element alt descriptions must not contain "image", "picture", or "photo"',
 			},
 			REACT_JSX_VOID_DOM_ELEMENTS_NO_CHILDREN: (element, properties) => ({
@@ -96313,31 +96313,31 @@ const ___R$project$rome$$romejs$diagnostics$descriptions_ts = {
 				)}</emphasis>.`,
 			}),
 			REACT_JSX_NO_COMMENT_TEXT: {
-				category: "lint/jsxNoCommentText",
+				category: "lint/javascript/xNoCommentText",
 				message: "Comments inside children should be placed in braces",
 			},
 			REACT_JSX_NO_TARGET_BLANK: {
-				category: "lint/jsxA11yNoTargetBlank",
+				category: "lint/javascript/xA11yNoTargetBlank",
 				message: 'Using <emphasis>target="_blank"</emphasis> without <emphasis>rel="noreferrer"</emphasis> is a security risk.',
 			},
 			REACT_JSX_A11Y_IFRAME_HAS_TITLE: {
-				category: "lint/jsxA11yIframeHasTitle",
+				category: "lint/javascript/xA11yIframeHasTitle",
 				message: "<emphasis>iframe</emphasis> elements should have a <emphasis>title prop</emphasis>.",
 			},
 			REACT_JSX_NO_ACCESS_KEY: {
-				category: "lint/jsxA11yNoAccessKey",
+				category: "lint/javascript/xA11yNoAccessKey",
 				message: "The <emphasis>accessKey</emphasis> prop is not allowed. Inconsistencies between keyboard shortcuts and keyboard comments used by screenreader and keyboard only users create a11y complications.",
 			},
 			REACT_JSX_NO_AUTOFOCUS: {
-				category: "lint/jsxA11yNoAutofocus",
+				category: "lint/javascript/xA11yNoAutofocus",
 				message: "The <emphasis>autoFocus</emphasis> prop should not be used, as it can reduce usability and accessibility for users.",
 			},
 			REACT_JSX_NO_SCOPE: {
-				category: "lint/jsxA11yScope",
+				category: "lint/javascript/xA11yScope",
 				message: "The <emphasis>scope</emphasis> prop can only be used on <emphasis>th</emphasis> elements.",
 			},
 			REACT_JSX_KEY: (origin) => ({
-				category: "lint/jsxKey",
+				category: "lint/javascript/xKey",
 				message: ___R$project$rome$$romejs$string$markup$escape_ts$markup`Missing the "key" prop for element in ${origin}`,
 			}),
 			UNSAFE_NEGATION: {
@@ -100678,7 +100678,7 @@ const ___R$$priv$project$rome$$romejs$core$master$MasterRequest_ts$crypto = requ
 		}
 
 		async initFromLocal(
-			// rome-ignore lint/noExplicitAny
+			// rome-ignore lint/javascript/noExplicitAny
 			localCommand,
 		) {
 			const {query} = this;
@@ -107981,7 +107981,7 @@ const ___R$project$rome$$romejs$codec$js$manifest$convert_ts = {
 				main: manifest.main,
 				// TODO we now support fallbacks which means manifest.exports is lossy
 				//exports: exportsToObject(manifest.exports),
-				// rome-ignore lint/noExplicitAny
+				// rome-ignore lint/javascript/noExplicitAny
 				exports: (manifest.raw.exports),
 				author: manifest.author,
 				contributors: manifest.contributors,
@@ -109299,7 +109299,7 @@ const ___R$$priv$project$rome$$romejs$codec$js$manifest$index_ts$TYPO_KEYS = new
 			}
 
 			// TODO `{type: "module"}` will always fail since we've produced CJS bundles
-			// rome-ignore lint/noDelete
+			// rome-ignore lint/javascript/noDelete
 			delete newManifest.type;
 
 			return newManifest;
@@ -118101,7 +118101,7 @@ const ___R$$priv$project$rome$$romejs$core$master$Master_ts$STDOUT_MAX_CHUNK_LEN
 			process.exit();
 		}
 
-		// rome-ignore lint/noExplicitAny
+		// rome-ignore lint/javascript/noExplicitAny
 		wrapFatal(callback) {
 			return (((...args) => {
 				try {
@@ -122945,7 +122945,7 @@ const ___R$$priv$project$rome$$romejs$core$test$worker$TestWorker_ts$inspector =
 					hydrate(err, data) {
 						return new ___R$project$rome$$romejs$diagnostics$errors_ts$DiagnosticsError(
 							String(err.message),
-							// rome-ignore lint/noExplicitAny
+							// rome-ignore lint/javascript/noExplicitAny
 							(data.diagnostics),
 						);
 					},
