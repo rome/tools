@@ -17,6 +17,7 @@ import emptyMatches from "./regular/emptyMatches";
 import getterReturn from "./regular/getterReturn";
 import importDefaultBasename from "./regular/importDefaultBasename";
 import jsxA11YAltText from "./react/jsxA11yAltText";
+import jsxA11YAnchorHasContent from "./react/jsxA11yAnchorHasContent";
 import jsxA11YHeadingHasContent from "./react/jsxA11yHeadingHasContent";
 import jsxA11YHTMLHasLang from "./react/jsxA11yHTMLHasLang";
 import jsxA11YIframeHasTitle from "./react/jsxA11yIframeHasTitle";
@@ -90,6 +91,7 @@ export const lintTransforms = [
 	getterReturn,
 	importDefaultBasename,
 	jsxA11YAltText,
+	jsxA11YAnchorHasContent,
 	jsxA11YHeadingHasContent,
 	jsxA11YHTMLHasLang,
 	jsxA11YIframeHasTitle,
