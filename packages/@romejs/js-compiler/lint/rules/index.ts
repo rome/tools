@@ -20,7 +20,7 @@ import jsxA11YAltText from "./react/jsxA11yAltText";
 import jsxA11YAnchorHasContent from "./react/jsxA11yAnchorHasContent";
 import jsxA11YHeadingHasContent from "./react/jsxA11yHeadingHasContent";
 import jsxA11YHTMLHasLang from "./react/jsxA11yHTMLHasLang";
-import jsxA11YHTMLInvalidLang from "./react/jsxA11yHTMLInvalidLang";
+import jsxA11YLang from "./react/jsxA11yLang";
 import jsxA11YIframeHasTitle from "./react/jsxA11yIframeHasTitle";
 import jsxA11YImgRedundantAlt from "./react/jsxA11yImgRedundantAlt";
 import jsxA11YNoAccessKey from "./react/jsxA11yNoAccessKey";
@@ -95,7 +95,7 @@ export const lintTransforms = [
 	jsxA11YAnchorHasContent,
 	jsxA11YHeadingHasContent,
 	jsxA11YHTMLHasLang,
-	jsxA11YHTMLInvalidLang,
+	jsxA11YLang,
 	jsxA11YIframeHasTitle,
 	jsxA11YImgRedundantAlt,
 	jsxA11YNoAccessKey,

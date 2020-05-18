@@ -402,13 +402,13 @@ const LANG_REGEX = new RegExp(/([a-z]{2})-([A-Z]{2})/);
 function jsxSupportedLang(node: JSXElement): boolean | undefined {
 	const attr = getJSXAttribute(node, "lang");
 
-	return (
-		attr !== undefined &&
-		attr.value &&
-		attr.value.type === "StringLiteral" &&
-		LANG_REGEX.test(attr.value.value) &&
-		langSupported(attr.value.value)
-	);
+	if (!attr || !attr.value) {
+		return false;
+	}
+	if (attr.value.type !== "StringLiteral") {
+		return true;
+	}
+	return langSupported(attr.value.value);
 }
 
 function langSupported(lang: string): boolean {
@@ -421,7 +421,7 @@ function langSupported(lang: string): boolean {
 	return false;
 }
 export default {
-	name: "jsxA11yHTMLInvalidLang",
+	name: "jsxA11yLang",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 

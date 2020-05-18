@@ -14,8 +14,9 @@ test(
 				'<html lang="zz-AA"></html>',
 				// VALID
 				'<html lang="en-US"></html>',
+				"<html lang={lang}></html>",
 			],
-			{category: "lint/jsxA11yHTMLInvalidLang"},
+			{category: "lint/jsxA11yLang"},
 		);
 	},
 );
