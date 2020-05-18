@@ -397,30 +397,56 @@ const ISO = {
 	],
 };
 
+// We lazily build this suggestions list as it is massive
+let suggestions: undefined | Array<string>;
+function getSuggestions() {
+	if (suggestions !== undefined) {
+		return suggestions;
+	}
+
+	suggestions = [...ISO.countries];
+
+	for (const language of ISO.languages) {
+		for (const country of ISO.countries) {
+			suggestions.push(`${language}-${country}`);
+		}
+	}
+
+	return suggestions;
+}
+
 const COUNTRY_AND_REGION_REGEX = new RegExp(/([a-z]{2})-([A-Z]{2})/);
 const COUNTRY_REGEX = new RegExp(/([a-z]{2})-([A-Z]{2})/);
 
-function jsxSupportedLang(node: JSXElement): boolean | undefined {
+// Will return the attribute value if invalid
+function jsxSupportedLang(node: JSXElement): undefined | string {
 	const attr = getJSXAttribute(node, "lang");
 
 	if (!attr || !attr.value) {
-		return false;
+		return "undefined";
 	}
-	if (attr.value.type !== "StringLiteral") {
-		return true;
+
+	if (attr.value.type === "StringLiteral") {
+		const {value} = attr.value;
+		if (!langSupported(value)) {
+			return value;
+		}
 	}
-	return langSupported(attr.value.value);
+
+	return undefined;
 }
 
 function langSupported(lang: string): boolean {
 	const countryAndRegionMatches = COUNTRY_AND_REGION_REGEX.exec(lang);
-	const countryMatches = COUNTRY_REGEX.exec(lang);
 	if (countryAndRegionMatches && countryAndRegionMatches.length > 0) {
 		return (
 			ISO.languages.includes(countryAndRegionMatches[1]) &&
 			ISO.countries.includes(countryAndRegionMatches[2])
 		);
-	} else if (countryMatches && countryMatches.length > 0) {
+	}
+
+	const countryMatches = COUNTRY_REGEX.exec(lang);
+	if (countryMatches && countryMatches.length > 0) {
 		return ISO.languages.includes(countryMatches[1]);
 	}
 
@@ -432,10 +458,15 @@ export default {
 		const {node} = path;
 
 		if (isJSXElement(node, "html") && hasJSXAttribute(node, "lang")) {
-			if (jsxSupportedLang(node) === false) {
+			const invalidValue = jsxSupportedLang(node);
+			if (invalidValue !== undefined) {
+				// TODO add an autofix suggestion
 				path.context.addNodeDiagnostic(
 					node,
-					descriptions.LINT.JSX_A11Y_HTML_INVALID_LANG,
+					descriptions.LINT.JSX_A11Y_HTML_INVALID_LANG(
+						invalidValue,
+						getSuggestions(),
+					),
 				);
 			}
 		}

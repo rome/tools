@@ -87,8 +87,28 @@
     <html lang="aa-zz"></html>
     ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+  ℹ Did you mean aa-AF?
+
+  - aa-zz
+  + aa-AF
+
+  ℹ Or one of these?
+
+  - aa-AL
+  - aa-DZ
+  - aa-AS
+  - aa-AD
+  - aa-AO
+  - aa-AI
+  - aa-AQ
+  - aa-AG
+  - aa-AR
+  - aa-AM
+  and 222 others...
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+⚠ Some diagnostics have been truncated. Use the --verbose-diagnostics flag to disable truncation.
 ✖ Found 1 problem
 
 ```
@@ -111,8 +131,28 @@
     <html lang="zz-AA"></html>
     ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+  ℹ Did you mean az-AF?
+
+  - zz-AA
+  + az-AF
+
+  ℹ Or one of these?
+
+  - az-AL
+  - az-AS
+  - az-AD
+  - az-AO
+  - az-AI
+  - az-AQ
+  - az-AG
+  - az-AR
+  - az-AM
+  - az-AW
+  and 37 others...
+
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+⚠ Some diagnostics have been truncated. Use the --verbose-diagnostics flag to disable truncation.
 ✖ Found 1 problem
 
 ```
@@ -127,18 +167,42 @@
 ### `5`
 
 ```
-✔ No known problems!
+
+ unknown:1 lint/jsxA11yLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The lang attribute must have a valid value.
+
+    <html lang="en2></html>
+    ^^^^^^^^^^^^^^^^^^^^^^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
 ### `5: formatted`
 
 ```
-<html lang='en-US'></html>;
+<html lang='en2&gt;&lt;/html&gt;'></html>;
 
 ```
 
 ### `6`
+
+```
+✔ No known problems!
+
+```
+
+### `6: formatted`
+
+```
+<html lang='en-US'></html>;
+
+```
+
+### `7`
 
 ```
 
@@ -155,21 +219,21 @@
 
 ```
 
-### `6: formatted`
+### `7: formatted`
 
 ```
 <html lang='en'></html>;
 
 ```
 
-### `7`
+### `8`
 
 ```
 ✔ No known problems!
 
 ```
 
-### `7: formatted`
+### `8: formatted`
 
 ```
 <html lang={lang}></html>;

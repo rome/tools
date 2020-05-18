@@ -228,7 +228,7 @@ function printList(
 		const {truncated} = opts.reporter.list(
 			item.list,
 			{
-				truncate: opts.flags.verboseDiagnostics ? undefined : 20,
+				truncate: opts.flags.verboseDiagnostics ? undefined : 10,
 				reverse: item.reverse,
 				ordered: item.ordered,
 			},
