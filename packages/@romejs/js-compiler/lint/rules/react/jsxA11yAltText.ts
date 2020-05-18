@@ -6,69 +6,61 @@
  */
 
 import {Path, TransformExitResult} from "@romejs/js-compiler";
-import {AnyNode, JSXElement} from "@romejs/js-ast";
+import {JSXElement} from "@romejs/js-ast";
 import {descriptions} from "@romejs/diagnostics";
+import {
+	getJSXAttribute,
+	hasJSXAttribute,
+	isJSXElement
+} from "@romejs/js-ast-utils";
 
-function hasUndefinedAltValue(node: AnyNode): boolean {
-	if (node.type !== "JSXExpressionContainer") {
+function hasImgAltText(node: JSXElement): boolean {
+	const attr = getJSXAttribute(node, "alt", true);
+	if (attr === undefined) {
 		return false;
 	}
 	return (
-		(node.expression.type === "ReferenceIdentifier" &&
-		node.expression.name === "undefined") ||
-		(node.expression.type === "TemplateLiteral" &&
-		node.expression.expressions.some((expression) =>
-			expression.type === "ReferenceIdentifier" &&
-			expression.name === "undefined"
-		))
-	);
-}
-
-function hasImgAltText(node: JSXElement): boolean {
-	return node.attributes.some((attr) =>
-		attr.type === "JSXAttribute" &&
-		attr.name.name === "alt" &&
-		attr.value &&
-		!hasUndefinedAltValue(attr.value)
+		!!(
+			attr.value &&
+			attr.value.type === "StringLiteral" &&
+			attr.value.value === ""
+		) || hasJSXAttribute(node, "alt")
 	);
 }
 
 function hasObjectAltText(node: JSXElement): boolean {
 	return (
-		node.attributes.some((attr) =>
-			attr.type === "JSXAttribute" &&
-			attr.name.type === "JSXIdentifier" &&
-			/(aria-label)|(aria-labelledby)|(title)/.test(attr.name.name) &&
-			attr.value &&
-			!hasUndefinedAltValue(attr.value)
-		) || node.children.length > 0
+		hasJSXAttribute(node, "aria-label") ||
+		hasJSXAttribute(node, "aria-labelledby") ||
+		hasJSXAttribute(node, "title") ||
+		node.children.length > 0
 	);
 }
 
 function hasAreaAltText(node: JSXElement): boolean {
-	return node.attributes.some((attr) =>
-		attr.type === "JSXAttribute" &&
-		attr.name.type === "JSXIdentifier" &&
-		/(aria-label)|(aria-labelledby)|(alt)|(title)/.test(attr.name.name) &&
-		attr.value &&
-		!hasUndefinedAltValue(attr.value)
+	return (
+		hasJSXAttribute(node, "aria-label") ||
+		hasJSXAttribute(node, "aria-labelledby") ||
+		hasJSXAttribute(node, "alt") ||
+		hasJSXAttribute(node, "title")
 	);
 }
 
 function hasInputAltText(node: JSXElement): boolean {
-	return node.attributes.some((attr) =>
-		attr.type === "JSXAttribute" &&
-		attr.name.type === "JSXIdentifier" &&
-		/(aria-label)|(aria-labelledby)|(alt)|(title)/.test(attr.name.name) &&
-		attr.value &&
-		!hasUndefinedAltValue(attr.value)
+	return (
+		hasJSXAttribute(node, "aria-label") ||
+		hasJSXAttribute(node, "aria-labelledby") ||
+		hasJSXAttribute(node, "alt") ||
+		hasJSXAttribute(node, "title")
 	);
 }
 
 function hasTypeImage(node: JSXElement): boolean {
-	return node.attributes.some((attr) =>
-		attr.type === "JSXAttribute" &&
-		attr.name.name === "type" &&
+	const attr = getJSXAttribute(node, "type");
+	if (attr === undefined) {
+		return false;
+	}
+	return !!(
 		attr.value &&
 		attr.value.type === "StringLiteral" &&
 		attr.value.value === "image"
@@ -86,20 +78,19 @@ export default {
 			}
 
 			if (
-				(node.name.name === "img" && !hasImgAltText(node)) ||
-				(node.name.name === "object" && !hasObjectAltText(node)) ||
-				(node.name.name === "area" && !hasAreaAltText(node)) ||
-				(node.name.name === "input" &&
-				hasTypeImage(node) &&
-				!hasInputAltText(node))
+				(isJSXElement(node, "img") && !hasImgAltText(node)) ||
+				(isJSXElement(node, "object") && !hasObjectAltText(node)) ||
+				(isJSXElement(node, "area") && !hasAreaAltText(node)) ||
+				(isJSXElement(node, "input") &&
+					hasTypeImage(node) &&
+					!hasInputAltText(node))
 			) {
 				path.context.addNodeDiagnostic(
 					node,
-					descriptions.LINT.JSX_A11Y_ALT_TEXT,
+					descriptions.LINT.JSX_A11Y_ALT_TEXT
 				);
 			}
 		}
-
 		return node;
-	},
+	}
 };

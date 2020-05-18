@@ -60,8 +60,8 @@
 
   ✖ img, area, input type='image', object must have alt text
 
-    <img {...props} alt />
-    ^^^^^^^^^^^^^^^^^^^^^^
+    <img {...props} alt={undefined} />
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -72,59 +72,11 @@
 ### `2: formatted`
 
 ```
-<img {...props} alt />;
-
-```
-
-### `3`
-
-```
-
- unknown:1 lint/jsxA11yAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ img, area, input type='image', object must have alt text
-
-    <img {...props} alt={undefined} />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `3: formatted`
-
-```
 <img {...props} alt={undefined} />;
 
 ```
 
-### `4`
-
-```
-
- unknown:1 lint/jsxA11yAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ img, area, input type='image', object must have alt text
-
-    <img {...props} alt={`${undefined}`} />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `4: formatted`
-
-```
-<img {...props} alt={`${undefined}`} />;
-
-```
-
-### `5`
+### `3`
 
 ```
 
@@ -141,14 +93,14 @@
 
 ```
 
-### `5: formatted`
+### `3: formatted`
 
 ```
 <img src='foo' role='presentation' />;
 
 ```
 
-### `6`
+### `4`
 
 ```
 
@@ -165,14 +117,14 @@
 
 ```
 
-### `6: formatted`
+### `4: formatted`
 
 ```
 <img src='foo' role='none' />;
 
 ```
 
-### `7`
+### `5`
 
 ```
 
@@ -189,38 +141,14 @@
 
 ```
 
-### `7: formatted`
+### `5: formatted`
 
 ```
 <object {...props} />;
 
 ```
 
-### `8`
-
-```
-
- unknown:1 lint/jsxA11yAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ img, area, input type='image', object must have alt text
-
-    <object aria-label />
-    ^^^^^^^^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `8: formatted`
-
-```
-<object aria-label />;
-
-```
-
-### `9`
+### `6`
 
 ```
 
@@ -237,38 +165,14 @@
 
 ```
 
-### `9: formatted`
+### `6: formatted`
 
 ```
 <object aria-label={undefined} />;
 
 ```
 
-### `10`
-
-```
-
- unknown:1 lint/jsxA11yAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ img, area, input type='image', object must have alt text
-
-    <object aria-label={`${undefined}`} />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `10: formatted`
-
-```
-<object aria-label={`${undefined}`} />;
-
-```
-
-### `11`
+### `7`
 
 ```
 
@@ -285,38 +189,14 @@
 
 ```
 
-### `11: formatted`
+### `7: formatted`
 
 ```
 <area {...props} />;
 
 ```
 
-### `12`
-
-```
-
- unknown:1 lint/jsxA11yAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ img, area, input type='image', object must have alt text
-
-    <area {...props} alt />
-    ^^^^^^^^^^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `12: formatted`
-
-```
-<area {...props} alt />;
-
-```
-
-### `13`
+### `8`
 
 ```
 
@@ -333,38 +213,14 @@
 
 ```
 
-### `13: formatted`
+### `8: formatted`
 
 ```
 <area alt={undefined} />;
 
 ```
 
-### `14`
-
-```
-
- unknown:1 lint/jsxA11yAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ img, area, input type='image', object must have alt text
-
-    <area {...props} alt={`${undefined}`} />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `14: formatted`
-
-```
-<area {...props} alt={`${undefined}`} />;
-
-```
-
-### `15`
+### `9`
 
 ```
 
@@ -381,38 +237,14 @@
 
 ```
 
-### `15: formatted`
+### `9: formatted`
 
 ```
 <input type='image' {...props} />;
 
 ```
 
-### `16`
-
-```
-
- unknown:1 lint/jsxA11yAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ img, area, input type='image', object must have alt text
-
-    <input type='image' {...props} alt />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
-
-```
-
-### `16: formatted`
-
-```
-<input type='image' {...props} alt />;
-
-```
-
-### `17`
+### `10`
 
 ```
 
@@ -429,34 +261,122 @@
 
 ```
 
-### `17: formatted`
+### `10: formatted`
 
 ```
 <input type='image' {...props} alt={undefined} />;
 
 ```
 
-### `18`
+### `11`
+
+```
+✔ No known problems!
 
 ```
 
- unknown:1 lint/jsxA11yAltText ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+### `11: formatted`
 
-  ✖ img, area, input type='image', object must have alt text
+```
+<img {...props} alt />;
 
-    <input type='image' {...props} alt={`${undefined}`} />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+```
 
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+### `12`
 
-✖ Found 1 problem
+```
+✔ No known problems!
+
+```
+
+### `12: formatted`
+
+```
+<img src='foo' alt='Foo eating a sandwich.' />;
+
+```
+
+### `13`
+
+```
+✔ No known problems!
+
+```
+
+### `13: formatted`
+
+```
+<img src='foo' alt={"Foo eating a sandwich."} />;
+
+```
+
+### `14`
+
+```
+✔ No known problems!
+
+```
+
+### `14: formatted`
+
+```
+<img src='foo' alt={altText} />;
+
+```
+
+### `15`
+
+```
+✔ No known problems!
+
+```
+
+### `15: formatted`
+
+```
+<img src='foo' alt={`${person} smiling`} />;
+
+```
+
+### `16`
+
+```
+✔ No known problems!
+
+```
+
+### `16: formatted`
+
+```
+<img src='foo' alt='' />;
+
+```
+
+### `17`
+
+```
+✔ No known problems!
+
+```
+
+### `17: formatted`
+
+```
+<object aria-label />;
+
+```
+
+### `18`
+
+```
+✔ No known problems!
 
 ```
 
 ### `18: formatted`
 
 ```
-<input type='image' {...props} alt={`${undefined}`} />;
+<object aria-label='foo' />;
 
 ```
 
@@ -470,7 +390,7 @@
 ### `19: formatted`
 
 ```
-<img src='foo' alt='Foo eating a sandwich.' />;
+<object aria-labelledby='id1' />;
 
 ```
 
@@ -484,7 +404,7 @@
 ### `20: formatted`
 
 ```
-<img src='foo' alt={"Foo eating a sandwich."} />;
+<object>Meaningful description</object>;
 
 ```
 
@@ -498,7 +418,7 @@
 ### `21: formatted`
 
 ```
-<img src='foo' alt={altText} />;
+<object>{hello}</object>;
 
 ```
 
@@ -512,7 +432,7 @@
 ### `22: formatted`
 
 ```
-<img src='foo' alt={`${person} smiling`} />;
+<object title='An object' />;
 
 ```
 
@@ -526,7 +446,7 @@
 ### `23: formatted`
 
 ```
-<img src='foo' alt='' />;
+<area {...props} alt />;
 
 ```
 
@@ -540,7 +460,7 @@
 ### `24: formatted`
 
 ```
-<object aria-label='foo' />;
+<area aria-label='foo' />;
 
 ```
 
@@ -554,7 +474,7 @@
 ### `25: formatted`
 
 ```
-<object aria-labelledby='id1' />;
+<area aria-labelledby='id1' />;
 
 ```
 
@@ -568,7 +488,7 @@
 ### `26: formatted`
 
 ```
-<object>Meaningful description</object>;
+<area alt='This is descriptive!' />;
 
 ```
 
@@ -582,7 +502,7 @@
 ### `27: formatted`
 
 ```
-<object>{hello}</object>;
+<input type='image' {...props} alt />;
 
 ```
 
@@ -596,7 +516,7 @@
 ### `28: formatted`
 
 ```
-<object title='An object' />;
+<input type='image' alt='This is descriptive!' />;
 
 ```
 
@@ -610,7 +530,7 @@
 ### `29: formatted`
 
 ```
-<area aria-label='foo' />;
+<input type='image' aria-label='foo' />;
 
 ```
 
@@ -622,62 +542,6 @@
 ```
 
 ### `30: formatted`
-
-```
-<area aria-labelledby='id1' />;
-
-```
-
-### `31`
-
-```
-✔ No known problems!
-
-```
-
-### `31: formatted`
-
-```
-<area alt='This is descriptive!' />;
-
-```
-
-### `32`
-
-```
-✔ No known problems!
-
-```
-
-### `32: formatted`
-
-```
-<input type='image' alt='This is descriptive!' />;
-
-```
-
-### `33`
-
-```
-✔ No known problems!
-
-```
-
-### `33: formatted`
-
-```
-<input type='image' aria-label='foo' />;
-
-```
-
-### `34`
-
-```
-✔ No known problems!
-
-```
-
-### `34: formatted`
 
 ```
 <input type='image' aria-labelledby='id1' />;
