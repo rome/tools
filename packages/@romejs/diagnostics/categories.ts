@@ -106,6 +106,7 @@ type LintDiagnosticCategory =
 	| "lint/jsxA11yAnchorHasContent"
 	| "lint/jsxA11yHeadingHasContent"
 	| "lint/jsxA11yHTMLHasLang"
+	| "lint/jsxA11yHTMLInvalidLang"
 	| "lint/jsxA11yIframeHasTitle"
 	| "lint/jsxA11yImgRedundantAlt"
 	| "lint/jsxA11yNoAccessKey"

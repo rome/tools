@@ -300,6 +300,10 @@ export const descriptions = createMessages({
 			category: "lint/jsxA11yAnchorHasContent",
 			message: "Anchor must have content and the content must be accessible by a screen reader.",
 		},
+		JSX_A11Y_HTML_INVALID_LANG: {
+			category: "lint/jsxA11yHTMLInvalidLang",
+			message: `the <emphasis>html</emphasis> attribute <emphasis>lang</emphasis> is not supported.`,
+		},
 		NO_DID_UPDATE_SET_STATE: {
 			category: "lint/noDidUpdateSetState",
 			message: "Avoid <emphasis>this.setState</emphasis> in <emphasis>componentDidUpdate</emphasis>",
