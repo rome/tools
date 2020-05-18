@@ -417,7 +417,8 @@ function langSupported(lang: string): boolean {
 	const countryMatches = COUNTRY_REGEX.exec(lang);
 	if (countryAndRegionMatches && countryAndRegionMatches.length > 0) {
 		return (
-			ISO.languages.includes(countryAndRegionMatches[1]) && ISO.countries.includes(countryAndRegionMatches[2])
+			ISO.languages.includes(countryAndRegionMatches[1]) &&
+			ISO.countries.includes(countryAndRegionMatches[2])
 		);
 	} else if (countryMatches && countryMatches.length > 0) {
 		return ISO.languages.includes(countryMatches[1]);
