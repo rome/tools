@@ -397,7 +397,8 @@ const ISO = {
 	],
 };
 
-const LANG_REGEX = new RegExp(/([a-z]{2})-([A-Z]{2})/);
+const COUNTRY_AND_REGION_REGEX = new RegExp(/([a-z]{2})-([A-Z]{2})/);
+const COUNTRY_REGEX = new RegExp(/([a-z]{2})-([A-Z]{2})/);
 
 function jsxSupportedLang(node: JSXElement): boolean | undefined {
 	const attr = getJSXAttribute(node, "lang");
@@ -412,12 +413,16 @@ function jsxSupportedLang(node: JSXElement): boolean | undefined {
 }
 
 function langSupported(lang: string): boolean {
-	const matches = LANG_REGEX.exec(lang);
-	if (matches && matches.length > 0) {
+	const countryAndRegionMatches = COUNTRY_AND_REGION_REGEX.exec(lang);
+	const countryMatches = COUNTRY_REGEX.exec(lang);
+	if (countryAndRegionMatches && countryAndRegionMatches.length > 0) {
 		return (
-			ISO.languages.includes(matches[1]) && ISO.countries.includes(matches[2])
+			ISO.languages.includes(countryAndRegionMatches[1]) && ISO.countries.includes(countryAndRegionMatches[2])
 		);
+	} else if (countryMatches && countryMatches.length > 0) {
+		return ISO.languages.includes(countryMatches[1]);
 	}
+
 	return false;
 }
 export default {

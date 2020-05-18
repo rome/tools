@@ -9,11 +9,13 @@ test(
 			[
 				// INVALID
 				'<html lang="foo"></html>',
+				'<html lang="ex"></html>',
 				'<html lang="foo-bar"></html>',
 				'<html lang="aa-zz"></html>',
 				'<html lang="zz-AA"></html>',
 				// VALID
 				'<html lang="en-US"></html>',
+				'<html lang="en"></html>',
 				"<html lang={lang}></html>",
 			],
 			{category: "lint/jsxA11yLang"},

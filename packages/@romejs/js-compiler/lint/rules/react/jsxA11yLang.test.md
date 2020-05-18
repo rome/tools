@@ -10,7 +10,7 @@
 
  unknown:1 lint/jsxA11yLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ the html attribute lang is not supported.
+  ✖ The lang attribute must have a valid value.
 
     <html lang="foo"></html>
     ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -34,10 +34,10 @@
 
  unknown:1 lint/jsxA11yLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ the html attribute lang is not supported.
+  ✖ The lang attribute must have a valid value.
 
-    <html lang="foo-bar"></html>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+    <html lang="ex"></html>
+    ^^^^^^^^^^^^^^^^^^^^^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -48,7 +48,7 @@
 ### `1: formatted`
 
 ```
-<html lang='foo-bar'></html>;
+<html lang='ex'></html>;
 
 ```
 
@@ -58,10 +58,10 @@
 
  unknown:1 lint/jsxA11yLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ the html attribute lang is not supported.
+  ✖ The lang attribute must have a valid value.
 
-    <html lang="aa-zz"></html>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+    <html lang="foo-bar"></html>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -72,7 +72,7 @@
 ### `2: formatted`
 
 ```
-<html lang='aa-zz'></html>;
+<html lang='foo-bar'></html>;
 
 ```
 
@@ -82,9 +82,9 @@
 
  unknown:1 lint/jsxA11yLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ the html attribute lang is not supported.
+  ✖ The lang attribute must have a valid value.
 
-    <html lang="zz-AA"></html>
+    <html lang="aa-zz"></html>
     ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
@@ -96,21 +96,31 @@
 ### `3: formatted`
 
 ```
-<html lang='zz-AA'></html>;
+<html lang='aa-zz'></html>;
 
 ```
 
 ### `4`
 
 ```
-✔ No known problems!
+
+ unknown:1 lint/jsxA11yLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The lang attribute must have a valid value.
+
+    <html lang="zz-AA"></html>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
 ### `4: formatted`
 
 ```
-<html lang='en-US'></html>;
+<html lang='zz-AA'></html>;
 
 ```
 
@@ -122,6 +132,44 @@
 ```
 
 ### `5: formatted`
+
+```
+<html lang='en-US'></html>;
+
+```
+
+### `6`
+
+```
+
+ unknown:1 lint/jsxA11yLang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The lang attribute must have a valid value.
+
+    <html lang="en"></html>
+    ^^^^^^^^^^^^^^^^^^^^^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `6: formatted`
+
+```
+<html lang='en'></html>;
+
+```
+
+### `7`
+
+```
+✔ No known problems!
+
+```
+
+### `7: formatted`
 
 ```
 <html lang={lang}></html>;
