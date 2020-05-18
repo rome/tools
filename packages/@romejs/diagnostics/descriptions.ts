@@ -294,7 +294,7 @@ export const descriptions = createMessages({
 	LINT: {
 		NO_DID_UPDATE_SET_STATE: {
 			category: "lint/noDidUpdateSetState",
-			message: "Avoid this.setState in componentDidUpdate",
+			message: "Avoid <emphasis>this.setState</emphasis> in <emphasis>componentDidUpdate</emphasis>",
 		},
 		JSX_A11Y_HEADING_HAS_CONTENT: {
 			category: "lint/jsxA11yHeadingHasContent",
