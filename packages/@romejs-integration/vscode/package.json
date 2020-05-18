@@ -6,6 +6,7 @@
   "activationEvents": [
     "*"
   ],
+  "icon": "icon.png",
   "_activationEvents": [
     "onLanguage:javascript",
     "onLanguage:javascriptreact",
