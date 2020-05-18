@@ -398,8 +398,13 @@ const ISO = {
 };
 
 // We lazily build this suggestions list as it is massive
+let suggestions: undefined | Array<string>;
 function getSuggestions() {
-	const suggestions = [...ISO.countries];
+	if (suggestions !== undefined) {
+		return suggestions;
+	}
+
+	suggestions = [...ISO.countries];
 
 	for (const language of ISO.languages) {
 		for (const country of ISO.countries) {
