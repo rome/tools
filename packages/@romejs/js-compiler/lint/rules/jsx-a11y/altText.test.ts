@@ -13,7 +13,7 @@ test(
 	async (t) => {
 		await testLintMultiple(
 			t,
-			// rome-ignore lint/javascript/noTemplateCurlyInString
+			// rome-ignore lint/js/noTemplateCurlyInString
 			[
 				// INVALID,
 				"<img src='foo' />",

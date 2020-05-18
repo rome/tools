@@ -49,7 +49,7 @@ export function createMasterCommand<Flags extends Dict<unknown>>(
 	return cmd;
 }
 
-// rome-ignore lint/javascript/noExplicitAny
+// rome-ignore lint/js/noExplicitAny
 export const masterCommands: Map<string, MasterCommand<any>> = new Map();
 masterCommands.set("test", test);
 masterCommands.set("lint", lint);

@@ -60,7 +60,7 @@ function addEmphasis(items: Array<string>): Array<string> {
 	return items.map((item) => `<emphasis>${item}</emphasis>`);
 }
 
-// rome-ignore lint/javascript/noExplicitAny
+// rome-ignore lint/js/noExplicitAny
 type InputMessagesFactory = (...params: Array<any>) => DiagnosticMetadataString;
 
 type InputMessagesCategory = {
@@ -106,11 +106,11 @@ type OutputMessages<Input extends InputMessages> = {
 function createMessages<Input extends InputMessages>(
 	messages: Input,
 ): OutputMessages<Input> {
-	// rome-ignore lint/javascript/noExplicitAny
+	// rome-ignore lint/js/noExplicitAny
 	const out: OutputMessages<Input> = ({} as any);
 
 	for (const categoryName in messages) {
-		// rome-ignore lint/javascript/noExplicitAny
+		// rome-ignore lint/js/noExplicitAny
 		const category: OutputMessagesCategory<any> = {};
 		out[categoryName] = category;
 
@@ -124,7 +124,7 @@ function createMessages<Input extends InputMessages>(
 					message: createBlessedDiagnosticMessage(value),
 				};
 			} else if (typeof value === "function") {
-				// rome-ignore lint/javascript/noExplicitAny
+				// rome-ignore lint/js/noExplicitAny
 				const callback: InputMessagesFactory = (value as any);
 
 				category[key] = function(...params) {
@@ -136,7 +136,7 @@ function createMessages<Input extends InputMessages>(
 					};
 				};
 			} else {
-				// rome-ignore lint/javascript/noExplicitAny
+				// rome-ignore lint/js/noExplicitAny
 				const {message, ...obj} = (value as any);
 				category[key] = {
 					advice: [],
@@ -301,7 +301,7 @@ export const descriptions = createMessages({
 			message: "Anchor must have content and the content must be accessible by a screen reader.",
 		},
 		JSX_A11Y_LANG: (value: string, suggestions: Array<string>) => ({
-			category: "lint/jsx-a11y-lang",
+			category: "lint/jsx-a11y/lang",
 			message: `The <emphasis>lang</emphasis> attribute must have a valid value.`,
 			advice: buildSuggestionAdvice(value, suggestions),
 		}),
@@ -390,8 +390,8 @@ export const descriptions = createMessages({
 				properties,
 			)}</emphasis>.`,
 		}),
-		JAVASCRIPT_IMPORT_DEFAULT_BASENAME: (prev: string, basename: string) => ({
-			category: "lint/javascript/importDefaultBasename",
+		JS_IMPORT_DEFAULT_BASENAME: (prev: string, basename: string) => ({
+			category: "lint/js/importDefaultBasename",
 			message: markup`When importing the default, use the basename <emphasis>${basename}</emphasis>`,
 			advice: [
 				{
@@ -405,8 +405,8 @@ export const descriptions = createMessages({
 				},
 			],
 		}),
-		JAVASCRIPT_NO_COMMA_OPERATOR: {
-			category: "lint/javascript/noCommaOperator",
+		JS_NO_COMMA_OPERATOR: {
+			category: "lint/js/noCommaOperator",
 			message: "Avoid usage of the comma operator. It can lead to easy mistakes and ambiguous code.",
 			advice: [
 				{
@@ -416,12 +416,12 @@ export const descriptions = createMessages({
 				},
 			],
 		},
-		JAVASCRIPT_NEGATION_ELSE: {
-			category: "lint/javascript/negationElse",
+		JS_NEGATION_ELSE: {
+			category: "lint/js/negationElse",
 			message: "Invert the blocks when you have a negation test",
 		},
-		JAVASCRIPT_DUPLICATE_IMPORT_SOURCE: (seenLocation: DiagnosticLocation) => ({
-			category: "lint/javascript/duplicateImportSource",
+		JS_DUPLICATE_IMPORT_SOURCE: (seenLocation: DiagnosticLocation) => ({
+			category: "lint/js/duplicateImportSource",
 			message: "This module has already been imported",
 			advice: [
 				{
@@ -435,50 +435,50 @@ export const descriptions = createMessages({
 				},
 			],
 		}),
-		JAVASCRIPT_PREFER_BLOCK_STATEMENT: {
-			category: "lint/javascript/preferBlockStatements",
+		JS_PREFER_BLOCK_STATEMENT: {
+			category: "lint/js/preferBlockStatements",
 			message: "Block statements are preferred in this position",
 		},
-		JAVASCRIPT_PREFER_TEMPLATE: {
-			category: "lint/javascript/preferTemplate",
+		JS_PREFER_TEMPLATE: {
+			category: "lint/js/preferTemplate",
 			message: "Template literals are preferred over string concatenation",
 		},
-		JAVASCRIPT_PREFER_WHILE: {
-			category: "lint/javascript/preferWhile",
+		JS_PREFER_WHILE: {
+			category: "lint/js/preferWhile",
 			message: "A while loop should be used over a for loop",
 		},
 
-		JAVASCRIPT_UNSAFE_NEGATION: {
-			category: "lint/javascript/unsafeNegation",
+		JS_UNSAFE_NEGATION: {
+			category: "lint/js/unsafeNegation",
 			message: "Unsafe usage of negation operator in left side of binary expression",
 		},
-		JAVASCRIPT_UNUSED_VARIABLES: (kind: string, name: string) => ({
-			category: "lint/javascript/unusedVariables",
+		JS_UNUSED_VARIABLES: (kind: string, name: string) => ({
+			category: "lint/js/unusedVariables",
 			message: markup`Unused ${kind} <emphasis>${name}</emphasis>`,
 		}),
-		JAVASCRIPT_UNDECLARED_VARIABLES: (name: string) => ({
-			category: "lint/javascript/undeclaredVariables",
+		JS_UNDECLARED_VARIABLES: (name: string) => ({
+			category: "lint/js/undeclaredVariables",
 			message: markup`Undeclared variable <emphasis>${name}</emphasis>`,
 		}),
-		JAVASCRIPT_VARIABLE_CAMEL_CASE: (name: string, camelCaseName: string) => ({
-			category: "lint/javascript/camelCase",
+		JS_VARIABLE_CAMEL_CASE: (name: string, camelCaseName: string) => ({
+			category: "lint/js/camelCase",
 			message: markup`Variable <emphasis>${name}</emphasis> should be camel cased as <emphasis>${camelCaseName}</emphasis>`,
 		}),
-		JAVASCRIPT_IDENTIFIER_CAMEL_CASE: (name: string, camelCaseName: string) => ({
-			category: "lint/javascript/camelCase",
+		JS_IDENTIFIER_CAMEL_CASE: (name: string, camelCaseName: string) => ({
+			category: "lint/js/camelCase",
 			message: markup`Identifier <emphasis>${name}</emphasis> should be camel cased as <emphasis>${camelCaseName}</emphasis>`,
 		}),
-		JAVASCRIPT_CASE_SINGLE_STATEMENT: {
-			category: "lint/javascript/caseSingleStatement",
+		JS_CASE_SINGLE_STATEMENT: {
+			category: "lint/js/caseSingleStatement",
 			message: "A switch case should only have a single statement. If you want more then wrap it in a block.",
 		},
-		JAVASCRIPT_CONFUSING_LANGUAGE: (
+		JS_CONFUSING_LANGUAGE: (
 			description: string,
 			word: string,
 			suggestion: string,
 			advice: DiagnosticAdvice,
 		) => ({
-			category: "lint/javascript/confusingLanguage",
+			category: "lint/js/confusingLanguage",
 			message: description,
 			advice: [
 				...advice,
@@ -489,8 +489,8 @@ export const descriptions = createMessages({
 				},
 			],
 		}),
-		JAVASCRIPT_DOUBLE_EQUALS: {
-			category: "lint/javascript/doubleEquals",
+		JS_DOUBLE_EQUALS: {
+			category: "lint/js/doubleEquals",
 			message: "Use === instead of ==",
 			advice: [
 				{
@@ -500,12 +500,12 @@ export const descriptions = createMessages({
 				},
 			],
 		},
-		JAVASCRIPT_EMPTY_MATCHES: {
-			category: "lint/javascript/emptyMatches",
+		JS_EMPTY_MATCHES: {
+			category: "lint/js/emptyMatches",
 			message: "The expression can return empty matches, and may match infinitely in some use cases",
 		},
-		JAVASCRIPT_NEGATE_DOUBLE_EQUALS: {
-			category: "lint/javascript/doubleEquals",
+		JS_NEGATE_DOUBLE_EQUALS: {
+			category: "lint/js/doubleEquals",
 			message: "Use !== instead of !=",
 			advice: [
 				{
@@ -515,40 +515,40 @@ export const descriptions = createMessages({
 				},
 			],
 		},
-		JAVASCRIPT_NO_CATCH_ASSIGN: {
-			category: "lint/javascript/noCatchAssign",
+		JS_NO_CATCH_ASSIGN: {
+			category: "lint/js/noCatchAssign",
 			message: "Don't reassign catch parameters",
 		},
-		JAVASCRIPT_SPARSE_ARRAY: {
-			category: "lint/javascript/sparseArray",
+		JS_SPARSE_ARRAY: {
+			category: "lint/js/sparseArray",
 			message: "Your array contains an empty slot",
 		},
-		JAVASCRIPT_SINGLE_VAR_DECLARATOR: {
-			category: "lint/javascript/singleVarDeclarator",
+		JS_SINGLE_VAR_DECLARATOR: {
+			category: "lint/js/singleVarDeclarator",
 			message: "Declare each variable separately",
 		},
-		JAVASCRIPT_PREFER_FUNCTION_DECLARATIONS: {
-			category: "lint/javascript/preferFunctionDeclarations",
+		JS_PREFER_FUNCTION_DECLARATIONS: {
+			category: "lint/js/preferFunctionDeclarations",
 			message: "Use a function declaration instead of a const function",
 		},
-		JAVASCRIPT_NO_VAR: {
-			category: "lint/javascript/noVar",
+		JS_NO_VAR: {
+			category: "lint/js/noVar",
 			message: "Variable declarations using `var` are disallowed, use `let` or `const` instead.",
 		},
-		JAVASCRIPT_NO_SHORTHAND_ARRAY_TYPE: {
-			category: "lint/javascript/noShorthandArrayType",
+		JS_NO_SHORTHAND_ARRAY_TYPE: {
+			category: "lint/js/noShorthandArrayType",
 			message: escapeMarkup("Use Array<T> instead of shorthand T[]"),
 		},
-		JAVASCRIPT_NO_UNSAFE_FINALLY: (type: string) => ({
-			category: "lint/javascript/noUnsafeFinally",
+		JS_NO_UNSAFE_FINALLY: (type: string) => ({
+			category: "lint/js/noUnsafeFinally",
 			message: markup`Unsafe usage of ${type}.`,
 		}),
-		JAVASCRIPT_NO_TEMPLATE_CURLY_IN_STRING: {
-			category: "lint/javascript/noTemplateCurlyInString",
+		JS_NO_TEMPLATE_CURLY_IN_STRING: {
+			category: "lint/js/noTemplateCurlyInString",
 			message: `Unexpected template string expression.`,
 		},
-		JAVASCRIPT_NO_SHADOW_RESTRICTED_NAMES: (name: string) => ({
-			category: "lint/javascript/noShadowRestrictedNames",
+		JS_NO_SHADOW_RESTRICTED_NAMES: (name: string) => ({
+			category: "lint/js/noShadowRestrictedNames",
 			message: markup`Shadowing of global property <emphasis>${name}</emphasis>`,
 			advice: [
 				{
@@ -558,8 +558,8 @@ export const descriptions = createMessages({
 				},
 			],
 		}),
-		JAVASCRIPT_NO_MULTIPLE_SPACES_IN_REGEX_LITERAL: (count: number) => ({
-			category: "lint/javascript/noMultipleSpacesInRegularExpressionLiterals",
+		JS_NO_MULTIPLE_SPACES_IN_REGEX_LITERAL: (count: number) => ({
+			category: "lint/js/noMultipleSpacesInRegularExpressionLiterals",
 			message: "Unclear multiple spaces in regular expression",
 			advice: [
 				{
@@ -571,92 +571,92 @@ export const descriptions = createMessages({
 				},
 			],
 		}),
-		JAVASCRIPT_NO_LABEL_VAR: {
-			category: "lint/javascript/noLabelVar",
+		JS_NO_LABEL_VAR: {
+			category: "lint/js/noLabelVar",
 			message: "Labels should not be variable names",
 		},
-		JAVASCRIPT_NO_IMPORT_ASSIGN: (name: string) => ({
-			category: "lint/javascript/noImportAssign",
+		JS_NO_IMPORT_ASSIGN: (name: string) => ({
+			category: "lint/js/noImportAssign",
 			message: markup`<emphasis>${name}</emphasis> is read-only`,
 		}),
-		JAVASCRIPT_NO_EXTRA_BOOLEAN_CAST: {
-			category: "lint/javascript/noExtraBooleanCast",
+		JS_NO_EXTRA_BOOLEAN_CAST: {
+			category: "lint/js/noExtraBooleanCast",
 			message: `Redundant double negation.`,
 		},
-		JAVASCRIPT_NO_FUNCTION_ASSIGN: {
-			category: "lint/javascript/noFunctionAssign",
+		JS_NO_FUNCTION_ASSIGN: {
+			category: "lint/js/noFunctionAssign",
 			message: "Reassignment of function declaration",
 		},
-		JAVASCRIPT_NO_EMPTY_CHAR_SET: {
-			category: "lint/javascript/noEmptyCharacterClass",
+		JS_NO_EMPTY_CHAR_SET: {
+			category: "lint/js/noEmptyCharacterClass",
 			message: "Empty character classes in regular expressions are not allowed",
 		},
-		JAVASCRIPT_NO_DUPLICATE_KEYS: (key: string) => ({
-			category: "lint/javascript/noDuplicateKeys",
+		JS_NO_DUPLICATE_KEYS: (key: string) => ({
+			category: "lint/js/noDuplicateKeys",
 			message: markup`Duplicate key <emphasis>${key}</emphasis>`,
 		}),
-		JAVASCRIPT_NO_POSIX_IN_REGULAR_EXPRESSION: {
-			category: "lint/javascript/noPosixInRegularExpression",
+		JS_NO_POSIX_IN_REGULAR_EXPRESSION: {
+			category: "lint/js/noPosixInRegularExpression",
 			message: "POSIX Character Classes and Collating Sequences are not supported in ECMAscript Regular Expressions",
 		},
-		JAVASCRIPT_NO_DUPLICATE_CASE: (value: string) => ({
-			category: "lint/javascript/noDuplicateCase",
+		JS_NO_DUPLICATE_CASE: (value: string) => ({
+			category: "lint/js/noDuplicateCase",
 			message: markup`Duplicate case <emphasis>${value}</emphasis> not allowed.`,
 		}),
-		JAVASCRIPT_NO_DUPE_ARGS: (name: string) => ({
-			category: "lint/javascript/noDupeArgs",
+		JS_NO_DUPE_ARGS: (name: string) => ({
+			category: "lint/js/noDupeArgs",
 			message: markup`Duplicate argument <emphasis>${name}</emphasis> in function definition`,
 		}),
-		JAVASCRIPT_NO_DELETE: {
-			category: "lint/javascript/noDelete",
+		JS_NO_DELETE: {
+			category: "lint/js/noDelete",
 			message: `Unexpected 'delete' operator.`,
 		},
-		JAVASCRIPT_NO_DELETE_VARS: {
-			category: "lint/javascript/noDeleteVars",
+		JS_NO_DELETE_VARS: {
+			category: "lint/js/noDeleteVars",
 			message: "Variables should not be deleted.",
 		},
-		JAVASCRIPT_NO_DEBUGGER: {
-			category: "lint/javascript/noDebugger",
+		JS_NO_DEBUGGER: {
+			category: "lint/js/noDebugger",
 			message: "Unexpected 'debugger' statement",
 		},
-		JAVASCRIPT_NO_COND_ASSIGN: {
-			category: "lint/javascript/noCondAssign",
+		JS_NO_COND_ASSIGN: {
+			category: "lint/js/noCondAssign",
 			message: "Cannot assign variable in loop condition",
 		},
-		JAVASCRIPT_NO_COMPARE_NEG_ZERO: (op: string) => ({
-			category: "lint/javascript/noCompareNegZero",
+		JS_NO_COMPARE_NEG_ZERO: (op: string) => ({
+			category: "lint/js/noCompareNegZero",
 			message: `Do not use the '${op}' operator to compare against -0`,
 			fixable: op === "===",
 		}),
-		JAVASCRIPT_NO_ASYNC_PROMISE_EXECUTOR: {
-			category: "lint/javascript/noAsyncPromiseExecutor",
+		JS_NO_ASYNC_PROMISE_EXECUTOR: {
+			category: "lint/js/noAsyncPromiseExecutor",
 			message: "Promise executor functions should not be async.",
 		},
-		JAVASCRIPT_GETTER_RETURN: (got: string) => ({
-			category: "lint/javascript/getterReturn",
+		JS_GETTER_RETURN: (got: string) => ({
+			category: "lint/js/getterReturn",
 			message: `Expected a 'return' at end of a getter method but got ${got}`,
 		}),
-		JAVASCRIPT_NO_SETTER_RETURN: {
-			category: "lint/javascript/noSetterReturn",
+		JS_NO_SETTER_RETURN: {
+			category: "lint/js/noSetterReturn",
 			message: `Setter cannot return a value`,
 		},
-		JAVASCRIPT_EMPTY_BLOCKS: {
-			category: "lint/javascript/emptyBlocks",
+		JS_EMPTY_BLOCKS: {
+			category: "lint/js/emptyBlocks",
 			message: "Empty block",
 		},
-		JAVASCRIPT_NO_ARGUMENTS: {
-			category: "lint/javascript/noArguments",
+		JS_NO_ARGUMENTS: {
+			category: "lint/js/noArguments",
 			message: "Use the rest parameters instead of 'arguments'",
 		},
-		JAVASCRIPT_DUPLICATE_REGEX_GROUP_NAME: (name: string) => ({
-			category: "lint/javascript/noDuplicateGroupNamesInRegularExpressions",
+		JS_DUPLICATE_REGEX_GROUP_NAME: (name: string) => ({
+			category: "lint/js/noDuplicateGroupNamesInRegularExpressions",
 			message: markup`Duplicate group name <emphasis>${name}</emphasis> in regular expression`,
 		}),
-		JAVASCRIPT_NO_REFERENCE_TO_NON_EXISTING_GROUP: (name: string) => ({
-			category: "lint/javascript/noReferenceToNonExistingGroup",
+		JS_NO_REFERENCE_TO_NON_EXISTING_GROUP: (name: string) => ({
+			category: "lint/js/noReferenceToNonExistingGroup",
 			message: markup`Reference to non-existent group <emphasis>"${name}"</emphasis>`,
 		}),
-		JAVASCRIPT_DEFAULT_EXPORT_SAME_BASENAME: (
+		JS_DEFAULT_EXPORT_SAME_BASENAME: (
 			{
 				defaultName,
 				defaultType,
@@ -680,7 +680,7 @@ export const descriptions = createMessages({
 			adviceMessage += ` ${defaultType} name should be <emphasis>${actualFilename}</emphasis>`;
 
 			return {
-				category: "lint/javascript/defaultExportSameBasename",
+				category: "lint/js/defaultExportSameBasename",
 				message: `Filename and the name of a default ${defaultType} should match`,
 				advice: [
 					{
@@ -691,16 +691,16 @@ export const descriptions = createMessages({
 				],
 			};
 		},
-		JAVASCRIPT_RESTRICTED_GLOBALS: (globalName) => ({
-			category: "lint/javascript/restrictedGlobals",
+		JS_RESTRICTED_GLOBALS: (globalName) => ({
+			category: "lint/js/restrictedGlobals",
 			message: markup`The use of the existing global variable <emphasis>${globalName}</emphasis> is not allowed. Use local variable instead.`,
 		}),
-		JAVASCRIPT_SORT_EXPORT_SPECIFIERS: {
-			category: "lint/javascript/sortImportExportSpecifiers",
+		JS_SORT_EXPORT_SPECIFIERS: {
+			category: "lint/js/sortImportExportSpecifiers",
 			message: `Specifiers of the export declaration should be sorted alphabetically.`,
 		},
-		JAVASCRIPT_SORT_IMPORT_SPECIFIERS: {
-			category: "lint/javascript/sortImportExportSpecifiers",
+		JS_SORT_IMPORT_SPECIFIERS: {
+			category: "lint/js/sortImportExportSpecifiers",
 			message: `Specifiers of the import declaration should be sorted alphabetically.`,
 		},
 		PENDING_FIXES: (
@@ -740,8 +740,8 @@ export const descriptions = createMessages({
 				} as DiagnosticAdviceAction),
 			],
 		}),
-		TYPESCRIPT_NO_EXPLICIT_ANY: {
-			category: "lint/typescript/noExplicitAny",
+		TS_NO_EXPLICIT_ANY: {
+			category: "lint/ts/noExplicitAny",
 			message: "Unexpected any. Specify a different type.",
 		},
 	},

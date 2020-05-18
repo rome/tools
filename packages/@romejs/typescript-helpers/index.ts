@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-// rome-ignore lint/javascript/noExplicitAny
+// rome-ignore lint/js/noExplicitAny
 export type Class<T, Args extends Array<unknown> = Array<any>> = {
 	new (
 		...args: Args

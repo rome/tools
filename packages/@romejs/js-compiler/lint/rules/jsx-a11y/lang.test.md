@@ -7,7 +7,17 @@
 ### `0`
 
 ```
-✔ No known problems!
+
+ unknown:1 lint/jsx-a11y/lang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The lang attribute must have a valid value.
+
+    <html lang="foo"></html>
+    ^^^^^^^^^^^^^^^^^^^^^^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
@@ -21,7 +31,17 @@
 ### `1`
 
 ```
-✔ No known problems!
+
+ unknown:1 lint/jsx-a11y/lang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The lang attribute must have a valid value.
+
+    <html lang="ex"></html>
+    ^^^^^^^^^^^^^^^^^^^^^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
@@ -35,7 +55,17 @@
 ### `2`
 
 ```
-✔ No known problems!
+
+ unknown:1 lint/jsx-a11y/lang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The lang attribute must have a valid value.
+
+    <html lang="foo-bar"></html>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
@@ -49,7 +79,37 @@
 ### `3`
 
 ```
-✔ No known problems!
+
+ unknown:1 lint/jsx-a11y/lang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The lang attribute must have a valid value.
+
+    <html lang="aa-zz"></html>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Did you mean aa-AF?
+
+  - aa-zz
+  + aa-AF
+
+  ℹ Or one of these?
+
+  - aa-AL
+  - aa-DZ
+  - aa-AS
+  - aa-AD
+  - aa-AO
+  - aa-AI
+  - aa-AQ
+  - aa-AG
+  - aa-AR
+  - aa-AM
+  and 222 others...
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚠ Some diagnostics have been truncated. Use the --verbose-diagnostics flag to disable truncation.
+✖ Found 1 problem
 
 ```
 
@@ -63,7 +123,37 @@
 ### `4`
 
 ```
-✔ No known problems!
+
+ unknown:1 lint/jsx-a11y/lang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The lang attribute must have a valid value.
+
+    <html lang="zz-AA"></html>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Did you mean az-AF?
+
+  - zz-AA
+  + az-AF
+
+  ℹ Or one of these?
+
+  - az-AL
+  - az-AS
+  - az-AD
+  - az-AO
+  - az-AI
+  - az-AQ
+  - az-AG
+  - az-AR
+  - az-AM
+  - az-AW
+  and 37 others...
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+⚠ Some diagnostics have been truncated. Use the --verbose-diagnostics flag to disable truncation.
+✖ Found 1 problem
 
 ```
 
@@ -77,7 +167,17 @@
 ### `5`
 
 ```
-✔ No known problems!
+
+ unknown:1 lint/jsx-a11y/lang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The lang attribute must have a valid value.
+
+    <html lang="en2></html>
+    ^^^^^^^^^^^^^^^^^^^^^^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
@@ -105,7 +205,17 @@
 ### `7`
 
 ```
-✔ No known problems!
+
+ unknown:1 lint/jsx-a11y/lang ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The lang attribute must have a valid value.
+
+    <html lang="en"></html>
+    ^^^^^^^^^^^^^^^^^^^^^^^
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 

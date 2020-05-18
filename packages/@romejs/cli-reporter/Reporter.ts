@@ -46,7 +46,7 @@ type ListOptions = {
 	start?: number;
 };
 
-// rome-ignore lint/javascript/noExplicitAny
+// rome-ignore lint/js/noExplicitAny
 type WrapperFactory = <T extends (...args: Array<any>) => any>(callback: T) => T;
 
 export type ReporterOptions = {
