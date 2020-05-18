@@ -6,6 +6,7 @@
 
 ```javascript
 Program {
+	comments: Array []
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -28,7 +29,7 @@ Program {
 		}
 	}
 	interpreter: InterpreterDirective {
-		value: "usr/bin/env babel-node"
+		value: "/usr/bin/env babel-node"
 		loc: Object {
 			filename: "input.js"
 			end: Object {
@@ -43,28 +44,8 @@ Program {
 			}
 		}
 	}
-	comments: Array [
-		CommentLine {
-			id: "0"
-			value: "usr/bin/env babel-node"
-			loc: Object {
-				filename: "input.js"
-				end: Object {
-					column: 25
-					index: 25
-					line: 1
-				}
-				start: Object {
-					column: 1
-					index: 1
-					line: 1
-				}
-			}
-		}
-	]
 	body: Array [
 		VariableDeclarationStatement {
-			leadingComments: Array ["0"]
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -80,7 +61,6 @@ Program {
 			}
 			declaration: VariableDeclaration {
 				kind: "var"
-				leadingComments: undefined
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -97,7 +77,6 @@ Program {
 				declarations: Array [
 					VariableDeclarator {
 						id: BindingObjectPattern {
-							leadingComments: undefined
 							rest: undefined
 							loc: Object {
 								filename: "input.js"
@@ -117,7 +96,6 @@ Program {
 									key: StaticPropertyKey {
 										value: Identifier {
 											name: "spawn"
-											leadingComments: undefined
 											loc: Object {
 												filename: "input.js"
 												identifierName: "spawn"
@@ -133,7 +111,6 @@ Program {
 												}
 											}
 										}
-										leadingComments: undefined
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -150,7 +127,6 @@ Program {
 									}
 									value: BindingIdentifier {
 										name: "spawn"
-										leadingComments: undefined
 										loc: Object {
 											filename: "input.js"
 											identifierName: "spawn"
@@ -166,7 +142,6 @@ Program {
 											}
 										}
 									}
-									leadingComments: undefined
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -183,7 +158,6 @@ Program {
 								}
 							]
 						}
-						leadingComments: undefined
 						loc: Object {
 							filename: "input.js"
 							end: Object {

@@ -6,6 +6,7 @@
 
 ```javascript
 Program {
+	comments: Array []
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -28,7 +29,7 @@ Program {
 		}
 	}
 	interpreter: InterpreterDirective {
-		value: "usr/bin/env babel-node"
+		value: "/usr/bin/env babel-node"
 		loc: Object {
 			filename: "input.js"
 			end: Object {
@@ -43,31 +44,11 @@ Program {
 			}
 		}
 	}
-	comments: Array [
-		CommentLine {
-			id: "0"
-			value: "usr/bin/env babel-node"
-			loc: Object {
-				filename: "input.js"
-				end: Object {
-					column: 25
-					index: 25
-					line: 1
-				}
-				start: Object {
-					column: 1
-					index: 1
-					line: 1
-				}
-			}
-		}
-	]
 	body: Array [
 		ImportDeclaration {
 			defaultSpecifier: undefined
 			importKind: undefined
 			namespaceSpecifier: undefined
-			leadingComments: Array ["0"]
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -99,7 +80,6 @@ Program {
 			}
 			namedSpecifiers: Array [
 				ImportSpecifier {
-					leadingComments: undefined
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -115,7 +95,6 @@ Program {
 					}
 					imported: Identifier {
 						name: "spawn"
-						leadingComments: undefined
 						loc: Object {
 							filename: "input.js"
 							identifierName: "spawn"
@@ -134,9 +113,6 @@ Program {
 					local: ImportSpecifierLocal {
 						name: BindingIdentifier {
 							name: "spawn"
-							innerComments: undefined
-							leadingComments: undefined
-							trailingComments: undefined
 							loc: Object {
 								filename: "input.js"
 								identifierName: "spawn"
@@ -153,7 +129,6 @@ Program {
 							}
 						}
 						importKind: undefined
-						leadingComments: undefined
 						loc: Object {
 							filename: "input.js"
 							end: Object {

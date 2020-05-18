@@ -18,6 +18,10 @@ export default function Program(builder: Builder, node: Program): Token {
 		tokens.push(hardline);
 	}
 
+	if (node.interpreter && builder.options.allowInterpreterDirective) {
+		tokens.push(builder.tokenize(node.interpreter, node));
+	}
+
 	tokens.push(
 		builder.tokenizeInnerComments(node, false),
 		builder.tokenizeStatementList(node.body, node),

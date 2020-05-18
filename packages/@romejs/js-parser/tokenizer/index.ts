@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyComment, NumericLiteral} from "@romejs/js-ast";
+import {AnyComment, InterpreterDirective, NumericLiteral} from "@romejs/js-ast";
 import {Position, SourceLocation} from "@romejs/parser-core";
 import {JSParser} from "../parser";
 import {xhtmlEntityNameToChar} from "../xhtmlEntities";
@@ -379,7 +379,14 @@ function skipBlockComment(parser: JSParser): void {
 	);
 }
 
-export function skipLineComment(parser: JSParser, startSkip: number): AnyComment {
+function parseLineComment(
+	parser: JSParser,
+	startSkip: number,
+): {
+	startPos: Position;
+	endPos: Position;
+	text: string;
+} {
 	const startIndex = parser.state.index;
 	const startPos = parser.getPositionFromState();
 	parser.state.index = ob1Add(parser.state.index, startSkip);
@@ -395,19 +402,43 @@ export function skipLineComment(parser: JSParser, startSkip: number): AnyComment
 			ch = parser.input.charCodeAt(getIndex(parser));
 		}
 	}
+	const endPos = parser.getPositionFromState();
+	const text = parser.getRawInput(
+		ob1Add(startIndex, startSkip),
+		parser.state.index,
+	);
 
+	return {
+		startPos,
+		endPos,
+		text,
+	};
+}
+
+export function skipLineComment(parser: JSParser, startSkip: number): AnyComment {
+	const lineComment = parseLineComment(parser, startSkip);
 	return pushComment(
 		parser,
 		{
 			block: false,
-			text: parser.getRawInput(
-				ob1Add(startIndex, startSkip),
-				parser.state.index,
-			),
-			startPos,
-			endPos: parser.getPositionFromState(),
+			text: lineComment.text,
+			startPos: lineComment.startPos,
+			endPos: lineComment.endPos,
 		},
 	);
+}
+
+export function skipInterpreterDirective(
+	parser: JSParser,
+	startSkip: number,
+): InterpreterDirective {
+	const lineComment = parseLineComment(parser, startSkip);
+	const loc = parser.finishLocAt(lineComment.startPos, lineComment.endPos);
+	return {
+		type: "InterpreterDirective",
+		value: lineComment.text,
+		loc,
+	};
 }
 
 // Called at the start of the parse and after every token. Skips
