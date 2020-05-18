@@ -66,7 +66,6 @@ export default {
 						}
 
 						if (NON_INLINED_REQUIRES.includes(source)) {
-							// Blacklisted
 							declarators.push(decl);
 							continue;
 						}
