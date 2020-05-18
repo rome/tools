@@ -7,7 +7,7 @@
 
 require("../_setup.cjs");
 
-const {write} = require("../_utils.cjs");
+const {toCamelCase, write} = require("../_utils.cjs");
 const {lintRulesFolder, descriptionsFile} = require("../_constants.cjs");
 const path = require("path");
 const fs = require("fs");
@@ -19,12 +19,17 @@ if (ruleName === undefined || category === undefined) {
 	process.exit(1);
 }
 
-const spacedName = ruleName.replace(/([A-Z+])/g, " $1").trim().toLowerCase();
+const camelCasedName = toCamelCase(ruleName);
+const spacedName = camelCasedName.replace(/([A-Z+])/g, " $1").trim().toLowerCase();
 const descriptionKey = spacedName.toUpperCase().replace(/ /g, "_");
-const categoryName = `lint/${ruleName}`;
+const categoryName = `lint/${camelCasedName}`;
 
-const ruleLoc = path.join(lintRulesFolder, category, `${ruleName}.ts`);
-const testLoc = path.join(lintRulesFolder, category, `${ruleName}.test.ts`);
+const ruleLoc = path.join(lintRulesFolder, category, `${camelCasedName}.ts`);
+const testLoc = path.join(
+	lintRulesFolder,
+	category,
+	`${camelCasedName}.test.ts`,
+);
 
 write(
 	ruleLoc,
@@ -32,7 +37,7 @@ write(
 import {descriptions} from "@romejs/diagnostics";
 
 export default {
- name: "${ruleName}",
+ name: "${camelCasedName}",
  enter(path: Path): TransformExitResult {
 	 const {node} = path;
 
