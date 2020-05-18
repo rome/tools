@@ -5,7 +5,7 @@
 ## `es2018 > object-rest-spread > 6`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ObjectExpression {
+			expression: JSObjectExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -59,9 +59,9 @@ Program {
 					}
 				}
 				properties: Array [
-					ObjectProperty {
-						key: StaticPropertyKey {
-							value: Identifier {
+					JSObjectProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "x"
 								loc: Object {
 									filename: "input.js"
@@ -92,7 +92,7 @@ Program {
 								}
 							}
 						}
-						value: ReferenceIdentifier {
+						value: JSReferenceIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.js"
@@ -123,7 +123,7 @@ Program {
 							}
 						}
 					}
-					SpreadProperty {
+					JSSpreadProperty {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -137,7 +137,7 @@ Program {
 								line: 1
 							}
 						}
-						argument: ReferenceIdentifier {
+						argument: JSReferenceIdentifier {
 							name: "y"
 							loc: Object {
 								filename: "input.js"
@@ -155,9 +155,9 @@ Program {
 							}
 						}
 					}
-					ObjectProperty {
-						key: StaticPropertyKey {
-							value: Identifier {
+					JSObjectProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "a"
 								loc: Object {
 									filename: "input.js"
@@ -188,7 +188,7 @@ Program {
 								}
 							}
 						}
-						value: ReferenceIdentifier {
+						value: JSReferenceIdentifier {
 							name: "a"
 							loc: Object {
 								filename: "input.js"
@@ -219,7 +219,7 @@ Program {
 							}
 						}
 					}
-					SpreadProperty {
+					JSSpreadProperty {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -233,7 +233,7 @@ Program {
 								line: 1
 							}
 						}
-						argument: ReferenceIdentifier {
+						argument: JSReferenceIdentifier {
 							name: "b"
 							loc: Object {
 								filename: "input.js"
@@ -251,9 +251,9 @@ Program {
 							}
 						}
 					}
-					ObjectProperty {
-						key: StaticPropertyKey {
-							value: Identifier {
+					JSObjectProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "c"
 								loc: Object {
 									filename: "input.js"
@@ -284,7 +284,7 @@ Program {
 								}
 							}
 						}
-						value: ReferenceIdentifier {
+						value: JSReferenceIdentifier {
 							name: "c"
 							loc: Object {
 								filename: "input.js"

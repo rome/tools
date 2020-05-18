@@ -4,7 +4,7 @@
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
  */
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 import {Path} from "@romejs/js-compiler";
 import {template} from "@romejs/js-ast-utils";
 import {descriptions} from "@romejs/diagnostics";
@@ -13,9 +13,9 @@ const OPERATORS_TO_CHECK = [">", ">=", "<", "<=", "==", "===", "!=", "!=="];
 
 function isNegZero(node: AnyNode): boolean {
 	return (
-		node.type === "UnaryExpression" &&
+		node.type === "JSUnaryExpression" &&
 		node.operator === "-" &&
-		node.argument.type === "NumericLiteral" &&
+		node.argument.type === "JSNumericLiteral" &&
 		node.argument.value === 0
 	);
 }
@@ -26,7 +26,7 @@ export default {
 		const {node} = path;
 
 		if (
-			node.type === "BinaryExpression" &&
+			node.type === "JSBinaryExpression" &&
 			OPERATORS_TO_CHECK.includes(node.operator) &&
 			(isNegZero(node.left) || isNegZero(node.right))
 		) {

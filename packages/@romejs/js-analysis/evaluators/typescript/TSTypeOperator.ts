@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, TSTypeOperator, tsTypeOperator} from "@romejs/js-ast";
+import {AnyNode, TSTypeOperator, tsTypeOperator} from "@romejs/ast";
 
 export default function TSTypeOperator(node: AnyNode, scope: Scope) {
 	node = tsTypeOperator.assert(node);

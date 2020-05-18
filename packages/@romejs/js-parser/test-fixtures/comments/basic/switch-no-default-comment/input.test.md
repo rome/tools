@@ -5,7 +5,7 @@
 ## `comments > basic > switch-no-default-comment`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentLine {
+		JSCommentLine {
 			id: "0"
 			value: "no default"
 			loc: Object {
@@ -48,7 +48,7 @@ Program {
 		}
 	]
 	body: Array [
-		SwitchStatement {
+		JSSwitchStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -62,7 +62,7 @@ Program {
 					line: 1
 				}
 			}
-			discriminant: ReferenceIdentifier {
+			discriminant: JSReferenceIdentifier {
 				name: "a"
 				loc: Object {
 					filename: "input.js"
@@ -80,7 +80,7 @@ Program {
 				}
 			}
 			cases: Array [
-				SwitchCase {
+				JSSwitchCase {
 					trailingComments: Array ["0"]
 					loc: Object {
 						filename: "input.js"
@@ -95,7 +95,7 @@ Program {
 							line: 2
 						}
 					}
-					test: NumericLiteral {
+					test: JSNumericLiteral {
 						value: 1
 						format: undefined
 						loc: Object {
@@ -113,7 +113,7 @@ Program {
 						}
 					}
 					consequent: Array [
-						BreakStatement {
+						JSBreakStatement {
 							label: undefined
 							trailingComments: undefined
 							loc: Object {

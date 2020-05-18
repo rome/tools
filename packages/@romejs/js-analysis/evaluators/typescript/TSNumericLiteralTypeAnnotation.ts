@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	TSNumericLiteralTypeAnnotation,
 	tsNumericLiteralTypeAnnotation,
-} from "@romejs/js-ast";
+} from "@romejs/ast";
 
 export default function TSNumericLiteralTypeAnnotation(
 	node: AnyNode,

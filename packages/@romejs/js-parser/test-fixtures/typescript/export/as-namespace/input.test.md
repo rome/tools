@@ -5,7 +5,7 @@
 ## `typescript > export > as-namespace`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -31,7 +31,7 @@ Program {
 	}
 	body: Array [
 		TSNamespaceExportDeclaration {
-			id: Identifier {
+			id: JSIdentifier {
 				name: "A"
 				loc: Object {
 					filename: "input.ts"

@@ -5,7 +5,7 @@
 ## `core > uncategorised > 298`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.js"
@@ -60,8 +60,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "hello"
 							loc: Object {
 								filename: "input.js"
@@ -91,8 +91,8 @@ Program {
 								line: 1
 							}
 						}
-						init: FunctionExpression {
-							id: BindingIdentifier {
+						init: JSFunctionExpression {
+							id: JSBindingIdentifier {
 								name: "hi"
 								loc: Object {
 									filename: "input.js"
@@ -122,7 +122,7 @@ Program {
 									line: 1
 								}
 							}
-							head: FunctionHead {
+							head: JSFunctionHead {
 								async: false
 								generator: false
 								hasHoistedVars: false
@@ -145,7 +145,7 @@ Program {
 									}
 								}
 							}
-							body: BlockStatement {
+							body: JSBlockStatement {
 								directives: Array []
 								loc: Object {
 									filename: "input.js"
@@ -161,7 +161,7 @@ Program {
 									}
 								}
 								body: Array [
-									ExpressionStatement {
+									JSExpressionStatement {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -175,7 +175,7 @@ Program {
 												line: 1
 											}
 										}
-										expression: CallExpression {
+										expression: JSCallExpression {
 											arguments: Array []
 											loc: Object {
 												filename: "input.js"
@@ -190,7 +190,7 @@ Program {
 													line: 1
 												}
 											}
-											callee: ReferenceIdentifier {
+											callee: JSReferenceIdentifier {
 												name: "sayHi"
 												loc: Object {
 													filename: "input.js"

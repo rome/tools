@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 78`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
@@ -46,8 +46,8 @@ Program {
 					line: 1
 				}
 			}
-			declaration: ClassDeclaration {
-				id: BindingIdentifier {
+			declaration: JSClassDeclaration {
+				id: JSBindingIdentifier {
 					name: "Class"
 					loc: Object {
 						filename: "input.js"
@@ -77,7 +77,7 @@ Program {
 						line: 1
 					}
 				}
-				meta: ClassHead {
+				meta: JSClassHead {
 					body: Array []
 					implements: undefined
 					superClass: undefined

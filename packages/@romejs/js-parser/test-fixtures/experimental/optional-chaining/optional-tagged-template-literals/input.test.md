@@ -5,7 +5,7 @@
 ## `experimental > optional-chaining > optional-tagged-template-literals`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: TaggedTemplateExpression {
+			expression: JSTaggedTemplateExpression {
 				typeArguments: undefined
 				loc: Object {
 					filename: "input.js"
@@ -83,7 +83,7 @@ Program {
 						line: 1
 					}
 				}
-				quasi: TemplateLiteral {
+				quasi: JSTemplateLiteral {
 					expressions: Array []
 					loc: Object {
 						filename: "input.js"
@@ -99,7 +99,7 @@ Program {
 						}
 					}
 					quasis: Array [
-						TemplateElement {
+						JSTemplateElement {
 							cooked: "foo"
 							raw: "foo"
 							tail: true
@@ -119,7 +119,7 @@ Program {
 						}
 					]
 				}
-				tag: MemberExpression {
+				tag: JSMemberExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -133,7 +133,7 @@ Program {
 							line: 1
 						}
 					}
-					object: ReferenceIdentifier {
+					object: JSReferenceIdentifier {
 						name: "a"
 						loc: Object {
 							filename: "input.js"
@@ -150,8 +150,8 @@ Program {
 							}
 						}
 					}
-					property: StaticMemberProperty {
-						value: Identifier {
+					property: JSStaticMemberProperty {
+						value: JSIdentifier {
 							name: "b"
 							loc: Object {
 								filename: "input.js"

@@ -5,7 +5,7 @@
 ## `jsx > basic > 20`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -33,7 +33,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -128,7 +128,7 @@ Program {
 										line: 1
 									}
 								}
-								expression: MemberExpression {
+								expression: JSMemberExpression {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -142,7 +142,7 @@ Program {
 											line: 1
 										}
 									}
-									object: ReferenceIdentifier {
+									object: JSReferenceIdentifier {
 										name: "aa"
 										loc: Object {
 											filename: "input.js"
@@ -159,8 +159,8 @@ Program {
 											}
 										}
 									}
-									property: StaticMemberProperty {
-										value: Identifier {
+									property: JSStaticMemberProperty {
+										value: JSIdentifier {
 											name: "b"
 											loc: Object {
 												filename: "input.js"
@@ -229,7 +229,7 @@ Program {
 									line: 1
 								}
 							}
-							expression: MemberExpression {
+							expression: JSMemberExpression {
 								loc: Object {
 									filename: "input.js"
 									end: Object {
@@ -243,8 +243,8 @@ Program {
 										line: 1
 									}
 								}
-								property: StaticMemberProperty {
-									value: Identifier {
+								property: JSStaticMemberProperty {
+									value: JSIdentifier {
 										name: "cc"
 										loc: Object {
 											filename: "input.js"
@@ -276,7 +276,7 @@ Program {
 										}
 									}
 								}
-								object: MemberExpression {
+								object: JSMemberExpression {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -290,7 +290,7 @@ Program {
 											line: 1
 										}
 									}
-									object: ReferenceIdentifier {
+									object: JSReferenceIdentifier {
 										name: "aa"
 										loc: Object {
 											filename: "input.js"
@@ -307,8 +307,8 @@ Program {
 											}
 										}
 									}
-									property: StaticMemberProperty {
-										value: Identifier {
+									property: JSStaticMemberProperty {
+										value: JSIdentifier {
 											name: "bb"
 											loc: Object {
 												filename: "input.js"
@@ -388,7 +388,7 @@ Program {
 									line: 1
 								}
 							}
-							expression: MemberExpression {
+							expression: JSMemberExpression {
 								loc: Object {
 									filename: "input.js"
 									end: Object {
@@ -402,8 +402,8 @@ Program {
 										line: 1
 									}
 								}
-								property: StaticMemberProperty {
-									value: Identifier {
+								property: JSStaticMemberProperty {
+									value: JSIdentifier {
 										name: "dd"
 										loc: Object {
 											filename: "input.js"
@@ -435,7 +435,7 @@ Program {
 										}
 									}
 								}
-								object: MemberExpression {
+								object: JSMemberExpression {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -449,7 +449,7 @@ Program {
 											line: 1
 										}
 									}
-									object: ReferenceIdentifier {
+									object: JSReferenceIdentifier {
 										name: "bb"
 										loc: Object {
 											filename: "input.js"
@@ -466,8 +466,8 @@ Program {
 											}
 										}
 									}
-									property: StaticMemberProperty {
-										value: Identifier {
+									property: JSStaticMemberProperty {
+										value: JSIdentifier {
 											name: "cc"
 											loc: Object {
 												filename: "input.js"

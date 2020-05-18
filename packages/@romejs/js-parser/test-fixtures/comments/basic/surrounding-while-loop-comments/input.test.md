@@ -5,7 +5,7 @@
 ## `comments > basic > surrounding-while-loop-comments`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentBlock {
+		JSCommentBlock {
 			id: "0"
 			value: " infinite "
 			loc: Object {
@@ -46,7 +46,7 @@ Program {
 				}
 			}
 		}
-		CommentBlock {
+		JSCommentBlock {
 			id: "1"
 			value: " bar "
 			loc: Object {
@@ -65,8 +65,8 @@ Program {
 		}
 	]
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
 					filename: "input.js"
@@ -96,7 +96,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: true
@@ -119,7 +119,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -135,7 +135,7 @@ Program {
 					}
 				}
 				body: Array [
-					WhileStatement {
+					JSWhileStatement {
 						leadingComments: Array ["0"]
 						trailingComments: Array ["1"]
 						loc: Object {
@@ -151,7 +151,7 @@ Program {
 								line: 1
 							}
 						}
-						test: BooleanLiteral {
+						test: JSBooleanLiteral {
 							value: true
 							leadingComments: undefined
 							loc: Object {
@@ -168,7 +168,7 @@ Program {
 								}
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
 							trailingComments: undefined
@@ -187,7 +187,7 @@ Program {
 							}
 						}
 					}
-					VariableDeclarationStatement {
+					JSVariableDeclarationStatement {
 						leadingComments: Array ["1"]
 						loc: Object {
 							filename: "input.js"
@@ -202,7 +202,7 @@ Program {
 								line: 1
 							}
 						}
-						declaration: VariableDeclaration {
+						declaration: JSVariableDeclaration {
 							kind: "var"
 							leadingComments: undefined
 							loc: Object {
@@ -219,8 +219,8 @@ Program {
 								}
 							}
 							declarations: Array [
-								VariableDeclarator {
-									id: BindingIdentifier {
+								JSVariableDeclarator {
+									id: JSBindingIdentifier {
 										name: "each"
 										leadingComments: undefined
 										loc: Object {

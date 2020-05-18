@@ -5,7 +5,7 @@
 ## `esprima > invalid-syntax > migrated_0144`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: MemberExpression {
+			expression: JSMemberExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -82,8 +82,8 @@ Program {
 						line: 1
 					}
 				}
-				property: StaticMemberProperty {
-					value: Identifier {
+				property: JSStaticMemberProperty {
+					value: JSIdentifier {
 						name: ""
 						loc: Object {
 							filename: "input.js"
@@ -115,7 +115,7 @@ Program {
 						}
 					}
 				}
-				object: NewExpression {
+				object: JSNewExpression {
 					arguments: Array []
 					optional: undefined
 					typeArguments: undefined
@@ -132,7 +132,7 @@ Program {
 							line: 1
 						}
 					}
-					callee: ReferenceIdentifier {
+					callee: JSReferenceIdentifier {
 						name: "X"
 						loc: Object {
 							filename: "input.js"

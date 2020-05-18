@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	TSBooleanLiteralTypeAnnotation,
 	tsBooleanLiteralTypeAnnotation,
-} from "@romejs/js-ast";
+} from "@romejs/ast";
 
 export default function TSBooleanLiteralTypeAnnotation(
 	node: AnyNode,

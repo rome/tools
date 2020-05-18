@@ -5,7 +5,7 @@
 ## `experimental > dynamic-import > invalid-arguments-spread`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ImportCall {
+			expression: JSImportCall {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -82,7 +82,7 @@ Program {
 						line: 1
 					}
 				}
-				argument: ArrayExpression {
+				argument: JSArrayExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -97,7 +97,7 @@ Program {
 						}
 					}
 					elements: Array [
-						NumericLiteral {
+						JSNumericLiteral {
 							value: 1
 							format: undefined
 							loc: Object {

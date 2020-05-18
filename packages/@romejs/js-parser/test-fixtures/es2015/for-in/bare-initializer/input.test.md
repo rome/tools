@@ -5,7 +5,7 @@
 ## `es2015 > for-in > bare-initializer`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.js"
@@ -84,8 +84,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "a"
 							loc: Object {
 								filename: "input.js"
@@ -120,7 +120,7 @@ Program {
 				]
 			}
 		}
-		ForInStatement {
+		JSForInStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -134,7 +134,7 @@ Program {
 					line: 2
 				}
 			}
-			body: EmptyStatement {
+			body: JSEmptyStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -149,7 +149,7 @@ Program {
 					}
 				}
 			}
-			left: AssignmentIdentifier {
+			left: JSAssignmentIdentifier {
 				name: "X"
 				loc: Object {
 					filename: "input.js"
@@ -165,7 +165,7 @@ Program {
 					}
 				}
 			}
-			right: ObjectExpression {
+			right: JSObjectExpression {
 				properties: Array []
 				loc: Object {
 					filename: "input.js"

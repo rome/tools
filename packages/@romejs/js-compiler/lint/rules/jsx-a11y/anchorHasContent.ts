@@ -1,5 +1,5 @@
 import {Path, TransformExitResult} from "@romejs/js-compiler";
-import {JSXElement} from "@romejs/js-ast";
+import {JSXElement} from "@romejs/ast";
 import {descriptions} from "@romejs/diagnostics";
 import {hasJSXAttribute, isJSXElement} from "@romejs/js-ast-utils";
 

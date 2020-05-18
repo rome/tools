@@ -5,7 +5,7 @@
 ## `esprima > expression-primary-object > migrated_0036`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ObjectExpression {
+			expression: JSObjectExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -59,9 +59,9 @@ Program {
 					}
 				}
 				properties: Array [
-					ObjectProperty {
-						key: ComputedPropertyKey {
-							value: StringLiteral {
+					JSObjectProperty {
+						key: JSComputedPropertyKey {
+							value: JSStringLiteral {
 								value: "__proto__"
 								loc: Object {
 									filename: "input.js"
@@ -91,7 +91,7 @@ Program {
 								}
 							}
 						}
-						value: NumericLiteral {
+						value: JSNumericLiteral {
 							value: 0
 							format: undefined
 							loc: Object {
@@ -122,9 +122,9 @@ Program {
 							}
 						}
 					}
-					ObjectProperty {
-						key: ComputedPropertyKey {
-							value: StringLiteral {
+					JSObjectProperty {
+						key: JSComputedPropertyKey {
+							value: JSStringLiteral {
 								value: "__proto__"
 								loc: Object {
 									filename: "input.js"
@@ -154,7 +154,7 @@ Program {
 								}
 							}
 						}
-						value: NumericLiteral {
+						value: JSNumericLiteral {
 							value: 0
 							format: undefined
 							loc: Object {

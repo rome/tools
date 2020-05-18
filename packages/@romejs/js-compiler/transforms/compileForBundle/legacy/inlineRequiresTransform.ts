@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, AnyStatement, VariableDeclarator} from "@romejs/js-ast";
+import {AnyJSStatement, AnyNode, JSVariableDeclarator} from "@romejs/ast";
 import {ConstBinding, Path} from "@romejs/js-compiler";
 import {getRequireSource, isInTypeAnnotation} from "@romejs/js-ast-utils";
 
@@ -16,7 +16,7 @@ export default {
 	enter(path: Path): AnyNode {
 		const {node} = path;
 
-		if (node.type === "ReferenceIdentifier") {
+		if (node.type === "JSReferenceIdentifier") {
 			const binding = path.scope.getBinding(node.name);
 
 			// Inline references to a require variable
@@ -38,21 +38,21 @@ export default {
 	exit(path: Path): AnyNode {
 		const {node} = path;
 
-		if (node.type === "Program" || node.type === "BlockStatement") {
-			const body: Array<AnyStatement> = [];
+		if (node.type === "JSProgram" || node.type === "JSBlockStatement") {
+			const body: Array<AnyJSStatement> = [];
 			let hadRequires = false;
 
 			// Remove all require declarations that could have been inlined
 			for (const bodyNode of node.body) {
 				if (
-					bodyNode.type === "VariableDeclarationStatement" &&
+					bodyNode.type === "JSVariableDeclarationStatement" &&
 					bodyNode.declaration.kind === "const"
 				) {
 					let hadRequireDeclarators = false;
-					const declarators: Array<VariableDeclarator> = [];
+					const declarators: Array<JSVariableDeclarator> = [];
 
 					for (const decl of bodyNode.declaration.declarations) {
-						if (decl.id.type !== "BindingIdentifier") {
+						if (decl.id.type !== "JSBindingIdentifier") {
 							// Patterns aren't supported yet
 							declarators.push(decl);
 							continue;

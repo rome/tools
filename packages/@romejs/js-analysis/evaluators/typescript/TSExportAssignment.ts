@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, TSExportAssignment, tsExportAssignment} from "@romejs/js-ast";
+import {AnyNode, TSExportAssignment, tsExportAssignment} from "@romejs/ast";
 
 export default function TSExportAssignment(node: AnyNode, scope: Scope) {
 	node = tsExportAssignment.assert(node);

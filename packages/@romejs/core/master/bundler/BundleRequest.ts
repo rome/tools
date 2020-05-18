@@ -222,7 +222,7 @@ export default class BundleRequest {
 			!forceSourceMaps && this.options.deferredSourceMaps === true;
 		if (deferredSourceMaps) {
 			sourceMap.addMaterializer(() => {
-				this.stepCombine(order, true);
+				//this.stepCombine(order, true);
 			});
 		}
 

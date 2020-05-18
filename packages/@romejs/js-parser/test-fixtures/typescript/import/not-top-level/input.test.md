@@ -5,7 +5,7 @@
 ## `typescript > import > not-top-level`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -31,7 +31,7 @@ Program {
 	}
 	body: Array [
 		TSModuleDeclaration {
-			id: StringLiteral {
+			id: JSStringLiteral {
 				value: "m"
 				loc: Object {
 					filename: "input.ts"
@@ -77,7 +77,7 @@ Program {
 					}
 				}
 				body: Array [
-					ImportDeclaration {
+					JSImportDeclaration {
 						defaultSpecifier: undefined
 						importKind: undefined
 						namedSpecifiers: Array []
@@ -94,7 +94,7 @@ Program {
 								line: 2
 							}
 						}
-						source: StringLiteral {
+						source: JSStringLiteral {
 							value: "a"
 							loc: Object {
 								filename: "input.ts"
@@ -110,7 +110,7 @@ Program {
 								}
 							}
 						}
-						namespaceSpecifier: ImportNamespaceSpecifier {
+						namespaceSpecifier: JSImportNamespaceSpecifier {
 							loc: Object {
 								filename: "input.ts"
 								end: Object {
@@ -124,8 +124,8 @@ Program {
 									line: 2
 								}
 							}
-							local: ImportSpecifierLocal {
-								name: BindingIdentifier {
+							local: JSImportSpecifierLocal {
+								name: JSBindingIdentifier {
 									name: "a"
 									loc: Object {
 										filename: "input.ts"

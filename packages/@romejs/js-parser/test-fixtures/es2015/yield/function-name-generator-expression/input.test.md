@@ -5,7 +5,7 @@
 ## `es2015 > yield > function-name-generator-expression`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: UnaryExpression {
+			expression: JSUnaryExpression {
 				operator: "+"
 				prefix: true
 				loc: Object {
@@ -84,8 +84,8 @@ Program {
 						line: 1
 					}
 				}
-				argument: FunctionExpression {
-					id: BindingIdentifier {
+				argument: JSFunctionExpression {
+					id: JSBindingIdentifier {
 						name: "yield"
 						loc: Object {
 							filename: "input.js"
@@ -115,7 +115,7 @@ Program {
 							line: 1
 						}
 					}
-					body: BlockStatement {
+					body: JSBlockStatement {
 						body: Array []
 						directives: Array []
 						loc: Object {
@@ -132,7 +132,7 @@ Program {
 							}
 						}
 					}
-					head: FunctionHead {
+					head: JSFunctionHead {
 						async: false
 						generator: true
 						hasHoistedVars: false

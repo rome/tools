@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 import T, {SerialTypeFactory} from "./T";
 import {HydrateData, HydrateTypeFactory} from "../Evaluator";
 import {Scope} from "../scopes";

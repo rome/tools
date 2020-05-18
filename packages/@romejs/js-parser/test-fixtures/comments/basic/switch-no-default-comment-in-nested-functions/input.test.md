@@ -5,7 +5,7 @@
 ## `comments > basic > switch-no-default-comment-in-nested-functions`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentLine {
+		JSCommentLine {
 			id: "0"
 			value: " no default"
 			loc: Object {
@@ -48,7 +48,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -62,7 +62,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: AssignmentExpression {
+			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
 					filename: "input.js"
@@ -77,7 +77,7 @@ Program {
 						line: 1
 					}
 				}
-				left: MemberExpression {
+				left: JSMemberExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -91,7 +91,7 @@ Program {
 							line: 1
 						}
 					}
-					object: ReferenceIdentifier {
+					object: JSReferenceIdentifier {
 						name: "module"
 						loc: Object {
 							filename: "input.js"
@@ -108,8 +108,8 @@ Program {
 							}
 						}
 					}
-					property: StaticMemberProperty {
-						value: Identifier {
+					property: JSStaticMemberProperty {
+						value: JSIdentifier {
 							name: "exports"
 							loc: Object {
 								filename: "input.js"
@@ -142,7 +142,7 @@ Program {
 						}
 					}
 				}
-				right: FunctionExpression {
+				right: JSFunctionExpression {
 					id: undefined
 					loc: Object {
 						filename: "input.js"
@@ -157,7 +157,7 @@ Program {
 							line: 1
 						}
 					}
-					head: FunctionHead {
+					head: JSFunctionHead {
 						async: false
 						generator: false
 						hasHoistedVars: false
@@ -179,7 +179,7 @@ Program {
 							}
 						}
 						params: Array [
-							BindingIdentifier {
+							JSBindingIdentifier {
 								name: "context"
 								loc: Object {
 									filename: "input.js"
@@ -195,7 +195,7 @@ Program {
 										line: 1
 									}
 								}
-								meta: PatternMeta {
+								meta: JSPatternMeta {
 									optional: undefined
 									typeAnnotation: undefined
 									loc: Object {
@@ -215,7 +215,7 @@ Program {
 							}
 						]
 					}
-					body: BlockStatement {
+					body: JSBlockStatement {
 						directives: Array []
 						loc: Object {
 							filename: "input.js"
@@ -231,8 +231,8 @@ Program {
 							}
 						}
 						body: Array [
-							FunctionDeclaration {
-								id: BindingIdentifier {
+							JSFunctionDeclaration {
+								id: JSBindingIdentifier {
 									name: "isConstant"
 									loc: Object {
 										filename: "input.js"
@@ -262,7 +262,7 @@ Program {
 										line: 3
 									}
 								}
-								head: FunctionHead {
+								head: JSFunctionHead {
 									async: false
 									generator: false
 									hasHoistedVars: false
@@ -284,7 +284,7 @@ Program {
 										}
 									}
 									params: Array [
-										BindingIdentifier {
+										JSBindingIdentifier {
 											name: "node"
 											loc: Object {
 												filename: "input.js"
@@ -300,7 +300,7 @@ Program {
 													line: 3
 												}
 											}
-											meta: PatternMeta {
+											meta: JSPatternMeta {
 												optional: undefined
 												typeAnnotation: undefined
 												loc: Object {
@@ -320,7 +320,7 @@ Program {
 										}
 									]
 								}
-								body: BlockStatement {
+								body: JSBlockStatement {
 									directives: Array []
 									loc: Object {
 										filename: "input.js"
@@ -336,7 +336,7 @@ Program {
 										}
 									}
 									body: Array [
-										SwitchStatement {
+										JSSwitchStatement {
 											loc: Object {
 												filename: "input.js"
 												end: Object {
@@ -350,7 +350,7 @@ Program {
 													line: 4
 												}
 											}
-											discriminant: MemberExpression {
+											discriminant: JSMemberExpression {
 												loc: Object {
 													filename: "input.js"
 													end: Object {
@@ -364,7 +364,7 @@ Program {
 														line: 4
 													}
 												}
-												object: ReferenceIdentifier {
+												object: JSReferenceIdentifier {
 													name: "node"
 													loc: Object {
 														filename: "input.js"
@@ -381,8 +381,8 @@ Program {
 														}
 													}
 												}
-												property: StaticMemberProperty {
-													value: Identifier {
+												property: JSStaticMemberProperty {
+													value: JSIdentifier {
 														name: "type"
 														loc: Object {
 															filename: "input.js"
@@ -416,7 +416,7 @@ Program {
 												}
 											}
 											cases: Array [
-												SwitchCase {
+												JSSwitchCase {
 													trailingComments: Array ["0"]
 													loc: Object {
 														filename: "input.js"
@@ -431,7 +431,7 @@ Program {
 															line: 5
 														}
 													}
-													test: StringLiteral {
+													test: JSStringLiteral {
 														value: "SequenceExpression"
 														loc: Object {
 															filename: "input.js"
@@ -448,7 +448,7 @@ Program {
 														}
 													}
 													consequent: Array [
-														ReturnStatement {
+														JSReturnStatement {
 															trailingComments: undefined
 															loc: Object {
 																filename: "input.js"
@@ -463,7 +463,7 @@ Program {
 																	line: 6
 																}
 															}
-															argument: CallExpression {
+															argument: JSCallExpression {
 																loc: Object {
 																	filename: "input.js"
 																	end: Object {
@@ -477,7 +477,7 @@ Program {
 																		line: 6
 																	}
 																}
-																callee: ReferenceIdentifier {
+																callee: JSReferenceIdentifier {
 																	name: "isConstant"
 																	loc: Object {
 																		filename: "input.js"
@@ -495,7 +495,7 @@ Program {
 																	}
 																}
 																arguments: Array [
-																	MemberExpression {
+																	JSMemberExpression {
 																		loc: Object {
 																			filename: "input.js"
 																			end: Object {
@@ -509,7 +509,7 @@ Program {
 																				line: 6
 																			}
 																		}
-																		object: MemberExpression {
+																		object: JSMemberExpression {
 																			loc: Object {
 																				filename: "input.js"
 																				end: Object {
@@ -523,7 +523,7 @@ Program {
 																					line: 6
 																				}
 																			}
-																			object: ReferenceIdentifier {
+																			object: JSReferenceIdentifier {
 																				name: "node"
 																				loc: Object {
 																					filename: "input.js"
@@ -540,8 +540,8 @@ Program {
 																					}
 																				}
 																			}
-																			property: StaticMemberProperty {
-																				value: Identifier {
+																			property: JSStaticMemberProperty {
+																				value: JSIdentifier {
 																					name: "expressions"
 																					loc: Object {
 																						filename: "input.js"
@@ -574,8 +574,8 @@ Program {
 																				}
 																			}
 																		}
-																		property: ComputedMemberProperty {
-																			value: BinaryExpression {
+																		property: JSComputedMemberProperty {
+																			value: JSBinaryExpression {
 																				operator: "-"
 																				loc: Object {
 																					filename: "input.js"
@@ -590,7 +590,7 @@ Program {
 																						line: 6
 																					}
 																				}
-																				right: NumericLiteral {
+																				right: JSNumericLiteral {
 																					value: 1
 																					format: undefined
 																					loc: Object {
@@ -607,7 +607,7 @@ Program {
 																						}
 																					}
 																				}
-																				left: MemberExpression {
+																				left: JSMemberExpression {
 																					loc: Object {
 																						filename: "input.js"
 																						end: Object {
@@ -621,8 +621,8 @@ Program {
 																							line: 6
 																						}
 																					}
-																					property: StaticMemberProperty {
-																						value: Identifier {
+																					property: JSStaticMemberProperty {
+																						value: JSIdentifier {
 																							name: "length"
 																							loc: Object {
 																								filename: "input.js"
@@ -654,7 +654,7 @@ Program {
 																							}
 																						}
 																					}
-																					object: MemberExpression {
+																					object: JSMemberExpression {
 																						loc: Object {
 																							filename: "input.js"
 																							end: Object {
@@ -668,7 +668,7 @@ Program {
 																								line: 6
 																							}
 																						}
-																						object: ReferenceIdentifier {
+																						object: JSReferenceIdentifier {
 																							name: "node"
 																							loc: Object {
 																								filename: "input.js"
@@ -685,8 +685,8 @@ Program {
 																								}
 																							}
 																						}
-																						property: StaticMemberProperty {
-																							value: Identifier {
+																						property: JSStaticMemberProperty {
+																							value: JSIdentifier {
 																								name: "expressions"
 																								loc: Object {
 																									filename: "input.js"
@@ -743,7 +743,7 @@ Program {
 												}
 											]
 										}
-										ReturnStatement {
+										JSReturnStatement {
 											loc: Object {
 												filename: "input.js"
 												end: Object {
@@ -757,7 +757,7 @@ Program {
 													line: 10
 												}
 											}
-											argument: BooleanLiteral {
+											argument: JSBooleanLiteral {
 												value: false
 												loc: Object {
 													filename: "input.js"

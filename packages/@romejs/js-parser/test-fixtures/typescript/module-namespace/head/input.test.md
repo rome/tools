@@ -5,7 +5,7 @@
 ## `typescript > module-namespace > head`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -31,7 +31,7 @@ Program {
 	}
 	body: Array [
 		TSModuleDeclaration {
-			id: BindingIdentifier {
+			id: JSBindingIdentifier {
 				name: "N"
 				loc: Object {
 					filename: "input.ts"
@@ -79,7 +79,7 @@ Program {
 			}
 		}
 		TSModuleDeclaration {
-			id: BindingIdentifier {
+			id: JSBindingIdentifier {
 				name: "M"
 				loc: Object {
 					filename: "input.ts"
@@ -110,7 +110,7 @@ Program {
 				}
 			}
 			body: TSModuleDeclaration {
-				id: BindingIdentifier {
+				id: JSBindingIdentifier {
 					name: "N"
 					loc: Object {
 						filename: "input.ts"
@@ -141,7 +141,7 @@ Program {
 					}
 				}
 				body: TSModuleDeclaration {
-					id: BindingIdentifier {
+					id: JSBindingIdentifier {
 						name: "O"
 						loc: Object {
 							filename: "input.ts"
@@ -191,7 +191,7 @@ Program {
 			}
 		}
 		TSModuleDeclaration {
-			id: BindingIdentifier {
+			id: JSBindingIdentifier {
 				name: "M"
 				loc: Object {
 					filename: "input.ts"
@@ -239,7 +239,7 @@ Program {
 			}
 		}
 		TSModuleDeclaration {
-			id: StringLiteral {
+			id: JSStringLiteral {
 				value: "m"
 				loc: Object {
 					filename: "input.ts"

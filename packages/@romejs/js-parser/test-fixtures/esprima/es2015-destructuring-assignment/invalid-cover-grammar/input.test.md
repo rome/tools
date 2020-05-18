@@ -5,7 +5,7 @@
 ## `esprima > es2015-destructuring-assignment > invalid-cover-grammar`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ArrayExpression {
+			expression: JSArrayExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -83,7 +83,7 @@ Program {
 					}
 				}
 				elements: Array [
-					ArrayExpression {
+					JSArrayExpression {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -98,7 +98,7 @@ Program {
 							}
 						}
 						elements: Array [
-							ArrayExpression {
+							JSArrayExpression {
 								loc: Object {
 									filename: "input.js"
 									end: Object {
@@ -113,7 +113,7 @@ Program {
 									}
 								}
 								elements: Array [
-									ArrayExpression {
+									JSArrayExpression {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -128,7 +128,7 @@ Program {
 											}
 										}
 										elements: Array [
-											ArrayExpression {
+											JSArrayExpression {
 												loc: Object {
 													filename: "input.js"
 													end: Object {
@@ -143,7 +143,7 @@ Program {
 													}
 												}
 												elements: Array [
-													ArrayExpression {
+													JSArrayExpression {
 														loc: Object {
 															filename: "input.js"
 															end: Object {
@@ -158,7 +158,7 @@ Program {
 															}
 														}
 														elements: Array [
-															ArrayExpression {
+															JSArrayExpression {
 																loc: Object {
 																	filename: "input.js"
 																	end: Object {
@@ -173,7 +173,7 @@ Program {
 																	}
 																}
 																elements: Array [
-																	ArrayExpression {
+																	JSArrayExpression {
 																		loc: Object {
 																			filename: "input.js"
 																			end: Object {
@@ -188,7 +188,7 @@ Program {
 																			}
 																		}
 																		elements: Array [
-																			ArrayExpression {
+																			JSArrayExpression {
 																				loc: Object {
 																					filename: "input.js"
 																					end: Object {
@@ -203,7 +203,7 @@ Program {
 																					}
 																				}
 																				elements: Array [
-																					ArrayExpression {
+																					JSArrayExpression {
 																						loc: Object {
 																							filename: "input.js"
 																							end: Object {
@@ -218,7 +218,7 @@ Program {
 																							}
 																						}
 																						elements: Array [
-																							ArrayExpression {
+																							JSArrayExpression {
 																								loc: Object {
 																									filename: "input.js"
 																									end: Object {
@@ -233,7 +233,7 @@ Program {
 																									}
 																								}
 																								elements: Array [
-																									ArrayExpression {
+																									JSArrayExpression {
 																										loc: Object {
 																											filename: "input.js"
 																											end: Object {
@@ -248,7 +248,7 @@ Program {
 																											}
 																										}
 																										elements: Array [
-																											ArrayExpression {
+																											JSArrayExpression {
 																												loc: Object {
 																													filename: "input.js"
 																													end: Object {
@@ -263,7 +263,7 @@ Program {
 																													}
 																												}
 																												elements: Array [
-																													ArrayExpression {
+																													JSArrayExpression {
 																														loc: Object {
 																															filename: "input.js"
 																															end: Object {
@@ -278,7 +278,7 @@ Program {
 																															}
 																														}
 																														elements: Array [
-																															ArrayExpression {
+																															JSArrayExpression {
 																																loc: Object {
 																																	filename: "input.js"
 																																	end: Object {
@@ -293,7 +293,7 @@ Program {
 																																	}
 																																}
 																																elements: Array [
-																																	ArrayExpression {
+																																	JSArrayExpression {
 																																		loc: Object {
 																																			filename: "input.js"
 																																			end: Object {
@@ -308,7 +308,7 @@ Program {
 																																			}
 																																		}
 																																		elements: Array [
-																																			ArrayExpression {
+																																			JSArrayExpression {
 																																				loc: Object {
 																																					filename: "input.js"
 																																					end: Object {
@@ -323,7 +323,7 @@ Program {
 																																					}
 																																				}
 																																				elements: Array [
-																																					ArrayExpression {
+																																					JSArrayExpression {
 																																						loc: Object {
 																																							filename: "input.js"
 																																							end: Object {
@@ -338,7 +338,7 @@ Program {
 																																							}
 																																						}
 																																						elements: Array [
-																																							ArrayExpression {
+																																							JSArrayExpression {
 																																								loc: Object {
 																																									filename: "input.js"
 																																									end: Object {
@@ -353,7 +353,7 @@ Program {
 																																									}
 																																								}
 																																								elements: Array [
-																																									ArrayExpression {
+																																									JSArrayExpression {
 																																										loc: Object {
 																																											filename: "input.js"
 																																											end: Object {
@@ -368,7 +368,7 @@ Program {
 																																											}
 																																										}
 																																										elements: Array [
-																																											AssignmentExpression {
+																																											JSAssignmentExpression {
 																																												operator: "="
 																																												loc: Object {
 																																													filename: "input.js"
@@ -383,7 +383,7 @@ Program {
 																																														line: 1
 																																													}
 																																												}
-																																												right: ReferenceIdentifier {
+																																												right: JSReferenceIdentifier {
 																																													name: "b"
 																																													loc: Object {
 																																														filename: "input.js"
@@ -400,7 +400,7 @@ Program {
 																																														}
 																																													}
 																																												}
-																																												left: AssignmentObjectPattern {
+																																												left: JSAssignmentObjectPattern {
 																																													rest: undefined
 																																													loc: Object {
 																																														filename: "input.js"
@@ -416,9 +416,9 @@ Program {
 																																														}
 																																													}
 																																													properties: Array [
-																																														AssignmentObjectPatternProperty {
-																																															key: StaticPropertyKey {
-																																																value: Identifier {
+																																														JSAssignmentObjectPatternProperty {
+																																															key: JSStaticPropertyKey {
+																																																value: JSIdentifier {
 																																																	name: "a"
 																																																	loc: Object {
 																																																		filename: "input.js"
@@ -449,7 +449,7 @@ Program {
 																																																	}
 																																																}
 																																															}
-																																															value: AssignmentIdentifier {
+																																															value: JSAssignmentIdentifier {
 																																																name: "a"
 																																																loc: Object {
 																																																	filename: "input.js"
@@ -483,7 +483,7 @@ Program {
 																																													]
 																																												}
 																																											}
-																																											ReferenceIdentifier {
+																																											JSReferenceIdentifier {
 																																												name: "INVALID_PLACEHOLDER"
 																																												loc: Object {
 																																													filename: "input.js"

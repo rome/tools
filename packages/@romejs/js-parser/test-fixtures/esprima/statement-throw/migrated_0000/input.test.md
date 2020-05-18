@@ -5,7 +5,7 @@
 ## `esprima > statement-throw > migrated_0000`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ThrowStatement {
+		JSThrowStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			argument: ReferenceIdentifier {
+			argument: JSReferenceIdentifier {
 				name: "x"
 				loc: Object {
 					filename: "input.js"

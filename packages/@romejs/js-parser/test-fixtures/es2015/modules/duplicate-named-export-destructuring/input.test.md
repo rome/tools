@@ -5,7 +5,7 @@
 ## `es2015 > modules > duplicate-named-export-destructuring`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
@@ -46,7 +46,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclarationStatement {
+			declaration: JSVariableDeclarationStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -60,7 +60,7 @@ Program {
 						line: 1
 					}
 				}
-				declaration: VariableDeclaration {
+				declaration: JSVariableDeclaration {
 					kind: "const"
 					loc: Object {
 						filename: "input.js"
@@ -76,8 +76,8 @@ Program {
 						}
 					}
 					declarations: Array [
-						VariableDeclarator {
-							id: BindingObjectPattern {
+						JSVariableDeclarator {
+							id: JSBindingObjectPattern {
 								rest: undefined
 								loc: Object {
 									filename: "input.js"
@@ -93,9 +93,9 @@ Program {
 									}
 								}
 								properties: Array [
-									BindingObjectPatternProperty {
-										key: StaticPropertyKey {
-											value: Identifier {
+									JSBindingObjectPatternProperty {
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
 												name: "foo"
 												loc: Object {
 													filename: "input.js"
@@ -126,7 +126,7 @@ Program {
 												}
 											}
 										}
-										value: BindingIdentifier {
+										value: JSBindingIdentifier {
 											name: "foo"
 											loc: Object {
 												filename: "input.js"
@@ -172,7 +172,7 @@ Program {
 									line: 1
 								}
 							}
-							init: ReferenceIdentifier {
+							init: JSReferenceIdentifier {
 								name: "bar"
 								loc: Object {
 									filename: "input.js"
@@ -194,7 +194,7 @@ Program {
 				}
 			}
 		}
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
@@ -210,7 +210,7 @@ Program {
 					line: 2
 				}
 			}
-			declaration: VariableDeclarationStatement {
+			declaration: JSVariableDeclarationStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -224,7 +224,7 @@ Program {
 						line: 2
 					}
 				}
-				declaration: VariableDeclaration {
+				declaration: JSVariableDeclaration {
 					kind: "const"
 					loc: Object {
 						filename: "input.js"
@@ -240,8 +240,8 @@ Program {
 						}
 					}
 					declarations: Array [
-						VariableDeclarator {
-							id: BindingObjectPattern {
+						JSVariableDeclarator {
+							id: JSBindingObjectPattern {
 								rest: undefined
 								loc: Object {
 									filename: "input.js"
@@ -257,9 +257,9 @@ Program {
 									}
 								}
 								properties: Array [
-									BindingObjectPatternProperty {
-										key: StaticPropertyKey {
-											value: Identifier {
+									JSBindingObjectPatternProperty {
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
 												name: "foo"
 												loc: Object {
 													filename: "input.js"
@@ -290,7 +290,7 @@ Program {
 												}
 											}
 										}
-										value: BindingIdentifier {
+										value: JSBindingIdentifier {
 											name: "foo2"
 											loc: Object {
 												filename: "input.js"
@@ -336,7 +336,7 @@ Program {
 									line: 2
 								}
 							}
-							init: ReferenceIdentifier {
+							init: JSReferenceIdentifier {
 								name: "bar"
 								loc: Object {
 									filename: "input.js"
@@ -358,7 +358,7 @@ Program {
 				}
 			}
 		}
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
@@ -374,7 +374,7 @@ Program {
 					line: 3
 				}
 			}
-			declaration: VariableDeclarationStatement {
+			declaration: JSVariableDeclarationStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -388,7 +388,7 @@ Program {
 						line: 3
 					}
 				}
-				declaration: VariableDeclaration {
+				declaration: JSVariableDeclaration {
 					kind: "const"
 					loc: Object {
 						filename: "input.js"
@@ -404,8 +404,8 @@ Program {
 						}
 					}
 					declarations: Array [
-						VariableDeclarator {
-							id: BindingObjectPattern {
+						JSVariableDeclarator {
+							id: JSBindingObjectPattern {
 								rest: undefined
 								loc: Object {
 									filename: "input.js"
@@ -421,9 +421,9 @@ Program {
 									}
 								}
 								properties: Array [
-									BindingObjectPatternProperty {
-										key: StaticPropertyKey {
-											value: Identifier {
+									JSBindingObjectPatternProperty {
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
 												name: "foo"
 												loc: Object {
 													filename: "input.js"
@@ -454,7 +454,7 @@ Program {
 												}
 											}
 										}
-										value: BindingObjectPattern {
+										value: JSBindingObjectPattern {
 											rest: undefined
 											loc: Object {
 												filename: "input.js"
@@ -470,9 +470,9 @@ Program {
 												}
 											}
 											properties: Array [
-												BindingObjectPatternProperty {
-													key: StaticPropertyKey {
-														value: Identifier {
+												JSBindingObjectPatternProperty {
+													key: JSStaticPropertyKey {
+														value: JSIdentifier {
 															name: "baz"
 															loc: Object {
 																filename: "input.js"
@@ -503,7 +503,7 @@ Program {
 															}
 														}
 													}
-													value: BindingIdentifier {
+													value: JSBindingIdentifier {
 														name: "baz"
 														loc: Object {
 															filename: "input.js"
@@ -565,7 +565,7 @@ Program {
 									line: 3
 								}
 							}
-							init: ReferenceIdentifier {
+							init: JSReferenceIdentifier {
 								name: "bar"
 								loc: Object {
 									filename: "input.js"
@@ -587,7 +587,7 @@ Program {
 				}
 			}
 		}
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
@@ -603,7 +603,7 @@ Program {
 					line: 4
 				}
 			}
-			declaration: VariableDeclarationStatement {
+			declaration: JSVariableDeclarationStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -617,7 +617,7 @@ Program {
 						line: 4
 					}
 				}
-				declaration: VariableDeclaration {
+				declaration: JSVariableDeclaration {
 					kind: "const"
 					loc: Object {
 						filename: "input.js"
@@ -633,8 +633,8 @@ Program {
 						}
 					}
 					declarations: Array [
-						VariableDeclarator {
-							id: BindingObjectPattern {
+						JSVariableDeclarator {
+							id: JSBindingObjectPattern {
 								rest: undefined
 								loc: Object {
 									filename: "input.js"
@@ -650,9 +650,9 @@ Program {
 									}
 								}
 								properties: Array [
-									BindingObjectPatternProperty {
-										key: StaticPropertyKey {
-											value: Identifier {
+									JSBindingObjectPatternProperty {
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
 												name: "foo"
 												loc: Object {
 													filename: "input.js"
@@ -683,7 +683,7 @@ Program {
 												}
 											}
 										}
-										value: BindingObjectPattern {
+										value: JSBindingObjectPattern {
 											rest: undefined
 											loc: Object {
 												filename: "input.js"
@@ -699,9 +699,9 @@ Program {
 												}
 											}
 											properties: Array [
-												BindingObjectPatternProperty {
-													key: StaticPropertyKey {
-														value: Identifier {
+												JSBindingObjectPatternProperty {
+													key: JSStaticPropertyKey {
+														value: JSIdentifier {
 															name: "baz"
 															loc: Object {
 																filename: "input.js"
@@ -732,7 +732,7 @@ Program {
 															}
 														}
 													}
-													value: BindingObjectPattern {
+													value: JSBindingObjectPattern {
 														rest: undefined
 														loc: Object {
 															filename: "input.js"
@@ -748,9 +748,9 @@ Program {
 															}
 														}
 														properties: Array [
-															BindingObjectPatternProperty {
-																key: StaticPropertyKey {
-																	value: Identifier {
+															JSBindingObjectPatternProperty {
+																key: JSStaticPropertyKey {
+																	value: JSIdentifier {
 																		name: "qux"
 																		loc: Object {
 																			filename: "input.js"
@@ -781,7 +781,7 @@ Program {
 																		}
 																	}
 																}
-																value: BindingIdentifier {
+																value: JSBindingIdentifier {
 																	name: "qux"
 																	loc: Object {
 																		filename: "input.js"
@@ -859,7 +859,7 @@ Program {
 									line: 4
 								}
 							}
-							init: ReferenceIdentifier {
+							init: JSReferenceIdentifier {
 								name: "bar"
 								loc: Object {
 									filename: "input.js"
@@ -881,7 +881,7 @@ Program {
 				}
 			}
 		}
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
@@ -897,7 +897,7 @@ Program {
 					line: 5
 				}
 			}
-			declaration: VariableDeclarationStatement {
+			declaration: JSVariableDeclarationStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -911,7 +911,7 @@ Program {
 						line: 5
 					}
 				}
-				declaration: VariableDeclaration {
+				declaration: JSVariableDeclaration {
 					kind: "const"
 					loc: Object {
 						filename: "input.js"
@@ -927,8 +927,8 @@ Program {
 						}
 					}
 					declarations: Array [
-						VariableDeclarator {
-							id: BindingObjectPattern {
+						JSVariableDeclarator {
+							id: JSBindingObjectPattern {
 								rest: undefined
 								loc: Object {
 									filename: "input.js"
@@ -944,9 +944,9 @@ Program {
 									}
 								}
 								properties: Array [
-									BindingObjectPatternProperty {
-										key: StaticPropertyKey {
-											value: Identifier {
+									JSBindingObjectPatternProperty {
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
 												name: "foo"
 												loc: Object {
 													filename: "input.js"
@@ -977,7 +977,7 @@ Program {
 												}
 											}
 										}
-										value: BindingObjectPattern {
+										value: JSBindingObjectPattern {
 											rest: undefined
 											loc: Object {
 												filename: "input.js"
@@ -993,9 +993,9 @@ Program {
 												}
 											}
 											properties: Array [
-												BindingObjectPatternProperty {
-													key: StaticPropertyKey {
-														value: Identifier {
+												JSBindingObjectPatternProperty {
+													key: JSStaticPropertyKey {
+														value: JSIdentifier {
 															name: "baz"
 															loc: Object {
 																filename: "input.js"
@@ -1026,7 +1026,7 @@ Program {
 															}
 														}
 													}
-													value: BindingObjectPattern {
+													value: JSBindingObjectPattern {
 														rest: undefined
 														loc: Object {
 															filename: "input.js"
@@ -1042,9 +1042,9 @@ Program {
 															}
 														}
 														properties: Array [
-															BindingObjectPatternProperty {
-																key: StaticPropertyKey {
-																	value: Identifier {
+															JSBindingObjectPatternProperty {
+																key: JSStaticPropertyKey {
+																	value: JSIdentifier {
 																		name: "qux2"
 																		loc: Object {
 																			filename: "input.js"
@@ -1075,7 +1075,7 @@ Program {
 																		}
 																	}
 																}
-																value: BindingIdentifier {
+																value: JSBindingIdentifier {
 																	name: "qux2"
 																	loc: Object {
 																		filename: "input.js"
@@ -1138,9 +1138,9 @@ Program {
 											}
 										}
 									}
-									BindingObjectPatternProperty {
-										key: StaticPropertyKey {
-											value: Identifier {
+									JSBindingObjectPatternProperty {
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
 												name: "foo3"
 												loc: Object {
 													filename: "input.js"
@@ -1171,7 +1171,7 @@ Program {
 												}
 											}
 										}
-										value: BindingIdentifier {
+										value: JSBindingIdentifier {
 											name: "foo3"
 											loc: Object {
 												filename: "input.js"
@@ -1217,7 +1217,7 @@ Program {
 									line: 5
 								}
 							}
-							init: ReferenceIdentifier {
+							init: JSReferenceIdentifier {
 								name: "bar"
 								loc: Object {
 									filename: "input.js"
@@ -1239,7 +1239,7 @@ Program {
 				}
 			}
 		}
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
@@ -1255,7 +1255,7 @@ Program {
 					line: 6
 				}
 			}
-			declaration: VariableDeclarationStatement {
+			declaration: JSVariableDeclarationStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -1269,7 +1269,7 @@ Program {
 						line: 6
 					}
 				}
-				declaration: VariableDeclaration {
+				declaration: JSVariableDeclaration {
 					kind: "const"
 					loc: Object {
 						filename: "input.js"
@@ -1285,8 +1285,8 @@ Program {
 						}
 					}
 					declarations: Array [
-						VariableDeclarator {
-							id: BindingArrayPattern {
+						JSVariableDeclarator {
+							id: JSBindingArrayPattern {
 								rest: undefined
 								loc: Object {
 									filename: "input.js"
@@ -1302,7 +1302,7 @@ Program {
 									}
 								}
 								elements: Array [
-									BindingIdentifier {
+									JSBindingIdentifier {
 										name: "foo4"
 										loc: Object {
 											filename: "input.js"
@@ -1318,7 +1318,7 @@ Program {
 												line: 6
 											}
 										}
-										meta: PatternMeta {
+										meta: JSPatternMeta {
 											optional: undefined
 											typeAnnotation: undefined
 											loc: Object {
@@ -1351,7 +1351,7 @@ Program {
 									line: 6
 								}
 							}
-							init: ReferenceIdentifier {
+							init: JSReferenceIdentifier {
 								name: "bar"
 								loc: Object {
 									filename: "input.js"
@@ -1373,7 +1373,7 @@ Program {
 				}
 			}
 		}
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
@@ -1389,7 +1389,7 @@ Program {
 					line: 7
 				}
 			}
-			declaration: VariableDeclarationStatement {
+			declaration: JSVariableDeclarationStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -1403,7 +1403,7 @@ Program {
 						line: 7
 					}
 				}
-				declaration: VariableDeclaration {
+				declaration: JSVariableDeclaration {
 					kind: "const"
 					loc: Object {
 						filename: "input.js"
@@ -1419,8 +1419,8 @@ Program {
 						}
 					}
 					declarations: Array [
-						VariableDeclarator {
-							id: BindingArrayPattern {
+						JSVariableDeclarator {
+							id: JSBindingArrayPattern {
 								rest: undefined
 								loc: Object {
 									filename: "input.js"
@@ -1436,7 +1436,7 @@ Program {
 									}
 								}
 								elements: Array [
-									BindingArrayPattern {
+									JSBindingArrayPattern {
 										rest: undefined
 										loc: Object {
 											filename: "input.js"
@@ -1451,7 +1451,7 @@ Program {
 												line: 7
 											}
 										}
-										meta: PatternMeta {
+										meta: JSPatternMeta {
 											optional: undefined
 											typeAnnotation: undefined
 											loc: Object {
@@ -1469,7 +1469,7 @@ Program {
 											}
 										}
 										elements: Array [
-											BindingIdentifier {
+											JSBindingIdentifier {
 												name: "baz2"
 												loc: Object {
 													filename: "input.js"
@@ -1485,7 +1485,7 @@ Program {
 														line: 7
 													}
 												}
-												meta: PatternMeta {
+												meta: JSPatternMeta {
 													optional: undefined
 													typeAnnotation: undefined
 													loc: Object {
@@ -1520,7 +1520,7 @@ Program {
 									line: 7
 								}
 							}
-							init: ReferenceIdentifier {
+							init: JSReferenceIdentifier {
 								name: "bar"
 								loc: Object {
 									filename: "input.js"
@@ -1542,7 +1542,7 @@ Program {
 				}
 			}
 		}
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
@@ -1558,7 +1558,7 @@ Program {
 					line: 8
 				}
 			}
-			declaration: VariableDeclarationStatement {
+			declaration: JSVariableDeclarationStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -1572,7 +1572,7 @@ Program {
 						line: 8
 					}
 				}
-				declaration: VariableDeclaration {
+				declaration: JSVariableDeclaration {
 					kind: "const"
 					loc: Object {
 						filename: "input.js"
@@ -1588,8 +1588,8 @@ Program {
 						}
 					}
 					declarations: Array [
-						VariableDeclarator {
-							id: BindingArrayPattern {
+						JSVariableDeclarator {
+							id: JSBindingArrayPattern {
 								rest: undefined
 								loc: Object {
 									filename: "input.js"
@@ -1605,7 +1605,7 @@ Program {
 									}
 								}
 								elements: Array [
-									BindingObjectPattern {
+									JSBindingObjectPattern {
 										rest: undefined
 										loc: Object {
 											filename: "input.js"
@@ -1620,7 +1620,7 @@ Program {
 												line: 8
 											}
 										}
-										meta: PatternMeta {
+										meta: JSPatternMeta {
 											optional: undefined
 											typeAnnotation: undefined
 											loc: Object {
@@ -1638,9 +1638,9 @@ Program {
 											}
 										}
 										properties: Array [
-											BindingObjectPatternProperty {
-												key: StaticPropertyKey {
-													value: Identifier {
+											JSBindingObjectPatternProperty {
+												key: JSStaticPropertyKey {
+													value: JSIdentifier {
 														name: "foo"
 														loc: Object {
 															filename: "input.js"
@@ -1671,7 +1671,7 @@ Program {
 														}
 													}
 												}
-												value: BindingArrayPattern {
+												value: JSBindingArrayPattern {
 													rest: undefined
 													loc: Object {
 														filename: "input.js"
@@ -1687,7 +1687,7 @@ Program {
 														}
 													}
 													elements: Array [
-														BindingIdentifier {
+														JSBindingIdentifier {
 															name: "baz3"
 															loc: Object {
 																filename: "input.js"
@@ -1703,7 +1703,7 @@ Program {
 																	line: 8
 																}
 															}
-															meta: PatternMeta {
+															meta: JSPatternMeta {
 																optional: undefined
 																typeAnnotation: undefined
 																loc: Object {
@@ -1739,7 +1739,7 @@ Program {
 											}
 										]
 									}
-									BindingObjectPattern {
+									JSBindingObjectPattern {
 										rest: undefined
 										loc: Object {
 											filename: "input.js"
@@ -1754,7 +1754,7 @@ Program {
 												line: 8
 											}
 										}
-										meta: PatternMeta {
+										meta: JSPatternMeta {
 											optional: undefined
 											typeAnnotation: undefined
 											loc: Object {
@@ -1772,9 +1772,9 @@ Program {
 											}
 										}
 										properties: Array [
-											BindingObjectPatternProperty {
-												key: StaticPropertyKey {
-													value: Identifier {
+											JSBindingObjectPatternProperty {
+												key: JSStaticPropertyKey {
+													value: JSIdentifier {
 														name: "foo2"
 														loc: Object {
 															filename: "input.js"
@@ -1805,7 +1805,7 @@ Program {
 														}
 													}
 												}
-												value: BindingArrayPattern {
+												value: JSBindingArrayPattern {
 													rest: undefined
 													loc: Object {
 														filename: "input.js"
@@ -1821,7 +1821,7 @@ Program {
 														}
 													}
 													elements: Array [
-														BindingIdentifier {
+														JSBindingIdentifier {
 															name: "baz4"
 															loc: Object {
 																filename: "input.js"
@@ -1837,7 +1837,7 @@ Program {
 																	line: 8
 																}
 															}
-															meta: PatternMeta {
+															meta: JSPatternMeta {
 																optional: undefined
 																typeAnnotation: undefined
 																loc: Object {
@@ -1888,7 +1888,7 @@ Program {
 									line: 8
 								}
 							}
-							init: ReferenceIdentifier {
+							init: JSReferenceIdentifier {
 								name: "bar"
 								loc: Object {
 									filename: "input.js"
@@ -1910,7 +1910,7 @@ Program {
 				}
 			}
 		}
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
@@ -1926,7 +1926,7 @@ Program {
 					line: 9
 				}
 			}
-			declaration: VariableDeclarationStatement {
+			declaration: JSVariableDeclarationStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -1940,7 +1940,7 @@ Program {
 						line: 9
 					}
 				}
-				declaration: VariableDeclaration {
+				declaration: JSVariableDeclaration {
 					kind: "const"
 					loc: Object {
 						filename: "input.js"
@@ -1956,8 +1956,8 @@ Program {
 						}
 					}
 					declarations: Array [
-						VariableDeclarator {
-							id: BindingObjectPattern {
+						JSVariableDeclarator {
+							id: JSBindingObjectPattern {
 								rest: undefined
 								loc: Object {
 									filename: "input.js"
@@ -1973,9 +1973,9 @@ Program {
 									}
 								}
 								properties: Array [
-									BindingObjectPatternProperty {
-										key: StaticPropertyKey {
-											value: Identifier {
+									JSBindingObjectPatternProperty {
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
 												name: "foo"
 												loc: Object {
 													filename: "input.js"
@@ -2006,7 +2006,7 @@ Program {
 												}
 											}
 										}
-										value: BindingObjectPattern {
+										value: JSBindingObjectPattern {
 											rest: undefined
 											loc: Object {
 												filename: "input.js"
@@ -2022,9 +2022,9 @@ Program {
 												}
 											}
 											properties: Array [
-												BindingObjectPatternProperty {
-													key: StaticPropertyKey {
-														value: Identifier {
+												JSBindingObjectPatternProperty {
+													key: JSStaticPropertyKey {
+														value: JSIdentifier {
 															name: "baz"
 															loc: Object {
 																filename: "input.js"
@@ -2055,7 +2055,7 @@ Program {
 															}
 														}
 													}
-													value: BindingObjectPattern {
+													value: JSBindingObjectPattern {
 														rest: undefined
 														loc: Object {
 															filename: "input.js"
@@ -2071,9 +2071,9 @@ Program {
 															}
 														}
 														properties: Array [
-															BindingObjectPatternProperty {
-																key: StaticPropertyKey {
-																	value: Identifier {
+															JSBindingObjectPatternProperty {
+																key: JSStaticPropertyKey {
+																	value: JSIdentifier {
 																		name: "qux3"
 																		loc: Object {
 																			filename: "input.js"
@@ -2104,7 +2104,7 @@ Program {
 																		}
 																	}
 																}
-																value: BindingIdentifier {
+																value: JSBindingIdentifier {
 																	name: "qux3"
 																	loc: Object {
 																		filename: "input.js"
@@ -2167,9 +2167,9 @@ Program {
 											}
 										}
 									}
-									BindingObjectPatternProperty {
-										key: StaticPropertyKey {
-											value: Identifier {
+									JSBindingObjectPatternProperty {
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
 												name: "foo2"
 												loc: Object {
 													filename: "input.js"
@@ -2200,7 +2200,7 @@ Program {
 												}
 											}
 										}
-										value: BindingObjectPattern {
+										value: JSBindingObjectPattern {
 											rest: undefined
 											loc: Object {
 												filename: "input.js"
@@ -2216,9 +2216,9 @@ Program {
 												}
 											}
 											properties: Array [
-												BindingObjectPatternProperty {
-													key: StaticPropertyKey {
-														value: Identifier {
+												JSBindingObjectPatternProperty {
+													key: JSStaticPropertyKey {
+														value: JSIdentifier {
 															name: "baz2"
 															loc: Object {
 																filename: "input.js"
@@ -2249,7 +2249,7 @@ Program {
 															}
 														}
 													}
-													value: BindingArrayPattern {
+													value: JSBindingArrayPattern {
 														rest: undefined
 														loc: Object {
 															filename: "input.js"
@@ -2265,7 +2265,7 @@ Program {
 															}
 														}
 														elements: Array [
-															BindingIdentifier {
+															JSBindingIdentifier {
 																name: "qux4"
 																loc: Object {
 																	filename: "input.js"
@@ -2281,7 +2281,7 @@ Program {
 																		line: 9
 																	}
 																}
-																meta: PatternMeta {
+																meta: JSPatternMeta {
 																	optional: undefined
 																	typeAnnotation: undefined
 																	loc: Object {
@@ -2346,7 +2346,7 @@ Program {
 									line: 9
 								}
 							}
-							init: ReferenceIdentifier {
+							init: JSReferenceIdentifier {
 								name: "bar"
 								loc: Object {
 									filename: "input.js"
@@ -2368,7 +2368,7 @@ Program {
 				}
 			}
 		}
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
@@ -2384,7 +2384,7 @@ Program {
 					line: 10
 				}
 			}
-			declaration: VariableDeclarationStatement {
+			declaration: JSVariableDeclarationStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -2398,7 +2398,7 @@ Program {
 						line: 10
 					}
 				}
-				declaration: VariableDeclaration {
+				declaration: JSVariableDeclaration {
 					kind: "const"
 					loc: Object {
 						filename: "input.js"
@@ -2414,8 +2414,8 @@ Program {
 						}
 					}
 					declarations: Array [
-						VariableDeclarator {
-							id: BindingObjectPattern {
+						JSVariableDeclarator {
+							id: JSBindingObjectPattern {
 								rest: undefined
 								loc: Object {
 									filename: "input.js"
@@ -2431,9 +2431,9 @@ Program {
 									}
 								}
 								properties: Array [
-									BindingObjectPatternProperty {
-										key: StaticPropertyKey {
-											value: Identifier {
+									JSBindingObjectPatternProperty {
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
 												name: "foo"
 												loc: Object {
 													filename: "input.js"
@@ -2464,7 +2464,7 @@ Program {
 												}
 											}
 										}
-										value: BindingObjectPattern {
+										value: JSBindingObjectPattern {
 											rest: undefined
 											loc: Object {
 												filename: "input.js"
@@ -2480,9 +2480,9 @@ Program {
 												}
 											}
 											properties: Array [
-												BindingObjectPatternProperty {
-													key: StaticPropertyKey {
-														value: Identifier {
+												JSBindingObjectPatternProperty {
+													key: JSStaticPropertyKey {
+														value: JSIdentifier {
 															name: "baz"
 															loc: Object {
 																filename: "input.js"
@@ -2513,7 +2513,7 @@ Program {
 															}
 														}
 													}
-													value: BindingObjectPattern {
+													value: JSBindingObjectPattern {
 														rest: undefined
 														loc: Object {
 															filename: "input.js"
@@ -2529,9 +2529,9 @@ Program {
 															}
 														}
 														properties: Array [
-															BindingObjectPatternProperty {
-																key: StaticPropertyKey {
-																	value: Identifier {
+															JSBindingObjectPatternProperty {
+																key: JSStaticPropertyKey {
+																	value: JSIdentifier {
 																		name: "qux5"
 																		loc: Object {
 																			filename: "input.js"
@@ -2562,7 +2562,7 @@ Program {
 																		}
 																	}
 																}
-																value: BindingIdentifier {
+																value: JSBindingIdentifier {
 																	name: "qux5"
 																	loc: Object {
 																		filename: "input.js"
@@ -2625,9 +2625,9 @@ Program {
 											}
 										}
 									}
-									BindingObjectPatternProperty {
-										key: StaticPropertyKey {
-											value: Identifier {
+									JSBindingObjectPatternProperty {
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
 												name: "foo2"
 												loc: Object {
 													filename: "input.js"
@@ -2658,7 +2658,7 @@ Program {
 												}
 											}
 										}
-										value: BindingObjectPattern {
+										value: JSBindingObjectPattern {
 											rest: undefined
 											loc: Object {
 												filename: "input.js"
@@ -2674,9 +2674,9 @@ Program {
 												}
 											}
 											properties: Array [
-												BindingObjectPatternProperty {
-													key: StaticPropertyKey {
-														value: Identifier {
+												JSBindingObjectPatternProperty {
+													key: JSStaticPropertyKey {
+														value: JSIdentifier {
 															name: "baz2"
 															loc: Object {
 																filename: "input.js"
@@ -2707,7 +2707,7 @@ Program {
 															}
 														}
 													}
-													value: BindingArrayPattern {
+													value: JSBindingArrayPattern {
 														rest: undefined
 														loc: Object {
 															filename: "input.js"
@@ -2723,7 +2723,7 @@ Program {
 															}
 														}
 														elements: Array [
-															BindingObjectPattern {
+															JSBindingObjectPattern {
 																rest: undefined
 																loc: Object {
 																	filename: "input.js"
@@ -2738,7 +2738,7 @@ Program {
 																		line: 10
 																	}
 																}
-																meta: PatternMeta {
+																meta: JSPatternMeta {
 																	optional: undefined
 																	typeAnnotation: undefined
 																	loc: Object {
@@ -2756,9 +2756,9 @@ Program {
 																	}
 																}
 																properties: Array [
-																	BindingObjectPatternProperty {
-																		key: StaticPropertyKey {
-																			value: Identifier {
+																	JSBindingObjectPatternProperty {
+																		key: JSStaticPropertyKey {
+																			value: JSIdentifier {
 																				name: "qux6"
 																				loc: Object {
 																					filename: "input.js"
@@ -2789,7 +2789,7 @@ Program {
 																				}
 																			}
 																		}
-																		value: BindingIdentifier {
+																		value: JSBindingIdentifier {
 																			name: "qux6"
 																			loc: Object {
 																				filename: "input.js"
@@ -2869,7 +2869,7 @@ Program {
 									line: 10
 								}
 							}
-							init: ReferenceIdentifier {
+							init: JSReferenceIdentifier {
 								name: "bar"
 								loc: Object {
 									filename: "input.js"
@@ -2891,7 +2891,7 @@ Program {
 				}
 			}
 		}
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
@@ -2907,7 +2907,7 @@ Program {
 					line: 11
 				}
 			}
-			declaration: VariableDeclarationStatement {
+			declaration: JSVariableDeclarationStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -2921,7 +2921,7 @@ Program {
 						line: 11
 					}
 				}
-				declaration: VariableDeclaration {
+				declaration: JSVariableDeclaration {
 					kind: "const"
 					loc: Object {
 						filename: "input.js"
@@ -2937,8 +2937,8 @@ Program {
 						}
 					}
 					declarations: Array [
-						VariableDeclarator {
-							id: BindingObjectPattern {
+						JSVariableDeclarator {
+							id: JSBindingObjectPattern {
 								rest: undefined
 								loc: Object {
 									filename: "input.js"
@@ -2954,9 +2954,9 @@ Program {
 									}
 								}
 								properties: Array [
-									BindingObjectPatternProperty {
-										key: StaticPropertyKey {
-											value: Identifier {
+									JSBindingObjectPatternProperty {
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
 												name: "Foo"
 												loc: Object {
 													filename: "input.js"
@@ -2987,7 +2987,7 @@ Program {
 												}
 											}
 										}
-										value: BindingIdentifier {
+										value: JSBindingIdentifier {
 											name: "Foo"
 											loc: Object {
 												filename: "input.js"
@@ -3033,7 +3033,7 @@ Program {
 									line: 11
 								}
 							}
-							init: ReferenceIdentifier {
+							init: JSReferenceIdentifier {
 								name: "bar"
 								loc: Object {
 									filename: "input.js"
@@ -3055,7 +3055,7 @@ Program {
 				}
 			}
 		}
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
@@ -3071,7 +3071,7 @@ Program {
 					line: 12
 				}
 			}
-			declaration: VariableDeclarationStatement {
+			declaration: JSVariableDeclarationStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -3085,7 +3085,7 @@ Program {
 						line: 12
 					}
 				}
-				declaration: VariableDeclaration {
+				declaration: JSVariableDeclaration {
 					kind: "const"
 					loc: Object {
 						filename: "input.js"
@@ -3101,8 +3101,8 @@ Program {
 						}
 					}
 					declarations: Array [
-						VariableDeclarator {
-							id: BindingObjectPattern {
+						JSVariableDeclarator {
+							id: JSBindingObjectPattern {
 								rest: undefined
 								loc: Object {
 									filename: "input.js"
@@ -3118,9 +3118,9 @@ Program {
 									}
 								}
 								properties: Array [
-									BindingObjectPatternProperty {
-										key: StaticPropertyKey {
-											value: Identifier {
+									JSBindingObjectPatternProperty {
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
 												name: "foo"
 												loc: Object {
 													filename: "input.js"
@@ -3151,7 +3151,7 @@ Program {
 												}
 											}
 										}
-										value: BindingArrayPattern {
+										value: JSBindingArrayPattern {
 											rest: undefined
 											loc: Object {
 												filename: "input.js"
@@ -3167,7 +3167,7 @@ Program {
 												}
 											}
 											elements: Array [
-												ArrayHole {
+												JSArrayHole {
 													loc: Object {
 														filename: "input.js"
 														end: Object {
@@ -3182,7 +3182,7 @@ Program {
 														}
 													}
 												}
-												ArrayHole {
+												JSArrayHole {
 													loc: Object {
 														filename: "input.js"
 														end: Object {
@@ -3197,7 +3197,7 @@ Program {
 														}
 													}
 												}
-												BindingIdentifier {
+												JSBindingIdentifier {
 													name: "qux7"
 													loc: Object {
 														filename: "input.js"
@@ -3213,7 +3213,7 @@ Program {
 															line: 12
 														}
 													}
-													meta: PatternMeta {
+													meta: JSPatternMeta {
 														optional: undefined
 														typeAnnotation: undefined
 														loc: Object {
@@ -3262,7 +3262,7 @@ Program {
 									line: 12
 								}
 							}
-							init: ReferenceIdentifier {
+							init: JSReferenceIdentifier {
 								name: "bar"
 								loc: Object {
 									filename: "input.js"

@@ -5,7 +5,7 @@
 ## `es2015 > yield > inside-arrow-inside-generator`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "fn"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: true
 				hasHoistedVars: false
@@ -84,7 +84,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -100,7 +100,7 @@ Program {
 					}
 				}
 				body: Array [
-					ExpressionStatement {
+					JSExpressionStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -114,7 +114,7 @@ Program {
 								line: 2
 							}
 						}
-						expression: ArrowFunctionExpression {
+						expression: JSArrowFunctionExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -128,7 +128,7 @@ Program {
 									line: 2
 								}
 							}
-							body: ReferenceIdentifier {
+							body: JSReferenceIdentifier {
 								name: "yield"
 								loc: Object {
 									filename: "input.js"
@@ -145,7 +145,7 @@ Program {
 									}
 								}
 							}
-							head: FunctionHead {
+							head: JSFunctionHead {
 								async: false
 								hasHoistedVars: false
 								params: Array []
@@ -168,7 +168,7 @@ Program {
 							}
 						}
 					}
-					ExpressionStatement {
+					JSExpressionStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -182,7 +182,7 @@ Program {
 								line: 3
 							}
 						}
-						expression: ArrowFunctionExpression {
+						expression: JSArrowFunctionExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -196,7 +196,7 @@ Program {
 									line: 3
 								}
 							}
-							head: FunctionHead {
+							head: JSFunctionHead {
 								async: false
 								hasHoistedVars: false
 								params: Array []
@@ -217,7 +217,7 @@ Program {
 									}
 								}
 							}
-							body: BlockStatement {
+							body: JSBlockStatement {
 								directives: Array []
 								loc: Object {
 									filename: "input.js"
@@ -233,7 +233,7 @@ Program {
 									}
 								}
 								body: Array [
-									ExpressionStatement {
+									JSExpressionStatement {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -247,7 +247,7 @@ Program {
 												line: 3
 											}
 										}
-										expression: ReferenceIdentifier {
+										expression: JSReferenceIdentifier {
 											name: "yield"
 											loc: Object {
 												filename: "input.js"

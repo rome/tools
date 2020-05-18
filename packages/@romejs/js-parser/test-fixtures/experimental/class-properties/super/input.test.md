@@ -5,7 +5,7 @@
 ## `experimental > class-properties > super`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		ClassDeclaration {
-			id: BindingIdentifier {
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
 				name: "Fails"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			meta: ClassHead {
+			meta: JSClassHead {
 				implements: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
@@ -78,7 +78,7 @@ Program {
 						line: 1
 					}
 				}
-				superClass: ClassExpression {
+				superClass: JSClassExpression {
 					id: undefined
 					loc: Object {
 						filename: "input.js"
@@ -93,7 +93,7 @@ Program {
 							line: 1
 						}
 					}
-					meta: ClassHead {
+					meta: JSClassHead {
 						implements: undefined
 						superClass: undefined
 						superTypeParameters: undefined
@@ -112,10 +112,10 @@ Program {
 							}
 						}
 						body: Array [
-							ClassMethod {
+							JSClassMethod {
 								kind: "method"
-								key: StaticPropertyKey {
-									value: Identifier {
+								key: JSStaticPropertyKey {
+									value: JSIdentifier {
 										name: "c"
 										loc: Object {
 											filename: "input.js"
@@ -159,7 +159,7 @@ Program {
 										line: 1
 									}
 								}
-								body: BlockStatement {
+								body: JSBlockStatement {
 									body: Array []
 									directives: Array []
 									loc: Object {
@@ -176,7 +176,7 @@ Program {
 										}
 									}
 								}
-								head: FunctionHead {
+								head: JSFunctionHead {
 									async: false
 									generator: false
 									hasHoistedVars: false
@@ -199,7 +199,7 @@ Program {
 										}
 									}
 								}
-								meta: ClassPropertyMeta {
+								meta: JSClassPropertyMeta {
 									abstract: false
 									accessibility: undefined
 									optional: false
@@ -230,9 +230,9 @@ Program {
 					}
 				}
 				body: Array [
-					ClassProperty {
-						key: StaticPropertyKey {
-							value: Identifier {
+					JSClassProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "c"
 								loc: Object {
 									filename: "input.js"
@@ -263,7 +263,7 @@ Program {
 								}
 							}
 						}
-						value: CallExpression {
+						value: JSCallExpression {
 							arguments: Array []
 							loc: Object {
 								filename: "input.js"
@@ -278,7 +278,7 @@ Program {
 									line: 2
 								}
 							}
-							callee: MemberExpression {
+							callee: JSMemberExpression {
 								loc: Object {
 									filename: "input.js"
 									end: Object {
@@ -292,7 +292,7 @@ Program {
 										line: 2
 									}
 								}
-								object: Super {
+								object: JSSuper {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -307,8 +307,8 @@ Program {
 										}
 									}
 								}
-								property: StaticMemberProperty {
-									value: Identifier {
+								property: JSStaticMemberProperty {
+									value: JSIdentifier {
 										name: "c"
 										loc: Object {
 											filename: "input.js"
@@ -357,7 +357,7 @@ Program {
 								line: 2
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false

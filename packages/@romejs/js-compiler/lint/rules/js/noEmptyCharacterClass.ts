@@ -13,7 +13,11 @@ export default {
 	enter(path: Path): TransformExitResult {
 		const {context, node} = path;
 
-		if (node.type === "RegExpCharSet" && node.body.length === 0 && !node.invert) {
+		if (
+			node.type === "JSRegExpCharSet" &&
+			node.body.length === 0 &&
+			!node.invert
+		) {
 			context.addNodeDiagnostic(node, descriptions.LINT.JS_NO_EMPTY_CHAR_SET);
 			return REDUCE_REMOVE;
 		}

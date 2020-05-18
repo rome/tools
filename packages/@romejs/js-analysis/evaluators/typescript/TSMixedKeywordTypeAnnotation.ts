@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	TSMixedKeywordTypeAnnotation,
 	tsMixedKeywordTypeAnnotation,
-} from "@romejs/js-ast";
+} from "@romejs/ast";
 import MixedT from "../../types/MixedT";
 
 export default function TSMixedKeywordTypeAnnotation(

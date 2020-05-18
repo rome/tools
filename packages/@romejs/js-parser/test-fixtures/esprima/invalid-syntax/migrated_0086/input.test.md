@@ -5,7 +5,7 @@
 ## `esprima > invalid-syntax > migrated_0086`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ArrowFunctionExpression {
+			expression: JSArrowFunctionExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -82,7 +82,7 @@ Program {
 						line: 1
 					}
 				}
-				body: NumericLiteral {
+				body: JSNumericLiteral {
 					value: 42
 					format: undefined
 					loc: Object {
@@ -99,7 +99,7 @@ Program {
 						}
 					}
 				}
-				head: FunctionHead {
+				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
 					rest: undefined
@@ -119,7 +119,7 @@ Program {
 						}
 					}
 					params: Array [
-						BindingIdentifier {
+						JSBindingIdentifier {
 							name: "a"
 							loc: Object {
 								filename: "input.js"
@@ -136,7 +136,7 @@ Program {
 								}
 							}
 						}
-						BindingIdentifier {
+						JSBindingIdentifier {
 							name: "b"
 							loc: Object {
 								filename: "input.js"

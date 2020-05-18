@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyImportSpecifier, ImportDeclaration} from "@romejs/js-ast";
+import {AnyImportSpecifier, JSImportDeclaration} from "@romejs/ast";
 
 export default function getImportSpecifiers(
-	node: ImportDeclaration,
+	node: JSImportDeclaration,
 ): Array<AnyImportSpecifier> {
 	let specifiers: Array<AnyImportSpecifier> = [];
 

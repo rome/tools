@@ -5,7 +5,7 @@
 ## `esprima > rest-parameter > arrow-rest-parameter-object`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ArrowFunctionExpression {
+			expression: JSArrowFunctionExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -58,7 +58,7 @@ Program {
 						line: 1
 					}
 				}
-				body: ReferenceIdentifier {
+				body: JSReferenceIdentifier {
 					name: "c"
 					loc: Object {
 						filename: "input.js"
@@ -75,7 +75,7 @@ Program {
 						}
 					}
 				}
-				head: FunctionHead {
+				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
 					returnType: undefined
@@ -94,7 +94,7 @@ Program {
 						}
 					}
 					params: Array [
-						BindingIdentifier {
+						JSBindingIdentifier {
 							name: "a"
 							loc: Object {
 								filename: "input.js"
@@ -112,7 +112,7 @@ Program {
 							}
 						}
 					]
-					rest: BindingObjectPattern {
+					rest: JSBindingObjectPattern {
 						rest: undefined
 						loc: Object {
 							filename: "input.js"
@@ -128,9 +128,9 @@ Program {
 							}
 						}
 						properties: Array [
-							BindingObjectPatternProperty {
-								key: StaticPropertyKey {
-									value: Identifier {
+							JSBindingObjectPatternProperty {
+								key: JSStaticPropertyKey {
+									value: JSIdentifier {
 										name: "b"
 										loc: Object {
 											filename: "input.js"
@@ -161,7 +161,7 @@ Program {
 										}
 									}
 								}
-								value: BindingIdentifier {
+								value: JSBindingIdentifier {
 									name: "b"
 									loc: Object {
 										filename: "input.js"

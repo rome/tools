@@ -5,11 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, MOCK_PROGRAM} from "@romejs/js-ast";
+import {AnyNode, JSNodeBase, MOCK_PROGRAM} from "@romejs/ast";
 import {DEFAULT_PROJECT_CONFIG} from "@romejs/project";
 import {CompilerContext, Path, TransformVisitors} from "@romejs/js-compiler";
 import {SourceLocation} from "@romejs/parser-core";
-import {JSNodeBase} from "@romejs/js-ast/base";
 
 function removeProp<T extends {
 	loc?: SourceLocation;

@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 85`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExportAllDeclaration {
+		JSExportAllDeclaration {
 			exportKind: undefined
 			loc: Object {
 				filename: "input.js"
@@ -45,7 +45,7 @@ Program {
 					line: 1
 				}
 			}
-			source: StringLiteral {
+			source: JSStringLiteral {
 				value: "crypto"
 				loc: Object {
 					filename: "input.js"

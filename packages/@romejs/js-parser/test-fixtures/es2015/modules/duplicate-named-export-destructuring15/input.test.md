@@ -5,7 +5,7 @@
 ## `es2015 > modules > duplicate-named-export-destructuring15`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
@@ -46,7 +46,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclarationStatement {
+			declaration: JSVariableDeclarationStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -60,7 +60,7 @@ Program {
 						line: 1
 					}
 				}
-				declaration: VariableDeclaration {
+				declaration: JSVariableDeclaration {
 					kind: "const"
 					loc: Object {
 						filename: "input.js"
@@ -76,8 +76,8 @@ Program {
 						}
 					}
 					declarations: Array [
-						VariableDeclarator {
-							id: BindingObjectPattern {
+						JSVariableDeclarator {
+							id: JSBindingObjectPattern {
 								rest: undefined
 								loc: Object {
 									filename: "input.js"
@@ -93,9 +93,9 @@ Program {
 									}
 								}
 								properties: Array [
-									BindingObjectPatternProperty {
-										key: StaticPropertyKey {
-											value: Identifier {
+									JSBindingObjectPatternProperty {
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
 												name: "foo"
 												loc: Object {
 													filename: "input.js"
@@ -126,7 +126,7 @@ Program {
 												}
 											}
 										}
-										value: BindingIdentifier {
+										value: JSBindingIdentifier {
 											name: "foo2"
 											loc: Object {
 												filename: "input.js"
@@ -172,7 +172,7 @@ Program {
 									line: 1
 								}
 							}
-							init: ReferenceIdentifier {
+							init: JSReferenceIdentifier {
 								name: "bar"
 								loc: Object {
 									filename: "input.js"
@@ -194,7 +194,7 @@ Program {
 				}
 			}
 		}
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
@@ -210,7 +210,7 @@ Program {
 					line: 2
 				}
 			}
-			declaration: VariableDeclarationStatement {
+			declaration: JSVariableDeclarationStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -224,7 +224,7 @@ Program {
 						line: 2
 					}
 				}
-				declaration: VariableDeclaration {
+				declaration: JSVariableDeclaration {
 					kind: "const"
 					loc: Object {
 						filename: "input.js"
@@ -240,8 +240,8 @@ Program {
 						}
 					}
 					declarations: Array [
-						VariableDeclarator {
-							id: BindingIdentifier {
+						JSVariableDeclarator {
+							id: JSBindingIdentifier {
 								name: "foo2"
 								loc: Object {
 									filename: "input.js"
@@ -271,7 +271,7 @@ Program {
 									line: 2
 								}
 							}
-							init: NumericLiteral {
+							init: JSNumericLiteral {
 								value: 1
 								format: undefined
 								loc: Object {

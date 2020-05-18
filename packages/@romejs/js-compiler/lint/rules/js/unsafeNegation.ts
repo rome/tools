@@ -6,7 +6,7 @@
  */
 
 import {Path, TransformExitResult} from "@romejs/js-compiler";
-import {unaryExpression} from "@romejs/js-ast";
+import {jsUnaryExpression} from "@romejs/ast";
 import {descriptions} from "@romejs/diagnostics";
 
 export default {
@@ -15,15 +15,15 @@ export default {
 		const {node} = path;
 
 		if (
-			node.type === "BinaryExpression" &&
+			node.type === "JSBinaryExpression" &&
 			(node.operator === "in" || node.operator === "instanceof") &&
-			node.left.type === "UnaryExpression" &&
+			node.left.type === "JSUnaryExpression" &&
 			node.left.operator === "!"
 		) {
 			return path.context.addFixableDiagnostic(
 				{
 					old: node,
-					fixed: unaryExpression.create({
+					fixed: jsUnaryExpression.create({
 						operator: node.left.operator,
 						argument: {
 							...node,

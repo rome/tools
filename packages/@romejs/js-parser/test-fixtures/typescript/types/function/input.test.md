@@ -5,7 +5,7 @@
 ## `typescript > types > function`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.ts"
@@ -60,8 +60,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "f"
 							loc: Object {
 								filename: "input.ts"
@@ -76,7 +76,7 @@ Program {
 									line: 1
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
 									filename: "input.ts"
@@ -105,7 +105,7 @@ Program {
 											line: 1
 										}
 									}
-									typeAnnotation: VoidKeywordTypeAnnotation {
+									typeAnnotation: TSVoidKeywordTypeAnnotation {
 										loc: Object {
 											filename: "input.ts"
 											end: Object {
@@ -135,7 +135,7 @@ Program {
 												line: 1
 											}
 										}
-										rest: BindingIdentifier {
+										rest: JSBindingIdentifier {
 											name: "c"
 											loc: Object {
 												filename: "input.ts"
@@ -151,7 +151,7 @@ Program {
 													line: 1
 												}
 											}
-											meta: PatternMeta {
+											meta: JSPatternMeta {
 												optional: undefined
 												loc: Object {
 													filename: "input.ts"
@@ -199,7 +199,7 @@ Program {
 											}
 										}
 										parameters: Array [
-											BindingIdentifier {
+											JSBindingIdentifier {
 												name: "a"
 												loc: Object {
 													filename: "input.ts"
@@ -215,7 +215,7 @@ Program {
 														line: 1
 													}
 												}
-												meta: PatternMeta {
+												meta: JSPatternMeta {
 													optional: undefined
 													loc: Object {
 														filename: "input.ts"
@@ -247,7 +247,7 @@ Program {
 													}
 												}
 											}
-											BindingIdentifier {
+											JSBindingIdentifier {
 												name: "b"
 												loc: Object {
 													filename: "input.ts"
@@ -263,7 +263,7 @@ Program {
 														line: 1
 													}
 												}
-												meta: PatternMeta {
+												meta: JSPatternMeta {
 													optional: true
 													loc: Object {
 														filename: "input.ts"

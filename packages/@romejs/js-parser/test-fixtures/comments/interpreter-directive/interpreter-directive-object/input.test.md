@@ -5,7 +5,7 @@
 ## `comments > interpreter-directive > interpreter-directive-object`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -28,7 +28,7 @@ Program {
 			line: 1
 		}
 	}
-	interpreter: InterpreterDirective {
+	interpreter: JSInterpreterDirective {
 		value: "/usr/bin/env babel-node"
 		loc: Object {
 			filename: "input.js"
@@ -45,7 +45,7 @@ Program {
 		}
 	}
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -59,7 +59,7 @@ Program {
 					line: 3
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.js"
@@ -75,8 +75,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingObjectPattern {
+					JSVariableDeclarator {
+						id: JSBindingObjectPattern {
 							rest: undefined
 							loc: Object {
 								filename: "input.js"
@@ -92,9 +92,9 @@ Program {
 								}
 							}
 							properties: Array [
-								BindingObjectPatternProperty {
-									key: StaticPropertyKey {
-										value: Identifier {
+								JSBindingObjectPatternProperty {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
 											name: "spawn"
 											loc: Object {
 												filename: "input.js"
@@ -125,7 +125,7 @@ Program {
 											}
 										}
 									}
-									value: BindingIdentifier {
+									value: JSBindingIdentifier {
 										name: "spawn"
 										loc: Object {
 											filename: "input.js"
@@ -171,7 +171,7 @@ Program {
 								line: 3
 							}
 						}
-						init: ReferenceIdentifier {
+						init: JSReferenceIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.js"

@@ -5,7 +5,7 @@
 ## `typescript > enum > declare`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -19,9 +19,9 @@ Program {
 	loc: Object {
 		filename: "input.ts"
 		end: Object {
-			column: 17
-			index: 17
-			line: 1
+			column: 0
+			index: 18
+			line: 2
 		}
 		start: Object {
 			column: 0
@@ -31,7 +31,7 @@ Program {
 	}
 	body: Array [
 		TSEnumDeclaration {
-			id: BindingIdentifier {
+			id: JSBindingIdentifier {
 				name: "E"
 				loc: Object {
 					filename: "input.ts"

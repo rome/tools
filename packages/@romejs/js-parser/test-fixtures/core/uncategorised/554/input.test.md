@@ -5,7 +5,7 @@
 ## `core > uncategorised > 554`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.js"
@@ -84,8 +84,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "a"
 							loc: Object {
 								filename: "input.js"
@@ -115,7 +115,7 @@ Program {
 								line: 1
 							}
 						}
-						init: MemberExpression {
+						init: JSMemberExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -129,7 +129,7 @@ Program {
 									line: 1
 								}
 							}
-							object: NumericLiteral {
+							object: JSNumericLiteral {
 								value: 83
 								format: "octal"
 								loc: Object {
@@ -146,8 +146,8 @@ Program {
 									}
 								}
 							}
-							property: StaticMemberProperty {
-								value: Identifier {
+							property: JSStaticMemberProperty {
+								value: JSIdentifier {
 									name: ""
 									loc: Object {
 										filename: "input.js"

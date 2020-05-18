@@ -5,7 +5,7 @@
 ## `esprima > es2015-method-definition > migrated_0002`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: AssignmentExpression {
+			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
 					filename: "input.js"
@@ -59,7 +59,7 @@ Program {
 						line: 1
 					}
 				}
-				left: AssignmentIdentifier {
+				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: Object {
 						filename: "input.js"
@@ -76,7 +76,7 @@ Program {
 						}
 					}
 				}
-				right: ObjectExpression {
+				right: JSObjectExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -91,10 +91,10 @@ Program {
 						}
 					}
 					properties: Array [
-						ObjectMethod {
+						JSObjectMethod {
 							kind: "method"
-							key: StaticPropertyKey {
-								value: StringLiteral {
+							key: JSStaticPropertyKey {
+								value: JSStringLiteral {
 									value: "method"
 									loc: Object {
 										filename: "input.js"
@@ -137,7 +137,7 @@ Program {
 									line: 1
 								}
 							}
-							body: BlockStatement {
+							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
 								loc: Object {
@@ -154,7 +154,7 @@ Program {
 									}
 								}
 							}
-							head: FunctionHead {
+							head: JSFunctionHead {
 								async: false
 								generator: false
 								hasHoistedVars: false

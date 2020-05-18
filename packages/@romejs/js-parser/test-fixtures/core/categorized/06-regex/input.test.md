@@ -5,7 +5,7 @@
 ## `core > categorized > 06-regex`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: BinaryExpression {
+			expression: JSBinaryExpression {
 				operator: "/"
 				loc: Object {
 					filename: "input.js"
@@ -59,7 +59,7 @@ Program {
 						line: 1
 					}
 				}
-				right: ReferenceIdentifier {
+				right: JSReferenceIdentifier {
 					name: "i"
 					loc: Object {
 						filename: "input.js"
@@ -76,7 +76,7 @@ Program {
 						}
 					}
 				}
-				left: BinaryExpression {
+				left: JSBinaryExpression {
 					operator: "/"
 					loc: Object {
 						filename: "input.js"
@@ -91,7 +91,7 @@ Program {
 							line: 1
 						}
 					}
-					right: NumericLiteral {
+					right: JSNumericLiteral {
 						value: 42
 						format: undefined
 						loc: Object {
@@ -108,7 +108,7 @@ Program {
 							}
 						}
 					}
-					left: UnaryExpression {
+					left: JSUnaryExpression {
 						operator: "!"
 						prefix: true
 						loc: Object {
@@ -124,8 +124,8 @@ Program {
 								line: 1
 							}
 						}
-						argument: FunctionExpression {
-							id: BindingIdentifier {
+						argument: JSFunctionExpression {
+							id: JSBindingIdentifier {
 								name: "fn"
 								loc: Object {
 									filename: "input.js"
@@ -155,7 +155,7 @@ Program {
 									line: 1
 								}
 							}
-							body: BlockStatement {
+							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
 								loc: Object {
@@ -172,7 +172,7 @@ Program {
 									}
 								}
 							}
-							head: FunctionHead {
+							head: JSFunctionHead {
 								async: false
 								generator: false
 								hasHoistedVars: false

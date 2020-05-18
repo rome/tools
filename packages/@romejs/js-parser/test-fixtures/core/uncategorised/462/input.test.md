@@ -5,7 +5,7 @@
 ## `core > uncategorised > 462`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		LabeledStatement {
+		JSLabeledStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			label: Identifier {
+			label: JSIdentifier {
 				name: "x"
 				loc: Object {
 					filename: "input.js"
@@ -85,7 +85,7 @@ Program {
 					}
 				}
 			}
-			body: WhileStatement {
+			body: JSWhileStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -99,7 +99,7 @@ Program {
 						line: 1
 					}
 				}
-				test: BooleanLiteral {
+				test: JSBooleanLiteral {
 					value: true
 					loc: Object {
 						filename: "input.js"
@@ -115,7 +115,7 @@ Program {
 						}
 					}
 				}
-				body: BlockStatement {
+				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
 						filename: "input.js"
@@ -131,7 +131,7 @@ Program {
 						}
 					}
 					body: Array [
-						ExpressionStatement {
+						JSExpressionStatement {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -145,7 +145,7 @@ Program {
 									line: 1
 								}
 							}
-							expression: FunctionExpression {
+							expression: JSFunctionExpression {
 								id: undefined
 								loc: Object {
 									filename: "input.js"
@@ -160,7 +160,7 @@ Program {
 										line: 1
 									}
 								}
-								head: FunctionHead {
+								head: JSFunctionHead {
 									async: false
 									generator: false
 									hasHoistedVars: false
@@ -183,7 +183,7 @@ Program {
 										}
 									}
 								}
-								body: BlockStatement {
+								body: JSBlockStatement {
 									directives: Array []
 									loc: Object {
 										filename: "input.js"
@@ -199,7 +199,7 @@ Program {
 										}
 									}
 									body: Array [
-										ContinueStatement {
+										JSContinueStatement {
 											loc: Object {
 												filename: "input.js"
 												end: Object {
@@ -213,7 +213,7 @@ Program {
 													line: 1
 												}
 											}
-											label: Identifier {
+											label: JSIdentifier {
 												name: "x"
 												loc: Object {
 													filename: "input.js"

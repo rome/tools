@@ -5,7 +5,7 @@
 ## `typescript > type-alias > export`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentLine {
+		JSCommentLine {
 			id: "0"
 			value: " `export default type` is not valid."
 			loc: Object {
@@ -48,7 +48,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "type"
 			specifiers: undefined
 			trailingComments: Array ["0"]
@@ -65,8 +65,8 @@ Program {
 					line: 1
 				}
 			}
-			declaration: TypeAliasTypeAnnotation {
-				id: BindingIdentifier {
+			declaration: TSTypeAliasTypeAnnotation {
+				id: JSBindingIdentifier {
 					name: "T"
 					loc: Object {
 						filename: "input.ts"

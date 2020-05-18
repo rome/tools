@@ -5,7 +5,7 @@
 ## `experimental > class-private-methods > combined`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		ClassDeclaration {
-			id: BindingIdentifier {
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			meta: ClassHead {
+			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
@@ -80,9 +80,9 @@ Program {
 					}
 				}
 				body: Array [
-					ClassProperty {
-						key: StaticPropertyKey {
-							value: Identifier {
+					JSClassProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "a"
 								loc: Object {
 									filename: "input.js"
@@ -113,7 +113,7 @@ Program {
 								}
 							}
 						}
-						value: NumericLiteral {
+						value: JSNumericLiteral {
 							value: 1
 							format: undefined
 							loc: Object {
@@ -145,7 +145,7 @@ Program {
 								line: 2
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -172,10 +172,10 @@ Program {
 							}
 						}
 					}
-					ClassPrivateMethod {
+					JSClassPrivateMethod {
 						kind: "method"
-						key: PrivateName {
-							id: Identifier {
+						key: JSPrivateName {
+							id: JSIdentifier {
 								name: "a"
 								loc: Object {
 									filename: "input.js"
@@ -219,7 +219,7 @@ Program {
 								line: 4
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: true
 							hasHoistedVars: false
@@ -242,7 +242,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -268,7 +268,7 @@ Program {
 								}
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
 								filename: "input.js"
@@ -284,7 +284,7 @@ Program {
 								}
 							}
 							body: Array [
-								ExpressionStatement {
+								JSExpressionStatement {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -298,7 +298,7 @@ Program {
 											line: 5
 										}
 									}
-									expression: YieldExpression {
+									expression: JSYieldExpression {
 										delegate: false
 										loc: Object {
 											filename: "input.js"
@@ -313,7 +313,7 @@ Program {
 												line: 5
 											}
 										}
-										argument: CallExpression {
+										argument: JSCallExpression {
 											arguments: Array []
 											loc: Object {
 												filename: "input.js"
@@ -328,7 +328,7 @@ Program {
 													line: 5
 												}
 											}
-											callee: ReferenceIdentifier {
+											callee: JSReferenceIdentifier {
 												name: "bar"
 												loc: Object {
 													filename: "input.js"
@@ -351,9 +351,9 @@ Program {
 							]
 						}
 					}
-					ClassPrivateProperty {
-						key: PrivateName {
-							id: Identifier {
+					JSClassPrivateProperty {
+						key: JSPrivateName {
+							id: JSIdentifier {
 								name: "b"
 								loc: Object {
 									filename: "input.js"
@@ -384,7 +384,7 @@ Program {
 								}
 							}
 						}
-						value: NumericLiteral {
+						value: JSNumericLiteral {
 							value: 2
 							format: undefined
 							loc: Object {
@@ -415,7 +415,7 @@ Program {
 								line: 8
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -442,10 +442,10 @@ Program {
 							}
 						}
 					}
-					ClassMethod {
+					JSClassMethod {
 						kind: "get"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "b"
 								loc: Object {
 									filename: "input.js"
@@ -489,7 +489,7 @@ Program {
 								line: 10
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -512,7 +512,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -538,7 +538,7 @@ Program {
 								}
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
 								filename: "input.js"
@@ -554,7 +554,7 @@ Program {
 								}
 							}
 							body: Array [
-								ReturnStatement {
+								JSReturnStatement {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -568,7 +568,7 @@ Program {
 											line: 10
 										}
 									}
-									argument: NumericLiteral {
+									argument: JSNumericLiteral {
 										value: 9_999
 										format: undefined
 										loc: Object {
@@ -589,10 +589,10 @@ Program {
 							]
 						}
 					}
-					ClassPrivateMethod {
+					JSClassPrivateMethod {
 						kind: "set"
-						key: PrivateName {
-							id: Identifier {
+						key: JSPrivateName {
+							id: JSIdentifier {
 								name: "c"
 								loc: Object {
 									filename: "input.js"
@@ -636,7 +636,7 @@ Program {
 								line: 11
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -662,7 +662,7 @@ Program {
 								}
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
 								filename: "input.js"
@@ -678,7 +678,7 @@ Program {
 								}
 							}
 							body: Array [
-								ReturnStatement {
+								JSReturnStatement {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -692,7 +692,7 @@ Program {
 											line: 11
 										}
 									}
-									argument: ReferenceIdentifier {
+									argument: JSReferenceIdentifier {
 										name: "x"
 										loc: Object {
 											filename: "input.js"
@@ -712,7 +712,7 @@ Program {
 								}
 							]
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -734,7 +734,7 @@ Program {
 								}
 							}
 							params: Array [
-								BindingIdentifier {
+								JSBindingIdentifier {
 									name: "x"
 									loc: Object {
 										filename: "input.js"
@@ -750,7 +750,7 @@ Program {
 											line: 11
 										}
 									}
-									meta: PatternMeta {
+									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
@@ -771,10 +771,10 @@ Program {
 							]
 						}
 					}
-					ClassPrivateMethod {
+					JSClassPrivateMethod {
 						kind: "method"
-						key: PrivateName {
-							id: Identifier {
+						key: JSPrivateName {
+							id: JSIdentifier {
 								name: "d"
 								loc: Object {
 									filename: "input.js"
@@ -818,7 +818,7 @@ Program {
 								line: 13
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -841,7 +841,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -867,7 +867,7 @@ Program {
 								}
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
 								filename: "input.js"
@@ -883,7 +883,7 @@ Program {
 								}
 							}
 							body: Array [
-								ReturnStatement {
+								JSReturnStatement {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -897,7 +897,7 @@ Program {
 											line: 14
 										}
 									}
-									argument: CallExpression {
+									argument: JSCallExpression {
 										arguments: Array []
 										loc: Object {
 											filename: "input.js"
@@ -912,7 +912,7 @@ Program {
 												line: 14
 											}
 										}
-										callee: MemberExpression {
+										callee: JSMemberExpression {
 											loc: Object {
 												filename: "input.js"
 												end: Object {
@@ -926,7 +926,7 @@ Program {
 													line: 14
 												}
 											}
-											object: ReferenceIdentifier {
+											object: JSReferenceIdentifier {
 												name: "Math"
 												loc: Object {
 													filename: "input.js"
@@ -943,8 +943,8 @@ Program {
 													}
 												}
 											}
-											property: StaticMemberProperty {
-												value: Identifier {
+											property: JSStaticMemberProperty {
+												value: JSIdentifier {
 													name: "random"
 													loc: Object {
 														filename: "input.js"

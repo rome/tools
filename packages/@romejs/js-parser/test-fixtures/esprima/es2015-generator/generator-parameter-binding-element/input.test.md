@@ -5,7 +5,7 @@
 ## `esprima > es2015-generator > generator-parameter-binding-element`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: FunctionExpression {
+			expression: JSFunctionExpression {
 				id: undefined
 				loc: Object {
 					filename: "input.js"
@@ -83,7 +83,7 @@ Program {
 						line: 1
 					}
 				}
-				head: FunctionHead {
+				head: JSFunctionHead {
 					async: false
 					generator: true
 					hasHoistedVars: false
@@ -106,7 +106,7 @@ Program {
 						}
 					}
 				}
-				body: BlockStatement {
+				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
 						filename: "input.js"
@@ -122,8 +122,8 @@ Program {
 						}
 					}
 					body: Array [
-						FunctionDeclaration {
-							id: BindingIdentifier {
+						JSFunctionDeclaration {
+							id: JSBindingIdentifier {
 								name: ""
 								loc: Object {
 									filename: "input.js"
@@ -153,7 +153,7 @@ Program {
 									line: 2
 								}
 							}
-							head: FunctionHead {
+							head: JSFunctionHead {
 								async: false
 								generator: false
 								hasHoistedVars: false
@@ -175,7 +175,7 @@ Program {
 									}
 								}
 								params: Array [
-									BindingAssignmentPattern {
+									JSBindingAssignmentPattern {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -189,7 +189,7 @@ Program {
 												line: 2
 											}
 										}
-										right: ReferenceIdentifier {
+										right: JSReferenceIdentifier {
 											name: "yield"
 											loc: Object {
 												filename: "input.js"
@@ -206,7 +206,7 @@ Program {
 												}
 											}
 										}
-										left: BindingIdentifier {
+										left: JSBindingIdentifier {
 											name: "x"
 											loc: Object {
 												filename: "input.js"
@@ -222,7 +222,7 @@ Program {
 													line: 2
 												}
 											}
-											meta: PatternMeta {
+											meta: JSPatternMeta {
 												optional: undefined
 												typeAnnotation: undefined
 												loc: Object {
@@ -243,7 +243,7 @@ Program {
 									}
 								]
 							}
-							body: BlockStatement {
+							body: JSBlockStatement {
 								directives: Array []
 								loc: Object {
 									filename: "input.js"
@@ -259,7 +259,7 @@ Program {
 									}
 								}
 								body: Array [
-									ExpressionStatement {
+									JSExpressionStatement {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -273,7 +273,7 @@ Program {
 												line: 2
 											}
 										}
-										expression: NumericLiteral {
+										expression: JSNumericLiteral {
 											value: 3
 											format: undefined
 											loc: Object {
@@ -291,7 +291,7 @@ Program {
 											}
 										}
 									}
-									ExpressionStatement {
+									JSExpressionStatement {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -305,7 +305,7 @@ Program {
 												line: 2
 											}
 										}
-										expression: ReferenceIdentifier {
+										expression: JSReferenceIdentifier {
 											name: "INVALID_PLACEHOLDER"
 											loc: Object {
 												filename: "input.js"
@@ -322,7 +322,7 @@ Program {
 											}
 										}
 									}
-									BlockStatement {
+									JSBlockStatement {
 										body: Array []
 										directives: Array []
 										loc: Object {
@@ -342,7 +342,7 @@ Program {
 								]
 							}
 						}
-						ExpressionStatement {
+						JSExpressionStatement {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -356,7 +356,7 @@ Program {
 									line: 3
 								}
 							}
-							expression: ReferenceIdentifier {
+							expression: JSReferenceIdentifier {
 								name: "INVALID_PLACEHOLDER"
 								loc: Object {
 									filename: "input.js"

@@ -9,7 +9,7 @@ import {
 	AnyNode,
 	TSExternalModuleReference,
 	tsExternalModuleReference,
-} from "@romejs/js-ast";
+} from "@romejs/ast";
 
 export default function TSExternalModuleReference(node: AnyNode) {
 	node = tsExternalModuleReference.assert(node);

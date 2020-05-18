@@ -5,7 +5,7 @@
 ## `typescript > interface > construct-signature`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -31,7 +31,7 @@ Program {
 	}
 	body: Array [
 		TSInterfaceDeclaration {
-			id: BindingIdentifier {
+			id: JSBindingIdentifier {
 				name: "I"
 				loc: Object {
 					filename: "input.ts"
@@ -92,7 +92,7 @@ Program {
 								line: 2
 							}
 						}
-						typeAnnotation: VoidKeywordTypeAnnotation {
+						typeAnnotation: TSVoidKeywordTypeAnnotation {
 							loc: Object {
 								filename: "input.ts"
 								end: Object {
@@ -124,7 +124,7 @@ Program {
 								}
 							}
 							parameters: Array [
-								BindingIdentifier {
+								JSBindingIdentifier {
 									name: "x"
 									loc: Object {
 										filename: "input.ts"
@@ -140,7 +140,7 @@ Program {
 											line: 2
 										}
 									}
-									meta: PatternMeta {
+									meta: JSPatternMeta {
 										optional: undefined
 										loc: Object {
 											filename: "input.ts"

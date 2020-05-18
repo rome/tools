@@ -5,7 +5,7 @@
 ## `typescript > function > getter-setter`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -19,9 +19,9 @@ Program {
 	loc: Object {
 		filename: "input.ts"
 		end: Object {
-			column: 2
-			index: 78
-			line: 6
+			column: 0
+			index: 79
+			line: 7
 		}
 		start: Object {
 			column: 0
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
 					filename: "input.ts"
@@ -60,8 +60,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "g"
 							loc: Object {
 								filename: "input.ts"
@@ -91,7 +91,7 @@ Program {
 								line: 1
 							}
 						}
-						init: ObjectExpression {
+						init: JSObjectExpression {
 							loc: Object {
 								filename: "input.ts"
 								end: Object {
@@ -106,10 +106,10 @@ Program {
 								}
 							}
 							properties: Array [
-								ObjectMethod {
+								JSObjectMethod {
 									kind: "get"
-									key: StaticPropertyKey {
-										value: Identifier {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
 											name: "m"
 											loc: Object {
 												filename: "input.ts"
@@ -153,7 +153,7 @@ Program {
 											line: 2
 										}
 									}
-									body: BlockStatement {
+									body: JSBlockStatement {
 										body: Array []
 										directives: Array []
 										loc: Object {
@@ -170,7 +170,7 @@ Program {
 											}
 										}
 									}
-									head: FunctionHead {
+									head: JSFunctionHead {
 										async: false
 										generator: false
 										hasHoistedVars: false
@@ -191,7 +191,7 @@ Program {
 												line: 2
 											}
 										}
-										thisType: BindingIdentifier {
+										thisType: JSBindingIdentifier {
 											name: "this"
 											loc: Object {
 												filename: "input.ts"
@@ -207,7 +207,7 @@ Program {
 													line: 2
 												}
 											}
-											meta: PatternMeta {
+											meta: JSPatternMeta {
 												optional: undefined
 												loc: Object {
 													filename: "input.ts"
@@ -248,7 +248,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -262,7 +262,7 @@ Program {
 					line: 4
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
 					filename: "input.ts"
@@ -278,8 +278,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "s"
 							loc: Object {
 								filename: "input.ts"
@@ -309,7 +309,7 @@ Program {
 								line: 4
 							}
 						}
-						init: ObjectExpression {
+						init: JSObjectExpression {
 							loc: Object {
 								filename: "input.ts"
 								end: Object {
@@ -324,10 +324,10 @@ Program {
 								}
 							}
 							properties: Array [
-								ObjectMethod {
+								JSObjectMethod {
 									kind: "set"
-									key: StaticPropertyKey {
-										value: Identifier {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
 											name: "m"
 											loc: Object {
 												filename: "input.ts"
@@ -371,7 +371,7 @@ Program {
 											line: 5
 										}
 									}
-									body: BlockStatement {
+									body: JSBlockStatement {
 										body: Array []
 										directives: Array []
 										loc: Object {
@@ -388,7 +388,7 @@ Program {
 											}
 										}
 									}
-									head: FunctionHead {
+									head: JSFunctionHead {
 										async: false
 										generator: false
 										hasHoistedVars: false
@@ -409,7 +409,7 @@ Program {
 											}
 										}
 										params: Array [
-											BindingIdentifier {
+											JSBindingIdentifier {
 												name: "value"
 												loc: Object {
 													filename: "input.ts"
@@ -425,7 +425,7 @@ Program {
 														line: 5
 													}
 												}
-												meta: PatternMeta {
+												meta: JSPatternMeta {
 													optional: undefined
 													typeAnnotation: undefined
 													loc: Object {
@@ -444,7 +444,7 @@ Program {
 												}
 											}
 										]
-										thisType: BindingIdentifier {
+										thisType: JSBindingIdentifier {
 											name: "this"
 											loc: Object {
 												filename: "input.ts"
@@ -460,7 +460,7 @@ Program {
 													line: 5
 												}
 											}
-											meta: PatternMeta {
+											meta: JSPatternMeta {
 												optional: undefined
 												loc: Object {
 													filename: "input.ts"

@@ -5,7 +5,7 @@
 ## `typescript > cast > type-assertion`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -73,7 +73,7 @@ Program {
 						}
 					}
 				}
-				expression: NumericLiteral {
+				expression: JSNumericLiteral {
 					value: 1
 					format: undefined
 					loc: Object {

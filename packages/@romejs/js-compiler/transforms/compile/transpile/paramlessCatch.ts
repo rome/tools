@@ -6,17 +6,17 @@
  */
 
 import {Path} from "@romejs/js-compiler";
-import {AnyNode, bindingIdentifier} from "@romejs/js-ast";
+import {AnyNode, jsBindingIdentifier} from "@romejs/ast";
 
 export default {
 	name: "paramlessCatch",
 	enter(path: Path): AnyNode {
 		const {node} = path;
 
-		if (node.type === "CatchClause" && node.param === undefined) {
+		if (node.type === "JSCatchClause" && node.param === undefined) {
 			return {
 				...node,
-				param: bindingIdentifier.create({
+				param: jsBindingIdentifier.create({
 					name: path.scope.generateUid(),
 				}),
 			};

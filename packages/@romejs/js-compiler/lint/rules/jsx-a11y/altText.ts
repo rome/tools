@@ -6,7 +6,7 @@
  */
 
 import {Path, TransformExitResult} from "@romejs/js-compiler";
-import {JSXElement} from "@romejs/js-ast";
+import {JSXElement} from "@romejs/ast";
 import {descriptions} from "@romejs/diagnostics";
 import {
 	getJSXAttribute,
@@ -21,7 +21,7 @@ function hasImgAltText(node: JSXElement): boolean {
 	}
 	return (
 		!!(attr.value &&
-		attr.value.type === "StringLiteral" &&
+		attr.value.type === "JSStringLiteral" &&
 		attr.value.value === "") || hasJSXAttribute(node, "alt")
 	);
 }
@@ -59,7 +59,7 @@ function hasTypeImage(node: JSXElement): boolean {
 		return false;
 	}
 	return !!(attr.value &&
-	attr.value.type === "StringLiteral" &&
+	attr.value.type === "JSStringLiteral" &&
 	attr.value.value === "image");
 }
 

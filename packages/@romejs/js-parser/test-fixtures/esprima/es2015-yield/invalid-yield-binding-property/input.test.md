@@ -5,7 +5,7 @@
 ## `esprima > es2015-yield > invalid-yield-binding-property`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.js"
@@ -84,8 +84,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingObjectPattern {
+					JSVariableDeclarator {
+						id: JSBindingObjectPattern {
 							rest: undefined
 							loc: Object {
 								filename: "input.js"
@@ -101,9 +101,9 @@ Program {
 								}
 							}
 							properties: Array [
-								BindingObjectPatternProperty {
-									key: StaticPropertyKey {
-										value: Identifier {
+								JSBindingObjectPatternProperty {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
 											name: "x"
 											loc: Object {
 												filename: "input.js"
@@ -134,7 +134,7 @@ Program {
 											}
 										}
 									}
-									value: BindingAssignmentPattern {
+									value: JSBindingAssignmentPattern {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -148,7 +148,7 @@ Program {
 												line: 1
 											}
 										}
-										left: BindingIdentifier {
+										left: JSBindingIdentifier {
 											name: "y"
 											loc: Object {
 												filename: "input.js"
@@ -165,7 +165,7 @@ Program {
 												}
 											}
 										}
-										right: ReferenceIdentifier {
+										right: JSReferenceIdentifier {
 											name: "yield"
 											loc: Object {
 												filename: "input.js"
@@ -212,7 +212,7 @@ Program {
 								line: 1
 							}
 						}
-						init: ReferenceIdentifier {
+						init: JSReferenceIdentifier {
 							name: "z"
 							loc: Object {
 								filename: "input.js"

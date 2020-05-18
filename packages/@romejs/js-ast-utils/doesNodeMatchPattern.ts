@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 import getNodeReferenceParts from "./getNodeReferenceParts";
 import isIdentifierish from "./isIdentifierish";
 
@@ -46,7 +46,7 @@ export default function doesNodeMatchPattern(
 	}
 
 	// Not a member expression
-	if (node.type !== "MemberExpression" && !isIdentifierish(node)) {
+	if (node.type !== "JSMemberExpression" && !isIdentifierish(node)) {
 		return false;
 	}
 

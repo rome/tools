@@ -5,7 +5,7 @@
 ## `esprima > es2015-template-literals > after-switch`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		SwitchStatement {
+		JSSwitchStatement {
 			cases: Array []
 			loc: Object {
 				filename: "input.js"
@@ -69,7 +69,7 @@ Program {
 					line: 1
 				}
 			}
-			discriminant: TemplateLiteral {
+			discriminant: JSTemplateLiteral {
 				expressions: Array []
 				loc: Object {
 					filename: "input.js"
@@ -85,7 +85,7 @@ Program {
 					}
 				}
 				quasis: Array [
-					TemplateElement {
+					JSTemplateElement {
 						cooked: "test"
 						raw: "test"
 						tail: true

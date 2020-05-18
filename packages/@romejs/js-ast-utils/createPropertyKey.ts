@@ -7,18 +7,18 @@
 
 import isValidIdentifierName from "./isValidIdentifierName";
 import {
-	Identifier,
-	StringLiteral,
-	identifier,
-	stringLiteral,
-} from "@romejs/js-ast";
+	JSIdentifier,
+	JSStringLiteral,
+	jsIdentifier,
+	jsStringLiteral,
+} from "@romejs/ast";
 
 export default function createPropertyKey(
 	name: string,
-): Identifier | StringLiteral {
+): JSIdentifier | JSStringLiteral {
 	if (isValidIdentifierName(name)) {
-		return identifier.quick(name);
+		return jsIdentifier.quick(name);
 	} else {
-		return stringLiteral.quick(name);
+		return jsStringLiteral.quick(name);
 	}
 }

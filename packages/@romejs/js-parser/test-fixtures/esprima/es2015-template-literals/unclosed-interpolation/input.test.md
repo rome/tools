@@ -5,7 +5,7 @@
 ## `esprima > es2015-template-literals > unclosed-interpolation`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -74,7 +74,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -88,7 +88,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: TemplateLiteral {
+			expression: JSTemplateLiteral {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -103,7 +103,7 @@ Program {
 					}
 				}
 				quasis: Array [
-					TemplateElement {
+					JSTemplateElement {
 						cooked: "hello "
 						raw: "hello "
 						tail: false
@@ -121,7 +121,7 @@ Program {
 							}
 						}
 					}
-					TemplateElement {
+					JSTemplateElement {
 						cooked: ";"
 						raw: ";"
 						tail: false
@@ -139,7 +139,7 @@ Program {
 							}
 						}
 					}
-					TemplateElement {
+					JSTemplateElement {
 						cooked: ""
 						raw: ""
 						tail: false
@@ -159,7 +159,7 @@ Program {
 					}
 				]
 				expressions: Array [
-					NumericLiteral {
+					JSNumericLiteral {
 						value: 10
 						format: undefined
 						loc: Object {
@@ -176,7 +176,7 @@ Program {
 							}
 						}
 					}
-					TaggedTemplateExpression {
+					JSTaggedTemplateExpression {
 						typeArguments: undefined
 						loc: Object {
 							filename: "input.js"
@@ -191,7 +191,7 @@ Program {
 								line: 1
 							}
 						}
-						tag: ReferenceIdentifier {
+						tag: JSReferenceIdentifier {
 							name: "test"
 							loc: Object {
 								filename: "input.js"
@@ -208,7 +208,7 @@ Program {
 								}
 							}
 						}
-						quasi: TemplateLiteral {
+						quasi: JSTemplateLiteral {
 							expressions: Array []
 							loc: Object {
 								filename: "input.js"
@@ -224,7 +224,7 @@ Program {
 								}
 							}
 							quasis: Array [
-								TemplateElement {
+								JSTemplateElement {
 									cooked: ""
 									raw: ""
 									tail: false

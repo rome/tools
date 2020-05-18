@@ -5,7 +5,7 @@
 ## `experimental > class-private-properties > failure-computed`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,8 +54,8 @@ Program {
 		}
 	]
 	body: Array [
-		ClassDeclaration {
-			id: BindingIdentifier {
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: Object {
 					filename: "input.js"
@@ -85,7 +85,7 @@ Program {
 					line: 1
 				}
 			}
-			meta: ClassHead {
+			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
@@ -104,9 +104,9 @@ Program {
 					}
 				}
 				body: Array [
-					ClassPrivateProperty {
-						key: PrivateName {
-							id: Identifier {
+					JSClassPrivateProperty {
+						key: JSPrivateName {
+							id: JSIdentifier {
 								name: "p"
 								loc: Object {
 									filename: "input.js"
@@ -137,7 +137,7 @@ Program {
 								}
 							}
 						}
-						value: ReferenceIdentifier {
+						value: JSReferenceIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.js"
@@ -168,7 +168,7 @@ Program {
 								line: 2
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -195,9 +195,9 @@ Program {
 							}
 						}
 					}
-					ClassProperty {
-						key: StaticPropertyKey {
-							value: Identifier {
+					JSClassProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: ""
 								loc: Object {
 									filename: "input.js"
@@ -228,7 +228,7 @@ Program {
 								}
 							}
 						}
-						value: NumericLiteral {
+						value: JSNumericLiteral {
 							value: 1
 							format: undefined
 							loc: Object {
@@ -260,7 +260,7 @@ Program {
 								line: 3
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false

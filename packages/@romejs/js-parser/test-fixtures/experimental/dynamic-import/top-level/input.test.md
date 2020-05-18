@@ -5,7 +5,7 @@
 ## `experimental > dynamic-import > top-level`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ImportCall {
+			expression: JSImportCall {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -58,7 +58,7 @@ Program {
 						line: 1
 					}
 				}
-				argument: StringLiteral {
+				argument: JSStringLiteral {
 					value: "testing.js"
 					loc: Object {
 						filename: "input.js"
@@ -76,7 +76,7 @@ Program {
 				}
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -90,7 +90,7 @@ Program {
 					line: 3
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
 					filename: "input.js"
@@ -106,8 +106,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "test"
 							loc: Object {
 								filename: "input.js"
@@ -137,7 +137,7 @@ Program {
 								line: 3
 							}
 						}
-						init: StringLiteral {
+						init: JSStringLiteral {
 							value: "hello"
 							loc: Object {
 								filename: "input.js"
@@ -157,7 +157,7 @@ Program {
 				]
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -171,7 +171,7 @@ Program {
 					line: 4
 				}
 			}
-			expression: ImportCall {
+			expression: JSImportCall {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -185,7 +185,7 @@ Program {
 						line: 4
 					}
 				}
-				argument: TemplateLiteral {
+				argument: JSTemplateLiteral {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -200,7 +200,7 @@ Program {
 						}
 					}
 					expressions: Array [
-						ReferenceIdentifier {
+						JSReferenceIdentifier {
 							name: "test"
 							loc: Object {
 								filename: "input.js"
@@ -219,7 +219,7 @@ Program {
 						}
 					]
 					quasis: Array [
-						TemplateElement {
+						JSTemplateElement {
 							cooked: "testing/"
 							raw: "testing/"
 							tail: false
@@ -237,7 +237,7 @@ Program {
 								}
 							}
 						}
-						TemplateElement {
+						JSTemplateElement {
 							cooked: ".js"
 							raw: ".js"
 							tail: true
@@ -259,7 +259,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -273,7 +273,7 @@ Program {
 					line: 6
 				}
 			}
-			expression: CallExpression {
+			expression: JSCallExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -288,7 +288,7 @@ Program {
 					}
 				}
 				arguments: Array [
-					ArrowFunctionExpression {
+					JSArrowFunctionExpression {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -302,7 +302,7 @@ Program {
 								line: 6
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
 							loc: Object {
@@ -319,7 +319,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							hasHoistedVars: false
 							params: Array []
@@ -342,7 +342,7 @@ Program {
 						}
 					}
 				]
-				callee: MemberExpression {
+				callee: JSMemberExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -356,7 +356,7 @@ Program {
 							line: 6
 						}
 					}
-					object: ImportCall {
+					object: JSImportCall {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -370,7 +370,7 @@ Program {
 								line: 6
 							}
 						}
-						argument: StringLiteral {
+						argument: JSStringLiteral {
 							value: "testing.js"
 							loc: Object {
 								filename: "input.js"
@@ -387,8 +387,8 @@ Program {
 							}
 						}
 					}
-					property: StaticMemberProperty {
-						value: Identifier {
+					property: JSStaticMemberProperty {
+						value: JSIdentifier {
 							name: "then"
 							loc: Object {
 								filename: "input.js"

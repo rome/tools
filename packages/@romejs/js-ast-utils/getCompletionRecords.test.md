@@ -9,7 +9,7 @@
 ```javascript
 Array [
 	COMPLETION {
-		node: ReturnStatement {
+		node: JSReturnStatement {
 			loc: Object {
 				filename: "unknown"
 				end: Object {
@@ -23,7 +23,7 @@ Array [
 					line: 1
 				}
 			}
-			argument: BooleanLiteral {
+			argument: JSBooleanLiteral {
 				value: false
 				loc: Object {
 					filename: "unknown"
@@ -49,7 +49,7 @@ Array [
 ```javascript
 Array [
 	COMPLETION {
-		node: ReturnStatement {
+		node: JSReturnStatement {
 			argument: undefined
 			loc: Object {
 				filename: "unknown"
@@ -74,7 +74,7 @@ Array [
 ```javascript
 Array [
 	COMPLETION {
-		node: ReturnStatement {
+		node: JSReturnStatement {
 			loc: Object {
 				filename: "unknown"
 				end: Object {
@@ -88,7 +88,7 @@ Array [
 					line: 1
 				}
 			}
-			argument: BooleanLiteral {
+			argument: JSBooleanLiteral {
 				value: false
 				loc: Object {
 					filename: "unknown"
@@ -108,7 +108,7 @@ Array [
 	}
 	INVALID {
 		description: "empty alternate"
-		node: IfStatement {
+		node: JSIfStatement {
 			alternate: undefined
 			loc: Object {
 				filename: "unknown"
@@ -123,7 +123,7 @@ Array [
 					line: 1
 				}
 			}
-			test: ReferenceIdentifier {
+			test: JSReferenceIdentifier {
 				name: "bar"
 				loc: Object {
 					filename: "unknown"
@@ -140,7 +140,7 @@ Array [
 					}
 				}
 			}
-			consequent: BlockStatement {
+			consequent: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "unknown"
@@ -156,7 +156,7 @@ Array [
 					}
 				}
 				body: Array [
-					ReturnStatement {
+					JSReturnStatement {
 						loc: Object {
 							filename: "unknown"
 							end: Object {
@@ -170,7 +170,7 @@ Array [
 								line: 1
 							}
 						}
-						argument: BooleanLiteral {
+						argument: JSBooleanLiteral {
 							value: false
 							loc: Object {
 								filename: "unknown"
@@ -199,7 +199,7 @@ Array [
 ```javascript
 Array [
 	COMPLETION {
-		node: ReturnStatement {
+		node: JSReturnStatement {
 			loc: Object {
 				filename: "unknown"
 				end: Object {
@@ -213,7 +213,7 @@ Array [
 					line: 1
 				}
 			}
-			argument: BooleanLiteral {
+			argument: JSBooleanLiteral {
 				value: false
 				loc: Object {
 					filename: "unknown"
@@ -232,7 +232,7 @@ Array [
 		}
 	}
 	COMPLETION {
-		node: ReturnStatement {
+		node: JSReturnStatement {
 			loc: Object {
 				filename: "unknown"
 				end: Object {
@@ -246,7 +246,7 @@ Array [
 					line: 1
 				}
 			}
-			argument: BooleanLiteral {
+			argument: JSBooleanLiteral {
 				value: true
 				loc: Object {
 					filename: "unknown"
@@ -272,7 +272,7 @@ Array [
 ```javascript
 Array [
 	COMPLETION {
-		node: ReturnStatement {
+		node: JSReturnStatement {
 			loc: Object {
 				filename: "unknown"
 				end: Object {
@@ -286,7 +286,7 @@ Array [
 					line: 1
 				}
 			}
-			argument: BooleanLiteral {
+			argument: JSBooleanLiteral {
 				value: false
 				loc: Object {
 					filename: "unknown"
@@ -312,7 +312,7 @@ Array [
 ```javascript
 Array [
 	COMPLETION {
-		node: ReturnStatement {
+		node: JSReturnStatement {
 			loc: Object {
 				filename: "unknown"
 				end: Object {
@@ -326,7 +326,7 @@ Array [
 					line: 1
 				}
 			}
-			argument: BooleanLiteral {
+			argument: JSBooleanLiteral {
 				value: false
 				loc: Object {
 					filename: "unknown"
@@ -355,7 +355,7 @@ Array [
 Array [
 	INVALID {
 		description: "empty block"
-		node: BlockStatement {
+		node: JSBlockStatement {
 			body: Array []
 			directives: Array []
 			loc: Object {
@@ -382,7 +382,7 @@ Array [
 Array [
 	INVALID {
 		description: "empty block"
-		node: BlockStatement {
+		node: JSBlockStatement {
 			body: Array []
 			loc: Object {
 				filename: "unknown"
@@ -398,7 +398,7 @@ Array [
 				}
 			}
 			directives: Array [
-				Directive {
+				JSDirective {
 					value: "foobar"
 					loc: Object {
 						filename: "unknown"
@@ -426,7 +426,7 @@ Array [
 Array [
 	INVALID {
 		description: "empty block"
-		node: BlockStatement {
+		node: JSBlockStatement {
 			directives: Array []
 			loc: Object {
 				filename: "unknown"
@@ -442,7 +442,7 @@ Array [
 				}
 			}
 			body: Array [
-				ExpressionStatement {
+				JSExpressionStatement {
 					loc: Object {
 						filename: "unknown"
 						end: Object {
@@ -456,7 +456,7 @@ Array [
 							line: 1
 						}
 					}
-					expression: StringLiteral {
+					expression: JSStringLiteral {
 						value: "foobar"
 						loc: Object {
 							filename: "unknown"
@@ -478,7 +478,7 @@ Array [
 	}
 	INVALID {
 		description: "empty alternate"
-		node: IfStatement {
+		node: JSIfStatement {
 			alternate: undefined
 			loc: Object {
 				filename: "unknown"
@@ -493,7 +493,7 @@ Array [
 					line: 1
 				}
 			}
-			test: ReferenceIdentifier {
+			test: JSReferenceIdentifier {
 				name: "bar"
 				loc: Object {
 					filename: "unknown"
@@ -510,7 +510,7 @@ Array [
 					}
 				}
 			}
-			consequent: BlockStatement {
+			consequent: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "unknown"
@@ -526,7 +526,7 @@ Array [
 					}
 				}
 				body: Array [
-					ExpressionStatement {
+					JSExpressionStatement {
 						loc: Object {
 							filename: "unknown"
 							end: Object {
@@ -540,7 +540,7 @@ Array [
 								line: 1
 							}
 						}
-						expression: StringLiteral {
+						expression: JSStringLiteral {
 							value: "foobar"
 							loc: Object {
 								filename: "unknown"
@@ -570,7 +570,7 @@ Array [
 Array [
 	INVALID {
 		description: "empty block"
-		node: BlockStatement {
+		node: JSBlockStatement {
 			directives: Array []
 			loc: Object {
 				filename: "unknown"
@@ -586,7 +586,7 @@ Array [
 				}
 			}
 			body: Array [
-				ExpressionStatement {
+				JSExpressionStatement {
 					loc: Object {
 						filename: "unknown"
 						end: Object {
@@ -600,7 +600,7 @@ Array [
 							line: 1
 						}
 					}
-					expression: StringLiteral {
+					expression: JSStringLiteral {
 						value: "foobar"
 						loc: Object {
 							filename: "unknown"
@@ -622,7 +622,7 @@ Array [
 	}
 	INVALID {
 		description: "empty block"
-		node: BlockStatement {
+		node: JSBlockStatement {
 			body: Array []
 			directives: Array []
 			loc: Object {
@@ -649,7 +649,7 @@ Array [
 Array [
 	INVALID {
 		description: "switch with no default clause"
-		node: SwitchStatement {
+		node: JSSwitchStatement {
 			cases: Array []
 			loc: Object {
 				filename: "unknown"
@@ -664,7 +664,7 @@ Array [
 					line: 1
 				}
 			}
-			discriminant: ReferenceIdentifier {
+			discriminant: JSReferenceIdentifier {
 				name: "foo"
 				loc: Object {
 					filename: "unknown"
@@ -692,7 +692,7 @@ Array [
 Array [
 	INVALID {
 		description: "switch with no default clause"
-		node: SwitchStatement {
+		node: JSSwitchStatement {
 			loc: Object {
 				filename: "unknown"
 				end: Object {
@@ -706,7 +706,7 @@ Array [
 					line: 1
 				}
 			}
-			discriminant: ReferenceIdentifier {
+			discriminant: JSReferenceIdentifier {
 				name: "foo"
 				loc: Object {
 					filename: "unknown"
@@ -724,7 +724,7 @@ Array [
 				}
 			}
 			cases: Array [
-				SwitchCase {
+				JSSwitchCase {
 					loc: Object {
 						filename: "unknown"
 						end: Object {
@@ -738,7 +738,7 @@ Array [
 							line: 1
 						}
 					}
-					test: StringLiteral {
+					test: JSStringLiteral {
 						value: "bar"
 						loc: Object {
 							filename: "unknown"
@@ -755,7 +755,7 @@ Array [
 						}
 					}
 					consequent: Array [
-						BlockStatement {
+						JSBlockStatement {
 							body: Array []
 							directives: Array []
 							loc: Object {
@@ -786,7 +786,7 @@ Array [
 Array [
 	INVALID {
 		description: "empty block"
-		node: BlockStatement {
+		node: JSBlockStatement {
 			body: Array []
 			directives: Array []
 			loc: Object {
@@ -812,7 +812,7 @@ Array [
 ```javascript
 Array [
 	COMPLETION {
-		node: ReturnStatement {
+		node: JSReturnStatement {
 			loc: Object {
 				filename: "unknown"
 				end: Object {
@@ -826,7 +826,7 @@ Array [
 					line: 1
 				}
 			}
-			argument: BooleanLiteral {
+			argument: JSBooleanLiteral {
 				value: false
 				loc: Object {
 					filename: "unknown"
@@ -846,7 +846,7 @@ Array [
 	}
 	INVALID {
 		description: "empty alternate"
-		node: IfStatement {
+		node: JSIfStatement {
 			alternate: undefined
 			loc: Object {
 				filename: "unknown"
@@ -861,7 +861,7 @@ Array [
 					line: 1
 				}
 			}
-			test: BooleanLiteral {
+			test: JSBooleanLiteral {
 				value: true
 				loc: Object {
 					filename: "unknown"
@@ -877,7 +877,7 @@ Array [
 					}
 				}
 			}
-			consequent: BlockStatement {
+			consequent: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "unknown"
@@ -893,7 +893,7 @@ Array [
 					}
 				}
 				body: Array [
-					ReturnStatement {
+					JSReturnStatement {
 						loc: Object {
 							filename: "unknown"
 							end: Object {
@@ -907,7 +907,7 @@ Array [
 								line: 1
 							}
 						}
-						argument: BooleanLiteral {
+						argument: JSBooleanLiteral {
 							value: false
 							loc: Object {
 								filename: "unknown"

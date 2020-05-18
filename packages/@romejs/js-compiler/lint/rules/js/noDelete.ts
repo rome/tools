@@ -7,10 +7,10 @@
 
 import {Path, TransformExitResult} from "@romejs/js-compiler";
 import {
-	assignmentExpression,
-	memberExpression,
-	referenceIdentifier,
-} from "@romejs/js-ast";
+	jsAssignmentExpression,
+	jsMemberExpression,
+	jsReferenceIdentifier,
+} from "@romejs/ast";
 import {descriptions} from "@romejs/diagnostics";
 
 export default {
@@ -19,22 +19,22 @@ export default {
 		const {context, node} = path;
 
 		if (
-			node.type === "UnaryExpression" &&
+			node.type === "JSUnaryExpression" &&
 			node.operator === "delete" &&
-			node.argument.type === "MemberExpression"
+			node.argument.type === "JSMemberExpression"
 		) {
 			const left = node.argument;
 			return context.addFixableDiagnostic(
 				{
 					old: node,
-					fixed: assignmentExpression.create(
+					fixed: jsAssignmentExpression.create(
 						{
 							operator: "=",
-							left: memberExpression.create({
+							left: jsMemberExpression.create({
 								object: left.object,
 								property: left.property,
 							}),
-							right: referenceIdentifier.create({
+							right: jsReferenceIdentifier.create({
 								name: "undefined",
 							}),
 						},

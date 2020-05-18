@@ -5,7 +5,7 @@
 ## `es2015 > statements > label-invalid-class`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		LabeledStatement {
+		JSLabeledStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			label: Identifier {
+			label: JSIdentifier {
 				name: "foo"
 				loc: Object {
 					filename: "input.js"
@@ -85,8 +85,8 @@ Program {
 					}
 				}
 			}
-			body: ClassDeclaration {
-				id: BindingIdentifier {
+			body: JSClassDeclaration {
+				id: JSBindingIdentifier {
 					name: "X"
 					loc: Object {
 						filename: "input.js"
@@ -116,7 +116,7 @@ Program {
 						line: 1
 					}
 				}
-				meta: ClassHead {
+				meta: JSClassHead {
 					body: Array []
 					implements: undefined
 					superClass: undefined

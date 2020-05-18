@@ -6,40 +6,40 @@
  */
 
 import {
-	AnyExpression,
+	AnyJSExpression,
 	AnyNode,
-	CallExpression,
+	JSCallExpression,
+	JSMemberExpression,
+	JSObjectProperties,
+	JSObjectProperty,
+	JSReferenceIdentifier,
+	JSStringLiteral,
+	JSThisExpression,
 	JSXAttribute,
 	JSXElement,
 	JSXExpressionContainer,
 	JSXIdentifier,
 	JSXNamespacedName,
-	MemberExpression,
-	ObjectProperties,
-	ObjectProperty,
-	ReferenceIdentifier,
-	StringLiteral,
-	ThisExpression,
-	booleanLiteral,
-	callExpression,
-	computedMemberProperty,
-	computedPropertyKey,
-	identifier,
+	jsBooleanLiteral,
+	jsCallExpression,
+	jsComputedMemberProperty,
+	jsComputedPropertyKey,
+	jsIdentifier,
+	jsMemberExpression,
+	jsNullLiteral,
+	jsObjectExpression,
+	jsObjectProperty,
+	jsReferenceIdentifier,
+	jsSpreadElement,
+	jsStaticMemberProperty,
+	jsStaticPropertyKey,
+	jsStringLiteral,
+	jsThisExpression,
 	jsxElement,
 	jsxExpressionContainer,
 	jsxIdentifier,
 	jsxNamespacedName,
-	memberExpression,
-	nullLiteral,
-	objectExpression,
-	objectProperty,
-	referenceIdentifier,
-	spreadElement,
-	staticMemberProperty,
-	staticPropertyKey,
-	stringLiteral,
-	thisExpression,
-} from "@romejs/js-ast";
+} from "@romejs/ast";
 import {Path} from "@romejs/js-compiler";
 import {
 	inheritLoc,
@@ -50,14 +50,18 @@ import {descriptions} from "@romejs/diagnostics";
 
 function convertJSXIdentifier(
 	path: Path,
-): MemberExpression | ThisExpression | StringLiteral | ReferenceIdentifier {
+):
+	| JSMemberExpression
+	| JSThisExpression
+	| JSStringLiteral
+	| JSReferenceIdentifier {
 	const {node} = path;
 
 	if (node.type === "JSXReferenceIdentifier") {
 		if (node.name === "this") {
-			return thisExpression.create({});
+			return jsThisExpression.create({});
 		} else {
-			return referenceIdentifier.create(
+			return jsReferenceIdentifier.create(
 				{
 					name: node.name,
 				},
@@ -65,19 +69,19 @@ function convertJSXIdentifier(
 			);
 		}
 	} else if (node.type === "JSXIdentifier") {
-		return stringLiteral.quick(node.name);
+		return jsStringLiteral.quick(node.name);
 	} else if (node.type === "JSXMemberExpression") {
 		let prop = convertJSXIdentifier(path.getChildPath("property"));
 
-		if (prop.type === "ReferenceIdentifier") {
-			return memberExpression.create({
+		if (prop.type === "JSReferenceIdentifier") {
+			return jsMemberExpression.create({
 				object: convertJSXIdentifier(path.getChildPath("object")),
-				property: staticMemberProperty.quick(identifier.quick(prop.name)),
+				property: jsStaticMemberProperty.quick(jsIdentifier.quick(prop.name)),
 			});
 		} else {
-			return memberExpression.create({
+			return jsMemberExpression.create({
 				object: convertJSXIdentifier(path.getChildPath("object")),
-				property: computedMemberProperty.quick(prop),
+				property: jsComputedMemberProperty.quick(prop),
 			});
 		}
 	} else {
@@ -88,8 +92,8 @@ function convertJSXIdentifier(
 }
 
 function convertAttributeValue(
-	node: AnyExpression | JSXExpressionContainer,
-): AnyExpression {
+	node: AnyJSExpression | JSXExpressionContainer,
+): AnyJSExpression {
 	if (node.type === "JSXExpressionContainer") {
 		return node.expression;
 	} else {
@@ -105,18 +109,18 @@ function extractName(node: JSXIdentifier | JSXNamespacedName): string {
 	}
 }
 
-function convertAttribute(node: JSXAttribute): ObjectProperty {
+function convertAttribute(node: JSXAttribute): JSObjectProperty {
 	let valueNode = convertAttributeValue(
 		node.value ||
-		booleanLiteral.create({
+		jsBooleanLiteral.create({
 			value: true,
 		}),
 	);
 	if (
-		valueNode.type === "StringLiteral" &&
+		valueNode.type === "JSStringLiteral" &&
 		(!node.value || node.value.type !== "JSXExpressionContainer")
 	) {
-		valueNode = stringLiteral.create({
+		valueNode = jsStringLiteral.create({
 			value: valueNode.value.replace(/\n\s+/g, " "),
 		});
 	}
@@ -124,38 +128,38 @@ function convertAttribute(node: JSXAttribute): ObjectProperty {
 	const name = extractName(node.name);
 
 	if (isValidIdentifierName(name)) {
-		const nameNode = identifier.create({
+		const nameNode = jsIdentifier.create({
 			name,
 			loc: inheritLoc(node),
 		});
 
-		return objectProperty.create({
-			key: staticPropertyKey.quick(nameNode),
+		return jsObjectProperty.create({
+			key: jsStaticPropertyKey.quick(nameNode),
 			value: valueNode,
 		});
 	} else {
-		return objectProperty.create({
-			key: computedPropertyKey.quick(stringLiteral.quick(name)),
+		return jsObjectProperty.create({
+			key: jsComputedPropertyKey.quick(jsStringLiteral.quick(name)),
 			value: valueNode,
 		});
 	}
 }
 
 function pushProps(
-	_props: ObjectProperties,
-	objs: Array<AnyExpression>,
-): ObjectProperties {
+	_props: JSObjectProperties,
+	objs: Array<AnyJSExpression>,
+): JSObjectProperties {
 	if (!_props.length) {
 		return _props;
 	}
 
-	objs.push(objectExpression.create({properties: _props}));
+	objs.push(jsObjectExpression.create({properties: _props}));
 	return [];
 }
 
 function buildOpeningElementAttributes(attribs: JSXElement["attributes"]) {
-	let _props: ObjectProperties = [];
-	const objs: Array<AnyExpression> = [];
+	let _props: JSObjectProperties = [];
+	const objs: Array<AnyJSExpression> = [];
 
 	while (attribs.length > 0) {
 		const prop = attribs.shift()!;
@@ -170,18 +174,18 @@ function buildOpeningElementAttributes(attribs: JSXElement["attributes"]) {
 
 	pushProps(_props, objs);
 
-	let ret: AnyExpression;
+	let ret: AnyJSExpression;
 	if (objs.length === 1) {
 		// only one object
 		ret = objs[0];
 	} else {
 		// looks like we have multiple objects
-		if (objs[0].type !== "ObjectExpression") {
-			objs.unshift(objectExpression.create({properties: []}));
+		if (objs[0].type !== "JSObjectExpression") {
+			objs.unshift(jsObjectExpression.create({properties: []}));
 		}
 
 		// spread it
-		ret = callExpression.create({
+		ret = jsCallExpression.create({
 			callee: template.expression`Object.assign`,
 			arguments: objs,
 		});
@@ -190,7 +194,7 @@ function buildOpeningElementAttributes(attribs: JSXElement["attributes"]) {
 	return ret;
 }
 
-function cleanJSXElementLiteralChild(value: string): undefined | StringLiteral {
+function cleanJSXElementLiteralChild(value: string): undefined | JSStringLiteral {
 	const lines = value.split(/\r\n|\n|\r/);
 
 	let lastNonEmptyLine = 0;
@@ -233,7 +237,7 @@ function cleanJSXElementLiteralChild(value: string): undefined | StringLiteral {
 	}
 
 	if (str !== "") {
-		return stringLiteral.quick(str);
+		return jsStringLiteral.quick(str);
 	} else {
 		return undefined;
 	}
@@ -241,8 +245,8 @@ function cleanJSXElementLiteralChild(value: string): undefined | StringLiteral {
 
 function buildChildren(
 	children: JSXElement["children"],
-): CallExpression["arguments"] {
-	const elems: CallExpression["arguments"] = [];
+): JSCallExpression["arguments"] {
+	const elems: JSCallExpression["arguments"] = [];
 
 	for (let child of children) {
 		if (child.type === "JSXText") {
@@ -262,7 +266,7 @@ function buildChildren(
 		}
 
 		if (child.type === "JSXSpreadChild") {
-			elems.push(spreadElement.quick(child.expression));
+			elems.push(jsSpreadElement.quick(child.expression));
 			continue;
 		}
 
@@ -285,14 +289,14 @@ export default {
 				context.addNodeDiagnostic(type, descriptions.COMPILER.JSX_NOT_XML);
 			}
 
-			let attribs: AnyExpression;
+			let attribs: AnyJSExpression;
 			if (node.attributes.length > 0) {
 				attribs = buildOpeningElementAttributes(node.attributes);
 			} else {
-				attribs = nullLiteral.create({});
+				attribs = jsNullLiteral.create({});
 			}
 
-			const call = callExpression.create({
+			const call = jsCallExpression.create({
 				callee: template.expression`React.createElement`,
 				arguments: [type, attribs, ...buildChildren(node.children)],
 			});
@@ -310,7 +314,7 @@ export default {
 		if (node.type === "JSXFragment") {
 			const type = template.expression`React.Fragment`;
 			const attribs = template.expression`null`;
-			return callExpression.create({
+			return jsCallExpression.create({
 				callee: template.expression`React.createElement`,
 				arguments: [type, attribs, ...buildChildren(node.children)],
 			});

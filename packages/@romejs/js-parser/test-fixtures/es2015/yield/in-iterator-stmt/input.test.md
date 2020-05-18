@@ -5,7 +5,7 @@
 ## `es2015 > yield > in-iterator-stmt`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -54,8 +54,8 @@ Program {
 		}
 	]
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "g"
 				loc: Object {
 					filename: "input.js"
@@ -85,7 +85,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: true
 				hasHoistedVars: false
@@ -108,7 +108,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -124,7 +124,7 @@ Program {
 					}
 				}
 				body: Array [
-					ForInStatement {
+					JSForInStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -138,7 +138,7 @@ Program {
 								line: 2
 							}
 						}
-						body: EmptyStatement {
+						body: JSEmptyStatement {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -153,7 +153,7 @@ Program {
 								}
 							}
 						}
-						left: AssignmentIdentifier {
+						left: JSAssignmentIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: Object {
 								filename: "input.js"
@@ -169,7 +169,7 @@ Program {
 								}
 							}
 						}
-						right: ObjectExpression {
+						right: JSObjectExpression {
 							properties: Array []
 							loc: Object {
 								filename: "input.js"
@@ -186,7 +186,7 @@ Program {
 							}
 						}
 					}
-					EmptyStatement {
+					JSEmptyStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -201,7 +201,7 @@ Program {
 							}
 						}
 					}
-					ExpressionStatement {
+					JSExpressionStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -215,7 +215,7 @@ Program {
 								line: 2
 							}
 						}
-						expression: ReferenceIdentifier {
+						expression: JSReferenceIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: Object {
 								filename: "input.js"

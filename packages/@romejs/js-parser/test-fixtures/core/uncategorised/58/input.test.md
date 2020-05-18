@@ -5,7 +5,7 @@
 ## `core > uncategorised > 58`
 
 ```javascript
-Program {
+JSProgram {
 	body: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -32,7 +32,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentLine {
+		JSCommentLine {
 			id: "0"
 			value: " Hallo, world!"
 			loc: Object {

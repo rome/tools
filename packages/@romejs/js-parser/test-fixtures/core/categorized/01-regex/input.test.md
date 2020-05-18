@@ -5,7 +5,7 @@
 ## `core > categorized > 01-regex`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
 					filename: "input.js"
@@ -60,8 +60,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.js"
@@ -91,7 +91,7 @@ Program {
 								line: 1
 							}
 						}
-						init: BinaryExpression {
+						init: JSBinaryExpression {
 							operator: "/"
 							loc: Object {
 								filename: "input.js"
@@ -106,7 +106,7 @@ Program {
 									line: 1
 								}
 							}
-							right: ReferenceIdentifier {
+							right: JSReferenceIdentifier {
 								name: "i"
 								loc: Object {
 									filename: "input.js"
@@ -123,7 +123,7 @@ Program {
 									}
 								}
 							}
-							left: BinaryExpression {
+							left: JSBinaryExpression {
 								operator: "/"
 								loc: Object {
 									filename: "input.js"
@@ -138,7 +138,7 @@ Program {
 										line: 1
 									}
 								}
-								right: NumericLiteral {
+								right: JSNumericLiteral {
 									value: 42
 									format: undefined
 									loc: Object {
@@ -155,8 +155,8 @@ Program {
 										}
 									}
 								}
-								left: FunctionExpression {
-									id: BindingIdentifier {
+								left: JSFunctionExpression {
+									id: JSBindingIdentifier {
 										name: "foo"
 										loc: Object {
 											filename: "input.js"
@@ -186,7 +186,7 @@ Program {
 											line: 1
 										}
 									}
-									body: BlockStatement {
+									body: JSBlockStatement {
 										body: Array []
 										directives: Array []
 										loc: Object {
@@ -203,7 +203,7 @@ Program {
 											}
 										}
 									}
-									head: FunctionHead {
+									head: JSFunctionHead {
 										async: false
 										generator: false
 										hasHoistedVars: false

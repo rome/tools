@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, TSOptionalType, tsOptionalType} from "@romejs/js-ast";
+import {AnyNode, TSOptionalType, tsOptionalType} from "@romejs/ast";
 
 export default function TSOptionalType(node: AnyNode, scope: Scope) {
 	node = tsOptionalType.assert(node);

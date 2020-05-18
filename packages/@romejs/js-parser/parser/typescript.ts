@@ -32,24 +32,26 @@ import {
 	toReferenceIdentifier,
 } from "./index";
 import {
-	AmbiguousFlowTypeCastExpression,
-	AnyExpression,
-	AnyLiteralTypeAnnotation,
+	AnyJSExpression,
+	AnyJSTargetAssignmentPattern,
+	AnyJSTargetBindingPattern,
 	AnyNode,
 	AnyTSEntityName,
 	AnyTSKeywordTypeAnnotation,
+	AnyTSLiteralTypeAnnotation,
 	AnyTSModuleReference,
 	AnyTSPrimary,
 	AnyTSTypeElement,
-	AnyTargetAssignmentPattern,
-	AnyTargetBindingPattern,
-	ClassDeclaration,
 	ConstTSAccessibility,
 	ConstTSModifier,
-	FunctionDeclaration,
-	Identifier,
-	PatternMeta,
-	StringLiteral,
+	JSAmbiguousFlowTypeCastExpression,
+	JSClassDeclaration,
+	JSFunctionDeclaration,
+	JSIdentifier,
+	JSPatternMeta,
+	JSStringLiteral,
+	JSVariableDeclarationKind,
+	JSVariableDeclarationStatement,
 	TSCallSignatureDeclaration,
 	TSConstructSignatureDeclaration,
 	TSConstructorType,
@@ -79,6 +81,7 @@ import {
 	TSTemplateLiteralTypeAnnotation,
 	TSThisType,
 	TSTupleType,
+	TSTypeAliasTypeAnnotation,
 	TSTypeAssertion,
 	TSTypeLiteral,
 	TSTypeOperator,
@@ -88,10 +91,7 @@ import {
 	TSTypePredicate,
 	TSTypeQuery,
 	TSTypeReference,
-	TypeAliasTypeAnnotation,
-	VariableDeclarationKind,
-	VariableDeclarationStatement,
-} from "@romejs/js-ast";
+} from "@romejs/ast";
 import {descriptions} from "@romejs/diagnostics";
 import {NumberTokenValue} from "../tokenizer";
 import {toTargetAssignmentPattern} from "./lval";
@@ -133,10 +133,10 @@ function keywordTypeFromName(
 			return "TSSymbolKeywordTypeAnnotation";
 
 		case "undefined":
-			return "UndefinedKeywordTypeAnnotation";
+			return "TSUndefinedKeywordTypeAnnotation";
 
 		case "unknown":
-			return "UnknownKeywordTypeAnnotation";
+			return "TSUnknownKeywordTypeAnnotation";
 
 		default:
 			return undefined;
@@ -434,15 +434,15 @@ function parseTSTypeQuery(parser: JSParser): TSTypeQuery {
 
 export function ambiguousTypeCastToParameter(
 	parser: JSParser,
-	node: AmbiguousFlowTypeCastExpression,
-): AnyTargetAssignmentPattern {
+	node: JSAmbiguousFlowTypeCastExpression,
+): AnyJSTargetAssignmentPattern {
 	const start = parser.getPosition();
 	const expr = toTargetAssignmentPattern(parser, node.expression, "parameter");
 
-	const meta: PatternMeta = parser.finishNode(
+	const meta: JSPatternMeta = parser.finishNode(
 		start,
 		{
-			type: "PatternMeta",
+			type: "JSPatternMeta",
 			optional: node.optional,
 			typeAnnotation: node.typeAnnotation,
 		},
@@ -544,16 +544,16 @@ export function tsCheckLiteralForConstantContext(
 	node: AnyNode,
 ) {
 	switch (node.type) {
-		case "StringLiteral":
-		case "TemplateLiteral":
-		case "NumericLiteral":
-		case "BooleanLiteral":
-		case "SpreadElement":
-		case "ObjectMethod":
-		case "ObjectExpression":
+		case "JSStringLiteral":
+		case "JSTemplateLiteral":
+		case "JSNumericLiteral":
+		case "JSBooleanLiteral":
+		case "JSSpreadElement":
+		case "JSObjectMethod":
+		case "JSObjectExpression":
 			break;
 
-		case "ArrayExpression": {
+		case "JSArrayExpression": {
 			for (const elem of node.elements) {
 				if (elem) {
 					tsCheckLiteralForConstantContext(parser, elem);
@@ -562,12 +562,12 @@ export function tsCheckLiteralForConstantContext(
 			break;
 		}
 
-		case "ObjectProperty": {
+		case "JSObjectProperty": {
 			tsCheckLiteralForConstantContext(parser, node.value);
 			break;
 		}
 
-		case "UnaryExpression": {
+		case "JSUnaryExpression": {
 			tsCheckLiteralForConstantContext(parser, node.argument);
 			break;
 		}
@@ -620,8 +620,8 @@ function parseTSSignatureDeclarationMeta(
 function parseTSBindingListForSignature(
 	parser: JSParser,
 ): {
-	list: Array<AnyTargetBindingPattern>;
-	rest: undefined | AnyTargetBindingPattern;
+	list: Array<AnyJSTargetBindingPattern>;
+	rest: undefined | AnyJSTargetBindingPattern;
 } {
 	const openContext = parser.expectOpening(
 		tt.parenL,
@@ -629,13 +629,13 @@ function parseTSBindingListForSignature(
 		"ts signature parameters",
 	);
 	const {list: patterns, rest} = parseBindingListNonEmpty(parser, openContext);
-	const validPatterns: Array<AnyTargetBindingPattern> = [];
+	const validPatterns: Array<AnyJSTargetBindingPattern> = [];
 
 	for (const pattern of patterns) {
 		if (
-			pattern.type === "BindingIdentifier" ||
-			pattern.type === "BindingObjectPattern" ||
-			pattern.type === "BindingArrayPattern"
+			pattern.type === "JSBindingIdentifier" ||
+			pattern.type === "JSBindingObjectPattern" ||
+			pattern.type === "JSBindingArrayPattern"
 		) {
 			validPatterns.push(pattern);
 		} else {
@@ -724,7 +724,7 @@ export function tryTSParseIndexSignature(
 				idStart,
 				{
 					...id.meta,
-					type: "PatternMeta",
+					type: "JSPatternMeta",
 					typeAnnotation: keyTypeAnnotation,
 				},
 			),
@@ -1123,10 +1123,10 @@ function parseTSNonArrayType(parser: JSParser): AnyTSPrimary {
 			let type:
 				| undefined
 				| AnyTSKeywordTypeAnnotation["type"]
-				| "VoidKeywordTypeAnnotation"
+				| "TSVoidKeywordTypeAnnotation"
 				| "TSNullKeywordTypeAnnotation";
 			if (parser.match(tt._void)) {
-				type = "VoidKeywordTypeAnnotation";
+				type = "TSVoidKeywordTypeAnnotation";
 			} else if (parser.match(tt._null)) {
 				type = "TSNullKeywordTypeAnnotation";
 			} else {
@@ -1204,7 +1204,7 @@ function parseTSNonArrayType(parser: JSParser): AnyTSPrimary {
 
 function parseTSTypeLiteralAnnotation(
 	parser: JSParser,
-): AnyLiteralTypeAnnotation {
+): AnyTSLiteralTypeAnnotation {
 	const start = parser.getPosition();
 
 	switch (parser.state.tokenType) {
@@ -1440,7 +1440,7 @@ function parseTSTypeOperatorOrHigher(parser: JSParser): AnyTSPrimary {
 
 function parseTSUnionOrIntersectionType(
 	parser: JSParser,
-	kind: "UnionTypeAnnotation" | "TSIntersectionTypeAnnotation",
+	kind: "JSUnionTypeAnnotation" | "TSIntersectionTypeAnnotation",
 	parseConstituentType: ParserCallback<AnyTSPrimary>,
 	operator: TokenType,
 ): AnyTSPrimary {
@@ -1454,11 +1454,11 @@ function parseTSUnionOrIntersectionType(
 		}
 
 		const start = parser.getLoc(type).start;
-		if (kind === "UnionTypeAnnotation") {
+		if (kind === "JSUnionTypeAnnotation") {
 			type = parser.finishNode(
 				start,
 				{
-					type: "UnionTypeAnnotation",
+					type: "TSUnionTypeAnnotation",
 					types,
 				},
 			);
@@ -1490,7 +1490,7 @@ function parseTSIntersectionTypeAnnotationOrHigher(
 function parseUnionTypeAnnotationOrHigher(parser: JSParser) {
 	return parseTSUnionOrIntersectionType(
 		parser,
-		"UnionTypeAnnotation",
+		"JSUnionTypeAnnotation",
 		parseTSIntersectionTypeAnnotationOrHigher,
 		tt.bitwiseOR,
 	);
@@ -1587,7 +1587,7 @@ export function parseTSTypeOrTypePredicateAnnotation(
 	parser.expect(returnToken);
 
 	let hasAsserts = parser.eatContextual("asserts");
-	let parameterName: Identifier;
+	let parameterName: JSIdentifier;
 	let typePredicateVariable;
 	if (tsIsIdentifier(parser)) {
 		typePredicateVariable = tryTSParse(parser, parseTSTypePredicatePrefix);
@@ -1633,7 +1633,7 @@ function tryTSParseType(parser: JSParser): undefined | AnyTSPrimary {
 	return tsEatThenParseType(parser, tt.colon);
 }
 
-function parseTSTypePredicatePrefix(parser: JSParser): undefined | Identifier {
+function parseTSTypePredicatePrefix(parser: JSParser): undefined | JSIdentifier {
 	const id = parseIdentifier(parser);
 	if (parser.isContextual("is") && !parser.hasPrecedingLineBreak()) {
 		parser.next();
@@ -1814,7 +1814,7 @@ export function parseTSInterfaceDeclaration(
 export function parseTSTypeAlias(
 	parser: JSParser,
 	start: Position,
-): TypeAliasTypeAnnotation {
+): TSTypeAliasTypeAnnotation {
 	const id = parseBindingIdentifier(parser);
 	const typeParameters = tryParseTSTypeParameters(parser);
 	const typeAnnotation = tsExpectThenParseType(parser, tt.eq);
@@ -1822,7 +1822,7 @@ export function parseTSTypeAlias(
 	return parser.finishNode(
 		start,
 		{
-			type: "TypeAliasTypeAnnotation",
+			type: "TSTypeAliasTypeAnnotation",
 			id,
 			typeParameters,
 			right: typeAnnotation,
@@ -1870,13 +1870,13 @@ function tsDoThenParseType(parser: JSParser, cb: () => void): AnyTSPrimary {
 function parseTSEnumMember(parser: JSParser): TSEnumMember {
 	const start = parser.getPosition();
 	// Computed property names are grammar errors in an enum, so accept just string literal or identifier.
-	const id: StringLiteral | Identifier = parser.match(tt.string)
+	const id: JSStringLiteral | JSIdentifier = parser.match(tt.string)
 		? parseStringLiteral(parser)
 		: parseIdentifier(parser, /* liberal */ true);
 
-	let initializer: undefined | AnyExpression;
+	let initializer: undefined | AnyJSExpression;
 	if (parser.eat(tt.eq)) {
-		initializer = parseMaybeAssign<AnyExpression>(
+		initializer = parseMaybeAssign<AnyJSExpression>(
 			parser,
 			"ts enum member initializer",
 		);
@@ -2051,7 +2051,7 @@ function parseTSExternalModuleReference(
 		"ts external module reference",
 	);
 
-	let expression: StringLiteral;
+	let expression: JSStringLiteral;
 	if (parser.match(tt.string)) {
 		expression = parseStringLiteral(parser);
 	} else {
@@ -2066,7 +2066,7 @@ function parseTSExternalModuleReference(
 		expression = parser.finishNode(
 			start,
 			{
-				type: "StringLiteral",
+				type: "JSStringLiteral",
 				value: "",
 			},
 		);
@@ -2109,17 +2109,17 @@ function tryTSParse<T>(
 
 export type TSDeclareNode =
 	| TSEnumDeclaration
-	| FunctionDeclaration
-	| ClassDeclaration
-	| VariableDeclarationStatement
+	| JSFunctionDeclaration
+	| JSClassDeclaration
+	| JSVariableDeclarationStatement
 	| TSDeclareFunction
 	| TSModuleDeclaration
-	| TypeAliasTypeAnnotation
+	| TSTypeAliasTypeAnnotation
 	| TSInterfaceDeclaration;
 
 export function parseTSDeclare(parser: JSParser, start: Position): TSDeclareNode {
 	let starttype = parser.state.tokenType;
-	let kind: undefined | VariableDeclarationKind;
+	let kind: undefined | JSVariableDeclarationKind;
 	if (parser.isContextual("let")) {
 		starttype = tt._var;
 		kind = "let";
@@ -2182,11 +2182,11 @@ export function parseTSDeclare(parser: JSParser, start: Position): TSDeclareNode
 
 				if (
 					decl.type !== "TSInterfaceDeclaration" &&
-					decl.type !== "TypeAliasTypeAnnotation" &&
+					decl.type !== "TSTypeAliasTypeAnnotation" &&
 					decl.type !== "TSEnumDeclaration" &&
-					decl.type !== "FunctionDeclaration" &&
-					decl.type !== "ClassDeclaration" &&
-					decl.type !== "VariableDeclarationStatement" &&
+					decl.type !== "JSFunctionDeclaration" &&
+					decl.type !== "JSClassDeclaration" &&
+					decl.type !== "JSVariableDeclarationStatement" &&
 					decl.type !== "TSDeclareFunction" &&
 					decl.type !== "TSModuleDeclaration"
 				) {
@@ -2207,15 +2207,15 @@ export function parseTSDeclare(parser: JSParser, start: Position): TSDeclareNode
 	// Fake node
 	const loc = parser.finishLoc(start);
 	return {
-		type: "VariableDeclarationStatement",
+		type: "JSVariableDeclarationStatement",
 		loc,
 		declaration: {
-			type: "VariableDeclaration",
+			type: "JSVariableDeclaration",
 			loc,
 			kind: "var",
 			declarations: [
 				{
-					type: "VariableDeclarator",
+					type: "JSVariableDeclarator",
 					loc,
 					id: toBindingIdentifier(
 						parser,
@@ -2231,15 +2231,14 @@ export function parseTSDeclare(parser: JSParser, start: Position): TSDeclareNode
 export function parseTSTypeExpressionStatement(
 	parser: JSParser,
 	start: Position,
-	expr: AnyExpression,
+	expr: AnyJSExpression,
 ):
 	| undefined
 	| TSDeclareNode
-	| TypeAliasTypeAnnotation
-	| TypeAliasTypeAnnotation
+	| TSTypeAliasTypeAnnotation
 	| TSInterfaceDeclaration {
 	// TODO TypeScript does not like parser.isLineTerminator()
-	if (expr.type !== "ReferenceIdentifier") {
+	if (expr.type !== "JSReferenceIdentifier") {
 		return undefined;
 	}
 
@@ -2339,7 +2338,7 @@ export function parseTSTypeExpressionStatement(
 export function parseTSAbstractClass(
 	parser: JSParser,
 	start: Position,
-): ClassDeclaration {
+): JSClassDeclaration {
 	return {
 		...parseClassDeclaration(parser, start),
 		abstract: true,
@@ -2349,7 +2348,7 @@ export function parseTSAbstractClass(
 export function parseTSExportDefaultAbstractClass(
 	parser: JSParser,
 	start: Position,
-): ClassDeclaration {
+): JSClassDeclaration {
 	return {
 		...parseExportDefaultClassDeclaration(parser, start),
 		abstract: true,

@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > 32`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
 					filename: "input.js"
@@ -84,8 +84,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "foo"
 							loc: Object {
 								filename: "input.js"
@@ -115,7 +115,7 @@ Program {
 								line: 1
 							}
 						}
-						init: CallExpression {
+						init: JSCallExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -129,7 +129,7 @@ Program {
 									line: 1
 								}
 							}
-							callee: ReferenceIdentifier {
+							callee: JSReferenceIdentifier {
 								name: "async"
 								loc: Object {
 									filename: "input.js"
@@ -147,7 +147,7 @@ Program {
 								}
 							}
 							arguments: Array [
-								AssignmentExpression {
+								JSAssignmentExpression {
 									operator: "="
 									loc: Object {
 										filename: "input.js"
@@ -162,7 +162,7 @@ Program {
 											line: 1
 										}
 									}
-									right: ReferenceIdentifier {
+									right: JSReferenceIdentifier {
 										name: "bar"
 										loc: Object {
 											filename: "input.js"
@@ -179,7 +179,7 @@ Program {
 											}
 										}
 									}
-									left: AssignmentObjectPattern {
+									left: JSAssignmentObjectPattern {
 										rest: undefined
 										loc: Object {
 											filename: "input.js"
@@ -195,9 +195,9 @@ Program {
 											}
 										}
 										properties: Array [
-											AssignmentObjectPatternProperty {
-												key: StaticPropertyKey {
-													value: Identifier {
+											JSAssignmentObjectPatternProperty {
+												key: JSStaticPropertyKey {
+													value: JSIdentifier {
 														name: "async"
 														loc: Object {
 															filename: "input.js"
@@ -229,7 +229,7 @@ Program {
 														}
 													}
 												}
-												value: AssignmentIdentifier {
+												value: JSAssignmentIdentifier {
 													name: "async"
 													loc: Object {
 														filename: "input.js"
@@ -269,7 +269,7 @@ Program {
 				]
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -283,7 +283,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ReferenceIdentifier {
+			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
 					filename: "input.js"
@@ -300,7 +300,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -314,7 +314,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ReferenceIdentifier {
+			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
 					filename: "input.js"
@@ -331,7 +331,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -345,7 +345,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ReferenceIdentifier {
+			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
 					filename: "input.js"
@@ -362,7 +362,7 @@ Program {
 				}
 			}
 		}
-		BlockStatement {
+		JSBlockStatement {
 			directives: Array []
 			loc: Object {
 				filename: "input.js"
@@ -378,7 +378,7 @@ Program {
 				}
 			}
 			body: Array [
-				ExpressionStatement {
+				JSExpressionStatement {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -392,7 +392,7 @@ Program {
 							line: 2
 						}
 					}
-					expression: ReferenceIdentifier {
+					expression: JSReferenceIdentifier {
 						name: "await"
 						loc: Object {
 							filename: "input.js"
@@ -410,7 +410,7 @@ Program {
 						}
 					}
 				}
-				ExpressionStatement {
+				JSExpressionStatement {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -424,7 +424,7 @@ Program {
 							line: 2
 						}
 					}
-					expression: ReferenceIdentifier {
+					expression: JSReferenceIdentifier {
 						name: "baz"
 						loc: Object {
 							filename: "input.js"
@@ -444,7 +444,7 @@ Program {
 				}
 			]
 		}
-		EmptyStatement {
+		JSEmptyStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {

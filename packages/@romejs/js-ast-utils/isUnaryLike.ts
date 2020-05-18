@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 
 export default function isUnaryLike(node: undefined | AnyNode): boolean {
 	if (node === undefined) {
@@ -13,9 +13,9 @@ export default function isUnaryLike(node: undefined | AnyNode): boolean {
 	}
 
 	switch (node.type) {
-		case "UnaryExpression":
-		case "SpreadElement":
-		case "SpreadProperty":
+		case "JSUnaryExpression":
+		case "JSSpreadElement":
+		case "JSSpreadProperty":
 			return true;
 
 		default:

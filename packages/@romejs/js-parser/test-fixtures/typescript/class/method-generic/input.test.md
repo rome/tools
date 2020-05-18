@@ -5,7 +5,7 @@
 ## `typescript > class > method-generic`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		ClassDeclaration {
-			id: BindingIdentifier {
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
 				name: "C"
 				loc: Object {
 					filename: "input.ts"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			meta: ClassHead {
+			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
@@ -80,10 +80,10 @@ Program {
 					}
 				}
 				body: Array [
-					ClassMethod {
+					JSClassMethod {
 						kind: "method"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "f"
 								loc: Object {
 									filename: "input.ts"
@@ -127,7 +127,7 @@ Program {
 								line: 2
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
 							loc: Object {
@@ -144,7 +144,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -170,7 +170,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -203,7 +203,7 @@ Program {
 										line: 2
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "T"
 									loc: Object {
 										filename: "input.ts"
@@ -256,7 +256,7 @@ Program {
 									}
 								]
 							}
-							rest: BindingIdentifier {
+							rest: JSBindingIdentifier {
 								name: "c"
 								loc: Object {
 									filename: "input.ts"
@@ -272,7 +272,7 @@ Program {
 										line: 2
 									}
 								}
-								meta: PatternMeta {
+								meta: JSPatternMeta {
 									optional: undefined
 									loc: Object {
 										filename: "input.ts"
@@ -316,7 +316,7 @@ Program {
 													line: 2
 												}
 											}
-											typeName: ReferenceIdentifier {
+											typeName: JSReferenceIdentifier {
 												name: "T"
 												loc: Object {
 													filename: "input.ts"
@@ -338,7 +338,7 @@ Program {
 								}
 							}
 							params: Array [
-								BindingIdentifier {
+								JSBindingIdentifier {
 									name: "a"
 									loc: Object {
 										filename: "input.ts"
@@ -354,7 +354,7 @@ Program {
 											line: 2
 										}
 									}
-									meta: PatternMeta {
+									meta: JSPatternMeta {
 										optional: undefined
 										loc: Object {
 											filename: "input.ts"
@@ -384,7 +384,7 @@ Program {
 													line: 2
 												}
 											}
-											typeName: ReferenceIdentifier {
+											typeName: JSReferenceIdentifier {
 												name: "T"
 												loc: Object {
 													filename: "input.ts"
@@ -404,7 +404,7 @@ Program {
 										}
 									}
 								}
-								BindingIdentifier {
+								JSBindingIdentifier {
 									name: "b"
 									loc: Object {
 										filename: "input.ts"
@@ -420,7 +420,7 @@ Program {
 											line: 2
 										}
 									}
-									meta: PatternMeta {
+									meta: JSPatternMeta {
 										optional: true
 										loc: Object {
 											filename: "input.ts"
@@ -450,7 +450,7 @@ Program {
 													line: 2
 												}
 											}
-											typeName: ReferenceIdentifier {
+											typeName: JSReferenceIdentifier {
 												name: "T"
 												loc: Object {
 													filename: "input.ts"
@@ -473,10 +473,10 @@ Program {
 							]
 						}
 					}
-					ClassMethod {
+					JSClassMethod {
 						kind: "method"
-						key: ComputedPropertyKey {
-							value: MemberExpression {
+						key: JSComputedPropertyKey {
+							value: JSMemberExpression {
 								loc: Object {
 									filename: "input.ts"
 									end: Object {
@@ -490,7 +490,7 @@ Program {
 										line: 3
 									}
 								}
-								object: ReferenceIdentifier {
+								object: JSReferenceIdentifier {
 									name: "Symbol"
 									loc: Object {
 										filename: "input.ts"
@@ -507,8 +507,8 @@ Program {
 										}
 									}
 								}
-								property: StaticMemberProperty {
-									value: Identifier {
+								property: JSStaticMemberProperty {
+									value: JSIdentifier {
 										name: "iterator"
 										loc: Object {
 											filename: "input.ts"
@@ -568,7 +568,7 @@ Program {
 								line: 3
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
 							loc: Object {
@@ -585,7 +585,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -611,7 +611,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -646,7 +646,7 @@ Program {
 										line: 3
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "T"
 									loc: Object {
 										filename: "input.ts"

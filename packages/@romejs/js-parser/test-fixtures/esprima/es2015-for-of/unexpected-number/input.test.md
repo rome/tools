@@ -5,7 +5,7 @@
 ## `esprima > es2015-for-of > unexpected-number`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ForStatement {
+		JSForStatement {
 			update: undefined
 			loc: Object {
 				filename: "input.js"
@@ -69,7 +69,7 @@ Program {
 					line: 1
 				}
 			}
-			body: EmptyStatement {
+			body: JSEmptyStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -84,7 +84,7 @@ Program {
 					}
 				}
 			}
-			test: NumericLiteral {
+			test: JSNumericLiteral {
 				value: 42
 				format: undefined
 				loc: Object {
@@ -101,7 +101,7 @@ Program {
 					}
 				}
 			}
-			init: VariableDeclaration {
+			init: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
 					filename: "input.js"
@@ -117,8 +117,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "of"
 							loc: Object {
 								filename: "input.js"

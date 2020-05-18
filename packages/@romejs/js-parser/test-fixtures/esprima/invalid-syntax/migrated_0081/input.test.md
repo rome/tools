@@ -5,7 +5,7 @@
 ## `esprima > invalid-syntax > migrated_0081`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -74,7 +74,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -88,7 +88,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ObjectExpression {
+			expression: JSObjectExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -103,10 +103,10 @@ Program {
 					}
 				}
 				properties: Array [
-					ObjectMethod {
+					JSObjectMethod {
 						kind: "get"
-						key: ComputedPropertyKey {
-							value: ReferenceIdentifier {
+						key: JSComputedPropertyKey {
+							value: JSReferenceIdentifier {
 								name: "a"
 								loc: Object {
 									filename: "input.js"
@@ -150,7 +150,7 @@ Program {
 								line: 1
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -172,7 +172,7 @@ Program {
 								}
 							}
 							params: Array [
-								BindingIdentifier {
+								JSBindingIdentifier {
 									name: ""
 									loc: Object {
 										filename: "input.js"
@@ -188,7 +188,7 @@ Program {
 											line: 1
 										}
 									}
-									meta: PatternMeta {
+									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
@@ -208,7 +208,7 @@ Program {
 								}
 							]
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
 								filename: "input.js"
@@ -224,7 +224,7 @@ Program {
 								}
 							}
 							body: Array [
-								ExpressionStatement {
+								JSExpressionStatement {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -238,7 +238,7 @@ Program {
 											line: 1
 										}
 									}
-									expression: ReferenceIdentifier {
+									expression: JSReferenceIdentifier {
 										name: "b"
 										loc: Object {
 											filename: "input.js"
@@ -256,7 +256,7 @@ Program {
 										}
 									}
 								}
-								ExpressionStatement {
+								JSExpressionStatement {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -270,7 +270,7 @@ Program {
 											line: 1
 										}
 									}
-									expression: ReferenceIdentifier {
+									expression: JSReferenceIdentifier {
 										name: "INVALID_PLACEHOLDER"
 										loc: Object {
 											filename: "input.js"
@@ -287,7 +287,7 @@ Program {
 										}
 									}
 								}
-								ExpressionStatement {
+								JSExpressionStatement {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -301,7 +301,7 @@ Program {
 											line: 1
 										}
 									}
-									expression: ReferenceIdentifier {
+									expression: JSReferenceIdentifier {
 										name: "INVALID_PLACEHOLDER"
 										loc: Object {
 											filename: "input.js"
@@ -318,7 +318,7 @@ Program {
 										}
 									}
 								}
-								ExpressionStatement {
+								JSExpressionStatement {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -332,7 +332,7 @@ Program {
 											line: 1
 										}
 									}
-									expression: NumericLiteral {
+									expression: JSNumericLiteral {
 										value: 0
 										format: undefined
 										loc: Object {

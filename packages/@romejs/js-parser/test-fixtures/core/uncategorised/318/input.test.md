@@ -5,7 +5,7 @@
 ## `core > uncategorised > 318`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: CallExpression {
+			expression: JSCallExpression {
 				arguments: Array []
 				loc: Object {
 					filename: "input.js"
@@ -59,7 +59,7 @@ Program {
 						line: 1
 					}
 				}
-				callee: FunctionExpression {
+				callee: JSFunctionExpression {
 					id: undefined
 					loc: Object {
 						filename: "input.js"
@@ -74,7 +74,7 @@ Program {
 							line: 1
 						}
 					}
-					head: FunctionHead {
+					head: JSFunctionHead {
 						async: false
 						generator: false
 						hasHoistedVars: false
@@ -97,7 +97,7 @@ Program {
 							}
 						}
 					}
-					body: BlockStatement {
+					body: JSBlockStatement {
 						body: Array []
 						loc: Object {
 							filename: "input.js"
@@ -113,7 +113,7 @@ Program {
 							}
 						}
 						directives: Array [
-							Directive {
+							JSDirective {
 								value: "use strict"
 								loc: Object {
 									filename: "input.js"
@@ -129,7 +129,7 @@ Program {
 									}
 								}
 							}
-							Directive {
+							JSDirective {
 								value: "\0"
 								loc: Object {
 									filename: "input.js"

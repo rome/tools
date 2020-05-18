@@ -5,7 +5,7 @@
 ## `es2015 > regression > 6864`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: true
 				hasHoistedVars: false
@@ -84,7 +84,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -100,7 +100,7 @@ Program {
 					}
 				}
 				body: Array [
-					ExpressionStatement {
+					JSExpressionStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -114,7 +114,7 @@ Program {
 								line: 2
 							}
 						}
-						expression: YieldExpression {
+						expression: JSYieldExpression {
 							delegate: false
 							loc: Object {
 								filename: "input.js"
@@ -129,7 +129,7 @@ Program {
 									line: 2
 								}
 							}
-							argument: ArrowFunctionExpression {
+							argument: JSArrowFunctionExpression {
 								loc: Object {
 									filename: "input.js"
 									end: Object {
@@ -143,7 +143,7 @@ Program {
 										line: 2
 									}
 								}
-								body: ReferenceIdentifier {
+								body: JSReferenceIdentifier {
 									name: "a"
 									loc: Object {
 										filename: "input.js"
@@ -160,7 +160,7 @@ Program {
 										}
 									}
 								}
-								head: FunctionHead {
+								head: JSFunctionHead {
 									async: false
 									hasHoistedVars: false
 									rest: undefined
@@ -179,7 +179,7 @@ Program {
 										}
 									}
 									params: Array [
-										BindingIdentifier {
+										JSBindingIdentifier {
 											name: "a"
 											loc: Object {
 												filename: "input.js"
@@ -201,7 +201,7 @@ Program {
 							}
 						}
 					}
-					ExpressionStatement {
+					JSExpressionStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -215,7 +215,7 @@ Program {
 								line: 3
 							}
 						}
-						expression: YieldExpression {
+						expression: JSYieldExpression {
 							delegate: false
 							loc: Object {
 								filename: "input.js"
@@ -230,7 +230,7 @@ Program {
 									line: 3
 								}
 							}
-							argument: ArrowFunctionExpression {
+							argument: JSArrowFunctionExpression {
 								loc: Object {
 									filename: "input.js"
 									end: Object {
@@ -244,7 +244,7 @@ Program {
 										line: 3
 									}
 								}
-								body: ReferenceIdentifier {
+								body: JSReferenceIdentifier {
 									name: "a"
 									loc: Object {
 										filename: "input.js"
@@ -261,7 +261,7 @@ Program {
 										}
 									}
 								}
-								head: FunctionHead {
+								head: JSFunctionHead {
 									async: true
 									hasHoistedVars: false
 									rest: undefined
@@ -280,7 +280,7 @@ Program {
 										}
 									}
 									params: Array [
-										BindingIdentifier {
+										JSBindingIdentifier {
 											name: "a"
 											loc: Object {
 												filename: "input.js"
@@ -302,7 +302,7 @@ Program {
 							}
 						}
 					}
-					ExpressionStatement {
+					JSExpressionStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -316,7 +316,7 @@ Program {
 								line: 4
 							}
 						}
-						expression: YieldExpression {
+						expression: JSYieldExpression {
 							delegate: false
 							loc: Object {
 								filename: "input.js"
@@ -331,7 +331,7 @@ Program {
 									line: 4
 								}
 							}
-							argument: ArrowFunctionExpression {
+							argument: JSArrowFunctionExpression {
 								loc: Object {
 									filename: "input.js"
 									end: Object {
@@ -345,7 +345,7 @@ Program {
 										line: 4
 									}
 								}
-								body: ReferenceIdentifier {
+								body: JSReferenceIdentifier {
 									name: "a"
 									loc: Object {
 										filename: "input.js"
@@ -362,7 +362,7 @@ Program {
 										}
 									}
 								}
-								head: FunctionHead {
+								head: JSFunctionHead {
 									async: true
 									hasHoistedVars: false
 									rest: undefined
@@ -382,7 +382,7 @@ Program {
 										}
 									}
 									params: Array [
-										BindingIdentifier {
+										JSBindingIdentifier {
 											name: "a"
 											loc: Object {
 												filename: "input.js"

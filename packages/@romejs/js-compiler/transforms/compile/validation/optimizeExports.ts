@@ -8,34 +8,34 @@
 import {ImportBinding, Path} from "@romejs/js-compiler";
 import {
 	AnyNode,
-	ExportExternalDeclaration,
-	ExportLocalDeclaration,
-	exportExternalDeclaration,
-	exportExternalSpecifier,
-	exportLocalDeclaration,
-	identifier,
-	stringLiteral,
-} from "@romejs/js-ast";
+	JSExportExternalDeclaration,
+	JSExportLocalDeclaration,
+	jsExportExternalDeclaration,
+	jsExportExternalSpecifier,
+	jsExportLocalDeclaration,
+	jsIdentifier,
+	jsStringLiteral,
+} from "@romejs/ast";
 
 export default {
 	name: "optimizeExports",
 	enter(
 		path: Path,
-	): AnyNode | Array<ExportExternalDeclaration | ExportLocalDeclaration> {
+	): AnyNode | Array<JSExportExternalDeclaration | JSExportLocalDeclaration> {
 		const {node} = path;
 
 		// turn `import {a} from 'b'; export {a}`; to `export {a} from 'b';`';
 		if (
-			node.type === "ExportLocalDeclaration" &&
+			node.type === "JSExportLocalDeclaration" &&
 			node.exportKind === "value" &&
 			node.declaration === undefined &&
 			node.specifiers !== undefined
 		) {
-			const nodes: Array<ExportExternalDeclaration | ExportLocalDeclaration> = [];
+			const nodes: Array<JSExportExternalDeclaration | JSExportLocalDeclaration> = [];
 			const specifiers = [];
 
 			for (const specifier of node.specifiers) {
-				if (specifier.type === "ExportLocalSpecifier") {
+				if (specifier.type === "JSExportLocalSpecifier") {
 					const binding = path.scope.getBinding(specifier.local.name);
 					if (
 						binding !== undefined &&
@@ -43,15 +43,15 @@ export default {
 						binding.meta.type === "name"
 					) {
 						nodes.push(
-							exportExternalDeclaration.create({
+							jsExportExternalDeclaration.create({
 								namedSpecifiers: [
-									exportExternalSpecifier.create({
-										local: identifier.quick(binding.meta.imported),
+									jsExportExternalSpecifier.create({
+										local: jsIdentifier.quick(binding.meta.imported),
 										exported: specifier.exported,
 										loc: specifier.loc,
 									}),
 								],
-								source: stringLiteral.quick(binding.meta.source),
+								source: jsStringLiteral.quick(binding.meta.source),
 							}),
 						);
 					} else {
@@ -68,7 +68,7 @@ export default {
 			}
 
 			if (specifiers.length !== 0) {
-				nodes.push(exportLocalDeclaration.create({specifiers}));
+				nodes.push(jsExportLocalDeclaration.create({specifiers}));
 			}
 
 			return nodes;

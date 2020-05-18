@@ -1,4 +1,4 @@
-import {AnyNode, JSXElement} from "@romejs/js-ast";
+import {AnyNode, JSXElement} from "@romejs/ast";
 import doesNodeMatchPattern from "./doesNodeMatchPattern";
 
 export default function isJSXElement(

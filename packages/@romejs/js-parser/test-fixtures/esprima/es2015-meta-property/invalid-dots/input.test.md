@@ -5,7 +5,7 @@
 ## `esprima > es2015-meta-property > invalid-dots`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.js"
@@ -84,8 +84,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.js"
@@ -115,7 +115,7 @@ Program {
 								line: 1
 							}
 						}
-						init: FunctionExpression {
+						init: JSFunctionExpression {
 							id: undefined
 							loc: Object {
 								filename: "input.js"
@@ -130,7 +130,7 @@ Program {
 									line: 1
 								}
 							}
-							head: FunctionHead {
+							head: JSFunctionHead {
 								async: false
 								generator: false
 								hasHoistedVars: false
@@ -153,7 +153,7 @@ Program {
 									}
 								}
 							}
-							body: BlockStatement {
+							body: JSBlockStatement {
 								directives: Array []
 								loc: Object {
 									filename: "input.js"
@@ -169,7 +169,7 @@ Program {
 									}
 								}
 								body: Array [
-									ExpressionStatement {
+									JSExpressionStatement {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -183,7 +183,7 @@ Program {
 												line: 1
 											}
 										}
-										expression: AssignmentExpression {
+										expression: JSAssignmentExpression {
 											operator: "="
 											loc: Object {
 												filename: "input.js"
@@ -198,7 +198,7 @@ Program {
 													line: 1
 												}
 											}
-											left: AssignmentIdentifier {
+											left: JSAssignmentIdentifier {
 												name: "y"
 												loc: Object {
 													filename: "input.js"
@@ -215,7 +215,7 @@ Program {
 													}
 												}
 											}
-											right: MetaProperty {
+											right: JSMetaProperty {
 												loc: Object {
 													filename: "input.js"
 													end: Object {
@@ -229,7 +229,7 @@ Program {
 														line: 1
 													}
 												}
-												meta: Identifier {
+												meta: JSIdentifier {
 													name: "new"
 													loc: Object {
 														filename: "input.js"
@@ -246,7 +246,7 @@ Program {
 														}
 													}
 												}
-												property: Identifier {
+												property: JSIdentifier {
 													name: ""
 													loc: Object {
 														filename: "input.js"
@@ -266,7 +266,7 @@ Program {
 											}
 										}
 									}
-									ExpressionStatement {
+									JSExpressionStatement {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -280,7 +280,7 @@ Program {
 												line: 1
 											}
 										}
-										expression: ReferenceIdentifier {
+										expression: JSReferenceIdentifier {
 											name: "target"
 											loc: Object {
 												filename: "input.js"

@@ -13,7 +13,7 @@ export default {
 	enter(path: Path) {
 		const {node} = path;
 
-		if (node.type === "LogicalExpression" && node.operator === "??") {
+		if (node.type === "JSLogicalExpression" && node.operator === "??") {
 			// TODO assign `node.left` to a variable and use it as a reference
 			return template.expression`${node.left} == null ? ${node.right} : ${node.left}`;
 		}

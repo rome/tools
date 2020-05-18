@@ -5,7 +5,7 @@
 ## `typescript > regression > async-arrow-generic-9560`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -19,9 +19,9 @@ Program {
 	loc: Object {
 		filename: "input.ts"
 		end: Object {
-			column: 1
-			index: 80
-			line: 8
+			column: 0
+			index: 81
+			line: 9
 		}
 		start: Object {
 			column: 0
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		ClassDeclaration {
-			id: BindingIdentifier {
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
 				name: "Cl"
 				loc: Object {
 					filename: "input.ts"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			meta: ClassHead {
+			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
@@ -80,9 +80,9 @@ Program {
 					}
 				}
 				body: Array [
-					ClassProperty {
-						key: StaticPropertyKey {
-							value: Identifier {
+					JSClassProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "a"
 								loc: Object {
 									filename: "input.ts"
@@ -113,7 +113,7 @@ Program {
 								}
 							}
 						}
-						value: ArrowFunctionExpression {
+						value: JSArrowFunctionExpression {
 							loc: Object {
 								filename: "input.ts"
 								end: Object {
@@ -127,7 +127,7 @@ Program {
 									line: 2
 								}
 							}
-							head: FunctionHead {
+							head: JSFunctionHead {
 								async: true
 								hasHoistedVars: false
 								params: Array []
@@ -183,7 +183,7 @@ Program {
 									]
 								}
 							}
-							body: BlockStatement {
+							body: JSBlockStatement {
 								directives: Array []
 								loc: Object {
 									filename: "input.ts"
@@ -199,7 +199,7 @@ Program {
 									}
 								}
 								body: Array [
-									ExpressionStatement {
+									JSExpressionStatement {
 										loc: Object {
 											filename: "input.ts"
 											end: Object {
@@ -213,7 +213,7 @@ Program {
 												line: 3
 											}
 										}
-										expression: AwaitExpression {
+										expression: JSAwaitExpression {
 											loc: Object {
 												filename: "input.ts"
 												end: Object {
@@ -227,7 +227,7 @@ Program {
 													line: 3
 												}
 											}
-											argument: NumericLiteral {
+											argument: JSNumericLiteral {
 												value: 0
 												format: undefined
 												loc: Object {
@@ -264,7 +264,7 @@ Program {
 								line: 2
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -291,9 +291,9 @@ Program {
 							}
 						}
 					}
-					ClassProperty {
-						key: StaticPropertyKey {
-							value: Identifier {
+					JSClassProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "b"
 								loc: Object {
 									filename: "input.ts"
@@ -324,7 +324,7 @@ Program {
 								}
 							}
 						}
-						value: ArrowFunctionExpression {
+						value: JSArrowFunctionExpression {
 							loc: Object {
 								filename: "input.ts"
 								end: Object {
@@ -338,7 +338,7 @@ Program {
 									line: 6
 								}
 							}
-							body: BlockStatement {
+							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
 								loc: Object {
@@ -355,7 +355,7 @@ Program {
 									}
 								}
 							}
-							head: FunctionHead {
+							head: JSFunctionHead {
 								async: true
 								hasHoistedVars: false
 								params: Array []
@@ -427,7 +427,7 @@ Program {
 								line: 6
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false

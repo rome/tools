@@ -6,7 +6,7 @@
  */
 
 import {Path, TransformExitResult} from "@romejs/js-compiler";
-import {blockStatement} from "@romejs/js-ast";
+import {jsBlockStatement} from "@romejs/ast";
 import {descriptions} from "@romejs/diagnostics";
 
 export default {
@@ -14,13 +14,13 @@ export default {
 	enter(path: Path): TransformExitResult {
 		const {node, context} = path;
 
-		if (node.type === "SwitchCase" && node.consequent.length > 1) {
+		if (node.type === "JSSwitchCase" && node.consequent.length > 1) {
 			return context.addFixableDiagnostic(
 				{
 					old: node,
 					fixed: {
 						...node,
-						consequent: [blockStatement.quick(node.consequent)],
+						consequent: [jsBlockStatement.quick(node.consequent)],
 					},
 				},
 				descriptions.LINT.JS_CASE_SINGLE_STATEMENT,

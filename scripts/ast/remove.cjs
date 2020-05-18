@@ -12,7 +12,7 @@ const fs = require("fs");
 
 const filename = process.argv[2];
 if (filename === undefined) {
-	console.error("node remove-ast-type.js [category]/[nodeType]");
+	console.error("node remove-ast-type.js [language]/[category]/[nodeType]");
 	process.exit(1);
 }
 

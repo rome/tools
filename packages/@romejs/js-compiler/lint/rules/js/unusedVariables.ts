@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 import {Path, Scope, createHook} from "@romejs/js-compiler";
 import {getBindingIdentifiers} from "@romejs/js-ast-utils";
 import {Dict} from "@romejs/typescript-helpers";
@@ -28,10 +28,10 @@ const provider = createHook<State, undefined, AnyNode>({
 	call(path: Path, state: State) {
 		const {node} = path;
 		if (
-			node.type !== "ReferenceIdentifier" &&
+			node.type !== "JSReferenceIdentifier" &&
 			node.type !== "JSXReferenceIdentifier"
 		) {
-			throw new Error("Expected only Identifier to be dispatched");
+			throw new Error("Expected only JSIdentifier to be dispatched");
 		}
 
 		const binding = path.scope.getBindingFromPath(path);
@@ -103,11 +103,11 @@ export default {
 
 			// For functions, consider all parameters except the last to be used
 			if (
-				node.type === "FunctionDeclaration" ||
-				node.type === "FunctionExpression" ||
-				node.type === "ObjectMethod" ||
-				node.type === "ClassMethod" ||
-				node.type === "ArrowFunctionExpression"
+				node.type === "JSFunctionDeclaration" ||
+				node.type === "JSFunctionExpression" ||
+				node.type === "JSObjectMethod" ||
+				node.type === "JSClassMethod" ||
+				node.type === "JSArrowFunctionExpression"
 			) {
 				for (const {name} of getBindingIdentifiers(
 					node.head.params.slice(0, -1),
@@ -119,9 +119,9 @@ export default {
 				// to be used as this is typically an interface definition
 				const {body: block} = node;
 				if (
-					block.type === "BlockStatement" &&
+					block.type === "JSBlockStatement" &&
 					block.body.length === 1 &&
-					block.body[0].type === "ThrowStatement"
+					block.body[0].type === "JSThrowStatement"
 				) {
 					for (const {name} of getBindingIdentifiers(node.head.params)) {
 						usedBindings[name] = true;
@@ -130,16 +130,16 @@ export default {
 			}
 
 			if (
-				node.type === "CatchClause" &&
+				node.type === "JSCatchClause" &&
 				node.param &&
-				node.param.type === "BindingIdentifier"
+				node.param.type === "JSBindingIdentifier"
 			) {
 				// Mark error param as used as they are required
 				usedBindings[node.param.name] = true;
 			}
 
 			// For a named function expression, don't consider the id to be unused
-			if (node.type === "FunctionExpression" && node.id !== undefined) {
+			if (node.type === "JSFunctionExpression" && node.id !== undefined) {
 				usedBindings[node.id.name] = true;
 			}
 
@@ -154,7 +154,7 @@ export default {
 
 		if (
 			node.type === "JSXReferenceIdentifier" ||
-			node.type === "ReferenceIdentifier"
+			node.type === "JSReferenceIdentifier"
 		) {
 			return path.callHook(provider, undefined, node);
 		}

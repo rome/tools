@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 import {Path} from "@romejs/js-compiler";
 import {descriptions} from "@romejs/diagnostics";
 import {DiagnosticsDuplicateHelper} from "../../../lib/DiagnosticsDuplicateHelper";
@@ -15,14 +15,14 @@ export default {
 	enter(path: Path): AnyNode {
 		const {context, node} = path;
 
-		if (node.type === "RegExpSubExpression") {
+		if (node.type === "JSRegExpSubExpression") {
 			const duplicates = new DiagnosticsDuplicateHelper(
 				context,
 				descriptions.LINT.JS_DUPLICATE_REGEX_GROUP_NAME,
 			);
 
 			for (const bodyItem of node.body) {
-				if (bodyItem.type === "RegExpGroupCapture") {
+				if (bodyItem.type === "JSRegExpGroupCapture") {
 					const groupName = bodyItem.name;
 
 					if (groupName !== undefined) {

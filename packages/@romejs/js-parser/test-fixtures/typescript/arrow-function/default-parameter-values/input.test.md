@@ -5,7 +5,7 @@
 ## `typescript > arrow-function > default-parameter-values`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ArrowFunctionExpression {
+			expression: JSArrowFunctionExpression {
 				loc: Object {
 					filename: "input.ts"
 					end: Object {
@@ -58,7 +58,7 @@ Program {
 						line: 1
 					}
 				}
-				body: NumericLiteral {
+				body: JSNumericLiteral {
 					value: 0
 					format: undefined
 					loc: Object {
@@ -75,7 +75,7 @@ Program {
 						}
 					}
 				}
-				head: FunctionHead {
+				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
 					rest: undefined
@@ -95,7 +95,7 @@ Program {
 						}
 					}
 					params: Array [
-						BindingAssignmentPattern {
+						JSBindingAssignmentPattern {
 							operator: "="
 							loc: Object {
 								filename: "input.ts"
@@ -110,7 +110,7 @@ Program {
 									line: 1
 								}
 							}
-							right: NumericLiteral {
+							right: JSNumericLiteral {
 								value: 0
 								format: undefined
 								loc: Object {
@@ -127,7 +127,7 @@ Program {
 									}
 								}
 							}
-							left: BindingIdentifier {
+							left: JSBindingIdentifier {
 								name: "x"
 								loc: Object {
 									filename: "input.ts"
@@ -142,7 +142,7 @@ Program {
 										line: 1
 									}
 								}
-								meta: PatternMeta {
+								meta: JSPatternMeta {
 									optional: undefined
 									loc: Object {
 										filename: "input.ts"

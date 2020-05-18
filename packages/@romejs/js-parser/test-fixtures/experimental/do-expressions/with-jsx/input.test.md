@@ -5,7 +5,7 @@
 ## `experimental > do-expressions > with-jsx`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "foo"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -84,7 +84,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -100,7 +100,7 @@ Program {
 					}
 				}
 				body: Array [
-					ReturnStatement {
+					JSReturnStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -229,7 +229,7 @@ Program {
 											line: 5
 										}
 									}
-									expression: DoExpression {
+									expression: JSDoExpression {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -243,7 +243,7 @@ Program {
 												line: 6
 											}
 										}
-										body: BlockStatement {
+										body: JSBlockStatement {
 											directives: Array []
 											loc: Object {
 												filename: "input.js"
@@ -259,7 +259,7 @@ Program {
 												}
 											}
 											body: Array [
-												IfStatement {
+												JSIfStatement {
 													loc: Object {
 														filename: "input.js"
 														end: Object {
@@ -273,7 +273,7 @@ Program {
 															line: 7
 														}
 													}
-													test: ReferenceIdentifier {
+													test: JSReferenceIdentifier {
 														name: "loggedIn"
 														loc: Object {
 															filename: "input.js"
@@ -290,7 +290,7 @@ Program {
 															}
 														}
 													}
-													alternate: BlockStatement {
+													alternate: JSBlockStatement {
 														directives: Array []
 														loc: Object {
 															filename: "input.js"
@@ -306,7 +306,7 @@ Program {
 															}
 														}
 														body: Array [
-															ExpressionStatement {
+															JSExpressionStatement {
 																loc: Object {
 																	filename: "input.js"
 																	end: Object {
@@ -358,7 +358,7 @@ Program {
 															}
 														]
 													}
-													consequent: BlockStatement {
+													consequent: JSBlockStatement {
 														directives: Array []
 														loc: Object {
 															filename: "input.js"
@@ -374,7 +374,7 @@ Program {
 															}
 														}
 														body: Array [
-															ExpressionStatement {
+															JSExpressionStatement {
 																loc: Object {
 																	filename: "input.js"
 																	end: Object {

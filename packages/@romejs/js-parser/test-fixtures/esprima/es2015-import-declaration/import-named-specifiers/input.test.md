@@ -5,7 +5,7 @@
 ## `esprima > es2015-import-declaration > import-named-specifiers`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ImportDeclaration {
+		JSImportDeclaration {
 			defaultSpecifier: undefined
 			importKind: undefined
 			namespaceSpecifier: undefined
@@ -47,7 +47,7 @@ Program {
 					line: 1
 				}
 			}
-			source: StringLiteral {
+			source: JSStringLiteral {
 				value: "foo"
 				loc: Object {
 					filename: "input.js"
@@ -64,7 +64,7 @@ Program {
 				}
 			}
 			namedSpecifiers: Array [
-				ImportSpecifier {
+				JSImportSpecifier {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -78,7 +78,7 @@ Program {
 							line: 1
 						}
 					}
-					imported: Identifier {
+					imported: JSIdentifier {
 						name: "bar"
 						loc: Object {
 							filename: "input.js"
@@ -95,8 +95,8 @@ Program {
 							}
 						}
 					}
-					local: ImportSpecifierLocal {
-						name: BindingIdentifier {
+					local: JSImportSpecifierLocal {
+						name: JSBindingIdentifier {
 							name: "bar"
 							loc: Object {
 								filename: "input.js"
@@ -129,7 +129,7 @@ Program {
 						}
 					}
 				}
-				ImportSpecifier {
+				JSImportSpecifier {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -143,7 +143,7 @@ Program {
 							line: 1
 						}
 					}
-					imported: Identifier {
+					imported: JSIdentifier {
 						name: "baz"
 						loc: Object {
 							filename: "input.js"
@@ -160,8 +160,8 @@ Program {
 							}
 						}
 					}
-					local: ImportSpecifierLocal {
-						name: BindingIdentifier {
+					local: JSImportSpecifierLocal {
+						name: JSBindingIdentifier {
 							name: "baz"
 							loc: Object {
 								filename: "input.js"

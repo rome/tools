@@ -9,7 +9,7 @@ import {
 	AnyNode,
 	TSTypeParameterInstantiation,
 	tsTypeParameterInstantiation,
-} from "@romejs/js-ast";
+} from "@romejs/ast";
 
 export default function TSTypeParameterInstantiation(node: AnyNode) {
 	node = tsTypeParameterInstantiation.assert(node);

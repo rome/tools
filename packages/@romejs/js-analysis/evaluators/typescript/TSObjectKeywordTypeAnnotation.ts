@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	TSObjectKeywordTypeAnnotation,
 	tsObjectKeywordTypeAnnotation,
-} from "@romejs/js-ast";
+} from "@romejs/ast";
 
 export default function TSObjectKeywordTypeAnnotation(
 	node: AnyNode,

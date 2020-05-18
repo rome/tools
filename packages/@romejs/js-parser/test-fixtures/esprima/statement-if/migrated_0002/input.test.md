@@ -5,7 +5,7 @@
 ## `esprima > statement-if > migrated_0002`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		IfStatement {
+		JSIfStatement {
 			alternate: undefined
 			loc: Object {
 				filename: "input.js"
@@ -45,7 +45,7 @@ Program {
 					line: 1
 				}
 			}
-			test: ReferenceIdentifier {
+			test: JSReferenceIdentifier {
 				name: "morning"
 				loc: Object {
 					filename: "input.js"
@@ -62,7 +62,7 @@ Program {
 					}
 				}
 			}
-			consequent: VariableDeclarationStatement {
+			consequent: JSVariableDeclarationStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -76,7 +76,7 @@ Program {
 						line: 1
 					}
 				}
-				declaration: VariableDeclaration {
+				declaration: JSVariableDeclaration {
 					kind: "var"
 					loc: Object {
 						filename: "input.js"
@@ -92,8 +92,8 @@ Program {
 						}
 					}
 					declarations: Array [
-						VariableDeclarator {
-							id: BindingIdentifier {
+						JSVariableDeclarator {
+							id: JSBindingIdentifier {
 								name: "x"
 								loc: Object {
 									filename: "input.js"
@@ -123,7 +123,7 @@ Program {
 									line: 1
 								}
 							}
-							init: NumericLiteral {
+							init: JSNumericLiteral {
 								value: 0
 								format: undefined
 								loc: Object {

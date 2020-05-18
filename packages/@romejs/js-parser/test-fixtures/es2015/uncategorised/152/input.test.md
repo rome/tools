@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 152`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
 				loc: Object {
@@ -78,7 +78,7 @@ Program {
 					}
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -100,7 +100,7 @@ Program {
 					}
 				}
 				params: Array [
-					BindingAssignmentPattern {
+					JSBindingAssignmentPattern {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -114,7 +114,7 @@ Program {
 								line: 1
 							}
 						}
-						right: ArrayExpression {
+						right: JSArrayExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -129,7 +129,7 @@ Program {
 								}
 							}
 							elements: Array [
-								NumericLiteral {
+								JSNumericLiteral {
 									value: 1
 									format: undefined
 									loc: Object {
@@ -148,7 +148,7 @@ Program {
 								}
 							]
 						}
-						left: BindingArrayPattern {
+						left: JSBindingArrayPattern {
 							rest: undefined
 							loc: Object {
 								filename: "input.js"
@@ -163,7 +163,7 @@ Program {
 									line: 1
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
 								loc: Object {
@@ -181,7 +181,7 @@ Program {
 								}
 							}
 							elements: Array [
-								BindingIdentifier {
+								JSBindingIdentifier {
 									name: "x"
 									loc: Object {
 										filename: "input.js"
@@ -197,7 +197,7 @@ Program {
 											line: 1
 										}
 									}
-									meta: PatternMeta {
+									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {

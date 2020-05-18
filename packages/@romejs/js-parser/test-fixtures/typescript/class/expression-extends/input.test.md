@@ -5,7 +5,7 @@
 ## `typescript > class > expression-extends`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ClassExpression {
+			expression: JSClassExpression {
 				id: undefined
 				loc: Object {
 					filename: "input.ts"
@@ -59,7 +59,7 @@ Program {
 						line: 1
 					}
 				}
-				meta: ClassHead {
+				meta: JSClassHead {
 					body: Array []
 					implements: undefined
 					typeParameters: undefined
@@ -76,7 +76,7 @@ Program {
 							line: 1
 						}
 					}
-					superClass: CallExpression {
+					superClass: JSCallExpression {
 						arguments: Array []
 						loc: Object {
 							filename: "input.ts"
@@ -91,7 +91,7 @@ Program {
 								line: 1
 							}
 						}
-						callee: ReferenceIdentifier {
+						callee: JSReferenceIdentifier {
 							name: "f"
 							loc: Object {
 								filename: "input.ts"
@@ -139,7 +139,7 @@ Program {
 										line: 1
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "T"
 									loc: Object {
 										filename: "input.ts"
@@ -162,7 +162,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -176,8 +176,8 @@ Program {
 					line: 2
 				}
 			}
-			expression: ClassExpression {
-				id: BindingIdentifier {
+			expression: JSClassExpression {
+				id: JSBindingIdentifier {
 					name: "C"
 					loc: Object {
 						filename: "input.ts"
@@ -207,7 +207,7 @@ Program {
 						line: 2
 					}
 				}
-				meta: ClassHead {
+				meta: JSClassHead {
 					body: Array []
 					implements: undefined
 					typeParameters: undefined
@@ -224,7 +224,7 @@ Program {
 							line: 2
 						}
 					}
-					superClass: CallExpression {
+					superClass: JSCallExpression {
 						arguments: Array []
 						loc: Object {
 							filename: "input.ts"
@@ -239,7 +239,7 @@ Program {
 								line: 2
 							}
 						}
-						callee: ReferenceIdentifier {
+						callee: JSReferenceIdentifier {
 							name: "f"
 							loc: Object {
 								filename: "input.ts"
@@ -287,7 +287,7 @@ Program {
 										line: 2
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "T"
 									loc: Object {
 										filename: "input.ts"

@@ -6,25 +6,27 @@
  */
 
 import {
-	AnyRegExpBodyItem,
-	RegExpCharacter,
-	RegExpQuantified,
-	RegExpSubExpression,
-	regExpQuantified,
-} from "@romejs/js-ast";
+	AnyJSRegExpBodyItem,
+	JSRegExpCharacter,
+	JSRegExpQuantified,
+	JSRegExpSubExpression,
+	jsRegExpQuantified,
+} from "@romejs/ast";
 import {CompilerContext, Path, TransformExitResult} from "@romejs/js-compiler";
 import {descriptions} from "@romejs/diagnostics";
 
 function isSpaceChar(
-	node: undefined | AnyRegExpBodyItem,
-): node is RegExpCharacter {
+	node: undefined | AnyJSRegExpBodyItem,
+): node is JSRegExpCharacter {
 	return (
-		node !== undefined && node.type === "RegExpCharacter" && node.value === " "
+		node !== undefined &&
+		node.type === "JSRegExpCharacter" &&
+		node.value === " "
 	);
 }
 
 function checkRegex(
-	node: RegExpSubExpression,
+	node: JSRegExpSubExpression,
 	context: CompilerContext,
 ): TransformExitResult {
 	for (let i = 0; i < node.body.length; i++) {
@@ -35,7 +37,7 @@ function checkRegex(
 			continue;
 		}
 
-		const spaceNodes: Array<RegExpCharacter> = [];
+		const spaceNodes: Array<JSRegExpCharacter> = [];
 
 		// Get all the space nodes
 		for (let x = i; x < node.body.length; x++) {
@@ -48,13 +50,13 @@ function checkRegex(
 			}
 		}
 
-		const quantifiedSpace: RegExpQuantified = regExpQuantified.create({
+		const quantifiedSpace: JSRegExpQuantified = jsRegExpQuantified.create({
 			min: spaceNodes.length,
 			max: spaceNodes.length,
 			target: item,
 		});
 
-		const newRegex: RegExpSubExpression = {
+		const newRegex: JSRegExpSubExpression = {
 			...node,
 			body: [
 				// Get start
@@ -86,7 +88,7 @@ export default {
 	enter(path: Path): TransformExitResult {
 		const {context, node} = path;
 
-		if (node.type === "RegExpSubExpression") {
+		if (node.type === "JSRegExpSubExpression") {
 			return checkRegex(node, context);
 		}
 

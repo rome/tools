@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 123`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	filename: "input.js"
@@ -28,7 +28,7 @@ Program {
 		}
 	}
 	directives: Array [
-		Directive {
+		JSDirective {
 			value: "use strict"
 			loc: Object {
 				filename: "input.js"
@@ -76,7 +76,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -90,8 +90,8 @@ Program {
 					line: 1
 				}
 			}
-			expression: ClassExpression {
-				id: BindingIdentifier {
+			expression: JSClassExpression {
+				id: JSBindingIdentifier {
 					name: "A"
 					loc: Object {
 						filename: "input.js"
@@ -121,7 +121,7 @@ Program {
 						line: 1
 					}
 				}
-				meta: ClassHead {
+				meta: JSClassHead {
 					implements: undefined
 					superClass: undefined
 					superTypeParameters: undefined
@@ -140,10 +140,10 @@ Program {
 						}
 					}
 					body: Array [
-						ClassMethod {
+						JSClassMethod {
 							kind: "constructor"
-							key: StaticPropertyKey {
-								value: Identifier {
+							key: JSStaticPropertyKey {
+								value: JSIdentifier {
 									name: "constructor"
 									loc: Object {
 										filename: "input.js"
@@ -187,7 +187,7 @@ Program {
 									line: 1
 								}
 							}
-							head: FunctionHead {
+							head: JSFunctionHead {
 								async: false
 								generator: false
 								hasHoistedVars: false
@@ -210,7 +210,7 @@ Program {
 									}
 								}
 							}
-							meta: ClassPropertyMeta {
+							meta: JSClassPropertyMeta {
 								abstract: false
 								accessibility: undefined
 								optional: false
@@ -236,7 +236,7 @@ Program {
 									}
 								}
 							}
-							body: BlockStatement {
+							body: JSBlockStatement {
 								directives: Array []
 								loc: Object {
 									filename: "input.js"
@@ -252,7 +252,7 @@ Program {
 									}
 								}
 								body: Array [
-									ExpressionStatement {
+									JSExpressionStatement {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -266,7 +266,7 @@ Program {
 												line: 1
 											}
 										}
-										expression: CallExpression {
+										expression: JSCallExpression {
 											arguments: Array []
 											loc: Object {
 												filename: "input.js"
@@ -281,7 +281,7 @@ Program {
 													line: 1
 												}
 											}
-											callee: Super {
+											callee: JSSuper {
 												loc: Object {
 													filename: "input.js"
 													end: Object {

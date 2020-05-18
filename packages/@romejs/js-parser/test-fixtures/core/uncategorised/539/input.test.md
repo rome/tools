@@ -5,7 +5,7 @@
 ## `core > uncategorised > 539`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				body: Array []
 				loc: Object {
 					filename: "input.js"
@@ -77,7 +77,7 @@ Program {
 					}
 				}
 				directives: Array [
-					Directive {
+					JSDirective {
 						value: "use strict"
 						loc: Object {
 							filename: "input.js"
@@ -95,7 +95,7 @@ Program {
 					}
 				]
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -117,7 +117,7 @@ Program {
 					}
 				}
 				params: Array [
-					BindingIdentifier {
+					JSBindingIdentifier {
 						name: "f"
 						loc: Object {
 							filename: "input.js"
@@ -133,7 +133,7 @@ Program {
 								line: 1
 							}
 						}
-						meta: PatternMeta {
+						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {

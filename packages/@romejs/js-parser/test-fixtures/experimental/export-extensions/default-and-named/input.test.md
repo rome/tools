@@ -5,7 +5,7 @@
 ## `experimental > export-extensions > default-and-named`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExportExternalDeclaration {
+		JSExportExternalDeclaration {
 			exportKind: undefined
 			namespaceSpecifier: undefined
 			loc: Object {
@@ -46,7 +46,7 @@ Program {
 					line: 1
 				}
 			}
-			source: StringLiteral {
+			source: JSStringLiteral {
 				value: "bar"
 				loc: Object {
 					filename: "input.js"
@@ -62,7 +62,7 @@ Program {
 					}
 				}
 			}
-			defaultSpecifier: ExportDefaultSpecifier {
+			defaultSpecifier: JSExportDefaultSpecifier {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -76,7 +76,7 @@ Program {
 						line: 1
 					}
 				}
-				exported: Identifier {
+				exported: JSIdentifier {
 					name: "foo"
 					loc: Object {
 						filename: "input.js"
@@ -95,7 +95,7 @@ Program {
 				}
 			}
 			namedSpecifiers: Array [
-				ExportExternalSpecifier {
+				JSExportExternalSpecifier {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -109,7 +109,7 @@ Program {
 							line: 1
 						}
 					}
-					exported: Identifier {
+					exported: JSIdentifier {
 						name: "bar"
 						loc: Object {
 							filename: "input.js"
@@ -126,7 +126,7 @@ Program {
 							}
 						}
 					}
-					local: Identifier {
+					local: JSIdentifier {
 						name: "bar"
 						loc: Object {
 							filename: "input.js"

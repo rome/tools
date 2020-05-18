@@ -5,7 +5,7 @@
 ## `es2018 > object-rest-spread > 19`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -55,7 +55,7 @@ Program {
 	]
 	body: Array [
 		TSDeclareFunction {
-			id: BindingIdentifier {
+			id: JSBindingIdentifier {
 				name: "test"
 				loc: Object {
 					filename: "input.js"
@@ -85,7 +85,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -107,7 +107,7 @@ Program {
 					}
 				}
 				params: Array [
-					BindingObjectPattern {
+					JSBindingObjectPattern {
 						properties: Array []
 						loc: Object {
 							filename: "input.js"
@@ -122,7 +122,7 @@ Program {
 								line: 1
 							}
 						}
-						meta: PatternMeta {
+						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
@@ -139,7 +139,7 @@ Program {
 								}
 							}
 						}
-						rest: BindingIdentifier {
+						rest: JSBindingIdentifier {
 							name: ""
 							loc: Object {
 								filename: "input.js"
@@ -160,7 +160,7 @@ Program {
 				]
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -174,7 +174,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ReferenceIdentifier {
+			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
 					filename: "input.js"
@@ -191,7 +191,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -205,7 +205,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ReferenceIdentifier {
+			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
 					filename: "input.js"
@@ -222,7 +222,7 @@ Program {
 				}
 			}
 		}
-		BlockStatement {
+		JSBlockStatement {
 			body: Array []
 			directives: Array []
 			loc: Object {

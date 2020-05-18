@@ -5,7 +5,7 @@
 ## `typescript > export > nested-same-name`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
@@ -46,7 +46,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclarationStatement {
+			declaration: JSVariableDeclarationStatement {
 				loc: Object {
 					filename: "input.ts"
 					end: Object {
@@ -60,7 +60,7 @@ Program {
 						line: 1
 					}
 				}
-				declaration: VariableDeclaration {
+				declaration: JSVariableDeclaration {
 					kind: "const"
 					loc: Object {
 						filename: "input.ts"
@@ -76,8 +76,8 @@ Program {
 						}
 					}
 					declarations: Array [
-						VariableDeclarator {
-							id: BindingIdentifier {
+						JSVariableDeclarator {
+							id: JSBindingIdentifier {
 								name: "x"
 								loc: Object {
 									filename: "input.ts"
@@ -107,7 +107,7 @@ Program {
 									line: 1
 								}
 							}
-							init: NumericLiteral {
+							init: JSNumericLiteral {
 								value: 0
 								format: undefined
 								loc: Object {
@@ -129,7 +129,7 @@ Program {
 				}
 			}
 		}
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
@@ -146,7 +146,7 @@ Program {
 				}
 			}
 			declaration: TSModuleDeclaration {
-				id: BindingIdentifier {
+				id: JSBindingIdentifier {
 					name: "N"
 					loc: Object {
 						filename: "input.ts"
@@ -191,7 +191,7 @@ Program {
 						}
 					}
 					body: Array [
-						ExportLocalDeclaration {
+						JSExportLocalDeclaration {
 							exportKind: "value"
 							specifiers: undefined
 							loc: Object {
@@ -207,7 +207,7 @@ Program {
 									line: 3
 								}
 							}
-							declaration: VariableDeclarationStatement {
+							declaration: JSVariableDeclarationStatement {
 								loc: Object {
 									filename: "input.ts"
 									end: Object {
@@ -221,7 +221,7 @@ Program {
 										line: 3
 									}
 								}
-								declaration: VariableDeclaration {
+								declaration: JSVariableDeclaration {
 									kind: "const"
 									loc: Object {
 										filename: "input.ts"
@@ -237,8 +237,8 @@ Program {
 										}
 									}
 									declarations: Array [
-										VariableDeclarator {
-											id: BindingIdentifier {
+										JSVariableDeclarator {
+											id: JSBindingIdentifier {
 												name: "x"
 												loc: Object {
 													filename: "input.ts"
@@ -268,7 +268,7 @@ Program {
 													line: 3
 												}
 											}
-											init: NumericLiteral {
+											init: JSNumericLiteral {
 												value: 1
 												format: undefined
 												loc: Object {

@@ -5,7 +5,7 @@
 ## `esprima > invalid-syntax > GH-1106-05`
 
 ```javascript
-Program {
+JSProgram {
 	body: Array []
 	comments: Array []
 	corrupt: false
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	directives: Array [
-		Directive {
+		JSDirective {
 			value: "\\ux"
 			loc: Object {
 				filename: "input.js"

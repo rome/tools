@@ -5,7 +5,7 @@
 ## `typescript > enum > export-const`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
@@ -47,7 +47,7 @@ Program {
 				}
 			}
 			declaration: TSEnumDeclaration {
-				id: BindingIdentifier {
+				id: JSBindingIdentifier {
 					name: "E"
 					loc: Object {
 						filename: "input.ts"

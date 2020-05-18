@@ -5,7 +5,7 @@
 ## `comments > function-head-inner`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentBlock {
+		JSCommentBlock {
 			id: "0"
 			value: " EMPTY "
 			loc: Object {
@@ -46,7 +46,7 @@ Program {
 				}
 			}
 		}
-		CommentBlock {
+		JSCommentBlock {
 			id: "1"
 			value: " ARGS "
 			loc: Object {
@@ -63,7 +63,7 @@ Program {
 				}
 			}
 		}
-		CommentLine {
+		JSCommentLine {
 			id: "2"
 			value: " BODY"
 			loc: Object {
@@ -83,7 +83,7 @@ Program {
 	]
 	body: Array [
 		TSDeclareFunction {
-			id: BindingIdentifier {
+			id: JSBindingIdentifier {
 				name: "x"
 				loc: Object {
 					filename: "input.ts"
@@ -113,7 +113,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -139,8 +139,8 @@ Program {
 				}
 			}
 		}
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "x"
 				loc: Object {
 					filename: "input.ts"
@@ -170,7 +170,7 @@ Program {
 					line: 2
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
 				trailingComments: Array []
@@ -190,7 +190,7 @@ Program {
 					}
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false

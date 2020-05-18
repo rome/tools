@@ -5,7 +5,7 @@
 ## `typescript > type-alias > generic`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		TypeAliasTypeAnnotation {
-			id: BindingIdentifier {
+		TSTypeAliasTypeAnnotation {
+			id: JSBindingIdentifier {
 				name: "T"
 				loc: Object {
 					filename: "input.ts"
@@ -76,7 +76,7 @@ Program {
 						line: 1
 					}
 				}
-				typeName: ReferenceIdentifier {
+				typeName: JSReferenceIdentifier {
 					name: "U"
 					loc: Object {
 						filename: "input.ts"

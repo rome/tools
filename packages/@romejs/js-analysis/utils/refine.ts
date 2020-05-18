@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../scopes";
-import {AnyNode, ReferenceIdentifier, UnaryExpression} from "@romejs/js-ast";
+import {AnyNode, JSReferenceIdentifier, JSUnaryExpression} from "@romejs/ast";
 import T from "../types/T";
 import Evaluator from "../Evaluator";
 import RefinedT from "../types/RefinedT";
@@ -30,13 +30,13 @@ function typesToMap(types: TypeDefinitions): Map<string, T> {
 
 function isTypeofNode(
 	node: AnyNode,
-): node is UnaryExpression & {
-	argument: ReferenceIdentifier;
+): node is JSUnaryExpression & {
+	argument: JSReferenceIdentifier;
 } {
 	return (
-		node.type === "UnaryExpression" &&
+		node.type === "JSUnaryExpression" &&
 		node.operator === "typeof" &&
-		node.argument.type === "ReferenceIdentifier"
+		node.argument.type === "JSReferenceIdentifier"
 	);
 }
 
@@ -45,7 +45,7 @@ function genTypes(node: AnyNode, scope: Scope): Array<TypeDefinition> {
 	let types = [];
 
 	switch (node.type) {
-		case "BinaryExpression": {
+		case "JSBinaryExpression": {
 			const {left, right} = node;
 			switch (node.operator) {
 				case "==":
@@ -73,7 +73,7 @@ function genTypes(node: AnyNode, scope: Scope): Array<TypeDefinition> {
 					}
 
 					// foo === 'bar'
-					if (left.type === "ReferenceIdentifier") {
+					if (left.type === "JSReferenceIdentifier") {
 						types.push({
 							name: left.name,
 							value: evaluator.getTypeFromEvaluatedNode(right),
@@ -98,7 +98,7 @@ function genTypes(node: AnyNode, scope: Scope): Array<TypeDefinition> {
 					}
 
 					// 'bar' === foo
-					if (right.type === "ReferenceIdentifier") {
+					if (right.type === "JSReferenceIdentifier") {
 						types.push({
 							name: right.name,
 							value: evaluator.getTypeFromEvaluatedNode(left),
@@ -109,7 +109,7 @@ function genTypes(node: AnyNode, scope: Scope): Array<TypeDefinition> {
 
 				case "!==": {
 					// TODO add `typeof`
-					if (left.type === "ReferenceIdentifier") {
+					if (left.type === "JSReferenceIdentifier") {
 						types.push({
 							name: left.name,
 							value: new RefinedT(
@@ -120,7 +120,7 @@ function genTypes(node: AnyNode, scope: Scope): Array<TypeDefinition> {
 							),
 						});
 					}
-					if (right.type === "ReferenceIdentifier") {
+					if (right.type === "JSReferenceIdentifier") {
 						types.push({
 							name: right.name,
 							value: new RefinedT(
@@ -138,12 +138,12 @@ function genTypes(node: AnyNode, scope: Scope): Array<TypeDefinition> {
 					return [];
 
 				default:
-					throw new Error("Unknown BinaryExpression operator");
+					throw new Error("Unknown JSBinaryExpression operator");
 			}
 			break;
 		}
 
-		case "LogicalExpression":
+		case "JSLogicalExpression":
 			switch (node.operator) {
 				case "||": {
 					const leftMap = typesToMap(genTypes(node.left, scope));

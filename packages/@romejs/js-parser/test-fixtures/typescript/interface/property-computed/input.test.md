@@ -5,7 +5,7 @@
 ## `typescript > interface > property-computed`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -31,7 +31,7 @@ Program {
 	}
 	body: Array [
 		TSInterfaceDeclaration {
-			id: BindingIdentifier {
+			id: JSBindingIdentifier {
 				name: "I"
 				loc: Object {
 					filename: "input.ts"
@@ -79,8 +79,8 @@ Program {
 				}
 				body: Array [
 					TSPropertySignature {
-						key: ComputedPropertyKey {
-							value: MemberExpression {
+						key: JSComputedPropertyKey {
+							value: JSMemberExpression {
 								loc: Object {
 									filename: "input.ts"
 									end: Object {
@@ -94,7 +94,7 @@ Program {
 										line: 2
 									}
 								}
-								object: ReferenceIdentifier {
+								object: JSReferenceIdentifier {
 									name: "Symbol"
 									loc: Object {
 										filename: "input.ts"
@@ -111,8 +111,8 @@ Program {
 										}
 									}
 								}
-								property: StaticMemberProperty {
-									value: Identifier {
+								property: JSStaticMemberProperty {
+									value: JSIdentifier {
 										name: "iterator"
 										loc: Object {
 											filename: "input.ts"
@@ -191,8 +191,8 @@ Program {
 						}
 					}
 					TSPropertySignature {
-						key: ComputedPropertyKey {
-							value: MemberExpression {
+						key: JSComputedPropertyKey {
+							value: JSMemberExpression {
 								loc: Object {
 									filename: "input.ts"
 									end: Object {
@@ -206,7 +206,7 @@ Program {
 										line: 3
 									}
 								}
-								object: ReferenceIdentifier {
+								object: JSReferenceIdentifier {
 									name: "Symbol"
 									loc: Object {
 										filename: "input.ts"
@@ -223,8 +223,8 @@ Program {
 										}
 									}
 								}
-								property: StaticMemberProperty {
-									value: Identifier {
+								property: JSStaticMemberProperty {
+									value: JSIdentifier {
 										name: "iterator"
 										loc: Object {
 											filename: "input.ts"

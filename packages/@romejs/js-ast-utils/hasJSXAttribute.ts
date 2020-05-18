@@ -1,4 +1,4 @@
-import {JSXElement} from "@romejs/js-ast";
+import {JSXElement} from "@romejs/ast";
 import getJSXAttribute from "./getJSXAttribute";
 
 export default function hasJSXAttribute(

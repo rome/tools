@@ -13,7 +13,7 @@ export default {
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 
-		if (node.type === "DebuggerStatement") {
+		if (node.type === "JSDebuggerStatement") {
 			return path.context.addFixableDiagnostic(
 				{
 					old: node,

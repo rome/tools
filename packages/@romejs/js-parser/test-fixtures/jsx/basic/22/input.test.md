@@ -5,7 +5,7 @@
 ## `jsx > basic > 22`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	directives: Array []
 	filename: "input.mjs"
@@ -31,7 +31,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentBlock {
+		JSCommentBlock {
 			id: "0"
 			value: "* @jsx mdx "
 			loc: Object {
@@ -84,7 +84,7 @@ Program {
 		}
 	]
 	body: Array [
-		ImportDeclaration {
+		JSImportDeclaration {
 			defaultSpecifier: undefined
 			importKind: undefined
 			namespaceSpecifier: undefined
@@ -102,7 +102,7 @@ Program {
 					line: 2
 				}
 			}
-			source: StringLiteral {
+			source: JSStringLiteral {
 				value: "@mdx-js/preact"
 				loc: Object {
 					filename: "input.mjs"
@@ -119,7 +119,7 @@ Program {
 				}
 			}
 			namedSpecifiers: Array [
-				ImportSpecifier {
+				JSImportSpecifier {
 					leadingComments: undefined
 					loc: Object {
 						filename: "input.mjs"
@@ -134,7 +134,7 @@ Program {
 							line: 2
 						}
 					}
-					imported: Identifier {
+					imported: JSIdentifier {
 						name: "mdx"
 						leadingComments: undefined
 						loc: Object {
@@ -152,8 +152,8 @@ Program {
 							}
 						}
 					}
-					local: ImportSpecifierLocal {
-						name: BindingIdentifier {
+					local: JSImportSpecifierLocal {
+						name: JSBindingIdentifier {
 							name: "mdx"
 							innerComments: undefined
 							leadingComments: undefined
@@ -192,7 +192,7 @@ Program {
 				}
 			]
 		}
-		ExportDefaultDeclaration {
+		JSExportDefaultDeclaration {
 			loc: Object {
 				filename: "input.mjs"
 				end: Object {
@@ -206,8 +206,8 @@ Program {
 					line: 4
 				}
 			}
-			declaration: FunctionDeclaration {
-				id: BindingIdentifier {
+			declaration: JSFunctionDeclaration {
+				id: JSBindingIdentifier {
 					name: "MDXContent"
 					loc: Object {
 						filename: "input.mjs"
@@ -237,7 +237,7 @@ Program {
 						line: 4
 					}
 				}
-				head: FunctionHead {
+				head: JSFunctionHead {
 					async: false
 					generator: false
 					hasHoistedVars: false
@@ -260,7 +260,7 @@ Program {
 						}
 					}
 				}
-				body: BlockStatement {
+				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
 						filename: "input.mjs"
@@ -276,7 +276,7 @@ Program {
 						}
 					}
 					body: Array [
-						ReturnStatement {
+						JSReturnStatement {
 							loc: Object {
 								filename: "input.mjs"
 								end: Object {

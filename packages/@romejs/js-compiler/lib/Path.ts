@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, MOCK_PARENT} from "@romejs/js-ast";
+import {AnyNode, MOCK_PARENT} from "@romejs/ast";
 import {
 	CompilerContext,
 	Scope,

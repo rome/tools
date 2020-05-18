@@ -5,7 +5,7 @@
 ## `typescript > interface > reserved-method-name`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -31,7 +31,7 @@ Program {
 	}
 	body: Array [
 		TSInterfaceDeclaration {
-			id: BindingIdentifier {
+			id: JSBindingIdentifier {
 				name: "I"
 				loc: Object {
 					filename: "input.ts"
@@ -79,8 +79,8 @@ Program {
 				}
 				body: Array [
 					TSMethodSignature {
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "catch"
 								loc: Object {
 									filename: "input.ts"
@@ -125,7 +125,7 @@ Program {
 								line: 2
 							}
 						}
-						returnType: VoidKeywordTypeAnnotation {
+						returnType: TSVoidKeywordTypeAnnotation {
 							loc: Object {
 								filename: "input.ts"
 								end: Object {

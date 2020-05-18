@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > 30`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
 					filename: "input.js"
@@ -60,8 +60,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "foo"
 							loc: Object {
 								filename: "input.js"
@@ -91,7 +91,7 @@ Program {
 								line: 1
 							}
 						}
-						init: FunctionExpression {
+						init: JSFunctionExpression {
 							id: undefined
 							loc: Object {
 								filename: "input.js"
@@ -106,7 +106,7 @@ Program {
 									line: 1
 								}
 							}
-							body: BlockStatement {
+							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
 								loc: Object {
@@ -123,7 +123,7 @@ Program {
 									}
 								}
 							}
-							head: FunctionHead {
+							head: JSFunctionHead {
 								async: false
 								generator: false
 								hasHoistedVars: false
@@ -145,7 +145,7 @@ Program {
 									}
 								}
 								params: Array [
-									BindingObjectPattern {
+									JSBindingObjectPattern {
 										rest: undefined
 										loc: Object {
 											filename: "input.js"
@@ -160,7 +160,7 @@ Program {
 												line: 1
 											}
 										}
-										meta: PatternMeta {
+										meta: JSPatternMeta {
 											optional: undefined
 											typeAnnotation: undefined
 											loc: Object {
@@ -178,9 +178,9 @@ Program {
 											}
 										}
 										properties: Array [
-											BindingObjectPatternProperty {
-												key: StaticPropertyKey {
-													value: Identifier {
+											JSBindingObjectPatternProperty {
+												key: JSStaticPropertyKey {
+													value: JSIdentifier {
 														name: "async"
 														loc: Object {
 															filename: "input.js"
@@ -211,7 +211,7 @@ Program {
 														}
 													}
 												}
-												value: BindingIdentifier {
+												value: JSBindingIdentifier {
 													name: "bar"
 													loc: Object {
 														filename: "input.js"

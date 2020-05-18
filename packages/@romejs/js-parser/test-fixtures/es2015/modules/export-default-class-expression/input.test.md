@@ -5,7 +5,7 @@
 ## `es2015 > modules > export-default-class-expression`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExportDefaultDeclaration {
+		JSExportDefaultDeclaration {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,8 +44,8 @@ Program {
 					line: 1
 				}
 			}
-			declaration: ClassExpression {
-				id: BindingIdentifier {
+			declaration: JSClassExpression {
+				id: JSBindingIdentifier {
 					name: "Foo"
 					loc: Object {
 						filename: "input.js"
@@ -75,7 +75,7 @@ Program {
 						line: 1
 					}
 				}
-				meta: ClassHead {
+				meta: JSClassHead {
 					body: Array []
 					implements: undefined
 					superClass: undefined

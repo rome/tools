@@ -5,7 +5,7 @@
 ## `esprima > statement-continue > migrated_0004`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		LabeledStatement {
+		JSLabeledStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			label: Identifier {
+			label: JSIdentifier {
 				name: "__proto__"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					}
 				}
 			}
-			body: WhileStatement {
+			body: JSWhileStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -75,7 +75,7 @@ Program {
 						line: 1
 					}
 				}
-				test: BooleanLiteral {
+				test: JSBooleanLiteral {
 					value: true
 					loc: Object {
 						filename: "input.js"
@@ -91,7 +91,7 @@ Program {
 						}
 					}
 				}
-				body: BlockStatement {
+				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
 						filename: "input.js"
@@ -107,7 +107,7 @@ Program {
 						}
 					}
 					body: Array [
-						ContinueStatement {
+						JSContinueStatement {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -121,7 +121,7 @@ Program {
 									line: 1
 								}
 							}
-							label: Identifier {
+							label: JSIdentifier {
 								name: "__proto__"
 								loc: Object {
 									filename: "input.js"

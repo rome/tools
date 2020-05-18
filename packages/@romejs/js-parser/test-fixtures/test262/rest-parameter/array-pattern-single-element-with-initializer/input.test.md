@@ -5,7 +5,7 @@
 ## `test262 > rest-parameter > array-pattern-single-element-with-initializer`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "singleElementWithInitializer"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
 				loc: Object {
@@ -78,7 +78,7 @@ Program {
 					}
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -99,7 +99,7 @@ Program {
 						line: 1
 					}
 				}
-				rest: BindingArrayPattern {
+				rest: JSBindingArrayPattern {
 					rest: undefined
 					loc: Object {
 						filename: "input.js"
@@ -114,7 +114,7 @@ Program {
 							line: 1
 						}
 					}
-					meta: PatternMeta {
+					meta: JSPatternMeta {
 						optional: undefined
 						typeAnnotation: undefined
 						loc: Object {
@@ -132,7 +132,7 @@ Program {
 						}
 					}
 					elements: Array [
-						BindingAssignmentPattern {
+						JSBindingAssignmentPattern {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -146,7 +146,7 @@ Program {
 									line: 1
 								}
 							}
-							right: NumericLiteral {
+							right: JSNumericLiteral {
 								value: 0
 								format: undefined
 								loc: Object {
@@ -163,7 +163,7 @@ Program {
 									}
 								}
 							}
-							left: BindingIdentifier {
+							left: JSBindingIdentifier {
 								name: "a"
 								loc: Object {
 									filename: "input.js"
@@ -179,7 +179,7 @@ Program {
 										line: 1
 									}
 								}
-								meta: PatternMeta {
+								meta: JSPatternMeta {
 									optional: undefined
 									typeAnnotation: undefined
 									loc: Object {

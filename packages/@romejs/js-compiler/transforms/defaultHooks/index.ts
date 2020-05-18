@@ -7,33 +7,33 @@
 
 import {Path, createHook} from "@romejs/js-compiler";
 import {
-	AnyComment,
-	AnyCommentOptionalId,
-	AnyExpression,
+	AnyJSComment,
+	AnyJSCommentOptionalId,
+	AnyJSExpression,
 	AnyNode,
-	AssignmentIdentifier,
-	ReferenceIdentifier,
-	assignmentIdentifier,
-	bindingIdentifier,
-	referenceIdentifier,
-	variableDeclaration,
-	variableDeclarationStatement,
-	variableDeclarator,
-} from "@romejs/js-ast";
+	JSAssignmentIdentifier,
+	JSReferenceIdentifier,
+	jsAssignmentIdentifier,
+	jsBindingIdentifier,
+	jsReferenceIdentifier,
+	jsVariableDeclaration,
+	jsVariableDeclarationStatement,
+	jsVariableDeclarator,
+} from "@romejs/ast";
 
 type VariableInjectorState = {
-	bindings: Array<[string, undefined | AnyExpression]>;
+	bindings: Array<[string, undefined | AnyJSExpression]>;
 };
 
 type VariableInjectorArgs = {
 	name?: string;
-	init?: AnyExpression;
+	init?: AnyJSExpression;
 };
 
 export const bindingInjector = createHook<
 	VariableInjectorState,
 	VariableInjectorArgs,
-	[ReferenceIdentifier, AssignmentIdentifier]
+	[JSReferenceIdentifier, JSAssignmentIdentifier]
 >({
 	name: "bindingInjectorHook",
 	initialState: {
@@ -46,10 +46,10 @@ export const bindingInjector = createHook<
 	) {
 		const name = opts.name === undefined ? path.scope.generateUid() : opts.name;
 
-		const ref = referenceIdentifier.quick(name);
+		const ref = jsReferenceIdentifier.quick(name);
 
 		// lol
-		const ass = assignmentIdentifier.quick(name);
+		const ass = jsAssignmentIdentifier.quick(name);
 
 		return {
 			value: [ref, ass],
@@ -61,7 +61,7 @@ export const bindingInjector = createHook<
 	exit(path: Path, state: VariableInjectorState): AnyNode {
 		const {node} = path;
 
-		if (node.type !== "BlockStatement" && node.type !== "Program") {
+		if (node.type !== "JSBlockStatement" && node.type !== "JSProgram") {
 			throw new Error("Never should have been used as a provider");
 		}
 
@@ -73,12 +73,12 @@ export const bindingInjector = createHook<
 		return {
 			...node,
 			body: [
-				variableDeclarationStatement.quick(
-					variableDeclaration.create({
+				jsVariableDeclarationStatement.quick(
+					jsVariableDeclaration.create({
 						kind: "var",
 						declarations: bindings.map(([name, init]) => {
-							return variableDeclarator.create({
-								id: bindingIdentifier.quick(name),
+							return jsVariableDeclarator.create({
+								id: jsBindingIdentifier.quick(name),
 								init,
 							});
 						}),
@@ -95,7 +95,7 @@ export const variableInjectorVisitor = {
 	enter(path: Path) {
 		const {node} = path;
 
-		if (node.type === "BlockStatement" || node.type === "Program") {
+		if (node.type === "JSBlockStatement" || node.type === "JSProgram") {
 			path.provideHook(bindingInjector);
 		}
 
@@ -104,10 +104,10 @@ export const variableInjectorVisitor = {
 };
 
 type CommentInjectorState = {
-	comments: Array<AnyComment>;
+	comments: Array<AnyJSComment>;
 };
 
-type CommentInjectorArg = AnyCommentOptionalId;
+type CommentInjectorArg = AnyJSCommentOptionalId;
 
 export const commentInjector = createHook<
 	CommentInjectorState,
@@ -119,7 +119,7 @@ export const commentInjector = createHook<
 		comments: [],
 	},
 	call(path: Path, state: CommentInjectorState, comment: CommentInjectorArg) {
-		let commentWithId: AnyComment;
+		let commentWithId: AnyJSComment;
 		let comments = state.comments;
 
 		const {id} = comment;
@@ -147,7 +147,7 @@ export const commentInjector = createHook<
 	exit(path: Path, state: CommentInjectorState): AnyNode {
 		const {node} = path;
 
-		if (node.type !== "Program") {
+		if (node.type !== "JSProgram") {
 			throw new Error("Never should have been used as a provider");
 		}
 
@@ -163,11 +163,11 @@ export const commentInjectorVisitor = {
 	enter(path: Path) {
 		const {node, context} = path;
 
-		if (node.type === "CommentBlock" || node.type === "CommentLine") {
+		if (node.type === "JSCommentBlock" || node.type === "JSCommentLine") {
 			context.comments.updateComment(node);
 		}
 
-		if (node.type === "Program") {
+		if (node.type === "JSProgram") {
 			context.comments.setComments(node.comments);
 			return path.provideHook(commentInjector);
 		}

@@ -5,7 +5,7 @@
 ## `esprima > es2015-unicode-code-point-escape-sequence > migrated_0000`
 
 ```javascript
-Program {
+JSProgram {
 	body: Array []
 	comments: Array []
 	corrupt: false
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	directives: Array [
-		Directive {
+		JSDirective {
 			value: "\\\\u{714E}\\\\u{8336}"
 			loc: Object {
 				filename: "input.js"

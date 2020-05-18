@@ -6,7 +6,7 @@
  */
 
 import {Path} from "@romejs/js-compiler";
-import {AnyNode, JSXElement} from "@romejs/js-ast";
+import {AnyNode, JSXElement} from "@romejs/ast";
 import {descriptions} from "@romejs/diagnostics";
 
 function containsKeyAttr(node: JSXElement): boolean {
@@ -25,23 +25,23 @@ export default {
 		if (
 			node.type === "JSXElement" &&
 			!containsKeyAttr(node) &&
-			path.parentPath.node.type === "ArrayExpression"
+			path.parentPath.node.type === "JSArrayExpression"
 		) {
 			context.addNodeDiagnostic(node, descriptions.LINT.REACT_JSX_KEY("array"));
 		}
 
 		// Array.prototype.map
 		if (
-			node.type === "CallExpression" &&
-			node.callee.type === "MemberExpression" &&
-			node.callee.property.value.type === "Identifier" &&
+			node.type === "JSCallExpression" &&
+			node.callee.type === "JSMemberExpression" &&
+			node.callee.property.value.type === "JSIdentifier" &&
 			node.callee.property.value.name === "map"
 		) {
 			const fn = node.arguments[0];
 
 			// Short hand arrow function
 			if (
-				fn.type === "ArrowFunctionExpression" &&
+				fn.type === "JSArrowFunctionExpression" &&
 				fn.body.type === "JSXElement" &&
 				!containsKeyAttr(fn.body)
 			) {
@@ -54,13 +54,13 @@ export default {
 			// Function or arrow function with block statement
 			if (
 				fn &&
-				(fn.type === "FunctionExpression" ||
-				fn.type === "ArrowFunctionExpression") &&
-				fn.body.type === "BlockStatement"
+				(fn.type === "JSFunctionExpression" ||
+				fn.type === "JSArrowFunctionExpression") &&
+				fn.body.type === "JSBlockStatement"
 			) {
 				fn.body.body.forEach((statement) => {
 					if (
-						statement.type === "ReturnStatement" &&
+						statement.type === "JSReturnStatement" &&
 						statement.argument?.type === "JSXElement" &&
 						!containsKeyAttr(statement.argument)
 					) {

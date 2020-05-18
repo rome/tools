@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 112`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		ClassDeclaration {
-			id: BindingIdentifier {
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			meta: ClassHead {
+			meta: JSClassHead {
 				body: Array []
 				implements: undefined
 				superTypeParameters: undefined
@@ -79,8 +79,8 @@ Program {
 						line: 1
 					}
 				}
-				superClass: ClassExpression {
-					id: BindingIdentifier {
+				superClass: JSClassExpression {
+					id: JSBindingIdentifier {
 						name: "B"
 						loc: Object {
 							filename: "input.js"
@@ -110,7 +110,7 @@ Program {
 							line: 1
 						}
 					}
-					meta: ClassHead {
+					meta: JSClassHead {
 						body: Array []
 						implements: undefined
 						superTypeParameters: undefined
@@ -128,7 +128,7 @@ Program {
 								line: 1
 							}
 						}
-						superClass: ReferenceIdentifier {
+						superClass: JSReferenceIdentifier {
 							name: "C"
 							loc: Object {
 								filename: "input.js"

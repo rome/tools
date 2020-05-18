@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 299`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: CallExpression {
+			expression: JSCallExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -58,7 +58,7 @@ Program {
 						line: 1
 					}
 				}
-				callee: ReferenceIdentifier {
+				callee: JSReferenceIdentifier {
 					name: "doSmth"
 					loc: Object {
 						filename: "input.js"
@@ -76,7 +76,7 @@ Program {
 					}
 				}
 				arguments: Array [
-					TemplateLiteral {
+					JSTemplateLiteral {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -91,7 +91,7 @@ Program {
 							}
 						}
 						quasis: Array [
-							TemplateElement {
+							JSTemplateElement {
 								cooked: ""
 								raw: ""
 								tail: false
@@ -109,7 +109,7 @@ Program {
 									}
 								}
 							}
-							TemplateElement {
+							JSTemplateElement {
 								cooked: " + "
 								raw: " + "
 								tail: false
@@ -127,7 +127,7 @@ Program {
 									}
 								}
 							}
-							TemplateElement {
+							JSTemplateElement {
 								cooked: " = "
 								raw: " = "
 								tail: false
@@ -145,7 +145,7 @@ Program {
 									}
 								}
 							}
-							TemplateElement {
+							JSTemplateElement {
 								cooked: ""
 								raw: ""
 								tail: true
@@ -165,7 +165,7 @@ Program {
 							}
 						]
 						expressions: Array [
-							ReferenceIdentifier {
+							JSReferenceIdentifier {
 								name: "x"
 								loc: Object {
 									filename: "input.js"
@@ -182,7 +182,7 @@ Program {
 									}
 								}
 							}
-							ReferenceIdentifier {
+							JSReferenceIdentifier {
 								name: "y"
 								loc: Object {
 									filename: "input.js"
@@ -199,7 +199,7 @@ Program {
 									}
 								}
 							}
-							BinaryExpression {
+							JSBinaryExpression {
 								operator: "+"
 								loc: Object {
 									filename: "input.js"
@@ -214,7 +214,7 @@ Program {
 										line: 1
 									}
 								}
-								left: ReferenceIdentifier {
+								left: JSReferenceIdentifier {
 									name: "x"
 									loc: Object {
 										filename: "input.js"
@@ -231,7 +231,7 @@ Program {
 										}
 									}
 								}
-								right: ReferenceIdentifier {
+								right: JSReferenceIdentifier {
 									name: "y"
 									loc: Object {
 										filename: "input.js"

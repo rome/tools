@@ -5,7 +5,7 @@
 ## `comments > basic > block-trailing-comment`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentLine {
+		JSCommentLine {
 			id: "0"
 			value: "comment"
 			loc: Object {
@@ -48,7 +48,7 @@ Program {
 		}
 	]
 	body: Array [
-		BlockStatement {
+		JSBlockStatement {
 			directives: Array []
 			loc: Object {
 				filename: "input.js"
@@ -64,7 +64,7 @@ Program {
 				}
 			}
 			body: Array [
-				ExpressionStatement {
+				JSExpressionStatement {
 					trailingComments: Array ["0"]
 					loc: Object {
 						filename: "input.js"
@@ -79,7 +79,7 @@ Program {
 							line: 2
 						}
 					}
-					expression: CallExpression {
+					expression: JSCallExpression {
 						arguments: Array []
 						loc: Object {
 							filename: "input.js"
@@ -94,7 +94,7 @@ Program {
 								line: 2
 							}
 						}
-						callee: ReferenceIdentifier {
+						callee: JSReferenceIdentifier {
 							name: "a"
 							loc: Object {
 								filename: "input.js"

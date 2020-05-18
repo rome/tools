@@ -5,7 +5,7 @@
 ## `es2015 > meta-properties > new-target-invalid`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: MetaProperty {
+			expression: JSMetaProperty {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -82,7 +82,7 @@ Program {
 						line: 1
 					}
 				}
-				meta: Identifier {
+				meta: JSIdentifier {
 					name: "new"
 					loc: Object {
 						filename: "input.js"
@@ -99,7 +99,7 @@ Program {
 						}
 					}
 				}
-				property: Identifier {
+				property: JSIdentifier {
 					name: "target"
 					loc: Object {
 						filename: "input.js"

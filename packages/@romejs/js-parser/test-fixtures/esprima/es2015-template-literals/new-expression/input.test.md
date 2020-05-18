@@ -5,7 +5,7 @@
 ## `esprima > es2015-template-literals > new-expression`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: NewExpression {
+			expression: JSNewExpression {
 				arguments: Array []
 				optional: undefined
 				typeArguments: undefined
@@ -61,7 +61,7 @@ Program {
 						line: 1
 					}
 				}
-				callee: TaggedTemplateExpression {
+				callee: JSTaggedTemplateExpression {
 					typeArguments: undefined
 					loc: Object {
 						filename: "input.js"
@@ -76,7 +76,7 @@ Program {
 							line: 1
 						}
 					}
-					tag: ReferenceIdentifier {
+					tag: JSReferenceIdentifier {
 						name: "raw"
 						loc: Object {
 							filename: "input.js"
@@ -93,7 +93,7 @@ Program {
 							}
 						}
 					}
-					quasi: TemplateLiteral {
+					quasi: JSTemplateLiteral {
 						expressions: Array []
 						loc: Object {
 							filename: "input.js"
@@ -109,7 +109,7 @@ Program {
 							}
 						}
 						quasis: Array [
-							TemplateElement {
+							JSTemplateElement {
 								cooked: "42"
 								raw: "42"
 								tail: true

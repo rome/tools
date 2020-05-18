@@ -14,7 +14,7 @@ import {
 	TransformExitResult,
 	TransformVisitors,
 } from "@romejs/js-compiler";
-import {AnyNode, visitorKeys as allVisitorKeys} from "@romejs/js-ast";
+import {AnyNode, visitorKeys as allVisitorKeys} from "@romejs/ast";
 import {isNodeLike} from "@romejs/js-ast-utils";
 
 const BAIL_EXIT: "BAIL" = "BAIL";
@@ -192,7 +192,7 @@ export default function reduce(
 					const child = children[correctedIndex];
 
 					// An array may be mixed containing [undefined, Node] etc so check that it's actually a valid node
-					// An example of a property with empty elements is an ArrayExpression with holes
+					// An example of a property with empty elements is an JSArrayExpression with holes
 					if (isNodeLike(child)) {
 						// Run transforms on this node
 						const newChild = reduce(

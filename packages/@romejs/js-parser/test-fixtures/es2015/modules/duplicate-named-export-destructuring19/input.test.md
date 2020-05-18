@@ -5,7 +5,7 @@
 ## `es2015 > modules > duplicate-named-export-destructuring19`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
@@ -46,7 +46,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclarationStatement {
+			declaration: JSVariableDeclarationStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -60,7 +60,7 @@ Program {
 						line: 1
 					}
 				}
-				declaration: VariableDeclaration {
+				declaration: JSVariableDeclaration {
 					kind: "const"
 					loc: Object {
 						filename: "input.js"
@@ -76,8 +76,8 @@ Program {
 						}
 					}
 					declarations: Array [
-						VariableDeclarator {
-							id: BindingIdentifier {
+						JSVariableDeclarator {
+							id: JSBindingIdentifier {
 								name: "foo"
 								loc: Object {
 									filename: "input.js"
@@ -107,7 +107,7 @@ Program {
 									line: 1
 								}
 							}
-							init: NumericLiteral {
+							init: JSNumericLiteral {
 								value: 1
 								format: undefined
 								loc: Object {
@@ -129,7 +129,7 @@ Program {
 				}
 			}
 		}
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
@@ -145,7 +145,7 @@ Program {
 					line: 2
 				}
 			}
-			declaration: VariableDeclarationStatement {
+			declaration: JSVariableDeclarationStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -159,7 +159,7 @@ Program {
 						line: 2
 					}
 				}
-				declaration: VariableDeclaration {
+				declaration: JSVariableDeclaration {
 					kind: "const"
 					loc: Object {
 						filename: "input.js"
@@ -175,8 +175,8 @@ Program {
 						}
 					}
 					declarations: Array [
-						VariableDeclarator {
-							id: BindingObjectPattern {
+						JSVariableDeclarator {
+							id: JSBindingObjectPattern {
 								rest: undefined
 								loc: Object {
 									filename: "input.js"
@@ -192,9 +192,9 @@ Program {
 									}
 								}
 								properties: Array [
-									BindingObjectPatternProperty {
-										key: StaticPropertyKey {
-											value: Identifier {
+									JSBindingObjectPatternProperty {
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
 												name: "bar"
 												loc: Object {
 													filename: "input.js"
@@ -225,7 +225,7 @@ Program {
 												}
 											}
 										}
-										value: BindingArrayPattern {
+										value: JSBindingArrayPattern {
 											loc: Object {
 												filename: "input.js"
 												end: Object {
@@ -239,7 +239,7 @@ Program {
 													line: 2
 												}
 											}
-											rest: BindingIdentifier {
+											rest: JSBindingIdentifier {
 												name: "foo"
 												loc: Object {
 													filename: "input.js"
@@ -255,7 +255,7 @@ Program {
 														line: 2
 													}
 												}
-												meta: PatternMeta {
+												meta: JSPatternMeta {
 													optional: undefined
 													typeAnnotation: undefined
 													loc: Object {
@@ -274,7 +274,7 @@ Program {
 												}
 											}
 											elements: Array [
-												BindingIdentifier {
+												JSBindingIdentifier {
 													name: "baz"
 													loc: Object {
 														filename: "input.js"
@@ -290,7 +290,7 @@ Program {
 															line: 2
 														}
 													}
-													meta: PatternMeta {
+													meta: JSPatternMeta {
 														optional: undefined
 														typeAnnotation: undefined
 														loc: Object {
@@ -339,7 +339,7 @@ Program {
 									line: 2
 								}
 							}
-							init: ReferenceIdentifier {
+							init: JSReferenceIdentifier {
 								name: "qux"
 								loc: Object {
 									filename: "input.js"

@@ -5,7 +5,7 @@
 ## `typescript > module-namespace > body-nested`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -31,7 +31,7 @@ Program {
 	}
 	body: Array [
 		TSModuleDeclaration {
-			id: BindingIdentifier {
+			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
 					filename: "input.ts"
@@ -77,7 +77,7 @@ Program {
 				}
 				body: Array [
 					TSModuleDeclaration {
-						id: BindingIdentifier {
+						id: JSBindingIdentifier {
 							name: "B"
 							loc: Object {
 								filename: "input.ts"

@@ -5,7 +5,7 @@
 ## `esprima > es2015-arrow-function > migrated_0016`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ArrowFunctionExpression {
+			expression: JSArrowFunctionExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -58,7 +58,7 @@ Program {
 						line: 1
 					}
 				}
-				head: FunctionHead {
+				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
 					rest: undefined
@@ -77,7 +77,7 @@ Program {
 						}
 					}
 					params: Array [
-						BindingIdentifier {
+						JSBindingIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.js"
@@ -96,7 +96,7 @@ Program {
 						}
 					]
 				}
-				body: ArrowFunctionExpression {
+				body: JSArrowFunctionExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -110,7 +110,7 @@ Program {
 							line: 1
 						}
 					}
-					body: NumericLiteral {
+					body: JSNumericLiteral {
 						value: 42
 						format: undefined
 						loc: Object {
@@ -127,7 +127,7 @@ Program {
 							}
 						}
 					}
-					head: FunctionHead {
+					head: JSFunctionHead {
 						async: false
 						hasHoistedVars: false
 						rest: undefined
@@ -146,7 +146,7 @@ Program {
 							}
 						}
 						params: Array [
-							BindingIdentifier {
+							JSBindingIdentifier {
 								name: "y"
 								loc: Object {
 									filename: "input.js"

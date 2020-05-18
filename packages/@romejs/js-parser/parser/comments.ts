@@ -31,14 +31,14 @@
 
 import {JSParser} from "../parser";
 import {SourceLocation} from "@romejs/parser-core";
-import {AnyComment, AnyNode} from "@romejs/js-ast";
+import {AnyJSComment, AnyNode} from "@romejs/ast";
 import {Number0} from "@romejs/ob1";
 
 function last<T>(stack: Array<T>): T {
 	return stack[stack.length - 1];
 }
 
-function getIds(comments: Array<AnyComment>): Array<string> {
+function getIds(comments: Array<AnyJSComment>): Array<string> {
 	return comments.map((comment) => comment.id);
 }
 
@@ -67,7 +67,7 @@ function hasComments(
 function setComments(
 	node: AnyNode,
 	key: "leadingComments" | "trailingComments",
-	comments: Array<AnyComment>,
+	comments: Array<AnyJSComment>,
 ) {
 	let innerEndIndex = -1;
 
@@ -88,7 +88,7 @@ function setComments(
 	}
 }
 
-export function addComment(parser: JSParser, comment: AnyComment): void {
+export function addComment(parser: JSParser, comment: AnyJSComment): void {
 	parser.state.trailingComments.push(comment);
 	parser.state.leadingComments.push(comment);
 }
@@ -132,7 +132,7 @@ function adjustCommentsAfterTrailingComma(
 		}
 	}
 
-	const newTrailingComments: Array<AnyComment> = [];
+	const newTrailingComments: Array<AnyJSComment> = [];
 	for (let i = 0; i < parser.state.leadingComments.length; i++) {
 		const leadingComment = parser.state.leadingComments[i];
 		if (end(leadingComment) < end(node)) {
@@ -162,13 +162,13 @@ function adjustCommentsAfterTrailingComma(
 }
 
 export function attachComments(parser: JSParser, node: AnyNode) {
-	if (node.type === "Program" && node.body.length > 0) {
+	if (node.type === "JSProgram" && node.body.length > 0) {
 		return;
 	}
 
 	const {commentStack, commentPreviousNode} = parser.state;
 
-	let trailingComments: undefined | Array<AnyComment>;
+	let trailingComments: undefined | Array<AnyJSComment>;
 
 	if (parser.state.trailingComments.length > 0) {
 		// If the first comment in trailingComments comes after the
@@ -222,41 +222,41 @@ export function attachComments(parser: JSParser, node: AnyNode) {
 	// element
 	if (firstChild) {
 		switch (node.type) {
-			case "ObjectExpression": {
+			case "JSObjectExpression": {
 				adjustCommentsAfterTrailingComma(parser, node, node.properties);
 				break;
 			}
 
-			case "BindingObjectPattern":
-			case "AssignmentObjectPattern": {
+			case "JSBindingObjectPattern":
+			case "JSAssignmentObjectPattern": {
 				adjustCommentsAfterTrailingComma(parser, node, node.properties, true);
 				break;
 			}
 
-			case "CallExpression": {
+			case "JSCallExpression": {
 				adjustCommentsAfterTrailingComma(parser, node, node.arguments);
 				break;
 			}
 
-			case "ArrayExpression": {
+			case "JSArrayExpression": {
 				adjustCommentsAfterTrailingComma(parser, node, node.elements);
 				break;
 			}
 
-			case "BindingArrayPattern":
-			case "AssignmentArrayPattern": {
+			case "JSBindingArrayPattern":
+			case "JSAssignmentArrayPattern": {
 				adjustCommentsAfterTrailingComma(parser, node, node.elements, true);
 				break;
 			}
 		}
 	} else if (
 		commentPreviousNode !== undefined &&
-		((commentPreviousNode.type === "ImportSpecifier" &&
-		node.type !== "ImportSpecifier") ||
-		(commentPreviousNode.type === "ExportLocalSpecifier" &&
-		node.type !== "ExportExternalSpecifier") ||
-		(commentPreviousNode.type === "ExportExternalSpecifier" &&
-		node.type !== "ExportExternalSpecifier"))
+		((commentPreviousNode.type === "JSImportSpecifier" &&
+		node.type !== "JSImportSpecifier") ||
+		(commentPreviousNode.type === "JSExportLocalSpecifier" &&
+		node.type !== "JSExportExternalSpecifier") ||
+		(commentPreviousNode.type === "JSExportExternalSpecifier" &&
+		node.type !== "JSExportExternalSpecifier"))
 	) {
 		adjustCommentsAfterTrailingComma(
 			parser,
@@ -282,7 +282,7 @@ export function attachComments(parser: JSParser, node: AnyNode) {
 				);
 				lastChild.leadingComments = undefined;
 			} else {
-				// A leading comment for an anonymous class had been stolen by its first ClassMethod,
+				// A leading comment for an anonymous class had been stolen by its first JSClassMethod,
 				// so this takes back the leading comment.
 				// See also: https://github.com/eslint/espree/issues/158
 				for (let i = lastChild.leadingComments.length - 2; i >= 0; --i) {

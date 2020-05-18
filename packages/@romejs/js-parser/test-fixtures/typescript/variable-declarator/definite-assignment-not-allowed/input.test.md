@@ -5,7 +5,7 @@
 ## `typescript > variable-declarator > definite-assignment-not-allowed`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -18,9 +18,9 @@ Program {
 	loc: Object {
 		filename: "input.ts"
 		end: Object {
-			column: 13
-			index: 13
-			line: 1
+			column: 0
+			index: 14
+			line: 2
 		}
 		start: Object {
 			column: 0
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.ts"
@@ -84,8 +84,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingObjectPattern {
+					JSVariableDeclarator {
+						id: JSBindingObjectPattern {
 							properties: Array []
 							rest: undefined
 							loc: Object {
@@ -120,7 +120,7 @@ Program {
 				]
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -134,7 +134,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: UnaryExpression {
+			expression: JSUnaryExpression {
 				operator: "!"
 				prefix: true
 				loc: Object {
@@ -150,7 +150,7 @@ Program {
 						line: 1
 					}
 				}
-				argument: ReferenceIdentifier {
+				argument: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: Object {
 						filename: "input.ts"
@@ -168,7 +168,7 @@ Program {
 				}
 			}
 		}
-		BlockStatement {
+		JSBlockStatement {
 			body: Array []
 			directives: Array []
 			loc: Object {
@@ -185,7 +185,7 @@ Program {
 				}
 			}
 		}
-		EmptyStatement {
+		JSEmptyStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {

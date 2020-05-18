@@ -5,7 +5,7 @@
 ## `experimental > do-expressions > scoping-variable`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.js"
@@ -60,8 +60,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.js"
@@ -91,7 +91,7 @@ Program {
 								line: 1
 							}
 						}
-						init: DoExpression {
+						init: JSDoExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -105,7 +105,7 @@ Program {
 									line: 1
 								}
 							}
-							body: BlockStatement {
+							body: JSBlockStatement {
 								directives: Array []
 								loc: Object {
 									filename: "input.js"
@@ -121,7 +121,7 @@ Program {
 									}
 								}
 								body: Array [
-									VariableDeclarationStatement {
+									JSVariableDeclarationStatement {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -135,7 +135,7 @@ Program {
 												line: 2
 											}
 										}
-										declaration: VariableDeclaration {
+										declaration: JSVariableDeclaration {
 											kind: "let"
 											loc: Object {
 												filename: "input.js"
@@ -151,8 +151,8 @@ Program {
 												}
 											}
 											declarations: Array [
-												VariableDeclarator {
-													id: BindingIdentifier {
+												JSVariableDeclarator {
+													id: JSBindingIdentifier {
 														name: "tmp"
 														loc: Object {
 															filename: "input.js"
@@ -182,7 +182,7 @@ Program {
 															line: 2
 														}
 													}
-													init: CallExpression {
+													init: JSCallExpression {
 														arguments: Array []
 														loc: Object {
 															filename: "input.js"
@@ -197,7 +197,7 @@ Program {
 																line: 2
 															}
 														}
-														callee: ReferenceIdentifier {
+														callee: JSReferenceIdentifier {
 															name: "f"
 															loc: Object {
 																filename: "input.js"
@@ -219,7 +219,7 @@ Program {
 											]
 										}
 									}
-									ExpressionStatement {
+									JSExpressionStatement {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -233,7 +233,7 @@ Program {
 												line: 3
 											}
 										}
-										expression: BinaryExpression {
+										expression: JSBinaryExpression {
 											operator: "+"
 											loc: Object {
 												filename: "input.js"
@@ -248,7 +248,7 @@ Program {
 													line: 3
 												}
 											}
-											right: NumericLiteral {
+											right: JSNumericLiteral {
 												value: 1
 												format: undefined
 												loc: Object {
@@ -265,7 +265,7 @@ Program {
 													}
 												}
 											}
-											left: BinaryExpression {
+											left: JSBinaryExpression {
 												operator: "*"
 												loc: Object {
 													filename: "input.js"
@@ -280,7 +280,7 @@ Program {
 														line: 3
 													}
 												}
-												left: ReferenceIdentifier {
+												left: JSReferenceIdentifier {
 													name: "tmp"
 													loc: Object {
 														filename: "input.js"
@@ -297,7 +297,7 @@ Program {
 														}
 													}
 												}
-												right: ReferenceIdentifier {
+												right: JSReferenceIdentifier {
 													name: "tmp"
 													loc: Object {
 														filename: "input.js"

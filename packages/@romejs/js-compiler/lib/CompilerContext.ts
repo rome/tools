@@ -6,12 +6,12 @@
  */
 
 import {
-	AnyComment,
+	AnyJSComment,
 	AnyNode,
 	ConstSourceType,
-	Program,
-	program,
-} from "@romejs/js-ast";
+	JSProgram,
+	jsProgram,
+} from "@romejs/ast";
 import {
 	SourceLocation,
 	extractSourceLocationRangeFromNodes,
@@ -49,7 +49,7 @@ import CommentsConsumer from "@romejs/js-parser/CommentsConsumer";
 import {ob1Get0} from "@romejs/ob1";
 import {hookVisitors} from "../transforms";
 import stringDiff from "@romejs/string-diff";
-import {formatJS} from "@romejs/js-formatter";
+import {formatJS} from "@romejs/formatter";
 import {REDUCE_REMOVE} from "../constants";
 import {FileReference} from "@romejs/core";
 import {DEFAULT_PROJECT_CONFIG} from "@romejs/project";
@@ -61,7 +61,7 @@ import {
 } from "../lint/decisions";
 
 export type ContextArg = {
-	ast: Program;
+	ast: JSProgram;
 	suppressions?: DiagnosticSuppressions;
 	ref?: FileReference;
 	sourceText?: string;
@@ -179,7 +179,7 @@ export default class CompilerContext {
 		);
 	}
 
-	getComments(ids: undefined | Array<string>): Array<AnyComment> {
+	getComments(ids: undefined | Array<string>): Array<AnyJSComment> {
 		return this.comments.getCommentsFromIds(ids);
 	}
 
@@ -220,11 +220,11 @@ export default class CompilerContext {
 	}
 
 	reduceRoot(
-		ast: Program,
+		ast: JSProgram,
 		visitors: TransformVisitor | TransformVisitors,
 		pathOpts?: PathOptions,
-	): Program {
-		return program.assert(
+	): JSProgram {
+		return jsProgram.assert(
 			reduce(
 				ast,
 				[...hookVisitors, ...(Array.isArray(visitors) ? visitors : [visitors])],

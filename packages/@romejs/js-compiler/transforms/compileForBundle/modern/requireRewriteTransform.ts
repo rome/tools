@@ -7,10 +7,10 @@
 
 import {
 	AnyNode,
-	assignmentExpression,
-	assignmentIdentifier,
-	identifier,
-} from "@romejs/js-ast";
+	jsAssignmentExpression,
+	jsAssignmentIdentifier,
+	jsIdentifier,
+} from "@romejs/ast";
 import {Path} from "@romejs/js-compiler";
 import {doesNodeMatchPattern, inheritLoc, template} from "@romejs/js-ast-utils";
 import {getOptions, getPrefixedNamespace} from "../_utils";
@@ -24,10 +24,10 @@ export default {
 
 		// Replace all references to module.exports to the correct version
 		if (
-			node.type === "MemberExpression" &&
+			node.type === "JSMemberExpression" &&
 			doesNodeMatchPattern(node, "module.exports")
 		) {
-			return identifier.create({
+			return jsIdentifier.create({
 				name: getPrefixedNamespace(moduleId),
 				loc: inheritLoc(node, "module.exports"),
 			});
@@ -35,12 +35,12 @@ export default {
 
 		// Replace all assignments of module.exports to the correct version
 		if (
-			node.type === "AssignmentExpression" &&
+			node.type === "JSAssignmentExpression" &&
 			doesNodeMatchPattern(node.left, "module.exports")
 		) {
-			return assignmentExpression.create({
+			return jsAssignmentExpression.create({
 				operator: node.operator,
-				left: assignmentIdentifier.create({
+				left: jsAssignmentIdentifier.create({
 					name: getPrefixedNamespace(moduleId),
 					loc: inheritLoc(node, "module.exports"),
 				}),
@@ -57,17 +57,17 @@ export default {
 		}
 
 		// Now handle normal `require('module')`
-		if (node.type !== "CallExpression") {
+		if (node.type !== "JSCallExpression") {
 			return node;
 		}
 
 		const {callee} = node;
-		if (callee.type !== "ReferenceIdentifier" || callee.name !== "require") {
+		if (callee.type !== "JSReferenceIdentifier" || callee.name !== "require") {
 			return node;
 		}
 
 		const sourceArg = node.arguments[0];
-		if (sourceArg.type !== "StringLiteral") {
+		if (sourceArg.type !== "JSStringLiteral") {
 			return node;
 		}
 
@@ -77,7 +77,7 @@ export default {
 
 		const replacement = relativeSourcesToModuleId[sourceArg.value];
 		if (typeof replacement === "string") {
-			return identifier.create({
+			return jsIdentifier.create({
 				name: getPrefixedNamespace(replacement),
 			});
 		}

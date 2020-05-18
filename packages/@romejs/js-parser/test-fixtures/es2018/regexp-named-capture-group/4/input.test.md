@@ -5,7 +5,7 @@
 ## `es2018 > regexp-named-capture-group > 4`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.js"
@@ -84,8 +84,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "triplicate"
 							loc: Object {
 								filename: "input.js"
@@ -115,7 +115,7 @@ Program {
 								line: 1
 							}
 						}
-						init: RegExpLiteral {
+						init: JSRegExpLiteral {
 							global: false
 							insensitive: false
 							multiline: false
@@ -135,7 +135,7 @@ Program {
 									line: 1
 								}
 							}
-							expression: RegExpSubExpression {
+							expression: JSRegExpSubExpression {
 								loc: Object {
 									filename: "input.js"
 									end: Object {
@@ -150,7 +150,7 @@ Program {
 									}
 								}
 								body: Array [
-									RegExpStartCharacter {
+									JSRegExpStartCharacter {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -165,7 +165,7 @@ Program {
 											}
 										}
 									}
-									RegExpGroupCapture {
+									JSRegExpGroupCapture {
 										name: "part"
 										loc: Object {
 											filename: "input.js"
@@ -180,7 +180,7 @@ Program {
 												line: 1
 											}
 										}
-										expression: RegExpSubExpression {
+										expression: JSRegExpSubExpression {
 											loc: Object {
 												filename: "input.js"
 												end: Object {
@@ -195,7 +195,7 @@ Program {
 												}
 											}
 											body: Array [
-												RegExpQuantified {
+												JSRegExpQuantified {
 													lazy: false
 													max: undefined
 													min: 0
@@ -212,7 +212,7 @@ Program {
 															line: 1
 														}
 													}
-													target: RegExpAnyCharacter {
+													target: JSRegExpAnyCharacter {
 														loc: Object {
 															filename: "input.js"
 															end: Object {
@@ -231,7 +231,7 @@ Program {
 											]
 										}
 									}
-									RegExpAnyCharacter {
+									JSRegExpAnyCharacter {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -246,7 +246,7 @@ Program {
 											}
 										}
 									}
-									RegExpNamedBackReference {
+									JSRegExpNamedBackReference {
 										name: "par"
 										loc: Object {
 											filename: "input.js"
@@ -262,7 +262,7 @@ Program {
 											}
 										}
 									}
-									RegExpAnyCharacter {
+									JSRegExpAnyCharacter {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -277,7 +277,7 @@ Program {
 											}
 										}
 									}
-									RegExpCharacter {
+									JSRegExpCharacter {
 										value: "\x01"
 										loc: Object {
 											filename: "input.js"
@@ -293,7 +293,7 @@ Program {
 											}
 										}
 									}
-									RegExpEndCharacter {
+									JSRegExpEndCharacter {
 										loc: Object {
 											filename: "input.js"
 											end: Object {

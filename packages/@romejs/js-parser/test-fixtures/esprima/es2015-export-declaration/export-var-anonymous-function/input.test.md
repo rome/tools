@@ -5,7 +5,7 @@
 ## `esprima > es2015-export-declaration > export-var-anonymous-function`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
@@ -46,7 +46,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclarationStatement {
+			declaration: JSVariableDeclarationStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -60,7 +60,7 @@ Program {
 						line: 1
 					}
 				}
-				declaration: VariableDeclaration {
+				declaration: JSVariableDeclaration {
 					kind: "var"
 					loc: Object {
 						filename: "input.js"
@@ -76,8 +76,8 @@ Program {
 						}
 					}
 					declarations: Array [
-						VariableDeclarator {
-							id: BindingIdentifier {
+						JSVariableDeclarator {
+							id: JSBindingIdentifier {
 								name: "foo"
 								loc: Object {
 									filename: "input.js"
@@ -107,7 +107,7 @@ Program {
 									line: 1
 								}
 							}
-							init: FunctionExpression {
+							init: JSFunctionExpression {
 								id: undefined
 								loc: Object {
 									filename: "input.js"
@@ -122,7 +122,7 @@ Program {
 										line: 1
 									}
 								}
-								body: BlockStatement {
+								body: JSBlockStatement {
 									body: Array []
 									directives: Array []
 									loc: Object {
@@ -139,7 +139,7 @@ Program {
 										}
 									}
 								}
-								head: FunctionHead {
+								head: JSFunctionHead {
 									async: false
 									generator: false
 									hasHoistedVars: false

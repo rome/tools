@@ -5,7 +5,7 @@
 ## `esprima > es2015-object-initialiser > proto-shorthand-literal`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ObjectExpression {
+			expression: JSObjectExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -83,9 +83,9 @@ Program {
 					}
 				}
 				properties: Array [
-					ObjectProperty {
-						key: StaticPropertyKey {
-							value: Identifier {
+					JSObjectProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "__proto__"
 								loc: Object {
 									filename: "input.js"
@@ -116,7 +116,7 @@ Program {
 								}
 							}
 						}
-						value: ReferenceIdentifier {
+						value: JSReferenceIdentifier {
 							name: "__proto__"
 							loc: Object {
 								filename: "input.js"
@@ -147,9 +147,9 @@ Program {
 							}
 						}
 					}
-					ObjectProperty {
-						key: StaticPropertyKey {
-							value: StringLiteral {
+					JSObjectProperty {
+						key: JSStaticPropertyKey {
+							value: JSStringLiteral {
 								value: "__proto__"
 								loc: Object {
 									filename: "input.js"
@@ -179,7 +179,7 @@ Program {
 								}
 							}
 						}
-						value: NullLiteral {
+						value: JSNullLiteral {
 							loc: Object {
 								filename: "input.js"
 								end: Object {

@@ -1,7 +1,7 @@
 import {Path, TransformExitResult} from "@romejs/js-compiler";
 import {descriptions} from "@romejs/diagnostics";
 import {hasJSXAttribute, isJSXElement} from "@romejs/js-ast-utils";
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 
 const HEADINGS = ["h1", "h2", "h3", "h4", "h5", "h6"];
 

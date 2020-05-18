@@ -6,24 +6,24 @@
  */
 
 import {
-	ArrayExpression,
-	BooleanLiteral,
-	NullLiteral,
-	NumericLiteral,
-	ObjectExpression,
-	ObjectProperty,
-	ReferenceIdentifier,
-	StringLiteral,
-	arrayExpression,
-	booleanLiteral,
-	nullLiteral,
-	numericLiteral,
-	objectExpression,
-	objectProperty,
-	referenceIdentifier,
-	staticPropertyKey,
-	stringLiteral,
-} from "@romejs/js-ast";
+	JSArrayExpression,
+	JSBooleanLiteral,
+	JSNullLiteral,
+	JSNumericLiteral,
+	JSObjectExpression,
+	JSObjectProperty,
+	JSReferenceIdentifier,
+	JSStringLiteral,
+	jsArrayExpression,
+	jsBooleanLiteral,
+	jsNullLiteral,
+	jsNumericLiteral,
+	jsObjectExpression,
+	jsObjectProperty,
+	jsReferenceIdentifier,
+	jsStaticPropertyKey,
+	jsStringLiteral,
+} from "@romejs/ast";
 import createPropertyKey from "./createPropertyKey";
 import {UnknownObject} from "@romejs/typescript-helpers";
 
@@ -31,50 +31,50 @@ export default function valueToNode(
 	value: unknown,
 	ancestry: Array<unknown> = [],
 ):
-	| StringLiteral
-	| BooleanLiteral
-	| NumericLiteral
-	| ObjectExpression
-	| NullLiteral
-	| ReferenceIdentifier
-	| ArrayExpression {
+	| JSStringLiteral
+	| JSBooleanLiteral
+	| JSNumericLiteral
+	| JSObjectExpression
+	| JSNullLiteral
+	| JSReferenceIdentifier
+	| JSArrayExpression {
 	if (ancestry.includes(value)) {
 		throw new Error("Recursion detected");
 	}
 
 	switch (typeof value) {
 		case "string":
-			return stringLiteral.quick(value);
+			return jsStringLiteral.quick(value);
 
 		case "boolean":
-			return booleanLiteral.quick(value);
+			return jsBooleanLiteral.quick(value);
 
 		case "number":
-			return numericLiteral.quick(value);
+			return jsNumericLiteral.quick(value);
 
 		case "undefined":
-			return referenceIdentifier.quick("undefined");
+			return jsReferenceIdentifier.quick("undefined");
 
 		case "object": {
 			if (value === null) {
-				return nullLiteral.create({});
+				return jsNullLiteral.create({});
 			}
 
 			const subAncestry = [...ancestry, value];
 
 			if (Array.isArray(value)) {
-				return arrayExpression.quick(
+				return jsArrayExpression.quick(
 					value.map((elem) => valueToNode(elem, subAncestry)),
 				);
 			}
 
 			const obj = (value as UnknownObject);
-			const props: Array<ObjectProperty> = [];
+			const props: Array<JSObjectProperty> = [];
 
 			for (let key in obj) {
 				props.push(
-					objectProperty.create({
-						key: staticPropertyKey.create({
+					jsObjectProperty.create({
+						key: jsStaticPropertyKey.create({
 							value: createPropertyKey(key),
 						}),
 						value: valueToNode(obj[key], subAncestry),
@@ -82,7 +82,7 @@ export default function valueToNode(
 				);
 			}
 
-			return objectExpression.quick(props);
+			return jsObjectExpression.quick(props);
 		}
 
 		default:

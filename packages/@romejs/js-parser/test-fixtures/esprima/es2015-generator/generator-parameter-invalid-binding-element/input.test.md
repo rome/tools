@@ -5,7 +5,7 @@
 ## `esprima > es2015-generator > generator-parameter-invalid-binding-element`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: FunctionExpression {
+			expression: JSFunctionExpression {
 				id: undefined
 				loc: Object {
 					filename: "input.js"
@@ -83,7 +83,7 @@ Program {
 						line: 1
 					}
 				}
-				head: FunctionHead {
+				head: JSFunctionHead {
 					async: false
 					generator: true
 					hasHoistedVars: false
@@ -106,7 +106,7 @@ Program {
 						}
 					}
 				}
-				body: BlockStatement {
+				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
 						filename: "input.js"
@@ -122,8 +122,8 @@ Program {
 						}
 					}
 					body: Array [
-						FunctionDeclaration {
-							id: BindingIdentifier {
+						JSFunctionDeclaration {
+							id: JSBindingIdentifier {
 								name: ""
 								loc: Object {
 									filename: "input.js"
@@ -153,7 +153,7 @@ Program {
 									line: 2
 								}
 							}
-							body: BlockStatement {
+							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
 								loc: Object {
@@ -170,7 +170,7 @@ Program {
 									}
 								}
 							}
-							head: FunctionHead {
+							head: JSFunctionHead {
 								async: false
 								generator: true
 								hasHoistedVars: false
@@ -192,7 +192,7 @@ Program {
 									}
 								}
 								params: Array [
-									BindingAssignmentPattern {
+									JSBindingAssignmentPattern {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -206,7 +206,7 @@ Program {
 												line: 2
 											}
 										}
-										right: YieldExpression {
+										right: JSYieldExpression {
 											delegate: false
 											loc: Object {
 												filename: "input.js"
@@ -221,7 +221,7 @@ Program {
 													line: 2
 												}
 											}
-											argument: NumericLiteral {
+											argument: JSNumericLiteral {
 												value: 3
 												format: undefined
 												loc: Object {
@@ -239,7 +239,7 @@ Program {
 												}
 											}
 										}
-										left: BindingIdentifier {
+										left: JSBindingIdentifier {
 											name: "x"
 											loc: Object {
 												filename: "input.js"
@@ -255,7 +255,7 @@ Program {
 													line: 2
 												}
 											}
-											meta: PatternMeta {
+											meta: JSPatternMeta {
 												optional: undefined
 												typeAnnotation: undefined
 												loc: Object {

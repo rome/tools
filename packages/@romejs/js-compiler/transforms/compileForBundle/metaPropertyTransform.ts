@@ -6,24 +6,24 @@
  */
 
 import {
-	AnyExpression,
+	AnyJSExpression,
 	AnyNode,
-	MetaProperty,
-	stringLiteral,
-} from "@romejs/js-ast";
+	JSMetaProperty,
+	jsStringLiteral,
+} from "@romejs/ast";
 import {template} from "@romejs/js-ast-utils";
 import {CompilerContext, Path} from "@romejs/js-compiler";
 
-function isImportMeta(node: AnyNode): node is MetaProperty {
+function isImportMeta(node: AnyNode): node is JSMetaProperty {
 	return (
-		node.type === "MetaProperty" &&
+		node.type === "JSMetaProperty" &&
 		node.meta.name === "import" &&
 		node.property.name === "meta"
 	);
 }
 
-function createURLString(context: CompilerContext): AnyExpression {
-	const str = stringLiteral.create({
+function createURLString(context: CompilerContext): AnyJSExpression {
+	const str = jsStringLiteral.create({
 		value: `file://${getFilename(context)}`,
 	});
 	return template.expression`typeof __filename === 'string' ? 'file://' + __filename : ${str}`;
@@ -39,7 +39,7 @@ function getFilename(context: CompilerContext): string {
 }
 
 export default {
-	name: "metaPropertyTransform",
+	name: "jsMetaPropertyTransform",
 	enter(path: Path): AnyNode {
 		const {node, context} = path;
 
@@ -50,13 +50,13 @@ export default {
       (node.type === '__dirname' || node.name === '__filename')
     ) {
       if (node.type === '__dirname') {
-        return stringLiteral.create({
+        return jsStringLiteral.create({
           value: pathUtils.dirname(getFilename(context)),
         });
       }
 
       if (node.type === '__filename') {
-        return stringLiteral.create({
+        return jsStringLiteral.create({
           value: getFilename(context),
         });
       }
@@ -64,10 +64,10 @@ export default {
 
 		// Direct reference to import.meta.url
 		if (
-			node.type === "MemberExpression" &&
-			node.property.type === "StaticMemberProperty" &&
+			node.type === "JSMemberExpression" &&
+			node.property.type === "JSStaticMemberProperty" &&
 			isImportMeta(node.object) &&
-			node.property.value.type === "Identifier" &&
+			node.property.value.type === "JSIdentifier" &&
 			node.property.value.name === "url"
 		) {
 			return createURLString(context);

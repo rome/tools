@@ -5,7 +5,7 @@
 ## `experimental > bigint > invalid-decimal`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: BigIntLiteral {
+			expression: JSBigIntLiteral {
 				value: "1.0"
 				loc: Object {
 					filename: "input.js"

@@ -5,7 +5,7 @@
 ## `es2015 > statements > label-valid-func-non-strict`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		LabeledStatement {
+		JSLabeledStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			label: Identifier {
+			label: JSIdentifier {
 				name: "foo"
 				loc: Object {
 					filename: "input.js"
@@ -61,8 +61,8 @@ Program {
 					}
 				}
 			}
-			body: FunctionDeclaration {
-				id: BindingIdentifier {
+			body: JSFunctionDeclaration {
+				id: JSBindingIdentifier {
 					name: "bar"
 					loc: Object {
 						filename: "input.js"
@@ -92,7 +92,7 @@ Program {
 						line: 1
 					}
 				}
-				body: BlockStatement {
+				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
 					loc: Object {
@@ -109,7 +109,7 @@ Program {
 						}
 					}
 				}
-				head: FunctionHead {
+				head: JSFunctionHead {
 					async: false
 					generator: false
 					hasHoistedVars: false

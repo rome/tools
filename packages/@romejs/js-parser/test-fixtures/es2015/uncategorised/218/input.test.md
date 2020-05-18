@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 218`
 
 ```javascript
-Program {
+JSProgram {
 	body: Array []
 	comments: Array []
 	corrupt: false
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	directives: Array [
-		Directive {
+		JSDirective {
 			value: "\\u{FFFF"
 			loc: Object {
 				filename: "input.js"

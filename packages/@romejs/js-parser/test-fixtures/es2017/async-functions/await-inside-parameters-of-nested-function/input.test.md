@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > await-inside-parameters-of-nested-function`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -54,8 +54,8 @@ Program {
 		}
 	]
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "foo"
 				loc: Object {
 					filename: "input.js"
@@ -85,7 +85,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: true
 				generator: false
 				hasHoistedVars: false
@@ -108,7 +108,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -124,8 +124,8 @@ Program {
 					}
 				}
 				body: Array [
-					FunctionDeclaration {
-						id: BindingIdentifier {
+					JSFunctionDeclaration {
+						id: JSBindingIdentifier {
 							name: "bar"
 							loc: Object {
 								filename: "input.js"
@@ -155,7 +155,7 @@ Program {
 								line: 2
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -177,7 +177,7 @@ Program {
 								}
 							}
 							params: Array [
-								BindingAssignmentPattern {
+								JSBindingAssignmentPattern {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -191,7 +191,7 @@ Program {
 											line: 2
 										}
 									}
-									right: ReferenceIdentifier {
+									right: JSReferenceIdentifier {
 										name: "await"
 										loc: Object {
 											filename: "input.js"
@@ -208,7 +208,7 @@ Program {
 											}
 										}
 									}
-									left: BindingIdentifier {
+									left: JSBindingIdentifier {
 										name: "x"
 										loc: Object {
 											filename: "input.js"
@@ -224,7 +224,7 @@ Program {
 												line: 2
 											}
 										}
-										meta: PatternMeta {
+										meta: JSPatternMeta {
 											optional: undefined
 											typeAnnotation: undefined
 											loc: Object {
@@ -245,7 +245,7 @@ Program {
 								}
 							]
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
 								filename: "input.js"
@@ -261,7 +261,7 @@ Program {
 								}
 							}
 							body: Array [
-								ExpressionStatement {
+								JSExpressionStatement {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -275,7 +275,7 @@ Program {
 											line: 2
 										}
 									}
-									expression: NumericLiteral {
+									expression: JSNumericLiteral {
 										value: 2
 										format: undefined
 										loc: Object {
@@ -293,7 +293,7 @@ Program {
 										}
 									}
 								}
-								ExpressionStatement {
+								JSExpressionStatement {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -307,7 +307,7 @@ Program {
 											line: 2
 										}
 									}
-									expression: ReferenceIdentifier {
+									expression: JSReferenceIdentifier {
 										name: "INVALID_PLACEHOLDER"
 										loc: Object {
 											filename: "input.js"
@@ -324,7 +324,7 @@ Program {
 										}
 									}
 								}
-								BlockStatement {
+								JSBlockStatement {
 									body: Array []
 									directives: Array []
 									loc: Object {

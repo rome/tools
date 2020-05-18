@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, AnyVariableIdentifier} from "@romejs/js-ast";
+import {AnyJSVariableIdentifier, AnyNode} from "@romejs/ast";
 
 export default function isVariableIdentifier(
 	node: AnyNode,
-): node is AnyVariableIdentifier {
+): node is AnyJSVariableIdentifier {
 	return (
-		node.type === "BindingIdentifier" ||
-		node.type === "AssignmentIdentifier" ||
-		node.type === "ReferenceIdentifier" ||
+		node.type === "JSBindingIdentifier" ||
+		node.type === "JSAssignmentIdentifier" ||
+		node.type === "JSReferenceIdentifier" ||
 		node.type === "JSXReferenceIdentifier"
 	);
 }

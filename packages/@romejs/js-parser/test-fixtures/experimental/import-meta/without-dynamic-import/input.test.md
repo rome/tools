@@ -5,7 +5,7 @@
 ## `experimental > import-meta > without-dynamic-import`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
 					filename: "input.js"
@@ -60,8 +60,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.js"
@@ -91,7 +91,7 @@ Program {
 								line: 1
 							}
 						}
-						init: MetaProperty {
+						init: JSMetaProperty {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -105,7 +105,7 @@ Program {
 									line: 1
 								}
 							}
-							meta: Identifier {
+							meta: JSIdentifier {
 								name: "import"
 								loc: Object {
 									filename: "input.js"
@@ -122,7 +122,7 @@ Program {
 									}
 								}
 							}
-							property: Identifier {
+							property: JSIdentifier {
 								name: "meta"
 								loc: Object {
 									filename: "input.js"
@@ -144,7 +144,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -158,7 +158,7 @@ Program {
 					line: 2
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
 					filename: "input.js"
@@ -174,8 +174,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "url"
 							loc: Object {
 								filename: "input.js"
@@ -205,7 +205,7 @@ Program {
 								line: 2
 							}
 						}
-						init: MemberExpression {
+						init: JSMemberExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -219,8 +219,8 @@ Program {
 									line: 2
 								}
 							}
-							property: StaticMemberProperty {
-								value: Identifier {
+							property: JSStaticMemberProperty {
+								value: JSIdentifier {
 									name: "url"
 									loc: Object {
 										filename: "input.js"
@@ -252,7 +252,7 @@ Program {
 									}
 								}
 							}
-							object: MetaProperty {
+							object: JSMetaProperty {
 								loc: Object {
 									filename: "input.js"
 									end: Object {
@@ -266,7 +266,7 @@ Program {
 										line: 2
 									}
 								}
-								meta: Identifier {
+								meta: JSIdentifier {
 									name: "import"
 									loc: Object {
 										filename: "input.js"
@@ -283,7 +283,7 @@ Program {
 										}
 									}
 								}
-								property: Identifier {
+								property: JSIdentifier {
 									name: "meta"
 									loc: Object {
 										filename: "input.js"
@@ -306,7 +306,7 @@ Program {
 				]
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -320,7 +320,7 @@ Program {
 					line: 3
 				}
 			}
-			expression: MetaProperty {
+			expression: JSMetaProperty {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -334,7 +334,7 @@ Program {
 						line: 3
 					}
 				}
-				meta: Identifier {
+				meta: JSIdentifier {
 					name: "import"
 					loc: Object {
 						filename: "input.js"
@@ -351,7 +351,7 @@ Program {
 						}
 					}
 				}
-				property: Identifier {
+				property: JSIdentifier {
 					name: "meta"
 					loc: Object {
 						filename: "input.js"
@@ -370,7 +370,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -384,7 +384,7 @@ Program {
 					line: 4
 				}
 			}
-			expression: MemberExpression {
+			expression: JSMemberExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -398,8 +398,8 @@ Program {
 						line: 4
 					}
 				}
-				property: StaticMemberProperty {
-					value: Identifier {
+				property: JSStaticMemberProperty {
+					value: JSIdentifier {
 						name: "url"
 						loc: Object {
 							filename: "input.js"
@@ -431,7 +431,7 @@ Program {
 						}
 					}
 				}
-				object: MetaProperty {
+				object: JSMetaProperty {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -445,7 +445,7 @@ Program {
 							line: 4
 						}
 					}
-					meta: Identifier {
+					meta: JSIdentifier {
 						name: "import"
 						loc: Object {
 							filename: "input.js"
@@ -462,7 +462,7 @@ Program {
 							}
 						}
 					}
-					property: Identifier {
+					property: JSIdentifier {
 						name: "meta"
 						loc: Object {
 							filename: "input.js"
@@ -482,7 +482,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -496,7 +496,7 @@ Program {
 					line: 5
 				}
 			}
-			expression: AssignmentExpression {
+			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
 					filename: "input.js"
@@ -511,7 +511,7 @@ Program {
 						line: 5
 					}
 				}
-				right: BooleanLiteral {
+				right: JSBooleanLiteral {
 					value: true
 					loc: Object {
 						filename: "input.js"
@@ -527,7 +527,7 @@ Program {
 						}
 					}
 				}
-				left: MemberExpression {
+				left: JSMemberExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -541,8 +541,8 @@ Program {
 							line: 5
 						}
 					}
-					property: StaticMemberProperty {
-						value: Identifier {
+					property: JSStaticMemberProperty {
+						value: JSIdentifier {
 							name: "couldBeMutable"
 							loc: Object {
 								filename: "input.js"
@@ -574,7 +574,7 @@ Program {
 							}
 						}
 					}
-					object: MetaProperty {
+					object: JSMetaProperty {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -588,7 +588,7 @@ Program {
 								line: 5
 							}
 						}
-						meta: Identifier {
+						meta: JSIdentifier {
 							name: "import"
 							loc: Object {
 								filename: "input.js"
@@ -605,7 +605,7 @@ Program {
 								}
 							}
 						}
-						property: Identifier {
+						property: JSIdentifier {
 							name: "meta"
 							loc: Object {
 								filename: "input.js"

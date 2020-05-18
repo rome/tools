@@ -6,7 +6,7 @@
  */
 
 import {Path} from "@romejs/js-compiler";
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 import {descriptions} from "@romejs/diagnostics";
 
 export default {
@@ -14,7 +14,7 @@ export default {
 	enter(path: Path): AnyNode {
 		const {node, scope} = path;
 
-		if (node.type === "LabeledStatement") {
+		if (node.type === "JSLabeledStatement") {
 			const name = node.label.name;
 			const binding = scope.getBinding(name);
 			const isDefined =

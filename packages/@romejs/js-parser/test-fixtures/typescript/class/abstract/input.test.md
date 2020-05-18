@@ -5,7 +5,7 @@
 ## `typescript > class > abstract`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentLine {
+		JSCommentLine {
 			id: "0"
 			value: " `export abstract class {}` is not valid TypeScript."
 			loc: Object {
@@ -46,7 +46,7 @@ Program {
 				}
 			}
 		}
-		CommentLine {
+		JSCommentLine {
 			id: "1"
 			value: " `abstract class` is not valid as an expression."
 			loc: Object {
@@ -65,8 +65,8 @@ Program {
 		}
 	]
 	body: Array [
-		ClassDeclaration {
-			id: BindingIdentifier {
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
 				name: "C1"
 				loc: Object {
 					filename: "input.ts"
@@ -97,7 +97,7 @@ Program {
 					line: 1
 				}
 			}
-			meta: ClassHead {
+			meta: JSClassHead {
 				body: Array []
 				implements: undefined
 				superClass: undefined
@@ -118,8 +118,8 @@ Program {
 				}
 			}
 		}
-		ClassDeclaration {
-			id: BindingIdentifier {
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
 				name: "C2"
 				loc: Object {
 					filename: "input.ts"
@@ -151,7 +151,7 @@ Program {
 					line: 2
 				}
 			}
-			meta: ClassHead {
+			meta: JSClassHead {
 				body: Array []
 				implements: undefined
 				superClass: undefined
@@ -172,7 +172,7 @@ Program {
 				}
 			}
 		}
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
 			trailingComments: Array ["0"]
@@ -189,8 +189,8 @@ Program {
 					line: 3
 				}
 			}
-			declaration: ClassDeclaration {
-				id: BindingIdentifier {
+			declaration: JSClassDeclaration {
+				id: JSBindingIdentifier {
 					name: "C3"
 					loc: Object {
 						filename: "input.ts"
@@ -222,7 +222,7 @@ Program {
 						line: 3
 					}
 				}
-				meta: ClassHead {
+				meta: JSClassHead {
 					body: Array []
 					implements: undefined
 					superClass: undefined
@@ -245,7 +245,7 @@ Program {
 				}
 			}
 		}
-		ExportDefaultDeclaration {
+		JSExportDefaultDeclaration {
 			leadingComments: Array ["0"]
 			loc: Object {
 				filename: "input.ts"
@@ -260,8 +260,8 @@ Program {
 					line: 5
 				}
 			}
-			declaration: ClassDeclaration {
-				id: BindingIdentifier {
+			declaration: JSClassDeclaration {
+				id: JSBindingIdentifier {
 					name: "*default*"
 					loc: Object {
 						filename: "input.ts"
@@ -292,7 +292,7 @@ Program {
 						line: 5
 					}
 				}
-				meta: ClassHead {
+				meta: JSClassHead {
 					body: Array []
 					implements: undefined
 					leadingComments: undefined
@@ -315,7 +315,7 @@ Program {
 				}
 			}
 		}
-		ExportDefaultDeclaration {
+		JSExportDefaultDeclaration {
 			trailingComments: Array ["1"]
 			loc: Object {
 				filename: "input.ts"
@@ -330,8 +330,8 @@ Program {
 					line: 6
 				}
 			}
-			declaration: ClassDeclaration {
-				id: BindingIdentifier {
+			declaration: JSClassDeclaration {
+				id: JSBindingIdentifier {
 					name: "C4"
 					loc: Object {
 						filename: "input.ts"
@@ -363,7 +363,7 @@ Program {
 						line: 6
 					}
 				}
-				meta: ClassHead {
+				meta: JSClassHead {
 					body: Array []
 					implements: undefined
 					superClass: undefined

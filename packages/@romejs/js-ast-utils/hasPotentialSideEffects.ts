@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 import {Scope} from "@romejs/js-compiler";
 
 export default function hasPotentialSideEffects(
@@ -17,34 +17,34 @@ export default function hasPotentialSideEffects(
 	}
 
 	switch (node.type) {
-		case "ExportLocalDeclaration":
+		case "JSExportLocalDeclaration":
 			if (node.declaration === undefined) {
 				return false;
 			} else {
 				return hasPotentialSideEffects(node.declaration, scope);
 			}
 
-		case "ExportExternalDeclaration":
+		case "JSExportExternalDeclaration":
 			return true;
 
-		case "FunctionExpression":
-		case "FunctionDeclaration":
+		case "JSFunctionExpression":
+		case "JSFunctionDeclaration":
 			return false;
 
-		case "ClassDeclaration":
+		case "JSClassDeclaration":
 			return (
 				node.meta.superClass !== undefined ||
 				!hasPotentialSideEffects(node.meta.superClass, scope)
 			);
 
-		case "ReferenceIdentifier":
+		case "JSReferenceIdentifier":
 			// Variables that aren't in scope and aren't registered globals could trigger a getter
 			// Unlikely but let's aim for 100% correctness
 			return (
 				scope.getRootScope().isGlobal(node.name) || scope.hasBinding(node.name)
 			);
 
-		case "VariableDeclaration": {
+		case "JSVariableDeclaration": {
 			for (const declarator of node.declarations) {
 				if (hasPotentialSideEffects(declarator, scope)) {
 					return true;
@@ -53,21 +53,21 @@ export default function hasPotentialSideEffects(
 			return false;
 		}
 
-		case "VariableDeclarator":
+		case "JSVariableDeclarator":
 			return (
 				hasPotentialSideEffects(node.id, scope) ||
 				hasPotentialSideEffects(node.init, scope)
 			);
 
-		case "SpreadProperty":
-		case "SpreadElement":
+		case "JSSpreadProperty":
+		case "JSSpreadElement":
 			return hasPotentialSideEffects(node.argument, scope);
 
-		case "BindingAssignmentPattern":
+		case "JSBindingAssignmentPattern":
 			return hasPotentialSideEffects(node.right, scope);
 
-		case "ObjectExpression":
-		case "BindingObjectPattern": {
+		case "JSObjectExpression":
+		case "JSBindingObjectPattern": {
 			for (const prop of node.properties) {
 				if (hasPotentialSideEffects(prop, scope)) {
 					return true;
@@ -76,21 +76,21 @@ export default function hasPotentialSideEffects(
 			return false;
 		}
 
-		case "StaticPropertyKey":
+		case "JSStaticPropertyKey":
 			return false;
 
-		case "ComputedPropertyKey":
+		case "JSComputedPropertyKey":
 			return hasPotentialSideEffects(node.value, scope);
 
-		case "BindingObjectPatternProperty":
-		case "ObjectProperty":
+		case "JSBindingObjectPatternProperty":
+		case "JSObjectProperty":
 			return (
 				hasPotentialSideEffects(node.key, scope) ||
 				hasPotentialSideEffects(node.value, scope)
 			);
 
-		case "BindingArrayPattern":
-		case "ArrayExpression": {
+		case "JSBindingArrayPattern":
+		case "JSArrayExpression": {
 			for (const elem of node.elements) {
 				if (hasPotentialSideEffects(elem, scope)) {
 					return true;
@@ -99,10 +99,10 @@ export default function hasPotentialSideEffects(
 			return false;
 		}
 
-		case "StringLiteral":
-		case "NumericLiteral":
-		case "BooleanLiteral":
-		case "NullLiteral":
+		case "JSStringLiteral":
+		case "JSNumericLiteral":
+		case "JSBooleanLiteral":
+		case "JSNullLiteral":
 			return false;
 	}
 

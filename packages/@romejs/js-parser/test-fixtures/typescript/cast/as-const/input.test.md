@@ -5,7 +5,7 @@
 ## `typescript > cast > as-const`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentLine {
+		JSCommentLine {
 			id: "0"
 			value: " Copied over from TypeScript's test case"
 			loc: Object {
@@ -46,7 +46,7 @@ Program {
 				}
 			}
 		}
-		CommentLine {
+		JSCommentLine {
 			id: "1"
 			value: " https://github.com/Microsoft/TypeScript/blob/master/tests/baselines/reference/constAssertions.js"
 			loc: Object {
@@ -63,7 +63,7 @@ Program {
 				}
 			}
 		}
-		CommentLine {
+		JSCommentLine {
 			id: "2"
 			value: " Error"
 			loc: Object {
@@ -82,7 +82,7 @@ Program {
 		}
 	]
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			leadingComments: Array [
 				"0"
 				"1"
@@ -100,7 +100,7 @@ Program {
 					line: 3
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				leadingComments: undefined
 				loc: Object {
@@ -117,8 +117,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "v1"
 							leadingComments: undefined
 							loc: Object {
@@ -164,7 +164,7 @@ Program {
 									line: 3
 								}
 							}
-							expression: StringLiteral {
+							expression: JSStringLiteral {
 								value: "abc"
 								loc: Object {
 									filename: "input.ts"
@@ -195,7 +195,7 @@ Program {
 										line: 3
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "const"
 									loc: Object {
 										filename: "input.ts"
@@ -218,7 +218,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -232,7 +232,7 @@ Program {
 					line: 4
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.ts"
@@ -248,8 +248,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "v2"
 							loc: Object {
 								filename: "input.ts"
@@ -308,7 +308,7 @@ Program {
 										line: 4
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "const"
 									loc: Object {
 										filename: "input.ts"
@@ -326,7 +326,7 @@ Program {
 									}
 								}
 							}
-							expression: TemplateLiteral {
+							expression: JSTemplateLiteral {
 								expressions: Array []
 								loc: Object {
 									filename: "input.ts"
@@ -342,7 +342,7 @@ Program {
 									}
 								}
 								quasis: Array [
-									TemplateElement {
+									JSTemplateElement {
 										cooked: "abc"
 										raw: "abc"
 										tail: true
@@ -367,7 +367,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -381,7 +381,7 @@ Program {
 					line: 5
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.ts"
@@ -397,8 +397,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "v3"
 							loc: Object {
 								filename: "input.ts"
@@ -442,7 +442,7 @@ Program {
 									line: 5
 								}
 							}
-							expression: NumericLiteral {
+							expression: JSNumericLiteral {
 								value: 10
 								format: undefined
 								loc: Object {
@@ -474,7 +474,7 @@ Program {
 										line: 5
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "const"
 									loc: Object {
 										filename: "input.ts"
@@ -497,7 +497,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -511,7 +511,7 @@ Program {
 					line: 6
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.ts"
@@ -527,8 +527,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "v4"
 							loc: Object {
 								filename: "input.ts"
@@ -587,7 +587,7 @@ Program {
 										line: 6
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "const"
 									loc: Object {
 										filename: "input.ts"
@@ -605,7 +605,7 @@ Program {
 									}
 								}
 							}
-							expression: UnaryExpression {
+							expression: JSUnaryExpression {
 								operator: "-"
 								prefix: true
 								loc: Object {
@@ -621,7 +621,7 @@ Program {
 										line: 6
 									}
 								}
-								argument: NumericLiteral {
+								argument: JSNumericLiteral {
 									value: 10
 									format: undefined
 									loc: Object {
@@ -644,7 +644,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -658,7 +658,7 @@ Program {
 					line: 7
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.ts"
@@ -674,8 +674,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "v5"
 							loc: Object {
 								filename: "input.ts"
@@ -734,7 +734,7 @@ Program {
 										line: 7
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "const"
 									loc: Object {
 										filename: "input.ts"
@@ -752,7 +752,7 @@ Program {
 									}
 								}
 							}
-							expression: UnaryExpression {
+							expression: JSUnaryExpression {
 								operator: "+"
 								prefix: true
 								loc: Object {
@@ -768,7 +768,7 @@ Program {
 										line: 7
 									}
 								}
-								argument: NumericLiteral {
+								argument: JSNumericLiteral {
 									value: 10
 									format: undefined
 									loc: Object {
@@ -791,7 +791,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -805,7 +805,7 @@ Program {
 					line: 8
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.ts"
@@ -821,8 +821,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "v6"
 							loc: Object {
 								filename: "input.ts"
@@ -866,7 +866,7 @@ Program {
 									line: 8
 								}
 							}
-							expression: NumericLiteral {
+							expression: JSNumericLiteral {
 								value: 10
 								format: undefined
 								loc: Object {
@@ -898,7 +898,7 @@ Program {
 										line: 8
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "const"
 									loc: Object {
 										filename: "input.ts"
@@ -921,7 +921,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -935,7 +935,7 @@ Program {
 					line: 9
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.ts"
@@ -951,8 +951,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "v7"
 							loc: Object {
 								filename: "input.ts"
@@ -1011,7 +1011,7 @@ Program {
 										line: 9
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "const"
 									loc: Object {
 										filename: "input.ts"
@@ -1029,7 +1029,7 @@ Program {
 									}
 								}
 							}
-							expression: UnaryExpression {
+							expression: JSUnaryExpression {
 								operator: "-"
 								prefix: true
 								loc: Object {
@@ -1045,7 +1045,7 @@ Program {
 										line: 9
 									}
 								}
-								argument: NumericLiteral {
+								argument: JSNumericLiteral {
 									value: 10
 									format: undefined
 									loc: Object {
@@ -1068,7 +1068,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -1082,7 +1082,7 @@ Program {
 					line: 10
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.ts"
@@ -1098,8 +1098,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "v8"
 							loc: Object {
 								filename: "input.ts"
@@ -1143,7 +1143,7 @@ Program {
 									line: 10
 								}
 							}
-							expression: BooleanLiteral {
+							expression: JSBooleanLiteral {
 								value: true
 								loc: Object {
 									filename: "input.ts"
@@ -1174,7 +1174,7 @@ Program {
 										line: 10
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "const"
 									loc: Object {
 										filename: "input.ts"
@@ -1197,7 +1197,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -1211,7 +1211,7 @@ Program {
 					line: 11
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.ts"
@@ -1227,8 +1227,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "v9"
 							loc: Object {
 								filename: "input.ts"
@@ -1272,7 +1272,7 @@ Program {
 									line: 11
 								}
 							}
-							expression: BooleanLiteral {
+							expression: JSBooleanLiteral {
 								value: false
 								loc: Object {
 									filename: "input.ts"
@@ -1303,7 +1303,7 @@ Program {
 										line: 11
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "const"
 									loc: Object {
 										filename: "input.ts"
@@ -1326,7 +1326,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -1340,7 +1340,7 @@ Program {
 					line: 13
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.ts"
@@ -1356,8 +1356,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "a1"
 							loc: Object {
 								filename: "input.ts"
@@ -1401,7 +1401,7 @@ Program {
 									line: 13
 								}
 							}
-							expression: ArrayExpression {
+							expression: JSArrayExpression {
 								elements: Array []
 								loc: Object {
 									filename: "input.ts"
@@ -1432,7 +1432,7 @@ Program {
 										line: 13
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "const"
 									loc: Object {
 										filename: "input.ts"
@@ -1455,7 +1455,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -1469,7 +1469,7 @@ Program {
 					line: 14
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.ts"
@@ -1485,8 +1485,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "a2"
 							loc: Object {
 								filename: "input.ts"
@@ -1545,7 +1545,7 @@ Program {
 										line: 14
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "const"
 									loc: Object {
 										filename: "input.ts"
@@ -1563,7 +1563,7 @@ Program {
 									}
 								}
 							}
-							expression: ArrayExpression {
+							expression: JSArrayExpression {
 								loc: Object {
 									filename: "input.ts"
 									end: Object {
@@ -1578,7 +1578,7 @@ Program {
 									}
 								}
 								elements: Array [
-									NumericLiteral {
+									JSNumericLiteral {
 										value: 1
 										format: undefined
 										loc: Object {
@@ -1595,7 +1595,7 @@ Program {
 											}
 										}
 									}
-									NumericLiteral {
+									JSNumericLiteral {
 										value: 2
 										format: undefined
 										loc: Object {
@@ -1612,7 +1612,7 @@ Program {
 											}
 										}
 									}
-									NumericLiteral {
+									JSNumericLiteral {
 										value: 3
 										format: undefined
 										loc: Object {
@@ -1636,7 +1636,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -1650,7 +1650,7 @@ Program {
 					line: 15
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.ts"
@@ -1666,8 +1666,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "a3"
 							loc: Object {
 								filename: "input.ts"
@@ -1726,7 +1726,7 @@ Program {
 										line: 15
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "const"
 									loc: Object {
 										filename: "input.ts"
@@ -1744,7 +1744,7 @@ Program {
 									}
 								}
 							}
-							expression: ArrayExpression {
+							expression: JSArrayExpression {
 								loc: Object {
 									filename: "input.ts"
 									end: Object {
@@ -1759,7 +1759,7 @@ Program {
 									}
 								}
 								elements: Array [
-									NumericLiteral {
+									JSNumericLiteral {
 										value: 10
 										format: undefined
 										loc: Object {
@@ -1776,7 +1776,7 @@ Program {
 											}
 										}
 									}
-									StringLiteral {
+									JSStringLiteral {
 										value: "hello"
 										loc: Object {
 											filename: "input.ts"
@@ -1792,7 +1792,7 @@ Program {
 											}
 										}
 									}
-									BooleanLiteral {
+									JSBooleanLiteral {
 										value: true
 										loc: Object {
 											filename: "input.ts"
@@ -1815,7 +1815,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -1829,7 +1829,7 @@ Program {
 					line: 16
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.ts"
@@ -1845,8 +1845,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "a4"
 							loc: Object {
 								filename: "input.ts"
@@ -1905,7 +1905,7 @@ Program {
 										line: 16
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "const"
 									loc: Object {
 										filename: "input.ts"
@@ -1923,7 +1923,7 @@ Program {
 									}
 								}
 							}
-							expression: ArrayExpression {
+							expression: JSArrayExpression {
 								loc: Object {
 									filename: "input.ts"
 									end: Object {
@@ -1938,7 +1938,7 @@ Program {
 									}
 								}
 								elements: Array [
-									SpreadElement {
+									JSSpreadElement {
 										loc: Object {
 											filename: "input.ts"
 											end: Object {
@@ -1952,7 +1952,7 @@ Program {
 												line: 16
 											}
 										}
-										argument: ArrayExpression {
+										argument: JSArrayExpression {
 											loc: Object {
 												filename: "input.ts"
 												end: Object {
@@ -1967,7 +1967,7 @@ Program {
 												}
 											}
 											elements: Array [
-												NumericLiteral {
+												JSNumericLiteral {
 													value: 1
 													format: undefined
 													loc: Object {
@@ -1984,7 +1984,7 @@ Program {
 														}
 													}
 												}
-												NumericLiteral {
+												JSNumericLiteral {
 													value: 2
 													format: undefined
 													loc: Object {
@@ -2001,7 +2001,7 @@ Program {
 														}
 													}
 												}
-												NumericLiteral {
+												JSNumericLiteral {
 													value: 3
 													format: undefined
 													loc: Object {
@@ -2028,7 +2028,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -2042,7 +2042,7 @@ Program {
 					line: 17
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.ts"
@@ -2058,8 +2058,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "a5"
 							loc: Object {
 								filename: "input.ts"
@@ -2089,7 +2089,7 @@ Program {
 								line: 17
 							}
 						}
-						init: ArrayExpression {
+						init: JSArrayExpression {
 							loc: Object {
 								filename: "input.ts"
 								end: Object {
@@ -2104,7 +2104,7 @@ Program {
 								}
 							}
 							elements: Array [
-								NumericLiteral {
+								JSNumericLiteral {
 									value: 1
 									format: undefined
 									loc: Object {
@@ -2121,7 +2121,7 @@ Program {
 										}
 									}
 								}
-								NumericLiteral {
+								JSNumericLiteral {
 									value: 2
 									format: undefined
 									loc: Object {
@@ -2138,7 +2138,7 @@ Program {
 										}
 									}
 								}
-								NumericLiteral {
+								JSNumericLiteral {
 									value: 3
 									format: undefined
 									loc: Object {
@@ -2161,7 +2161,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -2175,7 +2175,7 @@ Program {
 					line: 18
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.ts"
@@ -2191,8 +2191,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "a6"
 							loc: Object {
 								filename: "input.ts"
@@ -2251,7 +2251,7 @@ Program {
 										line: 18
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "const"
 									loc: Object {
 										filename: "input.ts"
@@ -2269,7 +2269,7 @@ Program {
 									}
 								}
 							}
-							expression: ArrayExpression {
+							expression: JSArrayExpression {
 								loc: Object {
 									filename: "input.ts"
 									end: Object {
@@ -2284,7 +2284,7 @@ Program {
 									}
 								}
 								elements: Array [
-									SpreadElement {
+									JSSpreadElement {
 										loc: Object {
 											filename: "input.ts"
 											end: Object {
@@ -2298,7 +2298,7 @@ Program {
 												line: 18
 											}
 										}
-										argument: ReferenceIdentifier {
+										argument: JSReferenceIdentifier {
 											name: "a5"
 											loc: Object {
 												filename: "input.ts"
@@ -2323,7 +2323,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -2337,7 +2337,7 @@ Program {
 					line: 19
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.ts"
@@ -2353,8 +2353,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "a8"
 							loc: Object {
 								filename: "input.ts"
@@ -2413,7 +2413,7 @@ Program {
 										line: 19
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "const"
 									loc: Object {
 										filename: "input.ts"
@@ -2431,7 +2431,7 @@ Program {
 									}
 								}
 							}
-							expression: ArrayExpression {
+							expression: JSArrayExpression {
 								loc: Object {
 									filename: "input.ts"
 									end: Object {
@@ -2446,7 +2446,7 @@ Program {
 									}
 								}
 								elements: Array [
-									StringLiteral {
+									JSStringLiteral {
 										value: "abc"
 										loc: Object {
 											filename: "input.ts"
@@ -2462,7 +2462,7 @@ Program {
 											}
 										}
 									}
-									SpreadElement {
+									JSSpreadElement {
 										loc: Object {
 											filename: "input.ts"
 											end: Object {
@@ -2476,7 +2476,7 @@ Program {
 												line: 19
 											}
 										}
-										argument: ReferenceIdentifier {
+										argument: JSReferenceIdentifier {
 											name: "a7"
 											loc: Object {
 												filename: "input.ts"
@@ -2501,7 +2501,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -2515,7 +2515,7 @@ Program {
 					line: 21
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.ts"
@@ -2531,8 +2531,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "o1"
 							loc: Object {
 								filename: "input.ts"
@@ -2591,7 +2591,7 @@ Program {
 										line: 21
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "const"
 									loc: Object {
 										filename: "input.ts"
@@ -2609,7 +2609,7 @@ Program {
 									}
 								}
 							}
-							expression: ObjectExpression {
+							expression: JSObjectExpression {
 								loc: Object {
 									filename: "input.ts"
 									end: Object {
@@ -2624,9 +2624,9 @@ Program {
 									}
 								}
 								properties: Array [
-									ObjectProperty {
-										key: StaticPropertyKey {
-											value: Identifier {
+									JSObjectProperty {
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
 												name: "x"
 												loc: Object {
 													filename: "input.ts"
@@ -2657,7 +2657,7 @@ Program {
 												}
 											}
 										}
-										value: NumericLiteral {
+										value: JSNumericLiteral {
 											value: 10
 											format: undefined
 											loc: Object {
@@ -2688,9 +2688,9 @@ Program {
 											}
 										}
 									}
-									ObjectProperty {
-										key: StaticPropertyKey {
-											value: Identifier {
+									JSObjectProperty {
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
 												name: "y"
 												loc: Object {
 													filename: "input.ts"
@@ -2721,7 +2721,7 @@ Program {
 												}
 											}
 										}
-										value: NumericLiteral {
+										value: JSNumericLiteral {
 											value: 20
 											format: undefined
 											loc: Object {
@@ -2759,7 +2759,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -2773,7 +2773,7 @@ Program {
 					line: 22
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.ts"
@@ -2789,8 +2789,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "o2"
 							loc: Object {
 								filename: "input.ts"
@@ -2849,7 +2849,7 @@ Program {
 										line: 22
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "const"
 									loc: Object {
 										filename: "input.ts"
@@ -2867,7 +2867,7 @@ Program {
 									}
 								}
 							}
-							expression: ObjectExpression {
+							expression: JSObjectExpression {
 								loc: Object {
 									filename: "input.ts"
 									end: Object {
@@ -2882,9 +2882,9 @@ Program {
 									}
 								}
 								properties: Array [
-									ObjectProperty {
-										key: StaticPropertyKey {
-											value: Identifier {
+									JSObjectProperty {
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
 												name: "a"
 												loc: Object {
 													filename: "input.ts"
@@ -2915,7 +2915,7 @@ Program {
 												}
 											}
 										}
-										value: NumericLiteral {
+										value: JSNumericLiteral {
 											value: 1
 											format: undefined
 											loc: Object {
@@ -2946,9 +2946,9 @@ Program {
 											}
 										}
 									}
-									ObjectProperty {
-										key: StaticPropertyKey {
-											value: StringLiteral {
+									JSObjectProperty {
+										key: JSStaticPropertyKey {
+											value: JSStringLiteral {
 												value: "b"
 												loc: Object {
 													filename: "input.ts"
@@ -2978,7 +2978,7 @@ Program {
 												}
 											}
 										}
-										value: NumericLiteral {
+										value: JSNumericLiteral {
 											value: 2
 											format: undefined
 											loc: Object {
@@ -3009,9 +3009,9 @@ Program {
 											}
 										}
 									}
-									ObjectProperty {
-										key: ComputedPropertyKey {
-											value: StringLiteral {
+									JSObjectProperty {
+										key: JSComputedPropertyKey {
+											value: JSStringLiteral {
 												value: "c"
 												loc: Object {
 													filename: "input.ts"
@@ -3041,7 +3041,7 @@ Program {
 												}
 											}
 										}
-										value: NumericLiteral {
+										value: JSNumericLiteral {
 											value: 3
 											format: undefined
 											loc: Object {
@@ -3072,10 +3072,10 @@ Program {
 											}
 										}
 									}
-									ObjectMethod {
+									JSObjectMethod {
 										kind: "method"
-										key: StaticPropertyKey {
-											value: Identifier {
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
 												name: "d"
 												loc: Object {
 													filename: "input.ts"
@@ -3119,7 +3119,7 @@ Program {
 												line: 22
 											}
 										}
-										body: BlockStatement {
+										body: JSBlockStatement {
 											body: Array []
 											directives: Array []
 											loc: Object {
@@ -3136,7 +3136,7 @@ Program {
 												}
 											}
 										}
-										head: FunctionHead {
+										head: JSFunctionHead {
 											async: false
 											generator: false
 											hasHoistedVars: false
@@ -3160,9 +3160,9 @@ Program {
 											}
 										}
 									}
-									ObjectProperty {
-										key: ComputedPropertyKey {
-											value: BinaryExpression {
+									JSObjectProperty {
+										key: JSComputedPropertyKey {
+											value: JSBinaryExpression {
 												operator: "+"
 												loc: Object {
 													filename: "input.ts"
@@ -3177,7 +3177,7 @@ Program {
 														line: 22
 													}
 												}
-												left: StringLiteral {
+												left: JSStringLiteral {
 													value: "e"
 													loc: Object {
 														filename: "input.ts"
@@ -3193,7 +3193,7 @@ Program {
 														}
 													}
 												}
-												right: StringLiteral {
+												right: JSStringLiteral {
 													value: ""
 													loc: Object {
 														filename: "input.ts"
@@ -3224,7 +3224,7 @@ Program {
 												}
 											}
 										}
-										value: NumericLiteral {
+										value: JSNumericLiteral {
 											value: 4
 											format: undefined
 											loc: Object {
@@ -3262,7 +3262,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -3276,7 +3276,7 @@ Program {
 					line: 23
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.ts"
@@ -3292,8 +3292,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "o3"
 							loc: Object {
 								filename: "input.ts"
@@ -3352,7 +3352,7 @@ Program {
 										line: 23
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "const"
 									loc: Object {
 										filename: "input.ts"
@@ -3370,7 +3370,7 @@ Program {
 									}
 								}
 							}
-							expression: ObjectExpression {
+							expression: JSObjectExpression {
 								loc: Object {
 									filename: "input.ts"
 									end: Object {
@@ -3385,7 +3385,7 @@ Program {
 									}
 								}
 								properties: Array [
-									SpreadProperty {
+									JSSpreadProperty {
 										loc: Object {
 											filename: "input.ts"
 											end: Object {
@@ -3399,7 +3399,7 @@ Program {
 												line: 23
 											}
 										}
-										argument: ReferenceIdentifier {
+										argument: JSReferenceIdentifier {
 											name: "o1"
 											loc: Object {
 												filename: "input.ts"
@@ -3417,7 +3417,7 @@ Program {
 											}
 										}
 									}
-									SpreadProperty {
+									JSSpreadProperty {
 										loc: Object {
 											filename: "input.ts"
 											end: Object {
@@ -3431,7 +3431,7 @@ Program {
 												line: 23
 											}
 										}
-										argument: ReferenceIdentifier {
+										argument: JSReferenceIdentifier {
 											name: "o2"
 											loc: Object {
 												filename: "input.ts"
@@ -3456,7 +3456,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -3470,7 +3470,7 @@ Program {
 					line: 24
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.ts"
@@ -3486,8 +3486,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "o5"
 							loc: Object {
 								filename: "input.ts"
@@ -3546,7 +3546,7 @@ Program {
 										line: 24
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "const"
 									loc: Object {
 										filename: "input.ts"
@@ -3564,7 +3564,7 @@ Program {
 									}
 								}
 							}
-							expression: ObjectExpression {
+							expression: JSObjectExpression {
 								loc: Object {
 									filename: "input.ts"
 									end: Object {
@@ -3579,7 +3579,7 @@ Program {
 									}
 								}
 								properties: Array [
-									SpreadProperty {
+									JSSpreadProperty {
 										loc: Object {
 											filename: "input.ts"
 											end: Object {
@@ -3593,7 +3593,7 @@ Program {
 												line: 24
 											}
 										}
-										argument: ReferenceIdentifier {
+										argument: JSReferenceIdentifier {
 											name: "o4"
 											loc: Object {
 												filename: "input.ts"
@@ -3618,7 +3618,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -3632,7 +3632,7 @@ Program {
 					line: 25
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.ts"
@@ -3648,8 +3648,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "o7"
 							loc: Object {
 								filename: "input.ts"
@@ -3708,7 +3708,7 @@ Program {
 										line: 25
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "const"
 									loc: Object {
 										filename: "input.ts"
@@ -3726,7 +3726,7 @@ Program {
 									}
 								}
 							}
-							expression: ObjectExpression {
+							expression: JSObjectExpression {
 								loc: Object {
 									filename: "input.ts"
 									end: Object {
@@ -3741,7 +3741,7 @@ Program {
 									}
 								}
 								properties: Array [
-									SpreadProperty {
+									JSSpreadProperty {
 										loc: Object {
 											filename: "input.ts"
 											end: Object {
@@ -3755,7 +3755,7 @@ Program {
 												line: 25
 											}
 										}
-										argument: ReferenceIdentifier {
+										argument: JSReferenceIdentifier {
 											name: "d"
 											loc: Object {
 												filename: "input.ts"
@@ -3780,7 +3780,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			trailingComments: Array ["2"]
 			loc: Object {
 				filename: "input.ts"
@@ -3795,7 +3795,7 @@ Program {
 					line: 26
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				trailingComments: undefined
 				loc: Object {
@@ -3812,8 +3812,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "o9"
 							loc: Object {
 								filename: "input.ts"
@@ -3872,7 +3872,7 @@ Program {
 										line: 26
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "const"
 									loc: Object {
 										filename: "input.ts"
@@ -3890,7 +3890,7 @@ Program {
 									}
 								}
 							}
-							expression: ObjectExpression {
+							expression: JSObjectExpression {
 								loc: Object {
 									filename: "input.ts"
 									end: Object {
@@ -3905,9 +3905,9 @@ Program {
 									}
 								}
 								properties: Array [
-									ObjectProperty {
-										key: StaticPropertyKey {
-											value: Identifier {
+									JSObjectProperty {
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
 												name: "x"
 												loc: Object {
 													filename: "input.ts"
@@ -3938,7 +3938,7 @@ Program {
 												}
 											}
 										}
-										value: NumericLiteral {
+										value: JSNumericLiteral {
 											value: 10
 											format: undefined
 											loc: Object {
@@ -3969,10 +3969,10 @@ Program {
 											}
 										}
 									}
-									ObjectMethod {
+									JSObjectMethod {
 										kind: "method"
-										key: StaticPropertyKey {
-											value: Identifier {
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
 												name: "foo"
 												loc: Object {
 													filename: "input.ts"
@@ -4016,7 +4016,7 @@ Program {
 												line: 26
 											}
 										}
-										head: FunctionHead {
+										head: JSFunctionHead {
 											async: false
 											generator: false
 											hasHoistedVars: false
@@ -4039,7 +4039,7 @@ Program {
 												}
 											}
 										}
-										body: BlockStatement {
+										body: JSBlockStatement {
 											directives: Array []
 											loc: Object {
 												filename: "input.ts"
@@ -4055,7 +4055,7 @@ Program {
 												}
 											}
 											body: Array [
-												ExpressionStatement {
+												JSExpressionStatement {
 													loc: Object {
 														filename: "input.ts"
 														end: Object {
@@ -4069,7 +4069,7 @@ Program {
 															line: 26
 														}
 													}
-													expression: AssignmentExpression {
+													expression: JSAssignmentExpression {
 														operator: "="
 														loc: Object {
 															filename: "input.ts"
@@ -4084,7 +4084,7 @@ Program {
 																line: 26
 															}
 														}
-														right: NumericLiteral {
+														right: JSNumericLiteral {
 															value: 20
 															format: undefined
 															loc: Object {
@@ -4101,7 +4101,7 @@ Program {
 																}
 															}
 														}
-														left: MemberExpression {
+														left: JSMemberExpression {
 															loc: Object {
 																filename: "input.ts"
 																end: Object {
@@ -4115,7 +4115,7 @@ Program {
 																	line: 26
 																}
 															}
-															object: ThisExpression {
+															object: JSThisExpression {
 																loc: Object {
 																	filename: "input.ts"
 																	end: Object {
@@ -4130,8 +4130,8 @@ Program {
 																	}
 																}
 															}
-															property: StaticMemberProperty {
-																value: Identifier {
+															property: JSStaticMemberProperty {
+																value: JSIdentifier {
 																	name: "x"
 																	loc: Object {
 																		filename: "input.ts"
@@ -4176,7 +4176,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			leadingComments: Array ["2"]
 			loc: Object {
 				filename: "input.ts"
@@ -4191,7 +4191,7 @@ Program {
 					line: 28
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				leadingComments: undefined
 				loc: Object {
@@ -4208,8 +4208,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "p1"
 							leadingComments: undefined
 							loc: Object {
@@ -4255,7 +4255,7 @@ Program {
 									line: 28
 								}
 							}
-							expression: NumericLiteral {
+							expression: JSNumericLiteral {
 								value: 10
 								format: undefined
 								loc: Object {
@@ -4287,7 +4287,7 @@ Program {
 										line: 28
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "const"
 									loc: Object {
 										filename: "input.ts"
@@ -4310,7 +4310,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -4324,7 +4324,7 @@ Program {
 					line: 29
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.ts"
@@ -4340,8 +4340,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "p2"
 							loc: Object {
 								filename: "input.ts"
@@ -4400,7 +4400,7 @@ Program {
 										line: 29
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "const"
 									loc: Object {
 										filename: "input.ts"
@@ -4418,7 +4418,7 @@ Program {
 									}
 								}
 							}
-							expression: UnaryExpression {
+							expression: JSUnaryExpression {
 								operator: "-"
 								prefix: true
 								loc: Object {
@@ -4434,7 +4434,7 @@ Program {
 										line: 29
 									}
 								}
-								argument: NumericLiteral {
+								argument: JSNumericLiteral {
 									value: 10
 									format: undefined
 									loc: Object {
@@ -4457,7 +4457,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -4471,7 +4471,7 @@ Program {
 					line: 30
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.ts"
@@ -4487,8 +4487,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "p3"
 							loc: Object {
 								filename: "input.ts"
@@ -4547,7 +4547,7 @@ Program {
 										line: 30
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "const"
 									loc: Object {
 										filename: "input.ts"
@@ -4565,7 +4565,7 @@ Program {
 									}
 								}
 							}
-							expression: ArrayExpression {
+							expression: JSArrayExpression {
 								loc: Object {
 									filename: "input.ts"
 									end: Object {
@@ -4580,7 +4580,7 @@ Program {
 									}
 								}
 								elements: Array [
-									NumericLiteral {
+									JSNumericLiteral {
 										value: 10
 										format: undefined
 										loc: Object {
@@ -4604,7 +4604,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -4618,7 +4618,7 @@ Program {
 					line: 31
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.ts"
@@ -4634,8 +4634,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "p4"
 							loc: Object {
 								filename: "input.ts"
@@ -4694,7 +4694,7 @@ Program {
 										line: 31
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "const"
 									loc: Object {
 										filename: "input.ts"
@@ -4712,7 +4712,7 @@ Program {
 									}
 								}
 							}
-							expression: ArrayExpression {
+							expression: JSArrayExpression {
 								loc: Object {
 									filename: "input.ts"
 									end: Object {
@@ -4727,7 +4727,7 @@ Program {
 									}
 								}
 								elements: Array [
-									ArrayExpression {
+									JSArrayExpression {
 										loc: Object {
 											filename: "input.ts"
 											end: Object {
@@ -4742,7 +4742,7 @@ Program {
 											}
 										}
 										elements: Array [
-											ArrayExpression {
+											JSArrayExpression {
 												loc: Object {
 													filename: "input.ts"
 													end: Object {
@@ -4757,7 +4757,7 @@ Program {
 													}
 												}
 												elements: Array [
-													ArrayExpression {
+													JSArrayExpression {
 														loc: Object {
 															filename: "input.ts"
 															end: Object {
@@ -4772,7 +4772,7 @@ Program {
 															}
 														}
 														elements: Array [
-															NumericLiteral {
+															JSNumericLiteral {
 																value: 10
 																format: undefined
 																loc: Object {
@@ -4802,7 +4802,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -4816,7 +4816,7 @@ Program {
 					line: 33
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.ts"
@@ -4832,8 +4832,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "x1"
 							loc: Object {
 								filename: "input.ts"
@@ -4892,7 +4892,7 @@ Program {
 										line: 33
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "const"
 									loc: Object {
 										filename: "input.ts"
@@ -4910,7 +4910,7 @@ Program {
 									}
 								}
 							}
-							expression: ObjectExpression {
+							expression: JSObjectExpression {
 								loc: Object {
 									filename: "input.ts"
 									end: Object {
@@ -4925,9 +4925,9 @@ Program {
 									}
 								}
 								properties: Array [
-									ObjectProperty {
-										key: StaticPropertyKey {
-											value: Identifier {
+									JSObjectProperty {
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
 												name: "x"
 												loc: Object {
 													filename: "input.ts"
@@ -4958,7 +4958,7 @@ Program {
 												}
 											}
 										}
-										value: NumericLiteral {
+										value: JSNumericLiteral {
 											value: 10
 											format: undefined
 											loc: Object {
@@ -4989,9 +4989,9 @@ Program {
 											}
 										}
 									}
-									ObjectProperty {
-										key: StaticPropertyKey {
-											value: Identifier {
+									JSObjectProperty {
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
 												name: "y"
 												loc: Object {
 													filename: "input.ts"
@@ -5022,7 +5022,7 @@ Program {
 												}
 											}
 										}
-										value: ArrayExpression {
+										value: JSArrayExpression {
 											loc: Object {
 												filename: "input.ts"
 												end: Object {
@@ -5037,7 +5037,7 @@ Program {
 												}
 											}
 											elements: Array [
-												NumericLiteral {
+												JSNumericLiteral {
 													value: 20
 													format: undefined
 													loc: Object {
@@ -5054,7 +5054,7 @@ Program {
 														}
 													}
 												}
-												NumericLiteral {
+												JSNumericLiteral {
 													value: 30
 													format: undefined
 													loc: Object {
@@ -5087,9 +5087,9 @@ Program {
 											}
 										}
 									}
-									ObjectProperty {
-										key: StaticPropertyKey {
-											value: Identifier {
+									JSObjectProperty {
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
 												name: "z"
 												loc: Object {
 													filename: "input.ts"
@@ -5120,7 +5120,7 @@ Program {
 												}
 											}
 										}
-										value: ObjectExpression {
+										value: JSObjectExpression {
 											loc: Object {
 												filename: "input.ts"
 												end: Object {
@@ -5135,9 +5135,9 @@ Program {
 												}
 											}
 											properties: Array [
-												ObjectProperty {
-													key: StaticPropertyKey {
-														value: Identifier {
+												JSObjectProperty {
+													key: JSStaticPropertyKey {
+														value: JSIdentifier {
 															name: "a"
 															loc: Object {
 																filename: "input.ts"
@@ -5168,7 +5168,7 @@ Program {
 															}
 														}
 													}
-													value: ObjectExpression {
+													value: JSObjectExpression {
 														loc: Object {
 															filename: "input.ts"
 															end: Object {
@@ -5183,9 +5183,9 @@ Program {
 															}
 														}
 														properties: Array [
-															ObjectProperty {
-																key: StaticPropertyKey {
-																	value: Identifier {
+															JSObjectProperty {
+																key: JSStaticPropertyKey {
+																	value: JSIdentifier {
 																		name: "b"
 																		loc: Object {
 																			filename: "input.ts"
@@ -5216,7 +5216,7 @@ Program {
 																		}
 																	}
 																}
-																value: NumericLiteral {
+																value: JSNumericLiteral {
 																	value: 42
 																	format: undefined
 																	loc: Object {
@@ -5286,7 +5286,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -5300,7 +5300,7 @@ Program {
 					line: 35
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.ts"
@@ -5316,8 +5316,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "q1"
 							loc: Object {
 								filename: "input.ts"
@@ -5361,7 +5361,7 @@ Program {
 									line: 35
 								}
 							}
-							expression: NumericLiteral {
+							expression: JSNumericLiteral {
 								value: 10
 								format: undefined
 								loc: Object {
@@ -5393,7 +5393,7 @@ Program {
 										line: 35
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "const"
 									loc: Object {
 										filename: "input.ts"
@@ -5416,7 +5416,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -5430,7 +5430,7 @@ Program {
 					line: 36
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.ts"
@@ -5446,8 +5446,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "q2"
 							loc: Object {
 								filename: "input.ts"
@@ -5491,7 +5491,7 @@ Program {
 									line: 36
 								}
 							}
-							expression: StringLiteral {
+							expression: JSStringLiteral {
 								value: "abc"
 								loc: Object {
 									filename: "input.ts"
@@ -5522,7 +5522,7 @@ Program {
 										line: 36
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "const"
 									loc: Object {
 										filename: "input.ts"
@@ -5545,7 +5545,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -5559,7 +5559,7 @@ Program {
 					line: 37
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.ts"
@@ -5575,8 +5575,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "q3"
 							loc: Object {
 								filename: "input.ts"
@@ -5620,7 +5620,7 @@ Program {
 									line: 37
 								}
 							}
-							expression: BooleanLiteral {
+							expression: JSBooleanLiteral {
 								value: true
 								loc: Object {
 									filename: "input.ts"
@@ -5651,7 +5651,7 @@ Program {
 										line: 37
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "const"
 									loc: Object {
 										filename: "input.ts"
@@ -5674,7 +5674,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -5688,7 +5688,7 @@ Program {
 					line: 38
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.ts"
@@ -5704,8 +5704,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "q4"
 							loc: Object {
 								filename: "input.ts"
@@ -5764,7 +5764,7 @@ Program {
 										line: 38
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "const"
 									loc: Object {
 										filename: "input.ts"
@@ -5782,7 +5782,7 @@ Program {
 									}
 								}
 							}
-							expression: ArrayExpression {
+							expression: JSArrayExpression {
 								loc: Object {
 									filename: "input.ts"
 									end: Object {
@@ -5797,7 +5797,7 @@ Program {
 									}
 								}
 								elements: Array [
-									NumericLiteral {
+									JSNumericLiteral {
 										value: 1
 										format: undefined
 										loc: Object {
@@ -5814,7 +5814,7 @@ Program {
 											}
 										}
 									}
-									NumericLiteral {
+									JSNumericLiteral {
 										value: 2
 										format: undefined
 										loc: Object {
@@ -5831,7 +5831,7 @@ Program {
 											}
 										}
 									}
-									NumericLiteral {
+									JSNumericLiteral {
 										value: 3
 										format: undefined
 										loc: Object {
@@ -5855,7 +5855,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -5869,7 +5869,7 @@ Program {
 					line: 39
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.ts"
@@ -5885,8 +5885,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "q5"
 							loc: Object {
 								filename: "input.ts"
@@ -5945,7 +5945,7 @@ Program {
 										line: 39
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "const"
 									loc: Object {
 										filename: "input.ts"
@@ -5963,7 +5963,7 @@ Program {
 									}
 								}
 							}
-							expression: ObjectExpression {
+							expression: JSObjectExpression {
 								loc: Object {
 									filename: "input.ts"
 									end: Object {
@@ -5978,9 +5978,9 @@ Program {
 									}
 								}
 								properties: Array [
-									ObjectProperty {
-										key: StaticPropertyKey {
-											value: Identifier {
+									JSObjectProperty {
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
 												name: "x"
 												loc: Object {
 													filename: "input.ts"
@@ -6011,7 +6011,7 @@ Program {
 												}
 											}
 										}
-										value: NumericLiteral {
+										value: JSNumericLiteral {
 											value: 10
 											format: undefined
 											loc: Object {
@@ -6042,9 +6042,9 @@ Program {
 											}
 										}
 									}
-									ObjectProperty {
-										key: StaticPropertyKey {
-											value: Identifier {
+									JSObjectProperty {
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
 												name: "y"
 												loc: Object {
 													filename: "input.ts"
@@ -6075,7 +6075,7 @@ Program {
 												}
 											}
 										}
-										value: NumericLiteral {
+										value: JSNumericLiteral {
 											value: 20
 											format: undefined
 											loc: Object {

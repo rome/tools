@@ -5,7 +5,7 @@
 ## `experimental > dynamic-import > direct-calls-only`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,8 +54,8 @@ Program {
 		}
 	]
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "failsParse"
 				loc: Object {
 					filename: "input.js"
@@ -85,7 +85,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -108,7 +108,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -124,7 +124,7 @@ Program {
 					}
 				}
 				body: Array [
-					ReturnStatement {
+					JSReturnStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -138,7 +138,7 @@ Program {
 								line: 2
 							}
 						}
-						argument: CallExpression {
+						argument: JSCallExpression {
 							arguments: Array []
 							loc: Object {
 								filename: "input.js"
@@ -153,7 +153,7 @@ Program {
 									line: 2
 								}
 							}
-							callee: MetaProperty {
+							callee: JSMetaProperty {
 								loc: Object {
 									filename: "input.js"
 									end: Object {
@@ -167,7 +167,7 @@ Program {
 										line: 2
 									}
 								}
-								meta: Identifier {
+								meta: JSIdentifier {
 									name: "import"
 									loc: Object {
 										filename: "input.js"
@@ -184,7 +184,7 @@ Program {
 										}
 									}
 								}
-								property: Identifier {
+								property: JSIdentifier {
 									name: "then"
 									loc: Object {
 										filename: "input.js"

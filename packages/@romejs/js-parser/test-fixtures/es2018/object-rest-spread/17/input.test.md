@@ -5,7 +5,7 @@
 ## `es2018 > object-rest-spread > 17`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.js"
@@ -84,8 +84,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingObjectPattern {
+					JSVariableDeclarator {
+						id: JSBindingObjectPattern {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -99,7 +99,7 @@ Program {
 									line: 1
 								}
 							}
-							rest: BindingIdentifier {
+							rest: JSBindingIdentifier {
 								name: ""
 								loc: Object {
 									filename: "input.js"
@@ -117,9 +117,9 @@ Program {
 								}
 							}
 							properties: Array [
-								BindingObjectPatternProperty {
-									key: StaticPropertyKey {
-										value: Identifier {
+								JSBindingObjectPatternProperty {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
 											name: "x"
 											loc: Object {
 												filename: "input.js"
@@ -150,7 +150,7 @@ Program {
 											}
 										}
 									}
-									value: BindingAssignmentPattern {
+									value: JSBindingAssignmentPattern {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -164,7 +164,7 @@ Program {
 												line: 1
 											}
 										}
-										left: BindingIdentifier {
+										left: JSBindingIdentifier {
 											name: "x"
 											loc: Object {
 												filename: "input.js"
@@ -181,7 +181,7 @@ Program {
 												}
 											}
 										}
-										right: NumericLiteral {
+										right: JSNumericLiteral {
 											value: 5
 											format: undefined
 											loc: Object {
@@ -233,7 +233,7 @@ Program {
 				]
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -247,7 +247,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: AssignmentExpression {
+			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
 					filename: "input.js"
@@ -262,7 +262,7 @@ Program {
 						line: 1
 					}
 				}
-				left: AssignmentIdentifier {
+				left: JSAssignmentIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: Object {
 						filename: "input.js"
@@ -278,7 +278,7 @@ Program {
 						}
 					}
 				}
-				right: ObjectExpression {
+				right: JSObjectExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -293,9 +293,9 @@ Program {
 						}
 					}
 					properties: Array [
-						ObjectProperty {
-							key: StaticPropertyKey {
-								value: Identifier {
+						JSObjectProperty {
+							key: JSStaticPropertyKey {
+								value: JSIdentifier {
 									name: "x"
 									loc: Object {
 										filename: "input.js"
@@ -326,7 +326,7 @@ Program {
 									}
 								}
 							}
-							value: NumericLiteral {
+							value: JSNumericLiteral {
 								value: 1
 								format: undefined
 								loc: Object {

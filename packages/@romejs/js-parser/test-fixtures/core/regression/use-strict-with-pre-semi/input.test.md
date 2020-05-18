@@ -5,7 +5,7 @@
 ## `core > regression > use-strict-with-pre-semi`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "a"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -77,7 +77,7 @@ Program {
 					}
 				}
 				body: Array [
-					EmptyStatement {
+					JSEmptyStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -92,7 +92,7 @@ Program {
 							}
 						}
 					}
-					ExpressionStatement {
+					JSExpressionStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -106,7 +106,7 @@ Program {
 								line: 2
 							}
 						}
-						expression: StringLiteral {
+						expression: JSStringLiteral {
 							value: "use strict"
 							loc: Object {
 								filename: "input.js"
@@ -123,7 +123,7 @@ Program {
 							}
 						}
 					}
-					WithStatement {
+					JSWithStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -137,7 +137,7 @@ Program {
 								line: 2
 							}
 						}
-						object: ObjectExpression {
+						object: JSObjectExpression {
 							properties: Array []
 							loc: Object {
 								filename: "input.js"
@@ -153,7 +153,7 @@ Program {
 								}
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
 							loc: Object {
@@ -173,7 +173,7 @@ Program {
 					}
 				]
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -195,7 +195,7 @@ Program {
 					}
 				}
 				params: Array [
-					BindingAssignmentPattern {
+					JSBindingAssignmentPattern {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -209,7 +209,7 @@ Program {
 								line: 1
 							}
 						}
-						right: ArrayExpression {
+						right: JSArrayExpression {
 							elements: Array []
 							loc: Object {
 								filename: "input.js"
@@ -225,7 +225,7 @@ Program {
 								}
 							}
 						}
-						left: BindingArrayPattern {
+						left: JSBindingArrayPattern {
 							rest: undefined
 							loc: Object {
 								filename: "input.js"
@@ -240,7 +240,7 @@ Program {
 									line: 1
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
 								loc: Object {
@@ -258,7 +258,7 @@ Program {
 								}
 							}
 							elements: Array [
-								BindingIdentifier {
+								JSBindingIdentifier {
 									name: "a"
 									loc: Object {
 										filename: "input.js"
@@ -274,7 +274,7 @@ Program {
 											line: 1
 										}
 									}
-									meta: PatternMeta {
+									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 import isIdentifierish from "./isIdentifierish";
 
 type Parts = Array<{
@@ -41,17 +41,17 @@ export default function getNodeReferenceParts(node: undefined | AnyNode): Result
 		if (isIdentifierish(node)) {
 			parts.push({node, value: node.name});
 			return false;
-		} else if (node.type === "ThisExpression") {
+		} else if (node.type === "JSThisExpression") {
 			parts.push({node, value: "this"});
 			return false;
-		} else if (node.type === "StringLiteral") {
+		} else if (node.type === "JSStringLiteral") {
 			parts.push({node, value: node.value});
 			return false;
-		} else if (node.type === "MetaProperty") {
+		} else if (node.type === "JSMetaProperty") {
 			parts.push({node, value: node.meta.name});
 			parts.push({node, value: node.property.name});
 			return false;
-		} else if (node.type === "MemberExpression") {
+		} else if (node.type === "JSMemberExpression") {
 			const stop = add(node.object);
 			if (stop) {
 				return true;
@@ -59,11 +59,11 @@ export default function getNodeReferenceParts(node: undefined | AnyNode): Result
 				return add(node.property);
 			}
 		} else if (
-			node.type === "ComputedMemberProperty" &&
-			node.value.type === "StringLiteral"
+			node.type === "JSComputedMemberProperty" &&
+			node.value.type === "JSStringLiteral"
 		) {
 			return add(node.value);
-		} else if (node.type === "StaticMemberProperty") {
+		} else if (node.type === "JSStaticMemberProperty") {
 			return add(node.value);
 		} else {
 			return true;

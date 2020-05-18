@@ -6,7 +6,7 @@
 */
 
 import {Path} from "@romejs/js-compiler";
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 import {descriptions} from "@romejs/diagnostics";
 
 export default {
@@ -19,7 +19,7 @@ export default {
 			node.name.name === "style" &&
 			node.value !== undefined &&
 			((node.value.type === "JSXExpressionContainer" &&
-			node.value.expression.type !== "ObjectExpression") ||
+			node.value.expression.type !== "JSObjectExpression") ||
 			node.value.type !== "JSXExpressionContainer")
 		) {
 			path.context.addNodeDiagnostic(

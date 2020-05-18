@@ -5,7 +5,7 @@
 ## `core > uncategorised > 443`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: true
 	directives: Array []
 	filename: "input.js"
@@ -28,7 +28,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentBlock {
+		JSCommentBlock {
 			id: "0"
 			value: "\n"
 			loc: Object {
@@ -72,7 +72,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			leadingComments: Array ["0"]
 			loc: Object {
 				filename: "input.js"
@@ -87,7 +87,7 @@ Program {
 					line: 2
 				}
 			}
-			expression: ReferenceIdentifier {
+			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				leadingComments: undefined
 				loc: Object {

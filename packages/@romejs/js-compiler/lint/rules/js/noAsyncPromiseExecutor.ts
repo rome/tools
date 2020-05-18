@@ -15,12 +15,12 @@ export default {
 		const {node, context} = path;
 
 		if (
-			node.type === "NewExpression" &&
-			node.callee.type === "ReferenceIdentifier" &&
+			node.type === "JSNewExpression" &&
+			node.callee.type === "JSReferenceIdentifier" &&
 			node.callee.name === "Promise" &&
 			node.arguments.length > 0 &&
-			(node.arguments[0].type === "ArrowFunctionExpression" ||
-			node.arguments[0].type === "FunctionExpression") &&
+			(node.arguments[0].type === "JSArrowFunctionExpression" ||
+			node.arguments[0].type === "JSFunctionExpression") &&
 			node.arguments[0].head.async
 		) {
 			context.addNodeDiagnostic(

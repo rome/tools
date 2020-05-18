@@ -5,7 +5,7 @@
 ## `typescript > cast > assert-and-assign`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -19,9 +19,9 @@ Program {
 	loc: Object {
 		filename: "input.ts"
 		end: Object {
-			column: 19
-			index: 19
-			line: 1
+			column: 0
+			index: 20
+			line: 2
 		}
 		start: Object {
 			column: 0
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: AssignmentExpression {
+			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
 					filename: "input.ts"
@@ -59,7 +59,7 @@ Program {
 						line: 1
 					}
 				}
-				right: NumericLiteral {
+				right: JSNumericLiteral {
 					value: 42
 					format: undefined
 					loc: Object {
@@ -105,7 +105,7 @@ Program {
 							}
 						}
 					}
-					expression: AssignmentIdentifier {
+					expression: JSAssignmentIdentifier {
 						name: "a"
 						loc: Object {
 							filename: "input.ts"

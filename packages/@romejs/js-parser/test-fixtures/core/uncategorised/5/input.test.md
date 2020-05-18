@@ -5,7 +5,7 @@
 ## `core > uncategorised > 5`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: RegExpLiteral {
+			expression: JSRegExpLiteral {
 				global: true
 				insensitive: false
 				multiline: false
@@ -64,7 +64,7 @@ Program {
 						line: 1
 					}
 				}
-				expression: RegExpSubExpression {
+				expression: JSRegExpSubExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -79,7 +79,7 @@ Program {
 						}
 					}
 					body: Array [
-						RegExpCharSet {
+						JSRegExpCharSet {
 							invert: false
 							loc: Object {
 								filename: "input.js"
@@ -95,7 +95,7 @@ Program {
 								}
 							}
 							body: Array [
-								RegExpCharSetRange {
+								JSRegExpCharSetRange {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -109,7 +109,7 @@ Program {
 											line: 1
 										}
 									}
-									end: RegExpCharacter {
+									end: JSRegExpCharacter {
 										value: "z"
 										loc: Object {
 											filename: "input.js"
@@ -125,7 +125,7 @@ Program {
 											}
 										}
 									}
-									start: RegExpCharacter {
+									start: JSRegExpCharacter {
 										value: "a"
 										loc: Object {
 											filename: "input.js"

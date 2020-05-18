@@ -5,7 +5,7 @@
 ## `es2018 > regexp-named-capture-group > 1`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.js"
@@ -60,8 +60,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "re"
 							loc: Object {
 								filename: "input.js"
@@ -91,7 +91,7 @@ Program {
 								line: 1
 							}
 						}
-						init: RegExpLiteral {
+						init: JSRegExpLiteral {
 							global: false
 							insensitive: false
 							multiline: false
@@ -111,7 +111,7 @@ Program {
 									line: 1
 								}
 							}
-							expression: RegExpSubExpression {
+							expression: JSRegExpSubExpression {
 								loc: Object {
 									filename: "input.js"
 									end: Object {
@@ -126,7 +126,7 @@ Program {
 									}
 								}
 								body: Array [
-									RegExpGroupCapture {
+									JSRegExpGroupCapture {
 										name: "year"
 										loc: Object {
 											filename: "input.js"
@@ -141,7 +141,7 @@ Program {
 												line: 1
 											}
 										}
-										expression: RegExpSubExpression {
+										expression: JSRegExpSubExpression {
 											loc: Object {
 												filename: "input.js"
 												end: Object {
@@ -156,7 +156,7 @@ Program {
 												}
 											}
 											body: Array [
-												RegExpQuantified {
+												JSRegExpQuantified {
 													lazy: false
 													max: 4
 													min: 4
@@ -173,7 +173,7 @@ Program {
 															line: 1
 														}
 													}
-													target: RegExpDigitCharacter {
+													target: JSRegExpDigitCharacter {
 														loc: Object {
 															filename: "input.js"
 															end: Object {
@@ -192,7 +192,7 @@ Program {
 											]
 										}
 									}
-									RegExpCharacter {
+									JSRegExpCharacter {
 										value: "-"
 										loc: Object {
 											filename: "input.js"
@@ -208,7 +208,7 @@ Program {
 											}
 										}
 									}
-									RegExpGroupCapture {
+									JSRegExpGroupCapture {
 										name: "month"
 										loc: Object {
 											filename: "input.js"
@@ -223,7 +223,7 @@ Program {
 												line: 1
 											}
 										}
-										expression: RegExpSubExpression {
+										expression: JSRegExpSubExpression {
 											loc: Object {
 												filename: "input.js"
 												end: Object {
@@ -238,7 +238,7 @@ Program {
 												}
 											}
 											body: Array [
-												RegExpQuantified {
+												JSRegExpQuantified {
 													lazy: false
 													max: 2
 													min: 2
@@ -255,7 +255,7 @@ Program {
 															line: 1
 														}
 													}
-													target: RegExpDigitCharacter {
+													target: JSRegExpDigitCharacter {
 														loc: Object {
 															filename: "input.js"
 															end: Object {
@@ -274,7 +274,7 @@ Program {
 											]
 										}
 									}
-									RegExpCharacter {
+									JSRegExpCharacter {
 										value: "-"
 										loc: Object {
 											filename: "input.js"
@@ -290,7 +290,7 @@ Program {
 											}
 										}
 									}
-									RegExpGroupCapture {
+									JSRegExpGroupCapture {
 										name: "day"
 										loc: Object {
 											filename: "input.js"
@@ -305,7 +305,7 @@ Program {
 												line: 1
 											}
 										}
-										expression: RegExpSubExpression {
+										expression: JSRegExpSubExpression {
 											loc: Object {
 												filename: "input.js"
 												end: Object {
@@ -320,7 +320,7 @@ Program {
 												}
 											}
 											body: Array [
-												RegExpQuantified {
+												JSRegExpQuantified {
 													lazy: false
 													max: 2
 													min: 2
@@ -337,7 +337,7 @@ Program {
 															line: 1
 														}
 													}
-													target: RegExpDigitCharacter {
+													target: JSRegExpDigitCharacter {
 														loc: Object {
 															filename: "input.js"
 															end: Object {

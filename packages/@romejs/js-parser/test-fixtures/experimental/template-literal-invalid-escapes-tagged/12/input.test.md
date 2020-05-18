@@ -5,7 +5,7 @@
 ## `experimental > template-literal-invalid-escapes-tagged > 12`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: TaggedTemplateExpression {
+			expression: JSTaggedTemplateExpression {
 				typeArguments: undefined
 				loc: Object {
 					filename: "input.js"
@@ -59,7 +59,7 @@ Program {
 						line: 1
 					}
 				}
-				tag: ReferenceIdentifier {
+				tag: JSReferenceIdentifier {
 					name: "sampleTag"
 					loc: Object {
 						filename: "input.js"
@@ -76,7 +76,7 @@ Program {
 						}
 					}
 				}
-				quasi: TemplateLiteral {
+				quasi: JSTemplateLiteral {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -91,7 +91,7 @@ Program {
 						}
 					}
 					expressions: Array [
-						NumericLiteral {
+						JSNumericLiteral {
 							value: 0
 							format: undefined
 							loc: Object {
@@ -108,7 +108,7 @@ Program {
 								}
 							}
 						}
-						NumericLiteral {
+						JSNumericLiteral {
 							value: 1
 							format: undefined
 							loc: Object {
@@ -127,7 +127,7 @@ Program {
 						}
 					]
 					quasis: Array [
-						TemplateElement {
+						JSTemplateElement {
 							cooked: "left"
 							raw: "left"
 							tail: false
@@ -145,7 +145,7 @@ Program {
 								}
 							}
 						}
-						TemplateElement {
+						JSTemplateElement {
 							cooked: "\\xg"
 							raw: "\\xg"
 							tail: false
@@ -163,7 +163,7 @@ Program {
 								}
 							}
 						}
-						TemplateElement {
+						JSTemplateElement {
 							cooked: "right"
 							raw: "right"
 							tail: true

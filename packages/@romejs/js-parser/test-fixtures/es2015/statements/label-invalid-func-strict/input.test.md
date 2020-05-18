@@ -5,7 +5,7 @@
 ## `es2015 > statements > label-invalid-func-strict`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,8 +54,8 @@ Program {
 		}
 	]
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "foo"
 				loc: Object {
 					filename: "input.js"
@@ -85,7 +85,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -108,7 +108,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -123,7 +123,7 @@ Program {
 					}
 				}
 				directives: Array [
-					Directive {
+					JSDirective {
 						value: "use strict"
 						loc: Object {
 							filename: "input.js"
@@ -141,7 +141,7 @@ Program {
 					}
 				]
 				body: Array [
-					LabeledStatement {
+					JSLabeledStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -155,7 +155,7 @@ Program {
 								line: 1
 							}
 						}
-						label: Identifier {
+						label: JSIdentifier {
 							name: "bar"
 							loc: Object {
 								filename: "input.js"
@@ -172,8 +172,8 @@ Program {
 								}
 							}
 						}
-						body: FunctionDeclaration {
-							id: BindingIdentifier {
+						body: JSFunctionDeclaration {
+							id: JSBindingIdentifier {
 								name: "baz"
 								loc: Object {
 									filename: "input.js"
@@ -203,7 +203,7 @@ Program {
 									line: 1
 								}
 							}
-							body: BlockStatement {
+							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
 								loc: Object {
@@ -220,7 +220,7 @@ Program {
 									}
 								}
 							}
-							head: FunctionHead {
+							head: JSFunctionHead {
 								async: false
 								generator: false
 								hasHoistedVars: false

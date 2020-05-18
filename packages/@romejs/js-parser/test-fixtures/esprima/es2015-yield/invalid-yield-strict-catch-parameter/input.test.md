@@ -5,7 +5,7 @@
 ## `esprima > es2015-yield > invalid-yield-strict-catch-parameter`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	filename: "input.js"
@@ -28,7 +28,7 @@ Program {
 		}
 	}
 	directives: Array [
-		Directive {
+		JSDirective {
 			value: "use strict"
 			loc: Object {
 				filename: "input.js"
@@ -71,7 +71,7 @@ Program {
 		}
 	]
 	body: Array [
-		TryStatement {
+		JSTryStatement {
 			finalizer: undefined
 			loc: Object {
 				filename: "input.js"
@@ -86,7 +86,7 @@ Program {
 					line: 1
 				}
 			}
-			block: BlockStatement {
+			block: JSBlockStatement {
 				body: Array []
 				directives: Array []
 				loc: Object {
@@ -103,7 +103,7 @@ Program {
 					}
 				}
 			}
-			handler: CatchClause {
+			handler: JSCatchClause {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -117,7 +117,7 @@ Program {
 						line: 1
 					}
 				}
-				body: BlockStatement {
+				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
 					loc: Object {
@@ -134,7 +134,7 @@ Program {
 						}
 					}
 				}
-				param: BindingIdentifier {
+				param: JSBindingIdentifier {
 					name: "yield"
 					loc: Object {
 						filename: "input.js"

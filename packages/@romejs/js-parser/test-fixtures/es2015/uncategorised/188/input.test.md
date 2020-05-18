@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 188`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.js"
@@ -60,8 +60,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingArrayPattern {
+					JSVariableDeclarator {
+						id: JSBindingArrayPattern {
 							elements: Array []
 							loc: Object {
 								filename: "input.js"
@@ -76,7 +76,7 @@ Program {
 									line: 1
 								}
 							}
-							rest: BindingIdentifier {
+							rest: JSBindingIdentifier {
 								name: "a"
 								loc: Object {
 									filename: "input.js"
@@ -92,7 +92,7 @@ Program {
 										line: 1
 									}
 								}
-								meta: PatternMeta {
+								meta: JSPatternMeta {
 									optional: undefined
 									typeAnnotation: undefined
 									loc: Object {
@@ -124,7 +124,7 @@ Program {
 								line: 1
 							}
 						}
-						init: ReferenceIdentifier {
+						init: JSReferenceIdentifier {
 							name: "b"
 							loc: Object {
 								filename: "input.js"

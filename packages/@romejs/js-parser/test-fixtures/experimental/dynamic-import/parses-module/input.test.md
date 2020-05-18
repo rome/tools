@@ -5,7 +5,7 @@
 ## `experimental > dynamic-import > parses-module`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ImportCall {
+			expression: JSImportCall {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -58,7 +58,7 @@ Program {
 						line: 1
 					}
 				}
-				argument: StringLiteral {
+				argument: JSStringLiteral {
 					value: "test.js"
 					loc: Object {
 						filename: "input.js"

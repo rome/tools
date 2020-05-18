@@ -5,7 +5,7 @@
 ## `comments > basic > comment-within-condition`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentBlock {
+		JSCommentBlock {
 			id: "0"
 			value: " foo "
 			loc: Object {
@@ -46,7 +46,7 @@ Program {
 				}
 			}
 		}
-		CommentBlock {
+		JSCommentBlock {
 			id: "1"
 			value: " bar "
 			loc: Object {
@@ -65,7 +65,7 @@ Program {
 		}
 	]
 	body: Array [
-		IfStatement {
+		JSIfStatement {
 			alternate: undefined
 			leadingComments: Array ["0"]
 			loc: Object {
@@ -81,7 +81,7 @@ Program {
 					line: 2
 				}
 			}
-			consequent: BlockStatement {
+			consequent: JSBlockStatement {
 				body: Array []
 				directives: Array []
 				loc: Object {
@@ -98,7 +98,7 @@ Program {
 					}
 				}
 			}
-			test: ReferenceIdentifier {
+			test: JSReferenceIdentifier {
 				name: "a"
 				leadingComments: Array ["1"]
 				loc: Object {

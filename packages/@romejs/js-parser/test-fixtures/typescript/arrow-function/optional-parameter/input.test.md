@@ -5,7 +5,7 @@
 ## `typescript > arrow-function > optional-parameter`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ArrowFunctionExpression {
+			expression: JSArrowFunctionExpression {
 				loc: Object {
 					filename: "input.ts"
 					end: Object {
@@ -58,7 +58,7 @@ Program {
 						line: 1
 					}
 				}
-				body: ReferenceIdentifier {
+				body: JSReferenceIdentifier {
 					name: "x"
 					loc: Object {
 						filename: "input.ts"
@@ -75,7 +75,7 @@ Program {
 						}
 					}
 				}
-				head: FunctionHead {
+				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
 					rest: undefined
@@ -109,7 +109,7 @@ Program {
 						}
 					}
 					params: Array [
-						BindingIdentifier {
+						JSBindingIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.ts"
@@ -124,7 +124,7 @@ Program {
 									line: 1
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								optional: true
 								loc: Object {
 									filename: "input.ts"
@@ -160,7 +160,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -174,7 +174,7 @@ Program {
 					line: 2
 				}
 			}
-			expression: CallExpression {
+			expression: JSCallExpression {
 				arguments: Array []
 				loc: Object {
 					filename: "input.ts"
@@ -189,7 +189,7 @@ Program {
 						line: 2
 					}
 				}
-				callee: ArrowFunctionExpression {
+				callee: JSArrowFunctionExpression {
 					loc: Object {
 						filename: "input.ts"
 						end: Object {
@@ -203,7 +203,7 @@ Program {
 							line: 2
 						}
 					}
-					body: BinaryExpression {
+					body: JSBinaryExpression {
 						operator: "+"
 						loc: Object {
 							filename: "input.ts"
@@ -218,7 +218,7 @@ Program {
 								line: 2
 							}
 						}
-						left: ReferenceIdentifier {
+						left: JSReferenceIdentifier {
 							name: "k"
 							loc: Object {
 								filename: "input.ts"
@@ -235,7 +235,7 @@ Program {
 								}
 							}
 						}
-						right: NumericLiteral {
+						right: JSNumericLiteral {
 							value: 1
 							format: undefined
 							loc: Object {
@@ -253,7 +253,7 @@ Program {
 							}
 						}
 					}
-					head: FunctionHead {
+					head: JSFunctionHead {
 						async: false
 						hasHoistedVars: false
 						rest: undefined
@@ -273,7 +273,7 @@ Program {
 							}
 						}
 						params: Array [
-							BindingIdentifier {
+							JSBindingIdentifier {
 								name: "k"
 								loc: Object {
 									filename: "input.ts"
@@ -288,7 +288,7 @@ Program {
 										line: 2
 									}
 								}
-								meta: PatternMeta {
+								meta: JSPatternMeta {
 									optional: true
 									typeAnnotation: undefined
 									loc: Object {

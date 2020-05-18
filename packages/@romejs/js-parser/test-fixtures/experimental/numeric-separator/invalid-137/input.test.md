@@ -5,7 +5,7 @@
 ## `experimental > numeric-separator > invalid-137`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		BlockStatement {
+		JSBlockStatement {
 			directives: Array []
 			loc: Object {
 				filename: "input.js"
@@ -70,7 +70,7 @@ Program {
 				}
 			}
 			body: Array [
-				ExpressionStatement {
+				JSExpressionStatement {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -84,7 +84,7 @@ Program {
 							line: 1
 						}
 					}
-					expression: NumericLiteral {
+					expression: JSNumericLiteral {
 						value: 17
 						format: "hex"
 						loc: Object {

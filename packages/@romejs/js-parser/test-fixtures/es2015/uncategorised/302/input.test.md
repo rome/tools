@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 302`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: SequenceExpression {
+			expression: JSSequenceExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -59,7 +59,7 @@ Program {
 					}
 				}
 				expressions: Array [
-					TemplateLiteral {
+					JSTemplateLiteral {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -74,7 +74,7 @@ Program {
 							}
 						}
 						expressions: Array [
-							ReferenceIdentifier {
+							JSReferenceIdentifier {
 								name: "x"
 								loc: Object {
 									filename: "input.js"
@@ -93,7 +93,7 @@ Program {
 							}
 						]
 						quasis: Array [
-							TemplateElement {
+							JSTemplateElement {
 								cooked: "{"
 								raw: "{"
 								tail: false
@@ -111,7 +111,7 @@ Program {
 									}
 								}
 							}
-							TemplateElement {
+							JSTemplateElement {
 								cooked: "}"
 								raw: "}"
 								tail: true
@@ -131,7 +131,7 @@ Program {
 							}
 						]
 					}
-					TemplateLiteral {
+					JSTemplateLiteral {
 						expressions: Array []
 						loc: Object {
 							filename: "input.js"
@@ -147,7 +147,7 @@ Program {
 							}
 						}
 						quasis: Array [
-							TemplateElement {
+							JSTemplateElement {
 								cooked: "}"
 								raw: "}"
 								tail: true

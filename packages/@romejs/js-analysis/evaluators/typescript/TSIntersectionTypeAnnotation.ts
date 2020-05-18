@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	TSIntersectionTypeAnnotation,
 	tsIntersectionTypeAnnotation,
-} from "@romejs/js-ast";
+} from "@romejs/ast";
 import IntersectionT from "../../types/IntersectionT";
 
 export default function TSIntersectionTypeAnnotation(

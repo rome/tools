@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > await-inside-parameters`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,8 +54,8 @@ Program {
 		}
 	]
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "fn"
 				loc: Object {
 					filename: "input.js"
@@ -85,7 +85,7 @@ Program {
 					line: 1
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
 				loc: Object {
@@ -102,7 +102,7 @@ Program {
 					}
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: true
 				generator: false
 				hasHoistedVars: false
@@ -124,7 +124,7 @@ Program {
 					}
 				}
 				params: Array [
-					BindingAssignmentPattern {
+					JSBindingAssignmentPattern {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -138,7 +138,7 @@ Program {
 								line: 1
 							}
 						}
-						right: AwaitExpression {
+						right: JSAwaitExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -152,7 +152,7 @@ Program {
 									line: 1
 								}
 							}
-							argument: NumericLiteral {
+							argument: JSNumericLiteral {
 								value: 2
 								format: undefined
 								loc: Object {
@@ -170,7 +170,7 @@ Program {
 								}
 							}
 						}
-						left: BindingIdentifier {
+						left: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.js"
@@ -186,7 +186,7 @@ Program {
 									line: 1
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
 								loc: Object {

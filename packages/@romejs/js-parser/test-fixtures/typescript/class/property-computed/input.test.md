@@ -5,7 +5,7 @@
 ## `typescript > class > property-computed`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		ClassDeclaration {
-			id: BindingIdentifier {
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
 				name: "C"
 				loc: Object {
 					filename: "input.ts"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			meta: ClassHead {
+			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
@@ -80,9 +80,9 @@ Program {
 					}
 				}
 				body: Array [
-					ClassProperty {
-						key: ComputedPropertyKey {
-							value: MemberExpression {
+					JSClassProperty {
+						key: JSComputedPropertyKey {
+							value: JSMemberExpression {
 								loc: Object {
 									filename: "input.ts"
 									end: Object {
@@ -96,7 +96,7 @@ Program {
 										line: 2
 									}
 								}
-								object: ReferenceIdentifier {
+								object: JSReferenceIdentifier {
 									name: "Symbol"
 									loc: Object {
 										filename: "input.ts"
@@ -113,8 +113,8 @@ Program {
 										}
 									}
 								}
-								property: StaticMemberProperty {
-									value: Identifier {
+								property: JSStaticMemberProperty {
+									value: JSIdentifier {
 										name: "iterator"
 										loc: Object {
 											filename: "input.ts"
@@ -191,7 +191,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -218,9 +218,9 @@ Program {
 							}
 						}
 					}
-					ClassProperty {
-						key: ComputedPropertyKey {
-							value: MemberExpression {
+					JSClassProperty {
+						key: JSComputedPropertyKey {
+							value: JSMemberExpression {
 								loc: Object {
 									filename: "input.ts"
 									end: Object {
@@ -234,7 +234,7 @@ Program {
 										line: 3
 									}
 								}
-								object: ReferenceIdentifier {
+								object: JSReferenceIdentifier {
 									name: "Symbol"
 									loc: Object {
 										filename: "input.ts"
@@ -251,8 +251,8 @@ Program {
 										}
 									}
 								}
-								property: StaticMemberProperty {
-									value: Identifier {
+								property: JSStaticMemberProperty {
+									value: JSIdentifier {
 										name: "iterator"
 										loc: Object {
 											filename: "input.ts"
@@ -329,7 +329,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: true

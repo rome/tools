@@ -6,17 +6,21 @@
  */
 
 import {
+	AnyJSStatement,
 	AnyNode,
-	AnyStatement,
-	BreakStatement,
-	ContinueStatement,
-	ReturnStatement,
-	ThrowStatement,
-} from "@romejs/js-ast";
+	JSBreakStatement,
+	JSContinueStatement,
+	JSReturnStatement,
+	JSThrowStatement,
+} from "@romejs/ast";
 
 type CompletionRecord = {
 	type: "COMPLETION";
-	node: ReturnStatement | ContinueStatement | BreakStatement | ThrowStatement;
+	node:
+		| JSReturnStatement
+		| JSContinueStatement
+		| JSBreakStatement
+		| JSThrowStatement;
 };
 
 type InvalidRecord = {
@@ -46,7 +50,7 @@ function getIfCompletionRecords(
 }
 
 function getLastCompletionRecordFromNodes(
-	nodes: Array<AnyStatement>,
+	nodes: Array<AnyJSStatement>,
 ): undefined | Records {
 	// Get the last node to produce records
 	for (let i = nodes.length - 1; i >= 0; i--) {
@@ -60,7 +64,7 @@ function getLastCompletionRecordFromNodes(
 }
 
 function _getCompletionRecords(node: AnyNode): undefined | Records {
-	if (node.type === "BlockStatement") {
+	if (node.type === "JSBlockStatement") {
 		const records = getLastCompletionRecordFromNodes(node.body);
 		if (records !== undefined) {
 			return records;
@@ -75,7 +79,7 @@ function _getCompletionRecords(node: AnyNode): undefined | Records {
 		];
 	}
 
-	if (node.type === "SwitchStatement") {
+	if (node.type === "JSSwitchStatement") {
 		for (const caseNode of node.cases) {
 			if (caseNode.test === undefined) {
 				const records = getLastCompletionRecordFromNodes(caseNode.consequent);
@@ -102,7 +106,7 @@ function _getCompletionRecords(node: AnyNode): undefined | Records {
 		];
 	}
 
-	if (node.type === "IfStatement") {
+	if (node.type === "JSIfStatement") {
 		return [
 			...getIfCompletionRecords(node.consequent, node, "consequent"),
 			...getIfCompletionRecords(node.alternate, node, "alternate"),
@@ -110,10 +114,10 @@ function _getCompletionRecords(node: AnyNode): undefined | Records {
 	}
 
 	if (
-		node.type === "ReturnStatement" ||
-		node.type === "ContinueStatement" ||
-		node.type === "BreakStatement" ||
-		node.type === "ThrowStatement"
+		node.type === "JSReturnStatement" ||
+		node.type === "JSContinueStatement" ||
+		node.type === "JSBreakStatement" ||
+		node.type === "JSThrowStatement"
 	) {
 		return [
 			{

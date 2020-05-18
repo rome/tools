@@ -89,7 +89,7 @@ export default {
 			}
 		}
 
-		// Check regular identifiers, variable identifiers have already been checked above
+		// Check regular jsIdentifiers, variable jsIdentifiers have already been checked above
 		if (isIdentifierish(node) && !isVariableIdentifier(node)) {
 			const {name} = node;
 			const camelName = toVariableCamelCase(name);

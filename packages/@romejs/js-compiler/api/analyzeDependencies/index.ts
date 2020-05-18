@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, ConstImportModuleKind} from "@romejs/js-ast";
+import {AnyNode, ConstImportModuleKind} from "@romejs/ast";
 import {SourceLocation} from "@romejs/parser-core";
 import {TransformRequest} from "../../types";
 import {

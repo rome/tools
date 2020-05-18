@@ -5,7 +5,7 @@
 ## `experimental > class-properties > new-target`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		ClassDeclaration {
-			id: BindingIdentifier {
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
 				name: "X"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			meta: ClassHead {
+			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
@@ -80,9 +80,9 @@ Program {
 					}
 				}
 				body: Array [
-					ClassProperty {
-						key: StaticPropertyKey {
-							value: Identifier {
+					JSClassProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "a"
 								loc: Object {
 									filename: "input.js"
@@ -113,7 +113,7 @@ Program {
 								}
 							}
 						}
-						value: MetaProperty {
+						value: JSMetaProperty {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -127,7 +127,7 @@ Program {
 									line: 2
 								}
 							}
-							meta: Identifier {
+							meta: JSIdentifier {
 								name: "new"
 								loc: Object {
 									filename: "input.js"
@@ -144,7 +144,7 @@ Program {
 									}
 								}
 							}
-							property: Identifier {
+							property: JSIdentifier {
 								name: "target"
 								loc: Object {
 									filename: "input.js"
@@ -177,7 +177,7 @@ Program {
 								line: 2
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -204,9 +204,9 @@ Program {
 							}
 						}
 					}
-					ClassProperty {
-						key: StaticPropertyKey {
-							value: Identifier {
+					JSClassProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "b"
 								loc: Object {
 									filename: "input.js"
@@ -237,7 +237,7 @@ Program {
 								}
 							}
 						}
-						value: AssignmentExpression {
+						value: JSAssignmentExpression {
 							operator: "="
 							loc: Object {
 								filename: "input.js"
@@ -252,7 +252,7 @@ Program {
 									line: 3
 								}
 							}
-							left: AssignmentIdentifier {
+							left: JSAssignmentIdentifier {
 								name: "foo"
 								loc: Object {
 									filename: "input.js"
@@ -269,7 +269,7 @@ Program {
 									}
 								}
 							}
-							right: BinaryExpression {
+							right: JSBinaryExpression {
 								operator: "+"
 								loc: Object {
 									filename: "input.js"
@@ -284,7 +284,7 @@ Program {
 										line: 3
 									}
 								}
-								left: NumericLiteral {
+								left: JSNumericLiteral {
 									value: 1
 									format: undefined
 									loc: Object {
@@ -301,7 +301,7 @@ Program {
 										}
 									}
 								}
-								right: CallExpression {
+								right: JSCallExpression {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -315,7 +315,7 @@ Program {
 											line: 3
 										}
 									}
-									callee: ReferenceIdentifier {
+									callee: JSReferenceIdentifier {
 										name: "bar"
 										loc: Object {
 											filename: "input.js"
@@ -333,7 +333,7 @@ Program {
 										}
 									}
 									arguments: Array [
-										MetaProperty {
+										JSMetaProperty {
 											loc: Object {
 												filename: "input.js"
 												end: Object {
@@ -347,7 +347,7 @@ Program {
 													line: 3
 												}
 											}
-											meta: Identifier {
+											meta: JSIdentifier {
 												name: "new"
 												loc: Object {
 													filename: "input.js"
@@ -364,7 +364,7 @@ Program {
 													}
 												}
 											}
-											property: Identifier {
+											property: JSIdentifier {
 												name: "target"
 												loc: Object {
 													filename: "input.js"
@@ -401,7 +401,7 @@ Program {
 								line: 3
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -428,9 +428,9 @@ Program {
 							}
 						}
 					}
-					ClassProperty {
-						key: StaticPropertyKey {
-							value: Identifier {
+					JSClassProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "c"
 								loc: Object {
 									filename: "input.js"
@@ -461,7 +461,7 @@ Program {
 								}
 							}
 						}
-						value: ArrowFunctionExpression {
+						value: JSArrowFunctionExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -475,7 +475,7 @@ Program {
 									line: 4
 								}
 							}
-							head: FunctionHead {
+							head: JSFunctionHead {
 								async: false
 								hasHoistedVars: false
 								params: Array []
@@ -496,7 +496,7 @@ Program {
 									}
 								}
 							}
-							body: MetaProperty {
+							body: JSMetaProperty {
 								loc: Object {
 									filename: "input.js"
 									end: Object {
@@ -510,7 +510,7 @@ Program {
 										line: 4
 									}
 								}
-								meta: Identifier {
+								meta: JSIdentifier {
 									name: "new"
 									loc: Object {
 										filename: "input.js"
@@ -527,7 +527,7 @@ Program {
 										}
 									}
 								}
-								property: Identifier {
+								property: JSIdentifier {
 									name: "target"
 									loc: Object {
 										filename: "input.js"
@@ -561,7 +561,7 @@ Program {
 								line: 4
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -588,9 +588,9 @@ Program {
 							}
 						}
 					}
-					ClassProperty {
-						key: StaticPropertyKey {
-							value: Identifier {
+					JSClassProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "d"
 								loc: Object {
 									filename: "input.js"
@@ -621,7 +621,7 @@ Program {
 								}
 							}
 						}
-						value: ArrowFunctionExpression {
+						value: JSArrowFunctionExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -635,7 +635,7 @@ Program {
 									line: 5
 								}
 							}
-							body: BlockStatement {
+							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
 								loc: Object {
@@ -652,7 +652,7 @@ Program {
 									}
 								}
 							}
-							head: FunctionHead {
+							head: JSFunctionHead {
 								async: false
 								hasHoistedVars: false
 								rest: undefined
@@ -672,7 +672,7 @@ Program {
 									}
 								}
 								params: Array [
-									BindingAssignmentPattern {
+									JSBindingAssignmentPattern {
 										operator: "="
 										loc: Object {
 											filename: "input.js"
@@ -687,7 +687,7 @@ Program {
 												line: 5
 											}
 										}
-										left: BindingIdentifier {
+										left: JSBindingIdentifier {
 											name: "foo"
 											loc: Object {
 												filename: "input.js"
@@ -704,7 +704,7 @@ Program {
 												}
 											}
 										}
-										right: MetaProperty {
+										right: JSMetaProperty {
 											loc: Object {
 												filename: "input.js"
 												end: Object {
@@ -718,7 +718,7 @@ Program {
 													line: 5
 												}
 											}
-											meta: Identifier {
+											meta: JSIdentifier {
 												name: "new"
 												loc: Object {
 													filename: "input.js"
@@ -735,7 +735,7 @@ Program {
 													}
 												}
 											}
-											property: Identifier {
+											property: JSIdentifier {
 												name: "target"
 												loc: Object {
 													filename: "input.js"
@@ -772,7 +772,7 @@ Program {
 								line: 5
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -799,9 +799,9 @@ Program {
 							}
 						}
 					}
-					ClassProperty {
-						key: StaticPropertyKey {
-							value: Identifier {
+					JSClassProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "e"
 								loc: Object {
 									filename: "input.js"
@@ -832,7 +832,7 @@ Program {
 								}
 							}
 						}
-						value: MetaProperty {
+						value: JSMetaProperty {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -846,7 +846,7 @@ Program {
 									line: 6
 								}
 							}
-							meta: Identifier {
+							meta: JSIdentifier {
 								name: "new"
 								loc: Object {
 									filename: "input.js"
@@ -863,7 +863,7 @@ Program {
 									}
 								}
 							}
-							property: Identifier {
+							property: JSIdentifier {
 								name: "target"
 								loc: Object {
 									filename: "input.js"
@@ -896,7 +896,7 @@ Program {
 								line: 6
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -923,9 +923,9 @@ Program {
 							}
 						}
 					}
-					ClassProperty {
-						key: StaticPropertyKey {
-							value: Identifier {
+					JSClassProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "f"
 								loc: Object {
 									filename: "input.js"
@@ -956,7 +956,7 @@ Program {
 								}
 							}
 						}
-						value: AssignmentExpression {
+						value: JSAssignmentExpression {
 							operator: "="
 							loc: Object {
 								filename: "input.js"
@@ -971,7 +971,7 @@ Program {
 									line: 7
 								}
 							}
-							left: AssignmentIdentifier {
+							left: JSAssignmentIdentifier {
 								name: "foo"
 								loc: Object {
 									filename: "input.js"
@@ -988,7 +988,7 @@ Program {
 									}
 								}
 							}
-							right: BinaryExpression {
+							right: JSBinaryExpression {
 								operator: "+"
 								loc: Object {
 									filename: "input.js"
@@ -1003,7 +1003,7 @@ Program {
 										line: 7
 									}
 								}
-								left: NumericLiteral {
+								left: JSNumericLiteral {
 									value: 1
 									format: undefined
 									loc: Object {
@@ -1020,7 +1020,7 @@ Program {
 										}
 									}
 								}
-								right: CallExpression {
+								right: JSCallExpression {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -1034,7 +1034,7 @@ Program {
 											line: 7
 										}
 									}
-									callee: ReferenceIdentifier {
+									callee: JSReferenceIdentifier {
 										name: "bar"
 										loc: Object {
 											filename: "input.js"
@@ -1052,7 +1052,7 @@ Program {
 										}
 									}
 									arguments: Array [
-										MetaProperty {
+										JSMetaProperty {
 											loc: Object {
 												filename: "input.js"
 												end: Object {
@@ -1066,7 +1066,7 @@ Program {
 													line: 7
 												}
 											}
-											meta: Identifier {
+											meta: JSIdentifier {
 												name: "new"
 												loc: Object {
 													filename: "input.js"
@@ -1083,7 +1083,7 @@ Program {
 													}
 												}
 											}
-											property: Identifier {
+											property: JSIdentifier {
 												name: "target"
 												loc: Object {
 													filename: "input.js"
@@ -1120,7 +1120,7 @@ Program {
 								line: 7
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -1147,9 +1147,9 @@ Program {
 							}
 						}
 					}
-					ClassProperty {
-						key: StaticPropertyKey {
-							value: Identifier {
+					JSClassProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "g"
 								loc: Object {
 									filename: "input.js"
@@ -1180,7 +1180,7 @@ Program {
 								}
 							}
 						}
-						value: ArrowFunctionExpression {
+						value: JSArrowFunctionExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -1194,7 +1194,7 @@ Program {
 									line: 8
 								}
 							}
-							head: FunctionHead {
+							head: JSFunctionHead {
 								async: false
 								hasHoistedVars: false
 								params: Array []
@@ -1215,7 +1215,7 @@ Program {
 									}
 								}
 							}
-							body: MetaProperty {
+							body: JSMetaProperty {
 								loc: Object {
 									filename: "input.js"
 									end: Object {
@@ -1229,7 +1229,7 @@ Program {
 										line: 8
 									}
 								}
-								meta: Identifier {
+								meta: JSIdentifier {
 									name: "new"
 									loc: Object {
 										filename: "input.js"
@@ -1246,7 +1246,7 @@ Program {
 										}
 									}
 								}
-								property: Identifier {
+								property: JSIdentifier {
 									name: "target"
 									loc: Object {
 										filename: "input.js"
@@ -1280,7 +1280,7 @@ Program {
 								line: 8
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -1307,9 +1307,9 @@ Program {
 							}
 						}
 					}
-					ClassProperty {
-						key: StaticPropertyKey {
-							value: Identifier {
+					JSClassProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "h"
 								loc: Object {
 									filename: "input.js"
@@ -1340,7 +1340,7 @@ Program {
 								}
 							}
 						}
-						value: ArrowFunctionExpression {
+						value: JSArrowFunctionExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -1354,7 +1354,7 @@ Program {
 									line: 9
 								}
 							}
-							body: BlockStatement {
+							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
 								loc: Object {
@@ -1371,7 +1371,7 @@ Program {
 									}
 								}
 							}
-							head: FunctionHead {
+							head: JSFunctionHead {
 								async: false
 								hasHoistedVars: false
 								rest: undefined
@@ -1391,7 +1391,7 @@ Program {
 									}
 								}
 								params: Array [
-									BindingAssignmentPattern {
+									JSBindingAssignmentPattern {
 										operator: "="
 										loc: Object {
 											filename: "input.js"
@@ -1406,7 +1406,7 @@ Program {
 												line: 9
 											}
 										}
-										left: BindingIdentifier {
+										left: JSBindingIdentifier {
 											name: "foo"
 											loc: Object {
 												filename: "input.js"
@@ -1423,7 +1423,7 @@ Program {
 												}
 											}
 										}
-										right: MetaProperty {
+										right: JSMetaProperty {
 											loc: Object {
 												filename: "input.js"
 												end: Object {
@@ -1437,7 +1437,7 @@ Program {
 													line: 9
 												}
 											}
-											meta: Identifier {
+											meta: JSIdentifier {
 												name: "new"
 												loc: Object {
 													filename: "input.js"
@@ -1454,7 +1454,7 @@ Program {
 													}
 												}
 											}
-											property: Identifier {
+											property: JSIdentifier {
 												name: "target"
 												loc: Object {
 													filename: "input.js"
@@ -1491,7 +1491,7 @@ Program {
 								line: 9
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false

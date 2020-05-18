@@ -5,7 +5,7 @@
 ## `esprima > es2015-export-declaration > export-from-batch`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExportAllDeclaration {
+		JSExportAllDeclaration {
 			exportKind: undefined
 			loc: Object {
 				filename: "input.js"
@@ -45,7 +45,7 @@ Program {
 					line: 1
 				}
 			}
-			source: StringLiteral {
+			source: JSStringLiteral {
 				value: "foo"
 				loc: Object {
 					filename: "input.js"

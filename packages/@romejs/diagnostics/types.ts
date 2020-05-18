@@ -7,7 +7,7 @@
 
 import {Position, SourceLocation} from "@romejs/parser-core";
 import {Diffs} from "@romejs/string-diff";
-import {ConstSourceType} from "@romejs/js-ast";
+import {ConstSourceType} from "@romejs/ast";
 import {Number0, Number1} from "@romejs/ob1";
 import {JSONPropertyValue} from "@romejs/codec-json";
 import {DiagnosticCategory} from "./categories";

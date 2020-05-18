@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > await-identifier-inside-parameters-of-nested-function`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "fn"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: true
 				generator: false
 				hasHoistedVars: false
@@ -84,7 +84,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -100,8 +100,8 @@ Program {
 					}
 				}
 				body: Array [
-					FunctionDeclaration {
-						id: BindingIdentifier {
+					JSFunctionDeclaration {
+						id: JSBindingIdentifier {
 							name: "g"
 							loc: Object {
 								filename: "input.js"
@@ -131,7 +131,7 @@ Program {
 								line: 2
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
 							loc: Object {
@@ -148,7 +148,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -170,7 +170,7 @@ Program {
 								}
 							}
 							params: Array [
-								BindingAssignmentPattern {
+								JSBindingAssignmentPattern {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -184,7 +184,7 @@ Program {
 											line: 2
 										}
 									}
-									right: ReferenceIdentifier {
+									right: JSReferenceIdentifier {
 										name: "await"
 										loc: Object {
 											filename: "input.js"
@@ -201,7 +201,7 @@ Program {
 											}
 										}
 									}
-									left: BindingIdentifier {
+									left: JSBindingIdentifier {
 										name: "x"
 										loc: Object {
 											filename: "input.js"
@@ -217,7 +217,7 @@ Program {
 												line: 2
 											}
 										}
-										meta: PatternMeta {
+										meta: JSPatternMeta {
 											optional: undefined
 											typeAnnotation: undefined
 											loc: Object {

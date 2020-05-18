@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 393`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: AssignmentExpression {
+			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
 					filename: "input.js"
@@ -83,7 +83,7 @@ Program {
 						line: 1
 					}
 				}
-				right: ObjectExpression {
+				right: JSObjectExpression {
 					properties: Array []
 					loc: Object {
 						filename: "input.js"
@@ -99,7 +99,7 @@ Program {
 						}
 					}
 				}
-				left: AssignmentObjectPattern {
+				left: JSAssignmentObjectPattern {
 					rest: undefined
 					loc: Object {
 						filename: "input.js"
@@ -115,9 +115,9 @@ Program {
 						}
 					}
 					properties: Array [
-						AssignmentObjectPatternProperty {
-							key: StaticPropertyKey {
-								value: Identifier {
+						JSAssignmentObjectPatternProperty {
+							key: JSStaticPropertyKey {
+								value: JSIdentifier {
 									name: "set"
 									loc: Object {
 										filename: "input.js"
@@ -148,7 +148,7 @@ Program {
 									}
 								}
 							}
-							value: AssignmentIdentifier {
+							value: JSAssignmentIdentifier {
 								name: "set"
 								loc: Object {
 									filename: "input.js"
@@ -183,7 +183,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -197,7 +197,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ReferenceIdentifier {
+			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
 					filename: "input.js"
@@ -214,7 +214,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -228,7 +228,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ReferenceIdentifier {
+			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
 					filename: "input.js"
@@ -245,7 +245,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -259,7 +259,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ReferenceIdentifier {
+			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
 					filename: "input.js"
@@ -276,7 +276,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -290,7 +290,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ReferenceIdentifier {
+			expression: JSReferenceIdentifier {
 				name: "set"
 				loc: Object {
 					filename: "input.js"

@@ -5,7 +5,7 @@
 ## `jsx > basic > 4`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -33,7 +33,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -112,7 +112,7 @@ Program {
 									line: 1
 								}
 							}
-							expression: StringLiteral {
+							expression: JSStringLiteral {
 								value: " "
 								loc: Object {
 									filename: "input.js"
@@ -160,7 +160,7 @@ Program {
 								}
 							}
 						}
-						value: StringLiteral {
+						value: JSStringLiteral {
 							value: " "
 							loc: Object {
 								filename: "input.js"
@@ -207,7 +207,7 @@ Program {
 								}
 							}
 						}
-						value: StringLiteral {
+						value: JSStringLiteral {
 							value: "&"
 							loc: Object {
 								filename: "input.js"
@@ -254,7 +254,7 @@ Program {
 								}
 							}
 						}
-						value: StringLiteral {
+						value: JSStringLiteral {
 							value: "&ampr;"
 							loc: Object {
 								filename: "input.js"

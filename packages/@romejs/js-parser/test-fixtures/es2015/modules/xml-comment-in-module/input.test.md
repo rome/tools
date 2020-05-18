@@ -5,7 +5,7 @@
 ## `es2015 > modules > xml-comment-in-module`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: BinaryExpression {
+			expression: JSBinaryExpression {
 				operator: "<"
 				loc: Object {
 					filename: "input.js"
@@ -59,7 +59,7 @@ Program {
 						line: 1
 					}
 				}
-				left: ReferenceIdentifier {
+				left: JSReferenceIdentifier {
 					name: "foo"
 					loc: Object {
 						filename: "input.js"
@@ -76,7 +76,7 @@ Program {
 						}
 					}
 				}
-				right: UnaryExpression {
+				right: JSUnaryExpression {
 					operator: "!"
 					prefix: true
 					loc: Object {
@@ -92,7 +92,7 @@ Program {
 							line: 1
 						}
 					}
-					argument: UpdateExpression {
+					argument: JSUpdateExpression {
 						operator: "--"
 						prefix: true
 						loc: Object {
@@ -108,7 +108,7 @@ Program {
 								line: 1
 							}
 						}
-						argument: ReferenceIdentifier {
+						argument: JSReferenceIdentifier {
 							name: "bar"
 							loc: Object {
 								filename: "input.js"

@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, TSDeclareMethod, tsDeclareMethod} from "@romejs/js-ast";
+import {AnyNode, TSDeclareMethod, tsDeclareMethod} from "@romejs/ast";
 
 export default function TSDeclareMethod(node: AnyNode, scope: Scope) {
 	node = tsDeclareMethod.assert(node);

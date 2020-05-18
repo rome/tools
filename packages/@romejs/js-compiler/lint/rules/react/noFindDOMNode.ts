@@ -6,20 +6,20 @@
 */
 
 import {descriptions} from "@romejs/diagnostics";
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 import {Path} from "@romejs/js-compiler";
 import {doesNodeMatchPattern} from "@romejs/js-ast-utils";
 
 function hasFindMemberProperty(node: AnyNode) {
 	return (
-		node.type === "StaticMemberProperty" &&
+		node.type === "JSStaticMemberProperty" &&
 		doesNodeMatchPattern(node.value, "findDOMNode")
 	);
 }
 
 function hasFindCallExpression(node: AnyNode) {
 	return (
-		node.type === "CallExpression" &&
+		node.type === "JSCallExpression" &&
 		doesNodeMatchPattern(node.callee, "findDOMNode")
 	);
 }

@@ -5,7 +5,7 @@
 ## `typescript > arrow-function > generic-tsx`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -32,7 +32,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentLine {
+		JSCommentLine {
 			id: "0"
 			value: " Same as `generic`. Verify that JSX doesn't change things."
 			loc: Object {
@@ -51,7 +51,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			leadingComments: Array ["0"]
 			loc: Object {
 				filename: "input.ts"
@@ -66,7 +66,7 @@ Program {
 					line: 2
 				}
 			}
-			expression: ArrowFunctionExpression {
+			expression: JSArrowFunctionExpression {
 				loc: Object {
 					filename: "input.ts"
 					end: Object {
@@ -80,7 +80,7 @@ Program {
 						line: 2
 					}
 				}
-				body: ReferenceIdentifier {
+				body: JSReferenceIdentifier {
 					name: "a"
 					loc: Object {
 						filename: "input.ts"
@@ -134,7 +134,7 @@ Program {
 						}
 					]
 				}
-				head: FunctionHead {
+				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
 					rest: undefined
@@ -167,7 +167,7 @@ Program {
 								line: 2
 							}
 						}
-						typeName: ReferenceIdentifier {
+						typeName: JSReferenceIdentifier {
 							name: "T"
 							loc: Object {
 								filename: "input.ts"
@@ -186,7 +186,7 @@ Program {
 						}
 					}
 					params: Array [
-						BindingIdentifier {
+						JSBindingIdentifier {
 							name: "a"
 							loc: Object {
 								filename: "input.ts"
@@ -201,7 +201,7 @@ Program {
 									line: 2
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								optional: undefined
 								loc: Object {
 									filename: "input.ts"
@@ -231,7 +231,7 @@ Program {
 											line: 2
 										}
 									}
-									typeName: ReferenceIdentifier {
+									typeName: JSReferenceIdentifier {
 										name: "T"
 										loc: Object {
 											filename: "input.ts"

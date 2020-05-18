@@ -5,7 +5,7 @@
 ## `esprima > es2015-template-literals > tagged-nested-with-object-literal`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: TaggedTemplateExpression {
+			expression: JSTaggedTemplateExpression {
 				typeArguments: undefined
 				loc: Object {
 					filename: "input.js"
@@ -59,7 +59,7 @@ Program {
 						line: 1
 					}
 				}
-				tag: ReferenceIdentifier {
+				tag: JSReferenceIdentifier {
 					name: "raw"
 					loc: Object {
 						filename: "input.js"
@@ -76,7 +76,7 @@ Program {
 						}
 					}
 				}
-				quasi: TemplateLiteral {
+				quasi: JSTemplateLiteral {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -91,7 +91,7 @@ Program {
 						}
 					}
 					quasis: Array [
-						TemplateElement {
+						JSTemplateElement {
 							cooked: "token "
 							raw: "token "
 							tail: false
@@ -109,7 +109,7 @@ Program {
 								}
 							}
 						}
-						TemplateElement {
+						JSTemplateElement {
 							cooked: ""
 							raw: ""
 							tail: true
@@ -129,7 +129,7 @@ Program {
 						}
 					]
 					expressions: Array [
-						TemplateLiteral {
+						JSTemplateLiteral {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -144,7 +144,7 @@ Program {
 								}
 							}
 							quasis: Array [
-								TemplateElement {
+								JSTemplateElement {
 									cooked: "nested "
 									raw: "nested "
 									tail: false
@@ -162,7 +162,7 @@ Program {
 										}
 									}
 								}
-								TemplateElement {
+								JSTemplateElement {
 									cooked: " blah"
 									raw: " blah"
 									tail: true
@@ -182,7 +182,7 @@ Program {
 								}
 							]
 							expressions: Array [
-								BinaryExpression {
+								JSBinaryExpression {
 									operator: "+"
 									loc: Object {
 										filename: "input.js"
@@ -197,7 +197,7 @@ Program {
 											line: 1
 										}
 									}
-									right: ObjectExpression {
+									right: JSObjectExpression {
 										properties: Array []
 										loc: Object {
 											filename: "input.js"
@@ -213,7 +213,7 @@ Program {
 											}
 										}
 									}
-									left: TemplateLiteral {
+									left: JSTemplateLiteral {
 										expressions: Array []
 										loc: Object {
 											filename: "input.js"
@@ -229,7 +229,7 @@ Program {
 											}
 										}
 										quasis: Array [
-											TemplateElement {
+											JSTemplateElement {
 												cooked: "deeply"
 												raw: "deeply"
 												tail: true

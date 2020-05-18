@@ -8,7 +8,7 @@
 import {descriptions} from "@romejs/diagnostics";
 import {Scope} from "../../scopes";
 import E, {ErrorDefinition} from "./E";
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 
 export default class UnknownImportE extends E {
 	constructor(

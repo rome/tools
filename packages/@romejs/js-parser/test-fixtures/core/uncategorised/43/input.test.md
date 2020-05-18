@@ -5,7 +5,7 @@
 ## `core > uncategorised > 43`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: AssignmentExpression {
+			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
 					filename: "input.js"
@@ -59,7 +59,7 @@ Program {
 						line: 1
 					}
 				}
-				left: AssignmentIdentifier {
+				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: Object {
 						filename: "input.js"
@@ -76,7 +76,7 @@ Program {
 						}
 					}
 				}
-				right: ObjectExpression {
+				right: JSObjectExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -91,10 +91,10 @@ Program {
 						}
 					}
 					properties: Array [
-						ObjectMethod {
+						JSObjectMethod {
 							kind: "set"
-							key: StaticPropertyKey {
-								value: NumericLiteral {
+							key: JSStaticPropertyKey {
+								value: JSNumericLiteral {
 									value: 10
 									format: undefined
 									loc: Object {
@@ -138,7 +138,7 @@ Program {
 									line: 1
 								}
 							}
-							head: FunctionHead {
+							head: JSFunctionHead {
 								async: false
 								generator: false
 								hasHoistedVars: false
@@ -160,7 +160,7 @@ Program {
 									}
 								}
 								params: Array [
-									BindingIdentifier {
+									JSBindingIdentifier {
 										name: "w"
 										loc: Object {
 											filename: "input.js"
@@ -176,7 +176,7 @@ Program {
 												line: 1
 											}
 										}
-										meta: PatternMeta {
+										meta: JSPatternMeta {
 											optional: undefined
 											typeAnnotation: undefined
 											loc: Object {
@@ -196,7 +196,7 @@ Program {
 									}
 								]
 							}
-							body: BlockStatement {
+							body: JSBlockStatement {
 								directives: Array []
 								loc: Object {
 									filename: "input.js"
@@ -212,7 +212,7 @@ Program {
 									}
 								}
 								body: Array [
-									ExpressionStatement {
+									JSExpressionStatement {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -226,7 +226,7 @@ Program {
 												line: 1
 											}
 										}
-										expression: AssignmentExpression {
+										expression: JSAssignmentExpression {
 											operator: "="
 											loc: Object {
 												filename: "input.js"
@@ -241,7 +241,7 @@ Program {
 													line: 1
 												}
 											}
-											left: AssignmentIdentifier {
+											left: JSAssignmentIdentifier {
 												name: "m_null"
 												loc: Object {
 													filename: "input.js"
@@ -258,7 +258,7 @@ Program {
 													}
 												}
 											}
-											right: ReferenceIdentifier {
+											right: JSReferenceIdentifier {
 												name: "w"
 												loc: Object {
 													filename: "input.js"

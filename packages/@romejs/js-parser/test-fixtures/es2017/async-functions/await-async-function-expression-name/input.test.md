@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > await-async-function-expression-name`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,8 +68,8 @@ Program {
 					line: 1
 				}
 			}
-			expression: FunctionExpression {
-				id: BindingIdentifier {
+			expression: JSFunctionExpression {
+				id: JSBindingIdentifier {
 					name: "await"
 					loc: Object {
 						filename: "input.js"
@@ -99,7 +99,7 @@ Program {
 						line: 1
 					}
 				}
-				body: BlockStatement {
+				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
 					loc: Object {
@@ -116,7 +116,7 @@ Program {
 						}
 					}
 				}
-				head: FunctionHead {
+				head: JSFunctionHead {
 					async: true
 					generator: false
 					hasHoistedVars: false

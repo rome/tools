@@ -6,13 +6,13 @@
  */
 
 import {
+	AnyJSStatement,
 	AnyNode,
-	AnyStatement,
-	ClassExpression,
-	FunctionExpression,
-	program,
-	stringLiteral,
-} from "@romejs/js-ast";
+	JSClassExpression,
+	JSFunctionExpression,
+	jsProgram,
+	jsStringLiteral,
+} from "@romejs/ast";
 import {
 	getBindingIdentifiers,
 	getImportSpecifiers,
@@ -25,17 +25,17 @@ export default {
 	name: "esToCJSTransform",
 	enter(path: Path): AnyNode {
 		const {node} = path;
-		if (!program.is(node)) {
+		if (!jsProgram.is(node)) {
 			return node;
 		}
 
 		const options = getOptions(path.context);
 
-		const topBody: Array<AnyStatement> = [];
-		const bottomBody: Array<AnyStatement> = [];
+		const topBody: Array<AnyJSStatement> = [];
+		const bottomBody: Array<AnyJSStatement> = [];
 
 		for (const bodyNode of node.body) {
-			if (bodyNode.type === "ImportDeclaration") {
+			if (bodyNode.type === "JSImportDeclaration") {
 				if (bodyNode.importKind === "type" || bodyNode.importKind === "typeof") {
 					continue;
 				}
@@ -45,7 +45,7 @@ export default {
 					continue;
 				}
 
-				const source = stringLiteral.create({
+				const source = jsStringLiteral.create({
 					value: moduleId,
 				});
 
@@ -54,15 +54,15 @@ export default {
 					topBody.push(template.statement`Rome.requireNamespace(${source});`);
 				} else {
 					for (const specifier of specifiers) {
-						if (specifier.type === "ImportSpecifier") {
+						if (specifier.type === "JSImportSpecifier") {
 							topBody.push(
 								template.statement`const ${specifier.local.name} = Rome.requireNamespace(${source}).${specifier.imported};`,
 							);
-						} else if (specifier.type === "ImportNamespaceSpecifier") {
+						} else if (specifier.type === "JSImportNamespaceSpecifier") {
 							topBody.push(
 								template.statement`const ${specifier.local.name} = Rome.requireNamespace(${source});`,
 							);
-						} else if (specifier.type === "ImportDefaultSpecifier") {
+						} else if (specifier.type === "JSImportDefaultSpecifier") {
 							topBody.push(
 								template.statement`const ${specifier.local.name} = Rome.requireDefault(${source});`,
 							);
@@ -72,12 +72,12 @@ export default {
 				continue;
 			}
 
-			if (bodyNode.type === "ExportAllDeclaration") {
+			if (bodyNode.type === "JSExportAllDeclaration") {
 				// TODO
 				continue;
 			}
 
-			if (bodyNode.type === "ExportExternalDeclaration") {
+			if (bodyNode.type === "JSExportExternalDeclaration") {
 				if (bodyNode.exportKind === "type") {
 					continue;
 				}
@@ -87,7 +87,7 @@ export default {
 				// TODO defaultSpecifier and namespaceSpecifier
 				for (const specifier of bodyNode.namedSpecifiers) {
 					topBody.push(
-						template.statement`Object.defineProperty(exports, ${stringLiteral.create({
+						template.statement`Object.defineProperty(exports, ${jsStringLiteral.create({
 							value: specifier.exported.name,
 						})}, {
                 get: function() {
@@ -98,7 +98,7 @@ export default {
 				}
 			}
 
-			if (bodyNode.type === "ExportLocalDeclaration") {
+			if (bodyNode.type === "JSExportLocalDeclaration") {
 				if (bodyNode.exportKind === "type") {
 					continue;
 				}
@@ -107,7 +107,7 @@ export default {
 
 				if (declaration !== undefined) {
 					// Hoist function declarations
-					if (declaration.type === "FunctionDeclaration") {
+					if (declaration.type === "JSFunctionDeclaration") {
 						topBody.push(
 							template.statement`exports.${declaration.id} = ${declaration.id}`,
 						);
@@ -119,7 +119,7 @@ export default {
 					if (
 						declaration.type === "TSModuleDeclaration" ||
 						declaration.type === "TSEnumDeclaration" ||
-						declaration.type === "TypeAliasTypeAnnotation" ||
+						declaration.type === "TSTypeAliasTypeAnnotation" ||
 						declaration.type === "TSInterfaceDeclaration" ||
 						declaration.type === "TSDeclareFunction"
 					) {
@@ -129,8 +129,8 @@ export default {
 
 					// Handle variables and classes
 					if (
-						declaration.type === "VariableDeclarationStatement" ||
-						declaration.type === "ClassDeclaration"
+						declaration.type === "JSVariableDeclarationStatement" ||
+						declaration.type === "JSClassDeclaration"
 					) {
 						bottomBody.push(declaration);
 
@@ -163,16 +163,16 @@ export default {
 				continue;
 			}
 
-			if (bodyNode.type === "ExportDefaultDeclaration") {
+			if (bodyNode.type === "JSExportDefaultDeclaration") {
 				const {declaration} = bodyNode;
 
 				// Hoist function declarations
-				if (declaration.type === "FunctionDeclaration") {
-					// If it has an id then there's no way that anything in the program can refer to it, so inline it as a function expression
+				if (declaration.type === "JSFunctionDeclaration") {
+					// If it has an id then there's no way that anything in the jsProgram can refer to it, so inline it as a function expression
 					if (declaration.id === undefined) {
-						const expr: FunctionExpression = {
+						const expr: JSFunctionExpression = {
 							...declaration,
-							type: "FunctionExpression",
+							type: "JSFunctionExpression",
 						};
 						topBody.push(template.statement`exports.default = ${expr};`);
 					} else {
@@ -185,13 +185,13 @@ export default {
 				}
 
 				// Handle classes
-				if (declaration.type === "ClassDeclaration") {
+				if (declaration.type === "JSClassDeclaration") {
 					// Technically we could hoist these if they have no super class, but we don't as it's not spec compliant
 					topBody.push(template.statement`exports.default = undefined;`);
 					if (declaration.id === undefined) {
-						const expr: ClassExpression = {
+						const expr: JSClassExpression = {
 							...declaration,
-							type: "ClassExpression",
+							type: "JSClassExpression",
 						};
 						bottomBody.push(template.statement`exports.default = ${expr};`);
 					} else {

@@ -5,7 +5,7 @@
 ## `es2015 > yield > basic-without-argument`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "foo"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: true
 				hasHoistedVars: false
@@ -84,7 +84,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -100,7 +100,7 @@ Program {
 					}
 				}
 				body: Array [
-					ExpressionStatement {
+					JSExpressionStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -114,7 +114,7 @@ Program {
 								line: 1
 							}
 						}
-						expression: CallExpression {
+						expression: JSCallExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -129,7 +129,7 @@ Program {
 								}
 							}
 							arguments: Array [
-								YieldExpression {
+								JSYieldExpression {
 									argument: undefined
 									delegate: false
 									loc: Object {
@@ -147,7 +147,7 @@ Program {
 									}
 								}
 							]
-							callee: MemberExpression {
+							callee: JSMemberExpression {
 								loc: Object {
 									filename: "input.js"
 									end: Object {
@@ -161,7 +161,7 @@ Program {
 										line: 1
 									}
 								}
-								object: ReferenceIdentifier {
+								object: JSReferenceIdentifier {
 									name: "console"
 									loc: Object {
 										filename: "input.js"
@@ -178,8 +178,8 @@ Program {
 										}
 									}
 								}
-								property: StaticMemberProperty {
-									value: Identifier {
+								property: JSStaticMemberProperty {
+									value: JSIdentifier {
 										name: "log"
 										loc: Object {
 											filename: "input.js"

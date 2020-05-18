@@ -5,7 +5,7 @@
 ## `es2015 > array-rest-spread > comma-after-spread`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ArrayExpression {
+			expression: JSArrayExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -59,7 +59,7 @@ Program {
 					}
 				}
 				elements: Array [
-					SpreadElement {
+					JSSpreadElement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -73,7 +73,7 @@ Program {
 								line: 1
 							}
 						}
-						argument: ReferenceIdentifier {
+						argument: JSReferenceIdentifier {
 							name: "a"
 							loc: Object {
 								filename: "input.js"

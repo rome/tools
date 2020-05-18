@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, TSModuleBlock, tsModuleBlock} from "@romejs/js-ast";
+import {AnyNode, TSModuleBlock, tsModuleBlock} from "@romejs/ast";
 
 export default function TSModuleBlock(node: AnyNode, scope: Scope) {
 	node = tsModuleBlock.assert(node);

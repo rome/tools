@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSXText, jsxText} from "@romejs/js-ast";
+import {AnyNode, JSXText, jsxText} from "@romejs/ast";
 
 export default function JSXText(node: AnyNode, scope: Scope) {
 	node = jsxText.assert(node);

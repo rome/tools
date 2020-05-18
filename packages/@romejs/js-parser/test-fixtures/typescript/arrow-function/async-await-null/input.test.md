@@ -5,7 +5,7 @@
 ## `typescript > arrow-function > async-await-null`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ArrowFunctionExpression {
+			expression: JSArrowFunctionExpression {
 				loc: Object {
 					filename: "input.ts"
 					end: Object {
@@ -58,7 +58,7 @@ Program {
 						line: 1
 					}
 				}
-				body: AwaitExpression {
+				body: JSAwaitExpression {
 					loc: Object {
 						filename: "input.ts"
 						end: Object {
@@ -72,7 +72,7 @@ Program {
 							line: 1
 						}
 					}
-					argument: NullLiteral {
+					argument: JSNullLiteral {
 						loc: Object {
 							filename: "input.ts"
 							end: Object {
@@ -88,7 +88,7 @@ Program {
 						}
 					}
 				}
-				head: FunctionHead {
+				head: JSFunctionHead {
 					async: true
 					hasHoistedVars: false
 					params: Array []

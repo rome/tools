@@ -5,7 +5,7 @@
 ## `experimental > template-literal-invalid-escapes-untagged > 63`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: TemplateLiteral {
+			expression: JSTemplateLiteral {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -83,7 +83,7 @@ Program {
 					}
 				}
 				expressions: Array [
-					NumericLiteral {
+					JSNumericLiteral {
 						value: 0
 						format: undefined
 						loc: Object {
@@ -102,7 +102,7 @@ Program {
 					}
 				]
 				quasis: Array [
-					TemplateElement {
+					JSTemplateElement {
 						cooked: "left"
 						raw: "left"
 						tail: false
@@ -120,7 +120,7 @@ Program {
 							}
 						}
 					}
-					TemplateElement {
+					JSTemplateElement {
 						cooked: "\\u{\\u{0}"
 						raw: "\\u{\\u{0}"
 						tail: true

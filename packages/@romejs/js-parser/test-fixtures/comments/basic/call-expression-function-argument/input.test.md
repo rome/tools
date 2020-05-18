@@ -5,7 +5,7 @@
 ## `comments > basic > call-expression-function-argument`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentLine {
+		JSCommentLine {
 			id: "0"
 			value: " one"
 			loc: Object {
@@ -46,7 +46,7 @@ Program {
 				}
 			}
 		}
-		CommentLine {
+		JSCommentLine {
 			id: "1"
 			value: " two"
 			loc: Object {
@@ -65,7 +65,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -79,7 +79,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: CallExpression {
+			expression: JSCallExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -93,7 +93,7 @@ Program {
 						line: 1
 					}
 				}
-				callee: ReferenceIdentifier {
+				callee: JSReferenceIdentifier {
 					name: "test"
 					loc: Object {
 						filename: "input.js"
@@ -111,7 +111,7 @@ Program {
 					}
 				}
 				arguments: Array [
-					FunctionExpression {
+					JSFunctionExpression {
 						id: undefined
 						trailingComments: Array ["1"]
 						loc: Object {
@@ -127,7 +127,7 @@ Program {
 								line: 1
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: true
@@ -150,7 +150,7 @@ Program {
 								}
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							directives: Array []
 							trailingComments: Array ["1"]
 							loc: Object {
@@ -167,7 +167,7 @@ Program {
 								}
 							}
 							body: Array [
-								VariableDeclarationStatement {
+								JSVariableDeclarationStatement {
 									trailingComments: Array ["0"]
 									loc: Object {
 										filename: "input.js"
@@ -182,7 +182,7 @@ Program {
 											line: 2
 										}
 									}
-									declaration: VariableDeclaration {
+									declaration: JSVariableDeclaration {
 										kind: "var"
 										trailingComments: undefined
 										loc: Object {
@@ -199,8 +199,8 @@ Program {
 											}
 										}
 										declarations: Array [
-											VariableDeclarator {
-												id: BindingIdentifier {
+											JSVariableDeclarator {
+												id: JSBindingIdentifier {
 													name: "a"
 													loc: Object {
 														filename: "input.js"
@@ -230,7 +230,7 @@ Program {
 														line: 2
 													}
 												}
-												init: NumericLiteral {
+												init: JSNumericLiteral {
 													value: 1
 													format: undefined
 													loc: Object {

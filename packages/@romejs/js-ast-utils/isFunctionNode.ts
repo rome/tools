@@ -5,14 +5,14 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyFunction, AnyNode} from "@romejs/js-ast";
+import {AnyJSFunction, AnyNode} from "@romejs/ast";
 
-export default function isFunctionNode(node: AnyNode): node is AnyFunction {
+export default function isFunctionNode(node: AnyNode): node is AnyJSFunction {
 	return (
-		node.type === "FunctionDeclaration" ||
-		node.type === "FunctionExpression" ||
-		node.type === "ObjectMethod" ||
-		node.type === "ArrowFunctionExpression" ||
-		node.type === "ClassMethod"
+		node.type === "JSFunctionDeclaration" ||
+		node.type === "JSFunctionExpression" ||
+		node.type === "JSObjectMethod" ||
+		node.type === "JSArrowFunctionExpression" ||
+		node.type === "JSClassMethod"
 	);
 }

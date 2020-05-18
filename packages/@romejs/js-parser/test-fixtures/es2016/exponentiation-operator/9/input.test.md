@@ -5,7 +5,7 @@
 ## `es2016 > exponentiation-operator > 9`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: BinaryExpression {
+			expression: JSBinaryExpression {
 				operator: "**"
 				loc: Object {
 					filename: "input.js"
@@ -59,7 +59,7 @@ Program {
 						line: 1
 					}
 				}
-				right: NumericLiteral {
+				right: JSNumericLiteral {
 					value: 6
 					format: undefined
 					loc: Object {
@@ -76,7 +76,7 @@ Program {
 						}
 					}
 				}
-				left: UnaryExpression {
+				left: JSUnaryExpression {
 					operator: "-"
 					prefix: true
 					loc: Object {
@@ -92,7 +92,7 @@ Program {
 							line: 1
 						}
 					}
-					argument: NumericLiteral {
+					argument: JSNumericLiteral {
 						value: 5
 						format: undefined
 						loc: Object {

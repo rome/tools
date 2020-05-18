@@ -6,12 +6,12 @@
  */
 
 import {
-	AnyExpression,
-	AnyIdentifier,
+	AnyJSExpression,
+	AnyJSIdentifier,
+	AnyJSStatement,
 	AnyNode,
-	AnyStatement,
-	program,
-} from "@romejs/js-ast";
+	jsProgram,
+} from "@romejs/ast";
 import {CompilerContext, Path} from "@romejs/js-compiler";
 import removeLoc from "./removeLoc";
 import {parseJS} from "@romejs/js-parser";
@@ -20,7 +20,7 @@ import isIdentifierish from "./isIdentifierish";
 import {Dict} from "@romejs/typescript-helpers";
 
 type Placeholder = {
-	type: AnyIdentifier["type"];
+	type: AnyJSIdentifier["type"];
 	path: Array<string>;
 };
 
@@ -72,7 +72,7 @@ function getTemplate(strs: TemplateStringsArray): BuiltTemplate {
 	});
 
 	// remove `loc` properties
-	ast = program.assert(removeLoc(ast));
+	ast = jsProgram.assert(removeLoc(ast));
 
 	// traverse and find placeholders paths
 	function collectPlaceholderPaths(path: Path) {
@@ -174,12 +174,12 @@ export default function template(
 template.expression = (
 	strs: TemplateStringsArray,
 	...substitutions: TemplateSubstitions
-): AnyExpression => {
+): AnyJSExpression => {
 	const first = template.statement(strs, ...substitutions);
 
-	// Ensure that the single statement is an ExpressionStatement
-	if (first.type !== "ExpressionStatement") {
-		throw new Error("Single statement should be an ExpressionStatement");
+	// Ensure that the single statement is an JSExpressionStatement
+	if (first.type !== "JSExpressionStatement") {
+		throw new Error("Single statement should be an JSExpressionStatement");
 	}
 
 	return first.expression;
@@ -188,11 +188,11 @@ template.expression = (
 template.statement = (
 	strs: TemplateStringsArray,
 	...substitutions: TemplateSubstitions
-): AnyStatement => {
+): AnyJSStatement => {
 	// Parse the template, with caching
-	const ast = program.assert(template(strs, ...substitutions));
+	const ast = jsProgram.assert(template(strs, ...substitutions));
 
-	// Ensure that there's only a single statement in the Program body
+	// Ensure that there's only a single statement in the JSProgram body
 	const body = ast.body;
 	if (body.length !== 1) {
 		throw new Error("More than one statement isn't allowed for a template.");

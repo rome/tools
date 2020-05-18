@@ -6,7 +6,7 @@
  */
 
 import {Path} from "@romejs/js-compiler";
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 import {descriptions} from "@romejs/diagnostics";
 
 const SUGGESTION_DESCRIPTION = "This may be unsafe if you are relying on type coercion";
@@ -17,9 +17,9 @@ export default {
 		const {node, context} = path;
 
 		if (
-			node.type === "BinaryExpression" &&
-			node.right.type !== "NullLiteral" &&
-			node.left.type !== "NullLiteral"
+			node.type === "JSBinaryExpression" &&
+			node.right.type !== "JSNullLiteral" &&
+			node.left.type !== "JSNullLiteral"
 		) {
 			if (node.operator === "!=") {
 				context.addFixableDiagnostic(

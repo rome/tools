@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 291`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		IfStatement {
+		JSIfStatement {
 			alternate: undefined
 			loc: Object {
 				filename: "input.js"
@@ -69,7 +69,7 @@ Program {
 					line: 1
 				}
 			}
-			test: NumericLiteral {
+			test: JSNumericLiteral {
 				value: 1
 				format: undefined
 				loc: Object {
@@ -86,7 +86,7 @@ Program {
 					}
 				}
 			}
-			consequent: ImportDeclaration {
+			consequent: JSImportDeclaration {
 				defaultSpecifier: undefined
 				importKind: undefined
 				namedSpecifiers: Array []
@@ -104,7 +104,7 @@ Program {
 						line: 1
 					}
 				}
-				source: StringLiteral {
+				source: JSStringLiteral {
 					value: "acorn"
 					loc: Object {
 						filename: "input.js"

@@ -5,7 +5,7 @@
 ## `experimental > dynamic-import > variable-arguments`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
 					filename: "input.js"
@@ -60,8 +60,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "testVarible"
 							loc: Object {
 								filename: "input.js"
@@ -91,7 +91,7 @@ Program {
 								line: 1
 							}
 						}
-						init: StringLiteral {
+						init: JSStringLiteral {
 							value: "test.js"
 							loc: Object {
 								filename: "input.js"
@@ -111,7 +111,7 @@ Program {
 				]
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -125,7 +125,7 @@ Program {
 					line: 2
 				}
 			}
-			expression: CallExpression {
+			expression: JSCallExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -140,7 +140,7 @@ Program {
 					}
 				}
 				arguments: Array [
-					ArrowFunctionExpression {
+					JSArrowFunctionExpression {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -154,7 +154,7 @@ Program {
 								line: 2
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
 							loc: Object {
@@ -171,7 +171,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							hasHoistedVars: false
 							params: Array []
@@ -194,7 +194,7 @@ Program {
 						}
 					}
 				]
-				callee: MemberExpression {
+				callee: JSMemberExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -208,7 +208,7 @@ Program {
 							line: 2
 						}
 					}
-					object: ImportCall {
+					object: JSImportCall {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -222,7 +222,7 @@ Program {
 								line: 2
 							}
 						}
-						argument: ReferenceIdentifier {
+						argument: JSReferenceIdentifier {
 							name: "testVarible"
 							loc: Object {
 								filename: "input.js"
@@ -240,8 +240,8 @@ Program {
 							}
 						}
 					}
-					property: StaticMemberProperty {
-						value: Identifier {
+					property: JSStaticMemberProperty {
+						value: JSIdentifier {
 							name: "then"
 							loc: Object {
 								filename: "input.js"

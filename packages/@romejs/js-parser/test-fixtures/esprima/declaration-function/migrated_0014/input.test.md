@@ -5,7 +5,7 @@
 ## `esprima > declaration-function > migrated_0014`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "test"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -84,7 +84,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -100,7 +100,7 @@ Program {
 					}
 				}
 				body: Array [
-					ExpressionStatement {
+					JSExpressionStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -114,7 +114,7 @@ Program {
 								line: 1
 							}
 						}
-						expression: BinaryExpression {
+						expression: JSBinaryExpression {
 							operator: "+"
 							loc: Object {
 								filename: "input.js"
@@ -129,7 +129,7 @@ Program {
 									line: 1
 								}
 							}
-							left: StringLiteral {
+							left: JSStringLiteral {
 								value: "use strict"
 								loc: Object {
 									filename: "input.js"
@@ -145,7 +145,7 @@ Program {
 									}
 								}
 							}
-							right: NumericLiteral {
+							right: JSNumericLiteral {
 								value: 42
 								format: undefined
 								loc: Object {

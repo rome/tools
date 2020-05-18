@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, TSConditionalType, tsConditionalType} from "@romejs/js-ast";
+import {AnyNode, TSConditionalType, tsConditionalType} from "@romejs/ast";
 
 export default function TSConditionalType(node: AnyNode, scope: Scope) {
 	node = tsConditionalType.assert(node);

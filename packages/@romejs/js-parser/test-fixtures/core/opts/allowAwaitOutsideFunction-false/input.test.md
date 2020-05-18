@@ -5,7 +5,7 @@
 ## `core > opts > allowAwaitOutsideFunction-false`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ForStatement {
+		JSForStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			test: ReferenceIdentifier {
+			test: JSReferenceIdentifier {
 				name: "i"
 				loc: Object {
 					filename: "input.js"
@@ -85,7 +85,7 @@ Program {
 					}
 				}
 			}
-			update: ReferenceIdentifier {
+			update: JSReferenceIdentifier {
 				name: "of"
 				loc: Object {
 					filename: "input.js"
@@ -102,7 +102,7 @@ Program {
 					}
 				}
 			}
-			body: ExpressionStatement {
+			body: JSExpressionStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -116,7 +116,7 @@ Program {
 						line: 1
 					}
 				}
-				expression: ReferenceIdentifier {
+				expression: JSReferenceIdentifier {
 					name: "imports"
 					loc: Object {
 						filename: "input.js"
@@ -134,7 +134,7 @@ Program {
 					}
 				}
 			}
-			init: CallExpression {
+			init: JSCallExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -148,7 +148,7 @@ Program {
 						line: 1
 					}
 				}
-				callee: ReferenceIdentifier {
+				callee: JSReferenceIdentifier {
 					name: "await"
 					loc: Object {
 						filename: "input.js"
@@ -166,7 +166,7 @@ Program {
 					}
 				}
 				arguments: Array [
-					ReferenceIdentifier {
+					JSReferenceIdentifier {
 						name: "INVALID_PLACEHOLDER"
 						loc: Object {
 							filename: "input.js"
@@ -185,7 +185,7 @@ Program {
 				]
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -199,7 +199,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ReferenceIdentifier {
+			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
 					filename: "input.js"
@@ -216,7 +216,7 @@ Program {
 				}
 			}
 		}
-		BlockStatement {
+		JSBlockStatement {
 			body: Array []
 			directives: Array []
 			loc: Object {

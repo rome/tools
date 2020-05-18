@@ -8,11 +8,11 @@
 import getCompletionRecords from "./getCompletionRecords";
 import {test} from "rome";
 import {parseJS} from "@romejs/js-parser";
-import {functionDeclaration} from "@romejs/js-ast";
+import {jsFunctionDeclaration} from "@romejs/ast";
 
 function helper(input: string) {
 	return getCompletionRecords(
-		functionDeclaration.assert(
+		jsFunctionDeclaration.assert(
 			parseJS({
 				path: "unknown",
 				input: `function foo(){${input}}`,

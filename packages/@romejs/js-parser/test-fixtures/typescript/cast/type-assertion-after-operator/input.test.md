@@ -5,7 +5,7 @@
 ## `typescript > cast > type-assertion-after-operator`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: BinaryExpression {
+			expression: JSBinaryExpression {
 				operator: "+"
 				loc: Object {
 					filename: "input.ts"
@@ -59,7 +59,7 @@ Program {
 						line: 1
 					}
 				}
-				left: NumericLiteral {
+				left: JSNumericLiteral {
 					value: 1
 					format: undefined
 					loc: Object {
@@ -105,7 +105,7 @@ Program {
 							}
 						}
 					}
-					expression: NumericLiteral {
+					expression: JSNumericLiteral {
 						value: 1
 						format: undefined
 						loc: Object {

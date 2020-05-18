@@ -5,24 +5,24 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, RegExpCharSet} from "@romejs/js-ast";
+import {AnyNode, JSRegExpCharSet} from "@romejs/ast";
 import {CompilerContext, Path} from "@romejs/js-compiler";
 import {descriptions} from "@romejs/diagnostics";
 
 function checkRegEx(
-	node: RegExpCharSet,
+	node: JSRegExpCharSet,
 	context: CompilerContext,
-): RegExpCharSet {
+): JSRegExpCharSet {
 	node.body.forEach((currNode, i) => {
 		const nextNode = node.body[i + 1];
 		const lastNode = node.body[node.body.length - 1];
 		if (
-			currNode.type === "RegExpCharacter" &&
+			currNode.type === "JSRegExpCharacter" &&
 			currNode.value === "[" &&
 			nextNode &&
-			nextNode.type === "RegExpCharacter" &&
+			nextNode.type === "JSRegExpCharacter" &&
 			(nextNode.value === ":" || nextNode.value === ".") &&
-			lastNode.type === "RegExpCharacter" &&
+			lastNode.type === "JSRegExpCharacter" &&
 			lastNode.value === nextNode.value
 		) {
 			context.addNodeDiagnostic(
@@ -41,7 +41,7 @@ export default {
 	enter(path: Path): AnyNode {
 		const {context, node} = path;
 
-		if (node.type === "RegExpCharSet" && node.body.length > 2) {
+		if (node.type === "JSRegExpCharSet" && node.body.length > 2) {
 			return checkRegEx(node, context);
 		}
 

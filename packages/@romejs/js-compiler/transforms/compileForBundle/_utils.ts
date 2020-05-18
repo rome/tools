@@ -21,7 +21,7 @@ export function getPrivateName(name: string, moduleId: string) {
 	return `${SCOPE_PRIVATE_PREFIX}$priv$${normalizeModuleId(moduleId)}$${name}`;
 }
 
-// This is necessary so we can take our module uids which are paths on the file system into a valid JS identifier name
+// This is necessary so we can take our module uids which are paths on the file system into a valid JS jsIdentifier name
 export function normalizeModuleId(id: string): string {
 	// TODO probably need more stuff in this
 	return id.replace(/[\\\/@\-]/g, "$").replace(/[\-.]/g, "_");

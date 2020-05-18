@@ -5,7 +5,7 @@
 ## `es2018 > async-generators > class-method`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		ClassDeclaration {
-			id: BindingIdentifier {
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
 				name: "Query"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			meta: ClassHead {
+			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
@@ -80,10 +80,10 @@ Program {
 					}
 				}
 				body: Array [
-					ClassMethod {
+					JSClassMethod {
 						kind: "method"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "queryAll"
 								loc: Object {
 									filename: "input.js"
@@ -127,7 +127,7 @@ Program {
 								line: 2
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -153,7 +153,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: true
 							generator: true
 							hasHoistedVars: false
@@ -175,7 +175,7 @@ Program {
 								}
 							}
 							params: Array [
-								BindingIdentifier {
+								JSBindingIdentifier {
 									name: "ids"
 									loc: Object {
 										filename: "input.js"
@@ -191,7 +191,7 @@ Program {
 											line: 2
 										}
 									}
-									meta: PatternMeta {
+									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
@@ -211,7 +211,7 @@ Program {
 								}
 							]
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
 								filename: "input.js"
@@ -227,7 +227,7 @@ Program {
 								}
 							}
 							body: Array [
-								ForOfStatement {
+								JSForOfStatement {
 									await: false
 									loc: Object {
 										filename: "input.js"
@@ -242,7 +242,7 @@ Program {
 											line: 3
 										}
 									}
-									right: ReferenceIdentifier {
+									right: JSReferenceIdentifier {
 										name: "ids"
 										loc: Object {
 											filename: "input.js"
@@ -259,7 +259,7 @@ Program {
 											}
 										}
 									}
-									left: VariableDeclaration {
+									left: JSVariableDeclaration {
 										kind: "const"
 										loc: Object {
 											filename: "input.js"
@@ -275,8 +275,8 @@ Program {
 											}
 										}
 										declarations: Array [
-											VariableDeclarator {
-												id: BindingIdentifier {
+											JSVariableDeclarator {
+												id: JSBindingIdentifier {
 													name: "id"
 													loc: Object {
 														filename: "input.js"
@@ -310,7 +310,7 @@ Program {
 											}
 										]
 									}
-									body: BlockStatement {
+									body: JSBlockStatement {
 										directives: Array []
 										loc: Object {
 											filename: "input.js"
@@ -326,7 +326,7 @@ Program {
 											}
 										}
 										body: Array [
-											ExpressionStatement {
+											JSExpressionStatement {
 												loc: Object {
 													filename: "input.js"
 													end: Object {
@@ -340,7 +340,7 @@ Program {
 														line: 4
 													}
 												}
-												expression: YieldExpression {
+												expression: JSYieldExpression {
 													delegate: false
 													loc: Object {
 														filename: "input.js"
@@ -355,7 +355,7 @@ Program {
 															line: 4
 														}
 													}
-													argument: AwaitExpression {
+													argument: JSAwaitExpression {
 														loc: Object {
 															filename: "input.js"
 															end: Object {
@@ -369,7 +369,7 @@ Program {
 																line: 4
 															}
 														}
-														argument: CallExpression {
+														argument: JSCallExpression {
 															loc: Object {
 																filename: "input.js"
 																end: Object {
@@ -384,7 +384,7 @@ Program {
 																}
 															}
 															arguments: Array [
-																ReferenceIdentifier {
+																JSReferenceIdentifier {
 																	name: "id"
 																	loc: Object {
 																		filename: "input.js"
@@ -402,7 +402,7 @@ Program {
 																	}
 																}
 															]
-															callee: MemberExpression {
+															callee: JSMemberExpression {
 																loc: Object {
 																	filename: "input.js"
 																	end: Object {
@@ -416,7 +416,7 @@ Program {
 																		line: 4
 																	}
 																}
-																object: ThisExpression {
+																object: JSThisExpression {
 																	loc: Object {
 																		filename: "input.js"
 																		end: Object {
@@ -431,8 +431,8 @@ Program {
 																		}
 																	}
 																}
-																property: StaticMemberProperty {
-																	value: Identifier {
+																property: JSStaticMemberProperty {
+																	value: JSIdentifier {
 																		name: "query"
 																		loc: Object {
 																			filename: "input.js"

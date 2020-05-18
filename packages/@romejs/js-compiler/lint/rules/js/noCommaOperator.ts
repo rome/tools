@@ -6,7 +6,7 @@
  */
 
 import {Path} from "@romejs/js-compiler";
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 import {descriptions} from "@romejs/diagnostics";
 
 export default {
@@ -14,7 +14,7 @@ export default {
 	enter(path: Path): AnyNode {
 		const {node} = path;
 
-		if (node.type === "SequenceExpression") {
+		if (node.type === "JSSequenceExpression") {
 			path.context.addNodeDiagnostic(
 				node,
 				descriptions.LINT.JS_NO_COMMA_OPERATOR,

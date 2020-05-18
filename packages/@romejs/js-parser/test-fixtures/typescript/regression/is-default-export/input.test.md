@@ -5,7 +5,7 @@
 ## `typescript > regression > is-default-export`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "type"
 			specifiers: undefined
 			loc: Object {
@@ -46,8 +46,8 @@ Program {
 					line: 1
 				}
 			}
-			declaration: TypeAliasTypeAnnotation {
-				id: BindingIdentifier {
+			declaration: TSTypeAliasTypeAnnotation {
+				id: JSBindingIdentifier {
 					name: "T"
 					loc: Object {
 						filename: "input.ts"
@@ -95,7 +95,7 @@ Program {
 				}
 			}
 		}
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
@@ -112,7 +112,7 @@ Program {
 				}
 			}
 			declaration: TSEnumDeclaration {
-				id: BindingIdentifier {
+				id: JSBindingIdentifier {
 					name: "E"
 					loc: Object {
 						filename: "input.ts"
@@ -146,7 +146,7 @@ Program {
 				}
 			}
 		}
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "type"
 			specifiers: undefined
 			loc: Object {
@@ -163,7 +163,7 @@ Program {
 				}
 			}
 			declaration: TSInterfaceDeclaration {
-				id: BindingIdentifier {
+				id: JSBindingIdentifier {
 					name: "I"
 					loc: Object {
 						filename: "input.ts"

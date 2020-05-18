@@ -5,7 +5,7 @@
 ## `esprima > invalid-syntax > migrated_0031`
 
 ```javascript
-Program {
+JSProgram {
 	body: Array []
 	comments: Array []
 	corrupt: false
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	directives: Array [
-		Directive {
+		JSDirective {
 			value: "Hello\nWorld"
 			loc: Object {
 				filename: "input.js"

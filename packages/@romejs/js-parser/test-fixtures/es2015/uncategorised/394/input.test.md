@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 394`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.js"
@@ -84,8 +84,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "a"
 							loc: Object {
 								filename: "input.js"
@@ -120,7 +120,7 @@ Program {
 				]
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -134,7 +134,7 @@ Program {
 					line: 2
 				}
 			}
-			expression: AssignmentExpression {
+			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
 					filename: "input.js"
@@ -149,7 +149,7 @@ Program {
 						line: 2
 					}
 				}
-				right: ObjectExpression {
+				right: JSObjectExpression {
 					properties: Array []
 					loc: Object {
 						filename: "input.js"
@@ -165,7 +165,7 @@ Program {
 						}
 					}
 				}
-				left: AssignmentIdentifier {
+				left: JSAssignmentIdentifier {
 					name: "a"
 					loc: Object {
 						filename: "input.js"
@@ -184,7 +184,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -198,7 +198,7 @@ Program {
 					line: 3
 				}
 			}
-			expression: AssignmentExpression {
+			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
 					filename: "input.js"
@@ -213,7 +213,7 @@ Program {
 						line: 3
 					}
 				}
-				right: ObjectExpression {
+				right: JSObjectExpression {
 					properties: Array []
 					loc: Object {
 						filename: "input.js"
@@ -229,7 +229,7 @@ Program {
 						}
 					}
 				}
-				left: MemberExpression {
+				left: JSMemberExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -243,7 +243,7 @@ Program {
 							line: 3
 						}
 					}
-					object: ReferenceIdentifier {
+					object: JSReferenceIdentifier {
 						name: "a"
 						loc: Object {
 							filename: "input.js"
@@ -260,8 +260,8 @@ Program {
 							}
 						}
 					}
-					property: StaticMemberProperty {
-						value: Identifier {
+					property: JSStaticMemberProperty {
+						value: JSIdentifier {
 							name: "b"
 							loc: Object {
 								filename: "input.js"
@@ -296,7 +296,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -310,7 +310,7 @@ Program {
 					line: 4
 				}
 			}
-			expression: AssignmentExpression {
+			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
 					filename: "input.js"
@@ -325,7 +325,7 @@ Program {
 						line: 4
 					}
 				}
-				right: ObjectExpression {
+				right: JSObjectExpression {
 					properties: Array []
 					loc: Object {
 						filename: "input.js"
@@ -341,7 +341,7 @@ Program {
 						}
 					}
 				}
-				left: MemberExpression {
+				left: JSMemberExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -355,7 +355,7 @@ Program {
 							line: 4
 						}
 					}
-					object: ReferenceIdentifier {
+					object: JSReferenceIdentifier {
 						name: "a"
 						loc: Object {
 							filename: "input.js"
@@ -372,8 +372,8 @@ Program {
 							}
 						}
 					}
-					property: ComputedMemberProperty {
-						value: StringLiteral {
+					property: JSComputedMemberProperty {
+						value: JSStringLiteral {
 							value: "c"
 							loc: Object {
 								filename: "input.js"

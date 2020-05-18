@@ -5,7 +5,7 @@
 ## `esprima > es2015-destructuring-assignment-object-pattern > nested-cover-grammar`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: AssignmentExpression {
+			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
 					filename: "input.js"
@@ -83,7 +83,7 @@ Program {
 						line: 1
 					}
 				}
-				right: NumericLiteral {
+				right: JSNumericLiteral {
 					value: 0
 					format: undefined
 					loc: Object {
@@ -100,7 +100,7 @@ Program {
 						}
 					}
 				}
-				left: AssignmentArrayPattern {
+				left: JSAssignmentArrayPattern {
 					rest: undefined
 					loc: Object {
 						filename: "input.js"
@@ -116,7 +116,7 @@ Program {
 						}
 					}
 					elements: Array [
-						AssignmentArrayPattern {
+						JSAssignmentArrayPattern {
 							rest: undefined
 							loc: Object {
 								filename: "input.js"
@@ -132,7 +132,7 @@ Program {
 								}
 							}
 							elements: Array [
-								AssignmentArrayPattern {
+								JSAssignmentArrayPattern {
 									rest: undefined
 									loc: Object {
 										filename: "input.js"
@@ -148,7 +148,7 @@ Program {
 										}
 									}
 									elements: Array [
-										AssignmentArrayPattern {
+										JSAssignmentArrayPattern {
 											rest: undefined
 											loc: Object {
 												filename: "input.js"
@@ -164,7 +164,7 @@ Program {
 												}
 											}
 											elements: Array [
-												AssignmentArrayPattern {
+												JSAssignmentArrayPattern {
 													rest: undefined
 													loc: Object {
 														filename: "input.js"
@@ -180,7 +180,7 @@ Program {
 														}
 													}
 													elements: Array [
-														AssignmentArrayPattern {
+														JSAssignmentArrayPattern {
 															rest: undefined
 															loc: Object {
 																filename: "input.js"
@@ -196,7 +196,7 @@ Program {
 																}
 															}
 															elements: Array [
-																AssignmentArrayPattern {
+																JSAssignmentArrayPattern {
 																	rest: undefined
 																	loc: Object {
 																		filename: "input.js"
@@ -212,7 +212,7 @@ Program {
 																		}
 																	}
 																	elements: Array [
-																		AssignmentArrayPattern {
+																		JSAssignmentArrayPattern {
 																			rest: undefined
 																			loc: Object {
 																				filename: "input.js"
@@ -228,7 +228,7 @@ Program {
 																				}
 																			}
 																			elements: Array [
-																				AssignmentArrayPattern {
+																				JSAssignmentArrayPattern {
 																					rest: undefined
 																					loc: Object {
 																						filename: "input.js"
@@ -244,7 +244,7 @@ Program {
 																						}
 																					}
 																					elements: Array [
-																						AssignmentArrayPattern {
+																						JSAssignmentArrayPattern {
 																							rest: undefined
 																							loc: Object {
 																								filename: "input.js"
@@ -260,7 +260,7 @@ Program {
 																								}
 																							}
 																							elements: Array [
-																								AssignmentArrayPattern {
+																								JSAssignmentArrayPattern {
 																									rest: undefined
 																									loc: Object {
 																										filename: "input.js"
@@ -276,7 +276,7 @@ Program {
 																										}
 																									}
 																									elements: Array [
-																										AssignmentArrayPattern {
+																										JSAssignmentArrayPattern {
 																											rest: undefined
 																											loc: Object {
 																												filename: "input.js"
@@ -292,7 +292,7 @@ Program {
 																												}
 																											}
 																											elements: Array [
-																												AssignmentArrayPattern {
+																												JSAssignmentArrayPattern {
 																													rest: undefined
 																													loc: Object {
 																														filename: "input.js"
@@ -308,7 +308,7 @@ Program {
 																														}
 																													}
 																													elements: Array [
-																														AssignmentArrayPattern {
+																														JSAssignmentArrayPattern {
 																															rest: undefined
 																															loc: Object {
 																																filename: "input.js"
@@ -324,7 +324,7 @@ Program {
 																																}
 																															}
 																															elements: Array [
-																																AssignmentArrayPattern {
+																																JSAssignmentArrayPattern {
 																																	rest: undefined
 																																	loc: Object {
 																																		filename: "input.js"
@@ -340,7 +340,7 @@ Program {
 																																		}
 																																	}
 																																	elements: Array [
-																																		AssignmentArrayPattern {
+																																		JSAssignmentArrayPattern {
 																																			rest: undefined
 																																			loc: Object {
 																																				filename: "input.js"
@@ -356,7 +356,7 @@ Program {
 																																				}
 																																			}
 																																			elements: Array [
-																																				AssignmentArrayPattern {
+																																				JSAssignmentArrayPattern {
 																																					rest: undefined
 																																					loc: Object {
 																																						filename: "input.js"
@@ -372,7 +372,7 @@ Program {
 																																						}
 																																					}
 																																					elements: Array [
-																																						AssignmentArrayPattern {
+																																						JSAssignmentArrayPattern {
 																																							rest: undefined
 																																							loc: Object {
 																																								filename: "input.js"
@@ -388,7 +388,7 @@ Program {
 																																								}
 																																							}
 																																							elements: Array [
-																																								AssignmentArrayPattern {
+																																								JSAssignmentArrayPattern {
 																																									rest: undefined
 																																									loc: Object {
 																																										filename: "input.js"
@@ -404,7 +404,7 @@ Program {
 																																										}
 																																									}
 																																									elements: Array [
-																																										AssignmentArrayPattern {
+																																										JSAssignmentArrayPattern {
 																																											rest: undefined
 																																											loc: Object {
 																																												filename: "input.js"
@@ -420,7 +420,7 @@ Program {
 																																												}
 																																											}
 																																											elements: Array [
-																																												AssignmentAssignmentPattern {
+																																												JSAssignmentAssignmentPattern {
 																																													operator: "="
 																																													loc: Object {
 																																														filename: "input.js"
@@ -435,7 +435,7 @@ Program {
 																																															line: 1
 																																														}
 																																													}
-																																													right: MemberExpression {
+																																													right: JSMemberExpression {
 																																														loc: Object {
 																																															filename: "input.js"
 																																															end: Object {
@@ -449,7 +449,7 @@ Program {
 																																																line: 1
 																																															}
 																																														}
-																																														object: ReferenceIdentifier {
+																																														object: JSReferenceIdentifier {
 																																															name: "b"
 																																															loc: Object {
 																																																filename: "input.js"
@@ -466,8 +466,8 @@ Program {
 																																																}
 																																															}
 																																														}
-																																														property: ComputedMemberProperty {
-																																															value: NumericLiteral {
+																																														property: JSComputedMemberProperty {
+																																															value: JSNumericLiteral {
 																																																value: 0
 																																																format: undefined
 																																																loc: Object {
@@ -499,7 +499,7 @@ Program {
 																																															}
 																																														}
 																																													}
-																																													left: AssignmentObjectPattern {
+																																													left: JSAssignmentObjectPattern {
 																																														rest: undefined
 																																														loc: Object {
 																																															filename: "input.js"
@@ -515,9 +515,9 @@ Program {
 																																															}
 																																														}
 																																														properties: Array [
-																																															AssignmentObjectPatternProperty {
-																																																key: StaticPropertyKey {
-																																																	value: Identifier {
+																																															JSAssignmentObjectPatternProperty {
+																																																key: JSStaticPropertyKey {
+																																																	value: JSIdentifier {
 																																																		name: "a"
 																																																		loc: Object {
 																																																			filename: "input.js"
@@ -548,7 +548,7 @@ Program {
 																																																		}
 																																																	}
 																																																}
-																																																value: AssignmentIdentifier {
+																																																value: JSAssignmentIdentifier {
 																																																	name: "a"
 																																																	loc: Object {
 																																																		filename: "input.js"
@@ -582,7 +582,7 @@ Program {
 																																														]
 																																													}
 																																												}
-																																												AssignmentIdentifier {
+																																												JSAssignmentIdentifier {
 																																													name: "INVALID_PLACEHOLDER"
 																																													loc: Object {
 																																														filename: "input.js"

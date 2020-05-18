@@ -5,7 +5,7 @@
 ## `es2015 > let > let-block-with-newline`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentLine {
+		JSCommentLine {
 			id: "0"
 			value: " ASI"
 			loc: Object {
@@ -48,7 +48,7 @@ Program {
 		}
 	]
 	body: Array [
-		IfStatement {
+		JSIfStatement {
 			alternate: undefined
 			loc: Object {
 				filename: "input.js"
@@ -63,7 +63,7 @@ Program {
 					line: 1
 				}
 			}
-			test: BooleanLiteral {
+			test: JSBooleanLiteral {
 				value: false
 				loc: Object {
 					filename: "input.js"
@@ -79,7 +79,7 @@ Program {
 					}
 				}
 			}
-			consequent: BlockStatement {
+			consequent: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -95,7 +95,7 @@ Program {
 					}
 				}
 				body: Array [
-					LabeledStatement {
+					JSLabeledStatement {
 						trailingComments: Array ["0"]
 						loc: Object {
 							filename: "input.js"
@@ -110,7 +110,7 @@ Program {
 								line: 2
 							}
 						}
-						label: Identifier {
+						label: JSIdentifier {
 							name: "L"
 							loc: Object {
 								filename: "input.js"
@@ -127,7 +127,7 @@ Program {
 								}
 							}
 						}
-						body: ExpressionStatement {
+						body: JSExpressionStatement {
 							trailingComments: undefined
 							loc: Object {
 								filename: "input.js"
@@ -142,7 +142,7 @@ Program {
 									line: 2
 								}
 							}
-							expression: ReferenceIdentifier {
+							expression: JSReferenceIdentifier {
 								name: "let"
 								trailingComments: undefined
 								loc: Object {
@@ -162,7 +162,7 @@ Program {
 							}
 						}
 					}
-					BlockStatement {
+					JSBlockStatement {
 						body: Array []
 						directives: Array []
 						leadingComments: Array ["0"]

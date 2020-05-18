@@ -5,7 +5,7 @@
 ## `typescript > class > extends-empty`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -55,7 +55,7 @@ Program {
 	]
 	body: Array [
 		TSInterfaceDeclaration {
-			id: BindingIdentifier {
+			id: JSBindingIdentifier {
 				name: "foo"
 				loc: Object {
 					filename: "input.ts"

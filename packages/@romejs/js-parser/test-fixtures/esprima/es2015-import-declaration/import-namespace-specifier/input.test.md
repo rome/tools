@@ -5,7 +5,7 @@
 ## `esprima > es2015-import-declaration > import-namespace-specifier`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ImportDeclaration {
+		JSImportDeclaration {
 			defaultSpecifier: undefined
 			importKind: undefined
 			namedSpecifiers: Array []
@@ -47,7 +47,7 @@ Program {
 					line: 1
 				}
 			}
-			source: StringLiteral {
+			source: JSStringLiteral {
 				value: "foo"
 				loc: Object {
 					filename: "input.js"
@@ -63,7 +63,7 @@ Program {
 					}
 				}
 			}
-			namespaceSpecifier: ImportNamespaceSpecifier {
+			namespaceSpecifier: JSImportNamespaceSpecifier {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -77,8 +77,8 @@ Program {
 						line: 1
 					}
 				}
-				local: ImportSpecifierLocal {
-					name: BindingIdentifier {
+				local: JSImportSpecifierLocal {
+					name: JSBindingIdentifier {
 						name: "foo"
 						loc: Object {
 							filename: "input.js"

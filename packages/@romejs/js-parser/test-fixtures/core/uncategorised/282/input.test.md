@@ -5,7 +5,7 @@
 ## `core > uncategorised > 282`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		TryStatement {
+		JSTryStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			block: BlockStatement {
+			block: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -60,7 +60,7 @@ Program {
 					}
 				}
 				body: Array [
-					ExpressionStatement {
+					JSExpressionStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -74,7 +74,7 @@ Program {
 								line: 1
 							}
 						}
-						expression: CallExpression {
+						expression: JSCallExpression {
 							arguments: Array []
 							loc: Object {
 								filename: "input.js"
@@ -89,7 +89,7 @@ Program {
 									line: 1
 								}
 							}
-							callee: ReferenceIdentifier {
+							callee: JSReferenceIdentifier {
 								name: "doThat"
 								loc: Object {
 									filename: "input.js"
@@ -110,7 +110,7 @@ Program {
 					}
 				]
 			}
-			finalizer: BlockStatement {
+			finalizer: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -126,7 +126,7 @@ Program {
 					}
 				}
 				body: Array [
-					ExpressionStatement {
+					JSExpressionStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -140,7 +140,7 @@ Program {
 								line: 1
 							}
 						}
-						expression: CallExpression {
+						expression: JSCallExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -154,7 +154,7 @@ Program {
 									line: 1
 								}
 							}
-							callee: ReferenceIdentifier {
+							callee: JSReferenceIdentifier {
 								name: "cleanup"
 								loc: Object {
 									filename: "input.js"
@@ -172,7 +172,7 @@ Program {
 								}
 							}
 							arguments: Array [
-								ReferenceIdentifier {
+								JSReferenceIdentifier {
 									name: "stuff"
 									loc: Object {
 										filename: "input.js"
@@ -194,7 +194,7 @@ Program {
 					}
 				]
 			}
-			handler: CatchClause {
+			handler: JSCatchClause {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -208,7 +208,7 @@ Program {
 						line: 1
 					}
 				}
-				param: BindingIdentifier {
+				param: JSBindingIdentifier {
 					name: "e"
 					loc: Object {
 						filename: "input.js"
@@ -225,7 +225,7 @@ Program {
 						}
 					}
 				}
-				body: BlockStatement {
+				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
 						filename: "input.js"
@@ -241,7 +241,7 @@ Program {
 						}
 					}
 					body: Array [
-						ExpressionStatement {
+						JSExpressionStatement {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -255,7 +255,7 @@ Program {
 									line: 1
 								}
 							}
-							expression: CallExpression {
+							expression: JSCallExpression {
 								loc: Object {
 									filename: "input.js"
 									end: Object {
@@ -269,7 +269,7 @@ Program {
 										line: 1
 									}
 								}
-								callee: ReferenceIdentifier {
+								callee: JSReferenceIdentifier {
 									name: "say"
 									loc: Object {
 										filename: "input.js"
@@ -287,7 +287,7 @@ Program {
 									}
 								}
 								arguments: Array [
-									ReferenceIdentifier {
+									JSReferenceIdentifier {
 										name: "e"
 										loc: Object {
 											filename: "input.js"

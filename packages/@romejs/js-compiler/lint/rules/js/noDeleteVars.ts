@@ -6,7 +6,7 @@
  */
 
 import {Path} from "@romejs/js-compiler";
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 import {descriptions} from "@romejs/diagnostics";
 
 export default {
@@ -15,9 +15,9 @@ export default {
 		const {node} = path;
 
 		if (
-			node.type === "UnaryExpression" &&
+			node.type === "JSUnaryExpression" &&
 			node.operator === "delete" &&
-			node.argument.type === "ReferenceIdentifier"
+			node.argument.type === "JSReferenceIdentifier"
 		) {
 			path.context.addNodeDiagnostic(node, descriptions.LINT.JS_NO_DELETE_VARS);
 		}

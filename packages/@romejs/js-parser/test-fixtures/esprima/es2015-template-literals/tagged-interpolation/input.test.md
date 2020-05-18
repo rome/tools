@@ -5,7 +5,7 @@
 ## `esprima > es2015-template-literals > tagged-interpolation`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: TaggedTemplateExpression {
+			expression: JSTaggedTemplateExpression {
 				typeArguments: undefined
 				loc: Object {
 					filename: "input.js"
@@ -59,7 +59,7 @@ Program {
 						line: 1
 					}
 				}
-				tag: ReferenceIdentifier {
+				tag: JSReferenceIdentifier {
 					name: "raw"
 					loc: Object {
 						filename: "input.js"
@@ -76,7 +76,7 @@ Program {
 						}
 					}
 				}
-				quasi: TemplateLiteral {
+				quasi: JSTemplateLiteral {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -91,7 +91,7 @@ Program {
 						}
 					}
 					expressions: Array [
-						ReferenceIdentifier {
+						JSReferenceIdentifier {
 							name: "name"
 							loc: Object {
 								filename: "input.js"
@@ -110,7 +110,7 @@ Program {
 						}
 					]
 					quasis: Array [
-						TemplateElement {
+						JSTemplateElement {
 							cooked: "hello "
 							raw: "hello "
 							tail: false
@@ -128,7 +128,7 @@ Program {
 								}
 							}
 						}
-						TemplateElement {
+						JSTemplateElement {
 							cooked: ""
 							raw: ""
 							tail: true

@@ -6,7 +6,7 @@
  */
 
 import Scope from "../Scope";
-import {AnyNode, TSImportEqualsDeclaration} from "@romejs/js-ast";
+import {AnyNode, TSImportEqualsDeclaration} from "@romejs/ast";
 import {ImportBinding} from "@romejs/js-compiler";
 
 export default {

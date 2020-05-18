@@ -5,7 +5,7 @@
 ## `esprima > expression-left-hand-side > migrated_0018`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: CallExpression {
+			expression: JSCallExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -59,7 +59,7 @@ Program {
 					}
 				}
 				arguments: Array [
-					NumericLiteral {
+					JSNumericLiteral {
 						value: 2_014
 						format: undefined
 						loc: Object {
@@ -77,7 +77,7 @@ Program {
 						}
 					}
 				]
-				callee: MemberExpression {
+				callee: JSMemberExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -91,8 +91,8 @@ Program {
 							line: 1
 						}
 					}
-					property: StaticMemberProperty {
-						value: Identifier {
+					property: JSStaticMemberProperty {
+						value: JSIdentifier {
 							name: "prepareForElection"
 							loc: Object {
 								filename: "input.js"
@@ -124,7 +124,7 @@ Program {
 							}
 						}
 					}
-					object: MemberExpression {
+					object: JSMemberExpression {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -138,8 +138,8 @@ Program {
 								line: 1
 							}
 						}
-						property: StaticMemberProperty {
-							value: Identifier {
+						property: JSStaticMemberProperty {
+							value: JSIdentifier {
 								name: "Indonesia"
 								loc: Object {
 									filename: "input.js"
@@ -171,7 +171,7 @@ Program {
 								}
 							}
 						}
-						object: MemberExpression {
+						object: JSMemberExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -185,7 +185,7 @@ Program {
 									line: 1
 								}
 							}
-							object: ReferenceIdentifier {
+							object: JSReferenceIdentifier {
 								name: "earth"
 								loc: Object {
 									filename: "input.js"
@@ -202,8 +202,8 @@ Program {
 									}
 								}
 							}
-							property: StaticMemberProperty {
-								value: Identifier {
+							property: JSStaticMemberProperty {
+								value: JSIdentifier {
 									name: "asia"
 									loc: Object {
 										filename: "input.js"

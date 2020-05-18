@@ -5,7 +5,7 @@
 ## `experimental > optional-chaining > class-contructor-call`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -74,7 +74,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -88,7 +88,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: NewExpression {
+			expression: JSNewExpression {
 				arguments: Array []
 				optional: undefined
 				typeArguments: undefined
@@ -105,7 +105,7 @@ Program {
 						line: 1
 					}
 				}
-				callee: MemberExpression {
+				callee: JSMemberExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -119,8 +119,8 @@ Program {
 							line: 1
 						}
 					}
-					property: StaticMemberProperty {
-						value: Identifier {
+					property: JSStaticMemberProperty {
+						value: JSIdentifier {
 							name: "d"
 							loc: Object {
 								filename: "input.js"
@@ -152,7 +152,7 @@ Program {
 							}
 						}
 					}
-					object: MemberExpression {
+					object: JSMemberExpression {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -166,7 +166,7 @@ Program {
 								line: 1
 							}
 						}
-						object: ReferenceIdentifier {
+						object: JSReferenceIdentifier {
 							name: "C"
 							loc: Object {
 								filename: "input.js"
@@ -183,8 +183,8 @@ Program {
 								}
 							}
 						}
-						property: StaticMemberProperty {
-							value: Identifier {
+						property: JSStaticMemberProperty {
+							value: JSIdentifier {
 								name: "b"
 								loc: Object {
 									filename: "input.js"

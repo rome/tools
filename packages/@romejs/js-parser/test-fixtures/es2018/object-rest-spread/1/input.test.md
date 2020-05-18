@@ -5,7 +5,7 @@
 ## `es2018 > object-rest-spread > 1`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.js"
@@ -60,8 +60,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingObjectPattern {
+					JSVariableDeclarator {
+						id: JSBindingObjectPattern {
 							properties: Array []
 							loc: Object {
 								filename: "input.js"
@@ -76,7 +76,7 @@ Program {
 									line: 1
 								}
 							}
-							rest: BindingIdentifier {
+							rest: JSBindingIdentifier {
 								name: "x"
 								loc: Object {
 									filename: "input.js"
@@ -107,7 +107,7 @@ Program {
 								line: 1
 							}
 						}
-						init: ReferenceIdentifier {
+						init: JSReferenceIdentifier {
 							name: "z"
 							loc: Object {
 								filename: "input.js"

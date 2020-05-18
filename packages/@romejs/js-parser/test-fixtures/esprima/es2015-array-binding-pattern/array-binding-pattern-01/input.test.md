@@ -5,7 +5,7 @@
 ## `esprima > es2015-array-binding-pattern > array-binding-pattern-01`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ArrowFunctionExpression {
+			expression: JSArrowFunctionExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -58,7 +58,7 @@ Program {
 						line: 1
 					}
 				}
-				body: ArrayExpression {
+				body: JSArrayExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -73,7 +73,7 @@ Program {
 						}
 					}
 					elements: Array [
-						NumericLiteral {
+						JSNumericLiteral {
 							value: 0
 							format: undefined
 							loc: Object {
@@ -92,7 +92,7 @@ Program {
 						}
 					]
 				}
-				head: FunctionHead {
+				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
 					rest: undefined
@@ -112,7 +112,7 @@ Program {
 						}
 					}
 					params: Array [
-						BindingArrayPattern {
+						JSBindingArrayPattern {
 							rest: undefined
 							loc: Object {
 								filename: "input.js"
@@ -128,7 +128,7 @@ Program {
 								}
 							}
 							elements: Array [
-								BindingIdentifier {
+								JSBindingIdentifier {
 									name: "a"
 									loc: Object {
 										filename: "input.js"

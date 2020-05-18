@@ -5,7 +5,7 @@
 ## `esprima > invalid-syntax > migrated_0145`
 
 ```javascript
-Program {
+JSProgram {
 	body: Array []
 	comments: Array []
 	corrupt: false

@@ -7,7 +7,7 @@
 
 import {Scope} from "../scopes";
 import T from "../types/T";
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 import NumericLiteralT from "../types/NumericLiteralT";
 import StringLiteralT from "../types/StringLiteralT";
 import GetPropT from "../types/GetPropT";
@@ -18,21 +18,24 @@ export default function executeAtom(
 	scope: Scope,
 ) {
 	switch (leftNode.type) {
-		case "BindingIdentifier": {
+		case "JSBindingIdentifier": {
 			scope.addBinding(leftNode.name, rightType);
 			break;
 		}
 
-		case "BindingObjectPattern": {
+		case "JSBindingObjectPattern": {
 			for (const prop of leftNode.properties) {
 				executeAtom(prop, rightType, scope);
 			}
 			break;
 		}
 
-		case "BindingObjectPatternProperty": {
+		case "JSBindingObjectPatternProperty": {
 			const {key} = leftNode;
-			if (key.type === "ComputedPropertyKey" || key.value.type !== "Identifier") {
+			if (
+				key.type === "JSComputedPropertyKey" ||
+				key.value.type !== "JSIdentifier"
+			) {
 				throw new Error("unimplemented");
 			}
 
@@ -42,7 +45,7 @@ export default function executeAtom(
 			break;
 		}
 
-		case "BindingArrayPattern": {
+		case "JSBindingArrayPattern": {
 			for (let i = 0; i < leftNode.elements.length; i++) {
 				const elem = leftNode.elements[i];
 				if (elem === undefined) {
@@ -56,7 +59,7 @@ export default function executeAtom(
 			break;
 		}
 
-		case "BindingAssignmentPattern": {
+		case "JSBindingAssignmentPattern": {
 			executeAtom(leftNode.left, rightType, scope);
 			break;
 		}

@@ -5,7 +5,7 @@
 ## `experimental > class-private-properties > nested`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		ClassDeclaration {
-			id: BindingIdentifier {
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
 				name: "Point"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			meta: ClassHead {
+			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
@@ -80,9 +80,9 @@ Program {
 					}
 				}
 				body: Array [
-					ClassPrivateProperty {
-						key: PrivateName {
-							id: Identifier {
+					JSClassPrivateProperty {
+						key: JSPrivateName {
+							id: JSIdentifier {
 								name: "x"
 								loc: Object {
 									filename: "input.js"
@@ -113,7 +113,7 @@ Program {
 								}
 							}
 						}
-						value: NumericLiteral {
+						value: JSNumericLiteral {
 							value: 1
 							format: undefined
 							loc: Object {
@@ -144,7 +144,7 @@ Program {
 								line: 2
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -171,9 +171,9 @@ Program {
 							}
 						}
 					}
-					ClassPrivateProperty {
-						key: PrivateName {
-							id: Identifier {
+					JSClassPrivateProperty {
+						key: JSPrivateName {
+							id: JSIdentifier {
 								name: "y"
 								loc: Object {
 									filename: "input.js"
@@ -204,7 +204,7 @@ Program {
 								}
 							}
 						}
-						value: NumericLiteral {
+						value: JSNumericLiteral {
 							value: 2
 							format: undefined
 							loc: Object {
@@ -235,7 +235,7 @@ Program {
 								line: 3
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -262,10 +262,10 @@ Program {
 							}
 						}
 					}
-					ClassMethod {
+					JSClassMethod {
 						kind: "constructor"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "constructor"
 								loc: Object {
 									filename: "input.js"
@@ -309,7 +309,7 @@ Program {
 								line: 5
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -335,7 +335,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -357,7 +357,7 @@ Program {
 								}
 							}
 							params: Array [
-								BindingAssignmentPattern {
+								JSBindingAssignmentPattern {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -371,7 +371,7 @@ Program {
 											line: 5
 										}
 									}
-									right: NumericLiteral {
+									right: JSNumericLiteral {
 										value: 0
 										format: undefined
 										loc: Object {
@@ -388,7 +388,7 @@ Program {
 											}
 										}
 									}
-									left: BindingIdentifier {
+									left: JSBindingIdentifier {
 										name: "x"
 										loc: Object {
 											filename: "input.js"
@@ -404,7 +404,7 @@ Program {
 												line: 5
 											}
 										}
-										meta: PatternMeta {
+										meta: JSPatternMeta {
 											optional: undefined
 											typeAnnotation: undefined
 											loc: Object {
@@ -423,7 +423,7 @@ Program {
 										}
 									}
 								}
-								BindingAssignmentPattern {
+								JSBindingAssignmentPattern {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -437,7 +437,7 @@ Program {
 											line: 5
 										}
 									}
-									right: NumericLiteral {
+									right: JSNumericLiteral {
 										value: 0
 										format: undefined
 										loc: Object {
@@ -454,7 +454,7 @@ Program {
 											}
 										}
 									}
-									left: BindingIdentifier {
+									left: JSBindingIdentifier {
 										name: "y"
 										loc: Object {
 											filename: "input.js"
@@ -470,7 +470,7 @@ Program {
 												line: 5
 											}
 										}
-										meta: PatternMeta {
+										meta: JSPatternMeta {
 											optional: undefined
 											typeAnnotation: undefined
 											loc: Object {
@@ -491,7 +491,7 @@ Program {
 								}
 							]
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
 								filename: "input.js"
@@ -507,7 +507,7 @@ Program {
 								}
 							}
 							body: Array [
-								ExpressionStatement {
+								JSExpressionStatement {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -521,7 +521,7 @@ Program {
 											line: 6
 										}
 									}
-									expression: AssignmentExpression {
+									expression: JSAssignmentExpression {
 										operator: "="
 										loc: Object {
 											filename: "input.js"
@@ -536,7 +536,7 @@ Program {
 												line: 6
 											}
 										}
-										right: UnaryExpression {
+										right: JSUnaryExpression {
 											operator: "+"
 											prefix: true
 											loc: Object {
@@ -552,7 +552,7 @@ Program {
 													line: 6
 												}
 											}
-											argument: ReferenceIdentifier {
+											argument: JSReferenceIdentifier {
 												name: "x"
 												loc: Object {
 													filename: "input.js"
@@ -570,7 +570,7 @@ Program {
 												}
 											}
 										}
-										left: MemberExpression {
+										left: JSMemberExpression {
 											loc: Object {
 												filename: "input.js"
 												end: Object {
@@ -584,7 +584,7 @@ Program {
 													line: 6
 												}
 											}
-											object: ThisExpression {
+											object: JSThisExpression {
 												loc: Object {
 													filename: "input.js"
 													end: Object {
@@ -599,9 +599,9 @@ Program {
 													}
 												}
 											}
-											property: StaticMemberProperty {
-												value: PrivateName {
-													id: Identifier {
+											property: JSStaticMemberProperty {
+												value: JSPrivateName {
+													id: JSIdentifier {
 														name: "x"
 														loc: Object {
 															filename: "input.js"
@@ -649,7 +649,7 @@ Program {
 										}
 									}
 								}
-								ExpressionStatement {
+								JSExpressionStatement {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -663,7 +663,7 @@ Program {
 											line: 7
 										}
 									}
-									expression: AssignmentExpression {
+									expression: JSAssignmentExpression {
 										operator: "="
 										loc: Object {
 											filename: "input.js"
@@ -678,7 +678,7 @@ Program {
 												line: 7
 											}
 										}
-										right: UnaryExpression {
+										right: JSUnaryExpression {
 											operator: "+"
 											prefix: true
 											loc: Object {
@@ -694,7 +694,7 @@ Program {
 													line: 7
 												}
 											}
-											argument: ReferenceIdentifier {
+											argument: JSReferenceIdentifier {
 												name: "y"
 												loc: Object {
 													filename: "input.js"
@@ -712,7 +712,7 @@ Program {
 												}
 											}
 										}
-										left: MemberExpression {
+										left: JSMemberExpression {
 											loc: Object {
 												filename: "input.js"
 												end: Object {
@@ -726,7 +726,7 @@ Program {
 													line: 7
 												}
 											}
-											object: ThisExpression {
+											object: JSThisExpression {
 												loc: Object {
 													filename: "input.js"
 													end: Object {
@@ -741,9 +741,9 @@ Program {
 													}
 												}
 											}
-											property: StaticMemberProperty {
-												value: PrivateName {
-													id: Identifier {
+											property: JSStaticMemberProperty {
+												value: JSPrivateName {
+													id: JSIdentifier {
 														name: "y"
 														loc: Object {
 															filename: "input.js"
@@ -791,7 +791,7 @@ Program {
 										}
 									}
 								}
-								ExpressionStatement {
+								JSExpressionStatement {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -805,7 +805,7 @@ Program {
 											line: 9
 										}
 									}
-									expression: AssignmentExpression {
+									expression: JSAssignmentExpression {
 										operator: "="
 										loc: Object {
 											filename: "input.js"
@@ -820,7 +820,7 @@ Program {
 												line: 9
 											}
 										}
-										left: MemberExpression {
+										left: JSMemberExpression {
 											loc: Object {
 												filename: "input.js"
 												end: Object {
@@ -834,7 +834,7 @@ Program {
 													line: 9
 												}
 											}
-											object: ThisExpression {
+											object: JSThisExpression {
 												loc: Object {
 													filename: "input.js"
 													end: Object {
@@ -849,8 +849,8 @@ Program {
 													}
 												}
 											}
-											property: StaticMemberProperty {
-												value: Identifier {
+											property: JSStaticMemberProperty {
+												value: JSIdentifier {
 													name: "foo"
 													loc: Object {
 														filename: "input.js"
@@ -883,7 +883,7 @@ Program {
 												}
 											}
 										}
-										right: ClassExpression {
+										right: JSClassExpression {
 											id: undefined
 											loc: Object {
 												filename: "input.js"
@@ -898,7 +898,7 @@ Program {
 													line: 9
 												}
 											}
-											meta: ClassHead {
+											meta: JSClassHead {
 												implements: undefined
 												superClass: undefined
 												superTypeParameters: undefined
@@ -917,9 +917,9 @@ Program {
 													}
 												}
 												body: Array [
-													ClassPrivateProperty {
-														key: PrivateName {
-															id: Identifier {
+													JSClassPrivateProperty {
+														key: JSPrivateName {
+															id: JSIdentifier {
 																name: "x"
 																loc: Object {
 																	filename: "input.js"
@@ -950,7 +950,7 @@ Program {
 																}
 															}
 														}
-														value: NumericLiteral {
+														value: JSNumericLiteral {
 															value: 1
 															format: undefined
 															loc: Object {
@@ -981,7 +981,7 @@ Program {
 																line: 10
 															}
 														}
-														meta: ClassPropertyMeta {
+														meta: JSClassPropertyMeta {
 															abstract: false
 															accessibility: undefined
 															optional: false
@@ -1008,9 +1008,9 @@ Program {
 															}
 														}
 													}
-													ClassPrivateProperty {
-														key: PrivateName {
-															id: Identifier {
+													JSClassPrivateProperty {
+														key: JSPrivateName {
+															id: JSIdentifier {
 																name: "y"
 																loc: Object {
 																	filename: "input.js"
@@ -1041,7 +1041,7 @@ Program {
 																}
 															}
 														}
-														value: NumericLiteral {
+														value: JSNumericLiteral {
 															value: 2
 															format: undefined
 															loc: Object {
@@ -1072,7 +1072,7 @@ Program {
 																line: 11
 															}
 														}
-														meta: ClassPropertyMeta {
+														meta: JSClassPropertyMeta {
 															abstract: false
 															accessibility: undefined
 															optional: false
@@ -1099,10 +1099,10 @@ Program {
 															}
 														}
 													}
-													ClassMethod {
+													JSClassMethod {
 														kind: "constructor"
-														key: StaticPropertyKey {
-															value: Identifier {
+														key: JSStaticPropertyKey {
+															value: JSIdentifier {
 																name: "constructor"
 																loc: Object {
 																	filename: "input.js"
@@ -1146,7 +1146,7 @@ Program {
 																line: 13
 															}
 														}
-														meta: ClassPropertyMeta {
+														meta: JSClassPropertyMeta {
 															abstract: false
 															accessibility: undefined
 															optional: false
@@ -1172,7 +1172,7 @@ Program {
 																}
 															}
 														}
-														head: FunctionHead {
+														head: JSFunctionHead {
 															async: false
 															generator: false
 															hasHoistedVars: false
@@ -1194,7 +1194,7 @@ Program {
 																}
 															}
 															params: Array [
-																BindingAssignmentPattern {
+																JSBindingAssignmentPattern {
 																	loc: Object {
 																		filename: "input.js"
 																		end: Object {
@@ -1208,7 +1208,7 @@ Program {
 																			line: 13
 																		}
 																	}
-																	right: NumericLiteral {
+																	right: JSNumericLiteral {
 																		value: 0
 																		format: undefined
 																		loc: Object {
@@ -1225,7 +1225,7 @@ Program {
 																			}
 																		}
 																	}
-																	left: BindingIdentifier {
+																	left: JSBindingIdentifier {
 																		name: "x"
 																		loc: Object {
 																			filename: "input.js"
@@ -1241,7 +1241,7 @@ Program {
 																				line: 13
 																			}
 																		}
-																		meta: PatternMeta {
+																		meta: JSPatternMeta {
 																			optional: undefined
 																			typeAnnotation: undefined
 																			loc: Object {
@@ -1260,7 +1260,7 @@ Program {
 																		}
 																	}
 																}
-																BindingAssignmentPattern {
+																JSBindingAssignmentPattern {
 																	loc: Object {
 																		filename: "input.js"
 																		end: Object {
@@ -1274,7 +1274,7 @@ Program {
 																			line: 13
 																		}
 																	}
-																	right: NumericLiteral {
+																	right: JSNumericLiteral {
 																		value: 0
 																		format: undefined
 																		loc: Object {
@@ -1291,7 +1291,7 @@ Program {
 																			}
 																		}
 																	}
-																	left: BindingIdentifier {
+																	left: JSBindingIdentifier {
 																		name: "y"
 																		loc: Object {
 																			filename: "input.js"
@@ -1307,7 +1307,7 @@ Program {
 																				line: 13
 																			}
 																		}
-																		meta: PatternMeta {
+																		meta: JSPatternMeta {
 																			optional: undefined
 																			typeAnnotation: undefined
 																			loc: Object {
@@ -1328,7 +1328,7 @@ Program {
 																}
 															]
 														}
-														body: BlockStatement {
+														body: JSBlockStatement {
 															directives: Array []
 															loc: Object {
 																filename: "input.js"
@@ -1344,7 +1344,7 @@ Program {
 																}
 															}
 															body: Array [
-																ExpressionStatement {
+																JSExpressionStatement {
 																	loc: Object {
 																		filename: "input.js"
 																		end: Object {
@@ -1358,7 +1358,7 @@ Program {
 																			line: 14
 																		}
 																	}
-																	expression: AssignmentExpression {
+																	expression: JSAssignmentExpression {
 																		operator: "="
 																		loc: Object {
 																			filename: "input.js"
@@ -1373,7 +1373,7 @@ Program {
 																				line: 14
 																			}
 																		}
-																		right: UnaryExpression {
+																		right: JSUnaryExpression {
 																			operator: "+"
 																			prefix: true
 																			loc: Object {
@@ -1389,7 +1389,7 @@ Program {
 																					line: 14
 																				}
 																			}
-																			argument: ReferenceIdentifier {
+																			argument: JSReferenceIdentifier {
 																				name: "x"
 																				loc: Object {
 																					filename: "input.js"
@@ -1407,7 +1407,7 @@ Program {
 																				}
 																			}
 																		}
-																		left: MemberExpression {
+																		left: JSMemberExpression {
 																			loc: Object {
 																				filename: "input.js"
 																				end: Object {
@@ -1421,7 +1421,7 @@ Program {
 																					line: 14
 																				}
 																			}
-																			object: ThisExpression {
+																			object: JSThisExpression {
 																				loc: Object {
 																					filename: "input.js"
 																					end: Object {
@@ -1436,9 +1436,9 @@ Program {
 																					}
 																				}
 																			}
-																			property: StaticMemberProperty {
-																				value: PrivateName {
-																					id: Identifier {
+																			property: JSStaticMemberProperty {
+																				value: JSPrivateName {
+																					id: JSIdentifier {
 																						name: "x"
 																						loc: Object {
 																							filename: "input.js"
@@ -1486,7 +1486,7 @@ Program {
 																		}
 																	}
 																}
-																ExpressionStatement {
+																JSExpressionStatement {
 																	loc: Object {
 																		filename: "input.js"
 																		end: Object {
@@ -1500,7 +1500,7 @@ Program {
 																			line: 15
 																		}
 																	}
-																	expression: AssignmentExpression {
+																	expression: JSAssignmentExpression {
 																		operator: "="
 																		loc: Object {
 																			filename: "input.js"
@@ -1515,7 +1515,7 @@ Program {
 																				line: 15
 																			}
 																		}
-																		right: UnaryExpression {
+																		right: JSUnaryExpression {
 																			operator: "+"
 																			prefix: true
 																			loc: Object {
@@ -1531,7 +1531,7 @@ Program {
 																					line: 15
 																				}
 																			}
-																			argument: ReferenceIdentifier {
+																			argument: JSReferenceIdentifier {
 																				name: "y"
 																				loc: Object {
 																					filename: "input.js"
@@ -1549,7 +1549,7 @@ Program {
 																				}
 																			}
 																		}
-																		left: MemberExpression {
+																		left: JSMemberExpression {
 																			loc: Object {
 																				filename: "input.js"
 																				end: Object {
@@ -1563,7 +1563,7 @@ Program {
 																					line: 15
 																				}
 																			}
-																			object: ThisExpression {
+																			object: JSThisExpression {
 																				loc: Object {
 																					filename: "input.js"
 																					end: Object {
@@ -1578,9 +1578,9 @@ Program {
 																					}
 																				}
 																			}
-																			property: StaticMemberProperty {
-																				value: PrivateName {
-																					id: Identifier {
+																			property: JSStaticMemberProperty {
+																				value: JSPrivateName {
+																					id: JSIdentifier {
 																						name: "y"
 																						loc: Object {
 																							filename: "input.js"
@@ -1631,10 +1631,10 @@ Program {
 															]
 														}
 													}
-													ClassMethod {
+													JSClassMethod {
 														kind: "get"
-														key: StaticPropertyKey {
-															value: Identifier {
+														key: JSStaticPropertyKey {
+															value: JSIdentifier {
 																name: "x"
 																loc: Object {
 																	filename: "input.js"
@@ -1678,7 +1678,7 @@ Program {
 																line: 18
 															}
 														}
-														head: FunctionHead {
+														head: JSFunctionHead {
 															async: false
 															generator: false
 															hasHoistedVars: false
@@ -1701,7 +1701,7 @@ Program {
 																}
 															}
 														}
-														meta: ClassPropertyMeta {
+														meta: JSClassPropertyMeta {
 															abstract: false
 															accessibility: undefined
 															optional: false
@@ -1727,7 +1727,7 @@ Program {
 																}
 															}
 														}
-														body: BlockStatement {
+														body: JSBlockStatement {
 															directives: Array []
 															loc: Object {
 																filename: "input.js"
@@ -1743,7 +1743,7 @@ Program {
 																}
 															}
 															body: Array [
-																ReturnStatement {
+																JSReturnStatement {
 																	loc: Object {
 																		filename: "input.js"
 																		end: Object {
@@ -1757,7 +1757,7 @@ Program {
 																			line: 18
 																		}
 																	}
-																	argument: MemberExpression {
+																	argument: JSMemberExpression {
 																		loc: Object {
 																			filename: "input.js"
 																			end: Object {
@@ -1771,7 +1771,7 @@ Program {
 																				line: 18
 																			}
 																		}
-																		object: ThisExpression {
+																		object: JSThisExpression {
 																			loc: Object {
 																				filename: "input.js"
 																				end: Object {
@@ -1786,9 +1786,9 @@ Program {
 																				}
 																			}
 																		}
-																		property: StaticMemberProperty {
-																			value: PrivateName {
-																				id: Identifier {
+																		property: JSStaticMemberProperty {
+																			value: JSPrivateName {
+																				id: JSIdentifier {
 																					name: "x"
 																					loc: Object {
 																						filename: "input.js"
@@ -1838,10 +1838,10 @@ Program {
 															]
 														}
 													}
-													ClassMethod {
+													JSClassMethod {
 														kind: "set"
-														key: StaticPropertyKey {
-															value: Identifier {
+														key: JSStaticPropertyKey {
+															value: JSIdentifier {
 																name: "x"
 																loc: Object {
 																	filename: "input.js"
@@ -1885,7 +1885,7 @@ Program {
 																line: 19
 															}
 														}
-														meta: ClassPropertyMeta {
+														meta: JSClassPropertyMeta {
 															abstract: false
 															accessibility: undefined
 															optional: false
@@ -1911,7 +1911,7 @@ Program {
 																}
 															}
 														}
-														head: FunctionHead {
+														head: JSFunctionHead {
 															async: false
 															generator: false
 															hasHoistedVars: false
@@ -1933,7 +1933,7 @@ Program {
 																}
 															}
 															params: Array [
-																BindingIdentifier {
+																JSBindingIdentifier {
 																	name: "value"
 																	loc: Object {
 																		filename: "input.js"
@@ -1949,7 +1949,7 @@ Program {
 																			line: 19
 																		}
 																	}
-																	meta: PatternMeta {
+																	meta: JSPatternMeta {
 																		optional: undefined
 																		typeAnnotation: undefined
 																		loc: Object {
@@ -1969,7 +1969,7 @@ Program {
 																}
 															]
 														}
-														body: BlockStatement {
+														body: JSBlockStatement {
 															directives: Array []
 															loc: Object {
 																filename: "input.js"
@@ -1985,7 +1985,7 @@ Program {
 																}
 															}
 															body: Array [
-																ExpressionStatement {
+																JSExpressionStatement {
 																	loc: Object {
 																		filename: "input.js"
 																		end: Object {
@@ -1999,7 +1999,7 @@ Program {
 																			line: 19
 																		}
 																	}
-																	expression: AssignmentExpression {
+																	expression: JSAssignmentExpression {
 																		operator: "="
 																		loc: Object {
 																			filename: "input.js"
@@ -2014,7 +2014,7 @@ Program {
 																				line: 19
 																			}
 																		}
-																		right: UnaryExpression {
+																		right: JSUnaryExpression {
 																			operator: "+"
 																			prefix: true
 																			loc: Object {
@@ -2030,7 +2030,7 @@ Program {
 																					line: 19
 																				}
 																			}
-																			argument: ReferenceIdentifier {
+																			argument: JSReferenceIdentifier {
 																				name: "value"
 																				loc: Object {
 																					filename: "input.js"
@@ -2048,7 +2048,7 @@ Program {
 																				}
 																			}
 																		}
-																		left: MemberExpression {
+																		left: JSMemberExpression {
 																			loc: Object {
 																				filename: "input.js"
 																				end: Object {
@@ -2062,7 +2062,7 @@ Program {
 																					line: 19
 																				}
 																			}
-																			object: ThisExpression {
+																			object: JSThisExpression {
 																				loc: Object {
 																					filename: "input.js"
 																					end: Object {
@@ -2077,9 +2077,9 @@ Program {
 																					}
 																				}
 																			}
-																			property: StaticMemberProperty {
-																				value: PrivateName {
-																					id: Identifier {
+																			property: JSStaticMemberProperty {
+																				value: JSPrivateName {
+																					id: JSIdentifier {
 																						name: "x"
 																						loc: Object {
 																							filename: "input.js"
@@ -2130,10 +2130,10 @@ Program {
 															]
 														}
 													}
-													ClassMethod {
+													JSClassMethod {
 														kind: "get"
-														key: StaticPropertyKey {
-															value: Identifier {
+														key: JSStaticPropertyKey {
+															value: JSIdentifier {
 																name: "y"
 																loc: Object {
 																	filename: "input.js"
@@ -2177,7 +2177,7 @@ Program {
 																line: 21
 															}
 														}
-														head: FunctionHead {
+														head: JSFunctionHead {
 															async: false
 															generator: false
 															hasHoistedVars: false
@@ -2200,7 +2200,7 @@ Program {
 																}
 															}
 														}
-														meta: ClassPropertyMeta {
+														meta: JSClassPropertyMeta {
 															abstract: false
 															accessibility: undefined
 															optional: false
@@ -2226,7 +2226,7 @@ Program {
 																}
 															}
 														}
-														body: BlockStatement {
+														body: JSBlockStatement {
 															directives: Array []
 															loc: Object {
 																filename: "input.js"
@@ -2242,7 +2242,7 @@ Program {
 																}
 															}
 															body: Array [
-																ReturnStatement {
+																JSReturnStatement {
 																	loc: Object {
 																		filename: "input.js"
 																		end: Object {
@@ -2256,7 +2256,7 @@ Program {
 																			line: 21
 																		}
 																	}
-																	argument: MemberExpression {
+																	argument: JSMemberExpression {
 																		loc: Object {
 																			filename: "input.js"
 																			end: Object {
@@ -2270,7 +2270,7 @@ Program {
 																				line: 21
 																			}
 																		}
-																		object: ThisExpression {
+																		object: JSThisExpression {
 																			loc: Object {
 																				filename: "input.js"
 																				end: Object {
@@ -2285,9 +2285,9 @@ Program {
 																				}
 																			}
 																		}
-																		property: StaticMemberProperty {
-																			value: PrivateName {
-																				id: Identifier {
+																		property: JSStaticMemberProperty {
+																			value: JSPrivateName {
+																				id: JSIdentifier {
 																					name: "y"
 																					loc: Object {
 																						filename: "input.js"
@@ -2337,10 +2337,10 @@ Program {
 															]
 														}
 													}
-													ClassMethod {
+													JSClassMethod {
 														kind: "set"
-														key: StaticPropertyKey {
-															value: Identifier {
+														key: JSStaticPropertyKey {
+															value: JSIdentifier {
 																name: "y"
 																loc: Object {
 																	filename: "input.js"
@@ -2384,7 +2384,7 @@ Program {
 																line: 22
 															}
 														}
-														meta: ClassPropertyMeta {
+														meta: JSClassPropertyMeta {
 															abstract: false
 															accessibility: undefined
 															optional: false
@@ -2410,7 +2410,7 @@ Program {
 																}
 															}
 														}
-														head: FunctionHead {
+														head: JSFunctionHead {
 															async: false
 															generator: false
 															hasHoistedVars: false
@@ -2432,7 +2432,7 @@ Program {
 																}
 															}
 															params: Array [
-																BindingIdentifier {
+																JSBindingIdentifier {
 																	name: "value"
 																	loc: Object {
 																		filename: "input.js"
@@ -2448,7 +2448,7 @@ Program {
 																			line: 22
 																		}
 																	}
-																	meta: PatternMeta {
+																	meta: JSPatternMeta {
 																		optional: undefined
 																		typeAnnotation: undefined
 																		loc: Object {
@@ -2468,7 +2468,7 @@ Program {
 																}
 															]
 														}
-														body: BlockStatement {
+														body: JSBlockStatement {
 															directives: Array []
 															loc: Object {
 																filename: "input.js"
@@ -2484,7 +2484,7 @@ Program {
 																}
 															}
 															body: Array [
-																ExpressionStatement {
+																JSExpressionStatement {
 																	loc: Object {
 																		filename: "input.js"
 																		end: Object {
@@ -2498,7 +2498,7 @@ Program {
 																			line: 22
 																		}
 																	}
-																	expression: AssignmentExpression {
+																	expression: JSAssignmentExpression {
 																		operator: "="
 																		loc: Object {
 																			filename: "input.js"
@@ -2513,7 +2513,7 @@ Program {
 																				line: 22
 																			}
 																		}
-																		right: UnaryExpression {
+																		right: JSUnaryExpression {
 																			operator: "+"
 																			prefix: true
 																			loc: Object {
@@ -2529,7 +2529,7 @@ Program {
 																					line: 22
 																				}
 																			}
-																			argument: ReferenceIdentifier {
+																			argument: JSReferenceIdentifier {
 																				name: "value"
 																				loc: Object {
 																					filename: "input.js"
@@ -2547,7 +2547,7 @@ Program {
 																				}
 																			}
 																		}
-																		left: MemberExpression {
+																		left: JSMemberExpression {
 																			loc: Object {
 																				filename: "input.js"
 																				end: Object {
@@ -2561,7 +2561,7 @@ Program {
 																					line: 22
 																				}
 																			}
-																			object: ThisExpression {
+																			object: JSThisExpression {
 																				loc: Object {
 																					filename: "input.js"
 																					end: Object {
@@ -2576,9 +2576,9 @@ Program {
 																					}
 																				}
 																			}
-																			property: StaticMemberProperty {
-																				value: PrivateName {
-																					id: Identifier {
+																			property: JSStaticMemberProperty {
+																				value: JSPrivateName {
+																					id: JSIdentifier {
 																						name: "y"
 																						loc: Object {
 																							filename: "input.js"
@@ -2629,10 +2629,10 @@ Program {
 															]
 														}
 													}
-													ClassMethod {
+													JSClassMethod {
 														kind: "method"
-														key: StaticPropertyKey {
-															value: Identifier {
+														key: JSStaticPropertyKey {
+															value: JSIdentifier {
 																name: "equals"
 																loc: Object {
 																	filename: "input.js"
@@ -2676,7 +2676,7 @@ Program {
 																line: 24
 															}
 														}
-														meta: ClassPropertyMeta {
+														meta: JSClassPropertyMeta {
 															abstract: false
 															accessibility: undefined
 															optional: false
@@ -2702,7 +2702,7 @@ Program {
 																}
 															}
 														}
-														head: FunctionHead {
+														head: JSFunctionHead {
 															async: false
 															generator: false
 															hasHoistedVars: false
@@ -2724,7 +2724,7 @@ Program {
 																}
 															}
 															params: Array [
-																BindingIdentifier {
+																JSBindingIdentifier {
 																	name: "p"
 																	loc: Object {
 																		filename: "input.js"
@@ -2740,7 +2740,7 @@ Program {
 																			line: 24
 																		}
 																	}
-																	meta: PatternMeta {
+																	meta: JSPatternMeta {
 																		optional: undefined
 																		typeAnnotation: undefined
 																		loc: Object {
@@ -2760,7 +2760,7 @@ Program {
 																}
 															]
 														}
-														body: BlockStatement {
+														body: JSBlockStatement {
 															directives: Array []
 															loc: Object {
 																filename: "input.js"
@@ -2776,7 +2776,7 @@ Program {
 																}
 															}
 															body: Array [
-																ReturnStatement {
+																JSReturnStatement {
 																	loc: Object {
 																		filename: "input.js"
 																		end: Object {
@@ -2790,7 +2790,7 @@ Program {
 																			line: 24
 																		}
 																	}
-																	argument: LogicalExpression {
+																	argument: JSLogicalExpression {
 																		operator: "&&"
 																		loc: Object {
 																			filename: "input.js"
@@ -2805,7 +2805,7 @@ Program {
 																				line: 24
 																			}
 																		}
-																		left: BinaryExpression {
+																		left: JSBinaryExpression {
 																			operator: "==="
 																			loc: Object {
 																				filename: "input.js"
@@ -2820,7 +2820,7 @@ Program {
 																					line: 24
 																				}
 																			}
-																			left: MemberExpression {
+																			left: JSMemberExpression {
 																				loc: Object {
 																					filename: "input.js"
 																					end: Object {
@@ -2834,7 +2834,7 @@ Program {
 																						line: 24
 																					}
 																				}
-																				object: ThisExpression {
+																				object: JSThisExpression {
 																					loc: Object {
 																						filename: "input.js"
 																						end: Object {
@@ -2849,9 +2849,9 @@ Program {
 																						}
 																					}
 																				}
-																				property: StaticMemberProperty {
-																					value: PrivateName {
-																						id: Identifier {
+																				property: JSStaticMemberProperty {
+																					value: JSPrivateName {
+																						id: JSIdentifier {
 																							name: "x"
 																							loc: Object {
 																								filename: "input.js"
@@ -2897,7 +2897,7 @@ Program {
 																					}
 																				}
 																			}
-																			right: MemberExpression {
+																			right: JSMemberExpression {
 																				loc: Object {
 																					filename: "input.js"
 																					end: Object {
@@ -2911,7 +2911,7 @@ Program {
 																						line: 24
 																					}
 																				}
-																				object: ReferenceIdentifier {
+																				object: JSReferenceIdentifier {
 																					name: "p"
 																					loc: Object {
 																						filename: "input.js"
@@ -2928,9 +2928,9 @@ Program {
 																						}
 																					}
 																				}
-																				property: StaticMemberProperty {
-																					value: PrivateName {
-																						id: Identifier {
+																				property: JSStaticMemberProperty {
+																					value: JSPrivateName {
+																						id: JSIdentifier {
 																							name: "x"
 																							loc: Object {
 																								filename: "input.js"
@@ -2977,7 +2977,7 @@ Program {
 																				}
 																			}
 																		}
-																		right: BinaryExpression {
+																		right: JSBinaryExpression {
 																			operator: "==="
 																			loc: Object {
 																				filename: "input.js"
@@ -2992,7 +2992,7 @@ Program {
 																					line: 24
 																				}
 																			}
-																			left: MemberExpression {
+																			left: JSMemberExpression {
 																				loc: Object {
 																					filename: "input.js"
 																					end: Object {
@@ -3006,7 +3006,7 @@ Program {
 																						line: 24
 																					}
 																				}
-																				object: ThisExpression {
+																				object: JSThisExpression {
 																					loc: Object {
 																						filename: "input.js"
 																						end: Object {
@@ -3021,9 +3021,9 @@ Program {
 																						}
 																					}
 																				}
-																				property: StaticMemberProperty {
-																					value: PrivateName {
-																						id: Identifier {
+																				property: JSStaticMemberProperty {
+																					value: JSPrivateName {
+																						id: JSIdentifier {
 																							name: "y"
 																							loc: Object {
 																								filename: "input.js"
@@ -3069,7 +3069,7 @@ Program {
 																					}
 																				}
 																			}
-																			right: MemberExpression {
+																			right: JSMemberExpression {
 																				loc: Object {
 																					filename: "input.js"
 																					end: Object {
@@ -3083,7 +3083,7 @@ Program {
 																						line: 24
 																					}
 																				}
-																				object: ReferenceIdentifier {
+																				object: JSReferenceIdentifier {
 																					name: "p"
 																					loc: Object {
 																						filename: "input.js"
@@ -3100,9 +3100,9 @@ Program {
 																						}
 																					}
 																				}
-																				property: StaticMemberProperty {
-																					value: PrivateName {
-																						id: Identifier {
+																				property: JSStaticMemberProperty {
+																					value: JSPrivateName {
+																						id: JSIdentifier {
 																							name: "y"
 																							loc: Object {
 																								filename: "input.js"
@@ -3154,10 +3154,10 @@ Program {
 															]
 														}
 													}
-													ClassMethod {
+													JSClassMethod {
 														kind: "method"
-														key: StaticPropertyKey {
-															value: Identifier {
+														key: JSStaticPropertyKey {
+															value: JSIdentifier {
 																name: "toString"
 																loc: Object {
 																	filename: "input.js"
@@ -3201,7 +3201,7 @@ Program {
 																line: 26
 															}
 														}
-														head: FunctionHead {
+														head: JSFunctionHead {
 															async: false
 															generator: false
 															hasHoistedVars: false
@@ -3224,7 +3224,7 @@ Program {
 																}
 															}
 														}
-														meta: ClassPropertyMeta {
+														meta: JSClassPropertyMeta {
 															abstract: false
 															accessibility: undefined
 															optional: false
@@ -3250,7 +3250,7 @@ Program {
 																}
 															}
 														}
-														body: BlockStatement {
+														body: JSBlockStatement {
 															directives: Array []
 															loc: Object {
 																filename: "input.js"
@@ -3266,7 +3266,7 @@ Program {
 																}
 															}
 															body: Array [
-																ReturnStatement {
+																JSReturnStatement {
 																	loc: Object {
 																		filename: "input.js"
 																		end: Object {
@@ -3280,7 +3280,7 @@ Program {
 																			line: 26
 																		}
 																	}
-																	argument: TemplateLiteral {
+																	argument: JSTemplateLiteral {
 																		loc: Object {
 																			filename: "input.js"
 																			end: Object {
@@ -3295,7 +3295,7 @@ Program {
 																			}
 																		}
 																		quasis: Array [
-																			TemplateElement {
+																			JSTemplateElement {
 																				cooked: "Point<"
 																				raw: "Point<"
 																				tail: false
@@ -3313,7 +3313,7 @@ Program {
 																					}
 																				}
 																			}
-																			TemplateElement {
+																			JSTemplateElement {
 																				cooked: ","
 																				raw: ","
 																				tail: false
@@ -3331,7 +3331,7 @@ Program {
 																					}
 																				}
 																			}
-																			TemplateElement {
+																			JSTemplateElement {
 																				cooked: ">"
 																				raw: ">"
 																				tail: true
@@ -3351,7 +3351,7 @@ Program {
 																			}
 																		]
 																		expressions: Array [
-																			MemberExpression {
+																			JSMemberExpression {
 																				loc: Object {
 																					filename: "input.js"
 																					end: Object {
@@ -3365,7 +3365,7 @@ Program {
 																						line: 26
 																					}
 																				}
-																				object: ThisExpression {
+																				object: JSThisExpression {
 																					loc: Object {
 																						filename: "input.js"
 																						end: Object {
@@ -3380,9 +3380,9 @@ Program {
 																						}
 																					}
 																				}
-																				property: StaticMemberProperty {
-																					value: PrivateName {
-																						id: Identifier {
+																				property: JSStaticMemberProperty {
+																					value: JSPrivateName {
+																						id: JSIdentifier {
 																							name: "x"
 																							loc: Object {
 																								filename: "input.js"
@@ -3428,7 +3428,7 @@ Program {
 																					}
 																				}
 																			}
-																			MemberExpression {
+																			JSMemberExpression {
 																				loc: Object {
 																					filename: "input.js"
 																					end: Object {
@@ -3442,7 +3442,7 @@ Program {
 																						line: 26
 																					}
 																				}
-																				object: ThisExpression {
+																				object: JSThisExpression {
 																					loc: Object {
 																						filename: "input.js"
 																						end: Object {
@@ -3457,9 +3457,9 @@ Program {
 																						}
 																					}
 																				}
-																				property: StaticMemberProperty {
-																					value: PrivateName {
-																						id: Identifier {
+																				property: JSStaticMemberProperty {
+																					value: JSPrivateName {
+																						id: JSIdentifier {
 																							name: "y"
 																							loc: Object {
 																								filename: "input.js"
@@ -3519,10 +3519,10 @@ Program {
 							]
 						}
 					}
-					ClassMethod {
+					JSClassMethod {
 						kind: "get"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "x"
 								loc: Object {
 									filename: "input.js"
@@ -3566,7 +3566,7 @@ Program {
 								line: 30
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -3589,7 +3589,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -3615,7 +3615,7 @@ Program {
 								}
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
 								filename: "input.js"
@@ -3631,7 +3631,7 @@ Program {
 								}
 							}
 							body: Array [
-								ReturnStatement {
+								JSReturnStatement {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -3645,7 +3645,7 @@ Program {
 											line: 30
 										}
 									}
-									argument: MemberExpression {
+									argument: JSMemberExpression {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -3659,7 +3659,7 @@ Program {
 												line: 30
 											}
 										}
-										object: ThisExpression {
+										object: JSThisExpression {
 											loc: Object {
 												filename: "input.js"
 												end: Object {
@@ -3674,9 +3674,9 @@ Program {
 												}
 											}
 										}
-										property: StaticMemberProperty {
-											value: PrivateName {
-												id: Identifier {
+										property: JSStaticMemberProperty {
+											value: JSPrivateName {
+												id: JSIdentifier {
 													name: "x"
 													loc: Object {
 														filename: "input.js"
@@ -3726,10 +3726,10 @@ Program {
 							]
 						}
 					}
-					ClassMethod {
+					JSClassMethod {
 						kind: "set"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "x"
 								loc: Object {
 									filename: "input.js"
@@ -3773,7 +3773,7 @@ Program {
 								line: 31
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -3799,7 +3799,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -3821,7 +3821,7 @@ Program {
 								}
 							}
 							params: Array [
-								BindingIdentifier {
+								JSBindingIdentifier {
 									name: "value"
 									loc: Object {
 										filename: "input.js"
@@ -3837,7 +3837,7 @@ Program {
 											line: 31
 										}
 									}
-									meta: PatternMeta {
+									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
@@ -3857,7 +3857,7 @@ Program {
 								}
 							]
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
 								filename: "input.js"
@@ -3873,7 +3873,7 @@ Program {
 								}
 							}
 							body: Array [
-								ExpressionStatement {
+								JSExpressionStatement {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -3887,7 +3887,7 @@ Program {
 											line: 31
 										}
 									}
-									expression: AssignmentExpression {
+									expression: JSAssignmentExpression {
 										operator: "="
 										loc: Object {
 											filename: "input.js"
@@ -3902,7 +3902,7 @@ Program {
 												line: 31
 											}
 										}
-										right: UnaryExpression {
+										right: JSUnaryExpression {
 											operator: "+"
 											prefix: true
 											loc: Object {
@@ -3918,7 +3918,7 @@ Program {
 													line: 31
 												}
 											}
-											argument: ReferenceIdentifier {
+											argument: JSReferenceIdentifier {
 												name: "value"
 												loc: Object {
 													filename: "input.js"
@@ -3936,7 +3936,7 @@ Program {
 												}
 											}
 										}
-										left: MemberExpression {
+										left: JSMemberExpression {
 											loc: Object {
 												filename: "input.js"
 												end: Object {
@@ -3950,7 +3950,7 @@ Program {
 													line: 31
 												}
 											}
-											object: ThisExpression {
+											object: JSThisExpression {
 												loc: Object {
 													filename: "input.js"
 													end: Object {
@@ -3965,9 +3965,9 @@ Program {
 													}
 												}
 											}
-											property: StaticMemberProperty {
-												value: PrivateName {
-													id: Identifier {
+											property: JSStaticMemberProperty {
+												value: JSPrivateName {
+													id: JSIdentifier {
 														name: "x"
 														loc: Object {
 															filename: "input.js"
@@ -4018,10 +4018,10 @@ Program {
 							]
 						}
 					}
-					ClassMethod {
+					JSClassMethod {
 						kind: "get"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "y"
 								loc: Object {
 									filename: "input.js"
@@ -4065,7 +4065,7 @@ Program {
 								line: 33
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -4088,7 +4088,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -4114,7 +4114,7 @@ Program {
 								}
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
 								filename: "input.js"
@@ -4130,7 +4130,7 @@ Program {
 								}
 							}
 							body: Array [
-								ReturnStatement {
+								JSReturnStatement {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -4144,7 +4144,7 @@ Program {
 											line: 33
 										}
 									}
-									argument: MemberExpression {
+									argument: JSMemberExpression {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -4158,7 +4158,7 @@ Program {
 												line: 33
 											}
 										}
-										object: ThisExpression {
+										object: JSThisExpression {
 											loc: Object {
 												filename: "input.js"
 												end: Object {
@@ -4173,9 +4173,9 @@ Program {
 												}
 											}
 										}
-										property: StaticMemberProperty {
-											value: PrivateName {
-												id: Identifier {
+										property: JSStaticMemberProperty {
+											value: JSPrivateName {
+												id: JSIdentifier {
 													name: "y"
 													loc: Object {
 														filename: "input.js"
@@ -4225,10 +4225,10 @@ Program {
 							]
 						}
 					}
-					ClassMethod {
+					JSClassMethod {
 						kind: "set"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "y"
 								loc: Object {
 									filename: "input.js"
@@ -4272,7 +4272,7 @@ Program {
 								line: 34
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -4298,7 +4298,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -4320,7 +4320,7 @@ Program {
 								}
 							}
 							params: Array [
-								BindingIdentifier {
+								JSBindingIdentifier {
 									name: "value"
 									loc: Object {
 										filename: "input.js"
@@ -4336,7 +4336,7 @@ Program {
 											line: 34
 										}
 									}
-									meta: PatternMeta {
+									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
@@ -4356,7 +4356,7 @@ Program {
 								}
 							]
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
 								filename: "input.js"
@@ -4372,7 +4372,7 @@ Program {
 								}
 							}
 							body: Array [
-								ExpressionStatement {
+								JSExpressionStatement {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -4386,7 +4386,7 @@ Program {
 											line: 34
 										}
 									}
-									expression: AssignmentExpression {
+									expression: JSAssignmentExpression {
 										operator: "="
 										loc: Object {
 											filename: "input.js"
@@ -4401,7 +4401,7 @@ Program {
 												line: 34
 											}
 										}
-										right: UnaryExpression {
+										right: JSUnaryExpression {
 											operator: "+"
 											prefix: true
 											loc: Object {
@@ -4417,7 +4417,7 @@ Program {
 													line: 34
 												}
 											}
-											argument: ReferenceIdentifier {
+											argument: JSReferenceIdentifier {
 												name: "value"
 												loc: Object {
 													filename: "input.js"
@@ -4435,7 +4435,7 @@ Program {
 												}
 											}
 										}
-										left: MemberExpression {
+										left: JSMemberExpression {
 											loc: Object {
 												filename: "input.js"
 												end: Object {
@@ -4449,7 +4449,7 @@ Program {
 													line: 34
 												}
 											}
-											object: ThisExpression {
+											object: JSThisExpression {
 												loc: Object {
 													filename: "input.js"
 													end: Object {
@@ -4464,9 +4464,9 @@ Program {
 													}
 												}
 											}
-											property: StaticMemberProperty {
-												value: PrivateName {
-													id: Identifier {
+											property: JSStaticMemberProperty {
+												value: JSPrivateName {
+													id: JSIdentifier {
 														name: "y"
 														loc: Object {
 															filename: "input.js"
@@ -4517,10 +4517,10 @@ Program {
 							]
 						}
 					}
-					ClassMethod {
+					JSClassMethod {
 						kind: "method"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "equals"
 								loc: Object {
 									filename: "input.js"
@@ -4564,7 +4564,7 @@ Program {
 								line: 36
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -4590,7 +4590,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -4612,7 +4612,7 @@ Program {
 								}
 							}
 							params: Array [
-								BindingIdentifier {
+								JSBindingIdentifier {
 									name: "p"
 									loc: Object {
 										filename: "input.js"
@@ -4628,7 +4628,7 @@ Program {
 											line: 36
 										}
 									}
-									meta: PatternMeta {
+									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
@@ -4648,7 +4648,7 @@ Program {
 								}
 							]
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
 								filename: "input.js"
@@ -4664,7 +4664,7 @@ Program {
 								}
 							}
 							body: Array [
-								ReturnStatement {
+								JSReturnStatement {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -4678,7 +4678,7 @@ Program {
 											line: 36
 										}
 									}
-									argument: LogicalExpression {
+									argument: JSLogicalExpression {
 										operator: "&&"
 										loc: Object {
 											filename: "input.js"
@@ -4693,7 +4693,7 @@ Program {
 												line: 36
 											}
 										}
-										left: BinaryExpression {
+										left: JSBinaryExpression {
 											operator: "==="
 											loc: Object {
 												filename: "input.js"
@@ -4708,7 +4708,7 @@ Program {
 													line: 36
 												}
 											}
-											left: MemberExpression {
+											left: JSMemberExpression {
 												loc: Object {
 													filename: "input.js"
 													end: Object {
@@ -4722,7 +4722,7 @@ Program {
 														line: 36
 													}
 												}
-												object: ThisExpression {
+												object: JSThisExpression {
 													loc: Object {
 														filename: "input.js"
 														end: Object {
@@ -4737,9 +4737,9 @@ Program {
 														}
 													}
 												}
-												property: StaticMemberProperty {
-													value: PrivateName {
-														id: Identifier {
+												property: JSStaticMemberProperty {
+													value: JSPrivateName {
+														id: JSIdentifier {
 															name: "x"
 															loc: Object {
 																filename: "input.js"
@@ -4785,7 +4785,7 @@ Program {
 													}
 												}
 											}
-											right: MemberExpression {
+											right: JSMemberExpression {
 												loc: Object {
 													filename: "input.js"
 													end: Object {
@@ -4799,7 +4799,7 @@ Program {
 														line: 36
 													}
 												}
-												object: ReferenceIdentifier {
+												object: JSReferenceIdentifier {
 													name: "p"
 													loc: Object {
 														filename: "input.js"
@@ -4816,9 +4816,9 @@ Program {
 														}
 													}
 												}
-												property: StaticMemberProperty {
-													value: PrivateName {
-														id: Identifier {
+												property: JSStaticMemberProperty {
+													value: JSPrivateName {
+														id: JSIdentifier {
 															name: "x"
 															loc: Object {
 																filename: "input.js"
@@ -4865,7 +4865,7 @@ Program {
 												}
 											}
 										}
-										right: BinaryExpression {
+										right: JSBinaryExpression {
 											operator: "==="
 											loc: Object {
 												filename: "input.js"
@@ -4880,7 +4880,7 @@ Program {
 													line: 36
 												}
 											}
-											left: MemberExpression {
+											left: JSMemberExpression {
 												loc: Object {
 													filename: "input.js"
 													end: Object {
@@ -4894,7 +4894,7 @@ Program {
 														line: 36
 													}
 												}
-												object: ThisExpression {
+												object: JSThisExpression {
 													loc: Object {
 														filename: "input.js"
 														end: Object {
@@ -4909,9 +4909,9 @@ Program {
 														}
 													}
 												}
-												property: StaticMemberProperty {
-													value: PrivateName {
-														id: Identifier {
+												property: JSStaticMemberProperty {
+													value: JSPrivateName {
+														id: JSIdentifier {
 															name: "y"
 															loc: Object {
 																filename: "input.js"
@@ -4957,7 +4957,7 @@ Program {
 													}
 												}
 											}
-											right: MemberExpression {
+											right: JSMemberExpression {
 												loc: Object {
 													filename: "input.js"
 													end: Object {
@@ -4971,7 +4971,7 @@ Program {
 														line: 36
 													}
 												}
-												object: ReferenceIdentifier {
+												object: JSReferenceIdentifier {
 													name: "p"
 													loc: Object {
 														filename: "input.js"
@@ -4988,9 +4988,9 @@ Program {
 														}
 													}
 												}
-												property: StaticMemberProperty {
-													value: PrivateName {
-														id: Identifier {
+												property: JSStaticMemberProperty {
+													value: JSPrivateName {
+														id: JSIdentifier {
 															name: "y"
 															loc: Object {
 																filename: "input.js"
@@ -5042,10 +5042,10 @@ Program {
 							]
 						}
 					}
-					ClassMethod {
+					JSClassMethod {
 						kind: "method"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "toString"
 								loc: Object {
 									filename: "input.js"
@@ -5089,7 +5089,7 @@ Program {
 								line: 38
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -5112,7 +5112,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -5138,7 +5138,7 @@ Program {
 								}
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
 								filename: "input.js"
@@ -5154,7 +5154,7 @@ Program {
 								}
 							}
 							body: Array [
-								ReturnStatement {
+								JSReturnStatement {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -5168,7 +5168,7 @@ Program {
 											line: 38
 										}
 									}
-									argument: TemplateLiteral {
+									argument: JSTemplateLiteral {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -5183,7 +5183,7 @@ Program {
 											}
 										}
 										quasis: Array [
-											TemplateElement {
+											JSTemplateElement {
 												cooked: "Point<"
 												raw: "Point<"
 												tail: false
@@ -5201,7 +5201,7 @@ Program {
 													}
 												}
 											}
-											TemplateElement {
+											JSTemplateElement {
 												cooked: ","
 												raw: ","
 												tail: false
@@ -5219,7 +5219,7 @@ Program {
 													}
 												}
 											}
-											TemplateElement {
+											JSTemplateElement {
 												cooked: ">"
 												raw: ">"
 												tail: true
@@ -5239,7 +5239,7 @@ Program {
 											}
 										]
 										expressions: Array [
-											MemberExpression {
+											JSMemberExpression {
 												loc: Object {
 													filename: "input.js"
 													end: Object {
@@ -5253,7 +5253,7 @@ Program {
 														line: 38
 													}
 												}
-												object: ThisExpression {
+												object: JSThisExpression {
 													loc: Object {
 														filename: "input.js"
 														end: Object {
@@ -5268,9 +5268,9 @@ Program {
 														}
 													}
 												}
-												property: StaticMemberProperty {
-													value: PrivateName {
-														id: Identifier {
+												property: JSStaticMemberProperty {
+													value: JSPrivateName {
+														id: JSIdentifier {
 															name: "x"
 															loc: Object {
 																filename: "input.js"
@@ -5316,7 +5316,7 @@ Program {
 													}
 												}
 											}
-											MemberExpression {
+											JSMemberExpression {
 												loc: Object {
 													filename: "input.js"
 													end: Object {
@@ -5330,7 +5330,7 @@ Program {
 														line: 38
 													}
 												}
-												object: ThisExpression {
+												object: JSThisExpression {
 													loc: Object {
 														filename: "input.js"
 														end: Object {
@@ -5345,9 +5345,9 @@ Program {
 														}
 													}
 												}
-												property: StaticMemberProperty {
-													value: PrivateName {
-														id: Identifier {
+												property: JSStaticMemberProperty {
+													value: JSPrivateName {
+														id: JSIdentifier {
 															name: "y"
 															loc: Object {
 																filename: "input.js"

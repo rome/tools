@@ -7,32 +7,32 @@
 import {Path, createHook} from "@romejs/js-compiler";
 import {
 	AnyNode,
-	FunctionDeclaration,
-	ThisExpression,
-	VariableDeclarationStatement,
-	VariableDeclarator,
-	bindingIdentifier,
-	blockStatement,
-	functionDeclaration,
-	returnStatement,
-	variableDeclarationStatement,
-	variableDeclarator,
-} from "@romejs/js-ast";
+	JSFunctionDeclaration,
+	JSThisExpression,
+	JSVariableDeclarationStatement,
+	JSVariableDeclarator,
+	jsBindingIdentifier,
+	jsBlockStatement,
+	jsFunctionDeclaration,
+	jsReturnStatement,
+	jsVariableDeclarationStatement,
+	jsVariableDeclarator,
+} from "@romejs/ast";
 import {isFunctionNode} from "@romejs/js-ast-utils";
 import {descriptions} from "@romejs/diagnostics";
 
 type State = {
-	declarators: Array<VariableDeclarator>;
+	declarators: Array<JSVariableDeclarator>;
 };
 
 type Arg = {
-	declarator: VariableDeclarator;
-	node: ThisExpression;
+	declarator: JSVariableDeclarator;
+	node: JSThisExpression;
 };
 
-// This hook is created with a list of initial VariableDeclarators that contain functions we want to convert
-// We then remove any ArrowFunctionExpression VariableDeclarators that contain a valid ThisExpression
-const hook = createHook<State, Arg, ThisExpression>({
+// This hook is created with a list of initial JSVariableDeclarators that contain functions we want to convert
+// We then remove any JSArrowFunctionExpression JSVariableDeclarators that contain a valid JSThisExpression
+const hook = createHook<State, Arg, JSThisExpression>({
 	name: "preferFunctionDeclarationsHook",
 	initialState: {
 		declarators: [],
@@ -50,18 +50,18 @@ const hook = createHook<State, Arg, ThisExpression>({
 		path: Path,
 		state: State,
 	):
-		| VariableDeclarationStatement
-		| Array<VariableDeclarationStatement | FunctionDeclaration> {
-		const node = variableDeclarationStatement.assert(path.node);
+		| JSVariableDeclarationStatement
+		| Array<JSVariableDeclarationStatement | JSFunctionDeclaration> {
+		const node = jsVariableDeclarationStatement.assert(path.node);
 
 		// We may have invalidated all declarations
 		if (state.declarators.length === 0) {
 			return node;
 		}
 
-		const nodes: Array<VariableDeclarationStatement | FunctionDeclaration> = [];
+		const nodes: Array<JSVariableDeclarationStatement | JSFunctionDeclaration> = [];
 
-		const newNode: VariableDeclarationStatement = {
+		const newNode: JSVariableDeclarationStatement = {
 			...node,
 			declaration: {
 				...node.declaration,
@@ -78,13 +78,13 @@ const hook = createHook<State, Arg, ThisExpression>({
 
 		// Convert functions
 		for (const decl of state.declarators) {
-			const id = bindingIdentifier.assert(decl.id);
+			const id = jsBindingIdentifier.assert(decl.id);
 			const {init} = decl;
 
 			if (
 				init === undefined ||
-				(init.type !== "FunctionExpression" &&
-				init.type !== "ArrowFunctionExpression")
+				(init.type !== "JSFunctionExpression" &&
+				init.type !== "JSArrowFunctionExpression")
 			) {
 				throw new Error("Invalid declarator put into state");
 			}
@@ -98,14 +98,14 @@ const hook = createHook<State, Arg, ThisExpression>({
 
 			// Convert arrow function body if necessary
 			const body =
-				init.body.type === "BlockStatement"
+				init.body.type === "JSBlockStatement"
 					? init.body
-					: blockStatement.create({
-							body: [returnStatement.quick(init.body)],
+					: jsBlockStatement.create({
+							body: [jsReturnStatement.quick(init.body)],
 						});
 
 			nodes.push(
-				functionDeclaration.create({
+				jsFunctionDeclaration.create({
 					id,
 					head: init.head,
 					body,
@@ -123,18 +123,18 @@ export default {
 		const {node} = path;
 
 		if (
-			node.type === "VariableDeclarationStatement" &&
+			node.type === "JSVariableDeclarationStatement" &&
 			node.declaration.kind === "const"
 		) {
-			// Get all declarators that are function expressions, have no type annotation, and have a binding identifier id
+			// Get all declarators that are function expressions, have no type annotation, and have a binding jsIdentifier id
 			const declarators = node.declaration.declarations.filter((decl) => {
 				return (
-					decl.id.type === "BindingIdentifier" &&
+					decl.id.type === "JSBindingIdentifier" &&
 					(decl.id.meta === undefined ||
 					decl.id.meta.typeAnnotation === undefined) &&
 					decl.init !== undefined &&
-					(decl.init.type === "FunctionExpression" ||
-					decl.init.type === "ArrowFunctionExpression")
+					(decl.init.type === "JSFunctionExpression" ||
+					decl.init.type === "JSArrowFunctionExpression")
 				);
 			});
 			if (declarators.length > 0) {
@@ -149,11 +149,11 @@ export default {
 
 		// If we have a `this` inside of an arrow function attached as a variable declarator then we should consider
 		// it valid
-		if (node.type === "ThisExpression") {
+		if (node.type === "JSThisExpression") {
 			// Try to find the arrow function owner, or stop if we get to another function
 			const func = path.findAncestry((path) => {
-				if (path.node.type === "ArrowFunctionExpression") {
-					return path.parent.type === "VariableDeclarator";
+				if (path.node.type === "JSArrowFunctionExpression") {
+					return path.parent.type === "JSVariableDeclarator";
 				}
 
 				if (isFunctionNode(path.node)) {
@@ -163,12 +163,12 @@ export default {
 				return false;
 			});
 
-			// We'll only return an ArrowFunctionExpression if it was inside of a VariableDeclarator
-			if (func !== undefined && func.node.type === "ArrowFunctionExpression") {
+			// We'll only return an JSArrowFunctionExpression if it was inside of a JSVariableDeclarator
+			if (func !== undefined && func.node.type === "JSArrowFunctionExpression") {
 				return path.callHook(
 					hook,
 					{
-						declarator: variableDeclarator.assert(func.parent),
+						declarator: jsVariableDeclarator.assert(func.parent),
 						node,
 					},
 					node,

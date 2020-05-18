@@ -5,7 +5,7 @@
 ## `esprima > es2015-yield > yield-generator-function-parameter`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "g"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: true
 				hasHoistedVars: true
@@ -84,7 +84,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -100,7 +100,7 @@ Program {
 					}
 				}
 				body: Array [
-					VariableDeclarationStatement {
+					JSVariableDeclarationStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -114,7 +114,7 @@ Program {
 								line: 1
 							}
 						}
-						declaration: VariableDeclaration {
+						declaration: JSVariableDeclaration {
 							kind: "var"
 							loc: Object {
 								filename: "input.js"
@@ -130,8 +130,8 @@ Program {
 								}
 							}
 							declarations: Array [
-								VariableDeclarator {
-									id: BindingIdentifier {
+								JSVariableDeclarator {
+									id: JSBindingIdentifier {
 										name: "z"
 										loc: Object {
 											filename: "input.js"
@@ -161,7 +161,7 @@ Program {
 											line: 1
 										}
 									}
-									init: FunctionExpression {
+									init: JSFunctionExpression {
 										id: undefined
 										loc: Object {
 											filename: "input.js"
@@ -176,7 +176,7 @@ Program {
 												line: 1
 											}
 										}
-										body: BlockStatement {
+										body: JSBlockStatement {
 											body: Array []
 											directives: Array []
 											loc: Object {
@@ -193,7 +193,7 @@ Program {
 												}
 											}
 										}
-										head: FunctionHead {
+										head: JSFunctionHead {
 											async: false
 											generator: false
 											hasHoistedVars: false
@@ -215,7 +215,7 @@ Program {
 												}
 											}
 											params: Array [
-												BindingIdentifier {
+												JSBindingIdentifier {
 													name: "yield"
 													loc: Object {
 														filename: "input.js"
@@ -231,7 +231,7 @@ Program {
 															line: 1
 														}
 													}
-													meta: PatternMeta {
+													meta: JSPatternMeta {
 														optional: undefined
 														typeAnnotation: undefined
 														loc: Object {

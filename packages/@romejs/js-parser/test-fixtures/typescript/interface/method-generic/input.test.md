@@ -5,7 +5,7 @@
 ## `typescript > interface > method-generic`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -31,7 +31,7 @@ Program {
 	}
 	body: Array [
 		TSInterfaceDeclaration {
-			id: BindingIdentifier {
+			id: JSBindingIdentifier {
 				name: "I"
 				loc: Object {
 					filename: "input.ts"
@@ -79,8 +79,8 @@ Program {
 				}
 				body: Array [
 					TSMethodSignature {
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "m"
 								loc: Object {
 									filename: "input.ts"
@@ -140,7 +140,7 @@ Program {
 									line: 2
 								}
 							}
-							typeName: ReferenceIdentifier {
+							typeName: JSReferenceIdentifier {
 								name: "T"
 								loc: Object {
 									filename: "input.ts"
@@ -235,8 +235,8 @@ Program {
 											}
 											members: Array [
 												TSPropertySignature {
-													key: StaticPropertyKey {
-														value: Identifier {
+													key: JSStaticPropertyKey {
+														value: JSIdentifier {
 															name: "x"
 															loc: Object {
 																filename: "input.ts"

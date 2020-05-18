@@ -5,7 +5,7 @@
 ## `typescript > class > modifiers-accessors`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentLine {
+		JSCommentLine {
 			id: "0"
 			value: " Copy of modifiers-methods with 'get'"
 			loc: Object {
@@ -48,8 +48,8 @@ Program {
 		}
 	]
 	body: Array [
-		ClassDeclaration {
-			id: BindingIdentifier {
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
 				name: "C"
 				loc: Object {
 					filename: "input.ts"
@@ -81,7 +81,7 @@ Program {
 					line: 2
 				}
 			}
-			meta: ClassHead {
+			meta: JSClassHead {
 				implements: undefined
 				leadingComments: undefined
 				superClass: undefined
@@ -103,8 +103,8 @@ Program {
 				body: Array [
 					TSDeclareMethod {
 						kind: "get"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "a"
 								loc: Object {
 									filename: "input.ts"
@@ -149,7 +149,7 @@ Program {
 								line: 3
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -172,7 +172,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: true
 							accessibility: undefined
 							optional: false
@@ -199,10 +199,10 @@ Program {
 							}
 						}
 					}
-					ClassMethod {
+					JSClassMethod {
 						kind: "get"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "s"
 								loc: Object {
 									filename: "input.ts"
@@ -246,7 +246,7 @@ Program {
 								line: 4
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -269,7 +269,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -295,7 +295,7 @@ Program {
 								}
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
 								filename: "input.ts"
@@ -311,7 +311,7 @@ Program {
 								}
 							}
 							body: Array [
-								ReturnStatement {
+								JSReturnStatement {
 									loc: Object {
 										filename: "input.ts"
 										end: Object {
@@ -325,7 +325,7 @@ Program {
 											line: 4
 										}
 									}
-									argument: NumericLiteral {
+									argument: JSNumericLiteral {
 										value: 0
 										format: undefined
 										loc: Object {
@@ -348,8 +348,8 @@ Program {
 					}
 					TSDeclareMethod {
 						kind: "get"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "pua"
 								loc: Object {
 									filename: "input.ts"
@@ -394,7 +394,7 @@ Program {
 								line: 5
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -417,7 +417,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: true
 							accessibility: "public"
 							optional: false
@@ -444,10 +444,10 @@ Program {
 							}
 						}
 					}
-					ClassMethod {
+					JSClassMethod {
 						kind: "get"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "pus"
 								loc: Object {
 									filename: "input.ts"
@@ -491,7 +491,7 @@ Program {
 								line: 6
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -514,7 +514,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: "public"
 							optional: false
@@ -540,7 +540,7 @@ Program {
 								}
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
 								filename: "input.ts"
@@ -556,7 +556,7 @@ Program {
 								}
 							}
 							body: Array [
-								ReturnStatement {
+								JSReturnStatement {
 									loc: Object {
 										filename: "input.ts"
 										end: Object {
@@ -570,7 +570,7 @@ Program {
 											line: 6
 										}
 									}
-									argument: NumericLiteral {
+									argument: JSNumericLiteral {
 										value: 0
 										format: undefined
 										loc: Object {
@@ -591,10 +591,10 @@ Program {
 							]
 						}
 					}
-					ClassMethod {
+					JSClassMethod {
 						kind: "get"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "pu"
 								loc: Object {
 									filename: "input.ts"
@@ -638,7 +638,7 @@ Program {
 								line: 8
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -661,7 +661,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: "public"
 							optional: false
@@ -687,7 +687,7 @@ Program {
 								}
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
 								filename: "input.ts"
@@ -703,7 +703,7 @@ Program {
 								}
 							}
 							body: Array [
-								ReturnStatement {
+								JSReturnStatement {
 									loc: Object {
 										filename: "input.ts"
 										end: Object {
@@ -717,7 +717,7 @@ Program {
 											line: 8
 										}
 									}
-									argument: NumericLiteral {
+									argument: JSNumericLiteral {
 										value: 0
 										format: undefined
 										loc: Object {
@@ -738,10 +738,10 @@ Program {
 							]
 						}
 					}
-					ClassMethod {
+					JSClassMethod {
 						kind: "get"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "po"
 								loc: Object {
 									filename: "input.ts"
@@ -785,7 +785,7 @@ Program {
 								line: 9
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -808,7 +808,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: "protected"
 							optional: false
@@ -834,7 +834,7 @@ Program {
 								}
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
 								filename: "input.ts"
@@ -850,7 +850,7 @@ Program {
 								}
 							}
 							body: Array [
-								ReturnStatement {
+								JSReturnStatement {
 									loc: Object {
 										filename: "input.ts"
 										end: Object {
@@ -864,7 +864,7 @@ Program {
 											line: 9
 										}
 									}
-									argument: NumericLiteral {
+									argument: JSNumericLiteral {
 										value: 0
 										format: undefined
 										loc: Object {
@@ -885,10 +885,10 @@ Program {
 							]
 						}
 					}
-					ClassMethod {
+					JSClassMethod {
 						kind: "get"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "pi"
 								loc: Object {
 									filename: "input.ts"
@@ -932,7 +932,7 @@ Program {
 								line: 10
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -955,7 +955,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: "private"
 							optional: false
@@ -981,7 +981,7 @@ Program {
 								}
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
 								filename: "input.ts"
@@ -997,7 +997,7 @@ Program {
 								}
 							}
 							body: Array [
-								ReturnStatement {
+								JSReturnStatement {
 									loc: Object {
 										filename: "input.ts"
 										end: Object {
@@ -1011,7 +1011,7 @@ Program {
 											line: 10
 										}
 									}
-									argument: NumericLiteral {
+									argument: JSNumericLiteral {
 										value: 0
 										format: undefined
 										loc: Object {

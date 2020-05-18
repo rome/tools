@@ -6,17 +6,17 @@
  */
 
 import {Path} from "@romejs/js-compiler";
-import {AnyNode, referenceIdentifier} from "@romejs/js-ast";
+import {AnyNode, jsReferenceIdentifier} from "@romejs/ast";
 
 export default {
 	name: "asyncImport",
 	enter(path: Path): AnyNode {
 		const {node} = path;
 
-		if (node.type === "CallExpression" && node.callee.type === "ImportCall") {
+		if (node.type === "JSCallExpression" && node.callee.type === "JSImportCall") {
 			return {
 				...node,
-				callee: referenceIdentifier.create({
+				callee: jsReferenceIdentifier.create({
 					name: "require",
 				}),
 			};

@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 149`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.js"
@@ -60,8 +60,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.js"
@@ -91,7 +91,7 @@ Program {
 								line: 1
 							}
 						}
-						init: ObjectExpression {
+						init: JSObjectExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -106,10 +106,10 @@ Program {
 								}
 							}
 							properties: Array [
-								ObjectMethod {
+								JSObjectMethod {
 									kind: "method"
-									key: ComputedPropertyKey {
-										value: ReferenceIdentifier {
+									key: JSComputedPropertyKey {
+										value: JSReferenceIdentifier {
 											name: "test"
 											loc: Object {
 												filename: "input.js"
@@ -153,7 +153,7 @@ Program {
 											line: 1
 										}
 									}
-									head: FunctionHead {
+									head: JSFunctionHead {
 										async: false
 										generator: true
 										hasHoistedVars: false
@@ -176,7 +176,7 @@ Program {
 											}
 										}
 									}
-									body: BlockStatement {
+									body: JSBlockStatement {
 										directives: Array []
 										loc: Object {
 											filename: "input.js"
@@ -192,7 +192,7 @@ Program {
 											}
 										}
 										body: Array [
-											ExpressionStatement {
+											JSExpressionStatement {
 												loc: Object {
 													filename: "input.js"
 													end: Object {
@@ -206,7 +206,7 @@ Program {
 														line: 1
 													}
 												}
-												expression: YieldExpression {
+												expression: JSYieldExpression {
 													delegate: true
 													loc: Object {
 														filename: "input.js"
@@ -221,7 +221,7 @@ Program {
 															line: 1
 														}
 													}
-													argument: ReferenceIdentifier {
+													argument: JSReferenceIdentifier {
 														name: "v"
 														loc: Object {
 															filename: "input.js"

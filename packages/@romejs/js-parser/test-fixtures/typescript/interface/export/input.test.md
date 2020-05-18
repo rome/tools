@@ -5,7 +5,7 @@
 ## `typescript > interface > export`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "type"
 			specifiers: undefined
 			loc: Object {
@@ -47,7 +47,7 @@ Program {
 				}
 			}
 			declaration: TSInterfaceDeclaration {
-				id: BindingIdentifier {
+				id: JSBindingIdentifier {
 					name: "I"
 					loc: Object {
 						filename: "input.ts"
@@ -97,7 +97,7 @@ Program {
 				}
 			}
 		}
-		ExportDefaultDeclaration {
+		JSExportDefaultDeclaration {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -112,7 +112,7 @@ Program {
 				}
 			}
 			declaration: TSInterfaceDeclaration {
-				id: BindingIdentifier {
+				id: JSBindingIdentifier {
 					name: "A"
 					loc: Object {
 						filename: "input.ts"

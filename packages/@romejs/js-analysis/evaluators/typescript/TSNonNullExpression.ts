@@ -6,11 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {
-	AnyNode,
-	TSNonNullExpression,
-	tsNonNullExpression,
-} from "@romejs/js-ast";
+import {AnyNode, TSNonNullExpression, tsNonNullExpression} from "@romejs/ast";
 
 export default function TSNonNullExpression(node: AnyNode, scope: Scope) {
 	node = tsNonNullExpression.assert(node);

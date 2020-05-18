@@ -5,7 +5,7 @@
 ## `esprima > es2015-yield > yield-expression-precedence`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "g"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: true
 				hasHoistedVars: false
@@ -84,7 +84,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -100,7 +100,7 @@ Program {
 					}
 				}
 				body: Array [
-					ExpressionStatement {
+					JSExpressionStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -114,7 +114,7 @@ Program {
 								line: 1
 							}
 						}
-						expression: SequenceExpression {
+						expression: JSSequenceExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -129,7 +129,7 @@ Program {
 								}
 							}
 							expressions: Array [
-								YieldExpression {
+								JSYieldExpression {
 									delegate: false
 									loc: Object {
 										filename: "input.js"
@@ -144,7 +144,7 @@ Program {
 											line: 1
 										}
 									}
-									argument: AssignmentExpression {
+									argument: JSAssignmentExpression {
 										operator: "="
 										loc: Object {
 											filename: "input.js"
@@ -159,7 +159,7 @@ Program {
 												line: 1
 											}
 										}
-										left: AssignmentIdentifier {
+										left: JSAssignmentIdentifier {
 											name: "a"
 											loc: Object {
 												filename: "input.js"
@@ -176,7 +176,7 @@ Program {
 												}
 											}
 										}
-										right: ReferenceIdentifier {
+										right: JSReferenceIdentifier {
 											name: "b"
 											loc: Object {
 												filename: "input.js"
@@ -195,7 +195,7 @@ Program {
 										}
 									}
 								}
-								YieldExpression {
+								JSYieldExpression {
 									delegate: true
 									loc: Object {
 										filename: "input.js"
@@ -210,7 +210,7 @@ Program {
 											line: 1
 										}
 									}
-									argument: AssignmentExpression {
+									argument: JSAssignmentExpression {
 										operator: "="
 										loc: Object {
 											filename: "input.js"
@@ -225,7 +225,7 @@ Program {
 												line: 1
 											}
 										}
-										left: AssignmentIdentifier {
+										left: JSAssignmentIdentifier {
 											name: "c"
 											loc: Object {
 												filename: "input.js"
@@ -242,7 +242,7 @@ Program {
 												}
 											}
 										}
-										right: ReferenceIdentifier {
+										right: JSReferenceIdentifier {
 											name: "d"
 											loc: Object {
 												filename: "input.js"
@@ -261,7 +261,7 @@ Program {
 										}
 									}
 								}
-								ReferenceIdentifier {
+								JSReferenceIdentifier {
 									name: "e"
 									loc: Object {
 										filename: "input.js"

@@ -5,7 +5,7 @@
 ## `experimental > function-sent > invalid-syntax`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,8 +54,8 @@ Program {
 		}
 	]
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "foo"
 				loc: Object {
 					filename: "input.js"
@@ -85,7 +85,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: true
 				hasHoistedVars: false
@@ -108,7 +108,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -124,7 +124,7 @@ Program {
 					}
 				}
 				body: Array [
-					IfStatement {
+					JSIfStatement {
 						alternate: undefined
 						loc: Object {
 							filename: "input.js"
@@ -139,7 +139,7 @@ Program {
 								line: 2
 							}
 						}
-						test: BooleanLiteral {
+						test: JSBooleanLiteral {
 							value: true
 							loc: Object {
 								filename: "input.js"
@@ -155,7 +155,7 @@ Program {
 								}
 							}
 						}
-						consequent: ExpressionStatement {
+						consequent: JSExpressionStatement {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -169,7 +169,7 @@ Program {
 									line: 2
 								}
 							}
-							expression: MetaProperty {
+							expression: JSMetaProperty {
 								loc: Object {
 									filename: "input.js"
 									end: Object {
@@ -183,7 +183,7 @@ Program {
 										line: 2
 									}
 								}
-								meta: Identifier {
+								meta: JSIdentifier {
 									name: "function"
 									loc: Object {
 										filename: "input.js"
@@ -200,7 +200,7 @@ Program {
 										}
 									}
 								}
-								property: Identifier {
+								property: JSIdentifier {
 									name: ""
 									loc: Object {
 										filename: "input.js"

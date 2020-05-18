@@ -5,7 +5,7 @@
 ## `es2015 > yield > asi2`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: true
 				hasHoistedVars: false
@@ -84,7 +84,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -100,7 +100,7 @@ Program {
 					}
 				}
 				body: Array [
-					ExpressionStatement {
+					JSExpressionStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -114,7 +114,7 @@ Program {
 								line: 1
 							}
 						}
-						expression: YieldExpression {
+						expression: JSYieldExpression {
 							argument: undefined
 							delegate: false
 							loc: Object {
@@ -132,7 +132,7 @@ Program {
 							}
 						}
 					}
-					BlockStatement {
+					JSBlockStatement {
 						body: Array []
 						directives: Array []
 						loc: Object {
@@ -149,7 +149,7 @@ Program {
 							}
 						}
 					}
-					ExpressionStatement {
+					JSExpressionStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -163,7 +163,7 @@ Program {
 								line: 2
 							}
 						}
-						expression: RegExpLiteral {
+						expression: JSRegExpLiteral {
 							global: true
 							insensitive: false
 							multiline: false
@@ -183,7 +183,7 @@ Program {
 									line: 2
 								}
 							}
-							expression: RegExpSubExpression {
+							expression: JSRegExpSubExpression {
 								loc: Object {
 									filename: "input.js"
 									end: Object {
@@ -198,7 +198,7 @@ Program {
 									}
 								}
 								body: Array [
-									RegExpCharacter {
+									JSRegExpCharacter {
 										value: "1"
 										loc: Object {
 											filename: "input.js"

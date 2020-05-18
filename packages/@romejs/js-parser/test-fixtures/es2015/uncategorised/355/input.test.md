@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 355`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "x"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
 				loc: Object {
@@ -78,7 +78,7 @@ Program {
 					}
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -100,7 +100,7 @@ Program {
 					}
 				}
 				params: Array [
-					BindingObjectPattern {
+					JSBindingObjectPattern {
 						rest: undefined
 						loc: Object {
 							filename: "input.js"
@@ -115,7 +115,7 @@ Program {
 								line: 1
 							}
 						}
-						meta: PatternMeta {
+						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
@@ -133,9 +133,9 @@ Program {
 							}
 						}
 						properties: Array [
-							BindingObjectPatternProperty {
-								key: StaticPropertyKey {
-									value: Identifier {
+							JSBindingObjectPatternProperty {
+								key: JSStaticPropertyKey {
+									value: JSIdentifier {
 										name: "set"
 										loc: Object {
 											filename: "input.js"
@@ -166,7 +166,7 @@ Program {
 										}
 									}
 								}
-								value: BindingAssignmentPattern {
+								value: JSBindingAssignmentPattern {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -180,7 +180,7 @@ Program {
 											line: 1
 										}
 									}
-									right: NullLiteral {
+									right: JSNullLiteral {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -195,7 +195,7 @@ Program {
 											}
 										}
 									}
-									left: BindingIdentifier {
+									left: JSBindingIdentifier {
 										name: "set"
 										loc: Object {
 											filename: "input.js"

@@ -5,7 +5,7 @@
 ## `experimental > optional-chaining > function-call`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: OptionalCallExpression {
+			expression: JSOptionalCallExpression {
 				arguments: Array []
 				loc: Object {
 					filename: "input.js"
@@ -59,7 +59,7 @@ Program {
 						line: 1
 					}
 				}
-				callee: ReferenceIdentifier {
+				callee: JSReferenceIdentifier {
 					name: "func"
 					loc: Object {
 						filename: "input.js"
@@ -78,7 +78,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -92,7 +92,7 @@ Program {
 					line: 3
 				}
 			}
-			expression: OptionalCallExpression {
+			expression: JSOptionalCallExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -106,7 +106,7 @@ Program {
 						line: 3
 					}
 				}
-				callee: ReferenceIdentifier {
+				callee: JSReferenceIdentifier {
 					name: "func"
 					loc: Object {
 						filename: "input.js"
@@ -124,7 +124,7 @@ Program {
 					}
 				}
 				arguments: Array [
-					ReferenceIdentifier {
+					JSReferenceIdentifier {
 						name: "a"
 						loc: Object {
 							filename: "input.js"
@@ -141,7 +141,7 @@ Program {
 							}
 						}
 					}
-					ReferenceIdentifier {
+					JSReferenceIdentifier {
 						name: "b"
 						loc: Object {
 							filename: "input.js"
@@ -161,7 +161,7 @@ Program {
 				]
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -175,7 +175,7 @@ Program {
 					line: 5
 				}
 			}
-			expression: OptionalCallExpression {
+			expression: JSOptionalCallExpression {
 				arguments: Array []
 				loc: Object {
 					filename: "input.js"
@@ -190,7 +190,7 @@ Program {
 						line: 5
 					}
 				}
-				callee: MemberExpression {
+				callee: JSMemberExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -204,7 +204,7 @@ Program {
 							line: 5
 						}
 					}
-					object: ReferenceIdentifier {
+					object: JSReferenceIdentifier {
 						name: "a"
 						loc: Object {
 							filename: "input.js"
@@ -221,8 +221,8 @@ Program {
 							}
 						}
 					}
-					property: StaticMemberProperty {
-						value: Identifier {
+					property: JSStaticMemberProperty {
+						value: JSIdentifier {
 							name: "func"
 							loc: Object {
 								filename: "input.js"
@@ -258,7 +258,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -272,7 +272,7 @@ Program {
 					line: 7
 				}
 			}
-			expression: OptionalCallExpression {
+			expression: JSOptionalCallExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -287,7 +287,7 @@ Program {
 					}
 				}
 				arguments: Array [
-					ReferenceIdentifier {
+					JSReferenceIdentifier {
 						name: "a"
 						loc: Object {
 							filename: "input.js"
@@ -304,7 +304,7 @@ Program {
 							}
 						}
 					}
-					ReferenceIdentifier {
+					JSReferenceIdentifier {
 						name: "b"
 						loc: Object {
 							filename: "input.js"
@@ -322,7 +322,7 @@ Program {
 						}
 					}
 				]
-				callee: MemberExpression {
+				callee: JSMemberExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -336,7 +336,7 @@ Program {
 							line: 7
 						}
 					}
-					object: ReferenceIdentifier {
+					object: JSReferenceIdentifier {
 						name: "a"
 						loc: Object {
 							filename: "input.js"
@@ -353,8 +353,8 @@ Program {
 							}
 						}
 					}
-					property: StaticMemberProperty {
-						value: Identifier {
+					property: JSStaticMemberProperty {
+						value: JSIdentifier {
 							name: "func"
 							loc: Object {
 								filename: "input.js"
@@ -390,7 +390,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -404,7 +404,7 @@ Program {
 					line: 9
 				}
 			}
-			expression: OptionalCallExpression {
+			expression: JSOptionalCallExpression {
 				arguments: Array []
 				loc: Object {
 					filename: "input.js"
@@ -419,7 +419,7 @@ Program {
 						line: 9
 					}
 				}
-				callee: MemberExpression {
+				callee: JSMemberExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -433,7 +433,7 @@ Program {
 							line: 9
 						}
 					}
-					object: ReferenceIdentifier {
+					object: JSReferenceIdentifier {
 						name: "a"
 						loc: Object {
 							filename: "input.js"
@@ -450,8 +450,8 @@ Program {
 							}
 						}
 					}
-					property: StaticMemberProperty {
-						value: Identifier {
+					property: JSStaticMemberProperty {
+						value: JSIdentifier {
 							name: "func"
 							loc: Object {
 								filename: "input.js"

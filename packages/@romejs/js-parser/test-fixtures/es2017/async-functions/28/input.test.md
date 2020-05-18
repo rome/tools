@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > 28`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
 					filename: "input.js"
@@ -60,8 +60,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "foo"
 							loc: Object {
 								filename: "input.js"
@@ -91,7 +91,7 @@ Program {
 								line: 1
 							}
 						}
-						init: ArrowFunctionExpression {
+						init: JSArrowFunctionExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -105,7 +105,7 @@ Program {
 									line: 1
 								}
 							}
-							body: BlockStatement {
+							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
 								loc: Object {
@@ -122,7 +122,7 @@ Program {
 									}
 								}
 							}
-							head: FunctionHead {
+							head: JSFunctionHead {
 								async: false
 								hasHoistedVars: false
 								rest: undefined
@@ -142,7 +142,7 @@ Program {
 									}
 								}
 								params: Array [
-									BindingObjectPattern {
+									JSBindingObjectPattern {
 										rest: undefined
 										loc: Object {
 											filename: "input.js"
@@ -158,9 +158,9 @@ Program {
 											}
 										}
 										properties: Array [
-											BindingObjectPatternProperty {
-												key: StaticPropertyKey {
-													value: Identifier {
+											JSBindingObjectPatternProperty {
+												key: JSStaticPropertyKey {
+													value: JSIdentifier {
 														name: "async"
 														loc: Object {
 															filename: "input.js"
@@ -192,7 +192,7 @@ Program {
 														}
 													}
 												}
-												value: BindingIdentifier {
+												value: JSBindingIdentifier {
 													name: "bar"
 													loc: Object {
 														filename: "input.js"

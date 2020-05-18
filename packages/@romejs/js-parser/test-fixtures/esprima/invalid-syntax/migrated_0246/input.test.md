@@ -5,7 +5,7 @@
 ## `esprima > invalid-syntax > migrated_0246`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,8 +68,8 @@ Program {
 					line: 1
 				}
 			}
-			expression: FunctionExpression {
-				id: BindingIdentifier {
+			expression: JSFunctionExpression {
+				id: JSBindingIdentifier {
 					name: "a"
 					loc: Object {
 						filename: "input.js"
@@ -99,7 +99,7 @@ Program {
 						line: 1
 					}
 				}
-				body: BlockStatement {
+				body: JSBlockStatement {
 					body: Array []
 					loc: Object {
 						filename: "input.js"
@@ -115,7 +115,7 @@ Program {
 						}
 					}
 					directives: Array [
-						Directive {
+						JSDirective {
 							value: "use strict"
 							loc: Object {
 								filename: "input.js"
@@ -133,7 +133,7 @@ Program {
 						}
 					]
 				}
-				head: FunctionHead {
+				head: JSFunctionHead {
 					async: false
 					generator: false
 					hasHoistedVars: false
@@ -155,7 +155,7 @@ Program {
 						}
 					}
 					params: Array [
-						BindingIdentifier {
+						JSBindingIdentifier {
 							name: "eval"
 							loc: Object {
 								filename: "input.js"
@@ -171,7 +171,7 @@ Program {
 									line: 1
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
 								loc: Object {

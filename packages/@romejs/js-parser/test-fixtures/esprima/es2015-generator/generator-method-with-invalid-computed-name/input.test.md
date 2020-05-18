@@ -5,7 +5,7 @@
 ## `esprima > es2015-generator > generator-method-with-invalid-computed-name`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -74,7 +74,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -88,7 +88,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ObjectExpression {
+			expression: JSObjectExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -103,10 +103,10 @@ Program {
 					}
 				}
 				properties: Array [
-					ObjectMethod {
+					JSObjectMethod {
 						kind: "method"
-						key: ComputedPropertyKey {
-							value: ReferenceIdentifier {
+						key: JSComputedPropertyKey {
+							value: JSReferenceIdentifier {
 								name: "yield"
 								loc: Object {
 									filename: "input.js"
@@ -150,7 +150,7 @@ Program {
 								line: 1
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: true
 							hasHoistedVars: false
@@ -172,7 +172,7 @@ Program {
 								}
 							}
 							params: Array [
-								BindingIdentifier {
+								JSBindingIdentifier {
 									name: "iter"
 									loc: Object {
 										filename: "input.js"
@@ -188,7 +188,7 @@ Program {
 											line: 1
 										}
 									}
-									meta: PatternMeta {
+									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
@@ -208,7 +208,7 @@ Program {
 								}
 							]
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
 								filename: "input.js"
@@ -224,7 +224,7 @@ Program {
 								}
 							}
 							body: Array [
-								ExpressionStatement {
+								JSExpressionStatement {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -238,7 +238,7 @@ Program {
 											line: 1
 										}
 									}
-									expression: CallExpression {
+									expression: JSCallExpression {
 										arguments: Array []
 										loc: Object {
 											filename: "input.js"
@@ -253,7 +253,7 @@ Program {
 												line: 1
 											}
 										}
-										callee: ReferenceIdentifier {
+										callee: JSReferenceIdentifier {
 											name: "INVALID_PLACEHOLDER"
 											loc: Object {
 												filename: "input.js"
@@ -271,7 +271,7 @@ Program {
 										}
 									}
 								}
-								BlockStatement {
+								JSBlockStatement {
 									body: Array []
 									directives: Array []
 									loc: Object {

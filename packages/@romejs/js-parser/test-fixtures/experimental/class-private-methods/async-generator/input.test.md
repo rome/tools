@@ -5,7 +5,7 @@
 ## `experimental > class-private-methods > async-generator`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		ClassDeclaration {
-			id: BindingIdentifier {
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			meta: ClassHead {
+			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
@@ -80,10 +80,10 @@ Program {
 					}
 				}
 				body: Array [
-					ClassPrivateMethod {
+					JSClassPrivateMethod {
 						kind: "method"
-						key: PrivateName {
-							id: Identifier {
+						key: JSPrivateName {
+							id: JSIdentifier {
 								name: "readLines"
 								loc: Object {
 									filename: "input.js"
@@ -127,7 +127,7 @@ Program {
 								line: 2
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -153,7 +153,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: true
 							generator: true
 							hasHoistedVars: false
@@ -175,7 +175,7 @@ Program {
 								}
 							}
 							params: Array [
-								BindingIdentifier {
+								JSBindingIdentifier {
 									name: "path"
 									loc: Object {
 										filename: "input.js"
@@ -191,7 +191,7 @@ Program {
 											line: 2
 										}
 									}
-									meta: PatternMeta {
+									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
@@ -211,7 +211,7 @@ Program {
 								}
 							]
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
 								filename: "input.js"
@@ -227,7 +227,7 @@ Program {
 								}
 							}
 							body: Array [
-								VariableDeclarationStatement {
+								JSVariableDeclarationStatement {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -241,7 +241,7 @@ Program {
 											line: 3
 										}
 									}
-									declaration: VariableDeclaration {
+									declaration: JSVariableDeclaration {
 										kind: "let"
 										loc: Object {
 											filename: "input.js"
@@ -257,8 +257,8 @@ Program {
 											}
 										}
 										declarations: Array [
-											VariableDeclarator {
-												id: BindingIdentifier {
+											JSVariableDeclarator {
+												id: JSBindingIdentifier {
 													name: "file"
 													loc: Object {
 														filename: "input.js"
@@ -288,7 +288,7 @@ Program {
 														line: 3
 													}
 												}
-												init: AwaitExpression {
+												init: JSAwaitExpression {
 													loc: Object {
 														filename: "input.js"
 														end: Object {
@@ -302,7 +302,7 @@ Program {
 															line: 3
 														}
 													}
-													argument: CallExpression {
+													argument: JSCallExpression {
 														loc: Object {
 															filename: "input.js"
 															end: Object {
@@ -316,7 +316,7 @@ Program {
 																line: 3
 															}
 														}
-														callee: ReferenceIdentifier {
+														callee: JSReferenceIdentifier {
 															name: "fileOpen"
 															loc: Object {
 																filename: "input.js"
@@ -334,7 +334,7 @@ Program {
 															}
 														}
 														arguments: Array [
-															ReferenceIdentifier {
+															JSReferenceIdentifier {
 																name: "path"
 																loc: Object {
 																	filename: "input.js"
@@ -358,7 +358,7 @@ Program {
 										]
 									}
 								}
-								TryStatement {
+								JSTryStatement {
 									handler: undefined
 									loc: Object {
 										filename: "input.js"
@@ -373,7 +373,7 @@ Program {
 											line: 5
 										}
 									}
-									finalizer: BlockStatement {
+									finalizer: JSBlockStatement {
 										directives: Array []
 										loc: Object {
 											filename: "input.js"
@@ -389,7 +389,7 @@ Program {
 											}
 										}
 										body: Array [
-											ExpressionStatement {
+											JSExpressionStatement {
 												loc: Object {
 													filename: "input.js"
 													end: Object {
@@ -403,7 +403,7 @@ Program {
 														line: 10
 													}
 												}
-												expression: AwaitExpression {
+												expression: JSAwaitExpression {
 													loc: Object {
 														filename: "input.js"
 														end: Object {
@@ -417,7 +417,7 @@ Program {
 															line: 10
 														}
 													}
-													argument: CallExpression {
+													argument: JSCallExpression {
 														arguments: Array []
 														loc: Object {
 															filename: "input.js"
@@ -432,7 +432,7 @@ Program {
 																line: 10
 															}
 														}
-														callee: MemberExpression {
+														callee: JSMemberExpression {
 															loc: Object {
 																filename: "input.js"
 																end: Object {
@@ -446,7 +446,7 @@ Program {
 																	line: 10
 																}
 															}
-															object: ReferenceIdentifier {
+															object: JSReferenceIdentifier {
 																name: "file"
 																loc: Object {
 																	filename: "input.js"
@@ -463,8 +463,8 @@ Program {
 																	}
 																}
 															}
-															property: StaticMemberProperty {
-																value: Identifier {
+															property: JSStaticMemberProperty {
+																value: JSIdentifier {
 																	name: "close"
 																	loc: Object {
 																		filename: "input.js"
@@ -502,7 +502,7 @@ Program {
 											}
 										]
 									}
-									block: BlockStatement {
+									block: JSBlockStatement {
 										directives: Array []
 										loc: Object {
 											filename: "input.js"
@@ -518,7 +518,7 @@ Program {
 											}
 										}
 										body: Array [
-											WhileStatement {
+											JSWhileStatement {
 												loc: Object {
 													filename: "input.js"
 													end: Object {
@@ -532,7 +532,7 @@ Program {
 														line: 6
 													}
 												}
-												test: UnaryExpression {
+												test: JSUnaryExpression {
 													operator: "!"
 													prefix: true
 													loc: Object {
@@ -548,7 +548,7 @@ Program {
 															line: 6
 														}
 													}
-													argument: MemberExpression {
+													argument: JSMemberExpression {
 														loc: Object {
 															filename: "input.js"
 															end: Object {
@@ -562,7 +562,7 @@ Program {
 																line: 6
 															}
 														}
-														object: ReferenceIdentifier {
+														object: JSReferenceIdentifier {
 															name: "file"
 															loc: Object {
 																filename: "input.js"
@@ -579,8 +579,8 @@ Program {
 																}
 															}
 														}
-														property: StaticMemberProperty {
-															value: Identifier {
+														property: JSStaticMemberProperty {
+															value: JSIdentifier {
 																name: "EOF"
 																loc: Object {
 																	filename: "input.js"
@@ -614,7 +614,7 @@ Program {
 														}
 													}
 												}
-												body: BlockStatement {
+												body: JSBlockStatement {
 													directives: Array []
 													loc: Object {
 														filename: "input.js"
@@ -630,7 +630,7 @@ Program {
 														}
 													}
 													body: Array [
-														ExpressionStatement {
+														JSExpressionStatement {
 															loc: Object {
 																filename: "input.js"
 																end: Object {
@@ -644,7 +644,7 @@ Program {
 																	line: 7
 																}
 															}
-															expression: YieldExpression {
+															expression: JSYieldExpression {
 																delegate: false
 																loc: Object {
 																	filename: "input.js"
@@ -659,7 +659,7 @@ Program {
 																		line: 7
 																	}
 																}
-																argument: AwaitExpression {
+																argument: JSAwaitExpression {
 																	loc: Object {
 																		filename: "input.js"
 																		end: Object {
@@ -673,7 +673,7 @@ Program {
 																			line: 7
 																		}
 																	}
-																	argument: CallExpression {
+																	argument: JSCallExpression {
 																		arguments: Array []
 																		loc: Object {
 																			filename: "input.js"
@@ -688,7 +688,7 @@ Program {
 																				line: 7
 																			}
 																		}
-																		callee: MemberExpression {
+																		callee: JSMemberExpression {
 																			loc: Object {
 																				filename: "input.js"
 																				end: Object {
@@ -702,7 +702,7 @@ Program {
 																					line: 7
 																				}
 																			}
-																			object: ReferenceIdentifier {
+																			object: JSReferenceIdentifier {
 																				name: "file"
 																				loc: Object {
 																					filename: "input.js"
@@ -719,8 +719,8 @@ Program {
 																					}
 																				}
 																			}
-																			property: StaticMemberProperty {
-																				value: Identifier {
+																			property: JSStaticMemberProperty {
+																				value: JSIdentifier {
 																					name: "readLine"
 																					loc: Object {
 																						filename: "input.js"

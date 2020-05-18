@@ -5,7 +5,7 @@
 ## `esprima > es2015-for-of > for-of-object-pattern`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ForOfStatement {
+		JSForOfStatement {
 			await: false
 			loc: Object {
 				filename: "input.js"
@@ -45,7 +45,7 @@ Program {
 					line: 1
 				}
 			}
-			body: EmptyStatement {
+			body: JSEmptyStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -60,7 +60,7 @@ Program {
 					}
 				}
 			}
-			right: ReferenceIdentifier {
+			right: JSReferenceIdentifier {
 				name: "z"
 				loc: Object {
 					filename: "input.js"
@@ -77,7 +77,7 @@ Program {
 					}
 				}
 			}
-			left: AssignmentObjectPattern {
+			left: JSAssignmentObjectPattern {
 				rest: undefined
 				loc: Object {
 					filename: "input.js"
@@ -93,9 +93,9 @@ Program {
 					}
 				}
 				properties: Array [
-					AssignmentObjectPatternProperty {
-						key: StaticPropertyKey {
-							value: Identifier {
+					JSAssignmentObjectPatternProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "x"
 								loc: Object {
 									filename: "input.js"
@@ -126,7 +126,7 @@ Program {
 								}
 							}
 						}
-						value: AssignmentIdentifier {
+						value: JSAssignmentIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.js"
@@ -157,9 +157,9 @@ Program {
 							}
 						}
 					}
-					AssignmentObjectPatternProperty {
-						key: StaticPropertyKey {
-							value: Identifier {
+					JSAssignmentObjectPatternProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "y"
 								loc: Object {
 									filename: "input.js"
@@ -190,7 +190,7 @@ Program {
 								}
 							}
 						}
-						value: AssignmentIdentifier {
+						value: JSAssignmentIdentifier {
 							name: "y"
 							loc: Object {
 								filename: "input.js"

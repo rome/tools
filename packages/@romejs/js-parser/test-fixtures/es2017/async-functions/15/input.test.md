@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > 15`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.js"
@@ -60,8 +60,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "o"
 							loc: Object {
 								filename: "input.js"
@@ -91,7 +91,7 @@ Program {
 								line: 1
 							}
 						}
-						init: ObjectExpression {
+						init: JSObjectExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -106,9 +106,9 @@ Program {
 								}
 							}
 							properties: Array [
-								ObjectProperty {
-									key: StaticPropertyKey {
-										value: Identifier {
+								JSObjectProperty {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
 											name: "a"
 											loc: Object {
 												filename: "input.js"
@@ -139,7 +139,7 @@ Program {
 											}
 										}
 									}
-									value: NumericLiteral {
+									value: JSNumericLiteral {
 										value: 1
 										format: undefined
 										loc: Object {
@@ -170,10 +170,10 @@ Program {
 										}
 									}
 								}
-								ObjectMethod {
+								JSObjectMethod {
 									kind: "method"
-									key: StaticPropertyKey {
-										value: Identifier {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
 											name: "foo"
 											loc: Object {
 												filename: "input.js"
@@ -217,7 +217,7 @@ Program {
 											line: 1
 										}
 									}
-									head: FunctionHead {
+									head: JSFunctionHead {
 										async: true
 										generator: false
 										hasHoistedVars: false
@@ -239,7 +239,7 @@ Program {
 											}
 										}
 										params: Array [
-											BindingIdentifier {
+											JSBindingIdentifier {
 												name: "promise"
 												loc: Object {
 													filename: "input.js"
@@ -255,7 +255,7 @@ Program {
 														line: 1
 													}
 												}
-												meta: PatternMeta {
+												meta: JSPatternMeta {
 													optional: undefined
 													typeAnnotation: undefined
 													loc: Object {
@@ -275,7 +275,7 @@ Program {
 											}
 										]
 									}
-									body: BlockStatement {
+									body: JSBlockStatement {
 										directives: Array []
 										loc: Object {
 											filename: "input.js"
@@ -291,7 +291,7 @@ Program {
 											}
 										}
 										body: Array [
-											ExpressionStatement {
+											JSExpressionStatement {
 												loc: Object {
 													filename: "input.js"
 													end: Object {
@@ -305,7 +305,7 @@ Program {
 														line: 1
 													}
 												}
-												expression: AwaitExpression {
+												expression: JSAwaitExpression {
 													loc: Object {
 														filename: "input.js"
 														end: Object {
@@ -319,7 +319,7 @@ Program {
 															line: 1
 														}
 													}
-													argument: ReferenceIdentifier {
+													argument: JSReferenceIdentifier {
 														name: "promise"
 														loc: Object {
 															filename: "input.js"

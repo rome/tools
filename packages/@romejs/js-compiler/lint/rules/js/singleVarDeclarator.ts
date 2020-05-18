@@ -7,10 +7,10 @@
 
 import {Path, TransformExitResult} from "@romejs/js-compiler";
 import {
-	VariableDeclarationStatement,
-	variableDeclaration,
-	variableDeclarationStatement,
-} from "@romejs/js-ast";
+	JSVariableDeclarationStatement,
+	jsVariableDeclaration,
+	jsVariableDeclarationStatement,
+} from "@romejs/ast";
 import {descriptions} from "@romejs/diagnostics";
 
 export default {
@@ -19,16 +19,16 @@ export default {
 		const {node} = path;
 
 		if (
-			node.type === "VariableDeclarationStatement" &&
+			node.type === "JSVariableDeclarationStatement" &&
 			node.declaration.declarations.length > 1
 		) {
-			const fixed: Array<VariableDeclarationStatement> = [];
+			const fixed: Array<JSVariableDeclarationStatement> = [];
 			const {kind} = node.declaration;
 
 			for (const declarator of node.declaration.declarations) {
 				fixed.push(
-					variableDeclarationStatement.quick(
-						variableDeclaration.create({
+					jsVariableDeclarationStatement.quick(
+						jsVariableDeclaration.create({
 							kind,
 							declarations: [declarator],
 						}),

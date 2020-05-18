@@ -5,7 +5,7 @@
 ## `esprima > es2015-export-declaration > invalid-export-default-token`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			declaration: undefined
 			exportKind: "value"
 			loc: Object {
@@ -71,7 +71,7 @@ Program {
 				}
 			}
 			specifiers: Array [
-				ExportLocalSpecifier {
+				JSExportLocalSpecifier {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -85,7 +85,7 @@ Program {
 							line: 1
 						}
 					}
-					exported: Identifier {
+					exported: JSIdentifier {
 						name: "default"
 						loc: Object {
 							filename: "input.js"
@@ -102,7 +102,7 @@ Program {
 							}
 						}
 					}
-					local: ReferenceIdentifier {
+					local: JSReferenceIdentifier {
 						name: "default"
 						loc: Object {
 							filename: "input.js"
@@ -122,7 +122,7 @@ Program {
 				}
 			]
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -136,7 +136,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: UnaryExpression {
+			expression: JSUnaryExpression {
 				operator: "+"
 				prefix: true
 				loc: Object {
@@ -152,7 +152,7 @@ Program {
 						line: 1
 					}
 				}
-				argument: ReferenceIdentifier {
+				argument: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: Object {
 						filename: "input.js"

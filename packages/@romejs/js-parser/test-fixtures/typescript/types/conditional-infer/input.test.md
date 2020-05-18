@@ -5,7 +5,7 @@
 ## `typescript > types > conditional-infer`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		TypeAliasTypeAnnotation {
-			id: BindingIdentifier {
+		TSTypeAliasTypeAnnotation {
+			id: JSBindingIdentifier {
 				name: "Element"
 				loc: Object {
 					filename: "input.ts"
@@ -125,7 +125,7 @@ Program {
 							line: 1
 						}
 					}
-					typeName: ReferenceIdentifier {
+					typeName: JSReferenceIdentifier {
 						name: "T"
 						loc: Object {
 							filename: "input.ts"
@@ -158,7 +158,7 @@ Program {
 							line: 1
 						}
 					}
-					typeName: ReferenceIdentifier {
+					typeName: JSReferenceIdentifier {
 						name: "T"
 						loc: Object {
 							filename: "input.ts"
@@ -191,7 +191,7 @@ Program {
 							line: 1
 						}
 					}
-					typeName: ReferenceIdentifier {
+					typeName: JSReferenceIdentifier {
 						name: "U"
 						loc: Object {
 							filename: "input.ts"

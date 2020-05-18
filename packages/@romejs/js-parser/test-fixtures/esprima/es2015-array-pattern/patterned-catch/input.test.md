@@ -5,7 +5,7 @@
 ## `esprima > es2015-array-pattern > patterned-catch`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		TryStatement {
+		JSTryStatement {
 			finalizer: undefined
 			loc: Object {
 				filename: "input.js"
@@ -45,7 +45,7 @@ Program {
 					line: 1
 				}
 			}
-			block: BlockStatement {
+			block: JSBlockStatement {
 				body: Array []
 				directives: Array []
 				loc: Object {
@@ -62,7 +62,7 @@ Program {
 					}
 				}
 			}
-			handler: CatchClause {
+			handler: JSCatchClause {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -76,7 +76,7 @@ Program {
 						line: 1
 					}
 				}
-				body: BlockStatement {
+				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
 					loc: Object {
@@ -93,7 +93,7 @@ Program {
 						}
 					}
 				}
-				param: BindingArrayPattern {
+				param: JSBindingArrayPattern {
 					rest: undefined
 					loc: Object {
 						filename: "input.js"
@@ -109,7 +109,7 @@ Program {
 						}
 					}
 					elements: Array [
-						BindingIdentifier {
+						JSBindingIdentifier {
 							name: "a"
 							loc: Object {
 								filename: "input.js"
@@ -125,7 +125,7 @@ Program {
 									line: 1
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
 								loc: Object {
@@ -143,7 +143,7 @@ Program {
 								}
 							}
 						}
-						BindingIdentifier {
+						JSBindingIdentifier {
 							name: "b"
 							loc: Object {
 								filename: "input.js"
@@ -159,7 +159,7 @@ Program {
 									line: 1
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
 								loc: Object {
@@ -177,7 +177,7 @@ Program {
 								}
 							}
 						}
-						BindingObjectPattern {
+						JSBindingObjectPattern {
 							rest: undefined
 							loc: Object {
 								filename: "input.js"
@@ -192,7 +192,7 @@ Program {
 									line: 1
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
 								loc: Object {
@@ -210,9 +210,9 @@ Program {
 								}
 							}
 							properties: Array [
-								BindingObjectPatternProperty {
-									key: StaticPropertyKey {
-										value: Identifier {
+								JSBindingObjectPatternProperty {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
 											name: "c"
 											loc: Object {
 												filename: "input.js"
@@ -243,7 +243,7 @@ Program {
 											}
 										}
 									}
-									value: BindingIdentifier {
+									value: JSBindingIdentifier {
 										name: "c"
 										loc: Object {
 											filename: "input.js"
@@ -274,9 +274,9 @@ Program {
 										}
 									}
 								}
-								BindingObjectPatternProperty {
-									key: StaticPropertyKey {
-										value: Identifier {
+								JSBindingObjectPatternProperty {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
 											name: "d"
 											loc: Object {
 												filename: "input.js"
@@ -307,7 +307,7 @@ Program {
 											}
 										}
 									}
-									value: BindingAssignmentPattern {
+									value: JSBindingAssignmentPattern {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -321,7 +321,7 @@ Program {
 												line: 1
 											}
 										}
-										left: BindingIdentifier {
+										left: JSBindingIdentifier {
 											name: "e"
 											loc: Object {
 												filename: "input.js"
@@ -338,7 +338,7 @@ Program {
 												}
 											}
 										}
-										right: NumericLiteral {
+										right: JSNumericLiteral {
 											value: 0
 											format: undefined
 											loc: Object {
@@ -370,9 +370,9 @@ Program {
 										}
 									}
 								}
-								BindingObjectPatternProperty {
-									key: ComputedPropertyKey {
-										value: ReferenceIdentifier {
+								JSBindingObjectPatternProperty {
+									key: JSComputedPropertyKey {
+										value: JSReferenceIdentifier {
 											name: "f"
 											loc: Object {
 												filename: "input.js"
@@ -403,7 +403,7 @@ Program {
 											}
 										}
 									}
-									value: BindingAssignmentPattern {
+									value: JSBindingAssignmentPattern {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -417,7 +417,7 @@ Program {
 												line: 1
 											}
 										}
-										left: BindingIdentifier {
+										left: JSBindingIdentifier {
 											name: "g"
 											loc: Object {
 												filename: "input.js"
@@ -434,7 +434,7 @@ Program {
 												}
 											}
 										}
-										right: NumericLiteral {
+										right: JSNumericLiteral {
 											value: 0
 											format: undefined
 											loc: Object {
@@ -466,9 +466,9 @@ Program {
 										}
 									}
 								}
-								BindingObjectPatternProperty {
-									key: StaticPropertyKey {
-										value: Identifier {
+								JSBindingObjectPatternProperty {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
 											name: "h"
 											loc: Object {
 												filename: "input.js"
@@ -499,7 +499,7 @@ Program {
 											}
 										}
 									}
-									value: BindingAssignmentPattern {
+									value: JSBindingAssignmentPattern {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -513,7 +513,7 @@ Program {
 												line: 1
 											}
 										}
-										left: BindingIdentifier {
+										left: JSBindingIdentifier {
 											name: "h"
 											loc: Object {
 												filename: "input.js"
@@ -530,7 +530,7 @@ Program {
 												}
 											}
 										}
-										right: ReferenceIdentifier {
+										right: JSReferenceIdentifier {
 											name: "i"
 											loc: Object {
 												filename: "input.js"

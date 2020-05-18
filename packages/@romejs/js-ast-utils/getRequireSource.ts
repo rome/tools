@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "@romejs/js-compiler";
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 import doesNodeMatchPattern from "./doesNodeMatchPattern";
 
 export default function getRequireSource(
@@ -20,25 +20,25 @@ export default function getRequireSource(
 
 	if (
 		allowStaticMember &&
-		node.type === "MemberExpression" &&
-		node.property.type === "StaticMemberProperty"
+		node.type === "JSMemberExpression" &&
+		node.property.type === "JSStaticMemberProperty"
 	) {
 		node = node.object;
 	}
 
-	if (node.type !== "CallExpression") {
+	if (node.type !== "JSCallExpression") {
 		return undefined;
 	}
 
 	const {arguments: args, callee} = node;
 
 	const [firstArg] = args;
-	if (args.length !== 1 || firstArg.type !== "StringLiteral") {
+	if (args.length !== 1 || firstArg.type !== "JSStringLiteral") {
 		return undefined;
 	}
 
 	const validRequireCallee =
-		callee.type === "ReferenceIdentifier" &&
+		callee.type === "JSReferenceIdentifier" &&
 		callee.name === "require" &&
 		scope.getBinding("require") === undefined;
 

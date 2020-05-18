@@ -5,7 +5,7 @@
 ## `esprima > es2015-template-literals > literal-escape-sequences`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: TemplateLiteral {
+			expression: JSTemplateLiteral {
 				expressions: Array []
 				loc: Object {
 					filename: "input.js"
@@ -60,7 +60,7 @@ Program {
 					}
 				}
 				quasis: Array [
-					TemplateElement {
+					JSTemplateElement {
 						cooked: "\\u{000042}\\u0042\\x42\\u0\\A\\0"
 						raw: "\\\\u{000042}\\\\u0042\\\\x42\\\\u0\\\\A\\\\0"
 						tail: true

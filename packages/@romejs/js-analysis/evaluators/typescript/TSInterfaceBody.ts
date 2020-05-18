@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, TSInterfaceBody, tsInterfaceBody} from "@romejs/js-ast";
+import {AnyNode, TSInterfaceBody, tsInterfaceBody} from "@romejs/ast";
 
 export default function TSInterfaceBody(node: AnyNode, scope: Scope) {
 	node = tsInterfaceBody.assert(node);

@@ -9,7 +9,7 @@ import {
 	AnyNode,
 	TSNamespaceExportDeclaration,
 	tsNamespaceExportDeclaration,
-} from "@romejs/js-ast";
+} from "@romejs/ast";
 
 export default function TSNamespaceExportDeclaration(node: AnyNode) {
 	node = tsNamespaceExportDeclaration.assert(node);

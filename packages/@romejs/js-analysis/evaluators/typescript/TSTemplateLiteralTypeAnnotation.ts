@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	TSTemplateLiteralTypeAnnotation,
 	tsTemplateLiteralTypeAnnotation,
-} from "@romejs/js-ast";
+} from "@romejs/ast";
 
 export default function TSTemplateLiteralTypeAnnotation(
 	node: AnyNode,

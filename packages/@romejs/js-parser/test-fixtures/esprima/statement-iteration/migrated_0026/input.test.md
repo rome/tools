@@ -5,7 +5,7 @@
 ## `esprima > statement-iteration > migrated_0026`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ForInStatement {
+		JSForInStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			body: EmptyStatement {
+			body: JSEmptyStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -59,7 +59,7 @@ Program {
 					}
 				}
 			}
-			right: ReferenceIdentifier {
+			right: JSReferenceIdentifier {
 				name: "a"
 				loc: Object {
 					filename: "input.js"
@@ -76,7 +76,7 @@ Program {
 					}
 				}
 			}
-			left: MemberExpression {
+			left: JSMemberExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -90,7 +90,7 @@ Program {
 						line: 1
 					}
 				}
-				object: ReferenceIdentifier {
+				object: JSReferenceIdentifier {
 					name: "a"
 					loc: Object {
 						filename: "input.js"
@@ -107,8 +107,8 @@ Program {
 						}
 					}
 				}
-				property: StaticMemberProperty {
-					value: Identifier {
+				property: JSStaticMemberProperty {
+					value: JSIdentifier {
 						name: "in"
 						loc: Object {
 							filename: "input.js"

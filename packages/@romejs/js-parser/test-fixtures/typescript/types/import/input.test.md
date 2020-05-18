@@ -5,7 +5,7 @@
 ## `typescript > types > import`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.ts"
@@ -60,8 +60,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.ts"
@@ -76,7 +76,7 @@ Program {
 									line: 1
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
 									filename: "input.ts"
@@ -121,7 +121,7 @@ Program {
 												line: 1
 											}
 										}
-										argument: StringLiteral {
+										argument: JSStringLiteral {
 											value: "./x"
 											loc: Object {
 												filename: "input.ts"
@@ -159,7 +159,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -173,7 +173,7 @@ Program {
 					line: 2
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.ts"
@@ -189,8 +189,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "Y"
 							loc: Object {
 								filename: "input.ts"
@@ -205,7 +205,7 @@ Program {
 									line: 2
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
 									filename: "input.ts"
@@ -235,7 +235,7 @@ Program {
 											line: 2
 										}
 									}
-									argument: StringLiteral {
+									argument: JSStringLiteral {
 										value: "./y"
 										loc: Object {
 											filename: "input.ts"
@@ -251,7 +251,7 @@ Program {
 											}
 										}
 									}
-									qualifier: ReferenceIdentifier {
+									qualifier: JSReferenceIdentifier {
 										name: "Y"
 										loc: Object {
 											filename: "input.ts"
@@ -289,7 +289,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -303,7 +303,7 @@ Program {
 					line: 3
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.ts"
@@ -319,8 +319,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "z"
 							loc: Object {
 								filename: "input.ts"
@@ -335,7 +335,7 @@ Program {
 									line: 3
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
 									filename: "input.ts"
@@ -364,7 +364,7 @@ Program {
 											line: 3
 										}
 									}
-									argument: StringLiteral {
+									argument: JSStringLiteral {
 										value: "/z"
 										loc: Object {
 											filename: "input.ts"
@@ -426,7 +426,7 @@ Program {
 												line: 3
 											}
 										}
-										left: ReferenceIdentifier {
+										left: JSReferenceIdentifier {
 											name: "foo"
 											loc: Object {
 												filename: "input.ts"
@@ -443,7 +443,7 @@ Program {
 												}
 											}
 										}
-										right: Identifier {
+										right: JSIdentifier {
 											name: "bar"
 											loc: Object {
 												filename: "input.ts"

@@ -12,11 +12,11 @@ import {
 	REDUCE_SKIP_SUBTREE,
 } from "@romejs/js-compiler";
 import {getBindingIdentifiers, isFunctionNode} from "@romejs/js-ast-utils";
-import {AnyFunction, Program} from "@romejs/js-ast";
+import {AnyJSFunction, JSProgram} from "@romejs/ast";
 
 export function addFunctionBindings(
 	scope: Scope,
-	node: AnyFunction,
+	node: AnyJSFunction,
 	hasArguments: boolean = true,
 ) {
 	const {head} = node;
@@ -58,7 +58,7 @@ export function addFunctionBindings(
 	}
 }
 
-export function addVarBindings(scope: Scope, topNode: AnyFunction | Program) {
+export function addVarBindings(scope: Scope, topNode: AnyJSFunction | JSProgram) {
 	const {context} = scope.getRootScope();
 	scope.setHoistedVars();
 
@@ -74,7 +74,7 @@ export function addVarBindings(scope: Scope, topNode: AnyFunction | Program) {
 						return REDUCE_SKIP_SUBTREE;
 					}
 
-					if (node.type === "VariableDeclaration" && node.kind === "var") {
+					if (node.type === "JSVariableDeclaration" && node.kind === "var") {
 						scope.evaluate(node, parent);
 					}
 

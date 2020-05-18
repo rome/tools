@@ -5,7 +5,7 @@
 ## `esprima > invalid-syntax > migrated_0135`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -74,7 +74,7 @@ Program {
 		}
 	]
 	body: Array [
-		TryStatement {
+		JSTryStatement {
 			finalizer: undefined
 			loc: Object {
 				filename: "input.js"
@@ -89,7 +89,7 @@ Program {
 					line: 1
 				}
 			}
-			block: BlockStatement {
+			block: JSBlockStatement {
 				body: Array []
 				directives: Array []
 				loc: Object {
@@ -106,7 +106,7 @@ Program {
 					}
 				}
 			}
-			handler: CatchClause {
+			handler: JSCatchClause {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -120,7 +120,7 @@ Program {
 						line: 1
 					}
 				}
-				param: BindingIdentifier {
+				param: JSBindingIdentifier {
 					name: "answer"
 					loc: Object {
 						filename: "input.js"
@@ -137,7 +137,7 @@ Program {
 						}
 					}
 				}
-				body: BlockStatement {
+				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
 						filename: "input.js"
@@ -153,7 +153,7 @@ Program {
 						}
 					}
 					body: Array [
-						ExpressionStatement {
+						JSExpressionStatement {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -167,7 +167,7 @@ Program {
 									line: 1
 								}
 							}
-							expression: ReferenceIdentifier {
+							expression: JSReferenceIdentifier {
 								name: "INVALID_PLACEHOLDER"
 								loc: Object {
 									filename: "input.js"
@@ -184,7 +184,7 @@ Program {
 								}
 							}
 						}
-						ExpressionStatement {
+						JSExpressionStatement {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -198,7 +198,7 @@ Program {
 									line: 1
 								}
 							}
-							expression: ReferenceIdentifier {
+							expression: JSReferenceIdentifier {
 								name: "INVALID_PLACEHOLDER"
 								loc: Object {
 									filename: "input.js"
@@ -215,7 +215,7 @@ Program {
 								}
 							}
 						}
-						BlockStatement {
+						JSBlockStatement {
 							body: Array []
 							directives: Array []
 							loc: Object {

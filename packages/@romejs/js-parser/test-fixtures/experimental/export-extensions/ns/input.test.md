@@ -5,7 +5,7 @@
 ## `experimental > export-extensions > ns`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExportExternalDeclaration {
+		JSExportExternalDeclaration {
 			exportKind: undefined
 			namedSpecifiers: Array []
 			loc: Object {
@@ -46,7 +46,7 @@ Program {
 					line: 1
 				}
 			}
-			source: StringLiteral {
+			source: JSStringLiteral {
 				value: "test"
 				loc: Object {
 					filename: "input.js"
@@ -62,7 +62,7 @@ Program {
 					}
 				}
 			}
-			namespaceSpecifier: ExportNamespaceSpecifier {
+			namespaceSpecifier: JSExportNamespaceSpecifier {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -76,7 +76,7 @@ Program {
 						line: 1
 					}
 				}
-				exported: Identifier {
+				exported: JSIdentifier {
 					name: "A"
 					loc: Object {
 						filename: "input.js"

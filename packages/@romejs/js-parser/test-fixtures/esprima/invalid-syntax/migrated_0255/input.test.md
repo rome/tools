@@ -5,7 +5,7 @@
 ## `esprima > invalid-syntax > migrated_0255`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -74,7 +74,7 @@ Program {
 		}
 	]
 	body: Array [
-		BlockStatement {
+		JSBlockStatement {
 			directives: Array []
 			loc: Object {
 				filename: "input.js"
@@ -90,7 +90,7 @@ Program {
 				}
 			}
 			body: Array [
-				EmptyStatement {
+				JSEmptyStatement {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -105,7 +105,7 @@ Program {
 						}
 					}
 				}
-				EmptyStatement {
+				JSEmptyStatement {
 					loc: Object {
 						filename: "input.js"
 						end: Object {

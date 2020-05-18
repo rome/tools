@@ -5,7 +5,7 @@
 ## `esprima > es2015-generator > incomplete-yield-delegate`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: FunctionExpression {
+			expression: JSFunctionExpression {
 				id: undefined
 				loc: Object {
 					filename: "input.js"
@@ -83,7 +83,7 @@ Program {
 						line: 1
 					}
 				}
-				head: FunctionHead {
+				head: JSFunctionHead {
 					async: false
 					generator: true
 					hasHoistedVars: false
@@ -106,7 +106,7 @@ Program {
 						}
 					}
 				}
-				body: BlockStatement {
+				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
 						filename: "input.js"
@@ -122,7 +122,7 @@ Program {
 						}
 					}
 					body: Array [
-						ExpressionStatement {
+						JSExpressionStatement {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -136,7 +136,7 @@ Program {
 									line: 1
 								}
 							}
-							expression: YieldExpression {
+							expression: JSYieldExpression {
 								delegate: true
 								loc: Object {
 									filename: "input.js"
@@ -151,7 +151,7 @@ Program {
 										line: 1
 									}
 								}
-								argument: ReferenceIdentifier {
+								argument: JSReferenceIdentifier {
 									name: "INVALID_PLACEHOLDER"
 									loc: Object {
 										filename: "input.js"
@@ -169,7 +169,7 @@ Program {
 								}
 							}
 						}
-						ExpressionStatement {
+						JSExpressionStatement {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -183,7 +183,7 @@ Program {
 									line: 1
 								}
 							}
-							expression: ReferenceIdentifier {
+							expression: JSReferenceIdentifier {
 								name: "INVALID_PLACEHOLDER"
 								loc: Object {
 									filename: "input.js"

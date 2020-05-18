@@ -8,7 +8,7 @@
 import {Mappings, SourceMapConsumer} from "@romejs/codec-source-map";
 import {DiagnosticSuppressions, Diagnostics} from "@romejs/diagnostics";
 import {Cache} from "@romejs/js-compiler";
-import {formatJS} from "@romejs/js-formatter";
+import {formatJS} from "@romejs/formatter";
 import {CompileRequest} from "../types";
 import transform from "../methods/transform";
 

@@ -5,7 +5,7 @@
 ## `es2015 > statements > label-invalid-func-async`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		LabeledStatement {
+		JSLabeledStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			label: Identifier {
+			label: JSIdentifier {
 				name: "foo"
 				loc: Object {
 					filename: "input.js"
@@ -85,8 +85,8 @@ Program {
 					}
 				}
 			}
-			body: FunctionDeclaration {
-				id: BindingIdentifier {
+			body: JSFunctionDeclaration {
+				id: JSBindingIdentifier {
 					name: "bar"
 					loc: Object {
 						filename: "input.js"
@@ -116,7 +116,7 @@ Program {
 						line: 1
 					}
 				}
-				body: BlockStatement {
+				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
 					loc: Object {
@@ -133,7 +133,7 @@ Program {
 						}
 					}
 				}
-				head: FunctionHead {
+				head: JSFunctionHead {
 					async: true
 					generator: false
 					hasHoistedVars: false

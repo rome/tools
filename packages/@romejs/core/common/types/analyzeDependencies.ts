@@ -10,7 +10,7 @@ import {
 	ConstExportModuleKind,
 	ConstImportModuleKind,
 	ConstProgramSyntax,
-} from "@romejs/js-ast";
+} from "@romejs/ast";
 import {SourceLocation} from "@romejs/parser-core";
 import {Dict} from "@romejs/typescript-helpers";
 

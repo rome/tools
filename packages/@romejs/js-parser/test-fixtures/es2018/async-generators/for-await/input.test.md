@@ -5,7 +5,7 @@
 ## `es2018 > async-generators > for-await`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: true
 				generator: false
 				hasHoistedVars: false
@@ -84,7 +84,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -100,7 +100,7 @@ Program {
 					}
 				}
 				body: Array [
-					ForOfStatement {
+					JSForOfStatement {
 						await: true
 						loc: Object {
 							filename: "input.js"
@@ -115,7 +115,7 @@ Program {
 								line: 2
 							}
 						}
-						body: EmptyStatement {
+						body: JSEmptyStatement {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -130,7 +130,7 @@ Program {
 								}
 							}
 						}
-						right: ReferenceIdentifier {
+						right: JSReferenceIdentifier {
 							name: "y"
 							loc: Object {
 								filename: "input.js"
@@ -147,7 +147,7 @@ Program {
 								}
 							}
 						}
-						left: VariableDeclaration {
+						left: JSVariableDeclaration {
 							kind: "let"
 							loc: Object {
 								filename: "input.js"
@@ -163,8 +163,8 @@ Program {
 								}
 							}
 							declarations: Array [
-								VariableDeclarator {
-									id: BindingIdentifier {
+								JSVariableDeclarator {
+									id: JSBindingIdentifier {
 										name: "x"
 										loc: Object {
 											filename: "input.js"

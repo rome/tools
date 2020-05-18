@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 295`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -74,7 +74,7 @@ Program {
 		}
 	]
 	body: Array [
-		SwitchStatement {
+		JSSwitchStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -88,7 +88,7 @@ Program {
 					line: 1
 				}
 			}
-			discriminant: ReferenceIdentifier {
+			discriminant: JSReferenceIdentifier {
 				name: "cond"
 				loc: Object {
 					filename: "input.js"
@@ -106,7 +106,7 @@ Program {
 				}
 			}
 			cases: Array [
-				SwitchCase {
+				JSSwitchCase {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -120,7 +120,7 @@ Program {
 							line: 1
 						}
 					}
-					test: NumericLiteral {
+					test: JSNumericLiteral {
 						value: 10
 						format: undefined
 						loc: Object {
@@ -138,7 +138,7 @@ Program {
 						}
 					}
 					consequent: Array [
-						VariableDeclarationStatement {
+						JSVariableDeclarationStatement {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -152,7 +152,7 @@ Program {
 									line: 1
 								}
 							}
-							declaration: VariableDeclaration {
+							declaration: JSVariableDeclaration {
 								kind: "let"
 								loc: Object {
 									filename: "input.js"
@@ -168,8 +168,8 @@ Program {
 									}
 								}
 								declarations: Array [
-									VariableDeclarator {
-										id: BindingIdentifier {
+									JSVariableDeclarator {
+										id: JSBindingIdentifier {
 											name: "a"
 											loc: Object {
 												filename: "input.js"
@@ -199,7 +199,7 @@ Program {
 												line: 1
 											}
 										}
-										init: NumericLiteral {
+										init: JSNumericLiteral {
 											value: 20
 											format: undefined
 											loc: Object {

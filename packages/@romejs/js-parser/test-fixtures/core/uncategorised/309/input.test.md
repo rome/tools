@@ -5,7 +5,7 @@
 ## `core > uncategorised > 309`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentBlock {
+		JSCommentBlock {
 			id: "0"
 			value: " Multiline\nComment "
 			loc: Object {
@@ -48,7 +48,7 @@ Program {
 		}
 	]
 	body: Array [
-		WhileStatement {
+		JSWhileStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -62,7 +62,7 @@ Program {
 					line: 1
 				}
 			}
-			test: BooleanLiteral {
+			test: JSBooleanLiteral {
 				value: true
 				loc: Object {
 					filename: "input.js"
@@ -78,7 +78,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -94,7 +94,7 @@ Program {
 					}
 				}
 				body: Array [
-					BreakStatement {
+					JSBreakStatement {
 						label: undefined
 						trailingComments: Array ["0"]
 						loc: Object {
@@ -111,7 +111,7 @@ Program {
 							}
 						}
 					}
-					ExpressionStatement {
+					JSExpressionStatement {
 						leadingComments: Array ["0"]
 						loc: Object {
 							filename: "input.js"
@@ -126,7 +126,7 @@ Program {
 								line: 2
 							}
 						}
-						expression: ReferenceIdentifier {
+						expression: JSReferenceIdentifier {
 							name: "there"
 							leadingComments: undefined
 							loc: Object {

@@ -5,7 +5,7 @@
 ## `comments > export-external`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentBlock {
+		JSCommentBlock {
 			id: "0"
 			value: " LEADING "
 			loc: Object {
@@ -48,7 +48,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExportExternalDeclaration {
+		JSExportExternalDeclaration {
 			defaultSpecifier: undefined
 			exportKind: undefined
 			namespaceSpecifier: undefined
@@ -66,7 +66,7 @@ Program {
 					line: 2
 				}
 			}
-			source: StringLiteral {
+			source: JSStringLiteral {
 				value: "./bar"
 				loc: Object {
 					filename: "input.js"
@@ -83,7 +83,7 @@ Program {
 				}
 			}
 			namedSpecifiers: Array [
-				ExportExternalSpecifier {
+				JSExportExternalSpecifier {
 					leadingComments: undefined
 					loc: Object {
 						filename: "input.js"
@@ -98,7 +98,7 @@ Program {
 							line: 2
 						}
 					}
-					local: Identifier {
+					local: JSIdentifier {
 						name: "FOO"
 						leadingComments: undefined
 						loc: Object {
@@ -116,7 +116,7 @@ Program {
 							}
 						}
 					}
-					exported: Identifier {
+					exported: JSIdentifier {
 						name: "FOO"
 						innerComments: undefined
 						leadingComments: undefined

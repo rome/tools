@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > 8`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
 					filename: "input.js"
@@ -60,8 +60,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingObjectPattern {
+					JSVariableDeclarator {
+						id: JSBindingObjectPattern {
 							rest: undefined
 							loc: Object {
 								filename: "input.js"
@@ -77,9 +77,9 @@ Program {
 								}
 							}
 							properties: Array [
-								BindingObjectPatternProperty {
-									key: StaticPropertyKey {
-										value: Identifier {
+								JSBindingObjectPatternProperty {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
 											name: "async"
 											loc: Object {
 												filename: "input.js"
@@ -110,7 +110,7 @@ Program {
 											}
 										}
 									}
-									value: BindingIdentifier {
+									value: JSBindingIdentifier {
 										name: "async"
 										loc: Object {
 											filename: "input.js"
@@ -156,7 +156,7 @@ Program {
 								line: 1
 							}
 						}
-						init: CallExpression {
+						init: JSCallExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -170,7 +170,7 @@ Program {
 									line: 1
 								}
 							}
-							callee: ReferenceIdentifier {
+							callee: JSReferenceIdentifier {
 								name: "require"
 								loc: Object {
 									filename: "input.js"
@@ -188,7 +188,7 @@ Program {
 								}
 							}
 							arguments: Array [
-								StringLiteral {
+								JSStringLiteral {
 									value: "../lang/task"
 									loc: Object {
 										filename: "input.js"

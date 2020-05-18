@@ -5,7 +5,7 @@
 ## `core > uncategorised > 416`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ForStatement {
+		JSForStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			test: ReferenceIdentifier {
+			test: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
 					filename: "input.js"
@@ -84,7 +84,7 @@ Program {
 					}
 				}
 			}
-			update: ReferenceIdentifier {
+			update: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
 					filename: "input.js"
@@ -100,7 +100,7 @@ Program {
 					}
 				}
 			}
-			body: ExpressionStatement {
+			body: JSExpressionStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -114,7 +114,7 @@ Program {
 						line: 1
 					}
 				}
-				expression: ReferenceIdentifier {
+				expression: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: Object {
 						filename: "input.js"
@@ -131,7 +131,7 @@ Program {
 					}
 				}
 			}
-			init: BinaryExpression {
+			init: JSBinaryExpression {
 				operator: "in"
 				loc: Object {
 					filename: "input.js"
@@ -146,7 +146,7 @@ Program {
 						line: 1
 					}
 				}
-				right: ObjectExpression {
+				right: JSObjectExpression {
 					properties: Array []
 					loc: Object {
 						filename: "input.js"
@@ -162,7 +162,7 @@ Program {
 						}
 					}
 				}
-				left: ReferenceIdentifier {
+				left: JSReferenceIdentifier {
 					name: "i"
 					loc: Object {
 						filename: "input.js"

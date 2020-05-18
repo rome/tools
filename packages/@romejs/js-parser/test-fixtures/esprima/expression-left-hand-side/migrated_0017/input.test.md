@@ -5,7 +5,7 @@
 ## `esprima > expression-left-hand-side > migrated_0017`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: MemberExpression {
+			expression: JSMemberExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -58,8 +58,8 @@ Program {
 						line: 1
 					}
 				}
-				property: StaticMemberProperty {
-					value: Identifier {
+				property: JSStaticMemberProperty {
+					value: JSIdentifier {
 						name: "milkyway"
 						loc: Object {
 							filename: "input.js"
@@ -91,7 +91,7 @@ Program {
 						}
 					}
 				}
-				object: CallExpression {
+				object: JSCallExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -106,7 +106,7 @@ Program {
 						}
 					}
 					arguments: Array [
-						NumericLiteral {
+						JSNumericLiteral {
 							value: 14
 							format: undefined
 							loc: Object {
@@ -123,7 +123,7 @@ Program {
 								}
 							}
 						}
-						NumericLiteral {
+						JSNumericLiteral {
 							value: 3
 							format: undefined
 							loc: Object {
@@ -140,7 +140,7 @@ Program {
 								}
 							}
 						}
-						NumericLiteral {
+						JSNumericLiteral {
 							value: 77
 							format: undefined
 							loc: Object {
@@ -158,7 +158,7 @@ Program {
 							}
 						}
 					]
-					callee: MemberExpression {
+					callee: JSMemberExpression {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -172,8 +172,8 @@ Program {
 								line: 1
 							}
 						}
-						property: StaticMemberProperty {
-							value: Identifier {
+						property: JSStaticMemberProperty {
+							value: JSIdentifier {
 								name: "galaxies"
 								loc: Object {
 									filename: "input.js"
@@ -205,7 +205,7 @@ Program {
 								}
 							}
 						}
-						object: CallExpression {
+						object: JSCallExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -219,7 +219,7 @@ Program {
 									line: 1
 								}
 							}
-							callee: ReferenceIdentifier {
+							callee: JSReferenceIdentifier {
 								name: "universe"
 								loc: Object {
 									filename: "input.js"
@@ -237,7 +237,7 @@ Program {
 								}
 							}
 							arguments: Array [
-								NumericLiteral {
+								JSNumericLiteral {
 									value: 42
 									format: undefined
 									loc: Object {

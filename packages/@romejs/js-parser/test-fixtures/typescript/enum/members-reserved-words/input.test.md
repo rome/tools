@@ -5,7 +5,7 @@
 ## `typescript > enum > members-reserved-words`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -31,7 +31,7 @@ Program {
 	}
 	body: Array [
 		TSEnumDeclaration {
-			id: BindingIdentifier {
+			id: JSBindingIdentifier {
 				name: "E"
 				loc: Object {
 					filename: "input.ts"
@@ -64,7 +64,7 @@ Program {
 			}
 			members: Array [
 				TSEnumMember {
-					id: Identifier {
+					id: JSIdentifier {
 						name: "const"
 						loc: Object {
 							filename: "input.ts"
@@ -97,7 +97,7 @@ Program {
 					}
 				}
 				TSEnumMember {
-					id: Identifier {
+					id: JSIdentifier {
 						name: "default"
 						loc: Object {
 							filename: "input.ts"

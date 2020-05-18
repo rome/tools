@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 142`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ObjectExpression {
+			expression: JSObjectExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -59,9 +59,9 @@ Program {
 					}
 				}
 				properties: Array [
-					ObjectProperty {
-						key: ComputedPropertyKey {
-							value: BinaryExpression {
+					JSObjectProperty {
+						key: JSComputedPropertyKey {
+							value: JSBinaryExpression {
 								operator: "+"
 								loc: Object {
 									filename: "input.js"
@@ -76,7 +76,7 @@ Program {
 										line: 1
 									}
 								}
-								left: StringLiteral {
+								left: JSStringLiteral {
 									value: "x"
 									loc: Object {
 										filename: "input.js"
@@ -92,7 +92,7 @@ Program {
 										}
 									}
 								}
-								right: StringLiteral {
+								right: JSStringLiteral {
 									value: "y"
 									loc: Object {
 										filename: "input.js"
@@ -123,7 +123,7 @@ Program {
 								}
 							}
 						}
-						value: NumericLiteral {
+						value: JSNumericLiteral {
 							value: 10
 							format: undefined
 							loc: Object {

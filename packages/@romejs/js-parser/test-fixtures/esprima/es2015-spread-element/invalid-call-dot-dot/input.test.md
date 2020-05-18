@@ -5,7 +5,7 @@
 ## `esprima > es2015-spread-element > invalid-call-dot-dot`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: CallExpression {
+			expression: JSCallExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -82,7 +82,7 @@ Program {
 						line: 1
 					}
 				}
-				callee: ReferenceIdentifier {
+				callee: JSReferenceIdentifier {
 					name: "f"
 					loc: Object {
 						filename: "input.js"
@@ -100,7 +100,7 @@ Program {
 					}
 				}
 				arguments: Array [
-					MemberExpression {
+					JSMemberExpression {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -114,7 +114,7 @@ Program {
 								line: 1
 							}
 						}
-						object: ReferenceIdentifier {
+						object: JSReferenceIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: Object {
 								filename: "input.js"
@@ -130,8 +130,8 @@ Program {
 								}
 							}
 						}
-						property: StaticMemberProperty {
-							value: Identifier {
+						property: JSStaticMemberProperty {
+							value: JSIdentifier {
 								name: "g"
 								loc: Object {
 									filename: "input.js"

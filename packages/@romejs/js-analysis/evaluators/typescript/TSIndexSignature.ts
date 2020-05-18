@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, TSIndexSignature, tsIndexSignature} from "@romejs/js-ast";
+import {AnyNode, TSIndexSignature, tsIndexSignature} from "@romejs/ast";
 
 export default function TSIndexSignature(node: AnyNode, scope: Scope) {
 	node = tsIndexSignature.assert(node);

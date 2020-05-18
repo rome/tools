@@ -5,7 +5,7 @@
 ## `experimental > dynamic-import > inside-function`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "loadImport"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -83,7 +83,7 @@ Program {
 					}
 				}
 				params: Array [
-					BindingIdentifier {
+					JSBindingIdentifier {
 						name: "file"
 						loc: Object {
 							filename: "input.js"
@@ -99,7 +99,7 @@ Program {
 								line: 1
 							}
 						}
-						meta: PatternMeta {
+						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
@@ -119,7 +119,7 @@ Program {
 					}
 				]
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -135,7 +135,7 @@ Program {
 					}
 				}
 				body: Array [
-					ReturnStatement {
+					JSReturnStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -149,7 +149,7 @@ Program {
 								line: 2
 							}
 						}
-						argument: ImportCall {
+						argument: JSImportCall {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -163,7 +163,7 @@ Program {
 									line: 2
 								}
 							}
-							argument: TemplateLiteral {
+							argument: JSTemplateLiteral {
 								loc: Object {
 									filename: "input.js"
 									end: Object {
@@ -178,7 +178,7 @@ Program {
 									}
 								}
 								expressions: Array [
-									ReferenceIdentifier {
+									JSReferenceIdentifier {
 										name: "file"
 										loc: Object {
 											filename: "input.js"
@@ -197,7 +197,7 @@ Program {
 									}
 								]
 								quasis: Array [
-									TemplateElement {
+									JSTemplateElement {
 										cooked: "test/"
 										raw: "test/"
 										tail: false
@@ -215,7 +215,7 @@ Program {
 											}
 										}
 									}
-									TemplateElement {
+									JSTemplateElement {
 										cooked: ".js"
 										raw: ".js"
 										tail: true

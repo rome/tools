@@ -7,7 +7,7 @@
 
 import {Path} from "@romejs/js-compiler";
 import {TransformExitResult} from "@romejs/js-compiler/types";
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 import {descriptions} from "@romejs/diagnostics";
 
 function isEmpty(node: AnyNode): boolean {
@@ -15,11 +15,11 @@ function isEmpty(node: AnyNode): boolean {
 		return false;
 	}
 
-	if (node.type === "EmptyStatement") {
+	if (node.type === "JSEmptyStatement") {
 		return true;
 	}
 
-	if (node.type === "BlockStatement" && node.body.length === 0) {
+	if (node.type === "JSBlockStatement" && node.body.length === 0) {
 		return true;
 	}
 
@@ -31,7 +31,7 @@ export default {
 	enter(path: Path): TransformExitResult {
 		const {node, context} = path;
 
-		if (node.type === "IfStatement") {
+		if (node.type === "JSIfStatement") {
 			if (isEmpty(node.consequent)) {
 				context.addNodeDiagnostic(
 					node.consequent,

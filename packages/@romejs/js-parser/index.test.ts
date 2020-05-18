@@ -7,7 +7,7 @@
 
 import {parseJS} from "@romejs/js-parser";
 import {createFixtureTests} from "@romejs/test-helpers";
-import {ConstProgramSyntax} from "@romejs/js-ast";
+import {ConstProgramSyntax} from "@romejs/ast";
 import {removeCarriageReturn} from "@romejs/string-utils";
 
 const promise = createFixtureTests(async (fixture, t) => {

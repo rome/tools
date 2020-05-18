@@ -5,7 +5,7 @@
 ## `typescript > function > pattern-parameters`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,8 +54,8 @@ Program {
 		}
 	]
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
 					filename: "input.ts"
@@ -85,7 +85,7 @@ Program {
 					line: 1
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
 				loc: Object {
@@ -102,7 +102,7 @@ Program {
 					}
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -124,7 +124,7 @@ Program {
 					}
 				}
 				params: Array [
-					BindingArrayPattern {
+					JSBindingArrayPattern {
 						elements: Array []
 						rest: undefined
 						loc: Object {
@@ -140,7 +140,7 @@ Program {
 								line: 1
 							}
 						}
-						meta: PatternMeta {
+						meta: JSPatternMeta {
 							optional: true
 							typeAnnotation: undefined
 							loc: Object {
@@ -158,7 +158,7 @@ Program {
 							}
 						}
 					}
-					BindingObjectPattern {
+					JSBindingObjectPattern {
 						properties: Array []
 						rest: undefined
 						loc: Object {
@@ -174,7 +174,7 @@ Program {
 								line: 1
 							}
 						}
-						meta: PatternMeta {
+						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {

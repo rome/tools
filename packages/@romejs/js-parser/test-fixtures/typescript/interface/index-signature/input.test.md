@@ -5,7 +5,7 @@
 ## `typescript > interface > index-signature`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -31,7 +31,7 @@ Program {
 	}
 	body: Array [
 		TSInterfaceDeclaration {
-			id: BindingIdentifier {
+			id: JSBindingIdentifier {
 				name: "I"
 				loc: Object {
 					filename: "input.ts"
@@ -79,7 +79,7 @@ Program {
 				}
 				body: Array [
 					TSIndexSignature {
-						key: BindingIdentifier {
+						key: JSBindingIdentifier {
 							name: "s"
 							loc: Object {
 								filename: "input.ts"
@@ -94,7 +94,7 @@ Program {
 									line: 2
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								loc: Object {
 									filename: "input.ts"
 									end: Object {

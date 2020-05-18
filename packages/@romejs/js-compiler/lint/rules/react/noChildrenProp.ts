@@ -8,12 +8,12 @@
 import {Path} from "@romejs/js-compiler";
 import {
 	AnyNode,
+	JSObjectMethod,
+	JSObjectProperty,
+	JSSpreadProperty,
 	JSXAttribute,
 	JSXSpreadAttribute,
-	ObjectMethod,
-	ObjectProperty,
-	SpreadProperty,
-} from "@romejs/js-ast";
+} from "@romejs/ast";
 import {doesNodeMatchPattern} from "@romejs/js-ast-utils";
 import {descriptions} from "@romejs/diagnostics";
 function isAttributePassingChildrenProp(
@@ -22,11 +22,11 @@ function isAttributePassingChildrenProp(
 	return attribute.type === "JSXAttribute" && attribute.name.name === "children";
 }
 function isCreateElementPassingChildrenProp(
-	property: ObjectProperty | ObjectMethod | SpreadProperty,
+	property: JSObjectProperty | JSObjectMethod | JSSpreadProperty,
 ): boolean {
 	return (
-		property.type === "ObjectProperty" &&
-		property.key.value.type === "Identifier" &&
+		property.type === "JSObjectProperty" &&
+		property.key.value.type === "JSIdentifier" &&
 		property.key.value.name === "children"
 	);
 }
@@ -37,9 +37,9 @@ export default {
 		if (
 			(node.type === "JSXElement" &&
 			node.attributes.find(isAttributePassingChildrenProp)) ||
-			(node.type === "CallExpression" &&
+			(node.type === "JSCallExpression" &&
 			doesNodeMatchPattern(node.callee, "React.createElement") &&
-			node.arguments[1].type === "ObjectExpression" &&
+			node.arguments[1].type === "JSObjectExpression" &&
 			node.arguments[1].properties.find(isCreateElementPassingChildrenProp))
 		) {
 			path.context.addNodeDiagnostic(

@@ -6,7 +6,7 @@
  */
 
 import {Path} from "@romejs/js-compiler";
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 import {descriptions} from "@romejs/diagnostics";
 
 export default {
@@ -14,16 +14,16 @@ export default {
 	enter(path: Path): AnyNode {
 		const {node, context} = path;
 
-		if (node.type === "TryStatement") {
+		if (node.type === "JSTryStatement") {
 			const {finalizer} = node;
 
-			if (finalizer && finalizer.type === "BlockStatement") {
+			if (finalizer && finalizer.type === "JSBlockStatement") {
 				for (const statement of finalizer.body) {
 					if (
-						statement.type === "ThrowStatement" ||
-						statement.type === "ContinueStatement" ||
-						statement.type === "BreakStatement" ||
-						statement.type === "ReturnStatement"
+						statement.type === "JSThrowStatement" ||
+						statement.type === "JSContinueStatement" ||
+						statement.type === "JSBreakStatement" ||
+						statement.type === "JSReturnStatement"
 					) {
 						context.addNodeDiagnostic(
 							statement,

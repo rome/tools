@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSXIdentifier, jsxIdentifier} from "@romejs/js-ast";
+import {AnyNode, JSXIdentifier, jsxIdentifier} from "@romejs/ast";
 
 export default function JSXIdentifier(node: AnyNode, scope: Scope) {
 	node = jsxIdentifier.assert(node);

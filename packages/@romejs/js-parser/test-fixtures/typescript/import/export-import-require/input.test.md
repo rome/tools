@@ -5,7 +5,7 @@
 ## `typescript > import > export-import-require`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -31,7 +31,7 @@ Program {
 	}
 	body: Array [
 		TSImportEqualsDeclaration {
-			id: BindingIdentifier {
+			id: JSBindingIdentifier {
 				name: "a"
 				loc: Object {
 					filename: "input.ts"
@@ -76,7 +76,7 @@ Program {
 						line: 1
 					}
 				}
-				expression: StringLiteral {
+				expression: JSStringLiteral {
 					value: "a"
 					loc: Object {
 						filename: "input.ts"

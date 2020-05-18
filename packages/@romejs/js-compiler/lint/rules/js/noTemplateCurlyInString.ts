@@ -13,7 +13,7 @@ export default {
 	enter(path: Path) {
 		const {node, context} = path;
 
-		if (node.type === "StringLiteral") {
+		if (node.type === "JSStringLiteral") {
 			const regex = /\$\{[^}]+\}/u;
 
 			if (regex.test(node.value)) {

@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 186`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: AssignmentExpression {
+			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
 					filename: "input.js"
@@ -59,7 +59,7 @@ Program {
 						line: 1
 					}
 				}
-				right: ReferenceIdentifier {
+				right: JSReferenceIdentifier {
 					name: "d"
 					loc: Object {
 						filename: "input.js"
@@ -76,7 +76,7 @@ Program {
 						}
 					}
 				}
-				left: AssignmentArrayPattern {
+				left: JSAssignmentArrayPattern {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -90,7 +90,7 @@ Program {
 							line: 1
 						}
 					}
-					rest: AssignmentIdentifier {
+					rest: JSAssignmentIdentifier {
 						name: "c"
 						loc: Object {
 							filename: "input.js"
@@ -108,7 +108,7 @@ Program {
 						}
 					}
 					elements: Array [
-						AssignmentObjectPattern {
+						JSAssignmentObjectPattern {
 							rest: undefined
 							loc: Object {
 								filename: "input.js"
@@ -124,9 +124,9 @@ Program {
 								}
 							}
 							properties: Array [
-								AssignmentObjectPatternProperty {
-									key: StaticPropertyKey {
-										value: Identifier {
+								JSAssignmentObjectPatternProperty {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
 											name: "a"
 											loc: Object {
 												filename: "input.js"
@@ -157,7 +157,7 @@ Program {
 											}
 										}
 									}
-									value: AssignmentIdentifier {
+									value: JSAssignmentIdentifier {
 										name: "a"
 										loc: Object {
 											filename: "input.js"
@@ -188,9 +188,9 @@ Program {
 										}
 									}
 								}
-								AssignmentObjectPatternProperty {
-									key: StaticPropertyKey {
-										value: Identifier {
+								JSAssignmentObjectPatternProperty {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
 											name: "b"
 											loc: Object {
 												filename: "input.js"
@@ -221,7 +221,7 @@ Program {
 											}
 										}
 									}
-									value: AssignmentIdentifier {
+									value: JSAssignmentIdentifier {
 										name: "b"
 										loc: Object {
 											filename: "input.js"

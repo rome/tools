@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 90`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExportExternalDeclaration {
+		JSExportExternalDeclaration {
 			defaultSpecifier: undefined
 			exportKind: undefined
 			namespaceSpecifier: undefined
@@ -47,7 +47,7 @@ Program {
 					line: 1
 				}
 			}
-			source: StringLiteral {
+			source: JSStringLiteral {
 				value: "other"
 				loc: Object {
 					filename: "input.js"
@@ -64,7 +64,7 @@ Program {
 				}
 			}
 			namedSpecifiers: Array [
-				ExportExternalSpecifier {
+				JSExportExternalSpecifier {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -78,7 +78,7 @@ Program {
 							line: 1
 						}
 					}
-					exported: Identifier {
+					exported: JSIdentifier {
 						name: "default"
 						loc: Object {
 							filename: "input.js"
@@ -95,7 +95,7 @@ Program {
 							}
 						}
 					}
-					local: Identifier {
+					local: JSIdentifier {
 						name: "default"
 						loc: Object {
 							filename: "input.js"

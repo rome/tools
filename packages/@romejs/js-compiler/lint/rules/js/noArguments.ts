@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 import {Path} from "@romejs/js-compiler";
 import {descriptions} from "@romejs/diagnostics";
 
@@ -14,7 +14,7 @@ export default {
 	enter(path: Path): AnyNode {
 		const {node, scope} = path;
 
-		if (node.type === "ReferenceIdentifier" && node.name === "arguments") {
+		if (node.type === "JSReferenceIdentifier" && node.name === "arguments") {
 			const args = scope.getBinding("arguments");
 			if (args && args.kind === "arguments") {
 				path.context.addNodeDiagnostic(node, descriptions.LINT.JS_NO_ARGUMENTS);

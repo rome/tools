@@ -5,7 +5,7 @@
 ## `esprima > expression-conditional > migrated_0001`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ConditionalExpression {
+			expression: JSConditionalExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -58,7 +58,7 @@ Program {
 						line: 1
 					}
 				}
-				alternate: NumericLiteral {
+				alternate: JSNumericLiteral {
 					value: 2
 					format: undefined
 					loc: Object {
@@ -75,7 +75,7 @@ Program {
 						}
 					}
 				}
-				consequent: NumericLiteral {
+				consequent: JSNumericLiteral {
 					value: 1
 					format: undefined
 					loc: Object {
@@ -92,7 +92,7 @@ Program {
 						}
 					}
 				}
-				test: LogicalExpression {
+				test: JSLogicalExpression {
 					operator: "&&"
 					loc: Object {
 						filename: "input.js"
@@ -107,7 +107,7 @@ Program {
 							line: 1
 						}
 					}
-					left: ReferenceIdentifier {
+					left: JSReferenceIdentifier {
 						name: "x"
 						loc: Object {
 							filename: "input.js"
@@ -124,7 +124,7 @@ Program {
 							}
 						}
 					}
-					right: ReferenceIdentifier {
+					right: JSReferenceIdentifier {
 						name: "y"
 						loc: Object {
 							filename: "input.js"

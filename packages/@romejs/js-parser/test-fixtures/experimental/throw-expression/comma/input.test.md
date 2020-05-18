@@ -5,7 +5,7 @@
 ## `experimental > throw-expression > comma`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "test"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -84,7 +84,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -100,7 +100,7 @@ Program {
 					}
 				}
 				body: Array [
-					ExpressionStatement {
+					JSExpressionStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -114,7 +114,7 @@ Program {
 								line: 2
 							}
 						}
-						expression: SequenceExpression {
+						expression: JSSequenceExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -129,7 +129,7 @@ Program {
 								}
 							}
 							expressions: Array [
-								UnaryExpression {
+								JSUnaryExpression {
 									operator: "throw"
 									prefix: true
 									loc: Object {
@@ -145,7 +145,7 @@ Program {
 											line: 2
 										}
 									}
-									argument: NumericLiteral {
+									argument: JSNumericLiteral {
 										value: 1
 										format: undefined
 										loc: Object {
@@ -163,7 +163,7 @@ Program {
 										}
 									}
 								}
-								NumericLiteral {
+								JSNumericLiteral {
 									value: 2
 									format: undefined
 									loc: Object {

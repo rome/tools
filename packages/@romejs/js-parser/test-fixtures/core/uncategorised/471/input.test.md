@@ -5,7 +5,7 @@
 ## `core > uncategorised > 471`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,8 +54,8 @@ Program {
 		}
 	]
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "hello"
 				loc: Object {
 					filename: "input.js"
@@ -85,7 +85,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -108,7 +108,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -123,7 +123,7 @@ Program {
 					}
 				}
 				directives: Array [
-					Directive {
+					JSDirective {
 						value: "use strict"
 						loc: Object {
 							filename: "input.js"
@@ -141,7 +141,7 @@ Program {
 					}
 				]
 				body: Array [
-					TryStatement {
+					JSTryStatement {
 						finalizer: undefined
 						loc: Object {
 							filename: "input.js"
@@ -156,7 +156,7 @@ Program {
 								line: 1
 							}
 						}
-						block: BlockStatement {
+						block: JSBlockStatement {
 							body: Array []
 							directives: Array []
 							loc: Object {
@@ -173,7 +173,7 @@ Program {
 								}
 							}
 						}
-						handler: CatchClause {
+						handler: JSCatchClause {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -187,7 +187,7 @@ Program {
 									line: 1
 								}
 							}
-							body: BlockStatement {
+							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
 								loc: Object {
@@ -204,7 +204,7 @@ Program {
 									}
 								}
 							}
-							param: BindingIdentifier {
+							param: JSBindingIdentifier {
 								name: "arguments"
 								loc: Object {
 									filename: "input.js"

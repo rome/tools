@@ -5,7 +5,7 @@
 ## `esprima > expression-primary-literal-regular-expression > migrated_0001`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ArrayExpression {
+			expression: JSArrayExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -59,7 +59,7 @@ Program {
 					}
 				}
 				elements: Array [
-					RegExpLiteral {
+					JSRegExpLiteral {
 						global: false
 						insensitive: false
 						multiline: false
@@ -79,7 +79,7 @@ Program {
 								line: 1
 							}
 						}
-						expression: RegExpSubExpression {
+						expression: JSRegExpSubExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -94,7 +94,7 @@ Program {
 								}
 							}
 							body: Array [
-								RegExpCharacter {
+								JSRegExpCharacter {
 									value: "q"
 									loc: Object {
 										filename: "input.js"

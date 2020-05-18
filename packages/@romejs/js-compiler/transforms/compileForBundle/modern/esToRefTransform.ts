@@ -28,22 +28,22 @@ import {
 } from "@romejs/js-ast-utils";
 import {
 	AnyNode,
-	ObjectProperties,
-	bindingIdentifier,
-	blockStatement,
-	functionHead,
-	identifier,
-	objectExpression,
-	objectMethod,
-	objectProperty,
-	program,
-	referenceIdentifier,
-	returnStatement,
-	staticPropertyKey,
-	variableDeclaration,
-	variableDeclarationStatement,
-	variableDeclarator,
-} from "@romejs/js-ast";
+	JSObjectProperties,
+	jsBindingIdentifier,
+	jsBlockStatement,
+	jsFunctionHead,
+	jsIdentifier,
+	jsObjectExpression,
+	jsObjectMethod,
+	jsObjectProperty,
+	jsProgram,
+	jsReferenceIdentifier,
+	jsReturnStatement,
+	jsStaticPropertyKey,
+	jsVariableDeclaration,
+	jsVariableDeclarationStatement,
+	jsVariableDeclarator,
+} from "@romejs/ast";
 
 export default {
 	name: "esToRefTransform",
@@ -52,7 +52,7 @@ export default {
 
 		const opts = getOptions(context);
 
-		if (program.is(node)) {
+		if (jsProgram.is(node)) {
 			const mappings = new Map();
 
 			// make all variables private
@@ -63,7 +63,7 @@ export default {
 			// map exports and imports and correctly
 			for (const child of node.body) {
 				if (
-					child.type === "ImportDeclaration" &&
+					child.type === "JSImportDeclaration" &&
 					child.importKind !== "type" &&
 					child.importKind !== "typeof"
 				) {
@@ -73,17 +73,17 @@ export default {
 					}
 
 					for (const specifier of getImportSpecifiers(child)) {
-						if (specifier.type === "ImportSpecifier") {
+						if (specifier.type === "JSImportSpecifier") {
 							mappings.set(
 								specifier.local.name.name,
 								getPrefixedName(specifier.imported.name, moduleId, opts),
 							);
-						} else if (specifier.type === "ImportNamespaceSpecifier") {
+						} else if (specifier.type === "JSImportNamespaceSpecifier") {
 							mappings.set(
 								specifier.local.name.name,
 								getPrefixedNamespace(moduleId),
 							);
-						} else if (specifier.type === "ImportDefaultSpecifier") {
+						} else if (specifier.type === "JSImportDefaultSpecifier") {
 							mappings.set(
 								specifier.local.name.name,
 								getPrefixedName("default", moduleId, opts),
@@ -94,7 +94,7 @@ export default {
 					}
 				}
 
-				if (child.type === "ExportLocalDeclaration") {
+				if (child.type === "JSExportLocalDeclaration") {
 					// export const foo = '';
 					// export function foo() {}
 					for (const {name} of getBindingIdentifiers(child)) {
@@ -117,11 +117,11 @@ export default {
 					}
 				}
 
-				if (child.type === "ExportDefaultDeclaration") {
+				if (child.type === "JSExportDefaultDeclaration") {
 					const {declaration: decl} = child;
 					if (
-						(decl.type === "FunctionDeclaration" ||
-						decl.type === "ClassDeclaration") &&
+						(decl.type === "JSFunctionDeclaration" ||
+						decl.type === "JSClassDeclaration") &&
 						decl.id !== undefined
 					) {
 						mappings.set(
@@ -132,7 +132,7 @@ export default {
 				}
 			}
 
-			const newProgram = program.assert(renameBindings(path, mappings));
+			const newProgram = jsProgram.assert(renameBindings(path, mappings));
 
 			// Get new scope with updated bindings. TODO Maybe `renameBindings` should return the path?
 			const newScope = scope.getRootScope().evaluate(
@@ -145,14 +145,14 @@ export default {
 				// Get all the export names
 				const exportNames: Map<string, string> = new Map();
 				for (const child of newProgram.body) {
-					if (child.type === "ExportDefaultDeclaration") {
+					if (child.type === "JSExportDefaultDeclaration") {
 						exportNames.set(
 							"default",
 							getPrefixedName("default", opts.moduleId, opts),
 						);
 					}
 
-					if (child.type === "ExportExternalDeclaration") {
+					if (child.type === "JSExportExternalDeclaration") {
 						// TODO defaultSpecifier and namespaceSpecifier
 						const {source} = child;
 
@@ -173,7 +173,7 @@ export default {
 						}
 					}
 
-					if (child.type === "ExportLocalDeclaration") {
+					if (child.type === "JSExportLocalDeclaration") {
 						if (child.declaration !== undefined) {
 							throw new Error(
 								"No export declarations should be here as they have been removed by renameBindings",
@@ -190,7 +190,7 @@ export default {
 					}
 				}
 
-				const exportObjProps: ObjectProperties = [];
+				const exportObjProps: JSObjectProperties = [];
 
 				for (const [exported, local] of exportNames) {
 					const binding = newScope.getBinding(local);
@@ -201,9 +201,9 @@ export default {
 
 						if (binding instanceof FunctionBinding) {
 							exportObjProps.push(
-								objectProperty.create({
-									key: staticPropertyKey.quick(identifier.quick(exported)),
-									value: referenceIdentifier.quick(local),
+								jsObjectProperty.create({
+									key: jsStaticPropertyKey.quick(jsIdentifier.quick(exported)),
+									value: jsReferenceIdentifier.quick(local),
 								}),
 							);
 							continue;
@@ -211,14 +211,14 @@ export default {
 					}
 
 					exportObjProps.push(
-						objectMethod.create({
+						jsObjectMethod.create({
 							kind: "get",
-							key: staticPropertyKey.quick(identifier.quick(exported)),
-							head: functionHead.quick([]),
-							body: blockStatement.create({
+							key: jsStaticPropertyKey.quick(jsIdentifier.quick(exported)),
+							head: jsFunctionHead.quick([]),
+							body: jsBlockStatement.create({
 								body: [
-									returnStatement.create({
-										argument: referenceIdentifier.create({
+									jsReturnStatement.create({
+										argument: jsReferenceIdentifier.create({
 											name: local,
 										}),
 									}),
@@ -228,18 +228,18 @@ export default {
 					);
 				}
 
-				const exportObj = objectExpression.create({properties: exportObjProps});
+				const exportObj = jsObjectExpression.create({properties: exportObjProps});
 
 				return {
 					...newProgram,
-					type: "Program",
+					type: "JSProgram",
 					body: [
-						variableDeclarationStatement.quick(
-							variableDeclaration.create({
+						jsVariableDeclarationStatement.quick(
+							jsVariableDeclaration.create({
 								kind: "const",
 								declarations: [
-									variableDeclarator.create({
-										id: bindingIdentifier.create({
+									jsVariableDeclarator.create({
+										id: jsBindingIdentifier.create({
 											name: getPrefixedNamespace(opts.moduleId),
 										}),
 										init: exportObj,
@@ -255,16 +255,16 @@ export default {
 			}
 		}
 
-		if (node.type === "ImportDeclaration") {
-			// should have already been handled with the Program branch
+		if (node.type === "JSImportDeclaration") {
+			// should have already been handled with the JSProgram branch
 			return REDUCE_REMOVE;
 		}
 
-		if (node.type === "ExportDefaultDeclaration") {
+		if (node.type === "JSExportDefaultDeclaration") {
 			const {declaration} = node;
 			if (
-				declaration.type === "FunctionDeclaration" ||
-				declaration.type === "ClassDeclaration"
+				declaration.type === "JSFunctionDeclaration" ||
+				declaration.type === "JSClassDeclaration"
 			) {
 				if (declaration.id === undefined) {
 					return {
@@ -272,7 +272,7 @@ export default {
 						...node,
 						declaration: {
 							...declaration,
-							id: bindingIdentifier.create({
+							id: jsBindingIdentifier.create({
 								name: getPrefixedName("default", opts.moduleId, opts),
 							}),
 						},
@@ -290,12 +290,12 @@ export default {
 			}
 		}
 
-		if (node.type === "ExportExternalDeclaration") {
+		if (node.type === "JSExportExternalDeclaration") {
 			// Remove external exports with a source as they will be resolved correctly and never point here
 			return REDUCE_REMOVE;
 		}
 
-		if (node.type === "ExportLocalDeclaration") {
+		if (node.type === "JSExportLocalDeclaration") {
 			const {declaration, specifiers} = node;
 
 			if (specifiers === undefined) {
@@ -311,24 +311,24 @@ export default {
 				const nodes: Array<AnyNode> = [];
 
 				for (const specifier of specifiers) {
-					if (specifier.type === "ExportLocalSpecifier") {
+					if (specifier.type === "JSExportLocalSpecifier") {
 						const binding = path.scope.getBinding(specifier.local.name);
 
 						// TODO we only really need this declaration for global bindings, `analyze()` could detect the exported import and resolvedImports would just work
 						if (binding === undefined || binding instanceof ImportBinding) {
 							nodes.push(
-								variableDeclaration.create({
+								jsVariableDeclaration.create({
 									kind: "const",
 									declarations: [
-										variableDeclarator.create({
-											id: bindingIdentifier.create({
+										jsVariableDeclarator.create({
+											id: jsBindingIdentifier.create({
 												name: getPrefixedName(
 													specifier.exported.name,
 													opts.moduleId,
 													opts,
 												),
 											}),
-											init: referenceIdentifier.quick(specifier.local.name),
+											init: jsReferenceIdentifier.quick(specifier.local.name),
 										}),
 									],
 								}),
@@ -347,7 +347,7 @@ export default {
 			}
 		}
 
-		if (node.type === "ExportAllDeclaration" && opts.moduleAll === true) {
+		if (node.type === "JSExportAllDeclaration" && opts.moduleAll === true) {
 			const moduleId = getModuleId(node.source.value, opts);
 			if (moduleId === undefined) {
 				return node;
@@ -369,7 +369,7 @@ export default {
       `;
 		}
 
-		if (node.type === "ExportAllDeclaration" && opts.moduleAll !== true) {
+		if (node.type === "JSExportAllDeclaration" && opts.moduleAll !== true) {
 			// We can remove these, this signature has already been flagged by analyze() and we'll automatically forward it
 			return REDUCE_REMOVE;
 		}

@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	JSXExpressionContainer,
 	jsxExpressionContainer,
-} from "@romejs/js-ast";
+} from "@romejs/ast";
 
 export default function JSXExpressionContainer(node: AnyNode, scope: Scope) {
 	node = jsxExpressionContainer.assert(node);

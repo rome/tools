@@ -5,7 +5,7 @@
 ## `typescript > regression > destructuring-in-function-type`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		TypeAliasTypeAnnotation {
-			id: BindingIdentifier {
+		TSTypeAliasTypeAnnotation {
+			id: JSBindingIdentifier {
 				name: "MyType"
 				loc: Object {
 					filename: "input.ts"
@@ -108,7 +108,7 @@ Program {
 						}
 					}
 					parameters: Array [
-						BindingObjectPattern {
+						JSBindingObjectPattern {
 							rest: undefined
 							loc: Object {
 								filename: "input.ts"
@@ -123,7 +123,7 @@ Program {
 									line: 1
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								optional: undefined
 								loc: Object {
 									filename: "input.ts"
@@ -155,9 +155,9 @@ Program {
 								}
 							}
 							properties: Array [
-								BindingObjectPatternProperty {
-									key: StaticPropertyKey {
-										value: Identifier {
+								JSBindingObjectPatternProperty {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
 											name: "theme"
 											loc: Object {
 												filename: "input.ts"
@@ -188,7 +188,7 @@ Program {
 											}
 										}
 									}
-									value: BindingIdentifier {
+									value: JSBindingIdentifier {
 										name: "theme"
 										loc: Object {
 											filename: "input.ts"
@@ -225,8 +225,8 @@ Program {
 				}
 			}
 		}
-		TypeAliasTypeAnnotation {
-			id: BindingIdentifier {
+		TSTypeAliasTypeAnnotation {
+			id: JSBindingIdentifier {
 				name: "AnotherType"
 				loc: Object {
 					filename: "input.ts"
@@ -303,7 +303,7 @@ Program {
 						}
 					}
 					parameters: Array [
-						BindingArrayPattern {
+						JSBindingArrayPattern {
 							rest: undefined
 							loc: Object {
 								filename: "input.ts"
@@ -318,7 +318,7 @@ Program {
 									line: 3
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								optional: undefined
 								loc: Object {
 									filename: "input.ts"
@@ -350,7 +350,7 @@ Program {
 								}
 							}
 							elements: Array [
-								BindingIdentifier {
+								JSBindingIdentifier {
 									name: "a"
 									loc: Object {
 										filename: "input.ts"
@@ -366,7 +366,7 @@ Program {
 											line: 3
 										}
 									}
-									meta: PatternMeta {
+									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {

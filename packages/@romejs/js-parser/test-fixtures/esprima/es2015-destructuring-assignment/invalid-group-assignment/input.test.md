@@ -5,7 +5,7 @@
 ## `esprima > es2015-destructuring-assignment > invalid-group-assignment`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: AssignmentExpression {
+			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
 					filename: "input.js"
@@ -83,7 +83,7 @@ Program {
 						line: 1
 					}
 				}
-				left: AssignmentIdentifier {
+				left: JSAssignmentIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: Object {
 						filename: "input.js"
@@ -99,7 +99,7 @@ Program {
 						}
 					}
 				}
-				right: SequenceExpression {
+				right: JSSequenceExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -114,7 +114,7 @@ Program {
 						}
 					}
 					expressions: Array [
-						ReferenceIdentifier {
+						JSReferenceIdentifier {
 							name: "c"
 							loc: Object {
 								filename: "input.js"
@@ -131,7 +131,7 @@ Program {
 								}
 							}
 						}
-						ReferenceIdentifier {
+						JSReferenceIdentifier {
 							name: "d"
 							loc: Object {
 								filename: "input.js"
