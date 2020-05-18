@@ -8,7 +8,7 @@
 
 ```
 
- unknown:4:12 lint/noDidUpdateSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:4:12 lint/react/noDidUpdateSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid this.setState in componentDidUpdate
 
@@ -42,7 +42,7 @@ class Hello extends React.Component {
 
 ```
 
- unknown:5:12 lint/noDidUpdateSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:5:12 lint/react/noDidUpdateSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid this.setState in componentDidUpdate
 
@@ -77,7 +77,7 @@ class Hello extends React.Component {
 
 ```
 
- unknown:4:12 lint/noDidUpdateSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:4:12 lint/react/noDidUpdateSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid this.setState in componentDidUpdate
 
@@ -111,7 +111,7 @@ class Hello extends Component {
 
 ```
 
- unknown:5:12 lint/noDidUpdateSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:5:12 lint/react/noDidUpdateSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid this.setState in componentDidUpdate
 

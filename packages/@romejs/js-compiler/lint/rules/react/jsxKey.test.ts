@@ -58,7 +58,7 @@ test(
         `,
 				),
 			],
-			{category: "lint/jsxKey"},
+			{category: "lint/react/jsxKey"},
 		);
 	},
 );

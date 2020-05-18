@@ -8,7 +8,7 @@
 
 ```
 
- unknown:4:12 lint/noWillUpdateSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:4:12 lint/react/noWillUpdateSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid this.setState in componentWillUpdate
 
@@ -42,7 +42,7 @@ class Hello extends React.Component {
 
 ```
 
- unknown:5:12 lint/noWillUpdateSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:5:12 lint/react/noWillUpdateSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid this.setState in componentWillUpdate
 
@@ -77,7 +77,7 @@ class Hello extends React.Component {
 
 ```
 
- unknown:5:12 lint/noWillUpdateSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:5:12 lint/react/noWillUpdateSetState ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Avoid this.setState in componentWillUpdate
 

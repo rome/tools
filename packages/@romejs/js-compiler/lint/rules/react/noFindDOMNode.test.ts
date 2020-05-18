@@ -21,7 +21,7 @@ test(
 				// VALID
 				"this.node.scrollIntoView()",
 			],
-			{category: "lint/noFindDOMNode"},
+			{category: "lint/react/noFindDOMNode"},
 		);
 	},
 );

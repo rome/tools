@@ -23,25 +23,26 @@ for (const category of fs.readdirSync(lintRulesFolder)) {
 
 	for (const filename of fs.readdirSync(loc)) {
 		if (filename.endsWith(".ts") && !filename.endsWith(".test.ts")) {
+			const basename = path.basename(filename, path.extname(filename));
 			defs.push({
-				basename: path.basename(filename, path.extname(filename)),
+				basename,
 				category,
+				ruleName: `${category}/${basename}`,
 			});
 		}
 	}
 }
 
 defs = defs.sort((a, b) => {
-	return a.basename.localeCompare(b.basename);
+	return a.ruleName.localeCompare(b.ruleName);
 });
 
 // Generate rules index
-
 const indexLoc = path.join(lintRulesFolder, "index.ts");
 let index = readGeneratedFile(indexLoc);
 
-for (const {basename, category} of defs) {
-	index += `import ${basename} from "./${category}/${basename}";\n`;
+for (const {basename, ruleName} of defs) {
+	index += `import ${basename} from "./${ruleName}";\n`;
 }
 
 index += "\n";
@@ -56,8 +57,8 @@ write(indexLoc, index);
 // Generate categories
 let categories = readGeneratedFile(categoriesFile);
 categories += "type LintDiagnosticCategory =";
-for (const {basename} of defs) {
-	categories += `\n	| "lint/${basename}"`;
+for (const {ruleName} of defs) {
+	categories += `\n	| "lint/${ruleName}"`;
 }
 categories += ";\n";
 write(categoriesFile, categories);

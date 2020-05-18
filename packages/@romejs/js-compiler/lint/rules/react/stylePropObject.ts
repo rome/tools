@@ -22,7 +22,10 @@ export default {
 			node.value.expression.type !== "ObjectExpression") ||
 			node.value.type !== "JSXExpressionContainer")
 		) {
-			path.context.addNodeDiagnostic(node, descriptions.LINT.STYLE_PROP_OBJECT);
+			path.context.addNodeDiagnostic(
+				node,
+				descriptions.LINT.REACT_STYLE_PROP_OBJECT,
+			);
 		}
 
 		return node;

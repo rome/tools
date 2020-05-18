@@ -72,7 +72,7 @@ export default {
 							selfClosing: true,
 						},
 					},
-					descriptions.LINT.REACT_JSX_VOID_DOM_ELEMENTS_NO_CHILDREN(
+					descriptions.LINT.REACT_VOID_DOM_ELEMENTS_NO_CHILDREN(
 						element,
 						Array.from(properties),
 					),

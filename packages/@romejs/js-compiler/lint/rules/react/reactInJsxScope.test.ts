@@ -19,7 +19,7 @@ test(
                 </div>;
             }`,
 			{
-				category: "lint/reactInJsxScope",
+				category: "lint/react/reactInJsxScope",
 			},
 		);
 	},

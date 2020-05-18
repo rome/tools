@@ -49,7 +49,7 @@ test(
 				'React.createElement("Valid", { children: "children" })',
 				'React.createElement("Valid", { children: ["children"] })',
 			],
-			{category: "lint/noDangerWithChildren"},
+			{category: "lint/react/noDangerWithChildren"},
 		);
 	},
 );

@@ -18,7 +18,10 @@ export default {
 			const reactIsInScope = scope.getBinding("React") !== undefined;
 
 			if (!reactIsInScope) {
-				context.addNodeDiagnostic(node, descriptions.LINT.REACT_IN_JSX_SCOPE);
+				context.addNodeDiagnostic(
+					node,
+					descriptions.LINT.REACT_REACT_IN_JSX_SCOPE,
+				);
 			}
 		}
 

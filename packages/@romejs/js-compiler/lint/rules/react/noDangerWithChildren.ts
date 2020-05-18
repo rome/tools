@@ -107,7 +107,7 @@ export default {
 		) {
 			path.context.addNodeDiagnostic(
 				node,
-				descriptions.LINT.NO_DANGER_WITH_CHILDREN,
+				descriptions.LINT.REACT_NO_DANGER_WITH_CHILDREN,
 			);
 		}
 

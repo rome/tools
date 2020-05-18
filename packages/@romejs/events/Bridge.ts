@@ -94,7 +94,7 @@ export default class Bridge {
 	type: BridgeType;
 
 	messageIdCounter: number;
-	// rome-ignore lint/noExplicitAny
+	// rome-ignore lint/js/noExplicitAny
 	events: Map<string, BridgeEvent<any, any>>;
 
 	listeners: Set<string>;

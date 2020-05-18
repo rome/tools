@@ -878,7 +878,7 @@ export default class Consumer {
 			this.unexpected(
 				descriptions.CONSUME.INVALID_STRING_SET_VALUE(
 					value,
-					// rome-ignore lint/noExplicitAny
+					// rome-ignore lint/js/noExplicitAny
 					((validValues as any) as Array<string>),
 				),
 				{
@@ -1201,7 +1201,7 @@ export default class Consumer {
 		return this.value;
 	}
 
-	// rome-ignore lint/noExplicitAny
+	// rome-ignore lint/js/noExplicitAny
 	asAny(): any {
 		return this.value;
 	}

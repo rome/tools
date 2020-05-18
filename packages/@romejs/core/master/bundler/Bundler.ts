@@ -351,7 +351,7 @@ export default class Bundler {
 		}
 
 		// TODO `{type: "module"}` will always fail since we've produced CJS bundles
-		// rome-ignore lint/noDelete
+		// rome-ignore lint/js/noDelete
 		delete newManifest.type;
 
 		return newManifest;

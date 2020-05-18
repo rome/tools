@@ -21,7 +21,7 @@ test(
 				// VALID
 				"<div style={{color: 'red'}} />",
 			],
-			{category: "lint/stylePropObject"},
+			{category: "lint/react/stylePropObject"},
 		);
 	},
 );
