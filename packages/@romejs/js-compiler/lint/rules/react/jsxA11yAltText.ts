@@ -11,7 +11,7 @@ import {descriptions} from "@romejs/diagnostics";
 import {
 	getJSXAttribute,
 	hasJSXAttribute,
-	isJSXElement
+	isJSXElement,
 } from "@romejs/js-ast-utils";
 
 function hasImgAltText(node: JSXElement): boolean {
@@ -20,11 +20,9 @@ function hasImgAltText(node: JSXElement): boolean {
 		return false;
 	}
 	return (
-		!!(
-			attr.value &&
-			attr.value.type === "StringLiteral" &&
-			attr.value.value === ""
-		) || hasJSXAttribute(node, "alt")
+		!!(attr.value &&
+		attr.value.type === "StringLiteral" &&
+		attr.value.value === "") || hasJSXAttribute(node, "alt")
 	);
 }
 
@@ -60,11 +58,9 @@ function hasTypeImage(node: JSXElement): boolean {
 	if (attr === undefined) {
 		return false;
 	}
-	return !!(
-		attr.value &&
-		attr.value.type === "StringLiteral" &&
-		attr.value.value === "image"
-	);
+	return !!(attr.value &&
+	attr.value.type === "StringLiteral" &&
+	attr.value.value === "image");
 }
 
 export default {
@@ -82,15 +78,15 @@ export default {
 				(isJSXElement(node, "object") && !hasObjectAltText(node)) ||
 				(isJSXElement(node, "area") && !hasAreaAltText(node)) ||
 				(isJSXElement(node, "input") &&
-					hasTypeImage(node) &&
-					!hasInputAltText(node))
+				hasTypeImage(node) &&
+				!hasInputAltText(node))
 			) {
 				path.context.addNodeDiagnostic(
 					node,
-					descriptions.LINT.JSX_A11Y_ALT_TEXT
+					descriptions.LINT.JSX_A11Y_ALT_TEXT,
 				);
 			}
 		}
 		return node;
-	}
+	},
 };
