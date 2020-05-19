@@ -296,6 +296,17 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	},
+	JSX_A11Y_ROLE_HAS_REQUIRED_ARIA_PROPS: (roleName: string, missingAttributes: Array<string>) => ({
+		category: "lint/jsx-a11y/roleHasRequiredAriaProps",
+		message: `The element with role ${roleName} doesn't have the mandatory aria-* attributes`,
+		advice: missingAttributes.map(missingAttribute => {
+			return {
+				type: "log",
+				category: "info",
+				text: `Missing aria attribute: ${missingAttribute}`,
+			}
+		})
+	}),
 	REACT_JSX_KEY: (origin: string) => ({
 		category: "lint/react/jsxKey",
 		message: `Provide a <emphasis>key</emphasis> prop with a unique value for each element in <emphasis>${origin}</emphasis>.`,

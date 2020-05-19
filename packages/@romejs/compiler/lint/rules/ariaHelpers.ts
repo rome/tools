@@ -374,3 +374,25 @@ export const ariaPropsMap: MapOfARIAPropertyDefinitions = new Map([
 		},
 	],
 ]);
+
+
+export type ARIARoleDefinition = {
+	/* aria-* properties and states allowed on this role. */
+	props: ARIAProperty[],
+	/* aria-* properties and states required on this role. */
+	requiredProps: ARIAProperty[],
+};
+
+export type MapOfAriaRoles = Map<
+	string,
+	ARIARoleDefinition
+	>;
+
+export const roles: MapOfAriaRoles = new Map([
+	['checkbox', {
+		props: ['aria-checked', 'aria-readonly'],
+		requiredProps: ['aria-checked']
+	}],
+]);
+
+
