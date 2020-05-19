@@ -5,114 +5,114 @@
 ## `es2015 > uncategorised > 74`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 19
-      index: 19
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExportLocalDeclaration {
-      exportKind: 'value'
-      specifiers: undefined
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 19
-          index: 19
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      declaration: VariableDeclarationStatement {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 19
-            index: 19
-            line: 1
-          }
-          start: Object {
-            column: 7
-            index: 7
-            line: 1
-          }
-        }
-        declaration: VariableDeclaration {
-          kind: 'let'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 19
-              index: 19
-              line: 1
-            }
-            start: Object {
-              column: 7
-              index: 7
-              line: 1
-            }
-          }
-          declarations: Array [
-            VariableDeclarator {
-              id: BindingIdentifier {
-                name: 'document'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'document'
-                  end: Object {
-                    column: 19
-                    index: 19
-                    line: 1
-                  }
-                  start: Object {
-                    column: 11
-                    index: 11
-                    line: 1
-                  }
-                }
-              }
-              init: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 19
-                  index: 19
-                  line: 1
-                }
-                start: Object {
-                  column: 11
-                  index: 11
-                  line: 1
-                }
-              }
-            }
-          ]
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "module"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 19
+			index: 19
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExportLocalDeclaration {
+			exportKind: "value"
+			specifiers: undefined
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 19
+					index: 19
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			declaration: JSVariableDeclarationStatement {
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 19
+						index: 19
+						line: 1
+					}
+					start: Object {
+						column: 7
+						index: 7
+						line: 1
+					}
+				}
+				declaration: JSVariableDeclaration {
+					kind: "let"
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 19
+							index: 19
+							line: 1
+						}
+						start: Object {
+							column: 7
+							index: 7
+							line: 1
+						}
+					}
+					declarations: Array [
+						JSVariableDeclarator {
+							id: JSBindingIdentifier {
+								name: "document"
+								loc: Object {
+									filename: "input.js"
+									identifierName: "document"
+									end: Object {
+										column: 19
+										index: 19
+										line: 1
+									}
+									start: Object {
+										column: 11
+										index: 11
+										line: 1
+									}
+								}
+							}
+							init: undefined
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 19
+									index: 19
+									line: 1
+								}
+								start: Object {
+									column: 11
+									index: 11
+									line: 1
+								}
+							}
+						}
+					]
+				}
+			}
+		}
+	]
 }
 ```

@@ -5,23 +5,23 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export * from './parse';
+export * from "./parse";
 
 export {
-  MarkupFormatFilenameHumanizer,
-  MarkupFormatFilenameNormalizer,
-  MarkupFormatGridOptions,
-  MarkupFormatNormalizeOptions,
-  MarkupFormatOptions,
-} from './types';
+	MarkupFormatFilenameHumanizer,
+	MarkupFormatFilenameNormalizer,
+	MarkupFormatGridOptions,
+	MarkupFormatNormalizeOptions,
+	MarkupFormatOptions,
+} from "./types";
 
 export {
-  markupToAnsi,
-  markupToPlainText,
-  markupToPlainTextString,
-  normalizeMarkup,
-} from './format';
+	markupToAnsi,
+	markupToPlainText,
+	markupToPlainTextString,
+	normalizeMarkup,
+} from "./format";
 
-export * from './escape';
+export * from "./escape";
 
-export * from './ansi';
+export * from "./ansi";

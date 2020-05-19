@@ -5,96 +5,96 @@
 ## `experimental > export-extensions > ns-default`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 32
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExportExternalDeclaration {
-      exportKind: undefined
-      namedSpecifiers: Array []
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 31
-          index: 31
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      source: StringLiteral {
-        value: 'foo'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 30
-            index: 30
-            line: 1
-          }
-          start: Object {
-            column: 25
-            index: 25
-            line: 1
-          }
-        }
-      }
-      namespaceSpecifier: ExportNamespaceSpecifier {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 19
-            index: 19
-            line: 1
-          }
-          start: Object {
-            column: 7
-            index: 7
-            line: 1
-          }
-        }
-        exported: Identifier {
-          name: 'default'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'default'
-            end: Object {
-              column: 19
-              index: 19
-              line: 1
-            }
-            start: Object {
-              column: 12
-              index: 12
-              line: 1
-            }
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "module"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 32
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExportExternalDeclaration {
+			exportKind: undefined
+			namedSpecifiers: Array []
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 31
+					index: 31
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			source: JSStringLiteral {
+				value: "foo"
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 30
+						index: 30
+						line: 1
+					}
+					start: Object {
+						column: 25
+						index: 25
+						line: 1
+					}
+				}
+			}
+			namespaceSpecifier: JSExportNamespaceSpecifier {
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 19
+						index: 19
+						line: 1
+					}
+					start: Object {
+						column: 7
+						index: 7
+						line: 1
+					}
+				}
+				exported: JSIdentifier {
+					name: "default"
+					loc: Object {
+						filename: "input.js"
+						identifierName: "default"
+						end: Object {
+							column: 19
+							index: 19
+							line: 1
+						}
+						start: Object {
+							column: 12
+							index: 12
+							line: 1
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

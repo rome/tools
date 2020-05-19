@@ -5,71 +5,71 @@
 ## `core > uncategorised > 454`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 6
-      index: 6
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ReturnStatement {
-      argument: undefined
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 6
-          index: 6
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-    }
-  ]
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: '\'return\' outside of function'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 6
+			index: 6
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSReturnStatement {
+			argument: undefined
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 6
+					index: 6
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+		}
+	]
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "'return' outside of function"}
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "script"
+				end: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+		}
+	]
 }
 ```

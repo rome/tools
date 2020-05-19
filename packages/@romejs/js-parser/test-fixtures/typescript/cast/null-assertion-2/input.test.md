@@ -5,111 +5,111 @@
 ## `typescript > cast > null-assertion-2`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.ts'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array ['ts']
-  loc: Object {
-    filename: 'input.ts'
-    end: Object {
-      column: 0
-      index: 7
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 6
-          index: 6
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: BinaryExpression {
-        operator: '/'
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 6
-            index: 6
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        right: NumericLiteral {
-          value: 2
-          format: undefined
-          loc: Object {
-            filename: 'input.ts'
-            end: Object {
-              column: 6
-              index: 6
-              line: 1
-            }
-            start: Object {
-              column: 5
-              index: 5
-              line: 1
-            }
-          }
-        }
-        left: TSNonNullExpression {
-          loc: Object {
-            filename: 'input.ts'
-            end: Object {
-              column: 2
-              index: 2
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-          expression: ReferenceIdentifier {
-            name: 'x'
-            loc: Object {
-              filename: 'input.ts'
-              identifierName: 'x'
-              end: Object {
-                column: 1
-                index: 1
-                line: 1
-              }
-              start: Object {
-                column: 0
-                index: 0
-                line: 1
-              }
-            }
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.ts"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "module"
+	syntax: Array ["ts"]
+	loc: Object {
+		filename: "input.ts"
+		end: Object {
+			column: 0
+			index: 7
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.ts"
+				end: Object {
+					column: 6
+					index: 6
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSBinaryExpression {
+				operator: "/"
+				loc: Object {
+					filename: "input.ts"
+					end: Object {
+						column: 6
+						index: 6
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				right: JSNumericLiteral {
+					value: 2
+					format: undefined
+					loc: Object {
+						filename: "input.ts"
+						end: Object {
+							column: 6
+							index: 6
+							line: 1
+						}
+						start: Object {
+							column: 5
+							index: 5
+							line: 1
+						}
+					}
+				}
+				left: TSNonNullExpression {
+					loc: Object {
+						filename: "input.ts"
+						end: Object {
+							column: 2
+							index: 2
+							line: 1
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+					expression: JSReferenceIdentifier {
+						name: "x"
+						loc: Object {
+							filename: "input.ts"
+							identifierName: "x"
+							end: Object {
+								column: 1
+								index: 1
+								line: 1
+							}
+							start: Object {
+								column: 0
+								index: 0
+								line: 1
+							}
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

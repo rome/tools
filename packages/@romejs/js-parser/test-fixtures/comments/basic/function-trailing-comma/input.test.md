@@ -5,133 +5,133 @@
 ## `comments > basic > function-trailing-comma`
 
 ```javascript
-Program {
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 25
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  comments: Array [
-    CommentBlock {
-      id: '0'
-      value: ' comment '
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 22
-          index: 22
-          line: 1
-        }
-        start: Object {
-          column: 9
-          index: 9
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 24
-          index: 24
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: CallExpression {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 23
-            index: 23
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        callee: ReferenceIdentifier {
-          name: 'fn'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'fn'
-            end: Object {
-              column: 2
-              index: 2
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
-        arguments: Array [
-          ReferenceIdentifier {
-            name: 'a'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'a'
-              end: Object {
-                column: 4
-                index: 4
-                line: 1
-              }
-              start: Object {
-                column: 3
-                index: 3
-                line: 1
-              }
-            }
-          }
-          ReferenceIdentifier {
-            name: 'b'
-            trailingComments: Array ['0']
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'b'
-              end: Object {
-                column: 7
-                index: 7
-                line: 1
-              }
-              start: Object {
-                column: 6
-                index: 6
-                line: 1
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+JSProgram {
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 25
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	comments: Array [
+		JSCommentBlock {
+			id: "0"
+			value: " comment "
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 22
+					index: 22
+					line: 1
+				}
+				start: Object {
+					column: 9
+					index: 9
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 24
+					index: 24
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSCallExpression {
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 23
+						index: 23
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				callee: JSReferenceIdentifier {
+					name: "fn"
+					loc: Object {
+						filename: "input.js"
+						identifierName: "fn"
+						end: Object {
+							column: 2
+							index: 2
+							line: 1
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+				}
+				arguments: Array [
+					JSReferenceIdentifier {
+						name: "a"
+						loc: Object {
+							filename: "input.js"
+							identifierName: "a"
+							end: Object {
+								column: 4
+								index: 4
+								line: 1
+							}
+							start: Object {
+								column: 3
+								index: 3
+								line: 1
+							}
+						}
+					}
+					JSReferenceIdentifier {
+						name: "b"
+						trailingComments: Array ["0"]
+						loc: Object {
+							filename: "input.js"
+							identifierName: "b"
+							end: Object {
+								column: 7
+								index: 7
+								line: 1
+							}
+							start: Object {
+								column: 6
+								index: 6
+								line: 1
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

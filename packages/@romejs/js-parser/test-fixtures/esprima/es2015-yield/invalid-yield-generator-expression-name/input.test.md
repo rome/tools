@@ -5,143 +5,142 @@
 ## `esprima > es2015-yield > invalid-yield-generator-expression-name`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 21
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Can not use \'yield\' as identifier inside a generator'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 15
-          index: 15
-          line: 1
-        }
-        start: Object {
-          column: 10
-          index: 10
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 20
-          index: 20
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: FunctionExpression {
-        id: BindingIdentifier {
-          name: 'yield'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'yield'
-            end: Object {
-              column: 15
-              index: 15
-              line: 1
-            }
-            start: Object {
-              column: 10
-              index: 10
-              line: 1
-            }
-          }
-        }
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 19
-            index: 19
-            line: 1
-          }
-          start: Object {
-            column: 1
-            index: 1
-            line: 1
-          }
-        }
-        body: BlockStatement {
-          body: Array []
-          directives: Array []
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 19
-              index: 19
-              line: 1
-            }
-            start: Object {
-              column: 17
-              index: 17
-              line: 1
-            }
-          }
-        }
-        head: FunctionHead {
-          async: false
-          generator: true
-          hasHoistedVars: false
-          params: Array []
-          predicate: undefined
-          rest: undefined
-          returnType: undefined
-          thisType: undefined
-          typeParameters: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 17
-              index: 17
-              line: 1
-            }
-            start: Object {
-              column: 15
-              index: 15
-              line: 1
-            }
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 21
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Can not use 'yield' as identifier inside a generator"}
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "script"
+				end: Object {
+					column: 15
+					index: 15
+					line: 1
+				}
+				start: Object {
+					column: 10
+					index: 10
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 20
+					index: 20
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSFunctionExpression {
+				id: JSBindingIdentifier {
+					name: "yield"
+					loc: Object {
+						filename: "input.js"
+						identifierName: "yield"
+						end: Object {
+							column: 15
+							index: 15
+							line: 1
+						}
+						start: Object {
+							column: 10
+							index: 10
+							line: 1
+						}
+					}
+				}
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 19
+						index: 19
+						line: 1
+					}
+					start: Object {
+						column: 1
+						index: 1
+						line: 1
+					}
+				}
+				body: JSBlockStatement {
+					body: Array []
+					directives: Array []
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 19
+							index: 19
+							line: 1
+						}
+						start: Object {
+							column: 17
+							index: 17
+							line: 1
+						}
+					}
+				}
+				head: JSFunctionHead {
+					async: false
+					generator: true
+					hasHoistedVars: false
+					params: Array []
+					rest: undefined
+					returnType: undefined
+					thisType: undefined
+					typeParameters: undefined
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 17
+							index: 17
+							line: 1
+						}
+						start: Object {
+							column: 15
+							index: 15
+							line: 1
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

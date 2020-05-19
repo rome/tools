@@ -5,137 +5,137 @@
 ## `es2015 > identifiers > invalid-escape-seq-export`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: true
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 23
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Escape sequence in keyword export'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 9
-          index: 9
-          line: 1
-        }
-        start: Object {
-          column: 9
-          index: 9
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    VariableDeclarationStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 22
-          index: 22
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      declaration: VariableDeclaration {
-        kind: 'var'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 22
-            index: 22
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        declarations: Array [
-          VariableDeclarator {
-            id: BindingIdentifier {
-              name: 'export'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'export'
-                end: Object {
-                  column: 15
-                  index: 15
-                  line: 1
-                }
-                start: Object {
-                  column: 4
-                  index: 4
-                  line: 1
-                }
-              }
-            }
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 21
-                index: 21
-                line: 1
-              }
-              start: Object {
-                column: 4
-                index: 4
-                line: 1
-              }
-            }
-            init: NumericLiteral {
-              value: 123
-              format: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 21
-                  index: 21
-                  line: 1
-                }
-                start: Object {
-                  column: 18
-                  index: 18
-                  line: 1
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: true
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 23
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Escape sequence in keyword export"}
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "script"
+				end: Object {
+					column: 9
+					index: 9
+					line: 1
+				}
+				start: Object {
+					column: 9
+					index: 9
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		JSVariableDeclarationStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 22
+					index: 22
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			declaration: JSVariableDeclaration {
+				kind: "var"
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 22
+						index: 22
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				declarations: Array [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "export"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "export"
+								end: Object {
+									column: 15
+									index: 15
+									line: 1
+								}
+								start: Object {
+									column: 4
+									index: 4
+									line: 1
+								}
+							}
+						}
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 21
+								index: 21
+								line: 1
+							}
+							start: Object {
+								column: 4
+								index: 4
+								line: 1
+							}
+						}
+						init: JSNumericLiteral {
+							value: 123
+							format: undefined
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 21
+									index: 21
+									line: 1
+								}
+								start: Object {
+									column: 18
+									index: 18
+									line: 1
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

@@ -5,97 +5,97 @@
 ## `esprima > es2015-identifier > escaped_math_zain_start`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: true
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 16
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    VariableDeclarationStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 15
-          index: 15
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      declaration: VariableDeclaration {
-        kind: 'var'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 15
-            index: 15
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        declarations: Array [
-          VariableDeclarator {
-            id: BindingIdentifier {
-              name: '\u{1ee06}_$'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: '\u{1ee06}_$'
-                end: Object {
-                  column: 15
-                  index: 15
-                  line: 1
-                }
-                start: Object {
-                  column: 4
-                  index: 4
-                  line: 1
-                }
-              }
-            }
-            init: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 15
-                index: 15
-                line: 1
-              }
-              start: Object {
-                column: 4
-                index: 4
-                line: 1
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: true
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 16
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSVariableDeclarationStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 15
+					index: 15
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			declaration: JSVariableDeclaration {
+				kind: "var"
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 15
+						index: 15
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				declarations: Array [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "\u{1ee06}_$"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "\u{1ee06}_$"
+								end: Object {
+									column: 15
+									index: 15
+									line: 1
+								}
+								start: Object {
+									column: 4
+									index: 4
+									line: 1
+								}
+							}
+						}
+						init: undefined
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 15
+								index: 15
+								line: 1
+							}
+							start: Object {
+								column: 4
+								index: 4
+								line: 1
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

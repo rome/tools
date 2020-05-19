@@ -5,47 +5,47 @@
 ## `esprima > expression-primary-literal-string > migrated_0000`
 
 ```javascript
-Program {
-  body: Array []
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 7
-      index: 7
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  directives: Array [
-    Directive {
-      value: 'Hello'
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 7
-          index: 7
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-    }
-  ]
+JSProgram {
+	body: Array []
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 7
+			index: 7
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	directives: Array [
+		JSDirective {
+			value: "Hello"
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 7
+					index: 7
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+		}
+	]
 }
 ```

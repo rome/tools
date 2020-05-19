@@ -5,96 +5,90 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-require('../_setup.cjs');
+require("../_setup.cjs");
 
-const {write} = require('../_utils.cjs');
-const {lintRulesFolder, descriptionsFile} = require('../_constants.cjs');
-const path = require('path');
-const fs = require('fs');
+const {toCamelCase, write} = require("../_utils.cjs");
+const {lintRulesFolder, descriptionsFile} = require("../_constants.cjs");
+const path = require("path");
+const fs = require("fs");
 
 const ruleName = process.argv[2];
 const category = process.argv[3];
 if (ruleName === undefined || category === undefined) {
-  console.error('node scripts/lint/add.cjs [ruleName] [category]');
-  process.exit(1);
+	console.error("node scripts/lint/add.cjs [ruleName] [category]");
+	process.exit(1);
 }
 
-const spacedName = ruleName.replace(/([A-Z+])/g, ' $1').trim().toLowerCase();
-const descriptionKey = spacedName.toUpperCase().replace(/ /g, '_');
-const categoryName = `lint/${ruleName}`;
+const camelCasedName = toCamelCase(ruleName);
+const spacedName = camelCasedName.replace(/([A-Z+])/g, " $1").trim().toLowerCase();
+const descriptionKey = `${category}_${spacedName}`.toUpperCase().replace(
+	/[\s\-]/g,
+	"_",
+);
+const categoryName = `lint/${category}/${camelCasedName}`;
 
-const ruleLoc = path.join(lintRulesFolder, category, `${ruleName}.ts`);
-const testLoc = path.join(lintRulesFolder, category, `${ruleName}.test.ts`);
+const ruleLoc = path.join(lintRulesFolder, category, `${camelCasedName}.ts`);
+const testLoc = path.join(
+	lintRulesFolder,
+	category,
+	`${camelCasedName}.test.ts`,
+);
 
 write(
-  ruleLoc,
-  `/**
-* Copyright (c) Facebook, Inc. and its affiliates.
-*
-* This source code is licensed under the MIT license found in the
-* LICENSE file in the root directory of this source tree.
-*/
-
-import {Path, TransformExitResult} from '@romejs/js-compiler';
-import {descriptions} from '@romejs/diagnostics';
+	ruleLoc,
+	`import {Path, TransformExitResult} from "@romejs/js-compiler";
+import {descriptions} from "@romejs/diagnostics";
 
 export default {
- name: '${ruleName}',
+ name: "${camelCasedName}",
  enter(path: Path): TransformExitResult {
-   const {node} = path;
+	 const {node} = path;
 
-   if (false) {
-      path.context.addNodeDiagnostic(
-        node,
-        descriptions.LINT.${descriptionKey},
-      );
-   }
+	 if (false) {
+			path.context.addNodeDiagnostic(
+				node,
+				descriptions.LINT.${descriptionKey},
+			);
+	 }
 
-   return node;
+	 return node;
  },
 };
 `,
 );
 
 write(
-  testLoc,
-  `/**
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-import {test} from 'rome';
-import {testLintMultiple} from '../testHelpers';
+	testLoc,
+	`import {test} from "rome";
+import {testLintMultiple} from "../testHelpers";
 
 test(
-  '${spacedName}',
-  async (t) => {
-    await testLintMultiple(
-      t,
-      [
-        // INVALID
-        '',
-        // VALID
-        '',
-      ],
-      {category: '${categoryName}'},
-    );
-  },
+	"${spacedName}",
+	async (t) => {
+		await testLintMultiple(
+			t,
+			[
+				// INVALID
+				"",
+				// VALID
+				"",
+			],
+			{category: "${categoryName}"},
+		);
+	},
 );
 `,
 );
 
 // Add description
-let descriptions = fs.readFileSync(descriptionsFile, 'utf8');
+let descriptions = fs.readFileSync(descriptionsFile, "utf8");
 descriptions = descriptions.replace(
-  'LINT: {',
-  `LINT: {\n    ${descriptionKey}: {
-      category: '${categoryName}',
-      message: 'INSERT MESSAGE HERE',
-    },`,
+	"LINT: {",
+	`LINT: {\n		${descriptionKey}: {
+			category: "${categoryName}",
+			message: "INSERT MESSAGE HERE",
+		},`,
 );
 write(descriptionsFile, descriptions);
 
-require('./update.cjs');
+require("./update.cjs");

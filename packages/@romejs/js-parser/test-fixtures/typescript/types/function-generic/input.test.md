@@ -5,279 +5,279 @@
 ## `typescript > types > function-generic`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.ts'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array ['ts']
-  loc: Object {
-    filename: 'input.ts'
-    end: Object {
-      column: 0
-      index: 23
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    VariableDeclarationStatement {
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 22
-          index: 22
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      declaration: VariableDeclaration {
-        kind: 'let'
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 22
-            index: 22
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        declarations: Array [
-          VariableDeclarator {
-            id: BindingIdentifier {
-              name: 'f'
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 21
-                  index: 21
-                  line: 1
-                }
-                start: Object {
-                  column: 4
-                  index: 4
-                  line: 1
-                }
-              }
-              meta: PatternMeta {
-                definite: undefined
-                loc: Object {
-                  filename: 'input.ts'
-                  end: Object {
-                    column: 21
-                    index: 21
-                    line: 1
-                  }
-                  start: Object {
-                    column: 4
-                    index: 4
-                    line: 1
-                  }
-                }
-                typeAnnotation: TSFunctionType {
-                  loc: Object {
-                    filename: 'input.ts'
-                    end: Object {
-                      column: 21
-                      index: 21
-                      line: 1
-                    }
-                    start: Object {
-                      column: 7
-                      index: 7
-                      line: 1
-                    }
-                  }
-                  typeAnnotation: TSTypeReference {
-                    typeParameters: undefined
-                    loc: Object {
-                      filename: 'input.ts'
-                      end: Object {
-                        column: 21
-                        index: 21
-                        line: 1
-                      }
-                      start: Object {
-                        column: 20
-                        index: 20
-                        line: 1
-                      }
-                    }
-                    typeName: ReferenceIdentifier {
-                      name: 'T'
-                      loc: Object {
-                        filename: 'input.ts'
-                        identifierName: 'T'
-                        end: Object {
-                          column: 21
-                          index: 21
-                          line: 1
-                        }
-                        start: Object {
-                          column: 20
-                          index: 20
-                          line: 1
-                        }
-                      }
-                    }
-                  }
-                  meta: TSSignatureDeclarationMeta {
-                    rest: undefined
-                    loc: Object {
-                      filename: 'input.ts'
-                      end: Object {
-                        column: 21
-                        index: 21
-                        line: 1
-                      }
-                      start: Object {
-                        column: 7
-                        index: 7
-                        line: 1
-                      }
-                    }
-                    typeParameters: TSTypeParameterDeclaration {
-                      loc: Object {
-                        filename: 'input.ts'
-                        end: Object {
-                          column: 10
-                          index: 10
-                          line: 1
-                        }
-                        start: Object {
-                          column: 7
-                          index: 7
-                          line: 1
-                        }
-                      }
-                      params: Array [
-                        TSTypeParameter {
-                          name: 'T'
-                          constraint: undefined
-                          default: undefined
-                          loc: Object {
-                            filename: 'input.ts'
-                            end: Object {
-                              column: 9
-                              index: 9
-                              line: 1
-                            }
-                            start: Object {
-                              column: 8
-                              index: 8
-                              line: 1
-                            }
-                          }
-                        }
-                      ]
-                    }
-                    parameters: Array [
-                      BindingIdentifier {
-                        name: 'a'
-                        loc: Object {
-                          filename: 'input.ts'
-                          identifierName: 'a'
-                          end: Object {
-                            column: 12
-                            index: 12
-                            line: 1
-                          }
-                          start: Object {
-                            column: 11
-                            index: 11
-                            line: 1
-                          }
-                        }
-                        meta: PatternMeta {
-                          optional: undefined
-                          loc: Object {
-                            filename: 'input.ts'
-                            end: Object {
-                              column: 15
-                              index: 15
-                              line: 1
-                            }
-                            start: Object {
-                              column: 11
-                              index: 11
-                              line: 1
-                            }
-                          }
-                          typeAnnotation: TSTypeReference {
-                            typeParameters: undefined
-                            loc: Object {
-                              filename: 'input.ts'
-                              end: Object {
-                                column: 15
-                                index: 15
-                                line: 1
-                              }
-                              start: Object {
-                                column: 14
-                                index: 14
-                                line: 1
-                              }
-                            }
-                            typeName: ReferenceIdentifier {
-                              name: 'T'
-                              loc: Object {
-                                filename: 'input.ts'
-                                identifierName: 'T'
-                                end: Object {
-                                  column: 15
-                                  index: 15
-                                  line: 1
-                                }
-                                start: Object {
-                                  column: 14
-                                  index: 14
-                                  line: 1
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    ]
-                  }
-                }
-              }
-            }
-            init: undefined
-            loc: Object {
-              filename: 'input.ts'
-              end: Object {
-                column: 21
-                index: 21
-                line: 1
-              }
-              start: Object {
-                column: 4
-                index: 4
-                line: 1
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.ts"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "module"
+	syntax: Array ["ts"]
+	loc: Object {
+		filename: "input.ts"
+		end: Object {
+			column: 0
+			index: 23
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSVariableDeclarationStatement {
+			loc: Object {
+				filename: "input.ts"
+				end: Object {
+					column: 22
+					index: 22
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			declaration: JSVariableDeclaration {
+				kind: "let"
+				loc: Object {
+					filename: "input.ts"
+					end: Object {
+						column: 22
+						index: 22
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				declarations: Array [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "f"
+							loc: Object {
+								filename: "input.ts"
+								end: Object {
+									column: 21
+									index: 21
+									line: 1
+								}
+								start: Object {
+									column: 4
+									index: 4
+									line: 1
+								}
+							}
+							meta: JSPatternMeta {
+								definite: undefined
+								loc: Object {
+									filename: "input.ts"
+									end: Object {
+										column: 21
+										index: 21
+										line: 1
+									}
+									start: Object {
+										column: 4
+										index: 4
+										line: 1
+									}
+								}
+								typeAnnotation: TSFunctionType {
+									loc: Object {
+										filename: "input.ts"
+										end: Object {
+											column: 21
+											index: 21
+											line: 1
+										}
+										start: Object {
+											column: 7
+											index: 7
+											line: 1
+										}
+									}
+									typeAnnotation: TSTypeReference {
+										typeParameters: undefined
+										loc: Object {
+											filename: "input.ts"
+											end: Object {
+												column: 21
+												index: 21
+												line: 1
+											}
+											start: Object {
+												column: 20
+												index: 20
+												line: 1
+											}
+										}
+										typeName: JSReferenceIdentifier {
+											name: "T"
+											loc: Object {
+												filename: "input.ts"
+												identifierName: "T"
+												end: Object {
+													column: 21
+													index: 21
+													line: 1
+												}
+												start: Object {
+													column: 20
+													index: 20
+													line: 1
+												}
+											}
+										}
+									}
+									meta: TSSignatureDeclarationMeta {
+										rest: undefined
+										loc: Object {
+											filename: "input.ts"
+											end: Object {
+												column: 21
+												index: 21
+												line: 1
+											}
+											start: Object {
+												column: 7
+												index: 7
+												line: 1
+											}
+										}
+										typeParameters: TSTypeParameterDeclaration {
+											loc: Object {
+												filename: "input.ts"
+												end: Object {
+													column: 10
+													index: 10
+													line: 1
+												}
+												start: Object {
+													column: 7
+													index: 7
+													line: 1
+												}
+											}
+											params: Array [
+												TSTypeParameter {
+													name: "T"
+													constraint: undefined
+													default: undefined
+													loc: Object {
+														filename: "input.ts"
+														end: Object {
+															column: 9
+															index: 9
+															line: 1
+														}
+														start: Object {
+															column: 8
+															index: 8
+															line: 1
+														}
+													}
+												}
+											]
+										}
+										parameters: Array [
+											JSBindingIdentifier {
+												name: "a"
+												loc: Object {
+													filename: "input.ts"
+													identifierName: "a"
+													end: Object {
+														column: 12
+														index: 12
+														line: 1
+													}
+													start: Object {
+														column: 11
+														index: 11
+														line: 1
+													}
+												}
+												meta: JSPatternMeta {
+													optional: undefined
+													loc: Object {
+														filename: "input.ts"
+														end: Object {
+															column: 15
+															index: 15
+															line: 1
+														}
+														start: Object {
+															column: 11
+															index: 11
+															line: 1
+														}
+													}
+													typeAnnotation: TSTypeReference {
+														typeParameters: undefined
+														loc: Object {
+															filename: "input.ts"
+															end: Object {
+																column: 15
+																index: 15
+																line: 1
+															}
+															start: Object {
+																column: 14
+																index: 14
+																line: 1
+															}
+														}
+														typeName: JSReferenceIdentifier {
+															name: "T"
+															loc: Object {
+																filename: "input.ts"
+																identifierName: "T"
+																end: Object {
+																	column: 15
+																	index: 15
+																	line: 1
+																}
+																start: Object {
+																	column: 14
+																	index: 14
+																	line: 1
+																}
+															}
+														}
+													}
+												}
+											}
+										]
+									}
+								}
+							}
+						}
+						init: undefined
+						loc: Object {
+							filename: "input.ts"
+							end: Object {
+								column: 21
+								index: 21
+								line: 1
+							}
+							start: Object {
+								column: 4
+								index: 4
+								line: 1
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

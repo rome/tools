@@ -5,159 +5,158 @@
 ## `es2015 > uncategorised > 142`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 19
-      index: 19
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 19
-          index: 19
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: ObjectExpression {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 18
-            index: 18
-            line: 1
-          }
-          start: Object {
-            column: 1
-            index: 1
-            line: 1
-          }
-        }
-        properties: Array [
-          ObjectProperty {
-            key: ComputedPropertyKey {
-              value: BinaryExpression {
-                operator: '+'
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 12
-                    index: 12
-                    line: 1
-                  }
-                  start: Object {
-                    column: 3
-                    index: 3
-                    line: 1
-                  }
-                }
-                left: StringLiteral {
-                  value: 'x'
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 6
-                      index: 6
-                      line: 1
-                    }
-                    start: Object {
-                      column: 3
-                      index: 3
-                      line: 1
-                    }
-                  }
-                }
-                right: StringLiteral {
-                  value: 'y'
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 12
-                      index: 12
-                      line: 1
-                    }
-                    start: Object {
-                      column: 9
-                      index: 9
-                      line: 1
-                    }
-                  }
-                }
-              }
-              variance: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 13
-                  index: 13
-                  line: 1
-                }
-                start: Object {
-                  column: 2
-                  index: 2
-                  line: 1
-                }
-              }
-            }
-            value: NumericLiteral {
-              value: 10
-              format: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 17
-                  index: 17
-                  line: 1
-                }
-                start: Object {
-                  column: 15
-                  index: 15
-                  line: 1
-                }
-              }
-            }
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 17
-                index: 17
-                line: 1
-              }
-              start: Object {
-                column: 2
-                index: 2
-                line: 1
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 19
+			index: 19
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 19
+					index: 19
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSObjectExpression {
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 18
+						index: 18
+						line: 1
+					}
+					start: Object {
+						column: 1
+						index: 1
+						line: 1
+					}
+				}
+				properties: Array [
+					JSObjectProperty {
+						key: JSComputedPropertyKey {
+							value: JSBinaryExpression {
+								operator: "+"
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 12
+										index: 12
+										line: 1
+									}
+									start: Object {
+										column: 3
+										index: 3
+										line: 1
+									}
+								}
+								left: JSStringLiteral {
+									value: "x"
+									loc: Object {
+										filename: "input.js"
+										end: Object {
+											column: 6
+											index: 6
+											line: 1
+										}
+										start: Object {
+											column: 3
+											index: 3
+											line: 1
+										}
+									}
+								}
+								right: JSStringLiteral {
+									value: "y"
+									loc: Object {
+										filename: "input.js"
+										end: Object {
+											column: 12
+											index: 12
+											line: 1
+										}
+										start: Object {
+											column: 9
+											index: 9
+											line: 1
+										}
+									}
+								}
+							}
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 13
+									index: 13
+									line: 1
+								}
+								start: Object {
+									column: 2
+									index: 2
+									line: 1
+								}
+							}
+						}
+						value: JSNumericLiteral {
+							value: 10
+							format: undefined
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 17
+									index: 17
+									line: 1
+								}
+								start: Object {
+									column: 15
+									index: 15
+									line: 1
+								}
+							}
+						}
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 17
+								index: 17
+								line: 1
+							}
+							start: Object {
+								column: 2
+								index: 2
+								line: 1
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

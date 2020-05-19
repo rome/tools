@@ -5,96 +5,96 @@
 ## `es2016 > exponentiation-operator > 1`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 8
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 7
-          index: 7
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: BinaryExpression {
-        operator: '**'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 6
-            index: 6
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        left: NumericLiteral {
-          value: 3
-          format: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 1
-              index: 1
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
-        right: NumericLiteral {
-          value: 2
-          format: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 6
-              index: 6
-              line: 1
-            }
-            start: Object {
-              column: 5
-              index: 5
-              line: 1
-            }
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 8
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 7
+					index: 7
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSBinaryExpression {
+				operator: "**"
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 6
+						index: 6
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				left: JSNumericLiteral {
+					value: 3
+					format: undefined
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 1
+							index: 1
+							line: 1
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+				}
+				right: JSNumericLiteral {
+					value: 2
+					format: undefined
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 6
+							index: 6
+							line: 1
+						}
+						start: Object {
+							column: 5
+							index: 5
+							line: 1
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

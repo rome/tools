@@ -5,123 +5,123 @@
 ## `es2015 > uncategorised > 291`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 22
-      index: 22
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: '\'import\' and \'export\' may only appear at the top level'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 22
-          index: 22
-          line: 1
-        }
-        start: Object {
-          column: 22
-          index: 22
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    IfStatement {
-      alternate: undefined
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 22
-          index: 22
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      test: NumericLiteral {
-        value: 1
-        format: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 5
-            index: 5
-            line: 1
-          }
-          start: Object {
-            column: 4
-            index: 4
-            line: 1
-          }
-        }
-      }
-      consequent: ImportDeclaration {
-        defaultSpecifier: undefined
-        importKind: undefined
-        namedSpecifiers: Array []
-        namespaceSpecifier: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 22
-            index: 22
-            line: 1
-          }
-          start: Object {
-            column: 7
-            index: 7
-            line: 1
-          }
-        }
-        source: StringLiteral {
-          value: 'acorn'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 21
-              index: 21
-              line: 1
-            }
-            start: Object {
-              column: 14
-              index: 14
-              line: 1
-            }
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 22
+			index: 22
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "'import' and 'export' may only appear at the top level"}
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "script"
+				end: Object {
+					column: 22
+					index: 22
+					line: 1
+				}
+				start: Object {
+					column: 22
+					index: 22
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		JSIfStatement {
+			alternate: undefined
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 22
+					index: 22
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			test: JSNumericLiteral {
+				value: 1
+				format: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 5
+						index: 5
+						line: 1
+					}
+					start: Object {
+						column: 4
+						index: 4
+						line: 1
+					}
+				}
+			}
+			consequent: JSImportDeclaration {
+				defaultSpecifier: undefined
+				importKind: undefined
+				namedSpecifiers: Array []
+				namespaceSpecifier: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 22
+						index: 22
+						line: 1
+					}
+					start: Object {
+						column: 7
+						index: 7
+						line: 1
+					}
+				}
+				source: JSStringLiteral {
+					value: "acorn"
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 21
+							index: 21
+							line: 1
+						}
+						start: Object {
+							column: 14
+							index: 14
+							line: 1
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

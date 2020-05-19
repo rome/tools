@@ -6,46 +6,46 @@
  */
 
 export type Node<Value> = {
-  value: Value;
-  lines: Array<Node<Value>>;
+	value: Value;
+	lines: Array<Node<Value>>;
 };
 
 export default class Graph<Value> {
-  constructor() {
-    this.nodes = [];
-    this.nodesByValue = new Map();
-  }
+	constructor() {
+		this.nodes = [];
+		this.nodesByValue = new Map();
+	}
 
-  nodes: Array<Node<Value>>;
-  nodesByValue: Map<Value, Node<Value>>;
+	nodes: Array<Node<Value>>;
+	nodesByValue: Map<Value, Node<Value>>;
 
-  addNode(value: Value): void {
-    if (this.find(value)) {
-      return;
-    }
+	addNode(value: Value): void {
+		if (this.find(value)) {
+			return;
+		}
 
-    const node: Node<Value> = {lines: [], value};
-    this.nodesByValue.set(value, node);
-    this.nodes.push(node);
-  }
+		const node: Node<Value> = {lines: [], value};
+		this.nodesByValue.set(value, node);
+		this.nodes.push(node);
+	}
 
-  find(value: Value): undefined | Node<Value> {
-    return this.nodesByValue.get(value);
-  }
+	find(value: Value): undefined | Node<Value> {
+		return this.nodesByValue.get(value);
+	}
 
-  hasConnections(value: Value) {
-    const node = this.nodesByValue.get(value);
-    return node !== undefined && (node?.lines).length > 0;
-  }
+	hasConnections(value: Value) {
+		const node = this.nodesByValue.get(value);
+		return node !== undefined && (node?.lines).length > 0;
+	}
 
-  addLine(startValue: Value, endValue: Value) {
-    const startNode = this.find(startValue);
-    const endNode = this.find(endValue);
+	addLine(startValue: Value, endValue: Value) {
+		const startNode = this.find(startValue);
+		const endNode = this.find(endValue);
 
-    if (!startNode || !endNode) {
-      throw new Error('Both nodes need to exist');
-    }
+		if (!startNode || !endNode) {
+			throw new Error("Both nodes need to exist");
+		}
 
-    startNode.lines.push(endNode);
-  }
+		startNode.lines.push(endNode);
+	}
 }

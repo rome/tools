@@ -6,14 +6,14 @@
  */
 
 import {
-  getFullCharCodeAt,
-  isES2015ReservedWord,
-  isIdentifierChar,
-  isIdentifierStart,
-  isKeyword,
-  isStrictBindReservedWord,
-  isStrictReservedWord,
-} from '@romejs/js-parser-utils';
+	getFullCharCodeAt,
+	isES2015ReservedWord,
+	isIdentifierChar,
+	isIdentifierStart,
+	isKeyword,
+	isStrictBindReservedWord,
+	isStrictReservedWord,
+} from "@romejs/js-parser-utils";
 
 /**
  * This performs a basic check to see if a string is a valid identifier name.
@@ -25,39 +25,39 @@ import {
  * unintentional semantics.
  */
 export default function isValidIdentifierName(name: string): boolean {
-  if (name.length === 0) {
-    return false;
-  }
+	if (name.length === 0) {
+		return false;
+	}
 
-  if (isStrictReservedWord(name, true)) {
-    return false;
-  }
+	if (isStrictReservedWord(name, true)) {
+		return false;
+	}
 
-  if (isStrictBindReservedWord(name, true)) {
-    return false;
-  }
+	if (isStrictBindReservedWord(name, true)) {
+		return false;
+	}
 
-  if (isES2015ReservedWord(name)) {
-    return false;
-  }
+	if (isES2015ReservedWord(name)) {
+		return false;
+	}
 
-  if (isKeyword(name)) {
-    return false;
-  }
+	if (isKeyword(name)) {
+		return false;
+	}
 
-  if (isIdentifierStart(getFullCharCodeAt(name, 0)) === false) {
-    return false;
-  }
+	if (isIdentifierStart(getFullCharCodeAt(name, 0)) === false) {
+		return false;
+	}
 
-  let i = 1;
-  while (i < name.length) {
-    const code = getFullCharCodeAt(name, i);
-    if (isIdentifierChar(code)) {
-      i += code <= 65_535 ? 1 : 2;
-    } else {
-      return false;
-    }
-  }
+	let i = 1;
+	while (i < name.length) {
+		const code = getFullCharCodeAt(name, i);
+		if (isIdentifierChar(code)) {
+			i += code <= 65_535 ? 1 : 2;
+		} else {
+			return false;
+		}
+	}
 
-  return true;
+	return true;
 }

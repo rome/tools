@@ -5,119 +5,119 @@
 ## `core > uncategorised > 367`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: true
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 5
-      index: 5
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Invalid left-hand side in assignment expression'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 1
-          index: 1
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 5
-          index: 5
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: AssignmentExpression {
-        operator: '='
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 5
-            index: 5
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        left: AssignmentIdentifier {
-          name: 'INVALID_PLACEHOLDER'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 1
-              index: 1
-              line: 1
-            }
-            start: Object {
-              column: 2
-              index: 2
-              line: 1
-            }
-          }
-        }
-        right: NumericLiteral {
-          value: 4
-          format: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 5
-              index: 5
-              line: 1
-            }
-            start: Object {
-              column: 4
-              index: 4
-              line: 1
-            }
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: true
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 5
+			index: 5
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Invalid left-hand side in assignment expression"}
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "script"
+				end: Object {
+					column: 1
+					index: 1
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 5
+					index: 5
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSAssignmentExpression {
+				operator: "="
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 5
+						index: 5
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				left: JSAssignmentIdentifier {
+					name: "INVALID_PLACEHOLDER"
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 1
+							index: 1
+							line: 1
+						}
+						start: Object {
+							column: 2
+							index: 2
+							line: 1
+						}
+					}
+				}
+				right: JSNumericLiteral {
+					value: 4
+					format: undefined
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 5
+							index: 5
+							line: 1
+						}
+						start: Object {
+							column: 4
+							index: 4
+							line: 1
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

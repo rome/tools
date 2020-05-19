@@ -5,298 +5,297 @@
 ## `es2015 > uncategorised > 333`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: true
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 39
-      index: 39
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  directives: Array [
-    Directive {
-      value: 'use strict'
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 13
-          index: 13
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-    }
-  ]
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'eval is a reserved word'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 20
-          index: 20
-          line: 1
-        }
-        start: Object {
-          column: 16
-          index: 16
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 31
-          index: 31
-          line: 1
-        }
-        start: Object {
-          column: 14
-          index: 14
-          line: 1
-        }
-      }
-      expression: AssignmentExpression {
-        operator: '='
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 31
-            index: 31
-            line: 1
-          }
-          start: Object {
-            column: 15
-            index: 15
-            line: 1
-          }
-        }
-        right: ReferenceIdentifier {
-          name: 'defValue'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'defValue'
-            end: Object {
-              column: 31
-              index: 31
-              line: 1
-            }
-            start: Object {
-              column: 23
-              index: 23
-              line: 1
-            }
-          }
-        }
-        left: AssignmentObjectPattern {
-          rest: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 20
-              index: 20
-              line: 1
-            }
-            start: Object {
-              column: 15
-              index: 15
-              line: 1
-            }
-          }
-          properties: Array [
-            AssignmentObjectPatternProperty {
-              key: StaticPropertyKey {
-                value: Identifier {
-                  name: 'eval'
-                  loc: Object {
-                    filename: 'input.js'
-                    identifierName: 'eval'
-                    end: Object {
-                      column: 20
-                      index: 20
-                      line: 1
-                    }
-                    start: Object {
-                      column: 16
-                      index: 16
-                      line: 1
-                    }
-                  }
-                }
-                variance: undefined
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 20
-                    index: 20
-                    line: 1
-                  }
-                  start: Object {
-                    column: 16
-                    index: 16
-                    line: 1
-                  }
-                }
-              }
-              value: AssignmentIdentifier {
-                name: 'eval'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'eval'
-                  end: Object {
-                    column: 20
-                    index: 20
-                    line: 1
-                  }
-                  start: Object {
-                    column: 16
-                    index: 16
-                    line: 1
-                  }
-                }
-              }
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 20
-                  index: 20
-                  line: 1
-                }
-                start: Object {
-                  column: 16
-                  index: 16
-                  line: 1
-                }
-              }
-            }
-          ]
-        }
-      }
-    }
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 38
-          index: 38
-          line: 1
-        }
-        start: Object {
-          column: 31
-          index: 31
-          line: 1
-        }
-      }
-      expression: AssignmentExpression {
-        operator: '='
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 38
-            index: 38
-            line: 1
-          }
-          start: Object {
-            column: 31
-            index: 31
-            line: 1
-          }
-        }
-        left: AssignmentIdentifier {
-          name: 'INVALID_PLACEHOLDER'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 32
-              index: 32
-              line: 1
-            }
-            start: Object {
-              column: 31
-              index: 31
-              line: 1
-            }
-          }
-        }
-        right: ReferenceIdentifier {
-          name: 'obj'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'obj'
-            end: Object {
-              column: 38
-              index: 38
-              line: 1
-            }
-            start: Object {
-              column: 35
-              index: 35
-              line: 1
-            }
-          }
-        }
-      }
-    }
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 39
-          index: 39
-          line: 1
-        }
-        start: Object {
-          column: 38
-          index: 38
-          line: 1
-        }
-      }
-      expression: ReferenceIdentifier {
-        name: 'INVALID_PLACEHOLDER'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 39
-            index: 39
-            line: 1
-          }
-          start: Object {
-            column: 38
-            index: 38
-            line: 1
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: true
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 39
+			index: 39
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	directives: Array [
+		JSDirective {
+			value: "use strict"
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 13
+					index: 13
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+		}
+	]
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "eval is a reserved word"}
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "script"
+				end: Object {
+					column: 20
+					index: 20
+					line: 1
+				}
+				start: Object {
+					column: 16
+					index: 16
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 31
+					index: 31
+					line: 1
+				}
+				start: Object {
+					column: 14
+					index: 14
+					line: 1
+				}
+			}
+			expression: JSAssignmentExpression {
+				operator: "="
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 31
+						index: 31
+						line: 1
+					}
+					start: Object {
+						column: 15
+						index: 15
+						line: 1
+					}
+				}
+				right: JSReferenceIdentifier {
+					name: "defValue"
+					loc: Object {
+						filename: "input.js"
+						identifierName: "defValue"
+						end: Object {
+							column: 31
+							index: 31
+							line: 1
+						}
+						start: Object {
+							column: 23
+							index: 23
+							line: 1
+						}
+					}
+				}
+				left: JSAssignmentObjectPattern {
+					rest: undefined
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 20
+							index: 20
+							line: 1
+						}
+						start: Object {
+							column: 15
+							index: 15
+							line: 1
+						}
+					}
+					properties: Array [
+						JSAssignmentObjectPatternProperty {
+							key: JSStaticPropertyKey {
+								value: JSIdentifier {
+									name: "eval"
+									loc: Object {
+										filename: "input.js"
+										identifierName: "eval"
+										end: Object {
+											column: 20
+											index: 20
+											line: 1
+										}
+										start: Object {
+											column: 16
+											index: 16
+											line: 1
+										}
+									}
+								}
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 20
+										index: 20
+										line: 1
+									}
+									start: Object {
+										column: 16
+										index: 16
+										line: 1
+									}
+								}
+							}
+							value: JSAssignmentIdentifier {
+								name: "eval"
+								loc: Object {
+									filename: "input.js"
+									identifierName: "eval"
+									end: Object {
+										column: 20
+										index: 20
+										line: 1
+									}
+									start: Object {
+										column: 16
+										index: 16
+										line: 1
+									}
+								}
+							}
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 20
+									index: 20
+									line: 1
+								}
+								start: Object {
+									column: 16
+									index: 16
+									line: 1
+								}
+							}
+						}
+					]
+				}
+			}
+		}
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 38
+					index: 38
+					line: 1
+				}
+				start: Object {
+					column: 31
+					index: 31
+					line: 1
+				}
+			}
+			expression: JSAssignmentExpression {
+				operator: "="
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 38
+						index: 38
+						line: 1
+					}
+					start: Object {
+						column: 31
+						index: 31
+						line: 1
+					}
+				}
+				left: JSAssignmentIdentifier {
+					name: "INVALID_PLACEHOLDER"
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 32
+							index: 32
+							line: 1
+						}
+						start: Object {
+							column: 31
+							index: 31
+							line: 1
+						}
+					}
+				}
+				right: JSReferenceIdentifier {
+					name: "obj"
+					loc: Object {
+						filename: "input.js"
+						identifierName: "obj"
+						end: Object {
+							column: 38
+							index: 38
+							line: 1
+						}
+						start: Object {
+							column: 35
+							index: 35
+							line: 1
+						}
+					}
+				}
+			}
+		}
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 39
+					index: 39
+					line: 1
+				}
+				start: Object {
+					column: 38
+					index: 38
+					line: 1
+				}
+			}
+			expression: JSReferenceIdentifier {
+				name: "INVALID_PLACEHOLDER"
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 39
+						index: 39
+						line: 1
+					}
+					start: Object {
+						column: 38
+						index: 38
+						line: 1
+					}
+				}
+			}
+		}
+	]
 }
 ```

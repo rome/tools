@@ -5,222 +5,222 @@
 ## `experimental > optional-chaining > class-contructor-call`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 12
-      index: 12
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 10
-          index: 10
-          line: 1
-        }
-        start: Object {
-          column: 10
-          index: 10
-          line: 1
-        }
-      }
-      description: Object {
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'constructors in/after an Optional Chain are not allowed'}
-        advice: Array [
-          log {
-            category: 'info'
-            text: 'Optional chain member responsible'
-          }
-          frame {
-            location: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 8
-                index: 8
-                line: 1
-              }
-              start: Object {
-                column: 4
-                index: 4
-                line: 1
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 12
-          index: 12
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: NewExpression {
-        arguments: Array []
-        optional: undefined
-        typeArguments: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 12
-            index: 12
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        callee: MemberExpression {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 10
-              index: 10
-              line: 1
-            }
-            start: Object {
-              column: 4
-              index: 4
-              line: 1
-            }
-          }
-          property: StaticMemberProperty {
-            value: Identifier {
-              name: 'd'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'd'
-                end: Object {
-                  column: 10
-                  index: 10
-                  line: 1
-                }
-                start: Object {
-                  column: 9
-                  index: 9
-                  line: 1
-                }
-              }
-            }
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'd'
-              end: Object {
-                column: 10
-                index: 10
-                line: 1
-              }
-              start: Object {
-                column: 9
-                index: 9
-                line: 1
-              }
-            }
-          }
-          object: MemberExpression {
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 8
-                index: 8
-                line: 1
-              }
-              start: Object {
-                column: 4
-                index: 4
-                line: 1
-              }
-            }
-            object: ReferenceIdentifier {
-              name: 'C'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'C'
-                end: Object {
-                  column: 5
-                  index: 5
-                  line: 1
-                }
-                start: Object {
-                  column: 4
-                  index: 4
-                  line: 1
-                }
-              }
-            }
-            property: StaticMemberProperty {
-              value: Identifier {
-                name: 'b'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'b'
-                  end: Object {
-                    column: 8
-                    index: 8
-                    line: 1
-                  }
-                  start: Object {
-                    column: 7
-                    index: 7
-                    line: 1
-                  }
-                }
-              }
-              optional: true
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'b'
-                end: Object {
-                  column: 8
-                  index: 8
-                  line: 1
-                }
-                start: Object {
-                  column: 7
-                  index: 7
-                  line: 1
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 12
+			index: 12
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "script"
+				end: Object {
+					column: 10
+					index: 10
+					line: 1
+				}
+				start: Object {
+					column: 10
+					index: 10
+					line: 1
+				}
+			}
+			description: Object {
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "constructors in/after an Optional Chain are not allowed"}
+				advice: Array [
+					log {
+						category: "info"
+						text: "Optional chain member responsible"
+					}
+					frame {
+						location: Object {
+							filename: "input.js"
+							end: Object {
+								column: 8
+								index: 8
+								line: 1
+							}
+							start: Object {
+								column: 4
+								index: 4
+								line: 1
+							}
+						}
+					}
+				]
+			}
+		}
+	]
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 12
+					index: 12
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSNewExpression {
+				arguments: Array []
+				optional: undefined
+				typeArguments: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 12
+						index: 12
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				callee: JSMemberExpression {
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 10
+							index: 10
+							line: 1
+						}
+						start: Object {
+							column: 4
+							index: 4
+							line: 1
+						}
+					}
+					property: JSStaticMemberProperty {
+						value: JSIdentifier {
+							name: "d"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "d"
+								end: Object {
+									column: 10
+									index: 10
+									line: 1
+								}
+								start: Object {
+									column: 9
+									index: 9
+									line: 1
+								}
+							}
+						}
+						loc: Object {
+							filename: "input.js"
+							identifierName: "d"
+							end: Object {
+								column: 10
+								index: 10
+								line: 1
+							}
+							start: Object {
+								column: 9
+								index: 9
+								line: 1
+							}
+						}
+					}
+					object: JSMemberExpression {
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 8
+								index: 8
+								line: 1
+							}
+							start: Object {
+								column: 4
+								index: 4
+								line: 1
+							}
+						}
+						object: JSReferenceIdentifier {
+							name: "C"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "C"
+								end: Object {
+									column: 5
+									index: 5
+									line: 1
+								}
+								start: Object {
+									column: 4
+									index: 4
+									line: 1
+								}
+							}
+						}
+						property: JSStaticMemberProperty {
+							value: JSIdentifier {
+								name: "b"
+								loc: Object {
+									filename: "input.js"
+									identifierName: "b"
+									end: Object {
+										column: 8
+										index: 8
+										line: 1
+									}
+									start: Object {
+										column: 7
+										index: 7
+										line: 1
+									}
+								}
+							}
+							optional: true
+							loc: Object {
+								filename: "input.js"
+								identifierName: "b"
+								end: Object {
+									column: 8
+									index: 8
+									line: 1
+								}
+								start: Object {
+									column: 7
+									index: 7
+									line: 1
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

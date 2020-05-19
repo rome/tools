@@ -5,135 +5,135 @@
 ## `esprima > es2015-export-declaration > invalid-export-batch-token`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: true
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 11
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Expected `from` for an export node'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'module'
-        end: Object {
-          column: 8
-          index: 8
-          line: 1
-        }
-        start: Object {
-          column: 9
-          index: 9
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    ExportAllDeclaration {
-      exportKind: undefined
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 8
-          index: 8
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      source: StringLiteral {
-        value: ''
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 8
-            index: 8
-            line: 1
-          }
-          start: Object {
-            column: 9
-            index: 9
-            line: 1
-          }
-        }
-      }
-    }
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 0
-          index: 11
-          line: 2
-        }
-        start: Object {
-          column: 9
-          index: 9
-          line: 1
-        }
-      }
-      expression: UnaryExpression {
-        operator: '+'
-        prefix: true
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 0
-            index: 11
-            line: 2
-          }
-          start: Object {
-            column: 9
-            index: 9
-            line: 1
-          }
-        }
-        argument: ReferenceIdentifier {
-          name: 'INVALID_PLACEHOLDER'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 0
-              index: 11
-              line: 2
-            }
-            start: Object {
-              column: 0
-              index: 11
-              line: 2
-            }
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: true
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "module"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 11
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Expected `from` for an export node"}
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "module"
+				end: Object {
+					column: 8
+					index: 8
+					line: 1
+				}
+				start: Object {
+					column: 9
+					index: 9
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		JSExportAllDeclaration {
+			exportKind: undefined
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 8
+					index: 8
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			source: JSStringLiteral {
+				value: ""
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 8
+						index: 8
+						line: 1
+					}
+					start: Object {
+						column: 9
+						index: 9
+						line: 1
+					}
+				}
+			}
+		}
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 0
+					index: 11
+					line: 2
+				}
+				start: Object {
+					column: 9
+					index: 9
+					line: 1
+				}
+			}
+			expression: JSUnaryExpression {
+				operator: "+"
+				prefix: true
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 0
+						index: 11
+						line: 2
+					}
+					start: Object {
+						column: 9
+						index: 9
+						line: 1
+					}
+				}
+				argument: JSReferenceIdentifier {
+					name: "INVALID_PLACEHOLDER"
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 0
+							index: 11
+							line: 2
+						}
+						start: Object {
+							column: 0
+							index: 11
+							line: 2
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

@@ -5,180 +5,180 @@
 ## `esprima > statement-try > migrated_0003`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 29
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    TryStatement {
-      finalizer: undefined
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 28
-          index: 28
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      block: BlockStatement {
-        body: Array []
-        directives: Array []
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 7
-            index: 7
-            line: 1
-          }
-          start: Object {
-            column: 4
-            index: 4
-            line: 1
-          }
-        }
-      }
-      handler: CatchClause {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 28
-            index: 28
-            line: 1
-          }
-          start: Object {
-            column: 8
-            index: 8
-            line: 1
-          }
-        }
-        param: BindingIdentifier {
-          name: 'e'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'e'
-            end: Object {
-              column: 16
-              index: 16
-              line: 1
-            }
-            start: Object {
-              column: 15
-              index: 15
-              line: 1
-            }
-          }
-        }
-        body: BlockStatement {
-          directives: Array []
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 28
-              index: 28
-              line: 1
-            }
-            start: Object {
-              column: 18
-              index: 18
-              line: 1
-            }
-          }
-          body: Array [
-            ExpressionStatement {
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 26
-                  index: 26
-                  line: 1
-                }
-                start: Object {
-                  column: 20
-                  index: 20
-                  line: 1
-                }
-              }
-              expression: CallExpression {
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 26
-                    index: 26
-                    line: 1
-                  }
-                  start: Object {
-                    column: 20
-                    index: 20
-                    line: 1
-                  }
-                }
-                callee: ReferenceIdentifier {
-                  name: 'say'
-                  loc: Object {
-                    filename: 'input.js'
-                    identifierName: 'say'
-                    end: Object {
-                      column: 23
-                      index: 23
-                      line: 1
-                    }
-                    start: Object {
-                      column: 20
-                      index: 20
-                      line: 1
-                    }
-                  }
-                }
-                arguments: Array [
-                  ReferenceIdentifier {
-                    name: 'e'
-                    loc: Object {
-                      filename: 'input.js'
-                      identifierName: 'e'
-                      end: Object {
-                        column: 25
-                        index: 25
-                        line: 1
-                      }
-                      start: Object {
-                        column: 24
-                        index: 24
-                        line: 1
-                      }
-                    }
-                  }
-                ]
-              }
-            }
-          ]
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 29
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSTryStatement {
+			finalizer: undefined
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 28
+					index: 28
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			block: JSBlockStatement {
+				body: Array []
+				directives: Array []
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 7
+						index: 7
+						line: 1
+					}
+					start: Object {
+						column: 4
+						index: 4
+						line: 1
+					}
+				}
+			}
+			handler: JSCatchClause {
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 28
+						index: 28
+						line: 1
+					}
+					start: Object {
+						column: 8
+						index: 8
+						line: 1
+					}
+				}
+				param: JSBindingIdentifier {
+					name: "e"
+					loc: Object {
+						filename: "input.js"
+						identifierName: "e"
+						end: Object {
+							column: 16
+							index: 16
+							line: 1
+						}
+						start: Object {
+							column: 15
+							index: 15
+							line: 1
+						}
+					}
+				}
+				body: JSBlockStatement {
+					directives: Array []
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 28
+							index: 28
+							line: 1
+						}
+						start: Object {
+							column: 18
+							index: 18
+							line: 1
+						}
+					}
+					body: Array [
+						JSExpressionStatement {
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 26
+									index: 26
+									line: 1
+								}
+								start: Object {
+									column: 20
+									index: 20
+									line: 1
+								}
+							}
+							expression: JSCallExpression {
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 26
+										index: 26
+										line: 1
+									}
+									start: Object {
+										column: 20
+										index: 20
+										line: 1
+									}
+								}
+								callee: JSReferenceIdentifier {
+									name: "say"
+									loc: Object {
+										filename: "input.js"
+										identifierName: "say"
+										end: Object {
+											column: 23
+											index: 23
+											line: 1
+										}
+										start: Object {
+											column: 20
+											index: 20
+											line: 1
+										}
+									}
+								}
+								arguments: Array [
+									JSReferenceIdentifier {
+										name: "e"
+										loc: Object {
+											filename: "input.js"
+											identifierName: "e"
+											end: Object {
+												column: 25
+												index: 25
+												line: 1
+											}
+											start: Object {
+												column: 24
+												index: 24
+												line: 1
+											}
+										}
+									}
+								]
+							}
+						}
+					]
+				}
+			}
+		}
+	]
 }
 ```

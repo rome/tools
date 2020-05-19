@@ -5,159 +5,159 @@
 ## `esprima > es2015-destructuring-assignment-array-pattern > member-expr-in-rest`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 15
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 14
-          index: 14
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: AssignmentExpression {
-        operator: '='
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 13
-            index: 13
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        right: NumericLiteral {
-          value: 0
-          format: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 13
-              index: 13
-              line: 1
-            }
-            start: Object {
-              column: 12
-              index: 12
-              line: 1
-            }
-          }
-        }
-        left: AssignmentArrayPattern {
-          elements: Array []
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 9
-              index: 9
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-          rest: MemberExpression {
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 8
-                index: 8
-                line: 1
-              }
-              start: Object {
-                column: 4
-                index: 4
-                line: 1
-              }
-            }
-            object: ReferenceIdentifier {
-              name: 'a'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'a'
-                end: Object {
-                  column: 5
-                  index: 5
-                  line: 1
-                }
-                start: Object {
-                  column: 4
-                  index: 4
-                  line: 1
-                }
-              }
-            }
-            property: ComputedMemberProperty {
-              value: NumericLiteral {
-                value: 0
-                format: undefined
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 7
-                    index: 7
-                    line: 1
-                  }
-                  start: Object {
-                    column: 6
-                    index: 6
-                    line: 1
-                  }
-                }
-              }
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 8
-                  index: 8
-                  line: 1
-                }
-                start: Object {
-                  column: 5
-                  index: 5
-                  line: 1
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 15
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 14
+					index: 14
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSAssignmentExpression {
+				operator: "="
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 13
+						index: 13
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				right: JSNumericLiteral {
+					value: 0
+					format: undefined
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 13
+							index: 13
+							line: 1
+						}
+						start: Object {
+							column: 12
+							index: 12
+							line: 1
+						}
+					}
+				}
+				left: JSAssignmentArrayPattern {
+					elements: Array []
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 9
+							index: 9
+							line: 1
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+					rest: JSMemberExpression {
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 8
+								index: 8
+								line: 1
+							}
+							start: Object {
+								column: 4
+								index: 4
+								line: 1
+							}
+						}
+						object: JSReferenceIdentifier {
+							name: "a"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "a"
+								end: Object {
+									column: 5
+									index: 5
+									line: 1
+								}
+								start: Object {
+									column: 4
+									index: 4
+									line: 1
+								}
+							}
+						}
+						property: JSComputedMemberProperty {
+							value: JSNumericLiteral {
+								value: 0
+								format: undefined
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 7
+										index: 7
+										line: 1
+									}
+									start: Object {
+										column: 6
+										index: 6
+										line: 1
+									}
+								}
+							}
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 8
+									index: 8
+									line: 1
+								}
+								start: Object {
+									column: 5
+									index: 5
+									line: 1
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

@@ -5,146 +5,146 @@
 ## `es2016 > exponentiation-operator > 4`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: true
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 21
-      index: 21
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    VariableDeclarationStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 21
-          index: 21
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      declaration: VariableDeclaration {
-        kind: 'var'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 21
-            index: 21
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        declarations: Array [
-          VariableDeclarator {
-            id: BindingIdentifier {
-              name: 'squared'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'squared'
-                end: Object {
-                  column: 11
-                  index: 11
-                  line: 1
-                }
-                start: Object {
-                  column: 4
-                  index: 4
-                  line: 1
-                }
-              }
-            }
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 20
-                index: 20
-                line: 1
-              }
-              start: Object {
-                column: 4
-                index: 4
-                line: 1
-              }
-            }
-            init: BinaryExpression {
-              operator: '**'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 20
-                  index: 20
-                  line: 1
-                }
-                start: Object {
-                  column: 14
-                  index: 14
-                  line: 1
-                }
-              }
-              left: NumericLiteral {
-                value: 2
-                format: undefined
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 15
-                    index: 15
-                    line: 1
-                  }
-                  start: Object {
-                    column: 14
-                    index: 14
-                    line: 1
-                  }
-                }
-              }
-              right: NumericLiteral {
-                value: 2
-                format: undefined
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 20
-                    index: 20
-                    line: 1
-                  }
-                  start: Object {
-                    column: 19
-                    index: 19
-                    line: 1
-                  }
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: true
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 21
+			index: 21
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSVariableDeclarationStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 21
+					index: 21
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			declaration: JSVariableDeclaration {
+				kind: "var"
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 21
+						index: 21
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				declarations: Array [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "squared"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "squared"
+								end: Object {
+									column: 11
+									index: 11
+									line: 1
+								}
+								start: Object {
+									column: 4
+									index: 4
+									line: 1
+								}
+							}
+						}
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 20
+								index: 20
+								line: 1
+							}
+							start: Object {
+								column: 4
+								index: 4
+								line: 1
+							}
+						}
+						init: JSBinaryExpression {
+							operator: "**"
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 20
+									index: 20
+									line: 1
+								}
+								start: Object {
+									column: 14
+									index: 14
+									line: 1
+								}
+							}
+							left: JSNumericLiteral {
+								value: 2
+								format: undefined
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 15
+										index: 15
+										line: 1
+									}
+									start: Object {
+										column: 14
+										index: 14
+										line: 1
+									}
+								}
+							}
+							right: JSNumericLiteral {
+								value: 2
+								format: undefined
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 20
+										index: 20
+										line: 1
+									}
+									start: Object {
+										column: 19
+										index: 19
+										line: 1
+									}
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

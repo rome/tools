@@ -5,95 +5,95 @@
 ## `es2015 > let > let-as-identifier-4`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 10
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 9
-          index: 9
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: BinaryExpression {
-        operator: 'in'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 9
-            index: 9
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        right: ObjectExpression {
-          properties: Array []
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 9
-              index: 9
-              line: 1
-            }
-            start: Object {
-              column: 7
-              index: 7
-              line: 1
-            }
-          }
-        }
-        left: ReferenceIdentifier {
-          name: 'let'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'let'
-            end: Object {
-              column: 3
-              index: 3
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 10
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 9
+					index: 9
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSBinaryExpression {
+				operator: "in"
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 9
+						index: 9
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				right: JSObjectExpression {
+					properties: Array []
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 9
+							index: 9
+							line: 1
+						}
+						start: Object {
+							column: 7
+							index: 7
+							line: 1
+						}
+					}
+				}
+				left: JSReferenceIdentifier {
+					name: "let"
+					loc: Object {
+						filename: "input.js"
+						identifierName: "let"
+						end: Object {
+							column: 3
+							index: 3
+							line: 1
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

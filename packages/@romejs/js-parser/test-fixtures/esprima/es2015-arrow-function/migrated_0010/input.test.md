@@ -5,116 +5,116 @@
 ## `esprima > es2015-arrow-function > migrated_0010`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 16
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 15
-          index: 15
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: ArrowFunctionExpression {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 15
-            index: 15
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        body: NumericLiteral {
-          value: 42
-          format: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 15
-              index: 15
-              line: 1
-            }
-            start: Object {
-              column: 13
-              index: 13
-              line: 1
-            }
-          }
-        }
-        head: FunctionHead {
-          async: false
-          hasHoistedVars: false
-          rest: undefined
-          thisType: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 12
-              index: 12
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-          params: Array [
-            BindingIdentifier {
-              name: 'arguments'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'arguments'
-                end: Object {
-                  column: 9
-                  index: 9
-                  line: 1
-                }
-                start: Object {
-                  column: 0
-                  index: 0
-                  line: 1
-                }
-              }
-            }
-          ]
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 16
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 15
+					index: 15
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSArrowFunctionExpression {
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 15
+						index: 15
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				body: JSNumericLiteral {
+					value: 42
+					format: undefined
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 15
+							index: 15
+							line: 1
+						}
+						start: Object {
+							column: 13
+							index: 13
+							line: 1
+						}
+					}
+				}
+				head: JSFunctionHead {
+					async: false
+					hasHoistedVars: false
+					rest: undefined
+					thisType: undefined
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 12
+							index: 12
+							line: 1
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+					params: Array [
+						JSBindingIdentifier {
+							name: "arguments"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "arguments"
+								end: Object {
+									column: 9
+									index: 9
+									line: 1
+								}
+								start: Object {
+									column: 0
+									index: 0
+									line: 1
+								}
+							}
+						}
+					]
+				}
+			}
+		}
+	]
 }
 ```

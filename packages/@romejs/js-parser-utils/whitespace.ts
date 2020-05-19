@@ -7,15 +7,15 @@
 
 // Matches a whole line break (where CRLF is considered a single line break). Used to count lines.
 export const lineBreak = /\r\n?|\n|u2028|u2029/;
-export const lineBreakG = new RegExp(lineBreak.source, 'g');
+export const lineBreakG = new RegExp(lineBreak.source, "g");
 
 export function isNewLine(code: number): boolean {
-  return code === 10 || code === 13 || code === 8_232 || code === 8_233;
+	return code === 10 || code === 13 || code === 8_232 || code === 8_233;
 }
 
 export const nonASCIIwhitespace = /[\u1680\u180e\u2000-\u200a\u202f\u205f\u3000\ufeff]/;
 
-// rome-ignore lint/emptyMatches
+// rome-ignore lint/js/emptyMatches
 export const skipWhiteSpace = /(?:\s|\/\/.*|\/\*[^]*?\*\/)*/g;
 
 export const NEWLINE = /\r\n|[\n\r\u2028\u2029]/;

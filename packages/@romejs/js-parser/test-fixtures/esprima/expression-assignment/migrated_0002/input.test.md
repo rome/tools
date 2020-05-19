@@ -5,96 +5,96 @@
 ## `esprima > expression-assignment > migrated_0002`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 15
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 14
-          index: 14
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: AssignmentExpression {
-        operator: '='
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 14
-            index: 14
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        left: AssignmentIdentifier {
-          name: 'arguments'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'arguments'
-            end: Object {
-              column: 9
-              index: 9
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
-        right: NumericLiteral {
-          value: 42
-          format: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 14
-              index: 14
-              line: 1
-            }
-            start: Object {
-              column: 12
-              index: 12
-              line: 1
-            }
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 15
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 14
+					index: 14
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSAssignmentExpression {
+				operator: "="
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 14
+						index: 14
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				left: JSAssignmentIdentifier {
+					name: "arguments"
+					loc: Object {
+						filename: "input.js"
+						identifierName: "arguments"
+						end: Object {
+							column: 9
+							index: 9
+							line: 1
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+				}
+				right: JSNumericLiteral {
+					value: 42
+					format: undefined
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 14
+							index: 14
+							line: 1
+						}
+						start: Object {
+							column: 12
+							index: 12
+							line: 1
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

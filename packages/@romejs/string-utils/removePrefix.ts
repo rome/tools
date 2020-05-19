@@ -6,9 +6,9 @@
  */
 
 export function removePrefix(value: string, prefix: string): string {
-  if (value.startsWith(prefix)) {
-    return value.slice(prefix.length);
-  } else {
-    return value;
-  }
+	if (value.startsWith(prefix)) {
+		return value.slice(prefix.length);
+	} else {
+		return value;
+	}
 }

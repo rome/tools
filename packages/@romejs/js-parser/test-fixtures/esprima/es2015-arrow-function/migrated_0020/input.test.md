@@ -5,118 +5,117 @@
 ## `esprima > es2015-arrow-function > migrated_0020`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 15
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 14
-          index: 14
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: ArrowFunctionExpression {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 14
-            index: 14
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        body: ReferenceIdentifier {
-          name: 'earth'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'earth'
-            end: Object {
-              column: 14
-              index: 14
-              line: 1
-            }
-            start: Object {
-              column: 9
-              index: 9
-              line: 1
-            }
-          }
-        }
-        head: FunctionHead {
-          async: false
-          hasHoistedVars: false
-          predicate: undefined
-          rest: undefined
-          returnType: undefined
-          thisType: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 8
-              index: 8
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-          params: Array [
-            BindingIdentifier {
-              name: 'sun'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'sun'
-                end: Object {
-                  column: 4
-                  index: 4
-                  line: 1
-                }
-                start: Object {
-                  column: 1
-                  index: 1
-                  line: 1
-                }
-              }
-            }
-          ]
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 15
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 14
+					index: 14
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSArrowFunctionExpression {
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 14
+						index: 14
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				body: JSReferenceIdentifier {
+					name: "earth"
+					loc: Object {
+						filename: "input.js"
+						identifierName: "earth"
+						end: Object {
+							column: 14
+							index: 14
+							line: 1
+						}
+						start: Object {
+							column: 9
+							index: 9
+							line: 1
+						}
+					}
+				}
+				head: JSFunctionHead {
+					async: false
+					hasHoistedVars: false
+					rest: undefined
+					returnType: undefined
+					thisType: undefined
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 8
+							index: 8
+							line: 1
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+					params: Array [
+						JSBindingIdentifier {
+							name: "sun"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "sun"
+								end: Object {
+									column: 4
+									index: 4
+									line: 1
+								}
+								start: Object {
+									column: 1
+									index: 1
+									line: 1
+								}
+							}
+						}
+					]
+				}
+			}
+		}
+	]
 }
 ```

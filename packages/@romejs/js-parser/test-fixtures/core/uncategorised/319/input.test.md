@@ -5,145 +5,145 @@
 ## `core > uncategorised > 319`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 17
-      index: 17
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 17
-          index: 17
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: CallExpression {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 17
-            index: 17
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        arguments: Array [
-          NumericLiteral {
-            value: 10
-            format: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 16
-                index: 16
-                line: 1
-              }
-              start: Object {
-                column: 14
-                index: 14
-                line: 1
-              }
-            }
-          }
-        ]
-        callee: MemberExpression {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 13
-              index: 13
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-          object: NumericLiteral {
-            value: 123
-            format: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 4
-                index: 4
-                line: 1
-              }
-              start: Object {
-                column: 0
-                index: 0
-                line: 1
-              }
-            }
-          }
-          property: StaticMemberProperty {
-            value: Identifier {
-              name: 'toString'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'toString'
-                end: Object {
-                  column: 13
-                  index: 13
-                  line: 1
-                }
-                start: Object {
-                  column: 5
-                  index: 5
-                  line: 1
-                }
-              }
-            }
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'toString'
-              end: Object {
-                column: 13
-                index: 13
-                line: 1
-              }
-              start: Object {
-                column: 5
-                index: 5
-                line: 1
-              }
-            }
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 17
+			index: 17
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 17
+					index: 17
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSCallExpression {
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 17
+						index: 17
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				arguments: Array [
+					JSNumericLiteral {
+						value: 10
+						format: undefined
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 16
+								index: 16
+								line: 1
+							}
+							start: Object {
+								column: 14
+								index: 14
+								line: 1
+							}
+						}
+					}
+				]
+				callee: JSMemberExpression {
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 13
+							index: 13
+							line: 1
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+					object: JSNumericLiteral {
+						value: 123
+						format: undefined
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 4
+								index: 4
+								line: 1
+							}
+							start: Object {
+								column: 0
+								index: 0
+								line: 1
+							}
+						}
+					}
+					property: JSStaticMemberProperty {
+						value: JSIdentifier {
+							name: "toString"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "toString"
+								end: Object {
+									column: 13
+									index: 13
+									line: 1
+								}
+								start: Object {
+									column: 5
+									index: 5
+									line: 1
+								}
+							}
+						}
+						loc: Object {
+							filename: "input.js"
+							identifierName: "toString"
+							end: Object {
+								column: 13
+								index: 13
+								line: 1
+							}
+							start: Object {
+								column: 5
+								index: 5
+								line: 1
+							}
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

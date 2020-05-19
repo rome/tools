@@ -5,206 +5,205 @@
 ## `esprima > es2015-generator > incomplete-yield-delegate`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: true
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 25
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unknown start to an yield argument'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 21
-          index: 21
-          line: 1
-        }
-        start: Object {
-          column: 22
-          index: 22
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 24
-          index: 24
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: FunctionExpression {
-        id: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 24
-            index: 24
-            line: 1
-          }
-          start: Object {
-            column: 1
-            index: 1
-            line: 1
-          }
-        }
-        head: FunctionHead {
-          async: false
-          generator: true
-          hasHoistedVars: false
-          params: Array []
-          predicate: undefined
-          rest: undefined
-          returnType: undefined
-          thisType: undefined
-          typeParameters: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 12
-              index: 12
-              line: 1
-            }
-            start: Object {
-              column: 10
-              index: 10
-              line: 1
-            }
-          }
-        }
-        body: BlockStatement {
-          directives: Array []
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 24
-              index: 24
-              line: 1
-            }
-            start: Object {
-              column: 13
-              index: 13
-              line: 1
-            }
-          }
-          body: Array [
-            ExpressionStatement {
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 23
-                  index: 23
-                  line: 1
-                }
-                start: Object {
-                  column: 15
-                  index: 15
-                  line: 1
-                }
-              }
-              expression: YieldExpression {
-                delegate: true
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 23
-                    index: 23
-                    line: 1
-                  }
-                  start: Object {
-                    column: 15
-                    index: 15
-                    line: 1
-                  }
-                }
-                argument: ReferenceIdentifier {
-                  name: 'INVALID_PLACEHOLDER'
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 23
-                      index: 23
-                      line: 1
-                    }
-                    start: Object {
-                      column: 22
-                      index: 22
-                      line: 1
-                    }
-                  }
-                }
-              }
-            }
-            ExpressionStatement {
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 24
-                  index: 24
-                  line: 1
-                }
-                start: Object {
-                  column: 23
-                  index: 23
-                  line: 1
-                }
-              }
-              expression: ReferenceIdentifier {
-                name: 'INVALID_PLACEHOLDER'
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 24
-                    index: 24
-                    line: 1
-                  }
-                  start: Object {
-                    column: 23
-                    index: 23
-                    line: 1
-                  }
-                }
-              }
-            }
-          ]
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: true
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 25
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unknown start to an yield argument"}
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "script"
+				end: Object {
+					column: 21
+					index: 21
+					line: 1
+				}
+				start: Object {
+					column: 22
+					index: 22
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 24
+					index: 24
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSFunctionExpression {
+				id: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 24
+						index: 24
+						line: 1
+					}
+					start: Object {
+						column: 1
+						index: 1
+						line: 1
+					}
+				}
+				head: JSFunctionHead {
+					async: false
+					generator: true
+					hasHoistedVars: false
+					params: Array []
+					rest: undefined
+					returnType: undefined
+					thisType: undefined
+					typeParameters: undefined
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 12
+							index: 12
+							line: 1
+						}
+						start: Object {
+							column: 10
+							index: 10
+							line: 1
+						}
+					}
+				}
+				body: JSBlockStatement {
+					directives: Array []
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 24
+							index: 24
+							line: 1
+						}
+						start: Object {
+							column: 13
+							index: 13
+							line: 1
+						}
+					}
+					body: Array [
+						JSExpressionStatement {
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 23
+									index: 23
+									line: 1
+								}
+								start: Object {
+									column: 15
+									index: 15
+									line: 1
+								}
+							}
+							expression: JSYieldExpression {
+								delegate: true
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 23
+										index: 23
+										line: 1
+									}
+									start: Object {
+										column: 15
+										index: 15
+										line: 1
+									}
+								}
+								argument: JSReferenceIdentifier {
+									name: "INVALID_PLACEHOLDER"
+									loc: Object {
+										filename: "input.js"
+										end: Object {
+											column: 23
+											index: 23
+											line: 1
+										}
+										start: Object {
+											column: 22
+											index: 22
+											line: 1
+										}
+									}
+								}
+							}
+						}
+						JSExpressionStatement {
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 24
+									index: 24
+									line: 1
+								}
+								start: Object {
+									column: 23
+									index: 23
+									line: 1
+								}
+							}
+							expression: JSReferenceIdentifier {
+								name: "INVALID_PLACEHOLDER"
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 24
+										index: 24
+										line: 1
+									}
+									start: Object {
+										column: 23
+										index: 23
+										line: 1
+									}
+								}
+							}
+						}
+					]
+				}
+			}
+		}
+	]
 }
 ```

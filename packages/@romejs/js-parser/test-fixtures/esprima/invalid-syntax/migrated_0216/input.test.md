@@ -5,87 +5,87 @@
 ## `esprima > invalid-syntax > migrated_0216`
 
 ```javascript
-Program {
-  body: Array []
-  comments: Array []
-  corrupt: false
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 20
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Octal literal in strict mode'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 2
-          index: 2
-          line: 1
-        }
-        start: Object {
-          column: 2
-          index: 2
-          line: 1
-        }
-      }
-    }
-  ]
-  directives: Array [
-    Directive {
-      value: '\\1'
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 5
-          index: 5
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-    }
-    Directive {
-      value: 'use strict'
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 19
-          index: 19
-          line: 1
-        }
-        start: Object {
-          column: 6
-          index: 6
-          line: 1
-        }
-      }
-    }
-  ]
+JSProgram {
+	body: Array []
+	comments: Array []
+	corrupt: false
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 20
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Octal literal in strict mode"}
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "script"
+				end: Object {
+					column: 2
+					index: 2
+					line: 1
+				}
+				start: Object {
+					column: 2
+					index: 2
+					line: 1
+				}
+			}
+		}
+	]
+	directives: Array [
+		JSDirective {
+			value: "\\1"
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 5
+					index: 5
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+		}
+		JSDirective {
+			value: "use strict"
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 19
+					index: 19
+					line: 1
+				}
+				start: Object {
+					column: 6
+					index: 6
+					line: 1
+				}
+			}
+		}
+	]
 }
 ```

@@ -5,199 +5,199 @@
 ## `experimental > class-private-properties > failure-numeric-literal`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 23
-      line: 4
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Expected an identifier'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 3
-          index: 15
-          line: 2
-        }
-        start: Object {
-          column: 3
-          index: 15
-          line: 2
-        }
-      }
-    }
-  ]
-  body: Array [
-    ClassDeclaration {
-      id: BindingIdentifier {
-        name: 'Foo'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'Foo'
-          end: Object {
-            column: 9
-            index: 9
-            line: 1
-          }
-          start: Object {
-            column: 6
-            index: 6
-            line: 1
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 1
-          index: 22
-          line: 3
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      meta: ClassHead {
-        implements: undefined
-        superClass: undefined
-        superTypeParameters: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 1
-            index: 22
-            line: 3
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        body: Array [
-          ClassPrivateProperty {
-            key: PrivateName {
-              id: Identifier {
-                name: ''
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: ''
-                  end: Object {
-                    column: 4
-                    index: 16
-                    line: 2
-                  }
-                  start: Object {
-                    column: 3
-                    index: 15
-                    line: 2
-                  }
-                }
-              }
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 4
-                  index: 16
-                  line: 2
-                }
-                start: Object {
-                  column: 2
-                  index: 14
-                  line: 2
-                }
-              }
-            }
-            value: ReferenceIdentifier {
-              name: 'y'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'y'
-                end: Object {
-                  column: 8
-                  index: 20
-                  line: 2
-                }
-                start: Object {
-                  column: 7
-                  index: 19
-                  line: 2
-                }
-              }
-            }
-            typeAnnotation: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 8
-                index: 20
-                line: 2
-              }
-              start: Object {
-                column: 2
-                index: 14
-                line: 2
-              }
-            }
-            meta: ClassPropertyMeta {
-              abstract: false
-              accessibility: undefined
-              optional: false
-              readonly: false
-              static: false
-              typeAnnotation: undefined
-              start: Object {
-                column: 2
-                index: 14
-                line: 2
-              }
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 4
-                  index: 16
-                  line: 2
-                }
-                start: Object {
-                  column: 2
-                  index: 14
-                  line: 2
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 23
+			line: 4
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Expected an identifier"}
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "script"
+				end: Object {
+					column: 3
+					index: 15
+					line: 2
+				}
+				start: Object {
+					column: 3
+					index: 15
+					line: 2
+				}
+			}
+		}
+	]
+	body: Array [
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
+				name: "Foo"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "Foo"
+					end: Object {
+						column: 9
+						index: 9
+						line: 1
+					}
+					start: Object {
+						column: 6
+						index: 6
+						line: 1
+					}
+				}
+			}
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 1
+					index: 22
+					line: 3
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			meta: JSClassHead {
+				implements: undefined
+				superClass: undefined
+				superTypeParameters: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 1
+						index: 22
+						line: 3
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				body: Array [
+					JSClassPrivateProperty {
+						key: JSPrivateName {
+							id: JSIdentifier {
+								name: ""
+								loc: Object {
+									filename: "input.js"
+									identifierName: ""
+									end: Object {
+										column: 4
+										index: 16
+										line: 2
+									}
+									start: Object {
+										column: 3
+										index: 15
+										line: 2
+									}
+								}
+							}
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 4
+									index: 16
+									line: 2
+								}
+								start: Object {
+									column: 2
+									index: 14
+									line: 2
+								}
+							}
+						}
+						value: JSReferenceIdentifier {
+							name: "y"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "y"
+								end: Object {
+									column: 8
+									index: 20
+									line: 2
+								}
+								start: Object {
+									column: 7
+									index: 19
+									line: 2
+								}
+							}
+						}
+						typeAnnotation: undefined
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 8
+								index: 20
+								line: 2
+							}
+							start: Object {
+								column: 2
+								index: 14
+								line: 2
+							}
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							start: Object {
+								column: 2
+								index: 14
+								line: 2
+							}
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 4
+									index: 16
+									line: 2
+								}
+								start: Object {
+									column: 2
+									index: 14
+									line: 2
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

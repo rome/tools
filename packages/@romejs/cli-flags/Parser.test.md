@@ -89,7 +89,7 @@
 ### `flags`
 
 ```javascript
-Object {name: 'sebastian'}
+Object {name: "sebastian"}
 ```
 
 ### `help`
@@ -125,7 +125,7 @@ Object {name: 'sebastian'}
 ### `flags`
 
 ```javascript
-Object {name: 'sebastian'}
+Object {name: "sebastian"}
 ```
 
 ### `help`
@@ -269,7 +269,7 @@ Object {run: true}
 ### `flags`
 
 ```javascript
-Object {name: 'sebastian'}
+Object {name: "sebastian"}
 ```
 
 ### `help`
@@ -413,7 +413,7 @@ Object {run: true}
 ### `flags`
 
 ```javascript
-Object {name: 'sebastian'}
+Object {name: "sebastian"}
 ```
 
 ### `help`

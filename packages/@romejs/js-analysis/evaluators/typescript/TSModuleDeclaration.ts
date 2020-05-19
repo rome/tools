@@ -5,15 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {
-  AnyNode,
-  TSModuleDeclaration,
-  tsModuleDeclaration,
-} from '@romejs/js-ast';
+import {Scope} from "../../scopes";
+import {AnyNode, TSModuleDeclaration, tsModuleDeclaration} from "@romejs/ast";
 
 export default function TSModuleDeclaration(node: AnyNode, scope: Scope) {
-  node = tsModuleDeclaration.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = tsModuleDeclaration.assert(node);
+	scope;
+	throw new Error("unimplemented");
 }

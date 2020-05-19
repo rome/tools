@@ -1,4 +1,4 @@
-import Bridge from './Bridge';
+import Bridge from "./Bridge";
 
 /**
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -7,10 +7,10 @@ import Bridge from './Bridge';
  * LICENSE file in the root directory of this source tree.
  */
 export default class BridgeError extends Error {
-  constructor(message: string, bridge: Bridge) {
-    super(message);
-    this.bridge = bridge;
-  }
+	constructor(message: string, bridge: Bridge) {
+		super(message);
+		this.bridge = bridge;
+	}
 
-  bridge: Bridge;
+	bridge: Bridge;
 }

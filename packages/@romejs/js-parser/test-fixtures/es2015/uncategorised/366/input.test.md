@@ -5,83 +5,83 @@
 ## `es2015 > uncategorised > 366`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 15
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ClassDeclaration {
-      id: BindingIdentifier {
-        name: 'await'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'await'
-          end: Object {
-            column: 11
-            index: 11
-            line: 1
-          }
-          start: Object {
-            column: 6
-            index: 6
-            line: 1
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 14
-          index: 14
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      meta: ClassHead {
-        body: Array []
-        implements: undefined
-        superClass: undefined
-        superTypeParameters: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 14
-            index: 14
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 15
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
+				name: "await"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "await"
+					end: Object {
+						column: 11
+						index: 11
+						line: 1
+					}
+					start: Object {
+						column: 6
+						index: 6
+						line: 1
+					}
+				}
+			}
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 14
+					index: 14
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			meta: JSClassHead {
+				body: Array []
+				implements: undefined
+				superClass: undefined
+				superTypeParameters: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 14
+						index: 14
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+			}
+		}
+	]
 }
 ```

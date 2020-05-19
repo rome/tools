@@ -5,295 +5,294 @@
 ## `es2015 > modules > duplicate-named-export-destructuring15`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 58
-      line: 4
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExportLocalDeclaration {
-      exportKind: 'value'
-      specifiers: undefined
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 33
-          index: 33
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      declaration: VariableDeclarationStatement {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 33
-            index: 33
-            line: 1
-          }
-          start: Object {
-            column: 7
-            index: 7
-            line: 1
-          }
-        }
-        declaration: VariableDeclaration {
-          kind: 'const'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 33
-              index: 33
-              line: 1
-            }
-            start: Object {
-              column: 7
-              index: 7
-              line: 1
-            }
-          }
-          declarations: Array [
-            VariableDeclarator {
-              id: BindingObjectPattern {
-                rest: undefined
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 26
-                    index: 26
-                    line: 1
-                  }
-                  start: Object {
-                    column: 13
-                    index: 13
-                    line: 1
-                  }
-                }
-                properties: Array [
-                  BindingObjectPatternProperty {
-                    key: StaticPropertyKey {
-                      value: Identifier {
-                        name: 'foo'
-                        loc: Object {
-                          filename: 'input.js'
-                          identifierName: 'foo'
-                          end: Object {
-                            column: 18
-                            index: 18
-                            line: 1
-                          }
-                          start: Object {
-                            column: 15
-                            index: 15
-                            line: 1
-                          }
-                        }
-                      }
-                      variance: undefined
-                      loc: Object {
-                        filename: 'input.js'
-                        end: Object {
-                          column: 18
-                          index: 18
-                          line: 1
-                        }
-                        start: Object {
-                          column: 15
-                          index: 15
-                          line: 1
-                        }
-                      }
-                    }
-                    value: BindingIdentifier {
-                      name: 'foo2'
-                      loc: Object {
-                        filename: 'input.js'
-                        identifierName: 'foo2'
-                        end: Object {
-                          column: 24
-                          index: 24
-                          line: 1
-                        }
-                        start: Object {
-                          column: 20
-                          index: 20
-                          line: 1
-                        }
-                      }
-                    }
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 24
-                        index: 24
-                        line: 1
-                      }
-                      start: Object {
-                        column: 15
-                        index: 15
-                        line: 1
-                      }
-                    }
-                  }
-                ]
-              }
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 32
-                  index: 32
-                  line: 1
-                }
-                start: Object {
-                  column: 13
-                  index: 13
-                  line: 1
-                }
-              }
-              init: ReferenceIdentifier {
-                name: 'bar'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'bar'
-                  end: Object {
-                    column: 32
-                    index: 32
-                    line: 1
-                  }
-                  start: Object {
-                    column: 29
-                    index: 29
-                    line: 1
-                  }
-                }
-              }
-            }
-          ]
-        }
-      }
-    }
-    ExportLocalDeclaration {
-      exportKind: 'value'
-      specifiers: undefined
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 22
-          index: 56
-          line: 2
-        }
-        start: Object {
-          column: 0
-          index: 34
-          line: 2
-        }
-      }
-      declaration: VariableDeclarationStatement {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 22
-            index: 56
-            line: 2
-          }
-          start: Object {
-            column: 7
-            index: 41
-            line: 2
-          }
-        }
-        declaration: VariableDeclaration {
-          kind: 'const'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 22
-              index: 56
-              line: 2
-            }
-            start: Object {
-              column: 7
-              index: 41
-              line: 2
-            }
-          }
-          declarations: Array [
-            VariableDeclarator {
-              id: BindingIdentifier {
-                name: 'foo2'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'foo2'
-                  end: Object {
-                    column: 17
-                    index: 51
-                    line: 2
-                  }
-                  start: Object {
-                    column: 13
-                    index: 47
-                    line: 2
-                  }
-                }
-              }
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 21
-                  index: 55
-                  line: 2
-                }
-                start: Object {
-                  column: 13
-                  index: 47
-                  line: 2
-                }
-              }
-              init: NumericLiteral {
-                value: 1
-                format: undefined
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 21
-                    index: 55
-                    line: 2
-                  }
-                  start: Object {
-                    column: 20
-                    index: 54
-                    line: 2
-                  }
-                }
-              }
-            }
-          ]
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "module"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 58
+			line: 4
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExportLocalDeclaration {
+			exportKind: "value"
+			specifiers: undefined
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 33
+					index: 33
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			declaration: JSVariableDeclarationStatement {
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 33
+						index: 33
+						line: 1
+					}
+					start: Object {
+						column: 7
+						index: 7
+						line: 1
+					}
+				}
+				declaration: JSVariableDeclaration {
+					kind: "const"
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 33
+							index: 33
+							line: 1
+						}
+						start: Object {
+							column: 7
+							index: 7
+							line: 1
+						}
+					}
+					declarations: Array [
+						JSVariableDeclarator {
+							id: JSBindingObjectPattern {
+								rest: undefined
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 26
+										index: 26
+										line: 1
+									}
+									start: Object {
+										column: 13
+										index: 13
+										line: 1
+									}
+								}
+								properties: Array [
+									JSBindingObjectPatternProperty {
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
+												name: "foo"
+												loc: Object {
+													filename: "input.js"
+													identifierName: "foo"
+													end: Object {
+														column: 18
+														index: 18
+														line: 1
+													}
+													start: Object {
+														column: 15
+														index: 15
+														line: 1
+													}
+												}
+											}
+											loc: Object {
+												filename: "input.js"
+												end: Object {
+													column: 18
+													index: 18
+													line: 1
+												}
+												start: Object {
+													column: 15
+													index: 15
+													line: 1
+												}
+											}
+										}
+										value: JSBindingIdentifier {
+											name: "foo2"
+											loc: Object {
+												filename: "input.js"
+												identifierName: "foo2"
+												end: Object {
+													column: 24
+													index: 24
+													line: 1
+												}
+												start: Object {
+													column: 20
+													index: 20
+													line: 1
+												}
+											}
+										}
+										loc: Object {
+											filename: "input.js"
+											end: Object {
+												column: 24
+												index: 24
+												line: 1
+											}
+											start: Object {
+												column: 15
+												index: 15
+												line: 1
+											}
+										}
+									}
+								]
+							}
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 32
+									index: 32
+									line: 1
+								}
+								start: Object {
+									column: 13
+									index: 13
+									line: 1
+								}
+							}
+							init: JSReferenceIdentifier {
+								name: "bar"
+								loc: Object {
+									filename: "input.js"
+									identifierName: "bar"
+									end: Object {
+										column: 32
+										index: 32
+										line: 1
+									}
+									start: Object {
+										column: 29
+										index: 29
+										line: 1
+									}
+								}
+							}
+						}
+					]
+				}
+			}
+		}
+		JSExportLocalDeclaration {
+			exportKind: "value"
+			specifiers: undefined
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 22
+					index: 56
+					line: 2
+				}
+				start: Object {
+					column: 0
+					index: 34
+					line: 2
+				}
+			}
+			declaration: JSVariableDeclarationStatement {
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 22
+						index: 56
+						line: 2
+					}
+					start: Object {
+						column: 7
+						index: 41
+						line: 2
+					}
+				}
+				declaration: JSVariableDeclaration {
+					kind: "const"
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 22
+							index: 56
+							line: 2
+						}
+						start: Object {
+							column: 7
+							index: 41
+							line: 2
+						}
+					}
+					declarations: Array [
+						JSVariableDeclarator {
+							id: JSBindingIdentifier {
+								name: "foo2"
+								loc: Object {
+									filename: "input.js"
+									identifierName: "foo2"
+									end: Object {
+										column: 17
+										index: 51
+										line: 2
+									}
+									start: Object {
+										column: 13
+										index: 47
+										line: 2
+									}
+								}
+							}
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 21
+									index: 55
+									line: 2
+								}
+								start: Object {
+									column: 13
+									index: 47
+									line: 2
+								}
+							}
+							init: JSNumericLiteral {
+								value: 1
+								format: undefined
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 21
+										index: 55
+										line: 2
+									}
+									start: Object {
+										column: 20
+										index: 54
+										line: 2
+									}
+								}
+							}
+						}
+					]
+				}
+			}
+		}
+	]
 }
 ```

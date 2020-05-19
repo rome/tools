@@ -7,11 +7,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-require('./_setup.cjs');
+require("./_setup.cjs");
 
-const {root, argv} = require('./_constants.cjs');
-const {execNode} = require('./_utils.cjs');
-const path = require('path');
-const PKG_ROOT = path.join(root, 'packages/rome');
+const {root, argv} = require("./_constants.cjs");
+const {execNode} = require("./_utils.cjs");
+const path = require("path");
+const PKG_ROOT = path.join(root, "packages/rome");
 
-execNode([path.join(__dirname, 'dev-rome'), 'bundle', PKG_ROOT, ...argv]);
+execNode([path.join(__dirname, "dev-rome"), "bundle", PKG_ROOT, ...argv]);

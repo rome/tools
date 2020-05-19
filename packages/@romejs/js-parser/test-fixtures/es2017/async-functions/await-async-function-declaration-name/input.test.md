@@ -5,104 +5,103 @@
 ## `es2017 > async-functions > await-async-function-declaration-name`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 25
-      index: 25
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    FunctionDeclaration {
-      id: BindingIdentifier {
-        name: 'await'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'await'
-          end: Object {
-            column: 20
-            index: 20
-            line: 1
-          }
-          start: Object {
-            column: 15
-            index: 15
-            line: 1
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 25
-          index: 25
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      body: BlockStatement {
-        body: Array []
-        directives: Array []
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 25
-            index: 25
-            line: 1
-          }
-          start: Object {
-            column: 23
-            index: 23
-            line: 1
-          }
-        }
-      }
-      head: FunctionHead {
-        async: true
-        generator: false
-        hasHoistedVars: false
-        params: Array []
-        predicate: undefined
-        rest: undefined
-        returnType: undefined
-        thisType: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 22
-            index: 22
-            line: 1
-          }
-          start: Object {
-            column: 20
-            index: 20
-            line: 1
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 25
+			index: 25
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
+				name: "await"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "await"
+					end: Object {
+						column: 20
+						index: 20
+						line: 1
+					}
+					start: Object {
+						column: 15
+						index: 15
+						line: 1
+					}
+				}
+			}
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 25
+					index: 25
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			body: JSBlockStatement {
+				body: Array []
+				directives: Array []
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 25
+						index: 25
+						line: 1
+					}
+					start: Object {
+						column: 23
+						index: 23
+						line: 1
+					}
+				}
+			}
+			head: JSFunctionHead {
+				async: true
+				generator: false
+				hasHoistedVars: false
+				params: Array []
+				rest: undefined
+				returnType: undefined
+				thisType: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 22
+						index: 22
+						line: 1
+					}
+					start: Object {
+						column: 20
+						index: 20
+						line: 1
+					}
+				}
+			}
+		}
+	]
 }
 ```

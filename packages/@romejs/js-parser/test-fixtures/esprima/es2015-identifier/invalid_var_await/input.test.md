@@ -5,147 +5,147 @@
 ## `esprima > es2015-identifier > invalid_var_await`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: true
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 18
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: '<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module'}
-        advice: Array [
-          log {
-            category: 'info'
-            text: 'Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module'
-          }
-          log {
-            category: 'info'
-            text: 'Add <emphasis>"type": "module"</emphasis> to your <filelink emphasis target="package.json" />'
-          }
-        ]
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 17
-          index: 17
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    ExportLocalDeclaration {
-      exportKind: 'value'
-      specifiers: undefined
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 17
-          index: 17
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      declaration: VariableDeclarationStatement {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 17
-            index: 17
-            line: 1
-          }
-          start: Object {
-            column: 7
-            index: 7
-            line: 1
-          }
-        }
-        declaration: VariableDeclaration {
-          kind: 'var'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 17
-              index: 17
-              line: 1
-            }
-            start: Object {
-              column: 7
-              index: 7
-              line: 1
-            }
-          }
-          declarations: Array [
-            VariableDeclarator {
-              id: BindingIdentifier {
-                name: 'await'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'await'
-                  end: Object {
-                    column: 16
-                    index: 16
-                    line: 1
-                  }
-                  start: Object {
-                    column: 11
-                    index: 11
-                    line: 1
-                  }
-                }
-              }
-              init: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 16
-                  index: 16
-                  line: 1
-                }
-                start: Object {
-                  column: 11
-                  index: 11
-                  line: 1
-                }
-              }
-            }
-          ]
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: true
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 18
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "<emphasis>import</emphasis> and <emphasis>export</emphasis> can only appear in a module"}
+				advice: Array [
+					log {
+						category: "info"
+						text: "Change the extension to <emphasis>.mjs</emphasis> to turn this file into a module"
+					}
+					log {
+						category: "info"
+						text: "Add <emphasis>\"type\": \"module\"</emphasis> to your <filelink emphasis target=\"package.json\" />"
+					}
+				]
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "script"
+				end: Object {
+					column: 17
+					index: 17
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		JSExportLocalDeclaration {
+			exportKind: "value"
+			specifiers: undefined
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 17
+					index: 17
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			declaration: JSVariableDeclarationStatement {
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 17
+						index: 17
+						line: 1
+					}
+					start: Object {
+						column: 7
+						index: 7
+						line: 1
+					}
+				}
+				declaration: JSVariableDeclaration {
+					kind: "var"
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 17
+							index: 17
+							line: 1
+						}
+						start: Object {
+							column: 7
+							index: 7
+							line: 1
+						}
+					}
+					declarations: Array [
+						JSVariableDeclarator {
+							id: JSBindingIdentifier {
+								name: "await"
+								loc: Object {
+									filename: "input.js"
+									identifierName: "await"
+									end: Object {
+										column: 16
+										index: 16
+										line: 1
+									}
+									start: Object {
+										column: 11
+										index: 11
+										line: 1
+									}
+								}
+							}
+							init: undefined
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 16
+									index: 16
+									line: 1
+								}
+								start: Object {
+									column: 11
+									index: 11
+									line: 1
+								}
+							}
+						}
+					]
+				}
+			}
+		}
+	]
 }
 ```

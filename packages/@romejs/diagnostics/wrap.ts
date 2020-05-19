@@ -5,64 +5,64 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {DiagnosticOrigin, Diagnostics} from './types';
-import {addOriginsToDiagnostics} from './derive';
-import {getDiagnosticsFromError} from './errors';
+import {DiagnosticOrigin, Diagnostics} from "./types";
+import {addOriginsToDiagnostics} from "./derive";
+import {getDiagnosticsFromError} from "./errors";
 
 type WrapResult<T> =
-  | {
-      readonly value: T;
-      readonly diagnostics: undefined;
-    }
-  | {
-      readonly value: undefined;
-      readonly diagnostics: Diagnostics;
-    };
+	| {
+			readonly value: T;
+			readonly diagnostics: undefined;
+		}
+	| {
+			readonly value: undefined;
+			readonly diagnostics: Diagnostics;
+		};
 
 export async function catchDiagnostics<T>(
-  promise: () => Promise<T>,
-  origin?: DiagnosticOrigin,
+	promise: () => Promise<T>,
+	origin?: DiagnosticOrigin,
 ): Promise<WrapResult<T>> {
-  try {
-    const value = await promise();
+	try {
+		const value = await promise();
 
-    return {value, diagnostics: undefined};
-  } catch (err) {
-    const diagnostics = getDiagnosticsFromError(err);
+		return {value, diagnostics: undefined};
+	} catch (err) {
+		const diagnostics = getDiagnosticsFromError(err);
 
-    if (diagnostics) {
-      return {
-        value: undefined,
-        diagnostics: origin === undefined
-          ? diagnostics
-          : addOriginsToDiagnostics([origin], diagnostics),
-      };
-    } else {
-      throw err;
-    }
-  }
+		if (diagnostics) {
+			return {
+				value: undefined,
+				diagnostics: origin === undefined
+					? diagnostics
+					: addOriginsToDiagnostics([origin], diagnostics),
+			};
+		} else {
+			throw err;
+		}
+	}
 }
 
 export function catchDiagnosticsSync<T>(
-  callback: () => T,
-  origin?: DiagnosticOrigin,
+	callback: () => T,
+	origin?: DiagnosticOrigin,
 ): WrapResult<T> {
-  try {
-    const value = callback();
+	try {
+		const value = callback();
 
-    return {value, diagnostics: undefined};
-  } catch (err) {
-    const diagnostics = getDiagnosticsFromError(err);
+		return {value, diagnostics: undefined};
+	} catch (err) {
+		const diagnostics = getDiagnosticsFromError(err);
 
-    if (diagnostics) {
-      return {
-        value: undefined,
-        diagnostics: origin === undefined
-          ? diagnostics
-          : addOriginsToDiagnostics([origin], diagnostics),
-      };
-    } else {
-      throw err;
-    }
-  }
+		if (diagnostics) {
+			return {
+				value: undefined,
+				diagnostics: origin === undefined
+					? diagnostics
+					: addOriginsToDiagnostics([origin], diagnostics),
+			};
+		} else {
+			throw err;
+		}
+	}
 }

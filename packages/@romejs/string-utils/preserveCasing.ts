@@ -6,13 +6,13 @@
  */
 
 export function preserveCasing(a: string, b: string) {
-  if (a === a.toUpperCase()) {
-    // If a is upper case then make b uppercase
-    return b.toUpperCase();
-  } else if (a[0] === a[0].toUpperCase()) {
-    // First letter is capitalized
-    return b[0].toUpperCase() + b.slice(1);
-  } else {
-    return b;
-  }
+	if (a === a.toUpperCase()) {
+		// If a is upper case then make b uppercase
+		return b.toUpperCase();
+	} else if (a[0] === a[0].toUpperCase()) {
+		// First letter is capitalized
+		return b[0].toUpperCase() + b.slice(1);
+	} else {
+		return b;
+	}
 }

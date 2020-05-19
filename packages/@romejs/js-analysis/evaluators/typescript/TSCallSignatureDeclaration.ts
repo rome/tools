@@ -6,12 +6,12 @@
  */
 
 import {
-  AnyNode,
-  TSCallSignatureDeclaration,
-  tsCallSignatureDeclaration,
-} from '@romejs/js-ast';
+	AnyNode,
+	TSCallSignatureDeclaration,
+	tsCallSignatureDeclaration,
+} from "@romejs/ast";
 
 export default function TSCallSignatureDeclaration(node: AnyNode) {
-  node = tsCallSignatureDeclaration.assert(node);
-  throw new Error('unimplemented');
+	node = tsCallSignatureDeclaration.assert(node);
+	throw new Error("unimplemented");
 }

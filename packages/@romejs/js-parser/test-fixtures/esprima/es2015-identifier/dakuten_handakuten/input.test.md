@@ -5,96 +5,96 @@
 ## `esprima > es2015-identifier > dakuten_handakuten`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 5
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 4
-          index: 4
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: BinaryExpression {
-        operator: '+'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 4
-            index: 4
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        left: ReferenceIdentifier {
-          name: '\u309b'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: '\u309b'
-            end: Object {
-              column: 1
-              index: 1
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
-        right: ReferenceIdentifier {
-          name: '\u309c'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: '\u309c'
-            end: Object {
-              column: 4
-              index: 4
-              line: 1
-            }
-            start: Object {
-              column: 3
-              index: 3
-              line: 1
-            }
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 5
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 4
+					index: 4
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSBinaryExpression {
+				operator: "+"
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 4
+						index: 4
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				left: JSReferenceIdentifier {
+					name: "\u309b"
+					loc: Object {
+						filename: "input.js"
+						identifierName: "\u309b"
+						end: Object {
+							column: 1
+							index: 1
+							line: 1
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+				}
+				right: JSReferenceIdentifier {
+					name: "\u309c"
+					loc: Object {
+						filename: "input.js"
+						identifierName: "\u309c"
+						end: Object {
+							column: 4
+							index: 4
+							line: 1
+						}
+						start: Object {
+							column: 3
+							index: 3
+							line: 1
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

@@ -5,12 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Number0, ob1Number0} from '@romejs/ob1';
+import {Number0, ob1Number0} from "@romejs/ob1";
 
 export function createIndexTracker(): IndexTracker {
-  return {index: ob1Number0};
+	return {index: ob1Number0};
 }
 
 export type IndexTracker = {
-  index: Number0;
+	index: Number0;
 };

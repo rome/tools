@@ -5,114 +5,114 @@
 ## `core > categorized > label-kind-switch`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 1
-      index: 25
-      line: 4
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    BlockStatement {
-      directives: Array []
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 1
-          index: 25
-          line: 4
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      body: Array [
-        LabeledStatement {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 3
-              index: 23
-              line: 3
-            }
-            start: Object {
-              column: 2
-              index: 4
-              line: 2
-            }
-          }
-          label: Identifier {
-            name: 'a'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'a'
-              end: Object {
-                column: 3
-                index: 5
-                line: 2
-              }
-              start: Object {
-                column: 2
-                index: 4
-                line: 2
-              }
-            }
-          }
-          body: SwitchStatement {
-            cases: Array []
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 3
-                index: 23
-                line: 3
-              }
-              start: Object {
-                column: 5
-                index: 7
-                line: 2
-              }
-            }
-            discriminant: ReferenceIdentifier {
-              name: 'i'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'i'
-                end: Object {
-                  column: 14
-                  index: 16
-                  line: 2
-                }
-                start: Object {
-                  column: 13
-                  index: 15
-                  line: 2
-                }
-              }
-            }
-          }
-        }
-      ]
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 1
+			index: 25
+			line: 4
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSBlockStatement {
+			directives: Array []
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 1
+					index: 25
+					line: 4
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			body: Array [
+				JSLabeledStatement {
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 3
+							index: 23
+							line: 3
+						}
+						start: Object {
+							column: 2
+							index: 4
+							line: 2
+						}
+					}
+					label: JSIdentifier {
+						name: "a"
+						loc: Object {
+							filename: "input.js"
+							identifierName: "a"
+							end: Object {
+								column: 3
+								index: 5
+								line: 2
+							}
+							start: Object {
+								column: 2
+								index: 4
+								line: 2
+							}
+						}
+					}
+					body: JSSwitchStatement {
+						cases: Array []
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 3
+								index: 23
+								line: 3
+							}
+							start: Object {
+								column: 5
+								index: 7
+								line: 2
+							}
+						}
+						discriminant: JSReferenceIdentifier {
+							name: "i"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "i"
+								end: Object {
+									column: 14
+									index: 16
+									line: 2
+								}
+								start: Object {
+									column: 13
+									index: 15
+									line: 2
+								}
+							}
+						}
+					}
+				}
+			]
+		}
+	]
 }
 ```

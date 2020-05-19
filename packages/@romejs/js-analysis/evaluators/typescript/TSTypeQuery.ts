@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {AnyNode, TSTypeQuery, tsTypeQuery} from '@romejs/js-ast';
+import {Scope} from "../../scopes";
+import {AnyNode, TSTypeQuery, tsTypeQuery} from "@romejs/ast";
 
 export default function TSTypeQuery(node: AnyNode, scope: Scope) {
-  node = tsTypeQuery.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = tsTypeQuery.assert(node);
+	scope;
+	throw new Error("unimplemented");
 }

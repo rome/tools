@@ -6,246 +6,245 @@
  */
 
 import {
-  AnyNode,
-  BindingIdentifier,
-  ConstExportModuleKind,
-  ConstImportModuleKind,
-  ConstProgramSyntax,
-  FlowTypeParameter,
-  ReferenceIdentifier,
-} from '@romejs/js-ast';
-import {SourceLocation} from '@romejs/parser-core';
+	AnyNode,
+	ConstExportModuleKind,
+	ConstImportModuleKind,
+	ConstProgramSyntax,
+	JSBindingIdentifier,
+	JSReferenceIdentifier,
+} from "@romejs/ast";
+import {SourceLocation} from "@romejs/parser-core";
 import {
-  ClassBinding,
-  FunctionBinding,
-  Path,
-  Scope,
-  TypeBinding,
-} from '@romejs/js-compiler';
+	ClassBinding,
+	FunctionBinding,
+	Path,
+	Scope,
+	TypeBinding,
+} from "@romejs/js-compiler";
 import {
-  AnalyzeDependency,
-  AnalyzeDependencyName,
-  AnalyzeDependencyResult,
-  AnalyzeExportValueType,
-  AnyAnalyzeExport,
-} from '@romejs/core';
+	AnalyzeDependency,
+	AnalyzeDependencyName,
+	AnalyzeDependencyResult,
+	AnalyzeExportValueType,
+	AnyAnalyzeExport,
+} from "@romejs/core";
 
 export function isOptional(path: Path): boolean {
-  for (const {node} of path.ancestryPaths) {
-    if (node.type === 'TryStatement') {
-      return true;
-    }
-  }
+	for (const {node} of path.ancestryPaths) {
+		if (node.type === "JSTryStatement") {
+			return true;
+		}
+	}
 
-  return false;
+	return false;
 }
 
 export function isTypeKind(kind: undefined | ConstImportModuleKind): boolean {
-  return kind === 'type' || kind === 'typeof';
+	return kind === "type" || kind === "typeof";
 }
 
 export function getImportKind(
-  kind: undefined | ConstImportModuleKind,
+	kind: undefined | ConstImportModuleKind,
 ): ConstImportModuleKind {
-  return kind === undefined ? 'value' : kind;
+	return kind === undefined ? "value" : kind;
 }
 
 export function getExportKind(
-  kind: undefined | ConstExportModuleKind,
+	kind: undefined | ConstExportModuleKind,
 ): ConstExportModuleKind {
-  return kind === undefined ? 'value' : kind;
+	return kind === undefined ? "value" : kind;
 }
 
 export function maybeTypeBinding(
-  kind: ConstExportModuleKind,
-  scope: Scope,
-  id: BindingIdentifier | FlowTypeParameter | ReferenceIdentifier,
+	kind: ConstExportModuleKind,
+	scope: Scope,
+	id: JSBindingIdentifier | JSReferenceIdentifier,
 ): ConstExportModuleKind {
-  const binding = scope.getBinding(id.name);
-  if (kind === 'value' && binding instanceof TypeBinding) {
-    return 'type';
-  } else {
-    return kind;
-  }
+	const binding = scope.getBinding(id.name);
+	if (kind === "value" && binding instanceof TypeBinding) {
+		return "type";
+	} else {
+		return kind;
+	}
 }
 
 export function getKindWithSpecifiers(
-  rawKind: undefined | ConstImportModuleKind,
-  specifierKinds: Array<ConstImportModuleKind>,
+	rawKind: undefined | ConstImportModuleKind,
+	specifierKinds: Array<ConstImportModuleKind>,
 ): ConstImportModuleKind {
-  const kind: ConstImportModuleKind = getImportKind(rawKind);
-  if (isTypeKind(kind) || specifierKinds.length === 0) {
-    return kind;
-  }
+	const kind: ConstImportModuleKind = getImportKind(rawKind);
+	if (isTypeKind(kind) || specifierKinds.length === 0) {
+		return kind;
+	}
 
-  for (const specifierKind of specifierKinds) {
-    if (specifierKind === 'value') {
-      return 'value';
-    }
-  }
-  return 'type';
+	for (const specifierKind of specifierKinds) {
+		if (specifierKind === "value") {
+			return "value";
+		}
+	}
+	return "type";
 }
 
 // We use this to have an easy way to identify the actual runtime type of an import
 // This is useful as we needs this as Flow allows you to `import type` classes which
 // are considered values
 export function getAnalyzeExportValueType(
-  scope: Scope,
-  node: undefined | AnyNode,
+	scope: Scope,
+	node: undefined | AnyNode,
 ): AnalyzeExportValueType {
-  if (node === undefined) {
-    return 'other';
-  }
+	if (node === undefined) {
+		return "other";
+	}
 
-  if (node.type === 'Identifier') {
-    const binding = scope.getBinding(node.name);
+	if (node.type === "JSIdentifier") {
+		const binding = scope.getBinding(node.name);
 
-    if (binding instanceof FunctionBinding) {
-      return 'function';
-    }
+		if (binding instanceof FunctionBinding) {
+			return "function";
+		}
 
-    if (binding instanceof ClassBinding) {
-      return 'class';
-    }
+		if (binding instanceof ClassBinding) {
+			return "class";
+		}
 
-    if (binding instanceof TypeBinding) {
-      const {typeKind} = binding;
-      switch (typeKind) {
-        case 'function':
-        case 'class':
-          return typeKind;
-      }
-    }
-  }
+		if (binding instanceof TypeBinding) {
+			const {typeKind} = binding;
+			switch (typeKind) {
+				case "function":
+				case "class":
+					return typeKind;
+			}
+		}
+	}
 
-  if (node.type === 'FunctionDeclaration') {
-    return 'function';
-  }
+	if (node.type === "JSFunctionDeclaration") {
+		return "function";
+	}
 
-  if (node.type === 'ClassDeclaration' || node.type === 'ClassExpression') {
-    return 'class';
-  }
+	if (node.type === "JSClassDeclaration" || node.type === "JSClassExpression") {
+		return "class";
+	}
 
-  return 'other';
+	return "other";
 }
 
 // Resolve a export declaration to it's binding node if one exists
 export function getDeclarationLoc(
-  scope: Scope,
-  node: AnyNode,
+	scope: Scope,
+	node: AnyNode,
 ): undefined | SourceLocation {
-  if (node.type === 'ReferenceIdentifier') {
-    const binding = scope.getBinding(node.name);
-    if (binding !== undefined) {
-      return binding.node.loc;
-    }
-  }
+	if (node.type === "JSReferenceIdentifier") {
+		const binding = scope.getBinding(node.name);
+		if (binding !== undefined) {
+			return binding.node.loc;
+		}
+	}
 
-  return node.loc;
+	return node.loc;
 }
 
 function arraySame<T>(
-  a: Array<T>,
-  b: Array<T>,
-  callback: (a: T, b: T) => boolean,
+	a: Array<T>,
+	b: Array<T>,
+	callback: (a: T, b: T) => boolean,
 ): boolean {
-  if (a.length !== b.length) {
-    return false;
-  }
+	if (a.length !== b.length) {
+		return false;
+	}
 
-  for (let i = 0; i < a.length; i++) {
-    if (!callback(a[i], b[i])) {
-      return false;
-    }
-  }
+	for (let i = 0; i < a.length; i++) {
+		if (!callback(a[i], b[i])) {
+			return false;
+		}
+	}
 
-  return true;
+	return true;
 }
 
 function syntaxSame(a: ConstProgramSyntax, b: ConstProgramSyntax): boolean {
-  return a === b;
+	return a === b;
 }
 
 function exportsSame(a: AnyAnalyzeExport, b: AnyAnalyzeExport): boolean {
-  if (a.type !== b.type) {
-    return false;
-  }
+	if (a.type !== b.type) {
+		return false;
+	}
 
-  if (a.kind !== b.kind) {
-    return false;
-  }
+	if (a.kind !== b.kind) {
+		return false;
+	}
 
-  switch (a.type) {
-    case 'local':
-      return b.type === 'local' && a.name === b.name;
+	switch (a.type) {
+		case "local":
+			return b.type === "local" && a.name === b.name;
 
-    case 'external':
-      return (
-        b.type === 'external' &&
-        a.imported === b.imported &&
-        a.exported === b.exported &&
-        a.source === b.source
-      );
+		case "external":
+			return (
+				b.type === "external" &&
+				a.imported === b.imported &&
+				a.exported === b.exported &&
+				a.source === b.source
+			);
 
-    case 'externalAll':
-      return b.type === 'externalAll' && a.source === b.source;
+		case "externalAll":
+			return b.type === "externalAll" && a.source === b.source;
 
-    case 'externalNamespace':
-      return (
-        b.type === 'externalNamespace' &&
-        a.source === b.source &&
-        a.exported === b.exported
-      );
-  }
+		case "externalNamespace":
+			return (
+				b.type === "externalNamespace" &&
+				a.source === b.source &&
+				a.exported === b.exported
+			);
+	}
 }
 
 function dependencyNameSame(
-  a: AnalyzeDependencyName,
-  b: AnalyzeDependencyName,
+	a: AnalyzeDependencyName,
+	b: AnalyzeDependencyName,
 ): boolean {
-  return a.kind === b.kind && a.name === b.name;
+	return a.kind === b.kind && a.name === b.name;
 }
 
 function dependenciesSame(a: AnalyzeDependency, b: AnalyzeDependency): boolean {
-  return (
-    a.all === b.all &&
-    a.async === b.async &&
-    a.optional === b.optional &&
-    a.source === b.source &&
-    a.type === b.type &&
-    arraySame(a.names, b.names, dependencyNameSame)
-  );
+	return (
+		a.all === b.all &&
+		a.async === b.async &&
+		a.optional === b.optional &&
+		a.source === b.source &&
+		a.type === b.type &&
+		arraySame(a.names, b.names, dependencyNameSame)
+	);
 }
 
 // Check if the shape of two analyzeDependencyResults are equal. Ignoring location information
 export function areAnalyzeDependencyResultsEqual(
-  a: AnalyzeDependencyResult,
-  b: AnalyzeDependencyResult,
+	a: AnalyzeDependencyResult,
+	b: AnalyzeDependencyResult,
 ): boolean {
-  if (
-    (a.firstTopAwaitLocation === undefined &&
-    b.firstTopAwaitLocation !== undefined) ||
-    (b.firstTopAwaitLocation === undefined &&
-    a.firstTopAwaitLocation !== undefined)
-  ) {
-    return false;
-  }
+	if (
+		(a.firstTopAwaitLocation === undefined &&
+		b.firstTopAwaitLocation !== undefined) ||
+		(b.firstTopAwaitLocation === undefined &&
+		a.firstTopAwaitLocation !== undefined)
+	) {
+		return false;
+	}
 
-  if (a.moduleType !== b.moduleType) {
-    return false;
-  }
+	if (a.moduleType !== b.moduleType) {
+		return false;
+	}
 
-  if (!arraySame(a.syntax, b.syntax, syntaxSame)) {
-    return false;
-  }
+	if (!arraySame(a.syntax, b.syntax, syntaxSame)) {
+		return false;
+	}
 
-  if (!arraySame(a.exports, b.exports, exportsSame)) {
-    return false;
-  }
+	if (!arraySame(a.exports, b.exports, exportsSame)) {
+		return false;
+	}
 
-  if (!arraySame(a.dependencies, b.dependencies, dependenciesSame)) {
-    return false;
-  }
+	if (!arraySame(a.dependencies, b.dependencies, dependenciesSame)) {
+		return false;
+	}
 
-  return true;
+	return true;
 }

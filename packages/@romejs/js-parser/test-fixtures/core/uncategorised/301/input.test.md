@@ -5,130 +5,130 @@
 ## `core > uncategorised > 301`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 5
-      index: 9
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    BlockStatement {
-      directives: Array []
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 5
-          index: 9
-          line: 2
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      body: Array [
-        ExpressionStatement {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 3
-              index: 3
-              line: 1
-            }
-            start: Object {
-              column: 2
-              index: 2
-              line: 1
-            }
-          }
-          expression: ReferenceIdentifier {
-            name: 'x'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'x'
-              end: Object {
-                column: 3
-                index: 3
-                line: 1
-              }
-              start: Object {
-                column: 2
-                index: 2
-                line: 1
-              }
-            }
-          }
-        }
-        ExpressionStatement {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 3
-              index: 7
-              line: 2
-            }
-            start: Object {
-              column: 0
-              index: 4
-              line: 2
-            }
-          }
-          expression: UpdateExpression {
-            operator: '--'
-            prefix: true
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 3
-                index: 7
-                line: 2
-              }
-              start: Object {
-                column: 0
-                index: 4
-                line: 2
-              }
-            }
-            argument: ReferenceIdentifier {
-              name: 'y'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'y'
-                end: Object {
-                  column: 3
-                  index: 7
-                  line: 2
-                }
-                start: Object {
-                  column: 2
-                  index: 6
-                  line: 2
-                }
-              }
-            }
-          }
-        }
-      ]
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 5
+			index: 9
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSBlockStatement {
+			directives: Array []
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 5
+					index: 9
+					line: 2
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			body: Array [
+				JSExpressionStatement {
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 3
+							index: 3
+							line: 1
+						}
+						start: Object {
+							column: 2
+							index: 2
+							line: 1
+						}
+					}
+					expression: JSReferenceIdentifier {
+						name: "x"
+						loc: Object {
+							filename: "input.js"
+							identifierName: "x"
+							end: Object {
+								column: 3
+								index: 3
+								line: 1
+							}
+							start: Object {
+								column: 2
+								index: 2
+								line: 1
+							}
+						}
+					}
+				}
+				JSExpressionStatement {
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 3
+							index: 7
+							line: 2
+						}
+						start: Object {
+							column: 0
+							index: 4
+							line: 2
+						}
+					}
+					expression: JSUpdateExpression {
+						operator: "--"
+						prefix: true
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 3
+								index: 7
+								line: 2
+							}
+							start: Object {
+								column: 0
+								index: 4
+								line: 2
+							}
+						}
+						argument: JSReferenceIdentifier {
+							name: "y"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "y"
+								end: Object {
+									column: 3
+									index: 7
+									line: 2
+								}
+								start: Object {
+									column: 2
+									index: 6
+									line: 2
+								}
+							}
+						}
+					}
+				}
+			]
+		}
+	]
 }
 ```

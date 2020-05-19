@@ -5,96 +5,96 @@
 ## `es2015 > yield > yield-star-in-global-scope-is-multiplication`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 9
-      index: 9
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 9
-          index: 9
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: BinaryExpression {
-        operator: '*'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 9
-            index: 9
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        left: ReferenceIdentifier {
-          name: 'yield'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'yield'
-            end: Object {
-              column: 5
-              index: 5
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
-        right: NumericLiteral {
-          value: 10
-          format: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 9
-              index: 9
-              line: 1
-            }
-            start: Object {
-              column: 7
-              index: 7
-              line: 1
-            }
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 9
+			index: 9
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 9
+					index: 9
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSBinaryExpression {
+				operator: "*"
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 9
+						index: 9
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				left: JSReferenceIdentifier {
+					name: "yield"
+					loc: Object {
+						filename: "input.js"
+						identifierName: "yield"
+						end: Object {
+							column: 5
+							index: 5
+							line: 1
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+				}
+				right: JSNumericLiteral {
+					value: 10
+					format: undefined
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 9
+							index: 9
+							line: 1
+						}
+						start: Object {
+							column: 7
+							index: 7
+							line: 1
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

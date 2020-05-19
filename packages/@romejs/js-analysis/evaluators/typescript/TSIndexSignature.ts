@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {AnyNode, TSIndexSignature, tsIndexSignature} from '@romejs/js-ast';
+import {Scope} from "../../scopes";
+import {AnyNode, TSIndexSignature, tsIndexSignature} from "@romejs/ast";
 
 export default function TSIndexSignature(node: AnyNode, scope: Scope) {
-  node = tsIndexSignature.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = tsIndexSignature.assert(node);
+	scope;
+	throw new Error("unimplemented");
 }

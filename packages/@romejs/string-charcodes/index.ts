@@ -111,5 +111,5 @@ export const lineSeparator = 8_232;
 export const paragraphSeparator = 8_233;
 
 export function isDigit(code: number): boolean {
-  return code >= digit0 && code <= digit9;
+	return code >= digit0 && code <= digit9;
 }

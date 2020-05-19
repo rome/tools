@@ -8,14 +8,14 @@
 
 ```
 
- unknown:1:11 lint/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:11 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Missing the "key" prop for element in array
 
     const a = [<div />, <div />]
                ^^^^^^^
 
- unknown:1:20 lint/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:20 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Missing the "key" prop for element in array
 
@@ -39,7 +39,7 @@ const a = [<div />, <div />];
 
 ```
 
- unknown:1:26 lint/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:26 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Missing the "key" prop for element in iterator
 
@@ -63,7 +63,7 @@ const a = [1, 2].map((x) => <div>{x}</div>);
 
 ```
 
- unknown:2:9 lint/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:2:9 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Missing the "key" prop for element in iterator
 
@@ -82,7 +82,7 @@ const a = [1, 2].map((x) => <div>{x}</div>);
 
 ```
 const a = [1, 2].map((x) => {
-  return <div>{x}</div>;
+	return <div>{x}</div>;
 });
 
 ```
@@ -91,7 +91,7 @@ const a = [1, 2].map((x) => {
 
 ```
 
- unknown:2:9 lint/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:2:9 lint/react/jsxKey ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Missing the "key" prop for element in iterator
 
@@ -110,7 +110,7 @@ const a = [1, 2].map((x) => {
 
 ```
 const a = [1, 2].map(function(x) {
-  return <div>{x}</div>;
+	return <div>{x}</div>;
 });
 
 ```
@@ -125,7 +125,7 @@ const a = [1, 2].map(function(x) {
 ### `4: formatted`
 
 ```
-const a = [<div key="a" />, <div key={'b'} />];
+const a = [<div key='a' />, <div key={"b"} />];
 
 ```
 
@@ -154,7 +154,7 @@ const a = [1, 2].map((x) => <div key={x}>{x}</div>);
 
 ```
 const a = [1, 2].map((x) => {
-  return <div key={x}>{x}</div>;
+	return <div key={x}>{x}</div>;
 });
 
 ```
@@ -170,7 +170,7 @@ const a = [1, 2].map((x) => {
 
 ```
 const a = [1, 2].map(function(x) {
-  return <div key={x}>{x}</div>;
+	return <div key={x}>{x}</div>;
 });
 
 ```

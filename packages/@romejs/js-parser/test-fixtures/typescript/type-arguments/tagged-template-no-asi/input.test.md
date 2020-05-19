@@ -5,182 +5,182 @@
 ## `typescript > type-arguments > tagged-template-no-asi`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.ts'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array ['ts']
-  loc: Object {
-    filename: 'input.ts'
-    end: Object {
-      column: 0
-      index: 12
-      line: 3
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 2
-          index: 11
-          line: 2
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: NewExpression {
-        arguments: Array []
-        optional: undefined
-        typeArguments: undefined
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 2
-            index: 11
-            line: 2
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        callee: TaggedTemplateExpression {
-          loc: Object {
-            filename: 'input.ts'
-            end: Object {
-              column: 2
-              index: 11
-              line: 2
-            }
-            start: Object {
-              column: 4
-              index: 4
-              line: 1
-            }
-          }
-          tag: ReferenceIdentifier {
-            name: 'C'
-            loc: Object {
-              filename: 'input.ts'
-              identifierName: 'C'
-              end: Object {
-                column: 5
-                index: 5
-                line: 1
-              }
-              start: Object {
-                column: 4
-                index: 4
-                line: 1
-              }
-            }
-          }
-          quasi: TemplateLiteral {
-            expressions: Array []
-            loc: Object {
-              filename: 'input.ts'
-              end: Object {
-                column: 2
-                index: 11
-                line: 2
-              }
-              start: Object {
-                column: 0
-                index: 9
-                line: 2
-              }
-            }
-            quasis: Array [
-              TemplateElement {
-                cooked: ''
-                raw: ''
-                tail: true
-                loc: Object {
-                  filename: 'input.ts'
-                  end: Object {
-                    column: 1
-                    index: 10
-                    line: 2
-                  }
-                  start: Object {
-                    column: 1
-                    index: 10
-                    line: 2
-                  }
-                }
-              }
-            ]
-          }
-          typeArguments: TSTypeParameterInstantiation {
-            loc: Object {
-              filename: 'input.ts'
-              end: Object {
-                column: 8
-                index: 8
-                line: 1
-              }
-              start: Object {
-                column: 5
-                index: 5
-                line: 1
-              }
-            }
-            params: Array [
-              TSTypeReference {
-                typeParameters: undefined
-                loc: Object {
-                  filename: 'input.ts'
-                  end: Object {
-                    column: 7
-                    index: 7
-                    line: 1
-                  }
-                  start: Object {
-                    column: 6
-                    index: 6
-                    line: 1
-                  }
-                }
-                typeName: ReferenceIdentifier {
-                  name: 'T'
-                  loc: Object {
-                    filename: 'input.ts'
-                    identifierName: 'T'
-                    end: Object {
-                      column: 7
-                      index: 7
-                      line: 1
-                    }
-                    start: Object {
-                      column: 6
-                      index: 6
-                      line: 1
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.ts"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "module"
+	syntax: Array ["ts"]
+	loc: Object {
+		filename: "input.ts"
+		end: Object {
+			column: 0
+			index: 12
+			line: 3
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.ts"
+				end: Object {
+					column: 2
+					index: 11
+					line: 2
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSNewExpression {
+				arguments: Array []
+				optional: undefined
+				typeArguments: undefined
+				loc: Object {
+					filename: "input.ts"
+					end: Object {
+						column: 2
+						index: 11
+						line: 2
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				callee: JSTaggedTemplateExpression {
+					loc: Object {
+						filename: "input.ts"
+						end: Object {
+							column: 2
+							index: 11
+							line: 2
+						}
+						start: Object {
+							column: 4
+							index: 4
+							line: 1
+						}
+					}
+					tag: JSReferenceIdentifier {
+						name: "C"
+						loc: Object {
+							filename: "input.ts"
+							identifierName: "C"
+							end: Object {
+								column: 5
+								index: 5
+								line: 1
+							}
+							start: Object {
+								column: 4
+								index: 4
+								line: 1
+							}
+						}
+					}
+					quasi: JSTemplateLiteral {
+						expressions: Array []
+						loc: Object {
+							filename: "input.ts"
+							end: Object {
+								column: 2
+								index: 11
+								line: 2
+							}
+							start: Object {
+								column: 0
+								index: 9
+								line: 2
+							}
+						}
+						quasis: Array [
+							JSTemplateElement {
+								cooked: ""
+								raw: ""
+								tail: true
+								loc: Object {
+									filename: "input.ts"
+									end: Object {
+										column: 1
+										index: 10
+										line: 2
+									}
+									start: Object {
+										column: 1
+										index: 10
+										line: 2
+									}
+								}
+							}
+						]
+					}
+					typeArguments: TSTypeParameterInstantiation {
+						loc: Object {
+							filename: "input.ts"
+							end: Object {
+								column: 8
+								index: 8
+								line: 1
+							}
+							start: Object {
+								column: 5
+								index: 5
+								line: 1
+							}
+						}
+						params: Array [
+							TSTypeReference {
+								typeParameters: undefined
+								loc: Object {
+									filename: "input.ts"
+									end: Object {
+										column: 7
+										index: 7
+										line: 1
+									}
+									start: Object {
+										column: 6
+										index: 6
+										line: 1
+									}
+								}
+								typeName: JSReferenceIdentifier {
+									name: "T"
+									loc: Object {
+										filename: "input.ts"
+										identifierName: "T"
+										end: Object {
+											column: 7
+											index: 7
+											line: 1
+										}
+										start: Object {
+											column: 6
+											index: 6
+											line: 1
+										}
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
 }
 ```

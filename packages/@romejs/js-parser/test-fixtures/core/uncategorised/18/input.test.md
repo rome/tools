@@ -5,95 +5,95 @@
 ## `core > uncategorised > 18`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 7
-      index: 7
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 7
-          index: 7
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: AssignmentExpression {
-        operator: '='
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 7
-            index: 7
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        right: ArrayExpression {
-          elements: Array []
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 7
-              index: 7
-              line: 1
-            }
-            start: Object {
-              column: 5
-              index: 5
-              line: 1
-            }
-          }
-        }
-        left: AssignmentIdentifier {
-          name: '\u2163\u2161'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: '\u2163\u2161'
-            end: Object {
-              column: 2
-              index: 2
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 7
+			index: 7
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 7
+					index: 7
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSAssignmentExpression {
+				operator: "="
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 7
+						index: 7
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				right: JSArrayExpression {
+					elements: Array []
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 7
+							index: 7
+							line: 1
+						}
+						start: Object {
+							column: 5
+							index: 5
+							line: 1
+						}
+					}
+				}
+				left: JSAssignmentIdentifier {
+					name: "\u2163\u2161"
+					loc: Object {
+						filename: "input.js"
+						identifierName: "\u2163\u2161"
+						end: Object {
+							column: 2
+							index: 2
+							line: 1
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

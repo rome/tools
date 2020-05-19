@@ -5,34 +5,34 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import data from './data';
+import data from "./data";
 
 type License = {
-  reference: string;
-  isDeprecatedLicenseId: boolean;
-  isFsfLibre?: boolean;
-  detailsUrl: string;
-  referenceNumber: string;
-  name: string;
-  licenseId: string;
-  seeAlso: Array<string>;
-  isOsiApproved: boolean;
+	reference: string;
+	isDeprecatedLicenseId: boolean;
+	isFsfLibre?: boolean;
+	detailsUrl: string;
+	referenceNumber: string;
+	name: string;
+	licenseId: string;
+	seeAlso: Array<string>;
+	isOsiApproved: boolean;
 };
 
 const idToLicense: Map<string, License> = new Map();
 const licenseNames: Array<string> = [];
 for (const license of data.licenses) {
-  licenseNames.push(license.licenseId);
-  idToLicense.set(license.licenseId, license);
+	licenseNames.push(license.licenseId);
+	idToLicense.set(license.licenseId, license);
 }
 
 export {licenseNames};
 
-export {ExpressionNode as SPDXExpressionNode} from './parse';
+export {ExpressionNode as SPDXExpressionNode} from "./parse";
 
 export function getSPDXLicense(licenseId: string): undefined | License {
-  return idToLicense.get(licenseId);
+	return idToLicense.get(licenseId);
 }
 
-export {default as parseSPDXLicense} from './parse';
-export {default as stringifySPDXLicense} from './stringify';
+export {default as parseSPDXLicense} from "./parse";
+export {default as stringifySPDXLicense} from "./stringify";

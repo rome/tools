@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode} from '@romejs/js-ast';
+import {AnyNode} from "@romejs/ast";
 
 export default function removeShallowLoc<T extends AnyNode>(node: T): T {
-  return {
-    ...node,
-    loc: undefined,
-  };
+	return {
+		...node,
+		loc: undefined,
+	};
 }

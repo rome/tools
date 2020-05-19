@@ -5,126 +5,126 @@
 ## `core > uncategorised > 272`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 31
-      index: 31
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    LabeledStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 31
-          index: 31
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      label: Identifier {
-        name: 'start'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'start'
-          end: Object {
-            column: 5
-            index: 5
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-      }
-      body: WhileStatement {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 31
-            index: 31
-            line: 1
-          }
-          start: Object {
-            column: 7
-            index: 7
-            line: 1
-          }
-        }
-        test: BooleanLiteral {
-          value: true
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 18
-              index: 18
-              line: 1
-            }
-            start: Object {
-              column: 14
-              index: 14
-              line: 1
-            }
-          }
-        }
-        body: BreakStatement {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 31
-              index: 31
-              line: 1
-            }
-            start: Object {
-              column: 20
-              index: 20
-              line: 1
-            }
-          }
-          label: Identifier {
-            name: 'start'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'start'
-              end: Object {
-                column: 31
-                index: 31
-                line: 1
-              }
-              start: Object {
-                column: 26
-                index: 26
-                line: 1
-              }
-            }
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 31
+			index: 31
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSLabeledStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 31
+					index: 31
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			label: JSIdentifier {
+				name: "start"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "start"
+					end: Object {
+						column: 5
+						index: 5
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+			}
+			body: JSWhileStatement {
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 31
+						index: 31
+						line: 1
+					}
+					start: Object {
+						column: 7
+						index: 7
+						line: 1
+					}
+				}
+				test: JSBooleanLiteral {
+					value: true
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 18
+							index: 18
+							line: 1
+						}
+						start: Object {
+							column: 14
+							index: 14
+							line: 1
+						}
+					}
+				}
+				body: JSBreakStatement {
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 31
+							index: 31
+							line: 1
+						}
+						start: Object {
+							column: 20
+							index: 20
+							line: 1
+						}
+					}
+					label: JSIdentifier {
+						name: "start"
+						loc: Object {
+							filename: "input.js"
+							identifierName: "start"
+							end: Object {
+								column: 31
+								index: 31
+								line: 1
+							}
+							start: Object {
+								column: 26
+								index: 26
+								line: 1
+							}
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

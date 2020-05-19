@@ -5,106 +5,106 @@
 ## `core > uncategorised > 387`
 
 ```javascript
-Program {
-  corrupt: true
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 1
-      index: 31
-      line: 4
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  comments: Array [
-    CommentBlock {
-      id: '0'
-      value: ' Some multiline\ncomment '
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 10
-          index: 29
-          line: 3
-        }
-        start: Object {
-          column: 0
-          index: 1
-          line: 2
-        }
-      }
-    }
-  ]
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unknown start to an statement expression'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 30
-          line: 4
-        }
-      }
-    }
-  ]
-  body: Array [
-    ExpressionStatement {
-      leadingComments: Array ['0']
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 1
-          index: 31
-          line: 4
-        }
-        start: Object {
-          column: 0
-          index: 30
-          line: 4
-        }
-      }
-      expression: ReferenceIdentifier {
-        name: 'INVALID_PLACEHOLDER'
-        leadingComments: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 1
-            index: 31
-            line: 4
-          }
-          start: Object {
-            column: 0
-            index: 30
-            line: 4
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	corrupt: true
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 1
+			index: 31
+			line: 4
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	comments: Array [
+		JSCommentBlock {
+			id: "0"
+			value: " Some multiline\ncomment "
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 10
+					index: 29
+					line: 3
+				}
+				start: Object {
+					column: 0
+					index: 1
+					line: 2
+				}
+			}
+		}
+	]
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unknown start to an statement expression"}
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "script"
+				end: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 30
+					line: 4
+				}
+			}
+		}
+	]
+	body: Array [
+		JSExpressionStatement {
+			leadingComments: Array ["0"]
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 1
+					index: 31
+					line: 4
+				}
+				start: Object {
+					column: 0
+					index: 30
+					line: 4
+				}
+			}
+			expression: JSReferenceIdentifier {
+				name: "INVALID_PLACEHOLDER"
+				leadingComments: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 1
+						index: 31
+						line: 4
+					}
+					start: Object {
+						column: 0
+						index: 30
+						line: 4
+					}
+				}
+			}
+		}
+	]
 }
 ```

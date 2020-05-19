@@ -5,169 +5,168 @@
 ## `core > uncategorised > 262`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 28
-      index: 28
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 28
-          index: 28
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: FunctionExpression {
-        id: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 27
-            index: 27
-            line: 1
-          }
-          start: Object {
-            column: 1
-            index: 1
-            line: 1
-          }
-        }
-        head: FunctionHead {
-          async: false
-          generator: false
-          hasHoistedVars: false
-          params: Array []
-          predicate: undefined
-          rest: undefined
-          returnType: undefined
-          thisType: undefined
-          typeParameters: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 11
-              index: 11
-              line: 1
-            }
-            start: Object {
-              column: 9
-              index: 9
-              line: 1
-            }
-          }
-        }
-        body: BlockStatement {
-          directives: Array []
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 27
-              index: 27
-              line: 1
-            }
-            start: Object {
-              column: 11
-              index: 11
-              line: 1
-            }
-          }
-          body: Array [
-            ReturnStatement {
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 25
-                  index: 25
-                  line: 1
-                }
-                start: Object {
-                  column: 13
-                  index: 13
-                  line: 1
-                }
-              }
-              argument: BinaryExpression {
-                operator: '*'
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 25
-                    index: 25
-                    line: 1
-                  }
-                  start: Object {
-                    column: 20
-                    index: 20
-                    line: 1
-                  }
-                }
-                left: ReferenceIdentifier {
-                  name: 'x'
-                  loc: Object {
-                    filename: 'input.js'
-                    identifierName: 'x'
-                    end: Object {
-                      column: 21
-                      index: 21
-                      line: 1
-                    }
-                    start: Object {
-                      column: 20
-                      index: 20
-                      line: 1
-                    }
-                  }
-                }
-                right: ReferenceIdentifier {
-                  name: 'y'
-                  loc: Object {
-                    filename: 'input.js'
-                    identifierName: 'y'
-                    end: Object {
-                      column: 25
-                      index: 25
-                      line: 1
-                    }
-                    start: Object {
-                      column: 24
-                      index: 24
-                      line: 1
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 28
+			index: 28
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 28
+					index: 28
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSFunctionExpression {
+				id: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 27
+						index: 27
+						line: 1
+					}
+					start: Object {
+						column: 1
+						index: 1
+						line: 1
+					}
+				}
+				head: JSFunctionHead {
+					async: false
+					generator: false
+					hasHoistedVars: false
+					params: Array []
+					rest: undefined
+					returnType: undefined
+					thisType: undefined
+					typeParameters: undefined
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 11
+							index: 11
+							line: 1
+						}
+						start: Object {
+							column: 9
+							index: 9
+							line: 1
+						}
+					}
+				}
+				body: JSBlockStatement {
+					directives: Array []
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 27
+							index: 27
+							line: 1
+						}
+						start: Object {
+							column: 11
+							index: 11
+							line: 1
+						}
+					}
+					body: Array [
+						JSReturnStatement {
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 25
+									index: 25
+									line: 1
+								}
+								start: Object {
+									column: 13
+									index: 13
+									line: 1
+								}
+							}
+							argument: JSBinaryExpression {
+								operator: "*"
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 25
+										index: 25
+										line: 1
+									}
+									start: Object {
+										column: 20
+										index: 20
+										line: 1
+									}
+								}
+								left: JSReferenceIdentifier {
+									name: "x"
+									loc: Object {
+										filename: "input.js"
+										identifierName: "x"
+										end: Object {
+											column: 21
+											index: 21
+											line: 1
+										}
+										start: Object {
+											column: 20
+											index: 20
+											line: 1
+										}
+									}
+								}
+								right: JSReferenceIdentifier {
+									name: "y"
+									loc: Object {
+										filename: "input.js"
+										identifierName: "y"
+										end: Object {
+											column: 25
+											index: 25
+											line: 1
+										}
+										start: Object {
+											column: 24
+											index: 24
+											line: 1
+										}
+									}
+								}
+							}
+						}
+					]
+				}
+			}
+		}
+	]
 }
 ```

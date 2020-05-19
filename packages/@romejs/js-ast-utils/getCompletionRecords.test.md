@@ -8,39 +8,39 @@
 
 ```javascript
 Array [
-  COMPLETION {
-    node: ReturnStatement {
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 28
-          index: 28
-          line: 1
-        }
-        start: Object {
-          column: 15
-          index: 15
-          line: 1
-        }
-      }
-      argument: BooleanLiteral {
-        value: false
-        loc: Object {
-          filename: 'unknown'
-          end: Object {
-            column: 27
-            index: 27
-            line: 1
-          }
-          start: Object {
-            column: 22
-            index: 22
-            line: 1
-          }
-        }
-      }
-    }
-  }
+	COMPLETION {
+		node: JSReturnStatement {
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 28
+					index: 28
+					line: 1
+				}
+				start: Object {
+					column: 15
+					index: 15
+					line: 1
+				}
+			}
+			argument: JSBooleanLiteral {
+				value: false
+				loc: Object {
+					filename: "unknown"
+					end: Object {
+						column: 27
+						index: 27
+						line: 1
+					}
+					start: Object {
+						column: 22
+						index: 22
+						line: 1
+					}
+				}
+			}
+		}
+	}
 ]
 ```
 
@@ -48,24 +48,24 @@ Array [
 
 ```javascript
 Array [
-  COMPLETION {
-    node: ReturnStatement {
-      argument: undefined
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 22
-          index: 22
-          line: 1
-        }
-        start: Object {
-          column: 15
-          index: 15
-          line: 1
-        }
-      }
-    }
-  }
+	COMPLETION {
+		node: JSReturnStatement {
+			argument: undefined
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 22
+					index: 22
+					line: 1
+				}
+				start: Object {
+					column: 15
+					index: 15
+					line: 1
+				}
+			}
+		}
+	}
 ]
 ```
 
@@ -73,124 +73,124 @@ Array [
 
 ```javascript
 Array [
-  COMPLETION {
-    node: ReturnStatement {
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 38
-          index: 38
-          line: 1
-        }
-        start: Object {
-          column: 25
-          index: 25
-          line: 1
-        }
-      }
-      argument: BooleanLiteral {
-        value: false
-        loc: Object {
-          filename: 'unknown'
-          end: Object {
-            column: 37
-            index: 37
-            line: 1
-          }
-          start: Object {
-            column: 32
-            index: 32
-            line: 1
-          }
-        }
-      }
-    }
-  }
-  INVALID {
-    description: 'empty alternate'
-    node: IfStatement {
-      alternate: undefined
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 39
-          index: 39
-          line: 1
-        }
-        start: Object {
-          column: 15
-          index: 15
-          line: 1
-        }
-      }
-      test: ReferenceIdentifier {
-        name: 'bar'
-        loc: Object {
-          filename: 'unknown'
-          identifierName: 'bar'
-          end: Object {
-            column: 22
-            index: 22
-            line: 1
-          }
-          start: Object {
-            column: 19
-            index: 19
-            line: 1
-          }
-        }
-      }
-      consequent: BlockStatement {
-        directives: Array []
-        loc: Object {
-          filename: 'unknown'
-          end: Object {
-            column: 39
-            index: 39
-            line: 1
-          }
-          start: Object {
-            column: 24
-            index: 24
-            line: 1
-          }
-        }
-        body: Array [
-          ReturnStatement {
-            loc: Object {
-              filename: 'unknown'
-              end: Object {
-                column: 38
-                index: 38
-                line: 1
-              }
-              start: Object {
-                column: 25
-                index: 25
-                line: 1
-              }
-            }
-            argument: BooleanLiteral {
-              value: false
-              loc: Object {
-                filename: 'unknown'
-                end: Object {
-                  column: 37
-                  index: 37
-                  line: 1
-                }
-                start: Object {
-                  column: 32
-                  index: 32
-                  line: 1
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-  }
+	COMPLETION {
+		node: JSReturnStatement {
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 38
+					index: 38
+					line: 1
+				}
+				start: Object {
+					column: 25
+					index: 25
+					line: 1
+				}
+			}
+			argument: JSBooleanLiteral {
+				value: false
+				loc: Object {
+					filename: "unknown"
+					end: Object {
+						column: 37
+						index: 37
+						line: 1
+					}
+					start: Object {
+						column: 32
+						index: 32
+						line: 1
+					}
+				}
+			}
+		}
+	}
+	INVALID {
+		description: "empty alternate"
+		node: JSIfStatement {
+			alternate: undefined
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 39
+					index: 39
+					line: 1
+				}
+				start: Object {
+					column: 15
+					index: 15
+					line: 1
+				}
+			}
+			test: JSReferenceIdentifier {
+				name: "bar"
+				loc: Object {
+					filename: "unknown"
+					identifierName: "bar"
+					end: Object {
+						column: 22
+						index: 22
+						line: 1
+					}
+					start: Object {
+						column: 19
+						index: 19
+						line: 1
+					}
+				}
+			}
+			consequent: JSBlockStatement {
+				directives: Array []
+				loc: Object {
+					filename: "unknown"
+					end: Object {
+						column: 39
+						index: 39
+						line: 1
+					}
+					start: Object {
+						column: 24
+						index: 24
+						line: 1
+					}
+				}
+				body: Array [
+					JSReturnStatement {
+						loc: Object {
+							filename: "unknown"
+							end: Object {
+								column: 38
+								index: 38
+								line: 1
+							}
+							start: Object {
+								column: 25
+								index: 25
+								line: 1
+							}
+						}
+						argument: JSBooleanLiteral {
+							value: false
+							loc: Object {
+								filename: "unknown"
+								end: Object {
+									column: 37
+									index: 37
+									line: 1
+								}
+								start: Object {
+									column: 32
+									index: 32
+									line: 1
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+	}
 ]
 ```
 
@@ -198,72 +198,72 @@ Array [
 
 ```javascript
 Array [
-  COMPLETION {
-    node: ReturnStatement {
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 38
-          index: 38
-          line: 1
-        }
-        start: Object {
-          column: 25
-          index: 25
-          line: 1
-        }
-      }
-      argument: BooleanLiteral {
-        value: false
-        loc: Object {
-          filename: 'unknown'
-          end: Object {
-            column: 37
-            index: 37
-            line: 1
-          }
-          start: Object {
-            column: 32
-            index: 32
-            line: 1
-          }
-        }
-      }
-    }
-  }
-  COMPLETION {
-    node: ReturnStatement {
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 58
-          index: 58
-          line: 1
-        }
-        start: Object {
-          column: 46
-          index: 46
-          line: 1
-        }
-      }
-      argument: BooleanLiteral {
-        value: true
-        loc: Object {
-          filename: 'unknown'
-          end: Object {
-            column: 57
-            index: 57
-            line: 1
-          }
-          start: Object {
-            column: 53
-            index: 53
-            line: 1
-          }
-        }
-      }
-    }
-  }
+	COMPLETION {
+		node: JSReturnStatement {
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 38
+					index: 38
+					line: 1
+				}
+				start: Object {
+					column: 25
+					index: 25
+					line: 1
+				}
+			}
+			argument: JSBooleanLiteral {
+				value: false
+				loc: Object {
+					filename: "unknown"
+					end: Object {
+						column: 37
+						index: 37
+						line: 1
+					}
+					start: Object {
+						column: 32
+						index: 32
+						line: 1
+					}
+				}
+			}
+		}
+	}
+	COMPLETION {
+		node: JSReturnStatement {
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 58
+					index: 58
+					line: 1
+				}
+				start: Object {
+					column: 46
+					index: 46
+					line: 1
+				}
+			}
+			argument: JSBooleanLiteral {
+				value: true
+				loc: Object {
+					filename: "unknown"
+					end: Object {
+						column: 57
+						index: 57
+						line: 1
+					}
+					start: Object {
+						column: 53
+						index: 53
+						line: 1
+					}
+				}
+			}
+		}
+	}
 ]
 ```
 
@@ -271,39 +271,39 @@ Array [
 
 ```javascript
 Array [
-  COMPLETION {
-    node: ReturnStatement {
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 52
-          index: 52
-          line: 1
-        }
-        start: Object {
-          column: 39
-          index: 39
-          line: 1
-        }
-      }
-      argument: BooleanLiteral {
-        value: false
-        loc: Object {
-          filename: 'unknown'
-          end: Object {
-            column: 51
-            index: 51
-            line: 1
-          }
-          start: Object {
-            column: 46
-            index: 46
-            line: 1
-          }
-        }
-      }
-    }
-  }
+	COMPLETION {
+		node: JSReturnStatement {
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 52
+					index: 52
+					line: 1
+				}
+				start: Object {
+					column: 39
+					index: 39
+					line: 1
+				}
+			}
+			argument: JSBooleanLiteral {
+				value: false
+				loc: Object {
+					filename: "unknown"
+					end: Object {
+						column: 51
+						index: 51
+						line: 1
+					}
+					start: Object {
+						column: 46
+						index: 46
+						line: 1
+					}
+				}
+			}
+		}
+	}
 ]
 ```
 
@@ -311,39 +311,39 @@ Array [
 
 ```javascript
 Array [
-  COMPLETION {
-    node: ReturnStatement {
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 52
-          index: 52
-          line: 1
-        }
-        start: Object {
-          column: 39
-          index: 39
-          line: 1
-        }
-      }
-      argument: BooleanLiteral {
-        value: false
-        loc: Object {
-          filename: 'unknown'
-          end: Object {
-            column: 51
-            index: 51
-            line: 1
-          }
-          start: Object {
-            column: 46
-            index: 46
-            line: 1
-          }
-        }
-      }
-    }
-  }
+	COMPLETION {
+		node: JSReturnStatement {
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 52
+					index: 52
+					line: 1
+				}
+				start: Object {
+					column: 39
+					index: 39
+					line: 1
+				}
+			}
+			argument: JSBooleanLiteral {
+				value: false
+				loc: Object {
+					filename: "unknown"
+					end: Object {
+						column: 51
+						index: 51
+						line: 1
+					}
+					start: Object {
+						column: 46
+						index: 46
+						line: 1
+					}
+				}
+			}
+		}
+	}
 ]
 ```
 
@@ -353,26 +353,26 @@ Array [
 
 ```javascript
 Array [
-  INVALID {
-    description: 'empty block'
-    node: BlockStatement {
-      body: Array []
-      directives: Array []
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 17
-          index: 17
-          line: 1
-        }
-        start: Object {
-          column: 15
-          index: 15
-          line: 1
-        }
-      }
-    }
-  }
+	INVALID {
+		description: "empty block"
+		node: JSBlockStatement {
+			body: Array []
+			directives: Array []
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 17
+					index: 17
+					line: 1
+				}
+				start: Object {
+					column: 15
+					index: 15
+					line: 1
+				}
+			}
+		}
+	}
 ]
 ```
 
@@ -380,43 +380,43 @@ Array [
 
 ```javascript
 Array [
-  INVALID {
-    description: 'empty block'
-    node: BlockStatement {
-      body: Array []
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 25
-          index: 25
-          line: 1
-        }
-        start: Object {
-          column: 14
-          index: 14
-          line: 1
-        }
-      }
-      directives: Array [
-        Directive {
-          value: 'foobar'
-          loc: Object {
-            filename: 'unknown'
-            end: Object {
-              column: 24
-              index: 24
-              line: 1
-            }
-            start: Object {
-              column: 15
-              index: 15
-              line: 1
-            }
-          }
-        }
-      ]
-    }
-  }
+	INVALID {
+		description: "empty block"
+		node: JSBlockStatement {
+			body: Array []
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 25
+					index: 25
+					line: 1
+				}
+				start: Object {
+					column: 14
+					index: 14
+					line: 1
+				}
+			}
+			directives: Array [
+				JSDirective {
+					value: "foobar"
+					loc: Object {
+						filename: "unknown"
+						end: Object {
+							column: 24
+							index: 24
+							line: 1
+						}
+						start: Object {
+							column: 15
+							index: 15
+							line: 1
+						}
+					}
+				}
+			]
+		}
+	}
 ]
 ```
 
@@ -424,143 +424,143 @@ Array [
 
 ```javascript
 Array [
-  INVALID {
-    description: 'empty block'
-    node: BlockStatement {
-      directives: Array []
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 35
-          index: 35
-          line: 1
-        }
-        start: Object {
-          column: 24
-          index: 24
-          line: 1
-        }
-      }
-      body: Array [
-        ExpressionStatement {
-          loc: Object {
-            filename: 'unknown'
-            end: Object {
-              column: 34
-              index: 34
-              line: 1
-            }
-            start: Object {
-              column: 25
-              index: 25
-              line: 1
-            }
-          }
-          expression: StringLiteral {
-            value: 'foobar'
-            loc: Object {
-              filename: 'unknown'
-              end: Object {
-                column: 33
-                index: 33
-                line: 1
-              }
-              start: Object {
-                column: 25
-                index: 25
-                line: 1
-              }
-            }
-          }
-        }
-      ]
-    }
-  }
-  INVALID {
-    description: 'empty alternate'
-    node: IfStatement {
-      alternate: undefined
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 35
-          index: 35
-          line: 1
-        }
-        start: Object {
-          column: 15
-          index: 15
-          line: 1
-        }
-      }
-      test: ReferenceIdentifier {
-        name: 'bar'
-        loc: Object {
-          filename: 'unknown'
-          identifierName: 'bar'
-          end: Object {
-            column: 22
-            index: 22
-            line: 1
-          }
-          start: Object {
-            column: 19
-            index: 19
-            line: 1
-          }
-        }
-      }
-      consequent: BlockStatement {
-        directives: Array []
-        loc: Object {
-          filename: 'unknown'
-          end: Object {
-            column: 35
-            index: 35
-            line: 1
-          }
-          start: Object {
-            column: 24
-            index: 24
-            line: 1
-          }
-        }
-        body: Array [
-          ExpressionStatement {
-            loc: Object {
-              filename: 'unknown'
-              end: Object {
-                column: 34
-                index: 34
-                line: 1
-              }
-              start: Object {
-                column: 25
-                index: 25
-                line: 1
-              }
-            }
-            expression: StringLiteral {
-              value: 'foobar'
-              loc: Object {
-                filename: 'unknown'
-                end: Object {
-                  column: 33
-                  index: 33
-                  line: 1
-                }
-                start: Object {
-                  column: 25
-                  index: 25
-                  line: 1
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-  }
+	INVALID {
+		description: "empty block"
+		node: JSBlockStatement {
+			directives: Array []
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 35
+					index: 35
+					line: 1
+				}
+				start: Object {
+					column: 24
+					index: 24
+					line: 1
+				}
+			}
+			body: Array [
+				JSExpressionStatement {
+					loc: Object {
+						filename: "unknown"
+						end: Object {
+							column: 34
+							index: 34
+							line: 1
+						}
+						start: Object {
+							column: 25
+							index: 25
+							line: 1
+						}
+					}
+					expression: JSStringLiteral {
+						value: "foobar"
+						loc: Object {
+							filename: "unknown"
+							end: Object {
+								column: 33
+								index: 33
+								line: 1
+							}
+							start: Object {
+								column: 25
+								index: 25
+								line: 1
+							}
+						}
+					}
+				}
+			]
+		}
+	}
+	INVALID {
+		description: "empty alternate"
+		node: JSIfStatement {
+			alternate: undefined
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 35
+					index: 35
+					line: 1
+				}
+				start: Object {
+					column: 15
+					index: 15
+					line: 1
+				}
+			}
+			test: JSReferenceIdentifier {
+				name: "bar"
+				loc: Object {
+					filename: "unknown"
+					identifierName: "bar"
+					end: Object {
+						column: 22
+						index: 22
+						line: 1
+					}
+					start: Object {
+						column: 19
+						index: 19
+						line: 1
+					}
+				}
+			}
+			consequent: JSBlockStatement {
+				directives: Array []
+				loc: Object {
+					filename: "unknown"
+					end: Object {
+						column: 35
+						index: 35
+						line: 1
+					}
+					start: Object {
+						column: 24
+						index: 24
+						line: 1
+					}
+				}
+				body: Array [
+					JSExpressionStatement {
+						loc: Object {
+							filename: "unknown"
+							end: Object {
+								column: 34
+								index: 34
+								line: 1
+							}
+							start: Object {
+								column: 25
+								index: 25
+								line: 1
+							}
+						}
+						expression: JSStringLiteral {
+							value: "foobar"
+							loc: Object {
+								filename: "unknown"
+								end: Object {
+									column: 33
+									index: 33
+									line: 1
+								}
+								start: Object {
+									column: 25
+									index: 25
+									line: 1
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+	}
 ]
 ```
 
@@ -568,78 +568,78 @@ Array [
 
 ```javascript
 Array [
-  INVALID {
-    description: 'empty block'
-    node: BlockStatement {
-      directives: Array []
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 35
-          index: 35
-          line: 1
-        }
-        start: Object {
-          column: 24
-          index: 24
-          line: 1
-        }
-      }
-      body: Array [
-        ExpressionStatement {
-          loc: Object {
-            filename: 'unknown'
-            end: Object {
-              column: 34
-              index: 34
-              line: 1
-            }
-            start: Object {
-              column: 25
-              index: 25
-              line: 1
-            }
-          }
-          expression: StringLiteral {
-            value: 'foobar'
-            loc: Object {
-              filename: 'unknown'
-              end: Object {
-                column: 33
-                index: 33
-                line: 1
-              }
-              start: Object {
-                column: 25
-                index: 25
-                line: 1
-              }
-            }
-          }
-        }
-      ]
-    }
-  }
-  INVALID {
-    description: 'empty block'
-    node: BlockStatement {
-      body: Array []
-      directives: Array []
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 43
-          index: 43
-          line: 1
-        }
-        start: Object {
-          column: 41
-          index: 41
-          line: 1
-        }
-      }
-    }
-  }
+	INVALID {
+		description: "empty block"
+		node: JSBlockStatement {
+			directives: Array []
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 35
+					index: 35
+					line: 1
+				}
+				start: Object {
+					column: 24
+					index: 24
+					line: 1
+				}
+			}
+			body: Array [
+				JSExpressionStatement {
+					loc: Object {
+						filename: "unknown"
+						end: Object {
+							column: 34
+							index: 34
+							line: 1
+						}
+						start: Object {
+							column: 25
+							index: 25
+							line: 1
+						}
+					}
+					expression: JSStringLiteral {
+						value: "foobar"
+						loc: Object {
+							filename: "unknown"
+							end: Object {
+								column: 33
+								index: 33
+								line: 1
+							}
+							start: Object {
+								column: 25
+								index: 25
+								line: 1
+							}
+						}
+					}
+				}
+			]
+		}
+	}
+	INVALID {
+		description: "empty block"
+		node: JSBlockStatement {
+			body: Array []
+			directives: Array []
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 43
+					index: 43
+					line: 1
+				}
+				start: Object {
+					column: 41
+					index: 41
+					line: 1
+				}
+			}
+		}
+	}
 ]
 ```
 
@@ -647,42 +647,42 @@ Array [
 
 ```javascript
 Array [
-  INVALID {
-    description: 'switch with no default clause'
-    node: SwitchStatement {
-      cases: Array []
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 30
-          index: 30
-          line: 1
-        }
-        start: Object {
-          column: 15
-          index: 15
-          line: 1
-        }
-      }
-      discriminant: ReferenceIdentifier {
-        name: 'foo'
-        loc: Object {
-          filename: 'unknown'
-          identifierName: 'foo'
-          end: Object {
-            column: 26
-            index: 26
-            line: 1
-          }
-          start: Object {
-            column: 23
-            index: 23
-            line: 1
-          }
-        }
-      }
-    }
-  }
+	INVALID {
+		description: "switch with no default clause"
+		node: JSSwitchStatement {
+			cases: Array []
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 30
+					index: 30
+					line: 1
+				}
+				start: Object {
+					column: 15
+					index: 15
+					line: 1
+				}
+			}
+			discriminant: JSReferenceIdentifier {
+				name: "foo"
+				loc: Object {
+					filename: "unknown"
+					identifierName: "foo"
+					end: Object {
+						column: 26
+						index: 26
+						line: 1
+					}
+					start: Object {
+						column: 23
+						index: 23
+						line: 1
+					}
+				}
+			}
+		}
+	}
 ]
 ```
 
@@ -690,93 +690,93 @@ Array [
 
 ```javascript
 Array [
-  INVALID {
-    description: 'switch with no default clause'
-    node: SwitchStatement {
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 44
-          index: 44
-          line: 1
-        }
-        start: Object {
-          column: 15
-          index: 15
-          line: 1
-        }
-      }
-      discriminant: ReferenceIdentifier {
-        name: 'foo'
-        loc: Object {
-          filename: 'unknown'
-          identifierName: 'foo'
-          end: Object {
-            column: 26
-            index: 26
-            line: 1
-          }
-          start: Object {
-            column: 23
-            index: 23
-            line: 1
-          }
-        }
-      }
-      cases: Array [
-        SwitchCase {
-          loc: Object {
-            filename: 'unknown'
-            end: Object {
-              column: 43
-              index: 43
-              line: 1
-            }
-            start: Object {
-              column: 39
-              index: 39
-              line: 1
-            }
-          }
-          test: StringLiteral {
-            value: 'bar'
-            loc: Object {
-              filename: 'unknown'
-              end: Object {
-                column: 39
-                index: 39
-                line: 1
-              }
-              start: Object {
-                column: 34
-                index: 34
-                line: 1
-              }
-            }
-          }
-          consequent: Array [
-            BlockStatement {
-              body: Array []
-              directives: Array []
-              loc: Object {
-                filename: 'unknown'
-                end: Object {
-                  column: 43
-                  index: 43
-                  line: 1
-                }
-                start: Object {
-                  column: 41
-                  index: 41
-                  line: 1
-                }
-              }
-            }
-          ]
-        }
-      ]
-    }
-  }
+	INVALID {
+		description: "switch with no default clause"
+		node: JSSwitchStatement {
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 44
+					index: 44
+					line: 1
+				}
+				start: Object {
+					column: 15
+					index: 15
+					line: 1
+				}
+			}
+			discriminant: JSReferenceIdentifier {
+				name: "foo"
+				loc: Object {
+					filename: "unknown"
+					identifierName: "foo"
+					end: Object {
+						column: 26
+						index: 26
+						line: 1
+					}
+					start: Object {
+						column: 23
+						index: 23
+						line: 1
+					}
+				}
+			}
+			cases: Array [
+				JSSwitchCase {
+					loc: Object {
+						filename: "unknown"
+						end: Object {
+							column: 43
+							index: 43
+							line: 1
+						}
+						start: Object {
+							column: 39
+							index: 39
+							line: 1
+						}
+					}
+					test: JSStringLiteral {
+						value: "bar"
+						loc: Object {
+							filename: "unknown"
+							end: Object {
+								column: 39
+								index: 39
+								line: 1
+							}
+							start: Object {
+								column: 34
+								index: 34
+								line: 1
+							}
+						}
+					}
+					consequent: Array [
+						JSBlockStatement {
+							body: Array []
+							directives: Array []
+							loc: Object {
+								filename: "unknown"
+								end: Object {
+									column: 43
+									index: 43
+									line: 1
+								}
+								start: Object {
+									column: 41
+									index: 41
+									line: 1
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+	}
 ]
 ```
 
@@ -784,26 +784,26 @@ Array [
 
 ```javascript
 Array [
-  INVALID {
-    description: 'empty block'
-    node: BlockStatement {
-      body: Array []
-      directives: Array []
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 40
-          index: 40
-          line: 1
-        }
-        start: Object {
-          column: 38
-          index: 38
-          line: 1
-        }
-      }
-    }
-  }
+	INVALID {
+		description: "empty block"
+		node: JSBlockStatement {
+			body: Array []
+			directives: Array []
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 40
+					index: 40
+					line: 1
+				}
+				start: Object {
+					column: 38
+					index: 38
+					line: 1
+				}
+			}
+		}
+	}
 ]
 ```
 
@@ -811,122 +811,122 @@ Array [
 
 ```javascript
 Array [
-  COMPLETION {
-    node: ReturnStatement {
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 63
-          index: 63
-          line: 1
-        }
-        start: Object {
-          column: 50
-          index: 50
-          line: 1
-        }
-      }
-      argument: BooleanLiteral {
-        value: false
-        loc: Object {
-          filename: 'unknown'
-          end: Object {
-            column: 62
-            index: 62
-            line: 1
-          }
-          start: Object {
-            column: 57
-            index: 57
-            line: 1
-          }
-        }
-      }
-    }
-  }
-  INVALID {
-    description: 'empty alternate'
-    node: IfStatement {
-      alternate: undefined
-      loc: Object {
-        filename: 'unknown'
-        end: Object {
-          column: 64
-          index: 64
-          line: 1
-        }
-        start: Object {
-          column: 39
-          index: 39
-          line: 1
-        }
-      }
-      test: BooleanLiteral {
-        value: true
-        loc: Object {
-          filename: 'unknown'
-          end: Object {
-            column: 47
-            index: 47
-            line: 1
-          }
-          start: Object {
-            column: 43
-            index: 43
-            line: 1
-          }
-        }
-      }
-      consequent: BlockStatement {
-        directives: Array []
-        loc: Object {
-          filename: 'unknown'
-          end: Object {
-            column: 64
-            index: 64
-            line: 1
-          }
-          start: Object {
-            column: 49
-            index: 49
-            line: 1
-          }
-        }
-        body: Array [
-          ReturnStatement {
-            loc: Object {
-              filename: 'unknown'
-              end: Object {
-                column: 63
-                index: 63
-                line: 1
-              }
-              start: Object {
-                column: 50
-                index: 50
-                line: 1
-              }
-            }
-            argument: BooleanLiteral {
-              value: false
-              loc: Object {
-                filename: 'unknown'
-                end: Object {
-                  column: 62
-                  index: 62
-                  line: 1
-                }
-                start: Object {
-                  column: 57
-                  index: 57
-                  line: 1
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-  }
+	COMPLETION {
+		node: JSReturnStatement {
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 63
+					index: 63
+					line: 1
+				}
+				start: Object {
+					column: 50
+					index: 50
+					line: 1
+				}
+			}
+			argument: JSBooleanLiteral {
+				value: false
+				loc: Object {
+					filename: "unknown"
+					end: Object {
+						column: 62
+						index: 62
+						line: 1
+					}
+					start: Object {
+						column: 57
+						index: 57
+						line: 1
+					}
+				}
+			}
+		}
+	}
+	INVALID {
+		description: "empty alternate"
+		node: JSIfStatement {
+			alternate: undefined
+			loc: Object {
+				filename: "unknown"
+				end: Object {
+					column: 64
+					index: 64
+					line: 1
+				}
+				start: Object {
+					column: 39
+					index: 39
+					line: 1
+				}
+			}
+			test: JSBooleanLiteral {
+				value: true
+				loc: Object {
+					filename: "unknown"
+					end: Object {
+						column: 47
+						index: 47
+						line: 1
+					}
+					start: Object {
+						column: 43
+						index: 43
+						line: 1
+					}
+				}
+			}
+			consequent: JSBlockStatement {
+				directives: Array []
+				loc: Object {
+					filename: "unknown"
+					end: Object {
+						column: 64
+						index: 64
+						line: 1
+					}
+					start: Object {
+						column: 49
+						index: 49
+						line: 1
+					}
+				}
+				body: Array [
+					JSReturnStatement {
+						loc: Object {
+							filename: "unknown"
+							end: Object {
+								column: 63
+								index: 63
+								line: 1
+							}
+							start: Object {
+								column: 50
+								index: 50
+								line: 1
+							}
+						}
+						argument: JSBooleanLiteral {
+							value: false
+							loc: Object {
+								filename: "unknown"
+								end: Object {
+									column: 62
+									index: 62
+									line: 1
+								}
+								start: Object {
+									column: 57
+									index: 57
+									line: 1
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+	}
 ]
 ```

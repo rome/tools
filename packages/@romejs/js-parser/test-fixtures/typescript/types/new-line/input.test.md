@@ -5,128 +5,128 @@
 ## `typescript > types > new-line`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.ts'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array ['ts']
-  loc: Object {
-    filename: 'input.ts'
-    end: Object {
-      column: 0
-      index: 19
-      line: 3
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 4
-          index: 4
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: ReferenceIdentifier {
-        name: 'type'
-        loc: Object {
-          filename: 'input.ts'
-          identifierName: 'type'
-          end: Object {
-            column: 4
-            index: 4
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-      }
-    }
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 13
-          index: 18
-          line: 2
-        }
-        start: Object {
-          column: 0
-          index: 5
-          line: 2
-        }
-      }
-      expression: AssignmentExpression {
-        operator: '='
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 12
-            index: 17
-            line: 2
-          }
-          start: Object {
-            column: 0
-            index: 5
-            line: 2
-          }
-        }
-        left: AssignmentIdentifier {
-          name: 'Foo'
-          loc: Object {
-            filename: 'input.ts'
-            identifierName: 'Foo'
-            end: Object {
-              column: 3
-              index: 8
-              line: 2
-            }
-            start: Object {
-              column: 0
-              index: 5
-              line: 2
-            }
-          }
-        }
-        right: ReferenceIdentifier {
-          name: 'string'
-          loc: Object {
-            filename: 'input.ts'
-            identifierName: 'string'
-            end: Object {
-              column: 12
-              index: 17
-              line: 2
-            }
-            start: Object {
-              column: 6
-              index: 11
-              line: 2
-            }
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.ts"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "module"
+	syntax: Array ["ts"]
+	loc: Object {
+		filename: "input.ts"
+		end: Object {
+			column: 0
+			index: 19
+			line: 3
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.ts"
+				end: Object {
+					column: 4
+					index: 4
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSReferenceIdentifier {
+				name: "type"
+				loc: Object {
+					filename: "input.ts"
+					identifierName: "type"
+					end: Object {
+						column: 4
+						index: 4
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+			}
+		}
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.ts"
+				end: Object {
+					column: 13
+					index: 18
+					line: 2
+				}
+				start: Object {
+					column: 0
+					index: 5
+					line: 2
+				}
+			}
+			expression: JSAssignmentExpression {
+				operator: "="
+				loc: Object {
+					filename: "input.ts"
+					end: Object {
+						column: 12
+						index: 17
+						line: 2
+					}
+					start: Object {
+						column: 0
+						index: 5
+						line: 2
+					}
+				}
+				left: JSAssignmentIdentifier {
+					name: "Foo"
+					loc: Object {
+						filename: "input.ts"
+						identifierName: "Foo"
+						end: Object {
+							column: 3
+							index: 8
+							line: 2
+						}
+						start: Object {
+							column: 0
+							index: 5
+							line: 2
+						}
+					}
+				}
+				right: JSReferenceIdentifier {
+					name: "string"
+					loc: Object {
+						filename: "input.ts"
+						identifierName: "string"
+						end: Object {
+							column: 12
+							index: 17
+							line: 2
+						}
+						start: Object {
+							column: 6
+							index: 11
+							line: 2
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

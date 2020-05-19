@@ -5,83 +5,83 @@
 ## `es2015 > uncategorised > 140`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 21
-      index: 21
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ClassDeclaration {
-      id: BindingIdentifier {
-        name: 'Semicolon'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'Semicolon'
-          end: Object {
-            column: 15
-            index: 15
-            line: 1
-          }
-          start: Object {
-            column: 6
-            index: 6
-            line: 1
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 21
-          index: 21
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      meta: ClassHead {
-        body: Array []
-        implements: undefined
-        superClass: undefined
-        superTypeParameters: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 21
-            index: 21
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 21
+			index: 21
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
+				name: "Semicolon"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "Semicolon"
+					end: Object {
+						column: 15
+						index: 15
+						line: 1
+					}
+					start: Object {
+						column: 6
+						index: 6
+						line: 1
+					}
+				}
+			}
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 21
+					index: 21
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			meta: JSClassHead {
+				body: Array []
+				implements: undefined
+				superClass: undefined
+				superTypeParameters: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 21
+						index: 21
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+			}
+		}
+	]
 }
 ```

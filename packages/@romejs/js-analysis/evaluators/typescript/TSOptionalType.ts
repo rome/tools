@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {AnyNode, TSOptionalType, tsOptionalType} from '@romejs/js-ast';
+import {Scope} from "../../scopes";
+import {AnyNode, TSOptionalType, tsOptionalType} from "@romejs/ast";
 
 export default function TSOptionalType(node: AnyNode, scope: Scope) {
-  node = tsOptionalType.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = tsOptionalType.assert(node);
+	scope;
+	throw new Error("unimplemented");
 }

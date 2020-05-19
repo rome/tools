@@ -5,169 +5,168 @@
 ## `esprima > declaration-function > migrated_0010`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: true
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 35
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    VariableDeclarationStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 34
-          index: 34
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      declaration: VariableDeclaration {
-        kind: 'var'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 34
-            index: 34
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        declarations: Array [
-          VariableDeclarator {
-            id: BindingIdentifier {
-              name: 'hi'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'hi'
-                end: Object {
-                  column: 6
-                  index: 6
-                  line: 1
-                }
-                start: Object {
-                  column: 4
-                  index: 4
-                  line: 1
-                }
-              }
-            }
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 33
-                index: 33
-                line: 1
-              }
-              start: Object {
-                column: 4
-                index: 4
-                line: 1
-              }
-            }
-            init: FunctionExpression {
-              id: BindingIdentifier {
-                name: 'arguments'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'arguments'
-                  end: Object {
-                    column: 27
-                    index: 27
-                    line: 1
-                  }
-                  start: Object {
-                    column: 18
-                    index: 18
-                    line: 1
-                  }
-                }
-              }
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 33
-                  index: 33
-                  line: 1
-                }
-                start: Object {
-                  column: 9
-                  index: 9
-                  line: 1
-                }
-              }
-              body: BlockStatement {
-                body: Array []
-                directives: Array []
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 33
-                    index: 33
-                    line: 1
-                  }
-                  start: Object {
-                    column: 30
-                    index: 30
-                    line: 1
-                  }
-                }
-              }
-              head: FunctionHead {
-                async: false
-                generator: false
-                hasHoistedVars: false
-                params: Array []
-                predicate: undefined
-                rest: undefined
-                returnType: undefined
-                thisType: undefined
-                typeParameters: undefined
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 29
-                    index: 29
-                    line: 1
-                  }
-                  start: Object {
-                    column: 27
-                    index: 27
-                    line: 1
-                  }
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: true
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 35
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSVariableDeclarationStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 34
+					index: 34
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			declaration: JSVariableDeclaration {
+				kind: "var"
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 34
+						index: 34
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				declarations: Array [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "hi"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "hi"
+								end: Object {
+									column: 6
+									index: 6
+									line: 1
+								}
+								start: Object {
+									column: 4
+									index: 4
+									line: 1
+								}
+							}
+						}
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 33
+								index: 33
+								line: 1
+							}
+							start: Object {
+								column: 4
+								index: 4
+								line: 1
+							}
+						}
+						init: JSFunctionExpression {
+							id: JSBindingIdentifier {
+								name: "arguments"
+								loc: Object {
+									filename: "input.js"
+									identifierName: "arguments"
+									end: Object {
+										column: 27
+										index: 27
+										line: 1
+									}
+									start: Object {
+										column: 18
+										index: 18
+										line: 1
+									}
+								}
+							}
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 33
+									index: 33
+									line: 1
+								}
+								start: Object {
+									column: 9
+									index: 9
+									line: 1
+								}
+							}
+							body: JSBlockStatement {
+								body: Array []
+								directives: Array []
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 33
+										index: 33
+										line: 1
+									}
+									start: Object {
+										column: 30
+										index: 30
+										line: 1
+									}
+								}
+							}
+							head: JSFunctionHead {
+								async: false
+								generator: false
+								hasHoistedVars: false
+								params: Array []
+								rest: undefined
+								returnType: undefined
+								thisType: undefined
+								typeParameters: undefined
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 29
+										index: 29
+										line: 1
+									}
+									start: Object {
+										column: 27
+										index: 27
+										line: 1
+									}
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

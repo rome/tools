@@ -5,82 +5,82 @@
 ## `esprima > es2015-class > migrated_0022`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 11
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 10
-          index: 10
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: ClassExpression {
-        id: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 9
-            index: 9
-            line: 1
-          }
-          start: Object {
-            column: 1
-            index: 1
-            line: 1
-          }
-        }
-        meta: ClassHead {
-          body: Array []
-          implements: undefined
-          superClass: undefined
-          superTypeParameters: undefined
-          typeParameters: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 9
-              index: 9
-              line: 1
-            }
-            start: Object {
-              column: 1
-              index: 1
-              line: 1
-            }
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 11
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 10
+					index: 10
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSClassExpression {
+				id: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 9
+						index: 9
+						line: 1
+					}
+					start: Object {
+						column: 1
+						index: 1
+						line: 1
+					}
+				}
+				meta: JSClassHead {
+					body: Array []
+					implements: undefined
+					superClass: undefined
+					superTypeParameters: undefined
+					typeParameters: undefined
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 9
+							index: 9
+							line: 1
+						}
+						start: Object {
+							column: 1
+							index: 1
+							line: 1
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

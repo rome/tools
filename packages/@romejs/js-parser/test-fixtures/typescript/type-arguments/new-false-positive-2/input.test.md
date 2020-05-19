@@ -5,154 +5,154 @@
 ## `typescript > type-arguments > new-false-positive-2`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.ts'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array ['ts']
-  loc: Object {
-    filename: 'input.ts'
-    end: Object {
-      column: 0
-      index: 10
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'In TypeScript, a new expression with type arguments must have parens'}
-      }
-      location: Object {
-        filename: 'input.ts'
-        mtime: undefined
-        sourceType: 'module'
-        end: Object {
-          column: 8
-          index: 8
-          line: 1
-        }
-        start: Object {
-          column: 8
-          index: 8
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 9
-          index: 9
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: NewExpression {
-        arguments: Array []
-        optional: undefined
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 8
-            index: 8
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        callee: ReferenceIdentifier {
-          name: 'A'
-          loc: Object {
-            filename: 'input.ts'
-            identifierName: 'A'
-            end: Object {
-              column: 5
-              index: 5
-              line: 1
-            }
-            start: Object {
-              column: 4
-              index: 4
-              line: 1
-            }
-          }
-        }
-        typeArguments: TSTypeParameterInstantiation {
-          loc: Object {
-            filename: 'input.ts'
-            end: Object {
-              column: 8
-              index: 8
-              line: 1
-            }
-            start: Object {
-              column: 5
-              index: 5
-              line: 1
-            }
-          }
-          params: Array [
-            TSTypeReference {
-              typeParameters: undefined
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 7
-                  index: 7
-                  line: 1
-                }
-                start: Object {
-                  column: 6
-                  index: 6
-                  line: 1
-                }
-              }
-              typeName: ReferenceIdentifier {
-                name: 'T'
-                loc: Object {
-                  filename: 'input.ts'
-                  identifierName: 'T'
-                  end: Object {
-                    column: 7
-                    index: 7
-                    line: 1
-                  }
-                  start: Object {
-                    column: 6
-                    index: 6
-                    line: 1
-                  }
-                }
-              }
-            }
-          ]
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: "input.ts"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "module"
+	syntax: Array ["ts"]
+	loc: Object {
+		filename: "input.ts"
+		end: Object {
+			column: 0
+			index: 10
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "In TypeScript, a new expression with type arguments must have parens"}
+			}
+			location: Object {
+				filename: "input.ts"
+				mtime: undefined
+				sourceType: "module"
+				end: Object {
+					column: 8
+					index: 8
+					line: 1
+				}
+				start: Object {
+					column: 8
+					index: 8
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.ts"
+				end: Object {
+					column: 9
+					index: 9
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSNewExpression {
+				arguments: Array []
+				optional: undefined
+				loc: Object {
+					filename: "input.ts"
+					end: Object {
+						column: 8
+						index: 8
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				callee: JSReferenceIdentifier {
+					name: "A"
+					loc: Object {
+						filename: "input.ts"
+						identifierName: "A"
+						end: Object {
+							column: 5
+							index: 5
+							line: 1
+						}
+						start: Object {
+							column: 4
+							index: 4
+							line: 1
+						}
+					}
+				}
+				typeArguments: TSTypeParameterInstantiation {
+					loc: Object {
+						filename: "input.ts"
+						end: Object {
+							column: 8
+							index: 8
+							line: 1
+						}
+						start: Object {
+							column: 5
+							index: 5
+							line: 1
+						}
+					}
+					params: Array [
+						TSTypeReference {
+							typeParameters: undefined
+							loc: Object {
+								filename: "input.ts"
+								end: Object {
+									column: 7
+									index: 7
+									line: 1
+								}
+								start: Object {
+									column: 6
+									index: 6
+									line: 1
+								}
+							}
+							typeName: JSReferenceIdentifier {
+								name: "T"
+								loc: Object {
+									filename: "input.ts"
+									identifierName: "T"
+									end: Object {
+										column: 7
+										index: 7
+										line: 1
+									}
+									start: Object {
+										column: 6
+										index: 6
+										line: 1
+									}
+								}
+							}
+						}
+					]
+				}
+			}
+		}
+	]
 }
 ```

@@ -5,286 +5,285 @@
 ## `esprima > es2015-yield > yield-expression-precedence`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 43
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    FunctionDeclaration {
-      id: BindingIdentifier {
-        name: 'g'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'g'
-          end: Object {
-            column: 11
-            index: 11
-            line: 1
-          }
-          start: Object {
-            column: 10
-            index: 10
-            line: 1
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 42
-          index: 42
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      head: FunctionHead {
-        async: false
-        generator: true
-        hasHoistedVars: false
-        params: Array []
-        predicate: undefined
-        rest: undefined
-        returnType: undefined
-        thisType: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 13
-            index: 13
-            line: 1
-          }
-          start: Object {
-            column: 11
-            index: 11
-            line: 1
-          }
-        }
-      }
-      body: BlockStatement {
-        directives: Array []
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 42
-            index: 42
-            line: 1
-          }
-          start: Object {
-            column: 14
-            index: 14
-            line: 1
-          }
-        }
-        body: Array [
-          ExpressionStatement {
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 40
-                index: 40
-                line: 1
-              }
-              start: Object {
-                column: 16
-                index: 16
-                line: 1
-              }
-            }
-            expression: SequenceExpression {
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 40
-                  index: 40
-                  line: 1
-                }
-                start: Object {
-                  column: 16
-                  index: 16
-                  line: 1
-                }
-              }
-              expressions: Array [
-                YieldExpression {
-                  delegate: false
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 25
-                      index: 25
-                      line: 1
-                    }
-                    start: Object {
-                      column: 16
-                      index: 16
-                      line: 1
-                    }
-                  }
-                  argument: AssignmentExpression {
-                    operator: '='
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 25
-                        index: 25
-                        line: 1
-                      }
-                      start: Object {
-                        column: 22
-                        index: 22
-                        line: 1
-                      }
-                    }
-                    left: AssignmentIdentifier {
-                      name: 'a'
-                      loc: Object {
-                        filename: 'input.js'
-                        identifierName: 'a'
-                        end: Object {
-                          column: 23
-                          index: 23
-                          line: 1
-                        }
-                        start: Object {
-                          column: 22
-                          index: 22
-                          line: 1
-                        }
-                      }
-                    }
-                    right: ReferenceIdentifier {
-                      name: 'b'
-                      loc: Object {
-                        filename: 'input.js'
-                        identifierName: 'b'
-                        end: Object {
-                          column: 25
-                          index: 25
-                          line: 1
-                        }
-                        start: Object {
-                          column: 24
-                          index: 24
-                          line: 1
-                        }
-                      }
-                    }
-                  }
-                }
-                YieldExpression {
-                  delegate: true
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 37
-                      index: 37
-                      line: 1
-                    }
-                    start: Object {
-                      column: 27
-                      index: 27
-                      line: 1
-                    }
-                  }
-                  argument: AssignmentExpression {
-                    operator: '='
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 37
-                        index: 37
-                        line: 1
-                      }
-                      start: Object {
-                        column: 34
-                        index: 34
-                        line: 1
-                      }
-                    }
-                    left: AssignmentIdentifier {
-                      name: 'c'
-                      loc: Object {
-                        filename: 'input.js'
-                        identifierName: 'c'
-                        end: Object {
-                          column: 35
-                          index: 35
-                          line: 1
-                        }
-                        start: Object {
-                          column: 34
-                          index: 34
-                          line: 1
-                        }
-                      }
-                    }
-                    right: ReferenceIdentifier {
-                      name: 'd'
-                      loc: Object {
-                        filename: 'input.js'
-                        identifierName: 'd'
-                        end: Object {
-                          column: 37
-                          index: 37
-                          line: 1
-                        }
-                        start: Object {
-                          column: 36
-                          index: 36
-                          line: 1
-                        }
-                      }
-                    }
-                  }
-                }
-                ReferenceIdentifier {
-                  name: 'e'
-                  loc: Object {
-                    filename: 'input.js'
-                    identifierName: 'e'
-                    end: Object {
-                      column: 40
-                      index: 40
-                      line: 1
-                    }
-                    start: Object {
-                      column: 39
-                      index: 39
-                      line: 1
-                    }
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 43
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
+				name: "g"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "g"
+					end: Object {
+						column: 11
+						index: 11
+						line: 1
+					}
+					start: Object {
+						column: 10
+						index: 10
+						line: 1
+					}
+				}
+			}
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 42
+					index: 42
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: true
+				hasHoistedVars: false
+				params: Array []
+				rest: undefined
+				returnType: undefined
+				thisType: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 13
+						index: 13
+						line: 1
+					}
+					start: Object {
+						column: 11
+						index: 11
+						line: 1
+					}
+				}
+			}
+			body: JSBlockStatement {
+				directives: Array []
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 42
+						index: 42
+						line: 1
+					}
+					start: Object {
+						column: 14
+						index: 14
+						line: 1
+					}
+				}
+				body: Array [
+					JSExpressionStatement {
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 40
+								index: 40
+								line: 1
+							}
+							start: Object {
+								column: 16
+								index: 16
+								line: 1
+							}
+						}
+						expression: JSSequenceExpression {
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 40
+									index: 40
+									line: 1
+								}
+								start: Object {
+									column: 16
+									index: 16
+									line: 1
+								}
+							}
+							expressions: Array [
+								JSYieldExpression {
+									delegate: false
+									loc: Object {
+										filename: "input.js"
+										end: Object {
+											column: 25
+											index: 25
+											line: 1
+										}
+										start: Object {
+											column: 16
+											index: 16
+											line: 1
+										}
+									}
+									argument: JSAssignmentExpression {
+										operator: "="
+										loc: Object {
+											filename: "input.js"
+											end: Object {
+												column: 25
+												index: 25
+												line: 1
+											}
+											start: Object {
+												column: 22
+												index: 22
+												line: 1
+											}
+										}
+										left: JSAssignmentIdentifier {
+											name: "a"
+											loc: Object {
+												filename: "input.js"
+												identifierName: "a"
+												end: Object {
+													column: 23
+													index: 23
+													line: 1
+												}
+												start: Object {
+													column: 22
+													index: 22
+													line: 1
+												}
+											}
+										}
+										right: JSReferenceIdentifier {
+											name: "b"
+											loc: Object {
+												filename: "input.js"
+												identifierName: "b"
+												end: Object {
+													column: 25
+													index: 25
+													line: 1
+												}
+												start: Object {
+													column: 24
+													index: 24
+													line: 1
+												}
+											}
+										}
+									}
+								}
+								JSYieldExpression {
+									delegate: true
+									loc: Object {
+										filename: "input.js"
+										end: Object {
+											column: 37
+											index: 37
+											line: 1
+										}
+										start: Object {
+											column: 27
+											index: 27
+											line: 1
+										}
+									}
+									argument: JSAssignmentExpression {
+										operator: "="
+										loc: Object {
+											filename: "input.js"
+											end: Object {
+												column: 37
+												index: 37
+												line: 1
+											}
+											start: Object {
+												column: 34
+												index: 34
+												line: 1
+											}
+										}
+										left: JSAssignmentIdentifier {
+											name: "c"
+											loc: Object {
+												filename: "input.js"
+												identifierName: "c"
+												end: Object {
+													column: 35
+													index: 35
+													line: 1
+												}
+												start: Object {
+													column: 34
+													index: 34
+													line: 1
+												}
+											}
+										}
+										right: JSReferenceIdentifier {
+											name: "d"
+											loc: Object {
+												filename: "input.js"
+												identifierName: "d"
+												end: Object {
+													column: 37
+													index: 37
+													line: 1
+												}
+												start: Object {
+													column: 36
+													index: 36
+													line: 1
+												}
+											}
+										}
+									}
+								}
+								JSReferenceIdentifier {
+									name: "e"
+									loc: Object {
+										filename: "input.js"
+										identifierName: "e"
+										end: Object {
+											column: 40
+											index: 40
+											line: 1
+										}
+										start: Object {
+											column: 39
+											index: 39
+											line: 1
+										}
+									}
+								}
+							]
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

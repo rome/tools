@@ -5,160 +5,159 @@
 ## `esprima > expression-primary-object > migrated_0027`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 21
-      index: 21
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 21
-          index: 21
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: AssignmentExpression {
-        operator: '='
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 21
-            index: 21
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        left: AssignmentIdentifier {
-          name: 'x'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'x'
-            end: Object {
-              column: 1
-              index: 1
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
-        right: ObjectExpression {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 21
-              index: 21
-              line: 1
-            }
-            start: Object {
-              column: 4
-              index: 4
-              line: 1
-            }
-          }
-          properties: Array [
-            ObjectProperty {
-              key: StaticPropertyKey {
-                value: StringLiteral {
-                  value: '__proto__'
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 16
-                      index: 16
-                      line: 1
-                    }
-                    start: Object {
-                      column: 5
-                      index: 5
-                      line: 1
-                    }
-                  }
-                }
-                variance: undefined
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 16
-                    index: 16
-                    line: 1
-                  }
-                  start: Object {
-                    column: 5
-                    index: 5
-                    line: 1
-                  }
-                }
-              }
-              value: NumericLiteral {
-                value: 2
-                format: undefined
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 19
-                    index: 19
-                    line: 1
-                  }
-                  start: Object {
-                    column: 18
-                    index: 18
-                    line: 1
-                  }
-                }
-              }
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 19
-                  index: 19
-                  line: 1
-                }
-                start: Object {
-                  column: 5
-                  index: 5
-                  line: 1
-                }
-              }
-            }
-          ]
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 21
+			index: 21
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 21
+					index: 21
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSAssignmentExpression {
+				operator: "="
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 21
+						index: 21
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				left: JSAssignmentIdentifier {
+					name: "x"
+					loc: Object {
+						filename: "input.js"
+						identifierName: "x"
+						end: Object {
+							column: 1
+							index: 1
+							line: 1
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+				}
+				right: JSObjectExpression {
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 21
+							index: 21
+							line: 1
+						}
+						start: Object {
+							column: 4
+							index: 4
+							line: 1
+						}
+					}
+					properties: Array [
+						JSObjectProperty {
+							key: JSStaticPropertyKey {
+								value: JSStringLiteral {
+									value: "__proto__"
+									loc: Object {
+										filename: "input.js"
+										end: Object {
+											column: 16
+											index: 16
+											line: 1
+										}
+										start: Object {
+											column: 5
+											index: 5
+											line: 1
+										}
+									}
+								}
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 16
+										index: 16
+										line: 1
+									}
+									start: Object {
+										column: 5
+										index: 5
+										line: 1
+									}
+								}
+							}
+							value: JSNumericLiteral {
+								value: 2
+								format: undefined
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 19
+										index: 19
+										line: 1
+									}
+									start: Object {
+										column: 18
+										index: 18
+										line: 1
+									}
+								}
+							}
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 19
+									index: 19
+									line: 1
+								}
+								start: Object {
+									column: 5
+									index: 5
+									line: 1
+								}
+							}
+						}
+					]
+				}
+			}
+		}
+	]
 }
 ```

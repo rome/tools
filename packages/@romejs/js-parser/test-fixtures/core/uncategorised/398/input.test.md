@@ -5,163 +5,162 @@
 ## `core > uncategorised > 398`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 20
-      index: 20
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unexpected keyword true'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 15
-          index: 15
-          line: 1
-        }
-        start: Object {
-          column: 11
-          index: 11
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    FunctionDeclaration {
-      id: BindingIdentifier {
-        name: 't'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 't'
-          end: Object {
-            column: 10
-            index: 10
-            line: 1
-          }
-          start: Object {
-            column: 9
-            index: 9
-            line: 1
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 20
-          index: 20
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      body: BlockStatement {
-        body: Array []
-        directives: Array []
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 20
-            index: 20
-            line: 1
-          }
-          start: Object {
-            column: 17
-            index: 17
-            line: 1
-          }
-        }
-      }
-      head: FunctionHead {
-        async: false
-        generator: false
-        hasHoistedVars: false
-        predicate: undefined
-        rest: undefined
-        returnType: undefined
-        thisType: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 16
-            index: 16
-            line: 1
-          }
-          start: Object {
-            column: 10
-            index: 10
-            line: 1
-          }
-        }
-        params: Array [
-          BindingIdentifier {
-            name: 'true'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'true'
-              end: Object {
-                column: 15
-                index: 15
-                line: 1
-              }
-              start: Object {
-                column: 11
-                index: 11
-                line: 1
-              }
-            }
-            meta: PatternMeta {
-              optional: undefined
-              typeAnnotation: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 15
-                  index: 15
-                  line: 1
-                }
-                start: Object {
-                  column: 11
-                  index: 11
-                  line: 1
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 20
+			index: 20
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unexpected keyword true"}
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "script"
+				end: Object {
+					column: 15
+					index: 15
+					line: 1
+				}
+				start: Object {
+					column: 11
+					index: 11
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
+				name: "t"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "t"
+					end: Object {
+						column: 10
+						index: 10
+						line: 1
+					}
+					start: Object {
+						column: 9
+						index: 9
+						line: 1
+					}
+				}
+			}
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 20
+					index: 20
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			body: JSBlockStatement {
+				body: Array []
+				directives: Array []
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 20
+						index: 20
+						line: 1
+					}
+					start: Object {
+						column: 17
+						index: 17
+						line: 1
+					}
+				}
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				rest: undefined
+				returnType: undefined
+				thisType: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 16
+						index: 16
+						line: 1
+					}
+					start: Object {
+						column: 10
+						index: 10
+						line: 1
+					}
+				}
+				params: Array [
+					JSBindingIdentifier {
+						name: "true"
+						loc: Object {
+							filename: "input.js"
+							identifierName: "true"
+							end: Object {
+								column: 15
+								index: 15
+								line: 1
+							}
+							start: Object {
+								column: 11
+								index: 11
+								line: 1
+							}
+						}
+						meta: JSPatternMeta {
+							optional: undefined
+							typeAnnotation: undefined
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 15
+									index: 15
+									line: 1
+								}
+								start: Object {
+									column: 11
+									index: 11
+									line: 1
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

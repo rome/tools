@@ -5,183 +5,183 @@
 ## `experimental > class-private-properties > failure-spaces`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 35
-      line: 4
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unexpected space between # and identifier'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 3
-          index: 18
-          line: 2
-        }
-        start: Object {
-          column: 3
-          index: 18
-          line: 2
-        }
-      }
-    }
-  ]
-  body: Array [
-    ClassDeclaration {
-      id: BindingIdentifier {
-        name: 'Spaces'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'Spaces'
-          end: Object {
-            column: 12
-            index: 12
-            line: 1
-          }
-          start: Object {
-            column: 6
-            index: 6
-            line: 1
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 1
-          index: 34
-          line: 3
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      meta: ClassHead {
-        implements: undefined
-        superClass: undefined
-        superTypeParameters: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 1
-            index: 34
-            line: 3
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        body: Array [
-          ClassPrivateProperty {
-            key: PrivateName {
-              id: Identifier {
-                name: 'wrongSpaces'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'wrongSpaces'
-                  end: Object {
-                    column: 16
-                    index: 31
-                    line: 2
-                  }
-                  start: Object {
-                    column: 5
-                    index: 20
-                    line: 2
-                  }
-                }
-              }
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 16
-                  index: 31
-                  line: 2
-                }
-                start: Object {
-                  column: 2
-                  index: 17
-                  line: 2
-                }
-              }
-            }
-            value: undefined
-            typeAnnotation: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 17
-                index: 32
-                line: 2
-              }
-              start: Object {
-                column: 2
-                index: 17
-                line: 2
-              }
-            }
-            meta: ClassPropertyMeta {
-              abstract: false
-              accessibility: undefined
-              optional: false
-              readonly: false
-              static: false
-              typeAnnotation: undefined
-              start: Object {
-                column: 2
-                index: 17
-                line: 2
-              }
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 16
-                  index: 31
-                  line: 2
-                }
-                start: Object {
-                  column: 2
-                  index: 17
-                  line: 2
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 35
+			line: 4
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unexpected space between # and identifier"}
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "script"
+				end: Object {
+					column: 3
+					index: 18
+					line: 2
+				}
+				start: Object {
+					column: 3
+					index: 18
+					line: 2
+				}
+			}
+		}
+	]
+	body: Array [
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
+				name: "Spaces"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "Spaces"
+					end: Object {
+						column: 12
+						index: 12
+						line: 1
+					}
+					start: Object {
+						column: 6
+						index: 6
+						line: 1
+					}
+				}
+			}
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 1
+					index: 34
+					line: 3
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			meta: JSClassHead {
+				implements: undefined
+				superClass: undefined
+				superTypeParameters: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 1
+						index: 34
+						line: 3
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				body: Array [
+					JSClassPrivateProperty {
+						key: JSPrivateName {
+							id: JSIdentifier {
+								name: "wrongSpaces"
+								loc: Object {
+									filename: "input.js"
+									identifierName: "wrongSpaces"
+									end: Object {
+										column: 16
+										index: 31
+										line: 2
+									}
+									start: Object {
+										column: 5
+										index: 20
+										line: 2
+									}
+								}
+							}
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 16
+									index: 31
+									line: 2
+								}
+								start: Object {
+									column: 2
+									index: 17
+									line: 2
+								}
+							}
+						}
+						value: undefined
+						typeAnnotation: undefined
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 17
+								index: 32
+								line: 2
+							}
+							start: Object {
+								column: 2
+								index: 17
+								line: 2
+							}
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							start: Object {
+								column: 2
+								index: 17
+								line: 2
+							}
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 16
+									index: 31
+									line: 2
+								}
+								start: Object {
+									column: 2
+									index: 17
+									line: 2
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

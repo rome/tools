@@ -5,63 +5,63 @@
 ## `es2015 > uncategorised > 79`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 17
-      index: 17
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExportDefaultDeclaration {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 17
-          index: 17
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      declaration: NumericLiteral {
-        value: 42
-        format: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 17
-            index: 17
-            line: 1
-          }
-          start: Object {
-            column: 15
-            index: 15
-            line: 1
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "module"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 17
+			index: 17
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExportDefaultDeclaration {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 17
+					index: 17
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			declaration: JSNumericLiteral {
+				value: 42
+				format: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 17
+						index: 17
+						line: 1
+					}
+					start: Object {
+						column: 15
+						index: 15
+						line: 1
+					}
+				}
+			}
+		}
+	]
 }
 ```

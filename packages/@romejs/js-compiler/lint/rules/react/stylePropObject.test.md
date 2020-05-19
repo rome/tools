@@ -8,7 +8,7 @@
 
 ```
 
- unknown:1:5 lint/stylePropObject ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:5 lint/react/stylePropObject ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ style property value must be an object.
 
@@ -32,7 +32,7 @@
 
 ```
 
- unknown:1:5 lint/stylePropObject ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:5 lint/react/stylePropObject ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ style property value must be an object.
 
@@ -48,7 +48,7 @@
 ### `1: formatted`
 
 ```
-<div style="color: &apos;red&apos;" />;
+<div style='color: &apos;red&apos;' />;
 
 ```
 
@@ -56,7 +56,7 @@
 
 ```
 
- unknown:1:5 lint/stylePropObject ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:5 lint/react/stylePropObject ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ style property value must be an object.
 
@@ -86,6 +86,6 @@
 ### `3: formatted`
 
 ```
-<div style={{color: 'red'}} />;
+<div style={{color: "red"}} />;
 
 ```

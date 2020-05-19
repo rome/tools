@@ -5,64 +5,64 @@
 ## `core > uncategorised > 268`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 13
-      index: 13
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    SwitchStatement {
-      cases: Array []
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 13
-          index: 13
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      discriminant: ReferenceIdentifier {
-        name: 'x'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'x'
-          end: Object {
-            column: 9
-            index: 9
-            line: 1
-          }
-          start: Object {
-            column: 8
-            index: 8
-            line: 1
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 13
+			index: 13
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSSwitchStatement {
+			cases: Array []
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 13
+					index: 13
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			discriminant: JSReferenceIdentifier {
+				name: "x"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "x"
+					end: Object {
+						column: 9
+						index: 9
+						line: 1
+					}
+					start: Object {
+						column: 8
+						index: 8
+						line: 1
+					}
+				}
+			}
+		}
+	]
 }
 ```

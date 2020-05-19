@@ -5,98 +5,98 @@
 ## `esprima > es2015-class > migrated_0024`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 20
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 19
-          index: 19
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: ClassExpression {
-        id: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 18
-            index: 18
-            line: 1
-          }
-          start: Object {
-            column: 1
-            index: 1
-            line: 1
-          }
-        }
-        meta: ClassHead {
-          body: Array []
-          implements: undefined
-          superTypeParameters: undefined
-          typeParameters: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 18
-              index: 18
-              line: 1
-            }
-            start: Object {
-              column: 1
-              index: 1
-              line: 1
-            }
-          }
-          superClass: NumericLiteral {
-            value: 0
-            format: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 16
-                index: 16
-                line: 1
-              }
-              start: Object {
-                column: 15
-                index: 15
-                line: 1
-              }
-            }
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 20
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 19
+					index: 19
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSClassExpression {
+				id: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 18
+						index: 18
+						line: 1
+					}
+					start: Object {
+						column: 1
+						index: 1
+						line: 1
+					}
+				}
+				meta: JSClassHead {
+					body: Array []
+					implements: undefined
+					superTypeParameters: undefined
+					typeParameters: undefined
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 18
+							index: 18
+							line: 1
+						}
+						start: Object {
+							column: 1
+							index: 1
+							line: 1
+						}
+					}
+					superClass: JSNumericLiteral {
+						value: 0
+						format: undefined
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 16
+								index: 16
+								line: 1
+							}
+							start: Object {
+								column: 15
+								index: 15
+								line: 1
+							}
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

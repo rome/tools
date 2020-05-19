@@ -5,110 +5,110 @@
 ## `esprima > expression-left-hand-side > migrated_0014`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 21
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 20
-          index: 20
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: MemberExpression {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 20
-            index: 20
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        object: ReferenceIdentifier {
-          name: 'universe'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'universe'
-            end: Object {
-              column: 8
-              index: 8
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
-        property: ComputedMemberProperty {
-          value: ReferenceIdentifier {
-            name: 'galaxyName'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'galaxyName'
-              end: Object {
-                column: 19
-                index: 19
-                line: 1
-              }
-              start: Object {
-                column: 9
-                index: 9
-                line: 1
-              }
-            }
-          }
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 20
-              index: 20
-              line: 1
-            }
-            start: Object {
-              column: 8
-              index: 8
-              line: 1
-            }
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 21
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 20
+					index: 20
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSMemberExpression {
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 20
+						index: 20
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				object: JSReferenceIdentifier {
+					name: "universe"
+					loc: Object {
+						filename: "input.js"
+						identifierName: "universe"
+						end: Object {
+							column: 8
+							index: 8
+							line: 1
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+				}
+				property: JSComputedMemberProperty {
+					value: JSReferenceIdentifier {
+						name: "galaxyName"
+						loc: Object {
+							filename: "input.js"
+							identifierName: "galaxyName"
+							end: Object {
+								column: 19
+								index: 19
+								line: 1
+							}
+							start: Object {
+								column: 9
+								index: 9
+								line: 1
+							}
+						}
+					}
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 20
+							index: 20
+							line: 1
+						}
+						start: Object {
+							column: 8
+							index: 8
+							line: 1
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

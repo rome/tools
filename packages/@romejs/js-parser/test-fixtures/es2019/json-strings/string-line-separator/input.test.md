@@ -5,81 +5,81 @@
 ## `es2019 > json-strings > string-line-separator`
 
 ```javascript
-Program {
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 102
-      line: 4
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  comments: Array [
-    CommentLine {
-      id: '0'
-      value: '      ^ That\'s a U+2028 LINE SEPARATOR UTF-16 char (between \'before\' and \'after\')'
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 83
-          index: 101
-          line: 3
-        }
-        start: Object {
-          column: 0
-          index: 18
-          line: 3
-        }
-      }
-    }
-  ]
-  body: Array [
-    ExpressionStatement {
-      trailingComments: Array ['0']
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 17
-          index: 17
-          line: 2
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: StringLiteral {
-        value: 'before\u2028after'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 15
-            index: 15
-            line: 2
-          }
-          start: Object {
-            column: 1
-            index: 1
-            line: 1
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 102
+			line: 4
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	comments: Array [
+		JSCommentLine {
+			id: "0"
+			value: "      ^ That's a U+2028 LINE SEPARATOR UTF-16 char (between 'before' and 'after')"
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 83
+					index: 101
+					line: 3
+				}
+				start: Object {
+					column: 0
+					index: 18
+					line: 3
+				}
+			}
+		}
+	]
+	body: Array [
+		JSExpressionStatement {
+			trailingComments: Array ["0"]
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 17
+					index: 17
+					line: 2
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSStringLiteral {
+				value: "before\u2028after"
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 15
+						index: 15
+						line: 2
+					}
+					start: Object {
+						column: 1
+						index: 1
+						line: 1
+					}
+				}
+			}
+		}
+	]
 }
 ```

@@ -5,96 +5,96 @@
 ## `esprima > statement-continue > migrated_0001`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 26
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    WhileStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 25
-          index: 25
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      test: BooleanLiteral {
-        value: true
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 11
-            index: 11
-            line: 1
-          }
-          start: Object {
-            column: 7
-            index: 7
-            line: 1
-          }
-        }
-      }
-      body: BlockStatement {
-        directives: Array []
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 25
-            index: 25
-            line: 1
-          }
-          start: Object {
-            column: 13
-            index: 13
-            line: 1
-          }
-        }
-        body: Array [
-          ContinueStatement {
-            label: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 23
-                index: 23
-                line: 1
-              }
-              start: Object {
-                column: 15
-                index: 15
-                line: 1
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 26
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSWhileStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 25
+					index: 25
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			test: JSBooleanLiteral {
+				value: true
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 11
+						index: 11
+						line: 1
+					}
+					start: Object {
+						column: 7
+						index: 7
+						line: 1
+					}
+				}
+			}
+			body: JSBlockStatement {
+				directives: Array []
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 25
+						index: 25
+						line: 1
+					}
+					start: Object {
+						column: 13
+						index: 13
+						line: 1
+					}
+				}
+				body: Array [
+					JSContinueStatement {
+						label: undefined
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 23
+								index: 23
+								line: 1
+							}
+							start: Object {
+								column: 15
+								index: 15
+								line: 1
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

@@ -5,172 +5,172 @@
 ## `esprima > invalid-syntax > migrated_0248`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 26
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 20
-          index: 20
-          line: 1
-        }
-        start: Object {
-          column: 11
-          index: 11
-          line: 1
-        }
-      }
-      description: Object {
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Label <emphasis>__proto__</emphasis> is already declared'}
-        advice: Array [
-          log {
-            category: 'info'
-            text: 'Defined already here'
-          }
-          frame {
-            location: Object {
-              filename: 'input.js'
-              identifierName: '__proto__'
-              end: Object {
-                column: 9
-                index: 9
-                line: 1
-              }
-              start: Object {
-                column: 0
-                index: 0
-                line: 1
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
-  body: Array [
-    LabeledStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 25
-          index: 25
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      label: Identifier {
-        name: '__proto__'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: '__proto__'
-          end: Object {
-            column: 9
-            index: 9
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-      }
-      body: LabeledStatement {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 25
-            index: 25
-            line: 1
-          }
-          start: Object {
-            column: 11
-            index: 11
-            line: 1
-          }
-        }
-        label: Identifier {
-          name: '__proto__'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: '__proto__'
-            end: Object {
-              column: 20
-              index: 20
-              line: 1
-            }
-            start: Object {
-              column: 11
-              index: 11
-              line: 1
-            }
-          }
-        }
-        body: ExpressionStatement {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 25
-              index: 25
-              line: 1
-            }
-            start: Object {
-              column: 22
-              index: 22
-              line: 1
-            }
-          }
-          expression: NumericLiteral {
-            value: 42
-            format: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 24
-                index: 24
-                line: 1
-              }
-              start: Object {
-                column: 22
-                index: 22
-                line: 1
-              }
-            }
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 26
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "script"
+				end: Object {
+					column: 20
+					index: 20
+					line: 1
+				}
+				start: Object {
+					column: 11
+					index: 11
+					line: 1
+				}
+			}
+			description: Object {
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Label <emphasis>__proto__</emphasis> is already declared"}
+				advice: Array [
+					log {
+						category: "info"
+						text: "Defined already here"
+					}
+					frame {
+						location: Object {
+							filename: "input.js"
+							identifierName: "__proto__"
+							end: Object {
+								column: 9
+								index: 9
+								line: 1
+							}
+							start: Object {
+								column: 0
+								index: 0
+								line: 1
+							}
+						}
+					}
+				]
+			}
+		}
+	]
+	body: Array [
+		JSLabeledStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 25
+					index: 25
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			label: JSIdentifier {
+				name: "__proto__"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "__proto__"
+					end: Object {
+						column: 9
+						index: 9
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+			}
+			body: JSLabeledStatement {
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 25
+						index: 25
+						line: 1
+					}
+					start: Object {
+						column: 11
+						index: 11
+						line: 1
+					}
+				}
+				label: JSIdentifier {
+					name: "__proto__"
+					loc: Object {
+						filename: "input.js"
+						identifierName: "__proto__"
+						end: Object {
+							column: 20
+							index: 20
+							line: 1
+						}
+						start: Object {
+							column: 11
+							index: 11
+							line: 1
+						}
+					}
+				}
+				body: JSExpressionStatement {
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 25
+							index: 25
+							line: 1
+						}
+						start: Object {
+							column: 22
+							index: 22
+							line: 1
+						}
+					}
+					expression: JSNumericLiteral {
+						value: 42
+						format: undefined
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 24
+								index: 24
+								line: 1
+							}
+							start: Object {
+								column: 22
+								index: 22
+								line: 1
+							}
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

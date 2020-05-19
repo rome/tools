@@ -5,240 +5,239 @@
 ## `es2015 > modules > export-default-variable-declaration`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: true
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 1
-      index: 78
-      line: 3
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Only expressions, functions or classes are allowed as the `default` export.'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'module'
-        end: Object {
-          column: 14
-          index: 14
-          line: 1
-        }
-        start: Object {
-          column: 15
-          index: 15
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    ExportDefaultDeclaration {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 20
-          index: 20
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      declaration: ReferenceIdentifier {
-        name: 'INVALID_PLACEHOLDER'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 20
-            index: 20
-            line: 1
-          }
-          start: Object {
-            column: 15
-            index: 15
-            line: 1
-          }
-        }
-      }
-    }
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 1
-          index: 78
-          line: 3
-        }
-        start: Object {
-          column: 21
-          index: 21
-          line: 1
-        }
-      }
-      expression: AssignmentExpression {
-        operator: '='
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 1
-            index: 78
-            line: 3
-          }
-          start: Object {
-            column: 21
-            index: 21
-            line: 1
-          }
-        }
-        left: AssignmentIdentifier {
-          name: 'Foo'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'Foo'
-            end: Object {
-              column: 24
-              index: 24
-              line: 1
-            }
-            start: Object {
-              column: 21
-              index: 21
-              line: 1
-            }
-          }
-        }
-        right: ArrowFunctionExpression {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 1
-              index: 78
-              line: 3
-            }
-            start: Object {
-              column: 27
-              index: 27
-              line: 1
-            }
-          }
-          head: FunctionHead {
-            async: false
-            hasHoistedVars: false
-            params: Array []
-            predicate: undefined
-            rest: undefined
-            returnType: undefined
-            thisType: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 32
-                index: 32
-                line: 1
-              }
-              start: Object {
-                column: 27
-                index: 27
-                line: 1
-              }
-            }
-          }
-          body: BlockStatement {
-            directives: Array []
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 1
-                index: 78
-                line: 3
-              }
-              start: Object {
-                column: 33
-                index: 33
-                line: 1
-              }
-            }
-            body: Array [
-              ReturnStatement {
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 41
-                    index: 76
-                    line: 2
-                  }
-                  start: Object {
-                    column: 4
-                    index: 39
-                    line: 2
-                  }
-                }
-                argument: TemplateLiteral {
-                  expressions: Array []
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 40
-                      index: 75
-                      line: 2
-                    }
-                    start: Object {
-                      column: 11
-                      index: 46
-                      line: 2
-                    }
-                  }
-                  quasis: Array [
-                    TemplateElement {
-                      cooked: '<div class="bar">Hola</div>'
-                      raw: '<div class="bar">Hola</div>'
-                      tail: true
-                      loc: Object {
-                        filename: 'input.js'
-                        end: Object {
-                          column: 39
-                          index: 74
-                          line: 2
-                        }
-                        start: Object {
-                          column: 12
-                          index: 47
-                          line: 2
-                        }
-                      }
-                    }
-                  ]
-                }
-              }
-            ]
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: true
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "module"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 1
+			index: 78
+			line: 3
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Only expressions, functions or classes are allowed as the `default` export."}
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "module"
+				end: Object {
+					column: 14
+					index: 14
+					line: 1
+				}
+				start: Object {
+					column: 15
+					index: 15
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		JSExportDefaultDeclaration {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 20
+					index: 20
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			declaration: JSReferenceIdentifier {
+				name: "INVALID_PLACEHOLDER"
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 20
+						index: 20
+						line: 1
+					}
+					start: Object {
+						column: 15
+						index: 15
+						line: 1
+					}
+				}
+			}
+		}
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 1
+					index: 78
+					line: 3
+				}
+				start: Object {
+					column: 21
+					index: 21
+					line: 1
+				}
+			}
+			expression: JSAssignmentExpression {
+				operator: "="
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 1
+						index: 78
+						line: 3
+					}
+					start: Object {
+						column: 21
+						index: 21
+						line: 1
+					}
+				}
+				left: JSAssignmentIdentifier {
+					name: "Foo"
+					loc: Object {
+						filename: "input.js"
+						identifierName: "Foo"
+						end: Object {
+							column: 24
+							index: 24
+							line: 1
+						}
+						start: Object {
+							column: 21
+							index: 21
+							line: 1
+						}
+					}
+				}
+				right: JSArrowFunctionExpression {
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 1
+							index: 78
+							line: 3
+						}
+						start: Object {
+							column: 27
+							index: 27
+							line: 1
+						}
+					}
+					head: JSFunctionHead {
+						async: false
+						hasHoistedVars: false
+						params: Array []
+						rest: undefined
+						returnType: undefined
+						thisType: undefined
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 32
+								index: 32
+								line: 1
+							}
+							start: Object {
+								column: 27
+								index: 27
+								line: 1
+							}
+						}
+					}
+					body: JSBlockStatement {
+						directives: Array []
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 1
+								index: 78
+								line: 3
+							}
+							start: Object {
+								column: 33
+								index: 33
+								line: 1
+							}
+						}
+						body: Array [
+							JSReturnStatement {
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 41
+										index: 76
+										line: 2
+									}
+									start: Object {
+										column: 4
+										index: 39
+										line: 2
+									}
+								}
+								argument: JSTemplateLiteral {
+									expressions: Array []
+									loc: Object {
+										filename: "input.js"
+										end: Object {
+											column: 40
+											index: 75
+											line: 2
+										}
+										start: Object {
+											column: 11
+											index: 46
+											line: 2
+										}
+									}
+									quasis: Array [
+										JSTemplateElement {
+											cooked: "<div class=\"bar\">Hola</div>"
+											raw: "<div class=\"bar\">Hola</div>"
+											tail: true
+											loc: Object {
+												filename: "input.js"
+												end: Object {
+													column: 39
+													index: 74
+													line: 2
+												}
+												start: Object {
+													column: 12
+													index: 47
+													line: 2
+												}
+											}
+										}
+									]
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
 }
 ```

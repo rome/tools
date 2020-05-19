@@ -5,639 +5,632 @@
 ## `typescript > class > members-with-modifier-names`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.ts'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array ['ts']
-  loc: Object {
-    filename: 'input.ts'
-    end: Object {
-      column: 0
-      index: 119
-      line: 8
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ClassDeclaration {
-      id: BindingIdentifier {
-        name: 'C'
-        loc: Object {
-          filename: 'input.ts'
-          identifierName: 'C'
-          end: Object {
-            column: 7
-            index: 7
-            line: 1
-          }
-          start: Object {
-            column: 6
-            index: 6
-            line: 1
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 1
-          index: 118
-          line: 7
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      meta: ClassHead {
-        implements: undefined
-        superClass: undefined
-        superTypeParameters: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 1
-            index: 118
-            line: 7
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        body: Array [
-          TSDeclareMethod {
-            kind: 'method'
-            key: StaticPropertyKey {
-              value: Identifier {
-                name: 'public'
-                loc: Object {
-                  filename: 'input.ts'
-                  identifierName: 'public'
-                  end: Object {
-                    column: 10
-                    index: 20
-                    line: 2
-                  }
-                  start: Object {
-                    column: 4
-                    index: 14
-                    line: 2
-                  }
-                }
-              }
-              variance: undefined
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 10
-                  index: 20
-                  line: 2
-                }
-                start: Object {
-                  column: 4
-                  index: 14
-                  line: 2
-                }
-              }
-            }
-            body: undefined
-            loc: Object {
-              filename: 'input.ts'
-              end: Object {
-                column: 19
-                index: 29
-                line: 2
-              }
-              start: Object {
-                column: 4
-                index: 14
-                line: 2
-              }
-            }
-            meta: ClassPropertyMeta {
-              abstract: false
-              accessibility: undefined
-              optional: false
-              readonly: false
-              static: false
-              typeAnnotation: undefined
-              start: Object {
-                column: 4
-                index: 14
-                line: 2
-              }
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 10
-                  index: 20
-                  line: 2
-                }
-                start: Object {
-                  column: 4
-                  index: 14
-                  line: 2
-                }
-              }
-            }
-            head: FunctionHead {
-              async: false
-              generator: false
-              hasHoistedVars: false
-              params: Array []
-              predicate: undefined
-              rest: undefined
-              thisType: undefined
-              typeParameters: undefined
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 18
-                  index: 28
-                  line: 2
-                }
-                start: Object {
-                  column: 10
-                  index: 20
-                  line: 2
-                }
-              }
-              returnType: VoidKeywordTypeAnnotation {
-                loc: Object {
-                  filename: 'input.ts'
-                  end: Object {
-                    column: 18
-                    index: 28
-                    line: 2
-                  }
-                  start: Object {
-                    column: 14
-                    index: 24
-                    line: 2
-                  }
-                }
-              }
-            }
-          }
-          TSDeclareMethod {
-            kind: 'method'
-            key: StaticPropertyKey {
-              value: Identifier {
-                name: 'static'
-                loc: Object {
-                  filename: 'input.ts'
-                  identifierName: 'static'
-                  end: Object {
-                    column: 17
-                    index: 47
-                    line: 3
-                  }
-                  start: Object {
-                    column: 11
-                    index: 41
-                    line: 3
-                  }
-                }
-              }
-              loc: Object {
-                filename: 'input.ts'
-                identifierName: 'static'
-                end: Object {
-                  column: 17
-                  index: 47
-                  line: 3
-                }
-                start: Object {
-                  column: 11
-                  index: 41
-                  line: 3
-                }
-              }
-            }
-            body: undefined
-            loc: Object {
-              filename: 'input.ts'
-              end: Object {
-                column: 26
-                index: 56
-                line: 3
-              }
-              start: Object {
-                column: 4
-                index: 34
-                line: 3
-              }
-            }
-            meta: ClassPropertyMeta {
-              abstract: false
-              accessibility: 'public'
-              optional: false
-              readonly: false
-              static: false
-              typeAnnotation: undefined
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 17
-                  index: 47
-                  line: 3
-                }
-                start: Object {
-                  column: 4
-                  index: 34
-                  line: 3
-                }
-              }
-            }
-            head: FunctionHead {
-              async: false
-              generator: false
-              hasHoistedVars: false
-              params: Array []
-              predicate: undefined
-              rest: undefined
-              thisType: undefined
-              typeParameters: undefined
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 25
-                  index: 55
-                  line: 3
-                }
-                start: Object {
-                  column: 17
-                  index: 47
-                  line: 3
-                }
-              }
-              returnType: VoidKeywordTypeAnnotation {
-                loc: Object {
-                  filename: 'input.ts'
-                  end: Object {
-                    column: 25
-                    index: 55
-                    line: 3
-                  }
-                  start: Object {
-                    column: 21
-                    index: 51
-                    line: 3
-                  }
-                }
-              }
-            }
-          }
-          ClassProperty {
-            key: StaticPropertyKey {
-              value: Identifier {
-                name: 'readonly'
-                loc: Object {
-                  filename: 'input.ts'
-                  identifierName: 'readonly'
-                  end: Object {
-                    column: 12
-                    index: 69
-                    line: 4
-                  }
-                  start: Object {
-                    column: 4
-                    index: 61
-                    line: 4
-                  }
-                }
-              }
-              variance: undefined
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 12
-                  index: 69
-                  line: 4
-                }
-                start: Object {
-                  column: 4
-                  index: 61
-                  line: 4
-                }
-              }
-            }
-            value: NumericLiteral {
-              value: 0
-              format: undefined
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 16
-                  index: 73
-                  line: 4
-                }
-                start: Object {
-                  column: 15
-                  index: 72
-                  line: 4
-                }
-              }
-            }
-            definite: undefined
-            typeAnnotation: undefined
-            loc: Object {
-              filename: 'input.ts'
-              end: Object {
-                column: 17
-                index: 74
-                line: 4
-              }
-              start: Object {
-                column: 4
-                index: 61
-                line: 4
-              }
-            }
-            meta: ClassPropertyMeta {
-              abstract: false
-              accessibility: undefined
-              optional: false
-              readonly: false
-              static: false
-              typeAnnotation: undefined
-              start: Object {
-                column: 4
-                index: 61
-                line: 4
-              }
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 12
-                  index: 69
-                  line: 4
-                }
-                start: Object {
-                  column: 4
-                  index: 61
-                  line: 4
-                }
-              }
-            }
-          }
-          TSDeclareMethod {
-            kind: 'method'
-            key: StaticPropertyKey {
-              value: Identifier {
-                name: 'async'
-                loc: Object {
-                  filename: 'input.ts'
-                  identifierName: 'async'
-                  end: Object {
-                    column: 9
-                    index: 84
-                    line: 5
-                  }
-                  start: Object {
-                    column: 4
-                    index: 79
-                    line: 5
-                  }
-                }
-              }
-              variance: undefined
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 9
-                  index: 84
-                  line: 5
-                }
-                start: Object {
-                  column: 4
-                  index: 79
-                  line: 5
-                }
-              }
-            }
-            body: undefined
-            loc: Object {
-              filename: 'input.ts'
-              end: Object {
-                column: 21
-                index: 96
-                line: 5
-              }
-              start: Object {
-                column: 4
-                index: 79
-                line: 5
-              }
-            }
-            meta: ClassPropertyMeta {
-              abstract: false
-              accessibility: undefined
-              optional: false
-              readonly: false
-              static: false
-              typeAnnotation: undefined
-              start: Object {
-                column: 4
-                index: 79
-                line: 5
-              }
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 9
-                  index: 84
-                  line: 5
-                }
-                start: Object {
-                  column: 4
-                  index: 79
-                  line: 5
-                }
-              }
-            }
-            head: FunctionHead {
-              async: false
-              generator: false
-              hasHoistedVars: false
-              params: Array []
-              predicate: undefined
-              rest: undefined
-              thisType: undefined
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 20
-                  index: 95
-                  line: 5
-                }
-                start: Object {
-                  column: 12
-                  index: 87
-                  line: 5
-                }
-              }
-              returnType: VoidKeywordTypeAnnotation {
-                loc: Object {
-                  filename: 'input.ts'
-                  end: Object {
-                    column: 20
-                    index: 95
-                    line: 5
-                  }
-                  start: Object {
-                    column: 16
-                    index: 91
-                    line: 5
-                  }
-                }
-              }
-              typeParameters: TSTypeParameterDeclaration {
-                loc: Object {
-                  filename: 'input.ts'
-                  end: Object {
-                    column: 12
-                    index: 87
-                    line: 5
-                  }
-                  start: Object {
-                    column: 9
-                    index: 84
-                    line: 5
-                  }
-                }
-                params: Array [
-                  TSTypeParameter {
-                    name: 'T'
-                    constraint: undefined
-                    default: undefined
-                    loc: Object {
-                      filename: 'input.ts'
-                      end: Object {
-                        column: 11
-                        index: 86
-                        line: 5
-                      }
-                      start: Object {
-                        column: 10
-                        index: 85
-                        line: 5
-                      }
-                    }
-                  }
-                ]
-              }
-            }
-          }
-          ClassProperty {
-            key: StaticPropertyKey {
-              value: Identifier {
-                name: 'abstract'
-                loc: Object {
-                  filename: 'input.ts'
-                  identifierName: 'abstract'
-                  end: Object {
-                    column: 12
-                    index: 109
-                    line: 6
-                  }
-                  start: Object {
-                    column: 4
-                    index: 101
-                    line: 6
-                  }
-                }
-              }
-              variance: undefined
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 12
-                  index: 109
-                  line: 6
-                }
-                start: Object {
-                  column: 4
-                  index: 101
-                  line: 6
-                }
-              }
-            }
-            value: undefined
-            definite: true
-            loc: Object {
-              filename: 'input.ts'
-              end: Object {
-                column: 19
-                index: 116
-                line: 6
-              }
-              start: Object {
-                column: 4
-                index: 101
-                line: 6
-              }
-            }
-            typeAnnotation: VoidKeywordTypeAnnotation {
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 18
-                  index: 115
-                  line: 6
-                }
-                start: Object {
-                  column: 14
-                  index: 111
-                  line: 6
-                }
-              }
-            }
-            meta: ClassPropertyMeta {
-              abstract: false
-              accessibility: undefined
-              optional: false
-              readonly: false
-              static: false
-              typeAnnotation: undefined
-              start: Object {
-                column: 4
-                index: 101
-                line: 6
-              }
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 12
-                  index: 109
-                  line: 6
-                }
-                start: Object {
-                  column: 4
-                  index: 101
-                  line: 6
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.ts"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "module"
+	syntax: Array ["ts"]
+	loc: Object {
+		filename: "input.ts"
+		end: Object {
+			column: 0
+			index: 119
+			line: 8
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
+				name: "C"
+				loc: Object {
+					filename: "input.ts"
+					identifierName: "C"
+					end: Object {
+						column: 7
+						index: 7
+						line: 1
+					}
+					start: Object {
+						column: 6
+						index: 6
+						line: 1
+					}
+				}
+			}
+			loc: Object {
+				filename: "input.ts"
+				end: Object {
+					column: 1
+					index: 118
+					line: 7
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			meta: JSClassHead {
+				implements: undefined
+				superClass: undefined
+				superTypeParameters: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: "input.ts"
+					end: Object {
+						column: 1
+						index: 118
+						line: 7
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				body: Array [
+					TSDeclareMethod {
+						kind: "method"
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
+								name: "public"
+								loc: Object {
+									filename: "input.ts"
+									identifierName: "public"
+									end: Object {
+										column: 10
+										index: 20
+										line: 2
+									}
+									start: Object {
+										column: 4
+										index: 14
+										line: 2
+									}
+								}
+							}
+							loc: Object {
+								filename: "input.ts"
+								end: Object {
+									column: 10
+									index: 20
+									line: 2
+								}
+								start: Object {
+									column: 4
+									index: 14
+									line: 2
+								}
+							}
+						}
+						body: undefined
+						loc: Object {
+							filename: "input.ts"
+							end: Object {
+								column: 19
+								index: 29
+								line: 2
+							}
+							start: Object {
+								column: 4
+								index: 14
+								line: 2
+							}
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							start: Object {
+								column: 4
+								index: 14
+								line: 2
+							}
+							loc: Object {
+								filename: "input.ts"
+								end: Object {
+									column: 10
+									index: 20
+									line: 2
+								}
+								start: Object {
+									column: 4
+									index: 14
+									line: 2
+								}
+							}
+						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: Array []
+							rest: undefined
+							thisType: undefined
+							typeParameters: undefined
+							loc: Object {
+								filename: "input.ts"
+								end: Object {
+									column: 18
+									index: 28
+									line: 2
+								}
+								start: Object {
+									column: 10
+									index: 20
+									line: 2
+								}
+							}
+							returnType: TSVoidKeywordTypeAnnotation {
+								loc: Object {
+									filename: "input.ts"
+									end: Object {
+										column: 18
+										index: 28
+										line: 2
+									}
+									start: Object {
+										column: 14
+										index: 24
+										line: 2
+									}
+								}
+							}
+						}
+					}
+					TSDeclareMethod {
+						kind: "method"
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
+								name: "static"
+								loc: Object {
+									filename: "input.ts"
+									identifierName: "static"
+									end: Object {
+										column: 17
+										index: 47
+										line: 3
+									}
+									start: Object {
+										column: 11
+										index: 41
+										line: 3
+									}
+								}
+							}
+							loc: Object {
+								filename: "input.ts"
+								identifierName: "static"
+								end: Object {
+									column: 17
+									index: 47
+									line: 3
+								}
+								start: Object {
+									column: 11
+									index: 41
+									line: 3
+								}
+							}
+						}
+						body: undefined
+						loc: Object {
+							filename: "input.ts"
+							end: Object {
+								column: 26
+								index: 56
+								line: 3
+							}
+							start: Object {
+								column: 4
+								index: 34
+								line: 3
+							}
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: "public"
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							loc: Object {
+								filename: "input.ts"
+								end: Object {
+									column: 17
+									index: 47
+									line: 3
+								}
+								start: Object {
+									column: 4
+									index: 34
+									line: 3
+								}
+							}
+						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: Array []
+							rest: undefined
+							thisType: undefined
+							typeParameters: undefined
+							loc: Object {
+								filename: "input.ts"
+								end: Object {
+									column: 25
+									index: 55
+									line: 3
+								}
+								start: Object {
+									column: 17
+									index: 47
+									line: 3
+								}
+							}
+							returnType: TSVoidKeywordTypeAnnotation {
+								loc: Object {
+									filename: "input.ts"
+									end: Object {
+										column: 25
+										index: 55
+										line: 3
+									}
+									start: Object {
+										column: 21
+										index: 51
+										line: 3
+									}
+								}
+							}
+						}
+					}
+					JSClassProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
+								name: "readonly"
+								loc: Object {
+									filename: "input.ts"
+									identifierName: "readonly"
+									end: Object {
+										column: 12
+										index: 69
+										line: 4
+									}
+									start: Object {
+										column: 4
+										index: 61
+										line: 4
+									}
+								}
+							}
+							loc: Object {
+								filename: "input.ts"
+								end: Object {
+									column: 12
+									index: 69
+									line: 4
+								}
+								start: Object {
+									column: 4
+									index: 61
+									line: 4
+								}
+							}
+						}
+						value: JSNumericLiteral {
+							value: 0
+							format: undefined
+							loc: Object {
+								filename: "input.ts"
+								end: Object {
+									column: 16
+									index: 73
+									line: 4
+								}
+								start: Object {
+									column: 15
+									index: 72
+									line: 4
+								}
+							}
+						}
+						definite: undefined
+						typeAnnotation: undefined
+						loc: Object {
+							filename: "input.ts"
+							end: Object {
+								column: 17
+								index: 74
+								line: 4
+							}
+							start: Object {
+								column: 4
+								index: 61
+								line: 4
+							}
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							start: Object {
+								column: 4
+								index: 61
+								line: 4
+							}
+							loc: Object {
+								filename: "input.ts"
+								end: Object {
+									column: 12
+									index: 69
+									line: 4
+								}
+								start: Object {
+									column: 4
+									index: 61
+									line: 4
+								}
+							}
+						}
+					}
+					TSDeclareMethod {
+						kind: "method"
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
+								name: "async"
+								loc: Object {
+									filename: "input.ts"
+									identifierName: "async"
+									end: Object {
+										column: 9
+										index: 84
+										line: 5
+									}
+									start: Object {
+										column: 4
+										index: 79
+										line: 5
+									}
+								}
+							}
+							loc: Object {
+								filename: "input.ts"
+								end: Object {
+									column: 9
+									index: 84
+									line: 5
+								}
+								start: Object {
+									column: 4
+									index: 79
+									line: 5
+								}
+							}
+						}
+						body: undefined
+						loc: Object {
+							filename: "input.ts"
+							end: Object {
+								column: 21
+								index: 96
+								line: 5
+							}
+							start: Object {
+								column: 4
+								index: 79
+								line: 5
+							}
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							start: Object {
+								column: 4
+								index: 79
+								line: 5
+							}
+							loc: Object {
+								filename: "input.ts"
+								end: Object {
+									column: 9
+									index: 84
+									line: 5
+								}
+								start: Object {
+									column: 4
+									index: 79
+									line: 5
+								}
+							}
+						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: Array []
+							rest: undefined
+							thisType: undefined
+							loc: Object {
+								filename: "input.ts"
+								end: Object {
+									column: 20
+									index: 95
+									line: 5
+								}
+								start: Object {
+									column: 12
+									index: 87
+									line: 5
+								}
+							}
+							returnType: TSVoidKeywordTypeAnnotation {
+								loc: Object {
+									filename: "input.ts"
+									end: Object {
+										column: 20
+										index: 95
+										line: 5
+									}
+									start: Object {
+										column: 16
+										index: 91
+										line: 5
+									}
+								}
+							}
+							typeParameters: TSTypeParameterDeclaration {
+								loc: Object {
+									filename: "input.ts"
+									end: Object {
+										column: 12
+										index: 87
+										line: 5
+									}
+									start: Object {
+										column: 9
+										index: 84
+										line: 5
+									}
+								}
+								params: Array [
+									TSTypeParameter {
+										name: "T"
+										constraint: undefined
+										default: undefined
+										loc: Object {
+											filename: "input.ts"
+											end: Object {
+												column: 11
+												index: 86
+												line: 5
+											}
+											start: Object {
+												column: 10
+												index: 85
+												line: 5
+											}
+										}
+									}
+								]
+							}
+						}
+					}
+					JSClassProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
+								name: "abstract"
+								loc: Object {
+									filename: "input.ts"
+									identifierName: "abstract"
+									end: Object {
+										column: 12
+										index: 109
+										line: 6
+									}
+									start: Object {
+										column: 4
+										index: 101
+										line: 6
+									}
+								}
+							}
+							loc: Object {
+								filename: "input.ts"
+								end: Object {
+									column: 12
+									index: 109
+									line: 6
+								}
+								start: Object {
+									column: 4
+									index: 101
+									line: 6
+								}
+							}
+						}
+						value: undefined
+						definite: true
+						loc: Object {
+							filename: "input.ts"
+							end: Object {
+								column: 19
+								index: 116
+								line: 6
+							}
+							start: Object {
+								column: 4
+								index: 101
+								line: 6
+							}
+						}
+						typeAnnotation: TSVoidKeywordTypeAnnotation {
+							loc: Object {
+								filename: "input.ts"
+								end: Object {
+									column: 18
+									index: 115
+									line: 6
+								}
+								start: Object {
+									column: 14
+									index: 111
+									line: 6
+								}
+							}
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							start: Object {
+								column: 4
+								index: 101
+								line: 6
+							}
+							loc: Object {
+								filename: "input.ts"
+								end: Object {
+									column: 12
+									index: 109
+									line: 6
+								}
+								start: Object {
+									column: 4
+									index: 101
+									line: 6
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

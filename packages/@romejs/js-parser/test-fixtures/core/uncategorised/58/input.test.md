@@ -5,50 +5,50 @@
 ## `core > uncategorised > 58`
 
 ```javascript
-Program {
-  body: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  trailingComments: Array []
-  innerComments: Array ['0']
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 17
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  comments: Array [
-    CommentLine {
-      id: '0'
-      value: ' Hallo, world!'
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 16
-          index: 16
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-    }
-  ]
+JSProgram {
+	body: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	trailingComments: Array []
+	innerComments: Array ["0"]
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 17
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	comments: Array [
+		JSCommentLine {
+			id: "0"
+			value: " Hallo, world!"
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 16
+					index: 16
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+		}
+	]
 }
 ```

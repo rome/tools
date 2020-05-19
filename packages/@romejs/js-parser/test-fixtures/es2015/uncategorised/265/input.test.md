@@ -5,107 +5,107 @@
 ## `es2015 > uncategorised > 265`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 13
-      index: 13
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unexpected token, expected ('}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 8
-          index: 8
-          line: 1
-        }
-        start: Object {
-          column: 7
-          index: 7
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    SwitchStatement {
-      cases: Array []
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 13
-          index: 13
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      discriminant: TemplateLiteral {
-        expressions: Array []
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 13
-            index: 13
-            line: 1
-          }
-          start: Object {
-            column: 7
-            index: 7
-            line: 1
-          }
-        }
-        quasis: Array [
-          TemplateElement {
-            cooked: 'test'
-            raw: 'test'
-            tail: true
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 12
-                index: 12
-                line: 1
-              }
-              start: Object {
-                column: 8
-                index: 8
-                line: 1
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 13
+			index: 13
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unexpected token, expected ("}
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "script"
+				end: Object {
+					column: 8
+					index: 8
+					line: 1
+				}
+				start: Object {
+					column: 7
+					index: 7
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		JSSwitchStatement {
+			cases: Array []
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 13
+					index: 13
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			discriminant: JSTemplateLiteral {
+				expressions: Array []
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 13
+						index: 13
+						line: 1
+					}
+					start: Object {
+						column: 7
+						index: 7
+						line: 1
+					}
+				}
+				quasis: Array [
+					JSTemplateElement {
+						cooked: "test"
+						raw: "test"
+						tail: true
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 12
+								index: 12
+								line: 1
+							}
+							start: Object {
+								column: 8
+								index: 8
+								line: 1
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

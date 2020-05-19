@@ -5,200 +5,198 @@
 ## `esprima > es2015-generator > static-generator-method`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 31
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ClassDeclaration {
-      id: BindingIdentifier {
-        name: 'Foo'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'Foo'
-          end: Object {
-            column: 9
-            index: 9
-            line: 1
-          }
-          start: Object {
-            column: 6
-            index: 6
-            line: 1
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 30
-          index: 30
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      meta: ClassHead {
-        implements: undefined
-        superClass: undefined
-        superTypeParameters: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 30
-            index: 30
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        body: Array [
-          ClassMethod {
-            kind: 'method'
-            key: StaticPropertyKey {
-              value: Identifier {
-                name: 'foo'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'foo'
-                  end: Object {
-                    column: 23
-                    index: 23
-                    line: 1
-                  }
-                  start: Object {
-                    column: 20
-                    index: 20
-                    line: 1
-                  }
-                }
-              }
-              variance: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 23
-                  index: 23
-                  line: 1
-                }
-                start: Object {
-                  column: 20
-                  index: 20
-                  line: 1
-                }
-              }
-            }
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 28
-                index: 28
-                line: 1
-              }
-              start: Object {
-                column: 12
-                index: 12
-                line: 1
-              }
-            }
-            body: BlockStatement {
-              body: Array []
-              directives: Array []
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 28
-                  index: 28
-                  line: 1
-                }
-                start: Object {
-                  column: 26
-                  index: 26
-                  line: 1
-                }
-              }
-            }
-            head: FunctionHead {
-              async: false
-              generator: true
-              hasHoistedVars: false
-              params: Array []
-              predicate: undefined
-              rest: undefined
-              returnType: undefined
-              thisType: undefined
-              typeParameters: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 25
-                  index: 25
-                  line: 1
-                }
-                start: Object {
-                  column: 23
-                  index: 23
-                  line: 1
-                }
-              }
-            }
-            meta: ClassPropertyMeta {
-              abstract: false
-              accessibility: undefined
-              optional: false
-              readonly: false
-              static: true
-              typeAnnotation: undefined
-              start: Object {
-                column: 12
-                index: 12
-                line: 1
-              }
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 23
-                  index: 23
-                  line: 1
-                }
-                start: Object {
-                  column: 12
-                  index: 12
-                  line: 1
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 31
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
+				name: "Foo"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "Foo"
+					end: Object {
+						column: 9
+						index: 9
+						line: 1
+					}
+					start: Object {
+						column: 6
+						index: 6
+						line: 1
+					}
+				}
+			}
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 30
+					index: 30
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			meta: JSClassHead {
+				implements: undefined
+				superClass: undefined
+				superTypeParameters: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 30
+						index: 30
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				body: Array [
+					JSClassMethod {
+						kind: "method"
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
+								name: "foo"
+								loc: Object {
+									filename: "input.js"
+									identifierName: "foo"
+									end: Object {
+										column: 23
+										index: 23
+										line: 1
+									}
+									start: Object {
+										column: 20
+										index: 20
+										line: 1
+									}
+								}
+							}
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 23
+									index: 23
+									line: 1
+								}
+								start: Object {
+									column: 20
+									index: 20
+									line: 1
+								}
+							}
+						}
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 28
+								index: 28
+								line: 1
+							}
+							start: Object {
+								column: 12
+								index: 12
+								line: 1
+							}
+						}
+						body: JSBlockStatement {
+							body: Array []
+							directives: Array []
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 28
+									index: 28
+									line: 1
+								}
+								start: Object {
+									column: 26
+									index: 26
+									line: 1
+								}
+							}
+						}
+						head: JSFunctionHead {
+							async: false
+							generator: true
+							hasHoistedVars: false
+							params: Array []
+							rest: undefined
+							returnType: undefined
+							thisType: undefined
+							typeParameters: undefined
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 25
+									index: 25
+									line: 1
+								}
+								start: Object {
+									column: 23
+									index: 23
+									line: 1
+								}
+							}
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: true
+							typeAnnotation: undefined
+							start: Object {
+								column: 12
+								index: 12
+								line: 1
+							}
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 23
+									index: 23
+									line: 1
+								}
+								start: Object {
+									column: 12
+									index: 12
+									line: 1
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

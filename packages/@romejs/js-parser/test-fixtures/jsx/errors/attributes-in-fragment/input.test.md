@@ -5,173 +5,173 @@
 ## `jsx > errors > attributes-in-fragment`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array [
-    'jsx'
-    'flow'
-  ]
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 17
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unknown JSX identifier token'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 5
-          index: 5
-          line: 1
-        }
-        start: Object {
-          column: 5
-          index: 5
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 16
-          index: 16
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: JSXElement {
-        name: JSXIdentifier {
-          name: 'key'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 5
-              index: 5
-              line: 1
-            }
-            start: Object {
-              column: 2
-              index: 2
-              line: 1
-            }
-          }
-        }
-        children: Array []
-        selfClosing: false
-        typeArguments: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 16
-            index: 16
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        attributes: Array [
-          JSXAttribute {
-            name: JSXIdentifier {
-              name: ''
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 6
-                  index: 6
-                  line: 1
-                }
-                start: Object {
-                  column: 5
-                  index: 5
-                  line: 1
-                }
-              }
-            }
-            value: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 6
-                index: 6
-                line: 1
-              }
-              start: Object {
-                column: 5
-                index: 5
-                line: 1
-              }
-            }
-          }
-          JSXAttribute {
-            name: JSXIdentifier {
-              name: ''
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 12
-                  index: 12
-                  line: 1
-                }
-                start: Object {
-                  column: 6
-                  index: 6
-                  line: 1
-                }
-              }
-            }
-            value: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 12
-                index: 12
-                line: 1
-              }
-              start: Object {
-                column: 6
-                index: 6
-                line: 1
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array [
+		"jsx"
+		"ts"
+	]
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 17
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unknown JSX identifier token"}
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "script"
+				end: Object {
+					column: 5
+					index: 5
+					line: 1
+				}
+				start: Object {
+					column: 5
+					index: 5
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 16
+					index: 16
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSXElement {
+				name: JSXIdentifier {
+					name: "key"
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 5
+							index: 5
+							line: 1
+						}
+						start: Object {
+							column: 2
+							index: 2
+							line: 1
+						}
+					}
+				}
+				children: Array []
+				selfClosing: false
+				typeArguments: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 16
+						index: 16
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				attributes: Array [
+					JSXAttribute {
+						name: JSXIdentifier {
+							name: ""
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 6
+									index: 6
+									line: 1
+								}
+								start: Object {
+									column: 5
+									index: 5
+									line: 1
+								}
+							}
+						}
+						value: undefined
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 6
+								index: 6
+								line: 1
+							}
+							start: Object {
+								column: 5
+								index: 5
+								line: 1
+							}
+						}
+					}
+					JSXAttribute {
+						name: JSXIdentifier {
+							name: ""
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 12
+									index: 12
+									line: 1
+								}
+								start: Object {
+									column: 6
+									index: 6
+									line: 1
+								}
+							}
+						}
+						value: undefined
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 12
+								index: 12
+								line: 1
+							}
+							start: Object {
+								column: 6
+								index: 6
+								line: 1
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {AnyNode, JSXText, jsxText} from '@romejs/js-ast';
+import {Scope} from "../../scopes";
+import {AnyNode, JSXText, jsxText} from "@romejs/ast";
 
 export default function JSXText(node: AnyNode, scope: Scope) {
-  node = jsxText.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = jsxText.assert(node);
+	scope;
+	throw new Error("unimplemented");
 }

@@ -5,98 +5,98 @@
 ## `es2015 > modules > export-default-class-declaration`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 28
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExportDefaultDeclaration {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 27
-          index: 27
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      declaration: ClassDeclaration {
-        id: BindingIdentifier {
-          name: 'Foo'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'Foo'
-            end: Object {
-              column: 24
-              index: 24
-              line: 1
-            }
-            start: Object {
-              column: 21
-              index: 21
-              line: 1
-            }
-          }
-        }
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 27
-            index: 27
-            line: 1
-          }
-          start: Object {
-            column: 15
-            index: 15
-            line: 1
-          }
-        }
-        meta: ClassHead {
-          body: Array []
-          implements: undefined
-          superClass: undefined
-          superTypeParameters: undefined
-          typeParameters: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 27
-              index: 27
-              line: 1
-            }
-            start: Object {
-              column: 15
-              index: 15
-              line: 1
-            }
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "module"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 28
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExportDefaultDeclaration {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 27
+					index: 27
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			declaration: JSClassDeclaration {
+				id: JSBindingIdentifier {
+					name: "Foo"
+					loc: Object {
+						filename: "input.js"
+						identifierName: "Foo"
+						end: Object {
+							column: 24
+							index: 24
+							line: 1
+						}
+						start: Object {
+							column: 21
+							index: 21
+							line: 1
+						}
+					}
+				}
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 27
+						index: 27
+						line: 1
+					}
+					start: Object {
+						column: 15
+						index: 15
+						line: 1
+					}
+				}
+				meta: JSClassHead {
+					body: Array []
+					implements: undefined
+					superClass: undefined
+					superTypeParameters: undefined
+					typeParameters: undefined
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 27
+							index: 27
+							line: 1
+						}
+						start: Object {
+							column: 15
+							index: 15
+							line: 1
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

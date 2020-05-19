@@ -5,177 +5,176 @@
 ## `es2018 > async-generators > for-await-no-semi-1`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 46
-      line: 4
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unexpected token'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 14
-          index: 35
-          line: 2
-        }
-        start: Object {
-          column: 13
-          index: 34
-          line: 2
-        }
-      }
-    }
-  ]
-  body: Array [
-    FunctionDeclaration {
-      id: BindingIdentifier {
-        name: 'f'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'f'
-          end: Object {
-            column: 16
-            index: 16
-            line: 1
-          }
-          start: Object {
-            column: 15
-            index: 15
-            line: 1
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 1
-          index: 45
-          line: 3
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      head: FunctionHead {
-        async: true
-        generator: false
-        hasHoistedVars: false
-        params: Array []
-        predicate: undefined
-        rest: undefined
-        returnType: undefined
-        thisType: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 18
-            index: 18
-            line: 1
-          }
-          start: Object {
-            column: 16
-            index: 16
-            line: 1
-          }
-        }
-      }
-      body: BlockStatement {
-        directives: Array []
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 1
-            index: 45
-            line: 3
-          }
-          start: Object {
-            column: 19
-            index: 19
-            line: 1
-          }
-        }
-        body: Array [
-          ForStatement {
-            init: undefined
-            update: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 22
-                index: 43
-                line: 2
-              }
-              start: Object {
-                column: 2
-                index: 23
-                line: 2
-              }
-            }
-            body: EmptyStatement {
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 22
-                  index: 43
-                  line: 2
-                }
-                start: Object {
-                  column: 21
-                  index: 42
-                  line: 2
-                }
-              }
-            }
-            test: BooleanLiteral {
-              value: false
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 19
-                  index: 40
-                  line: 2
-                }
-                start: Object {
-                  column: 14
-                  index: 35
-                  line: 2
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 46
+			line: 4
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unexpected token"}
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "script"
+				end: Object {
+					column: 14
+					index: 35
+					line: 2
+				}
+				start: Object {
+					column: 13
+					index: 34
+					line: 2
+				}
+			}
+		}
+	]
+	body: Array [
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
+				name: "f"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "f"
+					end: Object {
+						column: 16
+						index: 16
+						line: 1
+					}
+					start: Object {
+						column: 15
+						index: 15
+						line: 1
+					}
+				}
+			}
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 1
+					index: 45
+					line: 3
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			head: JSFunctionHead {
+				async: true
+				generator: false
+				hasHoistedVars: false
+				params: Array []
+				rest: undefined
+				returnType: undefined
+				thisType: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 18
+						index: 18
+						line: 1
+					}
+					start: Object {
+						column: 16
+						index: 16
+						line: 1
+					}
+				}
+			}
+			body: JSBlockStatement {
+				directives: Array []
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 1
+						index: 45
+						line: 3
+					}
+					start: Object {
+						column: 19
+						index: 19
+						line: 1
+					}
+				}
+				body: Array [
+					JSForStatement {
+						init: undefined
+						update: undefined
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 22
+								index: 43
+								line: 2
+							}
+							start: Object {
+								column: 2
+								index: 23
+								line: 2
+							}
+						}
+						body: JSEmptyStatement {
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 22
+									index: 43
+									line: 2
+								}
+								start: Object {
+									column: 21
+									index: 42
+									line: 2
+								}
+							}
+						}
+						test: JSBooleanLiteral {
+							value: false
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 19
+									index: 40
+									line: 2
+								}
+								start: Object {
+									column: 14
+									index: 35
+									line: 2
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

@@ -5,52 +5,52 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {commandCategories} from '../../common/commands';
-import {createLocalCommand} from '../commands';
-import ClientRequest from '../ClientRequest';
+import {commandCategories} from "../../common/commands";
+import {createLocalCommand} from "../commands";
+import ClientRequest from "../ClientRequest";
 
 export default createLocalCommand({
-  description: 'connect to an lsp',
-  category: commandCategories.PROJECT_MANAGEMENT,
-  usage: '',
-  examples: [],
-  // vscode-languageclient adds these on
-  ignoreFlags: ['stdio', 'clientProcessId'],
-  defineFlags() {
-    return {};
-  },
-  async callback(req: ClientRequest) {
-    req.client.setFlags({
-      clientName: 'lsp',
-      silent: true,
-    });
+	description: "connect to an lsp",
+	category: commandCategories.PROJECT_MANAGEMENT,
+	usage: "",
+	examples: [],
+	// vscode-languageclient adds these on
+	ignoreFlags: ["stdio", "clientProcessId"],
+	defineFlags() {
+		return {};
+	},
+	async callback(req: ClientRequest) {
+		req.client.setFlags({
+			clientName: "lsp",
+			silent: true,
+		});
 
-    const stdin = req.client.reporter.getStdin();
-    req.client.reporter.teardown();
+		const stdin = req.client.reporter.getStdin();
+		req.client.reporter.teardown();
 
-    const bridge = await req.client.findOrStartMaster();
-    if (bridge === undefined) {
-      return false;
-    }
+		const bridge = await req.client.findOrStartMaster();
+		if (bridge === undefined) {
+			return false;
+		}
 
-    bridge.lspFromServerBuffer.subscribe((chunk) => {
-      req.client.derivedReporterStreams.stdout.write(chunk);
-    });
+		bridge.lspFromServerBuffer.subscribe((chunk) => {
+			req.client.derivedReporterStreams.stdout.write(chunk);
+		});
 
-    stdin.on(
-      'data',
-      (chunk) => {
-        bridge.lspFromClientBuffer.call(chunk.toString());
-      },
-    );
+		stdin.on(
+			"data",
+			(chunk) => {
+				bridge.lspFromClientBuffer.call(chunk.toString());
+			},
+		);
 
-    await req.client.query(
-      {
-        commandName: 'lsp',
-      },
-      'master',
-    );
+		await req.client.query(
+			{
+				commandName: "lsp",
+			},
+			"master",
+		);
 
-    return true;
-  },
+		return true;
+	},
 });

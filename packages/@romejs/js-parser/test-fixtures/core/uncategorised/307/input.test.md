@@ -5,128 +5,128 @@
 ## `core > uncategorised > 307`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 8
-      index: 29
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    WhileStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 8
-          index: 29
-          line: 2
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      test: BooleanLiteral {
-        value: true
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 11
-            index: 11
-            line: 1
-          }
-          start: Object {
-            column: 7
-            index: 7
-            line: 1
-          }
-        }
-      }
-      body: BlockStatement {
-        directives: Array []
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 8
-            index: 29
-            line: 2
-          }
-          start: Object {
-            column: 13
-            index: 13
-            line: 1
-          }
-        }
-        body: Array [
-          BreakStatement {
-            label: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 20
-                index: 20
-                line: 1
-              }
-              start: Object {
-                column: 15
-                index: 15
-                line: 1
-              }
-            }
-          }
-          ExpressionStatement {
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 6
-                index: 27
-                line: 2
-              }
-              start: Object {
-                column: 0
-                index: 21
-                line: 2
-              }
-            }
-            expression: ReferenceIdentifier {
-              name: 'there'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'there'
-                end: Object {
-                  column: 5
-                  index: 26
-                  line: 2
-                }
-                start: Object {
-                  column: 0
-                  index: 21
-                  line: 2
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 8
+			index: 29
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSWhileStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 8
+					index: 29
+					line: 2
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			test: JSBooleanLiteral {
+				value: true
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 11
+						index: 11
+						line: 1
+					}
+					start: Object {
+						column: 7
+						index: 7
+						line: 1
+					}
+				}
+			}
+			body: JSBlockStatement {
+				directives: Array []
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 8
+						index: 29
+						line: 2
+					}
+					start: Object {
+						column: 13
+						index: 13
+						line: 1
+					}
+				}
+				body: Array [
+					JSBreakStatement {
+						label: undefined
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 20
+								index: 20
+								line: 1
+							}
+							start: Object {
+								column: 15
+								index: 15
+								line: 1
+							}
+						}
+					}
+					JSExpressionStatement {
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 6
+								index: 27
+								line: 2
+							}
+							start: Object {
+								column: 0
+								index: 21
+								line: 2
+							}
+						}
+						expression: JSReferenceIdentifier {
+							name: "there"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "there"
+								end: Object {
+									column: 5
+									index: 26
+									line: 2
+								}
+								start: Object {
+									column: 0
+									index: 21
+									line: 2
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

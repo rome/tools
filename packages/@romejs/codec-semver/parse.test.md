@@ -8,24 +8,24 @@
 
 ```javascript
 AbsoluteVersion {
-  build: Array []
-  major: 1
-  minor: 2
-  patch: 3
-  prerelease: Array []
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 4
-      index: 4
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
+	build: Array []
+	major: 1
+	minor: 2
+	patch: 3
+	prerelease: Array []
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 4
+			index: 4
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
 }
 ```
 
@@ -33,294 +33,24 @@ AbsoluteVersion {
 
 ```javascript
 AbsoluteVersion {
-  build: Array []
-  major: 1
-  minor: 2
-  patch: 3
-  prerelease: Array ['prerelease']
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 6
-      index: 6
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-}
-```
-
-### `10`
-
-```javascript
-VersionRange {
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 8
-      index: 8
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  left: Wildcard {
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 1
-        index: 1
-        line: 1
-      }
-      start: Object {
-        column: 0
-        index: 0
-        line: 1
-      }
-    }
-  }
-  right: AbsoluteVersion {
-    build: Array []
-    major: 1
-    minor: 2
-    patch: 3
-    prerelease: Array []
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 8
-        index: 8
-        line: 1
-      }
-      start: Object {
-        column: 4
-        index: 4
-        line: 1
-      }
-    }
-  }
-}
-```
-
-### `11`
-
-```javascript
-AbsoluteVersion {
-  build: Array []
-  major: 1
-  minor: 2
-  patch: 3
-  prerelease: Array []
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 5
-      index: 5
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-}
-```
-
-### `12`
-
-```javascript
-Wildcard {
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-}
-```
-
-### `13`
-
-```javascript
-Wildcard {
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-}
-```
-
-### `14`
-
-```javascript
-AbsoluteVersion {
-  build: Array []
-  major: 1
-  minor: 2
-  patch: 3
-  prerelease: Array ['prerelease']
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 5
-      index: 5
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-}
-```
-
-### `15`
-
-```javascript
-WildcardVersion {
-  build: Array []
-  major: 1
-  minor: undefined
-  patch: undefined
-  prerelease: Array []
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-}
-```
-
-### `16`
-
-```javascript
-WildcardVersion {
-  build: Array []
-  major: 1
-  minor: 2
-  patch: undefined
-  prerelease: Array []
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 2
-      index: 2
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-}
-```
-
-### `17`
-
-```javascript
-WildcardVersion {
-  build: Array []
-  major: 1
-  minor: undefined
-  patch: undefined
-  prerelease: Array []
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 2
-      index: 2
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-}
-```
-
-### `18`
-
-```javascript
-WildcardVersion {
-  build: Array []
-  major: 1
-  minor: undefined
-  patch: 3
-  prerelease: Array []
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 4
-      index: 4
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-}
-```
-
-### `19`
-
-```javascript
-WildcardVersion {
-  build: Array []
-  major: 1
-  minor: 2
-  patch: undefined
-  prerelease: Array []
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 4
-      index: 4
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
+	build: Array []
+	major: 1
+	minor: 2
+	patch: 3
+	prerelease: Array ["prerelease"]
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 6
+			index: 6
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
 }
 ```
 
@@ -328,433 +58,27 @@ WildcardVersion {
 
 ```javascript
 AbsoluteVersion {
-  build: Array []
-  major: 1
-  minor: 2
-  patch: 3
-  prerelease: Array [
-    'pre'
-    2
-  ]
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 10
-      index: 10
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-}
-```
-
-### `20`
-
-```javascript
-WildcardVersion {
-  build: Array []
-  major: 1
-  minor: undefined
-  patch: undefined
-  prerelease: Array []
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 2
-      index: 2
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-}
-```
-
-### `21`
-
-```javascript
-WildcardVersion {
-  build: Array []
-  major: 1
-  minor: undefined
-  patch: 3
-  prerelease: Array []
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 4
-      index: 4
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-}
-```
-
-### `22`
-
-```javascript
-WildcardVersion {
-  build: Array []
-  major: 1
-  minor: 2
-  patch: undefined
-  prerelease: Array []
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 4
-      index: 4
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-}
-```
-
-### `23`
-
-```javascript
-WildcardVersion {
-  build: Array []
-  major: 1
-  minor: undefined
-  patch: undefined
-  prerelease: Array []
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 2
-      index: 2
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-}
-```
-
-### `24`
-
-```javascript
-WildcardVersion {
-  build: Array []
-  major: 1
-  minor: undefined
-  patch: 3
-  prerelease: Array []
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 4
-      index: 4
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-}
-```
-
-### `25`
-
-```javascript
-WildcardVersion {
-  build: Array []
-  major: 1
-  minor: 2
-  patch: undefined
-  prerelease: Array []
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 4
-      index: 4
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-}
-```
-
-### `26`
-
-```javascript
-VersionRange {
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 12
-      index: 12
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  left: AbsoluteVersion {
-    build: Array []
-    major: 1
-    minor: 2
-    patch: 3
-    prerelease: Array []
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 5
-        index: 5
-        line: 1
-      }
-      start: Object {
-        column: 0
-        index: 0
-        line: 1
-      }
-    }
-  }
-  right: AbsoluteVersion {
-    build: Array []
-    major: 1
-    minor: 2
-    patch: 4
-    prerelease: Array []
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 12
-        index: 12
-        line: 1
-      }
-      start: Object {
-        column: 8
-        index: 8
-        line: 1
-      }
-    }
-  }
-}
-```
-
-### `27`
-
-```javascript
-LogicalOr {
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 7
-      index: 7
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  left: WildcardVersion {
-    build: Array []
-    major: 1
-    minor: 2
-    patch: undefined
-    prerelease: Array []
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 3
-        index: 3
-        line: 1
-      }
-      start: Object {
-        column: 0
-        index: 0
-        line: 1
-      }
-    }
-  }
-  right: WildcardVersion {
-    build: Array []
-    major: 3
-    minor: undefined
-    patch: undefined
-    prerelease: Array []
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 7
-        index: 7
-        line: 1
-      }
-      start: Object {
-        column: 7
-        index: 7
-        line: 1
-      }
-    }
-  }
-}
-```
-
-### `28`
-
-```javascript
-LogicalOr {
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 10
-      index: 10
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  left: WildcardVersion {
-    build: Array []
-    major: 1
-    minor: undefined
-    patch: undefined
-    prerelease: Array []
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 1
-        index: 1
-        line: 1
-      }
-      start: Object {
-        column: 0
-        index: 0
-        line: 1
-      }
-    }
-  }
-  right: LogicalOr {
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 10
-        index: 10
-        line: 1
-      }
-      start: Object {
-        column: 5
-        index: 5
-        line: 1
-      }
-    }
-    left: WildcardVersion {
-      build: Array []
-      major: 2
-      minor: undefined
-      patch: undefined
-      prerelease: Array []
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 6
-          index: 6
-          line: 1
-        }
-        start: Object {
-          column: 5
-          index: 5
-          line: 1
-        }
-      }
-    }
-    right: WildcardVersion {
-      build: Array []
-      major: 3
-      minor: undefined
-      patch: undefined
-      prerelease: Array []
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 10
-          index: 10
-          line: 1
-        }
-        start: Object {
-          column: 10
-          index: 10
-          line: 1
-        }
-      }
-    }
-  }
-}
-```
-
-### `29`
-
-```javascript
-Comparator {
-  operator: '>='
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 6
-      index: 6
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  version: AbsoluteVersion {
-    build: Array []
-    major: 1
-    minor: 4
-    patch: 5
-    prerelease: Array []
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 6
-        index: 6
-        line: 1
-      }
-      start: Object {
-        column: 2
-        index: 2
-        line: 1
-      }
-    }
-  }
+	build: Array []
+	major: 1
+	minor: 2
+	patch: 3
+	prerelease: Array [
+		"pre"
+		2
+	]
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 10
+			index: 10
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
 }
 ```
 
@@ -762,696 +86,31 @@ Comparator {
 
 ```javascript
 AbsoluteVersion {
-  build: Array []
-  major: 1
-  minor: 2
-  patch: 3
-  prerelease: Array [
-    'pre'
-    2
-    3
-    4
-    5
-    'foo'
-  ]
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 18
-      index: 18
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-}
-```
-
-### `30`
-
-```javascript
-LogicalAnd {
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 14
-      index: 14
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  left: Comparator {
-    operator: '>='
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 7
-        index: 7
-        line: 1
-      }
-      start: Object {
-        column: 0
-        index: 0
-        line: 1
-      }
-    }
-    version: AbsoluteVersion {
-      build: Array []
-      major: 1
-      minor: 4
-      patch: 5
-      prerelease: Array []
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 7
-          index: 7
-          line: 1
-        }
-        start: Object {
-          column: 2
-          index: 2
-          line: 1
-        }
-      }
-    }
-  }
-  right: Comparator {
-    operator: '>='
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 14
-        index: 14
-        line: 1
-      }
-      start: Object {
-        column: 8
-        index: 8
-        line: 1
-      }
-    }
-    version: AbsoluteVersion {
-      build: Array []
-      major: 1
-      minor: 4
-      patch: 5
-      prerelease: Array []
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 14
-          index: 14
-          line: 1
-        }
-        start: Object {
-          column: 10
-          index: 10
-          line: 1
-        }
-      }
-    }
-  }
-}
-```
-
-### `31`
-
-```javascript
-Comparator {
-  operator: '<='
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 6
-      index: 6
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  version: AbsoluteVersion {
-    build: Array []
-    major: 1
-    minor: 4
-    patch: 5
-    prerelease: Array []
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 6
-        index: 6
-        line: 1
-      }
-      start: Object {
-        column: 2
-        index: 2
-        line: 1
-      }
-    }
-  }
-}
-```
-
-### `32`
-
-```javascript
-LogicalAnd {
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 14
-      index: 14
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  left: Comparator {
-    operator: '<='
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 7
-        index: 7
-        line: 1
-      }
-      start: Object {
-        column: 0
-        index: 0
-        line: 1
-      }
-    }
-    version: AbsoluteVersion {
-      build: Array []
-      major: 1
-      minor: 4
-      patch: 5
-      prerelease: Array []
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 7
-          index: 7
-          line: 1
-        }
-        start: Object {
-          column: 2
-          index: 2
-          line: 1
-        }
-      }
-    }
-  }
-  right: Comparator {
-    operator: '<='
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 14
-        index: 14
-        line: 1
-      }
-      start: Object {
-        column: 8
-        index: 8
-        line: 1
-      }
-    }
-    version: AbsoluteVersion {
-      build: Array []
-      major: 1
-      minor: 4
-      patch: 5
-      prerelease: Array []
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 14
-          index: 14
-          line: 1
-        }
-        start: Object {
-          column: 10
-          index: 10
-          line: 1
-        }
-      }
-    }
-  }
-}
-```
-
-### `33`
-
-```javascript
-Comparator {
-  operator: '>'
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 5
-      index: 5
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  version: AbsoluteVersion {
-    build: Array []
-    major: 1
-    minor: 4
-    patch: 5
-    prerelease: Array []
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 5
-        index: 5
-        line: 1
-      }
-      start: Object {
-        column: 1
-        index: 1
-        line: 1
-      }
-    }
-  }
-}
-```
-
-### `34`
-
-```javascript
-LogicalAnd {
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 12
-      index: 12
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  left: Comparator {
-    operator: '>'
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 6
-        index: 6
-        line: 1
-      }
-      start: Object {
-        column: 0
-        index: 0
-        line: 1
-      }
-    }
-    version: AbsoluteVersion {
-      build: Array []
-      major: 1
-      minor: 4
-      patch: 5
-      prerelease: Array []
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 6
-          index: 6
-          line: 1
-        }
-        start: Object {
-          column: 1
-          index: 1
-          line: 1
-        }
-      }
-    }
-  }
-  right: Comparator {
-    operator: '>'
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 12
-        index: 12
-        line: 1
-      }
-      start: Object {
-        column: 7
-        index: 7
-        line: 1
-      }
-    }
-    version: AbsoluteVersion {
-      build: Array []
-      major: 1
-      minor: 4
-      patch: 5
-      prerelease: Array []
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 12
-          index: 12
-          line: 1
-        }
-        start: Object {
-          column: 8
-          index: 8
-          line: 1
-        }
-      }
-    }
-  }
-}
-```
-
-### `35`
-
-```javascript
-Comparator {
-  operator: '<'
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 5
-      index: 5
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  version: AbsoluteVersion {
-    build: Array []
-    major: 1
-    minor: 4
-    patch: 5
-    prerelease: Array []
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 5
-        index: 5
-        line: 1
-      }
-      start: Object {
-        column: 1
-        index: 1
-        line: 1
-      }
-    }
-  }
-}
-```
-
-### `36`
-
-```javascript
-LogicalAnd {
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 12
-      index: 12
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  left: Comparator {
-    operator: '<'
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 6
-        index: 6
-        line: 1
-      }
-      start: Object {
-        column: 0
-        index: 0
-        line: 1
-      }
-    }
-    version: AbsoluteVersion {
-      build: Array []
-      major: 1
-      minor: 4
-      patch: 5
-      prerelease: Array []
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 6
-          index: 6
-          line: 1
-        }
-        start: Object {
-          column: 1
-          index: 1
-          line: 1
-        }
-      }
-    }
-  }
-  right: Comparator {
-    operator: '<'
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 12
-        index: 12
-        line: 1
-      }
-      start: Object {
-        column: 7
-        index: 7
-        line: 1
-      }
-    }
-    version: AbsoluteVersion {
-      build: Array []
-      major: 1
-      minor: 4
-      patch: 5
-      prerelease: Array []
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 12
-          index: 12
-          line: 1
-        }
-        start: Object {
-          column: 8
-          index: 8
-          line: 1
-        }
-      }
-    }
-  }
-}
-```
-
-### `37`
-
-```javascript
-Comparator {
-  operator: '^'
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 5
-      index: 5
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  version: AbsoluteVersion {
-    build: Array []
-    major: 1
-    minor: 4
-    patch: 5
-    prerelease: Array []
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 5
-        index: 5
-        line: 1
-      }
-      start: Object {
-        column: 1
-        index: 1
-        line: 1
-      }
-    }
-  }
-}
-```
-
-### `38`
-
-```javascript
-LogicalAnd {
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 12
-      index: 12
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  left: Comparator {
-    operator: '^'
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 6
-        index: 6
-        line: 1
-      }
-      start: Object {
-        column: 0
-        index: 0
-        line: 1
-      }
-    }
-    version: AbsoluteVersion {
-      build: Array []
-      major: 1
-      minor: 4
-      patch: 5
-      prerelease: Array []
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 6
-          index: 6
-          line: 1
-        }
-        start: Object {
-          column: 1
-          index: 1
-          line: 1
-        }
-      }
-    }
-  }
-  right: Comparator {
-    operator: '^'
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 12
-        index: 12
-        line: 1
-      }
-      start: Object {
-        column: 7
-        index: 7
-        line: 1
-      }
-    }
-    version: AbsoluteVersion {
-      build: Array []
-      major: 1
-      minor: 4
-      patch: 5
-      prerelease: Array []
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 12
-          index: 12
-          line: 1
-        }
-        start: Object {
-          column: 8
-          index: 8
-          line: 1
-        }
-      }
-    }
-  }
-}
-```
-
-### `39`
-
-```javascript
-Comparator {
-  operator: '~'
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 5
-      index: 5
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  version: AbsoluteVersion {
-    build: Array []
-    major: 1
-    minor: 4
-    patch: 5
-    prerelease: Array []
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 5
-        index: 5
-        line: 1
-      }
-      start: Object {
-        column: 1
-        index: 1
-        line: 1
-      }
-    }
-  }
+	build: Array []
+	major: 1
+	minor: 2
+	patch: 3
+	prerelease: Array [
+		"pre"
+		2
+		3
+		4
+		5
+		"foo"
+	]
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 18
+			index: 18
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
 }
 ```
 
@@ -1459,689 +118,24 @@ Comparator {
 
 ```javascript
 AbsoluteVersion {
-  major: 1
-  minor: 2
-  patch: 3
-  prerelease: Array []
-  build: Array ['build']
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 6
-      index: 6
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-}
-```
-
-### `40`
-
-```javascript
-LogicalAnd {
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 12
-      index: 12
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  left: Comparator {
-    operator: '~'
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 6
-        index: 6
-        line: 1
-      }
-      start: Object {
-        column: 0
-        index: 0
-        line: 1
-      }
-    }
-    version: AbsoluteVersion {
-      build: Array []
-      major: 1
-      minor: 4
-      patch: 5
-      prerelease: Array []
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 6
-          index: 6
-          line: 1
-        }
-        start: Object {
-          column: 1
-          index: 1
-          line: 1
-        }
-      }
-    }
-  }
-  right: Comparator {
-    operator: '~'
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 12
-        index: 12
-        line: 1
-      }
-      start: Object {
-        column: 7
-        index: 7
-        line: 1
-      }
-    }
-    version: AbsoluteVersion {
-      build: Array []
-      major: 1
-      minor: 4
-      patch: 5
-      prerelease: Array []
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 12
-          index: 12
-          line: 1
-        }
-        start: Object {
-          column: 8
-          index: 8
-          line: 1
-        }
-      }
-    }
-  }
-}
-```
-
-### `41`
-
-```javascript
-Comparator {
-  operator: '>='
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 4
-      index: 4
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  version: WildcardVersion {
-    build: Array []
-    major: 1
-    minor: 4
-    patch: undefined
-    prerelease: Array []
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 4
-        index: 4
-        line: 1
-      }
-      start: Object {
-        column: 2
-        index: 2
-        line: 1
-      }
-    }
-  }
-}
-```
-
-### `42`
-
-```javascript
-LogicalAnd {
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 10
-      index: 10
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  left: Comparator {
-    operator: '>='
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 5
-        index: 5
-        line: 1
-      }
-      start: Object {
-        column: 0
-        index: 0
-        line: 1
-      }
-    }
-    version: WildcardVersion {
-      build: Array []
-      major: 1
-      minor: 4
-      patch: undefined
-      prerelease: Array []
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 5
-          index: 5
-          line: 1
-        }
-        start: Object {
-          column: 2
-          index: 2
-          line: 1
-        }
-      }
-    }
-  }
-  right: Comparator {
-    operator: '>='
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 10
-        index: 10
-        line: 1
-      }
-      start: Object {
-        column: 6
-        index: 6
-        line: 1
-      }
-    }
-    version: WildcardVersion {
-      build: Array []
-      major: 1
-      minor: 4
-      patch: undefined
-      prerelease: Array []
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 10
-          index: 10
-          line: 1
-        }
-        start: Object {
-          column: 8
-          index: 8
-          line: 1
-        }
-      }
-    }
-  }
-}
-```
-
-### `43`
-
-```javascript
-Comparator {
-  operator: '<='
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 4
-      index: 4
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  version: WildcardVersion {
-    build: Array []
-    major: 1
-    minor: 4
-    patch: undefined
-    prerelease: Array []
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 4
-        index: 4
-        line: 1
-      }
-      start: Object {
-        column: 2
-        index: 2
-        line: 1
-      }
-    }
-  }
-}
-```
-
-### `44`
-
-```javascript
-LogicalAnd {
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 10
-      index: 10
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  left: Comparator {
-    operator: '<='
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 5
-        index: 5
-        line: 1
-      }
-      start: Object {
-        column: 0
-        index: 0
-        line: 1
-      }
-    }
-    version: WildcardVersion {
-      build: Array []
-      major: 1
-      minor: 4
-      patch: undefined
-      prerelease: Array []
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 5
-          index: 5
-          line: 1
-        }
-        start: Object {
-          column: 2
-          index: 2
-          line: 1
-        }
-      }
-    }
-  }
-  right: Comparator {
-    operator: '<='
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 10
-        index: 10
-        line: 1
-      }
-      start: Object {
-        column: 6
-        index: 6
-        line: 1
-      }
-    }
-    version: WildcardVersion {
-      build: Array []
-      major: 1
-      minor: 4
-      patch: undefined
-      prerelease: Array []
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 10
-          index: 10
-          line: 1
-        }
-        start: Object {
-          column: 8
-          index: 8
-          line: 1
-        }
-      }
-    }
-  }
-}
-```
-
-### `45`
-
-```javascript
-Comparator {
-  operator: '>'
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 3
-      index: 3
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  version: WildcardVersion {
-    build: Array []
-    major: 1
-    minor: 4
-    patch: undefined
-    prerelease: Array []
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 3
-        index: 3
-        line: 1
-      }
-      start: Object {
-        column: 1
-        index: 1
-        line: 1
-      }
-    }
-  }
-}
-```
-
-### `46`
-
-```javascript
-LogicalAnd {
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 8
-      index: 8
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  left: Comparator {
-    operator: '>'
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 4
-        index: 4
-        line: 1
-      }
-      start: Object {
-        column: 0
-        index: 0
-        line: 1
-      }
-    }
-    version: WildcardVersion {
-      build: Array []
-      major: 1
-      minor: 4
-      patch: undefined
-      prerelease: Array []
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 4
-          index: 4
-          line: 1
-        }
-        start: Object {
-          column: 1
-          index: 1
-          line: 1
-        }
-      }
-    }
-  }
-  right: Comparator {
-    operator: '>'
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 8
-        index: 8
-        line: 1
-      }
-      start: Object {
-        column: 5
-        index: 5
-        line: 1
-      }
-    }
-    version: WildcardVersion {
-      build: Array []
-      major: 1
-      minor: 4
-      patch: undefined
-      prerelease: Array []
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 8
-          index: 8
-          line: 1
-        }
-        start: Object {
-          column: 6
-          index: 6
-          line: 1
-        }
-      }
-    }
-  }
-}
-```
-
-### `47`
-
-```javascript
-Comparator {
-  operator: '<'
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 3
-      index: 3
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  version: WildcardVersion {
-    build: Array []
-    major: 1
-    minor: 4
-    patch: undefined
-    prerelease: Array []
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 3
-        index: 3
-        line: 1
-      }
-      start: Object {
-        column: 1
-        index: 1
-        line: 1
-      }
-    }
-  }
-}
-```
-
-### `48`
-
-```javascript
-LogicalAnd {
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 8
-      index: 8
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  left: Comparator {
-    operator: '<'
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 4
-        index: 4
-        line: 1
-      }
-      start: Object {
-        column: 0
-        index: 0
-        line: 1
-      }
-    }
-    version: WildcardVersion {
-      build: Array []
-      major: 1
-      minor: 4
-      patch: undefined
-      prerelease: Array []
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 4
-          index: 4
-          line: 1
-        }
-        start: Object {
-          column: 1
-          index: 1
-          line: 1
-        }
-      }
-    }
-  }
-  right: Comparator {
-    operator: '<'
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 8
-        index: 8
-        line: 1
-      }
-      start: Object {
-        column: 5
-        index: 5
-        line: 1
-      }
-    }
-    version: WildcardVersion {
-      build: Array []
-      major: 1
-      minor: 4
-      patch: undefined
-      prerelease: Array []
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 8
-          index: 8
-          line: 1
-        }
-        start: Object {
-          column: 6
-          index: 6
-          line: 1
-        }
-      }
-    }
-  }
-}
-```
-
-### `49`
-
-```javascript
-Comparator {
-  operator: '^'
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 3
-      index: 3
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  version: WildcardVersion {
-    build: Array []
-    major: 1
-    minor: 4
-    patch: undefined
-    prerelease: Array []
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 3
-        index: 3
-        line: 1
-      }
-      start: Object {
-        column: 1
-        index: 1
-        line: 1
-      }
-    }
-  }
+	major: 1
+	minor: 2
+	patch: 3
+	prerelease: Array []
+	build: Array ["build"]
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 6
+			index: 6
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
 }
 ```
 
@@ -2149,689 +143,24 @@ Comparator {
 
 ```javascript
 AbsoluteVersion {
-  major: 1
-  minor: 2
-  patch: 3
-  build: Array ['build']
-  prerelease: Array ['prerelease']
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 17
-      index: 17
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-}
-```
-
-### `50`
-
-```javascript
-LogicalAnd {
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 8
-      index: 8
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  left: Comparator {
-    operator: '^'
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 4
-        index: 4
-        line: 1
-      }
-      start: Object {
-        column: 0
-        index: 0
-        line: 1
-      }
-    }
-    version: WildcardVersion {
-      build: Array []
-      major: 1
-      minor: 4
-      patch: undefined
-      prerelease: Array []
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 4
-          index: 4
-          line: 1
-        }
-        start: Object {
-          column: 1
-          index: 1
-          line: 1
-        }
-      }
-    }
-  }
-  right: Comparator {
-    operator: '^'
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 8
-        index: 8
-        line: 1
-      }
-      start: Object {
-        column: 5
-        index: 5
-        line: 1
-      }
-    }
-    version: WildcardVersion {
-      build: Array []
-      major: 1
-      minor: 4
-      patch: undefined
-      prerelease: Array []
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 8
-          index: 8
-          line: 1
-        }
-        start: Object {
-          column: 6
-          index: 6
-          line: 1
-        }
-      }
-    }
-  }
-}
-```
-
-### `51`
-
-```javascript
-Comparator {
-  operator: '~'
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 3
-      index: 3
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  version: WildcardVersion {
-    build: Array []
-    major: 1
-    minor: 4
-    patch: undefined
-    prerelease: Array []
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 3
-        index: 3
-        line: 1
-      }
-      start: Object {
-        column: 1
-        index: 1
-        line: 1
-      }
-    }
-  }
-}
-```
-
-### `52`
-
-```javascript
-LogicalAnd {
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 8
-      index: 8
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  left: Comparator {
-    operator: '~'
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 4
-        index: 4
-        line: 1
-      }
-      start: Object {
-        column: 0
-        index: 0
-        line: 1
-      }
-    }
-    version: WildcardVersion {
-      build: Array []
-      major: 1
-      minor: 4
-      patch: undefined
-      prerelease: Array []
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 4
-          index: 4
-          line: 1
-        }
-        start: Object {
-          column: 1
-          index: 1
-          line: 1
-        }
-      }
-    }
-  }
-  right: Comparator {
-    operator: '~'
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 8
-        index: 8
-        line: 1
-      }
-      start: Object {
-        column: 5
-        index: 5
-        line: 1
-      }
-    }
-    version: WildcardVersion {
-      build: Array []
-      major: 1
-      minor: 4
-      patch: undefined
-      prerelease: Array []
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 8
-          index: 8
-          line: 1
-        }
-        start: Object {
-          column: 6
-          index: 6
-          line: 1
-        }
-      }
-    }
-  }
-}
-```
-
-### `53`
-
-```javascript
-Comparator {
-  operator: '>='
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 2
-      index: 2
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  version: WildcardVersion {
-    build: Array []
-    major: 1
-    minor: undefined
-    patch: undefined
-    prerelease: Array []
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 2
-        index: 2
-        line: 1
-      }
-      start: Object {
-        column: 2
-        index: 2
-        line: 1
-      }
-    }
-  }
-}
-```
-
-### `54`
-
-```javascript
-LogicalAnd {
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 6
-      index: 6
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  left: Comparator {
-    operator: '>='
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 3
-        index: 3
-        line: 1
-      }
-      start: Object {
-        column: 0
-        index: 0
-        line: 1
-      }
-    }
-    version: WildcardVersion {
-      build: Array []
-      major: 1
-      minor: undefined
-      patch: undefined
-      prerelease: Array []
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 3
-          index: 3
-          line: 1
-        }
-        start: Object {
-          column: 2
-          index: 2
-          line: 1
-        }
-      }
-    }
-  }
-  right: Comparator {
-    operator: '>='
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 6
-        index: 6
-        line: 1
-      }
-      start: Object {
-        column: 4
-        index: 4
-        line: 1
-      }
-    }
-    version: WildcardVersion {
-      build: Array []
-      major: 1
-      minor: undefined
-      patch: undefined
-      prerelease: Array []
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 6
-          index: 6
-          line: 1
-        }
-        start: Object {
-          column: 6
-          index: 6
-          line: 1
-        }
-      }
-    }
-  }
-}
-```
-
-### `55`
-
-```javascript
-Comparator {
-  operator: '<='
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 2
-      index: 2
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  version: WildcardVersion {
-    build: Array []
-    major: 1
-    minor: undefined
-    patch: undefined
-    prerelease: Array []
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 2
-        index: 2
-        line: 1
-      }
-      start: Object {
-        column: 2
-        index: 2
-        line: 1
-      }
-    }
-  }
-}
-```
-
-### `56`
-
-```javascript
-LogicalAnd {
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 6
-      index: 6
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  left: Comparator {
-    operator: '<='
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 3
-        index: 3
-        line: 1
-      }
-      start: Object {
-        column: 0
-        index: 0
-        line: 1
-      }
-    }
-    version: WildcardVersion {
-      build: Array []
-      major: 1
-      minor: undefined
-      patch: undefined
-      prerelease: Array []
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 3
-          index: 3
-          line: 1
-        }
-        start: Object {
-          column: 2
-          index: 2
-          line: 1
-        }
-      }
-    }
-  }
-  right: Comparator {
-    operator: '<='
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 6
-        index: 6
-        line: 1
-      }
-      start: Object {
-        column: 4
-        index: 4
-        line: 1
-      }
-    }
-    version: WildcardVersion {
-      build: Array []
-      major: 1
-      minor: undefined
-      patch: undefined
-      prerelease: Array []
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 6
-          index: 6
-          line: 1
-        }
-        start: Object {
-          column: 6
-          index: 6
-          line: 1
-        }
-      }
-    }
-  }
-}
-```
-
-### `57`
-
-```javascript
-Comparator {
-  operator: '>'
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 1
-      index: 1
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  version: WildcardVersion {
-    build: Array []
-    major: 1
-    minor: undefined
-    patch: undefined
-    prerelease: Array []
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 1
-        index: 1
-        line: 1
-      }
-      start: Object {
-        column: 1
-        index: 1
-        line: 1
-      }
-    }
-  }
-}
-```
-
-### `58`
-
-```javascript
-LogicalAnd {
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 4
-      index: 4
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  left: Comparator {
-    operator: '>'
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 2
-        index: 2
-        line: 1
-      }
-      start: Object {
-        column: 0
-        index: 0
-        line: 1
-      }
-    }
-    version: WildcardVersion {
-      build: Array []
-      major: 1
-      minor: undefined
-      patch: undefined
-      prerelease: Array []
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 2
-          index: 2
-          line: 1
-        }
-        start: Object {
-          column: 1
-          index: 1
-          line: 1
-        }
-      }
-    }
-  }
-  right: Comparator {
-    operator: '>'
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 4
-        index: 4
-        line: 1
-      }
-      start: Object {
-        column: 3
-        index: 3
-        line: 1
-      }
-    }
-    version: WildcardVersion {
-      build: Array []
-      major: 1
-      minor: undefined
-      patch: undefined
-      prerelease: Array []
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 4
-          index: 4
-          line: 1
-        }
-        start: Object {
-          column: 4
-          index: 4
-          line: 1
-        }
-      }
-    }
-  }
-}
-```
-
-### `59`
-
-```javascript
-Comparator {
-  operator: '<'
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 1
-      index: 1
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  version: WildcardVersion {
-    build: Array []
-    major: 1
-    minor: undefined
-    patch: undefined
-    prerelease: Array []
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 1
-        index: 1
-        line: 1
-      }
-      start: Object {
-        column: 1
-        index: 1
-        line: 1
-      }
-    }
-  }
+	major: 1
+	minor: 2
+	patch: 3
+	build: Array ["build"]
+	prerelease: Array ["prerelease"]
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 17
+			index: 17
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
 }
 ```
 
@@ -2839,385 +168,27 @@ Comparator {
 
 ```javascript
 AbsoluteVersion {
-  major: 1
-  minor: 2
-  patch: 3
-  build: Array ['build']
-  prerelease: Array [
-    'pre'
-    2
-  ]
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 12
-      index: 12
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-}
-```
-
-### `60`
-
-```javascript
-LogicalAnd {
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 4
-      index: 4
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  left: Comparator {
-    operator: '<'
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 2
-        index: 2
-        line: 1
-      }
-      start: Object {
-        column: 0
-        index: 0
-        line: 1
-      }
-    }
-    version: WildcardVersion {
-      build: Array []
-      major: 1
-      minor: undefined
-      patch: undefined
-      prerelease: Array []
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 2
-          index: 2
-          line: 1
-        }
-        start: Object {
-          column: 1
-          index: 1
-          line: 1
-        }
-      }
-    }
-  }
-  right: Comparator {
-    operator: '<'
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 4
-        index: 4
-        line: 1
-      }
-      start: Object {
-        column: 3
-        index: 3
-        line: 1
-      }
-    }
-    version: WildcardVersion {
-      build: Array []
-      major: 1
-      minor: undefined
-      patch: undefined
-      prerelease: Array []
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 4
-          index: 4
-          line: 1
-        }
-        start: Object {
-          column: 4
-          index: 4
-          line: 1
-        }
-      }
-    }
-  }
-}
-```
-
-### `61`
-
-```javascript
-Comparator {
-  operator: '^'
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 1
-      index: 1
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  version: WildcardVersion {
-    build: Array []
-    major: 1
-    minor: undefined
-    patch: undefined
-    prerelease: Array []
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 1
-        index: 1
-        line: 1
-      }
-      start: Object {
-        column: 1
-        index: 1
-        line: 1
-      }
-    }
-  }
-}
-```
-
-### `62`
-
-```javascript
-LogicalAnd {
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 4
-      index: 4
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  left: Comparator {
-    operator: '^'
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 2
-        index: 2
-        line: 1
-      }
-      start: Object {
-        column: 0
-        index: 0
-        line: 1
-      }
-    }
-    version: WildcardVersion {
-      build: Array []
-      major: 1
-      minor: undefined
-      patch: undefined
-      prerelease: Array []
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 2
-          index: 2
-          line: 1
-        }
-        start: Object {
-          column: 1
-          index: 1
-          line: 1
-        }
-      }
-    }
-  }
-  right: Comparator {
-    operator: '^'
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 4
-        index: 4
-        line: 1
-      }
-      start: Object {
-        column: 3
-        index: 3
-        line: 1
-      }
-    }
-    version: WildcardVersion {
-      build: Array []
-      major: 1
-      minor: undefined
-      patch: undefined
-      prerelease: Array []
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 4
-          index: 4
-          line: 1
-        }
-        start: Object {
-          column: 4
-          index: 4
-          line: 1
-        }
-      }
-    }
-  }
-}
-```
-
-### `63`
-
-```javascript
-Comparator {
-  operator: '~'
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 1
-      index: 1
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  version: WildcardVersion {
-    build: Array []
-    major: 1
-    minor: undefined
-    patch: undefined
-    prerelease: Array []
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 1
-        index: 1
-        line: 1
-      }
-      start: Object {
-        column: 1
-        index: 1
-        line: 1
-      }
-    }
-  }
-}
-```
-
-### `64`
-
-```javascript
-LogicalAnd {
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 4
-      index: 4
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  left: Comparator {
-    operator: '~'
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 2
-        index: 2
-        line: 1
-      }
-      start: Object {
-        column: 0
-        index: 0
-        line: 1
-      }
-    }
-    version: WildcardVersion {
-      build: Array []
-      major: 1
-      minor: undefined
-      patch: undefined
-      prerelease: Array []
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 2
-          index: 2
-          line: 1
-        }
-        start: Object {
-          column: 1
-          index: 1
-          line: 1
-        }
-      }
-    }
-  }
-  right: Comparator {
-    operator: '~'
-    loc: Object {
-      filename: undefined
-      end: Object {
-        column: 4
-        index: 4
-        line: 1
-      }
-      start: Object {
-        column: 3
-        index: 3
-        line: 1
-      }
-    }
-    version: WildcardVersion {
-      build: Array []
-      major: 1
-      minor: undefined
-      patch: undefined
-      prerelease: Array []
-      loc: Object {
-        filename: undefined
-        end: Object {
-          column: 4
-          index: 4
-          line: 1
-        }
-        start: Object {
-          column: 4
-          index: 4
-          line: 1
-        }
-      }
-    }
-  }
+	major: 1
+	minor: 2
+	patch: 3
+	build: Array ["build"]
+	prerelease: Array [
+		"pre"
+		2
+	]
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 12
+			index: 12
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
 }
 ```
 
@@ -3225,31 +196,31 @@ LogicalAnd {
 
 ```javascript
 AbsoluteVersion {
-  major: 1
-  minor: 2
-  patch: 3
-  build: Array ['build']
-  prerelease: Array [
-    'pre'
-    2
-    3
-    4
-    5
-    'foo'
-  ]
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 22
-      index: 22
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
+	major: 1
+	minor: 2
+	patch: 3
+	build: Array ["build"]
+	prerelease: Array [
+		"pre"
+		2
+		3
+		4
+		5
+		"foo"
+	]
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 22
+			index: 22
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
 }
 ```
 
@@ -3257,37 +228,37 @@ AbsoluteVersion {
 
 ```javascript
 AbsoluteVersion {
-  major: 1
-  minor: 2
-  patch: 3
-  build: Array [
-    'build'
-    2
-    3
-    4
-    'foo'
-  ]
-  prerelease: Array [
-    'pre'
-    2
-    3
-    4
-    5
-    'foo'
-  ]
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 34
-      index: 34
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
+	major: 1
+	minor: 2
+	patch: 3
+	build: Array [
+		"build"
+		2
+		3
+		4
+		"foo"
+	]
+	prerelease: Array [
+		"pre"
+		2
+		3
+		4
+		5
+		"foo"
+	]
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 34
+			index: 34
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
 }
 ```
 
@@ -3295,26 +266,3055 @@ AbsoluteVersion {
 
 ```javascript
 AbsoluteVersion {
-  major: 1
-  minor: 2
-  patch: 3
-  build: Array ['45build']
-  prerelease: Array [
-    '45pre'
-    '42yes'
-  ]
-  loc: Object {
-    filename: undefined
-    end: Object {
-      column: 20
-      index: 20
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
+	major: 1
+	minor: 2
+	patch: 3
+	build: Array ["45build"]
+	prerelease: Array [
+		"45pre"
+		"42yes"
+	]
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 20
+			index: 20
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+}
+```
+
+### `10`
+
+```javascript
+VersionRange {
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 8
+			index: 8
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	left: Wildcard {
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 1
+				index: 1
+				line: 1
+			}
+			start: Object {
+				column: 0
+				index: 0
+				line: 1
+			}
+		}
+	}
+	right: AbsoluteVersion {
+		build: Array []
+		major: 1
+		minor: 2
+		patch: 3
+		prerelease: Array []
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 8
+				index: 8
+				line: 1
+			}
+			start: Object {
+				column: 4
+				index: 4
+				line: 1
+			}
+		}
+	}
+}
+```
+
+### `11`
+
+```javascript
+AbsoluteVersion {
+	build: Array []
+	major: 1
+	minor: 2
+	patch: 3
+	prerelease: Array []
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 5
+			index: 5
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+}
+```
+
+### `12`
+
+```javascript
+Wildcard {
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+}
+```
+
+### `13`
+
+```javascript
+Wildcard {
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+}
+```
+
+### `14`
+
+```javascript
+AbsoluteVersion {
+	build: Array []
+	major: 1
+	minor: 2
+	patch: 3
+	prerelease: Array ["prerelease"]
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 5
+			index: 5
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+}
+```
+
+### `15`
+
+```javascript
+WildcardVersion {
+	build: Array []
+	major: 1
+	minor: undefined
+	patch: undefined
+	prerelease: Array []
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+}
+```
+
+### `16`
+
+```javascript
+WildcardVersion {
+	build: Array []
+	major: 1
+	minor: 2
+	patch: undefined
+	prerelease: Array []
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 2
+			index: 2
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+}
+```
+
+### `17`
+
+```javascript
+WildcardVersion {
+	build: Array []
+	major: 1
+	minor: undefined
+	patch: undefined
+	prerelease: Array []
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 2
+			index: 2
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+}
+```
+
+### `18`
+
+```javascript
+WildcardVersion {
+	build: Array []
+	major: 1
+	minor: undefined
+	patch: 3
+	prerelease: Array []
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 4
+			index: 4
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+}
+```
+
+### `19`
+
+```javascript
+WildcardVersion {
+	build: Array []
+	major: 1
+	minor: 2
+	patch: undefined
+	prerelease: Array []
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 4
+			index: 4
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+}
+```
+
+### `20`
+
+```javascript
+WildcardVersion {
+	build: Array []
+	major: 1
+	minor: undefined
+	patch: undefined
+	prerelease: Array []
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 2
+			index: 2
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+}
+```
+
+### `21`
+
+```javascript
+WildcardVersion {
+	build: Array []
+	major: 1
+	minor: undefined
+	patch: 3
+	prerelease: Array []
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 4
+			index: 4
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+}
+```
+
+### `22`
+
+```javascript
+WildcardVersion {
+	build: Array []
+	major: 1
+	minor: 2
+	patch: undefined
+	prerelease: Array []
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 4
+			index: 4
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+}
+```
+
+### `23`
+
+```javascript
+WildcardVersion {
+	build: Array []
+	major: 1
+	minor: undefined
+	patch: undefined
+	prerelease: Array []
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 2
+			index: 2
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+}
+```
+
+### `24`
+
+```javascript
+WildcardVersion {
+	build: Array []
+	major: 1
+	minor: undefined
+	patch: 3
+	prerelease: Array []
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 4
+			index: 4
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+}
+```
+
+### `25`
+
+```javascript
+WildcardVersion {
+	build: Array []
+	major: 1
+	minor: 2
+	patch: undefined
+	prerelease: Array []
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 4
+			index: 4
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+}
+```
+
+### `26`
+
+```javascript
+VersionRange {
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 12
+			index: 12
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	left: AbsoluteVersion {
+		build: Array []
+		major: 1
+		minor: 2
+		patch: 3
+		prerelease: Array []
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 5
+				index: 5
+				line: 1
+			}
+			start: Object {
+				column: 0
+				index: 0
+				line: 1
+			}
+		}
+	}
+	right: AbsoluteVersion {
+		build: Array []
+		major: 1
+		minor: 2
+		patch: 4
+		prerelease: Array []
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 12
+				index: 12
+				line: 1
+			}
+			start: Object {
+				column: 8
+				index: 8
+				line: 1
+			}
+		}
+	}
+}
+```
+
+### `27`
+
+```javascript
+LogicalOr {
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 7
+			index: 7
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	left: WildcardVersion {
+		build: Array []
+		major: 1
+		minor: 2
+		patch: undefined
+		prerelease: Array []
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 3
+				index: 3
+				line: 1
+			}
+			start: Object {
+				column: 0
+				index: 0
+				line: 1
+			}
+		}
+	}
+	right: WildcardVersion {
+		build: Array []
+		major: 3
+		minor: undefined
+		patch: undefined
+		prerelease: Array []
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 7
+				index: 7
+				line: 1
+			}
+			start: Object {
+				column: 7
+				index: 7
+				line: 1
+			}
+		}
+	}
+}
+```
+
+### `28`
+
+```javascript
+LogicalOr {
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 10
+			index: 10
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	left: WildcardVersion {
+		build: Array []
+		major: 1
+		minor: undefined
+		patch: undefined
+		prerelease: Array []
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 1
+				index: 1
+				line: 1
+			}
+			start: Object {
+				column: 0
+				index: 0
+				line: 1
+			}
+		}
+	}
+	right: LogicalOr {
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 10
+				index: 10
+				line: 1
+			}
+			start: Object {
+				column: 5
+				index: 5
+				line: 1
+			}
+		}
+		left: WildcardVersion {
+			build: Array []
+			major: 2
+			minor: undefined
+			patch: undefined
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 6
+					index: 6
+					line: 1
+				}
+				start: Object {
+					column: 5
+					index: 5
+					line: 1
+				}
+			}
+		}
+		right: WildcardVersion {
+			build: Array []
+			major: 3
+			minor: undefined
+			patch: undefined
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 10
+					index: 10
+					line: 1
+				}
+				start: Object {
+					column: 10
+					index: 10
+					line: 1
+				}
+			}
+		}
+	}
+}
+```
+
+### `29`
+
+```javascript
+Comparator {
+	operator: ">="
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 6
+			index: 6
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	version: AbsoluteVersion {
+		build: Array []
+		major: 1
+		minor: 4
+		patch: 5
+		prerelease: Array []
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 6
+				index: 6
+				line: 1
+			}
+			start: Object {
+				column: 2
+				index: 2
+				line: 1
+			}
+		}
+	}
+}
+```
+
+### `30`
+
+```javascript
+LogicalAnd {
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 14
+			index: 14
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	left: Comparator {
+		operator: ">="
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 7
+				index: 7
+				line: 1
+			}
+			start: Object {
+				column: 0
+				index: 0
+				line: 1
+			}
+		}
+		version: AbsoluteVersion {
+			build: Array []
+			major: 1
+			minor: 4
+			patch: 5
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 7
+					index: 7
+					line: 1
+				}
+				start: Object {
+					column: 2
+					index: 2
+					line: 1
+				}
+			}
+		}
+	}
+	right: Comparator {
+		operator: ">="
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 14
+				index: 14
+				line: 1
+			}
+			start: Object {
+				column: 8
+				index: 8
+				line: 1
+			}
+		}
+		version: AbsoluteVersion {
+			build: Array []
+			major: 1
+			minor: 4
+			patch: 5
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 14
+					index: 14
+					line: 1
+				}
+				start: Object {
+					column: 10
+					index: 10
+					line: 1
+				}
+			}
+		}
+	}
+}
+```
+
+### `31`
+
+```javascript
+Comparator {
+	operator: "<="
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 6
+			index: 6
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	version: AbsoluteVersion {
+		build: Array []
+		major: 1
+		minor: 4
+		patch: 5
+		prerelease: Array []
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 6
+				index: 6
+				line: 1
+			}
+			start: Object {
+				column: 2
+				index: 2
+				line: 1
+			}
+		}
+	}
+}
+```
+
+### `32`
+
+```javascript
+LogicalAnd {
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 14
+			index: 14
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	left: Comparator {
+		operator: "<="
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 7
+				index: 7
+				line: 1
+			}
+			start: Object {
+				column: 0
+				index: 0
+				line: 1
+			}
+		}
+		version: AbsoluteVersion {
+			build: Array []
+			major: 1
+			minor: 4
+			patch: 5
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 7
+					index: 7
+					line: 1
+				}
+				start: Object {
+					column: 2
+					index: 2
+					line: 1
+				}
+			}
+		}
+	}
+	right: Comparator {
+		operator: "<="
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 14
+				index: 14
+				line: 1
+			}
+			start: Object {
+				column: 8
+				index: 8
+				line: 1
+			}
+		}
+		version: AbsoluteVersion {
+			build: Array []
+			major: 1
+			minor: 4
+			patch: 5
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 14
+					index: 14
+					line: 1
+				}
+				start: Object {
+					column: 10
+					index: 10
+					line: 1
+				}
+			}
+		}
+	}
+}
+```
+
+### `33`
+
+```javascript
+Comparator {
+	operator: ">"
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 5
+			index: 5
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	version: AbsoluteVersion {
+		build: Array []
+		major: 1
+		minor: 4
+		patch: 5
+		prerelease: Array []
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 5
+				index: 5
+				line: 1
+			}
+			start: Object {
+				column: 1
+				index: 1
+				line: 1
+			}
+		}
+	}
+}
+```
+
+### `34`
+
+```javascript
+LogicalAnd {
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 12
+			index: 12
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	left: Comparator {
+		operator: ">"
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 6
+				index: 6
+				line: 1
+			}
+			start: Object {
+				column: 0
+				index: 0
+				line: 1
+			}
+		}
+		version: AbsoluteVersion {
+			build: Array []
+			major: 1
+			minor: 4
+			patch: 5
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 6
+					index: 6
+					line: 1
+				}
+				start: Object {
+					column: 1
+					index: 1
+					line: 1
+				}
+			}
+		}
+	}
+	right: Comparator {
+		operator: ">"
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 12
+				index: 12
+				line: 1
+			}
+			start: Object {
+				column: 7
+				index: 7
+				line: 1
+			}
+		}
+		version: AbsoluteVersion {
+			build: Array []
+			major: 1
+			minor: 4
+			patch: 5
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 12
+					index: 12
+					line: 1
+				}
+				start: Object {
+					column: 8
+					index: 8
+					line: 1
+				}
+			}
+		}
+	}
+}
+```
+
+### `35`
+
+```javascript
+Comparator {
+	operator: "<"
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 5
+			index: 5
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	version: AbsoluteVersion {
+		build: Array []
+		major: 1
+		minor: 4
+		patch: 5
+		prerelease: Array []
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 5
+				index: 5
+				line: 1
+			}
+			start: Object {
+				column: 1
+				index: 1
+				line: 1
+			}
+		}
+	}
+}
+```
+
+### `36`
+
+```javascript
+LogicalAnd {
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 12
+			index: 12
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	left: Comparator {
+		operator: "<"
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 6
+				index: 6
+				line: 1
+			}
+			start: Object {
+				column: 0
+				index: 0
+				line: 1
+			}
+		}
+		version: AbsoluteVersion {
+			build: Array []
+			major: 1
+			minor: 4
+			patch: 5
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 6
+					index: 6
+					line: 1
+				}
+				start: Object {
+					column: 1
+					index: 1
+					line: 1
+				}
+			}
+		}
+	}
+	right: Comparator {
+		operator: "<"
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 12
+				index: 12
+				line: 1
+			}
+			start: Object {
+				column: 7
+				index: 7
+				line: 1
+			}
+		}
+		version: AbsoluteVersion {
+			build: Array []
+			major: 1
+			minor: 4
+			patch: 5
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 12
+					index: 12
+					line: 1
+				}
+				start: Object {
+					column: 8
+					index: 8
+					line: 1
+				}
+			}
+		}
+	}
+}
+```
+
+### `37`
+
+```javascript
+Comparator {
+	operator: "^"
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 5
+			index: 5
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	version: AbsoluteVersion {
+		build: Array []
+		major: 1
+		minor: 4
+		patch: 5
+		prerelease: Array []
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 5
+				index: 5
+				line: 1
+			}
+			start: Object {
+				column: 1
+				index: 1
+				line: 1
+			}
+		}
+	}
+}
+```
+
+### `38`
+
+```javascript
+LogicalAnd {
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 12
+			index: 12
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	left: Comparator {
+		operator: "^"
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 6
+				index: 6
+				line: 1
+			}
+			start: Object {
+				column: 0
+				index: 0
+				line: 1
+			}
+		}
+		version: AbsoluteVersion {
+			build: Array []
+			major: 1
+			minor: 4
+			patch: 5
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 6
+					index: 6
+					line: 1
+				}
+				start: Object {
+					column: 1
+					index: 1
+					line: 1
+				}
+			}
+		}
+	}
+	right: Comparator {
+		operator: "^"
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 12
+				index: 12
+				line: 1
+			}
+			start: Object {
+				column: 7
+				index: 7
+				line: 1
+			}
+		}
+		version: AbsoluteVersion {
+			build: Array []
+			major: 1
+			minor: 4
+			patch: 5
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 12
+					index: 12
+					line: 1
+				}
+				start: Object {
+					column: 8
+					index: 8
+					line: 1
+				}
+			}
+		}
+	}
+}
+```
+
+### `39`
+
+```javascript
+Comparator {
+	operator: "~"
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 5
+			index: 5
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	version: AbsoluteVersion {
+		build: Array []
+		major: 1
+		minor: 4
+		patch: 5
+		prerelease: Array []
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 5
+				index: 5
+				line: 1
+			}
+			start: Object {
+				column: 1
+				index: 1
+				line: 1
+			}
+		}
+	}
+}
+```
+
+### `40`
+
+```javascript
+LogicalAnd {
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 12
+			index: 12
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	left: Comparator {
+		operator: "~"
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 6
+				index: 6
+				line: 1
+			}
+			start: Object {
+				column: 0
+				index: 0
+				line: 1
+			}
+		}
+		version: AbsoluteVersion {
+			build: Array []
+			major: 1
+			minor: 4
+			patch: 5
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 6
+					index: 6
+					line: 1
+				}
+				start: Object {
+					column: 1
+					index: 1
+					line: 1
+				}
+			}
+		}
+	}
+	right: Comparator {
+		operator: "~"
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 12
+				index: 12
+				line: 1
+			}
+			start: Object {
+				column: 7
+				index: 7
+				line: 1
+			}
+		}
+		version: AbsoluteVersion {
+			build: Array []
+			major: 1
+			minor: 4
+			patch: 5
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 12
+					index: 12
+					line: 1
+				}
+				start: Object {
+					column: 8
+					index: 8
+					line: 1
+				}
+			}
+		}
+	}
+}
+```
+
+### `41`
+
+```javascript
+Comparator {
+	operator: ">="
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 4
+			index: 4
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	version: WildcardVersion {
+		build: Array []
+		major: 1
+		minor: 4
+		patch: undefined
+		prerelease: Array []
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 4
+				index: 4
+				line: 1
+			}
+			start: Object {
+				column: 2
+				index: 2
+				line: 1
+			}
+		}
+	}
+}
+```
+
+### `42`
+
+```javascript
+LogicalAnd {
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 10
+			index: 10
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	left: Comparator {
+		operator: ">="
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 5
+				index: 5
+				line: 1
+			}
+			start: Object {
+				column: 0
+				index: 0
+				line: 1
+			}
+		}
+		version: WildcardVersion {
+			build: Array []
+			major: 1
+			minor: 4
+			patch: undefined
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 5
+					index: 5
+					line: 1
+				}
+				start: Object {
+					column: 2
+					index: 2
+					line: 1
+				}
+			}
+		}
+	}
+	right: Comparator {
+		operator: ">="
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 10
+				index: 10
+				line: 1
+			}
+			start: Object {
+				column: 6
+				index: 6
+				line: 1
+			}
+		}
+		version: WildcardVersion {
+			build: Array []
+			major: 1
+			minor: 4
+			patch: undefined
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 10
+					index: 10
+					line: 1
+				}
+				start: Object {
+					column: 8
+					index: 8
+					line: 1
+				}
+			}
+		}
+	}
+}
+```
+
+### `43`
+
+```javascript
+Comparator {
+	operator: "<="
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 4
+			index: 4
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	version: WildcardVersion {
+		build: Array []
+		major: 1
+		minor: 4
+		patch: undefined
+		prerelease: Array []
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 4
+				index: 4
+				line: 1
+			}
+			start: Object {
+				column: 2
+				index: 2
+				line: 1
+			}
+		}
+	}
+}
+```
+
+### `44`
+
+```javascript
+LogicalAnd {
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 10
+			index: 10
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	left: Comparator {
+		operator: "<="
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 5
+				index: 5
+				line: 1
+			}
+			start: Object {
+				column: 0
+				index: 0
+				line: 1
+			}
+		}
+		version: WildcardVersion {
+			build: Array []
+			major: 1
+			minor: 4
+			patch: undefined
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 5
+					index: 5
+					line: 1
+				}
+				start: Object {
+					column: 2
+					index: 2
+					line: 1
+				}
+			}
+		}
+	}
+	right: Comparator {
+		operator: "<="
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 10
+				index: 10
+				line: 1
+			}
+			start: Object {
+				column: 6
+				index: 6
+				line: 1
+			}
+		}
+		version: WildcardVersion {
+			build: Array []
+			major: 1
+			minor: 4
+			patch: undefined
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 10
+					index: 10
+					line: 1
+				}
+				start: Object {
+					column: 8
+					index: 8
+					line: 1
+				}
+			}
+		}
+	}
+}
+```
+
+### `45`
+
+```javascript
+Comparator {
+	operator: ">"
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 3
+			index: 3
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	version: WildcardVersion {
+		build: Array []
+		major: 1
+		minor: 4
+		patch: undefined
+		prerelease: Array []
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 3
+				index: 3
+				line: 1
+			}
+			start: Object {
+				column: 1
+				index: 1
+				line: 1
+			}
+		}
+	}
+}
+```
+
+### `46`
+
+```javascript
+LogicalAnd {
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 8
+			index: 8
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	left: Comparator {
+		operator: ">"
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 4
+				index: 4
+				line: 1
+			}
+			start: Object {
+				column: 0
+				index: 0
+				line: 1
+			}
+		}
+		version: WildcardVersion {
+			build: Array []
+			major: 1
+			minor: 4
+			patch: undefined
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 4
+					index: 4
+					line: 1
+				}
+				start: Object {
+					column: 1
+					index: 1
+					line: 1
+				}
+			}
+		}
+	}
+	right: Comparator {
+		operator: ">"
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 8
+				index: 8
+				line: 1
+			}
+			start: Object {
+				column: 5
+				index: 5
+				line: 1
+			}
+		}
+		version: WildcardVersion {
+			build: Array []
+			major: 1
+			minor: 4
+			patch: undefined
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 8
+					index: 8
+					line: 1
+				}
+				start: Object {
+					column: 6
+					index: 6
+					line: 1
+				}
+			}
+		}
+	}
+}
+```
+
+### `47`
+
+```javascript
+Comparator {
+	operator: "<"
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 3
+			index: 3
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	version: WildcardVersion {
+		build: Array []
+		major: 1
+		minor: 4
+		patch: undefined
+		prerelease: Array []
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 3
+				index: 3
+				line: 1
+			}
+			start: Object {
+				column: 1
+				index: 1
+				line: 1
+			}
+		}
+	}
+}
+```
+
+### `48`
+
+```javascript
+LogicalAnd {
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 8
+			index: 8
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	left: Comparator {
+		operator: "<"
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 4
+				index: 4
+				line: 1
+			}
+			start: Object {
+				column: 0
+				index: 0
+				line: 1
+			}
+		}
+		version: WildcardVersion {
+			build: Array []
+			major: 1
+			minor: 4
+			patch: undefined
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 4
+					index: 4
+					line: 1
+				}
+				start: Object {
+					column: 1
+					index: 1
+					line: 1
+				}
+			}
+		}
+	}
+	right: Comparator {
+		operator: "<"
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 8
+				index: 8
+				line: 1
+			}
+			start: Object {
+				column: 5
+				index: 5
+				line: 1
+			}
+		}
+		version: WildcardVersion {
+			build: Array []
+			major: 1
+			minor: 4
+			patch: undefined
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 8
+					index: 8
+					line: 1
+				}
+				start: Object {
+					column: 6
+					index: 6
+					line: 1
+				}
+			}
+		}
+	}
+}
+```
+
+### `49`
+
+```javascript
+Comparator {
+	operator: "^"
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 3
+			index: 3
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	version: WildcardVersion {
+		build: Array []
+		major: 1
+		minor: 4
+		patch: undefined
+		prerelease: Array []
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 3
+				index: 3
+				line: 1
+			}
+			start: Object {
+				column: 1
+				index: 1
+				line: 1
+			}
+		}
+	}
+}
+```
+
+### `50`
+
+```javascript
+LogicalAnd {
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 8
+			index: 8
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	left: Comparator {
+		operator: "^"
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 4
+				index: 4
+				line: 1
+			}
+			start: Object {
+				column: 0
+				index: 0
+				line: 1
+			}
+		}
+		version: WildcardVersion {
+			build: Array []
+			major: 1
+			minor: 4
+			patch: undefined
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 4
+					index: 4
+					line: 1
+				}
+				start: Object {
+					column: 1
+					index: 1
+					line: 1
+				}
+			}
+		}
+	}
+	right: Comparator {
+		operator: "^"
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 8
+				index: 8
+				line: 1
+			}
+			start: Object {
+				column: 5
+				index: 5
+				line: 1
+			}
+		}
+		version: WildcardVersion {
+			build: Array []
+			major: 1
+			minor: 4
+			patch: undefined
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 8
+					index: 8
+					line: 1
+				}
+				start: Object {
+					column: 6
+					index: 6
+					line: 1
+				}
+			}
+		}
+	}
+}
+```
+
+### `51`
+
+```javascript
+Comparator {
+	operator: "~"
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 3
+			index: 3
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	version: WildcardVersion {
+		build: Array []
+		major: 1
+		minor: 4
+		patch: undefined
+		prerelease: Array []
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 3
+				index: 3
+				line: 1
+			}
+			start: Object {
+				column: 1
+				index: 1
+				line: 1
+			}
+		}
+	}
+}
+```
+
+### `52`
+
+```javascript
+LogicalAnd {
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 8
+			index: 8
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	left: Comparator {
+		operator: "~"
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 4
+				index: 4
+				line: 1
+			}
+			start: Object {
+				column: 0
+				index: 0
+				line: 1
+			}
+		}
+		version: WildcardVersion {
+			build: Array []
+			major: 1
+			minor: 4
+			patch: undefined
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 4
+					index: 4
+					line: 1
+				}
+				start: Object {
+					column: 1
+					index: 1
+					line: 1
+				}
+			}
+		}
+	}
+	right: Comparator {
+		operator: "~"
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 8
+				index: 8
+				line: 1
+			}
+			start: Object {
+				column: 5
+				index: 5
+				line: 1
+			}
+		}
+		version: WildcardVersion {
+			build: Array []
+			major: 1
+			minor: 4
+			patch: undefined
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 8
+					index: 8
+					line: 1
+				}
+				start: Object {
+					column: 6
+					index: 6
+					line: 1
+				}
+			}
+		}
+	}
+}
+```
+
+### `53`
+
+```javascript
+Comparator {
+	operator: ">="
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 2
+			index: 2
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	version: WildcardVersion {
+		build: Array []
+		major: 1
+		minor: undefined
+		patch: undefined
+		prerelease: Array []
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 2
+				index: 2
+				line: 1
+			}
+			start: Object {
+				column: 2
+				index: 2
+				line: 1
+			}
+		}
+	}
+}
+```
+
+### `54`
+
+```javascript
+LogicalAnd {
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 6
+			index: 6
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	left: Comparator {
+		operator: ">="
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 3
+				index: 3
+				line: 1
+			}
+			start: Object {
+				column: 0
+				index: 0
+				line: 1
+			}
+		}
+		version: WildcardVersion {
+			build: Array []
+			major: 1
+			minor: undefined
+			patch: undefined
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 3
+					index: 3
+					line: 1
+				}
+				start: Object {
+					column: 2
+					index: 2
+					line: 1
+				}
+			}
+		}
+	}
+	right: Comparator {
+		operator: ">="
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 6
+				index: 6
+				line: 1
+			}
+			start: Object {
+				column: 4
+				index: 4
+				line: 1
+			}
+		}
+		version: WildcardVersion {
+			build: Array []
+			major: 1
+			minor: undefined
+			patch: undefined
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 6
+					index: 6
+					line: 1
+				}
+				start: Object {
+					column: 6
+					index: 6
+					line: 1
+				}
+			}
+		}
+	}
+}
+```
+
+### `55`
+
+```javascript
+Comparator {
+	operator: "<="
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 2
+			index: 2
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	version: WildcardVersion {
+		build: Array []
+		major: 1
+		minor: undefined
+		patch: undefined
+		prerelease: Array []
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 2
+				index: 2
+				line: 1
+			}
+			start: Object {
+				column: 2
+				index: 2
+				line: 1
+			}
+		}
+	}
+}
+```
+
+### `56`
+
+```javascript
+LogicalAnd {
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 6
+			index: 6
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	left: Comparator {
+		operator: "<="
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 3
+				index: 3
+				line: 1
+			}
+			start: Object {
+				column: 0
+				index: 0
+				line: 1
+			}
+		}
+		version: WildcardVersion {
+			build: Array []
+			major: 1
+			minor: undefined
+			patch: undefined
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 3
+					index: 3
+					line: 1
+				}
+				start: Object {
+					column: 2
+					index: 2
+					line: 1
+				}
+			}
+		}
+	}
+	right: Comparator {
+		operator: "<="
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 6
+				index: 6
+				line: 1
+			}
+			start: Object {
+				column: 4
+				index: 4
+				line: 1
+			}
+		}
+		version: WildcardVersion {
+			build: Array []
+			major: 1
+			minor: undefined
+			patch: undefined
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 6
+					index: 6
+					line: 1
+				}
+				start: Object {
+					column: 6
+					index: 6
+					line: 1
+				}
+			}
+		}
+	}
+}
+```
+
+### `57`
+
+```javascript
+Comparator {
+	operator: ">"
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 1
+			index: 1
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	version: WildcardVersion {
+		build: Array []
+		major: 1
+		minor: undefined
+		patch: undefined
+		prerelease: Array []
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 1
+				index: 1
+				line: 1
+			}
+			start: Object {
+				column: 1
+				index: 1
+				line: 1
+			}
+		}
+	}
+}
+```
+
+### `58`
+
+```javascript
+LogicalAnd {
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 4
+			index: 4
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	left: Comparator {
+		operator: ">"
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 2
+				index: 2
+				line: 1
+			}
+			start: Object {
+				column: 0
+				index: 0
+				line: 1
+			}
+		}
+		version: WildcardVersion {
+			build: Array []
+			major: 1
+			minor: undefined
+			patch: undefined
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 2
+					index: 2
+					line: 1
+				}
+				start: Object {
+					column: 1
+					index: 1
+					line: 1
+				}
+			}
+		}
+	}
+	right: Comparator {
+		operator: ">"
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 4
+				index: 4
+				line: 1
+			}
+			start: Object {
+				column: 3
+				index: 3
+				line: 1
+			}
+		}
+		version: WildcardVersion {
+			build: Array []
+			major: 1
+			minor: undefined
+			patch: undefined
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 4
+					index: 4
+					line: 1
+				}
+				start: Object {
+					column: 4
+					index: 4
+					line: 1
+				}
+			}
+		}
+	}
+}
+```
+
+### `59`
+
+```javascript
+Comparator {
+	operator: "<"
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 1
+			index: 1
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	version: WildcardVersion {
+		build: Array []
+		major: 1
+		minor: undefined
+		patch: undefined
+		prerelease: Array []
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 1
+				index: 1
+				line: 1
+			}
+			start: Object {
+				column: 1
+				index: 1
+				line: 1
+			}
+		}
+	}
+}
+```
+
+### `60`
+
+```javascript
+LogicalAnd {
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 4
+			index: 4
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	left: Comparator {
+		operator: "<"
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 2
+				index: 2
+				line: 1
+			}
+			start: Object {
+				column: 0
+				index: 0
+				line: 1
+			}
+		}
+		version: WildcardVersion {
+			build: Array []
+			major: 1
+			minor: undefined
+			patch: undefined
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 2
+					index: 2
+					line: 1
+				}
+				start: Object {
+					column: 1
+					index: 1
+					line: 1
+				}
+			}
+		}
+	}
+	right: Comparator {
+		operator: "<"
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 4
+				index: 4
+				line: 1
+			}
+			start: Object {
+				column: 3
+				index: 3
+				line: 1
+			}
+		}
+		version: WildcardVersion {
+			build: Array []
+			major: 1
+			minor: undefined
+			patch: undefined
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 4
+					index: 4
+					line: 1
+				}
+				start: Object {
+					column: 4
+					index: 4
+					line: 1
+				}
+			}
+		}
+	}
+}
+```
+
+### `61`
+
+```javascript
+Comparator {
+	operator: "^"
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 1
+			index: 1
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	version: WildcardVersion {
+		build: Array []
+		major: 1
+		minor: undefined
+		patch: undefined
+		prerelease: Array []
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 1
+				index: 1
+				line: 1
+			}
+			start: Object {
+				column: 1
+				index: 1
+				line: 1
+			}
+		}
+	}
+}
+```
+
+### `62`
+
+```javascript
+LogicalAnd {
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 4
+			index: 4
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	left: Comparator {
+		operator: "^"
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 2
+				index: 2
+				line: 1
+			}
+			start: Object {
+				column: 0
+				index: 0
+				line: 1
+			}
+		}
+		version: WildcardVersion {
+			build: Array []
+			major: 1
+			minor: undefined
+			patch: undefined
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 2
+					index: 2
+					line: 1
+				}
+				start: Object {
+					column: 1
+					index: 1
+					line: 1
+				}
+			}
+		}
+	}
+	right: Comparator {
+		operator: "^"
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 4
+				index: 4
+				line: 1
+			}
+			start: Object {
+				column: 3
+				index: 3
+				line: 1
+			}
+		}
+		version: WildcardVersion {
+			build: Array []
+			major: 1
+			minor: undefined
+			patch: undefined
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 4
+					index: 4
+					line: 1
+				}
+				start: Object {
+					column: 4
+					index: 4
+					line: 1
+				}
+			}
+		}
+	}
+}
+```
+
+### `63`
+
+```javascript
+Comparator {
+	operator: "~"
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 1
+			index: 1
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	version: WildcardVersion {
+		build: Array []
+		major: 1
+		minor: undefined
+		patch: undefined
+		prerelease: Array []
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 1
+				index: 1
+				line: 1
+			}
+			start: Object {
+				column: 1
+				index: 1
+				line: 1
+			}
+		}
+	}
+}
+```
+
+### `64`
+
+```javascript
+LogicalAnd {
+	loc: Object {
+		filename: undefined
+		end: Object {
+			column: 4
+			index: 4
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	left: Comparator {
+		operator: "~"
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 2
+				index: 2
+				line: 1
+			}
+			start: Object {
+				column: 0
+				index: 0
+				line: 1
+			}
+		}
+		version: WildcardVersion {
+			build: Array []
+			major: 1
+			minor: undefined
+			patch: undefined
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 2
+					index: 2
+					line: 1
+				}
+				start: Object {
+					column: 1
+					index: 1
+					line: 1
+				}
+			}
+		}
+	}
+	right: Comparator {
+		operator: "~"
+		loc: Object {
+			filename: undefined
+			end: Object {
+				column: 4
+				index: 4
+				line: 1
+			}
+			start: Object {
+				column: 3
+				index: 3
+				line: 1
+			}
+		}
+		version: WildcardVersion {
+			build: Array []
+			major: 1
+			minor: undefined
+			patch: undefined
+			prerelease: Array []
+			loc: Object {
+				filename: undefined
+				end: Object {
+					column: 4
+					index: 4
+					line: 1
+				}
+				start: Object {
+					column: 4
+					index: 4
+					line: 1
+				}
+			}
+		}
+	}
 }
 ```

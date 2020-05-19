@@ -6,294 +6,305 @@
  */
 
 import {
-  PathPatternNode,
-  PatternPartNode,
-  PatternParts,
-  PatternSegmentNode,
-  PatternSegments,
-  Tokens,
-} from './types';
-import {ParserOptions, createParser} from '@romejs/parser-core';
-import {Number0, ob1Add, ob1Coerce0, ob1Get0, ob1Number0} from '@romejs/ob1';
-import {descriptions} from '@romejs/diagnostics';
+	PathPatternNode,
+	PatternPartNode,
+	PatternParts,
+	PatternSegmentNode,
+	PatternSegments,
+	Tokens,
+} from "./types";
+import {ParserOptions, createParser} from "@romejs/parser-core";
+import {Number0, ob1Add, ob1Coerce0, ob1Get0, ob1Number0} from "@romejs/ob1";
+import {descriptions} from "@romejs/diagnostics";
 
-type ParseMode = 'path' | 'pattern';
+type ParseMode = "path" | "pattern";
 
 export type PathMatchParserOptions = ParserOptions;
 
 const createPathMatchParser = createParser((ParserCore) =>
-  class PathMatchParser extends ParserCore<Tokens, void> {
-    constructor(opts: PathMatchParserOptions, mode: ParseMode) {
-      super(opts, 'parse/patchMatch');
-      this.mode = mode;
-    }
+	class PathMatchParser extends ParserCore<Tokens, void> {
+		constructor(opts: PathMatchParserOptions, mode: ParseMode) {
+			super(opts, "parse/patchMatch");
+			this.mode = mode;
+		}
 
-    mode: ParseMode;
+		mode: ParseMode;
 
-    isWordCharacter(char: string, index: Number0, input: string): boolean {
-      const prevChar = input[ob1Get0(index) - 1];
-      const nextChar = input[ob1Get0(index) + 1];
+		isWordCharacter(char: string, index: Number0, input: string): boolean {
+			const prevChar = input[ob1Get0(index) - 1];
+			const nextChar = input[ob1Get0(index) + 1];
 
-      // Windows separator
-      if (char === '\\' && nextChar === '\\') {
-        return false;
-      }
+			// Windows separator
+			if (char === "\\" && nextChar === "\\") {
+				return false;
+			}
 
-      // Any escaped character is a word character
-      if (prevChar === '\\') {
-        return true;
-      }
+			// Any escaped character is a word character
+			if (prevChar === "\\") {
+				return true;
+			}
 
-      // Unix separator and wildcard
-      if (char === '/') {
-        return false;
-      }
+			// Unix separator and wildcard
+			if (char === "/") {
+				return false;
+			}
 
-      if (this.mode === 'pattern') {
-        // Wildcard
-        if (char === '*') {
-          return false;
-        }
+			if (this.mode === "pattern") {
+				// Wildcard
+				if (char === "*") {
+					return false;
+				}
 
-        // Comment
-        if (char === '#') {
-          return false;
-        }
-      }
+				// Comment
+				if (char === "#") {
+					return false;
+				}
+			}
 
-      return true;
-    }
+			return true;
+		}
 
-    tokenize(index: Number0, input: string) {
-      const char = input[ob1Get0(index)];
-      const nextChar = input[ob1Get0(index) + 1];
+		tokenize(index: Number0, input: string) {
+			const char = input[ob1Get0(index)];
+			const nextChar = input[ob1Get0(index) + 1];
 
-      if (this.mode === 'pattern') {
-        if (char === '*') {
-          if (nextChar === '*') {
-            return this.finishToken('DoubleStar', ob1Add(index, 2));
-          } else {
-            return this.finishToken('Star');
-          }
-        } else if (index === ob1Number0 && char === '!') {
-          return this.finishToken('Exclamation');
-        } else if (char === '#') {
-          return this.finishToken('Hash');
-        }
-      }
+			if (this.mode === "pattern") {
+				if (char === "*") {
+					if (nextChar === "*") {
+						return this.finishToken("DoubleStar", ob1Add(index, 2));
+					} else {
+						return this.finishToken("Star");
+					}
+				} else if (index === ob1Number0 && char === "!") {
+					return this.finishToken("Exclamation");
+				} else if (char === "#") {
+					return this.finishToken("Hash");
+				}
+			}
 
-      if (char === '/') {
-        return this.finishToken('Separator');
-      } else if (char === '\\' && nextChar === '\\') {
-        return this.finishToken('Separator', ob1Add(index, 2));
-      }
+			if (char === "/") {
+				return this.finishToken("Separator");
+			} else if (char === "\\" && nextChar === "\\") {
+				return this.finishToken("Separator", ob1Add(index, 2));
+			}
 
-      const [value, end] = this.readInputFrom(
-        index,
-        this.isWordCharacter.bind(this),
-      );
-      return this.finishValueToken('Word', value, end);
-    }
+			const [value, end] = this.readInputFrom(
+				index,
+				this.isWordCharacter.bind(this),
+			);
+			return this.finishValueToken("Word", value, end);
+		}
 
-    eatSeparators(): boolean {
-      let ate = false;
-      while (this.eatToken('Separator') !== undefined) {
-        ate = true;
-      }
-      return ate;
-    }
+		eatSeparators(): boolean {
+			let ate = false;
+			while (this.eatToken("Separator") !== undefined) {
+				ate = true;
+			}
+			return ate;
+		}
 
-    //# Pattern parsing
-    parsePatternSegmentPart(): PatternPartNode {
-      const startPos = this.getPosition();
-      const token = this.getToken();
-      this.nextToken();
+		//# Pattern parsing
+		parsePatternSegmentPart(): PatternPartNode {
+			const startPos = this.getPosition();
+			const token = this.getToken();
+			this.nextToken();
 
-      switch (token.type) {
-        case 'Star':
-          return {
-            type: 'Wildcard',
-            loc: this.finishLoc(startPos),
-          };
+			switch (token.type) {
+				case "Star":
+					return {
+						type: "Wildcard",
+						loc: this.finishLoc(startPos),
+					};
 
-        case 'Word':
-          return {
-            type: 'Word',
-            loc: this.finishLoc(startPos),
-            value: token.value,
-          };
+				case "Word":
+					return {
+						type: "Word",
+						loc: this.finishLoc(startPos),
+						value: token.value,
+					};
 
-        default:
-          throw this.unexpected({
-            start: startPos,
-            description: descriptions.PATH_MATCH.INVALID_PATTERN_SEGMENT_PART,
-          });
-      }
-    }
+				default:
+					throw this.unexpected({
+						start: startPos,
+						description: descriptions.PATH_MATCH.INVALID_PATTERN_SEGMENT_PART,
+					});
+			}
+		}
 
-    parseSegment(): PatternSegmentNode {
-      const startPos = this.getPosition();
-      const parts: PatternParts = [];
+		parseSegment(): PatternSegmentNode {
+			const startPos = this.getPosition();
+			const parts: PatternParts = [];
 
-      // A ** token is only allowed as the only part of a segment
-      if (this.matchToken('DoubleStar')) {
-        const lookahead = this.lookaheadToken();
-        if (lookahead.type === 'Separator' || lookahead.type === 'EOF') {
-          this.eatToken('DoubleStar');
-          this.eatSeparators();
-          return {
-            type: 'WildcardSegment',
-            loc: this.finishLoc(startPos),
-          };
-        }
-      }
+			// A ** token is only allowed as the only part of a segment
+			if (this.matchToken("DoubleStar")) {
+				const lookahead = this.lookaheadToken();
+				if (lookahead.type === "Separator" || lookahead.type === "EOF") {
+					this.eatToken("DoubleStar");
+					this.eatSeparators();
+					return {
+						type: "WildcardSegment",
+						loc: this.finishLoc(startPos),
+					};
+				}
+			}
 
-      // Keep consuming tokens until we hit a separator or a comment
-      while (
-        !this.matchToken('Hash') &&
-        !this.matchToken('EOF') &&
-        !this.eatSeparators()
-      ) {
-        parts.push(this.parsePatternSegmentPart());
-      }
+			// Keep consuming tokens until we hit a separator or a comment
+			while (
+				!this.matchToken("Hash") &&
+				!this.matchToken("EOF") &&
+				!this.eatSeparators()
+			) {
+				parts.push(this.parsePatternSegmentPart());
+			}
 
-      return {
-        loc: this.finishLoc(startPos),
-        type: 'Segment',
-        parts,
-      };
-    }
+			return {
+				loc: this.finishLoc(startPos),
+				type: "Segment",
+				parts,
+			};
+		}
 
-    isWildcardOnlySegment(segment: undefined | PatternSegmentNode): boolean {
-      if (segment === undefined) {
-        return false;
-      }
+		isWildcardOnlySegment(segment: undefined | PatternSegmentNode): boolean {
+			if (segment === undefined) {
+				return false;
+			}
 
-      if (segment.type === 'WildcardSegment') {
-        return true;
-      }
+			if (segment.type === "WildcardSegment") {
+				return true;
+			}
 
-      if (segment.parts.length === 1 && segment.parts[0].type === 'Wildcard') {
-        return true;
-      }
+			if (segment.parts.length === 1 && segment.parts[0].type === "Wildcard") {
+				return true;
+			}
 
-      return false;
-    }
+			return false;
+		}
 
-    // Normalize all path segments, removing empty segments and wildcards from the start and end
+		// Normalize all path segments, removing empty segments and wildcards from the start and end
 
-    // These could also be parse errors but let's allow them
-    normalizePatternSegments(segments: PatternSegments): PatternSegments {
-      const normalized: PatternSegments = [];
+		// These could also be parse errors but let's allow them
+		normalizePatternSegments(segments: PatternSegments): PatternSegments {
+			const normalized: PatternSegments = [];
 
-      // Never normalize it if there's a single segment. This is to support writing a pattern that's just "*"
-      if (segments.length === 1) {
-        return segments;
-      }
+			// Never normalize it if there's a single segment. This is to support writing a pattern that's just "*"
+			if (segments.length === 1) {
+				return segments;
+			}
 
-      for (const seg of segments) {
-        // Remove all wildcard-only segments from 'beginning
-        if (normalized.length === 0 && this.isWildcardOnlySegment(seg)) {
-          continue;
-        }
+			for (const seg of segments) {
+				// Remove all wildcard-only segments from 'beginning
+				if (normalized.length === 0 && this.isWildcardOnlySegment(seg)) {
+					continue;
+				}
 
-        // Remove all empty segments
-        if (seg.type === 'Segment' && seg.parts.length === 0) {
-          continue;
-        }
+				// Remove all empty segments
+				if (seg.type === "Segment" && seg.parts.length === 0) {
+					continue;
+				}
 
-        normalized.push(seg);
-      }
+				normalized.push(seg);
+			}
 
-      // TODO Remove duplicate wildcard segments
+			// TODO Remove duplicate wildcard segments
+			// - Multiple WildcardSegment
+			// - Wildcard next to a WildcardSegment
+			// Remove all wildcard-only segments from end
+			while (this.isWildcardOnlySegment(normalized[normalized.length - 1])) {
+				normalized.pop();
+			}
 
-      // - Multiple WildcardSegment
+			return normalized;
+		}
 
-      // - Wildcard next to a WildcardSegment
+		parsePatternsFile(): Array<PathPatternNode> {
+			const patterns: Array<PathPatternNode> = [];
+			while (!this.matchToken("EOF")) {
+				patterns.push(this.parsePattern());
+			}
+			return patterns;
+		}
 
-      // Remove all wildcard-only segments from end
-      while (this.isWildcardOnlySegment(normalized[normalized.length - 1])) {
-        normalized.pop();
-      }
+		parsePattern(): PathPatternNode {
+			const startPos = this.getPosition();
+			const segments: PatternSegments = [];
+			const negate = this.eatToken("Exclamation") !== undefined;
 
-      return normalized;
-    }
+			// Keep parsing segments until we hit the end of the input or a comment
+			while (!this.matchToken("Hash") && !this.matchToken("EOF")) {
+				segments.push(this.parseSegment());
+			}
 
-    parsePattern(): PathPatternNode {
-      const startPos = this.getPosition();
-      const segments: PatternSegments = [];
-      const negate = this.eatToken('Exclamation') !== undefined;
+			// Get a trailing comment
+			let comment = "";
+			if (this.eatToken("Hash")) {
+				comment = this.getRawInput(
+					this.getToken().start,
+					ob1Coerce0(this.input.length),
+				);
+			}
 
-      // Keep parsing segments until we hit the end of the input or a comment
-      while (!this.matchToken('Hash') && !this.matchToken('EOF')) {
-        segments.push(this.parseSegment());
-      }
+			let root = false;
+			if (segments.length > 0) {
+				const firstSeg = segments[0];
+				root = firstSeg.type === "Segment" && firstSeg.parts.length === 0;
+			}
 
-      // Get a trailing comment
+			return {
+				type: "PathPattern",
+				loc: this.finishLoc(startPos),
+				root,
+				comment,
+				negate,
+				segments: this.normalizePatternSegments(segments),
+			};
+		}
 
-      let comment = '';
-      if (this.eatToken('Hash')) {
-        comment = this.getRawInput(
-          this.getToken().start,
-          ob1Coerce0(this.input.length),
-        );
-      }
+		//# Path parsing
+		parsePath(): Array<string> {
+			const segments: Array<string> = [];
 
-      let root = false;
-      if (segments.length > 0) {
-        const firstSeg = segments[0];
-        root = firstSeg.type === 'Segment' && firstSeg.parts.length === 0;
-      }
+			this.eatSeparators();
 
-      return {
-        type: 'PathPattern',
-        loc: this.finishLoc(startPos),
-        root,
-        comment,
-        negate,
-        segments: this.normalizePatternSegments(segments),
-      };
-    }
+			while (!this.matchToken("EOF")) {
+				segments.push(this.parsePathSegment());
+			}
 
-    //# Path parsing
-    parsePath(): Array<string> {
-      const segments: Array<string> = [];
+			return segments;
+		}
 
-      this.eatSeparators();
+		parsePathSegment(): string {
+			let segment = "";
 
-      while (!this.matchToken('EOF')) {
-        segments.push(this.parsePathSegment());
-      }
+			while (!this.eatSeparators() && !this.matchToken("EOF")) {
+				segment += this.normalizePathSegmentToken();
+			}
 
-      return segments;
-    }
+			return segment;
+		}
 
-    parsePathSegment(): string {
-      let segment = '';
+		normalizePathSegmentToken(): string {
+			const token = this.getToken();
+			this.nextToken();
 
-      while (!this.eatSeparators() && !this.matchToken('EOF')) {
-        segment += this.normalizePathSegmentToken();
-      }
-
-      return segment;
-    }
-
-    normalizePathSegmentToken(): string {
-      const token = this.getToken();
-      this.nextToken();
-
-      if (token.type === 'Word') {
-        return token.value;
-      } else {
-        throw this.unexpected({
-          description: descriptions.PATH_MATCH.INVALID_PATH_SEGMENT,
-        });
-      }
-    }
-  }
+			if (token.type === "Word") {
+				return token.value;
+			} else {
+				throw this.unexpected({
+					description: descriptions.PATH_MATCH.INVALID_PATH_SEGMENT,
+				});
+			}
+		}
+	}
 );
 
 export function parsePattern(opts: PathMatchParserOptions): PathPatternNode {
-  const parser = createPathMatchParser(opts, 'pattern');
-  return parser.parsePattern();
+	const parser = createPathMatchParser(opts, "pattern");
+	return parser.parsePattern();
+}
+
+export function parsePatternsFile(
+	opts: PathMatchParserOptions,
+): Array<PathPatternNode> {
+	const parser = createPathMatchParser(opts, "pattern");
+	return parser.parsePatternsFile();
 }

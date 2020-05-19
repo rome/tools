@@ -5,203 +5,202 @@
 ## `esprima > es2015-default-parameter-value > migrated_0000`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 23
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 22
-          index: 22
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: AssignmentExpression {
-        operator: '='
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 22
-            index: 22
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        left: AssignmentIdentifier {
-          name: 'x'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'x'
-            end: Object {
-              column: 1
-              index: 1
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
-        right: FunctionExpression {
-          id: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 22
-              index: 22
-              line: 1
-            }
-            start: Object {
-              column: 4
-              index: 4
-              line: 1
-            }
-          }
-          body: BlockStatement {
-            body: Array []
-            directives: Array []
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 22
-                index: 22
-                line: 1
-              }
-              start: Object {
-                column: 20
-                index: 20
-                line: 1
-              }
-            }
-          }
-          head: FunctionHead {
-            async: false
-            generator: false
-            hasHoistedVars: false
-            predicate: undefined
-            rest: undefined
-            returnType: undefined
-            thisType: undefined
-            typeParameters: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 19
-                index: 19
-                line: 1
-              }
-              start: Object {
-                column: 12
-                index: 12
-                line: 1
-              }
-            }
-            params: Array [
-              BindingAssignmentPattern {
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 18
-                    index: 18
-                    line: 1
-                  }
-                  start: Object {
-                    column: 13
-                    index: 13
-                    line: 1
-                  }
-                }
-                right: NumericLiteral {
-                  value: 1
-                  format: undefined
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 18
-                      index: 18
-                      line: 1
-                    }
-                    start: Object {
-                      column: 17
-                      index: 17
-                      line: 1
-                    }
-                  }
-                }
-                left: BindingIdentifier {
-                  name: 'y'
-                  loc: Object {
-                    filename: 'input.js'
-                    identifierName: 'y'
-                    end: Object {
-                      column: 14
-                      index: 14
-                      line: 1
-                    }
-                    start: Object {
-                      column: 13
-                      index: 13
-                      line: 1
-                    }
-                  }
-                  meta: PatternMeta {
-                    optional: undefined
-                    typeAnnotation: undefined
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 14
-                        index: 14
-                        line: 1
-                      }
-                      start: Object {
-                        column: 13
-                        index: 13
-                        line: 1
-                      }
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 23
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 22
+					index: 22
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSAssignmentExpression {
+				operator: "="
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 22
+						index: 22
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				left: JSAssignmentIdentifier {
+					name: "x"
+					loc: Object {
+						filename: "input.js"
+						identifierName: "x"
+						end: Object {
+							column: 1
+							index: 1
+							line: 1
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+				}
+				right: JSFunctionExpression {
+					id: undefined
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 22
+							index: 22
+							line: 1
+						}
+						start: Object {
+							column: 4
+							index: 4
+							line: 1
+						}
+					}
+					body: JSBlockStatement {
+						body: Array []
+						directives: Array []
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 22
+								index: 22
+								line: 1
+							}
+							start: Object {
+								column: 20
+								index: 20
+								line: 1
+							}
+						}
+					}
+					head: JSFunctionHead {
+						async: false
+						generator: false
+						hasHoistedVars: false
+						rest: undefined
+						returnType: undefined
+						thisType: undefined
+						typeParameters: undefined
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 19
+								index: 19
+								line: 1
+							}
+							start: Object {
+								column: 12
+								index: 12
+								line: 1
+							}
+						}
+						params: Array [
+							JSBindingAssignmentPattern {
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 18
+										index: 18
+										line: 1
+									}
+									start: Object {
+										column: 13
+										index: 13
+										line: 1
+									}
+								}
+								right: JSNumericLiteral {
+									value: 1
+									format: undefined
+									loc: Object {
+										filename: "input.js"
+										end: Object {
+											column: 18
+											index: 18
+											line: 1
+										}
+										start: Object {
+											column: 17
+											index: 17
+											line: 1
+										}
+									}
+								}
+								left: JSBindingIdentifier {
+									name: "y"
+									loc: Object {
+										filename: "input.js"
+										identifierName: "y"
+										end: Object {
+											column: 14
+											index: 14
+											line: 1
+										}
+										start: Object {
+											column: 13
+											index: 13
+											line: 1
+										}
+									}
+									meta: JSPatternMeta {
+										optional: undefined
+										typeAnnotation: undefined
+										loc: Object {
+											filename: "input.js"
+											end: Object {
+												column: 14
+												index: 14
+												line: 1
+											}
+											start: Object {
+												column: 13
+												index: 13
+												line: 1
+											}
+										}
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
 }
 ```

@@ -5,210 +5,209 @@
 ## `typescript > interface > generic`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.ts'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array ['ts']
-  loc: Object {
-    filename: 'input.ts'
-    end: Object {
-      column: 0
-      index: 49
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    TSInterfaceDeclaration {
-      id: BindingIdentifier {
-        name: 'I'
-        loc: Object {
-          filename: 'input.ts'
-          identifierName: 'I'
-          end: Object {
-            column: 11
-            index: 11
-            line: 1
-          }
-          start: Object {
-            column: 10
-            index: 10
-            line: 1
-          }
-        }
-      }
-      extends: undefined
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 48
-          index: 48
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      body: TSInterfaceBody {
-        body: Array []
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 48
-            index: 48
-            line: 1
-          }
-          start: Object {
-            column: 46
-            index: 46
-            line: 1
-          }
-        }
-      }
-      typeParameters: TSTypeParameterDeclaration {
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 45
-            index: 45
-            line: 1
-          }
-          start: Object {
-            column: 11
-            index: 11
-            line: 1
-          }
-        }
-        params: Array [
-          TSTypeParameter {
-            name: 'T'
-            loc: Object {
-              filename: 'input.ts'
-              end: Object {
-                column: 44
-                index: 44
-                line: 1
-              }
-              start: Object {
-                column: 12
-                index: 12
-                line: 1
-              }
-            }
-            constraint: ObjectKeywordTypeAnnotation {
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 28
-                  index: 28
-                  line: 1
-                }
-                start: Object {
-                  column: 22
-                  index: 22
-                  line: 1
-                }
-              }
-            }
-            default: TSTypeLiteral {
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 44
-                  index: 44
-                  line: 1
-                }
-                start: Object {
-                  column: 31
-                  index: 31
-                  line: 1
-                }
-              }
-              members: Array [
-                TSPropertySignature {
-                  key: StaticPropertyKey {
-                    value: Identifier {
-                      name: 'x'
-                      loc: Object {
-                        filename: 'input.ts'
-                        identifierName: 'x'
-                        end: Object {
-                          column: 34
-                          index: 34
-                          line: 1
-                        }
-                        start: Object {
-                          column: 33
-                          index: 33
-                          line: 1
-                        }
-                      }
-                    }
-                    variance: undefined
-                    loc: Object {
-                      filename: 'input.ts'
-                      end: Object {
-                        column: 34
-                        index: 34
-                        line: 1
-                      }
-                      start: Object {
-                        column: 33
-                        index: 33
-                        line: 1
-                      }
-                    }
-                  }
-                  optional: false
-                  readonly: false
-                  loc: Object {
-                    filename: 'input.ts'
-                    end: Object {
-                      column: 42
-                      index: 42
-                      line: 1
-                    }
-                    start: Object {
-                      column: 33
-                      index: 33
-                      line: 1
-                    }
-                  }
-                  typeAnnotation: NumberKeywordTypeAnnotation {
-                    loc: Object {
-                      filename: 'input.ts'
-                      end: Object {
-                        column: 42
-                        index: 42
-                        line: 1
-                      }
-                      start: Object {
-                        column: 36
-                        index: 36
-                        line: 1
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.ts"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "module"
+	syntax: Array ["ts"]
+	loc: Object {
+		filename: "input.ts"
+		end: Object {
+			column: 0
+			index: 49
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		TSInterfaceDeclaration {
+			id: JSBindingIdentifier {
+				name: "I"
+				loc: Object {
+					filename: "input.ts"
+					identifierName: "I"
+					end: Object {
+						column: 11
+						index: 11
+						line: 1
+					}
+					start: Object {
+						column: 10
+						index: 10
+						line: 1
+					}
+				}
+			}
+			extends: undefined
+			loc: Object {
+				filename: "input.ts"
+				end: Object {
+					column: 48
+					index: 48
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			body: TSInterfaceBody {
+				body: Array []
+				loc: Object {
+					filename: "input.ts"
+					end: Object {
+						column: 48
+						index: 48
+						line: 1
+					}
+					start: Object {
+						column: 46
+						index: 46
+						line: 1
+					}
+				}
+			}
+			typeParameters: TSTypeParameterDeclaration {
+				loc: Object {
+					filename: "input.ts"
+					end: Object {
+						column: 45
+						index: 45
+						line: 1
+					}
+					start: Object {
+						column: 11
+						index: 11
+						line: 1
+					}
+				}
+				params: Array [
+					TSTypeParameter {
+						name: "T"
+						loc: Object {
+							filename: "input.ts"
+							end: Object {
+								column: 44
+								index: 44
+								line: 1
+							}
+							start: Object {
+								column: 12
+								index: 12
+								line: 1
+							}
+						}
+						constraint: TSObjectKeywordTypeAnnotation {
+							loc: Object {
+								filename: "input.ts"
+								end: Object {
+									column: 28
+									index: 28
+									line: 1
+								}
+								start: Object {
+									column: 22
+									index: 22
+									line: 1
+								}
+							}
+						}
+						default: TSTypeLiteral {
+							loc: Object {
+								filename: "input.ts"
+								end: Object {
+									column: 44
+									index: 44
+									line: 1
+								}
+								start: Object {
+									column: 31
+									index: 31
+									line: 1
+								}
+							}
+							members: Array [
+								TSPropertySignature {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
+											name: "x"
+											loc: Object {
+												filename: "input.ts"
+												identifierName: "x"
+												end: Object {
+													column: 34
+													index: 34
+													line: 1
+												}
+												start: Object {
+													column: 33
+													index: 33
+													line: 1
+												}
+											}
+										}
+										loc: Object {
+											filename: "input.ts"
+											end: Object {
+												column: 34
+												index: 34
+												line: 1
+											}
+											start: Object {
+												column: 33
+												index: 33
+												line: 1
+											}
+										}
+									}
+									optional: false
+									readonly: false
+									loc: Object {
+										filename: "input.ts"
+										end: Object {
+											column: 42
+											index: 42
+											line: 1
+										}
+										start: Object {
+											column: 33
+											index: 33
+											line: 1
+										}
+									}
+									typeAnnotation: TSNumberKeywordTypeAnnotation {
+										loc: Object {
+											filename: "input.ts"
+											end: Object {
+												column: 42
+												index: 42
+												line: 1
+											}
+											start: Object {
+												column: 36
+												index: 36
+												line: 1
+											}
+										}
+									}
+								}
+							]
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

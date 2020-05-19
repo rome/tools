@@ -5,149 +5,149 @@
 ## `esprima > automatic-semicolon-insertion > migrated_0008`
 
 ```javascript
-Program {
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 41
-      line: 3
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  comments: Array [
-    CommentLine {
-      id: '0'
-      value: ' Comment'
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 31
-          index: 31
-          line: 1
-        }
-        start: Object {
-          column: 21
-          index: 21
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    WhileStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 8
-          index: 40
-          line: 2
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      test: BooleanLiteral {
-        value: true
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 11
-            index: 11
-            line: 1
-          }
-          start: Object {
-            column: 7
-            index: 7
-            line: 1
-          }
-        }
-      }
-      body: BlockStatement {
-        directives: Array []
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 8
-            index: 40
-            line: 2
-          }
-          start: Object {
-            column: 13
-            index: 13
-            line: 1
-          }
-        }
-        body: Array [
-          BreakStatement {
-            label: undefined
-            trailingComments: Array ['0']
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 20
-                index: 20
-                line: 1
-              }
-              start: Object {
-                column: 15
-                index: 15
-                line: 1
-              }
-            }
-          }
-          ExpressionStatement {
-            leadingComments: Array ['0']
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 6
-                index: 38
-                line: 2
-              }
-              start: Object {
-                column: 0
-                index: 32
-                line: 2
-              }
-            }
-            expression: ReferenceIdentifier {
-              name: 'there'
-              leadingComments: undefined
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'there'
-                end: Object {
-                  column: 5
-                  index: 37
-                  line: 2
-                }
-                start: Object {
-                  column: 0
-                  index: 32
-                  line: 2
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+JSProgram {
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 41
+			line: 3
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	comments: Array [
+		JSCommentLine {
+			id: "0"
+			value: " Comment"
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 31
+					index: 31
+					line: 1
+				}
+				start: Object {
+					column: 21
+					index: 21
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		JSWhileStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 8
+					index: 40
+					line: 2
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			test: JSBooleanLiteral {
+				value: true
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 11
+						index: 11
+						line: 1
+					}
+					start: Object {
+						column: 7
+						index: 7
+						line: 1
+					}
+				}
+			}
+			body: JSBlockStatement {
+				directives: Array []
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 8
+						index: 40
+						line: 2
+					}
+					start: Object {
+						column: 13
+						index: 13
+						line: 1
+					}
+				}
+				body: Array [
+					JSBreakStatement {
+						label: undefined
+						trailingComments: Array ["0"]
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 20
+								index: 20
+								line: 1
+							}
+							start: Object {
+								column: 15
+								index: 15
+								line: 1
+							}
+						}
+					}
+					JSExpressionStatement {
+						leadingComments: Array ["0"]
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 6
+								index: 38
+								line: 2
+							}
+							start: Object {
+								column: 0
+								index: 32
+								line: 2
+							}
+						}
+						expression: JSReferenceIdentifier {
+							name: "there"
+							leadingComments: undefined
+							loc: Object {
+								filename: "input.js"
+								identifierName: "there"
+								end: Object {
+									column: 5
+									index: 37
+									line: 2
+								}
+								start: Object {
+									column: 0
+									index: 32
+									line: 2
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

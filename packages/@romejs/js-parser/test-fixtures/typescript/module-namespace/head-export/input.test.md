@@ -5,193 +5,193 @@
 ## `typescript > module-namespace > head-export`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.ts'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array ['ts']
-  loc: Object {
-    filename: 'input.ts'
-    end: Object {
-      column: 0
-      index: 43
-      line: 3
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExportLocalDeclaration {
-      exportKind: 'value'
-      specifiers: undefined
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 23
-          index: 23
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      declaration: TSModuleDeclaration {
-        id: BindingIdentifier {
-          name: 'X'
-          loc: Object {
-            filename: 'input.ts'
-            identifierName: 'X'
-            end: Object {
-              column: 18
-              index: 18
-              line: 1
-            }
-            start: Object {
-              column: 17
-              index: 17
-              line: 1
-            }
-          }
-        }
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 23
-            index: 23
-            line: 1
-          }
-          start: Object {
-            column: 7
-            index: 7
-            line: 1
-          }
-        }
-        body: TSModuleDeclaration {
-          id: BindingIdentifier {
-            name: 'Y'
-            loc: Object {
-              filename: 'input.ts'
-              identifierName: 'Y'
-              end: Object {
-                column: 20
-                index: 20
-                line: 1
-              }
-              start: Object {
-                column: 19
-                index: 19
-                line: 1
-              }
-            }
-          }
-          loc: Object {
-            filename: 'input.ts'
-            end: Object {
-              column: 23
-              index: 23
-              line: 1
-            }
-            start: Object {
-              column: 19
-              index: 19
-              line: 1
-            }
-          }
-          body: TSModuleBlock {
-            body: Array []
-            loc: Object {
-              filename: 'input.ts'
-              end: Object {
-                column: 23
-                index: 23
-                line: 1
-              }
-              start: Object {
-                column: 21
-                index: 21
-                line: 1
-              }
-            }
-          }
-        }
-      }
-    }
-    ExportLocalDeclaration {
-      exportKind: 'value'
-      specifiers: undefined
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 18
-          index: 42
-          line: 2
-        }
-        start: Object {
-          column: 0
-          index: 24
-          line: 2
-        }
-      }
-      declaration: TSModuleDeclaration {
-        id: BindingIdentifier {
-          name: 'X'
-          loc: Object {
-            filename: 'input.ts'
-            identifierName: 'X'
-            end: Object {
-              column: 15
-              index: 39
-              line: 2
-            }
-            start: Object {
-              column: 14
-              index: 38
-              line: 2
-            }
-          }
-        }
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 18
-            index: 42
-            line: 2
-          }
-          start: Object {
-            column: 7
-            index: 31
-            line: 2
-          }
-        }
-        body: TSModuleBlock {
-          body: Array []
-          loc: Object {
-            filename: 'input.ts'
-            end: Object {
-              column: 18
-              index: 42
-              line: 2
-            }
-            start: Object {
-              column: 16
-              index: 40
-              line: 2
-            }
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.ts"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "module"
+	syntax: Array ["ts"]
+	loc: Object {
+		filename: "input.ts"
+		end: Object {
+			column: 0
+			index: 43
+			line: 3
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExportLocalDeclaration {
+			exportKind: "value"
+			specifiers: undefined
+			loc: Object {
+				filename: "input.ts"
+				end: Object {
+					column: 23
+					index: 23
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			declaration: TSModuleDeclaration {
+				id: JSBindingIdentifier {
+					name: "X"
+					loc: Object {
+						filename: "input.ts"
+						identifierName: "X"
+						end: Object {
+							column: 18
+							index: 18
+							line: 1
+						}
+						start: Object {
+							column: 17
+							index: 17
+							line: 1
+						}
+					}
+				}
+				loc: Object {
+					filename: "input.ts"
+					end: Object {
+						column: 23
+						index: 23
+						line: 1
+					}
+					start: Object {
+						column: 7
+						index: 7
+						line: 1
+					}
+				}
+				body: TSModuleDeclaration {
+					id: JSBindingIdentifier {
+						name: "Y"
+						loc: Object {
+							filename: "input.ts"
+							identifierName: "Y"
+							end: Object {
+								column: 20
+								index: 20
+								line: 1
+							}
+							start: Object {
+								column: 19
+								index: 19
+								line: 1
+							}
+						}
+					}
+					loc: Object {
+						filename: "input.ts"
+						end: Object {
+							column: 23
+							index: 23
+							line: 1
+						}
+						start: Object {
+							column: 19
+							index: 19
+							line: 1
+						}
+					}
+					body: TSModuleBlock {
+						body: Array []
+						loc: Object {
+							filename: "input.ts"
+							end: Object {
+								column: 23
+								index: 23
+								line: 1
+							}
+							start: Object {
+								column: 21
+								index: 21
+								line: 1
+							}
+						}
+					}
+				}
+			}
+		}
+		JSExportLocalDeclaration {
+			exportKind: "value"
+			specifiers: undefined
+			loc: Object {
+				filename: "input.ts"
+				end: Object {
+					column: 18
+					index: 42
+					line: 2
+				}
+				start: Object {
+					column: 0
+					index: 24
+					line: 2
+				}
+			}
+			declaration: TSModuleDeclaration {
+				id: JSBindingIdentifier {
+					name: "X"
+					loc: Object {
+						filename: "input.ts"
+						identifierName: "X"
+						end: Object {
+							column: 15
+							index: 39
+							line: 2
+						}
+						start: Object {
+							column: 14
+							index: 38
+							line: 2
+						}
+					}
+				}
+				loc: Object {
+					filename: "input.ts"
+					end: Object {
+						column: 18
+						index: 42
+						line: 2
+					}
+					start: Object {
+						column: 7
+						index: 31
+						line: 2
+					}
+				}
+				body: TSModuleBlock {
+					body: Array []
+					loc: Object {
+						filename: "input.ts"
+						end: Object {
+							column: 18
+							index: 42
+							line: 2
+						}
+						start: Object {
+							column: 16
+							index: 40
+							line: 2
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

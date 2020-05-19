@@ -5,116 +5,116 @@
 ## `es2017 > async-functions > newline-arrow`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 13
-      line: 3
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 6
-          index: 12
-          line: 2
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: ArrowFunctionExpression {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 6
-            index: 12
-            line: 2
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        body: ReferenceIdentifier {
-          name: 'x'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'x'
-            end: Object {
-              column: 6
-              index: 12
-              line: 2
-            }
-            start: Object {
-              column: 5
-              index: 11
-              line: 2
-            }
-          }
-        }
-        head: FunctionHead {
-          async: true
-          hasHoistedVars: false
-          rest: undefined
-          thisType: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 4
-              index: 10
-              line: 2
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-          params: Array [
-            BindingIdentifier {
-              name: 'x'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'x'
-                end: Object {
-                  column: 1
-                  index: 7
-                  line: 2
-                }
-                start: Object {
-                  column: 0
-                  index: 6
-                  line: 2
-                }
-              }
-            }
-          ]
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 13
+			line: 3
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 6
+					index: 12
+					line: 2
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSArrowFunctionExpression {
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 6
+						index: 12
+						line: 2
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				body: JSReferenceIdentifier {
+					name: "x"
+					loc: Object {
+						filename: "input.js"
+						identifierName: "x"
+						end: Object {
+							column: 6
+							index: 12
+							line: 2
+						}
+						start: Object {
+							column: 5
+							index: 11
+							line: 2
+						}
+					}
+				}
+				head: JSFunctionHead {
+					async: true
+					hasHoistedVars: false
+					rest: undefined
+					thisType: undefined
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 4
+							index: 10
+							line: 2
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+					params: Array [
+						JSBindingIdentifier {
+							name: "x"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "x"
+								end: Object {
+									column: 1
+									index: 7
+									line: 2
+								}
+								start: Object {
+									column: 0
+									index: 6
+									line: 2
+								}
+							}
+						}
+					]
+				}
+			}
+		}
+	]
 }
 ```

@@ -5,156 +5,156 @@
 ## `typescript > cast > multiple-assert-and-assign`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.ts'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array ['ts']
-  loc: Object {
-    filename: 'input.ts'
-    end: Object {
-      column: 26
-      index: 26
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 26
-          index: 26
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: AssignmentExpression {
-        operator: '='
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 25
-            index: 25
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        right: NumericLiteral {
-          value: 42
-          format: undefined
-          loc: Object {
-            filename: 'input.ts'
-            end: Object {
-              column: 25
-              index: 25
-              line: 1
-            }
-            start: Object {
-              column: 23
-              index: 23
-              line: 1
-            }
-          }
-        }
-        left: TSAssignmentAsExpression {
-          loc: Object {
-            filename: 'input.ts'
-            end: Object {
-              column: 19
-              index: 19
-              line: 1
-            }
-            start: Object {
-              column: 1
-              index: 1
-              line: 1
-            }
-          }
-          typeAnnotation: AnyKeywordTypeAnnotation {
-            loc: Object {
-              filename: 'input.ts'
-              end: Object {
-                column: 19
-                index: 19
-                line: 1
-              }
-              start: Object {
-                column: 16
-                index: 16
-                line: 1
-              }
-            }
-          }
-          expression: TSAssignmentAsExpression {
-            loc: Object {
-              filename: 'input.ts'
-              end: Object {
-                column: 12
-                index: 12
-                line: 1
-              }
-              start: Object {
-                column: 1
-                index: 1
-                line: 1
-              }
-            }
-            typeAnnotation: NumberKeywordTypeAnnotation {
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 12
-                  index: 12
-                  line: 1
-                }
-                start: Object {
-                  column: 6
-                  index: 6
-                  line: 1
-                }
-              }
-            }
-            expression: AssignmentIdentifier {
-              name: 'a'
-              loc: Object {
-                filename: 'input.ts'
-                identifierName: 'a'
-                end: Object {
-                  column: 2
-                  index: 2
-                  line: 1
-                }
-                start: Object {
-                  column: 1
-                  index: 1
-                  line: 1
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.ts"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "module"
+	syntax: Array ["ts"]
+	loc: Object {
+		filename: "input.ts"
+		end: Object {
+			column: 0
+			index: 27
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.ts"
+				end: Object {
+					column: 26
+					index: 26
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSAssignmentExpression {
+				operator: "="
+				loc: Object {
+					filename: "input.ts"
+					end: Object {
+						column: 25
+						index: 25
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				right: JSNumericLiteral {
+					value: 42
+					format: undefined
+					loc: Object {
+						filename: "input.ts"
+						end: Object {
+							column: 25
+							index: 25
+							line: 1
+						}
+						start: Object {
+							column: 23
+							index: 23
+							line: 1
+						}
+					}
+				}
+				left: TSAssignmentAsExpression {
+					loc: Object {
+						filename: "input.ts"
+						end: Object {
+							column: 19
+							index: 19
+							line: 1
+						}
+						start: Object {
+							column: 1
+							index: 1
+							line: 1
+						}
+					}
+					typeAnnotation: TSAnyKeywordTypeAnnotation {
+						loc: Object {
+							filename: "input.ts"
+							end: Object {
+								column: 19
+								index: 19
+								line: 1
+							}
+							start: Object {
+								column: 16
+								index: 16
+								line: 1
+							}
+						}
+					}
+					expression: TSAssignmentAsExpression {
+						loc: Object {
+							filename: "input.ts"
+							end: Object {
+								column: 12
+								index: 12
+								line: 1
+							}
+							start: Object {
+								column: 1
+								index: 1
+								line: 1
+							}
+						}
+						typeAnnotation: TSNumberKeywordTypeAnnotation {
+							loc: Object {
+								filename: "input.ts"
+								end: Object {
+									column: 12
+									index: 12
+									line: 1
+								}
+								start: Object {
+									column: 6
+									index: 6
+									line: 1
+								}
+							}
+						}
+						expression: JSAssignmentIdentifier {
+							name: "a"
+							loc: Object {
+								filename: "input.ts"
+								identifierName: "a"
+								end: Object {
+									column: 2
+									index: 2
+									line: 1
+								}
+								start: Object {
+									column: 1
+									index: 1
+									line: 1
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

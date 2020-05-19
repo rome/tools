@@ -5,132 +5,132 @@
 ## `typescript > enum > members-reserved-words`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.ts'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array ['ts']
-  loc: Object {
-    filename: 'input.ts'
-    end: Object {
-      column: 0
-      index: 34
-      line: 5
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    TSEnumDeclaration {
-      id: BindingIdentifier {
-        name: 'E'
-        loc: Object {
-          filename: 'input.ts'
-          identifierName: 'E'
-          end: Object {
-            column: 6
-            index: 6
-            line: 1
-          }
-          start: Object {
-            column: 5
-            index: 5
-            line: 1
-          }
-        }
-      }
-      const: false
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 1
-          index: 33
-          line: 4
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      members: Array [
-        TSEnumMember {
-          id: Identifier {
-            name: 'const'
-            loc: Object {
-              filename: 'input.ts'
-              identifierName: 'const'
-              end: Object {
-                column: 9
-                index: 18
-                line: 2
-              }
-              start: Object {
-                column: 4
-                index: 13
-                line: 2
-              }
-            }
-          }
-          initializer: undefined
-          loc: Object {
-            filename: 'input.ts'
-            end: Object {
-              column: 9
-              index: 18
-              line: 2
-            }
-            start: Object {
-              column: 4
-              index: 13
-              line: 2
-            }
-          }
-        }
-        TSEnumMember {
-          id: Identifier {
-            name: 'default'
-            loc: Object {
-              filename: 'input.ts'
-              identifierName: 'default'
-              end: Object {
-                column: 11
-                index: 31
-                line: 3
-              }
-              start: Object {
-                column: 4
-                index: 24
-                line: 3
-              }
-            }
-          }
-          initializer: undefined
-          loc: Object {
-            filename: 'input.ts'
-            end: Object {
-              column: 11
-              index: 31
-              line: 3
-            }
-            start: Object {
-              column: 4
-              index: 24
-              line: 3
-            }
-          }
-        }
-      ]
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.ts"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "module"
+	syntax: Array ["ts"]
+	loc: Object {
+		filename: "input.ts"
+		end: Object {
+			column: 0
+			index: 34
+			line: 5
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		TSEnumDeclaration {
+			id: JSBindingIdentifier {
+				name: "E"
+				loc: Object {
+					filename: "input.ts"
+					identifierName: "E"
+					end: Object {
+						column: 6
+						index: 6
+						line: 1
+					}
+					start: Object {
+						column: 5
+						index: 5
+						line: 1
+					}
+				}
+			}
+			const: false
+			loc: Object {
+				filename: "input.ts"
+				end: Object {
+					column: 1
+					index: 33
+					line: 4
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			members: Array [
+				TSEnumMember {
+					id: JSIdentifier {
+						name: "const"
+						loc: Object {
+							filename: "input.ts"
+							identifierName: "const"
+							end: Object {
+								column: 9
+								index: 18
+								line: 2
+							}
+							start: Object {
+								column: 4
+								index: 13
+								line: 2
+							}
+						}
+					}
+					initializer: undefined
+					loc: Object {
+						filename: "input.ts"
+						end: Object {
+							column: 9
+							index: 18
+							line: 2
+						}
+						start: Object {
+							column: 4
+							index: 13
+							line: 2
+						}
+					}
+				}
+				TSEnumMember {
+					id: JSIdentifier {
+						name: "default"
+						loc: Object {
+							filename: "input.ts"
+							identifierName: "default"
+							end: Object {
+								column: 11
+								index: 31
+								line: 3
+							}
+							start: Object {
+								column: 4
+								index: 24
+								line: 3
+							}
+						}
+					}
+					initializer: undefined
+					loc: Object {
+						filename: "input.ts"
+						end: Object {
+							column: 11
+							index: 31
+							line: 3
+						}
+						start: Object {
+							column: 4
+							index: 24
+							line: 3
+						}
+					}
+				}
+			]
+		}
+	]
 }
 ```

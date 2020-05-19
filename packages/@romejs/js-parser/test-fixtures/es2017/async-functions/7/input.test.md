@@ -5,162 +5,162 @@
 ## `es2017 > async-functions > 7`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 16
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 15
-          index: 15
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: CallExpression {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 14
-            index: 14
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        callee: ReferenceIdentifier {
-          name: 'foo'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'foo'
-            end: Object {
-              column: 3
-              index: 3
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
-        arguments: Array [
-          ObjectExpression {
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 13
-                index: 13
-                line: 1
-              }
-              start: Object {
-                column: 4
-                index: 4
-                line: 1
-              }
-            }
-            properties: Array [
-              ObjectProperty {
-                key: StaticPropertyKey {
-                  value: Identifier {
-                    name: 'async'
-                    loc: Object {
-                      filename: 'input.js'
-                      identifierName: 'async'
-                      end: Object {
-                        column: 11
-                        index: 11
-                        line: 1
-                      }
-                      start: Object {
-                        column: 6
-                        index: 6
-                        line: 1
-                      }
-                    }
-                  }
-                  loc: Object {
-                    filename: 'input.js'
-                    identifierName: 'async'
-                    end: Object {
-                      column: 11
-                      index: 11
-                      line: 1
-                    }
-                    start: Object {
-                      column: 6
-                      index: 6
-                      line: 1
-                    }
-                  }
-                }
-                value: ReferenceIdentifier {
-                  name: 'async'
-                  loc: Object {
-                    filename: 'input.js'
-                    identifierName: 'async'
-                    end: Object {
-                      column: 11
-                      index: 11
-                      line: 1
-                    }
-                    start: Object {
-                      column: 6
-                      index: 6
-                      line: 1
-                    }
-                  }
-                }
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 11
-                    index: 11
-                    line: 1
-                  }
-                  start: Object {
-                    column: 6
-                    index: 6
-                    line: 1
-                  }
-                }
-              }
-            ]
-          }
-        ]
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 16
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 15
+					index: 15
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSCallExpression {
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 14
+						index: 14
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				callee: JSReferenceIdentifier {
+					name: "foo"
+					loc: Object {
+						filename: "input.js"
+						identifierName: "foo"
+						end: Object {
+							column: 3
+							index: 3
+							line: 1
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+				}
+				arguments: Array [
+					JSObjectExpression {
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 13
+								index: 13
+								line: 1
+							}
+							start: Object {
+								column: 4
+								index: 4
+								line: 1
+							}
+						}
+						properties: Array [
+							JSObjectProperty {
+								key: JSStaticPropertyKey {
+									value: JSIdentifier {
+										name: "async"
+										loc: Object {
+											filename: "input.js"
+											identifierName: "async"
+											end: Object {
+												column: 11
+												index: 11
+												line: 1
+											}
+											start: Object {
+												column: 6
+												index: 6
+												line: 1
+											}
+										}
+									}
+									loc: Object {
+										filename: "input.js"
+										identifierName: "async"
+										end: Object {
+											column: 11
+											index: 11
+											line: 1
+										}
+										start: Object {
+											column: 6
+											index: 6
+											line: 1
+										}
+									}
+								}
+								value: JSReferenceIdentifier {
+									name: "async"
+									loc: Object {
+										filename: "input.js"
+										identifierName: "async"
+										end: Object {
+											column: 11
+											index: 11
+											line: 1
+										}
+										start: Object {
+											column: 6
+											index: 6
+											line: 1
+										}
+									}
+								}
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 11
+										index: 11
+										line: 1
+									}
+									start: Object {
+										column: 6
+										index: 6
+										line: 1
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		}
+	]
 }
 ```

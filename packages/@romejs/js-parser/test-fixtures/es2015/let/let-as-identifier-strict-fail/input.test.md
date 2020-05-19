@@ -5,137 +5,137 @@
 ## `es2015 > let > let-as-identifier-strict-fail`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 22
-      line: 3
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  directives: Array [
-    Directive {
-      value: 'use strict'
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 13
-          index: 13
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-    }
-  ]
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'let is a reserved word'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 3
-          index: 17
-          line: 2
-        }
-        start: Object {
-          column: 0
-          index: 14
-          line: 2
-        }
-      }
-    }
-  ]
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 7
-          index: 21
-          line: 2
-        }
-        start: Object {
-          column: 0
-          index: 14
-          line: 2
-        }
-      }
-      expression: BinaryExpression {
-        operator: '+'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 7
-            index: 21
-            line: 2
-          }
-          start: Object {
-            column: 0
-            index: 14
-            line: 2
-          }
-        }
-        left: ReferenceIdentifier {
-          name: 'let'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'let'
-            end: Object {
-              column: 3
-              index: 17
-              line: 2
-            }
-            start: Object {
-              column: 0
-              index: 14
-              line: 2
-            }
-          }
-        }
-        right: NumericLiteral {
-          value: 1
-          format: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 7
-              index: 21
-              line: 2
-            }
-            start: Object {
-              column: 6
-              index: 20
-              line: 2
-            }
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 22
+			line: 3
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	directives: Array [
+		JSDirective {
+			value: "use strict"
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 13
+					index: 13
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+		}
+	]
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "let is a reserved word"}
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "script"
+				end: Object {
+					column: 3
+					index: 17
+					line: 2
+				}
+				start: Object {
+					column: 0
+					index: 14
+					line: 2
+				}
+			}
+		}
+	]
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 7
+					index: 21
+					line: 2
+				}
+				start: Object {
+					column: 0
+					index: 14
+					line: 2
+				}
+			}
+			expression: JSBinaryExpression {
+				operator: "+"
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 7
+						index: 21
+						line: 2
+					}
+					start: Object {
+						column: 0
+						index: 14
+						line: 2
+					}
+				}
+				left: JSReferenceIdentifier {
+					name: "let"
+					loc: Object {
+						filename: "input.js"
+						identifierName: "let"
+						end: Object {
+							column: 3
+							index: 17
+							line: 2
+						}
+						start: Object {
+							column: 0
+							index: 14
+							line: 2
+						}
+					}
+				}
+				right: JSNumericLiteral {
+					value: 1
+					format: undefined
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 7
+							index: 21
+							line: 2
+						}
+						start: Object {
+							column: 6
+							index: 20
+							line: 2
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

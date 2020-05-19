@@ -5,112 +5,112 @@
 ## `es2015 > uncategorised > 192`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 10
-      index: 10
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 10
-          index: 10
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: CallExpression {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 10
-            index: 10
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        callee: ReferenceIdentifier {
-          name: 'func'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'func'
-            end: Object {
-              column: 4
-              index: 4
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
-        arguments: Array [
-          SpreadElement {
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 9
-                index: 9
-                line: 1
-              }
-              start: Object {
-                column: 5
-                index: 5
-                line: 1
-              }
-            }
-            argument: ReferenceIdentifier {
-              name: 'a'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'a'
-                end: Object {
-                  column: 9
-                  index: 9
-                  line: 1
-                }
-                start: Object {
-                  column: 8
-                  index: 8
-                  line: 1
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 10
+			index: 10
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 10
+					index: 10
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSCallExpression {
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 10
+						index: 10
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				callee: JSReferenceIdentifier {
+					name: "func"
+					loc: Object {
+						filename: "input.js"
+						identifierName: "func"
+						end: Object {
+							column: 4
+							index: 4
+							line: 1
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+				}
+				arguments: Array [
+					JSSpreadElement {
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 9
+								index: 9
+								line: 1
+							}
+							start: Object {
+								column: 5
+								index: 5
+								line: 1
+							}
+						}
+						argument: JSReferenceIdentifier {
+							name: "a"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "a"
+								end: Object {
+									column: 9
+									index: 9
+									line: 1
+								}
+								start: Object {
+									column: 8
+									index: 8
+									line: 1
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

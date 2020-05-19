@@ -5,240 +5,240 @@
 ## `core > uncategorised > 108`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: true
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 22
-      index: 22
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Regular expression flags can\'t contain unicode escapes'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 16
-          index: 16
-          line: 1
-        }
-        start: Object {
-          column: 16
-          index: 16
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    VariableDeclarationStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 22
-          index: 22
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      declaration: VariableDeclaration {
-        kind: 'var'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 22
-            index: 22
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        declarations: Array [
-          VariableDeclarator {
-            id: BindingIdentifier {
-              name: 'x'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'x'
-                end: Object {
-                  column: 5
-                  index: 5
-                  line: 1
-                }
-                start: Object {
-                  column: 4
-                  index: 4
-                  line: 1
-                }
-              }
-            }
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 22
-                index: 22
-                line: 1
-              }
-              start: Object {
-                column: 4
-                index: 4
-                line: 1
-              }
-            }
-            init: RegExpLiteral {
-              global: true
-              insensitive: false
-              multiline: false
-              noDotNewline: false
-              sticky: false
-              unicode: false
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 22
-                  index: 22
-                  line: 1
-                }
-                start: Object {
-                  column: 8
-                  index: 8
-                  line: 1
-                }
-              }
-              expression: RegExpSubExpression {
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 14
-                    index: 15
-                    line: 1
-                  }
-                  start: Object {
-                    column: 9
-                    index: 9
-                    line: 1
-                  }
-                }
-                body: Array [
-                  RegExpCharSet {
-                    invert: false
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 14
-                        index: 14
-                        line: 1
-                      }
-                      start: Object {
-                        column: 9
-                        index: 9
-                        line: 1
-                      }
-                    }
-                    body: Array [
-                      RegExpCharacter {
-                        value: 'P'
-                        loc: Object {
-                          filename: 'input.js'
-                          end: Object {
-                            column: 11
-                            index: 11
-                            line: 1
-                          }
-                          start: Object {
-                            column: 10
-                            index: 10
-                            line: 1
-                          }
-                        }
-                      }
-                      RegExpCharacter {
-                        value: ' '
-                        loc: Object {
-                          filename: 'input.js'
-                          end: Object {
-                            column: 12
-                            index: 12
-                            line: 1
-                          }
-                          start: Object {
-                            column: 11
-                            index: 11
-                            line: 1
-                          }
-                        }
-                      }
-                      RegExpCharacter {
-                        value: 'Q'
-                        loc: Object {
-                          filename: 'input.js'
-                          end: Object {
-                            column: 13
-                            index: 13
-                            line: 1
-                          }
-                          start: Object {
-                            column: 12
-                            index: 12
-                            line: 1
-                          }
-                        }
-                      }
-                      RegExpCharacter {
-                        value: 'R'
-                        loc: Object {
-                          filename: 'input.js'
-                          end: Object {
-                            column: 14
-                            index: 14
-                            line: 1
-                          }
-                          start: Object {
-                            column: 13
-                            index: 13
-                            line: 1
-                          }
-                        }
-                      }
-                    ]
-                  }
-                ]
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: true
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 22
+			index: 22
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Regular expression flags can't contain unicode escapes"}
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "script"
+				end: Object {
+					column: 16
+					index: 16
+					line: 1
+				}
+				start: Object {
+					column: 16
+					index: 16
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		JSVariableDeclarationStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 22
+					index: 22
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			declaration: JSVariableDeclaration {
+				kind: "var"
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 22
+						index: 22
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				declarations: Array [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "x"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "x"
+								end: Object {
+									column: 5
+									index: 5
+									line: 1
+								}
+								start: Object {
+									column: 4
+									index: 4
+									line: 1
+								}
+							}
+						}
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 22
+								index: 22
+								line: 1
+							}
+							start: Object {
+								column: 4
+								index: 4
+								line: 1
+							}
+						}
+						init: JSRegExpLiteral {
+							global: true
+							insensitive: false
+							multiline: false
+							noDotNewline: false
+							sticky: false
+							unicode: false
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 22
+									index: 22
+									line: 1
+								}
+								start: Object {
+									column: 8
+									index: 8
+									line: 1
+								}
+							}
+							expression: JSRegExpSubExpression {
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 14
+										index: 15
+										line: 1
+									}
+									start: Object {
+										column: 9
+										index: 9
+										line: 1
+									}
+								}
+								body: Array [
+									JSRegExpCharSet {
+										invert: false
+										loc: Object {
+											filename: "input.js"
+											end: Object {
+												column: 14
+												index: 14
+												line: 1
+											}
+											start: Object {
+												column: 9
+												index: 9
+												line: 1
+											}
+										}
+										body: Array [
+											JSRegExpCharacter {
+												value: "P"
+												loc: Object {
+													filename: "input.js"
+													end: Object {
+														column: 11
+														index: 11
+														line: 1
+													}
+													start: Object {
+														column: 10
+														index: 10
+														line: 1
+													}
+												}
+											}
+											JSRegExpCharacter {
+												value: " "
+												loc: Object {
+													filename: "input.js"
+													end: Object {
+														column: 12
+														index: 12
+														line: 1
+													}
+													start: Object {
+														column: 11
+														index: 11
+														line: 1
+													}
+												}
+											}
+											JSRegExpCharacter {
+												value: "Q"
+												loc: Object {
+													filename: "input.js"
+													end: Object {
+														column: 13
+														index: 13
+														line: 1
+													}
+													start: Object {
+														column: 12
+														index: 12
+														line: 1
+													}
+												}
+											}
+											JSRegExpCharacter {
+												value: "R"
+												loc: Object {
+													filename: "input.js"
+													end: Object {
+														column: 14
+														index: 14
+														line: 1
+													}
+													start: Object {
+														column: 13
+														index: 13
+														line: 1
+													}
+												}
+											}
+										]
+									}
+								]
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

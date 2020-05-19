@@ -5,114 +5,114 @@
 ## `esprima > es2015-destructuring-assignment-array-pattern > simple-assignment`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 9
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 8
-          index: 8
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: AssignmentExpression {
-        operator: '='
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 7
-            index: 7
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        right: NumericLiteral {
-          value: 0
-          format: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 7
-              index: 7
-              line: 1
-            }
-            start: Object {
-              column: 6
-              index: 6
-              line: 1
-            }
-          }
-        }
-        left: AssignmentArrayPattern {
-          rest: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 3
-              index: 3
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-          elements: Array [
-            AssignmentIdentifier {
-              name: 'a'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'a'
-                end: Object {
-                  column: 2
-                  index: 2
-                  line: 1
-                }
-                start: Object {
-                  column: 1
-                  index: 1
-                  line: 1
-                }
-              }
-            }
-          ]
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 9
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 8
+					index: 8
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSAssignmentExpression {
+				operator: "="
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 7
+						index: 7
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				right: JSNumericLiteral {
+					value: 0
+					format: undefined
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 7
+							index: 7
+							line: 1
+						}
+						start: Object {
+							column: 6
+							index: 6
+							line: 1
+						}
+					}
+				}
+				left: JSAssignmentArrayPattern {
+					rest: undefined
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 3
+							index: 3
+							line: 1
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+					elements: Array [
+						JSAssignmentIdentifier {
+							name: "a"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "a"
+								end: Object {
+									column: 2
+									index: 2
+									line: 1
+								}
+								start: Object {
+									column: 1
+									index: 1
+									line: 1
+								}
+							}
+						}
+					]
+				}
+			}
+		}
+	]
 }
 ```

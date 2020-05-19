@@ -5,169 +5,169 @@
 ## `es2015 > uncategorised > 239`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 19
-      index: 19
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'import missing a source'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'module'
-        end: Object {
-          column: 15
-          index: 15
-          line: 1
-        }
-        start: Object {
-          column: 16
-          index: 16
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    ImportDeclaration {
-      importKind: undefined
-      namedSpecifiers: Array []
-      namespaceSpecifier: undefined
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 15
-          index: 15
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      source: StringLiteral {
-        value: ''
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 15
-            index: 15
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-      }
-      defaultSpecifier: ImportDefaultSpecifier {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 10
-            index: 10
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        local: ImportSpecifierLocal {
-          name: BindingIdentifier {
-            name: 'foo'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'foo'
-              end: Object {
-                column: 10
-                index: 10
-                line: 1
-              }
-              start: Object {
-                column: 7
-                index: 7
-                line: 1
-              }
-            }
-          }
-          importKind: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 10
-              index: 10
-              line: 1
-            }
-            start: Object {
-              column: 7
-              index: 7
-              line: 1
-            }
-          }
-        }
-      }
-    }
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 19
-          index: 19
-          line: 1
-        }
-        start: Object {
-          column: 16
-          index: 16
-          line: 1
-        }
-      }
-      expression: ReferenceIdentifier {
-        name: 'bar'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'bar'
-          end: Object {
-            column: 19
-            index: 19
-            line: 1
-          }
-          start: Object {
-            column: 16
-            index: 16
-            line: 1
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "module"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 19
+			index: 19
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "import missing a source"}
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "module"
+				end: Object {
+					column: 15
+					index: 15
+					line: 1
+				}
+				start: Object {
+					column: 16
+					index: 16
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		JSImportDeclaration {
+			importKind: undefined
+			namedSpecifiers: Array []
+			namespaceSpecifier: undefined
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 15
+					index: 15
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			source: JSStringLiteral {
+				value: ""
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 15
+						index: 15
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+			}
+			defaultSpecifier: JSImportDefaultSpecifier {
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 10
+						index: 10
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				local: JSImportSpecifierLocal {
+					name: JSBindingIdentifier {
+						name: "foo"
+						loc: Object {
+							filename: "input.js"
+							identifierName: "foo"
+							end: Object {
+								column: 10
+								index: 10
+								line: 1
+							}
+							start: Object {
+								column: 7
+								index: 7
+								line: 1
+							}
+						}
+					}
+					importKind: undefined
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 10
+							index: 10
+							line: 1
+						}
+						start: Object {
+							column: 7
+							index: 7
+							line: 1
+						}
+					}
+				}
+			}
+		}
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 19
+					index: 19
+					line: 1
+				}
+				start: Object {
+					column: 16
+					index: 16
+					line: 1
+				}
+			}
+			expression: JSReferenceIdentifier {
+				name: "bar"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "bar"
+					end: Object {
+						column: 19
+						index: 19
+						line: 1
+					}
+					start: Object {
+						column: 16
+						index: 16
+						line: 1
+					}
+				}
+			}
+		}
+	]
 }
 ```

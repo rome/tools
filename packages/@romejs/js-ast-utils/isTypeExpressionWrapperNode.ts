@@ -6,24 +6,18 @@
  */
 
 import {
-  AnyNode,
-  FlowTypeCastExpression,
-  TSAsExpression,
-  TSNonNullExpression,
-  TSTypeAssertion,
-} from '@romejs/js-ast';
+	AnyNode,
+	TSAsExpression,
+	TSNonNullExpression,
+	TSTypeAssertion,
+} from "@romejs/ast";
 
 export default function isTypeExpressionWrapperNode(
-  node: AnyNode,
-): node is
-  | FlowTypeCastExpression
-  | TSAsExpression
-  | TSTypeAssertion
-  | TSNonNullExpression {
-  return (
-    node.type === 'FlowTypeCastExpression' ||
-    node.type === 'TSAsExpression' ||
-    node.type === 'TSTypeAssertion' ||
-    node.type === 'TSNonNullExpression'
-  );
+	node: AnyNode,
+): node is TSAsExpression | TSTypeAssertion | TSNonNullExpression {
+	return (
+		node.type === "TSAsExpression" ||
+		node.type === "TSTypeAssertion" ||
+		node.type === "TSNonNullExpression"
+	);
 }

@@ -5,43 +5,43 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Diagnostics} from '@romejs/diagnostics';
-import {DEFAULT_PROJECT_CONFIG} from '@romejs/project';
-import {test} from 'rome';
-import {check} from '@romejs/js-analysis';
-import {parseJS} from '@romejs/js-parser';
-import {createUnknownFilePath} from '@romejs/path';
+import {Diagnostics} from "@romejs/diagnostics";
+import {DEFAULT_PROJECT_CONFIG} from "@romejs/project";
+import {test} from "rome";
+import {check} from "@romejs/js-analysis";
+import {parseJS} from "@romejs/js-parser";
+import {createUnknownFilePath} from "@romejs/path";
 
 async function testCheck(code: string): Promise<Diagnostics> {
-  const ast = parseJS({
-    input: code,
-    sourceType: 'module',
-    path: createUnknownFilePath('unknown'),
-  });
+	const ast = parseJS({
+		input: code,
+		sourceType: "module",
+		path: createUnknownFilePath("unknown"),
+	});
 
-  return check({
-    ast,
-    project: {
-      folder: undefined,
-      config: DEFAULT_PROJECT_CONFIG,
-    },
-    provider: {
-      getExportTypes() {
-        return Promise.reject('unsupported');
-      },
-    },
-  });
+	return check({
+		ast,
+		project: {
+			folder: undefined,
+			config: DEFAULT_PROJECT_CONFIG,
+		},
+		provider: {
+			getExportTypes() {
+				return Promise.reject("unsupported");
+			},
+		},
+	});
 }
 
 test(
-  "discovers require('module') call",
-  async () => {
-    testCheck;
+	"discovers require('module') call",
+	async () => {
+		testCheck;
 
-    /*const diagnostics = await testCheck(`
+		/*const diagnostics = await testCheck(`
     const a: number = '';
   `);
 
   console.log(diagnostics);*/
-  },
+	},
 );

@@ -5,368 +5,366 @@
 ## `typescript > function > predicate-types`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.ts'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array ['ts']
-  loc: Object {
-    filename: 'input.ts'
-    end: Object {
-      column: 0
-      index: 72
-      line: 3
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    FunctionDeclaration {
-      id: BindingIdentifier {
-        name: 'f'
-        loc: Object {
-          filename: 'input.ts'
-          identifierName: 'f'
-          end: Object {
-            column: 10
-            index: 10
-            line: 1
-          }
-          start: Object {
-            column: 9
-            index: 9
-            line: 1
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 35
-          index: 35
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      body: BlockStatement {
-        body: Array []
-        directives: Array []
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 35
-            index: 35
-            line: 1
-          }
-          start: Object {
-            column: 33
-            index: 33
-            line: 1
-          }
-        }
-      }
-      head: FunctionHead {
-        async: false
-        generator: false
-        hasHoistedVars: false
-        predicate: undefined
-        rest: undefined
-        thisType: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 32
-            index: 32
-            line: 1
-          }
-          start: Object {
-            column: 10
-            index: 10
-            line: 1
-          }
-        }
-        returnType: TSTypePredicate {
-          asserts: false
-          loc: Object {
-            filename: 'input.ts'
-            end: Object {
-              column: 32
-              index: 32
-              line: 1
-            }
-            start: Object {
-              column: 20
-              index: 20
-              line: 1
-            }
-          }
-          typeAnnotation: BooleanKeywordTypeAnnotation {
-            loc: Object {
-              filename: 'input.ts'
-              end: Object {
-                column: 32
-                index: 32
-                line: 1
-              }
-              start: Object {
-                column: 25
-                index: 25
-                line: 1
-              }
-            }
-          }
-          parameterName: Identifier {
-            name: 'x'
-            loc: Object {
-              filename: 'input.ts'
-              identifierName: 'x'
-              end: Object {
-                column: 21
-                index: 21
-                line: 1
-              }
-              start: Object {
-                column: 20
-                index: 20
-                line: 1
-              }
-            }
-          }
-        }
-        params: Array [
-          BindingIdentifier {
-            name: 'x'
-            loc: Object {
-              filename: 'input.ts'
-              identifierName: 'x'
-              end: Object {
-                column: 12
-                index: 12
-                line: 1
-              }
-              start: Object {
-                column: 11
-                index: 11
-                line: 1
-              }
-            }
-            meta: PatternMeta {
-              optional: undefined
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 17
-                  index: 17
-                  line: 1
-                }
-                start: Object {
-                  column: 11
-                  index: 11
-                  line: 1
-                }
-              }
-              typeAnnotation: AnyKeywordTypeAnnotation {
-                loc: Object {
-                  filename: 'input.ts'
-                  end: Object {
-                    column: 17
-                    index: 17
-                    line: 1
-                  }
-                  start: Object {
-                    column: 14
-                    index: 14
-                    line: 1
-                  }
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 35
-          index: 71
-          line: 2
-        }
-        start: Object {
-          column: 0
-          index: 36
-          line: 2
-        }
-      }
-      expression: FunctionExpression {
-        id: undefined
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 34
-            index: 70
-            line: 2
-          }
-          start: Object {
-            column: 1
-            index: 37
-            line: 2
-          }
-        }
-        body: BlockStatement {
-          body: Array []
-          directives: Array []
-          loc: Object {
-            filename: 'input.ts'
-            end: Object {
-              column: 34
-              index: 70
-              line: 2
-            }
-            start: Object {
-              column: 32
-              index: 68
-              line: 2
-            }
-          }
-        }
-        head: FunctionHead {
-          async: false
-          generator: false
-          hasHoistedVars: false
-          predicate: undefined
-          rest: undefined
-          thisType: undefined
-          typeParameters: undefined
-          loc: Object {
-            filename: 'input.ts'
-            end: Object {
-              column: 31
-              index: 67
-              line: 2
-            }
-            start: Object {
-              column: 9
-              index: 45
-              line: 2
-            }
-          }
-          returnType: TSTypePredicate {
-            asserts: false
-            loc: Object {
-              filename: 'input.ts'
-              end: Object {
-                column: 31
-                index: 67
-                line: 2
-              }
-              start: Object {
-                column: 19
-                index: 55
-                line: 2
-              }
-            }
-            typeAnnotation: BooleanKeywordTypeAnnotation {
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 31
-                  index: 67
-                  line: 2
-                }
-                start: Object {
-                  column: 24
-                  index: 60
-                  line: 2
-                }
-              }
-            }
-            parameterName: Identifier {
-              name: 'x'
-              loc: Object {
-                filename: 'input.ts'
-                identifierName: 'x'
-                end: Object {
-                  column: 20
-                  index: 56
-                  line: 2
-                }
-                start: Object {
-                  column: 19
-                  index: 55
-                  line: 2
-                }
-              }
-            }
-          }
-          params: Array [
-            BindingIdentifier {
-              name: 'x'
-              loc: Object {
-                filename: 'input.ts'
-                identifierName: 'x'
-                end: Object {
-                  column: 11
-                  index: 47
-                  line: 2
-                }
-                start: Object {
-                  column: 10
-                  index: 46
-                  line: 2
-                }
-              }
-              meta: PatternMeta {
-                optional: undefined
-                loc: Object {
-                  filename: 'input.ts'
-                  end: Object {
-                    column: 16
-                    index: 52
-                    line: 2
-                  }
-                  start: Object {
-                    column: 10
-                    index: 46
-                    line: 2
-                  }
-                }
-                typeAnnotation: AnyKeywordTypeAnnotation {
-                  loc: Object {
-                    filename: 'input.ts'
-                    end: Object {
-                      column: 16
-                      index: 52
-                      line: 2
-                    }
-                    start: Object {
-                      column: 13
-                      index: 49
-                      line: 2
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.ts"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "module"
+	syntax: Array ["ts"]
+	loc: Object {
+		filename: "input.ts"
+		end: Object {
+			column: 0
+			index: 72
+			line: 3
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
+				name: "f"
+				loc: Object {
+					filename: "input.ts"
+					identifierName: "f"
+					end: Object {
+						column: 10
+						index: 10
+						line: 1
+					}
+					start: Object {
+						column: 9
+						index: 9
+						line: 1
+					}
+				}
+			}
+			loc: Object {
+				filename: "input.ts"
+				end: Object {
+					column: 35
+					index: 35
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			body: JSBlockStatement {
+				body: Array []
+				directives: Array []
+				loc: Object {
+					filename: "input.ts"
+					end: Object {
+						column: 35
+						index: 35
+						line: 1
+					}
+					start: Object {
+						column: 33
+						index: 33
+						line: 1
+					}
+				}
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				rest: undefined
+				thisType: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: "input.ts"
+					end: Object {
+						column: 32
+						index: 32
+						line: 1
+					}
+					start: Object {
+						column: 10
+						index: 10
+						line: 1
+					}
+				}
+				returnType: TSTypePredicate {
+					asserts: false
+					loc: Object {
+						filename: "input.ts"
+						end: Object {
+							column: 32
+							index: 32
+							line: 1
+						}
+						start: Object {
+							column: 20
+							index: 20
+							line: 1
+						}
+					}
+					typeAnnotation: TSBooleanKeywordTypeAnnotation {
+						loc: Object {
+							filename: "input.ts"
+							end: Object {
+								column: 32
+								index: 32
+								line: 1
+							}
+							start: Object {
+								column: 25
+								index: 25
+								line: 1
+							}
+						}
+					}
+					parameterName: JSIdentifier {
+						name: "x"
+						loc: Object {
+							filename: "input.ts"
+							identifierName: "x"
+							end: Object {
+								column: 21
+								index: 21
+								line: 1
+							}
+							start: Object {
+								column: 20
+								index: 20
+								line: 1
+							}
+						}
+					}
+				}
+				params: Array [
+					JSBindingIdentifier {
+						name: "x"
+						loc: Object {
+							filename: "input.ts"
+							identifierName: "x"
+							end: Object {
+								column: 12
+								index: 12
+								line: 1
+							}
+							start: Object {
+								column: 11
+								index: 11
+								line: 1
+							}
+						}
+						meta: JSPatternMeta {
+							optional: undefined
+							loc: Object {
+								filename: "input.ts"
+								end: Object {
+									column: 17
+									index: 17
+									line: 1
+								}
+								start: Object {
+									column: 11
+									index: 11
+									line: 1
+								}
+							}
+							typeAnnotation: TSAnyKeywordTypeAnnotation {
+								loc: Object {
+									filename: "input.ts"
+									end: Object {
+										column: 17
+										index: 17
+										line: 1
+									}
+									start: Object {
+										column: 14
+										index: 14
+										line: 1
+									}
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.ts"
+				end: Object {
+					column: 35
+					index: 71
+					line: 2
+				}
+				start: Object {
+					column: 0
+					index: 36
+					line: 2
+				}
+			}
+			expression: JSFunctionExpression {
+				id: undefined
+				loc: Object {
+					filename: "input.ts"
+					end: Object {
+						column: 34
+						index: 70
+						line: 2
+					}
+					start: Object {
+						column: 1
+						index: 37
+						line: 2
+					}
+				}
+				body: JSBlockStatement {
+					body: Array []
+					directives: Array []
+					loc: Object {
+						filename: "input.ts"
+						end: Object {
+							column: 34
+							index: 70
+							line: 2
+						}
+						start: Object {
+							column: 32
+							index: 68
+							line: 2
+						}
+					}
+				}
+				head: JSFunctionHead {
+					async: false
+					generator: false
+					hasHoistedVars: false
+					rest: undefined
+					thisType: undefined
+					typeParameters: undefined
+					loc: Object {
+						filename: "input.ts"
+						end: Object {
+							column: 31
+							index: 67
+							line: 2
+						}
+						start: Object {
+							column: 9
+							index: 45
+							line: 2
+						}
+					}
+					returnType: TSTypePredicate {
+						asserts: false
+						loc: Object {
+							filename: "input.ts"
+							end: Object {
+								column: 31
+								index: 67
+								line: 2
+							}
+							start: Object {
+								column: 19
+								index: 55
+								line: 2
+							}
+						}
+						typeAnnotation: TSBooleanKeywordTypeAnnotation {
+							loc: Object {
+								filename: "input.ts"
+								end: Object {
+									column: 31
+									index: 67
+									line: 2
+								}
+								start: Object {
+									column: 24
+									index: 60
+									line: 2
+								}
+							}
+						}
+						parameterName: JSIdentifier {
+							name: "x"
+							loc: Object {
+								filename: "input.ts"
+								identifierName: "x"
+								end: Object {
+									column: 20
+									index: 56
+									line: 2
+								}
+								start: Object {
+									column: 19
+									index: 55
+									line: 2
+								}
+							}
+						}
+					}
+					params: Array [
+						JSBindingIdentifier {
+							name: "x"
+							loc: Object {
+								filename: "input.ts"
+								identifierName: "x"
+								end: Object {
+									column: 11
+									index: 47
+									line: 2
+								}
+								start: Object {
+									column: 10
+									index: 46
+									line: 2
+								}
+							}
+							meta: JSPatternMeta {
+								optional: undefined
+								loc: Object {
+									filename: "input.ts"
+									end: Object {
+										column: 16
+										index: 52
+										line: 2
+									}
+									start: Object {
+										column: 10
+										index: 46
+										line: 2
+									}
+								}
+								typeAnnotation: TSAnyKeywordTypeAnnotation {
+									loc: Object {
+										filename: "input.ts"
+										end: Object {
+											column: 16
+											index: 52
+											line: 2
+										}
+										start: Object {
+											column: 13
+											index: 49
+											line: 2
+										}
+									}
+								}
+							}
+						}
+					]
+				}
+			}
+		}
+	]
 }
 ```

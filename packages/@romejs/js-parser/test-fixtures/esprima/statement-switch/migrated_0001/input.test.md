@@ -5,163 +5,163 @@
 ## `esprima > statement-switch > migrated_0001`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 42
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    SwitchStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 41
-          index: 41
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      discriminant: ReferenceIdentifier {
-        name: 'answer'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'answer'
-          end: Object {
-            column: 14
-            index: 14
-            line: 1
-          }
-          start: Object {
-            column: 8
-            index: 8
-            line: 1
-          }
-        }
-      }
-      cases: Array [
-        SwitchCase {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 39
-              index: 39
-              line: 1
-            }
-            start: Object {
-              column: 25
-              index: 25
-              line: 1
-            }
-          }
-          test: NumericLiteral {
-            value: 42
-            format: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 25
-                index: 25
-                line: 1
-              }
-              start: Object {
-                column: 23
-                index: 23
-                line: 1
-              }
-            }
-          }
-          consequent: Array [
-            ExpressionStatement {
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 32
-                  index: 32
-                  line: 1
-                }
-                start: Object {
-                  column: 27
-                  index: 27
-                  line: 1
-                }
-              }
-              expression: CallExpression {
-                arguments: Array []
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 31
-                    index: 31
-                    line: 1
-                  }
-                  start: Object {
-                    column: 27
-                    index: 27
-                    line: 1
-                  }
-                }
-                callee: ReferenceIdentifier {
-                  name: 'hi'
-                  loc: Object {
-                    filename: 'input.js'
-                    identifierName: 'hi'
-                    end: Object {
-                      column: 29
-                      index: 29
-                      line: 1
-                    }
-                    start: Object {
-                      column: 27
-                      index: 27
-                      line: 1
-                    }
-                  }
-                }
-              }
-            }
-            BreakStatement {
-              label: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 39
-                  index: 39
-                  line: 1
-                }
-                start: Object {
-                  column: 33
-                  index: 33
-                  line: 1
-                }
-              }
-            }
-          ]
-        }
-      ]
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 42
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSSwitchStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 41
+					index: 41
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			discriminant: JSReferenceIdentifier {
+				name: "answer"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "answer"
+					end: Object {
+						column: 14
+						index: 14
+						line: 1
+					}
+					start: Object {
+						column: 8
+						index: 8
+						line: 1
+					}
+				}
+			}
+			cases: Array [
+				JSSwitchCase {
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 39
+							index: 39
+							line: 1
+						}
+						start: Object {
+							column: 25
+							index: 25
+							line: 1
+						}
+					}
+					test: JSNumericLiteral {
+						value: 42
+						format: undefined
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 25
+								index: 25
+								line: 1
+							}
+							start: Object {
+								column: 23
+								index: 23
+								line: 1
+							}
+						}
+					}
+					consequent: Array [
+						JSExpressionStatement {
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 32
+									index: 32
+									line: 1
+								}
+								start: Object {
+									column: 27
+									index: 27
+									line: 1
+								}
+							}
+							expression: JSCallExpression {
+								arguments: Array []
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 31
+										index: 31
+										line: 1
+									}
+									start: Object {
+										column: 27
+										index: 27
+										line: 1
+									}
+								}
+								callee: JSReferenceIdentifier {
+									name: "hi"
+									loc: Object {
+										filename: "input.js"
+										identifierName: "hi"
+										end: Object {
+											column: 29
+											index: 29
+											line: 1
+										}
+										start: Object {
+											column: 27
+											index: 27
+											line: 1
+										}
+									}
+								}
+							}
+						}
+						JSBreakStatement {
+							label: undefined
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 39
+									index: 39
+									line: 1
+								}
+								start: Object {
+									column: 33
+									index: 33
+									line: 1
+								}
+							}
+						}
+					]
+				}
+			]
+		}
+	]
 }
 ```

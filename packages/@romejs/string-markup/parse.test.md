@@ -8,11 +8,11 @@
 
 ```javascript
 Array [
-  Tag {
-    name: 'filelink'
-    children: Array []
-    attributes: Object {target: 'C:\\Users\\sebmck\\file.ts'}
-  }
+	Tag {
+		name: "filelink"
+		children: Array []
+		attributes: Object {target: "C:\\Users\\sebmck\\file.ts"}
+	}
 ]
 ```
 
@@ -20,11 +20,11 @@ Array [
 
 ```javascript
 Array [
-  Tag {
-    name: 'info'
-    attributes: Object {}
-    children: Array [Text {value: '[MemoryFileSystem] Adding new project folder C:\\Users\\sebmck\\rome'}]
-  }
+	Tag {
+		name: "info"
+		attributes: Object {}
+		children: Array [Text {value: "[MemoryFileSystem] Adding new project folder C:\\Users\\sebmck\\rome"}]
+	}
 ]
 ```
 
@@ -32,18 +32,18 @@ Array [
 
 ```javascript
 Array [
-  Text {value: '  <info>[MemoryFileSystem] Adding new project folder C:\\Users\\Sebastian\\rome\\</info>\n        '}
-  Tag {
-    name: 'error'
-    attributes: Object {}
-    children: Array [
-      Tag {
-        name: 'emphasis'
-        attributes: Object {}
-        children: Array [Text {value: '^'}]
-      }
-    ]
-  }
-  Text {value: ' '}
+	Text {value: "  <info>[MemoryFileSystem] Adding new project folder C:\\Users\\Sebastian\\rome\\</info>\n        "}
+	Tag {
+		name: "error"
+		attributes: Object {}
+		children: Array [
+			Tag {
+				name: "emphasis"
+				attributes: Object {}
+				children: Array [Text {value: "^"}]
+			}
+		]
+	}
+	Text {value: " "}
 ]
 ```

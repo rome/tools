@@ -5,39 +5,39 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ConstProgramSyntax, ConstSourceType} from '@romejs/js-ast';
-import {ParserOptionsWithRequiredPath} from '@romejs/parser-core';
+import {ConstProgramSyntax, ConstSourceType} from "@romejs/ast";
+import {ParserOptionsWithRequiredPath} from "@romejs/parser-core";
 
 type UserOptionsBase = {
-  syntax?: Array<ConstProgramSyntax>;
-  sourceType?: ConstSourceType;
-  tokens?: boolean;
-  allowReturnOutsideFunction?: boolean;
-  manifestPath?: undefined | string;
+	syntax?: Array<ConstProgramSyntax>;
+	sourceType?: ConstSourceType;
+	tokens?: boolean;
+	allowReturnOutsideFunction?: boolean;
+	manifestPath?: undefined | string;
 };
 
 export type JSParserUserOptions = ParserOptionsWithRequiredPath &
-  UserOptionsBase;
+	UserOptionsBase;
 
 export type JSParserOptions = ParserOptionsWithRequiredPath &
-  Required<UserOptionsBase>;
+	Required<UserOptionsBase>;
 
 const DEFAULT_USER_OPTIONS: Required<UserOptionsBase> = {
-  // I want to kill this option very badly
-  allowReturnOutsideFunction: false,
-  // Source type ("template", "script" or "module") for different semantics
-  sourceType: 'script',
-  // Whether we should be tracking tokens when parsing this file
-  // NOTE: This is memory-intensive
-  tokens: false,
-  syntax: [],
-  manifestPath: 'package.json',
+	// I want to kill this option very badly
+	allowReturnOutsideFunction: false,
+	// Source type ("template", "script" or "module") for different semantics
+	sourceType: "script",
+	// Whether we should be tracking tokens when parsing this file
+	// NOTE: This is memory-intensive
+	tokens: false,
+	syntax: [],
+	manifestPath: "package.json",
 };
 
 // Interpret and default an options object
 export function normalizeOptions(opts: JSParserUserOptions): JSParserOptions {
-  return {
-    ...DEFAULT_USER_OPTIONS,
-    ...opts,
-  };
+	return {
+		...DEFAULT_USER_OPTIONS,
+		...opts,
+	};
 }

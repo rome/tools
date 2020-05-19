@@ -18,76 +18,76 @@
  * strings are supported for membership.
  */
 export default class ArraySet {
-  constructor() {
-    this.array = [];
-    this.set = new Map();
-  }
+	constructor() {
+		this.array = [];
+		this.set = new Map();
+	}
 
-  array: Array<string>;
-  set: Map<string, number>;
+	array: Array<string>;
+	set: Map<string, number>;
 
-  /**
+	/**
    * Static method for creating ArraySet instances from 'an existing array.
    */
-  static fromArray(array: Array<string>, allowDuplicates: boolean): ArraySet {
-    const set = new ArraySet();
-    for (const item of array) {
-      set.add(item, allowDuplicates);
-    }
-    return set;
-  }
+	static fromArray(array: Array<string>, allowDuplicates: boolean): ArraySet {
+		const set = new ArraySet();
+		for (const item of array) {
+			set.add(item, allowDuplicates);
+		}
+		return set;
+	}
 
-  /**
+	/**
    * Add the given string to this set.
    */
-  add(str: string, allowDuplicates?: boolean): void {
-    const isDuplicate = this.has(str);
-    const idx = this.array.length;
+	add(str: string, allowDuplicates?: boolean): void {
+		const isDuplicate = this.has(str);
+		const idx = this.array.length;
 
-    if (isDuplicate === false || allowDuplicates === true) {
-      this.array.push(str);
-    }
+		if (isDuplicate === false || allowDuplicates === true) {
+			this.array.push(str);
+		}
 
-    if (isDuplicate === false) {
-      this.set.set(str, idx);
-    }
-  }
+		if (isDuplicate === false) {
+			this.set.set(str, idx);
+		}
+	}
 
-  /**
+	/**
    * Is the given string a member of this set?
    */
-  has(str: string): boolean {
-    return this.set.has(str);
-  }
+	has(str: string): boolean {
+		return this.set.has(str);
+	}
 
-  /**
+	/**
    * What is the index of the given string in the array?
    */
-  indexOf(str: string): number {
-    const idx = this.set.get(str);
-    if (idx === undefined || idx < 0) {
-      throw new Error(`${str} is not in the set`);
-    }
-    return idx;
-  }
+	indexOf(str: string): number {
+		const idx = this.set.get(str);
+		if (idx === undefined || idx < 0) {
+			throw new Error(`${str} is not in the set`);
+		}
+		return idx;
+	}
 
-  /**
+	/**
    * What is the element at the given index?
    */
-  at(idx: number): string {
-    if (idx >= 0 && idx < this.array.length) {
-      return this.array[idx];
-    } else {
-      throw new Error(`No element indexed by ${idx}`);
-    }
-  }
+	at(idx: number): string {
+		if (idx >= 0 && idx < this.array.length) {
+			return this.array[idx];
+		} else {
+			throw new Error(`No element indexed by ${idx}`);
+		}
+	}
 
-  /**
+	/**
    * Returns the array representation of this set (which has the proper indices
    * indicated by indexOf). Note that this is a copy of the internal array used
    * for storing the members so that no one can mess with internal state.
    */
-  toArray(): Array<string> {
-    return this.array.slice();
-  }
+	toArray(): Array<string> {
+		return this.array.slice();
+	}
 }

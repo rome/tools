@@ -5,169 +5,168 @@
 ## `es2015 > yield > yield-star-inside-plain-function`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 27
-      index: 27
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 27
-          index: 27
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: FunctionExpression {
-        id: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 26
-            index: 26
-            line: 1
-          }
-          start: Object {
-            column: 1
-            index: 1
-            line: 1
-          }
-        }
-        head: FunctionHead {
-          async: false
-          generator: false
-          hasHoistedVars: false
-          params: Array []
-          predicate: undefined
-          rest: undefined
-          returnType: undefined
-          thisType: undefined
-          typeParameters: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 12
-              index: 12
-              line: 1
-            }
-            start: Object {
-              column: 10
-              index: 10
-              line: 1
-            }
-          }
-        }
-        body: BlockStatement {
-          directives: Array []
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 26
-              index: 26
-              line: 1
-            }
-            start: Object {
-              column: 13
-              index: 13
-              line: 1
-            }
-          }
-          body: Array [
-            ExpressionStatement {
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 24
-                  index: 24
-                  line: 1
-                }
-                start: Object {
-                  column: 15
-                  index: 15
-                  line: 1
-                }
-              }
-              expression: BinaryExpression {
-                operator: '*'
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 24
-                    index: 24
-                    line: 1
-                  }
-                  start: Object {
-                    column: 15
-                    index: 15
-                    line: 1
-                  }
-                }
-                left: ReferenceIdentifier {
-                  name: 'yield'
-                  loc: Object {
-                    filename: 'input.js'
-                    identifierName: 'yield'
-                    end: Object {
-                      column: 20
-                      index: 20
-                      line: 1
-                    }
-                    start: Object {
-                      column: 15
-                      index: 15
-                      line: 1
-                    }
-                  }
-                }
-                right: NumericLiteral {
-                  value: 10
-                  format: undefined
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 24
-                      index: 24
-                      line: 1
-                    }
-                    start: Object {
-                      column: 22
-                      index: 22
-                      line: 1
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 27
+			index: 27
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 27
+					index: 27
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSFunctionExpression {
+				id: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 26
+						index: 26
+						line: 1
+					}
+					start: Object {
+						column: 1
+						index: 1
+						line: 1
+					}
+				}
+				head: JSFunctionHead {
+					async: false
+					generator: false
+					hasHoistedVars: false
+					params: Array []
+					rest: undefined
+					returnType: undefined
+					thisType: undefined
+					typeParameters: undefined
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 12
+							index: 12
+							line: 1
+						}
+						start: Object {
+							column: 10
+							index: 10
+							line: 1
+						}
+					}
+				}
+				body: JSBlockStatement {
+					directives: Array []
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 26
+							index: 26
+							line: 1
+						}
+						start: Object {
+							column: 13
+							index: 13
+							line: 1
+						}
+					}
+					body: Array [
+						JSExpressionStatement {
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 24
+									index: 24
+									line: 1
+								}
+								start: Object {
+									column: 15
+									index: 15
+									line: 1
+								}
+							}
+							expression: JSBinaryExpression {
+								operator: "*"
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 24
+										index: 24
+										line: 1
+									}
+									start: Object {
+										column: 15
+										index: 15
+										line: 1
+									}
+								}
+								left: JSReferenceIdentifier {
+									name: "yield"
+									loc: Object {
+										filename: "input.js"
+										identifierName: "yield"
+										end: Object {
+											column: 20
+											index: 20
+											line: 1
+										}
+										start: Object {
+											column: 15
+											index: 15
+											line: 1
+										}
+									}
+								}
+								right: JSNumericLiteral {
+									value: 10
+									format: undefined
+									loc: Object {
+										filename: "input.js"
+										end: Object {
+											column: 24
+											index: 24
+											line: 1
+										}
+										start: Object {
+											column: 22
+											index: 22
+											line: 1
+										}
+									}
+								}
+							}
+						}
+					]
+				}
+			}
+		}
+	]
 }
 ```

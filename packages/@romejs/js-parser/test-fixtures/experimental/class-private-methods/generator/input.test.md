@@ -5,265 +5,263 @@
 ## `experimental > class-private-methods > generator`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 56
-      line: 6
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ClassDeclaration {
-      id: BindingIdentifier {
-        name: 'Hotel'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'Hotel'
-          end: Object {
-            column: 11
-            index: 11
-            line: 1
-          }
-          start: Object {
-            column: 6
-            index: 6
-            line: 1
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 1
-          index: 55
-          line: 5
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      meta: ClassHead {
-        implements: undefined
-        superClass: undefined
-        superTypeParameters: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 1
-            index: 55
-            line: 5
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        body: Array [
-          ClassPrivateMethod {
-            kind: 'method'
-            key: PrivateName {
-              id: Identifier {
-                name: 'evil'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'evil'
-                  end: Object {
-                    column: 8
-                    index: 22
-                    line: 2
-                  }
-                  start: Object {
-                    column: 4
-                    index: 18
-                    line: 2
-                  }
-                }
-              }
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 8
-                  index: 22
-                  line: 2
-                }
-                start: Object {
-                  column: 3
-                  index: 17
-                  line: 2
-                }
-              }
-            }
-            variance: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 3
-                index: 53
-                line: 4
-              }
-              start: Object {
-                column: 2
-                index: 16
-                line: 2
-              }
-            }
-            head: FunctionHead {
-              async: false
-              generator: true
-              hasHoistedVars: false
-              params: Array []
-              predicate: undefined
-              rest: undefined
-              returnType: undefined
-              thisType: undefined
-              typeParameters: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 10
-                  index: 24
-                  line: 2
-                }
-                start: Object {
-                  column: 8
-                  index: 22
-                  line: 2
-                }
-              }
-            }
-            meta: ClassPropertyMeta {
-              abstract: false
-              accessibility: undefined
-              optional: false
-              readonly: false
-              static: false
-              typeAnnotation: undefined
-              start: Object {
-                column: 2
-                index: 16
-                line: 2
-              }
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 8
-                  index: 22
-                  line: 2
-                }
-                start: Object {
-                  column: 2
-                  index: 16
-                  line: 2
-                }
-              }
-            }
-            body: BlockStatement {
-              directives: Array []
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 3
-                  index: 53
-                  line: 4
-                }
-                start: Object {
-                  column: 11
-                  index: 25
-                  line: 2
-                }
-              }
-              body: Array [
-                ExpressionStatement {
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 22
-                      index: 49
-                      line: 3
-                    }
-                    start: Object {
-                      column: 4
-                      index: 31
-                      line: 3
-                    }
-                  }
-                  expression: YieldExpression {
-                    delegate: false
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 21
-                        index: 48
-                        line: 3
-                      }
-                      start: Object {
-                        column: 4
-                        index: 31
-                        line: 3
-                      }
-                    }
-                    argument: CallExpression {
-                      arguments: Array []
-                      loc: Object {
-                        filename: 'input.js'
-                        end: Object {
-                          column: 21
-                          index: 48
-                          line: 3
-                        }
-                        start: Object {
-                          column: 10
-                          index: 37
-                          line: 3
-                        }
-                      }
-                      callee: ReferenceIdentifier {
-                        name: 'notReally'
-                        loc: Object {
-                          filename: 'input.js'
-                          identifierName: 'notReally'
-                          end: Object {
-                            column: 19
-                            index: 46
-                            line: 3
-                          }
-                          start: Object {
-                            column: 10
-                            index: 37
-                            line: 3
-                          }
-                        }
-                      }
-                    }
-                  }
-                }
-              ]
-            }
-          }
-        ]
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 56
+			line: 6
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
+				name: "Hotel"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "Hotel"
+					end: Object {
+						column: 11
+						index: 11
+						line: 1
+					}
+					start: Object {
+						column: 6
+						index: 6
+						line: 1
+					}
+				}
+			}
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 1
+					index: 55
+					line: 5
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			meta: JSClassHead {
+				implements: undefined
+				superClass: undefined
+				superTypeParameters: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 1
+						index: 55
+						line: 5
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				body: Array [
+					JSClassPrivateMethod {
+						kind: "method"
+						key: JSPrivateName {
+							id: JSIdentifier {
+								name: "evil"
+								loc: Object {
+									filename: "input.js"
+									identifierName: "evil"
+									end: Object {
+										column: 8
+										index: 22
+										line: 2
+									}
+									start: Object {
+										column: 4
+										index: 18
+										line: 2
+									}
+								}
+							}
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 8
+									index: 22
+									line: 2
+								}
+								start: Object {
+									column: 3
+									index: 17
+									line: 2
+								}
+							}
+						}
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 3
+								index: 53
+								line: 4
+							}
+							start: Object {
+								column: 2
+								index: 16
+								line: 2
+							}
+						}
+						head: JSFunctionHead {
+							async: false
+							generator: true
+							hasHoistedVars: false
+							params: Array []
+							rest: undefined
+							returnType: undefined
+							thisType: undefined
+							typeParameters: undefined
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 10
+									index: 24
+									line: 2
+								}
+								start: Object {
+									column: 8
+									index: 22
+									line: 2
+								}
+							}
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							start: Object {
+								column: 2
+								index: 16
+								line: 2
+							}
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 8
+									index: 22
+									line: 2
+								}
+								start: Object {
+									column: 2
+									index: 16
+									line: 2
+								}
+							}
+						}
+						body: JSBlockStatement {
+							directives: Array []
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 3
+									index: 53
+									line: 4
+								}
+								start: Object {
+									column: 11
+									index: 25
+									line: 2
+								}
+							}
+							body: Array [
+								JSExpressionStatement {
+									loc: Object {
+										filename: "input.js"
+										end: Object {
+											column: 22
+											index: 49
+											line: 3
+										}
+										start: Object {
+											column: 4
+											index: 31
+											line: 3
+										}
+									}
+									expression: JSYieldExpression {
+										delegate: false
+										loc: Object {
+											filename: "input.js"
+											end: Object {
+												column: 21
+												index: 48
+												line: 3
+											}
+											start: Object {
+												column: 4
+												index: 31
+												line: 3
+											}
+										}
+										argument: JSCallExpression {
+											arguments: Array []
+											loc: Object {
+												filename: "input.js"
+												end: Object {
+													column: 21
+													index: 48
+													line: 3
+												}
+												start: Object {
+													column: 10
+													index: 37
+													line: 3
+												}
+											}
+											callee: JSReferenceIdentifier {
+												name: "notReally"
+												loc: Object {
+													filename: "input.js"
+													identifierName: "notReally"
+													end: Object {
+														column: 19
+														index: 46
+														line: 3
+													}
+													start: Object {
+														column: 10
+														index: 37
+														line: 3
+													}
+												}
+											}
+										}
+									}
+								}
+							]
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

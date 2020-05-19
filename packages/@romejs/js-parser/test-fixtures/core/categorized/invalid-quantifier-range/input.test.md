@@ -5,142 +5,142 @@
 ## `core > categorized > invalid-quantifier-range`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 9
-      index: 9
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/regex'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Quantifier minimum is greater than maximum'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 6
-          index: 6
-          line: 1
-        }
-        start: Object {
-          column: 3
-          index: 3
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 9
-          index: 9
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: RegExpLiteral {
-        global: false
-        insensitive: false
-        multiline: false
-        noDotNewline: false
-        sticky: false
-        unicode: false
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 8
-            index: 8
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        expression: RegExpSubExpression {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 6
-              index: 7
-              line: 1
-            }
-            start: Object {
-              column: 1
-              index: 1
-              line: 1
-            }
-          }
-          body: Array [
-            RegExpQuantified {
-              lazy: false
-              max: 2
-              min: 1
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 6
-                  index: 6
-                  line: 1
-                }
-                start: Object {
-                  column: 1
-                  index: 1
-                  line: 1
-                }
-              }
-              target: RegExpCharacter {
-                value: 'a'
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 2
-                    index: 2
-                    line: 1
-                  }
-                  start: Object {
-                    column: 1
-                    index: 1
-                    line: 1
-                  }
-                }
-              }
-            }
-          ]
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 9
+			index: 9
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/regex"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Quantifier minimum is greater than maximum"}
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "script"
+				end: Object {
+					column: 6
+					index: 6
+					line: 1
+				}
+				start: Object {
+					column: 3
+					index: 3
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 9
+					index: 9
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSRegExpLiteral {
+				global: false
+				insensitive: false
+				multiline: false
+				noDotNewline: false
+				sticky: false
+				unicode: false
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 8
+						index: 8
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				expression: JSRegExpSubExpression {
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 6
+							index: 7
+							line: 1
+						}
+						start: Object {
+							column: 1
+							index: 1
+							line: 1
+						}
+					}
+					body: Array [
+						JSRegExpQuantified {
+							lazy: false
+							max: 2
+							min: 1
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 6
+									index: 6
+									line: 1
+								}
+								start: Object {
+									column: 1
+									index: 1
+									line: 1
+								}
+							}
+							target: JSRegExpCharacter {
+								value: "a"
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 2
+										index: 2
+										line: 1
+									}
+									start: Object {
+										column: 1
+										index: 1
+										line: 1
+									}
+								}
+							}
+						}
+					]
+				}
+			}
+		}
+	]
 }
 ```

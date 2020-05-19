@@ -1,20 +1,22 @@
 # Contributing
 
-We can use help in a bunch of areas and any help is appreciated. Our [GitHub issues](https://github.com/facebookexperimental/rome/issues) serve as a place for any discussion, whether it's bug reports, questions, project direction etc. As the project grows this policy may change.
+We can use help in a bunch of areas and any help is appreciated. Our [GitHub issues](https://github.com/romejs/rome/issues) serve as a place for any discussion, whether it's bug reports, questions, project direction etc. As the project grows this policy may change.
 
 Our [Discord server](https://discord.gg/9WxHa5d) is open for help and more adhoc discussion. All activity on the Discord is still moderated and will be strictly enforced under the project's [Code of Conduct](./CODE_OF_CONDUCT.md).
 
-You have to sign the [contributor license agreement (CLA)](https://code.facebook.com/cla) before your pull request can be reviewed. 
+You have to sign the [contributor license agreement (CLA)](https://code.facebook.com/cla) before your pull request can be reviewed.
 
 ## Getting Started
 
 Getting started with developing Rome is as easy as three commands. You will need Node v12 or above.
 
 ```bash
-git clone https://github.com/facebookexperimental/rome
+git clone https://github.com/romejs/rome
 cd rome
 ./scripts/dev-rome --help
 ```
+
+**Note:** If you previously ran the user-facing [installation instructions](https://romejs.dev/docs/introduction/installation), the `dist` directory must be deleted before running any development commands.
 
 No dependency installation step is required as we check in our `node_modules` folder that contains only a copy of TypeScript and some definitions.
 

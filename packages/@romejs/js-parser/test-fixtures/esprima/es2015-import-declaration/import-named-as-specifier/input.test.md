@@ -5,132 +5,132 @@
 ## `esprima > es2015-import-declaration > import-named-as-specifier`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 32
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ImportDeclaration {
-      defaultSpecifier: undefined
-      importKind: undefined
-      namespaceSpecifier: undefined
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 31
-          index: 31
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      source: StringLiteral {
-        value: 'foo'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 30
-            index: 30
-            line: 1
-          }
-          start: Object {
-            column: 25
-            index: 25
-            line: 1
-          }
-        }
-      }
-      namedSpecifiers: Array [
-        ImportSpecifier {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 18
-              index: 18
-              line: 1
-            }
-            start: Object {
-              column: 8
-              index: 8
-              line: 1
-            }
-          }
-          imported: Identifier {
-            name: 'bar'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'bar'
-              end: Object {
-                column: 11
-                index: 11
-                line: 1
-              }
-              start: Object {
-                column: 8
-                index: 8
-                line: 1
-              }
-            }
-          }
-          local: ImportSpecifierLocal {
-            name: BindingIdentifier {
-              name: 'baz'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'baz'
-                end: Object {
-                  column: 18
-                  index: 18
-                  line: 1
-                }
-                start: Object {
-                  column: 15
-                  index: 15
-                  line: 1
-                }
-              }
-            }
-            importKind: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 18
-                index: 18
-                line: 1
-              }
-              start: Object {
-                column: 8
-                index: 8
-                line: 1
-              }
-            }
-          }
-        }
-      ]
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "module"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 32
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSImportDeclaration {
+			defaultSpecifier: undefined
+			importKind: undefined
+			namespaceSpecifier: undefined
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 31
+					index: 31
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			source: JSStringLiteral {
+				value: "foo"
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 30
+						index: 30
+						line: 1
+					}
+					start: Object {
+						column: 25
+						index: 25
+						line: 1
+					}
+				}
+			}
+			namedSpecifiers: Array [
+				JSImportSpecifier {
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 18
+							index: 18
+							line: 1
+						}
+						start: Object {
+							column: 8
+							index: 8
+							line: 1
+						}
+					}
+					imported: JSIdentifier {
+						name: "bar"
+						loc: Object {
+							filename: "input.js"
+							identifierName: "bar"
+							end: Object {
+								column: 11
+								index: 11
+								line: 1
+							}
+							start: Object {
+								column: 8
+								index: 8
+								line: 1
+							}
+						}
+					}
+					local: JSImportSpecifierLocal {
+						name: JSBindingIdentifier {
+							name: "baz"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "baz"
+								end: Object {
+									column: 18
+									index: 18
+									line: 1
+								}
+								start: Object {
+									column: 15
+									index: 15
+									line: 1
+								}
+							}
+						}
+						importKind: undefined
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 18
+								index: 18
+								line: 1
+							}
+							start: Object {
+								column: 8
+								index: 8
+								line: 1
+							}
+						}
+					}
+				}
+			]
+		}
+	]
 }
 ```

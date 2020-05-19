@@ -13,15 +13,16 @@ module.exports = {
   url: 'https://romejs.dev',
   baseUrl: '/',
   favicon: 'img/favicon.ico',
-  organizationName: 'facebookexperimental',
+  organizationName: 'romejs',
   projectName: 'rome',
   themeConfig: {
-    image: 'img/rome-logo.png',
+    image: 'img/rome-logo-black.svg',
     navbar: {
       title: 'Rome',
       logo: {
         alt: 'Rome Logo',
-        src: 'img/rome-logo.png',
+        src: 'img/rome-logo-black.svg',
+        srcDark: 'img/rome-logo-white.svg',
       },
       links: [
         {
@@ -31,7 +32,7 @@ module.exports = {
         },
         // Please keep GitHub link to the right for consistency.
         {
-          href: 'https://github.com/facebookexperimental/rome',
+          href: 'https://github.com/romejs/rome',
           label: 'GitHub',
           position: 'right',
         },
@@ -45,7 +46,7 @@ module.exports = {
           items: [
             {
               label: 'Installation',
-              to: 'docs/introduction/installation'
+              to: 'docs/introduction/installation',
             },
             {
               label: 'Getting Started',
@@ -59,7 +60,7 @@ module.exports = {
             {
               label: 'Code of Conduct',
               href:
-                'https://github.com/facebookexperimental/rome/blob/master/.github/CODE_OF_CONDUCT.md',
+                'https://github.com/romejs/rome/blob/master/.github/CODE_OF_CONDUCT.md',
             },
             {
               label: 'Contributing',
@@ -72,7 +73,7 @@ module.exports = {
           items: [
             {
               label: 'GitHub',
-              href: 'https://github.com/facebookexperimental/rome',
+              href: 'https://github.com/romejs/rome',
             },
           ],
         },
@@ -86,6 +87,9 @@ module.exports = {
       copyright: `Copyright © ${new Date().getFullYear()} Facebook, Inc. Built with Docusaurus.`,
     },
   },
+  stylesheets: [
+    'https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&display=swap',
+  ],
   presets: [
     [
       '@docusaurus/preset-classic',

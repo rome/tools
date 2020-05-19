@@ -5,193 +5,191 @@
 ## `es2017 > async-functions > await-function-expression-name-inside-async-function`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 1
-      index: 48
-      line: 3
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    FunctionDeclaration {
-      id: BindingIdentifier {
-        name: 'fn'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'fn'
-          end: Object {
-            column: 17
-            index: 17
-            line: 1
-          }
-          start: Object {
-            column: 15
-            index: 15
-            line: 1
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 1
-          index: 48
-          line: 3
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      head: FunctionHead {
-        async: true
-        generator: false
-        hasHoistedVars: false
-        params: Array []
-        predicate: undefined
-        rest: undefined
-        returnType: undefined
-        thisType: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 19
-            index: 19
-            line: 1
-          }
-          start: Object {
-            column: 17
-            index: 17
-            line: 1
-          }
-        }
-      }
-      body: BlockStatement {
-        directives: Array []
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 1
-            index: 48
-            line: 3
-          }
-          start: Object {
-            column: 20
-            index: 20
-            line: 1
-          }
-        }
-        body: Array [
-          ExpressionStatement {
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 24
-                index: 46
-                line: 2
-              }
-              start: Object {
-                column: 2
-                index: 24
-                line: 2
-              }
-            }
-            expression: FunctionExpression {
-              id: BindingIdentifier {
-                name: 'await'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'await'
-                  end: Object {
-                    column: 17
-                    index: 39
-                    line: 2
-                  }
-                  start: Object {
-                    column: 12
-                    index: 34
-                    line: 2
-                  }
-                }
-              }
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 22
-                  index: 44
-                  line: 2
-                }
-                start: Object {
-                  column: 3
-                  index: 25
-                  line: 2
-                }
-              }
-              body: BlockStatement {
-                body: Array []
-                directives: Array []
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 22
-                    index: 44
-                    line: 2
-                  }
-                  start: Object {
-                    column: 20
-                    index: 42
-                    line: 2
-                  }
-                }
-              }
-              head: FunctionHead {
-                async: false
-                generator: false
-                hasHoistedVars: false
-                params: Array []
-                predicate: undefined
-                rest: undefined
-                returnType: undefined
-                thisType: undefined
-                typeParameters: undefined
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 19
-                    index: 41
-                    line: 2
-                  }
-                  start: Object {
-                    column: 17
-                    index: 39
-                    line: 2
-                  }
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 1
+			index: 48
+			line: 3
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
+				name: "fn"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "fn"
+					end: Object {
+						column: 17
+						index: 17
+						line: 1
+					}
+					start: Object {
+						column: 15
+						index: 15
+						line: 1
+					}
+				}
+			}
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 1
+					index: 48
+					line: 3
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			head: JSFunctionHead {
+				async: true
+				generator: false
+				hasHoistedVars: false
+				params: Array []
+				rest: undefined
+				returnType: undefined
+				thisType: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 19
+						index: 19
+						line: 1
+					}
+					start: Object {
+						column: 17
+						index: 17
+						line: 1
+					}
+				}
+			}
+			body: JSBlockStatement {
+				directives: Array []
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 1
+						index: 48
+						line: 3
+					}
+					start: Object {
+						column: 20
+						index: 20
+						line: 1
+					}
+				}
+				body: Array [
+					JSExpressionStatement {
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 24
+								index: 46
+								line: 2
+							}
+							start: Object {
+								column: 2
+								index: 24
+								line: 2
+							}
+						}
+						expression: JSFunctionExpression {
+							id: JSBindingIdentifier {
+								name: "await"
+								loc: Object {
+									filename: "input.js"
+									identifierName: "await"
+									end: Object {
+										column: 17
+										index: 39
+										line: 2
+									}
+									start: Object {
+										column: 12
+										index: 34
+										line: 2
+									}
+								}
+							}
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 22
+									index: 44
+									line: 2
+								}
+								start: Object {
+									column: 3
+									index: 25
+									line: 2
+								}
+							}
+							body: JSBlockStatement {
+								body: Array []
+								directives: Array []
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 22
+										index: 44
+										line: 2
+									}
+									start: Object {
+										column: 20
+										index: 42
+										line: 2
+									}
+								}
+							}
+							head: JSFunctionHead {
+								async: false
+								generator: false
+								hasHoistedVars: false
+								params: Array []
+								rest: undefined
+								returnType: undefined
+								thisType: undefined
+								typeParameters: undefined
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 19
+										index: 41
+										line: 2
+									}
+									start: Object {
+										column: 17
+										index: 39
+										line: 2
+									}
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

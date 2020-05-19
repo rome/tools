@@ -5,48 +5,48 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Diagnostics} from '@romejs/diagnostics';
-import {SourceMapGenerator} from '@romejs/codec-source-map';
-import {MasterRequest, TestWorkerBridge} from '@romejs/core';
-import {CoverageFile, InspectorClient} from '@romejs/v8';
-import child = require('child_process');
-import {FileReference} from '@romejs/core/common/types/files';
+import {Diagnostics} from "@romejs/diagnostics";
+import {SourceMapGenerator} from "@romejs/codec-source-map";
+import {MasterRequest, TestWorkerBridge} from "@romejs/core";
+import {CoverageFile, InspectorClient} from "@romejs/v8";
+import child = require("child_process");
+import {FileReference} from "@romejs/core/common/types/files";
 
 export type TestSource = {
-  code: string;
-  sourceMap: SourceMapGenerator;
-  ref: FileReference;
+	code: string;
+	sourceMap: SourceMapGenerator;
+	ref: FileReference;
 };
 
 export type TestSources = Map<string, TestSource>;
 
 export type TestMasterRunnerConstructorOptions = {
-  sources: TestSources;
-  request: MasterRequest;
-  addDiagnostics: Diagnostics;
-  options: TestMasterRunnerOptions;
+	sources: TestSources;
+	request: MasterRequest;
+	addDiagnostics: Diagnostics;
+	options: TestMasterRunnerOptions;
 };
 
 export type TestMasterRunnerOptions = {
-  focusAllowed: boolean;
-  coverage: boolean;
-  showAllCoverage: boolean;
-  updateSnapshots: boolean;
-  freezeSnapshots: boolean;
-  verboseDiagnostics: boolean;
-  syncTests: boolean;
+	focusAllowed: boolean;
+	coverage: boolean;
+	showAllCoverage: boolean;
+	updateSnapshots: boolean;
+	freezeSnapshots: boolean;
+	verboseDiagnostics: boolean;
+	syncTests: boolean;
 };
 
 export type CoverageFolder = {
-  name: undefined | string;
-  folders: Map<string, CoverageFolder>;
-  files: Map<string, CoverageFile>;
+	name: undefined | string;
+	folders: Map<string, CoverageFolder>;
+	files: Map<string, CoverageFile>;
 };
 
 export type TestWorkerContainer = {
-  bridge: TestWorkerBridge;
-  process: child.ChildProcess;
-  inspector: undefined | InspectorClient;
+	bridge: TestWorkerBridge;
+	process: child.ChildProcess;
+	inspector: undefined | InspectorClient;
 };
 
 export type TestWorkerContainers = Array<TestWorkerContainer>;

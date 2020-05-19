@@ -5,171 +5,171 @@
 ## `esprima > es2015-export-declaration > invalid-export-default-token`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: true
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 19
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Expected a semicolon or a line terminator'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'module'
-        end: Object {
-          column: 16
-          index: 16
-          line: 1
-        }
-        start: Object {
-          column: 17
-          index: 17
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    ExportLocalDeclaration {
-      declaration: undefined
-      exportKind: 'value'
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 16
-          index: 16
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      specifiers: Array [
-        ExportLocalSpecifier {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 15
-              index: 15
-              line: 1
-            }
-            start: Object {
-              column: 8
-              index: 8
-              line: 1
-            }
-          }
-          exported: Identifier {
-            name: 'default'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'default'
-              end: Object {
-                column: 15
-                index: 15
-                line: 1
-              }
-              start: Object {
-                column: 8
-                index: 8
-                line: 1
-              }
-            }
-          }
-          local: ReferenceIdentifier {
-            name: 'default'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'default'
-              end: Object {
-                column: 15
-                index: 15
-                line: 1
-              }
-              start: Object {
-                column: 8
-                index: 8
-                line: 1
-              }
-            }
-          }
-        }
-      ]
-    }
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 0
-          index: 19
-          line: 2
-        }
-        start: Object {
-          column: 17
-          index: 17
-          line: 1
-        }
-      }
-      expression: UnaryExpression {
-        operator: '+'
-        prefix: true
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 0
-            index: 19
-            line: 2
-          }
-          start: Object {
-            column: 17
-            index: 17
-            line: 1
-          }
-        }
-        argument: ReferenceIdentifier {
-          name: 'INVALID_PLACEHOLDER'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 0
-              index: 19
-              line: 2
-            }
-            start: Object {
-              column: 0
-              index: 19
-              line: 2
-            }
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: true
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "module"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 19
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Expected a semicolon or a line terminator"}
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "module"
+				end: Object {
+					column: 16
+					index: 16
+					line: 1
+				}
+				start: Object {
+					column: 17
+					index: 17
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		JSExportLocalDeclaration {
+			declaration: undefined
+			exportKind: "value"
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 16
+					index: 16
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			specifiers: Array [
+				JSExportLocalSpecifier {
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 15
+							index: 15
+							line: 1
+						}
+						start: Object {
+							column: 8
+							index: 8
+							line: 1
+						}
+					}
+					exported: JSIdentifier {
+						name: "default"
+						loc: Object {
+							filename: "input.js"
+							identifierName: "default"
+							end: Object {
+								column: 15
+								index: 15
+								line: 1
+							}
+							start: Object {
+								column: 8
+								index: 8
+								line: 1
+							}
+						}
+					}
+					local: JSReferenceIdentifier {
+						name: "default"
+						loc: Object {
+							filename: "input.js"
+							identifierName: "default"
+							end: Object {
+								column: 15
+								index: 15
+								line: 1
+							}
+							start: Object {
+								column: 8
+								index: 8
+								line: 1
+							}
+						}
+					}
+				}
+			]
+		}
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 0
+					index: 19
+					line: 2
+				}
+				start: Object {
+					column: 17
+					index: 17
+					line: 1
+				}
+			}
+			expression: JSUnaryExpression {
+				operator: "+"
+				prefix: true
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 0
+						index: 19
+						line: 2
+					}
+					start: Object {
+						column: 17
+						index: 17
+						line: 1
+					}
+				}
+				argument: JSReferenceIdentifier {
+					name: "INVALID_PLACEHOLDER"
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 0
+							index: 19
+							line: 2
+						}
+						start: Object {
+							column: 0
+							index: 19
+							line: 2
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

@@ -5,110 +5,110 @@
 ## `esprima > statement-iteration > migrated_0004`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 23
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    DoWhileStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 22
-          index: 22
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      test: BooleanLiteral {
-        value: true
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 21
-            index: 21
-            line: 1
-          }
-          start: Object {
-            column: 17
-            index: 17
-            line: 1
-          }
-        }
-      }
-      body: ExpressionStatement {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 10
-            index: 10
-            line: 1
-          }
-          start: Object {
-            column: 3
-            index: 3
-            line: 1
-          }
-        }
-        expression: CallExpression {
-          arguments: Array []
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 9
-              index: 9
-              line: 1
-            }
-            start: Object {
-              column: 3
-              index: 3
-              line: 1
-            }
-          }
-          callee: ReferenceIdentifier {
-            name: 'that'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'that'
-              end: Object {
-                column: 7
-                index: 7
-                line: 1
-              }
-              start: Object {
-                column: 3
-                index: 3
-                line: 1
-              }
-            }
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 23
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSDoWhileStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 22
+					index: 22
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			test: JSBooleanLiteral {
+				value: true
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 21
+						index: 21
+						line: 1
+					}
+					start: Object {
+						column: 17
+						index: 17
+						line: 1
+					}
+				}
+			}
+			body: JSExpressionStatement {
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 10
+						index: 10
+						line: 1
+					}
+					start: Object {
+						column: 3
+						index: 3
+						line: 1
+					}
+				}
+				expression: JSCallExpression {
+					arguments: Array []
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 9
+							index: 9
+							line: 1
+						}
+						start: Object {
+							column: 3
+							index: 3
+							line: 1
+						}
+					}
+					callee: JSReferenceIdentifier {
+						name: "that"
+						loc: Object {
+							filename: "input.js"
+							identifierName: "that"
+							end: Object {
+								column: 7
+								index: 7
+								line: 1
+							}
+							start: Object {
+								column: 3
+								index: 3
+								line: 1
+							}
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

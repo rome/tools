@@ -5,18 +5,18 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import Event from './Event';
+import Event from "./Event";
 
 export {Event};
 
-// rome-ignore lint/noExplicitAny
+// rome-ignore lint/js/noExplicitAny
 export type AnyEvent = Event<any, any>;
 
-export {default as Bridge} from './Bridge';
-export {default as BridgeError} from './BridgeError';
+export {default as Bridge} from "./Bridge";
+export {default as BridgeError} from "./BridgeError";
 
-export * from './bridgeCreators';
+export * from "./bridgeCreators";
 
-export * from './types';
+export * from "./types";
 
-export * from './utils';
+export * from "./utils";

@@ -5,132 +5,132 @@
 ## `es2015 > uncategorised > 94`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 39
-      index: 39
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ImportDeclaration {
-      defaultSpecifier: undefined
-      importKind: undefined
-      namespaceSpecifier: undefined
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 39
-          index: 39
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      source: StringLiteral {
-        value: 'crypto'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 39
-            index: 39
-            line: 1
-          }
-          start: Object {
-            column: 31
-            index: 31
-            line: 1
-          }
-        }
-      }
-      namedSpecifiers: Array [
-        ImportSpecifier {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 23
-              index: 23
-              line: 1
-            }
-            start: Object {
-              column: 9
-              index: 9
-              line: 1
-            }
-          }
-          imported: Identifier {
-            name: 'encrypt'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'encrypt'
-              end: Object {
-                column: 16
-                index: 16
-                line: 1
-              }
-              start: Object {
-                column: 9
-                index: 9
-                line: 1
-              }
-            }
-          }
-          local: ImportSpecifierLocal {
-            name: BindingIdentifier {
-              name: 'enc'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'enc'
-                end: Object {
-                  column: 23
-                  index: 23
-                  line: 1
-                }
-                start: Object {
-                  column: 20
-                  index: 20
-                  line: 1
-                }
-              }
-            }
-            importKind: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 23
-                index: 23
-                line: 1
-              }
-              start: Object {
-                column: 9
-                index: 9
-                line: 1
-              }
-            }
-          }
-        }
-      ]
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "module"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 39
+			index: 39
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSImportDeclaration {
+			defaultSpecifier: undefined
+			importKind: undefined
+			namespaceSpecifier: undefined
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 39
+					index: 39
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			source: JSStringLiteral {
+				value: "crypto"
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 39
+						index: 39
+						line: 1
+					}
+					start: Object {
+						column: 31
+						index: 31
+						line: 1
+					}
+				}
+			}
+			namedSpecifiers: Array [
+				JSImportSpecifier {
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 23
+							index: 23
+							line: 1
+						}
+						start: Object {
+							column: 9
+							index: 9
+							line: 1
+						}
+					}
+					imported: JSIdentifier {
+						name: "encrypt"
+						loc: Object {
+							filename: "input.js"
+							identifierName: "encrypt"
+							end: Object {
+								column: 16
+								index: 16
+								line: 1
+							}
+							start: Object {
+								column: 9
+								index: 9
+								line: 1
+							}
+						}
+					}
+					local: JSImportSpecifierLocal {
+						name: JSBindingIdentifier {
+							name: "enc"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "enc"
+								end: Object {
+									column: 23
+									index: 23
+									line: 1
+								}
+								start: Object {
+									column: 20
+									index: 20
+									line: 1
+								}
+							}
+						}
+						importKind: undefined
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 23
+								index: 23
+								line: 1
+							}
+							start: Object {
+								column: 9
+								index: 9
+								line: 1
+							}
+						}
+					}
+				}
+			]
+		}
+	]
 }
 ```

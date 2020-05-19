@@ -5,201 +5,201 @@
 ## `typescript > variable-declarator > definite-assignment-not-allowed`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: true
-  directives: Array []
-  filename: 'input.ts'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array ['ts']
-  loc: Object {
-    filename: 'input.ts'
-    end: Object {
-      column: 13
-      index: 13
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Complex binding patterns require an initialization value'}
-      }
-      location: Object {
-        filename: 'input.ts'
-        mtime: undefined
-        sourceType: 'module'
-        end: Object {
-          column: 6
-          index: 6
-          line: 1
-        }
-        start: Object {
-          column: 6
-          index: 6
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    VariableDeclarationStatement {
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 6
-          index: 6
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      declaration: VariableDeclaration {
-        kind: 'let'
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 6
-            index: 6
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        declarations: Array [
-          VariableDeclarator {
-            id: BindingObjectPattern {
-              properties: Array []
-              rest: undefined
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 6
-                  index: 6
-                  line: 1
-                }
-                start: Object {
-                  column: 4
-                  index: 4
-                  line: 1
-                }
-              }
-            }
-            init: undefined
-            loc: Object {
-              filename: 'input.ts'
-              end: Object {
-                column: 6
-                index: 6
-                line: 1
-              }
-              start: Object {
-                column: 4
-                index: 4
-                line: 1
-              }
-            }
-          }
-        ]
-      }
-    }
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 9
-          index: 9
-          line: 1
-        }
-        start: Object {
-          column: 6
-          index: 6
-          line: 1
-        }
-      }
-      expression: UnaryExpression {
-        operator: '!'
-        prefix: true
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 9
-            index: 9
-            line: 1
-          }
-          start: Object {
-            column: 6
-            index: 6
-            line: 1
-          }
-        }
-        argument: ReferenceIdentifier {
-          name: 'INVALID_PLACEHOLDER'
-          loc: Object {
-            filename: 'input.ts'
-            end: Object {
-              column: 9
-              index: 9
-              line: 1
-            }
-            start: Object {
-              column: 8
-              index: 8
-              line: 1
-            }
-          }
-        }
-      }
-    }
-    BlockStatement {
-      body: Array []
-      directives: Array []
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 12
-          index: 12
-          line: 1
-        }
-        start: Object {
-          column: 10
-          index: 10
-          line: 1
-        }
-      }
-    }
-    EmptyStatement {
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 13
-          index: 13
-          line: 1
-        }
-        start: Object {
-          column: 12
-          index: 12
-          line: 1
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: true
+	directives: Array []
+	filename: "input.ts"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "module"
+	syntax: Array ["ts"]
+	loc: Object {
+		filename: "input.ts"
+		end: Object {
+			column: 0
+			index: 14
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Complex binding patterns require an initialization value"}
+			}
+			location: Object {
+				filename: "input.ts"
+				mtime: undefined
+				sourceType: "module"
+				end: Object {
+					column: 6
+					index: 6
+					line: 1
+				}
+				start: Object {
+					column: 6
+					index: 6
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		JSVariableDeclarationStatement {
+			loc: Object {
+				filename: "input.ts"
+				end: Object {
+					column: 6
+					index: 6
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			declaration: JSVariableDeclaration {
+				kind: "let"
+				loc: Object {
+					filename: "input.ts"
+					end: Object {
+						column: 6
+						index: 6
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				declarations: Array [
+					JSVariableDeclarator {
+						id: JSBindingObjectPattern {
+							properties: Array []
+							rest: undefined
+							loc: Object {
+								filename: "input.ts"
+								end: Object {
+									column: 6
+									index: 6
+									line: 1
+								}
+								start: Object {
+									column: 4
+									index: 4
+									line: 1
+								}
+							}
+						}
+						init: undefined
+						loc: Object {
+							filename: "input.ts"
+							end: Object {
+								column: 6
+								index: 6
+								line: 1
+							}
+							start: Object {
+								column: 4
+								index: 4
+								line: 1
+							}
+						}
+					}
+				]
+			}
+		}
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.ts"
+				end: Object {
+					column: 9
+					index: 9
+					line: 1
+				}
+				start: Object {
+					column: 6
+					index: 6
+					line: 1
+				}
+			}
+			expression: JSUnaryExpression {
+				operator: "!"
+				prefix: true
+				loc: Object {
+					filename: "input.ts"
+					end: Object {
+						column: 9
+						index: 9
+						line: 1
+					}
+					start: Object {
+						column: 6
+						index: 6
+						line: 1
+					}
+				}
+				argument: JSReferenceIdentifier {
+					name: "INVALID_PLACEHOLDER"
+					loc: Object {
+						filename: "input.ts"
+						end: Object {
+							column: 9
+							index: 9
+							line: 1
+						}
+						start: Object {
+							column: 8
+							index: 8
+							line: 1
+						}
+					}
+				}
+			}
+		}
+		JSBlockStatement {
+			body: Array []
+			directives: Array []
+			loc: Object {
+				filename: "input.ts"
+				end: Object {
+					column: 12
+					index: 12
+					line: 1
+				}
+				start: Object {
+					column: 10
+					index: 10
+					line: 1
+				}
+			}
+		}
+		JSEmptyStatement {
+			loc: Object {
+				filename: "input.ts"
+				end: Object {
+					column: 13
+					index: 13
+					line: 1
+				}
+				start: Object {
+					column: 12
+					index: 12
+					line: 1
+				}
+			}
+		}
+	]
 }
 ```

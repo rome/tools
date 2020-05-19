@@ -5,95 +5,95 @@
 ## `typescript > type-arguments > empty`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.ts'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array ['ts']
-  loc: Object {
-    filename: 'input.ts'
-    end: Object {
-      column: 0
-      index: 8
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 7
-          index: 7
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: CallExpression {
-        arguments: Array []
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 7
-            index: 7
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        typeArguments: TSTypeParameterInstantiation {
-          params: Array []
-          loc: Object {
-            filename: 'input.ts'
-            end: Object {
-              column: 5
-              index: 5
-              line: 1
-            }
-            start: Object {
-              column: 3
-              index: 3
-              line: 1
-            }
-          }
-        }
-        callee: ReferenceIdentifier {
-          name: 'foo'
-          loc: Object {
-            filename: 'input.ts'
-            identifierName: 'foo'
-            end: Object {
-              column: 3
-              index: 3
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.ts"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "module"
+	syntax: Array ["ts"]
+	loc: Object {
+		filename: "input.ts"
+		end: Object {
+			column: 0
+			index: 8
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.ts"
+				end: Object {
+					column: 7
+					index: 7
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSCallExpression {
+				arguments: Array []
+				loc: Object {
+					filename: "input.ts"
+					end: Object {
+						column: 7
+						index: 7
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				typeArguments: TSTypeParameterInstantiation {
+					params: Array []
+					loc: Object {
+						filename: "input.ts"
+						end: Object {
+							column: 5
+							index: 5
+							line: 1
+						}
+						start: Object {
+							column: 3
+							index: 3
+							line: 1
+						}
+					}
+				}
+				callee: JSReferenceIdentifier {
+					name: "foo"
+					loc: Object {
+						filename: "input.ts"
+						identifierName: "foo"
+						end: Object {
+							column: 3
+							index: 3
+							line: 1
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

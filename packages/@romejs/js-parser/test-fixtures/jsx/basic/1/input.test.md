@@ -5,84 +5,84 @@
 ## `jsx > basic > 1`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array [
-    'jsx'
-    'flow'
-  ]
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 5
-      index: 5
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 5
-          index: 5
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: JSXElement {
-        name: JSXIdentifier {
-          name: 'a'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 2
-              index: 2
-              line: 1
-            }
-            start: Object {
-              column: 1
-              index: 1
-              line: 1
-            }
-          }
-        }
-        attributes: Array []
-        children: Array []
-        selfClosing: true
-        typeArguments: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 5
-            index: 5
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array [
+		"jsx"
+		"ts"
+	]
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 5
+			index: 5
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 5
+					index: 5
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSXElement {
+				name: JSXIdentifier {
+					name: "a"
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 2
+							index: 2
+							line: 1
+						}
+						start: Object {
+							column: 1
+							index: 1
+							line: 1
+						}
+					}
+				}
+				attributes: Array []
+				children: Array []
+				selfClosing: true
+				typeArguments: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 5
+						index: 5
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+			}
+		}
+	]
 }
 ```

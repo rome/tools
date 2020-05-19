@@ -5,146 +5,146 @@
 ## `core > uncategorised > 267`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 22
-      index: 22
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    WithStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 22
-          index: 22
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      object: ReferenceIdentifier {
-        name: 'x'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'x'
-          end: Object {
-            column: 7
-            index: 7
-            line: 1
-          }
-          start: Object {
-            column: 6
-            index: 6
-            line: 1
-          }
-        }
-      }
-      body: BlockStatement {
-        directives: Array []
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 22
-            index: 22
-            line: 1
-          }
-          start: Object {
-            column: 9
-            index: 9
-            line: 1
-          }
-        }
-        body: Array [
-          ExpressionStatement {
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 20
-                index: 20
-                line: 1
-              }
-              start: Object {
-                column: 11
-                index: 11
-                line: 1
-              }
-            }
-            expression: AssignmentExpression {
-              operator: '='
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 20
-                  index: 20
-                  line: 1
-                }
-                start: Object {
-                  column: 11
-                  index: 11
-                  line: 1
-                }
-              }
-              left: AssignmentIdentifier {
-                name: 'foo'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'foo'
-                  end: Object {
-                    column: 14
-                    index: 14
-                    line: 1
-                  }
-                  start: Object {
-                    column: 11
-                    index: 11
-                    line: 1
-                  }
-                }
-              }
-              right: ReferenceIdentifier {
-                name: 'bar'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'bar'
-                  end: Object {
-                    column: 20
-                    index: 20
-                    line: 1
-                  }
-                  start: Object {
-                    column: 17
-                    index: 17
-                    line: 1
-                  }
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 22
+			index: 22
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSWithStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 22
+					index: 22
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			object: JSReferenceIdentifier {
+				name: "x"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "x"
+					end: Object {
+						column: 7
+						index: 7
+						line: 1
+					}
+					start: Object {
+						column: 6
+						index: 6
+						line: 1
+					}
+				}
+			}
+			body: JSBlockStatement {
+				directives: Array []
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 22
+						index: 22
+						line: 1
+					}
+					start: Object {
+						column: 9
+						index: 9
+						line: 1
+					}
+				}
+				body: Array [
+					JSExpressionStatement {
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 20
+								index: 20
+								line: 1
+							}
+							start: Object {
+								column: 11
+								index: 11
+								line: 1
+							}
+						}
+						expression: JSAssignmentExpression {
+							operator: "="
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 20
+									index: 20
+									line: 1
+								}
+								start: Object {
+									column: 11
+									index: 11
+									line: 1
+								}
+							}
+							left: JSAssignmentIdentifier {
+								name: "foo"
+								loc: Object {
+									filename: "input.js"
+									identifierName: "foo"
+									end: Object {
+										column: 14
+										index: 14
+										line: 1
+									}
+									start: Object {
+										column: 11
+										index: 11
+										line: 1
+									}
+								}
+							}
+							right: JSReferenceIdentifier {
+								name: "bar"
+								loc: Object {
+									filename: "input.js"
+									identifierName: "bar"
+									end: Object {
+										column: 20
+										index: 20
+										line: 1
+									}
+									start: Object {
+										column: 17
+										index: 17
+										line: 1
+									}
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

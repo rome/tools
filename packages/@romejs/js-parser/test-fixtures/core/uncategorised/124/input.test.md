@@ -5,158 +5,158 @@
 ## `core > uncategorised > 124`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 21
-      index: 21
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 21
-          index: 21
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: MemberExpression {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 21
-            index: 21
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        property: StaticMemberProperty {
-          value: Identifier {
-            name: 'galaxies'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'galaxies'
-              end: Object {
-                column: 21
-                index: 21
-                line: 1
-              }
-              start: Object {
-                column: 13
-                index: 13
-                line: 1
-              }
-            }
-          }
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'galaxies'
-            end: Object {
-              column: 21
-              index: 21
-              line: 1
-            }
-            start: Object {
-              column: 13
-              index: 13
-              line: 1
-            }
-          }
-        }
-        object: MemberExpression {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 12
-              index: 12
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-          object: ReferenceIdentifier {
-            name: 'universe'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'universe'
-              end: Object {
-                column: 8
-                index: 8
-                line: 1
-              }
-              start: Object {
-                column: 0
-                index: 0
-                line: 1
-              }
-            }
-          }
-          property: ComputedMemberProperty {
-            value: NumericLiteral {
-              value: 42
-              format: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 11
-                  index: 11
-                  line: 1
-                }
-                start: Object {
-                  column: 9
-                  index: 9
-                  line: 1
-                }
-              }
-            }
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 12
-                index: 12
-                line: 1
-              }
-              start: Object {
-                column: 8
-                index: 8
-                line: 1
-              }
-            }
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 21
+			index: 21
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 21
+					index: 21
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSMemberExpression {
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 21
+						index: 21
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				property: JSStaticMemberProperty {
+					value: JSIdentifier {
+						name: "galaxies"
+						loc: Object {
+							filename: "input.js"
+							identifierName: "galaxies"
+							end: Object {
+								column: 21
+								index: 21
+								line: 1
+							}
+							start: Object {
+								column: 13
+								index: 13
+								line: 1
+							}
+						}
+					}
+					loc: Object {
+						filename: "input.js"
+						identifierName: "galaxies"
+						end: Object {
+							column: 21
+							index: 21
+							line: 1
+						}
+						start: Object {
+							column: 13
+							index: 13
+							line: 1
+						}
+					}
+				}
+				object: JSMemberExpression {
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 12
+							index: 12
+							line: 1
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+					object: JSReferenceIdentifier {
+						name: "universe"
+						loc: Object {
+							filename: "input.js"
+							identifierName: "universe"
+							end: Object {
+								column: 8
+								index: 8
+								line: 1
+							}
+							start: Object {
+								column: 0
+								index: 0
+								line: 1
+							}
+						}
+					}
+					property: JSComputedMemberProperty {
+						value: JSNumericLiteral {
+							value: 42
+							format: undefined
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 11
+									index: 11
+									line: 1
+								}
+								start: Object {
+									column: 9
+									index: 9
+									line: 1
+								}
+							}
+						}
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 12
+								index: 12
+								line: 1
+							}
+							start: Object {
+								column: 8
+								index: 8
+								line: 1
+							}
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

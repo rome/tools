@@ -5,180 +5,179 @@
 ## `esprima > es2015-arrow-function > invalid-duplicated-params`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 13
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 5
-          index: 5
-          line: 1
-        }
-        start: Object {
-          column: 4
-          index: 4
-          line: 1
-        }
-      }
-      description: Object {
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Argument <emphasis>x</emphasis> name clash in strict mode'}
-        advice: Array [
-          log {
-            category: 'info'
-            text: 'Defined already here'
-          }
-          frame {
-            location: Object {
-              filename: 'input.js'
-              identifierName: 'x'
-              end: Object {
-                column: 5
-                index: 5
-                line: 1
-              }
-              start: Object {
-                column: 4
-                index: 4
-                line: 1
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 12
-          index: 12
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: ArrowFunctionExpression {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 11
-            index: 11
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        body: ReferenceIdentifier {
-          name: 'y'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'y'
-            end: Object {
-              column: 11
-              index: 11
-              line: 1
-            }
-            start: Object {
-              column: 10
-              index: 10
-              line: 1
-            }
-          }
-        }
-        head: FunctionHead {
-          async: false
-          hasHoistedVars: false
-          predicate: undefined
-          rest: undefined
-          returnType: undefined
-          thisType: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 9
-              index: 9
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-          params: Array [
-            BindingIdentifier {
-              name: 'x'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'x'
-                end: Object {
-                  column: 2
-                  index: 2
-                  line: 1
-                }
-                start: Object {
-                  column: 1
-                  index: 1
-                  line: 1
-                }
-              }
-            }
-            BindingIdentifier {
-              name: 'x'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'x'
-                end: Object {
-                  column: 5
-                  index: 5
-                  line: 1
-                }
-                start: Object {
-                  column: 4
-                  index: 4
-                  line: 1
-                }
-              }
-            }
-          ]
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 13
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "script"
+				end: Object {
+					column: 5
+					index: 5
+					line: 1
+				}
+				start: Object {
+					column: 4
+					index: 4
+					line: 1
+				}
+			}
+			description: Object {
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Argument <emphasis>x</emphasis> name clash in strict mode"}
+				advice: Array [
+					log {
+						category: "info"
+						text: "Defined already here"
+					}
+					frame {
+						location: Object {
+							filename: "input.js"
+							identifierName: "x"
+							end: Object {
+								column: 5
+								index: 5
+								line: 1
+							}
+							start: Object {
+								column: 4
+								index: 4
+								line: 1
+							}
+						}
+					}
+				]
+			}
+		}
+	]
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 12
+					index: 12
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSArrowFunctionExpression {
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 11
+						index: 11
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				body: JSReferenceIdentifier {
+					name: "y"
+					loc: Object {
+						filename: "input.js"
+						identifierName: "y"
+						end: Object {
+							column: 11
+							index: 11
+							line: 1
+						}
+						start: Object {
+							column: 10
+							index: 10
+							line: 1
+						}
+					}
+				}
+				head: JSFunctionHead {
+					async: false
+					hasHoistedVars: false
+					rest: undefined
+					returnType: undefined
+					thisType: undefined
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 9
+							index: 9
+							line: 1
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+					params: Array [
+						JSBindingIdentifier {
+							name: "x"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "x"
+								end: Object {
+									column: 2
+									index: 2
+									line: 1
+								}
+								start: Object {
+									column: 1
+									index: 1
+									line: 1
+								}
+							}
+						}
+						JSBindingIdentifier {
+							name: "x"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "x"
+								end: Object {
+									column: 5
+									index: 5
+									line: 1
+								}
+								start: Object {
+									column: 4
+									index: 4
+									line: 1
+								}
+							}
+						}
+					]
+				}
+			}
+		}
+	]
 }
 ```

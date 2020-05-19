@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {AnyNode, TSTypeParameter, tsTypeParameter} from '@romejs/js-ast';
+import {Scope} from "../../scopes";
+import {AnyNode, TSTypeParameter, tsTypeParameter} from "@romejs/ast";
 
 export default function TSTypeParameter(node: AnyNode, scope: Scope) {
-  node = tsTypeParameter.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = tsTypeParameter.assert(node);
+	scope;
+	throw new Error("unimplemented");
 }

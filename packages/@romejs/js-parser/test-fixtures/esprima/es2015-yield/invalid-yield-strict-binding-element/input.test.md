@@ -5,220 +5,219 @@
 ## `esprima > es2015-yield > invalid-yield-strict-binding-element`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  filename: 'input.js'
-  hasHoistedVars: true
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 38
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  directives: Array [
-    Directive {
-      value: 'use strict'
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 13
-          index: 13
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-    }
-  ]
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'yield is a reserved word'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 28
-          index: 28
-          line: 1
-        }
-        start: Object {
-          column: 23
-          index: 23
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    VariableDeclarationStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 37
-          index: 37
-          line: 1
-        }
-        start: Object {
-          column: 14
-          index: 14
-          line: 1
-        }
-      }
-      declaration: VariableDeclaration {
-        kind: 'var'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 37
-            index: 37
-            line: 1
-          }
-          start: Object {
-            column: 14
-            index: 14
-            line: 1
-          }
-        }
-        declarations: Array [
-          VariableDeclarator {
-            id: BindingObjectPattern {
-              rest: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 30
-                  index: 30
-                  line: 1
-                }
-                start: Object {
-                  column: 18
-                  index: 18
-                  line: 1
-                }
-              }
-              properties: Array [
-                BindingObjectPatternProperty {
-                  key: StaticPropertyKey {
-                    value: Identifier {
-                      name: 'x'
-                      loc: Object {
-                        filename: 'input.js'
-                        identifierName: 'x'
-                        end: Object {
-                          column: 21
-                          index: 21
-                          line: 1
-                        }
-                        start: Object {
-                          column: 20
-                          index: 20
-                          line: 1
-                        }
-                      }
-                    }
-                    variance: undefined
-                    loc: Object {
-                      filename: 'input.js'
-                      end: Object {
-                        column: 21
-                        index: 21
-                        line: 1
-                      }
-                      start: Object {
-                        column: 20
-                        index: 20
-                        line: 1
-                      }
-                    }
-                  }
-                  value: BindingIdentifier {
-                    name: 'yield'
-                    loc: Object {
-                      filename: 'input.js'
-                      identifierName: 'yield'
-                      end: Object {
-                        column: 28
-                        index: 28
-                        line: 1
-                      }
-                      start: Object {
-                        column: 23
-                        index: 23
-                        line: 1
-                      }
-                    }
-                  }
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 28
-                      index: 28
-                      line: 1
-                    }
-                    start: Object {
-                      column: 20
-                      index: 20
-                      line: 1
-                    }
-                  }
-                }
-              ]
-            }
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 36
-                index: 36
-                line: 1
-              }
-              start: Object {
-                column: 18
-                index: 18
-                line: 1
-              }
-            }
-            init: ReferenceIdentifier {
-              name: 'foo'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'foo'
-                end: Object {
-                  column: 36
-                  index: 36
-                  line: 1
-                }
-                start: Object {
-                  column: 33
-                  index: 33
-                  line: 1
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	filename: "input.js"
+	hasHoistedVars: true
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 38
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	directives: Array [
+		JSDirective {
+			value: "use strict"
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 13
+					index: 13
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+		}
+	]
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "yield is a reserved word"}
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "script"
+				end: Object {
+					column: 28
+					index: 28
+					line: 1
+				}
+				start: Object {
+					column: 23
+					index: 23
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		JSVariableDeclarationStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 37
+					index: 37
+					line: 1
+				}
+				start: Object {
+					column: 14
+					index: 14
+					line: 1
+				}
+			}
+			declaration: JSVariableDeclaration {
+				kind: "var"
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 37
+						index: 37
+						line: 1
+					}
+					start: Object {
+						column: 14
+						index: 14
+						line: 1
+					}
+				}
+				declarations: Array [
+					JSVariableDeclarator {
+						id: JSBindingObjectPattern {
+							rest: undefined
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 30
+									index: 30
+									line: 1
+								}
+								start: Object {
+									column: 18
+									index: 18
+									line: 1
+								}
+							}
+							properties: Array [
+								JSBindingObjectPatternProperty {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
+											name: "x"
+											loc: Object {
+												filename: "input.js"
+												identifierName: "x"
+												end: Object {
+													column: 21
+													index: 21
+													line: 1
+												}
+												start: Object {
+													column: 20
+													index: 20
+													line: 1
+												}
+											}
+										}
+										loc: Object {
+											filename: "input.js"
+											end: Object {
+												column: 21
+												index: 21
+												line: 1
+											}
+											start: Object {
+												column: 20
+												index: 20
+												line: 1
+											}
+										}
+									}
+									value: JSBindingIdentifier {
+										name: "yield"
+										loc: Object {
+											filename: "input.js"
+											identifierName: "yield"
+											end: Object {
+												column: 28
+												index: 28
+												line: 1
+											}
+											start: Object {
+												column: 23
+												index: 23
+												line: 1
+											}
+										}
+									}
+									loc: Object {
+										filename: "input.js"
+										end: Object {
+											column: 28
+											index: 28
+											line: 1
+										}
+										start: Object {
+											column: 20
+											index: 20
+											line: 1
+										}
+									}
+								}
+							]
+						}
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 36
+								index: 36
+								line: 1
+							}
+							start: Object {
+								column: 18
+								index: 18
+								line: 1
+							}
+						}
+						init: JSReferenceIdentifier {
+							name: "foo"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "foo"
+								end: Object {
+									column: 36
+									index: 36
+									line: 1
+								}
+								start: Object {
+									column: 33
+									index: 33
+									line: 1
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

@@ -5,121 +5,120 @@
 ## `es2015 > uncategorised > 77`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 27
-      index: 27
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExportLocalDeclaration {
-      exportKind: 'value'
-      specifiers: undefined
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 27
-          index: 27
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      declaration: FunctionDeclaration {
-        id: BindingIdentifier {
-          name: 'parse'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'parse'
-            end: Object {
-              column: 21
-              index: 21
-              line: 1
-            }
-            start: Object {
-              column: 16
-              index: 16
-              line: 1
-            }
-          }
-        }
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 27
-            index: 27
-            line: 1
-          }
-          start: Object {
-            column: 7
-            index: 7
-            line: 1
-          }
-        }
-        body: BlockStatement {
-          body: Array []
-          directives: Array []
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 27
-              index: 27
-              line: 1
-            }
-            start: Object {
-              column: 24
-              index: 24
-              line: 1
-            }
-          }
-        }
-        head: FunctionHead {
-          async: false
-          generator: false
-          hasHoistedVars: false
-          params: Array []
-          predicate: undefined
-          rest: undefined
-          returnType: undefined
-          thisType: undefined
-          typeParameters: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 23
-              index: 23
-              line: 1
-            }
-            start: Object {
-              column: 21
-              index: 21
-              line: 1
-            }
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "module"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 27
+			index: 27
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExportLocalDeclaration {
+			exportKind: "value"
+			specifiers: undefined
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 27
+					index: 27
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			declaration: JSFunctionDeclaration {
+				id: JSBindingIdentifier {
+					name: "parse"
+					loc: Object {
+						filename: "input.js"
+						identifierName: "parse"
+						end: Object {
+							column: 21
+							index: 21
+							line: 1
+						}
+						start: Object {
+							column: 16
+							index: 16
+							line: 1
+						}
+					}
+				}
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 27
+						index: 27
+						line: 1
+					}
+					start: Object {
+						column: 7
+						index: 7
+						line: 1
+					}
+				}
+				body: JSBlockStatement {
+					body: Array []
+					directives: Array []
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 27
+							index: 27
+							line: 1
+						}
+						start: Object {
+							column: 24
+							index: 24
+							line: 1
+						}
+					}
+				}
+				head: JSFunctionHead {
+					async: false
+					generator: false
+					hasHoistedVars: false
+					params: Array []
+					rest: undefined
+					returnType: undefined
+					thisType: undefined
+					typeParameters: undefined
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 23
+							index: 23
+							line: 1
+						}
+						start: Object {
+							column: 21
+							index: 21
+							line: 1
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

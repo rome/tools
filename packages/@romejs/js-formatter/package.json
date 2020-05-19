@@ -1,6 +1,0 @@
-{
-  "name": "@romejs/js-formatter",
-  "private": true,
-  "type": "module",
-  "main": "index.ts"
-}

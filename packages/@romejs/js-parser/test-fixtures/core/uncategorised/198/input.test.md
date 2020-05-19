@@ -5,145 +5,145 @@
 ## `core > uncategorised > 198`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 14
-      index: 14
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 14
-          index: 14
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: ConditionalExpression {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 14
-            index: 14
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        alternate: NumericLiteral {
-          value: 2
-          format: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 14
-              index: 14
-              line: 1
-            }
-            start: Object {
-              column: 13
-              index: 13
-              line: 1
-            }
-          }
-        }
-        consequent: NumericLiteral {
-          value: 1
-          format: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 10
-              index: 10
-              line: 1
-            }
-            start: Object {
-              column: 9
-              index: 9
-              line: 1
-            }
-          }
-        }
-        test: LogicalExpression {
-          operator: '&&'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 6
-              index: 6
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-          left: ReferenceIdentifier {
-            name: 'x'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'x'
-              end: Object {
-                column: 1
-                index: 1
-                line: 1
-              }
-              start: Object {
-                column: 0
-                index: 0
-                line: 1
-              }
-            }
-          }
-          right: ReferenceIdentifier {
-            name: 'y'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'y'
-              end: Object {
-                column: 6
-                index: 6
-                line: 1
-              }
-              start: Object {
-                column: 5
-                index: 5
-                line: 1
-              }
-            }
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 14
+			index: 14
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 14
+					index: 14
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSConditionalExpression {
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 14
+						index: 14
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				alternate: JSNumericLiteral {
+					value: 2
+					format: undefined
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 14
+							index: 14
+							line: 1
+						}
+						start: Object {
+							column: 13
+							index: 13
+							line: 1
+						}
+					}
+				}
+				consequent: JSNumericLiteral {
+					value: 1
+					format: undefined
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 10
+							index: 10
+							line: 1
+						}
+						start: Object {
+							column: 9
+							index: 9
+							line: 1
+						}
+					}
+				}
+				test: JSLogicalExpression {
+					operator: "&&"
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 6
+							index: 6
+							line: 1
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+					left: JSReferenceIdentifier {
+						name: "x"
+						loc: Object {
+							filename: "input.js"
+							identifierName: "x"
+							end: Object {
+								column: 1
+								index: 1
+								line: 1
+							}
+							start: Object {
+								column: 0
+								index: 0
+								line: 1
+							}
+						}
+					}
+					right: JSReferenceIdentifier {
+						name: "y"
+						loc: Object {
+							filename: "input.js"
+							identifierName: "y"
+							end: Object {
+								column: 6
+								index: 6
+								line: 1
+							}
+							start: Object {
+								column: 5
+								index: 5
+								line: 1
+							}
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

@@ -5,21 +5,21 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, BinaryExpression, LogicalExpression} from '@romejs/js-ast';
+import {AnyNode, JSBinaryExpression, JSLogicalExpression} from "@romejs/ast";
 
 export default function isBinary(
-  node: undefined | AnyNode,
-): node is BinaryExpression | LogicalExpression {
-  if (node === undefined) {
-    return false;
-  }
+	node: undefined | AnyNode,
+): node is JSBinaryExpression | JSLogicalExpression {
+	if (node === undefined) {
+		return false;
+	}
 
-  switch (node.type) {
-    case 'BinaryExpression':
-    case 'LogicalExpression':
-      return true;
+	switch (node.type) {
+		case "JSBinaryExpression":
+		case "JSLogicalExpression":
+			return true;
 
-    default:
-      return false;
-  }
+		default:
+			return false;
+	}
 }

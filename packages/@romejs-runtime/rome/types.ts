@@ -7,17 +7,17 @@
 
 // These are copied from packages/@romejs/codec-json/types.ts
 export type JSONValue =
-  | null
-  | string
-  | number
-  | boolean
-  | JSONObject
-  | JSONArray;
+	| null
+	| string
+	| number
+	| boolean
+	| JSONObject
+	| JSONArray;
 
 export type JSONPropertyValue = undefined | void | JSONValue;
 
 export type JSONObject = {
-  [x: string]: JSONPropertyValue;
+	[x: string]: JSONPropertyValue;
 };
 
 export type JSONArray = Array<JSONValue>;

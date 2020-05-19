@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {AnyNode, TSEnumDeclaration, tsEnumDeclaration} from '@romejs/js-ast';
+import {Scope} from "../../scopes";
+import {AnyNode, TSEnumDeclaration, tsEnumDeclaration} from "@romejs/ast";
 
 export default function TSEnumDeclaration(node: AnyNode, scope: Scope) {
-  node = tsEnumDeclaration.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = tsEnumDeclaration.assert(node);
+	scope;
+	throw new Error("unimplemented");
 }

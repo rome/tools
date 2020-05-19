@@ -5,165 +5,165 @@
 ## `es2015 > uncategorised > 187`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 18
-      index: 18
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 18
-          index: 18
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: AssignmentExpression {
-        operator: '='
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 18
-            index: 18
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        right: ReferenceIdentifier {
-          name: 'd'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'd'
-            end: Object {
-              column: 18
-              index: 18
-              line: 1
-            }
-            start: Object {
-              column: 17
-              index: 17
-              line: 1
-            }
-          }
-        }
-        left: AssignmentArrayPattern {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 14
-              index: 14
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-          elements: Array [
-            AssignmentIdentifier {
-              name: 'a'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'a'
-                end: Object {
-                  column: 2
-                  index: 2
-                  line: 1
-                }
-                start: Object {
-                  column: 1
-                  index: 1
-                  line: 1
-                }
-              }
-            }
-          ]
-          rest: AssignmentArrayPattern {
-            rest: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 13
-                index: 13
-                line: 1
-              }
-              start: Object {
-                column: 7
-                index: 7
-                line: 1
-              }
-            }
-            elements: Array [
-              AssignmentIdentifier {
-                name: 'b'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'b'
-                  end: Object {
-                    column: 9
-                    index: 9
-                    line: 1
-                  }
-                  start: Object {
-                    column: 8
-                    index: 8
-                    line: 1
-                  }
-                }
-              }
-              AssignmentIdentifier {
-                name: 'c'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'c'
-                  end: Object {
-                    column: 12
-                    index: 12
-                    line: 1
-                  }
-                  start: Object {
-                    column: 11
-                    index: 11
-                    line: 1
-                  }
-                }
-              }
-            ]
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 18
+			index: 18
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 18
+					index: 18
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSAssignmentExpression {
+				operator: "="
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 18
+						index: 18
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				right: JSReferenceIdentifier {
+					name: "d"
+					loc: Object {
+						filename: "input.js"
+						identifierName: "d"
+						end: Object {
+							column: 18
+							index: 18
+							line: 1
+						}
+						start: Object {
+							column: 17
+							index: 17
+							line: 1
+						}
+					}
+				}
+				left: JSAssignmentArrayPattern {
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 14
+							index: 14
+							line: 1
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+					elements: Array [
+						JSAssignmentIdentifier {
+							name: "a"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "a"
+								end: Object {
+									column: 2
+									index: 2
+									line: 1
+								}
+								start: Object {
+									column: 1
+									index: 1
+									line: 1
+								}
+							}
+						}
+					]
+					rest: JSAssignmentArrayPattern {
+						rest: undefined
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 13
+								index: 13
+								line: 1
+							}
+							start: Object {
+								column: 7
+								index: 7
+								line: 1
+							}
+						}
+						elements: Array [
+							JSAssignmentIdentifier {
+								name: "b"
+								loc: Object {
+									filename: "input.js"
+									identifierName: "b"
+									end: Object {
+										column: 9
+										index: 9
+										line: 1
+									}
+									start: Object {
+										column: 8
+										index: 8
+										line: 1
+									}
+								}
+							}
+							JSAssignmentIdentifier {
+								name: "c"
+								loc: Object {
+									filename: "input.js"
+									identifierName: "c"
+									end: Object {
+										column: 12
+										index: 12
+										line: 1
+									}
+									start: Object {
+										column: 11
+										index: 11
+										line: 1
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
 }
 ```

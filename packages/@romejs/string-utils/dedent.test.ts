@@ -5,23 +5,23 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {dedent} from './dedent';
-import {test} from 'rome';
+import {dedent} from "./dedent";
+import {test} from "rome";
 
 test(
-  'dedent',
-  (t) => {
-    t.is(dedent('\tx\n\ty'), 'x\ny');
+	"dedent",
+	(t) => {
+		t.is(dedent("\tx\n\ty"), "x\ny");
 
-    t.is(dedent('\tx\n\t\ty\n\tz'), 'x\n\ty\nz');
+		t.is(dedent("\tx\n\t\ty\n\tz"), "x\n\ty\nz");
 
-    t.is(
-      dedent`
+		t.is(
+			dedent`
         if (x) {
-          y = ${'1'};
+          y = ${"1"};
         }
       `,
-      'if (x) {\n  y = 1;\n}',
-    );
-  },
+			"if (x) {\n  y = 1;\n}",
+		);
+	},
 );

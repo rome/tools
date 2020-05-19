@@ -5,164 +5,163 @@
 ## `typescript > function > export-default`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.ts'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array ['ts']
-  loc: Object {
-    filename: 'input.ts'
-    end: Object {
-      column: 0
-      index: 43
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExportDefaultDeclaration {
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 42
-          index: 42
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      declaration: TSDeclareFunction {
-        id: BindingIdentifier {
-          name: '*default*'
-          loc: Object {
-            filename: 'input.ts'
-            end: Object {
-              column: 42
-              index: 42
-              line: 1
-            }
-            start: Object {
-              column: 15
-              index: 15
-              line: 1
-            }
-          }
-        }
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 42
-            index: 42
-            line: 1
-          }
-          start: Object {
-            column: 15
-            index: 15
-            line: 1
-          }
-        }
-        head: FunctionHead {
-          async: false
-          generator: false
-          hasHoistedVars: false
-          predicate: undefined
-          rest: undefined
-          thisType: undefined
-          typeParameters: undefined
-          loc: Object {
-            filename: 'input.ts'
-            end: Object {
-              column: 41
-              index: 41
-              line: 1
-            }
-            start: Object {
-              column: 23
-              index: 23
-              line: 1
-            }
-          }
-          returnType: VoidKeywordTypeAnnotation {
-            loc: Object {
-              filename: 'input.ts'
-              end: Object {
-                column: 41
-                index: 41
-                line: 1
-              }
-              start: Object {
-                column: 37
-                index: 37
-                line: 1
-              }
-            }
-          }
-          params: Array [
-            BindingIdentifier {
-              name: 'x'
-              loc: Object {
-                filename: 'input.ts'
-                identifierName: 'x'
-                end: Object {
-                  column: 25
-                  index: 25
-                  line: 1
-                }
-                start: Object {
-                  column: 24
-                  index: 24
-                  line: 1
-                }
-              }
-              meta: PatternMeta {
-                optional: true
-                loc: Object {
-                  filename: 'input.ts'
-                  end: Object {
-                    column: 34
-                    index: 34
-                    line: 1
-                  }
-                  start: Object {
-                    column: 24
-                    index: 24
-                    line: 1
-                  }
-                }
-                typeAnnotation: NumberKeywordTypeAnnotation {
-                  loc: Object {
-                    filename: 'input.ts'
-                    end: Object {
-                      column: 34
-                      index: 34
-                      line: 1
-                    }
-                    start: Object {
-                      column: 28
-                      index: 28
-                      line: 1
-                    }
-                  }
-                }
-              }
-            }
-          ]
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.ts"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "module"
+	syntax: Array ["ts"]
+	loc: Object {
+		filename: "input.ts"
+		end: Object {
+			column: 0
+			index: 43
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExportDefaultDeclaration {
+			loc: Object {
+				filename: "input.ts"
+				end: Object {
+					column: 42
+					index: 42
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			declaration: TSDeclareFunction {
+				id: JSBindingIdentifier {
+					name: "*default*"
+					loc: Object {
+						filename: "input.ts"
+						end: Object {
+							column: 42
+							index: 42
+							line: 1
+						}
+						start: Object {
+							column: 15
+							index: 15
+							line: 1
+						}
+					}
+				}
+				loc: Object {
+					filename: "input.ts"
+					end: Object {
+						column: 42
+						index: 42
+						line: 1
+					}
+					start: Object {
+						column: 15
+						index: 15
+						line: 1
+					}
+				}
+				head: JSFunctionHead {
+					async: false
+					generator: false
+					hasHoistedVars: false
+					rest: undefined
+					thisType: undefined
+					typeParameters: undefined
+					loc: Object {
+						filename: "input.ts"
+						end: Object {
+							column: 41
+							index: 41
+							line: 1
+						}
+						start: Object {
+							column: 23
+							index: 23
+							line: 1
+						}
+					}
+					returnType: TSVoidKeywordTypeAnnotation {
+						loc: Object {
+							filename: "input.ts"
+							end: Object {
+								column: 41
+								index: 41
+								line: 1
+							}
+							start: Object {
+								column: 37
+								index: 37
+								line: 1
+							}
+						}
+					}
+					params: Array [
+						JSBindingIdentifier {
+							name: "x"
+							loc: Object {
+								filename: "input.ts"
+								identifierName: "x"
+								end: Object {
+									column: 25
+									index: 25
+									line: 1
+								}
+								start: Object {
+									column: 24
+									index: 24
+									line: 1
+								}
+							}
+							meta: JSPatternMeta {
+								optional: true
+								loc: Object {
+									filename: "input.ts"
+									end: Object {
+										column: 34
+										index: 34
+										line: 1
+									}
+									start: Object {
+										column: 24
+										index: 24
+										line: 1
+									}
+								}
+								typeAnnotation: TSNumberKeywordTypeAnnotation {
+									loc: Object {
+										filename: "input.ts"
+										end: Object {
+											column: 34
+											index: 34
+											line: 1
+										}
+										start: Object {
+											column: 28
+											index: 28
+											line: 1
+										}
+									}
+								}
+							}
+						}
+					]
+				}
+			}
+		}
+	]
 }
 ```

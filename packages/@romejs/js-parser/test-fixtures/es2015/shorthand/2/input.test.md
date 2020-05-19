@@ -5,282 +5,279 @@
 ## `es2015 > shorthand > 2`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 21
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Unexpected keyword this'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 12
-          index: 12
-          line: 1
-        }
-        start: Object {
-          column: 8
-          index: 8
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 20
-          index: 20
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: ObjectExpression {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 18
-            index: 18
-            line: 1
-          }
-          start: Object {
-            column: 1
-            index: 1
-            line: 1
-          }
-        }
-        properties: Array [
-          ObjectProperty {
-            key: StaticPropertyKey {
-              value: Identifier {
-                name: 'get'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'get'
-                  end: Object {
-                    column: 6
-                    index: 6
-                    line: 1
-                  }
-                  start: Object {
-                    column: 3
-                    index: 3
-                    line: 1
-                  }
-                }
-              }
-              variance: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 6
-                  index: 6
-                  line: 1
-                }
-                start: Object {
-                  column: 3
-                  index: 3
-                  line: 1
-                }
-              }
-            }
-            value: ReferenceIdentifier {
-              name: 'get'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'get'
-                end: Object {
-                  column: 6
-                  index: 6
-                  line: 1
-                }
-                start: Object {
-                  column: 3
-                  index: 3
-                  line: 1
-                }
-              }
-            }
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 6
-                index: 6
-                line: 1
-              }
-              start: Object {
-                column: 3
-                index: 3
-                line: 1
-              }
-            }
-          }
-          ObjectProperty {
-            key: StaticPropertyKey {
-              value: Identifier {
-                name: 'this'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'this'
-                  end: Object {
-                    column: 12
-                    index: 12
-                    line: 1
-                  }
-                  start: Object {
-                    column: 8
-                    index: 8
-                    line: 1
-                  }
-                }
-              }
-              variance: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 12
-                  index: 12
-                  line: 1
-                }
-                start: Object {
-                  column: 8
-                  index: 8
-                  line: 1
-                }
-              }
-            }
-            value: ReferenceIdentifier {
-              name: 'this'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'this'
-                end: Object {
-                  column: 12
-                  index: 12
-                  line: 1
-                }
-                start: Object {
-                  column: 8
-                  index: 8
-                  line: 1
-                }
-              }
-            }
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 12
-                index: 12
-                line: 1
-              }
-              start: Object {
-                column: 8
-                index: 8
-                line: 1
-              }
-            }
-          }
-          ObjectProperty {
-            key: StaticPropertyKey {
-              value: Identifier {
-                name: 'if'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'if'
-                  end: Object {
-                    column: 16
-                    index: 16
-                    line: 1
-                  }
-                  start: Object {
-                    column: 14
-                    index: 14
-                    line: 1
-                  }
-                }
-              }
-              variance: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 16
-                  index: 16
-                  line: 1
-                }
-                start: Object {
-                  column: 14
-                  index: 14
-                  line: 1
-                }
-              }
-            }
-            value: ReferenceIdentifier {
-              name: 'if'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'if'
-                end: Object {
-                  column: 16
-                  index: 16
-                  line: 1
-                }
-                start: Object {
-                  column: 14
-                  index: 14
-                  line: 1
-                }
-              }
-            }
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 16
-                index: 16
-                line: 1
-              }
-              start: Object {
-                column: 14
-                index: 14
-                line: 1
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 21
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Unexpected keyword this"}
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "script"
+				end: Object {
+					column: 12
+					index: 12
+					line: 1
+				}
+				start: Object {
+					column: 8
+					index: 8
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 20
+					index: 20
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSObjectExpression {
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 18
+						index: 18
+						line: 1
+					}
+					start: Object {
+						column: 1
+						index: 1
+						line: 1
+					}
+				}
+				properties: Array [
+					JSObjectProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
+								name: "get"
+								loc: Object {
+									filename: "input.js"
+									identifierName: "get"
+									end: Object {
+										column: 6
+										index: 6
+										line: 1
+									}
+									start: Object {
+										column: 3
+										index: 3
+										line: 1
+									}
+								}
+							}
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 6
+									index: 6
+									line: 1
+								}
+								start: Object {
+									column: 3
+									index: 3
+									line: 1
+								}
+							}
+						}
+						value: JSReferenceIdentifier {
+							name: "get"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "get"
+								end: Object {
+									column: 6
+									index: 6
+									line: 1
+								}
+								start: Object {
+									column: 3
+									index: 3
+									line: 1
+								}
+							}
+						}
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 6
+								index: 6
+								line: 1
+							}
+							start: Object {
+								column: 3
+								index: 3
+								line: 1
+							}
+						}
+					}
+					JSObjectProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
+								name: "this"
+								loc: Object {
+									filename: "input.js"
+									identifierName: "this"
+									end: Object {
+										column: 12
+										index: 12
+										line: 1
+									}
+									start: Object {
+										column: 8
+										index: 8
+										line: 1
+									}
+								}
+							}
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 12
+									index: 12
+									line: 1
+								}
+								start: Object {
+									column: 8
+									index: 8
+									line: 1
+								}
+							}
+						}
+						value: JSReferenceIdentifier {
+							name: "this"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "this"
+								end: Object {
+									column: 12
+									index: 12
+									line: 1
+								}
+								start: Object {
+									column: 8
+									index: 8
+									line: 1
+								}
+							}
+						}
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 12
+								index: 12
+								line: 1
+							}
+							start: Object {
+								column: 8
+								index: 8
+								line: 1
+							}
+						}
+					}
+					JSObjectProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
+								name: "if"
+								loc: Object {
+									filename: "input.js"
+									identifierName: "if"
+									end: Object {
+										column: 16
+										index: 16
+										line: 1
+									}
+									start: Object {
+										column: 14
+										index: 14
+										line: 1
+									}
+								}
+							}
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 16
+									index: 16
+									line: 1
+								}
+								start: Object {
+									column: 14
+									index: 14
+									line: 1
+								}
+							}
+						}
+						value: JSReferenceIdentifier {
+							name: "if"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "if"
+								end: Object {
+									column: 16
+									index: 16
+									line: 1
+								}
+								start: Object {
+									column: 14
+									index: 14
+									line: 1
+								}
+							}
+						}
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 16
+								index: 16
+								line: 1
+							}
+							start: Object {
+								column: 14
+								index: 14
+								line: 1
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

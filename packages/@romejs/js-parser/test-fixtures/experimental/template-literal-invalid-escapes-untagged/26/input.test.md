@@ -5,142 +5,142 @@
 ## `experimental > template-literal-invalid-escapes-untagged > 26`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 16
-      index: 16
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Invalid escape sequence in template'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 4
-          index: 4
-          line: 1
-        }
-        start: Object {
-          column: 4
-          index: 4
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 16
-          index: 16
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: TemplateLiteral {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 16
-            index: 16
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        expressions: Array [
-          NumericLiteral {
-            value: 0
-            format: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 9
-                index: 9
-                line: 1
-              }
-              start: Object {
-                column: 8
-                index: 8
-                line: 1
-              }
-            }
-          }
-        ]
-        quasis: Array [
-          TemplateElement {
-            cooked: '\\u00g'
-            raw: '\\u00g'
-            tail: false
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 6
-                index: 6
-                line: 1
-              }
-              start: Object {
-                column: 1
-                index: 1
-                line: 1
-              }
-            }
-          }
-          TemplateElement {
-            cooked: 'right'
-            raw: 'right'
-            tail: true
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 15
-                index: 15
-                line: 1
-              }
-              start: Object {
-                column: 10
-                index: 10
-                line: 1
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 16
+			index: 16
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Invalid escape sequence in template"}
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "script"
+				end: Object {
+					column: 4
+					index: 4
+					line: 1
+				}
+				start: Object {
+					column: 4
+					index: 4
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 16
+					index: 16
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSTemplateLiteral {
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 16
+						index: 16
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				expressions: Array [
+					JSNumericLiteral {
+						value: 0
+						format: undefined
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 9
+								index: 9
+								line: 1
+							}
+							start: Object {
+								column: 8
+								index: 8
+								line: 1
+							}
+						}
+					}
+				]
+				quasis: Array [
+					JSTemplateElement {
+						cooked: "\\u00g"
+						raw: "\\u00g"
+						tail: false
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 6
+								index: 6
+								line: 1
+							}
+							start: Object {
+								column: 1
+								index: 1
+								line: 1
+							}
+						}
+					}
+					JSTemplateElement {
+						cooked: "right"
+						raw: "right"
+						tail: true
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 15
+								index: 15
+								line: 1
+							}
+							start: Object {
+								column: 10
+								index: 10
+								line: 1
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

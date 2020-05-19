@@ -5,15 +5,15 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
+import {Scope} from "../../scopes";
 import {
-  AnyNode,
-  JSXReferenceIdentifier,
-  jsxReferenceIdentifier,
-} from '@romejs/js-ast';
+	AnyNode,
+	JSXReferenceIdentifier,
+	jsxReferenceIdentifier,
+} from "@romejs/ast";
 
 export default function JSXReferenceIdentifier(node: AnyNode, scope: Scope) {
-  node = jsxReferenceIdentifier.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = jsxReferenceIdentifier.assert(node);
+	scope;
+	throw new Error("unimplemented");
 }

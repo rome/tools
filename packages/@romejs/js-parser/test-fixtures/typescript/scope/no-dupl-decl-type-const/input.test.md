@@ -5,160 +5,160 @@
 ## `typescript > scope > no-dupl-decl-type-const`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.ts'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array ['ts']
-  loc: Object {
-    filename: 'input.ts'
-    end: Object {
-      column: 0
-      index: 31
-      line: 3
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    VariableDeclarationStatement {
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 13
-          index: 13
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      declaration: VariableDeclaration {
-        kind: 'const'
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 13
-            index: 13
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        declarations: Array [
-          VariableDeclarator {
-            id: BindingIdentifier {
-              name: 'X'
-              loc: Object {
-                filename: 'input.ts'
-                identifierName: 'X'
-                end: Object {
-                  column: 7
-                  index: 7
-                  line: 1
-                }
-                start: Object {
-                  column: 6
-                  index: 6
-                  line: 1
-                }
-              }
-            }
-            loc: Object {
-              filename: 'input.ts'
-              end: Object {
-                column: 12
-                index: 12
-                line: 1
-              }
-              start: Object {
-                column: 6
-                index: 6
-                line: 1
-              }
-            }
-            init: StringLiteral {
-              value: ''
-              loc: Object {
-                filename: 'input.ts'
-                end: Object {
-                  column: 12
-                  index: 12
-                  line: 1
-                }
-                start: Object {
-                  column: 10
-                  index: 10
-                  line: 1
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-    TypeAliasTypeAnnotation {
-      id: BindingIdentifier {
-        name: 'X'
-        loc: Object {
-          filename: 'input.ts'
-          identifierName: 'X'
-          end: Object {
-            column: 6
-            index: 20
-            line: 2
-          }
-          start: Object {
-            column: 5
-            index: 19
-            line: 2
-          }
-        }
-      }
-      typeParameters: undefined
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 16
-          index: 30
-          line: 2
-        }
-        start: Object {
-          column: 0
-          index: 14
-          line: 2
-        }
-      }
-      right: NumberKeywordTypeAnnotation {
-        loc: Object {
-          filename: 'input.ts'
-          end: Object {
-            column: 15
-            index: 29
-            line: 2
-          }
-          start: Object {
-            column: 9
-            index: 23
-            line: 2
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.ts"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "module"
+	syntax: Array ["ts"]
+	loc: Object {
+		filename: "input.ts"
+		end: Object {
+			column: 0
+			index: 31
+			line: 3
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSVariableDeclarationStatement {
+			loc: Object {
+				filename: "input.ts"
+				end: Object {
+					column: 13
+					index: 13
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			declaration: JSVariableDeclaration {
+				kind: "const"
+				loc: Object {
+					filename: "input.ts"
+					end: Object {
+						column: 13
+						index: 13
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				declarations: Array [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "X"
+							loc: Object {
+								filename: "input.ts"
+								identifierName: "X"
+								end: Object {
+									column: 7
+									index: 7
+									line: 1
+								}
+								start: Object {
+									column: 6
+									index: 6
+									line: 1
+								}
+							}
+						}
+						loc: Object {
+							filename: "input.ts"
+							end: Object {
+								column: 12
+								index: 12
+								line: 1
+							}
+							start: Object {
+								column: 6
+								index: 6
+								line: 1
+							}
+						}
+						init: JSStringLiteral {
+							value: ""
+							loc: Object {
+								filename: "input.ts"
+								end: Object {
+									column: 12
+									index: 12
+									line: 1
+								}
+								start: Object {
+									column: 10
+									index: 10
+									line: 1
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+		TSTypeAliasTypeAnnotation {
+			id: JSBindingIdentifier {
+				name: "X"
+				loc: Object {
+					filename: "input.ts"
+					identifierName: "X"
+					end: Object {
+						column: 6
+						index: 20
+						line: 2
+					}
+					start: Object {
+						column: 5
+						index: 19
+						line: 2
+					}
+				}
+			}
+			typeParameters: undefined
+			loc: Object {
+				filename: "input.ts"
+				end: Object {
+					column: 16
+					index: 30
+					line: 2
+				}
+				start: Object {
+					column: 0
+					index: 14
+					line: 2
+				}
+			}
+			right: TSNumberKeywordTypeAnnotation {
+				loc: Object {
+					filename: "input.ts"
+					end: Object {
+						column: 15
+						index: 29
+						line: 2
+					}
+					start: Object {
+						column: 9
+						index: 23
+						line: 2
+					}
+				}
+			}
+		}
+	]
 }
 ```

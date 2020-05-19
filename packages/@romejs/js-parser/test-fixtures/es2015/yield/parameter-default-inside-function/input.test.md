@@ -5,171 +5,170 @@
 ## `es2015 > yield > parameter-default-inside-function`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 25
-      index: 25
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    FunctionDeclaration {
-      id: BindingIdentifier {
-        name: 'fn'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'fn'
-          end: Object {
-            column: 11
-            index: 11
-            line: 1
-          }
-          start: Object {
-            column: 9
-            index: 9
-            line: 1
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 25
-          index: 25
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      body: BlockStatement {
-        body: Array []
-        directives: Array []
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 25
-            index: 25
-            line: 1
-          }
-          start: Object {
-            column: 23
-            index: 23
-            line: 1
-          }
-        }
-      }
-      head: FunctionHead {
-        async: false
-        generator: false
-        hasHoistedVars: false
-        predicate: undefined
-        rest: undefined
-        returnType: undefined
-        thisType: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 22
-            index: 22
-            line: 1
-          }
-          start: Object {
-            column: 11
-            index: 11
-            line: 1
-          }
-        }
-        params: Array [
-          BindingAssignmentPattern {
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 21
-                index: 21
-                line: 1
-              }
-              start: Object {
-                column: 12
-                index: 12
-                line: 1
-              }
-            }
-            right: ReferenceIdentifier {
-              name: 'yield'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'yield'
-                end: Object {
-                  column: 21
-                  index: 21
-                  line: 1
-                }
-                start: Object {
-                  column: 16
-                  index: 16
-                  line: 1
-                }
-              }
-            }
-            left: BindingIdentifier {
-              name: 'x'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'x'
-                end: Object {
-                  column: 13
-                  index: 13
-                  line: 1
-                }
-                start: Object {
-                  column: 12
-                  index: 12
-                  line: 1
-                }
-              }
-              meta: PatternMeta {
-                optional: undefined
-                typeAnnotation: undefined
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 13
-                    index: 13
-                    line: 1
-                  }
-                  start: Object {
-                    column: 12
-                    index: 12
-                    line: 1
-                  }
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 25
+			index: 25
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
+				name: "fn"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "fn"
+					end: Object {
+						column: 11
+						index: 11
+						line: 1
+					}
+					start: Object {
+						column: 9
+						index: 9
+						line: 1
+					}
+				}
+			}
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 25
+					index: 25
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			body: JSBlockStatement {
+				body: Array []
+				directives: Array []
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 25
+						index: 25
+						line: 1
+					}
+					start: Object {
+						column: 23
+						index: 23
+						line: 1
+					}
+				}
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				rest: undefined
+				returnType: undefined
+				thisType: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 22
+						index: 22
+						line: 1
+					}
+					start: Object {
+						column: 11
+						index: 11
+						line: 1
+					}
+				}
+				params: Array [
+					JSBindingAssignmentPattern {
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 21
+								index: 21
+								line: 1
+							}
+							start: Object {
+								column: 12
+								index: 12
+								line: 1
+							}
+						}
+						right: JSReferenceIdentifier {
+							name: "yield"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "yield"
+								end: Object {
+									column: 21
+									index: 21
+									line: 1
+								}
+								start: Object {
+									column: 16
+									index: 16
+									line: 1
+								}
+							}
+						}
+						left: JSBindingIdentifier {
+							name: "x"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "x"
+								end: Object {
+									column: 13
+									index: 13
+									line: 1
+								}
+								start: Object {
+									column: 12
+									index: 12
+									line: 1
+								}
+							}
+							meta: JSPatternMeta {
+								optional: undefined
+								typeAnnotation: undefined
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 13
+										index: 13
+										line: 1
+									}
+									start: Object {
+										column: 12
+										index: 12
+										line: 1
+									}
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

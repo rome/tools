@@ -5,210 +5,209 @@
 ## `esprima > invalid-syntax > migrated_0183`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 44
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Deleting local variable in strict mode'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 37
-          index: 37
-          line: 1
-        }
-        start: Object {
-          column: 36
-          index: 36
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 43
-          index: 43
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: CallExpression {
-        arguments: Array []
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 42
-            index: 42
-            line: 1
-          }
-          start: Object {
-            column: 1
-            index: 1
-            line: 1
-          }
-        }
-        callee: FunctionExpression {
-          id: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 40
-              index: 40
-              line: 1
-            }
-            start: Object {
-              column: 1
-              index: 1
-              line: 1
-            }
-          }
-          head: FunctionHead {
-            async: false
-            generator: false
-            hasHoistedVars: false
-            params: Array []
-            predicate: undefined
-            rest: undefined
-            returnType: undefined
-            thisType: undefined
-            typeParameters: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 12
-                index: 12
-                line: 1
-              }
-              start: Object {
-                column: 10
-                index: 10
-                line: 1
-              }
-            }
-          }
-          body: BlockStatement {
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 40
-                index: 40
-                line: 1
-              }
-              start: Object {
-                column: 13
-                index: 13
-                line: 1
-              }
-            }
-            directives: Array [
-              Directive {
-                value: 'use strict'
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 28
-                    index: 28
-                    line: 1
-                  }
-                  start: Object {
-                    column: 15
-                    index: 15
-                    line: 1
-                  }
-                }
-              }
-            ]
-            body: Array [
-              ExpressionStatement {
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 38
-                    index: 38
-                    line: 1
-                  }
-                  start: Object {
-                    column: 29
-                    index: 29
-                    line: 1
-                  }
-                }
-                expression: UnaryExpression {
-                  operator: 'delete'
-                  prefix: true
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 37
-                      index: 37
-                      line: 1
-                    }
-                    start: Object {
-                      column: 29
-                      index: 29
-                      line: 1
-                    }
-                  }
-                  argument: ReferenceIdentifier {
-                    name: 'i'
-                    loc: Object {
-                      filename: 'input.js'
-                      identifierName: 'i'
-                      end: Object {
-                        column: 37
-                        index: 37
-                        line: 1
-                      }
-                      start: Object {
-                        column: 36
-                        index: 36
-                        line: 1
-                      }
-                    }
-                  }
-                }
-              }
-            ]
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 44
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Deleting local variable in strict mode"}
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "script"
+				end: Object {
+					column: 37
+					index: 37
+					line: 1
+				}
+				start: Object {
+					column: 36
+					index: 36
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 43
+					index: 43
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSCallExpression {
+				arguments: Array []
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 42
+						index: 42
+						line: 1
+					}
+					start: Object {
+						column: 1
+						index: 1
+						line: 1
+					}
+				}
+				callee: JSFunctionExpression {
+					id: undefined
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 40
+							index: 40
+							line: 1
+						}
+						start: Object {
+							column: 1
+							index: 1
+							line: 1
+						}
+					}
+					head: JSFunctionHead {
+						async: false
+						generator: false
+						hasHoistedVars: false
+						params: Array []
+						rest: undefined
+						returnType: undefined
+						thisType: undefined
+						typeParameters: undefined
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 12
+								index: 12
+								line: 1
+							}
+							start: Object {
+								column: 10
+								index: 10
+								line: 1
+							}
+						}
+					}
+					body: JSBlockStatement {
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 40
+								index: 40
+								line: 1
+							}
+							start: Object {
+								column: 13
+								index: 13
+								line: 1
+							}
+						}
+						directives: Array [
+							JSDirective {
+								value: "use strict"
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 28
+										index: 28
+										line: 1
+									}
+									start: Object {
+										column: 15
+										index: 15
+										line: 1
+									}
+								}
+							}
+						]
+						body: Array [
+							JSExpressionStatement {
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 38
+										index: 38
+										line: 1
+									}
+									start: Object {
+										column: 29
+										index: 29
+										line: 1
+									}
+								}
+								expression: JSUnaryExpression {
+									operator: "delete"
+									prefix: true
+									loc: Object {
+										filename: "input.js"
+										end: Object {
+											column: 37
+											index: 37
+											line: 1
+										}
+										start: Object {
+											column: 29
+											index: 29
+											line: 1
+										}
+									}
+									argument: JSReferenceIdentifier {
+										name: "i"
+										loc: Object {
+											filename: "input.js"
+											identifierName: "i"
+											end: Object {
+												column: 37
+												index: 37
+												line: 1
+											}
+											start: Object {
+												column: 36
+												index: 36
+												line: 1
+											}
+										}
+									}
+								}
+							}
+						]
+					}
+				}
+			}
+		}
+	]
 }
 ```

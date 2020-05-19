@@ -5,129 +5,129 @@
 ## `experimental > nullish-coalescing-operator > and-nullish`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 13
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 12
-          index: 12
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: LogicalExpression {
-        operator: '??'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 11
-            index: 11
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        right: ReferenceIdentifier {
-          name: 'c'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'c'
-            end: Object {
-              column: 11
-              index: 11
-              line: 1
-            }
-            start: Object {
-              column: 10
-              index: 10
-              line: 1
-            }
-          }
-        }
-        left: LogicalExpression {
-          operator: '&&'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 6
-              index: 6
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-          left: ReferenceIdentifier {
-            name: 'a'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'a'
-              end: Object {
-                column: 1
-                index: 1
-                line: 1
-              }
-              start: Object {
-                column: 0
-                index: 0
-                line: 1
-              }
-            }
-          }
-          right: ReferenceIdentifier {
-            name: 'b'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'b'
-              end: Object {
-                column: 6
-                index: 6
-                line: 1
-              }
-              start: Object {
-                column: 5
-                index: 5
-                line: 1
-              }
-            }
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 13
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 12
+					index: 12
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSLogicalExpression {
+				operator: "??"
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 11
+						index: 11
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				right: JSReferenceIdentifier {
+					name: "c"
+					loc: Object {
+						filename: "input.js"
+						identifierName: "c"
+						end: Object {
+							column: 11
+							index: 11
+							line: 1
+						}
+						start: Object {
+							column: 10
+							index: 10
+							line: 1
+						}
+					}
+				}
+				left: JSLogicalExpression {
+					operator: "&&"
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 6
+							index: 6
+							line: 1
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+					left: JSReferenceIdentifier {
+						name: "a"
+						loc: Object {
+							filename: "input.js"
+							identifierName: "a"
+							end: Object {
+								column: 1
+								index: 1
+								line: 1
+							}
+							start: Object {
+								column: 0
+								index: 0
+								line: 1
+							}
+						}
+					}
+					right: JSReferenceIdentifier {
+						name: "b"
+						loc: Object {
+							filename: "input.js"
+							identifierName: "b"
+							end: Object {
+								column: 6
+								index: 6
+								line: 1
+							}
+							start: Object {
+								column: 5
+								index: 5
+								line: 1
+							}
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

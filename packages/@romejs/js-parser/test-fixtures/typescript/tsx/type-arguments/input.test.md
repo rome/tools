@@ -5,346 +5,346 @@
 ## `typescript > tsx > type-arguments`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.tsx'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array [
-    'jsx'
-    'ts'
-  ]
-  loc: Object {
-    filename: 'input.tsx'
-    end: Object {
-      column: 14
-      index: 34
-      line: 3
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.tsx'
-        end: Object {
-          column: 7
-          index: 7
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: CallExpression {
-        arguments: Array []
-        loc: Object {
-          filename: 'input.tsx'
-          end: Object {
-            column: 6
-            index: 6
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        callee: ReferenceIdentifier {
-          name: 'f'
-          loc: Object {
-            filename: 'input.tsx'
-            identifierName: 'f'
-            end: Object {
-              column: 1
-              index: 1
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
-        typeArguments: TSTypeParameterInstantiation {
-          loc: Object {
-            filename: 'input.tsx'
-            end: Object {
-              column: 4
-              index: 4
-              line: 1
-            }
-            start: Object {
-              column: 1
-              index: 1
-              line: 1
-            }
-          }
-          params: Array [
-            TSTypeReference {
-              typeParameters: undefined
-              loc: Object {
-                filename: 'input.tsx'
-                end: Object {
-                  column: 3
-                  index: 3
-                  line: 1
-                }
-                start: Object {
-                  column: 2
-                  index: 2
-                  line: 1
-                }
-              }
-              typeName: ReferenceIdentifier {
-                name: 'T'
-                loc: Object {
-                  filename: 'input.tsx'
-                  identifierName: 'T'
-                  end: Object {
-                    column: 3
-                    index: 3
-                    line: 1
-                  }
-                  start: Object {
-                    column: 2
-                    index: 2
-                    line: 1
-                  }
-                }
-              }
-            }
-          ]
-        }
-      }
-    }
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.tsx'
-        end: Object {
-          column: 11
-          index: 19
-          line: 2
-        }
-        start: Object {
-          column: 0
-          index: 8
-          line: 2
-        }
-      }
-      expression: NewExpression {
-        arguments: Array []
-        optional: undefined
-        loc: Object {
-          filename: 'input.tsx'
-          end: Object {
-            column: 10
-            index: 18
-            line: 2
-          }
-          start: Object {
-            column: 0
-            index: 8
-            line: 2
-          }
-        }
-        callee: ReferenceIdentifier {
-          name: 'C'
-          loc: Object {
-            filename: 'input.tsx'
-            identifierName: 'C'
-            end: Object {
-              column: 5
-              index: 13
-              line: 2
-            }
-            start: Object {
-              column: 4
-              index: 12
-              line: 2
-            }
-          }
-        }
-        typeArguments: TSTypeParameterInstantiation {
-          loc: Object {
-            filename: 'input.tsx'
-            end: Object {
-              column: 8
-              index: 16
-              line: 2
-            }
-            start: Object {
-              column: 5
-              index: 13
-              line: 2
-            }
-          }
-          params: Array [
-            TSTypeReference {
-              typeParameters: undefined
-              loc: Object {
-                filename: 'input.tsx'
-                end: Object {
-                  column: 7
-                  index: 15
-                  line: 2
-                }
-                start: Object {
-                  column: 6
-                  index: 14
-                  line: 2
-                }
-              }
-              typeName: ReferenceIdentifier {
-                name: 'T'
-                loc: Object {
-                  filename: 'input.tsx'
-                  identifierName: 'T'
-                  end: Object {
-                    column: 7
-                    index: 15
-                    line: 2
-                  }
-                  start: Object {
-                    column: 6
-                    index: 14
-                    line: 2
-                  }
-                }
-              }
-            }
-          ]
-        }
-      }
-    }
-    TypeAliasTypeAnnotation {
-      id: BindingIdentifier {
-        name: 'A'
-        loc: Object {
-          filename: 'input.tsx'
-          identifierName: 'A'
-          end: Object {
-            column: 6
-            index: 26
-            line: 3
-          }
-          start: Object {
-            column: 5
-            index: 25
-            line: 3
-          }
-        }
-      }
-      typeParameters: undefined
-      loc: Object {
-        filename: 'input.tsx'
-        end: Object {
-          column: 14
-          index: 34
-          line: 3
-        }
-        start: Object {
-          column: 0
-          index: 20
-          line: 3
-        }
-      }
-      right: TSTypeReference {
-        loc: Object {
-          filename: 'input.tsx'
-          end: Object {
-            column: 13
-            index: 33
-            line: 3
-          }
-          start: Object {
-            column: 9
-            index: 29
-            line: 3
-          }
-        }
-        typeName: ReferenceIdentifier {
-          name: 'T'
-          loc: Object {
-            filename: 'input.tsx'
-            identifierName: 'T'
-            end: Object {
-              column: 10
-              index: 30
-              line: 3
-            }
-            start: Object {
-              column: 9
-              index: 29
-              line: 3
-            }
-          }
-        }
-        typeParameters: TSTypeParameterInstantiation {
-          loc: Object {
-            filename: 'input.tsx'
-            end: Object {
-              column: 13
-              index: 33
-              line: 3
-            }
-            start: Object {
-              column: 10
-              index: 30
-              line: 3
-            }
-          }
-          params: Array [
-            TSTypeReference {
-              typeParameters: undefined
-              loc: Object {
-                filename: 'input.tsx'
-                end: Object {
-                  column: 12
-                  index: 32
-                  line: 3
-                }
-                start: Object {
-                  column: 11
-                  index: 31
-                  line: 3
-                }
-              }
-              typeName: ReferenceIdentifier {
-                name: 'T'
-                loc: Object {
-                  filename: 'input.tsx'
-                  identifierName: 'T'
-                  end: Object {
-                    column: 12
-                    index: 32
-                    line: 3
-                  }
-                  start: Object {
-                    column: 11
-                    index: 31
-                    line: 3
-                  }
-                }
-              }
-            }
-          ]
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.tsx"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "module"
+	syntax: Array [
+		"jsx"
+		"ts"
+	]
+	loc: Object {
+		filename: "input.tsx"
+		end: Object {
+			column: 14
+			index: 34
+			line: 3
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.tsx"
+				end: Object {
+					column: 7
+					index: 7
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSCallExpression {
+				arguments: Array []
+				loc: Object {
+					filename: "input.tsx"
+					end: Object {
+						column: 6
+						index: 6
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				callee: JSReferenceIdentifier {
+					name: "f"
+					loc: Object {
+						filename: "input.tsx"
+						identifierName: "f"
+						end: Object {
+							column: 1
+							index: 1
+							line: 1
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+				}
+				typeArguments: TSTypeParameterInstantiation {
+					loc: Object {
+						filename: "input.tsx"
+						end: Object {
+							column: 4
+							index: 4
+							line: 1
+						}
+						start: Object {
+							column: 1
+							index: 1
+							line: 1
+						}
+					}
+					params: Array [
+						TSTypeReference {
+							typeParameters: undefined
+							loc: Object {
+								filename: "input.tsx"
+								end: Object {
+									column: 3
+									index: 3
+									line: 1
+								}
+								start: Object {
+									column: 2
+									index: 2
+									line: 1
+								}
+							}
+							typeName: JSReferenceIdentifier {
+								name: "T"
+								loc: Object {
+									filename: "input.tsx"
+									identifierName: "T"
+									end: Object {
+										column: 3
+										index: 3
+										line: 1
+									}
+									start: Object {
+										column: 2
+										index: 2
+										line: 1
+									}
+								}
+							}
+						}
+					]
+				}
+			}
+		}
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.tsx"
+				end: Object {
+					column: 11
+					index: 19
+					line: 2
+				}
+				start: Object {
+					column: 0
+					index: 8
+					line: 2
+				}
+			}
+			expression: JSNewExpression {
+				arguments: Array []
+				optional: undefined
+				loc: Object {
+					filename: "input.tsx"
+					end: Object {
+						column: 10
+						index: 18
+						line: 2
+					}
+					start: Object {
+						column: 0
+						index: 8
+						line: 2
+					}
+				}
+				callee: JSReferenceIdentifier {
+					name: "C"
+					loc: Object {
+						filename: "input.tsx"
+						identifierName: "C"
+						end: Object {
+							column: 5
+							index: 13
+							line: 2
+						}
+						start: Object {
+							column: 4
+							index: 12
+							line: 2
+						}
+					}
+				}
+				typeArguments: TSTypeParameterInstantiation {
+					loc: Object {
+						filename: "input.tsx"
+						end: Object {
+							column: 8
+							index: 16
+							line: 2
+						}
+						start: Object {
+							column: 5
+							index: 13
+							line: 2
+						}
+					}
+					params: Array [
+						TSTypeReference {
+							typeParameters: undefined
+							loc: Object {
+								filename: "input.tsx"
+								end: Object {
+									column: 7
+									index: 15
+									line: 2
+								}
+								start: Object {
+									column: 6
+									index: 14
+									line: 2
+								}
+							}
+							typeName: JSReferenceIdentifier {
+								name: "T"
+								loc: Object {
+									filename: "input.tsx"
+									identifierName: "T"
+									end: Object {
+										column: 7
+										index: 15
+										line: 2
+									}
+									start: Object {
+										column: 6
+										index: 14
+										line: 2
+									}
+								}
+							}
+						}
+					]
+				}
+			}
+		}
+		TSTypeAliasTypeAnnotation {
+			id: JSBindingIdentifier {
+				name: "A"
+				loc: Object {
+					filename: "input.tsx"
+					identifierName: "A"
+					end: Object {
+						column: 6
+						index: 26
+						line: 3
+					}
+					start: Object {
+						column: 5
+						index: 25
+						line: 3
+					}
+				}
+			}
+			typeParameters: undefined
+			loc: Object {
+				filename: "input.tsx"
+				end: Object {
+					column: 14
+					index: 34
+					line: 3
+				}
+				start: Object {
+					column: 0
+					index: 20
+					line: 3
+				}
+			}
+			right: TSTypeReference {
+				loc: Object {
+					filename: "input.tsx"
+					end: Object {
+						column: 13
+						index: 33
+						line: 3
+					}
+					start: Object {
+						column: 9
+						index: 29
+						line: 3
+					}
+				}
+				typeName: JSReferenceIdentifier {
+					name: "T"
+					loc: Object {
+						filename: "input.tsx"
+						identifierName: "T"
+						end: Object {
+							column: 10
+							index: 30
+							line: 3
+						}
+						start: Object {
+							column: 9
+							index: 29
+							line: 3
+						}
+					}
+				}
+				typeParameters: TSTypeParameterInstantiation {
+					loc: Object {
+						filename: "input.tsx"
+						end: Object {
+							column: 13
+							index: 33
+							line: 3
+						}
+						start: Object {
+							column: 10
+							index: 30
+							line: 3
+						}
+					}
+					params: Array [
+						TSTypeReference {
+							typeParameters: undefined
+							loc: Object {
+								filename: "input.tsx"
+								end: Object {
+									column: 12
+									index: 32
+									line: 3
+								}
+								start: Object {
+									column: 11
+									index: 31
+									line: 3
+								}
+							}
+							typeName: JSReferenceIdentifier {
+								name: "T"
+								loc: Object {
+									filename: "input.tsx"
+									identifierName: "T"
+									end: Object {
+										column: 12
+										index: 32
+										line: 3
+									}
+									start: Object {
+										column: 11
+										index: 31
+										line: 3
+									}
+								}
+							}
+						}
+					]
+				}
+			}
+		}
+	]
 }
 ```

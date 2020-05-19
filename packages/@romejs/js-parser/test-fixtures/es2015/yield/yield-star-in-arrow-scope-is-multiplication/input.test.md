@@ -5,149 +5,149 @@
 ## `es2015 > yield > yield-star-in-arrow-scope-is-multiplication`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 14
-      index: 14
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 14
-          index: 14
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: ArrowFunctionExpression {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 14
-            index: 14
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        head: FunctionHead {
-          async: false
-          hasHoistedVars: false
-          rest: undefined
-          thisType: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 4
-              index: 4
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-          params: Array [
-            BindingIdentifier {
-              name: 'e'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'e'
-                end: Object {
-                  column: 1
-                  index: 1
-                  line: 1
-                }
-                start: Object {
-                  column: 0
-                  index: 0
-                  line: 1
-                }
-              }
-            }
-          ]
-        }
-        body: BinaryExpression {
-          operator: '*'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 14
-              index: 14
-              line: 1
-            }
-            start: Object {
-              column: 5
-              index: 5
-              line: 1
-            }
-          }
-          left: ReferenceIdentifier {
-            name: 'yield'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'yield'
-              end: Object {
-                column: 10
-                index: 10
-                line: 1
-              }
-              start: Object {
-                column: 5
-                index: 5
-                line: 1
-              }
-            }
-          }
-          right: NumericLiteral {
-            value: 10
-            format: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 14
-                index: 14
-                line: 1
-              }
-              start: Object {
-                column: 12
-                index: 12
-                line: 1
-              }
-            }
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 14
+			index: 14
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 14
+					index: 14
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSArrowFunctionExpression {
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 14
+						index: 14
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				head: JSFunctionHead {
+					async: false
+					hasHoistedVars: false
+					rest: undefined
+					thisType: undefined
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 4
+							index: 4
+							line: 1
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+					params: Array [
+						JSBindingIdentifier {
+							name: "e"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "e"
+								end: Object {
+									column: 1
+									index: 1
+									line: 1
+								}
+								start: Object {
+									column: 0
+									index: 0
+									line: 1
+								}
+							}
+						}
+					]
+				}
+				body: JSBinaryExpression {
+					operator: "*"
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 14
+							index: 14
+							line: 1
+						}
+						start: Object {
+							column: 5
+							index: 5
+							line: 1
+						}
+					}
+					left: JSReferenceIdentifier {
+						name: "yield"
+						loc: Object {
+							filename: "input.js"
+							identifierName: "yield"
+							end: Object {
+								column: 10
+								index: 10
+								line: 1
+							}
+							start: Object {
+								column: 5
+								index: 5
+								line: 1
+							}
+						}
+					}
+					right: JSNumericLiteral {
+						value: 10
+						format: undefined
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 14
+								index: 14
+								line: 1
+							}
+							start: Object {
+								column: 12
+								index: 12
+								line: 1
+							}
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

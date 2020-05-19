@@ -5,192 +5,191 @@
 ## `comments > basic > surrounding-call-comments`
 
 ```javascript
-Program {
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 61
-      line: 6
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  comments: Array [
-    CommentBlock {
-      id: '0'
-      value: ' before '
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 16
-          index: 31
-          line: 2
-        }
-        start: Object {
-          column: 4
-          index: 19
-          line: 2
-        }
-      }
-    }
-    CommentBlock {
-      id: '1'
-      value: ' after '
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 15
-          index: 58
-          line: 4
-        }
-        start: Object {
-          column: 4
-          index: 47
-          line: 4
-        }
-      }
-    }
-  ]
-  body: Array [
-    FunctionDeclaration {
-      id: BindingIdentifier {
-        name: 'a'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'a'
-          end: Object {
-            column: 10
-            index: 10
-            line: 1
-          }
-          start: Object {
-            column: 9
-            index: 9
-            line: 1
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 1
-          index: 60
-          line: 5
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      head: FunctionHead {
-        async: false
-        generator: false
-        hasHoistedVars: false
-        params: Array []
-        predicate: undefined
-        rest: undefined
-        returnType: undefined
-        thisType: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 12
-            index: 12
-            line: 1
-          }
-          start: Object {
-            column: 10
-            index: 10
-            line: 1
-          }
-        }
-      }
-      body: BlockStatement {
-        directives: Array []
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 1
-            index: 60
-            line: 5
-          }
-          start: Object {
-            column: 13
-            index: 13
-            line: 1
-          }
-        }
-        body: Array [
-          ExpressionStatement {
-            leadingComments: Array ['0']
-            trailingComments: Array ['1']
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 10
-                index: 42
-                line: 3
-              }
-              start: Object {
-                column: 4
-                index: 36
-                line: 3
-              }
-            }
-            expression: CallExpression {
-              arguments: Array []
-              leadingComments: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 9
-                  index: 41
-                  line: 3
-                }
-                start: Object {
-                  column: 4
-                  index: 36
-                  line: 3
-                }
-              }
-              callee: ReferenceIdentifier {
-                name: 'foo'
-                leadingComments: undefined
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'foo'
-                  end: Object {
-                    column: 7
-                    index: 39
-                    line: 3
-                  }
-                  start: Object {
-                    column: 4
-                    index: 36
-                    line: 3
-                  }
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+JSProgram {
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 61
+			line: 6
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	comments: Array [
+		JSCommentBlock {
+			id: "0"
+			value: " before "
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 16
+					index: 31
+					line: 2
+				}
+				start: Object {
+					column: 4
+					index: 19
+					line: 2
+				}
+			}
+		}
+		JSCommentBlock {
+			id: "1"
+			value: " after "
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 15
+					index: 58
+					line: 4
+				}
+				start: Object {
+					column: 4
+					index: 47
+					line: 4
+				}
+			}
+		}
+	]
+	body: Array [
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
+				name: "a"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "a"
+					end: Object {
+						column: 10
+						index: 10
+						line: 1
+					}
+					start: Object {
+						column: 9
+						index: 9
+						line: 1
+					}
+				}
+			}
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 1
+					index: 60
+					line: 5
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				params: Array []
+				rest: undefined
+				returnType: undefined
+				thisType: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 12
+						index: 12
+						line: 1
+					}
+					start: Object {
+						column: 10
+						index: 10
+						line: 1
+					}
+				}
+			}
+			body: JSBlockStatement {
+				directives: Array []
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 1
+						index: 60
+						line: 5
+					}
+					start: Object {
+						column: 13
+						index: 13
+						line: 1
+					}
+				}
+				body: Array [
+					JSExpressionStatement {
+						leadingComments: Array ["0"]
+						trailingComments: Array ["1"]
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 10
+								index: 42
+								line: 3
+							}
+							start: Object {
+								column: 4
+								index: 36
+								line: 3
+							}
+						}
+						expression: JSCallExpression {
+							arguments: Array []
+							leadingComments: undefined
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 9
+									index: 41
+									line: 3
+								}
+								start: Object {
+									column: 4
+									index: 36
+									line: 3
+								}
+							}
+							callee: JSReferenceIdentifier {
+								name: "foo"
+								leadingComments: undefined
+								loc: Object {
+									filename: "input.js"
+									identifierName: "foo"
+									end: Object {
+										column: 7
+										index: 39
+										line: 3
+									}
+									start: Object {
+										column: 4
+										index: 36
+										line: 3
+									}
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

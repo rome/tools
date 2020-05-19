@@ -5,29 +5,29 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {HumanBuilder} from '../Utils';
-import UnknownT from './UnknownT';
-import T from './T';
+import {HumanBuilder} from "../Utils";
+import UnknownT from "./UnknownT";
+import T from "./T";
 
 export default class OpenT extends T {
-  static type = 'OpenT';
+	static type = "OpenT";
 
-  humanize(builder: HumanBuilder): string {
-    const type = this.utils.reduce(this);
-    if (type === this) {
-      return 'open';
-    } else {
-      return builder.humanize(type);
-    }
-  }
+	humanize(builder: HumanBuilder): string {
+		const type = this.utils.reduce(this);
+		if (type === this) {
+			return "open";
+		} else {
+			return builder.humanize(type);
+		}
+	}
 
-  reduce(): T {
-    const node = this.graph.find(this);
-    if (node === undefined) {
-      return new UnknownT(this.scope, this.originNode);
-    }
+	reduce(): T {
+		const node = this.graph.find(this);
+		if (node === undefined) {
+			return new UnknownT(this.scope, this.originNode);
+		}
 
-    const values = node.lines.map((line) => this.utils.reduce(line.value));
-    return this.scope.createUnion(values, this.originNode);
-  }
+		const values = node.lines.map((line) => this.utils.reduce(line.value));
+		return this.scope.createUnion(values, this.originNode);
+	}
 }

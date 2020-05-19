@@ -5,11 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from '../../scopes';
-import {AnyNode, JSXElement, jsxElement} from '@romejs/js-ast';
+import {Scope} from "../../scopes";
+import {AnyNode, JSXElement, jsxElement} from "@romejs/ast";
 
 export default function JSXElement(node: AnyNode, scope: Scope) {
-  node = jsxElement.assert(node);
-  scope;
-  throw new Error('unimplemented');
+	node = jsxElement.assert(node);
+	scope;
+	throw new Error("unimplemented");
 }

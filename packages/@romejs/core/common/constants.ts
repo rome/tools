@@ -5,16 +5,16 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import packageJson from '../../../../package.json';
-import os = require('os');
+import packageJson from "../../../../package.json";
+import os = require("os");
 
-import {TEMP_PATH, createAbsoluteFilePath} from '@romejs/path';
+import {TEMP_PATH, createAbsoluteFilePath} from "@romejs/path";
 
-export const CHILD_ARGS = ['--max-old-space-size=8192'];
+export const CHILD_ARGS = ["--max-old-space-size=8192"];
 
 // @ts-ignore: this will be wrong if we weren't the entry node script
 export const BIN = createAbsoluteFilePath(process.mainModule.filename);
-export const MAP = BIN.addExtension('.map');
+export const MAP = BIN.addExtension(".map");
 
 const MEGABYTE = 10_000;
 
@@ -31,4 +31,4 @@ export const SOCKET_PATH = TEMP_PATH.append(`rome-${VERSION}.sock`);
 
 export const CLI_SOCKET_PATH = TEMP_PATH.append(`rome-wait-${VERSION}.sock`);
 
-export const MOCKS_FOLDER_NAME = '__rmocks__';
+export const MOCKS_FOLDER_NAME = "__rmocks__";

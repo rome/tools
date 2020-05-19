@@ -5,83 +5,83 @@
 ## `core > uncategorised > 54`
 
 ```javascript
-Program {
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 2
-      index: 18
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  comments: Array [
-    CommentLine {
-      id: '0'
-      value: ' line comment'
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 15
-          index: 15
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    ExpressionStatement {
-      leadingComments: Array ['0']
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 2
-          index: 18
-          line: 2
-        }
-        start: Object {
-          column: 0
-          index: 16
-          line: 2
-        }
-      }
-      expression: NumericLiteral {
-        value: 42
-        format: undefined
-        leadingComments: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 2
-            index: 18
-            line: 2
-          }
-          start: Object {
-            column: 0
-            index: 16
-            line: 2
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 2
+			index: 18
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	comments: Array [
+		JSCommentLine {
+			id: "0"
+			value: " line comment"
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 15
+					index: 15
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		JSExpressionStatement {
+			leadingComments: Array ["0"]
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 2
+					index: 18
+					line: 2
+				}
+				start: Object {
+					column: 0
+					index: 16
+					line: 2
+				}
+			}
+			expression: JSNumericLiteral {
+				value: 42
+				format: undefined
+				leadingComments: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 2
+						index: 18
+						line: 2
+					}
+					start: Object {
+						column: 0
+						index: 16
+						line: 2
+					}
+				}
+			}
+		}
+	]
 }
 ```

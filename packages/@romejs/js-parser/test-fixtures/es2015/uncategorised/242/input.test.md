@@ -5,192 +5,191 @@
 ## `es2015 > uncategorised > 242`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 31
-      index: 31
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  directives: Array [
-    Directive {
-      value: 'use strict'
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 13
-          index: 13
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-    }
-  ]
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'eval is a reserved word'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 19
-          index: 19
-          line: 1
-        }
-        start: Object {
-          column: 15
-          index: 15
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 31
-          index: 31
-          line: 1
-        }
-        start: Object {
-          column: 14
-          index: 14
-          line: 1
-        }
-      }
-      expression: ArrowFunctionExpression {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 31
-            index: 31
-            line: 1
-          }
-          start: Object {
-            column: 14
-            index: 14
-            line: 1
-          }
-        }
-        body: NumericLiteral {
-          value: 42
-          format: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 31
-              index: 31
-              line: 1
-            }
-            start: Object {
-              column: 29
-              index: 29
-              line: 1
-            }
-          }
-        }
-        head: FunctionHead {
-          async: false
-          hasHoistedVars: false
-          predicate: undefined
-          rest: undefined
-          returnType: undefined
-          thisType: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 28
-              index: 28
-              line: 1
-            }
-            start: Object {
-              column: 14
-              index: 14
-              line: 1
-            }
-          }
-          params: Array [
-            BindingAssignmentPattern {
-              operator: '='
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 24
-                  index: 24
-                  line: 1
-                }
-                start: Object {
-                  column: 15
-                  index: 15
-                  line: 1
-                }
-              }
-              left: BindingIdentifier {
-                name: 'eval'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'eval'
-                  end: Object {
-                    column: 19
-                    index: 19
-                    line: 1
-                  }
-                  start: Object {
-                    column: 15
-                    index: 15
-                    line: 1
-                  }
-                }
-              }
-              right: NumericLiteral {
-                value: 10
-                format: undefined
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 24
-                    index: 24
-                    line: 1
-                  }
-                  start: Object {
-                    column: 22
-                    index: 22
-                    line: 1
-                  }
-                }
-              }
-            }
-          ]
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 31
+			index: 31
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	directives: Array [
+		JSDirective {
+			value: "use strict"
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 13
+					index: 13
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+		}
+	]
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "eval is a reserved word"}
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "script"
+				end: Object {
+					column: 19
+					index: 19
+					line: 1
+				}
+				start: Object {
+					column: 15
+					index: 15
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 31
+					index: 31
+					line: 1
+				}
+				start: Object {
+					column: 14
+					index: 14
+					line: 1
+				}
+			}
+			expression: JSArrowFunctionExpression {
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 31
+						index: 31
+						line: 1
+					}
+					start: Object {
+						column: 14
+						index: 14
+						line: 1
+					}
+				}
+				body: JSNumericLiteral {
+					value: 42
+					format: undefined
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 31
+							index: 31
+							line: 1
+						}
+						start: Object {
+							column: 29
+							index: 29
+							line: 1
+						}
+					}
+				}
+				head: JSFunctionHead {
+					async: false
+					hasHoistedVars: false
+					rest: undefined
+					returnType: undefined
+					thisType: undefined
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 28
+							index: 28
+							line: 1
+						}
+						start: Object {
+							column: 14
+							index: 14
+							line: 1
+						}
+					}
+					params: Array [
+						JSBindingAssignmentPattern {
+							operator: "="
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 24
+									index: 24
+									line: 1
+								}
+								start: Object {
+									column: 15
+									index: 15
+									line: 1
+								}
+							}
+							left: JSBindingIdentifier {
+								name: "eval"
+								loc: Object {
+									filename: "input.js"
+									identifierName: "eval"
+									end: Object {
+										column: 19
+										index: 19
+										line: 1
+									}
+									start: Object {
+										column: 15
+										index: 15
+										line: 1
+									}
+								}
+							}
+							right: JSNumericLiteral {
+								value: 10
+								format: undefined
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 24
+										index: 24
+										line: 1
+									}
+									start: Object {
+										column: 22
+										index: 22
+										line: 1
+									}
+								}
+							}
+						}
+					]
+				}
+			}
+		}
+	]
 }
 ```

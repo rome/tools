@@ -5,176 +5,175 @@
 ## `experimental > uncategorised > 43`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 26
-      index: 26
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ClassDeclaration {
-      id: BindingIdentifier {
-        name: 'Foo'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'Foo'
-          end: Object {
-            column: 9
-            index: 9
-            line: 1
-          }
-          start: Object {
-            column: 6
-            index: 6
-            line: 1
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 26
-          index: 26
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      meta: ClassHead {
-        implements: undefined
-        superClass: undefined
-        superTypeParameters: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 26
-            index: 26
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        body: Array [
-          ClassProperty {
-            key: StaticPropertyKey {
-              value: Identifier {
-                name: 'foo'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'foo'
-                  end: Object {
-                    column: 15
-                    index: 15
-                    line: 1
-                  }
-                  start: Object {
-                    column: 12
-                    index: 12
-                    line: 1
-                  }
-                }
-              }
-              variance: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 15
-                  index: 15
-                  line: 1
-                }
-                start: Object {
-                  column: 12
-                  index: 12
-                  line: 1
-                }
-              }
-            }
-            value: StringLiteral {
-              value: 'bar'
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 23
-                  index: 23
-                  line: 1
-                }
-                start: Object {
-                  column: 18
-                  index: 18
-                  line: 1
-                }
-              }
-            }
-            definite: undefined
-            typeAnnotation: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 24
-                index: 24
-                line: 1
-              }
-              start: Object {
-                column: 12
-                index: 12
-                line: 1
-              }
-            }
-            meta: ClassPropertyMeta {
-              abstract: false
-              accessibility: undefined
-              optional: false
-              readonly: false
-              static: false
-              typeAnnotation: undefined
-              start: Object {
-                column: 12
-                index: 12
-                line: 1
-              }
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 15
-                  index: 15
-                  line: 1
-                }
-                start: Object {
-                  column: 12
-                  index: 12
-                  line: 1
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 26
+			index: 26
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
+				name: "Foo"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "Foo"
+					end: Object {
+						column: 9
+						index: 9
+						line: 1
+					}
+					start: Object {
+						column: 6
+						index: 6
+						line: 1
+					}
+				}
+			}
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 26
+					index: 26
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			meta: JSClassHead {
+				implements: undefined
+				superClass: undefined
+				superTypeParameters: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 26
+						index: 26
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				body: Array [
+					JSClassProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
+								name: "foo"
+								loc: Object {
+									filename: "input.js"
+									identifierName: "foo"
+									end: Object {
+										column: 15
+										index: 15
+										line: 1
+									}
+									start: Object {
+										column: 12
+										index: 12
+										line: 1
+									}
+								}
+							}
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 15
+									index: 15
+									line: 1
+								}
+								start: Object {
+									column: 12
+									index: 12
+									line: 1
+								}
+							}
+						}
+						value: JSStringLiteral {
+							value: "bar"
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 23
+									index: 23
+									line: 1
+								}
+								start: Object {
+									column: 18
+									index: 18
+									line: 1
+								}
+							}
+						}
+						definite: undefined
+						typeAnnotation: undefined
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 24
+								index: 24
+								line: 1
+							}
+							start: Object {
+								column: 12
+								index: 12
+								line: 1
+							}
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							start: Object {
+								column: 12
+								index: 12
+								line: 1
+							}
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 15
+									index: 15
+									line: 1
+								}
+								start: Object {
+									column: 12
+									index: 12
+									line: 1
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

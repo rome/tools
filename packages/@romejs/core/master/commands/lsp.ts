@@ -5,33 +5,33 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {MasterRequest} from '@romejs/core';
-import {commandCategories} from '../../common/commands';
-import {createMasterCommand} from '../commands';
-import LSPServer from '../lsp/LSPServer';
+import {MasterRequest} from "@romejs/core";
+import {commandCategories} from "../../common/commands";
+import {createMasterCommand} from "../commands";
+import LSPServer from "../lsp/LSPServer";
 
 export default createMasterCommand({
-  category: commandCategories.PROJECT_MANAGEMENT,
-  description: 'TODO',
-  usage: '',
-  examples: [],
-  defineFlags() {
-    return {};
-  },
-  async callback(req: MasterRequest): Promise<void> {
-    const {master, bridge} = req;
+	category: commandCategories.PROJECT_MANAGEMENT,
+	description: "TODO",
+	usage: "",
+	examples: [],
+	defineFlags() {
+		return {};
+	},
+	async callback(req: MasterRequest): Promise<void> {
+		const {master, bridge} = req;
 
-    const lspServer = new LSPServer(req);
-    master.connectedLSPServers.add(lspServer);
+		const lspServer = new LSPServer(req);
+		master.connectedLSPServers.add(lspServer);
 
-    bridge.endEvent.subscribe(() => {
-      master.connectedLSPServers.delete(lspServer);
-    });
+		bridge.endEvent.subscribe(() => {
+			master.connectedLSPServers.delete(lspServer);
+		});
 
-    bridge.lspFromClientBuffer.subscribe((chunk) => {
-      lspServer.append(chunk);
-    });
+		bridge.lspFromClientBuffer.subscribe((chunk) => {
+			lspServer.append(chunk);
+		});
 
-    await bridge.endEvent.wait();
-  },
+		await bridge.endEvent.wait();
+	},
 });

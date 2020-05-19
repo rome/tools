@@ -5,210 +5,209 @@
 ## `es2017 > async-functions > await-inside-parameters`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 33
-      index: 33
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'await is not allowed in async function parameters'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 27
-          index: 27
-          line: 1
-        }
-        start: Object {
-          column: 28
-          index: 28
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    FunctionDeclaration {
-      id: BindingIdentifier {
-        name: 'fn'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'fn'
-          end: Object {
-            column: 17
-            index: 17
-            line: 1
-          }
-          start: Object {
-            column: 15
-            index: 15
-            line: 1
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 33
-          index: 33
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      body: BlockStatement {
-        body: Array []
-        directives: Array []
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 33
-            index: 33
-            line: 1
-          }
-          start: Object {
-            column: 31
-            index: 31
-            line: 1
-          }
-        }
-      }
-      head: FunctionHead {
-        async: true
-        generator: false
-        hasHoistedVars: false
-        predicate: undefined
-        rest: undefined
-        returnType: undefined
-        thisType: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 30
-            index: 30
-            line: 1
-          }
-          start: Object {
-            column: 17
-            index: 17
-            line: 1
-          }
-        }
-        params: Array [
-          BindingAssignmentPattern {
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 29
-                index: 29
-                line: 1
-              }
-              start: Object {
-                column: 18
-                index: 18
-                line: 1
-              }
-            }
-            right: AwaitExpression {
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 29
-                  index: 29
-                  line: 1
-                }
-                start: Object {
-                  column: 22
-                  index: 22
-                  line: 1
-                }
-              }
-              argument: NumericLiteral {
-                value: 2
-                format: undefined
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 29
-                    index: 29
-                    line: 1
-                  }
-                  start: Object {
-                    column: 28
-                    index: 28
-                    line: 1
-                  }
-                }
-              }
-            }
-            left: BindingIdentifier {
-              name: 'x'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'x'
-                end: Object {
-                  column: 19
-                  index: 19
-                  line: 1
-                }
-                start: Object {
-                  column: 18
-                  index: 18
-                  line: 1
-                }
-              }
-              meta: PatternMeta {
-                optional: undefined
-                typeAnnotation: undefined
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 19
-                    index: 19
-                    line: 1
-                  }
-                  start: Object {
-                    column: 18
-                    index: 18
-                    line: 1
-                  }
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 33
+			index: 33
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "await is not allowed in async function parameters"}
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "script"
+				end: Object {
+					column: 27
+					index: 27
+					line: 1
+				}
+				start: Object {
+					column: 28
+					index: 28
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
+				name: "fn"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "fn"
+					end: Object {
+						column: 17
+						index: 17
+						line: 1
+					}
+					start: Object {
+						column: 15
+						index: 15
+						line: 1
+					}
+				}
+			}
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 33
+					index: 33
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			body: JSBlockStatement {
+				body: Array []
+				directives: Array []
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 33
+						index: 33
+						line: 1
+					}
+					start: Object {
+						column: 31
+						index: 31
+						line: 1
+					}
+				}
+			}
+			head: JSFunctionHead {
+				async: true
+				generator: false
+				hasHoistedVars: false
+				rest: undefined
+				returnType: undefined
+				thisType: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 30
+						index: 30
+						line: 1
+					}
+					start: Object {
+						column: 17
+						index: 17
+						line: 1
+					}
+				}
+				params: Array [
+					JSBindingAssignmentPattern {
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 29
+								index: 29
+								line: 1
+							}
+							start: Object {
+								column: 18
+								index: 18
+								line: 1
+							}
+						}
+						right: JSAwaitExpression {
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 29
+									index: 29
+									line: 1
+								}
+								start: Object {
+									column: 22
+									index: 22
+									line: 1
+								}
+							}
+							argument: JSNumericLiteral {
+								value: 2
+								format: undefined
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 29
+										index: 29
+										line: 1
+									}
+									start: Object {
+										column: 28
+										index: 28
+										line: 1
+									}
+								}
+							}
+						}
+						left: JSBindingIdentifier {
+							name: "x"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "x"
+								end: Object {
+									column: 19
+									index: 19
+									line: 1
+								}
+								start: Object {
+									column: 18
+									index: 18
+									line: 1
+								}
+							}
+							meta: JSPatternMeta {
+								optional: undefined
+								typeAnnotation: undefined
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 19
+										index: 19
+										line: 1
+									}
+									start: Object {
+										column: 18
+										index: 18
+										line: 1
+									}
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

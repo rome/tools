@@ -5,40 +5,40 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {descriptions} from '@romejs/diagnostics';
-import {Scope} from '../../scopes';
-import E, {ErrorDefinition} from './E';
-import {AnyNode} from '@romejs/js-ast';
+import {descriptions} from "@romejs/diagnostics";
+import {Scope} from "../../scopes";
+import E, {ErrorDefinition} from "./E";
+import {AnyNode} from "@romejs/ast";
 
 export default class UnknownImportE extends E {
-  constructor(
-    scope: Scope,
-    originNode: undefined | AnyNode,
-    opts: {
-      possibleNames: Array<string>;
-      importedName: string;
-      source: string;
-    },
-  ) {
-    super(scope, originNode);
-    this.possibleNames = opts.possibleNames;
-    this.importedName = opts.importedName;
-    this.source = opts.source;
-  }
+	constructor(
+		scope: Scope,
+		originNode: undefined | AnyNode,
+		opts: {
+			possibleNames: Array<string>;
+			importedName: string;
+			source: string;
+		},
+	) {
+		super(scope, originNode);
+		this.possibleNames = opts.possibleNames;
+		this.importedName = opts.importedName;
+		this.source = opts.source;
+	}
 
-  static type = 'UnknownImportE';
-  importedName: string;
-  source: string;
-  possibleNames: Array<string>;
+	static type = "UnknownImportE";
+	importedName: string;
+	source: string;
+	possibleNames: Array<string>;
 
-  getError(): ErrorDefinition {
-    return {
-      description: descriptions.TYPE_CHECK.UNKNOWN_IMPORT(
-        this.importedName,
-        this.source,
-        this.possibleNames,
-      ),
-      lowerTarget: this,
-    };
-  }
+	getError(): ErrorDefinition {
+		return {
+			description: descriptions.TYPE_CHECK.UNKNOWN_IMPORT(
+				this.importedName,
+				this.source,
+				this.possibleNames,
+			),
+			lowerTarget: this,
+		};
+	}
 }

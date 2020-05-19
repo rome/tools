@@ -5,172 +5,171 @@
 ## `test262 > rest-parameter > array-pattern-empty-with-leading`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 39
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    FunctionDeclaration {
-      id: BindingIdentifier {
-        name: 'emptyWithLeading'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'emptyWithLeading'
-          end: Object {
-            column: 25
-            index: 25
-            line: 1
-          }
-          start: Object {
-            column: 9
-            index: 9
-            line: 1
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 38
-          index: 38
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      body: BlockStatement {
-        body: Array []
-        directives: Array []
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 38
-            index: 38
-            line: 1
-          }
-          start: Object {
-            column: 36
-            index: 36
-            line: 1
-          }
-        }
-      }
-      head: FunctionHead {
-        async: false
-        generator: false
-        hasHoistedVars: false
-        predicate: undefined
-        returnType: undefined
-        thisType: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 35
-            index: 35
-            line: 1
-          }
-          start: Object {
-            column: 25
-            index: 25
-            line: 1
-          }
-        }
-        rest: BindingArrayPattern {
-          elements: Array []
-          rest: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 34
-              index: 34
-              line: 1
-            }
-            start: Object {
-              column: 32
-              index: 32
-              line: 1
-            }
-          }
-          meta: PatternMeta {
-            optional: undefined
-            typeAnnotation: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 34
-                index: 34
-                line: 1
-              }
-              start: Object {
-                column: 32
-                index: 32
-                line: 1
-              }
-            }
-          }
-        }
-        params: Array [
-          BindingIdentifier {
-            name: 'x'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'x'
-              end: Object {
-                column: 27
-                index: 27
-                line: 1
-              }
-              start: Object {
-                column: 26
-                index: 26
-                line: 1
-              }
-            }
-            meta: PatternMeta {
-              optional: undefined
-              typeAnnotation: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 27
-                  index: 27
-                  line: 1
-                }
-                start: Object {
-                  column: 26
-                  index: 26
-                  line: 1
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 39
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
+				name: "emptyWithLeading"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "emptyWithLeading"
+					end: Object {
+						column: 25
+						index: 25
+						line: 1
+					}
+					start: Object {
+						column: 9
+						index: 9
+						line: 1
+					}
+				}
+			}
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 38
+					index: 38
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			body: JSBlockStatement {
+				body: Array []
+				directives: Array []
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 38
+						index: 38
+						line: 1
+					}
+					start: Object {
+						column: 36
+						index: 36
+						line: 1
+					}
+				}
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				returnType: undefined
+				thisType: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 35
+						index: 35
+						line: 1
+					}
+					start: Object {
+						column: 25
+						index: 25
+						line: 1
+					}
+				}
+				rest: JSBindingArrayPattern {
+					elements: Array []
+					rest: undefined
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 34
+							index: 34
+							line: 1
+						}
+						start: Object {
+							column: 32
+							index: 32
+							line: 1
+						}
+					}
+					meta: JSPatternMeta {
+						optional: undefined
+						typeAnnotation: undefined
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 34
+								index: 34
+								line: 1
+							}
+							start: Object {
+								column: 32
+								index: 32
+								line: 1
+							}
+						}
+					}
+				}
+				params: Array [
+					JSBindingIdentifier {
+						name: "x"
+						loc: Object {
+							filename: "input.js"
+							identifierName: "x"
+							end: Object {
+								column: 27
+								index: 27
+								line: 1
+							}
+							start: Object {
+								column: 26
+								index: 26
+								line: 1
+							}
+						}
+						meta: JSPatternMeta {
+							optional: undefined
+							typeAnnotation: undefined
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 27
+									index: 27
+									line: 1
+								}
+								start: Object {
+									column: 26
+									index: 26
+									line: 1
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

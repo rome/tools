@@ -5,195 +5,194 @@
 ## `es2015 > yield > parameter-default-inside-generator`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 26
-      index: 26
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'yield is not allowed in generator parameters'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 17
-          index: 17
-          line: 1
-        }
-        start: Object {
-          column: 17
-          index: 17
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    FunctionDeclaration {
-      id: BindingIdentifier {
-        name: 'fn'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'fn'
-          end: Object {
-            column: 12
-            index: 12
-            line: 1
-          }
-          start: Object {
-            column: 10
-            index: 10
-            line: 1
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 26
-          index: 26
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      body: BlockStatement {
-        body: Array []
-        directives: Array []
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 26
-            index: 26
-            line: 1
-          }
-          start: Object {
-            column: 24
-            index: 24
-            line: 1
-          }
-        }
-      }
-      head: FunctionHead {
-        async: false
-        generator: true
-        hasHoistedVars: false
-        predicate: undefined
-        rest: undefined
-        returnType: undefined
-        thisType: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 23
-            index: 23
-            line: 1
-          }
-          start: Object {
-            column: 12
-            index: 12
-            line: 1
-          }
-        }
-        params: Array [
-          BindingAssignmentPattern {
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 22
-                index: 22
-                line: 1
-              }
-              start: Object {
-                column: 13
-                index: 13
-                line: 1
-              }
-            }
-            right: YieldExpression {
-              argument: undefined
-              delegate: false
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 22
-                  index: 22
-                  line: 1
-                }
-                start: Object {
-                  column: 17
-                  index: 17
-                  line: 1
-                }
-              }
-            }
-            left: BindingIdentifier {
-              name: 'x'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'x'
-                end: Object {
-                  column: 14
-                  index: 14
-                  line: 1
-                }
-                start: Object {
-                  column: 13
-                  index: 13
-                  line: 1
-                }
-              }
-              meta: PatternMeta {
-                optional: undefined
-                typeAnnotation: undefined
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 14
-                    index: 14
-                    line: 1
-                  }
-                  start: Object {
-                    column: 13
-                    index: 13
-                    line: 1
-                  }
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 26
+			index: 26
+			line: 1
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "yield is not allowed in generator parameters"}
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "script"
+				end: Object {
+					column: 17
+					index: 17
+					line: 1
+				}
+				start: Object {
+					column: 17
+					index: 17
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
+				name: "fn"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "fn"
+					end: Object {
+						column: 12
+						index: 12
+						line: 1
+					}
+					start: Object {
+						column: 10
+						index: 10
+						line: 1
+					}
+				}
+			}
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 26
+					index: 26
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			body: JSBlockStatement {
+				body: Array []
+				directives: Array []
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 26
+						index: 26
+						line: 1
+					}
+					start: Object {
+						column: 24
+						index: 24
+						line: 1
+					}
+				}
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: true
+				hasHoistedVars: false
+				rest: undefined
+				returnType: undefined
+				thisType: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 23
+						index: 23
+						line: 1
+					}
+					start: Object {
+						column: 12
+						index: 12
+						line: 1
+					}
+				}
+				params: Array [
+					JSBindingAssignmentPattern {
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 22
+								index: 22
+								line: 1
+							}
+							start: Object {
+								column: 13
+								index: 13
+								line: 1
+							}
+						}
+						right: JSYieldExpression {
+							argument: undefined
+							delegate: false
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 22
+									index: 22
+									line: 1
+								}
+								start: Object {
+									column: 17
+									index: 17
+									line: 1
+								}
+							}
+						}
+						left: JSBindingIdentifier {
+							name: "x"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "x"
+								end: Object {
+									column: 14
+									index: 14
+									line: 1
+								}
+								start: Object {
+									column: 13
+									index: 13
+									line: 1
+								}
+							}
+							meta: JSPatternMeta {
+								optional: undefined
+								typeAnnotation: undefined
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 14
+										index: 14
+										line: 1
+									}
+									start: Object {
+										column: 13
+										index: 13
+										line: 1
+									}
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

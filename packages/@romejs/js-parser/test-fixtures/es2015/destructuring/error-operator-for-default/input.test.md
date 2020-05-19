@@ -5,171 +5,171 @@
 ## `es2015 > destructuring > error-operator-for-default`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 15
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'Only \'=\' operator can be used for specifying default value.'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'script'
-        end: Object {
-          column: 3
-          index: 3
-          line: 1
-        }
-        start: Object {
-          column: 2
-          index: 2
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 14
-          index: 14
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: AssignmentExpression {
-        operator: '='
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 13
-            index: 13
-            line: 1
-          }
-          start: Object {
-            column: 1
-            index: 1
-            line: 1
-          }
-        }
-        right: ReferenceIdentifier {
-          name: 'a'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'a'
-            end: Object {
-              column: 13
-              index: 13
-              line: 1
-            }
-            start: Object {
-              column: 12
-              index: 12
-              line: 1
-            }
-          }
-        }
-        left: AssignmentArrayPattern {
-          rest: undefined
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 9
-              index: 9
-              line: 1
-            }
-            start: Object {
-              column: 1
-              index: 1
-              line: 1
-            }
-          }
-          elements: Array [
-            AssignmentAssignmentPattern {
-              operator: '+='
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 8
-                  index: 8
-                  line: 1
-                }
-                start: Object {
-                  column: 2
-                  index: 2
-                  line: 1
-                }
-              }
-              left: AssignmentIdentifier {
-                name: 'a'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'a'
-                  end: Object {
-                    column: 3
-                    index: 3
-                    line: 1
-                  }
-                  start: Object {
-                    column: 2
-                    index: 2
-                    line: 1
-                  }
-                }
-              }
-              right: ReferenceIdentifier {
-                name: 'a'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'a'
-                  end: Object {
-                    column: 8
-                    index: 8
-                    line: 1
-                  }
-                  start: Object {
-                    column: 7
-                    index: 7
-                    line: 1
-                  }
-                }
-              }
-            }
-          ]
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 15
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "Only '=' operator can be used for specifying default value."}
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "script"
+				end: Object {
+					column: 3
+					index: 3
+					line: 1
+				}
+				start: Object {
+					column: 2
+					index: 2
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 14
+					index: 14
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSAssignmentExpression {
+				operator: "="
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 13
+						index: 13
+						line: 1
+					}
+					start: Object {
+						column: 1
+						index: 1
+						line: 1
+					}
+				}
+				right: JSReferenceIdentifier {
+					name: "a"
+					loc: Object {
+						filename: "input.js"
+						identifierName: "a"
+						end: Object {
+							column: 13
+							index: 13
+							line: 1
+						}
+						start: Object {
+							column: 12
+							index: 12
+							line: 1
+						}
+					}
+				}
+				left: JSAssignmentArrayPattern {
+					rest: undefined
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 9
+							index: 9
+							line: 1
+						}
+						start: Object {
+							column: 1
+							index: 1
+							line: 1
+						}
+					}
+					elements: Array [
+						JSAssignmentAssignmentPattern {
+							operator: "+="
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 8
+									index: 8
+									line: 1
+								}
+								start: Object {
+									column: 2
+									index: 2
+									line: 1
+								}
+							}
+							left: JSAssignmentIdentifier {
+								name: "a"
+								loc: Object {
+									filename: "input.js"
+									identifierName: "a"
+									end: Object {
+										column: 3
+										index: 3
+										line: 1
+									}
+									start: Object {
+										column: 2
+										index: 2
+										line: 1
+									}
+								}
+							}
+							right: JSReferenceIdentifier {
+								name: "a"
+								loc: Object {
+									filename: "input.js"
+									identifierName: "a"
+									end: Object {
+										column: 8
+										index: 8
+										line: 1
+									}
+									start: Object {
+										column: 7
+										index: 7
+										line: 1
+									}
+								}
+							}
+						}
+					]
+				}
+			}
+		}
+	]
 }
 ```

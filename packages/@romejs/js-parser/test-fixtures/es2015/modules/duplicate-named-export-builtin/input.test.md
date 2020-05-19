@@ -5,181 +5,181 @@
 ## `es2015 > modules > duplicate-named-export-builtin`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 42
-      line: 4
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    VariableDeclarationStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 19
-          index: 19
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      declaration: VariableDeclaration {
-        kind: 'const'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 19
-            index: 19
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        declarations: Array [
-          VariableDeclarator {
-            id: BindingIdentifier {
-              name: 'toString'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'toString'
-                end: Object {
-                  column: 14
-                  index: 14
-                  line: 1
-                }
-                start: Object {
-                  column: 6
-                  index: 6
-                  line: 1
-                }
-              }
-            }
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 18
-                index: 18
-                line: 1
-              }
-              start: Object {
-                column: 6
-                index: 6
-                line: 1
-              }
-            }
-            init: NumericLiteral {
-              value: 1
-              format: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 18
-                  index: 18
-                  line: 1
-                }
-                start: Object {
-                  column: 17
-                  index: 17
-                  line: 1
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-    ExportLocalDeclaration {
-      declaration: undefined
-      exportKind: 'value'
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 20
-          index: 41
-          line: 3
-        }
-        start: Object {
-          column: 0
-          index: 21
-          line: 3
-        }
-      }
-      specifiers: Array [
-        ExportLocalSpecifier {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 17
-              index: 38
-              line: 3
-            }
-            start: Object {
-              column: 9
-              index: 30
-              line: 3
-            }
-          }
-          exported: Identifier {
-            name: 'toString'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'toString'
-              end: Object {
-                column: 17
-                index: 38
-                line: 3
-              }
-              start: Object {
-                column: 9
-                index: 30
-                line: 3
-              }
-            }
-          }
-          local: ReferenceIdentifier {
-            name: 'toString'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'toString'
-              end: Object {
-                column: 17
-                index: 38
-                line: 3
-              }
-              start: Object {
-                column: 9
-                index: 30
-                line: 3
-              }
-            }
-          }
-        }
-      ]
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "module"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 42
+			line: 4
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSVariableDeclarationStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 19
+					index: 19
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			declaration: JSVariableDeclaration {
+				kind: "const"
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 19
+						index: 19
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				declarations: Array [
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
+							name: "toString"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "toString"
+								end: Object {
+									column: 14
+									index: 14
+									line: 1
+								}
+								start: Object {
+									column: 6
+									index: 6
+									line: 1
+								}
+							}
+						}
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 18
+								index: 18
+								line: 1
+							}
+							start: Object {
+								column: 6
+								index: 6
+								line: 1
+							}
+						}
+						init: JSNumericLiteral {
+							value: 1
+							format: undefined
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 18
+									index: 18
+									line: 1
+								}
+								start: Object {
+									column: 17
+									index: 17
+									line: 1
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+		JSExportLocalDeclaration {
+			declaration: undefined
+			exportKind: "value"
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 20
+					index: 41
+					line: 3
+				}
+				start: Object {
+					column: 0
+					index: 21
+					line: 3
+				}
+			}
+			specifiers: Array [
+				JSExportLocalSpecifier {
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 17
+							index: 38
+							line: 3
+						}
+						start: Object {
+							column: 9
+							index: 30
+							line: 3
+						}
+					}
+					exported: JSIdentifier {
+						name: "toString"
+						loc: Object {
+							filename: "input.js"
+							identifierName: "toString"
+							end: Object {
+								column: 17
+								index: 38
+								line: 3
+							}
+							start: Object {
+								column: 9
+								index: 30
+								line: 3
+							}
+						}
+					}
+					local: JSReferenceIdentifier {
+						name: "toString"
+						loc: Object {
+							filename: "input.js"
+							identifierName: "toString"
+							end: Object {
+								column: 17
+								index: 38
+								line: 3
+							}
+							start: Object {
+								column: 9
+								index: 30
+								line: 3
+							}
+						}
+					}
+				}
+			]
+		}
+	]
 }
 ```

@@ -5,229 +5,227 @@
 ## `es2015 > uncategorised > 375`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 26
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  diagnostics: Array [
-    Object {
-      origins: Array [Object {category: 'js-parser'}]
-      description: Object {
-        advice: Array []
-        category: 'parse/js'
-        message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: 'enum is a reserved word'}
-      }
-      location: Object {
-        filename: 'input.js'
-        mtime: undefined
-        sourceType: 'module'
-        end: Object {
-          column: 19
-          index: 19
-          line: 1
-        }
-        start: Object {
-          column: 15
-          index: 15
-          line: 1
-        }
-      }
-    }
-  ]
-  body: Array [
-    FunctionDeclaration {
-      id: BindingIdentifier {
-        name: 'foo'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'foo'
-          end: Object {
-            column: 12
-            index: 12
-            line: 1
-          }
-          start: Object {
-            column: 9
-            index: 9
-            line: 1
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 25
-          index: 25
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      body: BlockStatement {
-        body: Array []
-        directives: Array []
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 25
-            index: 25
-            line: 1
-          }
-          start: Object {
-            column: 23
-            index: 23
-            line: 1
-          }
-        }
-      }
-      head: FunctionHead {
-        async: false
-        generator: false
-        hasHoistedVars: false
-        predicate: undefined
-        rest: undefined
-        returnType: undefined
-        thisType: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 22
-            index: 22
-            line: 1
-          }
-          start: Object {
-            column: 12
-            index: 12
-            line: 1
-          }
-        }
-        params: Array [
-          BindingObjectPattern {
-            rest: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 21
-                index: 21
-                line: 1
-              }
-              start: Object {
-                column: 13
-                index: 13
-                line: 1
-              }
-            }
-            meta: PatternMeta {
-              optional: undefined
-              typeAnnotation: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 21
-                  index: 21
-                  line: 1
-                }
-                start: Object {
-                  column: 13
-                  index: 13
-                  line: 1
-                }
-              }
-            }
-            properties: Array [
-              BindingObjectPatternProperty {
-                key: StaticPropertyKey {
-                  value: Identifier {
-                    name: 'enum'
-                    loc: Object {
-                      filename: 'input.js'
-                      identifierName: 'enum'
-                      end: Object {
-                        column: 19
-                        index: 19
-                        line: 1
-                      }
-                      start: Object {
-                        column: 15
-                        index: 15
-                        line: 1
-                      }
-                    }
-                  }
-                  variance: undefined
-                  loc: Object {
-                    filename: 'input.js'
-                    end: Object {
-                      column: 19
-                      index: 19
-                      line: 1
-                    }
-                    start: Object {
-                      column: 15
-                      index: 15
-                      line: 1
-                    }
-                  }
-                }
-                value: BindingIdentifier {
-                  name: 'enum'
-                  loc: Object {
-                    filename: 'input.js'
-                    identifierName: 'enum'
-                    end: Object {
-                      column: 19
-                      index: 19
-                      line: 1
-                    }
-                    start: Object {
-                      column: 15
-                      index: 15
-                      line: 1
-                    }
-                  }
-                }
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 19
-                    index: 19
-                    line: 1
-                  }
-                  start: Object {
-                    column: 15
-                    index: 15
-                    line: 1
-                  }
-                }
-              }
-            ]
-          }
-        ]
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "module"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 26
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	diagnostics: Array [
+		Object {
+			origins: Array [Object {category: "js-parser"}]
+			description: Object {
+				advice: Array []
+				category: "parse/js"
+				message: PARTIAL_BLESSED_DIAGNOSTIC_MESSAGE {value: "enum is a reserved word"}
+			}
+			location: Object {
+				filename: "input.js"
+				mtime: undefined
+				sourceType: "module"
+				end: Object {
+					column: 19
+					index: 19
+					line: 1
+				}
+				start: Object {
+					column: 15
+					index: 15
+					line: 1
+				}
+			}
+		}
+	]
+	body: Array [
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
+				name: "foo"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "foo"
+					end: Object {
+						column: 12
+						index: 12
+						line: 1
+					}
+					start: Object {
+						column: 9
+						index: 9
+						line: 1
+					}
+				}
+			}
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 25
+					index: 25
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			body: JSBlockStatement {
+				body: Array []
+				directives: Array []
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 25
+						index: 25
+						line: 1
+					}
+					start: Object {
+						column: 23
+						index: 23
+						line: 1
+					}
+				}
+			}
+			head: JSFunctionHead {
+				async: false
+				generator: false
+				hasHoistedVars: false
+				rest: undefined
+				returnType: undefined
+				thisType: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 22
+						index: 22
+						line: 1
+					}
+					start: Object {
+						column: 12
+						index: 12
+						line: 1
+					}
+				}
+				params: Array [
+					JSBindingObjectPattern {
+						rest: undefined
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 21
+								index: 21
+								line: 1
+							}
+							start: Object {
+								column: 13
+								index: 13
+								line: 1
+							}
+						}
+						meta: JSPatternMeta {
+							optional: undefined
+							typeAnnotation: undefined
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 21
+									index: 21
+									line: 1
+								}
+								start: Object {
+									column: 13
+									index: 13
+									line: 1
+								}
+							}
+						}
+						properties: Array [
+							JSBindingObjectPatternProperty {
+								key: JSStaticPropertyKey {
+									value: JSIdentifier {
+										name: "enum"
+										loc: Object {
+											filename: "input.js"
+											identifierName: "enum"
+											end: Object {
+												column: 19
+												index: 19
+												line: 1
+											}
+											start: Object {
+												column: 15
+												index: 15
+												line: 1
+											}
+										}
+									}
+									loc: Object {
+										filename: "input.js"
+										end: Object {
+											column: 19
+											index: 19
+											line: 1
+										}
+										start: Object {
+											column: 15
+											index: 15
+											line: 1
+										}
+									}
+								}
+								value: JSBindingIdentifier {
+									name: "enum"
+									loc: Object {
+										filename: "input.js"
+										identifierName: "enum"
+										end: Object {
+											column: 19
+											index: 19
+											line: 1
+										}
+										start: Object {
+											column: 15
+											index: 15
+											line: 1
+										}
+									}
+								}
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 19
+										index: 19
+										line: 1
+									}
+									start: Object {
+										column: 15
+										index: 15
+										line: 1
+									}
+								}
+							}
+						]
+					}
+				]
+			}
+		}
+	]
 }
 ```

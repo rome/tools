@@ -5,73 +5,73 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {StructuredError} from '@romejs/v8';
-import {JSONObject} from '@romejs/codec-json';
+import {StructuredError} from "@romejs/v8";
+import {JSONObject} from "@romejs/codec-json";
 
 export type BridgeCreatorOptions = {
-  type: BridgeType;
-  onSendMessage?: (msg: BridgeMessage) => void;
+	type: BridgeType;
+	onSendMessage?: (msg: BridgeMessage) => void;
 };
 
-export type BridgeType = 'server' | 'client' | 'server&client';
+export type BridgeType = "server" | "client" | "server&client";
 
 export type BridgeOptions = BridgeCreatorOptions & {
-  sendMessage: (msg: BridgeMessage) => void;
+	sendMessage: (msg: BridgeMessage) => void;
 };
 
 export type EventOptions = {
-  name: string;
-  onError?: (err: Error) => void;
-  unique?: boolean;
-  serial?: boolean;
+	name: string;
+	onError?: (err: Error) => void;
+	unique?: boolean;
+	serial?: boolean;
 };
 
 export type EventSubscription = {
-  unsubscribe: () => void;
+	unsubscribe: () => void;
 };
 
 export type BridgeHandshakeMessage = {
-  type: 'handshake';
-  first: boolean;
-  subscriptions: Array<string>;
+	type: "handshake";
+	first: boolean;
+	subscriptions: Array<string>;
 };
 
 export type BridgeSubscriptionsMessage = {
-  type: 'subscriptions';
-  names: Array<string>;
+	type: "subscriptions";
+	names: Array<string>;
 };
 
 export type BridgeRequestMessage = {
-  id?: number;
-  event: string;
-  param: unknown;
-  type: 'request';
-  priority: boolean;
+	id?: number;
+	event: string;
+	param: unknown;
+	type: "request";
+	priority: boolean;
 };
 
 export type BridgeSuccessResponseMessage = {
-  id: number;
-  event: string;
-  value: unknown;
-  type: 'response';
-  responseStatus: 'success';
+	id: number;
+	event: string;
+	value: unknown;
+	type: "response";
+	responseStatus: "success";
 };
 
 export type BridgeErrorResponseMessage = {
-  id: number;
-  event: string;
-  type: 'response';
-  responseStatus: 'error';
-  value: StructuredError;
-  metadata: JSONObject;
+	id: number;
+	event: string;
+	type: "response";
+	responseStatus: "error";
+	value: StructuredError;
+	metadata: JSONObject;
 };
 
 export type BridgeResponseMessage =
-  | BridgeSuccessResponseMessage
-  | BridgeErrorResponseMessage;
+	| BridgeSuccessResponseMessage
+	| BridgeErrorResponseMessage;
 
 export type BridgeMessage =
-  | BridgeHandshakeMessage
-  | BridgeSubscriptionsMessage
-  | BridgeRequestMessage
-  | BridgeResponseMessage;
+	| BridgeHandshakeMessage
+	| BridgeSubscriptionsMessage
+	| BridgeRequestMessage
+	| BridgeResponseMessage;

@@ -5,66 +5,66 @@
 ## `typescript > enum > declare`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.ts'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'module'
-  syntax: Array ['ts']
-  loc: Object {
-    filename: 'input.ts'
-    end: Object {
-      column: 17
-      index: 17
-      line: 1
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    TSEnumDeclaration {
-      id: BindingIdentifier {
-        name: 'E'
-        loc: Object {
-          filename: 'input.ts'
-          identifierName: 'E'
-          end: Object {
-            column: 14
-            index: 14
-            line: 1
-          }
-          start: Object {
-            column: 13
-            index: 13
-            line: 1
-          }
-        }
-      }
-      const: false
-      declare: true
-      members: Array []
-      loc: Object {
-        filename: 'input.ts'
-        end: Object {
-          column: 17
-          index: 17
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.ts"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "module"
+	syntax: Array ["ts"]
+	loc: Object {
+		filename: "input.ts"
+		end: Object {
+			column: 0
+			index: 18
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		TSEnumDeclaration {
+			id: JSBindingIdentifier {
+				name: "E"
+				loc: Object {
+					filename: "input.ts"
+					identifierName: "E"
+					end: Object {
+						column: 14
+						index: 14
+						line: 1
+					}
+					start: Object {
+						column: 13
+						index: 13
+						line: 1
+					}
+				}
+			}
+			const: false
+			declare: true
+			members: Array []
+			loc: Object {
+				filename: "input.ts"
+				end: Object {
+					column: 17
+					index: 17
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+		}
+	]
 }
 ```

@@ -5,202 +5,201 @@
 ## `core > categorized > 06-regex`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 25
-      line: 2
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 24
-          index: 24
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: BinaryExpression {
-        operator: '/'
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 23
-            index: 23
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        right: ReferenceIdentifier {
-          name: 'i'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'i'
-            end: Object {
-              column: 23
-              index: 23
-              line: 1
-            }
-            start: Object {
-              column: 22
-              index: 22
-              line: 1
-            }
-          }
-        }
-        left: BinaryExpression {
-          operator: '/'
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 21
-              index: 21
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-          right: NumericLiteral {
-            value: 42
-            format: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 21
-                index: 21
-                line: 1
-              }
-              start: Object {
-                column: 19
-                index: 19
-                line: 1
-              }
-            }
-          }
-          left: UnaryExpression {
-            operator: '!'
-            prefix: true
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 17
-                index: 17
-                line: 1
-              }
-              start: Object {
-                column: 0
-                index: 0
-                line: 1
-              }
-            }
-            argument: FunctionExpression {
-              id: BindingIdentifier {
-                name: 'fn'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'fn'
-                  end: Object {
-                    column: 12
-                    index: 12
-                    line: 1
-                  }
-                  start: Object {
-                    column: 10
-                    index: 10
-                    line: 1
-                  }
-                }
-              }
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 17
-                  index: 17
-                  line: 1
-                }
-                start: Object {
-                  column: 1
-                  index: 1
-                  line: 1
-                }
-              }
-              body: BlockStatement {
-                body: Array []
-                directives: Array []
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 17
-                    index: 17
-                    line: 1
-                  }
-                  start: Object {
-                    column: 15
-                    index: 15
-                    line: 1
-                  }
-                }
-              }
-              head: FunctionHead {
-                async: false
-                generator: false
-                hasHoistedVars: false
-                params: Array []
-                predicate: undefined
-                rest: undefined
-                returnType: undefined
-                thisType: undefined
-                typeParameters: undefined
-                loc: Object {
-                  filename: 'input.js'
-                  end: Object {
-                    column: 14
-                    index: 14
-                    line: 1
-                  }
-                  start: Object {
-                    column: 12
-                    index: 12
-                    line: 1
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 25
+			line: 2
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 24
+					index: 24
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSBinaryExpression {
+				operator: "/"
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 23
+						index: 23
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				right: JSReferenceIdentifier {
+					name: "i"
+					loc: Object {
+						filename: "input.js"
+						identifierName: "i"
+						end: Object {
+							column: 23
+							index: 23
+							line: 1
+						}
+						start: Object {
+							column: 22
+							index: 22
+							line: 1
+						}
+					}
+				}
+				left: JSBinaryExpression {
+					operator: "/"
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 21
+							index: 21
+							line: 1
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+					right: JSNumericLiteral {
+						value: 42
+						format: undefined
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 21
+								index: 21
+								line: 1
+							}
+							start: Object {
+								column: 19
+								index: 19
+								line: 1
+							}
+						}
+					}
+					left: JSUnaryExpression {
+						operator: "!"
+						prefix: true
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 17
+								index: 17
+								line: 1
+							}
+							start: Object {
+								column: 0
+								index: 0
+								line: 1
+							}
+						}
+						argument: JSFunctionExpression {
+							id: JSBindingIdentifier {
+								name: "fn"
+								loc: Object {
+									filename: "input.js"
+									identifierName: "fn"
+									end: Object {
+										column: 12
+										index: 12
+										line: 1
+									}
+									start: Object {
+										column: 10
+										index: 10
+										line: 1
+									}
+								}
+							}
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 17
+									index: 17
+									line: 1
+								}
+								start: Object {
+									column: 1
+									index: 1
+									line: 1
+								}
+							}
+							body: JSBlockStatement {
+								body: Array []
+								directives: Array []
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 17
+										index: 17
+										line: 1
+									}
+									start: Object {
+										column: 15
+										index: 15
+										line: 1
+									}
+								}
+							}
+							head: JSFunctionHead {
+								async: false
+								generator: false
+								hasHoistedVars: false
+								params: Array []
+								rest: undefined
+								returnType: undefined
+								thisType: undefined
+								typeParameters: undefined
+								loc: Object {
+									filename: "input.js"
+									end: Object {
+										column: 14
+										index: 14
+										line: 1
+									}
+									start: Object {
+										column: 12
+										index: 12
+										line: 1
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```

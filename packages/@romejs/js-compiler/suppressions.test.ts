@@ -5,28 +5,28 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {test} from 'rome';
-import {extractSuppressionsFromProgram} from './suppressions';
-import CompilerContext from './lib/CompilerContext';
-import {parseJS} from '@romejs/js-parser';
-import {dedent} from '@romejs/string-utils';
+import {test} from "rome";
+import {extractSuppressionsFromProgram} from "./suppressions";
+import CompilerContext from "./lib/CompilerContext";
+import {parseJS} from "@romejs/js-parser";
+import {dedent} from "@romejs/string-utils";
 
 function extractSuppressionsFromSource(sourceText: string) {
-  const ast = parseJS({
-    sourceType: 'script',
-    path: 'unknown',
-    input: sourceText,
-  });
-  const context = new CompilerContext({ast});
-  return extractSuppressionsFromProgram(context, ast);
+	const ast = parseJS({
+		sourceType: "script",
+		path: "unknown",
+		input: sourceText,
+	});
+	const context = new CompilerContext({ast});
+	return extractSuppressionsFromProgram(context, ast);
 }
 
 test(
-  'single category',
-  async (t) => {
-    t.snapshot(
-      extractSuppressionsFromSource(
-        dedent`
+	"single category",
+	async (t) => {
+		t.snapshot(
+			extractSuppressionsFromSource(
+				dedent`
       // rome-ignore foo
       foo();
 
@@ -44,17 +44,17 @@ test(
        */
       wow();
     `,
-      ),
-    );
-  },
+			),
+		);
+	},
 );
 
 test(
-  'multiple categories',
-  async (t) => {
-    t.snapshot(
-      extractSuppressionsFromSource(
-        dedent`
+	"multiple categories",
+	async (t) => {
+		t.snapshot(
+			extractSuppressionsFromSource(
+				dedent`
       // rome-ignore foo dog
       foo();
 
@@ -72,24 +72,24 @@ test(
        */
       wow();
     `,
-      ),
-    );
-  },
+			),
+		);
+	},
 );
 
 test(
-  'duplicates',
-  async (t) => {
-    t.snapshot(
-      extractSuppressionsFromSource(
-        dedent`
+	"duplicates",
+	async (t) => {
+		t.snapshot(
+			extractSuppressionsFromSource(
+				dedent`
       // rome-ignore dog dog
       foo();
 
       // rome-ignore dog cat dog
       bar();
     `,
-      ),
-    );
-  },
+			),
+		);
+	},
 );

@@ -5,10 +5,10 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export * from './identifier';
+export * from "./identifier";
 
-export * from './location';
+export * from "./location";
 
-export * from './regex';
+export * from "./regex";
 
-export * from './whitespace';
+export * from "./whitespace";

@@ -5,484 +5,479 @@
 ## `experimental > class-properties > asi-success`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 0
-      index: 54
-      line: 10
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ClassDeclaration {
-      id: BindingIdentifier {
-        name: 'Foo'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'Foo'
-          end: Object {
-            column: 9
-            index: 9
-            line: 1
-          }
-          start: Object {
-            column: 6
-            index: 6
-            line: 1
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 1
-          index: 21
-          line: 4
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      meta: ClassHead {
-        implements: undefined
-        superClass: undefined
-        superTypeParameters: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 1
-            index: 21
-            line: 4
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        body: Array [
-          ClassProperty {
-            key: StaticPropertyKey {
-              value: Identifier {
-                name: 'x'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'x'
-                  end: Object {
-                    column: 3
-                    index: 15
-                    line: 2
-                  }
-                  start: Object {
-                    column: 2
-                    index: 14
-                    line: 2
-                  }
-                }
-              }
-              variance: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 3
-                  index: 15
-                  line: 2
-                }
-                start: Object {
-                  column: 2
-                  index: 14
-                  line: 2
-                }
-              }
-            }
-            value: undefined
-            definite: undefined
-            typeAnnotation: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 3
-                index: 15
-                line: 2
-              }
-              start: Object {
-                column: 2
-                index: 14
-                line: 2
-              }
-            }
-            meta: ClassPropertyMeta {
-              abstract: false
-              accessibility: undefined
-              optional: false
-              readonly: false
-              static: false
-              typeAnnotation: undefined
-              start: Object {
-                column: 2
-                index: 14
-                line: 2
-              }
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 3
-                  index: 15
-                  line: 2
-                }
-                start: Object {
-                  column: 2
-                  index: 14
-                  line: 2
-                }
-              }
-            }
-          }
-          ClassProperty {
-            key: StaticPropertyKey {
-              value: Identifier {
-                name: 'y'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'y'
-                  end: Object {
-                    column: 3
-                    index: 19
-                    line: 3
-                  }
-                  start: Object {
-                    column: 2
-                    index: 18
-                    line: 3
-                  }
-                }
-              }
-              variance: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 3
-                  index: 19
-                  line: 3
-                }
-                start: Object {
-                  column: 2
-                  index: 18
-                  line: 3
-                }
-              }
-            }
-            value: undefined
-            definite: undefined
-            typeAnnotation: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 3
-                index: 19
-                line: 3
-              }
-              start: Object {
-                column: 2
-                index: 18
-                line: 3
-              }
-            }
-            meta: ClassPropertyMeta {
-              abstract: false
-              accessibility: undefined
-              optional: false
-              readonly: false
-              static: false
-              typeAnnotation: undefined
-              start: Object {
-                column: 2
-                index: 18
-                line: 3
-              }
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 3
-                  index: 19
-                  line: 3
-                }
-                start: Object {
-                  column: 2
-                  index: 18
-                  line: 3
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-    ClassDeclaration {
-      id: BindingIdentifier {
-        name: 'Foo2'
-        loc: Object {
-          filename: 'input.js'
-          identifierName: 'Foo2'
-          end: Object {
-            column: 10
-            index: 33
-            line: 6
-          }
-          start: Object {
-            column: 6
-            index: 29
-            line: 6
-          }
-        }
-      }
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 1
-          index: 53
-          line: 9
-        }
-        start: Object {
-          column: 0
-          index: 23
-          line: 6
-        }
-      }
-      meta: ClassHead {
-        implements: undefined
-        superClass: undefined
-        superTypeParameters: undefined
-        typeParameters: undefined
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 1
-            index: 53
-            line: 9
-          }
-          start: Object {
-            column: 0
-            index: 23
-            line: 6
-          }
-        }
-        body: Array [
-          ClassProperty {
-            key: StaticPropertyKey {
-              value: Identifier {
-                name: 'p'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'p'
-                  end: Object {
-                    column: 3
-                    index: 39
-                    line: 7
-                  }
-                  start: Object {
-                    column: 2
-                    index: 38
-                    line: 7
-                  }
-                }
-              }
-              variance: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 3
-                  index: 39
-                  line: 7
-                }
-                start: Object {
-                  column: 2
-                  index: 38
-                  line: 7
-                }
-              }
-            }
-            value: undefined
-            definite: undefined
-            typeAnnotation: undefined
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 3
-                index: 39
-                line: 7
-              }
-              start: Object {
-                column: 2
-                index: 38
-                line: 7
-              }
-            }
-            meta: ClassPropertyMeta {
-              abstract: false
-              accessibility: undefined
-              optional: false
-              readonly: false
-              static: false
-              typeAnnotation: undefined
-              start: Object {
-                column: 2
-                index: 38
-                line: 7
-              }
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 3
-                  index: 39
-                  line: 7
-                }
-                start: Object {
-                  column: 2
-                  index: 38
-                  line: 7
-                }
-              }
-            }
-          }
-          ClassMethod {
-            kind: 'method'
-            key: ComputedPropertyKey {
-              value: ReferenceIdentifier {
-                name: 'm'
-                loc: Object {
-                  filename: 'input.js'
-                  identifierName: 'm'
-                  end: Object {
-                    column: 4
-                    index: 44
-                    line: 8
-                  }
-                  start: Object {
-                    column: 3
-                    index: 43
-                    line: 8
-                  }
-                }
-              }
-              variance: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 5
-                  index: 45
-                  line: 8
-                }
-                start: Object {
-                  column: 2
-                  index: 42
-                  line: 8
-                }
-              }
-            }
-            loc: Object {
-              filename: 'input.js'
-              end: Object {
-                column: 11
-                index: 51
-                line: 8
-              }
-              start: Object {
-                column: 2
-                index: 42
-                line: 8
-              }
-            }
-            body: BlockStatement {
-              body: Array []
-              directives: Array []
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 11
-                  index: 51
-                  line: 8
-                }
-                start: Object {
-                  column: 9
-                  index: 49
-                  line: 8
-                }
-              }
-            }
-            head: FunctionHead {
-              async: false
-              generator: false
-              hasHoistedVars: false
-              params: Array []
-              predicate: undefined
-              rest: undefined
-              returnType: undefined
-              thisType: undefined
-              typeParameters: undefined
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 8
-                  index: 48
-                  line: 8
-                }
-                start: Object {
-                  column: 6
-                  index: 46
-                  line: 8
-                }
-              }
-            }
-            meta: ClassPropertyMeta {
-              abstract: false
-              accessibility: undefined
-              optional: false
-              readonly: false
-              static: false
-              typeAnnotation: undefined
-              start: Object {
-                column: 2
-                index: 42
-                line: 8
-              }
-              loc: Object {
-                filename: 'input.js'
-                end: Object {
-                  column: 5
-                  index: 45
-                  line: 8
-                }
-                start: Object {
-                  column: 2
-                  index: 42
-                  line: 8
-                }
-              }
-            }
-          }
-        ]
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 0
+			index: 54
+			line: 10
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
+				name: "Foo"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "Foo"
+					end: Object {
+						column: 9
+						index: 9
+						line: 1
+					}
+					start: Object {
+						column: 6
+						index: 6
+						line: 1
+					}
+				}
+			}
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 1
+					index: 21
+					line: 4
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			meta: JSClassHead {
+				implements: undefined
+				superClass: undefined
+				superTypeParameters: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 1
+						index: 21
+						line: 4
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				body: Array [
+					JSClassProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
+								name: "x"
+								loc: Object {
+									filename: "input.js"
+									identifierName: "x"
+									end: Object {
+										column: 3
+										index: 15
+										line: 2
+									}
+									start: Object {
+										column: 2
+										index: 14
+										line: 2
+									}
+								}
+							}
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 3
+									index: 15
+									line: 2
+								}
+								start: Object {
+									column: 2
+									index: 14
+									line: 2
+								}
+							}
+						}
+						value: undefined
+						definite: undefined
+						typeAnnotation: undefined
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 3
+								index: 15
+								line: 2
+							}
+							start: Object {
+								column: 2
+								index: 14
+								line: 2
+							}
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							start: Object {
+								column: 2
+								index: 14
+								line: 2
+							}
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 3
+									index: 15
+									line: 2
+								}
+								start: Object {
+									column: 2
+									index: 14
+									line: 2
+								}
+							}
+						}
+					}
+					JSClassProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
+								name: "y"
+								loc: Object {
+									filename: "input.js"
+									identifierName: "y"
+									end: Object {
+										column: 3
+										index: 19
+										line: 3
+									}
+									start: Object {
+										column: 2
+										index: 18
+										line: 3
+									}
+								}
+							}
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 3
+									index: 19
+									line: 3
+								}
+								start: Object {
+									column: 2
+									index: 18
+									line: 3
+								}
+							}
+						}
+						value: undefined
+						definite: undefined
+						typeAnnotation: undefined
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 3
+								index: 19
+								line: 3
+							}
+							start: Object {
+								column: 2
+								index: 18
+								line: 3
+							}
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							start: Object {
+								column: 2
+								index: 18
+								line: 3
+							}
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 3
+									index: 19
+									line: 3
+								}
+								start: Object {
+									column: 2
+									index: 18
+									line: 3
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
+				name: "Foo2"
+				loc: Object {
+					filename: "input.js"
+					identifierName: "Foo2"
+					end: Object {
+						column: 10
+						index: 33
+						line: 6
+					}
+					start: Object {
+						column: 6
+						index: 29
+						line: 6
+					}
+				}
+			}
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 1
+					index: 53
+					line: 9
+				}
+				start: Object {
+					column: 0
+					index: 23
+					line: 6
+				}
+			}
+			meta: JSClassHead {
+				implements: undefined
+				superClass: undefined
+				superTypeParameters: undefined
+				typeParameters: undefined
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 1
+						index: 53
+						line: 9
+					}
+					start: Object {
+						column: 0
+						index: 23
+						line: 6
+					}
+				}
+				body: Array [
+					JSClassProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
+								name: "p"
+								loc: Object {
+									filename: "input.js"
+									identifierName: "p"
+									end: Object {
+										column: 3
+										index: 39
+										line: 7
+									}
+									start: Object {
+										column: 2
+										index: 38
+										line: 7
+									}
+								}
+							}
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 3
+									index: 39
+									line: 7
+								}
+								start: Object {
+									column: 2
+									index: 38
+									line: 7
+								}
+							}
+						}
+						value: undefined
+						definite: undefined
+						typeAnnotation: undefined
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 3
+								index: 39
+								line: 7
+							}
+							start: Object {
+								column: 2
+								index: 38
+								line: 7
+							}
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							start: Object {
+								column: 2
+								index: 38
+								line: 7
+							}
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 3
+									index: 39
+									line: 7
+								}
+								start: Object {
+									column: 2
+									index: 38
+									line: 7
+								}
+							}
+						}
+					}
+					JSClassMethod {
+						kind: "method"
+						key: JSComputedPropertyKey {
+							value: JSReferenceIdentifier {
+								name: "m"
+								loc: Object {
+									filename: "input.js"
+									identifierName: "m"
+									end: Object {
+										column: 4
+										index: 44
+										line: 8
+									}
+									start: Object {
+										column: 3
+										index: 43
+										line: 8
+									}
+								}
+							}
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 5
+									index: 45
+									line: 8
+								}
+								start: Object {
+									column: 2
+									index: 42
+									line: 8
+								}
+							}
+						}
+						loc: Object {
+							filename: "input.js"
+							end: Object {
+								column: 11
+								index: 51
+								line: 8
+							}
+							start: Object {
+								column: 2
+								index: 42
+								line: 8
+							}
+						}
+						body: JSBlockStatement {
+							body: Array []
+							directives: Array []
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 11
+									index: 51
+									line: 8
+								}
+								start: Object {
+									column: 9
+									index: 49
+									line: 8
+								}
+							}
+						}
+						head: JSFunctionHead {
+							async: false
+							generator: false
+							hasHoistedVars: false
+							params: Array []
+							rest: undefined
+							returnType: undefined
+							thisType: undefined
+							typeParameters: undefined
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 8
+									index: 48
+									line: 8
+								}
+								start: Object {
+									column: 6
+									index: 46
+									line: 8
+								}
+							}
+						}
+						meta: JSClassPropertyMeta {
+							abstract: false
+							accessibility: undefined
+							optional: false
+							readonly: false
+							static: false
+							typeAnnotation: undefined
+							start: Object {
+								column: 2
+								index: 42
+								line: 8
+							}
+							loc: Object {
+								filename: "input.js"
+								end: Object {
+									column: 5
+									index: 45
+									line: 8
+								}
+								start: Object {
+									column: 2
+									index: 42
+									line: 8
+								}
+							}
+						}
+					}
+				]
+			}
+		}
+	]
 }
 ```

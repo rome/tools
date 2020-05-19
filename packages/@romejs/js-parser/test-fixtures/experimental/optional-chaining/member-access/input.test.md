@@ -5,371 +5,371 @@
 ## `experimental > optional-chaining > member-access`
 
 ```javascript
-Program {
-  comments: Array []
-  corrupt: false
-  diagnostics: Array []
-  directives: Array []
-  filename: 'input.js'
-  hasHoistedVars: false
-  interpreter: undefined
-  mtime: undefined
-  sourceType: 'script'
-  syntax: Array []
-  loc: Object {
-    filename: 'input.js'
-    end: Object {
-      column: 12
-      index: 37
-      line: 5
-    }
-    start: Object {
-      column: 0
-      index: 0
-      line: 1
-    }
-  }
-  body: Array [
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 8
-          index: 8
-          line: 1
-        }
-        start: Object {
-          column: 0
-          index: 0
-          line: 1
-        }
-      }
-      expression: MemberExpression {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 8
-            index: 8
-            line: 1
-          }
-          start: Object {
-            column: 0
-            index: 0
-            line: 1
-          }
-        }
-        object: ReferenceIdentifier {
-          name: 'foo'
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'foo'
-            end: Object {
-              column: 3
-              index: 3
-              line: 1
-            }
-            start: Object {
-              column: 0
-              index: 0
-              line: 1
-            }
-          }
-        }
-        property: StaticMemberProperty {
-          value: Identifier {
-            name: 'bar'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'bar'
-              end: Object {
-                column: 8
-                index: 8
-                line: 1
-              }
-              start: Object {
-                column: 5
-                index: 5
-                line: 1
-              }
-            }
-          }
-          optional: true
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'bar'
-            end: Object {
-              column: 8
-              index: 8
-              line: 1
-            }
-            start: Object {
-              column: 5
-              index: 5
-              line: 1
-            }
-          }
-        }
-      }
-    }
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 13
-          index: 23
-          line: 3
-        }
-        start: Object {
-          column: 0
-          index: 10
-          line: 3
-        }
-      }
-      expression: MemberExpression {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 13
-            index: 23
-            line: 3
-          }
-          start: Object {
-            column: 0
-            index: 10
-            line: 3
-          }
-        }
-        property: StaticMemberProperty {
-          value: Identifier {
-            name: 'baz'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'baz'
-              end: Object {
-                column: 13
-                index: 23
-                line: 3
-              }
-              start: Object {
-                column: 10
-                index: 20
-                line: 3
-              }
-            }
-          }
-          optional: true
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'baz'
-            end: Object {
-              column: 13
-              index: 23
-              line: 3
-            }
-            start: Object {
-              column: 10
-              index: 20
-              line: 3
-            }
-          }
-        }
-        object: MemberExpression {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 8
-              index: 18
-              line: 3
-            }
-            start: Object {
-              column: 0
-              index: 10
-              line: 3
-            }
-          }
-          object: ReferenceIdentifier {
-            name: 'foo'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'foo'
-              end: Object {
-                column: 3
-                index: 13
-                line: 3
-              }
-              start: Object {
-                column: 0
-                index: 10
-                line: 3
-              }
-            }
-          }
-          property: StaticMemberProperty {
-            value: Identifier {
-              name: 'bar'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'bar'
-                end: Object {
-                  column: 8
-                  index: 18
-                  line: 3
-                }
-                start: Object {
-                  column: 5
-                  index: 15
-                  line: 3
-                }
-              }
-            }
-            optional: true
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'bar'
-              end: Object {
-                column: 8
-                index: 18
-                line: 3
-              }
-              start: Object {
-                column: 5
-                index: 15
-                line: 3
-              }
-            }
-          }
-        }
-      }
-    }
-    ExpressionStatement {
-      loc: Object {
-        filename: 'input.js'
-        end: Object {
-          column: 12
-          index: 37
-          line: 5
-        }
-        start: Object {
-          column: 0
-          index: 25
-          line: 5
-        }
-      }
-      expression: MemberExpression {
-        loc: Object {
-          filename: 'input.js'
-          end: Object {
-            column: 12
-            index: 37
-            line: 5
-          }
-          start: Object {
-            column: 0
-            index: 25
-            line: 5
-          }
-        }
-        property: StaticMemberProperty {
-          value: Identifier {
-            name: 'baz'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'baz'
-              end: Object {
-                column: 12
-                index: 37
-                line: 5
-              }
-              start: Object {
-                column: 9
-                index: 34
-                line: 5
-              }
-            }
-          }
-          optional: true
-          loc: Object {
-            filename: 'input.js'
-            identifierName: 'baz'
-            end: Object {
-              column: 12
-              index: 37
-              line: 5
-            }
-            start: Object {
-              column: 9
-              index: 34
-              line: 5
-            }
-          }
-        }
-        object: MemberExpression {
-          loc: Object {
-            filename: 'input.js'
-            end: Object {
-              column: 7
-              index: 32
-              line: 5
-            }
-            start: Object {
-              column: 0
-              index: 25
-              line: 5
-            }
-          }
-          object: ReferenceIdentifier {
-            name: 'foo'
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'foo'
-              end: Object {
-                column: 3
-                index: 28
-                line: 5
-              }
-              start: Object {
-                column: 0
-                index: 25
-                line: 5
-              }
-            }
-          }
-          property: StaticMemberProperty {
-            value: Identifier {
-              name: 'bar'
-              loc: Object {
-                filename: 'input.js'
-                identifierName: 'bar'
-                end: Object {
-                  column: 7
-                  index: 32
-                  line: 5
-                }
-                start: Object {
-                  column: 4
-                  index: 29
-                  line: 5
-                }
-              }
-            }
-            loc: Object {
-              filename: 'input.js'
-              identifierName: 'bar'
-              end: Object {
-                column: 7
-                index: 32
-                line: 5
-              }
-              start: Object {
-                column: 4
-                index: 29
-                line: 5
-              }
-            }
-          }
-        }
-      }
-    }
-  ]
+JSProgram {
+	comments: Array []
+	corrupt: false
+	diagnostics: Array []
+	directives: Array []
+	filename: "input.js"
+	hasHoistedVars: false
+	interpreter: undefined
+	mtime: undefined
+	sourceType: "script"
+	syntax: Array []
+	loc: Object {
+		filename: "input.js"
+		end: Object {
+			column: 12
+			index: 37
+			line: 5
+		}
+		start: Object {
+			column: 0
+			index: 0
+			line: 1
+		}
+	}
+	body: Array [
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 8
+					index: 8
+					line: 1
+				}
+				start: Object {
+					column: 0
+					index: 0
+					line: 1
+				}
+			}
+			expression: JSMemberExpression {
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 8
+						index: 8
+						line: 1
+					}
+					start: Object {
+						column: 0
+						index: 0
+						line: 1
+					}
+				}
+				object: JSReferenceIdentifier {
+					name: "foo"
+					loc: Object {
+						filename: "input.js"
+						identifierName: "foo"
+						end: Object {
+							column: 3
+							index: 3
+							line: 1
+						}
+						start: Object {
+							column: 0
+							index: 0
+							line: 1
+						}
+					}
+				}
+				property: JSStaticMemberProperty {
+					value: JSIdentifier {
+						name: "bar"
+						loc: Object {
+							filename: "input.js"
+							identifierName: "bar"
+							end: Object {
+								column: 8
+								index: 8
+								line: 1
+							}
+							start: Object {
+								column: 5
+								index: 5
+								line: 1
+							}
+						}
+					}
+					optional: true
+					loc: Object {
+						filename: "input.js"
+						identifierName: "bar"
+						end: Object {
+							column: 8
+							index: 8
+							line: 1
+						}
+						start: Object {
+							column: 5
+							index: 5
+							line: 1
+						}
+					}
+				}
+			}
+		}
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 13
+					index: 23
+					line: 3
+				}
+				start: Object {
+					column: 0
+					index: 10
+					line: 3
+				}
+			}
+			expression: JSMemberExpression {
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 13
+						index: 23
+						line: 3
+					}
+					start: Object {
+						column: 0
+						index: 10
+						line: 3
+					}
+				}
+				property: JSStaticMemberProperty {
+					value: JSIdentifier {
+						name: "baz"
+						loc: Object {
+							filename: "input.js"
+							identifierName: "baz"
+							end: Object {
+								column: 13
+								index: 23
+								line: 3
+							}
+							start: Object {
+								column: 10
+								index: 20
+								line: 3
+							}
+						}
+					}
+					optional: true
+					loc: Object {
+						filename: "input.js"
+						identifierName: "baz"
+						end: Object {
+							column: 13
+							index: 23
+							line: 3
+						}
+						start: Object {
+							column: 10
+							index: 20
+							line: 3
+						}
+					}
+				}
+				object: JSMemberExpression {
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 8
+							index: 18
+							line: 3
+						}
+						start: Object {
+							column: 0
+							index: 10
+							line: 3
+						}
+					}
+					object: JSReferenceIdentifier {
+						name: "foo"
+						loc: Object {
+							filename: "input.js"
+							identifierName: "foo"
+							end: Object {
+								column: 3
+								index: 13
+								line: 3
+							}
+							start: Object {
+								column: 0
+								index: 10
+								line: 3
+							}
+						}
+					}
+					property: JSStaticMemberProperty {
+						value: JSIdentifier {
+							name: "bar"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "bar"
+								end: Object {
+									column: 8
+									index: 18
+									line: 3
+								}
+								start: Object {
+									column: 5
+									index: 15
+									line: 3
+								}
+							}
+						}
+						optional: true
+						loc: Object {
+							filename: "input.js"
+							identifierName: "bar"
+							end: Object {
+								column: 8
+								index: 18
+								line: 3
+							}
+							start: Object {
+								column: 5
+								index: 15
+								line: 3
+							}
+						}
+					}
+				}
+			}
+		}
+		JSExpressionStatement {
+			loc: Object {
+				filename: "input.js"
+				end: Object {
+					column: 12
+					index: 37
+					line: 5
+				}
+				start: Object {
+					column: 0
+					index: 25
+					line: 5
+				}
+			}
+			expression: JSMemberExpression {
+				loc: Object {
+					filename: "input.js"
+					end: Object {
+						column: 12
+						index: 37
+						line: 5
+					}
+					start: Object {
+						column: 0
+						index: 25
+						line: 5
+					}
+				}
+				property: JSStaticMemberProperty {
+					value: JSIdentifier {
+						name: "baz"
+						loc: Object {
+							filename: "input.js"
+							identifierName: "baz"
+							end: Object {
+								column: 12
+								index: 37
+								line: 5
+							}
+							start: Object {
+								column: 9
+								index: 34
+								line: 5
+							}
+						}
+					}
+					optional: true
+					loc: Object {
+						filename: "input.js"
+						identifierName: "baz"
+						end: Object {
+							column: 12
+							index: 37
+							line: 5
+						}
+						start: Object {
+							column: 9
+							index: 34
+							line: 5
+						}
+					}
+				}
+				object: JSMemberExpression {
+					loc: Object {
+						filename: "input.js"
+						end: Object {
+							column: 7
+							index: 32
+							line: 5
+						}
+						start: Object {
+							column: 0
+							index: 25
+							line: 5
+						}
+					}
+					object: JSReferenceIdentifier {
+						name: "foo"
+						loc: Object {
+							filename: "input.js"
+							identifierName: "foo"
+							end: Object {
+								column: 3
+								index: 28
+								line: 5
+							}
+							start: Object {
+								column: 0
+								index: 25
+								line: 5
+							}
+						}
+					}
+					property: JSStaticMemberProperty {
+						value: JSIdentifier {
+							name: "bar"
+							loc: Object {
+								filename: "input.js"
+								identifierName: "bar"
+								end: Object {
+									column: 7
+									index: 32
+									line: 5
+								}
+								start: Object {
+									column: 4
+									index: 29
+									line: 5
+								}
+							}
+						}
+						loc: Object {
+							filename: "input.js"
+							identifierName: "bar"
+							end: Object {
+								column: 7
+								index: 32
+								line: 5
+							}
+							start: Object {
+								column: 4
+								index: 29
+								line: 5
+							}
+						}
+					}
+				}
+			}
+		}
+	]
 }
 ```
