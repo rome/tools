@@ -148,6 +148,7 @@ type LintDiagnosticCategory =
 	| "lint/jsx-a11y/iframeHasTitle"
 	| "lint/jsx-a11y/imgRedundantAlt"
 	| "lint/jsx-a11y/lang"
+	| "lint/jsx-a11y/mouseEventsHaveKeyEvents"
 	| "lint/jsx-a11y/noAccessKey"
 	| "lint/jsx-a11y/noAutofocus"
 	| "lint/jsx-a11y/noDistractingElements"
