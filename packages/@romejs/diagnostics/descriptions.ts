@@ -303,6 +303,10 @@ export const descriptions = createMessages({
 			category: "lint/jsx-a11y/mouseEventsHaveKeyEvents",
 			message: `The mouse event <emphasis>${mouseEvent}</emphasis> should be paired with the event <emphasis>${keyboardEvent}</emphasis>`,
 		}),
+		JSX_A11Y_MEDIA_HAS_CAPTION: {
+			category: "lint/jsx-a11y/mediaHasCaption",
+			message: "<emphasis>audio</emphasis> and <emphasis>video</emphasis> elements should have <emphasis>track</emphasis> for captions",
+		},
 		REACT_NO_WILL_UPDATE_SET_STATE: {
 			category: "lint/react/noWillUpdateSetState",
 			message: "Avoid <emphasis>this.setState</emphasis> in <emphasis>componentWillUpdate</emphasis>",
