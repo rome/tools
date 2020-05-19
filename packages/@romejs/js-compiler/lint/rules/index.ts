@@ -67,6 +67,7 @@ import noAutofocus from "./jsx-a11y/noAutofocus";
 import noDistractingElements from "./jsx-a11y/noDistractingElements";
 import noTargetBlank from "./jsx-a11y/noTargetBlank";
 import scope from "./jsx-a11y/scope";
+import tabindexNoPositive from "./jsx-a11y/tabindexNoPositive";
 import jsxKey from "./react/jsxKey";
 import jsxNoCommentText from "./react/jsxNoCommentText";
 import noChildrenProp from "./react/noChildrenProp";
@@ -142,6 +143,7 @@ export const lintTransforms = [
 	noDistractingElements,
 	noTargetBlank,
 	scope,
+	tabindexNoPositive,
 	jsxKey,
 	jsxNoCommentText,
 	noChildrenProp,

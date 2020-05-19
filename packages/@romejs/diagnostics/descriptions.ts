@@ -292,6 +292,10 @@ export const descriptions = createMessages({
 	},
 	// @romejs/js-compiler
 	LINT: {
+		JSX_A11Y_TABINDEX_NO_POSITIVE: {
+			category: "lint/jsx-a11y/tabindexNoPositive",
+			message: "Avoid positive integer values for <emphasis>tabIndex</emphasis>.",
+		},
 		REACT_NO_WILL_UPDATE_SET_STATE: {
 			category: "lint/react/noWillUpdateSetState",
 			message: "Avoid <emphasis>this.setState</emphasis> in <emphasis>componentWillUpdate</emphasis>",
