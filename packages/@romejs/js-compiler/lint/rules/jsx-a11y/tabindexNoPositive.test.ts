@@ -2,7 +2,7 @@ import {test} from "rome";
 import {testLintMultiple} from "../testHelpers";
 
 test(
-	"no tabindex positive",
+	"avoid positive tab index",
 	async (t) => {
 		await testLintMultiple(
 			t,
