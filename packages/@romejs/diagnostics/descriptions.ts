@@ -292,6 +292,13 @@ export const descriptions = createMessages({
 	},
 	// @romejs/js-compiler
 	LINT: {
+		JSX_A11Y_MOUSE_EVENTS_HAVE_KEY_EVENTS: (
+			mouseEvent: string,
+			keyboardEvent: string,
+		) => ({
+			category: "lint/jsx-a11y/mouseEventsHaveKeyEvents",
+			message: `The mouse event ${mouseEvent} should be paired with the event ${keyboardEvent}`,
+		}),
 		REACT_NO_WILL_UPDATE_SET_STATE: {
 			category: "lint/react/noWillUpdateSetState",
 			message: "Avoid <emphasis>this.setState</emphasis> in <emphasis>componentWillUpdate</emphasis>",
