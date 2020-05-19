@@ -5,7 +5,7 @@
 ## `esprima > expression-primary-object > migrated_0031`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	directives: Array [
-		Directive {
+		JSDirective {
 			value: "use strict"
 			loc: Object {
 				filename: "input.js"
@@ -47,7 +47,7 @@ Program {
 		}
 	]
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.js"
@@ -77,8 +77,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.js"
@@ -108,7 +108,7 @@ Program {
 								line: 1
 							}
 						}
-						init: ObjectExpression {
+						init: JSObjectExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -123,10 +123,10 @@ Program {
 								}
 							}
 							properties: Array [
-								ObjectMethod {
+								JSObjectMethod {
 									kind: "get"
-									key: StaticPropertyKey {
-										value: Identifier {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
 											name: "i"
 											loc: Object {
 												filename: "input.js"
@@ -170,7 +170,7 @@ Program {
 											line: 1
 										}
 									}
-									body: BlockStatement {
+									body: JSBlockStatement {
 										body: Array []
 										directives: Array []
 										loc: Object {
@@ -187,7 +187,7 @@ Program {
 											}
 										}
 									}
-									head: FunctionHead {
+									head: JSFunctionHead {
 										async: false
 										generator: false
 										hasHoistedVars: false
@@ -211,10 +211,10 @@ Program {
 										}
 									}
 								}
-								ObjectMethod {
+								JSObjectMethod {
 									kind: "get"
-									key: StaticPropertyKey {
-										value: Identifier {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
 											name: "i"
 											loc: Object {
 												filename: "input.js"
@@ -258,7 +258,7 @@ Program {
 											line: 1
 										}
 									}
-									body: BlockStatement {
+									body: JSBlockStatement {
 										body: Array []
 										directives: Array []
 										loc: Object {
@@ -275,7 +275,7 @@ Program {
 											}
 										}
 									}
-									head: FunctionHead {
+									head: JSFunctionHead {
 										async: false
 										generator: false
 										hasHoistedVars: false

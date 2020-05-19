@@ -7,7 +7,7 @@
 
 import {Path} from "@romejs/js-compiler";
 import {template} from "@romejs/js-ast-utils";
-import {AnyNode, stringLiteral} from "@romejs/js-ast";
+import {AnyNode, jsStringLiteral} from "@romejs/ast";
 import {getModuleId, getOptions} from "../_utils";
 
 export default {
@@ -17,10 +17,10 @@ export default {
 		const opts = getOptions(context);
 
 		// desugar import('source') to Rome.import(moduleId)
-		if (node.type === "ImportCall" && node.argument.type === "StringLiteral") {
+		if (node.type === "JSImportCall" && node.argument.type === "JSStringLiteral") {
 			const moduleId = getModuleId(node.argument.value, opts);
 			if (moduleId !== undefined) {
-				const id = stringLiteral.create({
+				const id = jsStringLiteral.create({
 					loc: node.argument.loc,
 					value: moduleId,
 				});

@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > await-inside-arrow-identifier-allowed`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ArrowFunctionExpression {
+			expression: JSArrowFunctionExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -58,7 +58,7 @@ Program {
 						line: 1
 					}
 				}
-				head: FunctionHead {
+				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
 					params: Array []
@@ -79,7 +79,7 @@ Program {
 						}
 					}
 				}
-				body: BlockStatement {
+				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
 						filename: "input.js"
@@ -95,7 +95,7 @@ Program {
 						}
 					}
 					body: Array [
-						ExpressionStatement {
+						JSExpressionStatement {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -109,7 +109,7 @@ Program {
 									line: 1
 								}
 							}
-							expression: ReferenceIdentifier {
+							expression: JSReferenceIdentifier {
 								name: "await"
 								loc: Object {
 									filename: "input.js"

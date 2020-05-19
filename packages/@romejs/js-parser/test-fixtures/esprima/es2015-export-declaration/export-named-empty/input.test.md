@@ -5,7 +5,7 @@
 ## `esprima > es2015-export-declaration > export-named-empty`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			declaration: undefined
 			exportKind: "value"
 			specifiers: Array []

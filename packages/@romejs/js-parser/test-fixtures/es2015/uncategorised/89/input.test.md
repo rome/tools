@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 89`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "encrypt"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
 				loc: Object {
@@ -78,7 +78,7 @@ Program {
 					}
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -102,8 +102,8 @@ Program {
 				}
 			}
 		}
-		ClassDeclaration {
-			id: BindingIdentifier {
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
 				name: "decrypt"
 				loc: Object {
 					filename: "input.js"
@@ -133,7 +133,7 @@ Program {
 					line: 2
 				}
 			}
-			meta: ClassHead {
+			meta: JSClassHead {
 				body: Array []
 				implements: undefined
 				superClass: undefined
@@ -154,7 +154,7 @@ Program {
 				}
 			}
 		}
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			declaration: undefined
 			exportKind: "value"
 			loc: Object {
@@ -171,7 +171,7 @@ Program {
 				}
 			}
 			specifiers: Array [
-				ExportLocalSpecifier {
+				JSExportLocalSpecifier {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -185,7 +185,7 @@ Program {
 							line: 3
 						}
 					}
-					exported: Identifier {
+					exported: JSIdentifier {
 						name: "encrypt"
 						loc: Object {
 							filename: "input.js"
@@ -202,7 +202,7 @@ Program {
 							}
 						}
 					}
-					local: ReferenceIdentifier {
+					local: JSReferenceIdentifier {
 						name: "encrypt"
 						loc: Object {
 							filename: "input.js"
@@ -220,7 +220,7 @@ Program {
 						}
 					}
 				}
-				ExportLocalSpecifier {
+				JSExportLocalSpecifier {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -234,7 +234,7 @@ Program {
 							line: 3
 						}
 					}
-					exported: Identifier {
+					exported: JSIdentifier {
 						name: "dec"
 						loc: Object {
 							filename: "input.js"
@@ -251,7 +251,7 @@ Program {
 							}
 						}
 					}
-					local: ReferenceIdentifier {
+					local: JSReferenceIdentifier {
 						name: "decrypt"
 						loc: Object {
 							filename: "input.js"

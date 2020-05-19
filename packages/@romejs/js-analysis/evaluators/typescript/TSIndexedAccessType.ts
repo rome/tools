@@ -6,11 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {
-	AnyNode,
-	TSIndexedAccessType,
-	tsIndexedAccessType,
-} from "@romejs/js-ast";
+import {AnyNode, TSIndexedAccessType, tsIndexedAccessType} from "@romejs/ast";
 
 export default function TSIndexedAccessType(node: AnyNode, scope: Scope) {
 	node = tsIndexedAccessType.assert(node);

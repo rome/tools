@@ -5,7 +5,7 @@
 ## `es2015 > for-in > strict-initializer`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	filename: "input.js"
@@ -28,7 +28,7 @@ Program {
 		}
 	}
 	directives: Array [
-		Directive {
+		JSDirective {
 			value: "use strict"
 			loc: Object {
 				filename: "input.js"
@@ -71,7 +71,7 @@ Program {
 		}
 	]
 	body: Array [
-		ForInStatement {
+		JSForInStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -85,7 +85,7 @@ Program {
 					line: 2
 				}
 			}
-			body: EmptyStatement {
+			body: JSEmptyStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -100,7 +100,7 @@ Program {
 					}
 				}
 			}
-			right: ObjectExpression {
+			right: JSObjectExpression {
 				properties: Array []
 				loc: Object {
 					filename: "input.js"
@@ -116,7 +116,7 @@ Program {
 					}
 				}
 			}
-			left: VariableDeclaration {
+			left: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.js"
@@ -132,8 +132,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "a"
 							loc: Object {
 								filename: "input.js"
@@ -163,7 +163,7 @@ Program {
 								line: 2
 							}
 						}
-						init: NumericLiteral {
+						init: JSNumericLiteral {
 							value: 0
 							format: undefined
 							loc: Object {

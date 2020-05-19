@@ -5,7 +5,7 @@
 ## `typescript > enum > members-strings`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -31,7 +31,7 @@ Program {
 	}
 	body: Array [
 		TSEnumDeclaration {
-			id: BindingIdentifier {
+			id: JSBindingIdentifier {
 				name: "E"
 				loc: Object {
 					filename: "input.ts"
@@ -64,7 +64,7 @@ Program {
 			}
 			members: Array [
 				TSEnumMember {
-					id: StringLiteral {
+					id: JSStringLiteral {
 						value: "foo"
 						loc: Object {
 							filename: "input.ts"
@@ -96,7 +96,7 @@ Program {
 					}
 				}
 				TSEnumMember {
-					id: StringLiteral {
+					id: JSStringLiteral {
 						value: "bar"
 						loc: Object {
 							filename: "input.ts"
@@ -125,7 +125,7 @@ Program {
 							line: 3
 						}
 					}
-					initializer: NumericLiteral {
+					initializer: JSNumericLiteral {
 						value: 1
 						format: undefined
 						loc: Object {

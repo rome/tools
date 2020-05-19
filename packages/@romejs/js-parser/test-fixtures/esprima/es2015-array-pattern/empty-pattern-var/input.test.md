@@ -5,7 +5,7 @@
 ## `esprima > es2015-array-pattern > empty-pattern-var`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.js"
@@ -60,8 +60,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingArrayPattern {
+					JSVariableDeclarator {
+						id: JSBindingArrayPattern {
 							elements: Array []
 							rest: undefined
 							loc: Object {
@@ -91,7 +91,7 @@ Program {
 								line: 1
 							}
 						}
-						init: NumericLiteral {
+						init: JSNumericLiteral {
 							value: 0
 							format: undefined
 							loc: Object {

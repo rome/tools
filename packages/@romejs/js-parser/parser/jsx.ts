@@ -9,6 +9,7 @@ import {types as tt} from "../tokenizer/types";
 import {Position, SourceLocation} from "@romejs/parser-core";
 import {JSParser} from "../parser";
 import {
+	JSStringLiteral,
 	JSXAttribute,
 	JSXElement,
 	JSXEmptyExpression,
@@ -19,8 +20,7 @@ import {
 	JSXSpreadAttribute,
 	JSXSpreadChild,
 	JSXText,
-	StringLiteral,
-} from "@romejs/js-ast";
+} from "@romejs/ast";
 import {
 	parseExpression,
 	parseMaybeAssign,
@@ -143,7 +143,7 @@ function parseJSXElementName(parser: JSParser): JSXElement["name"] {
 // Parses any type of JSX attribute value.
 function parseJSXAttributeValue(
 	parser: JSParser,
-): StringLiteral | JSXElement | JSXFragment | JSXExpressionContainer {
+): JSStringLiteral | JSXElement | JSXFragment | JSXExpressionContainer {
 	let node;
 	switch (parser.state.tokenType) {
 		case tt.braceL: {
@@ -170,7 +170,7 @@ function parseJSXAttributeValue(
 			return parser.finishNode(
 				parser.getPosition(),
 				{
-					type: "StringLiteral",
+					type: "JSStringLiteral",
 					value: "?",
 				},
 			);

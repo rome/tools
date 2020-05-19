@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 306`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.js"
@@ -60,8 +60,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingArrayPattern {
+					JSVariableDeclarator {
+						id: JSBindingArrayPattern {
 							rest: undefined
 							loc: Object {
 								filename: "input.js"
@@ -77,7 +77,7 @@ Program {
 								}
 							}
 							elements: Array [
-								BindingAssignmentPattern {
+								JSBindingAssignmentPattern {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -91,7 +91,7 @@ Program {
 											line: 1
 										}
 									}
-									right: ReferenceIdentifier {
+									right: JSReferenceIdentifier {
 										name: "defaultValue"
 										loc: Object {
 											filename: "input.js"
@@ -108,7 +108,7 @@ Program {
 											}
 										}
 									}
-									left: BindingIdentifier {
+									left: JSBindingIdentifier {
 										name: "localVar"
 										loc: Object {
 											filename: "input.js"
@@ -124,7 +124,7 @@ Program {
 												line: 1
 											}
 										}
-										meta: PatternMeta {
+										meta: JSPatternMeta {
 											optional: undefined
 											typeAnnotation: undefined
 											loc: Object {
@@ -158,7 +158,7 @@ Program {
 								line: 1
 							}
 						}
-						init: ReferenceIdentifier {
+						init: JSReferenceIdentifier {
 							name: "obj"
 							loc: Object {
 								filename: "input.js"

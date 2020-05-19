@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > invalid-escape-async-obj-method`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ObjectExpression {
+			expression: JSObjectExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -83,9 +83,9 @@ Program {
 					}
 				}
 				properties: Array [
-					ObjectProperty {
-						key: StaticPropertyKey {
-							value: Identifier {
+					JSObjectProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "async"
 								loc: Object {
 									filename: "input.js"
@@ -116,7 +116,7 @@ Program {
 								}
 							}
 						}
-						value: ReferenceIdentifier {
+						value: JSReferenceIdentifier {
 							name: "async"
 							loc: Object {
 								filename: "input.js"
@@ -150,7 +150,7 @@ Program {
 				]
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -164,7 +164,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: CallExpression {
+			expression: JSCallExpression {
 				arguments: Array []
 				loc: Object {
 					filename: "input.js"
@@ -179,7 +179,7 @@ Program {
 						line: 1
 					}
 				}
-				callee: ReferenceIdentifier {
+				callee: JSReferenceIdentifier {
 					name: "x"
 					loc: Object {
 						filename: "input.js"
@@ -198,7 +198,7 @@ Program {
 				}
 			}
 		}
-		BlockStatement {
+		JSBlockStatement {
 			directives: Array []
 			loc: Object {
 				filename: "input.js"
@@ -214,7 +214,7 @@ Program {
 				}
 			}
 			body: Array [
-				ExpressionStatement {
+				JSExpressionStatement {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -228,7 +228,7 @@ Program {
 							line: 1
 						}
 					}
-					expression: ReferenceIdentifier {
+					expression: JSReferenceIdentifier {
 						name: "await"
 						loc: Object {
 							filename: "input.js"
@@ -246,7 +246,7 @@ Program {
 						}
 					}
 				}
-				ExpressionStatement {
+				JSExpressionStatement {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -260,7 +260,7 @@ Program {
 							line: 1
 						}
 					}
-					expression: ReferenceIdentifier {
+					expression: JSReferenceIdentifier {
 						name: "x"
 						loc: Object {
 							filename: "input.js"
@@ -280,7 +280,7 @@ Program {
 				}
 			]
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -294,7 +294,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ReferenceIdentifier {
+			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
 					filename: "input.js"
@@ -311,7 +311,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -325,7 +325,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ReferenceIdentifier {
+			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
 					filename: "input.js"

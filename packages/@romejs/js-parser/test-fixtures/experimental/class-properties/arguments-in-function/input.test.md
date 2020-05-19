@@ -5,7 +5,7 @@
 ## `experimental > class-properties > arguments-in-function`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "fn"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -84,7 +84,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -100,8 +100,8 @@ Program {
 					}
 				}
 				body: Array [
-					ClassDeclaration {
-						id: BindingIdentifier {
+					JSClassDeclaration {
+						id: JSBindingIdentifier {
 							name: "A"
 							loc: Object {
 								filename: "input.js"
@@ -131,7 +131,7 @@ Program {
 								line: 2
 							}
 						}
-						meta: ClassHead {
+						meta: JSClassHead {
 							implements: undefined
 							superClass: undefined
 							superTypeParameters: undefined
@@ -150,9 +150,9 @@ Program {
 								}
 							}
 							body: Array [
-								ClassProperty {
-									key: StaticPropertyKey {
-										value: Identifier {
+								JSClassProperty {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
 											name: "foo"
 											loc: Object {
 												filename: "input.js"
@@ -183,8 +183,8 @@ Program {
 											}
 										}
 									}
-									value: FunctionExpression {
-										id: BindingIdentifier {
+									value: JSFunctionExpression {
+										id: JSBindingIdentifier {
 											name: "f"
 											loc: Object {
 												filename: "input.js"
@@ -214,7 +214,7 @@ Program {
 												line: 3
 											}
 										}
-										head: FunctionHead {
+										head: JSFunctionHead {
 											async: false
 											generator: false
 											hasHoistedVars: false
@@ -237,7 +237,7 @@ Program {
 												}
 											}
 										}
-										body: BlockStatement {
+										body: JSBlockStatement {
 											directives: Array []
 											loc: Object {
 												filename: "input.js"
@@ -253,7 +253,7 @@ Program {
 												}
 											}
 											body: Array [
-												ExpressionStatement {
+												JSExpressionStatement {
 													loc: Object {
 														filename: "input.js"
 														end: Object {
@@ -267,7 +267,7 @@ Program {
 															line: 3
 														}
 													}
-													expression: ReferenceIdentifier {
+													expression: JSReferenceIdentifier {
 														name: "arguments"
 														loc: Object {
 															filename: "input.js"
@@ -303,7 +303,7 @@ Program {
 											line: 3
 										}
 									}
-									meta: ClassPropertyMeta {
+									meta: JSClassPropertyMeta {
 										abstract: false
 										accessibility: undefined
 										optional: false

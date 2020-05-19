@@ -5,7 +5,7 @@
 ## `core > uncategorised > 264`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	directives: Array [
-		Directive {
+		JSDirective {
 			value: "use\\x20strict"
 			loc: Object {
 				filename: "input.js"
@@ -47,7 +47,7 @@ Program {
 		}
 	]
 	body: Array [
-		WithStatement {
+		JSWithStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			object: ReferenceIdentifier {
+			object: JSReferenceIdentifier {
 				name: "x"
 				loc: Object {
 					filename: "input.js"
@@ -78,7 +78,7 @@ Program {
 					}
 				}
 			}
-			body: ExpressionStatement {
+			body: JSExpressionStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -92,7 +92,7 @@ Program {
 						line: 1
 					}
 				}
-				expression: AssignmentExpression {
+				expression: JSAssignmentExpression {
 					operator: "="
 					loc: Object {
 						filename: "input.js"
@@ -107,7 +107,7 @@ Program {
 							line: 1
 						}
 					}
-					left: AssignmentIdentifier {
+					left: JSAssignmentIdentifier {
 						name: "foo"
 						loc: Object {
 							filename: "input.js"
@@ -124,7 +124,7 @@ Program {
 							}
 						}
 					}
-					right: ReferenceIdentifier {
+					right: JSReferenceIdentifier {
 						name: "bar"
 						loc: Object {
 							filename: "input.js"

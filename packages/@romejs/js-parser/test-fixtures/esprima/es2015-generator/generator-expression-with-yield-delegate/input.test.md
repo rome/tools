@@ -5,7 +5,7 @@
 ## `esprima > es2015-generator > generator-expression-with-yield-delegate`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: FunctionExpression {
+			expression: JSFunctionExpression {
 				id: undefined
 				loc: Object {
 					filename: "input.js"
@@ -59,7 +59,7 @@ Program {
 						line: 1
 					}
 				}
-				body: BlockStatement {
+				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
 						filename: "input.js"
@@ -75,7 +75,7 @@ Program {
 						}
 					}
 					body: Array [
-						ExpressionStatement {
+						JSExpressionStatement {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -89,7 +89,7 @@ Program {
 									line: 1
 								}
 							}
-							expression: YieldExpression {
+							expression: JSYieldExpression {
 								delegate: true
 								loc: Object {
 									filename: "input.js"
@@ -104,7 +104,7 @@ Program {
 										line: 1
 									}
 								}
-								argument: ReferenceIdentifier {
+								argument: JSReferenceIdentifier {
 									name: "x"
 									loc: Object {
 										filename: "input.js"
@@ -125,7 +125,7 @@ Program {
 						}
 					]
 				}
-				head: FunctionHead {
+				head: JSFunctionHead {
 					async: false
 					generator: true
 					hasHoistedVars: false
@@ -147,7 +147,7 @@ Program {
 						}
 					}
 					params: Array [
-						BindingIdentifier {
+						JSBindingIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.js"
@@ -163,7 +163,7 @@ Program {
 									line: 1
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
 								loc: Object {
@@ -181,7 +181,7 @@ Program {
 								}
 							}
 						}
-						BindingIdentifier {
+						JSBindingIdentifier {
 							name: "y"
 							loc: Object {
 								filename: "input.js"
@@ -197,7 +197,7 @@ Program {
 									line: 1
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
 								loc: Object {
@@ -215,7 +215,7 @@ Program {
 								}
 							}
 						}
-						BindingIdentifier {
+						JSBindingIdentifier {
 							name: "z"
 							loc: Object {
 								filename: "input.js"
@@ -231,7 +231,7 @@ Program {
 									line: 1
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
 								loc: Object {

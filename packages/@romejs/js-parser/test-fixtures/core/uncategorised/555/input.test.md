@@ -5,7 +5,7 @@
 ## `core > uncategorised > 555`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,8 +54,8 @@ Program {
 		}
 	]
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "foo"
 				loc: Object {
 					filename: "input.js"
@@ -85,7 +85,7 @@ Program {
 					line: 1
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
 				loc: Object {
@@ -102,7 +102,7 @@ Program {
 					}
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -122,7 +122,7 @@ Program {
 						line: 1
 					}
 				}
-				rest: BindingIdentifier {
+				rest: JSBindingIdentifier {
 					name: "second"
 					loc: Object {
 						filename: "input.js"
@@ -138,7 +138,7 @@ Program {
 							line: 3
 						}
 					}
-					meta: PatternMeta {
+					meta: JSPatternMeta {
 						optional: undefined
 						typeAnnotation: undefined
 						loc: Object {
@@ -157,7 +157,7 @@ Program {
 					}
 				}
 				params: Array [
-					BindingIdentifier {
+					JSBindingIdentifier {
 						name: "first"
 						loc: Object {
 							filename: "input.js"
@@ -173,7 +173,7 @@ Program {
 								line: 2
 							}
 						}
-						meta: PatternMeta {
+						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
@@ -191,7 +191,7 @@ Program {
 							}
 						}
 					}
-					BindingIdentifier {
+					JSBindingIdentifier {
 						name: "third"
 						loc: Object {
 							filename: "input.js"
@@ -207,7 +207,7 @@ Program {
 								line: 4
 							}
 						}
-						meta: PatternMeta {
+						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
@@ -228,7 +228,7 @@ Program {
 				]
 			}
 		}
-		EmptyStatement {
+		JSEmptyStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {

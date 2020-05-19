@@ -7,14 +7,17 @@
 
 import {Path, TransformExitResult} from "@romejs/js-compiler";
 import {
-	ExportExternalSpecifier,
-	ExportLocalSpecifier,
-	ImportSpecifier,
-} from "@romejs/js-ast";
+	JSExportExternalSpecifier,
+	JSExportLocalSpecifier,
+	JSImportSpecifier,
+} from "@romejs/ast";
 import {descriptions} from "@romejs/diagnostics";
 import {naturalCompare} from "@romejs/string-utils";
 
-function compareImportSpecifiers(a: ImportSpecifier, b: ImportSpecifier): number {
+function compareImportSpecifiers(
+	a: JSImportSpecifier,
+	b: JSImportSpecifier,
+): number {
 	const order = naturalCompare(a.local.name.name, b.local.name.name, false);
 	if (order === 0) {
 		return naturalCompare(a.imported.name, b.imported.name, false);
@@ -24,8 +27,8 @@ function compareImportSpecifiers(a: ImportSpecifier, b: ImportSpecifier): number
 }
 
 function compareExportSpecifiers<T extends
-	| ExportExternalSpecifier
-	| ExportLocalSpecifier>(a: T, b: T): number {
+	| JSExportExternalSpecifier
+	| JSExportLocalSpecifier>(a: T, b: T): number {
 	const order = naturalCompare(a.local.name, b.local.name, false);
 	if (order === 0) {
 		return naturalCompare(a.exported.name, b.exported.name, false);
@@ -49,7 +52,7 @@ export default {
 	enter(path: Path): TransformExitResult {
 		const {context, node} = path;
 
-		if (node.type === "ImportDeclaration") {
+		if (node.type === "JSImportDeclaration") {
 			if (node.namedSpecifiers.length > 1) {
 				const specifiers = node.namedSpecifiers;
 				const sortedSpecifiers = specifiers.slice().sort(
@@ -65,7 +68,7 @@ export default {
 					);
 				}
 			}
-		} else if (node.type === "ExportExternalDeclaration") {
+		} else if (node.type === "JSExportExternalDeclaration") {
 			if (node.namedSpecifiers.length > 1) {
 				const specifiers = node.namedSpecifiers;
 				const sortedSpecifiers = specifiers.slice().sort(
@@ -81,7 +84,7 @@ export default {
 					);
 				}
 			}
-		} else if (node.type === "ExportLocalDeclaration") {
+		} else if (node.type === "JSExportLocalDeclaration") {
 			if (node.specifiers !== undefined && node.specifiers.length > 1) {
 				const specifiers = node.specifiers;
 				const sortedSpecifiers = specifiers.slice().sort(

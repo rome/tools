@@ -1,4 +1,4 @@
-import {BinaryOperator, LogicalOperator} from "@romejs/js-ast";
+import {BinaryOperator, LogicalOperator} from "@romejs/ast";
 
 const PRECEDENCE = {
 	"||": 0,

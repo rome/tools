@@ -5,7 +5,7 @@
 ## `esprima > statement-switch > migrated_0001`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		SwitchStatement {
+		JSSwitchStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			discriminant: ReferenceIdentifier {
+			discriminant: JSReferenceIdentifier {
 				name: "answer"
 				loc: Object {
 					filename: "input.js"
@@ -62,7 +62,7 @@ Program {
 				}
 			}
 			cases: Array [
-				SwitchCase {
+				JSSwitchCase {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -76,7 +76,7 @@ Program {
 							line: 1
 						}
 					}
-					test: NumericLiteral {
+					test: JSNumericLiteral {
 						value: 42
 						format: undefined
 						loc: Object {
@@ -94,7 +94,7 @@ Program {
 						}
 					}
 					consequent: Array [
-						ExpressionStatement {
+						JSExpressionStatement {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -108,7 +108,7 @@ Program {
 									line: 1
 								}
 							}
-							expression: CallExpression {
+							expression: JSCallExpression {
 								arguments: Array []
 								loc: Object {
 									filename: "input.js"
@@ -123,7 +123,7 @@ Program {
 										line: 1
 									}
 								}
-								callee: ReferenceIdentifier {
+								callee: JSReferenceIdentifier {
 									name: "hi"
 									loc: Object {
 										filename: "input.js"
@@ -142,7 +142,7 @@ Program {
 								}
 							}
 						}
-						BreakStatement {
+						JSBreakStatement {
 							label: undefined
 							loc: Object {
 								filename: "input.js"

@@ -5,7 +5,7 @@
 ## `typescript > function > annotated`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
 					filename: "input.ts"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
 				loc: Object {
@@ -78,7 +78,7 @@ Program {
 					}
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -112,7 +112,7 @@ Program {
 							line: 1
 						}
 					}
-					typeName: ReferenceIdentifier {
+					typeName: JSReferenceIdentifier {
 						name: "T"
 						loc: Object {
 							filename: "input.ts"
@@ -166,7 +166,7 @@ Program {
 					]
 				}
 				params: Array [
-					BindingIdentifier {
+					JSBindingIdentifier {
 						name: "x"
 						loc: Object {
 							filename: "input.ts"
@@ -182,7 +182,7 @@ Program {
 								line: 1
 							}
 						}
-						meta: PatternMeta {
+						meta: JSPatternMeta {
 							optional: true
 							loc: Object {
 								filename: "input.ts"
@@ -212,7 +212,7 @@ Program {
 										line: 1
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "T"
 									loc: Object {
 										filename: "input.ts"

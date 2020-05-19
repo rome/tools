@@ -5,7 +5,7 @@
 ## `esprima > statement-if > migrated_0004`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		IfStatement {
+		JSIfStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			test: ReferenceIdentifier {
+			test: JSReferenceIdentifier {
 				name: "morning"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					}
 				}
 			}
-			alternate: ExpressionStatement {
+			alternate: JSExpressionStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -75,7 +75,7 @@ Program {
 						line: 1
 					}
 				}
-				expression: CallExpression {
+				expression: JSCallExpression {
 					arguments: Array []
 					loc: Object {
 						filename: "input.js"
@@ -90,7 +90,7 @@ Program {
 							line: 1
 						}
 					}
-					callee: ReferenceIdentifier {
+					callee: JSReferenceIdentifier {
 						name: "goodDay"
 						loc: Object {
 							filename: "input.js"
@@ -109,7 +109,7 @@ Program {
 					}
 				}
 			}
-			consequent: ExpressionStatement {
+			consequent: JSExpressionStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -123,7 +123,7 @@ Program {
 						line: 1
 					}
 				}
-				expression: CallExpression {
+				expression: JSCallExpression {
 					arguments: Array []
 					loc: Object {
 						filename: "input.js"
@@ -138,7 +138,7 @@ Program {
 							line: 1
 						}
 					}
-					callee: ReferenceIdentifier {
+					callee: JSReferenceIdentifier {
 						name: "goodMorning"
 						loc: Object {
 							filename: "input.js"

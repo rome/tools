@@ -5,7 +5,7 @@
 ## `esprima > es2015-array-pattern > with-object-pattern`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.js"
@@ -60,8 +60,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingArrayPattern {
+					JSVariableDeclarator {
+						id: JSBindingArrayPattern {
 							rest: undefined
 							loc: Object {
 								filename: "input.js"
@@ -77,7 +77,7 @@ Program {
 								}
 							}
 							elements: Array [
-								BindingObjectPattern {
+								JSBindingObjectPattern {
 									rest: undefined
 									loc: Object {
 										filename: "input.js"
@@ -92,7 +92,7 @@ Program {
 											line: 1
 										}
 									}
-									meta: PatternMeta {
+									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
@@ -110,9 +110,9 @@ Program {
 										}
 									}
 									properties: Array [
-										BindingObjectPatternProperty {
-											key: StaticPropertyKey {
-												value: Identifier {
+										JSBindingObjectPatternProperty {
+											key: JSStaticPropertyKey {
+												value: JSIdentifier {
 													name: "a"
 													loc: Object {
 														filename: "input.js"
@@ -143,7 +143,7 @@ Program {
 													}
 												}
 											}
-											value: BindingIdentifier {
+											value: JSBindingIdentifier {
 												name: "a"
 												loc: Object {
 													filename: "input.js"
@@ -191,7 +191,7 @@ Program {
 								line: 1
 							}
 						}
-						init: NumericLiteral {
+						init: JSNumericLiteral {
 							value: 0
 							format: undefined
 							loc: Object {

@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > 17`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: CallExpression {
+			expression: JSCallExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -58,7 +58,7 @@ Program {
 						line: 1
 					}
 				}
-				callee: ReferenceIdentifier {
+				callee: JSReferenceIdentifier {
 					name: "f"
 					loc: Object {
 						filename: "input.js"
@@ -76,7 +76,7 @@ Program {
 					}
 				}
 				arguments: Array [
-					ReferenceIdentifier {
+					JSReferenceIdentifier {
 						name: "a"
 						loc: Object {
 							filename: "input.js"
@@ -93,7 +93,7 @@ Program {
 							}
 						}
 					}
-					ArrowFunctionExpression {
+					JSArrowFunctionExpression {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -107,7 +107,7 @@ Program {
 								line: 1
 							}
 						}
-						body: AwaitExpression {
+						body: JSAwaitExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -121,7 +121,7 @@ Program {
 									line: 1
 								}
 							}
-							argument: ReferenceIdentifier {
+							argument: JSReferenceIdentifier {
 								name: "promise"
 								loc: Object {
 									filename: "input.js"
@@ -139,7 +139,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: true
 							hasHoistedVars: false
 							rest: undefined
@@ -158,7 +158,7 @@ Program {
 								}
 							}
 							params: Array [
-								BindingIdentifier {
+								JSBindingIdentifier {
 									name: "promise"
 									loc: Object {
 										filename: "input.js"

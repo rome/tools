@@ -5,7 +5,7 @@
 ## `typescript > module-namespace > declare-shorthand`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -31,7 +31,7 @@ Program {
 	}
 	body: Array [
 		TSModuleDeclaration {
-			id: StringLiteral {
+			id: JSStringLiteral {
 				value: "m"
 				loc: Object {
 					filename: "input.ts"

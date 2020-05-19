@@ -5,7 +5,7 @@
 ## `es2015 > class-methods > tricky-names`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		ClassDeclaration {
-			id: BindingIdentifier {
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			meta: ClassHead {
+			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
@@ -80,10 +80,10 @@ Program {
 					}
 				}
 				body: Array [
-					ClassMethod {
+					JSClassMethod {
 						kind: "method"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "get"
 								loc: Object {
 									filename: "input.js"
@@ -127,7 +127,7 @@ Program {
 								line: 2
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
 							loc: Object {
@@ -144,7 +144,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -167,7 +167,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -194,10 +194,10 @@ Program {
 							}
 						}
 					}
-					ClassMethod {
+					JSClassMethod {
 						kind: "method"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "set"
 								loc: Object {
 									filename: "input.js"
@@ -241,7 +241,7 @@ Program {
 								line: 5
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
 							loc: Object {
@@ -258,7 +258,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -281,7 +281,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -308,10 +308,10 @@ Program {
 							}
 						}
 					}
-					ClassMethod {
+					JSClassMethod {
 						kind: "method"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "static"
 								loc: Object {
 									filename: "input.js"
@@ -356,7 +356,7 @@ Program {
 								line: 8
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
 							loc: Object {
@@ -373,7 +373,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -394,7 +394,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -418,10 +418,10 @@ Program {
 							}
 						}
 					}
-					ClassMethod {
+					JSClassMethod {
 						kind: "method"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "async"
 								loc: Object {
 									filename: "input.js"
@@ -465,7 +465,7 @@ Program {
 								line: 11
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
 							loc: Object {
@@ -482,7 +482,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -505,7 +505,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -532,10 +532,10 @@ Program {
 							}
 						}
 					}
-					ClassMethod {
+					JSClassMethod {
 						kind: "method"
-						key: StaticPropertyKey {
-							value: StringLiteral {
+						key: JSStaticPropertyKey {
+							value: JSStringLiteral {
 								value: "get"
 								loc: Object {
 									filename: "input.js"
@@ -578,7 +578,7 @@ Program {
 								line: 15
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
 							loc: Object {
@@ -595,7 +595,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -618,7 +618,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -645,10 +645,10 @@ Program {
 							}
 						}
 					}
-					ClassMethod {
+					JSClassMethod {
 						kind: "method"
-						key: StaticPropertyKey {
-							value: StringLiteral {
+						key: JSStaticPropertyKey {
+							value: JSStringLiteral {
 								value: "set"
 								loc: Object {
 									filename: "input.js"
@@ -691,7 +691,7 @@ Program {
 								line: 18
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
 							loc: Object {
@@ -708,7 +708,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -731,7 +731,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -758,10 +758,10 @@ Program {
 							}
 						}
 					}
-					ClassMethod {
+					JSClassMethod {
 						kind: "method"
-						key: StaticPropertyKey {
-							value: StringLiteral {
+						key: JSStaticPropertyKey {
+							value: JSStringLiteral {
 								value: "async"
 								loc: Object {
 									filename: "input.js"
@@ -804,7 +804,7 @@ Program {
 								line: 21
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
 							loc: Object {
@@ -821,7 +821,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -844,7 +844,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -871,10 +871,10 @@ Program {
 							}
 						}
 					}
-					ClassMethod {
+					JSClassMethod {
 						kind: "method"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "get"
 								loc: Object {
 									filename: "input.js"
@@ -918,7 +918,7 @@ Program {
 								line: 25
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
 							loc: Object {
@@ -935,7 +935,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -958,7 +958,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -985,10 +985,10 @@ Program {
 							}
 						}
 					}
-					ClassMethod {
+					JSClassMethod {
 						kind: "method"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "set"
 								loc: Object {
 									filename: "input.js"
@@ -1032,7 +1032,7 @@ Program {
 								line: 29
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
 							loc: Object {
@@ -1049,7 +1049,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -1072,7 +1072,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -1099,10 +1099,10 @@ Program {
 							}
 						}
 					}
-					ClassMethod {
+					JSClassMethod {
 						kind: "method"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "static"
 								loc: Object {
 									filename: "input.js"
@@ -1146,7 +1146,7 @@ Program {
 								line: 33
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
 							loc: Object {
@@ -1163,7 +1163,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -1186,7 +1186,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -1213,10 +1213,10 @@ Program {
 							}
 						}
 					}
-					ClassMethod {
+					JSClassMethod {
 						kind: "method"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "async"
 								loc: Object {
 									filename: "input.js"
@@ -1260,7 +1260,7 @@ Program {
 								line: 37
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
 							loc: Object {
@@ -1277,7 +1277,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -1300,7 +1300,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -1327,10 +1327,10 @@ Program {
 							}
 						}
 					}
-					ClassMethod {
+					JSClassMethod {
 						kind: "method"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "a"
 								loc: Object {
 									filename: "input.js"
@@ -1374,7 +1374,7 @@ Program {
 								line: 41
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
 							loc: Object {
@@ -1391,7 +1391,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -1414,7 +1414,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -1441,10 +1441,10 @@ Program {
 							}
 						}
 					}
-					ClassMethod {
+					JSClassMethod {
 						kind: "get"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "async"
 								loc: Object {
 									filename: "input.js"
@@ -1488,7 +1488,7 @@ Program {
 								line: 46
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
 							loc: Object {
@@ -1505,7 +1505,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -1528,7 +1528,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -1555,10 +1555,10 @@ Program {
 							}
 						}
 					}
-					ClassMethod {
+					JSClassMethod {
 						kind: "get"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "static"
 								loc: Object {
 									filename: "input.js"
@@ -1602,7 +1602,7 @@ Program {
 								line: 51
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
 							loc: Object {
@@ -1619,7 +1619,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -1642,7 +1642,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false

@@ -5,7 +5,7 @@
 ## `typescript > cast > as-const-4`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	directives: Array []
 	filename: "input.ts"
@@ -17,9 +17,9 @@ Program {
 	loc: Object {
 		filename: "input.ts"
 		end: Object {
-			column: 33
-			index: 33
-			line: 1
+			column: 0
+			index: 34
+			line: 2
 		}
 		start: Object {
 			column: 0
@@ -28,7 +28,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentLine {
+		JSCommentLine {
 			id: "0"
 			value: " Error"
 			loc: Object {
@@ -72,7 +72,7 @@ Program {
 		}
 	]
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			trailingComments: Array ["0"]
 			loc: Object {
 				filename: "input.ts"
@@ -87,7 +87,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				trailingComments: undefined
 				loc: Object {
@@ -104,8 +104,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "e"
 							loc: Object {
 								filename: "input.ts"
@@ -164,7 +164,7 @@ Program {
 										line: 1
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "const"
 									loc: Object {
 										filename: "input.ts"
@@ -182,7 +182,7 @@ Program {
 									}
 								}
 							}
-							expression: CallExpression {
+							expression: JSCallExpression {
 								loc: Object {
 									filename: "input.ts"
 									end: Object {
@@ -196,7 +196,7 @@ Program {
 										line: 1
 									}
 								}
-								callee: ReferenceIdentifier {
+								callee: JSReferenceIdentifier {
 									name: "id"
 									loc: Object {
 										filename: "input.ts"
@@ -214,7 +214,7 @@ Program {
 									}
 								}
 								arguments: Array [
-									NumericLiteral {
+									JSNumericLiteral {
 										value: 1
 										format: undefined
 										loc: Object {

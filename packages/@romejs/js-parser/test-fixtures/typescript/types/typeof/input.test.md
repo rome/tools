@@ -5,7 +5,7 @@
 ## `typescript > types > typeof`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.ts"
@@ -60,8 +60,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.ts"
@@ -76,7 +76,7 @@ Program {
 									line: 1
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
 									filename: "input.ts"
@@ -119,7 +119,7 @@ Program {
 												line: 1
 											}
 										}
-										left: ReferenceIdentifier {
+										left: JSReferenceIdentifier {
 											name: "y"
 											loc: Object {
 												filename: "input.ts"
@@ -136,7 +136,7 @@ Program {
 												}
 											}
 										}
-										right: Identifier {
+										right: JSIdentifier {
 											name: "z"
 											loc: Object {
 												filename: "input.ts"

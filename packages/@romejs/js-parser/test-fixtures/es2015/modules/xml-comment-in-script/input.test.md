@@ -5,7 +5,7 @@
 ## `es2015 > modules > xml-comment-in-script`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentLine {
+		JSCommentLine {
 			id: "0"
 			value: "bar"
 			loc: Object {
@@ -48,7 +48,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			trailingComments: Array ["0"]
 			loc: Object {
 				filename: "input.js"
@@ -63,7 +63,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ReferenceIdentifier {
+			expression: JSReferenceIdentifier {
 				name: "foo"
 				trailingComments: undefined
 				loc: Object {

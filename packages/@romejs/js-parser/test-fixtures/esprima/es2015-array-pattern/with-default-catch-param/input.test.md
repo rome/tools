@@ -5,7 +5,7 @@
 ## `esprima > es2015-array-pattern > with-default-catch-param`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		TryStatement {
+		JSTryStatement {
 			finalizer: undefined
 			loc: Object {
 				filename: "input.js"
@@ -45,7 +45,7 @@ Program {
 					line: 1
 				}
 			}
-			block: BlockStatement {
+			block: JSBlockStatement {
 				body: Array []
 				directives: Array []
 				loc: Object {
@@ -62,7 +62,7 @@ Program {
 					}
 				}
 			}
-			handler: CatchClause {
+			handler: JSCatchClause {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -76,7 +76,7 @@ Program {
 						line: 1
 					}
 				}
-				body: BlockStatement {
+				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
 					loc: Object {
@@ -93,7 +93,7 @@ Program {
 						}
 					}
 				}
-				param: BindingArrayPattern {
+				param: JSBindingArrayPattern {
 					rest: undefined
 					loc: Object {
 						filename: "input.js"
@@ -109,7 +109,7 @@ Program {
 						}
 					}
 					elements: Array [
-						BindingAssignmentPattern {
+						JSBindingAssignmentPattern {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -123,7 +123,7 @@ Program {
 									line: 1
 								}
 							}
-							right: NumericLiteral {
+							right: JSNumericLiteral {
 								value: 0
 								format: undefined
 								loc: Object {
@@ -140,7 +140,7 @@ Program {
 									}
 								}
 							}
-							left: BindingIdentifier {
+							left: JSBindingIdentifier {
 								name: "a"
 								loc: Object {
 									filename: "input.js"
@@ -156,7 +156,7 @@ Program {
 										line: 1
 									}
 								}
-								meta: PatternMeta {
+								meta: JSPatternMeta {
 									optional: undefined
 									typeAnnotation: undefined
 									loc: Object {

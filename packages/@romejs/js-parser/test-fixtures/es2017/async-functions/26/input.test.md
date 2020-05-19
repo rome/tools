@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > 26`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: CallExpression {
+			expression: JSCallExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -58,7 +58,7 @@ Program {
 						line: 1
 					}
 				}
-				callee: ReferenceIdentifier {
+				callee: JSReferenceIdentifier {
 					name: "f"
 					loc: Object {
 						filename: "input.js"
@@ -76,7 +76,7 @@ Program {
 					}
 				}
 				arguments: Array [
-					ReferenceIdentifier {
+					JSReferenceIdentifier {
 						name: "a"
 						loc: Object {
 							filename: "input.js"
@@ -93,7 +93,7 @@ Program {
 							}
 						}
 					}
-					ArrowFunctionExpression {
+					JSArrowFunctionExpression {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -107,7 +107,7 @@ Program {
 								line: 1
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: true
 							hasHoistedVars: false
 							rest: undefined
@@ -127,7 +127,7 @@ Program {
 								}
 							}
 							params: Array [
-								BindingIdentifier {
+								JSBindingIdentifier {
 									name: "x"
 									loc: Object {
 										filename: "input.js"
@@ -144,7 +144,7 @@ Program {
 										}
 									}
 								}
-								BindingIdentifier {
+								JSBindingIdentifier {
 									name: "y"
 									loc: Object {
 										filename: "input.js"
@@ -163,7 +163,7 @@ Program {
 								}
 							]
 						}
-						body: AwaitExpression {
+						body: JSAwaitExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -177,7 +177,7 @@ Program {
 									line: 1
 								}
 							}
-							argument: ArrayExpression {
+							argument: JSArrayExpression {
 								loc: Object {
 									filename: "input.js"
 									end: Object {
@@ -192,7 +192,7 @@ Program {
 									}
 								}
 								elements: Array [
-									ReferenceIdentifier {
+									JSReferenceIdentifier {
 										name: "x"
 										loc: Object {
 											filename: "input.js"
@@ -209,7 +209,7 @@ Program {
 											}
 										}
 									}
-									ReferenceIdentifier {
+									JSReferenceIdentifier {
 										name: "y"
 										loc: Object {
 											filename: "input.js"
@@ -230,7 +230,7 @@ Program {
 							}
 						}
 					}
-					ReferenceIdentifier {
+					JSReferenceIdentifier {
 						name: "b"
 						loc: Object {
 							filename: "input.js"

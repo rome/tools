@@ -5,7 +5,7 @@
 ## `core > uncategorised > 457`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		SwitchStatement {
+		JSSwitchStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			discriminant: ReferenceIdentifier {
+			discriminant: JSReferenceIdentifier {
 				name: "x"
 				loc: Object {
 					filename: "input.js"
@@ -86,7 +86,7 @@ Program {
 				}
 			}
 			cases: Array [
-				SwitchCase {
+				JSSwitchCase {
 					test: undefined
 					loc: Object {
 						filename: "input.js"
@@ -102,7 +102,7 @@ Program {
 						}
 					}
 					consequent: Array [
-						ContinueStatement {
+						JSContinueStatement {
 							label: undefined
 							loc: Object {
 								filename: "input.js"

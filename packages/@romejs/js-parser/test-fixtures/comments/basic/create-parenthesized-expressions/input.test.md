@@ -5,7 +5,7 @@
 ## `comments > basic > create-parenthesized-expressions`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentLine {
+		JSCommentLine {
 			id: "0"
 			value: " One"
 			loc: Object {
@@ -46,7 +46,7 @@ Program {
 				}
 			}
 		}
-		CommentBlock {
+		JSCommentBlock {
 			id: "1"
 			value: " Two "
 			loc: Object {
@@ -63,7 +63,7 @@ Program {
 				}
 			}
 		}
-		CommentLine {
+		JSCommentLine {
 			id: "2"
 			value: " Three"
 			loc: Object {
@@ -80,7 +80,7 @@ Program {
 				}
 			}
 		}
-		CommentBlock {
+		JSCommentBlock {
 			id: "3"
 			value: " Four "
 			loc: Object {
@@ -99,7 +99,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			leadingComments: Array ["0"]
 			trailingComments: Array ["1"]
 			loc: Object {
@@ -115,7 +115,7 @@ Program {
 					line: 2
 				}
 			}
-			expression: NumericLiteral {
+			expression: JSNumericLiteral {
 				value: 1
 				format: undefined
 				leadingComments: undefined
@@ -134,7 +134,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			leadingComments: Array ["1"]
 			loc: Object {
 				filename: "input.js"
@@ -149,7 +149,7 @@ Program {
 					line: 5
 				}
 			}
-			expression: NumericLiteral {
+			expression: JSNumericLiteral {
 				value: 2
 				format: undefined
 				leadingComments: undefined
@@ -168,7 +168,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -182,7 +182,7 @@ Program {
 					line: 7
 				}
 			}
-			expression: NumericLiteral {
+			expression: JSNumericLiteral {
 				value: 3
 				format: undefined
 				leadingComments: Array ["2"]
@@ -201,7 +201,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -215,7 +215,7 @@ Program {
 					line: 12
 				}
 			}
-			expression: NumericLiteral {
+			expression: JSNumericLiteral {
 				value: 4
 				format: undefined
 				leadingComments: Array ["3"]

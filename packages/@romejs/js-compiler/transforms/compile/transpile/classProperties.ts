@@ -7,33 +7,33 @@
 
 import {CompilerContext, Path, Scope} from "@romejs/js-compiler";
 import {
-	AnyExpression,
+	AnyJSExpression,
+	AnyJSStatement,
 	AnyNode,
-	AnyStatement,
-	CallExpression,
-	ClassDeclaration,
-	ClassExpression,
-	ClassMethod,
-	FunctionHead,
-	arrowFunctionExpression,
-	bindingIdentifier,
-	blockStatement,
-	callExpression,
-	classMethod,
-	classPropertyMeta,
-	expressionStatement,
-	functionHead,
-	identifier,
-	referenceIdentifier,
-	returnStatement,
-	sequenceExpression,
-	staticPropertyKey,
-} from "@romejs/js-ast";
+	JSCallExpression,
+	JSClassDeclaration,
+	JSClassExpression,
+	JSClassMethod,
+	JSFunctionHead,
+	jsArrowFunctionExpression,
+	jsBindingIdentifier,
+	jsBlockStatement,
+	jsCallExpression,
+	jsClassMethod,
+	jsClassPropertyMeta,
+	jsExpressionStatement,
+	jsFunctionHead,
+	jsIdentifier,
+	jsReferenceIdentifier,
+	jsReturnStatement,
+	jsSequenceExpression,
+	jsStaticPropertyKey,
+} from "@romejs/ast";
 import {template} from "@romejs/js-ast-utils";
 
-function hasClassProps(node: ClassDeclaration | ClassExpression): boolean {
+function hasClassProps(node: JSClassDeclaration | JSClassExpression): boolean {
 	for (const bodyNode of node.meta.body) {
-		if (bodyNode.type === "ClassProperty") {
+		if (bodyNode.type === "JSClassProperty") {
 			return true;
 		}
 	}
@@ -42,58 +42,58 @@ function hasClassProps(node: ClassDeclaration | ClassExpression): boolean {
 }
 
 function createConstructor(
-	rest: undefined | FunctionHead["rest"],
-	body: Array<AnyStatement>,
+	rest: undefined | JSFunctionHead["rest"],
+	body: Array<AnyJSStatement>,
 ) {
-	return classMethod.create({
+	return jsClassMethod.create({
 		kind: "constructor",
-		key: staticPropertyKey.quick(identifier.quick("constructor")),
-		meta: classPropertyMeta.create({}),
-		head: functionHead.create({params: [], rest}),
-		body: blockStatement.create({body}),
+		key: jsStaticPropertyKey.quick(jsIdentifier.quick("constructor")),
+		meta: jsClassPropertyMeta.create({}),
+		head: jsFunctionHead.create({params: [], rest}),
+		body: jsBlockStatement.create({body}),
 	});
 }
 
 function toExpressionStatements(
-	expressions: Array<AnyExpression>,
-): Array<AnyStatement> {
+	expressions: Array<AnyJSExpression>,
+): Array<AnyJSStatement> {
 	return expressions.map((expr) => {
-		return expressionStatement.create({expression: expr});
+		return jsExpressionStatement.create({expression: expr});
 	});
 }
 
-function isSuperCall(node: AnyNode): node is CallExpression {
-	return node.type === "CallExpression" && node.callee.type === "Super";
+function isSuperCall(node: AnyNode): node is JSCallExpression {
+	return node.type === "JSCallExpression" && node.callee.type === "JSSuper";
 }
 
 function transformClass(
-	node: ClassDeclaration,
+	node: JSClassDeclaration,
 	scope: Scope,
 	context: CompilerContext,
 ): {
-	newClass: ClassDeclaration;
+	newClass: JSClassDeclaration;
 	className: string;
 	declarations: Array<AnyNode>;
 } {
-	const bodyReplacements: Array<AnyStatement> = [];
-	const constructorAssignments: Array<AnyExpression> = [];
+	const bodyReplacements: Array<AnyJSStatement> = [];
+	const constructorAssignments: Array<AnyJSExpression> = [];
 	const className: string =
 		node.id === undefined ? scope.generateUid("class") : node.id.name;
 
-	let _constructor: undefined | ClassMethod = undefined;
+	let _constructor: undefined | JSClassMethod = undefined;
 	const filteredClassBody = [];
 	for (const bodyNode of node.meta.body) {
-		if (bodyNode.type === "ClassMethod" && bodyNode.kind === "constructor") {
+		if (bodyNode.type === "JSClassMethod" && bodyNode.kind === "constructor") {
 			_constructor = bodyNode;
 			continue;
 		}
 
-		if (bodyNode.type === "ClassProperty") {
+		if (bodyNode.type === "JSClassProperty") {
 			if (bodyNode.value === undefined) {
 				continue;
 			}
 
-			if (bodyNode.key.type === "ComputedPropertyKey") {
+			if (bodyNode.key.type === "JSComputedPropertyKey") {
 				if (bodyNode.meta.static === true) {
 					bodyReplacements.push(
 						template.statement`${className}[${bodyNode.key.value}] = ${bodyNode.value};`,
@@ -139,18 +139,18 @@ function transformClass(
 
 								if (
 									isSuperCall(node) &&
-									path.parent.type !== "ExpressionStatement"
+									path.parent.type !== "JSExpressionStatement"
 								) {
 									visited.add(node);
 
 									// TODO retain proper value of super()
-									return sequenceExpression.create({
+									return jsSequenceExpression.create({
 										expressions: [node, ...constructorAssignments],
 									});
 								}
 
 								if (
-									node.type === "ExpressionStatement" &&
+									node.type === "JSExpressionStatement" &&
 									isSuperCall(node.expression)
 								) {
 									visited.add(node);
@@ -166,11 +166,11 @@ function transformClass(
 						},
 					],
 				);
-				_constructor = classMethod.assert(reducedConstructor);
+				_constructor = jsClassMethod.assert(reducedConstructor);
 			} else {
 				// create new constructor with a super() call and assignments
 				_constructor = createConstructor(
-					bindingIdentifier.quick("args"),
+					jsBindingIdentifier.quick("args"),
 					[
 						template.statement`super(...args);`,
 						...toExpressionStatements(constructorAssignments),
@@ -204,11 +204,11 @@ function transformClass(
 		filteredClassBody.unshift(_constructor);
 	}
 
-	const newClass: ClassDeclaration = {
+	const newClass: JSClassDeclaration = {
 		...node,
 		id: node.id !== undefined && node.id.name === className
 			? node.id
-			: bindingIdentifier.create({
+			: jsBindingIdentifier.create({
 					name: className,
 				}),
 		meta: {
@@ -231,10 +231,10 @@ export default {
 
 		// correctly replace an export class with the class node then append the declarations
 		if (
-			(node.type === "ExportLocalDeclaration" ||
-			node.type === "ExportDefaultDeclaration") &&
+			(node.type === "JSExportLocalDeclaration" ||
+			node.type === "JSExportDefaultDeclaration") &&
 			node.declaration !== undefined &&
-			node.declaration.type === "ClassDeclaration" &&
+			node.declaration.type === "JSClassDeclaration" &&
 			hasClassProps(node.declaration)
 		) {
 			const {newClass, declarations} = transformClass(
@@ -252,22 +252,22 @@ export default {
 		}
 
 		// turn a class expression into an IIFE that returns a class declaration
-		if (node.type === "ClassExpression" && hasClassProps(node)) {
+		if (node.type === "JSClassExpression" && hasClassProps(node)) {
 			const className =
 				node.id === undefined ? scope.generateUid("class") : node.id.name;
 
-			return callExpression.create({
-				callee: arrowFunctionExpression.create({
-					head: functionHead.quick([]),
-					body: blockStatement.create({
+			return jsCallExpression.create({
+				callee: jsArrowFunctionExpression.create({
+					head: jsFunctionHead.quick([]),
+					body: jsBlockStatement.create({
 						body: [
 							{
 								...node,
-								type: "ClassDeclaration",
-								id: bindingIdentifier.quick(className),
+								type: "JSClassDeclaration",
+								id: jsBindingIdentifier.quick(className),
 							},
-							returnStatement.create({
-								argument: referenceIdentifier.quick(className),
+							jsReturnStatement.create({
+								argument: jsReferenceIdentifier.quick(className),
 							}),
 						],
 					}),
@@ -276,7 +276,7 @@ export default {
 			});
 		}
 
-		if (node.type === "ClassDeclaration" && hasClassProps(node)) {
+		if (node.type === "JSClassDeclaration" && hasClassProps(node)) {
 			const {newClass, declarations} = transformClass(node, scope, context);
 			return ([newClass, ...declarations] as Array<AnyNode>);
 		}

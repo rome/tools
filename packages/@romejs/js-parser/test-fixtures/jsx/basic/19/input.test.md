@@ -5,7 +5,7 @@
 ## `jsx > basic > 19`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -33,7 +33,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -98,7 +98,7 @@ Program {
 								}
 							}
 						}
-						value: StringLiteral {
+						value: JSStringLiteral {
 							value: "leading"
 							loc: Object {
 								filename: "input.js"
@@ -145,7 +145,7 @@ Program {
 								}
 							}
 						}
-						value: StringLiteral {
+						value: JSStringLiteral {
 							value: "attribute"
 							loc: Object {
 								filename: "input.js"
@@ -189,7 +189,7 @@ Program {
 								line: 1
 							}
 						}
-						argument: ReferenceIdentifier {
+						argument: JSReferenceIdentifier {
 							name: "props"
 							loc: Object {
 								filename: "input.js"

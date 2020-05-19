@@ -5,7 +5,7 @@
 ## `core > uncategorised > 331`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: UpdateExpression {
+			expression: JSUpdateExpression {
 				operator: "++"
 				prefix: false
 				loc: Object {
@@ -60,7 +60,7 @@ Program {
 						line: 1
 					}
 				}
-				argument: ReferenceIdentifier {
+				argument: JSReferenceIdentifier {
 					name: "x"
 					loc: Object {
 						filename: "input.js"
@@ -79,7 +79,7 @@ Program {
 				}
 			}
 		}
-		BlockStatement {
+		JSBlockStatement {
 			body: Array []
 			directives: Array []
 			loc: Object {
@@ -96,7 +96,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -110,7 +110,7 @@ Program {
 					line: 3
 				}
 			}
-			expression: RegExpLiteral {
+			expression: JSRegExpLiteral {
 				global: false
 				insensitive: false
 				multiline: false
@@ -130,7 +130,7 @@ Program {
 						line: 3
 					}
 				}
-				expression: RegExpSubExpression {
+				expression: JSRegExpSubExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -145,7 +145,7 @@ Program {
 						}
 					}
 					body: Array [
-						RegExpCharacter {
+						JSRegExpCharacter {
 							value: "f"
 							loc: Object {
 								filename: "input.js"
@@ -161,7 +161,7 @@ Program {
 								}
 							}
 						}
-						RegExpCharacter {
+						JSRegExpCharacter {
 							value: "o"
 							loc: Object {
 								filename: "input.js"
@@ -177,7 +177,7 @@ Program {
 								}
 							}
 						}
-						RegExpCharacter {
+						JSRegExpCharacter {
 							value: "o"
 							loc: Object {
 								filename: "input.js"

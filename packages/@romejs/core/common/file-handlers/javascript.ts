@@ -7,8 +7,8 @@
 
 import * as compiler from "@romejs/js-compiler";
 import {check as typeCheck} from "@romejs/js-analysis";
-import {ConstProgramSyntax, ConstSourceType} from "@romejs/js-ast";
-import {formatJS} from "@romejs/js-formatter";
+import {ConstProgramSyntax, ConstSourceType} from "@romejs/ast";
+import {formatJS} from "@romejs/formatter";
 import {
 	ExtensionHandler,
 	ExtensionHandlerMethodInfo,

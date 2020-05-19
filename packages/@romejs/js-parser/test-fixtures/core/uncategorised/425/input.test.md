@@ -5,7 +5,7 @@
 ## `core > uncategorised > 425`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		TryStatement {
+		JSTryStatement {
 			finalizer: undefined
 			handler: undefined
 			loc: Object {
@@ -70,7 +70,7 @@ Program {
 					line: 1
 				}
 			}
-			block: BlockStatement {
+			block: JSBlockStatement {
 				body: Array []
 				directives: Array []
 				loc: Object {

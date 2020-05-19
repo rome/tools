@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > 20`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.js"
@@ -60,8 +60,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "ok"
 							loc: Object {
 								filename: "input.js"
@@ -91,7 +91,7 @@ Program {
 								line: 1
 							}
 						}
-						init: CallExpression {
+						init: JSCallExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -105,7 +105,7 @@ Program {
 									line: 1
 								}
 							}
-							callee: ReferenceIdentifier {
+							callee: JSReferenceIdentifier {
 								name: "async"
 								loc: Object {
 									filename: "input.js"
@@ -123,7 +123,7 @@ Program {
 								}
 							}
 							arguments: Array [
-								ReferenceIdentifier {
+								JSReferenceIdentifier {
 									name: "x"
 									loc: Object {
 										filename: "input.js"

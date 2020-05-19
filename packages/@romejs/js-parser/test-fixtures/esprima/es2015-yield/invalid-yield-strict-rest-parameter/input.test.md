@@ -5,7 +5,7 @@
 ## `esprima > es2015-yield > invalid-yield-strict-rest-parameter`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	filename: "input.js"
@@ -28,7 +28,7 @@ Program {
 		}
 	}
 	directives: Array [
-		Directive {
+		JSDirective {
 			value: "use strict"
 			loc: Object {
 				filename: "input.js"
@@ -71,8 +71,8 @@ Program {
 		}
 	]
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
 					filename: "input.js"
@@ -102,7 +102,7 @@ Program {
 					line: 1
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
 				loc: Object {
@@ -119,7 +119,7 @@ Program {
 					}
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -140,7 +140,7 @@ Program {
 						line: 1
 					}
 				}
-				rest: BindingIdentifier {
+				rest: JSBindingIdentifier {
 					name: "yield"
 					loc: Object {
 						filename: "input.js"
@@ -156,7 +156,7 @@ Program {
 							line: 1
 						}
 					}
-					meta: PatternMeta {
+					meta: JSPatternMeta {
 						optional: undefined
 						typeAnnotation: undefined
 						loc: Object {

@@ -5,7 +5,7 @@
 ## `experimental > optional-chaining > super-method-class`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		ClassDeclaration {
-			id: BindingIdentifier {
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			meta: ClassHead {
+			meta: JSClassHead {
 				implements: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
@@ -78,7 +78,7 @@ Program {
 						line: 1
 					}
 				}
-				superClass: ReferenceIdentifier {
+				superClass: JSReferenceIdentifier {
 					name: "B"
 					loc: Object {
 						filename: "input.js"
@@ -96,10 +96,10 @@ Program {
 					}
 				}
 				body: Array [
-					ClassMethod {
+					JSClassMethod {
 						kind: "constructor"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "constructor"
 								loc: Object {
 									filename: "input.js"
@@ -143,7 +143,7 @@ Program {
 								line: 2
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -166,7 +166,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -192,7 +192,7 @@ Program {
 								}
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
 								filename: "input.js"
@@ -208,7 +208,7 @@ Program {
 								}
 							}
 							body: Array [
-								ExpressionStatement {
+								JSExpressionStatement {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -222,7 +222,7 @@ Program {
 											line: 3
 										}
 									}
-									expression: MemberExpression {
+									expression: JSMemberExpression {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -236,7 +236,7 @@ Program {
 												line: 3
 											}
 										}
-										object: CallExpression {
+										object: JSCallExpression {
 											arguments: Array []
 											loc: Object {
 												filename: "input.js"
@@ -251,7 +251,7 @@ Program {
 													line: 3
 												}
 											}
-											callee: Super {
+											callee: JSSuper {
 												loc: Object {
 													filename: "input.js"
 													end: Object {
@@ -267,8 +267,8 @@ Program {
 												}
 											}
 										}
-										property: StaticMemberProperty {
-											value: Identifier {
+										property: JSStaticMemberProperty {
+											value: JSIdentifier {
 												name: "b"
 												loc: Object {
 													filename: "input.js"

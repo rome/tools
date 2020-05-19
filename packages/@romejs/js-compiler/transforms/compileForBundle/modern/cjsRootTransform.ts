@@ -16,7 +16,7 @@ export default {
 
 		const {moduleId} = getOptions(context);
 
-		if (node.type === "Program") {
+		if (node.type === "JSProgram") {
 			const mappings = new Map();
 
 			// make all variables private

@@ -8,10 +8,10 @@
 import {Path} from "@romejs/js-compiler";
 import {TransformExitResult} from "@romejs/js-compiler/types";
 import {
-	referenceIdentifier,
+	jsReferenceIdentifier,
 	tsTypeParameterInstantiation,
 	tsTypeReference,
-} from "@romejs/js-ast";
+} from "@romejs/ast";
 import {descriptions} from "@romejs/diagnostics";
 
 export default {
@@ -24,7 +24,7 @@ export default {
 				{
 					old: node,
 					fixed: tsTypeReference.create({
-						typeName: referenceIdentifier.quick("Array"),
+						typeName: jsReferenceIdentifier.quick("Array"),
 						typeParameters: tsTypeParameterInstantiation.create({
 							params: [node.elementType],
 						}),

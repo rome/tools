@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 329`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ForStatement {
+		JSForStatement {
 			init: undefined
 			test: undefined
 			update: undefined
@@ -71,7 +71,7 @@ Program {
 					line: 1
 				}
 			}
-			body: VariableDeclarationStatement {
+			body: JSVariableDeclarationStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -85,7 +85,7 @@ Program {
 						line: 1
 					}
 				}
-				declaration: VariableDeclaration {
+				declaration: JSVariableDeclaration {
 					kind: "const"
 					loc: Object {
 						filename: "input.js"
@@ -101,8 +101,8 @@ Program {
 						}
 					}
 					declarations: Array [
-						VariableDeclarator {
-							id: BindingIdentifier {
+						JSVariableDeclarator {
+							id: JSBindingIdentifier {
 								name: "x"
 								loc: Object {
 									filename: "input.js"
@@ -132,7 +132,7 @@ Program {
 									line: 1
 								}
 							}
-							init: NumericLiteral {
+							init: JSNumericLiteral {
 								value: 10
 								format: undefined
 								loc: Object {

@@ -5,7 +5,7 @@
 ## `core > uncategorised > 247`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ForInStatement {
+		JSForInStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			right: ReferenceIdentifier {
+			right: JSReferenceIdentifier {
 				name: "list"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					}
 				}
 			}
-			left: VariableDeclaration {
+			left: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.js"
@@ -77,8 +77,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.js"
@@ -112,7 +112,7 @@ Program {
 					}
 				]
 			}
-			body: ExpressionStatement {
+			body: JSExpressionStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -126,7 +126,7 @@ Program {
 						line: 1
 					}
 				}
-				expression: CallExpression {
+				expression: JSCallExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -140,7 +140,7 @@ Program {
 							line: 1
 						}
 					}
-					callee: ReferenceIdentifier {
+					callee: JSReferenceIdentifier {
 						name: "process"
 						loc: Object {
 							filename: "input.js"
@@ -158,7 +158,7 @@ Program {
 						}
 					}
 					arguments: Array [
-						ReferenceIdentifier {
+						JSReferenceIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.js"

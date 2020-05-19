@@ -5,7 +5,7 @@
 ## `typescript > function > export-default`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExportDefaultDeclaration {
+		JSExportDefaultDeclaration {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -45,7 +45,7 @@ Program {
 				}
 			}
 			declaration: TSDeclareFunction {
-				id: BindingIdentifier {
+				id: JSBindingIdentifier {
 					name: "*default*"
 					loc: Object {
 						filename: "input.ts"
@@ -74,7 +74,7 @@ Program {
 						line: 1
 					}
 				}
-				head: FunctionHead {
+				head: JSFunctionHead {
 					async: false
 					generator: false
 					hasHoistedVars: false
@@ -94,7 +94,7 @@ Program {
 							line: 1
 						}
 					}
-					returnType: VoidKeywordTypeAnnotation {
+					returnType: TSVoidKeywordTypeAnnotation {
 						loc: Object {
 							filename: "input.ts"
 							end: Object {
@@ -110,7 +110,7 @@ Program {
 						}
 					}
 					params: Array [
-						BindingIdentifier {
+						JSBindingIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.ts"
@@ -126,7 +126,7 @@ Program {
 									line: 1
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								optional: true
 								loc: Object {
 									filename: "input.ts"

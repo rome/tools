@@ -5,7 +5,7 @@
 ## `typescript > arrow-function > destructuring`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: AssignmentExpression {
+			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
 					filename: "input.ts"
@@ -83,7 +83,7 @@ Program {
 						line: 1
 					}
 				}
-				right: NumericLiteral {
+				right: JSNumericLiteral {
 					value: 0
 					format: undefined
 					loc: Object {
@@ -100,7 +100,7 @@ Program {
 						}
 					}
 				}
-				left: AssignmentObjectPattern {
+				left: JSAssignmentObjectPattern {
 					rest: undefined
 					loc: Object {
 						filename: "input.ts"
@@ -116,9 +116,9 @@ Program {
 						}
 					}
 					properties: Array [
-						AssignmentObjectPatternProperty {
-							key: StaticPropertyKey {
-								value: Identifier {
+						JSAssignmentObjectPatternProperty {
+							key: JSStaticPropertyKey {
+								value: JSIdentifier {
 									name: "a"
 									loc: Object {
 										filename: "input.ts"
@@ -149,7 +149,7 @@ Program {
 									}
 								}
 							}
-							value: AssignmentIdentifier {
+							value: JSAssignmentIdentifier {
 								name: "a"
 								loc: Object {
 									filename: "input.ts"
@@ -184,7 +184,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -198,7 +198,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ReferenceIdentifier {
+			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
 					filename: "input.ts"
@@ -215,7 +215,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -229,7 +229,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ReferenceIdentifier {
+			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
 					filename: "input.ts"
@@ -246,7 +246,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -260,7 +260,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ReferenceIdentifier {
+			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
 					filename: "input.ts"
@@ -277,7 +277,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -291,7 +291,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: NumericLiteral {
+			expression: JSNumericLiteral {
 				value: 0
 				format: undefined
 				loc: Object {

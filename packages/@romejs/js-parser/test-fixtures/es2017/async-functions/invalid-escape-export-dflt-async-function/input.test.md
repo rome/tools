@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > invalid-escape-export-dflt-async-function`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExportDefaultDeclaration {
+		JSExportDefaultDeclaration {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: ReferenceIdentifier {
+			declaration: JSReferenceIdentifier {
 				name: "async"
 				loc: Object {
 					filename: "input.js"
@@ -86,8 +86,8 @@ Program {
 				}
 			}
 		}
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "y"
 				loc: Object {
 					filename: "input.js"
@@ -117,7 +117,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -140,7 +140,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -156,7 +156,7 @@ Program {
 					}
 				}
 				body: Array [
-					ExpressionStatement {
+					JSExpressionStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -170,7 +170,7 @@ Program {
 								line: 1
 							}
 						}
-						expression: ReferenceIdentifier {
+						expression: JSReferenceIdentifier {
 							name: "await"
 							loc: Object {
 								filename: "input.js"
@@ -188,7 +188,7 @@ Program {
 							}
 						}
 					}
-					ExpressionStatement {
+					JSExpressionStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -202,7 +202,7 @@ Program {
 								line: 1
 							}
 						}
-						expression: ReferenceIdentifier {
+						expression: JSReferenceIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.js"

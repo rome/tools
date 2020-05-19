@@ -5,7 +5,7 @@
 ## `jsx > regression > 7`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -33,7 +33,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -98,7 +98,7 @@ Program {
 								}
 							}
 						}
-						value: StringLiteral {
+						value: JSStringLiteral {
 							value: "M230 80\n\t\tA 45 45, 0, 1, 0, 275 125\n    L 275 80 Z"
 							loc: Object {
 								filename: "input.js"

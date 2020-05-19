@@ -5,7 +5,7 @@
 ## `es2015 > modules > invalid-escape-import-from`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ImportDeclaration {
+		JSImportDeclaration {
 			importKind: undefined
 			namedSpecifiers: Array []
 			namespaceSpecifier: undefined
@@ -71,7 +71,7 @@ Program {
 					line: 1
 				}
 			}
-			source: StringLiteral {
+			source: JSStringLiteral {
 				value: ""
 				loc: Object {
 					filename: "input.js"
@@ -87,7 +87,7 @@ Program {
 					}
 				}
 			}
-			defaultSpecifier: ImportDefaultSpecifier {
+			defaultSpecifier: JSImportDefaultSpecifier {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -101,8 +101,8 @@ Program {
 						line: 1
 					}
 				}
-				local: ImportSpecifierLocal {
-					name: BindingIdentifier {
+				local: JSImportSpecifierLocal {
+					name: JSBindingIdentifier {
 						name: "X"
 						loc: Object {
 							filename: "input.js"
@@ -136,7 +136,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -150,7 +150,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ReferenceIdentifier {
+			expression: JSReferenceIdentifier {
 				name: "from"
 				loc: Object {
 					filename: "input.js"
@@ -168,7 +168,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -182,7 +182,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: StringLiteral {
+			expression: JSStringLiteral {
 				value: "x"
 				loc: Object {
 					filename: "input.js"

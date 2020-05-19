@@ -5,7 +5,7 @@
 ## `typescript > class > constructor-with-modifier-names`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		ClassDeclaration {
-			id: BindingIdentifier {
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: Object {
 					filename: "input.ts"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			meta: ClassHead {
+			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
@@ -80,10 +80,10 @@ Program {
 					}
 				}
 				body: Array [
-					ClassMethod {
+					JSClassMethod {
 						kind: "constructor"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "constructor"
 								loc: Object {
 									filename: "input.ts"
@@ -127,7 +127,7 @@ Program {
 								line: 2
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
 							loc: Object {
@@ -144,7 +144,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -170,7 +170,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -192,7 +192,7 @@ Program {
 								}
 							}
 							params: Array [
-								BindingIdentifier {
+								JSBindingIdentifier {
 									name: "set"
 									loc: Object {
 										filename: "input.ts"
@@ -208,7 +208,7 @@ Program {
 											line: 2
 										}
 									}
-									meta: PatternMeta {
+									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
@@ -226,7 +226,7 @@ Program {
 										}
 									}
 								}
-								BindingIdentifier {
+								JSBindingIdentifier {
 									name: "readonly"
 									loc: Object {
 										filename: "input.ts"
@@ -242,7 +242,7 @@ Program {
 											line: 2
 										}
 									}
-									meta: PatternMeta {
+									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
@@ -263,10 +263,10 @@ Program {
 							]
 						}
 					}
-					ClassMethod {
+					JSClassMethod {
 						kind: "constructor"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "constructor"
 								loc: Object {
 									filename: "input.ts"
@@ -310,7 +310,7 @@ Program {
 								line: 3
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
 							loc: Object {
@@ -327,7 +327,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -353,7 +353,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -375,7 +375,7 @@ Program {
 								}
 							}
 							params: Array [
-								BindingIdentifier {
+								JSBindingIdentifier {
 									name: "set"
 									loc: Object {
 										filename: "input.ts"
@@ -391,7 +391,7 @@ Program {
 											line: 3
 										}
 									}
-									meta: PatternMeta {
+									meta: JSPatternMeta {
 										optional: undefined
 										loc: Object {
 											filename: "input.ts"
@@ -423,7 +423,7 @@ Program {
 										}
 									}
 								}
-								BindingIdentifier {
+								JSBindingIdentifier {
 									name: "readonly"
 									loc: Object {
 										filename: "input.ts"
@@ -439,7 +439,7 @@ Program {
 											line: 3
 										}
 									}
-									meta: PatternMeta {
+									meta: JSPatternMeta {
 										optional: undefined
 										loc: Object {
 											filename: "input.ts"

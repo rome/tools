@@ -5,7 +5,7 @@
 ## `typescript > interface > export-abstract-interface`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ReferenceIdentifier {
+			expression: JSReferenceIdentifier {
 				name: "abstract"
 				loc: Object {
 					filename: "input.ts"
@@ -87,7 +87,7 @@ Program {
 			}
 		}
 		TSInterfaceDeclaration {
-			id: BindingIdentifier {
+			id: JSBindingIdentifier {
 				name: "I"
 				loc: Object {
 					filename: "input.ts"

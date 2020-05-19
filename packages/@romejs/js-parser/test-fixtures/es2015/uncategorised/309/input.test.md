@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 309`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: AssignmentExpression {
+			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
 					filename: "input.js"
@@ -83,7 +83,7 @@ Program {
 						line: 1
 					}
 				}
-				right: ReferenceIdentifier {
+				right: JSReferenceIdentifier {
 					name: "arr"
 					loc: Object {
 						filename: "input.js"
@@ -100,7 +100,7 @@ Program {
 						}
 					}
 				}
-				left: AssignmentArrayPattern {
+				left: JSAssignmentArrayPattern {
 					rest: undefined
 					loc: Object {
 						filename: "input.js"
@@ -116,7 +116,7 @@ Program {
 						}
 					}
 					elements: Array [
-						AssignmentIdentifier {
+						JSAssignmentIdentifier {
 							name: "a"
 							loc: Object {
 								filename: "input.js"
@@ -133,7 +133,7 @@ Program {
 								}
 							}
 						}
-						AssignmentObjectPattern {
+						JSAssignmentObjectPattern {
 							rest: undefined
 							loc: Object {
 								filename: "input.js"
@@ -149,9 +149,9 @@ Program {
 								}
 							}
 							properties: Array [
-								AssignmentObjectPatternProperty {
-									key: StaticPropertyKey {
-										value: Identifier {
+								JSAssignmentObjectPatternProperty {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
 											name: "b"
 											loc: Object {
 												filename: "input.js"
@@ -182,7 +182,7 @@ Program {
 											}
 										}
 									}
-									value: AssignmentAssignmentPattern {
+									value: JSAssignmentAssignmentPattern {
 										operator: "="
 										loc: Object {
 											filename: "input.js"
@@ -197,7 +197,7 @@ Program {
 												line: 1
 											}
 										}
-										right: NumericLiteral {
+										right: JSNumericLiteral {
 											value: 1
 											format: undefined
 											loc: Object {
@@ -214,7 +214,7 @@ Program {
 												}
 											}
 										}
-										left: AssignmentObjectPattern {
+										left: JSAssignmentObjectPattern {
 											rest: undefined
 											loc: Object {
 												filename: "input.js"
@@ -230,9 +230,9 @@ Program {
 												}
 											}
 											properties: Array [
-												AssignmentObjectPatternProperty {
-													key: StaticPropertyKey {
-														value: Identifier {
+												JSAssignmentObjectPatternProperty {
+													key: JSStaticPropertyKey {
+														value: JSIdentifier {
 															name: "c"
 															loc: Object {
 																filename: "input.js"
@@ -263,7 +263,7 @@ Program {
 															}
 														}
 													}
-													value: AssignmentIdentifier {
+													value: JSAssignmentIdentifier {
 														name: "c"
 														loc: Object {
 															filename: "input.js"
@@ -313,7 +313,7 @@ Program {
 								}
 							]
 						}
-						AssignmentIdentifier {
+						JSAssignmentIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: Object {
 								filename: "input.js"

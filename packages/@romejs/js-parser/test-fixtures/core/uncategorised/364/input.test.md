@@ -5,7 +5,7 @@
 ## `core > uncategorised > 364`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: RegExpLiteral {
+			expression: JSRegExpLiteral {
 				global: false
 				insensitive: false
 				multiline: false
@@ -88,7 +88,7 @@ Program {
 						line: 1
 					}
 				}
-				expression: RegExpSubExpression {
+				expression: JSRegExpSubExpression {
 					body: Array []
 					loc: Object {
 						filename: "input.js"

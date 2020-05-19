@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 311`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: AssignmentExpression {
+			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
 					filename: "input.js"
@@ -83,7 +83,7 @@ Program {
 						line: 1
 					}
 				}
-				left: AssignmentIdentifier {
+				left: JSAssignmentIdentifier {
 					name: "obj"
 					loc: Object {
 						filename: "input.js"
@@ -100,7 +100,7 @@ Program {
 						}
 					}
 				}
-				right: AssignmentExpression {
+				right: JSAssignmentExpression {
 					operator: "="
 					loc: Object {
 						filename: "input.js"
@@ -115,7 +115,7 @@ Program {
 							line: 1
 						}
 					}
-					right: NumericLiteral {
+					right: JSNumericLiteral {
 						value: 0
 						format: undefined
 						loc: Object {
@@ -132,7 +132,7 @@ Program {
 							}
 						}
 					}
-					left: AssignmentObjectPattern {
+					left: JSAssignmentObjectPattern {
 						rest: undefined
 						loc: Object {
 							filename: "input.js"
@@ -148,9 +148,9 @@ Program {
 							}
 						}
 						properties: Array [
-							AssignmentObjectPatternProperty {
-								key: StaticPropertyKey {
-									value: Identifier {
+							JSAssignmentObjectPatternProperty {
+								key: JSStaticPropertyKey {
+									value: JSIdentifier {
 										name: "x"
 										loc: Object {
 											filename: "input.js"
@@ -181,7 +181,7 @@ Program {
 										}
 									}
 								}
-								value: AssignmentIdentifier {
+								value: JSAssignmentIdentifier {
 									name: "x"
 									loc: Object {
 										filename: "input.js"
@@ -217,7 +217,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -231,7 +231,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ReferenceIdentifier {
+			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
 					filename: "input.js"

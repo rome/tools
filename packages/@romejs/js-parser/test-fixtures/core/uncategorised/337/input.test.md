@@ -5,7 +5,7 @@
 ## `core > uncategorised > 337`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		SwitchStatement {
+		JSSwitchStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			discriminant: ReferenceIdentifier {
+			discriminant: JSReferenceIdentifier {
 				name: "a"
 				loc: Object {
 					filename: "input.js"
@@ -62,7 +62,7 @@ Program {
 				}
 			}
 			cases: Array [
-				SwitchCase {
+				JSSwitchCase {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -76,7 +76,7 @@ Program {
 							line: 1
 						}
 					}
-					test: NumericLiteral {
+					test: JSNumericLiteral {
 						value: 1
 						format: undefined
 						loc: Object {
@@ -94,7 +94,7 @@ Program {
 						}
 					}
 					consequent: Array [
-						BlockStatement {
+						JSBlockStatement {
 							body: Array []
 							directives: Array []
 							loc: Object {
@@ -111,7 +111,7 @@ Program {
 								}
 							}
 						}
-						ExpressionStatement {
+						JSExpressionStatement {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -125,7 +125,7 @@ Program {
 									line: 2
 								}
 							}
-							expression: RegExpLiteral {
+							expression: JSRegExpLiteral {
 								global: false
 								insensitive: false
 								multiline: false
@@ -145,7 +145,7 @@ Program {
 										line: 2
 									}
 								}
-								expression: RegExpSubExpression {
+								expression: JSRegExpSubExpression {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -160,7 +160,7 @@ Program {
 										}
 									}
 									body: Array [
-										RegExpCharacter {
+										JSRegExpCharacter {
 											value: "f"
 											loc: Object {
 												filename: "input.js"
@@ -176,7 +176,7 @@ Program {
 												}
 											}
 										}
-										RegExpCharacter {
+										JSRegExpCharacter {
 											value: "o"
 											loc: Object {
 												filename: "input.js"
@@ -192,7 +192,7 @@ Program {
 												}
 											}
 										}
-										RegExpCharacter {
+										JSRegExpCharacter {
 											value: "o"
 											loc: Object {
 												filename: "input.js"

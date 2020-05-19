@@ -5,7 +5,7 @@
 ## `experimental > class-properties > asi-failure-computed`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -54,8 +54,8 @@ Program {
 		}
 	]
 	body: Array [
-		ClassDeclaration {
-			id: BindingIdentifier {
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: Object {
 					filename: "input.js"
@@ -85,7 +85,7 @@ Program {
 					line: 1
 				}
 			}
-			meta: ClassHead {
+			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
@@ -104,9 +104,9 @@ Program {
 					}
 				}
 				body: Array [
-					ClassProperty {
-						key: StaticPropertyKey {
-							value: Identifier {
+					JSClassProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "p"
 								loc: Object {
 									filename: "input.js"
@@ -137,7 +137,7 @@ Program {
 								}
 							}
 						}
-						value: CallExpression {
+						value: JSCallExpression {
 							arguments: Array []
 							loc: Object {
 								filename: "input.js"
@@ -152,7 +152,7 @@ Program {
 									line: 2
 								}
 							}
-							callee: MemberExpression {
+							callee: JSMemberExpression {
 								loc: Object {
 									filename: "input.js"
 									end: Object {
@@ -166,7 +166,7 @@ Program {
 										line: 2
 									}
 								}
-								object: ReferenceIdentifier {
+								object: JSReferenceIdentifier {
 									name: "x"
 									loc: Object {
 										filename: "input.js"
@@ -183,8 +183,8 @@ Program {
 										}
 									}
 								}
-								property: ComputedMemberProperty {
-									value: ReferenceIdentifier {
+								property: JSComputedMemberProperty {
+									value: JSReferenceIdentifier {
 										name: "m"
 										loc: Object {
 											filename: "input.js"
@@ -232,7 +232,7 @@ Program {
 								line: 2
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -259,9 +259,9 @@ Program {
 							}
 						}
 					}
-					ClassProperty {
-						key: StaticPropertyKey {
-							value: Identifier {
+					JSClassProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: ""
 								loc: Object {
 									filename: "input.js"
@@ -308,7 +308,7 @@ Program {
 								line: 3
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -338,7 +338,7 @@ Program {
 				]
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -352,7 +352,7 @@ Program {
 					line: 4
 				}
 			}
-			expression: ReferenceIdentifier {
+			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
 					filename: "input.js"

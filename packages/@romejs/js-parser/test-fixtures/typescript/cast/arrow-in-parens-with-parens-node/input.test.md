@@ -5,7 +5,7 @@
 ## `typescript > cast > arrow-in-parens-with-parens-node`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.ts"
@@ -60,8 +60,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "asserted1"
 							loc: Object {
 								filename: "input.ts"
@@ -91,7 +91,7 @@ Program {
 								line: 1
 							}
 						}
-						init: ArrowFunctionExpression {
+						init: JSArrowFunctionExpression {
 							loc: Object {
 								filename: "input.ts"
 								end: Object {
@@ -140,7 +140,7 @@ Program {
 									}
 								]
 							}
-							head: FunctionHead {
+							head: JSFunctionHead {
 								async: false
 								hasHoistedVars: false
 								rest: undefined
@@ -160,7 +160,7 @@ Program {
 									}
 								}
 								params: Array [
-									BindingIdentifier {
+									JSBindingIdentifier {
 										name: "n"
 										loc: Object {
 											filename: "input.ts"
@@ -179,7 +179,7 @@ Program {
 									}
 								]
 							}
-							body: BlockStatement {
+							body: JSBlockStatement {
 								directives: Array []
 								loc: Object {
 									filename: "input.ts"
@@ -195,7 +195,7 @@ Program {
 									}
 								}
 								body: Array [
-									ReturnStatement {
+									JSReturnStatement {
 										loc: Object {
 											filename: "input.ts"
 											end: Object {
@@ -209,7 +209,7 @@ Program {
 												line: 1
 											}
 										}
-										argument: ReferenceIdentifier {
+										argument: JSReferenceIdentifier {
 											name: "n"
 											loc: Object {
 												filename: "input.ts"

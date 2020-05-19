@@ -5,7 +5,7 @@
 ## `core > categorized > filename-specified`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentLine {
+		JSCommentLine {
 			id: "0"
 			value: " This comment should have a filename prop attached to loc"
 			loc: Object {
@@ -48,7 +48,7 @@ Program {
 		}
 	]
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			leadingComments: Array ["0"]
 			loc: Object {
 				filename: "input.js"
@@ -63,7 +63,7 @@ Program {
 					line: 2
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "var"
 				leadingComments: undefined
 				loc: Object {
@@ -80,8 +80,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "node"
 							leadingComments: undefined
 							loc: Object {
@@ -113,7 +113,7 @@ Program {
 								line: 2
 							}
 						}
-						init: StringLiteral {
+						init: JSStringLiteral {
 							value: "shouldHaveFilenameLocProp"
 							loc: Object {
 								filename: "input.js"

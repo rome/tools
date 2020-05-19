@@ -6,7 +6,7 @@
  */
 
 import Scope from "../Scope";
-import {AnyNode, TSInterfaceDeclaration} from "@romejs/js-ast";
+import {AnyNode, TSInterfaceDeclaration} from "@romejs/ast";
 import {TypeBinding} from "@romejs/js-compiler";
 
 export default {

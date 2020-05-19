@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {ConstExportModuleKind, ConstImportModuleKind} from "@romejs/js-ast";
+import {ConstExportModuleKind, ConstImportModuleKind} from "@romejs/ast";
 import {ImportBinding, Path} from "@romejs/js-compiler";
 import {AnalyzeDependencyName} from "@romejs/core";
 import {
@@ -37,7 +37,7 @@ export default {
 		const {node, scope, context} = path;
 
 		// import('./bar');
-		if (node.type === "ImportCall" && node.argument.type === "StringLiteral") {
+		if (node.type === "JSImportCall" && node.argument.type === "JSStringLiteral") {
 			context.record(
 				new ImportRecord({
 					type: "es",
@@ -56,7 +56,7 @@ export default {
 		// export const foo
 		// export function foo() {}
 		// export {};
-		if (node.type === "ExportLocalDeclaration") {
+		if (node.type === "JSExportLocalDeclaration") {
 			const valueType = getAnalyzeExportValueType(scope, node.declaration);
 			for (const id of getBindingIdentifiers(node)) {
 				const kind = maybeTypeBinding(getExportKind(node.exportKind), scope, id);
@@ -94,7 +94,7 @@ export default {
 		}
 
 		// export default
-		if (node.type === "ExportDefaultDeclaration") {
+		if (node.type === "JSExportDefaultDeclaration") {
 			context.record(
 				new ExportRecord({
 					type: "local",
@@ -108,7 +108,7 @@ export default {
 
 		// External binding exports:
 		// export {} from '';
-		if (node.type === "ExportExternalDeclaration") {
+		if (node.type === "JSExportExternalDeclaration") {
 			const {source} = node;
 			const specifiersKinds: Array<ConstImportModuleKind> = [];
 			const exportedNames: Array<AnalyzeDependencyName> = [];
@@ -196,7 +196,7 @@ export default {
 		}
 
 		// export * from '';
-		if (node.type === "ExportAllDeclaration") {
+		if (node.type === "JSExportAllDeclaration") {
 			context.record(
 				new ImportRecord({
 					type: "es",
@@ -221,9 +221,9 @@ export default {
 		}
 
 		if (
-			node.type === "ExportAllDeclaration" ||
-			node.type === "ExportDefaultDeclaration" ||
-			node.type === "ExportLocalDeclaration"
+			node.type === "JSExportAllDeclaration" ||
+			node.type === "JSExportDefaultDeclaration" ||
+			node.type === "JSExportLocalDeclaration"
 		) {
 			context.record(new ESExportRecord(getExportKind(node.exportKind), node));
 		}
@@ -231,13 +231,13 @@ export default {
 		// import {} from '';
 
 		// import * as foo from '';
-		if (node.type === "ImportDeclaration") {
+		if (node.type === "JSImportDeclaration") {
 			let hasNamespaceSpecifier = false;
 			const specifierKinds: Array<ConstImportModuleKind> = [];
 			const names: Array<AnalyzeDependencyName> = [];
 
 			for (const specifier of getImportSpecifiers(node)) {
-				if (specifier.type === "ImportNamespaceSpecifier") {
+				if (specifier.type === "JSImportNamespaceSpecifier") {
 					hasNamespaceSpecifier = true;
 					break;
 				}
@@ -245,7 +245,7 @@ export default {
 				const kind: ConstImportModuleKind = getImportKind(node.importKind);
 				specifierKinds.push(kind);
 
-				if (specifier.type === "ImportDefaultSpecifier") {
+				if (specifier.type === "JSImportDefaultSpecifier") {
 					names.push({
 						kind,
 						loc: specifier.loc,
@@ -253,7 +253,7 @@ export default {
 					});
 				}
 
-				if (specifier.type === "ImportSpecifier") {
+				if (specifier.type === "JSImportSpecifier") {
 					names.push({
 						kind,
 						loc: specifier.loc,
@@ -278,17 +278,17 @@ export default {
 
 		// Detect top level await
 		if (
-			node.type === "AwaitExpression" &&
+			node.type === "JSAwaitExpression" &&
 			path.findAncestry((path) => isFunctionNode(path.node)) === undefined
 		) {
 			const {loc} = node;
 			if (loc === undefined) {
-				throw new Error("loc is undefined on AwaitExpression we want to mark");
+				throw new Error("loc is undefined on JSAwaitExpression we want to mark");
 			}
 			context.record(new TopLevelAwaitRecord(loc));
 		}
 
-		if (node.type === "ReferenceIdentifier") {
+		if (node.type === "JSReferenceIdentifier") {
 			const binding = path.scope.getBinding(node.name);
 
 			// Mark references to imports outside of functions
@@ -304,7 +304,7 @@ export default {
 
 				// (They could still be triggered with an actual function call but this is just for some basic analysis)
 				const deferredExecution = path.findAncestry((path) =>
-					isFunctionNode(path.node) || path.node.type === "ClassProperty"
+					isFunctionNode(path.node) || path.node.type === "JSClassProperty"
 				);
 				const isTop = deferredExecution === undefined;
 

@@ -5,7 +5,7 @@
 ## `es2015 > generators > invalid-hanging`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		IfStatement {
+		JSIfStatement {
 			alternate: undefined
 			loc: Object {
 				filename: "input.js"
@@ -69,7 +69,7 @@ Program {
 					line: 1
 				}
 			}
-			test: NumericLiteral {
+			test: JSNumericLiteral {
 				value: 1
 				format: undefined
 				loc: Object {
@@ -86,8 +86,8 @@ Program {
 					}
 				}
 			}
-			consequent: FunctionDeclaration {
-				id: BindingIdentifier {
+			consequent: JSFunctionDeclaration {
+				id: JSBindingIdentifier {
 					name: "foo"
 					loc: Object {
 						filename: "input.js"
@@ -117,7 +117,7 @@ Program {
 						line: 1
 					}
 				}
-				body: BlockStatement {
+				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
 					loc: Object {
@@ -134,7 +134,7 @@ Program {
 						}
 					}
 				}
-				head: FunctionHead {
+				head: JSFunctionHead {
 					async: false
 					generator: true
 					hasHoistedVars: false

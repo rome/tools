@@ -5,7 +5,7 @@
 ## `comments > basic > switch-fallthrough-comment`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentLine {
+		JSCommentLine {
 			id: "0"
 			value: " foo"
 			loc: Object {
@@ -46,7 +46,7 @@ Program {
 				}
 			}
 		}
-		CommentLine {
+		JSCommentLine {
 			id: "1"
 			value: " falls through"
 			loc: Object {
@@ -65,7 +65,7 @@ Program {
 		}
 	]
 	body: Array [
-		SwitchStatement {
+		JSSwitchStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -79,7 +79,7 @@ Program {
 					line: 1
 				}
 			}
-			discriminant: ReferenceIdentifier {
+			discriminant: JSReferenceIdentifier {
 				name: "foo"
 				loc: Object {
 					filename: "input.js"
@@ -97,7 +97,7 @@ Program {
 				}
 			}
 			cases: Array [
-				SwitchCase {
+				JSSwitchCase {
 					consequent: Array []
 					trailingComments: Array ["1"]
 					loc: Object {
@@ -113,7 +113,7 @@ Program {
 							line: 3
 						}
 					}
-					test: NumericLiteral {
+					test: JSNumericLiteral {
 						value: 1
 						format: undefined
 						leadingComments: Array ["0"]
@@ -132,7 +132,7 @@ Program {
 						}
 					}
 				}
-				SwitchCase {
+				JSSwitchCase {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -146,7 +146,7 @@ Program {
 							line: 5
 						}
 					}
-					test: NumericLiteral {
+					test: JSNumericLiteral {
 						value: 2
 						format: undefined
 						leadingComments: Array ["1"]
@@ -165,7 +165,7 @@ Program {
 						}
 					}
 					consequent: Array [
-						ExpressionStatement {
+						JSExpressionStatement {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -179,7 +179,7 @@ Program {
 									line: 6
 								}
 							}
-							expression: CallExpression {
+							expression: JSCallExpression {
 								arguments: Array []
 								loc: Object {
 									filename: "input.js"
@@ -194,7 +194,7 @@ Program {
 										line: 6
 									}
 								}
-								callee: ReferenceIdentifier {
+								callee: JSReferenceIdentifier {
 									name: "doIt"
 									loc: Object {
 										filename: "input.js"

@@ -5,7 +5,7 @@
 ## `experimental > class-private-properties > inline`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		ClassDeclaration {
-			id: BindingIdentifier {
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			meta: ClassHead {
+			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
@@ -80,9 +80,9 @@ Program {
 					}
 				}
 				body: Array [
-					ClassPrivateProperty {
-						key: PrivateName {
-							id: Identifier {
+					JSClassPrivateProperty {
+						key: JSPrivateName {
+							id: JSIdentifier {
 								name: "x"
 								loc: Object {
 									filename: "input.js"
@@ -128,7 +128,7 @@ Program {
 								line: 1
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -155,9 +155,9 @@ Program {
 							}
 						}
 					}
-					ClassPrivateProperty {
-						key: PrivateName {
-							id: Identifier {
+					JSClassPrivateProperty {
+						key: JSPrivateName {
+							id: JSIdentifier {
 								name: "y"
 								loc: Object {
 									filename: "input.js"
@@ -203,7 +203,7 @@ Program {
 								line: 1
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -233,8 +233,8 @@ Program {
 				]
 			}
 		}
-		ClassDeclaration {
-			id: BindingIdentifier {
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
 				name: "B"
 				loc: Object {
 					filename: "input.js"
@@ -264,7 +264,7 @@ Program {
 					line: 3
 				}
 			}
-			meta: ClassHead {
+			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
@@ -283,9 +283,9 @@ Program {
 					}
 				}
 				body: Array [
-					ClassPrivateProperty {
-						key: PrivateName {
-							id: Identifier {
+					JSClassPrivateProperty {
+						key: JSPrivateName {
+							id: JSIdentifier {
 								name: "x"
 								loc: Object {
 									filename: "input.js"
@@ -316,7 +316,7 @@ Program {
 								}
 							}
 						}
-						value: NumericLiteral {
+						value: JSNumericLiteral {
 							value: 0
 							format: undefined
 							loc: Object {
@@ -347,7 +347,7 @@ Program {
 								line: 3
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -374,9 +374,9 @@ Program {
 							}
 						}
 					}
-					ClassPrivateProperty {
-						key: PrivateName {
-							id: Identifier {
+					JSClassPrivateProperty {
+						key: JSPrivateName {
+							id: JSIdentifier {
 								name: "y"
 								loc: Object {
 									filename: "input.js"
@@ -407,7 +407,7 @@ Program {
 								}
 							}
 						}
-						value: NumericLiteral {
+						value: JSNumericLiteral {
 							value: 1
 							format: undefined
 							loc: Object {
@@ -438,7 +438,7 @@ Program {
 								line: 3
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false

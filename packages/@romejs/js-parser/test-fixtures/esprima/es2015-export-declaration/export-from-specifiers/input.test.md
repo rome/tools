@@ -5,7 +5,7 @@
 ## `esprima > es2015-export-declaration > export-from-specifiers`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExportExternalDeclaration {
+		JSExportExternalDeclaration {
 			defaultSpecifier: undefined
 			exportKind: undefined
 			namespaceSpecifier: undefined
@@ -47,7 +47,7 @@ Program {
 					line: 1
 				}
 			}
-			source: StringLiteral {
+			source: JSStringLiteral {
 				value: "foo"
 				loc: Object {
 					filename: "input.js"
@@ -64,7 +64,7 @@ Program {
 				}
 			}
 			namedSpecifiers: Array [
-				ExportExternalSpecifier {
+				JSExportExternalSpecifier {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -78,7 +78,7 @@ Program {
 							line: 1
 						}
 					}
-					exported: Identifier {
+					exported: JSIdentifier {
 						name: "foo"
 						loc: Object {
 							filename: "input.js"
@@ -95,7 +95,7 @@ Program {
 							}
 						}
 					}
-					local: Identifier {
+					local: JSIdentifier {
 						name: "foo"
 						loc: Object {
 							filename: "input.js"
@@ -113,7 +113,7 @@ Program {
 						}
 					}
 				}
-				ExportExternalSpecifier {
+				JSExportExternalSpecifier {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -127,7 +127,7 @@ Program {
 							line: 1
 						}
 					}
-					exported: Identifier {
+					exported: JSIdentifier {
 						name: "bar"
 						loc: Object {
 							filename: "input.js"
@@ -144,7 +144,7 @@ Program {
 							}
 						}
 					}
-					local: Identifier {
+					local: JSIdentifier {
 						name: "bar"
 						loc: Object {
 							filename: "input.js"

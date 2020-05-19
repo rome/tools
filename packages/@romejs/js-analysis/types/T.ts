@@ -7,7 +7,7 @@
 
 import Evaluator, {HydrateData, HydrateTypeFactory} from "../Evaluator";
 import {SourceLocation} from "@romejs/parser-core";
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 import Graph from "../Graph";
 import {Scope} from "../scopes";
 import Hub from "../Hub";

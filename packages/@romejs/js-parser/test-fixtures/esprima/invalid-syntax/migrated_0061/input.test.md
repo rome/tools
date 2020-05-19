@@ -5,7 +5,7 @@
 ## `esprima > invalid-syntax > migrated_0061`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: BinaryExpression {
+			expression: JSBinaryExpression {
 				operator: "+"
 				loc: Object {
 					filename: "input.js"
@@ -83,7 +83,7 @@ Program {
 						line: 1
 					}
 				}
-				left: NumericLiteral {
+				left: JSNumericLiteral {
 					value: 1
 					format: undefined
 					loc: Object {
@@ -100,7 +100,7 @@ Program {
 						}
 					}
 				}
-				right: ObjectExpression {
+				right: JSObjectExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -115,9 +115,9 @@ Program {
 						}
 					}
 					properties: Array [
-						ObjectProperty {
-							key: StaticPropertyKey {
-								value: Identifier {
+						JSObjectProperty {
+							key: JSStaticPropertyKey {
+								value: JSIdentifier {
 									name: "t"
 									loc: Object {
 										filename: "input.js"
@@ -148,7 +148,7 @@ Program {
 									}
 								}
 							}
-							value: ReferenceIdentifier {
+							value: JSReferenceIdentifier {
 								name: "t"
 								loc: Object {
 									filename: "input.js"
@@ -179,9 +179,9 @@ Program {
 								}
 							}
 						}
-						ObjectProperty {
-							key: StaticPropertyKey {
-								value: Identifier {
+						JSObjectProperty {
+							key: JSStaticPropertyKey {
+								value: JSIdentifier {
 									name: ""
 									loc: Object {
 										filename: "input.js"
@@ -212,7 +212,7 @@ Program {
 									}
 								}
 							}
-							value: ReferenceIdentifier {
+							value: JSReferenceIdentifier {
 								name: ""
 								loc: Object {
 									filename: "input.js"

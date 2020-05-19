@@ -5,7 +5,7 @@
 ## `experimental > class-private-properties > failure-delete-private-property`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,8 +54,8 @@ Program {
 		}
 	]
 	body: Array [
-		ClassDeclaration {
-			id: BindingIdentifier {
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: Object {
 					filename: "input.js"
@@ -85,7 +85,7 @@ Program {
 					line: 1
 				}
 			}
-			meta: ClassHead {
+			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
@@ -104,9 +104,9 @@ Program {
 					}
 				}
 				body: Array [
-					ClassPrivateProperty {
-						key: PrivateName {
-							id: Identifier {
+					JSClassPrivateProperty {
+						key: JSPrivateName {
+							id: JSIdentifier {
 								name: "x"
 								loc: Object {
 									filename: "input.js"
@@ -152,7 +152,7 @@ Program {
 								line: 2
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -179,10 +179,10 @@ Program {
 							}
 						}
 					}
-					ClassMethod {
+					JSClassMethod {
 						kind: "constructor"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "constructor"
 								loc: Object {
 									filename: "input.js"
@@ -226,7 +226,7 @@ Program {
 								line: 3
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -249,7 +249,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -275,7 +275,7 @@ Program {
 								}
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
 								filename: "input.js"
@@ -291,7 +291,7 @@ Program {
 								}
 							}
 							body: Array [
-								ExpressionStatement {
+								JSExpressionStatement {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -305,7 +305,7 @@ Program {
 											line: 4
 										}
 									}
-									expression: UnaryExpression {
+									expression: JSUnaryExpression {
 										operator: "delete"
 										prefix: true
 										loc: Object {
@@ -321,7 +321,7 @@ Program {
 												line: 4
 											}
 										}
-										argument: MemberExpression {
+										argument: JSMemberExpression {
 											loc: Object {
 												filename: "input.js"
 												end: Object {
@@ -335,7 +335,7 @@ Program {
 													line: 4
 												}
 											}
-											object: ThisExpression {
+											object: JSThisExpression {
 												loc: Object {
 													filename: "input.js"
 													end: Object {
@@ -350,9 +350,9 @@ Program {
 													}
 												}
 											}
-											property: StaticMemberProperty {
-												value: PrivateName {
-													id: Identifier {
+											property: JSStaticMemberProperty {
+												value: JSPrivateName {
+													id: JSIdentifier {
 														name: "x"
 														loc: Object {
 															filename: "input.js"

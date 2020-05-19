@@ -5,7 +5,7 @@
 ## `core > categorized > label-kind-switch`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		BlockStatement {
+		JSBlockStatement {
 			directives: Array []
 			loc: Object {
 				filename: "input.js"
@@ -46,7 +46,7 @@ Program {
 				}
 			}
 			body: Array [
-				LabeledStatement {
+				JSLabeledStatement {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -60,7 +60,7 @@ Program {
 							line: 2
 						}
 					}
-					label: Identifier {
+					label: JSIdentifier {
 						name: "a"
 						loc: Object {
 							filename: "input.js"
@@ -77,7 +77,7 @@ Program {
 							}
 						}
 					}
-					body: SwitchStatement {
+					body: JSSwitchStatement {
 						cases: Array []
 						loc: Object {
 							filename: "input.js"
@@ -92,7 +92,7 @@ Program {
 								line: 2
 							}
 						}
-						discriminant: ReferenceIdentifier {
+						discriminant: JSReferenceIdentifier {
 							name: "i"
 							loc: Object {
 								filename: "input.js"

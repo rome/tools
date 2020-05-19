@@ -5,7 +5,7 @@
 ## `typescript > type-arguments > tagged-template-no-asi`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: NewExpression {
+			expression: JSNewExpression {
 				arguments: Array []
 				optional: undefined
 				typeArguments: undefined
@@ -61,7 +61,7 @@ Program {
 						line: 1
 					}
 				}
-				callee: TaggedTemplateExpression {
+				callee: JSTaggedTemplateExpression {
 					loc: Object {
 						filename: "input.ts"
 						end: Object {
@@ -75,7 +75,7 @@ Program {
 							line: 1
 						}
 					}
-					tag: ReferenceIdentifier {
+					tag: JSReferenceIdentifier {
 						name: "C"
 						loc: Object {
 							filename: "input.ts"
@@ -92,7 +92,7 @@ Program {
 							}
 						}
 					}
-					quasi: TemplateLiteral {
+					quasi: JSTemplateLiteral {
 						expressions: Array []
 						loc: Object {
 							filename: "input.ts"
@@ -108,7 +108,7 @@ Program {
 							}
 						}
 						quasis: Array [
-							TemplateElement {
+							JSTemplateElement {
 								cooked: ""
 								raw: ""
 								tail: true
@@ -158,7 +158,7 @@ Program {
 										line: 1
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "T"
 									loc: Object {
 										filename: "input.ts"

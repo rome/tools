@@ -5,7 +5,7 @@
 ## `esprima > invalid-syntax > migrated_0123`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ForStatement {
+		JSForStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			body: EmptyStatement {
+			body: JSEmptyStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -83,7 +83,7 @@ Program {
 					}
 				}
 			}
-			test: ReferenceIdentifier {
+			test: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
 					filename: "input.js"
@@ -99,7 +99,7 @@ Program {
 					}
 				}
 			}
-			update: ObjectExpression {
+			update: JSObjectExpression {
 				properties: Array []
 				loc: Object {
 					filename: "input.js"
@@ -115,7 +115,7 @@ Program {
 					}
 				}
 			}
-			init: VariableDeclaration {
+			init: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.js"
@@ -131,8 +131,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "i"
 							loc: Object {
 								filename: "input.js"
@@ -164,8 +164,8 @@ Program {
 							}
 						}
 					}
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "i2"
 							loc: Object {
 								filename: "input.js"

@@ -5,7 +5,7 @@
 ## `typescript > class > method-computed`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		ClassDeclaration {
-			id: BindingIdentifier {
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
 				name: "C"
 				loc: Object {
 					filename: "input.ts"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			meta: ClassHead {
+			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
@@ -82,8 +82,8 @@ Program {
 				body: Array [
 					TSDeclareMethod {
 						kind: "method"
-						key: ComputedPropertyKey {
-							value: MemberExpression {
+						key: JSComputedPropertyKey {
+							value: JSMemberExpression {
 								loc: Object {
 									filename: "input.ts"
 									end: Object {
@@ -97,7 +97,7 @@ Program {
 										line: 2
 									}
 								}
-								object: ReferenceIdentifier {
+								object: JSReferenceIdentifier {
 									name: "Symbol"
 									loc: Object {
 										filename: "input.ts"
@@ -114,8 +114,8 @@ Program {
 										}
 									}
 								}
-								property: StaticMemberProperty {
-									value: Identifier {
+								property: JSStaticMemberProperty {
+									value: JSIdentifier {
 										name: "iterator"
 										loc: Object {
 											filename: "input.ts"
@@ -176,7 +176,7 @@ Program {
 								line: 2
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -202,7 +202,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -223,7 +223,7 @@ Program {
 									line: 2
 								}
 							}
-							returnType: VoidKeywordTypeAnnotation {
+							returnType: TSVoidKeywordTypeAnnotation {
 								loc: Object {
 									filename: "input.ts"
 									end: Object {
@@ -242,8 +242,8 @@ Program {
 					}
 					TSDeclareMethod {
 						kind: "method"
-						key: ComputedPropertyKey {
-							value: MemberExpression {
+						key: JSComputedPropertyKey {
+							value: JSMemberExpression {
 								loc: Object {
 									filename: "input.ts"
 									end: Object {
@@ -257,7 +257,7 @@ Program {
 										line: 3
 									}
 								}
-								object: ReferenceIdentifier {
+								object: JSReferenceIdentifier {
 									name: "Symbol"
 									loc: Object {
 										filename: "input.ts"
@@ -274,8 +274,8 @@ Program {
 										}
 									}
 								}
-								property: StaticMemberProperty {
-									value: Identifier {
+								property: JSStaticMemberProperty {
+									value: JSIdentifier {
 										name: "iterator"
 										loc: Object {
 											filename: "input.ts"
@@ -336,7 +336,7 @@ Program {
 								line: 3
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: true
@@ -362,7 +362,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -383,7 +383,7 @@ Program {
 									line: 3
 								}
 							}
-							returnType: VoidKeywordTypeAnnotation {
+							returnType: TSVoidKeywordTypeAnnotation {
 								loc: Object {
 									filename: "input.ts"
 									end: Object {

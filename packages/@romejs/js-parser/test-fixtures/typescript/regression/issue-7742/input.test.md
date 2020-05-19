@@ -5,7 +5,7 @@
 ## `typescript > regression > issue-7742`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -34,7 +34,7 @@ Program {
 	}
 	body: Array [
 		TSInterfaceDeclaration {
-			id: BindingIdentifier {
+			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: Object {
 					filename: "input.ts"
@@ -144,7 +144,7 @@ Program {
 									line: 2
 								}
 							}
-							typeName: ReferenceIdentifier {
+							typeName: JSReferenceIdentifier {
 								name: "T"
 								loc: Object {
 									filename: "input.ts"
@@ -213,7 +213,7 @@ Program {
 								]
 							}
 							parameters: Array [
-								BindingIdentifier {
+								JSBindingIdentifier {
 									name: "bar"
 									loc: Object {
 										filename: "input.ts"
@@ -229,7 +229,7 @@ Program {
 											line: 2
 										}
 									}
-									meta: PatternMeta {
+									meta: JSPatternMeta {
 										optional: undefined
 										loc: Object {
 											filename: "input.ts"
@@ -259,7 +259,7 @@ Program {
 													line: 2
 												}
 											}
-											typeName: ReferenceIdentifier {
+											typeName: JSReferenceIdentifier {
 												name: "G"
 												loc: Object {
 													filename: "input.ts"

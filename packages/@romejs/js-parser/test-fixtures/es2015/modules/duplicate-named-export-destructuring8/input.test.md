@@ -5,7 +5,7 @@
 ## `es2015 > modules > duplicate-named-export-destructuring8`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
@@ -46,8 +46,8 @@ Program {
 					line: 1
 				}
 			}
-			declaration: ClassDeclaration {
-				id: BindingIdentifier {
+			declaration: JSClassDeclaration {
+				id: JSBindingIdentifier {
 					name: "Foo"
 					loc: Object {
 						filename: "input.js"
@@ -77,7 +77,7 @@ Program {
 						line: 1
 					}
 				}
-				meta: ClassHead {
+				meta: JSClassHead {
 					body: Array []
 					implements: undefined
 					superClass: undefined
@@ -99,7 +99,7 @@ Program {
 				}
 			}
 		}
-		EmptyStatement {
+		JSEmptyStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -114,7 +114,7 @@ Program {
 				}
 			}
 		}
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
@@ -130,7 +130,7 @@ Program {
 					line: 2
 				}
 			}
-			declaration: VariableDeclarationStatement {
+			declaration: JSVariableDeclarationStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -144,7 +144,7 @@ Program {
 						line: 2
 					}
 				}
-				declaration: VariableDeclaration {
+				declaration: JSVariableDeclaration {
 					kind: "const"
 					loc: Object {
 						filename: "input.js"
@@ -160,8 +160,8 @@ Program {
 						}
 					}
 					declarations: Array [
-						VariableDeclarator {
-							id: BindingObjectPattern {
+						JSVariableDeclarator {
+							id: JSBindingObjectPattern {
 								rest: undefined
 								loc: Object {
 									filename: "input.js"
@@ -177,9 +177,9 @@ Program {
 									}
 								}
 								properties: Array [
-									BindingObjectPatternProperty {
-										key: StaticPropertyKey {
-											value: Identifier {
+									JSBindingObjectPatternProperty {
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
 												name: "Foo"
 												loc: Object {
 													filename: "input.js"
@@ -210,7 +210,7 @@ Program {
 												}
 											}
 										}
-										value: BindingIdentifier {
+										value: JSBindingIdentifier {
 											name: "Foo"
 											loc: Object {
 												filename: "input.js"
@@ -256,7 +256,7 @@ Program {
 									line: 2
 								}
 							}
-							init: ReferenceIdentifier {
+							init: JSReferenceIdentifier {
 								name: "bar"
 								loc: Object {
 									filename: "input.js"

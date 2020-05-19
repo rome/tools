@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 227`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,8 +54,8 @@ Program {
 		}
 	]
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "hello"
 				loc: Object {
 					filename: "input.js"
@@ -85,7 +85,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -108,7 +108,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -123,7 +123,7 @@ Program {
 					}
 				}
 				directives: Array [
-					Directive {
+					JSDirective {
 						value: "use strict"
 						loc: Object {
 							filename: "input.js"
@@ -141,7 +141,7 @@ Program {
 					}
 				]
 				body: Array [
-					ExpressionStatement {
+					JSExpressionStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -155,7 +155,7 @@ Program {
 								line: 1
 							}
 						}
-						expression: ObjectExpression {
+						expression: JSObjectExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -170,9 +170,9 @@ Program {
 								}
 							}
 							properties: Array [
-								ObjectProperty {
-									key: StaticPropertyKey {
-										value: Identifier {
+								JSObjectProperty {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
 											name: "i"
 											loc: Object {
 												filename: "input.js"
@@ -203,7 +203,7 @@ Program {
 											}
 										}
 									}
-									value: NumericLiteral {
+									value: JSNumericLiteral {
 										value: 10
 										format: undefined
 										loc: Object {
@@ -234,10 +234,10 @@ Program {
 										}
 									}
 								}
-								ObjectMethod {
+								JSObjectMethod {
 									kind: "method"
-									key: StaticPropertyKey {
-										value: Identifier {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
 											name: "s"
 											loc: Object {
 												filename: "input.js"
@@ -281,7 +281,7 @@ Program {
 											line: 1
 										}
 									}
-									body: BlockStatement {
+									body: JSBlockStatement {
 										body: Array []
 										directives: Array []
 										loc: Object {
@@ -298,7 +298,7 @@ Program {
 											}
 										}
 									}
-									head: FunctionHead {
+									head: JSFunctionHead {
 										async: false
 										generator: false
 										hasHoistedVars: false
@@ -320,7 +320,7 @@ Program {
 											}
 										}
 										params: Array [
-											BindingIdentifier {
+											JSBindingIdentifier {
 												name: "eval"
 												loc: Object {
 													filename: "input.js"
@@ -336,7 +336,7 @@ Program {
 														line: 1
 													}
 												}
-												meta: PatternMeta {
+												meta: JSPatternMeta {
 													optional: undefined
 													typeAnnotation: undefined
 													loc: Object {

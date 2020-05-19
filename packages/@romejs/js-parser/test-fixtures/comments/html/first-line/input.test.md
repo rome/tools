@@ -5,7 +5,7 @@
 ## `comments > html > first-line`
 
 ```javascript
-Program {
+JSProgram {
 	body: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -35,7 +35,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentBlock {
+		JSCommentBlock {
 			id: "0"
 			value: ""
 			loc: Object {
@@ -52,7 +52,7 @@ Program {
 				}
 			}
 		}
-		CommentLine {
+		JSCommentLine {
 			id: "1"
 			value: " comment"
 			loc: Object {

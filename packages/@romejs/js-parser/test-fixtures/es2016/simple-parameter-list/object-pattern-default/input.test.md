@@ -5,7 +5,7 @@
 ## `es2016 > simple-parameter-list > object-pattern-default`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,8 +54,8 @@ Program {
 		}
 	]
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "a"
 				loc: Object {
 					filename: "input.js"
@@ -85,7 +85,7 @@ Program {
 					line: 1
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				body: Array []
 				loc: Object {
 					filename: "input.js"
@@ -101,7 +101,7 @@ Program {
 					}
 				}
 				directives: Array [
-					Directive {
+					JSDirective {
 						value: "use strict"
 						loc: Object {
 							filename: "input.js"
@@ -119,7 +119,7 @@ Program {
 					}
 				]
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -141,7 +141,7 @@ Program {
 					}
 				}
 				params: Array [
-					BindingAssignmentPattern {
+					JSBindingAssignmentPattern {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -155,7 +155,7 @@ Program {
 								line: 1
 							}
 						}
-						right: ObjectExpression {
+						right: JSObjectExpression {
 							properties: Array []
 							loc: Object {
 								filename: "input.js"
@@ -171,7 +171,7 @@ Program {
 								}
 							}
 						}
-						left: BindingObjectPattern {
+						left: JSBindingObjectPattern {
 							rest: undefined
 							loc: Object {
 								filename: "input.js"
@@ -186,7 +186,7 @@ Program {
 									line: 1
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
 								loc: Object {
@@ -204,9 +204,9 @@ Program {
 								}
 							}
 							properties: Array [
-								BindingObjectPatternProperty {
-									key: StaticPropertyKey {
-										value: Identifier {
+								JSBindingObjectPatternProperty {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
 											name: "option1"
 											loc: Object {
 												filename: "input.js"
@@ -237,7 +237,7 @@ Program {
 											}
 										}
 									}
-									value: BindingIdentifier {
+									value: JSBindingIdentifier {
 										name: "option1"
 										loc: Object {
 											filename: "input.js"
@@ -268,9 +268,9 @@ Program {
 										}
 									}
 								}
-								BindingObjectPatternProperty {
-									key: StaticPropertyKey {
-										value: Identifier {
+								JSBindingObjectPatternProperty {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
 											name: "option2"
 											loc: Object {
 												filename: "input.js"
@@ -301,7 +301,7 @@ Program {
 											}
 										}
 									}
-									value: BindingIdentifier {
+									value: JSBindingIdentifier {
 										name: "option2"
 										loc: Object {
 											filename: "input.js"

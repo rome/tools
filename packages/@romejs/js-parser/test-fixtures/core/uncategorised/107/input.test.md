@@ -5,7 +5,7 @@
 ## `core > uncategorised > 107`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.js"
@@ -60,8 +60,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.js"
@@ -91,7 +91,7 @@ Program {
 								line: 1
 							}
 						}
-						init: RegExpLiteral {
+						init: JSRegExpLiteral {
 							global: true
 							insensitive: false
 							multiline: false
@@ -111,7 +111,7 @@ Program {
 									line: 1
 								}
 							}
-							expression: RegExpSubExpression {
+							expression: JSRegExpSubExpression {
 								loc: Object {
 									filename: "input.js"
 									end: Object {
@@ -126,7 +126,7 @@ Program {
 									}
 								}
 								body: Array [
-									RegExpCharacter {
+									JSRegExpCharacter {
 										value: "="
 										loc: Object {
 											filename: "input.js"
@@ -142,7 +142,7 @@ Program {
 											}
 										}
 									}
-									RegExpQuantified {
+									JSRegExpQuantified {
 										lazy: false
 										max: undefined
 										min: 1
@@ -159,7 +159,7 @@ Program {
 												line: 1
 											}
 										}
-										target: RegExpGroupCapture {
+										target: JSRegExpGroupCapture {
 											name: undefined
 											loc: Object {
 												filename: "input.js"
@@ -174,7 +174,7 @@ Program {
 													line: 1
 												}
 											}
-											expression: RegExpSubExpression {
+											expression: JSRegExpSubExpression {
 												loc: Object {
 													filename: "input.js"
 													end: Object {
@@ -189,7 +189,7 @@ Program {
 													}
 												}
 												body: Array [
-													RegExpCharSet {
+													JSRegExpCharSet {
 														invert: true
 														loc: Object {
 															filename: "input.js"
@@ -205,7 +205,7 @@ Program {
 															}
 														}
 														body: Array [
-															RegExpCharacter {
+															JSRegExpCharacter {
 																value: "="
 																loc: Object {
 																	filename: "input.js"
@@ -221,7 +221,7 @@ Program {
 																	}
 																}
 															}
-															RegExpWhiteSpaceCharacter {
+															JSRegExpWhiteSpaceCharacter {
 																loc: Object {
 																	filename: "input.js"
 																	end: Object {

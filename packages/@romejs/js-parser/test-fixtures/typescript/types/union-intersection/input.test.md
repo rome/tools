@@ -5,7 +5,7 @@
 ## `typescript > types > union-intersection`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.ts"
@@ -60,8 +60,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "union"
 							loc: Object {
 								filename: "input.ts"
@@ -76,7 +76,7 @@ Program {
 									line: 1
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
 									filename: "input.ts"
@@ -91,7 +91,7 @@ Program {
 										line: 1
 									}
 								}
-								typeAnnotation: UnionTypeAnnotation {
+								typeAnnotation: TSUnionTypeAnnotation {
 									loc: Object {
 										filename: "input.ts"
 										end: Object {
@@ -136,7 +136,7 @@ Program {
 												}
 											}
 										}
-										UndefinedKeywordTypeAnnotation {
+										TSUndefinedKeywordTypeAnnotation {
 											loc: Object {
 												filename: "input.ts"
 												end: Object {
@@ -173,7 +173,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -187,7 +187,7 @@ Program {
 					line: 2
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.ts"
@@ -203,8 +203,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "intersection"
 							loc: Object {
 								filename: "input.ts"
@@ -219,7 +219,7 @@ Program {
 									line: 2
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
 									filename: "input.ts"
@@ -301,7 +301,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -315,7 +315,7 @@ Program {
 					line: 3
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.ts"
@@ -331,8 +331,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "precedence1"
 							loc: Object {
 								filename: "input.ts"
@@ -347,7 +347,7 @@ Program {
 									line: 3
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
 									filename: "input.ts"
@@ -362,7 +362,7 @@ Program {
 										line: 3
 									}
 								}
-								typeAnnotation: UnionTypeAnnotation {
+								typeAnnotation: TSUnionTypeAnnotation {
 									loc: Object {
 										filename: "input.ts"
 										end: Object {
@@ -461,7 +461,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -475,7 +475,7 @@ Program {
 					line: 4
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.ts"
@@ -491,8 +491,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "precedence2"
 							loc: Object {
 								filename: "input.ts"
@@ -507,7 +507,7 @@ Program {
 									line: 4
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
 									filename: "input.ts"
@@ -522,7 +522,7 @@ Program {
 										line: 4
 									}
 								}
-								typeAnnotation: UnionTypeAnnotation {
+								typeAnnotation: TSUnionTypeAnnotation {
 									loc: Object {
 										filename: "input.ts"
 										end: Object {

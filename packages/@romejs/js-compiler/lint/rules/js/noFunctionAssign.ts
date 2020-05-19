@@ -6,7 +6,7 @@
  */
 
 import {Path} from "@romejs/js-compiler";
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 import {FunctionBinding} from "@romejs/js-compiler/scope/bindings";
 import {descriptions} from "@romejs/diagnostics";
 
@@ -16,7 +16,7 @@ export default {
 		const {node, scope} = path;
 
 		if (
-			node.type === "AssignmentIdentifier" &&
+			node.type === "JSAssignmentIdentifier" &&
 			scope.getBinding(node.name) instanceof FunctionBinding
 		) {
 			path.context.addNodeDiagnostic(

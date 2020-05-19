@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 22`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: TemplateLiteral {
+			expression: JSTemplateLiteral {
 				expressions: Array []
 				loc: Object {
 					filename: "input.js"
@@ -60,7 +60,7 @@ Program {
 					}
 				}
 				quasis: Array [
-					TemplateElement {
+					JSTemplateElement {
 						cooked: "\n\r\b\x0b\t\f\u2028\u2029"
 						raw: "\\n\\r\\b\\v\\t\\f\\\n\\\n\\\u2028\\\u2029"
 						tail: true

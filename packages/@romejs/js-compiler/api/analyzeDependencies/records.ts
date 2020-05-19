@@ -8,8 +8,8 @@
 import {
 	AnyNode,
 	ConstExportModuleKind,
-	ReferenceIdentifier,
-} from "@romejs/js-ast";
+	JSReferenceIdentifier,
+} from "@romejs/ast";
 import {SourceLocation} from "@romejs/parser-core";
 import {
 	AnalyzeDependency,
@@ -57,12 +57,12 @@ export class CJSExportRecord extends Record {
 }
 
 export class CJSVarRefRecord extends Record {
-	constructor(node: ReferenceIdentifier) {
+	constructor(node: JSReferenceIdentifier) {
 		super();
 		this.node = node;
 	}
 
-	node: ReferenceIdentifier;
+	node: JSReferenceIdentifier;
 }
 
 export class ESExportRecord extends Record {

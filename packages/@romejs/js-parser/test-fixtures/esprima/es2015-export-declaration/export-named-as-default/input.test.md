@@ -5,7 +5,7 @@
 ## `esprima > es2015-export-declaration > export-named-as-default`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			declaration: undefined
 			exportKind: "value"
 			loc: Object {
@@ -47,7 +47,7 @@ Program {
 				}
 			}
 			specifiers: Array [
-				ExportLocalSpecifier {
+				JSExportLocalSpecifier {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -61,7 +61,7 @@ Program {
 							line: 1
 						}
 					}
-					exported: Identifier {
+					exported: JSIdentifier {
 						name: "default"
 						loc: Object {
 							filename: "input.js"
@@ -78,7 +78,7 @@ Program {
 							}
 						}
 					}
-					local: ReferenceIdentifier {
+					local: JSReferenceIdentifier {
 						name: "foo"
 						loc: Object {
 							filename: "input.js"
@@ -98,7 +98,7 @@ Program {
 				}
 			]
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -112,7 +112,7 @@ Program {
 					line: 2
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.js"
@@ -128,8 +128,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "foo"
 							loc: Object {
 								filename: "input.js"

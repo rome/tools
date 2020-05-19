@@ -5,7 +5,7 @@
 ## `experimental > dynamic-import > parses-strict`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	directives: Array [
-		Directive {
+		JSDirective {
 			value: "use strict"
 			loc: Object {
 				filename: "input.js"
@@ -47,7 +47,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -61,7 +61,7 @@ Program {
 					line: 3
 				}
 			}
-			expression: ImportCall {
+			expression: JSImportCall {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -75,7 +75,7 @@ Program {
 						line: 3
 					}
 				}
-				argument: StringLiteral {
+				argument: JSStringLiteral {
 					value: "test.js"
 					loc: Object {
 						filename: "input.js"

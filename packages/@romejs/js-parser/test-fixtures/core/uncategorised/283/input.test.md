@@ -5,7 +5,7 @@
 ## `core > uncategorised > 283`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		DebuggerStatement {
+		JSDebuggerStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {

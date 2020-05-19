@@ -5,7 +5,7 @@
 ## `comments > basic > surrounding-call-comments`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentBlock {
+		JSCommentBlock {
 			id: "0"
 			value: " before "
 			loc: Object {
@@ -46,7 +46,7 @@ Program {
 				}
 			}
 		}
-		CommentBlock {
+		JSCommentBlock {
 			id: "1"
 			value: " after "
 			loc: Object {
@@ -65,8 +65,8 @@ Program {
 		}
 	]
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "a"
 				loc: Object {
 					filename: "input.js"
@@ -96,7 +96,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -119,7 +119,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -135,7 +135,7 @@ Program {
 					}
 				}
 				body: Array [
-					ExpressionStatement {
+					JSExpressionStatement {
 						leadingComments: Array ["0"]
 						trailingComments: Array ["1"]
 						loc: Object {
@@ -151,7 +151,7 @@ Program {
 								line: 3
 							}
 						}
-						expression: CallExpression {
+						expression: JSCallExpression {
 							arguments: Array []
 							leadingComments: undefined
 							loc: Object {
@@ -167,7 +167,7 @@ Program {
 									line: 3
 								}
 							}
-							callee: ReferenceIdentifier {
+							callee: JSReferenceIdentifier {
 								name: "foo"
 								leadingComments: undefined
 								loc: Object {

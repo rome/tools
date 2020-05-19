@@ -5,7 +5,7 @@
 ## `esprima > es2015-for-of > invalid-lhs-init`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ForOfStatement {
+		JSForOfStatement {
 			await: false
 			loc: Object {
 				filename: "input.js"
@@ -69,7 +69,7 @@ Program {
 					line: 1
 				}
 			}
-			body: EmptyStatement {
+			body: JSEmptyStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -84,7 +84,7 @@ Program {
 					}
 				}
 			}
-			left: AssignmentIdentifier {
+			left: JSAssignmentIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
 					filename: "input.js"
@@ -100,7 +100,7 @@ Program {
 					}
 				}
 			}
-			right: ReferenceIdentifier {
+			right: JSReferenceIdentifier {
 				name: "that"
 				loc: Object {
 					filename: "input.js"

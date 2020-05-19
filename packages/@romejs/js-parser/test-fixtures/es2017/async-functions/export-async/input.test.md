@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > export-async`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			declaration: undefined
 			exportKind: "value"
 			specifiers: Array []
@@ -72,7 +72,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -86,7 +86,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ReferenceIdentifier {
+			expression: JSReferenceIdentifier {
 				name: "async"
 				loc: Object {
 					filename: "input.js"

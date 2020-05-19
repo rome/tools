@@ -5,7 +5,7 @@
 ## `typescript > const > reserved-word`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -18,9 +18,9 @@ Program {
 	loc: Object {
 		filename: "input.ts"
 		end: Object {
-			column: 15
-			index: 15
-			line: 1
+			column: 0
+			index: 16
+			line: 2
 		}
 		start: Object {
 			column: 0
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
 					filename: "input.ts"
@@ -84,8 +84,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "b"
 							loc: Object {
 								filename: "input.ts"
@@ -100,7 +100,7 @@ Program {
 									line: 1
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
 									filename: "input.ts"
@@ -129,7 +129,7 @@ Program {
 											line: 1
 										}
 									}
-									typeName: ReferenceIdentifier {
+									typeName: JSReferenceIdentifier {
 										name: "INVALID_PLACEHOLDER"
 										loc: Object {
 											filename: "input.ts"

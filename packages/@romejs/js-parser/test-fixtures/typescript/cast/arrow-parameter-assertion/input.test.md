@@ -5,7 +5,7 @@
 ## `typescript > cast > arrow-parameter-assertion`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -18,9 +18,9 @@ Program {
 	loc: Object {
 		filename: "input.ts"
 		end: Object {
-			column: 14
-			index: 14
-			line: 1
+			column: 0
+			index: 15
+			line: 2
 		}
 		start: Object {
 			column: 0
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ArrowFunctionExpression {
+			expression: JSArrowFunctionExpression {
 				loc: Object {
 					filename: "input.ts"
 					end: Object {
@@ -82,7 +82,7 @@ Program {
 						line: 1
 					}
 				}
-				body: BlockStatement {
+				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
 					loc: Object {
@@ -99,7 +99,7 @@ Program {
 						}
 					}
 				}
-				head: FunctionHead {
+				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
 					rest: undefined
@@ -119,7 +119,7 @@ Program {
 						}
 					}
 					params: Array [
-						BindingIdentifier {
+						JSBindingIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: Object {
 								filename: "input.ts"

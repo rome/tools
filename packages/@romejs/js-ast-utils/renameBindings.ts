@@ -8,16 +8,16 @@
 import {Binding, Path} from "@romejs/js-compiler";
 import inheritLoc from "./inheritLoc";
 import {
+	AnyJSVariableIdentifier,
 	AnyNode,
-	exportLocalDeclaration,
-	exportLocalSpecifier,
-	identifier,
-	referenceIdentifier,
-} from "@romejs/js-ast";
+	jsExportLocalDeclaration,
+	jsExportLocalSpecifier,
+	jsIdentifier,
+	jsReferenceIdentifier,
+} from "@romejs/ast";
 import getBindingIdentifiers from "./getBindingIdentifiers";
 import isVariableIdentifier from "./isVariableIdentifier";
 import assertSingleOrMultipleNodes from "./assertSingleOrMultipleNodes";
-import {AnyVariableIdentifier} from "@romejs/js-ast/unions";
 
 // This methods allows either passing in Bindings that could be present within deep scopes,
 // or local names for the scope in the passed Path
@@ -43,7 +43,7 @@ export default function renameBindings(
 	}
 
 	// discover nodes to replace first without manipulating the AST as that will change the scope and binding objects
-	const replaceNodesWithName: Map<AnyVariableIdentifier, string> = new Map();
+	const replaceNodesWithName: Map<AnyJSVariableIdentifier, string> = new Map();
 	path.traverse(
 		"renameBindingsCollector",
 		(path) => {
@@ -92,10 +92,10 @@ export default function renameBindings(
 
 				// Retain the correct exported name for `export function` and `export class`
 				if (
-					node.type === "ExportLocalDeclaration" &&
+					node.type === "JSExportLocalDeclaration" &&
 					node.declaration !== undefined &&
-					(node.declaration.type === "FunctionDeclaration" ||
-					node.declaration.type === "ClassDeclaration")
+					(node.declaration.type === "JSFunctionDeclaration" ||
+					node.declaration.type === "JSClassDeclaration")
 				) {
 					const newName = replaceNodesWithName.get(node.declaration.id);
 
@@ -106,12 +106,12 @@ export default function renameBindings(
 
 						return ([
 							node.declaration,
-							exportLocalDeclaration.create({
+							jsExportLocalDeclaration.create({
 								specifiers: [
-									exportLocalSpecifier.create({
+									jsExportLocalSpecifier.create({
 										loc: node.declaration.id.loc,
-										local: referenceIdentifier.quick(newName),
-										exported: identifier.quick(oldName),
+										local: jsReferenceIdentifier.quick(newName),
+										exported: jsIdentifier.quick(oldName),
 									}),
 								],
 							}),
@@ -121,7 +121,7 @@ export default function renameBindings(
 
 				// Retain the correct exported names for `export const`
 				if (
-					node.type === "ExportLocalDeclaration" &&
+					node.type === "JSExportLocalDeclaration" &&
 					node.declaration !== undefined
 				) {
 					const bindings = getBindingIdentifiers(node.declaration);
@@ -136,7 +136,7 @@ export default function renameBindings(
 					if (includesAny) {
 						return ([
 							node.declaration,
-							exportLocalDeclaration.create({
+							jsExportLocalDeclaration.create({
 								specifiers: bindings.map((node) => {
 									let local: string = node.name;
 
@@ -146,10 +146,10 @@ export default function renameBindings(
 										replaced.add(node);
 									}
 
-									return exportLocalSpecifier.create({
+									return jsExportLocalSpecifier.create({
 										loc: node.loc,
-										local: referenceIdentifier.quick(local),
-										exported: identifier.quick(node.name),
+										local: jsReferenceIdentifier.quick(local),
+										exported: jsIdentifier.quick(node.name),
 									});
 								}),
 							}),

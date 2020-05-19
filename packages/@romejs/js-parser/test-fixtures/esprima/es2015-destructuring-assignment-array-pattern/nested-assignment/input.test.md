@@ -5,7 +5,7 @@
 ## `esprima > es2015-destructuring-assignment-array-pattern > nested-assignment`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: AssignmentExpression {
+			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
 					filename: "input.js"
@@ -59,7 +59,7 @@ Program {
 						line: 1
 					}
 				}
-				right: NumericLiteral {
+				right: JSNumericLiteral {
 					value: 0
 					format: undefined
 					loc: Object {
@@ -76,7 +76,7 @@ Program {
 						}
 					}
 				}
-				left: AssignmentArrayPattern {
+				left: JSAssignmentArrayPattern {
 					rest: undefined
 					loc: Object {
 						filename: "input.js"
@@ -92,7 +92,7 @@ Program {
 						}
 					}
 					elements: Array [
-						AssignmentIdentifier {
+						JSAssignmentIdentifier {
 							name: "a"
 							loc: Object {
 								filename: "input.js"
@@ -109,7 +109,7 @@ Program {
 								}
 							}
 						}
-						AssignmentAssignmentPattern {
+						JSAssignmentAssignmentPattern {
 							operator: "="
 							loc: Object {
 								filename: "input.js"
@@ -124,7 +124,7 @@ Program {
 									line: 1
 								}
 							}
-							left: AssignmentIdentifier {
+							left: JSAssignmentIdentifier {
 								name: "b"
 								loc: Object {
 									filename: "input.js"
@@ -141,7 +141,7 @@ Program {
 									}
 								}
 							}
-							right: NumericLiteral {
+							right: JSNumericLiteral {
 								value: 0
 								format: undefined
 								loc: Object {
@@ -159,7 +159,7 @@ Program {
 								}
 							}
 						}
-						AssignmentAssignmentPattern {
+						JSAssignmentAssignmentPattern {
 							operator: "="
 							loc: Object {
 								filename: "input.js"
@@ -174,7 +174,7 @@ Program {
 									line: 1
 								}
 							}
-							right: ObjectExpression {
+							right: JSObjectExpression {
 								properties: Array []
 								loc: Object {
 									filename: "input.js"
@@ -190,7 +190,7 @@ Program {
 									}
 								}
 							}
-							left: AssignmentArrayPattern {
+							left: JSAssignmentArrayPattern {
 								loc: Object {
 									filename: "input.js"
 									end: Object {
@@ -205,7 +205,7 @@ Program {
 									}
 								}
 								elements: Array [
-									AssignmentIdentifier {
+									JSAssignmentIdentifier {
 										name: "c"
 										loc: Object {
 											filename: "input.js"
@@ -223,7 +223,7 @@ Program {
 										}
 									}
 								]
-								rest: MemberExpression {
+								rest: JSMemberExpression {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -237,7 +237,7 @@ Program {
 											line: 1
 										}
 									}
-									object: ReferenceIdentifier {
+									object: JSReferenceIdentifier {
 										name: "a"
 										loc: Object {
 											filename: "input.js"
@@ -254,8 +254,8 @@ Program {
 											}
 										}
 									}
-									property: ComputedMemberProperty {
-										value: NumericLiteral {
+									property: JSComputedMemberProperty {
+										value: JSNumericLiteral {
 											value: 0
 											format: undefined
 											loc: Object {

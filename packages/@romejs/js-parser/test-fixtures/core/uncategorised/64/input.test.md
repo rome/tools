@@ -5,7 +5,7 @@
 ## `core > uncategorised > 64`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentLine {
+		JSCommentLine {
 			id: "0"
 			value: " Some comment"
 			loc: Object {
@@ -48,7 +48,7 @@ Program {
 		}
 	]
 	body: Array [
-		IfStatement {
+		JSIfStatement {
 			alternate: undefined
 			loc: Object {
 				filename: "input.js"
@@ -63,7 +63,7 @@ Program {
 					line: 1
 				}
 			}
-			test: ReferenceIdentifier {
+			test: JSReferenceIdentifier {
 				name: "x"
 				loc: Object {
 					filename: "input.js"
@@ -80,7 +80,7 @@ Program {
 					}
 				}
 			}
-			consequent: BlockStatement {
+			consequent: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -96,7 +96,7 @@ Program {
 					}
 				}
 				body: Array [
-					ExpressionStatement {
+					JSExpressionStatement {
 						leadingComments: Array ["0"]
 						loc: Object {
 							filename: "input.js"
@@ -111,7 +111,7 @@ Program {
 								line: 2
 							}
 						}
-						expression: CallExpression {
+						expression: JSCallExpression {
 							arguments: Array []
 							leadingComments: undefined
 							loc: Object {
@@ -127,7 +127,7 @@ Program {
 									line: 2
 								}
 							}
-							callee: ReferenceIdentifier {
+							callee: JSReferenceIdentifier {
 								name: "doThat"
 								leadingComments: undefined
 								loc: Object {

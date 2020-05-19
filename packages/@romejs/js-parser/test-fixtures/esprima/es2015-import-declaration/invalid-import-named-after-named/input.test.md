@@ -5,7 +5,7 @@
 ## `esprima > es2015-import-declaration > invalid-import-named-after-named`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ImportDeclaration {
+		JSImportDeclaration {
 			defaultSpecifier: undefined
 			importKind: undefined
 			namespaceSpecifier: undefined
@@ -71,7 +71,7 @@ Program {
 					line: 1
 				}
 			}
-			source: StringLiteral {
+			source: JSStringLiteral {
 				value: ""
 				loc: Object {
 					filename: "input.js"
@@ -88,7 +88,7 @@ Program {
 				}
 			}
 			namedSpecifiers: Array [
-				ImportSpecifier {
+				JSImportSpecifier {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -102,7 +102,7 @@ Program {
 							line: 1
 						}
 					}
-					imported: Identifier {
+					imported: JSIdentifier {
 						name: "bar"
 						loc: Object {
 							filename: "input.js"
@@ -119,8 +119,8 @@ Program {
 							}
 						}
 					}
-					local: ImportSpecifierLocal {
-						name: BindingIdentifier {
+					local: JSImportSpecifierLocal {
+						name: JSBindingIdentifier {
 							name: "bar"
 							loc: Object {
 								filename: "input.js"
@@ -155,7 +155,7 @@ Program {
 				}
 			]
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -169,7 +169,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ReferenceIdentifier {
+			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
 					filename: "input.js"
@@ -186,7 +186,7 @@ Program {
 				}
 			}
 		}
-		BlockStatement {
+		JSBlockStatement {
 			directives: Array []
 			loc: Object {
 				filename: "input.js"
@@ -202,7 +202,7 @@ Program {
 				}
 			}
 			body: Array [
-				ExpressionStatement {
+				JSExpressionStatement {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -216,7 +216,7 @@ Program {
 							line: 1
 						}
 					}
-					expression: ReferenceIdentifier {
+					expression: JSReferenceIdentifier {
 						name: "foo"
 						loc: Object {
 							filename: "input.js"
@@ -236,7 +236,7 @@ Program {
 				}
 			]
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -250,7 +250,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ReferenceIdentifier {
+			expression: JSReferenceIdentifier {
 				name: "from"
 				loc: Object {
 					filename: "input.js"
@@ -268,7 +268,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -282,7 +282,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: StringLiteral {
+			expression: JSStringLiteral {
 				value: "foo"
 				loc: Object {
 					filename: "input.js"

@@ -5,7 +5,7 @@
 ## `jsx > errors > attribute-arbitrary-expression`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -57,7 +57,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -122,7 +122,7 @@ Program {
 								}
 							}
 						}
-						value: StringLiteral {
+						value: JSStringLiteral {
 							value: "?"
 							loc: Object {
 								filename: "input.js"

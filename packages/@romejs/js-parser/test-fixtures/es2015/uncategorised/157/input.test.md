@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 157`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ClassExpression {
+			expression: JSClassExpression {
 				id: undefined
 				loc: Object {
 					filename: "input.js"
@@ -59,7 +59,7 @@ Program {
 						line: 1
 					}
 				}
-				meta: ClassHead {
+				meta: JSClassHead {
 					implements: undefined
 					superClass: undefined
 					superTypeParameters: undefined
@@ -78,10 +78,10 @@ Program {
 						}
 					}
 					body: Array [
-						ClassMethod {
+						JSClassMethod {
 							kind: "method"
-							key: StaticPropertyKey {
-								value: Identifier {
+							key: JSStaticPropertyKey {
+								value: JSIdentifier {
 									name: "f"
 									loc: Object {
 										filename: "input.js"
@@ -125,7 +125,7 @@ Program {
 									line: 1
 								}
 							}
-							body: BlockStatement {
+							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
 								loc: Object {
@@ -142,7 +142,7 @@ Program {
 									}
 								}
 							}
-							meta: ClassPropertyMeta {
+							meta: JSClassPropertyMeta {
 								abstract: false
 								accessibility: undefined
 								optional: false
@@ -168,7 +168,7 @@ Program {
 									}
 								}
 							}
-							head: FunctionHead {
+							head: JSFunctionHead {
 								async: false
 								generator: false
 								hasHoistedVars: false
@@ -190,7 +190,7 @@ Program {
 									}
 								}
 								params: Array [
-									BindingAssignmentPattern {
+									JSBindingAssignmentPattern {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -204,7 +204,7 @@ Program {
 												line: 1
 											}
 										}
-										right: ObjectExpression {
+										right: JSObjectExpression {
 											loc: Object {
 												filename: "input.js"
 												end: Object {
@@ -219,9 +219,9 @@ Program {
 												}
 											}
 											properties: Array [
-												ObjectProperty {
-													key: StaticPropertyKey {
-														value: Identifier {
+												JSObjectProperty {
+													key: JSStaticPropertyKey {
+														value: JSIdentifier {
 															name: "x"
 															loc: Object {
 																filename: "input.js"
@@ -252,7 +252,7 @@ Program {
 															}
 														}
 													}
-													value: NumericLiteral {
+													value: JSNumericLiteral {
 														value: 10
 														format: undefined
 														loc: Object {
@@ -285,7 +285,7 @@ Program {
 												}
 											]
 										}
-										left: BindingObjectPattern {
+										left: JSBindingObjectPattern {
 											rest: undefined
 											loc: Object {
 												filename: "input.js"
@@ -300,7 +300,7 @@ Program {
 													line: 1
 												}
 											}
-											meta: PatternMeta {
+											meta: JSPatternMeta {
 												optional: undefined
 												typeAnnotation: undefined
 												loc: Object {
@@ -318,9 +318,9 @@ Program {
 												}
 											}
 											properties: Array [
-												BindingObjectPatternProperty {
-													key: StaticPropertyKey {
-														value: Identifier {
+												JSBindingObjectPatternProperty {
+													key: JSStaticPropertyKey {
+														value: JSIdentifier {
 															name: "x"
 															loc: Object {
 																filename: "input.js"
@@ -351,7 +351,7 @@ Program {
 															}
 														}
 													}
-													value: BindingIdentifier {
+													value: JSBindingIdentifier {
 														name: "x"
 														loc: Object {
 															filename: "input.js"

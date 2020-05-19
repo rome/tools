@@ -5,7 +5,7 @@
 ## `core > uncategorised > 244`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ForStatement {
+		JSForStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			body: EmptyStatement {
+			body: JSEmptyStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -59,7 +59,7 @@ Program {
 					}
 				}
 			}
-			update: UpdateExpression {
+			update: JSUpdateExpression {
 				operator: "++"
 				prefix: false
 				loc: Object {
@@ -75,7 +75,7 @@ Program {
 						line: 1
 					}
 				}
-				argument: ReferenceIdentifier {
+				argument: JSReferenceIdentifier {
 					name: "x"
 					loc: Object {
 						filename: "input.js"
@@ -93,7 +93,7 @@ Program {
 					}
 				}
 			}
-			init: AssignmentExpression {
+			init: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
 					filename: "input.js"
@@ -108,7 +108,7 @@ Program {
 						line: 1
 					}
 				}
-				left: AssignmentIdentifier {
+				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: Object {
 						filename: "input.js"
@@ -125,7 +125,7 @@ Program {
 						}
 					}
 				}
-				right: NumericLiteral {
+				right: JSNumericLiteral {
 					value: 0
 					format: undefined
 					loc: Object {
@@ -143,7 +143,7 @@ Program {
 					}
 				}
 			}
-			test: BinaryExpression {
+			test: JSBinaryExpression {
 				operator: "<"
 				loc: Object {
 					filename: "input.js"
@@ -158,7 +158,7 @@ Program {
 						line: 1
 					}
 				}
-				left: ReferenceIdentifier {
+				left: JSReferenceIdentifier {
 					name: "x"
 					loc: Object {
 						filename: "input.js"
@@ -175,7 +175,7 @@ Program {
 						}
 					}
 				}
-				right: NumericLiteral {
+				right: JSNumericLiteral {
 					value: 42
 					format: undefined
 					loc: Object {

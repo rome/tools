@@ -14,9 +14,9 @@ function inComponentDidUpdate(path: Path): boolean {
 	return (
 		!func &&
 		path.findAncestry(({node}) =>
-			node.type === "ClassMethod" &&
-			node.key.type === "StaticPropertyKey" &&
-			node.key.value.type === "Identifier" &&
+			node.type === "JSClassMethod" &&
+			node.key.type === "JSStaticPropertyKey" &&
+			node.key.value.type === "JSIdentifier" &&
 			node.key.value.name === "componentDidUpdate"
 		) !== undefined
 	);

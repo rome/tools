@@ -5,7 +5,7 @@
 ## `esprima > es2015-spread-element > call-spread-default`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: CallExpression {
+			expression: JSCallExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -58,7 +58,7 @@ Program {
 						line: 1
 					}
 				}
-				callee: ReferenceIdentifier {
+				callee: JSReferenceIdentifier {
 					name: "f"
 					loc: Object {
 						filename: "input.js"
@@ -76,7 +76,7 @@ Program {
 					}
 				}
 				arguments: Array [
-					ReferenceIdentifier {
+					JSReferenceIdentifier {
 						name: "g"
 						loc: Object {
 							filename: "input.js"
@@ -93,7 +93,7 @@ Program {
 							}
 						}
 					}
-					SpreadElement {
+					JSSpreadElement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -107,7 +107,7 @@ Program {
 								line: 1
 							}
 						}
-						argument: AssignmentExpression {
+						argument: JSAssignmentExpression {
 							operator: "="
 							loc: Object {
 								filename: "input.js"
@@ -122,7 +122,7 @@ Program {
 									line: 1
 								}
 							}
-							left: AssignmentIdentifier {
+							left: JSAssignmentIdentifier {
 								name: "h"
 								loc: Object {
 									filename: "input.js"
@@ -139,7 +139,7 @@ Program {
 									}
 								}
 							}
-							right: ReferenceIdentifier {
+							right: JSReferenceIdentifier {
 								name: "i"
 								loc: Object {
 									filename: "input.js"

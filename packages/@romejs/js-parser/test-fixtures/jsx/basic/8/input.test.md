@@ -5,7 +5,7 @@
 ## `jsx > basic > 8`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -33,7 +33,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -112,7 +112,7 @@ Program {
 									line: 1
 								}
 							}
-							expression: ConditionalExpression {
+							expression: JSConditionalExpression {
 								loc: Object {
 									filename: "input.js"
 									end: Object {
@@ -126,7 +126,7 @@ Program {
 										line: 1
 									}
 								}
-								test: ReferenceIdentifier {
+								test: JSReferenceIdentifier {
 									name: "x"
 									loc: Object {
 										filename: "input.js"

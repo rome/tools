@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 86`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			declaration: undefined
 			exportKind: "value"
 			loc: Object {
@@ -47,7 +47,7 @@ Program {
 				}
 			}
 			specifiers: Array [
-				ExportLocalSpecifier {
+				JSExportLocalSpecifier {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -61,7 +61,7 @@ Program {
 							line: 1
 						}
 					}
-					exported: Identifier {
+					exported: JSIdentifier {
 						name: "encrypt"
 						loc: Object {
 							filename: "input.js"
@@ -78,7 +78,7 @@ Program {
 							}
 						}
 					}
-					local: ReferenceIdentifier {
+					local: JSReferenceIdentifier {
 						name: "encrypt"
 						loc: Object {
 							filename: "input.js"
@@ -98,8 +98,8 @@ Program {
 				}
 			]
 		}
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "encrypt"
 				loc: Object {
 					filename: "input.js"
@@ -129,7 +129,7 @@ Program {
 					line: 2
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
 				loc: Object {
@@ -146,7 +146,7 @@ Program {
 					}
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false

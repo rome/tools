@@ -5,7 +5,7 @@
 ## `esprima > es2015-export-declaration > export-default-expression`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExportDefaultDeclaration {
+		JSExportDefaultDeclaration {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: BinaryExpression {
+			declaration: JSBinaryExpression {
 				operator: "+"
 				loc: Object {
 					filename: "input.js"
@@ -59,7 +59,7 @@ Program {
 						line: 1
 					}
 				}
-				left: NumericLiteral {
+				left: JSNumericLiteral {
 					value: 1
 					format: undefined
 					loc: Object {
@@ -76,7 +76,7 @@ Program {
 						}
 					}
 				}
-				right: NumericLiteral {
+				right: JSNumericLiteral {
 					value: 2
 					format: undefined
 					loc: Object {

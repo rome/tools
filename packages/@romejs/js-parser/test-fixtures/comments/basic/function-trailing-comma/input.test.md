@@ -5,7 +5,7 @@
 ## `comments > basic > function-trailing-comma`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentBlock {
+		JSCommentBlock {
 			id: "0"
 			value: " comment "
 			loc: Object {
@@ -48,7 +48,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -62,7 +62,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: CallExpression {
+			expression: JSCallExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -76,7 +76,7 @@ Program {
 						line: 1
 					}
 				}
-				callee: ReferenceIdentifier {
+				callee: JSReferenceIdentifier {
 					name: "fn"
 					loc: Object {
 						filename: "input.js"
@@ -94,7 +94,7 @@ Program {
 					}
 				}
 				arguments: Array [
-					ReferenceIdentifier {
+					JSReferenceIdentifier {
 						name: "a"
 						loc: Object {
 							filename: "input.js"
@@ -111,7 +111,7 @@ Program {
 							}
 						}
 					}
-					ReferenceIdentifier {
+					JSReferenceIdentifier {
 						name: "b"
 						trailingComments: Array ["0"]
 						loc: Object {

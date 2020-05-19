@@ -5,7 +5,7 @@
 ## `core > categorized > invalid-fn-decl-labeled-inside-loop`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		WhileStatement {
+		JSWhileStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			test: NumericLiteral {
+			test: JSNumericLiteral {
 				value: 1
 				format: undefined
 				loc: Object {
@@ -85,7 +85,7 @@ Program {
 					}
 				}
 			}
-			body: LabeledStatement {
+			body: JSLabeledStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -99,7 +99,7 @@ Program {
 						line: 1
 					}
 				}
-				label: Identifier {
+				label: JSIdentifier {
 					name: "foo"
 					loc: Object {
 						filename: "input.js"
@@ -116,7 +116,7 @@ Program {
 						}
 					}
 				}
-				body: LabeledStatement {
+				body: JSLabeledStatement {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -130,7 +130,7 @@ Program {
 							line: 1
 						}
 					}
-					label: Identifier {
+					label: JSIdentifier {
 						name: "bar"
 						loc: Object {
 							filename: "input.js"
@@ -147,8 +147,8 @@ Program {
 							}
 						}
 					}
-					body: FunctionDeclaration {
-						id: BindingIdentifier {
+					body: JSFunctionDeclaration {
+						id: JSBindingIdentifier {
 							name: "foo"
 							loc: Object {
 								filename: "input.js"
@@ -178,7 +178,7 @@ Program {
 								line: 1
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
 							loc: Object {
@@ -195,7 +195,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false

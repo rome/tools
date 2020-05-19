@@ -10,7 +10,7 @@
 
  unknown:7:4 lint/js/noUnsafeFinally ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unsafe usage of ReturnStatement.
+  ✖ Unsafe usage of JSReturnStatement.
 
     5 │     throw err;
     6 │   } finally {
@@ -46,7 +46,7 @@ function greet1() {
 
  unknown:7:4 lint/js/noUnsafeFinally ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unsafe usage of BreakStatement.
+  ✖ Unsafe usage of JSBreakStatement.
 
     5 │     throw err;
     6 │   } finally {
@@ -82,7 +82,7 @@ function greet2() {
 
  unknown:7:4 lint/js/noUnsafeFinally ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unsafe usage of ContinueStatement.
+  ✖ Unsafe usage of JSContinueStatement.
 
     5 │     throw err;
     6 │   } finally {
@@ -118,7 +118,7 @@ function greet3() {
 
  unknown:7:4 lint/js/noUnsafeFinally ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unsafe usage of ThrowStatement.
+  ✖ Unsafe usage of JSThrowStatement.
 
     5 │     throw err;
     6 │   } finally {

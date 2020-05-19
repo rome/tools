@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 278`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -74,8 +74,8 @@ Program {
 		}
 	]
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
 					filename: "input.js"
@@ -105,7 +105,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -125,7 +125,7 @@ Program {
 						line: 1
 					}
 				}
-				rest: BindingIdentifier {
+				rest: JSBindingIdentifier {
 					name: "b"
 					loc: Object {
 						filename: "input.js"
@@ -141,7 +141,7 @@ Program {
 							line: 1
 						}
 					}
-					meta: PatternMeta {
+					meta: JSPatternMeta {
 						optional: undefined
 						typeAnnotation: undefined
 						loc: Object {
@@ -160,7 +160,7 @@ Program {
 					}
 				}
 				params: Array [
-					BindingIdentifier {
+					JSBindingIdentifier {
 						name: "a"
 						loc: Object {
 							filename: "input.js"
@@ -176,7 +176,7 @@ Program {
 								line: 1
 							}
 						}
-						meta: PatternMeta {
+						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
@@ -196,7 +196,7 @@ Program {
 					}
 				]
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -212,7 +212,7 @@ Program {
 					}
 				}
 				body: Array [
-					ExpressionStatement {
+					JSExpressionStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -226,7 +226,7 @@ Program {
 								line: 1
 							}
 						}
-						expression: ReferenceIdentifier {
+						expression: JSReferenceIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: Object {
 								filename: "input.js"
@@ -243,7 +243,7 @@ Program {
 							}
 						}
 					}
-					ExpressionStatement {
+					JSExpressionStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -257,7 +257,7 @@ Program {
 								line: 1
 							}
 						}
-						expression: NumericLiteral {
+						expression: JSNumericLiteral {
 							value: 0
 							format: undefined
 							loc: Object {
@@ -275,7 +275,7 @@ Program {
 							}
 						}
 					}
-					ExpressionStatement {
+					JSExpressionStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -289,7 +289,7 @@ Program {
 								line: 1
 							}
 						}
-						expression: ReferenceIdentifier {
+						expression: JSReferenceIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: Object {
 								filename: "input.js"

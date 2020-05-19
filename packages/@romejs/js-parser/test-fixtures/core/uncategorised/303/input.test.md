@@ -5,7 +5,7 @@
 ## `core > uncategorised > 303`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		BlockStatement {
+		JSBlockStatement {
 			directives: Array []
 			loc: Object {
 				filename: "input.js"
@@ -46,7 +46,7 @@ Program {
 				}
 			}
 			body: Array [
-				VariableDeclarationStatement {
+				JSVariableDeclarationStatement {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -60,7 +60,7 @@ Program {
 							line: 1
 						}
 					}
-					declaration: VariableDeclaration {
+					declaration: JSVariableDeclaration {
 						kind: "var"
 						loc: Object {
 							filename: "input.js"
@@ -76,8 +76,8 @@ Program {
 							}
 						}
 						declarations: Array [
-							VariableDeclarator {
-								id: BindingIdentifier {
+							JSVariableDeclarator {
+								id: JSBindingIdentifier {
 									name: "x"
 									loc: Object {
 										filename: "input.js"
@@ -107,7 +107,7 @@ Program {
 										line: 1
 									}
 								}
-								init: NumericLiteral {
+								init: JSNumericLiteral {
 									value: 14
 									format: undefined
 									loc: Object {
@@ -125,8 +125,8 @@ Program {
 									}
 								}
 							}
-							VariableDeclarator {
-								id: BindingIdentifier {
+							JSVariableDeclarator {
+								id: JSBindingIdentifier {
 									name: "y"
 									loc: Object {
 										filename: "input.js"
@@ -156,7 +156,7 @@ Program {
 										line: 1
 									}
 								}
-								init: NumericLiteral {
+								init: JSNumericLiteral {
 									value: 3
 									format: undefined
 									loc: Object {
@@ -177,7 +177,7 @@ Program {
 						]
 					}
 				}
-				ExpressionStatement {
+				JSExpressionStatement {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -191,7 +191,7 @@ Program {
 							line: 2
 						}
 					}
-					expression: ReferenceIdentifier {
+					expression: JSReferenceIdentifier {
 						name: "z"
 						loc: Object {
 							filename: "input.js"

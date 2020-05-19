@@ -5,7 +5,7 @@
 ## `es2015 > yield > in-global-scope`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ReferenceIdentifier {
+			expression: JSReferenceIdentifier {
 				name: "yield"
 				loc: Object {
 					filename: "input.js"
@@ -86,7 +86,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -100,7 +100,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: NumericLiteral {
+			expression: JSNumericLiteral {
 				value: 10
 				format: undefined
 				loc: Object {

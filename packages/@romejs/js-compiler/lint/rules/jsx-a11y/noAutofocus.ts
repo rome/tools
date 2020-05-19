@@ -1,5 +1,5 @@
 import {descriptions} from "@romejs/diagnostics";
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 import {Path} from "@romejs/js-compiler";
 import {hasJSXAttribute, isJSXElement} from "@romejs/js-ast-utils";
 

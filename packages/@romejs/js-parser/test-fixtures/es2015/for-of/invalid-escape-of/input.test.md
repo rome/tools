@@ -5,7 +5,7 @@
 ## `es2015 > for-of > invalid-escape-of`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ForStatement {
+		JSForStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
 				loc: Object {
@@ -85,7 +85,7 @@ Program {
 					}
 				}
 			}
-			init: ReferenceIdentifier {
+			init: JSReferenceIdentifier {
 				name: "x"
 				loc: Object {
 					filename: "input.js"
@@ -102,7 +102,7 @@ Program {
 					}
 				}
 			}
-			test: ReferenceIdentifier {
+			test: JSReferenceIdentifier {
 				name: "of"
 				loc: Object {
 					filename: "input.js"
@@ -119,7 +119,7 @@ Program {
 					}
 				}
 			}
-			update: ReferenceIdentifier {
+			update: JSReferenceIdentifier {
 				name: "y"
 				loc: Object {
 					filename: "input.js"

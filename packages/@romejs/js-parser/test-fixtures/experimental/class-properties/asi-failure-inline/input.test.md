@@ -5,7 +5,7 @@
 ## `experimental > class-properties > asi-failure-inline`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,8 +54,8 @@ Program {
 		}
 	]
 	body: Array [
-		ClassDeclaration {
-			id: BindingIdentifier {
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: Object {
 					filename: "input.js"
@@ -85,7 +85,7 @@ Program {
 					line: 1
 				}
 			}
-			meta: ClassHead {
+			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
@@ -104,9 +104,9 @@ Program {
 					}
 				}
 				body: Array [
-					ClassProperty {
-						key: StaticPropertyKey {
-							value: Identifier {
+					JSClassProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "y"
 								loc: Object {
 									filename: "input.js"
@@ -153,7 +153,7 @@ Program {
 								line: 2
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false

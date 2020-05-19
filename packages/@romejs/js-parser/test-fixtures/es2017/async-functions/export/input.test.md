@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > export`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
@@ -46,8 +46,8 @@ Program {
 					line: 1
 				}
 			}
-			declaration: FunctionDeclaration {
-				id: BindingIdentifier {
+			declaration: JSFunctionDeclaration {
+				id: JSBindingIdentifier {
 					name: "foo"
 					loc: Object {
 						filename: "input.js"
@@ -77,7 +77,7 @@ Program {
 						line: 1
 					}
 				}
-				body: BlockStatement {
+				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
 					loc: Object {
@@ -94,7 +94,7 @@ Program {
 						}
 					}
 				}
-				head: FunctionHead {
+				head: JSFunctionHead {
 					async: true
 					generator: false
 					hasHoistedVars: false
@@ -119,7 +119,7 @@ Program {
 				}
 			}
 		}
-		ExportDefaultDeclaration {
+		JSExportDefaultDeclaration {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -133,8 +133,8 @@ Program {
 					line: 2
 				}
 			}
-			declaration: FunctionDeclaration {
-				id: BindingIdentifier {
+			declaration: JSFunctionDeclaration {
+				id: JSBindingIdentifier {
 					name: "bar"
 					loc: Object {
 						filename: "input.js"
@@ -164,7 +164,7 @@ Program {
 						line: 2
 					}
 				}
-				body: BlockStatement {
+				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
 					loc: Object {
@@ -181,7 +181,7 @@ Program {
 						}
 					}
 				}
-				head: FunctionHead {
+				head: JSFunctionHead {
 					async: true
 					generator: false
 					hasHoistedVars: false

@@ -5,7 +5,7 @@
 ## `es2015 > modules > export-default-variable-declaration3`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExportDefaultDeclaration {
+		JSExportDefaultDeclaration {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: ReferenceIdentifier {
+			declaration: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
 					filename: "input.js"
@@ -85,7 +85,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -99,7 +99,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: AssignmentExpression {
+			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
 					filename: "input.js"
@@ -114,7 +114,7 @@ Program {
 						line: 1
 					}
 				}
-				left: AssignmentIdentifier {
+				left: JSAssignmentIdentifier {
 					name: "Foo"
 					loc: Object {
 						filename: "input.js"
@@ -131,7 +131,7 @@ Program {
 						}
 					}
 				}
-				right: ArrowFunctionExpression {
+				right: JSArrowFunctionExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -145,7 +145,7 @@ Program {
 							line: 1
 						}
 					}
-					head: FunctionHead {
+					head: JSFunctionHead {
 						async: false
 						hasHoistedVars: false
 						params: Array []
@@ -166,7 +166,7 @@ Program {
 							}
 						}
 					}
-					body: BlockStatement {
+					body: JSBlockStatement {
 						directives: Array []
 						loc: Object {
 							filename: "input.js"
@@ -182,7 +182,7 @@ Program {
 							}
 						}
 						body: Array [
-							ReturnStatement {
+							JSReturnStatement {
 								loc: Object {
 									filename: "input.js"
 									end: Object {
@@ -196,7 +196,7 @@ Program {
 										line: 2
 									}
 								}
-								argument: TemplateLiteral {
+								argument: JSTemplateLiteral {
 									expressions: Array []
 									loc: Object {
 										filename: "input.js"
@@ -212,7 +212,7 @@ Program {
 										}
 									}
 									quasis: Array [
-										TemplateElement {
+										JSTemplateElement {
 											cooked: "<div class=\"bar\">Hola</div>"
 											raw: "<div class=\"bar\">Hola</div>"
 											tail: true

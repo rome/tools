@@ -8,11 +8,11 @@
 import {Path} from "@romejs/js-compiler";
 import {
 	AnyNode,
-	FunctionExpression,
-	blockStatement,
-	functionExpression,
-	stringLiteral,
-} from "@romejs/js-ast";
+	JSFunctionExpression,
+	jsBlockStatement,
+	jsFunctionExpression,
+	jsStringLiteral,
+} from "@romejs/ast";
 import {template} from "@romejs/js-ast-utils";
 import {getOptions} from "../_utils";
 
@@ -24,8 +24,8 @@ export default {
 
 		// Update relative requires with their module id
 		if (
-			node.type === "CallExpression" &&
-			node.callee.type === "ReferenceIdentifier" &&
+			node.type === "JSCallExpression" &&
+			node.callee.type === "JSReferenceIdentifier" &&
 			node.callee.name === "require" &&
 			scope.getBinding("require") === undefined
 		) {
@@ -33,7 +33,7 @@ export default {
 			const arg = args[0];
 
 			// Maybe error?
-			if (args.length !== 1 || arg.type !== "StringLiteral") {
+			if (args.length !== 1 || arg.type !== "JSStringLiteral") {
 				return node;
 			}
 
@@ -46,7 +46,7 @@ export default {
 				)
 			) {
 				const resolved = options.relativeSourcesToModuleId[source];
-				const sourceNode = stringLiteral.create({
+				const sourceNode = jsStringLiteral.create({
 					value: resolved,
 				});
 				return template.expression`Rome.requireNamespace(${sourceNode})`;
@@ -54,7 +54,7 @@ export default {
 		}
 
 		if (
-			node.type === "ReferenceIdentifier" &&
+			node.type === "JSReferenceIdentifier" &&
 			node.name === "require" &&
 			scope.getBinding("require") === undefined
 		) {
@@ -68,19 +68,19 @@ export default {
 		const options = getOptions(context);
 
 		// Add module wrapper
-		if (node.type === "Program") {
-			const source = stringLiteral.create({
+		if (node.type === "JSProgram") {
+			const source = jsStringLiteral.create({
 				value: options.moduleId,
 			});
 
 			// Build factory
-			const factoryBody = blockStatement.create({
+			const factoryBody = jsBlockStatement.create({
 				directives: node.directives,
 				body: node.body,
 			});
 
-			const factory: FunctionExpression = {
-				...functionExpression.assert(
+			const factory: JSFunctionExpression = {
+				...jsFunctionExpression.assert(
 					template.expression`(function(module, exports) {})`,
 				),
 				body: factoryBody,

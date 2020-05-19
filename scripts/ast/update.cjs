@@ -10,7 +10,7 @@ require("../_setup.cjs");
 const path = require("path");
 const fs = require("fs");
 
-const {readGeneratedFile, write, getBuilderName} = require("../_utils.cjs");
+const {readGeneratedFile, write} = require("../_utils.cjs");
 
 const {
 	formatterFolder,
@@ -20,20 +20,28 @@ const {
 
 let defs = [];
 
-for (const category of fs.readdirSync(astFolder)) {
-	const loc = path.join(astFolder, category);
+for (const language of fs.readdirSync(astFolder)) {
+	const languageLoc = path.join(astFolder, language);
 
-	if (fs.statSync(loc).isFile()) {
+	if (fs.statSync(languageLoc).isFile()) {
 		continue;
 	}
 
-	for (const basename of fs.readdirSync(loc)) {
-		const nodeType = path.basename(basename, path.extname(basename));
-		defs.push({
-			category,
-			builderName: getBuilderName(nodeType),
-			nodeType,
-		});
+	for (const category of fs.readdirSync(languageLoc)) {
+		const categoryLoc = path.join(languageLoc, category);
+
+		if (fs.statSync(categoryLoc).isFile()) {
+			continue;
+		}
+
+		for (const basename of fs.readdirSync(categoryLoc)) {
+			const nodeType = path.basename(basename, path.extname(basename));
+			defs.push({
+				category,
+				language,
+				nodeType,
+			});
+		}
 	}
 }
 
@@ -41,8 +49,8 @@ defs = defs.sort((a, b) => {
 	return a.nodeType.localeCompare(b.nodeType);
 });
 
-function readIndexFile(loc, handlers) {
-	let file = readGeneratedFile(loc);
+function readIndexFile(loc, handlers, raw) {
+	let file = readGeneratedFile(loc, raw);
 
 	for (const {iterator, wrapCallback} of handlers) {
 		let buff = "";
@@ -75,11 +83,25 @@ readIndexFile(
 	path.join(astFolder, "index.ts"),
 	[
 		{
-			iterator({category, nodeType}) {
-				return `export * from "./${category}/${nodeType}";\n`;
+			iterator({language, category, nodeType}) {
+				return `export * from "./${language}/${category}/${nodeType}";\n`;
 			},
 		},
 	],
+);
+readIndexFile(
+	path.join(astFolder, "index.ts"),
+	[
+		{
+			iterator(def) {
+				return `\n	| n.${def.nodeType}`;
+			},
+			wrapCallback(buff) {
+				return `export type AnyNode = ${buff};`;
+			},
+		},
+	],
+	true,
 );
 
 // Add to builders
@@ -87,9 +109,9 @@ readIndexFile(
 	path.join(formatterFolder, "index.ts"),
 	[
 		{
-			iterator({category, nodeType}) {
+			iterator({language, category, nodeType}) {
 				return (
-					`import ${nodeType} from "./${category}/${nodeType}";\n` +
+					`import ${nodeType} from "./${language}/${category}/${nodeType}";\n` +
 					`builders.set("${nodeType}", ${nodeType});\n\n`
 				);
 			},
@@ -102,47 +124,15 @@ readIndexFile(
 	path.join(analysisFolder, "index.ts"),
 	[
 		{
-			iterator({category, nodeType}) {
-				return (
-					`import ${nodeType} from "./${category}/${nodeType}";\n` +
-					`evaluators.set("${nodeType}", ${nodeType});\n\n`
-				);
-			},
-		},
-	],
-);
-
-// Update unions.ts
-const unionsLoc = path.join(astFolder, "unions.ts");
-readIndexFile(
-	unionsLoc,
-	[
-		/*{
-		iterator(def) {
-			if (def.category === "typescript") {
-				return `\n	| n.${def.nodeType}`;
-			}
-		},
-		wrapCallback(buff) {
-			return `export type AnyTS = ${buff};`;
-		},
-	},
-	{
-		iterator(def) {
-			if (def.category === "flow") {
-				return `\n	| n.${def.nodeType}`;
-			}
-		},
-		wrapCallback(buff) {
-			return `export type AnyFlow = ${buff};`;
-		},
-	},*/
-		{
-			iterator(def) {
-				return `\n	| n.${def.nodeType}`;
-			},
-			wrapCallback(buff) {
-				return `export type AnyNode = ${buff};`;
+			iterator({language, category, nodeType}) {
+				if (language === "js") {
+					return (
+						`import ${nodeType} from "./${category}/${nodeType}";\n` +
+						`evaluators.set("${nodeType}", ${nodeType});\n\n`
+					);
+				} else {
+					return "";
+				}
 			},
 		},
 	],

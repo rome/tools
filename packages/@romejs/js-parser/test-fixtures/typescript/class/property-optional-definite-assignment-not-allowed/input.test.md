@@ -5,7 +5,7 @@
 ## `typescript > class > property-optional-definite-assignment-not-allowed`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,8 +54,8 @@ Program {
 		}
 	]
 	body: Array [
-		ClassDeclaration {
-			id: BindingIdentifier {
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
 				name: "C"
 				loc: Object {
 					filename: "input.ts"
@@ -85,7 +85,7 @@ Program {
 					line: 1
 				}
 			}
-			meta: ClassHead {
+			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
@@ -104,9 +104,9 @@ Program {
 					}
 				}
 				body: Array [
-					ClassProperty {
-						key: StaticPropertyKey {
-							value: Identifier {
+					JSClassProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "x"
 								loc: Object {
 									filename: "input.ts"
@@ -153,7 +153,7 @@ Program {
 								line: 2
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: true
@@ -180,9 +180,9 @@ Program {
 							}
 						}
 					}
-					ClassProperty {
-						key: StaticPropertyKey {
-							value: Identifier {
+					JSClassProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: ""
 								loc: Object {
 									filename: "input.ts"
@@ -243,7 +243,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false

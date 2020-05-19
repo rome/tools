@@ -6,7 +6,7 @@
  */
 
 import {Path} from "@romejs/js-compiler";
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 import {descriptions} from "@romejs/diagnostics";
 
 export default {
@@ -15,12 +15,12 @@ export default {
 		const {node} = path;
 
 		if (
-			(node.type === "IfStatement" ||
-			node.type === "ForStatement" ||
-			node.type === "WhileStatement" ||
-			node.type === "DoWhileStatement") &&
+			(node.type === "JSIfStatement" ||
+			node.type === "JSForStatement" ||
+			node.type === "JSWhileStatement" ||
+			node.type === "JSDoWhileStatement") &&
 			node.test &&
-			node.test.type === "AssignmentExpression"
+			node.test.type === "JSAssignmentExpression"
 		) {
 			path.context.addNodeDiagnostic(
 				node.test,

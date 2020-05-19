@@ -5,7 +5,7 @@
 ## `typescript > interface > property-named-public`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -31,7 +31,7 @@ Program {
 	}
 	body: Array [
 		TSInterfaceDeclaration {
-			id: BindingIdentifier {
+			id: JSBindingIdentifier {
 				name: "I"
 				loc: Object {
 					filename: "input.ts"
@@ -79,8 +79,8 @@ Program {
 				}
 				body: Array [
 					TSPropertySignature {
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "public"
 								loc: Object {
 									filename: "input.ts"

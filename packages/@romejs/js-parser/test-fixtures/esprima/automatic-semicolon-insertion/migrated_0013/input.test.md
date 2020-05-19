@@ -5,7 +5,7 @@
 ## `esprima > automatic-semicolon-insertion > migrated_0013`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		BlockStatement {
+		JSBlockStatement {
 			directives: Array []
 			loc: Object {
 				filename: "input.js"
@@ -46,7 +46,7 @@ Program {
 				}
 			}
 			body: Array [
-				ThrowStatement {
+				JSThrowStatement {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -60,7 +60,7 @@ Program {
 							line: 1
 						}
 					}
-					argument: ReferenceIdentifier {
+					argument: JSReferenceIdentifier {
 						name: "error"
 						loc: Object {
 							filename: "input.js"
@@ -78,7 +78,7 @@ Program {
 						}
 					}
 				}
-				ExpressionStatement {
+				JSExpressionStatement {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -92,7 +92,7 @@ Program {
 							line: 2
 						}
 					}
-					expression: ReferenceIdentifier {
+					expression: JSReferenceIdentifier {
 						name: "error"
 						loc: Object {
 							filename: "input.js"

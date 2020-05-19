@@ -5,7 +5,7 @@
 ## `esprima > statement-iteration > for-statement-with-seq`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ForStatement {
+		JSForStatement {
 			test: undefined
 			update: undefined
 			loc: Object {
@@ -46,7 +46,7 @@ Program {
 					line: 1
 				}
 			}
-			body: EmptyStatement {
+			body: JSEmptyStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -61,7 +61,7 @@ Program {
 					}
 				}
 			}
-			init: SequenceExpression {
+			init: JSSequenceExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -76,7 +76,7 @@ Program {
 					}
 				}
 				expressions: Array [
-					ReferenceIdentifier {
+					JSReferenceIdentifier {
 						name: "a"
 						loc: Object {
 							filename: "input.js"
@@ -93,7 +93,7 @@ Program {
 							}
 						}
 					}
-					ReferenceIdentifier {
+					JSReferenceIdentifier {
 						name: "b"
 						loc: Object {
 							filename: "input.js"
@@ -110,7 +110,7 @@ Program {
 							}
 						}
 					}
-					ReferenceIdentifier {
+					JSReferenceIdentifier {
 						name: "c"
 						loc: Object {
 							filename: "input.js"

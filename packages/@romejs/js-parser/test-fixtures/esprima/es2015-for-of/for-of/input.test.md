@@ -5,7 +5,7 @@
 ## `esprima > es2015-for-of > for-of`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ForOfStatement {
+		JSForOfStatement {
 			await: false
 			loc: Object {
 				filename: "input.js"
@@ -45,7 +45,7 @@ Program {
 					line: 1
 				}
 			}
-			body: EmptyStatement {
+			body: JSEmptyStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -60,7 +60,7 @@ Program {
 					}
 				}
 			}
-			left: AssignmentIdentifier {
+			left: JSAssignmentIdentifier {
 				name: "p"
 				loc: Object {
 					filename: "input.js"
@@ -77,7 +77,7 @@ Program {
 					}
 				}
 			}
-			right: ReferenceIdentifier {
+			right: JSReferenceIdentifier {
 				name: "q"
 				loc: Object {
 					filename: "input.js"

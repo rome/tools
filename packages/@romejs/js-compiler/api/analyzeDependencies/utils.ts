@@ -7,12 +7,12 @@
 
 import {
 	AnyNode,
-	BindingIdentifier,
 	ConstExportModuleKind,
 	ConstImportModuleKind,
 	ConstProgramSyntax,
-	ReferenceIdentifier,
-} from "@romejs/js-ast";
+	JSBindingIdentifier,
+	JSReferenceIdentifier,
+} from "@romejs/ast";
 import {SourceLocation} from "@romejs/parser-core";
 import {
 	ClassBinding,
@@ -31,7 +31,7 @@ import {
 
 export function isOptional(path: Path): boolean {
 	for (const {node} of path.ancestryPaths) {
-		if (node.type === "TryStatement") {
+		if (node.type === "JSTryStatement") {
 			return true;
 		}
 	}
@@ -58,7 +58,7 @@ export function getExportKind(
 export function maybeTypeBinding(
 	kind: ConstExportModuleKind,
 	scope: Scope,
-	id: BindingIdentifier | ReferenceIdentifier,
+	id: JSBindingIdentifier | JSReferenceIdentifier,
 ): ConstExportModuleKind {
 	const binding = scope.getBinding(id.name);
 	if (kind === "value" && binding instanceof TypeBinding) {
@@ -96,7 +96,7 @@ export function getAnalyzeExportValueType(
 		return "other";
 	}
 
-	if (node.type === "Identifier") {
+	if (node.type === "JSIdentifier") {
 		const binding = scope.getBinding(node.name);
 
 		if (binding instanceof FunctionBinding) {
@@ -117,11 +117,11 @@ export function getAnalyzeExportValueType(
 		}
 	}
 
-	if (node.type === "FunctionDeclaration") {
+	if (node.type === "JSFunctionDeclaration") {
 		return "function";
 	}
 
-	if (node.type === "ClassDeclaration" || node.type === "ClassExpression") {
+	if (node.type === "JSClassDeclaration" || node.type === "JSClassExpression") {
 		return "class";
 	}
 
@@ -133,7 +133,7 @@ export function getDeclarationLoc(
 	scope: Scope,
 	node: AnyNode,
 ): undefined | SourceLocation {
-	if (node.type === "ReferenceIdentifier") {
+	if (node.type === "JSReferenceIdentifier") {
 		const binding = scope.getBinding(node.name);
 		if (binding !== undefined) {
 			return binding.node.loc;

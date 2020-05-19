@@ -6,7 +6,7 @@
  */
 
 import {Path} from "@romejs/js-compiler";
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 import {descriptions} from "@romejs/diagnostics";
 
 export default {
@@ -14,7 +14,7 @@ export default {
 	enter(path: Path): AnyNode {
 		const {node, context, scope} = path;
 
-		if (node.type === "AssignmentIdentifier") {
+		if (node.type === "JSAssignmentIdentifier") {
 			const binding = scope.getBinding(node.name);
 
 			if (binding !== undefined && binding.kind === "catch") {

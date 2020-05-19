@@ -5,7 +5,7 @@
 ## `es2015 > meta-properties > new-target-inside-params`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "Foo"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
 				loc: Object {
@@ -78,7 +78,7 @@ Program {
 					}
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -100,7 +100,7 @@ Program {
 					}
 				}
 				params: Array [
-					BindingAssignmentPattern {
+					JSBindingAssignmentPattern {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -114,7 +114,7 @@ Program {
 								line: 1
 							}
 						}
-						left: BindingIdentifier {
+						left: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.js"
@@ -130,7 +130,7 @@ Program {
 									line: 1
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
 								loc: Object {
@@ -148,7 +148,7 @@ Program {
 								}
 							}
 						}
-						right: MetaProperty {
+						right: JSMetaProperty {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -162,7 +162,7 @@ Program {
 									line: 1
 								}
 							}
-							meta: Identifier {
+							meta: JSIdentifier {
 								name: "new"
 								loc: Object {
 									filename: "input.js"
@@ -179,7 +179,7 @@ Program {
 									}
 								}
 							}
-							property: Identifier {
+							property: JSIdentifier {
 								name: "target"
 								loc: Object {
 									filename: "input.js"
@@ -201,8 +201,8 @@ Program {
 				]
 			}
 		}
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "Bar"
 				loc: Object {
 					filename: "input.js"
@@ -232,7 +232,7 @@ Program {
 					line: 2
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -255,7 +255,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -271,7 +271,7 @@ Program {
 					}
 				}
 				body: Array [
-					ExpressionStatement {
+					JSExpressionStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -285,7 +285,7 @@ Program {
 								line: 2
 							}
 						}
-						expression: ArrowFunctionExpression {
+						expression: JSArrowFunctionExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -299,7 +299,7 @@ Program {
 									line: 2
 								}
 							}
-							body: BlockStatement {
+							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
 								loc: Object {
@@ -316,7 +316,7 @@ Program {
 									}
 								}
 							}
-							head: FunctionHead {
+							head: JSFunctionHead {
 								async: false
 								hasHoistedVars: false
 								rest: undefined
@@ -336,7 +336,7 @@ Program {
 									}
 								}
 								params: Array [
-									BindingAssignmentPattern {
+									JSBindingAssignmentPattern {
 										operator: "="
 										loc: Object {
 											filename: "input.js"
@@ -351,7 +351,7 @@ Program {
 												line: 2
 											}
 										}
-										left: BindingIdentifier {
+										left: JSBindingIdentifier {
 											name: "x"
 											loc: Object {
 												filename: "input.js"
@@ -368,7 +368,7 @@ Program {
 												}
 											}
 										}
-										right: MetaProperty {
+										right: JSMetaProperty {
 											loc: Object {
 												filename: "input.js"
 												end: Object {
@@ -382,7 +382,7 @@ Program {
 													line: 2
 												}
 											}
-											meta: Identifier {
+											meta: JSIdentifier {
 												name: "new"
 												loc: Object {
 													filename: "input.js"
@@ -399,7 +399,7 @@ Program {
 													}
 												}
 											}
-											property: Identifier {
+											property: JSIdentifier {
 												name: "target"
 												loc: Object {
 													filename: "input.js"

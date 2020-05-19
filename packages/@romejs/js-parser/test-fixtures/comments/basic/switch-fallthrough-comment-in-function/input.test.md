@@ -5,7 +5,7 @@
 ## `comments > basic > switch-fallthrough-comment-in-function`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentLine {
+		JSCommentLine {
 			id: "0"
 			value: " foo"
 			loc: Object {
@@ -46,7 +46,7 @@ Program {
 				}
 			}
 		}
-		CommentLine {
+		JSCommentLine {
 			id: "1"
 			value: " falls through"
 			loc: Object {
@@ -65,8 +65,8 @@ Program {
 		}
 	]
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "bar"
 				loc: Object {
 					filename: "input.js"
@@ -96,7 +96,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -118,7 +118,7 @@ Program {
 					}
 				}
 				params: Array [
-					BindingIdentifier {
+					JSBindingIdentifier {
 						name: "foo"
 						loc: Object {
 							filename: "input.js"
@@ -134,7 +134,7 @@ Program {
 								line: 1
 							}
 						}
-						meta: PatternMeta {
+						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
@@ -154,7 +154,7 @@ Program {
 					}
 				]
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -170,7 +170,7 @@ Program {
 					}
 				}
 				body: Array [
-					SwitchStatement {
+					JSSwitchStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -184,7 +184,7 @@ Program {
 								line: 2
 							}
 						}
-						discriminant: ReferenceIdentifier {
+						discriminant: JSReferenceIdentifier {
 							name: "foo"
 							loc: Object {
 								filename: "input.js"
@@ -202,7 +202,7 @@ Program {
 							}
 						}
 						cases: Array [
-							SwitchCase {
+							JSSwitchCase {
 								consequent: Array []
 								trailingComments: Array ["1"]
 								loc: Object {
@@ -218,7 +218,7 @@ Program {
 										line: 4
 									}
 								}
-								test: NumericLiteral {
+								test: JSNumericLiteral {
 									value: 1
 									format: undefined
 									leadingComments: Array ["0"]
@@ -237,7 +237,7 @@ Program {
 									}
 								}
 							}
-							SwitchCase {
+							JSSwitchCase {
 								loc: Object {
 									filename: "input.js"
 									end: Object {
@@ -251,7 +251,7 @@ Program {
 										line: 6
 									}
 								}
-								test: NumericLiteral {
+								test: JSNumericLiteral {
 									value: 2
 									format: undefined
 									leadingComments: Array ["1"]
@@ -270,7 +270,7 @@ Program {
 									}
 								}
 								consequent: Array [
-									ExpressionStatement {
+									JSExpressionStatement {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -284,7 +284,7 @@ Program {
 												line: 7
 											}
 										}
-										expression: CallExpression {
+										expression: JSCallExpression {
 											arguments: Array []
 											loc: Object {
 												filename: "input.js"
@@ -299,7 +299,7 @@ Program {
 													line: 7
 												}
 											}
-											callee: ReferenceIdentifier {
+											callee: JSReferenceIdentifier {
 												name: "doIt"
 												loc: Object {
 													filename: "input.js"

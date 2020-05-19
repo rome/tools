@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 313`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		TryStatement {
+		JSTryStatement {
 			finalizer: undefined
 			loc: Object {
 				filename: "input.js"
@@ -45,7 +45,7 @@ Program {
 					line: 1
 				}
 			}
-			block: BlockStatement {
+			block: JSBlockStatement {
 				body: Array []
 				directives: Array []
 				loc: Object {
@@ -62,7 +62,7 @@ Program {
 					}
 				}
 			}
-			handler: CatchClause {
+			handler: JSCatchClause {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -76,7 +76,7 @@ Program {
 						line: 1
 					}
 				}
-				body: BlockStatement {
+				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
 					loc: Object {
@@ -93,7 +93,7 @@ Program {
 						}
 					}
 				}
-				param: BindingObjectPattern {
+				param: JSBindingObjectPattern {
 					rest: undefined
 					loc: Object {
 						filename: "input.js"
@@ -109,9 +109,9 @@ Program {
 						}
 					}
 					properties: Array [
-						BindingObjectPatternProperty {
-							key: StaticPropertyKey {
-								value: Identifier {
+						JSBindingObjectPatternProperty {
+							key: JSStaticPropertyKey {
+								value: JSIdentifier {
 									name: "message"
 									loc: Object {
 										filename: "input.js"
@@ -142,7 +142,7 @@ Program {
 									}
 								}
 							}
-							value: BindingIdentifier {
+							value: JSBindingIdentifier {
 								name: "message"
 								loc: Object {
 									filename: "input.js"

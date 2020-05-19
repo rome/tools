@@ -5,7 +5,7 @@
 ## `experimental > dynamic-import > return-value`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
 					filename: "input.js"
@@ -60,8 +60,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "importResult"
 							loc: Object {
 								filename: "input.js"
@@ -91,7 +91,7 @@ Program {
 								line: 1
 							}
 						}
-						init: ImportCall {
+						init: JSImportCall {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -105,7 +105,7 @@ Program {
 									line: 1
 								}
 							}
-							argument: StringLiteral {
+							argument: JSStringLiteral {
 								value: "test.js"
 								loc: Object {
 									filename: "input.js"

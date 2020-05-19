@@ -5,7 +5,7 @@
 ## `es2016 > simple-parameter-list > array-pattern`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,8 +54,8 @@ Program {
 		}
 	]
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "a"
 				loc: Object {
 					filename: "input.js"
@@ -85,7 +85,7 @@ Program {
 					line: 1
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				body: Array []
 				loc: Object {
 					filename: "input.js"
@@ -101,7 +101,7 @@ Program {
 					}
 				}
 				directives: Array [
-					Directive {
+					JSDirective {
 						value: "use strict"
 						loc: Object {
 							filename: "input.js"
@@ -119,7 +119,7 @@ Program {
 					}
 				]
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -141,7 +141,7 @@ Program {
 					}
 				}
 				params: Array [
-					BindingArrayPattern {
+					JSBindingArrayPattern {
 						rest: undefined
 						loc: Object {
 							filename: "input.js"
@@ -156,7 +156,7 @@ Program {
 								line: 1
 							}
 						}
-						meta: PatternMeta {
+						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
@@ -174,7 +174,7 @@ Program {
 							}
 						}
 						elements: Array [
-							BindingIdentifier {
+							JSBindingIdentifier {
 								name: "option1"
 								loc: Object {
 									filename: "input.js"
@@ -190,7 +190,7 @@ Program {
 										line: 1
 									}
 								}
-								meta: PatternMeta {
+								meta: JSPatternMeta {
 									optional: undefined
 									typeAnnotation: undefined
 									loc: Object {
@@ -208,7 +208,7 @@ Program {
 									}
 								}
 							}
-							BindingIdentifier {
+							JSBindingIdentifier {
 								name: "option2"
 								loc: Object {
 									filename: "input.js"
@@ -224,7 +224,7 @@ Program {
 										line: 1
 									}
 								}
-								meta: PatternMeta {
+								meta: JSPatternMeta {
 									optional: undefined
 									typeAnnotation: undefined
 									loc: Object {

@@ -5,7 +5,7 @@
 ## `typescript > cast > as`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentLine {
+		JSCommentLine {
 			id: "0"
 			value: " (x < y) as boolean;"
 			loc: Object {
@@ -46,7 +46,7 @@ Program {
 				}
 			}
 		}
-		CommentLine {
+		JSCommentLine {
 			id: "1"
 			value: " x === (1 as number);"
 			loc: Object {
@@ -65,7 +65,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -93,7 +93,7 @@ Program {
 						line: 1
 					}
 				}
-				expression: ReferenceIdentifier {
+				expression: JSReferenceIdentifier {
 					name: "x"
 					loc: Object {
 						filename: "input.ts"
@@ -125,7 +125,7 @@ Program {
 							line: 1
 						}
 					}
-					typeName: ReferenceIdentifier {
+					typeName: JSReferenceIdentifier {
 						name: "T"
 						loc: Object {
 							filename: "input.ts"
@@ -145,7 +145,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			trailingComments: Array ["0"]
 			loc: Object {
 				filename: "input.ts"
@@ -189,7 +189,7 @@ Program {
 						}
 					}
 				}
-				expression: BinaryExpression {
+				expression: JSBinaryExpression {
 					operator: "<"
 					loc: Object {
 						filename: "input.ts"
@@ -204,7 +204,7 @@ Program {
 							line: 2
 						}
 					}
-					left: ReferenceIdentifier {
+					left: JSReferenceIdentifier {
 						name: "x"
 						loc: Object {
 							filename: "input.ts"
@@ -221,7 +221,7 @@ Program {
 							}
 						}
 					}
-					right: ReferenceIdentifier {
+					right: JSReferenceIdentifier {
 						name: "y"
 						loc: Object {
 							filename: "input.ts"
@@ -241,7 +241,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			leadingComments: Array ["0"]
 			trailingComments: Array ["1"]
 			loc: Object {
@@ -257,7 +257,7 @@ Program {
 					line: 3
 				}
 			}
-			expression: BinaryExpression {
+			expression: JSBinaryExpression {
 				leadingComments: undefined
 				operator: "==="
 				loc: Object {
@@ -273,7 +273,7 @@ Program {
 						line: 3
 					}
 				}
-				left: ReferenceIdentifier {
+				left: JSReferenceIdentifier {
 					name: "x"
 					leadingComments: undefined
 					loc: Object {
@@ -320,7 +320,7 @@ Program {
 							}
 						}
 					}
-					expression: NumericLiteral {
+					expression: JSNumericLiteral {
 						value: 1
 						format: undefined
 						loc: Object {
@@ -340,7 +340,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			leadingComments: Array ["1"]
 			loc: Object {
 				filename: "input.ts"
@@ -385,7 +385,7 @@ Program {
 							line: 4
 						}
 					}
-					typeName: ReferenceIdentifier {
+					typeName: JSReferenceIdentifier {
 						name: "T"
 						loc: Object {
 							filename: "input.ts"
@@ -433,7 +433,7 @@ Program {
 							}
 						}
 					}
-					expression: ReferenceIdentifier {
+					expression: JSReferenceIdentifier {
 						name: "x"
 						leadingComments: undefined
 						loc: Object {

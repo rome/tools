@@ -10,7 +10,7 @@ import {WorkerLintOptions, WorkerParseOptions} from "../bridges/WorkerBridge";
 import Worker from "../../worker/Worker";
 import {DiagnosticSuppressions, Diagnostics} from "@romejs/diagnostics";
 import * as compiler from "@romejs/js-compiler";
-import {ConstProgramSyntax, ConstSourceType} from "@romejs/js-ast";
+import {ConstProgramSyntax, ConstSourceType} from "@romejs/ast";
 import {AnalyzeDependencyResult} from "../types/analyzeDependencies";
 
 export type ExtensionLintInfo = ExtensionHandlerMethodInfo & {

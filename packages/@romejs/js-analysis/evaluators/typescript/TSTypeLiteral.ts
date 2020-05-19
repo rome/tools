@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, TSTypeLiteral, tsTypeLiteral} from "@romejs/js-ast";
+import {AnyNode, TSTypeLiteral, tsTypeLiteral} from "@romejs/ast";
 
 export default function TSTypeLiteral(node: AnyNode, scope: Scope) {
 	node = tsTypeLiteral.assert(node);

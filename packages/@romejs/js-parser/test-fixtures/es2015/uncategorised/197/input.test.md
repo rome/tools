@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 197`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		DoWhileStatement {
+		JSDoWhileStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			test: BooleanLiteral {
+			test: JSBooleanLiteral {
 				value: false
 				loc: Object {
 					filename: "input.js"
@@ -60,7 +60,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
 				loc: Object {
@@ -78,7 +78,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -92,7 +92,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: CallExpression {
+			expression: JSCallExpression {
 				arguments: Array []
 				loc: Object {
 					filename: "input.js"
@@ -107,7 +107,7 @@ Program {
 						line: 1
 					}
 				}
-				callee: ReferenceIdentifier {
+				callee: JSReferenceIdentifier {
 					name: "foo"
 					loc: Object {
 						filename: "input.js"

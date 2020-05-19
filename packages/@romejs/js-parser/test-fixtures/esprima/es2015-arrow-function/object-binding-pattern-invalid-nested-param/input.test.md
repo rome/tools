@@ -5,7 +5,7 @@
 ## `esprima > es2015-arrow-function > object-binding-pattern-invalid-nested-param`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ArrowFunctionExpression {
+			expression: JSArrowFunctionExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -82,7 +82,7 @@ Program {
 						line: 1
 					}
 				}
-				body: NumericLiteral {
+				body: JSNumericLiteral {
 					value: 0
 					format: undefined
 					loc: Object {
@@ -99,7 +99,7 @@ Program {
 						}
 					}
 				}
-				head: FunctionHead {
+				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
 					rest: undefined
@@ -119,7 +119,7 @@ Program {
 						}
 					}
 					params: Array [
-						BindingArrayPattern {
+						JSBindingArrayPattern {
 							rest: undefined
 							loc: Object {
 								filename: "input.js"
@@ -135,7 +135,7 @@ Program {
 								}
 							}
 							elements: Array [
-								BindingArrayPattern {
+								JSBindingArrayPattern {
 									rest: undefined
 									loc: Object {
 										filename: "input.js"
@@ -151,7 +151,7 @@ Program {
 										}
 									}
 									elements: Array [
-										BindingArrayPattern {
+										JSBindingArrayPattern {
 											rest: undefined
 											loc: Object {
 												filename: "input.js"
@@ -167,7 +167,7 @@ Program {
 												}
 											}
 											elements: Array [
-												BindingArrayPattern {
+												JSBindingArrayPattern {
 													rest: undefined
 													loc: Object {
 														filename: "input.js"
@@ -183,7 +183,7 @@ Program {
 														}
 													}
 													elements: Array [
-														BindingArrayPattern {
+														JSBindingArrayPattern {
 															rest: undefined
 															loc: Object {
 																filename: "input.js"
@@ -199,7 +199,7 @@ Program {
 																}
 															}
 															elements: Array [
-																BindingArrayPattern {
+																JSBindingArrayPattern {
 																	rest: undefined
 																	loc: Object {
 																		filename: "input.js"
@@ -215,7 +215,7 @@ Program {
 																		}
 																	}
 																	elements: Array [
-																		BindingArrayPattern {
+																		JSBindingArrayPattern {
 																			rest: undefined
 																			loc: Object {
 																				filename: "input.js"
@@ -231,7 +231,7 @@ Program {
 																				}
 																			}
 																			elements: Array [
-																				BindingArrayPattern {
+																				JSBindingArrayPattern {
 																					rest: undefined
 																					loc: Object {
 																						filename: "input.js"
@@ -247,7 +247,7 @@ Program {
 																						}
 																					}
 																					elements: Array [
-																						BindingArrayPattern {
+																						JSBindingArrayPattern {
 																							rest: undefined
 																							loc: Object {
 																								filename: "input.js"
@@ -263,7 +263,7 @@ Program {
 																								}
 																							}
 																							elements: Array [
-																								BindingArrayPattern {
+																								JSBindingArrayPattern {
 																									rest: undefined
 																									loc: Object {
 																										filename: "input.js"
@@ -279,7 +279,7 @@ Program {
 																										}
 																									}
 																									elements: Array [
-																										BindingArrayPattern {
+																										JSBindingArrayPattern {
 																											rest: undefined
 																											loc: Object {
 																												filename: "input.js"
@@ -295,7 +295,7 @@ Program {
 																												}
 																											}
 																											elements: Array [
-																												BindingArrayPattern {
+																												JSBindingArrayPattern {
 																													rest: undefined
 																													loc: Object {
 																														filename: "input.js"
@@ -311,7 +311,7 @@ Program {
 																														}
 																													}
 																													elements: Array [
-																														BindingArrayPattern {
+																														JSBindingArrayPattern {
 																															rest: undefined
 																															loc: Object {
 																																filename: "input.js"
@@ -327,7 +327,7 @@ Program {
 																																}
 																															}
 																															elements: Array [
-																																BindingArrayPattern {
+																																JSBindingArrayPattern {
 																																	rest: undefined
 																																	loc: Object {
 																																		filename: "input.js"
@@ -343,7 +343,7 @@ Program {
 																																		}
 																																	}
 																																	elements: Array [
-																																		BindingArrayPattern {
+																																		JSBindingArrayPattern {
 																																			rest: undefined
 																																			loc: Object {
 																																				filename: "input.js"
@@ -359,7 +359,7 @@ Program {
 																																				}
 																																			}
 																																			elements: Array [
-																																				BindingArrayPattern {
+																																				JSBindingArrayPattern {
 																																					rest: undefined
 																																					loc: Object {
 																																						filename: "input.js"
@@ -375,7 +375,7 @@ Program {
 																																						}
 																																					}
 																																					elements: Array [
-																																						BindingArrayPattern {
+																																						JSBindingArrayPattern {
 																																							rest: undefined
 																																							loc: Object {
 																																								filename: "input.js"
@@ -391,7 +391,7 @@ Program {
 																																								}
 																																							}
 																																							elements: Array [
-																																								BindingArrayPattern {
+																																								JSBindingArrayPattern {
 																																									rest: undefined
 																																									loc: Object {
 																																										filename: "input.js"
@@ -407,7 +407,7 @@ Program {
 																																										}
 																																									}
 																																									elements: Array [
-																																										BindingArrayPattern {
+																																										JSBindingArrayPattern {
 																																											rest: undefined
 																																											loc: Object {
 																																												filename: "input.js"
@@ -423,7 +423,7 @@ Program {
 																																												}
 																																											}
 																																											elements: Array [
-																																												BindingArrayPattern {
+																																												JSBindingArrayPattern {
 																																													rest: undefined
 																																													loc: Object {
 																																														filename: "input.js"
@@ -439,7 +439,7 @@ Program {
 																																														}
 																																													}
 																																													elements: Array [
-																																														BindingObjectPattern {
+																																														JSBindingObjectPattern {
 																																															rest: undefined
 																																															loc: Object {
 																																																filename: "input.js"
@@ -455,9 +455,9 @@ Program {
 																																																}
 																																															}
 																																															properties: Array [
-																																																BindingObjectPatternProperty {
-																																																	key: StaticPropertyKey {
-																																																		value: Identifier {
+																																																JSBindingObjectPatternProperty {
+																																																	key: JSStaticPropertyKey {
+																																																		value: JSIdentifier {
 																																																			name: "a"
 																																																			loc: Object {
 																																																				filename: "input.js"
@@ -488,7 +488,7 @@ Program {
 																																																			}
 																																																		}
 																																																	}
-																																																	value: BindingIdentifier {
+																																																	value: JSBindingIdentifier {
 																																																		name: "X"
 																																																		loc: Object {
 																																																			filename: "input.js"

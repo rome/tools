@@ -5,7 +5,7 @@
 ## `jsx > errors > adjacent-tags`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -57,7 +57,7 @@ Program {
 		}
 	]
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -71,7 +71,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.js"
@@ -87,8 +87,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.js"
@@ -118,7 +118,7 @@ Program {
 								line: 1
 							}
 						}
-						init: BinaryExpression {
+						init: JSBinaryExpression {
 							operator: "<"
 							loc: Object {
 								filename: "input.js"
@@ -133,7 +133,7 @@ Program {
 									line: 1
 								}
 							}
-							left: BinaryExpression {
+							left: JSBinaryExpression {
 								operator: ">"
 								loc: Object {
 									filename: "input.js"
@@ -148,7 +148,7 @@ Program {
 										line: 1
 									}
 								}
-								right: ReferenceIdentifier {
+								right: JSReferenceIdentifier {
 									name: "two"
 									loc: Object {
 										filename: "input.js"
@@ -165,7 +165,7 @@ Program {
 										}
 									}
 								}
-								left: BinaryExpression {
+								left: JSBinaryExpression {
 									operator: "<"
 									loc: Object {
 										filename: "input.js"
@@ -180,7 +180,7 @@ Program {
 											line: 1
 										}
 									}
-									right: ReferenceIdentifier {
+									right: JSReferenceIdentifier {
 										name: "div"
 										loc: Object {
 											filename: "input.js"
@@ -251,7 +251,7 @@ Program {
 									}
 								}
 							}
-							right: RegExpLiteral {
+							right: JSRegExpLiteral {
 								global: false
 								insensitive: false
 								multiline: false
@@ -271,7 +271,7 @@ Program {
 										line: 1
 									}
 								}
-								expression: RegExpSubExpression {
+								expression: JSRegExpSubExpression {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -286,7 +286,7 @@ Program {
 										}
 									}
 									body: Array [
-										RegExpCharacter {
+										JSRegExpCharacter {
 											value: "d"
 											loc: Object {
 												filename: "input.js"
@@ -302,7 +302,7 @@ Program {
 												}
 											}
 										}
-										RegExpCharacter {
+										JSRegExpCharacter {
 											value: "i"
 											loc: Object {
 												filename: "input.js"
@@ -318,7 +318,7 @@ Program {
 												}
 											}
 										}
-										RegExpCharacter {
+										JSRegExpCharacter {
 											value: "v"
 											loc: Object {
 												filename: "input.js"
@@ -334,7 +334,7 @@ Program {
 												}
 											}
 										}
-										RegExpCharacter {
+										JSRegExpCharacter {
 											value: ">"
 											loc: Object {
 												filename: "input.js"
@@ -350,7 +350,7 @@ Program {
 												}
 											}
 										}
-										RegExpCharacter {
+										JSRegExpCharacter {
 											value: ";"
 											loc: Object {
 												filename: "input.js"

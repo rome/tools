@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > export-arrow`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExportDefaultDeclaration {
+		JSExportDefaultDeclaration {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: ArrowFunctionExpression {
+			declaration: JSArrowFunctionExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -58,7 +58,7 @@ Program {
 						line: 1
 					}
 				}
-				head: FunctionHead {
+				head: JSFunctionHead {
 					async: true
 					hasHoistedVars: false
 					params: Array []
@@ -79,7 +79,7 @@ Program {
 						}
 					}
 				}
-				body: AwaitExpression {
+				body: JSAwaitExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -93,7 +93,7 @@ Program {
 							line: 1
 						}
 					}
-					argument: CallExpression {
+					argument: JSCallExpression {
 						arguments: Array []
 						loc: Object {
 							filename: "input.js"
@@ -108,7 +108,7 @@ Program {
 								line: 1
 							}
 						}
-						callee: ReferenceIdentifier {
+						callee: JSReferenceIdentifier {
 							name: "foo"
 							loc: Object {
 								filename: "input.js"

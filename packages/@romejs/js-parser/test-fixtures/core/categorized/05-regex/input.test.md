@@ -5,7 +5,7 @@
 ## `core > categorized > 05-regex`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: CallExpression {
+			expression: JSCallExpression {
 				arguments: Array []
 				loc: Object {
 					filename: "input.js"
@@ -59,7 +59,7 @@ Program {
 						line: 1
 					}
 				}
-				callee: ReferenceIdentifier {
+				callee: JSReferenceIdentifier {
 					name: "test"
 					loc: Object {
 						filename: "input.js"
@@ -78,8 +78,8 @@ Program {
 				}
 			}
 		}
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "foo"
 				loc: Object {
 					filename: "input.js"
@@ -109,7 +109,7 @@ Program {
 					line: 1
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
 				loc: Object {
@@ -126,7 +126,7 @@ Program {
 					}
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -150,7 +150,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -164,7 +164,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: RegExpLiteral {
+			expression: JSRegExpLiteral {
 				global: false
 				insensitive: true
 				multiline: false
@@ -184,7 +184,7 @@ Program {
 						line: 1
 					}
 				}
-				expression: RegExpSubExpression {
+				expression: JSRegExpSubExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -199,7 +199,7 @@ Program {
 						}
 					}
 					body: Array [
-						RegExpCharacter {
+						JSRegExpCharacter {
 							value: "4"
 							loc: Object {
 								filename: "input.js"
@@ -215,7 +215,7 @@ Program {
 								}
 							}
 						}
-						RegExpCharacter {
+						JSRegExpCharacter {
 							value: "2"
 							loc: Object {
 								filename: "input.js"

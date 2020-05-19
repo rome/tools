@@ -5,7 +5,7 @@
 ## `esprima > expression-left-hand-side > migrated_0010`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: MemberExpression {
+			expression: JSMemberExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -58,7 +58,7 @@ Program {
 						line: 1
 					}
 				}
-				object: ReferenceIdentifier {
+				object: JSReferenceIdentifier {
 					name: "universe"
 					loc: Object {
 						filename: "input.js"
@@ -75,8 +75,8 @@ Program {
 						}
 					}
 				}
-				property: StaticMemberProperty {
-					value: Identifier {
+				property: JSStaticMemberProperty {
+					value: JSIdentifier {
 						name: "milkyway"
 						loc: Object {
 							filename: "input.js"

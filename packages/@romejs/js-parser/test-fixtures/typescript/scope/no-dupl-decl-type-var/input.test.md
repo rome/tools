@@ -5,7 +5,7 @@
 ## `typescript > scope > no-dupl-decl-type-var`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.ts"
@@ -60,8 +60,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "X"
 							loc: Object {
 								filename: "input.ts"
@@ -91,7 +91,7 @@ Program {
 								line: 1
 							}
 						}
-						init: StringLiteral {
+						init: JSStringLiteral {
 							value: ""
 							loc: Object {
 								filename: "input.ts"
@@ -111,8 +111,8 @@ Program {
 				]
 			}
 		}
-		TypeAliasTypeAnnotation {
-			id: BindingIdentifier {
+		TSTypeAliasTypeAnnotation {
+			id: JSBindingIdentifier {
 				name: "X"
 				loc: Object {
 					filename: "input.ts"

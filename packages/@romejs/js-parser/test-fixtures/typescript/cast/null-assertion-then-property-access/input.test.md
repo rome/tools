@@ -5,7 +5,7 @@
 ## `typescript > cast > null-assertion-then-property-access`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: MemberExpression {
+			expression: JSMemberExpression {
 				loc: Object {
 					filename: "input.ts"
 					end: Object {
@@ -72,7 +72,7 @@ Program {
 							line: 1
 						}
 					}
-					expression: ReferenceIdentifier {
+					expression: JSReferenceIdentifier {
 						name: "x"
 						loc: Object {
 							filename: "input.ts"
@@ -90,8 +90,8 @@ Program {
 						}
 					}
 				}
-				property: StaticMemberProperty {
-					value: Identifier {
+				property: JSStaticMemberProperty {
+					value: JSIdentifier {
 						name: "y"
 						loc: Object {
 							filename: "input.ts"

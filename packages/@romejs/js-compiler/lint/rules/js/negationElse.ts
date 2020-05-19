@@ -6,12 +6,12 @@
  */
 
 import {Path} from "@romejs/js-compiler";
-import {AnyExpression, UnaryExpression} from "@romejs/js-ast";
+import {AnyJSExpression, JSUnaryExpression} from "@romejs/ast";
 import {descriptions} from "@romejs/diagnostics";
 
-function isNegation(node: AnyExpression): node is UnaryExpression {
+function isNegation(node: AnyJSExpression): node is JSUnaryExpression {
 	return (
-		node.type === "UnaryExpression" &&
+		node.type === "JSUnaryExpression" &&
 		node.prefix === true &&
 		node.operator === "!"
 	);
@@ -23,7 +23,7 @@ export default {
 		const {node} = path;
 
 		if (
-			node.type === "IfStatement" &&
+			node.type === "JSIfStatement" &&
 			node.alternate !== undefined &&
 			isNegation(node.test)
 		) {
@@ -41,7 +41,7 @@ export default {
 			);
 		}
 
-		if (node.type === "ConditionalExpression" && isNegation(node.test)) {
+		if (node.type === "JSConditionalExpression" && isNegation(node.test)) {
 			return path.context.addFixableDiagnostic(
 				{
 					old: node,

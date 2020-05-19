@@ -5,7 +5,7 @@
 ## `es2019 > json-strings > directive-line-separator`
 
 ```javascript
-Program {
+JSProgram {
 	body: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentLine {
+		JSCommentLine {
 			id: "0"
 			value: "     ^ That's a U+2028 LINE SEPARATOR UTF-16 char (between 'before' and 'after')"
 			loc: Object {
@@ -48,7 +48,7 @@ Program {
 		}
 	]
 	directives: Array [
-		Directive {
+		JSDirective {
 			value: "before\u2028after"
 			trailingComments: Array ["0"]
 			loc: Object {

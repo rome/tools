@@ -5,7 +5,7 @@
 ## `esprima > statement-iteration > migrated_0025`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ForInStatement {
+		JSForInStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			body: EmptyStatement {
+			body: JSEmptyStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -59,7 +59,7 @@ Program {
 					}
 				}
 			}
-			right: ReferenceIdentifier {
+			right: JSReferenceIdentifier {
 				name: "d"
 				loc: Object {
 					filename: "input.js"
@@ -76,7 +76,7 @@ Program {
 					}
 				}
 			}
-			left: MemberExpression {
+			left: JSMemberExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -90,8 +90,8 @@ Program {
 						line: 1
 					}
 				}
-				property: ComputedMemberProperty {
-					value: NumericLiteral {
+				property: JSComputedMemberProperty {
+					value: JSNumericLiteral {
 						value: 0
 						format: undefined
 						loc: Object {
@@ -122,7 +122,7 @@ Program {
 						}
 					}
 				}
-				object: CallExpression {
+				object: JSCallExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -136,7 +136,7 @@ Program {
 							line: 1
 						}
 					}
-					callee: ReferenceIdentifier {
+					callee: JSReferenceIdentifier {
 						name: "a"
 						loc: Object {
 							filename: "input.js"
@@ -154,7 +154,7 @@ Program {
 						}
 					}
 					arguments: Array [
-						BinaryExpression {
+						JSBinaryExpression {
 							operator: "in"
 							loc: Object {
 								filename: "input.js"
@@ -169,7 +169,7 @@ Program {
 									line: 1
 								}
 							}
-							left: ReferenceIdentifier {
+							left: JSReferenceIdentifier {
 								name: "b"
 								loc: Object {
 									filename: "input.js"
@@ -186,7 +186,7 @@ Program {
 									}
 								}
 							}
-							right: ReferenceIdentifier {
+							right: JSReferenceIdentifier {
 								name: "c"
 								loc: Object {
 									filename: "input.js"

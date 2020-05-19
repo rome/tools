@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > export-invalid`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExportDefaultDeclaration {
+		JSExportDefaultDeclaration {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: ArrowFunctionExpression {
+			declaration: JSArrowFunctionExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -82,7 +82,7 @@ Program {
 						line: 1
 					}
 				}
-				body: ReferenceIdentifier {
+				body: JSReferenceIdentifier {
 					name: "INVALID_PLACEHOLDER"
 					loc: Object {
 						filename: "input.js"
@@ -98,7 +98,7 @@ Program {
 						}
 					}
 				}
-				head: FunctionHead {
+				head: JSFunctionHead {
 					async: true
 					hasHoistedVars: false
 					rest: undefined
@@ -117,7 +117,7 @@ Program {
 						}
 					}
 					params: Array [
-						BindingIdentifier {
+						JSBindingIdentifier {
 							name: "functionX"
 							loc: Object {
 								filename: "input.js"
@@ -138,7 +138,7 @@ Program {
 				}
 			}
 		}
-		BlockStatement {
+		JSBlockStatement {
 			body: Array []
 			directives: Array []
 			loc: Object {

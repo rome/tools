@@ -5,7 +5,7 @@
 ## `test262 > rest-parameter > array-pattern-multi-element-with-leading`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "multiElementWithLeading"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
 				loc: Object {
@@ -78,7 +78,7 @@ Program {
 					}
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -99,7 +99,7 @@ Program {
 					}
 				}
 				params: Array [
-					BindingIdentifier {
+					JSBindingIdentifier {
 						name: "x"
 						loc: Object {
 							filename: "input.js"
@@ -115,7 +115,7 @@ Program {
 								line: 1
 							}
 						}
-						meta: PatternMeta {
+						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
@@ -133,7 +133,7 @@ Program {
 							}
 						}
 					}
-					BindingIdentifier {
+					JSBindingIdentifier {
 						name: "y"
 						loc: Object {
 							filename: "input.js"
@@ -149,7 +149,7 @@ Program {
 								line: 1
 							}
 						}
-						meta: PatternMeta {
+						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
@@ -168,7 +168,7 @@ Program {
 						}
 					}
 				]
-				rest: BindingArrayPattern {
+				rest: JSBindingArrayPattern {
 					rest: undefined
 					loc: Object {
 						filename: "input.js"
@@ -183,7 +183,7 @@ Program {
 							line: 1
 						}
 					}
-					meta: PatternMeta {
+					meta: JSPatternMeta {
 						optional: undefined
 						typeAnnotation: undefined
 						loc: Object {
@@ -201,7 +201,7 @@ Program {
 						}
 					}
 					elements: Array [
-						BindingIdentifier {
+						JSBindingIdentifier {
 							name: "a"
 							loc: Object {
 								filename: "input.js"
@@ -217,7 +217,7 @@ Program {
 									line: 1
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
 								loc: Object {
@@ -235,7 +235,7 @@ Program {
 								}
 							}
 						}
-						BindingIdentifier {
+						JSBindingIdentifier {
 							name: "b"
 							loc: Object {
 								filename: "input.js"
@@ -251,7 +251,7 @@ Program {
 									line: 1
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
 								loc: Object {
@@ -269,7 +269,7 @@ Program {
 								}
 							}
 						}
-						BindingIdentifier {
+						JSBindingIdentifier {
 							name: "c"
 							loc: Object {
 								filename: "input.js"
@@ -285,7 +285,7 @@ Program {
 									line: 1
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
 								loc: Object {

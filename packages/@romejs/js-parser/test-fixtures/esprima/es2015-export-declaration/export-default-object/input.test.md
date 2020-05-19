@@ -5,7 +5,7 @@
 ## `esprima > es2015-export-declaration > export-default-object`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExportDefaultDeclaration {
+		JSExportDefaultDeclaration {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: ObjectExpression {
+			declaration: JSObjectExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -59,9 +59,9 @@ Program {
 					}
 				}
 				properties: Array [
-					ObjectProperty {
-						key: StaticPropertyKey {
-							value: Identifier {
+					JSObjectProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "foo"
 								loc: Object {
 									filename: "input.js"
@@ -92,7 +92,7 @@ Program {
 								}
 							}
 						}
-						value: NumericLiteral {
+						value: JSNumericLiteral {
 							value: 1
 							format: undefined
 							loc: Object {

@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 286`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ArrowFunctionExpression {
+			expression: JSArrowFunctionExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -82,7 +82,7 @@ Program {
 						line: 1
 					}
 				}
-				body: BlockStatement {
+				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
 					loc: Object {
@@ -99,7 +99,7 @@ Program {
 						}
 					}
 				}
-				head: FunctionHead {
+				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
 					params: Array []
@@ -118,7 +118,7 @@ Program {
 							line: 1
 						}
 					}
-					rest: BindingArrayPattern {
+					rest: JSBindingArrayPattern {
 						rest: undefined
 						loc: Object {
 							filename: "input.js"
@@ -134,7 +134,7 @@ Program {
 							}
 						}
 						elements: Array [
-							BindingIdentifier {
+							JSBindingIdentifier {
 								name: "INVALID_PLACEHOLDER"
 								loc: Object {
 									filename: "input.js"

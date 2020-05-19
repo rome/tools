@@ -5,7 +5,7 @@
 ## `esprima > es2015-for-of > for-of-with-let`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ForOfStatement {
+		JSForOfStatement {
 			await: false
 			loc: Object {
 				filename: "input.js"
@@ -45,7 +45,7 @@ Program {
 					line: 1
 				}
 			}
-			body: EmptyStatement {
+			body: JSEmptyStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -60,7 +60,7 @@ Program {
 					}
 				}
 			}
-			right: ReferenceIdentifier {
+			right: JSReferenceIdentifier {
 				name: "list"
 				loc: Object {
 					filename: "input.js"
@@ -77,7 +77,7 @@ Program {
 					}
 				}
 			}
-			left: VariableDeclaration {
+			left: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.js"
@@ -93,8 +93,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "z"
 							loc: Object {
 								filename: "input.js"

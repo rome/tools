@@ -5,7 +5,7 @@
 ## `es2015 > let > let-as-identifier-5`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		IfStatement {
+		JSIfStatement {
 			alternate: undefined
 			loc: Object {
 				filename: "input.js"
@@ -45,7 +45,7 @@ Program {
 					line: 1
 				}
 			}
-			test: NumericLiteral {
+			test: JSNumericLiteral {
 				value: 1
 				format: undefined
 				loc: Object {
@@ -62,7 +62,7 @@ Program {
 					}
 				}
 			}
-			consequent: ExpressionStatement {
+			consequent: JSExpressionStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -76,7 +76,7 @@ Program {
 						line: 1
 					}
 				}
-				expression: ReferenceIdentifier {
+				expression: JSReferenceIdentifier {
 					name: "let"
 					loc: Object {
 						filename: "input.js"
@@ -95,7 +95,7 @@ Program {
 				}
 			}
 		}
-		BlockStatement {
+		JSBlockStatement {
 			body: Array []
 			directives: Array []
 			loc: Object {

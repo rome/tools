@@ -5,7 +5,7 @@
 ## `es2015 > class-methods > direct-super-in-object-method`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: CallExpression {
+			expression: JSCallExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -82,7 +82,7 @@ Program {
 						line: 1
 					}
 				}
-				callee: MemberExpression {
+				callee: JSMemberExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -96,7 +96,7 @@ Program {
 							line: 1
 						}
 					}
-					object: ReferenceIdentifier {
+					object: JSReferenceIdentifier {
 						name: "Object"
 						loc: Object {
 							filename: "input.js"
@@ -113,8 +113,8 @@ Program {
 							}
 						}
 					}
-					property: StaticMemberProperty {
-						value: Identifier {
+					property: JSStaticMemberProperty {
+						value: JSIdentifier {
 							name: "create"
 							loc: Object {
 								filename: "input.js"
@@ -148,7 +148,7 @@ Program {
 					}
 				}
 				arguments: Array [
-					ObjectExpression {
+					JSObjectExpression {
 						properties: Array []
 						loc: Object {
 							filename: "input.js"
@@ -164,7 +164,7 @@ Program {
 							}
 						}
 					}
-					ObjectExpression {
+					JSObjectExpression {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -179,9 +179,9 @@ Program {
 							}
 						}
 						properties: Array [
-							ObjectProperty {
-								key: StaticPropertyKey {
-									value: Identifier {
+							JSObjectProperty {
+								key: JSStaticPropertyKey {
+									value: JSIdentifier {
 										name: "foo"
 										loc: Object {
 											filename: "input.js"
@@ -212,7 +212,7 @@ Program {
 										}
 									}
 								}
-								value: ObjectExpression {
+								value: JSObjectExpression {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -227,9 +227,9 @@ Program {
 										}
 									}
 									properties: Array [
-										ObjectProperty {
-											key: StaticPropertyKey {
-												value: Identifier {
+										JSObjectProperty {
+											key: JSStaticPropertyKey {
+												value: JSIdentifier {
 													name: "get"
 													loc: Object {
 														filename: "input.js"
@@ -260,7 +260,7 @@ Program {
 													}
 												}
 											}
-											value: FunctionExpression {
+											value: JSFunctionExpression {
 												id: undefined
 												loc: Object {
 													filename: "input.js"
@@ -275,7 +275,7 @@ Program {
 														line: 3
 													}
 												}
-												head: FunctionHead {
+												head: JSFunctionHead {
 													async: false
 													generator: false
 													hasHoistedVars: false
@@ -298,7 +298,7 @@ Program {
 														}
 													}
 												}
-												body: BlockStatement {
+												body: JSBlockStatement {
 													directives: Array []
 													loc: Object {
 														filename: "input.js"
@@ -314,7 +314,7 @@ Program {
 														}
 													}
 													body: Array [
-														ReturnStatement {
+														JSReturnStatement {
 															loc: Object {
 																filename: "input.js"
 																end: Object {
@@ -328,7 +328,7 @@ Program {
 																	line: 4
 																}
 															}
-															argument: MemberExpression {
+															argument: JSMemberExpression {
 																loc: Object {
 																	filename: "input.js"
 																	end: Object {
@@ -342,7 +342,7 @@ Program {
 																		line: 4
 																	}
 																}
-																object: Super {
+																object: JSSuper {
 																	loc: Object {
 																		filename: "input.js"
 																		end: Object {
@@ -357,8 +357,8 @@ Program {
 																		}
 																	}
 																}
-																property: StaticMemberProperty {
-																	value: Identifier {
+																property: JSStaticMemberProperty {
+																	value: JSIdentifier {
 																		name: "foo"
 																		loc: Object {
 																			filename: "input.js"

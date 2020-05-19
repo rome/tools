@@ -5,7 +5,7 @@
 ## `typescript > type-arguments > new-false-positive`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: BinaryExpression {
+			expression: JSBinaryExpression {
 				operator: "<"
 				loc: Object {
 					filename: "input.ts"
@@ -59,7 +59,7 @@ Program {
 						line: 1
 					}
 				}
-				right: ReferenceIdentifier {
+				right: JSReferenceIdentifier {
 					name: "T"
 					loc: Object {
 						filename: "input.ts"
@@ -76,7 +76,7 @@ Program {
 						}
 					}
 				}
-				left: NewExpression {
+				left: JSNewExpression {
 					arguments: Array []
 					optional: undefined
 					typeArguments: undefined
@@ -93,7 +93,7 @@ Program {
 							line: 1
 						}
 					}
-					callee: ReferenceIdentifier {
+					callee: JSReferenceIdentifier {
 						name: "A"
 						loc: Object {
 							filename: "input.ts"

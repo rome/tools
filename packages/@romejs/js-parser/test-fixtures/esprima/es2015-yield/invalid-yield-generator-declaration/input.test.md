@@ -5,7 +5,7 @@
 ## `esprima > es2015-yield > invalid-yield-generator-declaration`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,8 +54,8 @@ Program {
 		}
 	]
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "g"
 				loc: Object {
 					filename: "input.js"
@@ -85,7 +85,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: true
 				hasHoistedVars: false
@@ -108,7 +108,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -124,8 +124,8 @@ Program {
 					}
 				}
 				body: Array [
-					FunctionDeclaration {
-						id: BindingIdentifier {
+					JSFunctionDeclaration {
+						id: JSBindingIdentifier {
 							name: "yield"
 							loc: Object {
 								filename: "input.js"
@@ -155,7 +155,7 @@ Program {
 								line: 1
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
 							loc: Object {
@@ -172,7 +172,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: true
 							hasHoistedVars: false

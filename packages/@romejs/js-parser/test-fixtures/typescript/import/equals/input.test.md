@@ -5,7 +5,7 @@
 ## `typescript > import > equals`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -31,7 +31,7 @@ Program {
 	}
 	body: Array [
 		TSImportEqualsDeclaration {
-			id: BindingIdentifier {
+			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
 					filename: "input.ts"
@@ -76,7 +76,7 @@ Program {
 						line: 1
 					}
 				}
-				left: ReferenceIdentifier {
+				left: JSReferenceIdentifier {
 					name: "B"
 					loc: Object {
 						filename: "input.ts"
@@ -93,7 +93,7 @@ Program {
 						}
 					}
 				}
-				right: Identifier {
+				right: JSIdentifier {
 					name: "C"
 					loc: Object {
 						filename: "input.ts"

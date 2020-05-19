@@ -5,7 +5,7 @@
 ## `esprima > es2015-array-pattern > dupe-param-3`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	filename: "input.js"
@@ -28,7 +28,7 @@ Program {
 		}
 	}
 	directives: Array [
-		Directive {
+		JSDirective {
 			value: "use strict"
 			loc: Object {
 				filename: "input.js"
@@ -92,8 +92,8 @@ Program {
 		}
 	]
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "a"
 				loc: Object {
 					filename: "input.js"
@@ -123,7 +123,7 @@ Program {
 					line: 2
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
 				loc: Object {
@@ -140,7 +140,7 @@ Program {
 					}
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -162,7 +162,7 @@ Program {
 					}
 				}
 				params: Array [
-					BindingArrayPattern {
+					JSBindingArrayPattern {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -176,7 +176,7 @@ Program {
 								line: 2
 							}
 						}
-						meta: PatternMeta {
+						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
@@ -193,7 +193,7 @@ Program {
 								}
 							}
 						}
-						rest: BindingIdentifier {
+						rest: JSBindingIdentifier {
 							name: "a"
 							loc: Object {
 								filename: "input.js"
@@ -209,7 +209,7 @@ Program {
 									line: 2
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
 								loc: Object {
@@ -228,7 +228,7 @@ Program {
 							}
 						}
 						elements: Array [
-							BindingObjectPattern {
+							JSBindingObjectPattern {
 								rest: undefined
 								loc: Object {
 									filename: "input.js"
@@ -243,7 +243,7 @@ Program {
 										line: 2
 									}
 								}
-								meta: PatternMeta {
+								meta: JSPatternMeta {
 									optional: undefined
 									typeAnnotation: undefined
 									loc: Object {
@@ -261,9 +261,9 @@ Program {
 									}
 								}
 								properties: Array [
-									BindingObjectPatternProperty {
-										key: StaticPropertyKey {
-											value: Identifier {
+									JSBindingObjectPatternProperty {
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
 												name: "a"
 												loc: Object {
 													filename: "input.js"
@@ -294,7 +294,7 @@ Program {
 												}
 											}
 										}
-										value: BindingIdentifier {
+										value: JSBindingIdentifier {
 											name: "a"
 											loc: Object {
 												filename: "input.js"

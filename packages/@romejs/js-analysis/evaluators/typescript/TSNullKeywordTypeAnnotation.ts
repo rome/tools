@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	TSNullKeywordTypeAnnotation,
 	tsNullKeywordTypeAnnotation,
-} from "@romejs/js-ast";
+} from "@romejs/ast";
 import NullT from "../../types/NullT";
 
 export default function TSNullKeywordTypeAnnotation(node: AnyNode, scope: Scope) {

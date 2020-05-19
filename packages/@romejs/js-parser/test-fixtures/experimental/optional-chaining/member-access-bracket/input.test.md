@@ -5,7 +5,7 @@
 ## `experimental > optional-chaining > member-access-bracket`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: MemberExpression {
+			expression: JSMemberExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -58,7 +58,7 @@ Program {
 						line: 1
 					}
 				}
-				object: ReferenceIdentifier {
+				object: JSReferenceIdentifier {
 					name: "obj"
 					loc: Object {
 						filename: "input.js"
@@ -75,8 +75,8 @@ Program {
 						}
 					}
 				}
-				property: ComputedMemberProperty {
-					value: ReferenceIdentifier {
+				property: JSComputedMemberProperty {
+					value: JSReferenceIdentifier {
 						name: "expr"
 						loc: Object {
 							filename: "input.js"
@@ -110,7 +110,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -124,7 +124,7 @@ Program {
 					line: 3
 				}
 			}
-			expression: MemberExpression {
+			expression: JSMemberExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -138,8 +138,8 @@ Program {
 						line: 3
 					}
 				}
-				property: ComputedMemberProperty {
-					value: ReferenceIdentifier {
+				property: JSComputedMemberProperty {
+					value: JSReferenceIdentifier {
 						name: "other"
 						loc: Object {
 							filename: "input.js"
@@ -171,7 +171,7 @@ Program {
 						}
 					}
 				}
-				object: MemberExpression {
+				object: JSMemberExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -185,7 +185,7 @@ Program {
 							line: 3
 						}
 					}
-					object: ReferenceIdentifier {
+					object: JSReferenceIdentifier {
 						name: "obj"
 						loc: Object {
 							filename: "input.js"
@@ -202,8 +202,8 @@ Program {
 							}
 						}
 					}
-					property: ComputedMemberProperty {
-						value: ReferenceIdentifier {
+					property: JSComputedMemberProperty {
+						value: JSReferenceIdentifier {
 							name: "expr"
 							loc: Object {
 								filename: "input.js"
@@ -238,7 +238,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -252,7 +252,7 @@ Program {
 					line: 5
 				}
 			}
-			expression: MemberExpression {
+			expression: JSMemberExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -266,7 +266,7 @@ Program {
 						line: 5
 					}
 				}
-				object: ReferenceIdentifier {
+				object: JSReferenceIdentifier {
 					name: "obj"
 					loc: Object {
 						filename: "input.js"
@@ -283,8 +283,8 @@ Program {
 						}
 					}
 				}
-				property: ComputedMemberProperty {
-					value: BooleanLiteral {
+				property: JSComputedMemberProperty {
+					value: JSBooleanLiteral {
 						value: true
 						loc: Object {
 							filename: "input.js"
@@ -317,7 +317,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -331,7 +331,7 @@ Program {
 					line: 7
 				}
 			}
-			expression: MemberExpression {
+			expression: JSMemberExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -345,8 +345,8 @@ Program {
 						line: 7
 					}
 				}
-				property: ComputedMemberProperty {
-					value: BooleanLiteral {
+				property: JSComputedMemberProperty {
+					value: JSBooleanLiteral {
 						value: true
 						loc: Object {
 							filename: "input.js"
@@ -377,7 +377,7 @@ Program {
 						}
 					}
 				}
-				object: MemberExpression {
+				object: JSMemberExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -391,7 +391,7 @@ Program {
 							line: 7
 						}
 					}
-					object: ReferenceIdentifier {
+					object: JSReferenceIdentifier {
 						name: "obj"
 						loc: Object {
 							filename: "input.js"
@@ -408,8 +408,8 @@ Program {
 							}
 						}
 					}
-					property: ComputedMemberProperty {
-						value: BooleanLiteral {
+					property: JSComputedMemberProperty {
+						value: JSBooleanLiteral {
 							value: true
 							loc: Object {
 								filename: "input.js"
@@ -443,7 +443,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -457,7 +457,7 @@ Program {
 					line: 9
 				}
 			}
-			expression: MemberExpression {
+			expression: JSMemberExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -471,8 +471,8 @@ Program {
 						line: 9
 					}
 				}
-				property: ComputedMemberProperty {
-					value: ReferenceIdentifier {
+				property: JSComputedMemberProperty {
+					value: JSReferenceIdentifier {
 						name: "expr"
 						loc: Object {
 							filename: "input.js"
@@ -504,7 +504,7 @@ Program {
 						}
 					}
 				}
-				object: MemberExpression {
+				object: JSMemberExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -518,7 +518,7 @@ Program {
 							line: 9
 						}
 					}
-					object: ReferenceIdentifier {
+					object: JSReferenceIdentifier {
 						name: "obj"
 						loc: Object {
 							filename: "input.js"
@@ -535,8 +535,8 @@ Program {
 							}
 						}
 					}
-					property: StaticMemberProperty {
-						value: Identifier {
+					property: JSStaticMemberProperty {
+						value: JSIdentifier {
 							name: "a"
 							loc: Object {
 								filename: "input.js"
@@ -571,7 +571,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -585,7 +585,7 @@ Program {
 					line: 11
 				}
 			}
-			expression: MemberExpression {
+			expression: JSMemberExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -599,8 +599,8 @@ Program {
 						line: 11
 					}
 				}
-				property: ComputedMemberProperty {
-					value: BooleanLiteral {
+				property: JSComputedMemberProperty {
+					value: JSBooleanLiteral {
 						value: true
 						loc: Object {
 							filename: "input.js"
@@ -631,7 +631,7 @@ Program {
 						}
 					}
 				}
-				object: MemberExpression {
+				object: JSMemberExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -645,7 +645,7 @@ Program {
 							line: 11
 						}
 					}
-					object: ReferenceIdentifier {
+					object: JSReferenceIdentifier {
 						name: "obj"
 						loc: Object {
 							filename: "input.js"
@@ -662,8 +662,8 @@ Program {
 							}
 						}
 					}
-					property: StaticMemberProperty {
-						value: Identifier {
+					property: JSStaticMemberProperty {
+						value: JSIdentifier {
 							name: "a"
 							loc: Object {
 								filename: "input.js"

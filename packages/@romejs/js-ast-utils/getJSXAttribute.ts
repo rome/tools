@@ -1,16 +1,16 @@
-import {AnyExpression, JSXAttribute, JSXElement} from "@romejs/js-ast";
+import {AnyJSExpression, JSXAttribute, JSXElement} from "@romejs/ast";
 
 function isEmptyAttributeValue(
-	node: NonNullable<JSXAttribute["value"]> | AnyExpression,
+	node: NonNullable<JSXAttribute["value"]> | AnyJSExpression,
 ): boolean {
 	switch (node.type) {
-		case "StringLiteral":
+		case "JSStringLiteral":
 			return node.value === "";
 
 		case "JSXExpressionContainer":
 			return isEmptyAttributeValue(node.expression);
 
-		case "ReferenceIdentifier":
+		case "JSReferenceIdentifier":
 			return node.name === "undefined";
 
 		case "JSXEmptyExpression":

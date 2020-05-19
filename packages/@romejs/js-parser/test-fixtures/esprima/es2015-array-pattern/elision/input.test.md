@@ -5,7 +5,7 @@
 ## `esprima > es2015-array-pattern > elision`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.js"
@@ -60,8 +60,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingArrayPattern {
+					JSVariableDeclarator {
+						id: JSBindingArrayPattern {
 							rest: undefined
 							loc: Object {
 								filename: "input.js"
@@ -77,7 +77,7 @@ Program {
 								}
 							}
 							elements: Array [
-								BindingIdentifier {
+								JSBindingIdentifier {
 									name: "a"
 									loc: Object {
 										filename: "input.js"
@@ -93,7 +93,7 @@ Program {
 											line: 1
 										}
 									}
-									meta: PatternMeta {
+									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
@@ -126,7 +126,7 @@ Program {
 								line: 1
 							}
 						}
-						init: NumericLiteral {
+						init: JSNumericLiteral {
 							value: 0
 							format: undefined
 							loc: Object {

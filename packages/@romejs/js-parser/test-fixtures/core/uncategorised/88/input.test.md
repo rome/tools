@@ -5,7 +5,7 @@
 ## `core > uncategorised > 88`
 
 ```javascript
-Program {
+JSProgram {
 	body: Array []
 	comments: Array []
 	corrupt: false
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	directives: Array [
-		Directive {
+		JSDirective {
 			value: "\\x61"
 			loc: Object {
 				filename: "input.js"

@@ -5,7 +5,7 @@
 ## `typescript > types > new-line`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ReferenceIdentifier {
+			expression: JSReferenceIdentifier {
 				name: "type"
 				loc: Object {
 					filename: "input.ts"
@@ -62,7 +62,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -76,7 +76,7 @@ Program {
 					line: 2
 				}
 			}
-			expression: AssignmentExpression {
+			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
 					filename: "input.ts"
@@ -91,7 +91,7 @@ Program {
 						line: 2
 					}
 				}
-				left: AssignmentIdentifier {
+				left: JSAssignmentIdentifier {
 					name: "Foo"
 					loc: Object {
 						filename: "input.ts"
@@ -108,7 +108,7 @@ Program {
 						}
 					}
 				}
-				right: ReferenceIdentifier {
+				right: JSReferenceIdentifier {
 					name: "string"
 					loc: Object {
 						filename: "input.ts"

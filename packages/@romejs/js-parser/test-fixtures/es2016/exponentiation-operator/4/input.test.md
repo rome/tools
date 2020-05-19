@@ -5,7 +5,7 @@
 ## `es2016 > exponentiation-operator > 4`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.js"
@@ -60,8 +60,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "squared"
 							loc: Object {
 								filename: "input.js"
@@ -91,7 +91,7 @@ Program {
 								line: 1
 							}
 						}
-						init: BinaryExpression {
+						init: JSBinaryExpression {
 							operator: "**"
 							loc: Object {
 								filename: "input.js"
@@ -106,7 +106,7 @@ Program {
 									line: 1
 								}
 							}
-							left: NumericLiteral {
+							left: JSNumericLiteral {
 								value: 2
 								format: undefined
 								loc: Object {
@@ -123,7 +123,7 @@ Program {
 									}
 								}
 							}
-							right: NumericLiteral {
+							right: JSNumericLiteral {
 								value: 2
 								format: undefined
 								loc: Object {

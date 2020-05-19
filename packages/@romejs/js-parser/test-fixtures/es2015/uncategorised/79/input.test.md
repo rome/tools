@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 79`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExportDefaultDeclaration {
+		JSExportDefaultDeclaration {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: NumericLiteral {
+			declaration: JSNumericLiteral {
 				value: 42
 				format: undefined
 				loc: Object {

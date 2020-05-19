@@ -6,7 +6,7 @@
  */
 
 import {Path} from "@romejs/js-compiler";
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 import {descriptions} from "@romejs/diagnostics";
 
 export default {
@@ -14,11 +14,11 @@ export default {
 	enter(path: Path): AnyNode {
 		const {node, context} = path;
 
-		if (node.type === "SwitchStatement") {
+		if (node.type === "JSSwitchStatement") {
 			const uniqueSwitchCases = new Set();
 
 			for (const param of node.cases) {
-				if (param.test && param.test.type === "StringLiteral") {
+				if (param.test && param.test.type === "JSStringLiteral") {
 					const {test} = param;
 
 					if (uniqueSwitchCases.has(test.value)) {

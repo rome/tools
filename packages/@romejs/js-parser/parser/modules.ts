@@ -10,29 +10,29 @@ import {Position} from "@romejs/parser-core";
 import {types as tt} from "../tokenizer/types";
 import {
 	AnyExportExternalSpecifier,
+	AnyJSStatement,
 	AnyNode,
-	AnyStatement,
-	BindingIdentifier,
 	ConstExportModuleKind,
 	ConstImportModuleKind,
-	ExportAllDeclaration,
-	ExportDefaultDeclaration,
-	ExportDefaultSpecifier,
-	ExportExternalDeclaration,
-	ExportExternalSpecifier,
-	ExportLocalDeclaration,
-	ExportLocalSpecifier,
-	ExportNamespaceSpecifier,
-	ImportDeclaration,
-	ImportDefaultSpecifier,
-	ImportNamespaceSpecifier,
-	ImportSpecifier,
-	ImportSpecifierLocal,
-	StringLiteral,
+	JSBindingIdentifier,
+	JSExportAllDeclaration,
+	JSExportDefaultDeclaration,
+	JSExportDefaultSpecifier,
+	JSExportExternalDeclaration,
+	JSExportExternalSpecifier,
+	JSExportLocalDeclaration,
+	JSExportLocalSpecifier,
+	JSExportNamespaceSpecifier,
+	JSImportDeclaration,
+	JSImportDefaultSpecifier,
+	JSImportNamespaceSpecifier,
+	JSImportSpecifier,
+	JSImportSpecifierLocal,
+	JSStringLiteral,
 	TSExportAssignment,
 	TSImportEqualsDeclaration,
 	TSNamespaceExportDeclaration,
-} from "@romejs/js-ast";
+} from "@romejs/ast";
 import {getBindingIdentifiers} from "@romejs/js-ast-utils";
 import {
 	checkLVal,
@@ -62,11 +62,11 @@ import {descriptions} from "@romejs/diagnostics";
 import {State} from "../tokenizer/state";
 
 export type ParseExportResult =
-	| AnyStatement
-	| ExportAllDeclaration
-	| ExportLocalDeclaration
-	| ExportExternalDeclaration
-	| ExportDefaultDeclaration
+	| AnyJSStatement
+	| JSExportAllDeclaration
+	| JSExportLocalDeclaration
+	| JSExportExternalDeclaration
+	| JSExportDefaultDeclaration
 	| TSNamespaceExportDeclaration
 	| TSExportAssignment
 	| TSImportEqualsDeclaration;
@@ -81,8 +81,8 @@ export function parseExport(
 	}
 
 	let exportKind: ConstExportModuleKind = "value";
-	let declaration: undefined | AnyStatement;
-	let localSpecifiers: undefined | Array<ExportLocalSpecifier>;
+	let declaration: undefined | AnyJSStatement;
+	let localSpecifiers: undefined | Array<JSExportLocalSpecifier>;
 
 	// export * from '...'';
 	if (shouldParseExportStar(parser)) {
@@ -91,15 +91,15 @@ export function parseExport(
 		const defStart = parser.getPosition();
 		const defExported = parseIdentifier(parser, true);
 
-		let namedSpecifiers: Array<ExportLocalSpecifier> = [];
-		let defaultSpecifier: ExportDefaultSpecifier = parser.finishNode(
+		let namedSpecifiers: Array<JSExportLocalSpecifier> = [];
+		let defaultSpecifier: JSExportDefaultSpecifier = parser.finishNode(
 			defStart,
 			{
-				type: "ExportDefaultSpecifier",
+				type: "JSExportDefaultSpecifier",
 				exported: defExported,
 			},
 		);
-		let namespaceSpecifier: undefined | ExportNamespaceSpecifier;
+		let namespaceSpecifier: undefined | JSExportNamespaceSpecifier;
 
 		if (parser.match(tt.comma) && parser.lookaheadState().tokenType === tt.star) {
 			parser.expect(tt.comma);
@@ -110,7 +110,7 @@ export function parseExport(
 			namespaceSpecifier = parser.finishNode(
 				specifierStart,
 				{
-					type: "ExportNamespaceSpecifier",
+					type: "JSExportNamespaceSpecifier",
 					exported,
 				},
 			);
@@ -139,10 +139,10 @@ export function parseExport(
 			},
 		);
 
-		const node: ExportDefaultDeclaration = parser.finishNode(
+		const node: JSExportDefaultDeclaration = parser.finishNode(
 			start,
 			{
-				type: "ExportDefaultDeclaration",
+				type: "JSExportDefaultDeclaration",
 				declaration,
 			},
 		);
@@ -214,12 +214,12 @@ export function parseExport(
 
 	if (declaration !== undefined) {
 		if (
-			declaration.type !== "VariableDeclarationStatement" &&
-			declaration.type !== "ClassDeclaration" &&
-			declaration.type !== "FunctionDeclaration" &&
+			declaration.type !== "JSVariableDeclarationStatement" &&
+			declaration.type !== "JSClassDeclaration" &&
+			declaration.type !== "JSFunctionDeclaration" &&
 			declaration.type !== "TSModuleDeclaration" &&
 			declaration.type !== "TSEnumDeclaration" &&
-			declaration.type !== "TypeAliasTypeAnnotation" &&
+			declaration.type !== "TSTypeAliasTypeAnnotation" &&
 			declaration.type !== "TSInterfaceDeclaration" &&
 			declaration.type !== "TSDeclareFunction"
 		) {
@@ -231,10 +231,10 @@ export function parseExport(
 		}
 	}
 
-	const node: ExportLocalDeclaration = parser.finishNode(
+	const node: JSExportLocalDeclaration = parser.finishNode(
 		start,
 		{
-			type: "ExportLocalDeclaration",
+			type: "JSExportLocalDeclaration",
 			exportKind,
 			specifiers: localSpecifiers,
 			declaration,
@@ -246,12 +246,12 @@ export function parseExport(
 function createExportExternalDeclaration(
 	parser: JSParser,
 	start: Position,
-	defaultSpecifier: undefined | ExportDefaultSpecifier,
-	namespaceSpecifier: undefined | ExportNamespaceSpecifier,
-	namedSpecifiers: Array<ExportLocalSpecifier>,
-	source: StringLiteral,
+	defaultSpecifier: undefined | JSExportDefaultSpecifier,
+	namespaceSpecifier: undefined | JSExportNamespaceSpecifier,
+	namedSpecifiers: Array<JSExportLocalSpecifier>,
+	source: JSStringLiteral,
 	exportKind?: ConstExportModuleKind,
-): ExportExternalDeclaration {
+): JSExportExternalDeclaration {
 	checkExport(
 		parser,
 		{
@@ -265,7 +265,7 @@ function createExportExternalDeclaration(
 	const node = parser.finishNode(
 		start,
 		{
-			type: "ExportExternalDeclaration",
+			type: "JSExportExternalDeclaration",
 			exportKind,
 			source,
 			namedSpecifiers: [],
@@ -274,7 +274,7 @@ function createExportExternalDeclaration(
 		},
 	);
 
-	// We convert the specifiers after we've finished the ExportExternalDeclaration node
+	// We convert the specifiers after we've finished the JSExportExternalDeclaration node
 	// as the comment attachment logic may mess with the specifiers and so we need to
 	// clone them after
 	return {
@@ -285,12 +285,12 @@ function createExportExternalDeclaration(
 
 function convertLocalToExternalSpecifiers(
 	parser: JSParser,
-	specifiers: Array<ExportLocalSpecifier> = [],
-): Array<ExportExternalSpecifier> {
+	specifiers: Array<JSExportLocalSpecifier> = [],
+): Array<JSExportExternalSpecifier> {
 	return specifiers.map((specifier) => {
 		return {
 			...specifier,
-			type: "ExportExternalSpecifier",
+			type: "JSExportExternalSpecifier",
 			local: toIdentifier(parser, specifier.local),
 		};
 	});
@@ -298,7 +298,7 @@ function convertLocalToExternalSpecifiers(
 
 function parseExportDefaultExpression(
 	parser: JSParser,
-): ExportDefaultDeclaration["declaration"] {
+): JSExportDefaultDeclaration["declaration"] {
 	if (parser.isSyntaxEnabled("ts")) {
 		if (isTSAbstractClass(parser)) {
 			const start = parser.getPosition();
@@ -343,9 +343,9 @@ function parseExportDeclaration(
 	parser: JSParser,
 ): {
 	exportKind: ConstExportModuleKind;
-	declaration?: AnyStatement;
-	localSpecifiers?: Array<ExportLocalSpecifier>;
-	source?: StringLiteral;
+	declaration?: AnyJSStatement;
+	localSpecifiers?: Array<JSExportLocalSpecifier>;
+	source?: JSStringLiteral;
 } {
 	if (parser.isContextual("type")) {
 		const start = parser.getPosition();
@@ -424,7 +424,7 @@ function isExportDefaultSpecifier(parser: JSParser): boolean {
 
 function parseExportLocalSpecifiersMaybe(
 	parser: JSParser,
-): Array<ExportLocalSpecifier> {
+): Array<JSExportLocalSpecifier> {
 	if (parser.eat(tt.comma)) {
 		return parseExportSpecifiers(parser);
 	} else {
@@ -432,16 +432,16 @@ function parseExportLocalSpecifiersMaybe(
 	}
 }
 
-function parseExportFromExpect(parser: JSParser): StringLiteral {
-	// @ts-ignore: `expect` parameter will always return a StringLiteral
+function parseExportFromExpect(parser: JSParser): JSStringLiteral {
+	// @ts-ignore: `expect` parameter will always return a JSStringLiteral
 	return parseExportFrom(parser, true);
 }
 
 function parseExportFrom(
 	parser: JSParser,
 	expect: boolean,
-): undefined | StringLiteral {
-	let source: undefined | StringLiteral;
+): undefined | JSStringLiteral {
+	let source: undefined | JSStringLiteral;
 
 	if (parser.eatContextual("from")) {
 		if (parser.match(tt.string)) {
@@ -455,7 +455,7 @@ function parseExportFrom(
 			});
 
 			source = {
-				type: "StringLiteral",
+				type: "JSStringLiteral",
 				value: "",
 				loc: expr.loc,
 			};
@@ -466,7 +466,7 @@ function parseExportFrom(
 		});
 
 		source = {
-			type: "StringLiteral",
+			type: "JSStringLiteral",
 			value: "",
 			loc: parser.finishLoc(parser.getPosition()),
 		};
@@ -488,7 +488,10 @@ function shouldParseExportStar(parser: JSParser): boolean {
 function parseExportStar(
 	parser: JSParser,
 	start: Position,
-): ExportAllDeclaration | ExportLocalDeclaration | ExportExternalDeclaration {
+):
+	| JSExportAllDeclaration
+	| JSExportLocalDeclaration
+	| JSExportExternalDeclaration {
 	let exportKind: undefined | ConstExportModuleKind;
 	if (parser.eatContextual("type")) {
 		exportKind = "type";
@@ -504,7 +507,7 @@ function parseExportStar(
 		return parser.finishNode(
 			start,
 			{
-				type: "ExportExternalDeclaration",
+				type: "JSExportExternalDeclaration",
 				namespaceSpecifier,
 				exportKind,
 				namedSpecifiers,
@@ -519,7 +522,7 @@ function parseExportStar(
 		return parser.finishNode(
 			start,
 			{
-				type: "ExportAllDeclaration",
+				type: "JSExportAllDeclaration",
 				exportKind,
 				source,
 			},
@@ -531,9 +534,9 @@ function parseExportNamespace(
 	parser: JSParser,
 	exportKind: undefined | ConstExportModuleKind,
 ): {
-	source: StringLiteral;
-	namespaceSpecifier: ExportNamespaceSpecifier;
-	namedSpecifiers: Array<ExportExternalSpecifier>;
+	source: JSStringLiteral;
+	namespaceSpecifier: JSExportNamespaceSpecifier;
+	namedSpecifiers: Array<JSExportExternalSpecifier>;
 } {
 	if (exportKind === "type") {
 		parser.addDiagnostic({
@@ -548,7 +551,7 @@ function parseExportNamespace(
 	const namespaceSpecifier = parser.finishNode(
 		specifierStart,
 		{
-			type: "ExportNamespaceSpecifier",
+			type: "JSExportNamespaceSpecifier",
 			exported,
 		},
 	);
@@ -588,7 +591,7 @@ function checkExport(
 	}: {
 		localIsExternal?: boolean;
 		specifiers?: Array<
-			undefined | ExportLocalSpecifier | AnyExportExternalSpecifier
+			undefined | JSExportLocalSpecifier | AnyExportExternalSpecifier
 		>;
 		declaration?: AnyNode;
 		isDefault: boolean;
@@ -605,7 +608,7 @@ function checkExport(
 
 	if (declaration !== undefined) {
 		// Exported declarations
-		if (declaration.type === "FunctionDeclaration") {
+		if (declaration.type === "JSFunctionDeclaration") {
 			if (declaration.id === undefined) {
 				throw new Error("Expected declaration.id");
 			}
@@ -613,7 +616,7 @@ function checkExport(
 			checkDuplicateExports(parser, declaration, declaration.id.name);
 		}
 
-		if (declaration.type === "ClassDeclaration") {
+		if (declaration.type === "JSClassDeclaration") {
 			if (declaration.id === undefined) {
 				throw new Error("Expected declaration.id");
 			}
@@ -621,7 +624,7 @@ function checkExport(
 			checkDuplicateExports(parser, declaration, declaration.id.name);
 		}
 
-		if (declaration.type === "VariableDeclaration") {
+		if (declaration.type === "JSVariableDeclaration") {
 			for (const node of getBindingIdentifiers(declaration)) {
 				checkDuplicateExports(parser, node, node.name);
 			}
@@ -637,7 +640,7 @@ function checkExport(
 
 			checkDuplicateExports(parser, specifier, specifier.exported.name);
 
-			if (specifier.type === "ExportLocalSpecifier" && !localIsExternal) {
+			if (specifier.type === "JSExportLocalSpecifier" && !localIsExternal) {
 				const {local} = specifier;
 				if (local !== undefined) {
 					// check for keywords used as local names
@@ -676,8 +679,8 @@ function checkDuplicateExports(
 }
 
 // Parses a comma-separated list of module exports.
-function parseExportSpecifiers(parser: JSParser): Array<ExportLocalSpecifier> {
-	const specifiers: Array<ExportLocalSpecifier> = [];
+function parseExportSpecifiers(parser: JSParser): Array<JSExportLocalSpecifier> {
+	const specifiers: Array<JSExportLocalSpecifier> = [];
 	let first = true;
 
 	// export { x, y as z } [from '...']';
@@ -711,7 +714,7 @@ function parseExportSpecifiers(parser: JSParser): Array<ExportLocalSpecifier> {
 			parser.finishNode(
 				start,
 				{
-					type: "ExportLocalSpecifier",
+					type: "JSExportLocalSpecifier",
 					local,
 					exported,
 					// TODO exportKind?
@@ -723,7 +726,7 @@ function parseExportSpecifiers(parser: JSParser): Array<ExportLocalSpecifier> {
 	return specifiers;
 }
 
-export type ParseImportResult = ImportDeclaration | TSImportEqualsDeclaration;
+export type ParseImportResult = JSImportDeclaration | TSImportEqualsDeclaration;
 
 export function parseImport(
 	parser: JSParser,
@@ -733,10 +736,10 @@ export function parseImport(
 		return parseTSImportEqualsDeclaration(parser, start);
 	}
 
-	let namedSpecifiers: Array<ImportSpecifier> = [];
-	let namespaceSpecifier: undefined | ImportNamespaceSpecifier;
-	let defaultSpecifier: undefined | ImportDefaultSpecifier;
-	let source: StringLiteral;
+	let namedSpecifiers: Array<JSImportSpecifier> = [];
+	let namespaceSpecifier: undefined | JSImportNamespaceSpecifier;
+	let defaultSpecifier: undefined | JSImportDefaultSpecifier;
+	let source: JSStringLiteral;
 	let importKind: undefined | ConstImportModuleKind;
 
 	// import '...'
@@ -760,7 +763,7 @@ export function parseImport(
 			source = parser.finishNode(
 				start,
 				{
-					type: "StringLiteral",
+					type: "JSStringLiteral",
 					value: "",
 				},
 			);
@@ -771,7 +774,7 @@ export function parseImport(
 	return parser.finishNode(
 		start,
 		{
-			type: "ImportDeclaration",
+			type: "JSImportDeclaration",
 			namedSpecifiers,
 			namespaceSpecifier,
 			defaultSpecifier,
@@ -809,7 +812,7 @@ function parseImportSpecifierLocal(
 	parser: JSParser,
 	importKind: undefined | ConstImportModuleKind,
 	contextDescription: string,
-): ImportSpecifierLocal {
+): JSImportSpecifierLocal {
 	const start = parser.getPosition();
 
 	const local = parseBindingIdentifier(parser);
@@ -819,7 +822,7 @@ function parseImportSpecifierLocal(
 	return parser.finishNode(
 		start,
 		{
-			type: "ImportSpecifierLocal",
+			type: "JSImportSpecifierLocal",
 			name: local,
 			importKind,
 		},
@@ -831,9 +834,9 @@ function parseImportSpecifiers(
 	parser: JSParser,
 	start: Position,
 ): {
-	namedSpecifiers: Array<ImportSpecifier>;
-	namespaceSpecifier: undefined | ImportNamespaceSpecifier;
-	defaultSpecifier: undefined | ImportDefaultSpecifier;
+	namedSpecifiers: Array<JSImportSpecifier>;
+	namespaceSpecifier: undefined | JSImportNamespaceSpecifier;
+	defaultSpecifier: undefined | JSImportDefaultSpecifier;
 	importKind: undefined | ConstImportModuleKind;
 } {
 	let importKind: undefined | ConstImportModuleKind = undefined;
@@ -870,9 +873,9 @@ function parseImportSpecifiers(
 		}
 	}
 
-	let namedSpecifiers: Array<ImportSpecifier> = [];
-	let namespaceSpecifier: undefined | ImportNamespaceSpecifier;
-	let defaultSpecifier: undefined | ImportDefaultSpecifier;
+	let namedSpecifiers: Array<JSImportSpecifier> = [];
+	let namespaceSpecifier: undefined | JSImportNamespaceSpecifier;
+	let defaultSpecifier: undefined | JSImportDefaultSpecifier;
 
 	let first = true;
 
@@ -887,7 +890,7 @@ function parseImportSpecifiers(
 		defaultSpecifier = parser.finishNode(
 			start,
 			{
-				type: "ImportDefaultSpecifier",
+				type: "JSImportDefaultSpecifier",
 				local: meta,
 			},
 		);
@@ -915,7 +918,7 @@ function parseImportSpecifiers(
 		namespaceSpecifier = parser.finishNode(
 			start,
 			{
-				type: "ImportNamespaceSpecifier",
+				type: "JSImportNamespaceSpecifier",
 				local: meta,
 			},
 		);
@@ -961,13 +964,13 @@ function parseImportSpecifiers(
 function parseImportSpecifier(
 	parser: JSParser,
 	nodeKind: undefined | ConstImportModuleKind,
-): ImportSpecifier {
+): JSImportSpecifier {
 	const start = parser.getPosition();
 	const firstIdentPos = parser.state.startPos;
 	const firstIdent = parseIdentifier(parser, true);
 
 	let imported;
-	let local: BindingIdentifier;
+	let local: JSBindingIdentifier;
 	let importKind: undefined | ConstImportModuleKind = undefined;
 	if (firstIdent.name === "type") {
 		importKind = "type";
@@ -1032,12 +1035,12 @@ function parseImportSpecifier(
 	return parser.finishNode(
 		start,
 		{
-			type: "ImportSpecifier",
+			type: "JSImportSpecifier",
 			imported,
 			local: parser.finishNode(
 				start,
 				{
-					type: "ImportSpecifierLocal",
+					type: "JSImportSpecifierLocal",
 					name: local,
 					importKind,
 				},

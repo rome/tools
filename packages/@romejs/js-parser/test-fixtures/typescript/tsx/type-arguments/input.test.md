@@ -5,7 +5,7 @@
 ## `typescript > tsx > type-arguments`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -33,7 +33,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.tsx"
 				end: Object {
@@ -47,7 +47,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: CallExpression {
+			expression: JSCallExpression {
 				arguments: Array []
 				loc: Object {
 					filename: "input.tsx"
@@ -62,7 +62,7 @@ Program {
 						line: 1
 					}
 				}
-				callee: ReferenceIdentifier {
+				callee: JSReferenceIdentifier {
 					name: "f"
 					loc: Object {
 						filename: "input.tsx"
@@ -109,7 +109,7 @@ Program {
 									line: 1
 								}
 							}
-							typeName: ReferenceIdentifier {
+							typeName: JSReferenceIdentifier {
 								name: "T"
 								loc: Object {
 									filename: "input.tsx"
@@ -131,7 +131,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.tsx"
 				end: Object {
@@ -145,7 +145,7 @@ Program {
 					line: 2
 				}
 			}
-			expression: NewExpression {
+			expression: JSNewExpression {
 				arguments: Array []
 				optional: undefined
 				loc: Object {
@@ -161,7 +161,7 @@ Program {
 						line: 2
 					}
 				}
-				callee: ReferenceIdentifier {
+				callee: JSReferenceIdentifier {
 					name: "C"
 					loc: Object {
 						filename: "input.tsx"
@@ -208,7 +208,7 @@ Program {
 									line: 2
 								}
 							}
-							typeName: ReferenceIdentifier {
+							typeName: JSReferenceIdentifier {
 								name: "T"
 								loc: Object {
 									filename: "input.tsx"
@@ -230,8 +230,8 @@ Program {
 				}
 			}
 		}
-		TypeAliasTypeAnnotation {
-			id: BindingIdentifier {
+		TSTypeAliasTypeAnnotation {
+			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
 					filename: "input.tsx"
@@ -276,7 +276,7 @@ Program {
 						line: 3
 					}
 				}
-				typeName: ReferenceIdentifier {
+				typeName: JSReferenceIdentifier {
 					name: "T"
 					loc: Object {
 						filename: "input.tsx"
@@ -323,7 +323,7 @@ Program {
 									line: 3
 								}
 							}
-							typeName: ReferenceIdentifier {
+							typeName: JSReferenceIdentifier {
 								name: "T"
 								loc: Object {
 									filename: "input.tsx"

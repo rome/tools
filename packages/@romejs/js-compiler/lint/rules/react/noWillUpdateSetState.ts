@@ -5,9 +5,9 @@ import {doesNodeMatchPattern} from "@romejs/js-ast-utils";
 function inComponentWillUpdate(path: Path): boolean {
 	return (
 		path.findAncestry(({node}) =>
-			node.type === "ClassMethod" &&
-			node.key.type === "StaticPropertyKey" &&
-			node.key.value.type === "Identifier" &&
+			node.type === "JSClassMethod" &&
+			node.key.type === "JSStaticPropertyKey" &&
+			node.key.value.type === "JSIdentifier" &&
 			(node.key.value.name === "componentWillUpdate" ||
 			node.key.value.name === "UNSAFE_componentWillUpdate")
 		) !== undefined

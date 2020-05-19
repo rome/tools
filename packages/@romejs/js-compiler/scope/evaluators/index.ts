@@ -6,28 +6,28 @@
  */
 
 import Scope from "../Scope";
-import ClassDeclaration from "./ClassDeclaration";
-import FunctionDeclaration from "./FunctionDeclaration";
-import VariableDeclaration from "./VariableDeclaration";
-import TypeAliasTypeAnnotation from "./TypeAliasTypeAnnotation";
-import ExportDefaultDeclaration from "./ExportDefaultDeclaration";
-import ExportLocalDeclaration from "./ExportLocalDeclaration";
-import ImportDeclaration from "./ImportDeclaration";
-import SwitchCase from "./SwitchCase";
-import SwitchStatement from "./SwitchStatement";
+import JSClassDeclaration from "./JSClassDeclaration";
+import JSFunctionDeclaration from "./JSFunctionDeclaration";
+import JSVariableDeclaration from "./JSVariableDeclaration";
+import TSTypeAliasTypeAnnotation from "./TSTypeAliasTypeAnnotation";
+import JSExportDefaultDeclaration from "./JSExportDefaultDeclaration";
+import JSExportLocalDeclaration from "./JSExportLocalDeclaration";
+import JSImportDeclaration from "./JSImportDeclaration";
+import JSSwitchCase from "./JSSwitchCase";
+import JSSwitchStatement from "./JSSwitchStatement";
 import TSImportEqualsDeclaration from "./TSImportEqualsDeclaration";
-import ArrowFunctionExpression from "./ArrowFunctionExpression";
-import BlockStatement from "./BlockStatement";
-import ClassExpression from "./ClassExpression";
-import CatchClause from "./CatchClause";
-import Program from "./Program";
-import ForStatement from "./ForStatement";
-import ForOfStatement from "./ForOfStatement";
-import VariableDeclarationStatement from "./VariableDeclarationStatement";
+import JSArrowFunctionExpression from "./JSArrowFunctionExpression";
+import JSBlockStatement from "./JSBlockStatement";
+import JSClassExpression from "./JSClassExpression";
+import JSCatchClause from "./JSCatchClause";
+import JSProgram from "./JSProgram";
+import JSForStatement from "./JSForStatement";
+import JSForOfStatement from "./JSForOfStatement";
+import JSVariableDeclarationStatement from "./JSVariableDeclarationStatement";
 import TSInterfaceDeclaration from "./TSInterfaceDeclaration";
 import TSDeclareFunction from "./TSDeclareFunction";
-import FunctionHead from "./FunctionHead";
-import {AnyNode} from "@romejs/js-ast";
+import JSFunctionHead from "./JSFunctionHead";
+import {AnyNode} from "@romejs/ast";
 
 type ScopeEvaluator = {
 	creator: boolean;
@@ -38,28 +38,27 @@ type ScopeEvaluator = {
 
 const evaluators: Map<string, ScopeEvaluator> = new Map();
 
-evaluators.set("FunctionHead", FunctionHead);
+evaluators.set("JSFunctionHead", JSFunctionHead);
 evaluators.set("TSDeclareFunction", TSDeclareFunction);
-evaluators.set("ClassDeclaration", ClassDeclaration);
-evaluators.set("FunctionDeclaration", FunctionDeclaration);
-evaluators.set("VariableDeclarationStatement", VariableDeclarationStatement);
-evaluators.set("VariableDeclaration", VariableDeclaration);
-evaluators.set("TypeAliasTypeAnnotation", TypeAliasTypeAnnotation);
-evaluators.set("ExportDefaultDeclaration", ExportDefaultDeclaration);
-evaluators.set("ExportLocalDeclaration", ExportLocalDeclaration);
-evaluators.set("ImportDeclaration", ImportDeclaration);
-evaluators.set("SwitchCase", SwitchCase);
-evaluators.set("SwitchStatement", SwitchStatement);
-evaluators.set("TypeAliasTypeAnnotation", TypeAliasTypeAnnotation);
+evaluators.set("JSClassDeclaration", JSClassDeclaration);
+evaluators.set("JSFunctionDeclaration", JSFunctionDeclaration);
+evaluators.set("JSVariableDeclarationStatement", JSVariableDeclarationStatement);
+evaluators.set("JSVariableDeclaration", JSVariableDeclaration);
+evaluators.set("JSExportDefaultDeclaration", JSExportDefaultDeclaration);
+evaluators.set("JSExportLocalDeclaration", JSExportLocalDeclaration);
+evaluators.set("JSImportDeclaration", JSImportDeclaration);
+evaluators.set("JSSwitchCase", JSSwitchCase);
+evaluators.set("JSSwitchStatement", JSSwitchStatement);
+evaluators.set("TSTypeAliasTypeAnnotation", TSTypeAliasTypeAnnotation);
 evaluators.set("TSImportEqualsDeclaration", TSImportEqualsDeclaration);
-evaluators.set("ArrowFunctionExpression", ArrowFunctionExpression);
-evaluators.set("BlockStatement", BlockStatement);
-evaluators.set("ClassExpression", ClassExpression);
-evaluators.set("CatchClause", CatchClause);
-evaluators.set("Program", Program);
-evaluators.set("ForStatement", ForStatement);
-evaluators.set("ForOfStatement", ForOfStatement);
-evaluators.set("ForInStatement", ForOfStatement);
+evaluators.set("JSArrowFunctionExpression", JSArrowFunctionExpression);
+evaluators.set("JSBlockStatement", JSBlockStatement);
+evaluators.set("JSClassExpression", JSClassExpression);
+evaluators.set("JSCatchClause", JSCatchClause);
+evaluators.set("JSProgram", JSProgram);
+evaluators.set("JSForStatement", JSForStatement);
+evaluators.set("JSForOfStatement", JSForOfStatement);
+evaluators.set("JSForInStatement", JSForOfStatement);
 evaluators.set("TSInterfaceDeclaration", TSInterfaceDeclaration);
 
 export default evaluators;

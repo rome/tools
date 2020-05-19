@@ -5,7 +5,7 @@
 ## `core > uncategorised > 455`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	body: Array [
-		BreakStatement {
+		JSBreakStatement {
 			label: undefined
 			loc: Object {
 				filename: "input.js"

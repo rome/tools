@@ -6,7 +6,7 @@
  */
 
 import {Path} from "@romejs/js-compiler";
-import {AnyNode, AnyStatement, ImportDeclaration} from "@romejs/js-ast";
+import {AnyJSStatement, AnyNode, JSImportDeclaration} from "@romejs/ast";
 import {SourceLocation} from "@romejs/parser-core";
 import {descriptions} from "@romejs/diagnostics";
 
@@ -15,13 +15,13 @@ export default {
 	enter(path: Path): AnyNode {
 		const {node} = path;
 
-		if (node.type === "Program") {
-			const skipImports: Set<ImportDeclaration> = new Set();
+		if (node.type === "JSProgram") {
+			const skipImports: Set<JSImportDeclaration> = new Set();
 			const seenSources: Map<string, undefined | SourceLocation> = new Map();
 			let shouldFix = false;
 
 			for (const bodyNode of node.body) {
-				if (bodyNode.type === "ImportDeclaration") {
+				if (bodyNode.type === "JSImportDeclaration") {
 					const source = bodyNode.source.value;
 
 					// Allow duplicate sources if the `importKind` is different
@@ -51,12 +51,12 @@ export default {
 
 			// Defer fixing unless it's totally necessary since there's additional overhead
 			if (shouldFix) {
-				const newBody: Array<AnyStatement> = [];
+				const newBody: Array<AnyJSStatement> = [];
 
 				for (let i = 0; i < node.body.length; i++) {
 					const bodyNode = node.body[i];
 
-					if (bodyNode.type === "ImportDeclaration") {
+					if (bodyNode.type === "JSImportDeclaration") {
 						// Skip import if it's already been consumed
 						if (skipImports.has(bodyNode)) {
 							continue;
@@ -73,7 +73,7 @@ export default {
 							const possibleDuplicateNode = node.body[x];
 
 							if (
-								possibleDuplicateNode.type === "ImportDeclaration" &&
+								possibleDuplicateNode.type === "JSImportDeclaration" &&
 								bodyNode.source.value === possibleDuplicateNode.source.value &&
 								bodyNode.importKind === possibleDuplicateNode.importKind &&
 								!skipImports.has(possibleDuplicateNode)

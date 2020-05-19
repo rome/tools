@@ -5,7 +5,7 @@
 ## `esprima > es2015-array-pattern > with-default-catch-param-fail`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -74,7 +74,7 @@ Program {
 		}
 	]
 	body: Array [
-		TryStatement {
+		JSTryStatement {
 			finalizer: undefined
 			loc: Object {
 				filename: "input.js"
@@ -89,7 +89,7 @@ Program {
 					line: 1
 				}
 			}
-			block: BlockStatement {
+			block: JSBlockStatement {
 				body: Array []
 				directives: Array []
 				loc: Object {
@@ -106,7 +106,7 @@ Program {
 					}
 				}
 			}
-			handler: CatchClause {
+			handler: JSCatchClause {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -120,7 +120,7 @@ Program {
 						line: 1
 					}
 				}
-				param: BindingArrayPattern {
+				param: JSBindingArrayPattern {
 					rest: undefined
 					loc: Object {
 						filename: "input.js"
@@ -136,7 +136,7 @@ Program {
 						}
 					}
 					elements: Array [
-						BindingIdentifier {
+						JSBindingIdentifier {
 							name: "a"
 							loc: Object {
 								filename: "input.js"
@@ -152,7 +152,7 @@ Program {
 									line: 1
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
 								loc: Object {
@@ -172,7 +172,7 @@ Program {
 						}
 					]
 				}
-				body: BlockStatement {
+				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
 						filename: "input.js"
@@ -188,7 +188,7 @@ Program {
 						}
 					}
 					body: Array [
-						ExpressionStatement {
+						JSExpressionStatement {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -202,7 +202,7 @@ Program {
 									line: 1
 								}
 							}
-							expression: MemberExpression {
+							expression: JSMemberExpression {
 								loc: Object {
 									filename: "input.js"
 									end: Object {
@@ -216,7 +216,7 @@ Program {
 										line: 1
 									}
 								}
-								object: ReferenceIdentifier {
+								object: JSReferenceIdentifier {
 									name: "INVALID_PLACEHOLDER"
 									loc: Object {
 										filename: "input.js"
@@ -232,8 +232,8 @@ Program {
 										}
 									}
 								}
-								property: ComputedMemberProperty {
-									value: ReferenceIdentifier {
+								property: JSComputedMemberProperty {
+									value: JSReferenceIdentifier {
 										name: "INVALID_PLACEHOLDER"
 										loc: Object {
 											filename: "input.js"
@@ -265,7 +265,7 @@ Program {
 								}
 							}
 						}
-						ExpressionStatement {
+						JSExpressionStatement {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -279,7 +279,7 @@ Program {
 									line: 1
 								}
 							}
-							expression: ReferenceIdentifier {
+							expression: JSReferenceIdentifier {
 								name: "INVALID_PLACEHOLDER"
 								loc: Object {
 									filename: "input.js"
@@ -296,7 +296,7 @@ Program {
 								}
 							}
 						}
-						BlockStatement {
+						JSBlockStatement {
 							body: Array []
 							directives: Array []
 							loc: Object {

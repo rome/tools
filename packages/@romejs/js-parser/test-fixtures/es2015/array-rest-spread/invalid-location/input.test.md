@@ -5,7 +5,7 @@
 ## `es2015 > array-rest-spread > invalid-location`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: AssignmentExpression {
+			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
 					filename: "input.js"
@@ -83,7 +83,7 @@ Program {
 						line: 1
 					}
 				}
-				right: ReferenceIdentifier {
+				right: JSReferenceIdentifier {
 					name: "c"
 					loc: Object {
 						filename: "input.js"
@@ -100,7 +100,7 @@ Program {
 						}
 					}
 				}
-				left: AssignmentArrayPattern {
+				left: JSAssignmentArrayPattern {
 					rest: undefined
 					loc: Object {
 						filename: "input.js"
@@ -116,7 +116,7 @@ Program {
 						}
 					}
 					elements: Array [
-						AssignmentIdentifier {
+						JSAssignmentIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: Object {
 								filename: "input.js"
@@ -132,7 +132,7 @@ Program {
 								}
 							}
 						}
-						AssignmentIdentifier {
+						JSAssignmentIdentifier {
 							name: "b"
 							loc: Object {
 								filename: "input.js"

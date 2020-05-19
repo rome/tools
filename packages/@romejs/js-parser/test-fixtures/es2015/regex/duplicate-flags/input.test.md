@@ -5,7 +5,7 @@
 ## `es2015 > regex > duplicate-flags`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: RegExpLiteral {
+			expression: JSRegExpLiteral {
 				global: true
 				insensitive: true
 				multiline: false
@@ -88,7 +88,7 @@ Program {
 						line: 1
 					}
 				}
-				expression: RegExpSubExpression {
+				expression: JSRegExpSubExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -103,7 +103,7 @@ Program {
 						}
 					}
 					body: Array [
-						RegExpAnyCharacter {
+						JSRegExpAnyCharacter {
 							loc: Object {
 								filename: "input.js"
 								end: Object {

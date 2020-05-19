@@ -7,7 +7,7 @@
 
 import {JSONObject} from "@romejs/codec-json";
 import T from "./types/T";
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 import {ModuleSignature} from "./index";
 import ImportT from "./types/ImportT";
 import Intrinsics from "./Intrinsics";

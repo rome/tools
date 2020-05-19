@@ -1,6 +1,6 @@
 import {Path, TransformExitResult} from "@romejs/js-compiler";
 import {descriptions} from "@romejs/diagnostics";
-import {JSXElement} from "@romejs/js-ast";
+import {JSXElement} from "@romejs/ast";
 import {
 	getJSXAttribute,
 	hasJSXAttribute,
@@ -426,7 +426,7 @@ function jsxSupportedLang(node: JSXElement): undefined | string {
 		return "undefined";
 	}
 
-	if (attr.value.type === "StringLiteral") {
+	if (attr.value.type === "JSStringLiteral") {
 		const {value} = attr.value;
 		if (!langSupported(value)) {
 			return value;

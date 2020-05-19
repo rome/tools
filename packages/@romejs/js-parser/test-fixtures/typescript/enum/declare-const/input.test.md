@@ -5,7 +5,7 @@
 ## `typescript > enum > declare-const`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -31,7 +31,7 @@ Program {
 	}
 	body: Array [
 		TSEnumDeclaration {
-			id: BindingIdentifier {
+			id: JSBindingIdentifier {
 				name: "E"
 				loc: Object {
 					filename: "input.ts"

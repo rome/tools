@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > export-default-newline`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExportDefaultDeclaration {
+		JSExportDefaultDeclaration {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: ReferenceIdentifier {
+			declaration: JSReferenceIdentifier {
 				name: "async"
 				loc: Object {
 					filename: "input.js"
@@ -62,8 +62,8 @@ Program {
 				}
 			}
 		}
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "bar"
 				loc: Object {
 					filename: "input.js"
@@ -93,7 +93,7 @@ Program {
 					line: 2
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
 				loc: Object {
@@ -110,7 +110,7 @@ Program {
 					}
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false

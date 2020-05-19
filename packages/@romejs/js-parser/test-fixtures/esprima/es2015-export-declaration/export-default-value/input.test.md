@@ -5,7 +5,7 @@
 ## `esprima > es2015-export-declaration > export-default-value`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExportDefaultDeclaration {
+		JSExportDefaultDeclaration {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: ReferenceIdentifier {
+			declaration: JSReferenceIdentifier {
 				name: "foo"
 				loc: Object {
 					filename: "input.js"

@@ -5,7 +5,7 @@
 ## `core > uncategorised > 553`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: NumericLiteral {
+			expression: JSNumericLiteral {
 				value: 25_257_156_155
 				format: "octal"
 				loc: Object {

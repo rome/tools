@@ -6,7 +6,7 @@
  */
 
 import {Path} from "@romejs/js-compiler";
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 import {PositionTracker, SourceLocation} from "@romejs/parser-core";
 import {ob1Coerce0} from "@romejs/ob1";
 import {isIdentifierish} from "@romejs/js-ast-utils";
@@ -111,7 +111,7 @@ export default {
 		if (loc !== undefined) {
 			// Infer a string to check
 			let value: undefined | string;
-			if (node.type === "CommentBlock" || node.type === "CommentLine") {
+			if (node.type === "JSCommentBlock" || node.type === "JSCommentLine") {
 				value = node.value;
 			}
 			if (isIdentifierish(node)) {
@@ -141,7 +141,7 @@ export default {
 
 				// Autofix if not suppressed
 				if (results.length > 0 && !suppressed) {
-					if (node.type === "CommentBlock" || node.type === "CommentLine") {
+					if (node.type === "JSCommentBlock" || node.type === "JSCommentLine") {
 						return {
 							...node,
 							value: fixed,

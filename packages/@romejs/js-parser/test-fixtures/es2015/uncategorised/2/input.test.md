@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 2`
 
 ```javascript
-Program {
+JSProgram {
 	body: Array []
 	comments: Array []
 	corrupt: false
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	directives: Array [
-		Directive {
+		JSDirective {
 			value: "\\u{20BB7}\\u{91CE}\\u{5BB6}"
 			loc: Object {
 				filename: "input.js"

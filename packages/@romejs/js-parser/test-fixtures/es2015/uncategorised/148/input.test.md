@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 148`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
 				loc: Object {
@@ -78,7 +78,7 @@ Program {
 					}
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -100,7 +100,7 @@ Program {
 					}
 				}
 				params: Array [
-					BindingObjectPattern {
+					JSBindingObjectPattern {
 						rest: undefined
 						loc: Object {
 							filename: "input.js"
@@ -115,7 +115,7 @@ Program {
 								line: 1
 							}
 						}
-						meta: PatternMeta {
+						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
@@ -133,9 +133,9 @@ Program {
 							}
 						}
 						properties: Array [
-							BindingObjectPatternProperty {
-								key: ComputedPropertyKey {
-									value: ReferenceIdentifier {
+							JSBindingObjectPatternProperty {
+								key: JSComputedPropertyKey {
+									value: JSReferenceIdentifier {
 										name: "x"
 										loc: Object {
 											filename: "input.js"
@@ -166,7 +166,7 @@ Program {
 										}
 									}
 								}
-								value: BindingIdentifier {
+								value: JSBindingIdentifier {
 									name: "y"
 									loc: Object {
 										filename: "input.js"

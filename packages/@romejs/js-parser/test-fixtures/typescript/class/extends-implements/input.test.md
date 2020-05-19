@@ -5,7 +5,7 @@
 ## `typescript > class > extends-implements`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		ClassDeclaration {
-			id: BindingIdentifier {
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
 				name: "C"
 				loc: Object {
 					filename: "input.ts"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			meta: ClassHead {
+			meta: JSClassHead {
 				body: Array []
 				typeParameters: undefined
 				loc: Object {
@@ -77,7 +77,7 @@ Program {
 						line: 1
 					}
 				}
-				superClass: CallExpression {
+				superClass: JSCallExpression {
 					arguments: Array []
 					loc: Object {
 						filename: "input.ts"
@@ -92,7 +92,7 @@ Program {
 							line: 1
 						}
 					}
-					callee: ReferenceIdentifier {
+					callee: JSReferenceIdentifier {
 						name: "f"
 						loc: Object {
 							filename: "input.ts"
@@ -140,7 +140,7 @@ Program {
 									line: 1
 								}
 							}
-							typeName: ReferenceIdentifier {
+							typeName: JSReferenceIdentifier {
 								name: "T"
 								loc: Object {
 									filename: "input.ts"
@@ -189,7 +189,7 @@ Program {
 									line: 1
 								}
 							}
-							left: ReferenceIdentifier {
+							left: JSReferenceIdentifier {
 								name: "X"
 								loc: Object {
 									filename: "input.ts"
@@ -206,7 +206,7 @@ Program {
 									}
 								}
 							}
-							right: Identifier {
+							right: JSIdentifier {
 								name: "Y"
 								loc: Object {
 									filename: "input.ts"
@@ -254,7 +254,7 @@ Program {
 											line: 1
 										}
 									}
-									typeName: ReferenceIdentifier {
+									typeName: JSReferenceIdentifier {
 										name: "T"
 										loc: Object {
 											filename: "input.ts"

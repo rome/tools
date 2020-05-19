@@ -5,7 +5,7 @@
 ## `es2015 > modules > duplicate-named-export`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -74,7 +74,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			declaration: undefined
 			exportKind: "value"
 			loc: Object {
@@ -91,7 +91,7 @@ Program {
 				}
 			}
 			specifiers: Array [
-				ExportLocalSpecifier {
+				JSExportLocalSpecifier {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -105,7 +105,7 @@ Program {
 							line: 1
 						}
 					}
-					exported: Identifier {
+					exported: JSIdentifier {
 						name: "foo"
 						loc: Object {
 							filename: "input.js"
@@ -122,7 +122,7 @@ Program {
 							}
 						}
 					}
-					local: ReferenceIdentifier {
+					local: JSReferenceIdentifier {
 						name: "foo"
 						loc: Object {
 							filename: "input.js"
@@ -142,7 +142,7 @@ Program {
 				}
 			]
 		}
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			declaration: undefined
 			exportKind: "value"
 			loc: Object {
@@ -159,7 +159,7 @@ Program {
 				}
 			}
 			specifiers: Array [
-				ExportLocalSpecifier {
+				JSExportLocalSpecifier {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -173,7 +173,7 @@ Program {
 							line: 2
 						}
 					}
-					exported: Identifier {
+					exported: JSIdentifier {
 						name: "foo"
 						loc: Object {
 							filename: "input.js"
@@ -190,7 +190,7 @@ Program {
 							}
 						}
 					}
-					local: ReferenceIdentifier {
+					local: JSReferenceIdentifier {
 						name: "bar"
 						loc: Object {
 							filename: "input.js"

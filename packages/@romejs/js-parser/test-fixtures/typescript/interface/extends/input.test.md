@@ -5,7 +5,7 @@
 ## `typescript > interface > extends`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -31,7 +31,7 @@ Program {
 	}
 	body: Array [
 		TSInterfaceDeclaration {
-			id: BindingIdentifier {
+			id: JSBindingIdentifier {
 				name: "I"
 				loc: Object {
 					filename: "input.ts"
@@ -107,7 +107,7 @@ Program {
 								line: 1
 							}
 						}
-						left: ReferenceIdentifier {
+						left: JSReferenceIdentifier {
 							name: "X"
 							loc: Object {
 								filename: "input.ts"
@@ -124,7 +124,7 @@ Program {
 								}
 							}
 						}
-						right: Identifier {
+						right: JSIdentifier {
 							name: "Y"
 							loc: Object {
 								filename: "input.ts"
@@ -172,7 +172,7 @@ Program {
 										line: 1
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "Z"
 									loc: Object {
 										filename: "input.ts"

@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > invalid-escape-async-class-method`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,8 +54,8 @@ Program {
 		}
 	]
 	body: Array [
-		ClassDeclaration {
-			id: BindingIdentifier {
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
 				name: "X"
 				loc: Object {
 					filename: "input.js"
@@ -85,7 +85,7 @@ Program {
 					line: 1
 				}
 			}
-			meta: ClassHead {
+			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
@@ -104,10 +104,10 @@ Program {
 					}
 				}
 				body: Array [
-					ClassMethod {
+					JSClassMethod {
 						kind: "method"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "x"
 								loc: Object {
 									filename: "input.js"
@@ -151,7 +151,7 @@ Program {
 								line: 1
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: true
 							generator: false
 							hasHoistedVars: false
@@ -174,7 +174,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -200,7 +200,7 @@ Program {
 								}
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
 								filename: "input.js"
@@ -216,7 +216,7 @@ Program {
 								}
 							}
 							body: Array [
-								ExpressionStatement {
+								JSExpressionStatement {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -230,7 +230,7 @@ Program {
 											line: 1
 										}
 									}
-									expression: AwaitExpression {
+									expression: JSAwaitExpression {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -244,7 +244,7 @@ Program {
 												line: 1
 											}
 										}
-										argument: ReferenceIdentifier {
+										argument: JSReferenceIdentifier {
 											name: "x"
 											loc: Object {
 												filename: "input.js"

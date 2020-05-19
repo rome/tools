@@ -5,7 +5,7 @@
 ## `core > uncategorised > 335`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: BinaryExpression {
+			expression: JSBinaryExpression {
 				operator: "/"
 				loc: Object {
 					filename: "input.js"
@@ -59,7 +59,7 @@ Program {
 						line: 1
 					}
 				}
-				right: NumericLiteral {
+				right: JSNumericLiteral {
 					value: 2
 					format: undefined
 					loc: Object {
@@ -76,7 +76,7 @@ Program {
 						}
 					}
 				}
-				left: BinaryExpression {
+				left: JSBinaryExpression {
 					operator: "+"
 					loc: Object {
 						filename: "input.js"
@@ -91,7 +91,7 @@ Program {
 							line: 1
 						}
 					}
-					right: ArrayExpression {
+					right: JSArrayExpression {
 						elements: Array []
 						loc: Object {
 							filename: "input.js"
@@ -107,7 +107,7 @@ Program {
 							}
 						}
 					}
-					left: ObjectExpression {
+					left: JSObjectExpression {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -122,9 +122,9 @@ Program {
 							}
 						}
 						properties: Array [
-							ObjectProperty {
-								key: StaticPropertyKey {
-									value: Identifier {
+							JSObjectProperty {
+								key: JSStaticPropertyKey {
+									value: JSIdentifier {
 										name: "a"
 										loc: Object {
 											filename: "input.js"
@@ -155,7 +155,7 @@ Program {
 										}
 									}
 								}
-								value: ArrayExpression {
+								value: JSArrayExpression {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -170,7 +170,7 @@ Program {
 										}
 									}
 									elements: Array [
-										NumericLiteral {
+										JSNumericLiteral {
 											value: 1
 											format: undefined
 											loc: Object {

@@ -5,7 +5,7 @@
 ## `comments > basic > object-property-trailing-comma`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentLine {
+		JSCommentLine {
 			id: "0"
 			value: " comment 1"
 			loc: Object {
@@ -46,7 +46,7 @@ Program {
 				}
 			}
 		}
-		CommentLine {
+		JSCommentLine {
 			id: "1"
 			value: " comment 2"
 			loc: Object {
@@ -63,7 +63,7 @@ Program {
 				}
 			}
 		}
-		CommentLine {
+		JSCommentLine {
 			id: "2"
 			value: " comment 3"
 			loc: Object {
@@ -82,7 +82,7 @@ Program {
 		}
 	]
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -96,7 +96,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.js"
@@ -112,8 +112,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "obj"
 							loc: Object {
 								filename: "input.js"
@@ -143,7 +143,7 @@ Program {
 								line: 1
 							}
 						}
-						init: ObjectExpression {
+						init: JSObjectExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -158,9 +158,9 @@ Program {
 								}
 							}
 							properties: Array [
-								ObjectProperty {
-									key: StaticPropertyKey {
-										value: Identifier {
+								JSObjectProperty {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
 											name: "a"
 											loc: Object {
 												filename: "input.js"
@@ -191,7 +191,7 @@ Program {
 											}
 										}
 									}
-									value: StringLiteral {
+									value: JSStringLiteral {
 										value: "1"
 										loc: Object {
 											filename: "input.js"
@@ -221,9 +221,9 @@ Program {
 										}
 									}
 								}
-								ObjectProperty {
-									key: StaticPropertyKey {
-										value: Identifier {
+								JSObjectProperty {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
 											name: "b"
 											leadingComments: undefined
 											loc: Object {
@@ -256,7 +256,7 @@ Program {
 											}
 										}
 									}
-									value: StringLiteral {
+									value: JSStringLiteral {
 										value: "2"
 										loc: Object {
 											filename: "input.js"
@@ -287,9 +287,9 @@ Program {
 										}
 									}
 								}
-								ObjectProperty {
-									key: StaticPropertyKey {
-										value: Identifier {
+								JSObjectProperty {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
 											name: "c"
 											leadingComments: undefined
 											loc: Object {
@@ -322,7 +322,7 @@ Program {
 											}
 										}
 									}
-									value: StringLiteral {
+									value: JSStringLiteral {
 										value: "3"
 										loc: Object {
 											filename: "input.js"

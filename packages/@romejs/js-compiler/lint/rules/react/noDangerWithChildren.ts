@@ -6,7 +6,7 @@
 */
 
 import {descriptions} from "@romejs/diagnostics";
-import {AnyNode, ObjectExpression} from "@romejs/js-ast";
+import {AnyNode, JSObjectExpression} from "@romejs/ast";
 import {Path} from "@romejs/js-compiler";
 import {doesNodeMatchPattern} from "@romejs/js-ast-utils";
 
@@ -41,7 +41,7 @@ function jsxDangerWithPropChildren(node: AnyNode) {
 }
 
 function createElementDangerWithChildren(node: AnyNode): boolean {
-	if (node.type !== "CallExpression") {
+	if (node.type !== "JSCallExpression") {
 		return false;
 	}
 
@@ -50,44 +50,44 @@ function createElementDangerWithChildren(node: AnyNode): boolean {
 	return (
 		doesNodeMatchPattern(node.callee, "React.createElement") &&
 		node.arguments.length === 3 &&
-		propsArgument.type === "ObjectExpression" &&
+		propsArgument.type === "JSObjectExpression" &&
 		propsArgument.properties.some((prop) =>
-			prop.type === "ObjectProperty" &&
-			prop.key.type === "StaticPropertyKey" &&
-			prop.key.value.type === "Identifier" &&
+			prop.type === "JSObjectProperty" &&
+			prop.key.type === "JSStaticPropertyKey" &&
+			prop.key.value.type === "JSIdentifier" &&
 			prop.key.value.name === "dangerouslySetInnerHTML"
 		)
 	);
 }
 
 function createElementDangerWithPropChildren(node: AnyNode): boolean {
-	if (node.type !== "CallExpression") {
+	if (node.type !== "JSCallExpression") {
 		return false;
 	}
 
 	const propsArgument = node.arguments[1];
 
-	function hasDangerAttribute(node: ObjectExpression) {
+	function hasDangerAttribute(node: JSObjectExpression) {
 		return node.properties.some((prop) =>
-			prop.type === "ObjectProperty" &&
-			prop.key.type === "StaticPropertyKey" &&
-			prop.key.value.type === "Identifier" &&
+			prop.type === "JSObjectProperty" &&
+			prop.key.type === "JSStaticPropertyKey" &&
+			prop.key.value.type === "JSIdentifier" &&
 			prop.key.value.name === "dangerouslySetInnerHTML"
 		);
 	}
 
-	function hasChildrenAttribute(node: ObjectExpression) {
+	function hasChildrenAttribute(node: JSObjectExpression) {
 		return node.properties.some((prop) =>
-			prop.type === "ObjectProperty" &&
-			prop.key.type === "StaticPropertyKey" &&
-			prop.key.value.type === "Identifier" &&
+			prop.type === "JSObjectProperty" &&
+			prop.key.type === "JSStaticPropertyKey" &&
+			prop.key.value.type === "JSIdentifier" &&
 			prop.key.value.name === "children"
 		);
 	}
 
 	return (
 		doesNodeMatchPattern(node.callee, "React.createElement") &&
-		propsArgument.type === "ObjectExpression" &&
+		propsArgument.type === "JSObjectExpression" &&
 		hasDangerAttribute(propsArgument) &&
 		hasChildrenAttribute(propsArgument)
 	);

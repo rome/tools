@@ -5,7 +5,7 @@
 ## `jsx > basic > 10`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -32,7 +32,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentBlock {
+		JSCommentBlock {
 			id: "1"
 			value: " this is a comment "
 			loc: Object {
@@ -51,7 +51,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {

@@ -5,7 +5,7 @@
 ## `core > categorized > startline-specified`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: CallExpression {
+			expression: JSCallExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -58,7 +58,7 @@ Program {
 						line: 1
 					}
 				}
-				callee: ReferenceIdentifier {
+				callee: JSReferenceIdentifier {
 					name: "call"
 					loc: Object {
 						filename: "input.js"
@@ -76,7 +76,7 @@ Program {
 					}
 				}
 				arguments: Array [
-					NumericLiteral {
+					JSNumericLiteral {
 						value: 1
 						format: undefined
 						loc: Object {
@@ -96,7 +96,7 @@ Program {
 				]
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -110,7 +110,7 @@ Program {
 					line: 2
 				}
 			}
-			expression: CallExpression {
+			expression: JSCallExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -124,7 +124,7 @@ Program {
 						line: 2
 					}
 				}
-				callee: ReferenceIdentifier {
+				callee: JSReferenceIdentifier {
 					name: "run"
 					loc: Object {
 						filename: "input.js"
@@ -142,7 +142,7 @@ Program {
 					}
 				}
 				arguments: Array [
-					NumericLiteral {
+					JSNumericLiteral {
 						value: 2
 						format: undefined
 						loc: Object {

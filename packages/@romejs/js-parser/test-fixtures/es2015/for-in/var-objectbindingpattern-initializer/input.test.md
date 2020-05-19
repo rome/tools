@@ -5,7 +5,7 @@
 ## `es2015 > for-in > var-objectbindingpattern-initializer`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ForInStatement {
+		JSForInStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			body: EmptyStatement {
+			body: JSEmptyStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -83,7 +83,7 @@ Program {
 					}
 				}
 			}
-			right: ObjectExpression {
+			right: JSObjectExpression {
 				properties: Array []
 				loc: Object {
 					filename: "input.js"
@@ -99,7 +99,7 @@ Program {
 					}
 				}
 			}
-			left: VariableDeclaration {
+			left: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.js"
@@ -115,8 +115,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingObjectPattern {
+					JSVariableDeclarator {
+						id: JSBindingObjectPattern {
 							rest: undefined
 							loc: Object {
 								filename: "input.js"
@@ -132,9 +132,9 @@ Program {
 								}
 							}
 							properties: Array [
-								BindingObjectPatternProperty {
-									key: StaticPropertyKey {
-										value: Identifier {
+								JSBindingObjectPatternProperty {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
 											name: "a"
 											loc: Object {
 												filename: "input.js"
@@ -165,7 +165,7 @@ Program {
 											}
 										}
 									}
-									value: BindingIdentifier {
+									value: JSBindingIdentifier {
 										name: "a"
 										loc: Object {
 											filename: "input.js"
@@ -211,7 +211,7 @@ Program {
 								line: 1
 							}
 						}
-						init: NumericLiteral {
+						init: JSNumericLiteral {
 							value: 0
 							format: undefined
 							loc: Object {

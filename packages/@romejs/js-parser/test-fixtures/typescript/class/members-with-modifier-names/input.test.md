@@ -5,7 +5,7 @@
 ## `typescript > class > members-with-modifier-names`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		ClassDeclaration {
-			id: BindingIdentifier {
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
 				name: "C"
 				loc: Object {
 					filename: "input.ts"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			meta: ClassHead {
+			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
@@ -82,8 +82,8 @@ Program {
 				body: Array [
 					TSDeclareMethod {
 						kind: "method"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "public"
 								loc: Object {
 									filename: "input.ts"
@@ -128,7 +128,7 @@ Program {
 								line: 2
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -154,7 +154,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -175,7 +175,7 @@ Program {
 									line: 2
 								}
 							}
-							returnType: VoidKeywordTypeAnnotation {
+							returnType: TSVoidKeywordTypeAnnotation {
 								loc: Object {
 									filename: "input.ts"
 									end: Object {
@@ -194,8 +194,8 @@ Program {
 					}
 					TSDeclareMethod {
 						kind: "method"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "static"
 								loc: Object {
 									filename: "input.ts"
@@ -241,7 +241,7 @@ Program {
 								line: 3
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: "public"
 							optional: false
@@ -262,7 +262,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -283,7 +283,7 @@ Program {
 									line: 3
 								}
 							}
-							returnType: VoidKeywordTypeAnnotation {
+							returnType: TSVoidKeywordTypeAnnotation {
 								loc: Object {
 									filename: "input.ts"
 									end: Object {
@@ -300,9 +300,9 @@ Program {
 							}
 						}
 					}
-					ClassProperty {
-						key: StaticPropertyKey {
-							value: Identifier {
+					JSClassProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "readonly"
 								loc: Object {
 									filename: "input.ts"
@@ -333,7 +333,7 @@ Program {
 								}
 							}
 						}
-						value: NumericLiteral {
+						value: JSNumericLiteral {
 							value: 0
 							format: undefined
 							loc: Object {
@@ -365,7 +365,7 @@ Program {
 								line: 4
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -394,8 +394,8 @@ Program {
 					}
 					TSDeclareMethod {
 						kind: "method"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "async"
 								loc: Object {
 									filename: "input.ts"
@@ -440,7 +440,7 @@ Program {
 								line: 5
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -466,7 +466,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -486,7 +486,7 @@ Program {
 									line: 5
 								}
 							}
-							returnType: VoidKeywordTypeAnnotation {
+							returnType: TSVoidKeywordTypeAnnotation {
 								loc: Object {
 									filename: "input.ts"
 									end: Object {
@@ -538,9 +538,9 @@ Program {
 							}
 						}
 					}
-					ClassProperty {
-						key: StaticPropertyKey {
-							value: Identifier {
+					JSClassProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "abstract"
 								loc: Object {
 									filename: "input.ts"
@@ -586,7 +586,7 @@ Program {
 								line: 6
 							}
 						}
-						typeAnnotation: VoidKeywordTypeAnnotation {
+						typeAnnotation: TSVoidKeywordTypeAnnotation {
 							loc: Object {
 								filename: "input.ts"
 								end: Object {
@@ -601,7 +601,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false

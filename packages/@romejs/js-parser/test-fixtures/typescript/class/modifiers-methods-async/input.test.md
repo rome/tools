@@ -5,7 +5,7 @@
 ## `typescript > class > modifiers-methods-async`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentLine {
+		JSCommentLine {
 			id: "0"
 			value: " Copy of modifiers-methods with 'async'"
 			loc: Object {
@@ -48,8 +48,8 @@ Program {
 		}
 	]
 	body: Array [
-		ClassDeclaration {
-			id: BindingIdentifier {
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
 				name: "C"
 				loc: Object {
 					filename: "input.ts"
@@ -81,7 +81,7 @@ Program {
 					line: 2
 				}
 			}
-			meta: ClassHead {
+			meta: JSClassHead {
 				implements: undefined
 				leadingComments: undefined
 				superClass: undefined
@@ -103,8 +103,8 @@ Program {
 				body: Array [
 					TSDeclareMethod {
 						kind: "method"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "a"
 								loc: Object {
 									filename: "input.ts"
@@ -149,7 +149,7 @@ Program {
 								line: 3
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: true
 							generator: false
 							hasHoistedVars: false
@@ -172,7 +172,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: true
 							accessibility: undefined
 							optional: false
@@ -199,10 +199,10 @@ Program {
 							}
 						}
 					}
-					ClassMethod {
+					JSClassMethod {
 						kind: "method"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "s"
 								loc: Object {
 									filename: "input.ts"
@@ -246,7 +246,7 @@ Program {
 								line: 4
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
 							loc: Object {
@@ -263,7 +263,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: true
 							generator: false
 							hasHoistedVars: false
@@ -286,7 +286,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -315,8 +315,8 @@ Program {
 					}
 					TSDeclareMethod {
 						kind: "method"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "pua"
 								loc: Object {
 									filename: "input.ts"
@@ -361,7 +361,7 @@ Program {
 								line: 5
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: true
 							generator: false
 							hasHoistedVars: false
@@ -384,7 +384,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: true
 							accessibility: "public"
 							optional: false
@@ -411,10 +411,10 @@ Program {
 							}
 						}
 					}
-					ClassMethod {
+					JSClassMethod {
 						kind: "method"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "pus"
 								loc: Object {
 									filename: "input.ts"
@@ -458,7 +458,7 @@ Program {
 								line: 6
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
 							loc: Object {
@@ -475,7 +475,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: true
 							generator: false
 							hasHoistedVars: false
@@ -498,7 +498,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: "public"
 							optional: false
@@ -525,10 +525,10 @@ Program {
 							}
 						}
 					}
-					ClassMethod {
+					JSClassMethod {
 						kind: "method"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "pu"
 								loc: Object {
 									filename: "input.ts"
@@ -572,7 +572,7 @@ Program {
 								line: 8
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
 							loc: Object {
@@ -589,7 +589,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: true
 							generator: false
 							hasHoistedVars: false
@@ -612,7 +612,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: "public"
 							optional: false
@@ -639,10 +639,10 @@ Program {
 							}
 						}
 					}
-					ClassMethod {
+					JSClassMethod {
 						kind: "method"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "po"
 								loc: Object {
 									filename: "input.ts"
@@ -686,7 +686,7 @@ Program {
 								line: 9
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
 							loc: Object {
@@ -703,7 +703,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: true
 							generator: false
 							hasHoistedVars: false
@@ -726,7 +726,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: "protected"
 							optional: false
@@ -753,10 +753,10 @@ Program {
 							}
 						}
 					}
-					ClassMethod {
+					JSClassMethod {
 						kind: "method"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "pi"
 								loc: Object {
 									filename: "input.ts"
@@ -800,7 +800,7 @@ Program {
 								line: 10
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
 							loc: Object {
@@ -817,7 +817,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: true
 							generator: false
 							hasHoistedVars: false
@@ -840,7 +840,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: "private"
 							optional: false

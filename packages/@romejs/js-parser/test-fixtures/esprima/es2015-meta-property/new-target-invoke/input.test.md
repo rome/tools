@@ -5,7 +5,7 @@
 ## `esprima > es2015-meta-property > new-target-invoke`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -84,7 +84,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -100,7 +100,7 @@ Program {
 					}
 				}
 				body: Array [
-					ExpressionStatement {
+					JSExpressionStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -114,7 +114,7 @@ Program {
 								line: 2
 							}
 						}
-						expression: CallExpression {
+						expression: JSCallExpression {
 							arguments: Array []
 							loc: Object {
 								filename: "input.js"
@@ -129,7 +129,7 @@ Program {
 									line: 2
 								}
 							}
-							callee: MetaProperty {
+							callee: JSMetaProperty {
 								loc: Object {
 									filename: "input.js"
 									end: Object {
@@ -143,7 +143,7 @@ Program {
 										line: 2
 									}
 								}
-								meta: Identifier {
+								meta: JSIdentifier {
 									name: "new"
 									loc: Object {
 										filename: "input.js"
@@ -160,7 +160,7 @@ Program {
 										}
 									}
 								}
-								property: Identifier {
+								property: JSIdentifier {
 									name: "target"
 									loc: Object {
 										filename: "input.js"

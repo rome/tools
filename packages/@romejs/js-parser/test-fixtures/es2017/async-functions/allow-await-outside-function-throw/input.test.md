@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > allow-await-outside-function-throw`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,8 +54,8 @@ Program {
 		}
 	]
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "a"
 				loc: Object {
 					filename: "input.js"
@@ -85,7 +85,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -108,7 +108,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -124,7 +124,7 @@ Program {
 					}
 				}
 				body: Array [
-					ReturnStatement {
+					JSReturnStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -138,7 +138,7 @@ Program {
 								line: 2
 							}
 						}
-						argument: ReferenceIdentifier {
+						argument: JSReferenceIdentifier {
 							name: "await"
 							loc: Object {
 								filename: "input.js"
@@ -156,7 +156,7 @@ Program {
 							}
 						}
 					}
-					ExpressionStatement {
+					JSExpressionStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -170,7 +170,7 @@ Program {
 								line: 2
 							}
 						}
-						expression: NumericLiteral {
+						expression: JSNumericLiteral {
 							value: 1
 							format: undefined
 							loc: Object {

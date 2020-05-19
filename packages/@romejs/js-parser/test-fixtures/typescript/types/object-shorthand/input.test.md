@@ -5,7 +5,7 @@
 ## `typescript > types > object-shorthand`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentLine {
+		JSCommentLine {
 			id: "0"
 			value: " actually put."
 			loc: Object {
@@ -48,7 +48,7 @@ Program {
 		}
 	]
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -62,7 +62,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
 					filename: "input.ts"
@@ -78,8 +78,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "table"
 							loc: Object {
 								filename: "input.ts"
@@ -109,7 +109,7 @@ Program {
 								line: 1
 							}
 						}
-						init: ObjectExpression {
+						init: JSObjectExpression {
 							loc: Object {
 								filename: "input.ts"
 								end: Object {
@@ -124,10 +124,10 @@ Program {
 								}
 							}
 							properties: Array [
-								ObjectMethod {
+								JSObjectMethod {
 									kind: "method"
-									key: StaticPropertyKey {
-										value: Identifier {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
 											name: "put"
 											loc: Object {
 												filename: "input.ts"
@@ -171,7 +171,7 @@ Program {
 											line: 2
 										}
 									}
-									body: BlockStatement {
+									body: JSBlockStatement {
 										body: Array []
 										directives: Array []
 										trailingComments: Array []
@@ -190,7 +190,7 @@ Program {
 											}
 										}
 									}
-									head: FunctionHead {
+									head: JSFunctionHead {
 										async: false
 										generator: false
 										hasHoistedVars: false
@@ -211,7 +211,7 @@ Program {
 											}
 										}
 										params: Array [
-											BindingIdentifier {
+											JSBindingIdentifier {
 												name: "value"
 												loc: Object {
 													filename: "input.ts"
@@ -227,7 +227,7 @@ Program {
 														line: 2
 													}
 												}
-												meta: PatternMeta {
+												meta: JSPatternMeta {
 													optional: undefined
 													loc: Object {
 														filename: "input.ts"
@@ -257,7 +257,7 @@ Program {
 																line: 2
 															}
 														}
-														typeName: ReferenceIdentifier {
+														typeName: JSReferenceIdentifier {
 															name: "T"
 															loc: Object {
 																filename: "input.ts"
@@ -325,8 +325,8 @@ Program {
 														}
 														members: Array [
 															TSPropertySignature {
-																key: StaticPropertyKey {
-																	value: Identifier {
+																key: JSStaticPropertyKey {
+																	value: JSIdentifier {
 																		name: "id"
 																		loc: Object {
 																			filename: "input.ts"

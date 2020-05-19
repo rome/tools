@@ -5,7 +5,7 @@
 ## `typescript > declare > var-new-line`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ReferenceIdentifier {
+			expression: JSReferenceIdentifier {
 				name: "declare"
 				loc: Object {
 					filename: "input.ts"
@@ -62,7 +62,7 @@ Program {
 				}
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -76,7 +76,7 @@ Program {
 					line: 2
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.ts"
@@ -92,8 +92,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.ts"
@@ -128,7 +128,7 @@ Program {
 				]
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -142,7 +142,7 @@ Program {
 					line: 4
 				}
 			}
-			expression: ReferenceIdentifier {
+			expression: JSReferenceIdentifier {
 				name: "declare"
 				loc: Object {
 					filename: "input.ts"
@@ -160,7 +160,7 @@ Program {
 				}
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -174,7 +174,7 @@ Program {
 					line: 5
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.ts"
@@ -190,8 +190,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.ts"
@@ -206,7 +206,7 @@ Program {
 									line: 5
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
 									filename: "input.ts"

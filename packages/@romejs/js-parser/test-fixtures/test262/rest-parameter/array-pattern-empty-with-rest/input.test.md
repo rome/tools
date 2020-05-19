@@ -5,7 +5,7 @@
 ## `test262 > rest-parameter > array-pattern-empty-with-rest`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "emptyWithRest"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
 				loc: Object {
@@ -78,7 +78,7 @@ Program {
 					}
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -99,7 +99,7 @@ Program {
 						line: 1
 					}
 				}
-				rest: BindingArrayPattern {
+				rest: JSBindingArrayPattern {
 					elements: Array []
 					loc: Object {
 						filename: "input.js"
@@ -114,7 +114,7 @@ Program {
 							line: 1
 						}
 					}
-					meta: PatternMeta {
+					meta: JSPatternMeta {
 						optional: undefined
 						typeAnnotation: undefined
 						loc: Object {
@@ -131,7 +131,7 @@ Program {
 							}
 						}
 					}
-					rest: BindingArrayPattern {
+					rest: JSBindingArrayPattern {
 						elements: Array []
 						rest: undefined
 						loc: Object {
@@ -147,7 +147,7 @@ Program {
 								line: 1
 							}
 						}
-						meta: PatternMeta {
+						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {

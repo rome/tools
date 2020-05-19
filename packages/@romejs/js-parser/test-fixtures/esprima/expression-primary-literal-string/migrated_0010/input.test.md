@@ -5,7 +5,7 @@
 ## `esprima > expression-primary-literal-string > migrated_0010`
 
 ```javascript
-Program {
+JSProgram {
 	body: Array []
 	comments: Array []
 	corrupt: false
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	directives: Array [
-		Directive {
+		JSDirective {
 			value: "Hello\\122World"
 			loc: Object {
 				filename: "input.js"

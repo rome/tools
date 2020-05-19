@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > await-inside-arguments-of-async-function-call`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "fn"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: true
 				generator: false
 				hasHoistedVars: false
@@ -84,7 +84,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -100,7 +100,7 @@ Program {
 					}
 				}
 				body: Array [
-					ExpressionStatement {
+					JSExpressionStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -114,7 +114,7 @@ Program {
 								line: 2
 							}
 						}
-						expression: CallExpression {
+						expression: JSCallExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -128,7 +128,7 @@ Program {
 									line: 2
 								}
 							}
-							callee: ReferenceIdentifier {
+							callee: JSReferenceIdentifier {
 								name: "async"
 								loc: Object {
 									filename: "input.js"
@@ -146,7 +146,7 @@ Program {
 								}
 							}
 							arguments: Array [
-								AssignmentExpression {
+								JSAssignmentExpression {
 									operator: "="
 									loc: Object {
 										filename: "input.js"
@@ -161,7 +161,7 @@ Program {
 											line: 2
 										}
 									}
-									left: AssignmentIdentifier {
+									left: JSAssignmentIdentifier {
 										name: "x"
 										loc: Object {
 											filename: "input.js"
@@ -178,7 +178,7 @@ Program {
 											}
 										}
 									}
-									right: AwaitExpression {
+									right: JSAwaitExpression {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -192,7 +192,7 @@ Program {
 												line: 2
 											}
 										}
-										argument: NumericLiteral {
+										argument: JSNumericLiteral {
 											value: 2
 											format: undefined
 											loc: Object {

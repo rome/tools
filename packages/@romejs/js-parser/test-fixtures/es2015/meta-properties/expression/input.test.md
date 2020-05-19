@@ -5,7 +5,7 @@
 ## `es2015 > meta-properties > expression`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
 					filename: "input.js"
@@ -60,8 +60,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "A"
 							loc: Object {
 								filename: "input.js"
@@ -91,7 +91,7 @@ Program {
 								line: 1
 							}
 						}
-						init: FunctionExpression {
+						init: JSFunctionExpression {
 							id: undefined
 							loc: Object {
 								filename: "input.js"
@@ -106,7 +106,7 @@ Program {
 									line: 1
 								}
 							}
-							head: FunctionHead {
+							head: JSFunctionHead {
 								async: false
 								generator: false
 								hasHoistedVars: false
@@ -129,7 +129,7 @@ Program {
 									}
 								}
 							}
-							body: BlockStatement {
+							body: JSBlockStatement {
 								directives: Array []
 								loc: Object {
 									filename: "input.js"
@@ -145,7 +145,7 @@ Program {
 									}
 								}
 								body: Array [
-									ExpressionStatement {
+									JSExpressionStatement {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -159,7 +159,7 @@ Program {
 												line: 2
 											}
 										}
-										expression: MetaProperty {
+										expression: JSMetaProperty {
 											loc: Object {
 												filename: "input.js"
 												end: Object {
@@ -173,7 +173,7 @@ Program {
 													line: 2
 												}
 											}
-											meta: Identifier {
+											meta: JSIdentifier {
 												name: "new"
 												loc: Object {
 													filename: "input.js"
@@ -190,7 +190,7 @@ Program {
 													}
 												}
 											}
-											property: Identifier {
+											property: JSIdentifier {
 												name: "target"
 												loc: Object {
 													filename: "input.js"

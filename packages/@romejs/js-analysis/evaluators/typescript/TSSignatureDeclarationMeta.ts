@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	TSSignatureDeclarationMeta,
 	tsSignatureDeclarationMeta,
-} from "@romejs/js-ast";
+} from "@romejs/ast";
 
 export default function TSSignatureDeclarationMeta(node: AnyNode, scope: Scope) {
 	node = tsSignatureDeclarationMeta.assert(node);

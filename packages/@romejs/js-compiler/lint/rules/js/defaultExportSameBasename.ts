@@ -7,10 +7,10 @@
 
 import {
 	AnyNode,
-	ClassDeclaration,
-	ExportDefaultDeclaration,
-	FunctionDeclaration,
-} from "@romejs/js-ast";
+	JSClassDeclaration,
+	JSExportDefaultDeclaration,
+	JSFunctionDeclaration,
+} from "@romejs/ast";
 import {Path} from "@romejs/js-compiler";
 import {UnknownFilePath} from "@romejs/path";
 import {renameBindings} from "@romejs/js-ast-utils";
@@ -20,8 +20,10 @@ import {toVariableCamelCase} from "./camelCase";
 
 function isValidDeclaration(
 	node: AnyNode,
-): node is FunctionDeclaration | ClassDeclaration {
-	return node.type === "FunctionDeclaration" || node.type === "ClassDeclaration";
+): node is JSFunctionDeclaration | JSClassDeclaration {
+	return (
+		node.type === "JSFunctionDeclaration" || node.type === "JSClassDeclaration"
+	);
 }
 
 export function filenameToId(
@@ -43,10 +45,10 @@ export default {
 	enter(path: Path): TransformExitResult {
 		const {context, node} = path;
 
-		if (node.type === "Program") {
-			let defaultExport: undefined | ExportDefaultDeclaration;
+		if (node.type === "JSProgram") {
+			let defaultExport: undefined | JSExportDefaultDeclaration;
 			for (const bodyNode of node.body) {
-				if (bodyNode.type === "ExportDefaultDeclaration") {
+				if (bodyNode.type === "JSExportDefaultDeclaration") {
 					defaultExport = bodyNode;
 					break;
 				}
@@ -62,7 +64,7 @@ export default {
 				const id = declaration.id;
 				if (id !== undefined && context.path !== undefined) {
 					const type =
-						declaration.type === "FunctionDeclaration" ? "function" : "class";
+						declaration.type === "JSFunctionDeclaration" ? "function" : "class";
 					const basename = filenameToId(context.path, type === "class");
 
 					if (basename !== undefined && basename !== id.name) {

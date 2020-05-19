@@ -5,7 +5,7 @@
 ## `typescript > declare > interface`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -31,7 +31,7 @@ Program {
 	}
 	body: Array [
 		TSInterfaceDeclaration {
-			id: BindingIdentifier {
+			id: JSBindingIdentifier {
 				name: "I"
 				loc: Object {
 					filename: "input.ts"

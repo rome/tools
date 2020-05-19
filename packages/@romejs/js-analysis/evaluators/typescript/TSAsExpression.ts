@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, TSAsExpression, tsAsExpression} from "@romejs/js-ast";
+import {AnyNode, TSAsExpression, tsAsExpression} from "@romejs/ast";
 
 export default function TSAsExpression(node: AnyNode, scope: Scope) {
 	node = tsAsExpression.assert(node);

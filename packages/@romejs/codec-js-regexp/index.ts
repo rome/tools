@@ -19,17 +19,17 @@ import {
 	isESIdentifierStart,
 } from "@romejs/parser-core";
 import {
-	AnyRegExpBodyItem,
-	AnyRegExpEscapedCharacter,
-	AnyRegExpExpression,
-	RegExpAlternation,
-	RegExpCharSet,
-	RegExpCharSetRange,
-	RegExpGroupCapture,
-	RegExpGroupNonCapture,
-	RegExpQuantified,
-	RegExpSubExpression,
-} from "@romejs/js-ast";
+	AnyJSRegExpBodyItem,
+	AnyJSRegExpEscapedCharacter,
+	AnyJSRegExpExpression,
+	JSRegExpAlternation,
+	JSRegExpCharSet,
+	JSRegExpCharSetRange,
+	JSRegExpGroupCapture,
+	JSRegExpGroupNonCapture,
+	JSRegExpQuantified,
+	JSRegExpSubExpression,
+} from "@romejs/ast";
 import {Diagnostics, descriptions} from "@romejs/diagnostics";
 import {Number0, ob1Add, ob1Coerce0, ob1Get0} from "@romejs/ob1";
 
@@ -80,7 +80,7 @@ type Tokens = BaseTokens & {
 type GroupModifiers =
 	| {
 			type: "NON_CAPTURE";
-			kind: RegExpGroupNonCapture["kind"];
+			kind: JSRegExpGroupNonCapture["kind"];
 		}
 	| {
 			type: "NAMED_CAPTURE";
@@ -618,7 +618,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 			}
 		}
 
-		parseGroupCapture(): RegExpGroupCapture | RegExpGroupNonCapture {
+		parseGroupCapture(): JSRegExpGroupCapture | JSRegExpGroupNonCapture {
 			const start = this.getPosition();
 			this.nextToken();
 
@@ -638,7 +638,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 
 			if (modifiers !== undefined && modifiers.type === "NON_CAPTURE") {
 				return {
-					type: "RegExpGroupNonCapture",
+					type: "JSRegExpGroupNonCapture",
 					expression,
 					kind: modifiers.kind,
 					loc: this.finishLoc(start),
@@ -646,7 +646,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 			} else {
 				let name = modifiers !== undefined ? modifiers.name : undefined;
 				return {
-					type: "RegExpGroupCapture",
+					type: "JSRegExpGroupCapture",
 					expression,
 					name,
 					loc: this.finishLoc(start),
@@ -654,11 +654,11 @@ export const createRegExpParser = createParser((ParserCore) =>
 			}
 		}
 
-		parseCharSet(): RegExpCharSet {
+		parseCharSet(): JSRegExpCharSet {
 			const start = this.getPosition();
 			this.nextToken();
 
-			const body: RegExpCharSet["body"] = [];
+			const body: JSRegExpCharSet["body"] = [];
 			const invert = this.eatOperator("^");
 
 			while (!this.matchToken("EOF") && !this.matchOperator("]")) {
@@ -674,7 +674,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 			}
 
 			return {
-				type: "RegExpCharSet",
+				type: "JSRegExpCharSet",
 				invert,
 				body,
 				loc: this.finishLoc(start),
@@ -697,13 +697,13 @@ export const createRegExpParser = createParser((ParserCore) =>
 			}
 		}
 
-		parseCharacter(): AnyRegExpEscapedCharacter {
+		parseCharacter(): AnyJSRegExpEscapedCharacter {
 			const token = this.getToken();
 
 			if (token.type === "Character") {
 				this.nextToken();
 				return {
-					type: "RegExpCharacter",
+					type: "JSRegExpCharacter",
 					value: token.value,
 					loc: this.finishLocFromToken(token),
 				};
@@ -713,7 +713,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 				this.nextToken();
 
 				return {
-					type: "RegExpNumericBackReference",
+					type: "JSRegExpNumericBackReference",
 					value: token.value,
 					loc: this.finishLocFromToken(token),
 				};
@@ -739,7 +739,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 
 				const name = token.value.slice(1, token.value.length - 1);
 				return {
-					type: "RegExpNamedBackReference",
+					type: "JSRegExpNamedBackReference",
 					name,
 					loc: this.finishLocFromToken(token),
 				};
@@ -752,49 +752,49 @@ export const createRegExpParser = createParser((ParserCore) =>
 				switch (token.value) {
 					case "d":
 						return {
-							type: "RegExpDigitCharacter",
+							type: "JSRegExpDigitCharacter",
 							loc,
 						};
 
 					case "D":
 						return {
-							type: "RegExpNonDigitCharacter",
+							type: "JSRegExpNonDigitCharacter",
 							loc,
 						};
 
 					case "b":
 						return {
-							type: "RegExpWordBoundaryCharacter",
+							type: "JSRegExpWordBoundaryCharacter",
 							loc,
 						};
 
 					case "B":
 						return {
-							type: "RegExpNonWordBoundaryCharacter",
+							type: "JSRegExpNonWordBoundaryCharacter",
 							loc,
 						};
 
 					case "s":
 						return {
-							type: "RegExpWhiteSpaceCharacter",
+							type: "JSRegExpWhiteSpaceCharacter",
 							loc,
 						};
 
 					case "S":
 						return {
-							type: "RegExpNonWhiteSpaceCharacter",
+							type: "JSRegExpNonWhiteSpaceCharacter",
 							loc,
 						};
 
 					case "w":
 						return {
-							type: "RegExpWordCharacter",
+							type: "JSRegExpWordCharacter",
 							loc,
 						};
 
 					case "W":
 						return {
-							type: "RegExpNonWordCharacter",
+							type: "JSRegExpNonWordCharacter",
 							loc,
 						};
 				}
@@ -802,20 +802,20 @@ export const createRegExpParser = createParser((ParserCore) =>
 
 			this.nextToken();
 			return {
-				type: "RegExpCharacter",
+				type: "JSRegExpCharacter",
 				value: this.getCharacterFromToken(token),
 				loc: this.finishLocFromToken(token),
 			};
 		}
 
-		parseCharacterOrRange(): AnyRegExpEscapedCharacter | RegExpCharSetRange {
+		parseCharacterOrRange(): AnyJSRegExpEscapedCharacter | JSRegExpCharSetRange {
 			const startPos = this.getPosition();
 			let start = this.parseCharacter();
 
 			// Range
 			const nextToken = this.getToken();
 			if (
-				start.type === "RegExpCharacter" &&
+				start.type === "JSRegExpCharacter" &&
 				nextToken.type === "Character" &&
 				nextToken.value === "-" &&
 				!nextToken.escaped
@@ -830,8 +830,8 @@ export const createRegExpParser = createParser((ParserCore) =>
 					const loc = this.finishLoc(startPos);
 
 					if (
-						start.type === "RegExpCharacter" &&
-						end.type === "RegExpCharacter" &&
+						start.type === "JSRegExpCharacter" &&
+						end.type === "JSRegExpCharacter" &&
 						getCodePoint(end.value) < getCodePoint(start.value)
 					) {
 						this.addDiagnostic({
@@ -844,7 +844,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 					}
 
 					return {
-						type: "RegExpCharSetRange",
+						type: "JSRegExpCharSetRange",
 						loc,
 						start,
 						end,
@@ -949,7 +949,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 			return undefined;
 		}
 
-		parseBodyItem(): undefined | AnyRegExpBodyItem {
+		parseBodyItem(): undefined | AnyJSRegExpBodyItem {
 			const start = this.getPosition();
 
 			const prefix = this.parseBodyItemPrefix();
@@ -967,8 +967,8 @@ export const createRegExpParser = createParser((ParserCore) =>
 
 				const lazy = this.eatOperator("?");
 
-				const quantified: RegExpQuantified = {
-					type: "RegExpQuantified",
+				const quantified: JSRegExpQuantified = {
+					type: "JSRegExpQuantified",
 					loc: this.finishLoc(start),
 					target,
 					lazy,
@@ -981,12 +981,12 @@ export const createRegExpParser = createParser((ParserCore) =>
 			return target;
 		}
 
-		parseOperator(token: Tokens["Operator"]): undefined | AnyRegExpBodyItem {
+		parseOperator(token: Tokens["Operator"]): undefined | AnyJSRegExpBodyItem {
 			switch (token.value) {
 				case "$": {
 					this.nextToken();
 					return {
-						type: "RegExpEndCharacter",
+						type: "JSRegExpEndCharacter",
 						loc: this.finishLocFromToken(token),
 					};
 				}
@@ -994,7 +994,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 				case "^": {
 					this.nextToken();
 					return {
-						type: "RegExpStartCharacter",
+						type: "JSRegExpStartCharacter",
 						loc: this.finishLocFromToken(token),
 					};
 				}
@@ -1002,7 +1002,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 				case ".": {
 					this.nextToken();
 					return {
-						type: "RegExpAnyCharacter",
+						type: "JSRegExpAnyCharacter",
 						loc: this.finishLocFromToken(token),
 					};
 				}
@@ -1061,7 +1061,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 			}
 		}
 
-		parseBodyItemPrefix(): undefined | AnyRegExpBodyItem {
+		parseBodyItemPrefix(): undefined | AnyJSRegExpBodyItem {
 			const token = this.getToken();
 
 			switch (token.type) {
@@ -1085,13 +1085,13 @@ export const createRegExpParser = createParser((ParserCore) =>
 
 		parseExpression(
 			whileCallback?: () => boolean,
-		): RegExpSubExpression | RegExpAlternation {
+		): JSRegExpSubExpression | JSRegExpAlternation {
 			const alternations: Array<{
 				start: Position;
 				end: Position;
-				body: Array<AnyRegExpBodyItem>;
+				body: Array<AnyJSRegExpBodyItem>;
 			}> = [];
-			let body: Array<AnyRegExpBodyItem> = [];
+			let body: Array<AnyJSRegExpBodyItem> = [];
 
 			const start = this.getPosition();
 			let alternateStart = start;
@@ -1123,13 +1123,13 @@ export const createRegExpParser = createParser((ParserCore) =>
 				end: this.getPosition(),
 			});
 
-			let expression: undefined | RegExpSubExpression | RegExpAlternation;
+			let expression: undefined | JSRegExpSubExpression | JSRegExpAlternation;
 
 			while (alternations.length > 0) {
 				const alternation = alternations.shift()!;
 
-				const sub: RegExpSubExpression = {
-					type: "RegExpSubExpression",
+				const sub: JSRegExpSubExpression = {
+					type: "JSRegExpSubExpression",
 					body: alternation.body,
 					loc: this.finishLocAt(alternation.start, alternation.end),
 				};
@@ -1137,8 +1137,8 @@ export const createRegExpParser = createParser((ParserCore) =>
 				if (expression === undefined) {
 					expression = sub;
 				} else {
-					const alternationNode: RegExpAlternation = {
-						type: "RegExpAlternation",
+					const alternationNode: JSRegExpAlternation = {
+						type: "JSRegExpAlternation",
 						left: expression,
 						right: sub,
 						loc: this.finishLocAt(
@@ -1161,7 +1161,7 @@ export const createRegExpParser = createParser((ParserCore) =>
 		}
 
 		parse(): {
-			expression: AnyRegExpExpression;
+			expression: AnyJSRegExpExpression;
 			diagnostics: Diagnostics;
 		} {
 			return {

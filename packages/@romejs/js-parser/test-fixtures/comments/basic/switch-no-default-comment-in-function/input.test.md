@@ -5,7 +5,7 @@
 ## `comments > basic > switch-no-default-comment-in-function`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentLine {
+		JSCommentLine {
 			id: "0"
 			value: "no default"
 			loc: Object {
@@ -48,8 +48,8 @@ Program {
 		}
 	]
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "bar"
 				loc: Object {
 					filename: "input.js"
@@ -79,7 +79,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -101,7 +101,7 @@ Program {
 					}
 				}
 				params: Array [
-					BindingIdentifier {
+					JSBindingIdentifier {
 						name: "a"
 						loc: Object {
 							filename: "input.js"
@@ -117,7 +117,7 @@ Program {
 								line: 1
 							}
 						}
-						meta: PatternMeta {
+						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
@@ -137,7 +137,7 @@ Program {
 					}
 				]
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -153,7 +153,7 @@ Program {
 					}
 				}
 				body: Array [
-					SwitchStatement {
+					JSSwitchStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -167,7 +167,7 @@ Program {
 								line: 2
 							}
 						}
-						discriminant: ReferenceIdentifier {
+						discriminant: JSReferenceIdentifier {
 							name: "a"
 							loc: Object {
 								filename: "input.js"
@@ -185,7 +185,7 @@ Program {
 							}
 						}
 						cases: Array [
-							SwitchCase {
+							JSSwitchCase {
 								loc: Object {
 									filename: "input.js"
 									end: Object {
@@ -199,7 +199,7 @@ Program {
 										line: 3
 									}
 								}
-								test: NumericLiteral {
+								test: JSNumericLiteral {
 									value: 2
 									format: undefined
 									loc: Object {
@@ -217,7 +217,7 @@ Program {
 									}
 								}
 								consequent: Array [
-									BreakStatement {
+									JSBreakStatement {
 										label: undefined
 										loc: Object {
 											filename: "input.js"
@@ -235,7 +235,7 @@ Program {
 									}
 								]
 							}
-							SwitchCase {
+							JSSwitchCase {
 								trailingComments: Array ["0"]
 								loc: Object {
 									filename: "input.js"
@@ -250,7 +250,7 @@ Program {
 										line: 5
 									}
 								}
-								test: NumericLiteral {
+								test: JSNumericLiteral {
 									value: 1
 									format: undefined
 									loc: Object {
@@ -268,7 +268,7 @@ Program {
 									}
 								}
 								consequent: Array [
-									BreakStatement {
+									JSBreakStatement {
 										label: undefined
 										trailingComments: undefined
 										loc: Object {

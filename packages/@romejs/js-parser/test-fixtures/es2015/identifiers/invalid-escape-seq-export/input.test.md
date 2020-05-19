@@ -5,7 +5,7 @@
 ## `es2015 > identifiers > invalid-escape-seq-export`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.js"
@@ -84,8 +84,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "export"
 							loc: Object {
 								filename: "input.js"
@@ -115,7 +115,7 @@ Program {
 								line: 1
 							}
 						}
-						init: NumericLiteral {
+						init: JSNumericLiteral {
 							value: 123
 							format: undefined
 							loc: Object {

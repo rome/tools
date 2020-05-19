@@ -5,7 +5,7 @@
 ## `esprima > statement-labelled > migrated_0001`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		LabeledStatement {
+		JSLabeledStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			label: Identifier {
+			label: JSIdentifier {
 				name: "start"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					}
 				}
 			}
-			body: WhileStatement {
+			body: JSWhileStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -75,7 +75,7 @@ Program {
 						line: 1
 					}
 				}
-				test: BooleanLiteral {
+				test: JSBooleanLiteral {
 					value: true
 					loc: Object {
 						filename: "input.js"
@@ -91,7 +91,7 @@ Program {
 						}
 					}
 				}
-				body: BreakStatement {
+				body: JSBreakStatement {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -105,7 +105,7 @@ Program {
 							line: 1
 						}
 					}
-					label: Identifier {
+					label: JSIdentifier {
 						name: "start"
 						loc: Object {
 							filename: "input.js"

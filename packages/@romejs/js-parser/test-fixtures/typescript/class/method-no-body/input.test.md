@@ -5,7 +5,7 @@
 ## `typescript > class > method-no-body`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		ClassDeclaration {
-			id: BindingIdentifier {
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
 				name: "C"
 				loc: Object {
 					filename: "input.ts"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			meta: ClassHead {
+			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
@@ -82,8 +82,8 @@ Program {
 				body: Array [
 					TSDeclareMethod {
 						kind: "method"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "f"
 								loc: Object {
 									filename: "input.ts"
@@ -128,7 +128,7 @@ Program {
 								line: 2
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -151,7 +151,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -180,8 +180,8 @@ Program {
 					}
 					TSDeclareMethod {
 						kind: "method"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "f"
 								loc: Object {
 									filename: "input.ts"
@@ -226,7 +226,7 @@ Program {
 								line: 3
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -252,7 +252,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -273,7 +273,7 @@ Program {
 									line: 3
 								}
 							}
-							returnType: VoidKeywordTypeAnnotation {
+							returnType: TSVoidKeywordTypeAnnotation {
 								loc: Object {
 									filename: "input.ts"
 									end: Object {

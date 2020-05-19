@@ -6,7 +6,7 @@
  */
 
 import {Path} from "@romejs/js-compiler";
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 import {descriptions} from "@romejs/diagnostics";
 import {createUnknownFilePath} from "@romejs/path";
 import {filenameToId} from "./defaultExportSameBasename";
@@ -16,7 +16,7 @@ export default {
 	enter(path: Path): AnyNode {
 		const {node} = path;
 
-		if (node.type === "ImportDeclaration") {
+		if (node.type === "JSImportDeclaration") {
 			const {defaultSpecifier} = node;
 			if (defaultSpecifier === undefined) {
 				return node;

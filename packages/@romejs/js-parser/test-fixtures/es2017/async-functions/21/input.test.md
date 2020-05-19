@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > 21`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: FunctionExpression {
+			expression: JSFunctionExpression {
 				id: undefined
 				loc: Object {
 					filename: "input.js"
@@ -59,7 +59,7 @@ Program {
 						line: 1
 					}
 				}
-				head: FunctionHead {
+				head: JSFunctionHead {
 					async: false
 					generator: false
 					hasHoistedVars: true
@@ -82,7 +82,7 @@ Program {
 						}
 					}
 				}
-				body: BlockStatement {
+				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
 						filename: "input.js"
@@ -98,7 +98,7 @@ Program {
 						}
 					}
 					body: Array [
-						VariableDeclarationStatement {
+						JSVariableDeclarationStatement {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -112,7 +112,7 @@ Program {
 									line: 1
 								}
 							}
-							declaration: VariableDeclaration {
+							declaration: JSVariableDeclaration {
 								kind: "var"
 								loc: Object {
 									filename: "input.js"
@@ -128,8 +128,8 @@ Program {
 									}
 								}
 								declarations: Array [
-									VariableDeclarator {
-										id: BindingIdentifier {
+									JSVariableDeclarator {
+										id: JSBindingIdentifier {
 											name: "async"
 											loc: Object {
 												filename: "input.js"
@@ -164,7 +164,7 @@ Program {
 								]
 							}
 						}
-						ExpressionStatement {
+						JSExpressionStatement {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -178,7 +178,7 @@ Program {
 									line: 1
 								}
 							}
-							expression: AssignmentExpression {
+							expression: JSAssignmentExpression {
 								operator: "="
 								loc: Object {
 									filename: "input.js"
@@ -193,7 +193,7 @@ Program {
 										line: 1
 									}
 								}
-								left: AssignmentIdentifier {
+								left: JSAssignmentIdentifier {
 									name: "async"
 									loc: Object {
 										filename: "input.js"
@@ -210,7 +210,7 @@ Program {
 										}
 									}
 								}
-								right: NumericLiteral {
+								right: JSNumericLiteral {
 									value: 10
 									format: undefined
 									loc: Object {

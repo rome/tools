@@ -5,7 +5,7 @@
 ## `core > categorized > 03-regex`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: FunctionExpression {
+			expression: JSFunctionExpression {
 				id: undefined
 				loc: Object {
 					filename: "input.js"
@@ -59,7 +59,7 @@ Program {
 						line: 1
 					}
 				}
-				head: FunctionHead {
+				head: JSFunctionHead {
 					async: false
 					generator: false
 					hasHoistedVars: false
@@ -82,7 +82,7 @@ Program {
 						}
 					}
 				}
-				body: BlockStatement {
+				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
 						filename: "input.js"
@@ -98,7 +98,7 @@ Program {
 						}
 					}
 					body: Array [
-						ReturnStatement {
+						JSReturnStatement {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -112,7 +112,7 @@ Program {
 									line: 2
 								}
 							}
-							argument: BinaryExpression {
+							argument: JSBinaryExpression {
 								operator: "/"
 								loc: Object {
 									filename: "input.js"
@@ -127,7 +127,7 @@ Program {
 										line: 2
 									}
 								}
-								right: ReferenceIdentifier {
+								right: JSReferenceIdentifier {
 									name: "i"
 									loc: Object {
 										filename: "input.js"
@@ -144,7 +144,7 @@ Program {
 										}
 									}
 								}
-								left: BinaryExpression {
+								left: JSBinaryExpression {
 									operator: "/"
 									loc: Object {
 										filename: "input.js"
@@ -159,7 +159,7 @@ Program {
 											line: 2
 										}
 									}
-									right: NumericLiteral {
+									right: JSNumericLiteral {
 										value: 42
 										format: undefined
 										loc: Object {
@@ -176,8 +176,8 @@ Program {
 											}
 										}
 									}
-									left: FunctionExpression {
-										id: BindingIdentifier {
+									left: JSFunctionExpression {
+										id: JSBindingIdentifier {
 											name: "fn"
 											loc: Object {
 												filename: "input.js"
@@ -207,7 +207,7 @@ Program {
 												line: 2
 											}
 										}
-										body: BlockStatement {
+										body: JSBlockStatement {
 											body: Array []
 											directives: Array []
 											loc: Object {
@@ -224,7 +224,7 @@ Program {
 												}
 											}
 										}
-										head: FunctionHead {
+										head: JSFunctionHead {
 											async: false
 											generator: false
 											hasHoistedVars: false

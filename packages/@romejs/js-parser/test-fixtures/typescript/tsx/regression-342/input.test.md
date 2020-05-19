@@ -5,7 +5,7 @@
 ## `typescript > tsx > regression-342`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -33,7 +33,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.tsx"
 				end: Object {
@@ -47,7 +47,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ConditionalExpression {
+			expression: JSConditionalExpression {
 				loc: Object {
 					filename: "input.tsx"
 					end: Object {
@@ -61,7 +61,7 @@ Program {
 						line: 1
 					}
 				}
-				test: NumericLiteral {
+				test: JSNumericLiteral {
 					value: 0
 					format: undefined
 					loc: Object {

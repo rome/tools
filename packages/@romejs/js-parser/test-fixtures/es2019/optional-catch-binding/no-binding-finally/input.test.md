@@ -5,7 +5,7 @@
 ## `es2019 > optional-catch-binding > no-binding-finally`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		TryStatement {
+		JSTryStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			block: BlockStatement {
+			block: JSBlockStatement {
 				body: Array []
 				directives: Array []
 				loc: Object {
@@ -61,7 +61,7 @@ Program {
 					}
 				}
 			}
-			finalizer: BlockStatement {
+			finalizer: JSBlockStatement {
 				body: Array []
 				directives: Array []
 				loc: Object {
@@ -78,7 +78,7 @@ Program {
 					}
 				}
 			}
-			handler: CatchClause {
+			handler: JSCatchClause {
 				param: undefined
 				loc: Object {
 					filename: "input.js"
@@ -93,7 +93,7 @@ Program {
 						line: 4
 					}
 				}
-				body: BlockStatement {
+				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
 					loc: Object {

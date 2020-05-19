@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > await-inside-parameters-of-nested-arrow-function`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,8 +54,8 @@ Program {
 		}
 	]
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "fn"
 				loc: Object {
 					filename: "input.js"
@@ -85,7 +85,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: true
 				generator: false
 				hasHoistedVars: false
@@ -108,7 +108,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -124,7 +124,7 @@ Program {
 					}
 				}
 				body: Array [
-					ExpressionStatement {
+					JSExpressionStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -138,7 +138,7 @@ Program {
 								line: 2
 							}
 						}
-						expression: ArrowFunctionExpression {
+						expression: JSArrowFunctionExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -152,7 +152,7 @@ Program {
 									line: 2
 								}
 							}
-							body: BlockStatement {
+							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
 								loc: Object {
@@ -169,7 +169,7 @@ Program {
 									}
 								}
 							}
-							head: FunctionHead {
+							head: JSFunctionHead {
 								async: false
 								hasHoistedVars: false
 								rest: undefined
@@ -189,7 +189,7 @@ Program {
 									}
 								}
 								params: Array [
-									BindingAssignmentPattern {
+									JSBindingAssignmentPattern {
 										operator: "="
 										loc: Object {
 											filename: "input.js"
@@ -204,7 +204,7 @@ Program {
 												line: 2
 											}
 										}
-										left: BindingIdentifier {
+										left: JSBindingIdentifier {
 											name: "x"
 											loc: Object {
 												filename: "input.js"
@@ -221,7 +221,7 @@ Program {
 												}
 											}
 										}
-										right: AwaitExpression {
+										right: JSAwaitExpression {
 											loc: Object {
 												filename: "input.js"
 												end: Object {
@@ -235,7 +235,7 @@ Program {
 													line: 2
 												}
 											}
-											argument: NumericLiteral {
+											argument: JSNumericLiteral {
 												value: 2
 												format: undefined
 												loc: Object {

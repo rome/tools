@@ -5,7 +5,7 @@
 ## `typescript > interface > properties`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -31,7 +31,7 @@ Program {
 	}
 	body: Array [
 		TSInterfaceDeclaration {
-			id: BindingIdentifier {
+			id: JSBindingIdentifier {
 				name: "I"
 				loc: Object {
 					filename: "input.ts"
@@ -79,8 +79,8 @@ Program {
 				}
 				body: Array [
 					TSPropertySignature {
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "x"
 								loc: Object {
 									filename: "input.ts"
@@ -129,8 +129,8 @@ Program {
 						}
 					}
 					TSPropertySignature {
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "y"
 								loc: Object {
 									filename: "input.ts"
@@ -193,8 +193,8 @@ Program {
 						}
 					}
 					TSPropertySignature {
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "z"
 								loc: Object {
 									filename: "input.ts"

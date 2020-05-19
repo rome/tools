@@ -5,7 +5,7 @@
 ## `es2015 > let > let-with-linebreak-arr-dstrk`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.js"
@@ -60,8 +60,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingArrayPattern {
+					JSVariableDeclarator {
+						id: JSBindingArrayPattern {
 							rest: undefined
 							loc: Object {
 								filename: "input.js"
@@ -77,7 +77,7 @@ Program {
 								}
 							}
 							elements: Array [
-								BindingIdentifier {
+								JSBindingIdentifier {
 									name: "a"
 									loc: Object {
 										filename: "input.js"
@@ -93,7 +93,7 @@ Program {
 											line: 2
 										}
 									}
-									meta: PatternMeta {
+									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
@@ -126,7 +126,7 @@ Program {
 								line: 2
 							}
 						}
-						init: ArrayExpression {
+						init: JSArrayExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -141,7 +141,7 @@ Program {
 								}
 							}
 							elements: Array [
-								NumericLiteral {
+								JSNumericLiteral {
 									value: 1
 									format: undefined
 									loc: Object {

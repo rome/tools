@@ -5,7 +5,7 @@
 ## `core > uncategorised > 280`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		TryStatement {
+		JSTryStatement {
 			handler: undefined
 			loc: Object {
 				filename: "input.js"
@@ -45,7 +45,7 @@ Program {
 					line: 1
 				}
 			}
-			block: BlockStatement {
+			block: JSBlockStatement {
 				body: Array []
 				directives: Array []
 				loc: Object {
@@ -62,7 +62,7 @@ Program {
 					}
 				}
 			}
-			finalizer: BlockStatement {
+			finalizer: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -78,7 +78,7 @@ Program {
 					}
 				}
 				body: Array [
-					ExpressionStatement {
+					JSExpressionStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -92,7 +92,7 @@ Program {
 								line: 1
 							}
 						}
-						expression: CallExpression {
+						expression: JSCallExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -106,7 +106,7 @@ Program {
 									line: 1
 								}
 							}
-							callee: ReferenceIdentifier {
+							callee: JSReferenceIdentifier {
 								name: "cleanup"
 								loc: Object {
 									filename: "input.js"
@@ -124,7 +124,7 @@ Program {
 								}
 							}
 							arguments: Array [
-								ReferenceIdentifier {
+								JSReferenceIdentifier {
 									name: "stuff"
 									loc: Object {
 										filename: "input.js"

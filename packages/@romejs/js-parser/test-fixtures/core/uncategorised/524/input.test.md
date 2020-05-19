@@ -5,7 +5,7 @@
 ## `core > uncategorised > 524`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ThrowStatement {
+		JSThrowStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			argument: NumericLiteral {
+			argument: JSNumericLiteral {
 				value: 10
 				format: undefined
 				loc: Object {

@@ -5,7 +5,7 @@
 ## `core > uncategorised > 56`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentLine {
+		JSCommentLine {
 			id: "0"
 			value: " Hello, world!"
 			loc: Object {
@@ -48,7 +48,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			leadingComments: Array ["0"]
 			loc: Object {
 				filename: "input.js"
@@ -63,7 +63,7 @@ Program {
 					line: 2
 				}
 			}
-			expression: NumericLiteral {
+			expression: JSNumericLiteral {
 				value: 42
 				format: undefined
 				leadingComments: undefined

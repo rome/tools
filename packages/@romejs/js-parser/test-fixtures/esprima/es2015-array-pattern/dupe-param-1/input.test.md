@@ -5,7 +5,7 @@
 ## `esprima > es2015-array-pattern > dupe-param-1`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	filename: "input.js"
@@ -28,7 +28,7 @@ Program {
 		}
 	}
 	directives: Array [
-		Directive {
+		JSDirective {
 			value: "use strict"
 			loc: Object {
 				filename: "input.js"
@@ -92,8 +92,8 @@ Program {
 		}
 	]
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "a"
 				loc: Object {
 					filename: "input.js"
@@ -123,7 +123,7 @@ Program {
 					line: 2
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
 				loc: Object {
@@ -140,7 +140,7 @@ Program {
 					}
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -162,7 +162,7 @@ Program {
 					}
 				}
 				params: Array [
-					BindingArrayPattern {
+					JSBindingArrayPattern {
 						rest: undefined
 						loc: Object {
 							filename: "input.js"
@@ -177,7 +177,7 @@ Program {
 								line: 2
 							}
 						}
-						meta: PatternMeta {
+						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
@@ -195,7 +195,7 @@ Program {
 							}
 						}
 						elements: Array [
-							BindingIdentifier {
+							JSBindingIdentifier {
 								name: "a"
 								loc: Object {
 									filename: "input.js"
@@ -211,7 +211,7 @@ Program {
 										line: 2
 									}
 								}
-								meta: PatternMeta {
+								meta: JSPatternMeta {
 									optional: undefined
 									typeAnnotation: undefined
 									loc: Object {
@@ -229,7 +229,7 @@ Program {
 									}
 								}
 							}
-							BindingIdentifier {
+							JSBindingIdentifier {
 								name: "a"
 								loc: Object {
 									filename: "input.js"
@@ -245,7 +245,7 @@ Program {
 										line: 2
 									}
 								}
-								meta: PatternMeta {
+								meta: JSPatternMeta {
 									optional: undefined
 									typeAnnotation: undefined
 									loc: Object {

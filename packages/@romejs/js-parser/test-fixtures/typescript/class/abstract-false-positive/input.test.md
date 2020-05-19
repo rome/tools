@@ -5,7 +5,7 @@
 ## `typescript > class > abstract-false-positive`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentLine {
+		JSCommentLine {
 			id: "0"
 			value: " Exports an identifier, doesn't try parsing `abstract class`"
 			loc: Object {
@@ -48,7 +48,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExportDefaultDeclaration {
+		JSExportDefaultDeclaration {
 			leadingComments: Array ["0"]
 			loc: Object {
 				filename: "input.ts"
@@ -63,7 +63,7 @@ Program {
 					line: 2
 				}
 			}
-			declaration: ReferenceIdentifier {
+			declaration: JSReferenceIdentifier {
 				name: "abstract"
 				leadingComments: undefined
 				loc: Object {

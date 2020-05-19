@@ -9,7 +9,7 @@ import {
 	AnyNode,
 	TSSymbolKeywordTypeAnnotation,
 	tsSymbolKeywordTypeAnnotation,
-} from "@romejs/js-ast";
+} from "@romejs/ast";
 
 export default function TSSymbolKeywordTypeAnnotation(node: AnyNode) {
 	node = tsSymbolKeywordTypeAnnotation.assert(node);

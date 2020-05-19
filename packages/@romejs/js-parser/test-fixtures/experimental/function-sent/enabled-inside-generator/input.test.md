@@ -5,7 +5,7 @@
 ## `experimental > function-sent > enabled-inside-generator`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "foo"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: true
 				hasHoistedVars: false
@@ -84,7 +84,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -100,7 +100,7 @@ Program {
 					}
 				}
 				body: Array [
-					ReturnStatement {
+					JSReturnStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -114,7 +114,7 @@ Program {
 								line: 2
 							}
 						}
-						argument: MetaProperty {
+						argument: JSMetaProperty {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -128,7 +128,7 @@ Program {
 									line: 2
 								}
 							}
-							meta: Identifier {
+							meta: JSIdentifier {
 								name: "function"
 								loc: Object {
 									filename: "input.js"
@@ -145,7 +145,7 @@ Program {
 									}
 								}
 							}
-							property: Identifier {
+							property: JSIdentifier {
 								name: "sent"
 								loc: Object {
 									filename: "input.js"

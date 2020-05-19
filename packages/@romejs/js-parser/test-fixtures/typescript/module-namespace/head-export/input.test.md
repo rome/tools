@@ -5,7 +5,7 @@
 ## `typescript > module-namespace > head-export`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
@@ -47,7 +47,7 @@ Program {
 				}
 			}
 			declaration: TSModuleDeclaration {
-				id: BindingIdentifier {
+				id: JSBindingIdentifier {
 					name: "X"
 					loc: Object {
 						filename: "input.ts"
@@ -78,7 +78,7 @@ Program {
 					}
 				}
 				body: TSModuleDeclaration {
-					id: BindingIdentifier {
+					id: JSBindingIdentifier {
 						name: "Y"
 						loc: Object {
 							filename: "input.ts"
@@ -127,7 +127,7 @@ Program {
 				}
 			}
 		}
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
@@ -144,7 +144,7 @@ Program {
 				}
 			}
 			declaration: TSModuleDeclaration {
-				id: BindingIdentifier {
+				id: JSBindingIdentifier {
 					name: "X"
 					loc: Object {
 						filename: "input.ts"

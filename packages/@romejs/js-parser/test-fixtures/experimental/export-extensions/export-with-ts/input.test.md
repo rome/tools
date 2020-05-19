@@ -5,7 +5,7 @@
 ## `experimental > export-extensions > export-with-ts`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
@@ -46,8 +46,8 @@ Program {
 					line: 1
 				}
 			}
-			declaration: ClassDeclaration {
-				id: BindingIdentifier {
+			declaration: JSClassDeclaration {
+				id: JSBindingIdentifier {
 					name: "A"
 					loc: Object {
 						filename: "input.ts"
@@ -78,7 +78,7 @@ Program {
 						line: 1
 					}
 				}
-				meta: ClassHead {
+				meta: JSClassHead {
 					body: Array []
 					implements: undefined
 					superClass: undefined
@@ -100,7 +100,7 @@ Program {
 				}
 			}
 		}
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
@@ -117,7 +117,7 @@ Program {
 				}
 			}
 			declaration: TSInterfaceDeclaration {
-				id: BindingIdentifier {
+				id: JSBindingIdentifier {
 					name: "B"
 					loc: Object {
 						filename: "input.ts"
@@ -168,7 +168,7 @@ Program {
 				}
 			}
 		}
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
@@ -185,7 +185,7 @@ Program {
 				}
 			}
 			declaration: TSEnumDeclaration {
-				id: BindingIdentifier {
+				id: JSBindingIdentifier {
 					name: "C"
 					loc: Object {
 						filename: "input.ts"
@@ -219,7 +219,7 @@ Program {
 				}
 			}
 		}
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "type"
 			specifiers: undefined
 			loc: Object {
@@ -236,7 +236,7 @@ Program {
 				}
 			}
 			declaration: TSInterfaceDeclaration {
-				id: BindingIdentifier {
+				id: JSBindingIdentifier {
 					name: "D"
 					loc: Object {
 						filename: "input.ts"
@@ -286,7 +286,7 @@ Program {
 				}
 			}
 		}
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
@@ -303,7 +303,7 @@ Program {
 				}
 			}
 			declaration: TSModuleDeclaration {
-				id: BindingIdentifier {
+				id: JSBindingIdentifier {
 					name: "E"
 					loc: Object {
 						filename: "input.ts"
@@ -351,7 +351,7 @@ Program {
 				}
 			}
 		}
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
@@ -368,7 +368,7 @@ Program {
 				}
 			}
 			declaration: TSModuleDeclaration {
-				id: BindingIdentifier {
+				id: JSBindingIdentifier {
 					name: "F"
 					loc: Object {
 						filename: "input.ts"
@@ -416,7 +416,7 @@ Program {
 				}
 			}
 		}
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "type"
 			specifiers: undefined
 			loc: Object {
@@ -432,8 +432,8 @@ Program {
 					line: 7
 				}
 			}
-			declaration: TypeAliasTypeAnnotation {
-				id: BindingIdentifier {
+			declaration: TSTypeAliasTypeAnnotation {
+				id: JSBindingIdentifier {
 					name: "G"
 					loc: Object {
 						filename: "input.ts"
@@ -478,7 +478,7 @@ Program {
 							line: 7
 						}
 					}
-					exprName: ReferenceIdentifier {
+					exprName: JSReferenceIdentifier {
 						name: "foo"
 						loc: Object {
 							filename: "input.ts"

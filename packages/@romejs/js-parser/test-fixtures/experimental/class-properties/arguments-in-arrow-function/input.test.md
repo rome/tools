@@ -5,7 +5,7 @@
 ## `experimental > class-properties > arguments-in-arrow-function`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,8 +54,8 @@ Program {
 		}
 	]
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "fn"
 				loc: Object {
 					filename: "input.js"
@@ -85,7 +85,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -108,7 +108,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -124,8 +124,8 @@ Program {
 					}
 				}
 				body: Array [
-					ClassDeclaration {
-						id: BindingIdentifier {
+					JSClassDeclaration {
+						id: JSBindingIdentifier {
 							name: "A"
 							loc: Object {
 								filename: "input.js"
@@ -155,7 +155,7 @@ Program {
 								line: 2
 							}
 						}
-						meta: ClassHead {
+						meta: JSClassHead {
 							implements: undefined
 							superClass: undefined
 							superTypeParameters: undefined
@@ -174,9 +174,9 @@ Program {
 								}
 							}
 							body: Array [
-								ClassProperty {
-									key: StaticPropertyKey {
-										value: Identifier {
+								JSClassProperty {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
 											name: "foo"
 											loc: Object {
 												filename: "input.js"
@@ -207,7 +207,7 @@ Program {
 											}
 										}
 									}
-									value: ArrowFunctionExpression {
+									value: JSArrowFunctionExpression {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -221,7 +221,7 @@ Program {
 												line: 3
 											}
 										}
-										body: ReferenceIdentifier {
+										body: JSReferenceIdentifier {
 											name: "arguments"
 											loc: Object {
 												filename: "input.js"
@@ -238,7 +238,7 @@ Program {
 												}
 											}
 										}
-										head: FunctionHead {
+										head: JSFunctionHead {
 											async: false
 											hasHoistedVars: false
 											params: Array []
@@ -275,7 +275,7 @@ Program {
 											line: 3
 										}
 									}
-									meta: ClassPropertyMeta {
+									meta: JSClassPropertyMeta {
 										abstract: false
 										accessibility: undefined
 										optional: false

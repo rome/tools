@@ -6,7 +6,7 @@
  */
 
 import Scope from "./Scope";
-import {AnyNode, ConstImportModuleKind} from "@romejs/js-ast";
+import {AnyNode, ConstImportModuleKind} from "@romejs/ast";
 
 let id = 0;
 

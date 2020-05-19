@@ -5,7 +5,7 @@
 ## `es2015 > shorthand > 1`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.js"
@@ -84,8 +84,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.js"
@@ -115,7 +115,7 @@ Program {
 								line: 1
 							}
 						}
-						init: ObjectExpression {
+						init: JSObjectExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -130,9 +130,9 @@ Program {
 								}
 							}
 							properties: Array [
-								ObjectProperty {
-									key: StaticPropertyKey {
-										value: Identifier {
+								JSObjectProperty {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
 											name: "const"
 											loc: Object {
 												filename: "input.js"
@@ -163,7 +163,7 @@ Program {
 											}
 										}
 									}
-									value: ReferenceIdentifier {
+									value: JSReferenceIdentifier {
 										name: "const"
 										loc: Object {
 											filename: "input.js"

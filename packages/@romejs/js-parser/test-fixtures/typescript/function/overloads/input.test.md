@@ -5,7 +5,7 @@
 ## `typescript > function > overloads`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
@@ -47,7 +47,7 @@ Program {
 				}
 			}
 			declaration: TSDeclareFunction {
-				id: BindingIdentifier {
+				id: JSBindingIdentifier {
 					name: "f"
 					loc: Object {
 						filename: "input.ts"
@@ -77,7 +77,7 @@ Program {
 						line: 1
 					}
 				}
-				head: FunctionHead {
+				head: JSFunctionHead {
 					async: false
 					generator: false
 					hasHoistedVars: false
@@ -113,7 +113,7 @@ Program {
 						}
 					}
 					params: Array [
-						BindingIdentifier {
+						JSBindingIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.ts"
@@ -129,7 +129,7 @@ Program {
 									line: 1
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								optional: undefined
 								loc: Object {
 									filename: "input.ts"
@@ -165,7 +165,7 @@ Program {
 				}
 			}
 		}
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			exportKind: "value"
 			specifiers: undefined
 			loc: Object {
@@ -182,7 +182,7 @@ Program {
 				}
 			}
 			declaration: TSDeclareFunction {
-				id: BindingIdentifier {
+				id: JSBindingIdentifier {
 					name: "f"
 					loc: Object {
 						filename: "input.ts"
@@ -212,7 +212,7 @@ Program {
 						line: 2
 					}
 				}
-				head: FunctionHead {
+				head: JSFunctionHead {
 					async: false
 					generator: false
 					hasHoistedVars: false
@@ -248,7 +248,7 @@ Program {
 						}
 					}
 					params: Array [
-						BindingIdentifier {
+						JSBindingIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.ts"
@@ -264,7 +264,7 @@ Program {
 									line: 2
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								optional: undefined
 								loc: Object {
 									filename: "input.ts"

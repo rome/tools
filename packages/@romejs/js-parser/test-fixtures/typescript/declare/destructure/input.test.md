@@ -5,7 +5,7 @@
 ## `typescript > declare > destructure`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			declare: true
 			loc: Object {
 				filename: "input.ts"
@@ -45,7 +45,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
 					filename: "input.ts"
@@ -61,8 +61,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingObjectPattern {
+					JSVariableDeclarator {
+						id: JSBindingObjectPattern {
 							rest: undefined
 							loc: Object {
 								filename: "input.ts"
@@ -78,9 +78,9 @@ Program {
 								}
 							}
 							properties: Array [
-								BindingObjectPatternProperty {
-									key: StaticPropertyKey {
-										value: Identifier {
+								JSBindingObjectPatternProperty {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
 											name: "x"
 											loc: Object {
 												filename: "input.ts"
@@ -111,7 +111,7 @@ Program {
 											}
 										}
 									}
-									value: BindingIdentifier {
+									value: JSBindingIdentifier {
 										name: "x"
 										loc: Object {
 											filename: "input.ts"
@@ -142,9 +142,9 @@ Program {
 										}
 									}
 								}
-								BindingObjectPatternProperty {
-									key: StaticPropertyKey {
-										value: Identifier {
+								JSBindingObjectPatternProperty {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
 											name: "y"
 											loc: Object {
 												filename: "input.ts"
@@ -175,7 +175,7 @@ Program {
 											}
 										}
 									}
-									value: BindingIdentifier {
+									value: JSBindingIdentifier {
 										name: "y"
 										loc: Object {
 											filename: "input.ts"
@@ -207,7 +207,7 @@ Program {
 									}
 								}
 							]
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
 									filename: "input.ts"
@@ -238,8 +238,8 @@ Program {
 									}
 									members: Array [
 										TSPropertySignature {
-											key: StaticPropertyKey {
-												value: Identifier {
+											key: JSStaticPropertyKey {
+												value: JSIdentifier {
 													name: "x"
 													loc: Object {
 														filename: "input.ts"
@@ -302,8 +302,8 @@ Program {
 											}
 										}
 										TSPropertySignature {
-											key: StaticPropertyKey {
-												value: Identifier {
+											key: JSStaticPropertyKey {
+												value: JSIdentifier {
 													name: "y"
 													loc: Object {
 														filename: "input.ts"

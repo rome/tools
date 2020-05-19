@@ -5,7 +5,7 @@
 ## `es2015 > arrow-functions > in-logic-expression`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: LogicalExpression {
+			expression: JSLogicalExpression {
 				operator: "||"
 				loc: Object {
 					filename: "input.js"
@@ -59,7 +59,7 @@ Program {
 						line: 1
 					}
 				}
-				right: BooleanLiteral {
+				right: JSBooleanLiteral {
 					value: true
 					loc: Object {
 						filename: "input.js"
@@ -75,7 +75,7 @@ Program {
 						}
 					}
 				}
-				left: ArrowFunctionExpression {
+				left: JSArrowFunctionExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -89,7 +89,7 @@ Program {
 							line: 1
 						}
 					}
-					body: BlockStatement {
+					body: JSBlockStatement {
 						body: Array []
 						directives: Array []
 						loc: Object {
@@ -106,7 +106,7 @@ Program {
 							}
 						}
 					}
-					head: FunctionHead {
+					head: JSFunctionHead {
 						async: false
 						hasHoistedVars: false
 						params: Array []
@@ -130,7 +130,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -144,7 +144,7 @@ Program {
 					line: 2
 				}
 			}
-			expression: ConditionalExpression {
+			expression: JSConditionalExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -158,7 +158,7 @@ Program {
 						line: 2
 					}
 				}
-				alternate: ReferenceIdentifier {
+				alternate: JSReferenceIdentifier {
 					name: "b"
 					loc: Object {
 						filename: "input.js"
@@ -175,7 +175,7 @@ Program {
 						}
 					}
 				}
-				consequent: ReferenceIdentifier {
+				consequent: JSReferenceIdentifier {
 					name: "a"
 					loc: Object {
 						filename: "input.js"
@@ -192,7 +192,7 @@ Program {
 						}
 					}
 				}
-				test: ArrowFunctionExpression {
+				test: JSArrowFunctionExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -206,7 +206,7 @@ Program {
 							line: 2
 						}
 					}
-					body: BlockStatement {
+					body: JSBlockStatement {
 						body: Array []
 						directives: Array []
 						loc: Object {
@@ -223,7 +223,7 @@ Program {
 							}
 						}
 					}
-					head: FunctionHead {
+					head: JSFunctionHead {
 						async: false
 						hasHoistedVars: false
 						params: Array []

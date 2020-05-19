@@ -7,7 +7,7 @@
 
 import Scope from "../Scope";
 import {FunctionBinding} from "@romejs/js-compiler";
-import {AnyNode, TSDeclareFunction} from "@romejs/js-ast";
+import {AnyNode, TSDeclareFunction} from "@romejs/ast";
 
 export default {
 	creator: false,

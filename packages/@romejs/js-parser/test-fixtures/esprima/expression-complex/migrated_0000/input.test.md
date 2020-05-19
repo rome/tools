@@ -5,7 +5,7 @@
 ## `esprima > expression-complex > migrated_0000`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: LogicalExpression {
+			expression: JSLogicalExpression {
 				operator: "||"
 				loc: Object {
 					filename: "input.js"
@@ -59,7 +59,7 @@ Program {
 						line: 1
 					}
 				}
-				left: ReferenceIdentifier {
+				left: JSReferenceIdentifier {
 					name: "a"
 					loc: Object {
 						filename: "input.js"
@@ -76,7 +76,7 @@ Program {
 						}
 					}
 				}
-				right: LogicalExpression {
+				right: JSLogicalExpression {
 					operator: "&&"
 					loc: Object {
 						filename: "input.js"
@@ -91,7 +91,7 @@ Program {
 							line: 1
 						}
 					}
-					left: ReferenceIdentifier {
+					left: JSReferenceIdentifier {
 						name: "b"
 						loc: Object {
 							filename: "input.js"
@@ -108,7 +108,7 @@ Program {
 							}
 						}
 					}
-					right: BinaryExpression {
+					right: JSBinaryExpression {
 						operator: "|"
 						loc: Object {
 							filename: "input.js"
@@ -123,7 +123,7 @@ Program {
 								line: 1
 							}
 						}
-						left: ReferenceIdentifier {
+						left: JSReferenceIdentifier {
 							name: "c"
 							loc: Object {
 								filename: "input.js"
@@ -140,7 +140,7 @@ Program {
 								}
 							}
 						}
-						right: BinaryExpression {
+						right: JSBinaryExpression {
 							operator: "^"
 							loc: Object {
 								filename: "input.js"
@@ -155,7 +155,7 @@ Program {
 									line: 1
 								}
 							}
-							left: ReferenceIdentifier {
+							left: JSReferenceIdentifier {
 								name: "d"
 								loc: Object {
 									filename: "input.js"
@@ -172,7 +172,7 @@ Program {
 									}
 								}
 							}
-							right: BinaryExpression {
+							right: JSBinaryExpression {
 								operator: "&"
 								loc: Object {
 									filename: "input.js"
@@ -187,7 +187,7 @@ Program {
 										line: 1
 									}
 								}
-								left: ReferenceIdentifier {
+								left: JSReferenceIdentifier {
 									name: "e"
 									loc: Object {
 										filename: "input.js"
@@ -204,7 +204,7 @@ Program {
 										}
 									}
 								}
-								right: BinaryExpression {
+								right: JSBinaryExpression {
 									operator: "=="
 									loc: Object {
 										filename: "input.js"
@@ -219,7 +219,7 @@ Program {
 											line: 1
 										}
 									}
-									left: ReferenceIdentifier {
+									left: JSReferenceIdentifier {
 										name: "f"
 										loc: Object {
 											filename: "input.js"
@@ -236,7 +236,7 @@ Program {
 											}
 										}
 									}
-									right: BinaryExpression {
+									right: JSBinaryExpression {
 										operator: "<"
 										loc: Object {
 											filename: "input.js"
@@ -251,7 +251,7 @@ Program {
 												line: 1
 											}
 										}
-										left: ReferenceIdentifier {
+										left: JSReferenceIdentifier {
 											name: "g"
 											loc: Object {
 												filename: "input.js"
@@ -268,7 +268,7 @@ Program {
 												}
 											}
 										}
-										right: BinaryExpression {
+										right: JSBinaryExpression {
 											operator: ">>>"
 											loc: Object {
 												filename: "input.js"
@@ -283,7 +283,7 @@ Program {
 													line: 1
 												}
 											}
-											left: ReferenceIdentifier {
+											left: JSReferenceIdentifier {
 												name: "h"
 												loc: Object {
 													filename: "input.js"
@@ -300,7 +300,7 @@ Program {
 													}
 												}
 											}
-											right: BinaryExpression {
+											right: JSBinaryExpression {
 												operator: "+"
 												loc: Object {
 													filename: "input.js"
@@ -315,7 +315,7 @@ Program {
 														line: 1
 													}
 												}
-												left: ReferenceIdentifier {
+												left: JSReferenceIdentifier {
 													name: "i"
 													loc: Object {
 														filename: "input.js"
@@ -332,7 +332,7 @@ Program {
 														}
 													}
 												}
-												right: BinaryExpression {
+												right: JSBinaryExpression {
 													operator: "*"
 													loc: Object {
 														filename: "input.js"
@@ -347,7 +347,7 @@ Program {
 															line: 1
 														}
 													}
-													left: ReferenceIdentifier {
+													left: JSReferenceIdentifier {
 														name: "j"
 														loc: Object {
 															filename: "input.js"
@@ -364,7 +364,7 @@ Program {
 															}
 														}
 													}
-													right: ReferenceIdentifier {
+													right: JSReferenceIdentifier {
 														name: "k"
 														loc: Object {
 															filename: "input.js"

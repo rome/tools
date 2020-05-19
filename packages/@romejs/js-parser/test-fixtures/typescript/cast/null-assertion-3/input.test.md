@@ -5,7 +5,7 @@
 ## `typescript > cast > null-assertion-3`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
 					filename: "input.ts"
@@ -60,8 +60,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.ts"
@@ -105,7 +105,7 @@ Program {
 									line: 1
 								}
 							}
-							expression: CallExpression {
+							expression: JSCallExpression {
 								arguments: Array []
 								loc: Object {
 									filename: "input.ts"
@@ -120,7 +120,7 @@ Program {
 										line: 1
 									}
 								}
-								callee: ReferenceIdentifier {
+								callee: JSReferenceIdentifier {
 									name: "foo"
 									loc: Object {
 										filename: "input.ts"

@@ -5,7 +5,7 @@
 ## `esprima > es2015-yield > invalid-yield-generator-rest`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,8 +54,8 @@ Program {
 		}
 	]
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "g"
 				loc: Object {
 					filename: "input.js"
@@ -85,7 +85,7 @@ Program {
 					line: 1
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
 				loc: Object {
@@ -102,7 +102,7 @@ Program {
 					}
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: true
 				hasHoistedVars: false
@@ -122,7 +122,7 @@ Program {
 						line: 1
 					}
 				}
-				rest: BindingIdentifier {
+				rest: JSBindingIdentifier {
 					name: "yield"
 					loc: Object {
 						filename: "input.js"
@@ -138,7 +138,7 @@ Program {
 							line: 1
 						}
 					}
-					meta: PatternMeta {
+					meta: JSPatternMeta {
 						optional: undefined
 						typeAnnotation: undefined
 						loc: Object {
@@ -157,7 +157,7 @@ Program {
 					}
 				}
 				params: Array [
-					BindingIdentifier {
+					JSBindingIdentifier {
 						name: "a"
 						loc: Object {
 							filename: "input.js"
@@ -173,7 +173,7 @@ Program {
 								line: 1
 							}
 						}
-						meta: PatternMeta {
+						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
@@ -191,7 +191,7 @@ Program {
 							}
 						}
 					}
-					BindingIdentifier {
+					JSBindingIdentifier {
 						name: "b"
 						loc: Object {
 							filename: "input.js"
@@ -207,7 +207,7 @@ Program {
 								line: 1
 							}
 						}
-						meta: PatternMeta {
+						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
@@ -225,7 +225,7 @@ Program {
 							}
 						}
 					}
-					BindingIdentifier {
+					JSBindingIdentifier {
 						name: "c"
 						loc: Object {
 							filename: "input.js"
@@ -241,7 +241,7 @@ Program {
 								line: 1
 							}
 						}
-						meta: PatternMeta {
+						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {

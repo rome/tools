@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, TSArrayType, tsArrayType} from "@romejs/js-ast";
+import {AnyNode, TSArrayType, tsArrayType} from "@romejs/ast";
 
 export default function TSArrayType(node: AnyNode, scope: Scope) {
 	node = tsArrayType.assert(node);

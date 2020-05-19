@@ -5,7 +5,7 @@
 ## `typescript > class > parameter-properties`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentLine {
+		JSCommentLine {
 			id: "0"
 			value: " Also works on AssignmentPattern"
 			loc: Object {
@@ -48,8 +48,8 @@ Program {
 		}
 	]
 	body: Array [
-		ClassDeclaration {
-			id: BindingIdentifier {
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
 				name: "C"
 				loc: Object {
 					filename: "input.ts"
@@ -79,7 +79,7 @@ Program {
 					line: 1
 				}
 			}
-			meta: ClassHead {
+			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
@@ -98,10 +98,10 @@ Program {
 					}
 				}
 				body: Array [
-					ClassMethod {
+					JSClassMethod {
 						kind: "constructor"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "constructor"
 								loc: Object {
 									filename: "input.ts"
@@ -145,7 +145,7 @@ Program {
 								line: 2
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
 							loc: Object {
@@ -162,7 +162,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -188,7 +188,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -210,7 +210,7 @@ Program {
 								}
 							}
 							params: Array [
-								BindingIdentifier {
+								JSBindingIdentifier {
 									name: "r"
 									loc: Object {
 										filename: "input.ts"
@@ -225,7 +225,7 @@ Program {
 											line: 3
 										}
 									}
-									meta: PatternMeta {
+									meta: JSPatternMeta {
 										accessibility: undefined
 										readonly: true
 										loc: Object {
@@ -243,7 +243,7 @@ Program {
 										}
 									}
 								}
-								BindingIdentifier {
+								JSBindingIdentifier {
 									name: "pu"
 									loc: Object {
 										filename: "input.ts"
@@ -258,7 +258,7 @@ Program {
 											line: 4
 										}
 									}
-									meta: PatternMeta {
+									meta: JSPatternMeta {
 										accessibility: "public"
 										readonly: false
 										loc: Object {
@@ -276,7 +276,7 @@ Program {
 										}
 									}
 								}
-								BindingIdentifier {
+								JSBindingIdentifier {
 									name: "po"
 									loc: Object {
 										filename: "input.ts"
@@ -291,7 +291,7 @@ Program {
 											line: 5
 										}
 									}
-									meta: PatternMeta {
+									meta: JSPatternMeta {
 										accessibility: "protected"
 										readonly: false
 										loc: Object {
@@ -309,7 +309,7 @@ Program {
 										}
 									}
 								}
-								BindingIdentifier {
+								JSBindingIdentifier {
 									name: "pi"
 									loc: Object {
 										filename: "input.ts"
@@ -324,7 +324,7 @@ Program {
 											line: 6
 										}
 									}
-									meta: PatternMeta {
+									meta: JSPatternMeta {
 										accessibility: "private"
 										readonly: false
 										loc: Object {
@@ -342,7 +342,7 @@ Program {
 										}
 									}
 								}
-								BindingIdentifier {
+								JSBindingIdentifier {
 									name: "pur"
 									loc: Object {
 										filename: "input.ts"
@@ -357,7 +357,7 @@ Program {
 											line: 7
 										}
 									}
-									meta: PatternMeta {
+									meta: JSPatternMeta {
 										accessibility: "public"
 										readonly: true
 										loc: Object {
@@ -375,7 +375,7 @@ Program {
 										}
 									}
 								}
-								BindingAssignmentPattern {
+								JSBindingAssignmentPattern {
 									leadingComments: Array ["0"]
 									loc: Object {
 										filename: "input.ts"
@@ -390,7 +390,7 @@ Program {
 											line: 9
 										}
 									}
-									right: NumericLiteral {
+									right: JSNumericLiteral {
 										value: 0
 										format: undefined
 										loc: Object {
@@ -407,7 +407,7 @@ Program {
 											}
 										}
 									}
-									meta: PatternMeta {
+									meta: JSPatternMeta {
 										accessibility: undefined
 										leadingComments: undefined
 										readonly: true
@@ -425,7 +425,7 @@ Program {
 											}
 										}
 									}
-									left: BindingIdentifier {
+									left: JSBindingIdentifier {
 										name: "x"
 										leadingComments: undefined
 										loc: Object {
@@ -442,7 +442,7 @@ Program {
 												line: 9
 											}
 										}
-										meta: PatternMeta {
+										meta: JSPatternMeta {
 											leadingComments: undefined
 											optional: undefined
 											typeAnnotation: undefined
@@ -462,7 +462,7 @@ Program {
 										}
 									}
 								}
-								BindingAssignmentPattern {
+								JSBindingAssignmentPattern {
 									loc: Object {
 										filename: "input.ts"
 										end: Object {
@@ -476,7 +476,7 @@ Program {
 											line: 10
 										}
 									}
-									meta: PatternMeta {
+									meta: JSPatternMeta {
 										accessibility: "public"
 										readonly: false
 										loc: Object {
@@ -493,7 +493,7 @@ Program {
 											}
 										}
 									}
-									right: NumericLiteral {
+									right: JSNumericLiteral {
 										value: 0
 										format: undefined
 										loc: Object {
@@ -510,7 +510,7 @@ Program {
 											}
 										}
 									}
-									left: BindingIdentifier {
+									left: JSBindingIdentifier {
 										name: "y"
 										loc: Object {
 											filename: "input.ts"
@@ -526,7 +526,7 @@ Program {
 												line: 10
 											}
 										}
-										meta: PatternMeta {
+										meta: JSPatternMeta {
 											optional: true
 											loc: Object {
 												filename: "input.ts"

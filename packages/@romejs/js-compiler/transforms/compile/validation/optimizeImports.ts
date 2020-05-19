@@ -8,16 +8,16 @@
 import {Binding, Path, TransformExitResult} from "@romejs/js-compiler";
 import {
 	AnyNode,
-	ImportDeclaration,
-	ImportSpecifier,
-	bindingIdentifier,
-	identifier,
-	importDeclaration,
-	importSpecifier,
-	importSpecifierLocal,
+	JSImportDeclaration,
+	JSImportSpecifier,
+	jsBindingIdentifier,
+	jsIdentifier,
+	jsImportDeclaration,
+	jsImportSpecifier,
+	jsImportSpecifierLocal,
+	jsReferenceIdentifier,
 	jsxIdentifier,
-	referenceIdentifier,
-} from "@romejs/js-ast";
+} from "@romejs/ast";
 import {isIdentifierish} from "@romejs/js-ast-utils";
 
 // TODO: Remove this. This contains React for the following reason:
@@ -27,14 +27,14 @@ import {isIdentifierish} from "@romejs/js-ast-utils";
 const IGNORED_NAMES = ["React", "react"];
 
 function getName(node: AnyNode): undefined | string {
-	if (node.type !== "MemberExpression" && node.type !== "JSXMemberExpression") {
+	if (node.type !== "JSMemberExpression" && node.type !== "JSXMemberExpression") {
 		return undefined;
 	}
 
 	const {property} = node;
 
-	if (property.type === "ComputedMemberProperty") {
-		if (property.value.type === "StringLiteral") {
+	if (property.type === "JSComputedMemberProperty") {
+		if (property.value.type === "JSStringLiteral") {
 			return property.value.value;
 		}
 	} else {
@@ -51,7 +51,7 @@ export default {
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 
-		if (node.type !== "Program") {
+		if (node.type !== "JSProgram") {
 			return node;
 		}
 
@@ -65,10 +65,10 @@ export default {
 				references: Set<AnyNode>;
 			}
 		> = new Map();
-		const wildcardImportNodeToLocal: Map<ImportDeclaration, string> = new Map();
+		const wildcardImportNodeToLocal: Map<JSImportDeclaration, string> = new Map();
 		for (const child of node.body) {
 			if (
-				child.type === "ImportDeclaration" &&
+				child.type === "JSImportDeclaration" &&
 				!IGNORED_NAMES.includes(child.source.value) &&
 				child.namespaceSpecifier !== undefined
 			) {
@@ -96,7 +96,7 @@ export default {
 			"optimizeImportsWildcardCollector",
 			(path) => {
 				const {node, parent} = path;
-				if (node.type !== "ReferenceIdentifier") {
+				if (node.type !== "JSReferenceIdentifier") {
 					return;
 				}
 
@@ -112,11 +112,11 @@ export default {
 				}
 
 				const isComputed =
-					parent.type === "MemberExpression" &&
+					parent.type === "JSMemberExpression" &&
 					parent.object === node &&
 					getName(parent) === undefined;
 				const isUnboxed =
-					parent.type !== "MemberExpression" &&
+					parent.type !== "JSMemberExpression" &&
 					parent.type !== "JSXMemberExpression";
 
 				if (isComputed || isUnboxed) {
@@ -150,7 +150,7 @@ export default {
 
 				// Replace all member expressions with their uids
 				if (
-					(node.type === "MemberExpression" ||
+					(node.type === "JSMemberExpression" ||
 					node.type === "JSXMemberExpression") &&
 					isIdentifierish(node.object)
 				) {
@@ -169,14 +169,14 @@ export default {
 						if (node.type === "JSXMemberExpression") {
 							return jsxIdentifier.quick(newName);
 						} else {
-							return referenceIdentifier.quick(newName);
+							return jsReferenceIdentifier.quick(newName);
 						}
 					}
 				}
 
 				// Add new specifiers to wildcard import declarations
 				if (
-					node.type === "ImportDeclaration" &&
+					node.type === "JSImportDeclaration" &&
 					wildcardImportNodeToLocal.has(node)
 				) {
 					const local = wildcardImportNodeToLocal.get(node);
@@ -191,23 +191,23 @@ export default {
 					}
 
 					// Remove wildcard specifier
-					let namedSpecifiers: Array<ImportSpecifier> = [
+					let namedSpecifiers: Array<JSImportSpecifier> = [
 						...(node.namedSpecifiers || []),
 					];
 
 					// Add on our new mappings
 					for (const [imported, local] of wildcardInfo.mappings) {
 						namedSpecifiers.push(
-							importSpecifier.create({
-								imported: identifier.quick(imported),
-								local: importSpecifierLocal.quick(
-									bindingIdentifier.quick(local),
+							jsImportSpecifier.create({
+								imported: jsIdentifier.quick(imported),
+								local: jsImportSpecifierLocal.quick(
+									jsBindingIdentifier.quick(local),
 								),
 							}),
 						);
 					}
 
-					return importDeclaration.create({
+					return jsImportDeclaration.create({
 						...node,
 						namespaceSpecifier: undefined,
 						namedSpecifiers,

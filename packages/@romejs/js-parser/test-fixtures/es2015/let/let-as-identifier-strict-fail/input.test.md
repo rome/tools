@@ -5,7 +5,7 @@
 ## `es2015 > let > let-as-identifier-strict-fail`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	filename: "input.js"
@@ -28,7 +28,7 @@ Program {
 		}
 	}
 	directives: Array [
-		Directive {
+		JSDirective {
 			value: "use strict"
 			loc: Object {
 				filename: "input.js"
@@ -71,7 +71,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -85,7 +85,7 @@ Program {
 					line: 2
 				}
 			}
-			expression: BinaryExpression {
+			expression: JSBinaryExpression {
 				operator: "+"
 				loc: Object {
 					filename: "input.js"
@@ -100,7 +100,7 @@ Program {
 						line: 2
 					}
 				}
-				left: ReferenceIdentifier {
+				left: JSReferenceIdentifier {
 					name: "let"
 					loc: Object {
 						filename: "input.js"
@@ -117,7 +117,7 @@ Program {
 						}
 					}
 				}
-				right: NumericLiteral {
+				right: JSNumericLiteral {
 					value: 1
 					format: undefined
 					loc: Object {

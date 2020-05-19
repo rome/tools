@@ -5,7 +5,7 @@
 ## `typescript > types > type-literal`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentLine {
+		JSCommentLine {
 			id: "0"
 			value: " Type literals have the same body syntax as interfaces, so see `interface` directory for that."
 			loc: Object {
@@ -48,7 +48,7 @@ Program {
 		}
 	]
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			trailingComments: Array ["0"]
 			loc: Object {
 				filename: "input.ts"
@@ -63,7 +63,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				trailingComments: undefined
 				loc: Object {
@@ -80,8 +80,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "obj"
 							loc: Object {
 								filename: "input.ts"
@@ -96,7 +96,7 @@ Program {
 									line: 1
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								definite: undefined
 								loc: Object {
 									filename: "input.ts"
@@ -127,8 +127,8 @@ Program {
 									}
 									members: Array [
 										TSPropertySignature {
-											key: StaticPropertyKey {
-												value: Identifier {
+											key: JSStaticPropertyKey {
+												value: JSIdentifier {
 													name: "x"
 													loc: Object {
 														filename: "input.ts"

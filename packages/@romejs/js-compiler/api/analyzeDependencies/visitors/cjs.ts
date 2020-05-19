@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {objectExpression} from "@romejs/js-ast";
+import {jsObjectExpression} from "@romejs/ast";
 import {Path} from "@romejs/js-compiler";
 import {
 	doesNodeMatchPattern,
@@ -31,16 +31,16 @@ export default {
 		const {node, parent, scope, context} = path;
 
 		// Handle require()
-		if (node.type === "CallExpression") {
+		if (node.type === "JSCallExpression") {
 			const {callee, arguments: args} = node;
 
 			const isRequire: boolean =
-				callee.type === "ReferenceIdentifier" &&
+				callee.type === "JSReferenceIdentifier" &&
 				callee.name === "require" &&
 				path.scope.hasBinding("require") === false;
 			const sourceArg = args[0];
 
-			if (isRequire && args.length === 1 && sourceArg.type === "StringLiteral") {
+			if (isRequire && args.length === 1 && sourceArg.type === "JSStringLiteral") {
 				context.record(
 					new ImportRecord({
 						type: "cjs",
@@ -57,7 +57,7 @@ export default {
 		}
 
 		// Detect assignments to exports and module.exports as definitely being an CJS module
-		if (node.type === "AssignmentExpression") {
+		if (node.type === "JSAssignmentExpression") {
 			const isModuleExports =
 				path.scope.getBinding("module") === undefined &&
 				(doesNodeMatchPattern(node.left, "module.exports") ||
@@ -74,7 +74,7 @@ export default {
 			if (isModuleExports) {
 				const {right} = node;
 
-				if (objectExpression.is(right)) {
+				if (jsObjectExpression.is(right)) {
 					context.record(
 						new ExportRecord({
 							type: "local",
@@ -88,9 +88,9 @@ export default {
 					for (const prop of right.properties) {
 						// Don't allow spread, unknown, or computed properties
 						if (
-							prop.type === "SpreadProperty" ||
-							(prop.key.type === "ComputedPropertyKey" &&
-							prop.key.value.type !== "StringLiteral")
+							prop.type === "JSSpreadProperty" ||
+							(prop.key.type === "JSComputedPropertyKey" &&
+							prop.key.value.type !== "JSStringLiteral")
 						) {
 							context.record(new EscapedCJSRefRecord(prop));
 							continue;
@@ -98,9 +98,9 @@ export default {
 
 						const key = prop.key.value;
 						let name: string;
-						if (key.type === "Identifier") {
+						if (key.type === "JSIdentifier") {
 							name = key.name;
-						} else if (key.type === "StringLiteral") {
+						} else if (key.type === "JSStringLiteral") {
 							name = key.value;
 						} else {
 							// Unknown key literal
@@ -108,7 +108,7 @@ export default {
 							continue;
 						}
 
-						let target = prop.type === "ObjectMethod" ? prop : prop.value;
+						let target = prop.type === "JSObjectMethod" ? prop : prop.value;
 
 						context.record(
 							new ExportRecord({
@@ -176,7 +176,7 @@ export default {
 			}
 		}
 
-		if (node.type === "ReferenceIdentifier") {
+		if (node.type === "JSReferenceIdentifier") {
 			const binding = path.scope.getBinding(node.name);
 
 			// Detect references to exports and module
@@ -193,7 +193,7 @@ export default {
 
 				if (node.name === "module" || node.name === "exports") {
 					const inMemberExpression =
-						parent.type === "MemberExpression" && parent.object === node;
+						parent.type === "JSMemberExpression" && parent.object === node;
 					if (!inMemberExpression) {
 						context.record(new EscapedCJSRefRecord(node));
 					}

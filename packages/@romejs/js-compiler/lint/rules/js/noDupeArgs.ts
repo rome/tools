@@ -6,7 +6,7 @@
  */
 
 import {Path} from "@romejs/js-compiler";
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 import {getBindingIdentifiers} from "@romejs/js-ast-utils";
 import {descriptions} from "@romejs/diagnostics";
 
@@ -15,7 +15,7 @@ export default {
 	enter(path: Path): AnyNode {
 		const {node, context} = path;
 
-		if (node.type === "FunctionHead") {
+		if (node.type === "JSFunctionHead") {
 			const uniqueIdentifiers = new Set();
 
 			for (const param of node.params) {

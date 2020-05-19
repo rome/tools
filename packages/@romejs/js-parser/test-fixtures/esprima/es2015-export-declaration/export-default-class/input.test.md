@@ -5,7 +5,7 @@
 ## `esprima > es2015-export-declaration > export-default-class`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExportDefaultDeclaration {
+		JSExportDefaultDeclaration {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,8 +44,8 @@ Program {
 					line: 1
 				}
 			}
-			declaration: ClassDeclaration {
-				id: BindingIdentifier {
+			declaration: JSClassDeclaration {
+				id: JSBindingIdentifier {
 					name: "*default*"
 					loc: Object {
 						filename: "input.js"
@@ -74,7 +74,7 @@ Program {
 						line: 1
 					}
 				}
-				meta: ClassHead {
+				meta: JSClassHead {
 					body: Array []
 					implements: undefined
 					superClass: undefined

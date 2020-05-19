@@ -6,22 +6,22 @@
  */
 
 import {Path} from "@romejs/js-compiler";
-import {ObjectMethod, ObjectProperty} from "@romejs/js-ast";
+import {JSObjectMethod, JSObjectProperty} from "@romejs/ast";
 import {TransformExitResult} from "@romejs/js-compiler/types";
 import {descriptions} from "@romejs/diagnostics";
 import {DiagnosticsDuplicateHelper} from "../../../lib/DiagnosticsDuplicateHelper";
 
 function extractPropertyKey(
-	node: ObjectProperty | ObjectMethod,
+	node: JSObjectProperty | JSObjectMethod,
 ): string | undefined {
-	if (node.key.type === "StaticPropertyKey") {
+	if (node.key.type === "JSStaticPropertyKey") {
 		const {value} = node.key;
 
-		if (value.type === "PrivateName") {
+		if (value.type === "JSPrivateName") {
 			return value.id.name;
 		}
 
-		if (value.type === "Identifier") {
+		if (value.type === "JSIdentifier") {
 			return value.name;
 		}
 
@@ -36,14 +36,14 @@ export default {
 	enter(path: Path): TransformExitResult {
 		const {node, context} = path;
 
-		if (node.type === "ObjectExpression") {
+		if (node.type === "JSObjectExpression") {
 			const duplicates = new DiagnosticsDuplicateHelper(
 				context,
 				descriptions.LINT.JS_NO_DUPLICATE_KEYS,
 			);
 
 			for (const prop of node.properties) {
-				if (prop.type === "SpreadProperty") {
+				if (prop.type === "JSSpreadProperty") {
 					continue;
 				}
 

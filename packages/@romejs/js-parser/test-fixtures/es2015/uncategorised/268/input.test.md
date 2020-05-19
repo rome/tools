@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 268`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	directives: Array []
 	filename: "input.js"
@@ -28,7 +28,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentLine {
+		JSCommentLine {
 			id: "0"
 			value: " expression closure is not supported"
 			loc: Object {
@@ -72,8 +72,8 @@ Program {
 		}
 	]
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "a"
 				loc: Object {
 					filename: "input.js"
@@ -104,7 +104,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -127,7 +127,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				trailingComments: undefined
 				loc: Object {
@@ -144,7 +144,7 @@ Program {
 					}
 				}
 				body: Array [
-					ExpressionStatement {
+					JSExpressionStatement {
 						trailingComments: undefined
 						loc: Object {
 							filename: "input.js"
@@ -159,7 +159,7 @@ Program {
 								line: 1
 							}
 						}
-						expression: NumericLiteral {
+						expression: JSNumericLiteral {
 							value: 1
 							format: undefined
 							trailingComments: undefined

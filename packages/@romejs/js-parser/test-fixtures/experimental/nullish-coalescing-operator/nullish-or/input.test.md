@@ -5,7 +5,7 @@
 ## `experimental > nullish-coalescing-operator > nullish-or`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: LogicalExpression {
+			expression: JSLogicalExpression {
 				operator: "||"
 				loc: Object {
 					filename: "input.js"
@@ -59,7 +59,7 @@ Program {
 						line: 1
 					}
 				}
-				right: ReferenceIdentifier {
+				right: JSReferenceIdentifier {
 					name: "c"
 					loc: Object {
 						filename: "input.js"
@@ -76,7 +76,7 @@ Program {
 						}
 					}
 				}
-				left: LogicalExpression {
+				left: JSLogicalExpression {
 					operator: "??"
 					loc: Object {
 						filename: "input.js"
@@ -91,7 +91,7 @@ Program {
 							line: 1
 						}
 					}
-					left: ReferenceIdentifier {
+					left: JSReferenceIdentifier {
 						name: "a"
 						loc: Object {
 							filename: "input.js"
@@ -108,7 +108,7 @@ Program {
 							}
 						}
 					}
-					right: ReferenceIdentifier {
+					right: JSReferenceIdentifier {
 						name: "b"
 						loc: Object {
 							filename: "input.js"

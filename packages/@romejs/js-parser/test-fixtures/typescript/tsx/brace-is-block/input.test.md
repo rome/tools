@@ -5,7 +5,7 @@
 ## `typescript > tsx > brace-is-block`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -32,7 +32,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentLine {
+		JSCommentLine {
 			id: "0"
 			value: " Regression test for tokenizer bug where the `{` after `<T>` was considered a JSX interpolation."
 			loc: Object {
@@ -51,8 +51,8 @@ Program {
 		}
 	]
 	body: Array [
-		ClassDeclaration {
-			id: BindingIdentifier {
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
 				name: "C"
 				leadingComments: undefined
 				loc: Object {
@@ -84,7 +84,7 @@ Program {
 					line: 2
 				}
 			}
-			meta: ClassHead {
+			meta: JSClassHead {
 				body: Array []
 				implements: undefined
 				leadingComments: undefined
@@ -102,7 +102,7 @@ Program {
 						line: 2
 					}
 				}
-				superClass: ReferenceIdentifier {
+				superClass: JSReferenceIdentifier {
 					name: "D"
 					loc: Object {
 						filename: "input.tsx"
@@ -149,7 +149,7 @@ Program {
 									line: 2
 								}
 							}
-							typeName: ReferenceIdentifier {
+							typeName: JSReferenceIdentifier {
 								name: "T"
 								loc: Object {
 									filename: "input.tsx"
@@ -171,7 +171,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.tsx"
 				end: Object {

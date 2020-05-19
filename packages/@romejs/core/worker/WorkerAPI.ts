@@ -6,7 +6,7 @@
  */
 
 import {FileReference, Worker} from "@romejs/core";
-import {AnyNode, Program} from "@romejs/js-ast";
+import {AnyNode, JSProgram} from "@romejs/ast";
 import {Diagnostics, catchDiagnostics, descriptions} from "@romejs/diagnostics";
 import {
 	CompileResult,
@@ -35,7 +35,7 @@ import {
 	InlineSnapshotUpdate,
 	InlineSnapshotUpdates,
 } from "../test-worker/SnapshotManager";
-import {formatJS} from "@romejs/js-formatter";
+import {formatJS} from "@romejs/formatter";
 import {getNodeReferenceParts, valueToNode} from "@romejs/js-ast-utils";
 
 // Some Windows git repos will automatically convert Unix line endings to Windows
@@ -122,7 +122,7 @@ export default class WorkerAPI {
 				name: "updateInlineSnapshots",
 				enter(path: Path): AnyNode {
 					const {node} = path;
-					if (node.type !== "CallExpression" || pendingUpdates.size === 0) {
+					if (node.type !== "JSCallExpression" || pendingUpdates.size === 0) {
 						return node;
 					}
 
@@ -267,7 +267,10 @@ export default class WorkerAPI {
 		);
 	}
 
-	async parseJS(ref: FileReference, opts: WorkerParseOptions): Promise<Program> {
+	async parseJS(
+		ref: FileReference,
+		opts: WorkerParseOptions,
+	): Promise<JSProgram> {
 		let {ast, generated} = await this.worker.parseJS(
 			ref,
 			{

@@ -5,7 +5,7 @@
 ## `experimental > class-private-methods > async`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		ClassDeclaration {
-			id: BindingIdentifier {
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
 				name: "Hotel"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			meta: ClassHead {
+			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
@@ -80,10 +80,10 @@ Program {
 					}
 				}
 				body: Array [
-					ClassPrivateMethod {
+					JSClassPrivateMethod {
 						kind: "method"
-						key: PrivateName {
-							id: Identifier {
+						key: JSPrivateName {
+							id: JSIdentifier {
 								name: "evil"
 								loc: Object {
 									filename: "input.js"
@@ -127,7 +127,7 @@ Program {
 								line: 2
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: true
 							generator: false
 							hasHoistedVars: false
@@ -150,7 +150,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -176,7 +176,7 @@ Program {
 								}
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
 								filename: "input.js"
@@ -192,7 +192,7 @@ Program {
 								}
 							}
 							body: Array [
-								ExpressionStatement {
+								JSExpressionStatement {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -206,7 +206,7 @@ Program {
 											line: 3
 										}
 									}
-									expression: AwaitExpression {
+									expression: JSAwaitExpression {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -220,7 +220,7 @@ Program {
 												line: 3
 											}
 										}
-										argument: CallExpression {
+										argument: JSCallExpression {
 											arguments: Array []
 											loc: Object {
 												filename: "input.js"
@@ -235,7 +235,7 @@ Program {
 													line: 3
 												}
 											}
-											callee: ReferenceIdentifier {
+											callee: JSReferenceIdentifier {
 												name: "notReally"
 												loc: Object {
 													filename: "input.js"

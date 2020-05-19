@@ -5,7 +5,7 @@
 ## `esprima > es2015-arrow-function > param-with-rest-without-arrow`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: BinaryExpression {
+			expression: JSBinaryExpression {
 				operator: "+"
 				loc: Object {
 					filename: "input.js"
@@ -83,7 +83,7 @@ Program {
 						line: 1
 					}
 				}
-				right: NumericLiteral {
+				right: JSNumericLiteral {
 					value: 1
 					format: undefined
 					loc: Object {
@@ -100,7 +100,7 @@ Program {
 						}
 					}
 				}
-				left: SequenceExpression {
+				left: JSSequenceExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -115,7 +115,7 @@ Program {
 						}
 					}
 					expressions: Array [
-						ReferenceIdentifier {
+						JSReferenceIdentifier {
 							name: "b"
 							loc: Object {
 								filename: "input.js"
@@ -132,7 +132,7 @@ Program {
 								}
 							}
 						}
-						ReferenceIdentifier {
+						JSReferenceIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: Object {
 								filename: "input.js"

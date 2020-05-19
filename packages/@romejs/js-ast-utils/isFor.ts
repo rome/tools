@@ -7,22 +7,22 @@
 
 import {
 	AnyNode,
-	ForInStatement,
-	ForOfStatement,
-	ForStatement,
-} from "@romejs/js-ast";
+	JSForInStatement,
+	JSForOfStatement,
+	JSForStatement,
+} from "@romejs/ast";
 
 export default function isFor(
 	node: undefined | AnyNode,
-): node is ForStatement | ForInStatement | ForOfStatement {
+): node is JSForStatement | JSForInStatement | JSForOfStatement {
 	if (node === undefined) {
 		return false;
 	}
 
 	switch (node.type) {
-		case "ForStatement":
-		case "ForInStatement":
-		case "ForOfStatement":
+		case "JSForStatement":
+		case "JSForInStatement":
+		case "JSForOfStatement":
 			return true;
 
 		default:

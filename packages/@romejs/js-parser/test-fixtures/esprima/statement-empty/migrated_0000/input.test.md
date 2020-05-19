@@ -5,7 +5,7 @@
 ## `esprima > statement-empty > migrated_0000`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		EmptyStatement {
+		JSEmptyStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {

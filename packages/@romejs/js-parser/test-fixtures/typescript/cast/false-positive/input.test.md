@@ -5,7 +5,7 @@
 ## `typescript > cast > false-positive`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: CallExpression {
+			expression: JSCallExpression {
 				loc: Object {
 					filename: "input.ts"
 					end: Object {
@@ -58,7 +58,7 @@ Program {
 						line: 1
 					}
 				}
-				callee: ReferenceIdentifier {
+				callee: JSReferenceIdentifier {
 					name: "f"
 					loc: Object {
 						filename: "input.ts"
@@ -76,7 +76,7 @@ Program {
 					}
 				}
 				arguments: Array [
-					BinaryExpression {
+					JSBinaryExpression {
 						operator: "<"
 						loc: Object {
 							filename: "input.ts"
@@ -91,7 +91,7 @@ Program {
 								line: 1
 							}
 						}
-						left: ReferenceIdentifier {
+						left: JSReferenceIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.ts"
@@ -108,7 +108,7 @@ Program {
 								}
 							}
 						}
-						right: NumericLiteral {
+						right: JSNumericLiteral {
 							value: 0
 							format: undefined
 							loc: Object {
@@ -126,7 +126,7 @@ Program {
 							}
 						}
 					}
-					RegExpLiteral {
+					JSRegExpLiteral {
 						global: false
 						insensitive: false
 						multiline: false
@@ -146,7 +146,7 @@ Program {
 								line: 1
 							}
 						}
-						expression: RegExpSubExpression {
+						expression: JSRegExpSubExpression {
 							loc: Object {
 								filename: "input.ts"
 								end: Object {
@@ -161,7 +161,7 @@ Program {
 								}
 							}
 							body: Array [
-								RegExpCharacter {
+								JSRegExpCharacter {
 									value: "a"
 									loc: Object {
 										filename: "input.ts"

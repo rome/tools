@@ -9,32 +9,32 @@ import {Path} from "@romejs/js-compiler";
 import {template} from "@romejs/js-ast-utils";
 import {bindingInjector} from "../../defaultHooks/index";
 import {
-	CallExpression,
-	NullLiteral,
-	ReferenceIdentifier,
-	arrayExpression,
-	assignmentExpression,
-	memberExpression,
-	nullLiteral,
-	sequenceExpression,
-} from "@romejs/js-ast";
+	JSCallExpression,
+	JSNullLiteral,
+	JSReferenceIdentifier,
+	jsArrayExpression,
+	jsAssignmentExpression,
+	jsMemberExpression,
+	jsNullLiteral,
+	jsSequenceExpression,
+} from "@romejs/ast";
 
 export default {
 	name: "callSpread",
 	enter(path: Path) {
 		const {node} = path;
 
-		if (node.type === "CallExpression") {
+		if (node.type === "JSCallExpression") {
 			let func = node.callee;
 
 			// Impossible to transform a bare super call
-			if (func.type === "Super") {
+			if (func.type === "JSSuper") {
 				return node;
 			}
 
 			let hasSpread = false;
 			for (const arg of node.arguments) {
-				if (arg.type === "SpreadElement") {
+				if (arg.type === "JSSpreadElement") {
 					hasSpread = true;
 					break;
 				}
@@ -42,39 +42,39 @@ export default {
 			if (hasSpread) {
 				let prepend;
 
-				let object: ReferenceIdentifier | NullLiteral;
-				if (func.type === "MemberExpression") {
+				let object: JSReferenceIdentifier | JSNullLiteral;
+				if (func.type === "JSMemberExpression") {
 					const injection = path.callHook(bindingInjector, {});
 					object = injection[0];
 
-					prepend = assignmentExpression.create({
+					prepend = jsAssignmentExpression.create({
 						operator: "=",
 						left: injection[1],
 						right: func.object,
 					});
 
-					func = memberExpression.create({
+					func = jsMemberExpression.create({
 						object,
 						property: func.property,
 					});
 				} else {
-					object = nullLiteral.create({});
+					object = jsNullLiteral.create({});
 				}
 
-				let call: CallExpression = {
-					type: "CallExpression",
+				let call: JSCallExpression = {
+					type: "JSCallExpression",
 					loc: node.loc,
 					callee: template.expression`${func}.apply`,
 					arguments: [
 						object,
-						arrayExpression.create({elements: node.arguments}),
+						jsArrayExpression.create({elements: node.arguments}),
 					],
 				};
 
 				if (prepend === undefined) {
 					return call;
 				} else {
-					return sequenceExpression.create({
+					return jsSequenceExpression.create({
 						expressions: [prepend, call],
 					});
 				}

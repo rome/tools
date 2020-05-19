@@ -5,7 +5,7 @@
 ## `typescript > arrow-function > async-generic-false-positive`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: BinaryExpression {
+			expression: JSBinaryExpression {
 				operator: "<"
 				loc: Object {
 					filename: "input.ts"
@@ -59,7 +59,7 @@ Program {
 						line: 1
 					}
 				}
-				left: ReferenceIdentifier {
+				left: JSReferenceIdentifier {
 					name: "async"
 					loc: Object {
 						filename: "input.ts"
@@ -76,7 +76,7 @@ Program {
 						}
 					}
 				}
-				right: NumericLiteral {
+				right: JSNumericLiteral {
 					value: 1
 					format: undefined
 					loc: Object {
@@ -95,7 +95,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -109,7 +109,7 @@ Program {
 					line: 2
 				}
 			}
-			expression: BinaryExpression {
+			expression: JSBinaryExpression {
 				operator: "=="
 				loc: Object {
 					filename: "input.ts"
@@ -124,7 +124,7 @@ Program {
 						line: 2
 					}
 				}
-				right: NumericLiteral {
+				right: JSNumericLiteral {
 					value: 0
 					format: undefined
 					loc: Object {
@@ -141,7 +141,7 @@ Program {
 						}
 					}
 				}
-				left: CallExpression {
+				left: JSCallExpression {
 					arguments: Array []
 					loc: Object {
 						filename: "input.ts"
@@ -156,7 +156,7 @@ Program {
 							line: 2
 						}
 					}
-					callee: ReferenceIdentifier {
+					callee: JSReferenceIdentifier {
 						name: "async"
 						loc: Object {
 							filename: "input.ts"
@@ -203,7 +203,7 @@ Program {
 										line: 2
 									}
 								}
-								typeName: ReferenceIdentifier {
+								typeName: JSReferenceIdentifier {
 									name: "T"
 									loc: Object {
 										filename: "input.ts"

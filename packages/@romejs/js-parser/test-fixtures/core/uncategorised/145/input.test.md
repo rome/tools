@@ -5,7 +5,7 @@
 ## `core > uncategorised > 145`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: UnaryExpression {
+			expression: JSUnaryExpression {
 				operator: "-"
 				prefix: true
 				loc: Object {
@@ -60,7 +60,7 @@ Program {
 						line: 1
 					}
 				}
-				argument: ReferenceIdentifier {
+				argument: JSReferenceIdentifier {
 					name: "x"
 					loc: Object {
 						filename: "input.js"

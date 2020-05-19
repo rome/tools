@@ -5,7 +5,7 @@
 ## `core > categorized > invalid-quantifier-range`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: RegExpLiteral {
+			expression: JSRegExpLiteral {
 				global: false
 				insensitive: false
 				multiline: false
@@ -88,7 +88,7 @@ Program {
 						line: 1
 					}
 				}
-				expression: RegExpSubExpression {
+				expression: JSRegExpSubExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -103,7 +103,7 @@ Program {
 						}
 					}
 					body: Array [
-						RegExpQuantified {
+						JSRegExpQuantified {
 							lazy: false
 							max: 2
 							min: 1
@@ -120,7 +120,7 @@ Program {
 									line: 1
 								}
 							}
-							target: RegExpCharacter {
+							target: JSRegExpCharacter {
 								value: "a"
 								loc: Object {
 									filename: "input.js"

@@ -5,7 +5,7 @@
 ## `es2018 > async-generators > for-await-async-context`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -54,8 +54,8 @@ Program {
 		}
 	]
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
 					filename: "input.js"
@@ -85,7 +85,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -108,7 +108,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -124,7 +124,7 @@ Program {
 					}
 				}
 				body: Array [
-					ForStatement {
+					JSForStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -138,7 +138,7 @@ Program {
 								line: 2
 							}
 						}
-						test: ReferenceIdentifier {
+						test: JSReferenceIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.js"
@@ -155,7 +155,7 @@ Program {
 								}
 							}
 						}
-						update: ReferenceIdentifier {
+						update: JSReferenceIdentifier {
 							name: "of"
 							loc: Object {
 								filename: "input.js"
@@ -172,7 +172,7 @@ Program {
 								}
 							}
 						}
-						body: ExpressionStatement {
+						body: JSExpressionStatement {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -186,7 +186,7 @@ Program {
 									line: 2
 								}
 							}
-							expression: ReferenceIdentifier {
+							expression: JSReferenceIdentifier {
 								name: "y"
 								loc: Object {
 									filename: "input.js"
@@ -204,7 +204,7 @@ Program {
 								}
 							}
 						}
-						init: CallExpression {
+						init: JSCallExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -218,7 +218,7 @@ Program {
 									line: 2
 								}
 							}
-							callee: ReferenceIdentifier {
+							callee: JSReferenceIdentifier {
 								name: "await"
 								loc: Object {
 									filename: "input.js"
@@ -236,7 +236,7 @@ Program {
 								}
 							}
 							arguments: Array [
-								ReferenceIdentifier {
+								JSReferenceIdentifier {
 									name: "let"
 									loc: Object {
 										filename: "input.js"
@@ -256,7 +256,7 @@ Program {
 							]
 						}
 					}
-					ExpressionStatement {
+					JSExpressionStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -270,7 +270,7 @@ Program {
 								line: 2
 							}
 						}
-						expression: ReferenceIdentifier {
+						expression: JSReferenceIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: Object {
 								filename: "input.js"

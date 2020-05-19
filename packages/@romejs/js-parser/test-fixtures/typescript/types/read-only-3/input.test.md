@@ -5,7 +5,7 @@
 ## `typescript > types > read-only-3`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	directives: Array []
 	filename: "input.ts"
@@ -28,7 +28,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentLine {
+		JSCommentLine {
 			id: "0"
 			value: " Error"
 			loc: Object {
@@ -72,8 +72,8 @@ Program {
 		}
 	]
 	body: Array [
-		TypeAliasTypeAnnotation {
-			id: BindingIdentifier {
+		TSTypeAliasTypeAnnotation {
+			id: JSBindingIdentifier {
 				name: "T32"
 				loc: Object {
 					filename: "input.ts"

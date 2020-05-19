@@ -9,10 +9,10 @@ import {
 	AnyNode,
 	ConstProgramSyntax,
 	ConstSourceType,
-	Identifier,
-	Program,
-	StringLiteral,
-} from "@romejs/js-ast";
+	JSIdentifier,
+	JSProgram,
+	JSStringLiteral,
+} from "@romejs/ast";
 import {
 	ParserOptionsWithRequiredPath,
 	Position,
@@ -248,10 +248,10 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			reason: string,
 			start: Position = this.getPosition(),
 			end: Position = this.getLastEndPosition(),
-		): Identifier {
+		): JSIdentifier {
 			this.state.corrupt = true;
 			return {
-				type: "Identifier",
+				type: "JSIdentifier",
 				name: "INVALID_PLACEHOLDER",
 				loc: this.finishLocAt(start, end),
 			};
@@ -261,10 +261,10 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			reason: string,
 			start: Position = this.getPosition(),
 			end: Position = this.getLastEndPosition(),
-		): StringLiteral {
+		): JSStringLiteral {
 			this.state.corrupt = true;
 			return {
-				type: "StringLiteral",
+				type: "JSStringLiteral",
 				value: "INVALID_PLACEHOLDER",
 				loc: this.finishLocAt(start, end),
 			};
@@ -746,7 +746,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			};
 		}
 
-		parse(): Program {
+		parse(): JSProgram {
 			if (this.inModule) {
 				this.pushScope("ASYNC", true);
 				this.pushScope("STRICT", true);

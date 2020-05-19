@@ -7,30 +7,30 @@
 
 import {Path, TransformExitResult} from "@romejs/js-compiler";
 import {
+	AnyJSObjectMember,
+	AnyJSStatement,
+	AnyJSTargetBindingPattern,
 	AnyNode,
-	AnyObjectMember,
-	AnyStatement,
-	AnyTargetBindingPattern,
-	BindingIdentifier,
-	CallExpression,
-	ObjectExpression,
-	VariableDeclaration,
-	VariableDeclarationStatement,
-	VariableDeclarator,
-	bindingIdentifier,
-	bindingObjectPattern,
-	callExpression,
-	objectExpression,
-	referenceIdentifier,
-	variableDeclaration,
-	variableDeclarationStatement,
-	variableDeclarator,
-} from "@romejs/js-ast";
+	JSBindingIdentifier,
+	JSCallExpression,
+	JSObjectExpression,
+	JSVariableDeclaration,
+	JSVariableDeclarationStatement,
+	JSVariableDeclarator,
+	jsBindingIdentifier,
+	jsBindingObjectPattern,
+	jsCallExpression,
+	jsObjectExpression,
+	jsReferenceIdentifier,
+	jsVariableDeclaration,
+	jsVariableDeclarationStatement,
+	jsVariableDeclarator,
+} from "@romejs/ast";
 import {template} from "@romejs/js-ast-utils";
 
 function hasSpreadProperty(props: Array<AnyNode>): boolean {
 	for (const prop of props) {
-		if (prop.type === "SpreadProperty") {
+		if (prop.type === "JSSpreadProperty") {
 			return true;
 		}
 	}
@@ -40,23 +40,23 @@ function hasSpreadProperty(props: Array<AnyNode>): boolean {
 function getRestProperty(
 	node:
 		| undefined
-		| VariableDeclarator
-		| VariableDeclarationStatement
-		| VariableDeclaration
-		| AnyTargetBindingPattern,
-): undefined | BindingIdentifier {
+		| JSVariableDeclarator
+		| JSVariableDeclarationStatement
+		| JSVariableDeclaration
+		| AnyJSTargetBindingPattern,
+): undefined | JSBindingIdentifier {
 	if (node === undefined) {
 		return undefined;
 	}
 
 	switch (node.type) {
-		case "VariableDeclarator":
+		case "JSVariableDeclarator":
 			return getRestProperty(node.id);
 
-		case "VariableDeclarationStatement":
+		case "JSVariableDeclarationStatement":
 			return getRestProperty(node.declaration);
 
-		case "VariableDeclaration": {
+		case "JSVariableDeclaration": {
 			for (const declarator of node.declarations) {
 				const rest = getRestProperty(declarator);
 				if (rest !== undefined) {
@@ -66,7 +66,7 @@ function getRestProperty(
 			return undefined;
 		}
 
-		case "BindingObjectPattern":
+		case "JSBindingObjectPattern":
 			return node.rest;
 	}
 
@@ -75,9 +75,9 @@ function getRestProperty(
 
 function transformSpreadProperty(
 	path: Path,
-	node: ObjectExpression,
-): CallExpression {
-	let props: Array<AnyObjectMember> = [];
+	node: JSObjectExpression,
+): JSCallExpression {
+	let props: Array<AnyJSObjectMember> = [];
 	const assignArgs = [];
 
 	function pushProps() {
@@ -85,13 +85,13 @@ function transformSpreadProperty(
 			return;
 		}
 
-		assignArgs.push(objectExpression.create({properties: props}));
+		assignArgs.push(jsObjectExpression.create({properties: props}));
 
 		props = [];
 	}
 
 	for (const prop of node.properties) {
-		if (prop.type === "SpreadProperty") {
+		if (prop.type === "JSSpreadProperty") {
 			pushProps();
 			assignArgs.push(prop.argument);
 		} else {
@@ -101,7 +101,7 @@ function transformSpreadProperty(
 
 	pushProps();
 
-	return callExpression.create({
+	return jsCallExpression.create({
 		callee: template.expression`Object.assign`,
 		arguments: assignArgs,
 	});
@@ -109,17 +109,20 @@ function transformSpreadProperty(
 
 function transformRestProperty(
 	path: Path,
-	node: VariableDeclaration,
-): Array<AnyStatement> {
-	const nodes: Array<AnyStatement> = [];
+	node: JSVariableDeclaration,
+): Array<AnyJSStatement> {
+	const nodes: Array<AnyJSStatement> = [];
 
 	for (const declarator of node.declarations) {
 		const restElem = getRestProperty(declarator);
 
-		if (restElem === undefined || declarator.id.type !== "BindingObjectPattern") {
+		if (
+			restElem === undefined ||
+			declarator.id.type !== "JSBindingObjectPattern"
+		) {
 			nodes.push(
-				variableDeclarationStatement.quick(
-					variableDeclaration.create({
+				jsVariableDeclarationStatement.quick(
+					jsVariableDeclaration.create({
 						kind: node.kind,
 						declarations: [declarator],
 					}),
@@ -132,12 +135,12 @@ function transformRestProperty(
 
 		// push on the initial declaration so we can reference it later
 		nodes.push(
-			variableDeclarationStatement.quick(
-				variableDeclaration.create({
+			jsVariableDeclarationStatement.quick(
+				jsVariableDeclaration.create({
 					kind: node.kind,
 					declarations: [
-						variableDeclarator.create({
-							id: bindingIdentifier.create({
+						jsVariableDeclarator.create({
+							id: jsBindingIdentifier.create({
 								name: uid,
 							}),
 							init: declarator.init,
@@ -150,10 +153,10 @@ function transformRestProperty(
 		// fetch all the previous prop names
 		const removeProps = [];
 		for (const prop of declarator.id.properties) {
-			if (prop.type === "BindingObjectPatternProperty") {
+			if (prop.type === "JSBindingObjectPatternProperty") {
 				if (
-					prop.key.type === "ComputedPropertyKey" ||
-					prop.key.value.type !== "Identifier"
+					prop.key.type === "JSComputedPropertyKey" ||
+					prop.key.value.type !== "JSIdentifier"
 				) {
 					throw new Error("unimplemented");
 				} else {
@@ -165,12 +168,12 @@ function transformRestProperty(
 		// clone the init to the rest element
 		const restName = restElem.name;
 		nodes.push(
-			variableDeclarationStatement.quick(
-				variableDeclaration.create({
+			jsVariableDeclarationStatement.quick(
+				jsVariableDeclaration.create({
 					kind: node.kind,
 					declarations: [
-						variableDeclarator.create({
-							id: bindingIdentifier.quick(restName),
+						jsVariableDeclarator.create({
+							id: jsBindingIdentifier.quick(restName),
 							init: template.expression`Object.assign({}, ${uid})`,
 						}),
 					],
@@ -185,16 +188,16 @@ function transformRestProperty(
 
 		// push on the initial destructuring without the rest element
 		nodes.push(
-			variableDeclarationStatement.quick(
-				variableDeclaration.create({
+			jsVariableDeclarationStatement.quick(
+				jsVariableDeclaration.create({
 					kind: node.kind,
 					declarations: [
-						variableDeclarator.create({
-							id: bindingObjectPattern.create({
+						jsVariableDeclarator.create({
+							id: jsBindingObjectPattern.create({
 								properties: declarator.id.properties,
 								rest: undefined,
 							}),
-							init: referenceIdentifier.quick(uid),
+							init: jsReferenceIdentifier.quick(uid),
 						}),
 					],
 				}),
@@ -211,13 +214,13 @@ export default {
 		const {node} = path;
 
 		if (
-			node.type === "VariableDeclarationStatement" &&
+			node.type === "JSVariableDeclarationStatement" &&
 			getRestProperty(node) !== undefined
 		) {
 			return transformRestProperty(path, node.declaration);
 		}
 
-		if (node.type === "ObjectExpression" && hasSpreadProperty(node.properties)) {
+		if (node.type === "JSObjectExpression" && hasSpreadProperty(node.properties)) {
 			return transformSpreadProperty(path, node);
 		}
 

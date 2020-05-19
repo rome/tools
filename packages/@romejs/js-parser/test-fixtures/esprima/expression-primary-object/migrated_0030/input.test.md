@@ -5,7 +5,7 @@
 ## `esprima > expression-primary-object > migrated_0030`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	directives: Array [
-		Directive {
+		JSDirective {
 			value: "use strict"
 			loc: Object {
 				filename: "input.js"
@@ -47,7 +47,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: AssignmentExpression {
+			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
 					filename: "input.js"
@@ -76,7 +76,7 @@ Program {
 						line: 1
 					}
 				}
-				left: AssignmentIdentifier {
+				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: Object {
 						filename: "input.js"
@@ -93,7 +93,7 @@ Program {
 						}
 					}
 				}
-				right: ObjectExpression {
+				right: JSObjectExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -108,9 +108,9 @@ Program {
 						}
 					}
 					properties: Array [
-						ObjectProperty {
-							key: StaticPropertyKey {
-								value: Identifier {
+						JSObjectProperty {
+							key: JSStaticPropertyKey {
+								value: JSIdentifier {
 									name: "y"
 									loc: Object {
 										filename: "input.js"
@@ -141,7 +141,7 @@ Program {
 									}
 								}
 							}
-							value: NumericLiteral {
+							value: JSNumericLiteral {
 								value: 1
 								format: undefined
 								loc: Object {
@@ -172,9 +172,9 @@ Program {
 								}
 							}
 						}
-						ObjectProperty {
-							key: StaticPropertyKey {
-								value: Identifier {
+						JSObjectProperty {
+							key: JSStaticPropertyKey {
+								value: JSIdentifier {
 									name: "y"
 									loc: Object {
 										filename: "input.js"
@@ -205,7 +205,7 @@ Program {
 									}
 								}
 							}
-							value: NumericLiteral {
+							value: JSNumericLiteral {
 								value: 1
 								format: undefined
 								loc: Object {

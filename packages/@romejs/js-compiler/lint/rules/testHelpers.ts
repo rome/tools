@@ -10,7 +10,7 @@ import lint from "../index";
 import {parseJS} from "@romejs/js-parser";
 import {createUnknownFilePath} from "@romejs/path";
 import {DEFAULT_PROJECT_CONFIG} from "@romejs/project";
-import {ConstProgramSyntax, ConstSourceType} from "@romejs/js-ast";
+import {ConstProgramSyntax, ConstSourceType} from "@romejs/ast";
 import {DiagnosticCategory} from "@romejs/diagnostics";
 import {printDiagnosticsToString} from "@romejs/cli-diagnostics";
 

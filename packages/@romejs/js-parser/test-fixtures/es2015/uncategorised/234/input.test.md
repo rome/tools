@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 234`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	directives: Array [
-		Directive {
+		JSDirective {
 			value: "use strict"
 			loc: Object {
 				filename: "input.js"
@@ -47,7 +47,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: AssignmentExpression {
+			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
 					filename: "input.js"
@@ -76,7 +76,7 @@ Program {
 						line: 1
 					}
 				}
-				right: ReferenceIdentifier {
+				right: JSReferenceIdentifier {
 					name: "obj"
 					loc: Object {
 						filename: "input.js"
@@ -93,7 +93,7 @@ Program {
 						}
 					}
 				}
-				left: AssignmentObjectPattern {
+				left: JSAssignmentObjectPattern {
 					rest: undefined
 					loc: Object {
 						filename: "input.js"
@@ -109,9 +109,9 @@ Program {
 						}
 					}
 					properties: Array [
-						AssignmentObjectPatternProperty {
-							key: StaticPropertyKey {
-								value: Identifier {
+						JSAssignmentObjectPatternProperty {
+							key: JSStaticPropertyKey {
+								value: JSIdentifier {
 									name: "v"
 									loc: Object {
 										filename: "input.js"
@@ -142,7 +142,7 @@ Program {
 									}
 								}
 							}
-							value: AssignmentIdentifier {
+							value: JSAssignmentIdentifier {
 								name: "arguments"
 								loc: Object {
 									filename: "input.js"

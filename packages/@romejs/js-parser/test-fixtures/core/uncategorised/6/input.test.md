@@ -5,7 +5,7 @@
 ## `core > uncategorised > 6`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: BinaryExpression {
+			expression: JSBinaryExpression {
 				operator: "*"
 				loc: Object {
 					filename: "input.js"
@@ -59,7 +59,7 @@ Program {
 						line: 1
 					}
 				}
-				right: NumericLiteral {
+				right: JSNumericLiteral {
 					value: 3
 					format: undefined
 					loc: Object {
@@ -76,7 +76,7 @@ Program {
 						}
 					}
 				}
-				left: BinaryExpression {
+				left: JSBinaryExpression {
 					operator: "+"
 					loc: Object {
 						filename: "input.js"
@@ -91,7 +91,7 @@ Program {
 							line: 1
 						}
 					}
-					left: NumericLiteral {
+					left: JSNumericLiteral {
 						value: 1
 						format: undefined
 						loc: Object {
@@ -108,7 +108,7 @@ Program {
 							}
 						}
 					}
-					right: NumericLiteral {
+					right: JSNumericLiteral {
 						value: 2
 						format: undefined
 						loc: Object {

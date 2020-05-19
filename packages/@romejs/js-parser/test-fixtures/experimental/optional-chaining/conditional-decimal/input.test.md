@@ -5,7 +5,7 @@
 ## `experimental > optional-chaining > conditional-decimal`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ConditionalExpression {
+			expression: JSConditionalExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -58,7 +58,7 @@ Program {
 						line: 1
 					}
 				}
-				test: BooleanLiteral {
+				test: JSBooleanLiteral {
 					value: true
 					loc: Object {
 						filename: "input.js"
@@ -74,7 +74,7 @@ Program {
 						}
 					}
 				}
-				alternate: NumericLiteral {
+				alternate: JSNumericLiteral {
 					value: 0
 					format: undefined
 					loc: Object {
@@ -91,7 +91,7 @@ Program {
 						}
 					}
 				}
-				consequent: NumericLiteral {
+				consequent: JSNumericLiteral {
 					value: 0.3
 					format: undefined
 					loc: Object {
@@ -110,7 +110,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -124,7 +124,7 @@ Program {
 					line: 3
 				}
 			}
-			expression: ConditionalExpression {
+			expression: JSConditionalExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -138,7 +138,7 @@ Program {
 						line: 3
 					}
 				}
-				test: BooleanLiteral {
+				test: JSBooleanLiteral {
 					value: true
 					loc: Object {
 						filename: "input.js"
@@ -154,7 +154,7 @@ Program {
 						}
 					}
 				}
-				alternate: NumericLiteral {
+				alternate: JSNumericLiteral {
 					value: 0
 					format: undefined
 					loc: Object {
@@ -171,7 +171,7 @@ Program {
 						}
 					}
 				}
-				consequent: NumericLiteral {
+				consequent: JSNumericLiteral {
 					value: 0.3
 					format: undefined
 					loc: Object {

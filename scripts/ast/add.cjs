@@ -16,16 +16,22 @@ const {
 	astFolder,
 } = require("../_constants.cjs");
 
-const {write, getBuilderName} = require("../_utils.cjs");
+const {write} = require("../_utils.cjs");
 
-const nodeType = process.argv[2];
-const category = process.argv[3];
-if (nodeType === undefined || category === undefined) {
-	console.error("node scripts/ast/add.cjs [node-type] [category]");
+const language = process.argv[2];
+const rawNodeType = process.argv[3];
+const category = process.argv[4];
+if (
+	language === undefined ||
+	rawNodeType === undefined ||
+	category === undefined
+) {
+	console.error("node scripts/ast/add.cjs [language] [node-type] [category]");
 	process.exit(1);
 }
 
-const builderName = getBuilderName(nodeType);
+const builderName = `${language}${nodeType}`;
+const nodeType = `${language.toUpperCase()}${rawNodeType}`;
 
 // Write AST def
 let file = `import {JSNodeBase} from "../index";
@@ -40,7 +46,7 @@ export const ${builderName} = createBuilder<${nodeType}>("${nodeType}", {
 	visitorKeys: {},
 });
 `;
-const fileLoc = path.join(astFolder, category, `${nodeType}.ts`);
+const fileLoc = path.join(astFolder, language, category, `${nodeType}.ts`);
 if (fs.existsSync(fileLoc, "utf8")) {
 	console.log("Already have", nodeType);
 	process.exit();
@@ -48,7 +54,12 @@ if (fs.existsSync(fileLoc, "utf8")) {
 write(fileLoc, file);
 
 // Write builder
-const builderDefFile = path.join(formatterFolder, category, `${nodeType}.ts`);
+const builderDefFile = path.join(
+	formatterFolder,
+	language,
+	category,
+	`${nodeType}.ts`,
+);
 const builderContent = `import Builder from "../../Builder";
 import {AnyNode, ${nodeType}} from "@romejs/js-ast";
 import {Token} from "../../tokens";
@@ -60,14 +71,16 @@ export default function ${nodeType}(builder: Builder, node: ${nodeType}): Token 
 write(builderDefFile, builderContent);
 
 // Write analysis
-const analysisDefFile = path.join(analysisFolder, category, `${nodeType}.ts`);
-const analysisContent = `import {AnyNode, ${nodeType}, ${builderName}} from "@romejs/js-ast";
+if (language === "js") {
+	const analysisDefFile = path.join(analysisFolder, category, `${nodeType}.ts`);
+	const analysisContent = `import {AnyNode, ${nodeType}, ${builderName}} from "@romejs/js-ast";
 
-export default function ${nodeType}(node: AnyNode) {
-	node = ${builderName}.assert(node);
-	throw new Error("unimplemented");
+	export default function ${nodeType}(node: AnyNode) {
+		node = ${builderName}.assert(node);
+		throw new Error("unimplemented");
+	}
+	`;
+	write(analysisDefFile, analysisContent);
 }
- `;
-write(analysisDefFile, analysisContent);
 
 require("./update.cjs");

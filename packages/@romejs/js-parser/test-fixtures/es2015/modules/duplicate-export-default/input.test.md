@@ -5,7 +5,7 @@
 ## `es2015 > modules > duplicate-export-default`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -74,7 +74,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExportDefaultDeclaration {
+		JSExportDefaultDeclaration {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -88,7 +88,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: ObjectExpression {
+			declaration: JSObjectExpression {
 				properties: Array []
 				loc: Object {
 					filename: "input.js"
@@ -105,7 +105,7 @@ Program {
 				}
 			}
 		}
-		ExportDefaultDeclaration {
+		JSExportDefaultDeclaration {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -119,8 +119,8 @@ Program {
 					line: 2
 				}
 			}
-			declaration: FunctionDeclaration {
-				id: BindingIdentifier {
+			declaration: JSFunctionDeclaration {
+				id: JSBindingIdentifier {
 					name: "*default*"
 					loc: Object {
 						filename: "input.js"
@@ -149,7 +149,7 @@ Program {
 						line: 2
 					}
 				}
-				body: BlockStatement {
+				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
 					loc: Object {
@@ -166,7 +166,7 @@ Program {
 						}
 					}
 				}
-				head: FunctionHead {
+				head: JSFunctionHead {
 					async: false
 					generator: false
 					hasHoistedVars: false
@@ -191,7 +191,7 @@ Program {
 				}
 			}
 		}
-		EmptyStatement {
+		JSEmptyStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {

@@ -7,7 +7,7 @@
 
 import {Scope} from "../scopes";
 import {HydrateData} from "../Evaluator";
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 import StringLiteralT from "./StringLiteralT";
 import ObjT from "./ObjT";
 import T from "./T";

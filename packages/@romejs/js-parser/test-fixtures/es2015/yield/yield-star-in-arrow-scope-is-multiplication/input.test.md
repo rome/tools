@@ -5,7 +5,7 @@
 ## `es2015 > yield > yield-star-in-arrow-scope-is-multiplication`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ArrowFunctionExpression {
+			expression: JSArrowFunctionExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -58,7 +58,7 @@ Program {
 						line: 1
 					}
 				}
-				head: FunctionHead {
+				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
 					rest: undefined
@@ -77,7 +77,7 @@ Program {
 						}
 					}
 					params: Array [
-						BindingIdentifier {
+						JSBindingIdentifier {
 							name: "e"
 							loc: Object {
 								filename: "input.js"
@@ -96,7 +96,7 @@ Program {
 						}
 					]
 				}
-				body: BinaryExpression {
+				body: JSBinaryExpression {
 					operator: "*"
 					loc: Object {
 						filename: "input.js"
@@ -111,7 +111,7 @@ Program {
 							line: 1
 						}
 					}
-					left: ReferenceIdentifier {
+					left: JSReferenceIdentifier {
 						name: "yield"
 						loc: Object {
 							filename: "input.js"
@@ -128,7 +128,7 @@ Program {
 							}
 						}
 					}
-					right: NumericLiteral {
+					right: JSNumericLiteral {
 						value: 10
 						format: undefined
 						loc: Object {

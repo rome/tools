@@ -5,7 +5,7 @@
 ## `comments > interpreter-directive > interpreter-directive-import`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -28,7 +28,7 @@ Program {
 			line: 1
 		}
 	}
-	interpreter: InterpreterDirective {
+	interpreter: JSInterpreterDirective {
 		value: "/usr/bin/env babel-node"
 		loc: Object {
 			filename: "input.js"
@@ -45,7 +45,7 @@ Program {
 		}
 	}
 	body: Array [
-		ImportDeclaration {
+		JSImportDeclaration {
 			defaultSpecifier: undefined
 			importKind: undefined
 			namespaceSpecifier: undefined
@@ -62,7 +62,7 @@ Program {
 					line: 3
 				}
 			}
-			source: StringLiteral {
+			source: JSStringLiteral {
 				value: "foobar"
 				loc: Object {
 					filename: "input.js"
@@ -79,7 +79,7 @@ Program {
 				}
 			}
 			namedSpecifiers: Array [
-				ImportSpecifier {
+				JSImportSpecifier {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -93,7 +93,7 @@ Program {
 							line: 3
 						}
 					}
-					imported: Identifier {
+					imported: JSIdentifier {
 						name: "spawn"
 						loc: Object {
 							filename: "input.js"
@@ -110,8 +110,8 @@ Program {
 							}
 						}
 					}
-					local: ImportSpecifierLocal {
-						name: BindingIdentifier {
+					local: JSImportSpecifierLocal {
+						name: JSBindingIdentifier {
 							name: "spawn"
 							loc: Object {
 								filename: "input.js"

@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, TSTypeAssertion, tsTypeAssertion} from "@romejs/js-ast";
+import {AnyNode, TSTypeAssertion, tsTypeAssertion} from "@romejs/ast";
 
 export default function TSTypeAssertion(node: AnyNode, scope: Scope) {
 	node = tsTypeAssertion.assert(node);

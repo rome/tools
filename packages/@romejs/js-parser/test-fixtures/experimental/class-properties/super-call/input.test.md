@@ -5,7 +5,7 @@
 ## `experimental > class-properties > super-call`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -59,8 +59,8 @@ Program {
 		}
 	]
 	body: Array [
-		ClassDeclaration {
-			id: BindingIdentifier {
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
 					filename: "input.js"
@@ -90,7 +90,7 @@ Program {
 					line: 1
 				}
 			}
-			meta: ClassHead {
+			meta: JSClassHead {
 				implements: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
@@ -107,7 +107,7 @@ Program {
 						line: 1
 					}
 				}
-				superClass: ReferenceIdentifier {
+				superClass: JSReferenceIdentifier {
 					name: "B"
 					loc: Object {
 						filename: "input.js"
@@ -125,10 +125,10 @@ Program {
 					}
 				}
 				body: Array [
-					ClassMethod {
+					JSClassMethod {
 						kind: "constructor"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "constructor"
 								loc: Object {
 									filename: "input.js"
@@ -172,7 +172,7 @@ Program {
 								line: 2
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -195,7 +195,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -221,7 +221,7 @@ Program {
 								}
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
 								filename: "input.js"
@@ -237,8 +237,8 @@ Program {
 								}
 							}
 							body: Array [
-								ClassDeclaration {
-									id: BindingIdentifier {
+								JSClassDeclaration {
+									id: JSBindingIdentifier {
 										name: "C"
 										loc: Object {
 											filename: "input.js"
@@ -268,7 +268,7 @@ Program {
 											line: 3
 										}
 									}
-									meta: ClassHead {
+									meta: JSClassHead {
 										implements: undefined
 										superTypeParameters: undefined
 										typeParameters: undefined
@@ -285,7 +285,7 @@ Program {
 												line: 3
 											}
 										}
-										superClass: ReferenceIdentifier {
+										superClass: JSReferenceIdentifier {
 											name: "D"
 											loc: Object {
 												filename: "input.js"
@@ -303,9 +303,9 @@ Program {
 											}
 										}
 										body: Array [
-											ClassProperty {
-												key: StaticPropertyKey {
-													value: Identifier {
+											JSClassProperty {
+												key: JSStaticPropertyKey {
+													value: JSIdentifier {
 														name: "foo"
 														loc: Object {
 															filename: "input.js"
@@ -336,7 +336,7 @@ Program {
 														}
 													}
 												}
-												value: CallExpression {
+												value: JSCallExpression {
 													arguments: Array []
 													loc: Object {
 														filename: "input.js"
@@ -351,7 +351,7 @@ Program {
 															line: 4
 														}
 													}
-													callee: Super {
+													callee: JSSuper {
 														loc: Object {
 															filename: "input.js"
 															end: Object {
@@ -382,7 +382,7 @@ Program {
 														line: 4
 													}
 												}
-												meta: ClassPropertyMeta {
+												meta: JSClassPropertyMeta {
 													abstract: false
 													accessibility: undefined
 													optional: false

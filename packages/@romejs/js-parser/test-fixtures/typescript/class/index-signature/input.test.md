@@ -5,7 +5,7 @@
 ## `typescript > class > index-signature`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		ClassDeclaration {
-			id: BindingIdentifier {
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
 				name: "C"
 				loc: Object {
 					filename: "input.ts"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			meta: ClassHead {
+			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
@@ -81,7 +81,7 @@ Program {
 				}
 				body: Array [
 					TSIndexSignature {
-						key: BindingIdentifier {
+						key: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.ts"
@@ -96,7 +96,7 @@ Program {
 									line: 2
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								loc: Object {
 									filename: "input.ts"
 									end: Object {
@@ -158,7 +158,7 @@ Program {
 						}
 					}
 					TSIndexSignature {
-						key: BindingIdentifier {
+						key: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.ts"
@@ -173,7 +173,7 @@ Program {
 									line: 3
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								loc: Object {
 									filename: "input.ts"
 									end: Object {

@@ -5,7 +5,7 @@
 ## `esprima > invalid-syntax > migrated_0126`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ForInStatement {
+		JSForInStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			body: EmptyStatement {
+			body: JSEmptyStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -83,7 +83,7 @@ Program {
 					}
 				}
 			}
-			left: AssignmentIdentifier {
+			left: JSAssignmentIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
 					filename: "input.js"
@@ -99,7 +99,7 @@ Program {
 					}
 				}
 			}
-			right: ObjectExpression {
+			right: JSObjectExpression {
 				properties: Array []
 				loc: Object {
 					filename: "input.js"

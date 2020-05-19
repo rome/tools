@@ -5,7 +5,7 @@
 ## `typescript > arrow-function > arrow-function-with-newline`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ArrowFunctionExpression {
+			expression: JSArrowFunctionExpression {
 				loc: Object {
 					filename: "input.ts"
 					end: Object {
@@ -58,7 +58,7 @@ Program {
 						line: 1
 					}
 				}
-				body: BlockStatement {
+				body: JSBlockStatement {
 					body: Array []
 					directives: Array []
 					loc: Object {
@@ -75,7 +75,7 @@ Program {
 						}
 					}
 				}
-				head: FunctionHead {
+				head: JSFunctionHead {
 					async: true
 					hasHoistedVars: false
 					rest: undefined
@@ -94,7 +94,7 @@ Program {
 						}
 					}
 					params: Array [
-						BindingIdentifier {
+						JSBindingIdentifier {
 							name: "f"
 							loc: Object {
 								filename: "input.ts"
@@ -127,7 +127,7 @@ Program {
 								line: 2
 							}
 						}
-						typeName: ReferenceIdentifier {
+						typeName: JSReferenceIdentifier {
 							name: "t"
 							loc: Object {
 								filename: "input.ts"

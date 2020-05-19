@@ -10,7 +10,7 @@ import {Scope} from "../../scopes";
 import T from "../T";
 import {orderBySimilarity} from "@romejs/string-utils";
 import E, {ErrorDefinition} from "./E";
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 
 export default class UnknownPropE extends E {
 	constructor(

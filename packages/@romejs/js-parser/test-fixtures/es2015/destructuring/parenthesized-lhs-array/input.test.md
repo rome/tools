@@ -5,7 +5,7 @@
 ## `es2015 > destructuring > parenthesized-lhs-array`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: AssignmentExpression {
+			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
 					filename: "input.js"
@@ -83,7 +83,7 @@ Program {
 						line: 1
 					}
 				}
-				right: NumericLiteral {
+				right: JSNumericLiteral {
 					value: 2
 					format: undefined
 					loc: Object {
@@ -100,7 +100,7 @@ Program {
 						}
 					}
 				}
-				left: AssignmentArrayPattern {
+				left: JSAssignmentArrayPattern {
 					rest: undefined
 					loc: Object {
 						filename: "input.js"
@@ -116,7 +116,7 @@ Program {
 						}
 					}
 					elements: Array [
-						AssignmentIdentifier {
+						JSAssignmentIdentifier {
 							name: "a"
 							loc: Object {
 								filename: "input.js"

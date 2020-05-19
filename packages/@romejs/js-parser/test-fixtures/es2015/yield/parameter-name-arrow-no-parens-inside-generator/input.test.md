@@ -5,7 +5,7 @@
 ## `es2015 > yield > parameter-name-arrow-no-parens-inside-generator`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -54,8 +54,8 @@ Program {
 		}
 	]
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "fn"
 				loc: Object {
 					filename: "input.js"
@@ -85,7 +85,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: true
 				hasHoistedVars: false
@@ -108,7 +108,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -124,7 +124,7 @@ Program {
 					}
 				}
 				body: Array [
-					ExpressionStatement {
+					JSExpressionStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -138,7 +138,7 @@ Program {
 								line: 2
 							}
 						}
-						expression: YieldExpression {
+						expression: JSYieldExpression {
 							argument: undefined
 							delegate: false
 							loc: Object {
@@ -156,7 +156,7 @@ Program {
 							}
 						}
 					}
-					ExpressionStatement {
+					JSExpressionStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -170,7 +170,7 @@ Program {
 								line: 2
 							}
 						}
-						expression: ReferenceIdentifier {
+						expression: JSReferenceIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: Object {
 								filename: "input.js"
@@ -187,7 +187,7 @@ Program {
 							}
 						}
 					}
-					BlockStatement {
+					JSBlockStatement {
 						body: Array []
 						directives: Array []
 						loc: Object {
@@ -204,7 +204,7 @@ Program {
 							}
 						}
 					}
-					EmptyStatement {
+					JSEmptyStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {

@@ -7,7 +7,7 @@
 
 import {descriptions} from "@romejs/diagnostics";
 import {Path, TransformExitResult} from "@romejs/js-compiler";
-import {booleanLiteral, whileStatement} from "@romejs/js-ast";
+import {jsBooleanLiteral, jsWhileStatement} from "@romejs/ast";
 
 export default {
 	name: "preferWhile",
@@ -15,18 +15,18 @@ export default {
 		const {context, node} = path;
 
 		if (
-			node.type === "ForStatement" &&
+			node.type === "JSForStatement" &&
 			node.init === undefined &&
 			node.update === undefined
 		) {
 			return context.addFixableDiagnostic(
 				{
 					old: node,
-					fixed: whileStatement.create(
+					fixed: jsWhileStatement.create(
 						{
 							test: node.test !== undefined
 								? node.test
-								: booleanLiteral.quick(true),
+								: jsBooleanLiteral.quick(true),
 							body: node.body,
 							leadingComments: node.leadingComments,
 							trailingComments: node.trailingComments,

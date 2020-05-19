@@ -5,7 +5,7 @@
 ## `es2015 > yield > accessor-name-inst-computed-yield-expr`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.js"
@@ -60,8 +60,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "yieldSet"
 							loc: Object {
 								filename: "input.js"
@@ -93,8 +93,8 @@ Program {
 							}
 						}
 					}
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "C"
 							loc: Object {
 								filename: "input.js"
@@ -126,8 +126,8 @@ Program {
 							}
 						}
 					}
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "iter"
 							loc: Object {
 								filename: "input.js"
@@ -162,8 +162,8 @@ Program {
 				]
 			}
 		}
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "g"
 				loc: Object {
 					filename: "input.js"
@@ -193,7 +193,7 @@ Program {
 					line: 2
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: true
 				hasHoistedVars: false
@@ -216,7 +216,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -232,8 +232,8 @@ Program {
 					}
 				}
 				body: Array [
-					ClassDeclaration {
-						id: BindingIdentifier {
+					JSClassDeclaration {
+						id: JSBindingIdentifier {
 							name: "C_"
 							loc: Object {
 								filename: "input.js"
@@ -263,7 +263,7 @@ Program {
 								line: 3
 							}
 						}
-						meta: ClassHead {
+						meta: JSClassHead {
 							implements: undefined
 							superClass: undefined
 							superTypeParameters: undefined
@@ -282,10 +282,10 @@ Program {
 								}
 							}
 							body: Array [
-								ClassMethod {
+								JSClassMethod {
 									kind: "get"
-									key: ComputedPropertyKey {
-										value: YieldExpression {
+									key: JSComputedPropertyKey {
+										value: JSYieldExpression {
 											argument: undefined
 											delegate: false
 											loc: Object {
@@ -329,7 +329,7 @@ Program {
 											line: 4
 										}
 									}
-									head: FunctionHead {
+									head: JSFunctionHead {
 										async: false
 										generator: false
 										hasHoistedVars: false
@@ -352,7 +352,7 @@ Program {
 											}
 										}
 									}
-									meta: ClassPropertyMeta {
+									meta: JSClassPropertyMeta {
 										abstract: false
 										accessibility: undefined
 										optional: false
@@ -378,7 +378,7 @@ Program {
 											}
 										}
 									}
-									body: BlockStatement {
+									body: JSBlockStatement {
 										directives: Array []
 										loc: Object {
 											filename: "input.js"
@@ -394,7 +394,7 @@ Program {
 											}
 										}
 										body: Array [
-											ReturnStatement {
+											JSReturnStatement {
 												loc: Object {
 													filename: "input.js"
 													end: Object {
@@ -408,7 +408,7 @@ Program {
 														line: 4
 													}
 												}
-												argument: StringLiteral {
+												argument: JSStringLiteral {
 													value: "get yield"
 													loc: Object {
 														filename: "input.js"
@@ -428,10 +428,10 @@ Program {
 										]
 									}
 								}
-								ClassMethod {
+								JSClassMethod {
 									kind: "set"
-									key: ComputedPropertyKey {
-										value: YieldExpression {
+									key: JSComputedPropertyKey {
+										value: JSYieldExpression {
 											argument: undefined
 											delegate: false
 											loc: Object {
@@ -475,7 +475,7 @@ Program {
 											line: 5
 										}
 									}
-									meta: ClassPropertyMeta {
+									meta: JSClassPropertyMeta {
 										abstract: false
 										accessibility: undefined
 										optional: false
@@ -501,7 +501,7 @@ Program {
 											}
 										}
 									}
-									head: FunctionHead {
+									head: JSFunctionHead {
 										async: false
 										generator: false
 										hasHoistedVars: false
@@ -523,7 +523,7 @@ Program {
 											}
 										}
 										params: Array [
-											BindingIdentifier {
+											JSBindingIdentifier {
 												name: "param"
 												loc: Object {
 													filename: "input.js"
@@ -539,7 +539,7 @@ Program {
 														line: 5
 													}
 												}
-												meta: PatternMeta {
+												meta: JSPatternMeta {
 													optional: undefined
 													typeAnnotation: undefined
 													loc: Object {
@@ -559,7 +559,7 @@ Program {
 											}
 										]
 									}
-									body: BlockStatement {
+									body: JSBlockStatement {
 										directives: Array []
 										loc: Object {
 											filename: "input.js"
@@ -575,7 +575,7 @@ Program {
 											}
 										}
 										body: Array [
-											ExpressionStatement {
+											JSExpressionStatement {
 												loc: Object {
 													filename: "input.js"
 													end: Object {
@@ -589,7 +589,7 @@ Program {
 														line: 5
 													}
 												}
-												expression: AssignmentExpression {
+												expression: JSAssignmentExpression {
 													operator: "="
 													loc: Object {
 														filename: "input.js"
@@ -604,7 +604,7 @@ Program {
 															line: 5
 														}
 													}
-													left: AssignmentIdentifier {
+													left: JSAssignmentIdentifier {
 														name: "yieldSet"
 														loc: Object {
 															filename: "input.js"
@@ -621,7 +621,7 @@ Program {
 															}
 														}
 													}
-													right: ReferenceIdentifier {
+													right: JSReferenceIdentifier {
 														name: "param"
 														loc: Object {
 															filename: "input.js"
@@ -646,7 +646,7 @@ Program {
 							]
 						}
 					}
-					ExpressionStatement {
+					JSExpressionStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -660,7 +660,7 @@ Program {
 								line: 8
 							}
 						}
-						expression: AssignmentExpression {
+						expression: JSAssignmentExpression {
 							operator: "="
 							loc: Object {
 								filename: "input.js"
@@ -675,7 +675,7 @@ Program {
 									line: 8
 								}
 							}
-							left: AssignmentIdentifier {
+							left: JSAssignmentIdentifier {
 								name: "C"
 								loc: Object {
 									filename: "input.js"
@@ -692,7 +692,7 @@ Program {
 									}
 								}
 							}
-							right: ReferenceIdentifier {
+							right: JSReferenceIdentifier {
 								name: "C_"
 								loc: Object {
 									filename: "input.js"

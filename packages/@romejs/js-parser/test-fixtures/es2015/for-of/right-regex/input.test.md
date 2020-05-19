@@ -5,7 +5,7 @@
 ## `es2015 > for-of > right-regex`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ForOfStatement {
+		JSForOfStatement {
 			await: false
 			loc: Object {
 				filename: "input.js"
@@ -45,7 +45,7 @@ Program {
 					line: 1
 				}
 			}
-			body: EmptyStatement {
+			body: JSEmptyStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -60,7 +60,7 @@ Program {
 					}
 				}
 			}
-			left: VariableDeclaration {
+			left: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.js"
@@ -76,8 +76,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.js"
@@ -111,7 +111,7 @@ Program {
 					}
 				]
 			}
-			right: RegExpLiteral {
+			right: JSRegExpLiteral {
 				global: true
 				insensitive: false
 				multiline: false
@@ -131,7 +131,7 @@ Program {
 						line: 1
 					}
 				}
-				expression: RegExpSubExpression {
+				expression: JSRegExpSubExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -146,7 +146,7 @@ Program {
 						}
 					}
 					body: Array [
-						RegExpCharacter {
+						JSRegExpCharacter {
 							value: "f"
 							loc: Object {
 								filename: "input.js"
@@ -162,7 +162,7 @@ Program {
 								}
 							}
 						}
-						RegExpCharacter {
+						JSRegExpCharacter {
 							value: "o"
 							loc: Object {
 								filename: "input.js"
@@ -178,7 +178,7 @@ Program {
 								}
 							}
 						}
-						RegExpCharacter {
+						JSRegExpCharacter {
 							value: "o"
 							loc: Object {
 								filename: "input.js"
@@ -198,7 +198,7 @@ Program {
 				}
 			}
 		}
-		ForStatement {
+		JSForStatement {
 			test: undefined
 			update: undefined
 			loc: Object {
@@ -214,7 +214,7 @@ Program {
 					line: 3
 				}
 			}
-			body: EmptyStatement {
+			body: JSEmptyStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -229,7 +229,7 @@ Program {
 					}
 				}
 			}
-			init: VariableDeclaration {
+			init: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.js"
@@ -245,8 +245,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.js"
@@ -276,7 +276,7 @@ Program {
 								line: 3
 							}
 						}
-						init: BinaryExpression {
+						init: JSBinaryExpression {
 							operator: "/"
 							loc: Object {
 								filename: "input.js"
@@ -291,7 +291,7 @@ Program {
 									line: 3
 								}
 							}
-							right: ReferenceIdentifier {
+							right: JSReferenceIdentifier {
 								name: "g"
 								loc: Object {
 									filename: "input.js"
@@ -308,7 +308,7 @@ Program {
 									}
 								}
 							}
-							left: BinaryExpression {
+							left: JSBinaryExpression {
 								operator: "/"
 								loc: Object {
 									filename: "input.js"
@@ -323,7 +323,7 @@ Program {
 										line: 3
 									}
 								}
-								left: ReferenceIdentifier {
+								left: JSReferenceIdentifier {
 									name: "of"
 									loc: Object {
 										filename: "input.js"
@@ -340,7 +340,7 @@ Program {
 										}
 									}
 								}
-								right: ReferenceIdentifier {
+								right: JSReferenceIdentifier {
 									name: "foo"
 									loc: Object {
 										filename: "input.js"

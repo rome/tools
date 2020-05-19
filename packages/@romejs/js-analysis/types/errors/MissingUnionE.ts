@@ -8,7 +8,7 @@
 import {Scope} from "../../scopes";
 import E, {ErrorDefinition} from "./E";
 import T from "../T";
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 import {descriptions} from "@romejs/diagnostics";
 
 export default class MissingUnionE extends E {

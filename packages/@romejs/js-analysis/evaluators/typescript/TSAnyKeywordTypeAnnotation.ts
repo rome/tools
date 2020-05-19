@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	TSAnyKeywordTypeAnnotation,
 	tsAnyKeywordTypeAnnotation,
-} from "@romejs/js-ast";
+} from "@romejs/ast";
 import AnyT from "../../types/AnyT";
 
 export default function TSAnyKeywordTypeAnnotation(node: AnyNode, scope: Scope) {

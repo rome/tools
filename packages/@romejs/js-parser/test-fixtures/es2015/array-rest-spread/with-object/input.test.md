@@ -5,7 +5,7 @@
 ## `es2015 > array-rest-spread > with-object`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.js"
@@ -60,8 +60,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingArrayPattern {
+					JSVariableDeclarator {
+						id: JSBindingArrayPattern {
 							elements: Array []
 							loc: Object {
 								filename: "input.js"
@@ -76,7 +76,7 @@ Program {
 									line: 1
 								}
 							}
-							rest: BindingObjectPattern {
+							rest: JSBindingObjectPattern {
 								rest: undefined
 								loc: Object {
 									filename: "input.js"
@@ -91,7 +91,7 @@ Program {
 										line: 1
 									}
 								}
-								meta: PatternMeta {
+								meta: JSPatternMeta {
 									optional: undefined
 									typeAnnotation: undefined
 									loc: Object {
@@ -109,9 +109,9 @@ Program {
 									}
 								}
 								properties: Array [
-									BindingObjectPatternProperty {
-										key: StaticPropertyKey {
-											value: Identifier {
+									JSBindingObjectPatternProperty {
+										key: JSStaticPropertyKey {
+											value: JSIdentifier {
 												name: "length"
 												loc: Object {
 													filename: "input.js"
@@ -142,7 +142,7 @@ Program {
 												}
 											}
 										}
-										value: BindingIdentifier {
+										value: JSBindingIdentifier {
 											name: "length"
 											loc: Object {
 												filename: "input.js"
@@ -189,7 +189,7 @@ Program {
 								line: 1
 							}
 						}
-						init: ArrayExpression {
+						init: JSArrayExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -204,7 +204,7 @@ Program {
 								}
 							}
 							elements: Array [
-								NumericLiteral {
+								JSNumericLiteral {
 									value: 1
 									format: undefined
 									loc: Object {
@@ -221,7 +221,7 @@ Program {
 										}
 									}
 								}
-								NumericLiteral {
+								JSNumericLiteral {
 									value: 2
 									format: undefined
 									loc: Object {
@@ -238,7 +238,7 @@ Program {
 										}
 									}
 								}
-								NumericLiteral {
+								JSNumericLiteral {
 									value: 3
 									format: undefined
 									loc: Object {

@@ -5,7 +5,7 @@
 ## `experimental > class-properties > arguments-in-key`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "fn"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -84,7 +84,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -100,8 +100,8 @@ Program {
 					}
 				}
 				body: Array [
-					ClassDeclaration {
-						id: BindingIdentifier {
+					JSClassDeclaration {
+						id: JSBindingIdentifier {
 							name: "A"
 							loc: Object {
 								filename: "input.js"
@@ -131,7 +131,7 @@ Program {
 								line: 2
 							}
 						}
-						meta: ClassHead {
+						meta: JSClassHead {
 							implements: undefined
 							superClass: undefined
 							superTypeParameters: undefined
@@ -150,9 +150,9 @@ Program {
 								}
 							}
 							body: Array [
-								ClassProperty {
-									key: ComputedPropertyKey {
-										value: ReferenceIdentifier {
+								JSClassProperty {
+									key: JSComputedPropertyKey {
+										value: JSReferenceIdentifier {
 											name: "arguments"
 											loc: Object {
 												filename: "input.js"
@@ -183,7 +183,7 @@ Program {
 											}
 										}
 									}
-									value: NumericLiteral {
+									value: JSNumericLiteral {
 										value: 2
 										format: undefined
 										loc: Object {
@@ -215,7 +215,7 @@ Program {
 											line: 3
 										}
 									}
-									meta: ClassPropertyMeta {
+									meta: JSClassPropertyMeta {
 										abstract: false
 										accessibility: undefined
 										optional: false

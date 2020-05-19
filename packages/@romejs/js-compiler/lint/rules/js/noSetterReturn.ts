@@ -6,7 +6,7 @@
  */
 
 import {Path} from "@romejs/js-compiler";
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 import {getCompletionRecords} from "@romejs/js-ast-utils";
 import {descriptions} from "@romejs/diagnostics";
 
@@ -16,13 +16,13 @@ export default {
 		const {node} = path;
 
 		if (
-			(node.type === "ClassMethod" || node.type === "ObjectMethod") &&
+			(node.type === "JSClassMethod" || node.type === "JSObjectMethod") &&
 			node.kind === "set"
 		) {
 			for (const record of getCompletionRecords(node.body)) {
 				if (
 					record.type === "COMPLETION" &&
-					record.node.type === "ReturnStatement" &&
+					record.node.type === "JSReturnStatement" &&
 					record.node.argument !== undefined
 				) {
 					path.context.addNodeDiagnostic(

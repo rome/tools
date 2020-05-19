@@ -10,7 +10,7 @@ import {Consumer} from "@romejs/consume";
 import {commandCategories} from "../../common/commands";
 import {createMasterCommand} from "../commands";
 import {createUnknownFilePath} from "@romejs/path";
-import {ConstSourceType, program} from "@romejs/js-ast";
+import {ConstSourceType, jsProgram} from "@romejs/ast";
 import {removeLoc} from "@romejs/js-ast-utils";
 
 type Flags = {
@@ -53,7 +53,7 @@ export default createMasterCommand({
 		);
 
 		if (flags.compact) {
-			ast = program.assert(removeLoc(ast));
+			ast = jsProgram.assert(removeLoc(ast));
 		}
 
 		reporter.inspect(ast);

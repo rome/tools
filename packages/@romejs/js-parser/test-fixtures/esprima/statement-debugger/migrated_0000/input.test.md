@@ -5,7 +5,7 @@
 ## `esprima > statement-debugger > migrated_0000`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		DebuggerStatement {
+		JSDebuggerStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {

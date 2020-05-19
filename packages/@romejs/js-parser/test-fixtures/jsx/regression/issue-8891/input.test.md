@@ -5,7 +5,7 @@
 ## `jsx > regression > issue-8891`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -33,7 +33,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -143,7 +143,7 @@ Program {
 											line: 2
 										}
 									}
-									expression: ObjectExpression {
+									expression: JSObjectExpression {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -158,9 +158,9 @@ Program {
 											}
 										}
 										properties: Array [
-											ObjectProperty {
-												key: StaticPropertyKey {
-													value: Identifier {
+											JSObjectProperty {
+												key: JSStaticPropertyKey {
+													value: JSIdentifier {
 														name: "function"
 														loc: Object {
 															filename: "input.js"
@@ -191,7 +191,7 @@ Program {
 														}
 													}
 												}
-												value: StringLiteral {
+												value: JSStringLiteral {
 													value: "test"
 													loc: Object {
 														filename: "input.js"
@@ -321,7 +321,7 @@ Program {
 											line: 3
 										}
 									}
-									expression: ObjectExpression {
+									expression: JSObjectExpression {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -336,9 +336,9 @@ Program {
 											}
 										}
 										properties: Array [
-											ObjectProperty {
-												key: StaticPropertyKey {
-													value: Identifier {
+											JSObjectProperty {
+												key: JSStaticPropertyKey {
+													value: JSIdentifier {
 														name: "class"
 														loc: Object {
 															filename: "input.js"
@@ -369,7 +369,7 @@ Program {
 														}
 													}
 												}
-												value: StringLiteral {
+												value: JSStringLiteral {
 													value: "test"
 													loc: Object {
 														filename: "input.js"
@@ -499,7 +499,7 @@ Program {
 											line: 4
 										}
 									}
-									expression: ObjectExpression {
+									expression: JSObjectExpression {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -514,9 +514,9 @@ Program {
 											}
 										}
 										properties: Array [
-											ObjectProperty {
-												key: StaticPropertyKey {
-													value: Identifier {
+											JSObjectProperty {
+												key: JSStaticPropertyKey {
+													value: JSIdentifier {
 														name: "delete"
 														loc: Object {
 															filename: "input.js"
@@ -547,7 +547,7 @@ Program {
 														}
 													}
 												}
-												value: StringLiteral {
+												value: JSStringLiteral {
 													value: "test"
 													loc: Object {
 														filename: "input.js"
@@ -677,7 +677,7 @@ Program {
 											line: 5
 										}
 									}
-									expression: ObjectExpression {
+									expression: JSObjectExpression {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -692,9 +692,9 @@ Program {
 											}
 										}
 										properties: Array [
-											ObjectProperty {
-												key: StaticPropertyKey {
-													value: Identifier {
+											JSObjectProperty {
+												key: JSStaticPropertyKey {
+													value: JSIdentifier {
 														name: "enum"
 														loc: Object {
 															filename: "input.js"
@@ -725,7 +725,7 @@ Program {
 														}
 													}
 												}
-												value: StringLiteral {
+												value: JSStringLiteral {
 													value: "test"
 													loc: Object {
 														filename: "input.js"

@@ -6,7 +6,7 @@
  */
 
 import {Path, TransformExitResult} from "@romejs/js-compiler";
-import {referenceIdentifier} from "@romejs/js-ast";
+import {jsReferenceIdentifier} from "@romejs/ast";
 import {descriptions} from "@romejs/diagnostics";
 
 export default {
@@ -14,11 +14,11 @@ export default {
 	enter(path: Path): TransformExitResult {
 		const {node, parent} = path;
 
-		if (node.type === "ArrayHole" && parent.type === "ArrayExpression") {
+		if (node.type === "JSArrayHole" && parent.type === "JSArrayExpression") {
 			return path.context.addFixableDiagnostic(
 				{
 					old: node,
-					fixed: referenceIdentifier.create({name: "undefined"}),
+					fixed: jsReferenceIdentifier.create({name: "undefined"}),
 				},
 				descriptions.LINT.JS_SPARSE_ARRAY,
 			);

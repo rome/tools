@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > invalid-escape-sequence-arrow`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ReferenceIdentifier {
+			expression: JSReferenceIdentifier {
 				name: "async"
 				loc: Object {
 					filename: "input.js"
@@ -86,7 +86,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -100,7 +100,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ArrowFunctionExpression {
+			expression: JSArrowFunctionExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -114,7 +114,7 @@ Program {
 						line: 1
 					}
 				}
-				head: FunctionHead {
+				head: JSFunctionHead {
 					async: false
 					hasHoistedVars: false
 					rest: undefined
@@ -133,7 +133,7 @@ Program {
 						}
 					}
 					params: Array [
-						BindingIdentifier {
+						JSBindingIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.js"
@@ -152,7 +152,7 @@ Program {
 						}
 					]
 				}
-				body: BlockStatement {
+				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
 						filename: "input.js"
@@ -168,7 +168,7 @@ Program {
 						}
 					}
 					body: Array [
-						ExpressionStatement {
+						JSExpressionStatement {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -182,7 +182,7 @@ Program {
 									line: 1
 								}
 							}
-							expression: ReferenceIdentifier {
+							expression: JSReferenceIdentifier {
 								name: "await"
 								loc: Object {
 									filename: "input.js"
@@ -200,7 +200,7 @@ Program {
 								}
 							}
 						}
-						ExpressionStatement {
+						JSExpressionStatement {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -214,7 +214,7 @@ Program {
 									line: 1
 								}
 							}
-							expression: ReferenceIdentifier {
+							expression: JSReferenceIdentifier {
 								name: "x"
 								loc: Object {
 									filename: "input.js"

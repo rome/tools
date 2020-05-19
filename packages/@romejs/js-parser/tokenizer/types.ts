@@ -138,7 +138,7 @@ export const types = {
 	//
 	// `isAssign` marks all of `=`, `+=`, `-=` etcetera, which act as
 	// binary operators with a very low precedence, that should result
-	// in AssignmentExpression nodes.
+	// in JSAssignmentExpression nodes.
 	eq: new TokenType("=", {beforeExpr, isAssign}),
 	assign: new TokenType("_=", {beforeExpr, isAssign}),
 	incDec: new TokenType("++/--", {prefix, postfix, startsExpr}),

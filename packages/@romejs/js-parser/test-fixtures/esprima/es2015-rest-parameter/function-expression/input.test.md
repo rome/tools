@@ -5,7 +5,7 @@
 ## `esprima > es2015-rest-parameter > function-expression`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: AssignmentExpression {
+			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
 					filename: "input.js"
@@ -59,7 +59,7 @@ Program {
 						line: 1
 					}
 				}
-				left: AssignmentIdentifier {
+				left: JSAssignmentIdentifier {
 					name: "f"
 					loc: Object {
 						filename: "input.js"
@@ -76,7 +76,7 @@ Program {
 						}
 					}
 				}
-				right: FunctionExpression {
+				right: JSFunctionExpression {
 					id: undefined
 					loc: Object {
 						filename: "input.js"
@@ -91,7 +91,7 @@ Program {
 							line: 1
 						}
 					}
-					body: BlockStatement {
+					body: JSBlockStatement {
 						body: Array []
 						directives: Array []
 						loc: Object {
@@ -108,7 +108,7 @@ Program {
 							}
 						}
 					}
-					head: FunctionHead {
+					head: JSFunctionHead {
 						async: false
 						generator: false
 						hasHoistedVars: false
@@ -128,7 +128,7 @@ Program {
 								line: 1
 							}
 						}
-						rest: BindingIdentifier {
+						rest: JSBindingIdentifier {
 							name: "b"
 							loc: Object {
 								filename: "input.js"
@@ -144,7 +144,7 @@ Program {
 									line: 1
 								}
 							}
-							meta: PatternMeta {
+							meta: JSPatternMeta {
 								optional: undefined
 								typeAnnotation: undefined
 								loc: Object {
@@ -163,7 +163,7 @@ Program {
 							}
 						}
 						params: Array [
-							BindingIdentifier {
+							JSBindingIdentifier {
 								name: "a"
 								loc: Object {
 									filename: "input.js"
@@ -179,7 +179,7 @@ Program {
 										line: 1
 									}
 								}
-								meta: PatternMeta {
+								meta: JSPatternMeta {
 									optional: undefined
 									typeAnnotation: undefined
 									loc: Object {

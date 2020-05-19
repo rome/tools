@@ -5,7 +5,7 @@
 ## `core > uncategorised > 268`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		SwitchStatement {
+		JSSwitchStatement {
 			cases: Array []
 			loc: Object {
 				filename: "input.js"
@@ -45,7 +45,7 @@ Program {
 					line: 1
 				}
 			}
-			discriminant: ReferenceIdentifier {
+			discriminant: JSReferenceIdentifier {
 				name: "x"
 				loc: Object {
 					filename: "input.js"

@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 390`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExportLocalDeclaration {
+		JSExportLocalDeclaration {
 			declaration: undefined
 			exportKind: "value"
 			loc: Object {
@@ -71,7 +71,7 @@ Program {
 				}
 			}
 			specifiers: Array [
-				ExportLocalSpecifier {
+				JSExportLocalSpecifier {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -85,7 +85,7 @@ Program {
 							line: 1
 						}
 					}
-					exported: Identifier {
+					exported: JSIdentifier {
 						name: "while"
 						loc: Object {
 							filename: "input.js"
@@ -102,7 +102,7 @@ Program {
 							}
 						}
 					}
-					local: ReferenceIdentifier {
+					local: JSReferenceIdentifier {
 						name: "while"
 						loc: Object {
 							filename: "input.js"
@@ -120,7 +120,7 @@ Program {
 						}
 					}
 				}
-				ExportLocalSpecifier {
+				JSExportLocalSpecifier {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -134,7 +134,7 @@ Program {
 							line: 1
 						}
 					}
-					exported: Identifier {
+					exported: JSIdentifier {
 						name: ""
 						loc: Object {
 							filename: "input.js"
@@ -151,7 +151,7 @@ Program {
 							}
 						}
 					}
-					local: ReferenceIdentifier {
+					local: JSReferenceIdentifier {
 						name: ""
 						loc: Object {
 							filename: "input.js"
@@ -169,7 +169,7 @@ Program {
 						}
 					}
 				}
-				ExportLocalSpecifier {
+				JSExportLocalSpecifier {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -183,7 +183,7 @@ Program {
 							line: 1
 						}
 					}
-					exported: Identifier {
+					exported: JSIdentifier {
 						name: "foo"
 						loc: Object {
 							filename: "input.js"
@@ -200,7 +200,7 @@ Program {
 							}
 						}
 					}
-					local: ReferenceIdentifier {
+					local: JSReferenceIdentifier {
 						name: "foo"
 						loc: Object {
 							filename: "input.js"
@@ -218,7 +218,7 @@ Program {
 						}
 					}
 				}
-				ExportLocalSpecifier {
+				JSExportLocalSpecifier {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -232,7 +232,7 @@ Program {
 							line: 1
 						}
 					}
-					exported: Identifier {
+					exported: JSIdentifier {
 						name: ""
 						loc: Object {
 							filename: "input.js"
@@ -249,7 +249,7 @@ Program {
 							}
 						}
 					}
-					local: ReferenceIdentifier {
+					local: JSReferenceIdentifier {
 						name: ""
 						loc: Object {
 							filename: "input.js"
@@ -267,7 +267,7 @@ Program {
 						}
 					}
 				}
-				ExportLocalSpecifier {
+				JSExportLocalSpecifier {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -281,7 +281,7 @@ Program {
 							line: 1
 						}
 					}
-					exported: Identifier {
+					exported: JSIdentifier {
 						name: ""
 						loc: Object {
 							filename: "input.js"
@@ -298,7 +298,7 @@ Program {
 							}
 						}
 					}
-					local: ReferenceIdentifier {
+					local: JSReferenceIdentifier {
 						name: ""
 						loc: Object {
 							filename: "input.js"

@@ -5,7 +5,7 @@
 ## `typescript > export > equals`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ReferenceIdentifier {
+			expression: JSReferenceIdentifier {
 				name: "f"
 				loc: Object {
 					filename: "input.ts"

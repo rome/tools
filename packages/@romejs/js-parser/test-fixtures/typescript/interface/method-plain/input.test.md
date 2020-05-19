@@ -5,7 +5,7 @@
 ## `typescript > interface > method-plain`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -31,7 +31,7 @@ Program {
 	}
 	body: Array [
 		TSInterfaceDeclaration {
-			id: BindingIdentifier {
+			id: JSBindingIdentifier {
 				name: "I"
 				loc: Object {
 					filename: "input.ts"
@@ -79,8 +79,8 @@ Program {
 				}
 				body: Array [
 					TSMethodSignature {
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "m"
 								loc: Object {
 									filename: "input.ts"
@@ -146,8 +146,8 @@ Program {
 						}
 					}
 					TSMethodSignature {
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "m"
 								loc: Object {
 									filename: "input.ts"
@@ -192,7 +192,7 @@ Program {
 								line: 3
 							}
 						}
-						returnType: VoidKeywordTypeAnnotation {
+						returnType: TSVoidKeywordTypeAnnotation {
 							loc: Object {
 								filename: "input.ts"
 								end: Object {
@@ -223,7 +223,7 @@ Program {
 								}
 							}
 							parameters: Array [
-								BindingIdentifier {
+								JSBindingIdentifier {
 									name: "x"
 									loc: Object {
 										filename: "input.ts"
@@ -239,7 +239,7 @@ Program {
 											line: 3
 										}
 									}
-									meta: PatternMeta {
+									meta: JSPatternMeta {
 										optional: true
 										loc: Object {
 											filename: "input.ts"
@@ -272,7 +272,7 @@ Program {
 									}
 								}
 							]
-							rest: BindingIdentifier {
+							rest: JSBindingIdentifier {
 								name: "y"
 								loc: Object {
 									filename: "input.ts"
@@ -288,7 +288,7 @@ Program {
 										line: 3
 									}
 								}
-								meta: PatternMeta {
+								meta: JSPatternMeta {
 									optional: undefined
 									loc: Object {
 										filename: "input.ts"

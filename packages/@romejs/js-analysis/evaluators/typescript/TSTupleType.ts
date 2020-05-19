@@ -6,7 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, TSTupleType, tsTupleType} from "@romejs/js-ast";
+import {AnyNode, TSTupleType, tsTupleType} from "@romejs/ast";
 
 export default function TSTupleType(node: AnyNode, scope: Scope) {
 	node = tsTupleType.assert(node);

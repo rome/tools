@@ -5,7 +5,7 @@
 ## `experimental > do-expressions > conditional-statement`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.js"
@@ -60,8 +60,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.js"
@@ -91,7 +91,7 @@ Program {
 								line: 1
 							}
 						}
-						init: DoExpression {
+						init: JSDoExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -105,7 +105,7 @@ Program {
 									line: 1
 								}
 							}
-							body: BlockStatement {
+							body: JSBlockStatement {
 								directives: Array []
 								loc: Object {
 									filename: "input.js"
@@ -121,7 +121,7 @@ Program {
 									}
 								}
 								body: Array [
-									IfStatement {
+									JSIfStatement {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -135,7 +135,7 @@ Program {
 												line: 2
 											}
 										}
-										test: CallExpression {
+										test: JSCallExpression {
 											arguments: Array []
 											loc: Object {
 												filename: "input.js"
@@ -150,7 +150,7 @@ Program {
 													line: 2
 												}
 											}
-											callee: ReferenceIdentifier {
+											callee: JSReferenceIdentifier {
 												name: "foo"
 												loc: Object {
 													filename: "input.js"
@@ -168,7 +168,7 @@ Program {
 												}
 											}
 										}
-										consequent: BlockStatement {
+										consequent: JSBlockStatement {
 											directives: Array []
 											loc: Object {
 												filename: "input.js"
@@ -184,7 +184,7 @@ Program {
 												}
 											}
 											body: Array [
-												ExpressionStatement {
+												JSExpressionStatement {
 													loc: Object {
 														filename: "input.js"
 														end: Object {
@@ -198,7 +198,7 @@ Program {
 															line: 2
 														}
 													}
-													expression: CallExpression {
+													expression: JSCallExpression {
 														arguments: Array []
 														loc: Object {
 															filename: "input.js"
@@ -213,7 +213,7 @@ Program {
 																line: 2
 															}
 														}
-														callee: ReferenceIdentifier {
+														callee: JSReferenceIdentifier {
 															name: "f"
 															loc: Object {
 																filename: "input.js"
@@ -234,7 +234,7 @@ Program {
 												}
 											]
 										}
-										alternate: IfStatement {
+										alternate: JSIfStatement {
 											loc: Object {
 												filename: "input.js"
 												end: Object {
@@ -248,7 +248,7 @@ Program {
 													line: 3
 												}
 											}
-											test: CallExpression {
+											test: JSCallExpression {
 												arguments: Array []
 												loc: Object {
 													filename: "input.js"
@@ -263,7 +263,7 @@ Program {
 														line: 3
 													}
 												}
-												callee: ReferenceIdentifier {
+												callee: JSReferenceIdentifier {
 													name: "bar"
 													loc: Object {
 														filename: "input.js"
@@ -281,7 +281,7 @@ Program {
 													}
 												}
 											}
-											alternate: BlockStatement {
+											alternate: JSBlockStatement {
 												directives: Array []
 												loc: Object {
 													filename: "input.js"
@@ -297,7 +297,7 @@ Program {
 													}
 												}
 												body: Array [
-													ExpressionStatement {
+													JSExpressionStatement {
 														loc: Object {
 															filename: "input.js"
 															end: Object {
@@ -311,7 +311,7 @@ Program {
 																line: 4
 															}
 														}
-														expression: CallExpression {
+														expression: JSCallExpression {
 															arguments: Array []
 															loc: Object {
 																filename: "input.js"
@@ -326,7 +326,7 @@ Program {
 																	line: 4
 																}
 															}
-															callee: ReferenceIdentifier {
+															callee: JSReferenceIdentifier {
 																name: "h"
 																loc: Object {
 																	filename: "input.js"
@@ -347,7 +347,7 @@ Program {
 													}
 												]
 											}
-											consequent: BlockStatement {
+											consequent: JSBlockStatement {
 												directives: Array []
 												loc: Object {
 													filename: "input.js"
@@ -363,7 +363,7 @@ Program {
 													}
 												}
 												body: Array [
-													ExpressionStatement {
+													JSExpressionStatement {
 														loc: Object {
 															filename: "input.js"
 															end: Object {
@@ -377,7 +377,7 @@ Program {
 																line: 3
 															}
 														}
-														expression: CallExpression {
+														expression: JSCallExpression {
 															arguments: Array []
 															loc: Object {
 																filename: "input.js"
@@ -392,7 +392,7 @@ Program {
 																	line: 3
 																}
 															}
-															callee: ReferenceIdentifier {
+															callee: JSReferenceIdentifier {
 																name: "g"
 																loc: Object {
 																	filename: "input.js"

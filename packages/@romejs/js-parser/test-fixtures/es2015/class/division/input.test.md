@@ -5,7 +5,7 @@
 ## `es2015 > class > division`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: AssignmentExpression {
+			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
 					filename: "input.js"
@@ -59,7 +59,7 @@ Program {
 						line: 1
 					}
 				}
-				left: AssignmentIdentifier {
+				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: Object {
 						filename: "input.js"
@@ -76,7 +76,7 @@ Program {
 						}
 					}
 				}
-				right: BinaryExpression {
+				right: JSBinaryExpression {
 					operator: "/"
 					loc: Object {
 						filename: "input.js"
@@ -91,7 +91,7 @@ Program {
 							line: 1
 						}
 					}
-					right: ReferenceIdentifier {
+					right: JSReferenceIdentifier {
 						name: "foo"
 						loc: Object {
 							filename: "input.js"
@@ -108,7 +108,7 @@ Program {
 							}
 						}
 					}
-					left: ClassExpression {
+					left: JSClassExpression {
 						id: undefined
 						loc: Object {
 							filename: "input.js"
@@ -123,7 +123,7 @@ Program {
 								line: 1
 							}
 						}
-						meta: ClassHead {
+						meta: JSClassHead {
 							body: Array []
 							implements: undefined
 							superClass: undefined
@@ -147,7 +147,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -161,7 +161,7 @@ Program {
 					line: 3
 				}
 			}
-			expression: AssignmentExpression {
+			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
 					filename: "input.js"
@@ -176,7 +176,7 @@ Program {
 						line: 3
 					}
 				}
-				left: AssignmentIdentifier {
+				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: Object {
 						filename: "input.js"
@@ -193,7 +193,7 @@ Program {
 						}
 					}
 				}
-				right: BinaryExpression {
+				right: JSBinaryExpression {
 					operator: "/"
 					loc: Object {
 						filename: "input.js"
@@ -208,7 +208,7 @@ Program {
 							line: 3
 						}
 					}
-					left: BinaryExpression {
+					left: JSBinaryExpression {
 						operator: "/"
 						loc: Object {
 							filename: "input.js"
@@ -223,7 +223,7 @@ Program {
 								line: 3
 							}
 						}
-						right: ReferenceIdentifier {
+						right: JSReferenceIdentifier {
 							name: "foo"
 							loc: Object {
 								filename: "input.js"
@@ -240,7 +240,7 @@ Program {
 								}
 							}
 						}
-						left: ClassExpression {
+						left: JSClassExpression {
 							id: undefined
 							loc: Object {
 								filename: "input.js"
@@ -255,7 +255,7 @@ Program {
 									line: 3
 								}
 							}
-							meta: ClassHead {
+							meta: JSClassHead {
 								body: Array []
 								implements: undefined
 								superClass: undefined
@@ -277,7 +277,7 @@ Program {
 							}
 						}
 					}
-					right: CallExpression {
+					right: JSCallExpression {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -291,7 +291,7 @@ Program {
 								line: 4
 							}
 						}
-						callee: CallExpression {
+						callee: JSCallExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -305,7 +305,7 @@ Program {
 									line: 4
 								}
 							}
-							callee: ReferenceIdentifier {
+							callee: JSReferenceIdentifier {
 								name: "g"
 								loc: Object {
 									filename: "input.js"
@@ -323,7 +323,7 @@ Program {
 								}
 							}
 							arguments: Array [
-								AssignmentExpression {
+								JSAssignmentExpression {
 									operator: "="
 									loc: Object {
 										filename: "input.js"
@@ -338,7 +338,7 @@ Program {
 											line: 6
 										}
 									}
-									left: AssignmentIdentifier {
+									left: JSAssignmentIdentifier {
 										name: "x"
 										loc: Object {
 											filename: "input.js"
@@ -355,7 +355,7 @@ Program {
 											}
 										}
 									}
-									right: BinaryExpression {
+									right: JSBinaryExpression {
 										operator: "/"
 										loc: Object {
 											filename: "input.js"
@@ -370,7 +370,7 @@ Program {
 												line: 6
 											}
 										}
-										right: ReferenceIdentifier {
+										right: JSReferenceIdentifier {
 											name: "foo"
 											loc: Object {
 												filename: "input.js"
@@ -387,7 +387,7 @@ Program {
 												}
 											}
 										}
-										left: ClassExpression {
+										left: JSClassExpression {
 											id: undefined
 											loc: Object {
 												filename: "input.js"
@@ -402,7 +402,7 @@ Program {
 													line: 6
 												}
 											}
-											meta: ClassHead {
+											meta: JSClassHead {
 												body: Array []
 												implements: undefined
 												superClass: undefined
@@ -428,7 +428,7 @@ Program {
 							]
 						}
 						arguments: Array [
-							AssignmentExpression {
+							JSAssignmentExpression {
 								operator: "="
 								loc: Object {
 									filename: "input.js"
@@ -443,7 +443,7 @@ Program {
 										line: 8
 									}
 								}
-								left: AssignmentIdentifier {
+								left: JSAssignmentIdentifier {
 									name: "x"
 									loc: Object {
 										filename: "input.js"
@@ -460,7 +460,7 @@ Program {
 										}
 									}
 								}
-								right: BinaryExpression {
+								right: JSBinaryExpression {
 									operator: "/"
 									loc: Object {
 										filename: "input.js"
@@ -475,7 +475,7 @@ Program {
 											line: 8
 										}
 									}
-									right: ReferenceIdentifier {
+									right: JSReferenceIdentifier {
 										name: "g"
 										loc: Object {
 											filename: "input.js"
@@ -492,7 +492,7 @@ Program {
 											}
 										}
 									}
-									left: BinaryExpression {
+									left: JSBinaryExpression {
 										operator: "/"
 										loc: Object {
 											filename: "input.js"
@@ -507,7 +507,7 @@ Program {
 												line: 8
 											}
 										}
-										right: ReferenceIdentifier {
+										right: JSReferenceIdentifier {
 											name: "foo"
 											loc: Object {
 												filename: "input.js"
@@ -524,7 +524,7 @@ Program {
 												}
 											}
 										}
-										left: ClassExpression {
+										left: JSClassExpression {
 											id: undefined
 											loc: Object {
 												filename: "input.js"
@@ -539,7 +539,7 @@ Program {
 													line: 8
 												}
 											}
-											meta: ClassHead {
+											meta: JSClassHead {
 												body: Array []
 												implements: undefined
 												superClass: undefined

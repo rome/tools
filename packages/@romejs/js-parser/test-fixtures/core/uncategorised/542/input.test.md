@@ -5,7 +5,7 @@
 ## `core > uncategorised > 542`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: CallExpression {
+			expression: JSCallExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -59,7 +59,7 @@ Program {
 					}
 				}
 				arguments: Array [
-					StringLiteral {
+					JSStringLiteral {
 						value: " "
 						loc: Object {
 							filename: "input.js"
@@ -76,7 +76,7 @@ Program {
 						}
 					}
 				]
-				callee: MemberExpression {
+				callee: JSMemberExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -90,7 +90,7 @@ Program {
 							line: 1
 						}
 					}
-					object: StringLiteral {
+					object: JSStringLiteral {
 						value: "foo"
 						loc: Object {
 							filename: "input.js"
@@ -106,8 +106,8 @@ Program {
 							}
 						}
 					}
-					property: StaticMemberProperty {
-						value: Identifier {
+					property: JSStaticMemberProperty {
+						value: JSIdentifier {
 							name: "split"
 							loc: Object {
 								filename: "input.js"

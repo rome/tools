@@ -5,7 +5,7 @@
 ## `experimental > class-properties > super-inside-arrow-function`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		ClassDeclaration {
-			id: BindingIdentifier {
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			meta: ClassHead {
+			meta: JSClassHead {
 				implements: undefined
 				superTypeParameters: undefined
 				typeParameters: undefined
@@ -78,7 +78,7 @@ Program {
 						line: 1
 					}
 				}
-				superClass: ReferenceIdentifier {
+				superClass: JSReferenceIdentifier {
 					name: "B"
 					loc: Object {
 						filename: "input.js"
@@ -96,9 +96,9 @@ Program {
 					}
 				}
 				body: Array [
-					ClassProperty {
-						key: StaticPropertyKey {
-							value: Identifier {
+					JSClassProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "foo"
 								loc: Object {
 									filename: "input.js"
@@ -129,7 +129,7 @@ Program {
 								}
 							}
 						}
-						value: ArrowFunctionExpression {
+						value: JSArrowFunctionExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -143,7 +143,7 @@ Program {
 									line: 2
 								}
 							}
-							head: FunctionHead {
+							head: JSFunctionHead {
 								async: false
 								hasHoistedVars: false
 								params: Array []
@@ -164,7 +164,7 @@ Program {
 									}
 								}
 							}
-							body: CallExpression {
+							body: JSCallExpression {
 								arguments: Array []
 								loc: Object {
 									filename: "input.js"
@@ -179,7 +179,7 @@ Program {
 										line: 2
 									}
 								}
-								callee: MemberExpression {
+								callee: JSMemberExpression {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -193,7 +193,7 @@ Program {
 											line: 2
 										}
 									}
-									object: Super {
+									object: JSSuper {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -208,8 +208,8 @@ Program {
 											}
 										}
 									}
-									property: StaticMemberProperty {
-										value: Identifier {
+									property: JSStaticMemberProperty {
+										value: JSIdentifier {
 											name: "x"
 											loc: Object {
 												filename: "input.js"
@@ -259,7 +259,7 @@ Program {
 								line: 2
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false

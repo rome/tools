@@ -7,7 +7,7 @@
 
 import {descriptions} from "@romejs/diagnostics";
 import {hasJSXAttribute, isJSXElement} from "@romejs/js-ast-utils";
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 import {Path} from "@romejs/js-compiler";
 
 function jsxIframeMissingTitle(node: AnyNode) {

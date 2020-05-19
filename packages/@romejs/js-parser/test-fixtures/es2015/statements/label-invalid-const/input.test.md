@@ -5,7 +5,7 @@
 ## `es2015 > statements > label-invalid-const`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		LabeledStatement {
+		JSLabeledStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			label: Identifier {
+			label: JSIdentifier {
 				name: "foo"
 				loc: Object {
 					filename: "input.js"
@@ -85,7 +85,7 @@ Program {
 					}
 				}
 			}
-			body: VariableDeclarationStatement {
+			body: JSVariableDeclarationStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -99,7 +99,7 @@ Program {
 						line: 1
 					}
 				}
-				declaration: VariableDeclaration {
+				declaration: JSVariableDeclaration {
 					kind: "const"
 					loc: Object {
 						filename: "input.js"
@@ -115,8 +115,8 @@ Program {
 						}
 					}
 					declarations: Array [
-						VariableDeclarator {
-							id: BindingIdentifier {
+						JSVariableDeclarator {
+							id: JSBindingIdentifier {
 								name: "bar"
 								loc: Object {
 									filename: "input.js"
@@ -146,7 +146,7 @@ Program {
 									line: 1
 								}
 							}
-							init: NullLiteral {
+							init: JSNullLiteral {
 								loc: Object {
 									filename: "input.js"
 									end: Object {

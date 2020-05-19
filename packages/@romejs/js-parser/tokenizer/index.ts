@@ -5,7 +5,11 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyComment, InterpreterDirective, NumericLiteral} from "@romejs/js-ast";
+import {
+	AnyJSComment,
+	JSInterpreterDirective,
+	JSNumericLiteral,
+} from "@romejs/ast";
 import {Position, SourceLocation} from "@romejs/parser-core";
 import {JSParser} from "../parser";
 import {xhtmlEntityNameToChar} from "../xhtmlEntities";
@@ -47,7 +51,7 @@ const HEX_NUMBER = /^[\da-fA-F]+$/;
 const DECIMAL_NUMBER = /^\d+$/;
 
 // The following character codes are forbidden from 'being
-// an immediate sibling of NumericLiteralSeparator _
+// an immediate sibling of JSNumericLiteralSeparator _
 const forbiddenNumericSeparatorSiblings = {
 	decBinOct: [
 		charCodes.dot,
@@ -135,13 +139,13 @@ export class RegExpTokenValue {
 }
 
 export class NumberTokenValue {
-	constructor(value: number, format: NumericLiteral["format"]) {
+	constructor(value: number, format: JSNumericLiteral["format"]) {
 		this.value = value;
 		this.format = format;
 	}
 
 	value: number;
-	format: NumericLiteral["format"];
+	format: JSNumericLiteral["format"];
 }
 
 // ## Tokenizer
@@ -280,7 +284,7 @@ function readJSXToken(parser: JSParser, code: number): boolean {
 }
 
 function readNormalToken(parser: JSParser, code: number): void {
-	// Identifier or keyword. '\uXXXX' sequences are allowed in
+	// JSIdentifier or keyword. '\uXXXX' sequences are allowed in
 	// identifiers, so '\' also dispatches to that.
 	if (isIdentifierStart(code) || code === charCodes.backslash) {
 		readWord(parser);
@@ -301,18 +305,18 @@ function pushComment(
 		startPos: Position;
 		endPos: Position;
 	},
-): AnyComment {
+): AnyJSComment {
 	const loc = parser.finishLocAt(opts.startPos, opts.endPos);
-	let comment: AnyComment;
+	let comment: AnyJSComment;
 	if (opts.block) {
 		comment = parser.comments.addComment({
-			type: "CommentBlock",
+			type: "JSCommentBlock",
 			value: removeCarriageReturn(opts.text),
 			loc,
 		});
 	} else {
 		comment = parser.comments.addComment({
-			type: "CommentLine",
+			type: "JSCommentLine",
 			value: opts.text,
 			loc,
 		});
@@ -415,7 +419,10 @@ function parseLineComment(
 	};
 }
 
-export function skipLineComment(parser: JSParser, startSkip: number): AnyComment {
+export function skipLineComment(
+	parser: JSParser,
+	startSkip: number,
+): AnyJSComment {
 	const lineComment = parseLineComment(parser, startSkip);
 	return pushComment(
 		parser,
@@ -431,11 +438,11 @@ export function skipLineComment(parser: JSParser, startSkip: number): AnyComment
 export function skipInterpreterDirective(
 	parser: JSParser,
 	startSkip: number,
-): InterpreterDirective {
+): JSInterpreterDirective {
 	const lineComment = parseLineComment(parser, startSkip);
 	const loc = parser.finishLocAt(lineComment.startPos, lineComment.endPos);
 	return {
-		type: "InterpreterDirective",
+		type: "JSInterpreterDirective",
 		value: lineComment.text,
 		loc,
 	};
@@ -1216,7 +1223,7 @@ function readInt(
 function readRadixNumber(
 	parser: JSParser,
 	radix: number,
-	format: NumericLiteral["format"],
+	format: JSNumericLiteral["format"],
 ): void {
 	const start = parser.state.index;
 	let isBigInt = false;

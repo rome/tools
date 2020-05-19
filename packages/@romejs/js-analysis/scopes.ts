@@ -9,7 +9,7 @@ import Intrinsics from "./Intrinsics";
 import Evaluator from "./Evaluator";
 import T from "./types/T";
 import Hub from "./Hub";
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 import StringLiteralT from "./types/StringLiteralT";
 import UnknownT from "./types/UnknownT";
 import GetPropT from "./types/GetPropT";

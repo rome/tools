@@ -5,7 +5,7 @@
 ## `esprima > es2015-class > migrated_0024`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ClassExpression {
+			expression: JSClassExpression {
 				id: undefined
 				loc: Object {
 					filename: "input.js"
@@ -59,7 +59,7 @@ Program {
 						line: 1
 					}
 				}
-				meta: ClassHead {
+				meta: JSClassHead {
 					body: Array []
 					implements: undefined
 					superTypeParameters: undefined
@@ -77,7 +77,7 @@ Program {
 							line: 1
 						}
 					}
-					superClass: NumericLiteral {
+					superClass: JSNumericLiteral {
 						value: 0
 						format: undefined
 						loc: Object {

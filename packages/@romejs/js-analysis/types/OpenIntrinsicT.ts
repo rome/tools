@@ -9,7 +9,7 @@ import {Scope} from "../scopes";
 import {HydrateData} from "../Evaluator";
 import T from "./T";
 import OpenT from "./OpenT";
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 
 export default class OpenIntrinsicT extends OpenT {
 	constructor(scope: Scope, originNode: undefined | AnyNode, name: string) {

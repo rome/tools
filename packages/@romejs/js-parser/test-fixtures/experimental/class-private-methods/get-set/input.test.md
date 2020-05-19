@@ -5,7 +5,7 @@
 ## `experimental > class-private-methods > get-set`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		ClassDeclaration {
-			id: BindingIdentifier {
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
 				name: "Hotel"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			meta: ClassHead {
+			meta: JSClassHead {
 				implements: undefined
 				superClass: undefined
 				superTypeParameters: undefined
@@ -80,10 +80,10 @@ Program {
 					}
 				}
 				body: Array [
-					ClassPrivateMethod {
+					JSClassPrivateMethod {
 						kind: "get"
-						key: PrivateName {
-							id: Identifier {
+						key: JSPrivateName {
+							id: JSIdentifier {
 								name: "evil"
 								loc: Object {
 									filename: "input.js"
@@ -127,7 +127,7 @@ Program {
 								line: 2
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -150,7 +150,7 @@ Program {
 								}
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -176,7 +176,7 @@ Program {
 								}
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
 								filename: "input.js"
@@ -192,7 +192,7 @@ Program {
 								}
 							}
 							body: Array [
-								ReturnStatement {
+								JSReturnStatement {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -206,7 +206,7 @@ Program {
 											line: 3
 										}
 									}
-									argument: CallExpression {
+									argument: JSCallExpression {
 										arguments: Array []
 										loc: Object {
 											filename: "input.js"
@@ -221,7 +221,7 @@ Program {
 												line: 3
 											}
 										}
-										callee: ReferenceIdentifier {
+										callee: JSReferenceIdentifier {
 											name: "ohNo"
 											loc: Object {
 												filename: "input.js"
@@ -243,10 +243,10 @@ Program {
 							]
 						}
 					}
-					ClassPrivateMethod {
+					JSClassPrivateMethod {
 						kind: "set"
-						key: PrivateName {
-							id: Identifier {
+						key: JSPrivateName {
+							id: JSIdentifier {
 								name: "evil"
 								loc: Object {
 									filename: "input.js"
@@ -290,7 +290,7 @@ Program {
 								line: 5
 							}
 						}
-						meta: ClassPropertyMeta {
+						meta: JSClassPropertyMeta {
 							abstract: false
 							accessibility: undefined
 							optional: false
@@ -316,7 +316,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -338,7 +338,7 @@ Program {
 								}
 							}
 							params: Array [
-								BindingIdentifier {
+								JSBindingIdentifier {
 									name: "x"
 									loc: Object {
 										filename: "input.js"
@@ -354,7 +354,7 @@ Program {
 											line: 5
 										}
 									}
-									meta: PatternMeta {
+									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {
@@ -374,7 +374,7 @@ Program {
 								}
 							]
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
 								filename: "input.js"
@@ -390,7 +390,7 @@ Program {
 								}
 							}
 							body: Array [
-								ReturnStatement {
+								JSReturnStatement {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -404,7 +404,7 @@ Program {
 											line: 6
 										}
 									}
-									argument: CallExpression {
+									argument: JSCallExpression {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -418,7 +418,7 @@ Program {
 												line: 6
 											}
 										}
-										callee: ReferenceIdentifier {
+										callee: JSReferenceIdentifier {
 											name: "makeEvil"
 											loc: Object {
 												filename: "input.js"
@@ -436,7 +436,7 @@ Program {
 											}
 										}
 										arguments: Array [
-											ReferenceIdentifier {
+											JSReferenceIdentifier {
 												name: "x"
 												loc: Object {
 													filename: "input.js"

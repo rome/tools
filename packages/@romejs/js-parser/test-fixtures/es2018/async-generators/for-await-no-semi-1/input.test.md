@@ -5,7 +5,7 @@
 ## `es2018 > async-generators > for-await-no-semi-1`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,8 +54,8 @@ Program {
 		}
 	]
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
 					filename: "input.js"
@@ -85,7 +85,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: true
 				generator: false
 				hasHoistedVars: false
@@ -108,7 +108,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -124,7 +124,7 @@ Program {
 					}
 				}
 				body: Array [
-					ForStatement {
+					JSForStatement {
 						init: undefined
 						update: undefined
 						loc: Object {
@@ -140,7 +140,7 @@ Program {
 								line: 2
 							}
 						}
-						body: EmptyStatement {
+						body: JSEmptyStatement {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -155,7 +155,7 @@ Program {
 								}
 							}
 						}
-						test: BooleanLiteral {
+						test: JSBooleanLiteral {
 							value: false
 							loc: Object {
 								filename: "input.js"

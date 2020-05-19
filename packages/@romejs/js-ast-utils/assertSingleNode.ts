@@ -6,7 +6,7 @@
  */
 
 import {TransformExitResult} from "@romejs/js-compiler";
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 
 export default function assertSingleNode(result: TransformExitResult): AnyNode {
 	if (Array.isArray(result)) {

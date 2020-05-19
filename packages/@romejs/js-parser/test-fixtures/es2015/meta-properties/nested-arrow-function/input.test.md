@@ -5,7 +5,7 @@
 ## `es2015 > meta-properties > nested-arrow-function`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -84,7 +84,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -100,7 +100,7 @@ Program {
 					}
 				}
 				body: Array [
-					ReturnStatement {
+					JSReturnStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -114,7 +114,7 @@ Program {
 								line: 1
 							}
 						}
-						argument: ArrowFunctionExpression {
+						argument: JSArrowFunctionExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -128,7 +128,7 @@ Program {
 									line: 1
 								}
 							}
-							head: FunctionHead {
+							head: JSFunctionHead {
 								async: false
 								hasHoistedVars: false
 								params: Array []
@@ -149,7 +149,7 @@ Program {
 									}
 								}
 							}
-							body: MetaProperty {
+							body: JSMetaProperty {
 								loc: Object {
 									filename: "input.js"
 									end: Object {
@@ -163,7 +163,7 @@ Program {
 										line: 1
 									}
 								}
-								meta: Identifier {
+								meta: JSIdentifier {
 									name: "new"
 									loc: Object {
 										filename: "input.js"
@@ -180,7 +180,7 @@ Program {
 										}
 									}
 								}
-								property: Identifier {
+								property: JSIdentifier {
 									name: "target"
 									loc: Object {
 										filename: "input.js"

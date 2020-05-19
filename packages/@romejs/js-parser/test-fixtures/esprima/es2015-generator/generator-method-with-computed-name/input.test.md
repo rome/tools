@@ -5,7 +5,7 @@
 ## `esprima > es2015-generator > generator-method-with-computed-name`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: FunctionExpression {
+			expression: JSFunctionExpression {
 				id: undefined
 				loc: Object {
 					filename: "input.js"
@@ -59,7 +59,7 @@ Program {
 						line: 1
 					}
 				}
-				head: FunctionHead {
+				head: JSFunctionHead {
 					async: false
 					generator: true
 					hasHoistedVars: false
@@ -82,7 +82,7 @@ Program {
 						}
 					}
 				}
-				body: BlockStatement {
+				body: JSBlockStatement {
 					directives: Array []
 					loc: Object {
 						filename: "input.js"
@@ -98,7 +98,7 @@ Program {
 						}
 					}
 					body: Array [
-						ReturnStatement {
+						JSReturnStatement {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -112,7 +112,7 @@ Program {
 									line: 2
 								}
 							}
-							argument: ObjectExpression {
+							argument: JSObjectExpression {
 								loc: Object {
 									filename: "input.js"
 									end: Object {
@@ -127,10 +127,10 @@ Program {
 									}
 								}
 								properties: Array [
-									ObjectMethod {
+									JSObjectMethod {
 										kind: "method"
-										key: ComputedPropertyKey {
-											value: YieldExpression {
+										key: JSComputedPropertyKey {
+											value: JSYieldExpression {
 												delegate: false
 												loc: Object {
 													filename: "input.js"
@@ -145,7 +145,7 @@ Program {
 														line: 2
 													}
 												}
-												argument: ReferenceIdentifier {
+												argument: JSReferenceIdentifier {
 													name: "iter"
 													loc: Object {
 														filename: "input.js"
@@ -190,7 +190,7 @@ Program {
 												line: 2
 											}
 										}
-										body: BlockStatement {
+										body: JSBlockStatement {
 											body: Array []
 											directives: Array []
 											loc: Object {
@@ -207,7 +207,7 @@ Program {
 												}
 											}
 										}
-										head: FunctionHead {
+										head: JSFunctionHead {
 											async: false
 											generator: true
 											hasHoistedVars: false

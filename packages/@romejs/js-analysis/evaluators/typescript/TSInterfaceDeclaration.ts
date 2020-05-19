@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	TSInterfaceDeclaration,
 	tsInterfaceDeclaration,
-} from "@romejs/js-ast";
+} from "@romejs/ast";
 
 export default function TSInterfaceDeclaration(node: AnyNode, scope: Scope) {
 	node = tsInterfaceDeclaration.assert(node);

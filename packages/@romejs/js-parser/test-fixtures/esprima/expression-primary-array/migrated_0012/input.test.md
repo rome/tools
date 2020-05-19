@@ -5,7 +5,7 @@
 ## `esprima > expression-primary-array > migrated_0012`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: AssignmentExpression {
+			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
 					filename: "input.js"
@@ -83,7 +83,7 @@ Program {
 						line: 1
 					}
 				}
-				left: AssignmentIdentifier {
+				left: JSAssignmentIdentifier {
 					name: "\u2163\u2161\u200a"
 					loc: Object {
 						filename: "input.js"
@@ -100,7 +100,7 @@ Program {
 						}
 					}
 				}
-				right: MemberExpression {
+				right: JSMemberExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -114,7 +114,7 @@ Program {
 							line: 1
 						}
 					}
-					object: ReferenceIdentifier {
+					object: JSReferenceIdentifier {
 						name: "\u2009"
 						loc: Object {
 							filename: "input.js"
@@ -131,8 +131,8 @@ Program {
 							}
 						}
 					}
-					property: ComputedMemberProperty {
-						value: ReferenceIdentifier {
+					property: JSComputedMemberProperty {
+						value: JSReferenceIdentifier {
 							name: "INVALID_PLACEHOLDER"
 							loc: Object {
 								filename: "input.js"

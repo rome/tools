@@ -5,7 +5,7 @@
 ## `comments > while`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentLine {
+		JSCommentLine {
 			id: "0"
 			value: " A"
 			loc: Object {
@@ -46,7 +46,7 @@ Program {
 				}
 			}
 		}
-		CommentLine {
+		JSCommentLine {
 			id: "1"
 			value: " B"
 			loc: Object {
@@ -65,8 +65,8 @@ Program {
 		}
 	]
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
 					filename: "input.js"
@@ -96,7 +96,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -119,7 +119,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -135,7 +135,7 @@ Program {
 					}
 				}
 				body: Array [
-					WhileStatement {
+					JSWhileStatement {
 						leadingComments: Array ["0"]
 						trailingComments: Array ["1"]
 						loc: Object {
@@ -151,7 +151,7 @@ Program {
 								line: 3
 							}
 						}
-						test: ReferenceIdentifier {
+						test: JSReferenceIdentifier {
 							name: "x"
 							leadingComments: undefined
 							loc: Object {
@@ -169,7 +169,7 @@ Program {
 								}
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							directives: Array []
 							trailingComments: undefined
 							loc: Object {
@@ -186,7 +186,7 @@ Program {
 								}
 							}
 							body: Array [
-								ExpressionStatement {
+								JSExpressionStatement {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -200,7 +200,7 @@ Program {
 											line: 4
 										}
 									}
-									expression: ReferenceIdentifier {
+									expression: JSReferenceIdentifier {
 										name: "x"
 										loc: Object {
 											filename: "input.js"
@@ -221,7 +221,7 @@ Program {
 							]
 						}
 					}
-					IfStatement {
+					JSIfStatement {
 						alternate: undefined
 						leadingComments: Array ["1"]
 						loc: Object {
@@ -237,7 +237,7 @@ Program {
 								line: 8
 							}
 						}
-						test: ReferenceIdentifier {
+						test: JSReferenceIdentifier {
 							name: "y"
 							leadingComments: undefined
 							loc: Object {
@@ -255,7 +255,7 @@ Program {
 								}
 							}
 						}
-						consequent: BlockStatement {
+						consequent: JSBlockStatement {
 							directives: Array []
 							loc: Object {
 								filename: "input.js"
@@ -271,7 +271,7 @@ Program {
 								}
 							}
 							body: Array [
-								ExpressionStatement {
+								JSExpressionStatement {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -285,7 +285,7 @@ Program {
 											line: 9
 										}
 									}
-									expression: ReferenceIdentifier {
+									expression: JSReferenceIdentifier {
 										name: "y"
 										loc: Object {
 											filename: "input.js"

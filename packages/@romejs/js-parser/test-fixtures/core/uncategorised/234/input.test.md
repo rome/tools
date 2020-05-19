@@ -5,7 +5,7 @@
 ## `core > uncategorised > 234`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		DoWhileStatement {
+		JSDoWhileStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			test: BinaryExpression {
+			test: JSBinaryExpression {
 				operator: "<"
 				loc: Object {
 					filename: "input.js"
@@ -59,7 +59,7 @@ Program {
 						line: 1
 					}
 				}
-				left: ReferenceIdentifier {
+				left: JSReferenceIdentifier {
 					name: "x"
 					loc: Object {
 						filename: "input.js"
@@ -76,7 +76,7 @@ Program {
 						}
 					}
 				}
-				right: NumericLiteral {
+				right: JSNumericLiteral {
 					value: 10
 					format: undefined
 					loc: Object {
@@ -94,7 +94,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -110,7 +110,7 @@ Program {
 					}
 				}
 				body: Array [
-					ExpressionStatement {
+					JSExpressionStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -124,7 +124,7 @@ Program {
 								line: 1
 							}
 						}
-						expression: UpdateExpression {
+						expression: JSUpdateExpression {
 							operator: "++"
 							prefix: false
 							loc: Object {
@@ -140,7 +140,7 @@ Program {
 									line: 1
 								}
 							}
-							argument: ReferenceIdentifier {
+							argument: JSReferenceIdentifier {
 								name: "x"
 								loc: Object {
 									filename: "input.js"
@@ -159,7 +159,7 @@ Program {
 							}
 						}
 					}
-					ExpressionStatement {
+					JSExpressionStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -173,7 +173,7 @@ Program {
 								line: 1
 							}
 						}
-						expression: UpdateExpression {
+						expression: JSUpdateExpression {
 							operator: "--"
 							prefix: false
 							loc: Object {
@@ -189,7 +189,7 @@ Program {
 									line: 1
 								}
 							}
-							argument: ReferenceIdentifier {
+							argument: JSReferenceIdentifier {
 								name: "y"
 								loc: Object {
 									filename: "input.js"

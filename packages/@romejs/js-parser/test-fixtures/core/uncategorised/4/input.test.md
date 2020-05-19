@@ -5,7 +5,7 @@
 ## `core > uncategorised > 4`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: RegExpLiteral {
+			expression: JSRegExpLiteral {
 				global: false
 				insensitive: false
 				multiline: false
@@ -64,7 +64,7 @@ Program {
 						line: 1
 					}
 				}
-				expression: RegExpSubExpression {
+				expression: JSRegExpSubExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -79,7 +79,7 @@ Program {
 						}
 					}
 					body: Array [
-						RegExpCharacter {
+						JSRegExpCharacter {
 							value: "f"
 							loc: Object {
 								filename: "input.js"
@@ -95,7 +95,7 @@ Program {
 								}
 							}
 						}
-						RegExpCharacter {
+						JSRegExpCharacter {
 							value: "o"
 							loc: Object {
 								filename: "input.js"
@@ -111,7 +111,7 @@ Program {
 								}
 							}
 						}
-						RegExpCharacter {
+						JSRegExpCharacter {
 							value: "o"
 							loc: Object {
 								filename: "input.js"
@@ -127,7 +127,7 @@ Program {
 								}
 							}
 						}
-						RegExpCharacter {
+						JSRegExpCharacter {
 							value: "b"
 							loc: Object {
 								filename: "input.js"
@@ -143,7 +143,7 @@ Program {
 								}
 							}
 						}
-						RegExpCharacter {
+						JSRegExpCharacter {
 							value: "a"
 							loc: Object {
 								filename: "input.js"
@@ -159,7 +159,7 @@ Program {
 								}
 							}
 						}
-						RegExpCharacter {
+						JSRegExpCharacter {
 							value: "r"
 							loc: Object {
 								filename: "input.js"

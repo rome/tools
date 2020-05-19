@@ -5,7 +5,7 @@
 ## `esprima > statement-iteration > migrated_0009`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ForStatement {
+		JSForStatement {
 			init: undefined
 			test: undefined
 			update: undefined
@@ -47,7 +47,7 @@ Program {
 					line: 1
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
 				loc: Object {

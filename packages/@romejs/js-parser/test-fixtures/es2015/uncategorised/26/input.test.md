@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 26`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: TemplateLiteral {
+			expression: JSTemplateLiteral {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -59,7 +59,7 @@ Program {
 					}
 				}
 				quasis: Array [
-					TemplateElement {
+					JSTemplateElement {
 						cooked: "outer"
 						raw: "outer"
 						tail: false
@@ -77,7 +77,7 @@ Program {
 							}
 						}
 					}
-					TemplateElement {
+					JSTemplateElement {
 						cooked: "bar"
 						raw: "bar"
 						tail: false
@@ -95,7 +95,7 @@ Program {
 							}
 						}
 					}
-					TemplateElement {
+					JSTemplateElement {
 						cooked: "end"
 						raw: "end"
 						tail: true
@@ -115,7 +115,7 @@ Program {
 					}
 				]
 				expressions: Array [
-					ObjectExpression {
+					JSObjectExpression {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -130,9 +130,9 @@ Program {
 							}
 						}
 						properties: Array [
-							ObjectProperty {
-								key: StaticPropertyKey {
-									value: Identifier {
+							JSObjectProperty {
+								key: JSStaticPropertyKey {
+									value: JSIdentifier {
 										name: "x"
 										loc: Object {
 											filename: "input.js"
@@ -163,7 +163,7 @@ Program {
 										}
 									}
 								}
-								value: ObjectExpression {
+								value: JSObjectExpression {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -178,9 +178,9 @@ Program {
 										}
 									}
 									properties: Array [
-										ObjectProperty {
-											key: StaticPropertyKey {
-												value: Identifier {
+										JSObjectProperty {
+											key: JSStaticPropertyKey {
+												value: JSIdentifier {
 													name: "y"
 													loc: Object {
 														filename: "input.js"
@@ -211,7 +211,7 @@ Program {
 													}
 												}
 											}
-											value: NumericLiteral {
+											value: JSNumericLiteral {
 												value: 10
 												format: undefined
 												loc: Object {
@@ -260,7 +260,7 @@ Program {
 							}
 						]
 					}
-					TemplateLiteral {
+					JSTemplateLiteral {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -275,7 +275,7 @@ Program {
 							}
 						}
 						quasis: Array [
-							TemplateElement {
+							JSTemplateElement {
 								cooked: "nested"
 								raw: "nested"
 								tail: false
@@ -293,7 +293,7 @@ Program {
 									}
 								}
 							}
-							TemplateElement {
+							JSTemplateElement {
 								cooked: "endnest"
 								raw: "endnest"
 								tail: true
@@ -313,7 +313,7 @@ Program {
 							}
 						]
 						expressions: Array [
-							FunctionExpression {
+							JSFunctionExpression {
 								id: undefined
 								loc: Object {
 									filename: "input.js"
@@ -328,7 +328,7 @@ Program {
 										line: 1
 									}
 								}
-								head: FunctionHead {
+								head: JSFunctionHead {
 									async: false
 									generator: false
 									hasHoistedVars: false
@@ -351,7 +351,7 @@ Program {
 										}
 									}
 								}
-								body: BlockStatement {
+								body: JSBlockStatement {
 									directives: Array []
 									loc: Object {
 										filename: "input.js"
@@ -367,7 +367,7 @@ Program {
 										}
 									}
 									body: Array [
-										ReturnStatement {
+										JSReturnStatement {
 											loc: Object {
 												filename: "input.js"
 												end: Object {
@@ -381,7 +381,7 @@ Program {
 													line: 1
 												}
 											}
-											argument: NumericLiteral {
+											argument: JSNumericLiteral {
 												value: 1
 												format: undefined
 												loc: Object {

@@ -5,7 +5,7 @@
 ## `esprima > es2015-yield > invalid-yield-strict-function-expression`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,8 +68,8 @@ Program {
 					line: 1
 				}
 			}
-			expression: FunctionExpression {
-				id: BindingIdentifier {
+			expression: JSFunctionExpression {
+				id: JSBindingIdentifier {
 					name: "yield"
 					loc: Object {
 						filename: "input.js"
@@ -99,7 +99,7 @@ Program {
 						line: 1
 					}
 				}
-				head: FunctionHead {
+				head: JSFunctionHead {
 					async: false
 					generator: false
 					hasHoistedVars: false
@@ -122,7 +122,7 @@ Program {
 						}
 					}
 				}
-				body: BlockStatement {
+				body: JSBlockStatement {
 					body: Array []
 					loc: Object {
 						filename: "input.js"
@@ -138,7 +138,7 @@ Program {
 						}
 					}
 					directives: Array [
-						Directive {
+						JSDirective {
 							value: "use strict"
 							loc: Object {
 								filename: "input.js"

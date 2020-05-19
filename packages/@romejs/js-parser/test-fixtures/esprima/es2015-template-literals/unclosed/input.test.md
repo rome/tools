@@ -5,7 +5,7 @@
 ## `esprima > es2015-template-literals > unclosed`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: TemplateLiteral {
+			expression: JSTemplateLiteral {
 				expressions: Array []
 				loc: Object {
 					filename: "input.js"
@@ -84,7 +84,7 @@ Program {
 					}
 				}
 				quasis: Array [
-					TemplateElement {
+					JSTemplateElement {
 						cooked: ""
 						raw: ""
 						tail: false

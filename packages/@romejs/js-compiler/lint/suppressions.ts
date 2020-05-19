@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyComment, AnyNode, Program} from "@romejs/js-ast";
+import {AnyJSComment, AnyNode, JSProgram} from "@romejs/ast";
 import {CompilerContext} from "@romejs/js-compiler";
 import {Number1, ob1Get1} from "@romejs/ob1";
 import Path from "../lib/Path";
@@ -26,7 +26,10 @@ function buildSuppressionCommentValue(categories: Set<string>): string {
 	return `${SUPPRESSION_START} ${Array.from(categories).join(" ")}`;
 }
 
-export function addSuppressions(context: CompilerContext, ast: Program): Program {
+export function addSuppressions(
+	context: CompilerContext,
+	ast: JSProgram,
+): JSProgram {
 	if (!context.hasLintDecisions()) {
 		return ast;
 	}
@@ -50,7 +53,7 @@ export function addSuppressions(context: CompilerContext, ast: Program): Program
 		}
 
 		// Find existing suppression comment
-		let updateComment: undefined | AnyComment;
+		let updateComment: undefined | AnyJSComment;
 		const lastComment = context.comments.getCommentsFromIds(
 			node.leadingComments,
 		).pop();
@@ -66,7 +69,7 @@ export function addSuppressions(context: CompilerContext, ast: Program): Program
 			const id = path.callHook(
 				commentInjector,
 				{
-					type: "CommentLine",
+					type: "JSCommentLine",
 					value: ` ${buildSuppressionCommentValue(suppressionCategories)}`,
 				},
 			);
@@ -111,9 +114,9 @@ export function addSuppressions(context: CompilerContext, ast: Program): Program
 
 				// Don't allow attaching suppression comments to a comment or program...
 				if (
-					node.type === "CommentBlock" ||
-					node.type === "CommentLine" ||
-					node.type === "Program"
+					node.type === "JSCommentBlock" ||
+					node.type === "JSCommentLine" ||
+					node.type === "JSProgram"
 				) {
 					return node;
 				}

@@ -5,7 +5,7 @@
 ## `core > categorized > regex-after-block`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		IfStatement {
+		JSIfStatement {
 			alternate: undefined
 			loc: Object {
 				filename: "input.js"
@@ -45,7 +45,7 @@ Program {
 					line: 1
 				}
 			}
-			test: BooleanLiteral {
+			test: JSBooleanLiteral {
 				value: true
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					}
 				}
 			}
-			consequent: BlockStatement {
+			consequent: JSBlockStatement {
 				body: Array []
 				directives: Array []
 				loc: Object {
@@ -79,7 +79,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -93,7 +93,7 @@ Program {
 					line: 4
 				}
 			}
-			expression: RegExpLiteral {
+			expression: JSRegExpLiteral {
 				global: false
 				insensitive: false
 				multiline: false
@@ -113,7 +113,7 @@ Program {
 						line: 4
 					}
 				}
-				expression: RegExpSubExpression {
+				expression: JSRegExpSubExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -128,7 +128,7 @@ Program {
 						}
 					}
 					body: Array [
-						RegExpCharacter {
+						JSRegExpCharacter {
 							value: "f"
 							loc: Object {
 								filename: "input.js"
@@ -144,7 +144,7 @@ Program {
 								}
 							}
 						}
-						RegExpCharacter {
+						JSRegExpCharacter {
 							value: "o"
 							loc: Object {
 								filename: "input.js"
@@ -160,7 +160,7 @@ Program {
 								}
 							}
 						}
-						RegExpCharacter {
+						JSRegExpCharacter {
 							value: "o"
 							loc: Object {
 								filename: "input.js"

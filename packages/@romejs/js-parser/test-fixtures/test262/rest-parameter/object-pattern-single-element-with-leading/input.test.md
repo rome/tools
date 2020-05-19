@@ -5,7 +5,7 @@
 ## `test262 > rest-parameter > object-pattern-single-element-with-leading`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "singleElementWithLeading"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				body: Array []
 				directives: Array []
 				loc: Object {
@@ -78,7 +78,7 @@ Program {
 					}
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -99,7 +99,7 @@ Program {
 					}
 				}
 				params: Array [
-					BindingIdentifier {
+					JSBindingIdentifier {
 						name: "x"
 						loc: Object {
 							filename: "input.js"
@@ -115,7 +115,7 @@ Program {
 								line: 1
 							}
 						}
-						meta: PatternMeta {
+						meta: JSPatternMeta {
 							optional: undefined
 							typeAnnotation: undefined
 							loc: Object {
@@ -134,7 +134,7 @@ Program {
 						}
 					}
 				]
-				rest: BindingObjectPattern {
+				rest: JSBindingObjectPattern {
 					rest: undefined
 					loc: Object {
 						filename: "input.js"
@@ -149,7 +149,7 @@ Program {
 							line: 1
 						}
 					}
-					meta: PatternMeta {
+					meta: JSPatternMeta {
 						optional: undefined
 						typeAnnotation: undefined
 						loc: Object {
@@ -167,9 +167,9 @@ Program {
 						}
 					}
 					properties: Array [
-						BindingObjectPatternProperty {
-							key: StaticPropertyKey {
-								value: Identifier {
+						JSBindingObjectPatternProperty {
+							key: JSStaticPropertyKey {
+								value: JSIdentifier {
 									name: "a"
 									loc: Object {
 										filename: "input.js"
@@ -200,7 +200,7 @@ Program {
 									}
 								}
 							}
-							value: BindingIdentifier {
+							value: JSBindingIdentifier {
 								name: "b"
 								loc: Object {
 									filename: "input.js"

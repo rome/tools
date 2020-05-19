@@ -7,7 +7,7 @@
 
 import {Path} from "@romejs/js-compiler";
 import {isInTypeAnnotation} from "@romejs/js-ast-utils";
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 import {descriptions} from "@romejs/diagnostics";
 
 const NODE_VARIABLES = [
@@ -41,7 +41,7 @@ export default {
 		const {node, scope} = path;
 
 		if (
-			(node.type === "ReferenceIdentifier" ||
+			(node.type === "JSReferenceIdentifier" ||
 			node.type === "JSXReferenceIdentifier") &&
 			!isInTypeAnnotation(path)
 		) {

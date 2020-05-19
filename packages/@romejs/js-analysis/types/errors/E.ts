@@ -7,7 +7,7 @@
 
 import {Scope} from "../../scopes";
 import {DiagnosticDescription} from "@romejs/diagnostics";
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 import AnyT from "../AnyT";
 import T from "../T";
 

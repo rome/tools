@@ -5,7 +5,7 @@
 ## `typescript > types > parenthesized`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		TypeAliasTypeAnnotation {
-			id: BindingIdentifier {
+		TSTypeAliasTypeAnnotation {
+			id: JSBindingIdentifier {
 				name: "T"
 				loc: Object {
 					filename: "input.ts"

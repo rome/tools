@@ -5,7 +5,7 @@
 ## `typescript > enum > members-trailing-comma-with-initializer`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -31,7 +31,7 @@ Program {
 	}
 	body: Array [
 		TSEnumDeclaration {
-			id: BindingIdentifier {
+			id: JSBindingIdentifier {
 				name: "E"
 				loc: Object {
 					filename: "input.ts"
@@ -64,7 +64,7 @@ Program {
 			}
 			members: Array [
 				TSEnumMember {
-					id: Identifier {
+					id: JSIdentifier {
 						name: "A"
 						loc: Object {
 							filename: "input.ts"
@@ -94,7 +94,7 @@ Program {
 							line: 2
 						}
 					}
-					initializer: NumericLiteral {
+					initializer: JSNumericLiteral {
 						value: 0
 						format: undefined
 						loc: Object {

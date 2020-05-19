@@ -8,34 +8,38 @@
 import {Path} from "@romejs/js-compiler";
 import {
 	AnyNode,
-	ConditionalExpression,
-	DoWhileStatement,
-	ForStatement,
-	IfStatement,
-	WhileStatement,
-} from "@romejs/js-ast";
+	JSConditionalExpression,
+	JSDoWhileStatement,
+	JSForStatement,
+	JSIfStatement,
+	JSWhileStatement,
+} from "@romejs/ast";
 import {descriptions} from "@romejs/diagnostics";
 
 function isBooleanConstructorCall(node: AnyNode) {
 	return (
-		node.type === "NewExpression" &&
-		node.callee.type === "ReferenceIdentifier" &&
+		node.type === "JSNewExpression" &&
+		node.callee.type === "JSReferenceIdentifier" &&
 		node.callee.name === "Boolean"
 	);
 }
 
-function isConditionalStatement(node: AnyNode): node is ConditionalExpression {
-	return node.type === "ConditionalExpression";
+function isConditionalStatement(node: AnyNode): node is JSConditionalExpression {
+	return node.type === "JSConditionalExpression";
 }
 
 function isInBooleanContext(
 	node: AnyNode,
-): node is IfStatement | DoWhileStatement | WhileStatement | ForStatement {
+): node is
+	| JSIfStatement
+	| JSDoWhileStatement
+	| JSWhileStatement
+	| JSForStatement {
 	return (
-		node.type === "IfStatement" ||
-		node.type === "DoWhileStatement" ||
-		node.type === "WhileStatement" ||
-		node.type === "ForStatement"
+		node.type === "JSIfStatement" ||
+		node.type === "JSDoWhileStatement" ||
+		node.type === "JSWhileStatement" ||
+		node.type === "JSForStatement"
 	);
 }
 
@@ -43,7 +47,7 @@ function getNode(path: Path): undefined | AnyNode {
 	let {node} = path;
 
 	if (isBooleanConstructorCall(node)) {
-		if (node.type === "NewExpression" && node.arguments.length > 0) {
+		if (node.type === "JSNewExpression" && node.arguments.length > 0) {
 			return node.arguments[0];
 		}
 	}
@@ -64,12 +68,12 @@ export default {
 
 		if (node !== undefined) {
 			if (
-				(node.type === "UnaryExpression" &&
+				(node.type === "JSUnaryExpression" &&
 				node.operator === "!" &&
-				node.argument.type === "UnaryExpression" &&
+				node.argument.type === "JSUnaryExpression" &&
 				node.argument.operator === "!") ||
-				(node.type === "CallExpression" &&
-				node.callee.type === "ReferenceIdentifier" &&
+				(node.type === "JSCallExpression" &&
+				node.callee.type === "JSReferenceIdentifier" &&
 				node.callee.name === "Boolean")
 			) {
 				context.addNodeDiagnostic(

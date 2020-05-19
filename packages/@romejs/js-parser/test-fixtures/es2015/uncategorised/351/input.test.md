@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 351`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ObjectExpression {
+			expression: JSObjectExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -59,10 +59,10 @@ Program {
 					}
 				}
 				properties: Array [
-					ObjectMethod {
+					JSObjectMethod {
 						kind: "method"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "__proto__"
 								loc: Object {
 									filename: "input.js"
@@ -106,7 +106,7 @@ Program {
 								line: 1
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -129,7 +129,7 @@ Program {
 								}
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
 								filename: "input.js"
@@ -145,7 +145,7 @@ Program {
 								}
 							}
 							body: Array [
-								ReturnStatement {
+								JSReturnStatement {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -159,7 +159,7 @@ Program {
 											line: 1
 										}
 									}
-									argument: NumericLiteral {
+									argument: JSNumericLiteral {
 										value: 1
 										format: undefined
 										loc: Object {
@@ -180,9 +180,9 @@ Program {
 							]
 						}
 					}
-					ObjectProperty {
-						key: StaticPropertyKey {
-							value: Identifier {
+					JSObjectProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "__proto__"
 								loc: Object {
 									filename: "input.js"
@@ -213,7 +213,7 @@ Program {
 								}
 							}
 						}
-						value: NumericLiteral {
+						value: JSNumericLiteral {
 							value: 2
 							format: undefined
 							loc: Object {

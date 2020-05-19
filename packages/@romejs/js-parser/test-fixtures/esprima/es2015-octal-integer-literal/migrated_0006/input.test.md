@@ -5,7 +5,7 @@
 ## `esprima > es2015-octal-integer-literal > migrated_0006`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "test"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -84,7 +84,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -99,7 +99,7 @@ Program {
 					}
 				}
 				directives: Array [
-					Directive {
+					JSDirective {
 						value: "use strict"
 						loc: Object {
 							filename: "input.js"
@@ -117,7 +117,7 @@ Program {
 					}
 				]
 				body: Array [
-					ExpressionStatement {
+					JSExpressionStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -131,7 +131,7 @@ Program {
 								line: 1
 							}
 						}
-						expression: NumericLiteral {
+						expression: JSNumericLiteral {
 							value: 0
 							format: "octal"
 							loc: Object {

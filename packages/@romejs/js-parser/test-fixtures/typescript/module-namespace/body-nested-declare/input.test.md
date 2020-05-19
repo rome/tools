@@ -5,7 +5,7 @@
 ## `typescript > module-namespace > body-nested-declare`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -31,7 +31,7 @@ Program {
 	}
 	body: Array [
 		TSModuleDeclaration {
-			id: BindingIdentifier {
+			id: JSBindingIdentifier {
 				name: "A"
 				loc: Object {
 					filename: "input.ts"
@@ -78,7 +78,7 @@ Program {
 				}
 				body: Array [
 					TSModuleDeclaration {
-						id: BindingIdentifier {
+						id: JSBindingIdentifier {
 							name: "B"
 							loc: Object {
 								filename: "input.ts"
@@ -123,7 +123,7 @@ Program {
 								}
 							}
 							body: Array [
-								VariableDeclarationStatement {
+								JSVariableDeclarationStatement {
 									loc: Object {
 										filename: "input.ts"
 										end: Object {
@@ -137,7 +137,7 @@ Program {
 											line: 3
 										}
 									}
-									declaration: VariableDeclaration {
+									declaration: JSVariableDeclaration {
 										kind: "const"
 										loc: Object {
 											filename: "input.ts"
@@ -153,8 +153,8 @@ Program {
 											}
 										}
 										declarations: Array [
-											VariableDeclarator {
-												id: BindingIdentifier {
+											JSVariableDeclarator {
+												id: JSBindingIdentifier {
 													name: "x"
 													loc: Object {
 														filename: "input.ts"
@@ -169,7 +169,7 @@ Program {
 															line: 3
 														}
 													}
-													meta: PatternMeta {
+													meta: JSPatternMeta {
 														definite: undefined
 														loc: Object {
 															filename: "input.ts"

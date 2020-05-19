@@ -5,7 +5,7 @@
 ## `es2015 > for-in > nonstrict-initializer`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.js"
@@ -60,8 +60,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "effects"
 							loc: Object {
 								filename: "input.js"
@@ -91,7 +91,7 @@ Program {
 								line: 1
 							}
 						}
-						init: NumericLiteral {
+						init: JSNumericLiteral {
 							value: 0
 							format: undefined
 							loc: Object {
@@ -112,7 +112,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -126,7 +126,7 @@ Program {
 					line: 2
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.js"
@@ -142,8 +142,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "iterations"
 							loc: Object {
 								filename: "input.js"
@@ -173,7 +173,7 @@ Program {
 								line: 2
 							}
 						}
-						init: NumericLiteral {
+						init: JSNumericLiteral {
 							value: 0
 							format: undefined
 							loc: Object {
@@ -194,7 +194,7 @@ Program {
 				]
 			}
 		}
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -208,7 +208,7 @@ Program {
 					line: 3
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.js"
@@ -224,8 +224,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "stored"
 							loc: Object {
 								filename: "input.js"
@@ -260,7 +260,7 @@ Program {
 				]
 			}
 		}
-		ForInStatement {
+		JSForInStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -274,7 +274,7 @@ Program {
 					line: 4
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -290,7 +290,7 @@ Program {
 					}
 				}
 				body: Array [
-					ExpressionStatement {
+					JSExpressionStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -304,7 +304,7 @@ Program {
 								line: 5
 							}
 						}
-						expression: UpdateExpression {
+						expression: JSUpdateExpression {
 							operator: "++"
 							prefix: true
 							loc: Object {
@@ -320,7 +320,7 @@ Program {
 									line: 5
 								}
 							}
-							argument: ReferenceIdentifier {
+							argument: JSReferenceIdentifier {
 								name: "iterations"
 								loc: Object {
 									filename: "input.js"
@@ -341,7 +341,7 @@ Program {
 					}
 				]
 			}
-			left: VariableDeclaration {
+			left: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.js"
@@ -357,8 +357,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "a"
 							loc: Object {
 								filename: "input.js"
@@ -388,7 +388,7 @@ Program {
 								line: 4
 							}
 						}
-						init: SequenceExpression {
+						init: JSSequenceExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -403,7 +403,7 @@ Program {
 								}
 							}
 							expressions: Array [
-								UpdateExpression {
+								JSUpdateExpression {
 									operator: "++"
 									prefix: true
 									loc: Object {
@@ -419,7 +419,7 @@ Program {
 											line: 4
 										}
 									}
-									argument: ReferenceIdentifier {
+									argument: JSReferenceIdentifier {
 										name: "effects"
 										loc: Object {
 											filename: "input.js"
@@ -437,7 +437,7 @@ Program {
 										}
 									}
 								}
-								UnaryExpression {
+								JSUnaryExpression {
 									operator: "-"
 									prefix: true
 									loc: Object {
@@ -453,7 +453,7 @@ Program {
 											line: 4
 										}
 									}
-									argument: NumericLiteral {
+									argument: JSNumericLiteral {
 										value: 1
 										format: undefined
 										loc: Object {
@@ -476,7 +476,7 @@ Program {
 					}
 				]
 			}
-			right: SequenceExpression {
+			right: JSSequenceExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -491,7 +491,7 @@ Program {
 					}
 				}
 				expressions: Array [
-					AssignmentExpression {
+					JSAssignmentExpression {
 						operator: "="
 						loc: Object {
 							filename: "input.js"
@@ -506,7 +506,7 @@ Program {
 								line: 4
 							}
 						}
-						left: AssignmentIdentifier {
+						left: JSAssignmentIdentifier {
 							name: "stored"
 							loc: Object {
 								filename: "input.js"
@@ -523,7 +523,7 @@ Program {
 								}
 							}
 						}
-						right: ReferenceIdentifier {
+						right: JSReferenceIdentifier {
 							name: "a"
 							loc: Object {
 								filename: "input.js"
@@ -541,7 +541,7 @@ Program {
 							}
 						}
 					}
-					ObjectExpression {
+					JSObjectExpression {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -556,9 +556,9 @@ Program {
 							}
 						}
 						properties: Array [
-							ObjectProperty {
-								key: StaticPropertyKey {
-									value: Identifier {
+							JSObjectProperty {
+								key: JSStaticPropertyKey {
+									value: JSIdentifier {
 										name: "a"
 										loc: Object {
 											filename: "input.js"
@@ -589,7 +589,7 @@ Program {
 										}
 									}
 								}
-								value: NumericLiteral {
+								value: JSNumericLiteral {
 									value: 0
 									format: undefined
 									loc: Object {
@@ -620,9 +620,9 @@ Program {
 									}
 								}
 							}
-							ObjectProperty {
-								key: StaticPropertyKey {
-									value: Identifier {
+							JSObjectProperty {
+								key: JSStaticPropertyKey {
+									value: JSIdentifier {
 										name: "b"
 										loc: Object {
 											filename: "input.js"
@@ -653,7 +653,7 @@ Program {
 										}
 									}
 								}
-								value: NumericLiteral {
+								value: JSNumericLiteral {
 									value: 1
 									format: undefined
 									loc: Object {
@@ -684,9 +684,9 @@ Program {
 									}
 								}
 							}
-							ObjectProperty {
-								key: StaticPropertyKey {
-									value: Identifier {
+							JSObjectProperty {
+								key: JSStaticPropertyKey {
+									value: JSIdentifier {
 										name: "c"
 										loc: Object {
 											filename: "input.js"
@@ -717,7 +717,7 @@ Program {
 										}
 									}
 								}
-								value: NumericLiteral {
+								value: JSNumericLiteral {
 									value: 2
 									format: undefined
 									loc: Object {

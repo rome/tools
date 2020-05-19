@@ -5,7 +5,7 @@
 ## `esprima > es2015-destructuring-assignment-array-pattern > dup-assignment`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: AssignmentExpression {
+			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
 					filename: "input.js"
@@ -59,7 +59,7 @@ Program {
 						line: 1
 					}
 				}
-				right: NumericLiteral {
+				right: JSNumericLiteral {
 					value: 0
 					format: undefined
 					loc: Object {
@@ -76,7 +76,7 @@ Program {
 						}
 					}
 				}
-				left: AssignmentArrayPattern {
+				left: JSAssignmentArrayPattern {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -90,7 +90,7 @@ Program {
 							line: 1
 						}
 					}
-					rest: AssignmentIdentifier {
+					rest: JSAssignmentIdentifier {
 						name: "a"
 						loc: Object {
 							filename: "input.js"
@@ -108,7 +108,7 @@ Program {
 						}
 					}
 					elements: Array [
-						AssignmentIdentifier {
+						JSAssignmentIdentifier {
 							name: "a"
 							loc: Object {
 								filename: "input.js"
@@ -125,7 +125,7 @@ Program {
 								}
 							}
 						}
-						AssignmentIdentifier {
+						JSAssignmentIdentifier {
 							name: "a"
 							loc: Object {
 								filename: "input.js"
@@ -142,7 +142,7 @@ Program {
 								}
 							}
 						}
-						ArrayHole {
+						JSArrayHole {
 							loc: Object {
 								filename: "input.js"
 								end: Object {

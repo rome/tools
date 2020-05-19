@@ -5,7 +5,7 @@
 ## `es2018 > object-rest-spread > 10`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "let"
 				loc: Object {
 					filename: "input.js"
@@ -60,8 +60,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingObjectPattern {
+					JSVariableDeclarator {
+						id: JSBindingObjectPattern {
 							rest: undefined
 							loc: Object {
 								filename: "input.js"
@@ -77,9 +77,9 @@ Program {
 								}
 							}
 							properties: Array [
-								BindingObjectPatternProperty {
-									key: StaticPropertyKey {
-										value: Identifier {
+								JSBindingObjectPatternProperty {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
 											name: "x"
 											loc: Object {
 												filename: "input.js"
@@ -110,7 +110,7 @@ Program {
 											}
 										}
 									}
-									value: BindingIdentifier {
+									value: JSBindingIdentifier {
 										name: "x"
 										loc: Object {
 											filename: "input.js"
@@ -141,9 +141,9 @@ Program {
 										}
 									}
 								}
-								BindingObjectPatternProperty {
-									key: StaticPropertyKey {
-										value: Identifier {
+								JSBindingObjectPatternProperty {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
 											name: "y"
 											loc: Object {
 												filename: "input.js"
@@ -174,7 +174,7 @@ Program {
 											}
 										}
 									}
-									value: BindingIdentifier {
+									value: JSBindingIdentifier {
 										name: "y"
 										loc: Object {
 											filename: "input.js"
@@ -220,7 +220,7 @@ Program {
 								line: 1
 							}
 						}
-						init: ReferenceIdentifier {
+						init: JSReferenceIdentifier {
 							name: "obj"
 							loc: Object {
 								filename: "input.js"

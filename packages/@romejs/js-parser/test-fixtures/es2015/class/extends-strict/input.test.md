@@ -5,7 +5,7 @@
 ## `es2015 > class > extends-strict`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,8 +54,8 @@ Program {
 		}
 	]
 	body: Array [
-		ClassDeclaration {
-			id: BindingIdentifier {
+		JSClassDeclaration {
+			id: JSBindingIdentifier {
 				name: "C"
 				loc: Object {
 					filename: "input.js"
@@ -85,7 +85,7 @@ Program {
 					line: 1
 				}
 			}
-			meta: ClassHead {
+			meta: JSClassHead {
 				body: Array []
 				implements: undefined
 				superTypeParameters: undefined
@@ -103,7 +103,7 @@ Program {
 						line: 1
 					}
 				}
-				superClass: CallExpression {
+				superClass: JSCallExpression {
 					arguments: Array []
 					loc: Object {
 						filename: "input.js"
@@ -118,8 +118,8 @@ Program {
 							line: 1
 						}
 					}
-					callee: FunctionExpression {
-						id: BindingIdentifier {
+					callee: JSFunctionExpression {
+						id: JSBindingIdentifier {
 							name: "B"
 							loc: Object {
 								filename: "input.js"
@@ -149,7 +149,7 @@ Program {
 								line: 1
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -172,7 +172,7 @@ Program {
 								}
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							directives: Array []
 							loc: Object {
 								filename: "input.js"
@@ -188,7 +188,7 @@ Program {
 								}
 							}
 							body: Array [
-								WithStatement {
+								JSWithStatement {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -202,7 +202,7 @@ Program {
 											line: 2
 										}
 									}
-									body: EmptyStatement {
+									body: JSEmptyStatement {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -217,7 +217,7 @@ Program {
 											}
 										}
 									}
-									object: ObjectExpression {
+									object: JSObjectExpression {
 										properties: Array []
 										loc: Object {
 											filename: "input.js"
@@ -234,7 +234,7 @@ Program {
 										}
 									}
 								}
-								ReturnStatement {
+								JSReturnStatement {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -248,7 +248,7 @@ Program {
 											line: 3
 										}
 									}
-									argument: ReferenceIdentifier {
+									argument: JSReferenceIdentifier {
 										name: "B"
 										loc: Object {
 											filename: "input.js"

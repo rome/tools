@@ -16,8 +16,8 @@ export default {
 		const options = getOptions(path.context);
 
 		if (
-			node.type === "ExportDefaultDeclaration" &&
-			node.declaration.type === "StringLiteral" &&
+			node.type === "JSExportDefaultDeclaration" &&
+			node.declaration.type === "JSStringLiteral" &&
 			node.declaration.value === ASSET_EXPORT_TEMPORARY_VALUE &&
 			options.assetPath !== undefined
 		) {

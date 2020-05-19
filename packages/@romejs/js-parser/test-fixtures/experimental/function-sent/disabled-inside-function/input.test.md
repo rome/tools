@@ -5,7 +5,7 @@
 ## `experimental > function-sent > disabled-inside-function`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,8 +54,8 @@ Program {
 		}
 	]
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "foo"
 				loc: Object {
 					filename: "input.js"
@@ -85,7 +85,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: false
 				hasHoistedVars: false
@@ -108,7 +108,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -124,7 +124,7 @@ Program {
 					}
 				}
 				body: Array [
-					ReturnStatement {
+					JSReturnStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -138,7 +138,7 @@ Program {
 								line: 2
 							}
 						}
-						argument: FunctionExpression {
+						argument: JSFunctionExpression {
 							id: undefined
 							loc: Object {
 								filename: "input.js"
@@ -153,7 +153,7 @@ Program {
 									line: 2
 								}
 							}
-							body: BlockStatement {
+							body: JSBlockStatement {
 								directives: Array []
 								loc: Object {
 									filename: "input.js"
@@ -169,7 +169,7 @@ Program {
 									}
 								}
 								body: Array [
-									ExpressionStatement {
+									JSExpressionStatement {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -183,7 +183,7 @@ Program {
 												line: 2
 											}
 										}
-										expression: ReferenceIdentifier {
+										expression: JSReferenceIdentifier {
 											name: "sent"
 											loc: Object {
 												filename: "input.js"
@@ -203,7 +203,7 @@ Program {
 									}
 								]
 							}
-							head: FunctionHead {
+							head: JSFunctionHead {
 								async: false
 								generator: false
 								hasHoistedVars: false
@@ -225,7 +225,7 @@ Program {
 									}
 								}
 								params: Array [
-									BindingIdentifier {
+									JSBindingIdentifier {
 										name: ""
 										loc: Object {
 											filename: "input.js"
@@ -241,7 +241,7 @@ Program {
 												line: 2
 											}
 										}
-										meta: PatternMeta {
+										meta: JSPatternMeta {
 											optional: undefined
 											typeAnnotation: undefined
 											loc: Object {

@@ -5,7 +5,7 @@
 ## `core > regression > 9374`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "test"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: true
 				hasHoistedVars: false
@@ -84,7 +84,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -100,7 +100,7 @@ Program {
 					}
 				}
 				body: Array [
-					ExpressionStatement {
+					JSExpressionStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -114,7 +114,7 @@ Program {
 								line: 2
 							}
 						}
-						expression: YieldExpression {
+						expression: JSYieldExpression {
 							delegate: false
 							loc: Object {
 								filename: "input.js"
@@ -129,7 +129,7 @@ Program {
 									line: 2
 								}
 							}
-							argument: NewExpression {
+							argument: JSNewExpression {
 								arguments: Array []
 								optional: undefined
 								typeArguments: undefined
@@ -146,7 +146,7 @@ Program {
 										line: 2
 									}
 								}
-								callee: ReferenceIdentifier {
+								callee: JSReferenceIdentifier {
 									name: "Foo"
 									loc: Object {
 										filename: "input.js"

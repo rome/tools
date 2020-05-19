@@ -5,7 +5,7 @@
 ## `core > uncategorised > 65`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentBlock {
+		JSCommentBlock {
 			id: "0"
 			value: " perfect "
 			loc: Object {
@@ -48,7 +48,7 @@ Program {
 		}
 	]
 	body: Array [
-		SwitchStatement {
+		JSSwitchStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -62,7 +62,7 @@ Program {
 					line: 1
 				}
 			}
-			discriminant: ReferenceIdentifier {
+			discriminant: JSReferenceIdentifier {
 				name: "answer"
 				loc: Object {
 					filename: "input.js"
@@ -80,7 +80,7 @@ Program {
 				}
 			}
 			cases: Array [
-				SwitchCase {
+				JSSwitchCase {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -94,7 +94,7 @@ Program {
 							line: 1
 						}
 					}
-					test: NumericLiteral {
+					test: JSNumericLiteral {
 						value: 42
 						format: undefined
 						loc: Object {
@@ -112,7 +112,7 @@ Program {
 						}
 					}
 					consequent: Array [
-						ExpressionStatement {
+						JSExpressionStatement {
 							leadingComments: Array ["0"]
 							loc: Object {
 								filename: "input.js"
@@ -127,7 +127,7 @@ Program {
 									line: 1
 								}
 							}
-							expression: CallExpression {
+							expression: JSCallExpression {
 								arguments: Array []
 								leadingComments: undefined
 								loc: Object {
@@ -143,7 +143,7 @@ Program {
 										line: 1
 									}
 								}
-								callee: ReferenceIdentifier {
+								callee: JSReferenceIdentifier {
 									name: "bingo"
 									leadingComments: undefined
 									loc: Object {

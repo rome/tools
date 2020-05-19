@@ -5,7 +5,7 @@
 ## `esprima > es2015-meta-property > invalid-new-target`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.js"
@@ -84,8 +84,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.js"
@@ -115,7 +115,7 @@ Program {
 								line: 1
 							}
 						}
-						init: MetaProperty {
+						init: JSMetaProperty {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -129,7 +129,7 @@ Program {
 									line: 1
 								}
 							}
-							meta: Identifier {
+							meta: JSIdentifier {
 								name: "new"
 								loc: Object {
 									filename: "input.js"
@@ -146,7 +146,7 @@ Program {
 									}
 								}
 							}
-							property: Identifier {
+							property: JSIdentifier {
 								name: "target"
 								loc: Object {
 									filename: "input.js"

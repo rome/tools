@@ -5,7 +5,7 @@
 ## `es2015 > yield > input-not-followed-by-regex`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,8 +30,8 @@ Program {
 		}
 	}
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "f2"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: false
 				generator: true
 				hasHoistedVars: false
@@ -84,7 +84,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -100,7 +100,7 @@ Program {
 					}
 				}
 				body: Array [
-					ExpressionStatement {
+					JSExpressionStatement {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -114,7 +114,7 @@ Program {
 								line: 1
 							}
 						}
-						expression: ArrowFunctionExpression {
+						expression: JSArrowFunctionExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -128,7 +128,7 @@ Program {
 									line: 1
 								}
 							}
-							head: FunctionHead {
+							head: JSFunctionHead {
 								async: false
 								hasHoistedVars: false
 								params: Array []
@@ -149,7 +149,7 @@ Program {
 									}
 								}
 							}
-							body: BinaryExpression {
+							body: JSBinaryExpression {
 								operator: "/"
 								loc: Object {
 									filename: "input.js"
@@ -164,7 +164,7 @@ Program {
 										line: 1
 									}
 								}
-								left: ReferenceIdentifier {
+								left: JSReferenceIdentifier {
 									name: "yield"
 									loc: Object {
 										filename: "input.js"
@@ -181,7 +181,7 @@ Program {
 										}
 									}
 								}
-								right: NumericLiteral {
+								right: JSNumericLiteral {
 									value: 1
 									format: undefined
 									loc: Object {

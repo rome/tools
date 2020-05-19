@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 328`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		IfStatement {
+		JSIfStatement {
 			alternate: undefined
 			loc: Object {
 				filename: "input.js"
@@ -69,7 +69,7 @@ Program {
 					line: 1
 				}
 			}
-			test: NumericLiteral {
+			test: JSNumericLiteral {
 				value: 1
 				format: undefined
 				loc: Object {
@@ -86,7 +86,7 @@ Program {
 					}
 				}
 			}
-			consequent: ExpressionStatement {
+			consequent: JSExpressionStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -100,7 +100,7 @@ Program {
 						line: 1
 					}
 				}
-				expression: ReferenceIdentifier {
+				expression: JSReferenceIdentifier {
 					name: "let"
 					loc: Object {
 						filename: "input.js"
@@ -119,7 +119,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -133,7 +133,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: AssignmentExpression {
+			expression: JSAssignmentExpression {
 				operator: "="
 				loc: Object {
 					filename: "input.js"
@@ -148,7 +148,7 @@ Program {
 						line: 1
 					}
 				}
-				left: AssignmentIdentifier {
+				left: JSAssignmentIdentifier {
 					name: "x"
 					loc: Object {
 						filename: "input.js"
@@ -165,7 +165,7 @@ Program {
 						}
 					}
 				}
-				right: NumericLiteral {
+				right: JSNumericLiteral {
 					value: 10
 					format: undefined
 					loc: Object {

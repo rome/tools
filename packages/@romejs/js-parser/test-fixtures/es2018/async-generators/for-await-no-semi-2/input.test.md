@@ -5,7 +5,7 @@
 ## `es2018 > async-generators > for-await-no-semi-2`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,8 +54,8 @@ Program {
 		}
 	]
 	body: Array [
-		FunctionDeclaration {
-			id: BindingIdentifier {
+		JSFunctionDeclaration {
+			id: JSBindingIdentifier {
 				name: "f"
 				loc: Object {
 					filename: "input.js"
@@ -85,7 +85,7 @@ Program {
 					line: 1
 				}
 			}
-			head: FunctionHead {
+			head: JSFunctionHead {
 				async: true
 				generator: false
 				hasHoistedVars: false
@@ -108,7 +108,7 @@ Program {
 					}
 				}
 			}
-			body: BlockStatement {
+			body: JSBlockStatement {
 				directives: Array []
 				loc: Object {
 					filename: "input.js"
@@ -124,7 +124,7 @@ Program {
 					}
 				}
 				body: Array [
-					ForStatement {
+					JSForStatement {
 						update: undefined
 						loc: Object {
 							filename: "input.js"
@@ -139,7 +139,7 @@ Program {
 								line: 2
 							}
 						}
-						body: EmptyStatement {
+						body: JSEmptyStatement {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -154,7 +154,7 @@ Program {
 								}
 							}
 						}
-						test: BooleanLiteral {
+						test: JSBooleanLiteral {
 							value: false
 							loc: Object {
 								filename: "input.js"
@@ -170,7 +170,7 @@ Program {
 								}
 							}
 						}
-						init: VariableDeclaration {
+						init: JSVariableDeclaration {
 							kind: "let"
 							loc: Object {
 								filename: "input.js"
@@ -186,8 +186,8 @@ Program {
 								}
 							}
 							declarations: Array [
-								VariableDeclarator {
-									id: BindingIdentifier {
+								JSVariableDeclarator {
+									id: JSBindingIdentifier {
 										name: "i"
 										loc: Object {
 											filename: "input.js"
@@ -217,7 +217,7 @@ Program {
 											line: 2
 										}
 									}
-									init: NumericLiteral {
+									init: JSNumericLiteral {
 										value: 0
 										format: undefined
 										loc: Object {

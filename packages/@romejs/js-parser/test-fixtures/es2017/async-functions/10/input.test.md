@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > 10`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: true
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.js"
@@ -84,8 +84,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.js"
@@ -115,7 +115,7 @@ Program {
 								line: 1
 							}
 						}
-						init: CallExpression {
+						init: JSCallExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -129,7 +129,7 @@ Program {
 									line: 1
 								}
 							}
-							callee: ReferenceIdentifier {
+							callee: JSReferenceIdentifier {
 								name: "async"
 								loc: Object {
 									filename: "input.js"
@@ -147,7 +147,7 @@ Program {
 								}
 							}
 							arguments: Array [
-								ReferenceIdentifier {
+								JSReferenceIdentifier {
 									name: "x"
 									loc: Object {
 										filename: "input.js"
@@ -170,7 +170,7 @@ Program {
 				]
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -184,7 +184,7 @@ Program {
 					line: 2
 				}
 			}
-			expression: ReferenceIdentifier {
+			expression: JSReferenceIdentifier {
 				name: "INVALID_PLACEHOLDER"
 				loc: Object {
 					filename: "input.js"
@@ -201,7 +201,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -215,7 +215,7 @@ Program {
 					line: 2
 				}
 			}
-			expression: BinaryExpression {
+			expression: JSBinaryExpression {
 				operator: "+"
 				loc: Object {
 					filename: "input.js"
@@ -230,7 +230,7 @@ Program {
 						line: 2
 					}
 				}
-				left: ReferenceIdentifier {
+				left: JSReferenceIdentifier {
 					name: "x"
 					loc: Object {
 						filename: "input.js"
@@ -247,7 +247,7 @@ Program {
 						}
 					}
 				}
-				right: NumericLiteral {
+				right: JSNumericLiteral {
 					value: 1
 					format: undefined
 					loc: Object {

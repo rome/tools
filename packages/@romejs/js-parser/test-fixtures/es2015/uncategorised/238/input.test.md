@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 238`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ImportDeclaration {
+		JSImportDeclaration {
 			defaultSpecifier: undefined
 			importKind: undefined
 			namespaceSpecifier: undefined
@@ -71,7 +71,7 @@ Program {
 					line: 1
 				}
 			}
-			source: StringLiteral {
+			source: JSStringLiteral {
 				value: ""
 				loc: Object {
 					filename: "input.js"
@@ -88,7 +88,7 @@ Program {
 				}
 			}
 			namedSpecifiers: Array [
-				ImportSpecifier {
+				JSImportSpecifier {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -102,7 +102,7 @@ Program {
 							line: 1
 						}
 					}
-					imported: Identifier {
+					imported: JSIdentifier {
 						name: "foo"
 						loc: Object {
 							filename: "input.js"
@@ -119,8 +119,8 @@ Program {
 							}
 						}
 					}
-					local: ImportSpecifierLocal {
-						name: BindingIdentifier {
+					local: JSImportSpecifierLocal {
+						name: JSBindingIdentifier {
 							name: "foo"
 							loc: Object {
 								filename: "input.js"
@@ -153,7 +153,7 @@ Program {
 						}
 					}
 				}
-				ImportSpecifier {
+				JSImportSpecifier {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -167,7 +167,7 @@ Program {
 							line: 1
 						}
 					}
-					imported: Identifier {
+					imported: JSIdentifier {
 						name: "bar"
 						loc: Object {
 							filename: "input.js"
@@ -184,8 +184,8 @@ Program {
 							}
 						}
 					}
-					local: ImportSpecifierLocal {
-						name: BindingIdentifier {
+					local: JSImportSpecifierLocal {
+						name: JSBindingIdentifier {
 							name: "bar"
 							loc: Object {
 								filename: "input.js"

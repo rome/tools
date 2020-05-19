@@ -5,7 +5,7 @@
 ## `esprima > es2015-object-initialiser > proto-identifier-setter`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: ObjectExpression {
+			expression: JSObjectExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -59,9 +59,9 @@ Program {
 					}
 				}
 				properties: Array [
-					ObjectProperty {
-						key: StaticPropertyKey {
-							value: Identifier {
+					JSObjectProperty {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "__proto__"
 								loc: Object {
 									filename: "input.js"
@@ -92,7 +92,7 @@ Program {
 								}
 							}
 						}
-						value: NullLiteral {
+						value: JSNullLiteral {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -121,10 +121,10 @@ Program {
 							}
 						}
 					}
-					ObjectMethod {
+					JSObjectMethod {
 						kind: "set"
-						key: StaticPropertyKey {
-							value: Identifier {
+						key: JSStaticPropertyKey {
+							value: JSIdentifier {
 								name: "__proto__"
 								loc: Object {
 									filename: "input.js"
@@ -168,7 +168,7 @@ Program {
 								line: 1
 							}
 						}
-						body: BlockStatement {
+						body: JSBlockStatement {
 							body: Array []
 							directives: Array []
 							loc: Object {
@@ -185,7 +185,7 @@ Program {
 								}
 							}
 						}
-						head: FunctionHead {
+						head: JSFunctionHead {
 							async: false
 							generator: false
 							hasHoistedVars: false
@@ -207,7 +207,7 @@ Program {
 								}
 							}
 							params: Array [
-								BindingIdentifier {
+								JSBindingIdentifier {
 									name: "x"
 									loc: Object {
 										filename: "input.js"
@@ -223,7 +223,7 @@ Program {
 											line: 1
 										}
 									}
-									meta: PatternMeta {
+									meta: JSPatternMeta {
 										optional: undefined
 										typeAnnotation: undefined
 										loc: Object {

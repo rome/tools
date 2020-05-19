@@ -5,7 +5,7 @@
 ## `experimental > optional-chaining > separated-chaining`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: MemberExpression {
+			expression: JSMemberExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -58,8 +58,8 @@ Program {
 						line: 1
 					}
 				}
-				property: StaticMemberProperty {
-					value: Identifier {
+				property: JSStaticMemberProperty {
+					value: JSIdentifier {
 						name: "f"
 						loc: Object {
 							filename: "input.js"
@@ -92,7 +92,7 @@ Program {
 						}
 					}
 				}
-				object: MemberExpression {
+				object: JSMemberExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -106,8 +106,8 @@ Program {
 							line: 1
 						}
 					}
-					property: StaticMemberProperty {
-						value: Identifier {
+					property: JSStaticMemberProperty {
+						value: JSIdentifier {
 							name: "e"
 							loc: Object {
 								filename: "input.js"
@@ -139,7 +139,7 @@ Program {
 							}
 						}
 					}
-					object: MemberExpression {
+					object: JSMemberExpression {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -153,8 +153,8 @@ Program {
 								line: 1
 							}
 						}
-						property: StaticMemberProperty {
-							value: Identifier {
+						property: JSStaticMemberProperty {
+							value: JSIdentifier {
 								name: "d"
 								loc: Object {
 									filename: "input.js"
@@ -186,7 +186,7 @@ Program {
 								}
 							}
 						}
-						object: MemberExpression {
+						object: JSMemberExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -200,8 +200,8 @@ Program {
 									line: 1
 								}
 							}
-							property: StaticMemberProperty {
-								value: Identifier {
+							property: JSStaticMemberProperty {
+								value: JSIdentifier {
 									name: "c"
 									loc: Object {
 										filename: "input.js"
@@ -233,7 +233,7 @@ Program {
 									}
 								}
 							}
-							object: MemberExpression {
+							object: JSMemberExpression {
 								loc: Object {
 									filename: "input.js"
 									end: Object {
@@ -247,7 +247,7 @@ Program {
 										line: 1
 									}
 								}
-								object: ReferenceIdentifier {
+								object: JSReferenceIdentifier {
 									name: "a"
 									loc: Object {
 										filename: "input.js"
@@ -264,8 +264,8 @@ Program {
 										}
 									}
 								}
-								property: StaticMemberProperty {
-									value: Identifier {
+								property: JSStaticMemberProperty {
+									value: JSIdentifier {
 										name: "b"
 										loc: Object {
 											filename: "input.js"
@@ -304,7 +304,7 @@ Program {
 				}
 			}
 		}
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -318,7 +318,7 @@ Program {
 					line: 3
 				}
 			}
-			expression: MemberExpression {
+			expression: JSMemberExpression {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -332,8 +332,8 @@ Program {
 						line: 3
 					}
 				}
-				property: StaticMemberProperty {
-					value: Identifier {
+				property: JSStaticMemberProperty {
+					value: JSIdentifier {
 						name: "f"
 						loc: Object {
 							filename: "input.js"
@@ -365,7 +365,7 @@ Program {
 						}
 					}
 				}
-				object: MemberExpression {
+				object: JSMemberExpression {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -379,8 +379,8 @@ Program {
 							line: 3
 						}
 					}
-					property: StaticMemberProperty {
-						value: Identifier {
+					property: JSStaticMemberProperty {
+						value: JSIdentifier {
 							name: "e"
 							loc: Object {
 								filename: "input.js"
@@ -412,7 +412,7 @@ Program {
 							}
 						}
 					}
-					object: MemberExpression {
+					object: JSMemberExpression {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -426,8 +426,8 @@ Program {
 								line: 3
 							}
 						}
-						property: StaticMemberProperty {
-							value: Identifier {
+						property: JSStaticMemberProperty {
+							value: JSIdentifier {
 								name: "d"
 								loc: Object {
 									filename: "input.js"
@@ -460,7 +460,7 @@ Program {
 								}
 							}
 						}
-						object: MemberExpression {
+						object: JSMemberExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -474,8 +474,8 @@ Program {
 									line: 3
 								}
 							}
-							property: StaticMemberProperty {
-								value: Identifier {
+							property: JSStaticMemberProperty {
+								value: JSIdentifier {
 									name: "c"
 									loc: Object {
 										filename: "input.js"
@@ -507,7 +507,7 @@ Program {
 									}
 								}
 							}
-							object: MemberExpression {
+							object: JSMemberExpression {
 								loc: Object {
 									filename: "input.js"
 									end: Object {
@@ -521,7 +521,7 @@ Program {
 										line: 3
 									}
 								}
-								object: ReferenceIdentifier {
+								object: JSReferenceIdentifier {
 									name: "a"
 									loc: Object {
 										filename: "input.js"
@@ -538,8 +538,8 @@ Program {
 										}
 									}
 								}
-								property: StaticMemberProperty {
-									value: Identifier {
+								property: JSStaticMemberProperty {
+									value: JSIdentifier {
 										name: "b"
 										loc: Object {
 											filename: "input.js"

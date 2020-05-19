@@ -5,7 +5,7 @@
 ## `experimental > optional-chaining > optional-super-property`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
 					filename: "input.js"
@@ -84,8 +84,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "a"
 							loc: Object {
 								filename: "input.js"
@@ -115,7 +115,7 @@ Program {
 								line: 1
 							}
 						}
-						init: ObjectExpression {
+						init: JSObjectExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -130,10 +130,10 @@ Program {
 								}
 							}
 							properties: Array [
-								ObjectMethod {
+								JSObjectMethod {
 									kind: "method"
-									key: StaticPropertyKey {
-										value: Identifier {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
 											name: "b"
 											loc: Object {
 												filename: "input.js"
@@ -177,7 +177,7 @@ Program {
 											line: 2
 										}
 									}
-									head: FunctionHead {
+									head: JSFunctionHead {
 										async: false
 										generator: false
 										hasHoistedVars: false
@@ -200,7 +200,7 @@ Program {
 											}
 										}
 									}
-									body: BlockStatement {
+									body: JSBlockStatement {
 										directives: Array []
 										loc: Object {
 											filename: "input.js"
@@ -216,7 +216,7 @@ Program {
 											}
 										}
 										body: Array [
-											ReturnStatement {
+											JSReturnStatement {
 												loc: Object {
 													filename: "input.js"
 													end: Object {
@@ -230,7 +230,7 @@ Program {
 														line: 3
 													}
 												}
-												argument: MemberExpression {
+												argument: JSMemberExpression {
 													loc: Object {
 														filename: "input.js"
 														end: Object {
@@ -244,7 +244,7 @@ Program {
 															line: 3
 														}
 													}
-													object: Super {
+													object: JSSuper {
 														loc: Object {
 															filename: "input.js"
 															end: Object {
@@ -259,8 +259,8 @@ Program {
 															}
 														}
 													}
-													property: StaticMemberProperty {
-														value: Identifier {
+													property: JSStaticMemberProperty {
+														value: JSIdentifier {
 															name: "c"
 															loc: Object {
 																filename: "input.js"

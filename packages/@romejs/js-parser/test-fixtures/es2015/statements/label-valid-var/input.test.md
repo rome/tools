@@ -5,7 +5,7 @@
 ## `es2015 > statements > label-valid-var`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		LabeledStatement {
+		JSLabeledStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			label: Identifier {
+			label: JSIdentifier {
 				name: "foo"
 				loc: Object {
 					filename: "input.js"
@@ -61,7 +61,7 @@ Program {
 					}
 				}
 			}
-			body: VariableDeclarationStatement {
+			body: JSVariableDeclarationStatement {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -75,7 +75,7 @@ Program {
 						line: 1
 					}
 				}
-				declaration: VariableDeclaration {
+				declaration: JSVariableDeclaration {
 					kind: "var"
 					loc: Object {
 						filename: "input.js"
@@ -91,8 +91,8 @@ Program {
 						}
 					}
 					declarations: Array [
-						VariableDeclarator {
-							id: BindingIdentifier {
+						JSVariableDeclarator {
+							id: JSBindingIdentifier {
 								name: "bar"
 								loc: Object {
 									filename: "input.js"

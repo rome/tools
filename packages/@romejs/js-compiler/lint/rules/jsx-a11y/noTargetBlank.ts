@@ -1,5 +1,5 @@
 import {descriptions} from "@romejs/diagnostics";
-import {AnyNode} from "@romejs/js-ast";
+import {AnyNode} from "@romejs/ast";
 import {Path} from "@romejs/js-compiler";
 import {isJSXElement} from "@romejs/js-ast-utils";
 
@@ -10,7 +10,7 @@ function jsxAnchorHasBlankTarget(node: AnyNode) {
 			attribute.type === "JSXAttribute" &&
 			attribute.name.name === "target" &&
 			attribute.value &&
-			attribute.value.type === "StringLiteral" &&
+			attribute.value.type === "JSStringLiteral" &&
 			attribute.value.value === "_blank"
 		)
 	);
@@ -23,7 +23,7 @@ function jsxAnchorHasNoReferrer(node: AnyNode) {
 			attribute.type === "JSXAttribute" &&
 			attribute.name.name === "rel" &&
 			attribute.value &&
-			attribute.value.type === "StringLiteral" &&
+			attribute.value.type === "JSStringLiteral" &&
 			attribute.value.value.includes("noreferrer")
 		)
 	);
@@ -36,7 +36,7 @@ function jsxAnchorHasExternalLink(node: AnyNode) {
 			attribute.type === "JSXAttribute" &&
 			attribute.name.name === "href" &&
 			attribute.value &&
-			((attribute.value.type === "StringLiteral" &&
+			((attribute.value.type === "JSStringLiteral" &&
 			/^(?:\w+:|\/\/)/.test(attribute.value.value)) ||
 			attribute.value.type === "JSXExpressionContainer")
 		)

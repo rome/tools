@@ -5,7 +5,7 @@
 ## `comments > basic > export-default-anonymous-class`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentBlock {
+		JSCommentBlock {
 			id: "0"
 			value: "*\n * this is anonymous class.\n "
 			loc: Object {
@@ -46,7 +46,7 @@ Program {
 				}
 			}
 		}
-		CommentBlock {
+		JSCommentBlock {
 			id: "1"
 			value: "*\n     * this is method1.\n     "
 			loc: Object {
@@ -65,7 +65,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExportDefaultDeclaration {
+		JSExportDefaultDeclaration {
 			leadingComments: Array ["0"]
 			loc: Object {
 				filename: "input.js"
@@ -80,8 +80,8 @@ Program {
 					line: 4
 				}
 			}
-			declaration: ClassDeclaration {
-				id: BindingIdentifier {
+			declaration: JSClassDeclaration {
+				id: JSBindingIdentifier {
 					name: "*default*"
 					loc: Object {
 						filename: "input.js"
@@ -111,7 +111,7 @@ Program {
 						line: 4
 					}
 				}
-				meta: ClassHead {
+				meta: JSClassHead {
 					implements: undefined
 					leadingComments: undefined
 					superClass: undefined
@@ -131,10 +131,10 @@ Program {
 						}
 					}
 					body: Array [
-						ClassMethod {
+						JSClassMethod {
 							kind: "method"
-							key: StaticPropertyKey {
-								value: Identifier {
+							key: JSStaticPropertyKey {
+								value: JSIdentifier {
 									name: "method1"
 									leadingComments: undefined
 									loc: Object {
@@ -181,7 +181,7 @@ Program {
 									line: 8
 								}
 							}
-							body: BlockStatement {
+							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
 								loc: Object {
@@ -198,7 +198,7 @@ Program {
 									}
 								}
 							}
-							head: FunctionHead {
+							head: JSFunctionHead {
 								async: false
 								generator: false
 								hasHoistedVars: false
@@ -221,7 +221,7 @@ Program {
 									}
 								}
 							}
-							meta: ClassPropertyMeta {
+							meta: JSClassPropertyMeta {
 								abstract: false
 								accessibility: undefined
 								leadingComments: undefined

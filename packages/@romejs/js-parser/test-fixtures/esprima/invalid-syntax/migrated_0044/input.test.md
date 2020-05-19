@@ -5,7 +5,7 @@
 ## `esprima > invalid-syntax > migrated_0044`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -68,7 +68,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "var"
 				loc: Object {
 					filename: "input.js"
@@ -84,8 +84,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "x"
 							loc: Object {
 								filename: "input.js"
@@ -115,7 +115,7 @@ Program {
 								line: 1
 							}
 						}
-						init: RegExpLiteral {
+						init: JSRegExpLiteral {
 							global: true
 							insensitive: false
 							multiline: false
@@ -135,7 +135,7 @@ Program {
 									line: 1
 								}
 							}
-							expression: RegExpSubExpression {
+							expression: JSRegExpSubExpression {
 								loc: Object {
 									filename: "input.js"
 									end: Object {
@@ -150,7 +150,7 @@ Program {
 									}
 								}
 								body: Array [
-									RegExpCharSet {
+									JSRegExpCharSet {
 										invert: false
 										loc: Object {
 											filename: "input.js"
@@ -166,7 +166,7 @@ Program {
 											}
 										}
 										body: Array [
-											RegExpCharacter {
+											JSRegExpCharacter {
 												value: "P"
 												loc: Object {
 													filename: "input.js"
@@ -182,7 +182,7 @@ Program {
 													}
 												}
 											}
-											RegExpCharacter {
+											JSRegExpCharacter {
 												value: " "
 												loc: Object {
 													filename: "input.js"
@@ -198,7 +198,7 @@ Program {
 													}
 												}
 											}
-											RegExpCharacter {
+											JSRegExpCharacter {
 												value: "Q"
 												loc: Object {
 													filename: "input.js"
@@ -214,7 +214,7 @@ Program {
 													}
 												}
 											}
-											RegExpCharacter {
+											JSRegExpCharacter {
 												value: "R"
 												loc: Object {
 													filename: "input.js"

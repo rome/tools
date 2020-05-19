@@ -5,7 +5,7 @@
 ## `jsx > regression > 3`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -33,7 +33,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -95,7 +95,7 @@ Program {
 								line: 1
 							}
 						}
-						expression: ObjectExpression {
+						expression: JSObjectExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -110,9 +110,9 @@ Program {
 								}
 							}
 							properties: Array [
-								ObjectProperty {
-									key: StaticPropertyKey {
-										value: Identifier {
+								JSObjectProperty {
+									key: JSStaticPropertyKey {
+										value: JSIdentifier {
 											name: "a"
 											loc: Object {
 												filename: "input.js"
@@ -143,7 +143,7 @@ Program {
 											}
 										}
 									}
-									value: ReferenceIdentifier {
+									value: JSReferenceIdentifier {
 										name: "a"
 										loc: Object {
 											filename: "input.js"

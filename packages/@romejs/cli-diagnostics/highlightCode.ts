@@ -8,7 +8,7 @@
 import {tokenizeJS} from "@romejs/js-parser";
 import {Number0, ob1Get0} from "@romejs/ob1";
 import {DiagnosticLanguage, DiagnosticSourceType} from "@romejs/diagnostics";
-import {ConstSourceType} from "@romejs/js-ast";
+import {ConstSourceType} from "@romejs/ast";
 import {tokenizeJSON} from "@romejs/codec-json";
 import {UnknownFilePath, createUnknownFilePath} from "@romejs/path";
 import {escapeMarkup, markupTag} from "@romejs/string-markup";

@@ -5,7 +5,7 @@
 ## `comments > basic > switch-function-call-no-semicolon`
 
 ```javascript
-Program {
+JSProgram {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []
@@ -29,7 +29,7 @@ Program {
 		}
 	}
 	comments: Array [
-		CommentLine {
+		JSCommentLine {
 			id: "0"
 			value: " comment"
 			loc: Object {
@@ -48,7 +48,7 @@ Program {
 		}
 	]
 	body: Array [
-		SwitchStatement {
+		JSSwitchStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -62,7 +62,7 @@ Program {
 					line: 1
 				}
 			}
-			discriminant: ReferenceIdentifier {
+			discriminant: JSReferenceIdentifier {
 				name: "x"
 				loc: Object {
 					filename: "input.js"
@@ -80,7 +80,7 @@ Program {
 				}
 			}
 			cases: Array [
-				SwitchCase {
+				JSSwitchCase {
 					trailingComments: Array ["0"]
 					loc: Object {
 						filename: "input.js"
@@ -95,7 +95,7 @@ Program {
 							line: 2
 						}
 					}
-					test: NumericLiteral {
+					test: JSNumericLiteral {
 						value: 1
 						format: undefined
 						loc: Object {
@@ -113,7 +113,7 @@ Program {
 						}
 					}
 					consequent: Array [
-						ExpressionStatement {
+						JSExpressionStatement {
 							trailingComments: undefined
 							loc: Object {
 								filename: "input.js"
@@ -128,7 +128,7 @@ Program {
 									line: 3
 								}
 							}
-							expression: CallExpression {
+							expression: JSCallExpression {
 								trailingComments: undefined
 								loc: Object {
 									filename: "input.js"
@@ -144,7 +144,7 @@ Program {
 									}
 								}
 								arguments: Array [
-									StringLiteral {
+									JSStringLiteral {
 										value: "1"
 										loc: Object {
 											filename: "input.js"
@@ -161,7 +161,7 @@ Program {
 										}
 									}
 								]
-								callee: MemberExpression {
+								callee: JSMemberExpression {
 									loc: Object {
 										filename: "input.js"
 										end: Object {
@@ -175,7 +175,7 @@ Program {
 											line: 3
 										}
 									}
-									object: ReferenceIdentifier {
+									object: JSReferenceIdentifier {
 										name: "console"
 										loc: Object {
 											filename: "input.js"
@@ -192,8 +192,8 @@ Program {
 											}
 										}
 									}
-									property: StaticMemberProperty {
-										value: Identifier {
+									property: JSStaticMemberProperty {
+										value: JSIdentifier {
 											name: "log"
 											loc: Object {
 												filename: "input.js"
@@ -230,7 +230,7 @@ Program {
 						}
 					]
 				}
-				SwitchCase {
+				JSSwitchCase {
 					test: undefined
 					leadingComments: Array ["0"]
 					loc: Object {
@@ -247,7 +247,7 @@ Program {
 						}
 					}
 					consequent: Array [
-						BreakStatement {
+						JSBreakStatement {
 							label: undefined
 							leadingComments: undefined
 							loc: Object {

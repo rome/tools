@@ -7,33 +7,33 @@
 
 import {Path} from "@romejs/js-compiler";
 import {
-	AnyExpression,
+	AnyJSExpression,
 	AnyNode,
-	binaryExpression,
-	stringLiteral,
-} from "@romejs/js-ast";
+	jsBinaryExpression,
+	jsStringLiteral,
+} from "@romejs/ast";
 
 export default {
-	name: "templateLiterals",
+	name: "jsTemplateLiterals",
 	enter(path: Path): AnyNode {
 		const {node, parent} = path;
 
-		if (node.type === "TaggedTemplateExpression") {
+		if (node.type === "JSTaggedTemplateExpression") {
 			// TODO
 		}
 
 		if (
-			node.type === "TemplateLiteral" &&
-			parent.type !== "TaggedTemplateExpression"
+			node.type === "JSTemplateLiteral" &&
+			parent.type !== "JSTaggedTemplateExpression"
 		) {
-			const nodes: Array<AnyExpression> = [];
+			const nodes: Array<AnyJSExpression> = [];
 			const {expressions, quasis} = node;
 
 			let index = 0;
 			for (const elem of quasis) {
 				if (elem.cooked) {
 					nodes.push(
-						stringLiteral.create({
+						jsStringLiteral.create({
 							value: elem.cooked,
 						}),
 					);
@@ -41,7 +41,7 @@ export default {
 
 				if (index < expressions.length) {
 					const expr = expressions[index++];
-					if (expr.type !== "StringLiteral" || expr.value !== "") {
+					if (expr.type !== "JSStringLiteral" || expr.value !== "") {
 						nodes.push(expr);
 					}
 				}
@@ -52,14 +52,17 @@ export default {
 			}
 
 			// Since `+` is left-to-right associative, nsure the first node is a string if first/second isn't
-			if (nodes[0].type !== "StringLiteral" && nodes[1].type !== "StringLiteral") {
-				nodes.unshift(stringLiteral.quick(""));
+			if (
+				nodes[0].type !== "JSStringLiteral" &&
+				nodes[1].type !== "JSStringLiteral"
+			) {
+				nodes.unshift(jsStringLiteral.quick(""));
 			}
 
 			// Build the final expression
 			let root = nodes[0];
 			for (let i = 1; i < nodes.length; i++) {
-				root = binaryExpression.create({
+				root = jsBinaryExpression.create({
 					operator: "+",
 					left: root,
 					right: nodes[i],

@@ -5,7 +5,7 @@
 ## `esprima > es2015-import-declaration > invalid-import-module-specifier`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	directives: Array []
@@ -54,7 +54,7 @@ Program {
 		}
 	]
 	body: Array [
-		ExportExternalDeclaration {
+		JSExportExternalDeclaration {
 			defaultSpecifier: undefined
 			exportKind: undefined
 			namespaceSpecifier: undefined
@@ -71,7 +71,7 @@ Program {
 					line: 1
 				}
 			}
-			source: StringLiteral {
+			source: JSStringLiteral {
 				value: ""
 				loc: Object {
 					filename: "input.js"
@@ -89,7 +89,7 @@ Program {
 				}
 			}
 			namedSpecifiers: Array [
-				ExportExternalSpecifier {
+				JSExportExternalSpecifier {
 					loc: Object {
 						filename: "input.js"
 						end: Object {
@@ -103,7 +103,7 @@ Program {
 							line: 1
 						}
 					}
-					exported: Identifier {
+					exported: JSIdentifier {
 						name: "foo"
 						loc: Object {
 							filename: "input.js"
@@ -120,7 +120,7 @@ Program {
 							}
 						}
 					}
-					local: Identifier {
+					local: JSIdentifier {
 						name: "foo"
 						loc: Object {
 							filename: "input.js"

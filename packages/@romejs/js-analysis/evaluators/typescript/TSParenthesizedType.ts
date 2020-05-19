@@ -6,11 +6,7 @@
  */
 
 import {Scope} from "../../scopes";
-import {
-	AnyNode,
-	TSParenthesizedType,
-	tsParenthesizedType,
-} from "@romejs/js-ast";
+import {AnyNode, TSParenthesizedType, tsParenthesizedType} from "@romejs/ast";
 
 export default function TSParenthesizedType(node: AnyNode, scope: Scope) {
 	node = tsParenthesizedType.assert(node);

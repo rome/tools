@@ -5,7 +5,7 @@
 ## `typescript > function > anonymous`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		VariableDeclarationStatement {
+		JSVariableDeclarationStatement {
 			loc: Object {
 				filename: "input.ts"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			declaration: VariableDeclaration {
+			declaration: JSVariableDeclaration {
 				kind: "const"
 				loc: Object {
 					filename: "input.ts"
@@ -60,8 +60,8 @@ Program {
 					}
 				}
 				declarations: Array [
-					VariableDeclarator {
-						id: BindingIdentifier {
+					JSVariableDeclarator {
+						id: JSBindingIdentifier {
 							name: "f"
 							loc: Object {
 								filename: "input.ts"
@@ -91,7 +91,7 @@ Program {
 								line: 1
 							}
 						}
-						init: FunctionExpression {
+						init: JSFunctionExpression {
 							id: undefined
 							loc: Object {
 								filename: "input.ts"
@@ -106,7 +106,7 @@ Program {
 									line: 1
 								}
 							}
-							body: BlockStatement {
+							body: JSBlockStatement {
 								body: Array []
 								directives: Array []
 								loc: Object {
@@ -123,7 +123,7 @@ Program {
 									}
 								}
 							}
-							head: FunctionHead {
+							head: JSFunctionHead {
 								async: false
 								generator: false
 								hasHoistedVars: false
@@ -157,7 +157,7 @@ Program {
 											line: 1
 										}
 									}
-									typeName: ReferenceIdentifier {
+									typeName: JSReferenceIdentifier {
 										name: "T"
 										loc: Object {
 											filename: "input.ts"
@@ -211,7 +211,7 @@ Program {
 									]
 								}
 								params: Array [
-									BindingIdentifier {
+									JSBindingIdentifier {
 										name: "x"
 										loc: Object {
 											filename: "input.ts"
@@ -227,7 +227,7 @@ Program {
 												line: 1
 											}
 										}
-										meta: PatternMeta {
+										meta: JSPatternMeta {
 											optional: true
 											loc: Object {
 												filename: "input.ts"
@@ -257,7 +257,7 @@ Program {
 														line: 1
 													}
 												}
-												typeName: ReferenceIdentifier {
+												typeName: JSReferenceIdentifier {
 													name: "T"
 													loc: Object {
 														filename: "input.ts"

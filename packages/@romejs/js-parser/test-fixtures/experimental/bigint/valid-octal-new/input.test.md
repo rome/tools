@@ -5,7 +5,7 @@
 ## `experimental > bigint > valid-octal-new`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: BigIntLiteral {
+			expression: JSBigIntLiteral {
 				value: "0o16432"
 				loc: Object {
 					filename: "input.js"

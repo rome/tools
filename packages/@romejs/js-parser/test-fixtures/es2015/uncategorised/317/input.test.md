@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 317`
 
 ```javascript
-Program {
+JSProgram {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
@@ -30,7 +30,7 @@ Program {
 		}
 	}
 	body: Array [
-		ExpressionStatement {
+		JSExpressionStatement {
 			loc: Object {
 				filename: "input.js"
 				end: Object {
@@ -44,7 +44,7 @@ Program {
 					line: 1
 				}
 			}
-			expression: TemplateLiteral {
+			expression: JSTemplateLiteral {
 				loc: Object {
 					filename: "input.js"
 					end: Object {
@@ -59,7 +59,7 @@ Program {
 					}
 				}
 				quasis: Array [
-					TemplateElement {
+					JSTemplateElement {
 						cooked: ""
 						raw: ""
 						tail: false
@@ -77,7 +77,7 @@ Program {
 							}
 						}
 					}
-					TemplateElement {
+					JSTemplateElement {
 						cooked: ""
 						raw: ""
 						tail: true
@@ -97,7 +97,7 @@ Program {
 					}
 				]
 				expressions: Array [
-					MemberExpression {
+					JSMemberExpression {
 						loc: Object {
 							filename: "input.js"
 							end: Object {
@@ -111,8 +111,8 @@ Program {
 								line: 1
 							}
 						}
-						property: ComputedMemberProperty {
-							value: NumericLiteral {
+						property: JSComputedMemberProperty {
+							value: JSNumericLiteral {
 								value: 0
 								format: undefined
 								loc: Object {
@@ -143,7 +143,7 @@ Program {
 								}
 							}
 						}
-						object: CallExpression {
+						object: JSCallExpression {
 							loc: Object {
 								filename: "input.js"
 								end: Object {
@@ -158,7 +158,7 @@ Program {
 								}
 							}
 							arguments: Array [
-								StringLiteral {
+								JSStringLiteral {
 									value: "1"
 									loc: Object {
 										filename: "input.js"
@@ -175,7 +175,7 @@ Program {
 									}
 								}
 							]
-							callee: MemberExpression {
+							callee: JSMemberExpression {
 								loc: Object {
 									filename: "input.js"
 									end: Object {
@@ -189,8 +189,8 @@ Program {
 										line: 1
 									}
 								}
-								property: StaticMemberProperty {
-									value: Identifier {
+								property: JSStaticMemberProperty {
+									value: JSIdentifier {
 										name: "exec"
 										loc: Object {
 											filename: "input.js"
@@ -222,7 +222,7 @@ Program {
 										}
 									}
 								}
-								object: RegExpLiteral {
+								object: JSRegExpLiteral {
 									global: false
 									insensitive: false
 									multiline: false
@@ -242,7 +242,7 @@ Program {
 											line: 1
 										}
 									}
-									expression: RegExpSubExpression {
+									expression: JSRegExpSubExpression {
 										loc: Object {
 											filename: "input.js"
 											end: Object {
@@ -257,7 +257,7 @@ Program {
 											}
 										}
 										body: Array [
-											RegExpDigitCharacter {
+											JSRegExpDigitCharacter {
 												loc: Object {
 													filename: "input.js"
 													end: Object {
