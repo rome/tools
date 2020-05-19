@@ -63,6 +63,7 @@ import iframeHasTitle from "./jsx-a11y/iframeHasTitle";
 import imgRedundantAlt from "./jsx-a11y/imgRedundantAlt";
 import lang from "./jsx-a11y/lang";
 import mouseEventsHaveKeyEvents from "./jsx-a11y/mouseEventsHaveKeyEvents";
+import mediaHasCaption from "./jsx-a11y/mediaHasCaption";
 import noAccessKey from "./jsx-a11y/noAccessKey";
 import noAutofocus from "./jsx-a11y/noAutofocus";
 import noDistractingElements from "./jsx-a11y/noDistractingElements";
@@ -140,6 +141,7 @@ export const lintTransforms = [
 	imgRedundantAlt,
 	lang,
 	mouseEventsHaveKeyEvents,
+	mediaHasCaption,
 	noAccessKey,
 	noAutofocus,
 	noDistractingElements,
