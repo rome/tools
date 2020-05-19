@@ -292,6 +292,10 @@ export const descriptions = createMessages({
 	},
 	// @romejs/js-compiler
 	LINT: {
+		JSX_A11Y_TABINDEX_NO_POSITIVE: {
+			category: "lint/jsx-a11y/tabindexNoPositive",
+			message: "Avoid positive integer values for <emphasis>tabIndex</emphasis>.",
+		},
 		JSX_A11Y_MOUSE_EVENTS_HAVE_KEY_EVENTS: (
 			mouseEvent: string,
 			keyboardEvent: string,

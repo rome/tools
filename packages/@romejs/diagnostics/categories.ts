@@ -154,6 +154,7 @@ type LintDiagnosticCategory =
 	| "lint/jsx-a11y/noDistractingElements"
 	| "lint/jsx-a11y/noTargetBlank"
 	| "lint/jsx-a11y/scope"
+	| "lint/jsx-a11y/tabindexNoPositive"
 	| "lint/react/jsxKey"
 	| "lint/react/jsxNoCommentText"
 	| "lint/react/noChildrenProp"
