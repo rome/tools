@@ -297,7 +297,7 @@ export const descriptions = createMessages({
 			keyboardEvent: string,
 		) => ({
 			category: "lint/jsx-a11y/mouseEventsHaveKeyEvents",
-			message: `The mouse event ${mouseEvent} should be paired with the event ${keyboardEvent}`,
+			message: `The mouse event <emphasis>${mouseEvent}</emphasis> should be paired with the event <emphasis>${keyboardEvent}</emphasis>`,
 		}),
 		REACT_NO_WILL_UPDATE_SET_STATE: {
 			category: "lint/react/noWillUpdateSetState",
