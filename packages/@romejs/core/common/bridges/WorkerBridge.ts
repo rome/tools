@@ -219,7 +219,7 @@ export default class WorkerBridge extends Bridge {
 		Diagnostics
 	>({name: "updateInlineSnapshots", direction: "server->client"});
 
-	compileJS = this.createEvent<
+	compile = this.createEvent<
 		{
 			file: JSONFileReference;
 			stage: TransformStageName;
@@ -227,15 +227,15 @@ export default class WorkerBridge extends Bridge {
 			parseOptions: WorkerParseOptions;
 		},
 		CompileResult
-	>({name: "compileJS", direction: "server->client"});
+	>({name: "compile", direction: "server->client"});
 
-	parseJS = this.createEvent<
+	parse = this.createEvent<
 		{
 			file: JSONFileReference;
 			options: WorkerParseOptions;
 		},
 		JSRoot
-	>({name: "parseJS", direction: "server->client"});
+	>({name: "parse", direction: "server->client"});
 
 	updateBuffer = this.createEvent<
 		{

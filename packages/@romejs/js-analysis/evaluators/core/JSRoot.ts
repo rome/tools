@@ -6,10 +6,10 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSRoot, JSRoot} from "@romejs/ast";
+import {AnyNode, JSRoot, jsRoot} from "@romejs/ast";
 import JSBlockStatement from "../statements/JSBlockStatement";
 
 export default function JSRoot(node: AnyNode, scope: Scope) {
-	node = JSRoot.assert(node);
+	node = jsRoot.assert(node);
 	JSBlockStatement(node, scope);
 }

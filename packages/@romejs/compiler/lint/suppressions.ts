@@ -26,10 +26,7 @@ function buildSuppressionCommentValue(categories: Set<string>): string {
 	return `${SUPPRESSION_START} ${Array.from(categories).join(" ")}`;
 }
 
-export function addSuppressions(
-	context: CompilerContext,
-	ast: JSRoot,
-): JSRoot {
+export function addSuppressions(context: CompilerContext, ast: JSRoot): JSRoot {
 	if (!context.hasLintDecisions()) {
 		return ast;
 	}

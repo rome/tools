@@ -36,9 +36,9 @@ import {
 	jsObjectExpression,
 	jsObjectMethod,
 	jsObjectProperty,
-	JSRoot,
 	jsReferenceIdentifier,
 	jsReturnStatement,
+	jsRoot,
 	jsStaticPropertyKey,
 	jsVariableDeclaration,
 	jsVariableDeclarationStatement,
@@ -52,7 +52,7 @@ export default {
 
 		const opts = getOptions(context);
 
-		if (JSRoot.is(node)) {
+		if (jsRoot.is(node)) {
 			const mappings = new Map();
 
 			// make all variables private
@@ -132,7 +132,7 @@ export default {
 				}
 			}
 
-			const newProgram = JSRoot.assert(renameBindings(path, mappings));
+			const newProgram = jsRoot.assert(renameBindings(path, mappings));
 
 			// Get new scope with updated bindings. TODO Maybe `renameBindings` should return the path?
 			const newScope = scope.getRootScope().evaluate(

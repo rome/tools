@@ -19,7 +19,7 @@ exports.analysisFolder = path.join(
 );
 exports.lintRulesFolder = path.join(
 	exports.packages,
-	"js-compiler",
+	"compiler",
 	"lint",
 	"rules",
 );

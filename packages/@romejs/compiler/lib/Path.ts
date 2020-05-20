@@ -19,6 +19,7 @@ import {
 } from "../api/createHook";
 import reduce from "../methods/reduce";
 import {TransformExitResult} from "../types";
+import {isRoot} from "@romejs/ast-utils";
 
 export type PathOptions = {
 	ancestryPaths?: Array<Path>;
@@ -58,7 +59,9 @@ export default class Path {
 		this.context = context;
 
 		const parentScope =
-			opts.parentScope === undefined ? context.getRootScope() : opts.parentScope;
+			opts.parentScope === undefined || isRoot(node)
+				? context.getRootScope()
+				: opts.parentScope;
 
 		let scope = opts.scope;
 		if (scope === undefined) {

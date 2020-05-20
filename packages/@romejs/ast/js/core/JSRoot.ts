@@ -47,7 +47,7 @@ export const MOCK_PROGRAM: JSRoot = {
 	hasHoistedVars: false,
 };
 
-export const JSRoot = createBuilder<JSRoot>(
+export const jsRoot = createBuilder<JSRoot>(
 	"JSRoot",
 	{
 		bindingKeys: {},

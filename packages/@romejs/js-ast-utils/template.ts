@@ -10,7 +10,7 @@ import {
 	AnyJSIdentifier,
 	AnyJSStatement,
 	AnyNode,
-	JSRoot,
+	jsRoot,
 } from "@romejs/ast";
 import {CompilerContext, Path} from "@romejs/compiler";
 import removeLoc from "./removeLoc";
@@ -72,7 +72,7 @@ function getTemplate(strs: TemplateStringsArray): BuiltTemplate {
 	});
 
 	// remove `loc` properties
-	ast = JSRoot.assert(removeLoc(ast));
+	ast = jsRoot.assert(removeLoc(ast));
 
 	// traverse and find placeholders paths
 	function collectPlaceholderPaths(path: Path) {
@@ -190,7 +190,7 @@ template.statement = (
 	...substitutions: TemplateSubstitions
 ): AnyJSStatement => {
 	// Parse the template, with caching
-	const ast = JSRoot.assert(template(strs, ...substitutions));
+	const ast = jsRoot.assert(template(strs, ...substitutions));
 
 	// Ensure that there's only a single statement in the JSRoot body
 	const body = ast.body;

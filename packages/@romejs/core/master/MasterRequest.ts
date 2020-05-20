@@ -895,7 +895,7 @@ export default class MasterRequest {
 		return this.wrapRequestDiagnostic(
 			"parse",
 			path,
-			(bridge, file) => bridge.parseJS.call({file, options: opts}),
+			(bridge, file) => bridge.parse.call({file, options: opts}),
 		);
 	}
 
@@ -1001,7 +1001,7 @@ export default class MasterRequest {
 					options = {};
 				}
 
-				return bridge.compileJS.call({file, stage, options, parseOptions});
+				return bridge.compile.call({file, stage, options, parseOptions});
 			},
 		);
 

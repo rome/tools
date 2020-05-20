@@ -15,7 +15,8 @@ import {
 	ExtensionLintInfo,
 	ExtensionLintResult,
 } from "./types";
-import {ParseJSResult} from "@romejs/core/worker/Worker";
+import {ParseResult} from "@romejs/core/worker/Worker";
+import {parseJS} from "@romejs/js-parser";
 
 // These are extensions that be implicitly tried when a file is referenced
 // This is mostly for compatibility with Node.js projects. This list should not
@@ -37,11 +38,28 @@ function buildJSHandler(
 
 	return {
 		ext,
-		syntax,
 		sourceType,
 
+		async parse({stat, sourceType, manifestPath, path, file, worker}) {
+			const sourceText = await worker.readFile(file.real);
+			const ast = parseJS({
+				input: sourceText,
+				mtime: stat.mtimeMs,
+				manifestPath,
+				path,
+				sourceType,
+				syntax,
+				allowReturnOutsideFunction: sourceType === "script",
+			});
+			return {
+				sourceText,
+				ast,
+				generated: false,
+			};
+		},
+
 		async analyzeDependencies({file, worker, parseOptions}) {
-			const {ast, sourceText, project, generated} = await worker.parseJS(
+			const {ast, sourceText, project, generated} = await worker.parse(
 				file,
 				parseOptions,
 			);
@@ -59,17 +77,10 @@ function buildJSHandler(
 			);
 		},
 
-		async toJavaScript({file, worker}) {
-			return {
-				sourceText: await worker.readFile(file.real),
-				generated: false,
-			};
-		},
-
 		async format(info: ExtensionHandlerMethodInfo): Promise<ExtensionLintResult> {
 			const {file: ref, parseOptions, worker} = info;
 
-			const {ast, sourceText, generated}: ParseJSResult = await worker.parseJS(
+			const {ast, sourceText, generated}: ParseResult = await worker.parse(
 				ref,
 				parseOptions,
 			);
@@ -95,7 +106,7 @@ function buildJSHandler(
 		async lint(info: ExtensionLintInfo): Promise<ExtensionLintResult> {
 			const {file: ref, project, parseOptions, options, worker} = info;
 
-			const {ast, sourceText, generated}: ParseJSResult = await worker.parseJS(
+			const {ast, sourceText, generated}: ParseResult = await worker.parse(
 				ref,
 				parseOptions,
 			);

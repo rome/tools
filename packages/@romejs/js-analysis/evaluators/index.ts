@@ -264,9 +264,6 @@ evaluators.set("JSPatternMeta", JSPatternMeta);
 import JSPrivateName from "./classes/JSPrivateName";
 evaluators.set("JSPrivateName", JSPrivateName);
 
-import JSRoot from "./core/JSRoot";
-evaluators.set("JSRoot", JSRoot);
-
 import JSReferenceIdentifier from "./expressions/JSReferenceIdentifier";
 evaluators.set("JSReferenceIdentifier", JSReferenceIdentifier);
 
@@ -344,6 +341,9 @@ evaluators.set("JSRegExpWordCharacter", JSRegExpWordCharacter);
 
 import JSReturnStatement from "./statements/JSReturnStatement";
 evaluators.set("JSReturnStatement", JSReturnStatement);
+
+import JSRoot from "./core/JSRoot";
+evaluators.set("JSRoot", JSRoot);
 
 import JSSequenceExpression from "./expressions/JSSequenceExpression";
 evaluators.set("JSSequenceExpression", JSSequenceExpression);

@@ -10,8 +10,10 @@ import {WorkerLintOptions, WorkerParseOptions} from "../bridges/WorkerBridge";
 import Worker from "../../worker/Worker";
 import {DiagnosticSuppressions, Diagnostics} from "@romejs/diagnostics";
 import * as compiler from "@romejs/compiler";
-import {ConstProgramSyntax, ConstSourceType} from "@romejs/ast";
+import {AnyRoot, ConstSourceType} from "@romejs/ast";
 import {AnalyzeDependencyResult} from "../types/analyzeDependencies";
+import fs = require("fs");
+import {UnknownFilePath} from "@romejs/path";
 
 export type ExtensionLintInfo = ExtensionHandlerMethodInfo & {
 	options: WorkerLintOptions;
@@ -31,19 +33,28 @@ export type ExtensionHandlerMethodInfo = {
 	worker: Worker;
 };
 
+export type ExtensionParseInfo = ExtensionHandlerMethodInfo & {
+	sourceType: ConstSourceType;
+	stat: fs.Stats;
+	manifestPath: undefined | string;
+	path: UnknownFilePath;
+};
+
 export type PartialExtensionHandler = {
 	sourceType?: ConstSourceType;
-	syntax?: Array<ConstProgramSyntax>;
 	isAsset?: boolean;
 	canHaveScale?: boolean;
 	lint?: (info: ExtensionLintInfo) => Promise<ExtensionLintResult>;
 	format?: (info: ExtensionHandlerMethodInfo) => Promise<ExtensionLintResult>;
-	toJavaScript?: (
-		opts: ExtensionHandlerMethodInfo,
+
+	parse: (
+		opts: ExtensionParseInfo,
 	) => Promise<{
-		generated: boolean;
 		sourceText: string;
+		generated: boolean;
+		ast: AnyRoot;
 	}>;
+
 	analyzeDependencies?: (
 		opts: ExtensionHandlerMethodInfo,
 	) => Promise<AnalyzeDependencyResult>;

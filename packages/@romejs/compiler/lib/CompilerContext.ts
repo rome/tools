@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	ConstSourceType,
 	JSRoot,
-	JSRoot,
+	jsRoot,
 } from "@romejs/ast";
 import {
 	SourceLocation,
@@ -224,7 +224,7 @@ export default class CompilerContext {
 		visitors: TransformVisitor | TransformVisitors,
 		pathOpts?: PathOptions,
 	): JSRoot {
-		return JSRoot.assert(
+		return jsRoot.assert(
 			reduce(
 				ast,
 				[...hookVisitors, ...(Array.isArray(visitors) ? visitors : [visitors])],

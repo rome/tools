@@ -18,6 +18,7 @@ import {
 } from "./javascript";
 import {textHandler} from "./text";
 import {jsonHandler, rjsonHandler} from "./json";
+import {parseJS} from "@romejs/js-parser";
 
 type ExtensionsMap = Map<string, ExtensionHandler>;
 
@@ -75,12 +76,16 @@ const assetHandler: ExtensionHandler = {
 	ext: "unknown",
 	canHaveScale: true,
 	isAsset: true,
-	async toJavaScript() {
+	async parse({path}) {
 		// This exists just so analyzeDependencies has something to look at
 		// When bundling we'll have custom logic in the compiler to handle assets and inject the correct string
+		const sourceText = `export default '${ASSET_EXPORT_TEMPORARY_VALUE}';`;
+
 		return {
+			// Shouldn't error
+			ast: parseJS({input: sourceText, sourceType: "module", path}),
 			generated: true,
-			sourceText: `export default '${ASSET_EXPORT_TEMPORARY_VALUE}';`,
+			sourceText,
 		};
 	},
 };

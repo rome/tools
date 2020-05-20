@@ -88,7 +88,7 @@ export default class WorkerAPI {
 	}
 
 	async moduleSignatureJS(ref: FileReference, parseOptions: WorkerParseOptions) {
-		const {ast, project} = await this.worker.parseJS(ref, parseOptions);
+		const {ast, project} = await this.worker.parse(ref, parseOptions);
 
 		this.logger.info(`Generating export types:`, ref.real);
 
@@ -108,7 +108,7 @@ export default class WorkerAPI {
 		updates: InlineSnapshotUpdates,
 		parseOptions: WorkerParseOptions,
 	): Promise<Diagnostics> {
-		let {ast, sourceText} = await this.worker.parseJS(ref, parseOptions);
+		let {ast, sourceText} = await this.worker.parse(ref, parseOptions);
 
 		const appliedUpdatesToCallees: Set<AnyNode> = new Set();
 		const pendingUpdates: Set<InlineSnapshotUpdate> = new Set(updates);
@@ -241,13 +241,13 @@ export default class WorkerAPI {
 		}
 	}
 
-	async compileJS(
+	async compile(
 		ref: FileReference,
 		stage: TransformStageName,
 		options: WorkerCompilerOptions,
 		parseOptions: WorkerParseOptions,
 	): Promise<CompileResult> {
-		const {ast, project, sourceText, generated} = await this.worker.parseJS(
+		const {ast, project, sourceText, generated} = await this.worker.parse(
 			ref,
 			parseOptions,
 		);
@@ -271,11 +271,8 @@ export default class WorkerAPI {
 		);
 	}
 
-	async parseJS(
-		ref: FileReference,
-		opts: WorkerParseOptions,
-	): Promise<JSRoot> {
-		let {ast, generated} = await this.worker.parseJS(
+	async parse(ref: FileReference, opts: WorkerParseOptions): Promise<JSRoot> {
+		let {ast, generated} = await this.worker.parse(
 			ref,
 			{
 				...opts,
