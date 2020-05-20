@@ -11,7 +11,7 @@
  unknown:3:10 lint/react/noUnsafe ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ UNSAFE_componentWillMount is unsafe for use in async rendering. Update the component to use
-    componentDidMount instead. See
+    componentDidMount instead. See 
     https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html.
 
     2 │         class Hello extends React.Component {
@@ -42,7 +42,7 @@ class Hello extends React.Component {
  unknown:3:10 lint/react/noUnsafe ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ UNSAFE_componentWillReceiveProps is unsafe for use in async rendering. Update the component to
-    use getDerivedStateFromProps instead. See
+    use getDerivedStateFromProps instead. See 
     https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html.
 
     2 │         class Hello extends React.Component {
@@ -73,7 +73,7 @@ class Hello extends React.Component {
  unknown:3:10 lint/react/noUnsafe ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ UNSAFE_componentWillUpdate is unsafe for use in async rendering. Update the component to use
-    componentDidUpdate instead. See
+    componentDidUpdate instead. See 
     https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html.
 
     2 │         class Hello extends React.Component {
