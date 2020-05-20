@@ -27,6 +27,7 @@ import JSVariableDeclarationStatement from "./JSVariableDeclarationStatement";
 import TSInterfaceDeclaration from "./TSInterfaceDeclaration";
 import TSDeclareFunction from "./TSDeclareFunction";
 import JSFunctionHead from "./JSFunctionHead";
+import TSEnumDeclaration from "./TSEnumDeclaration";
 import {AnyNode} from "@romejs/ast";
 
 type ScopeEvaluator = {
@@ -60,5 +61,6 @@ evaluators.set("JSForStatement", JSForStatement);
 evaluators.set("JSForOfStatement", JSForOfStatement);
 evaluators.set("JSForInStatement", JSForOfStatement);
 evaluators.set("TSInterfaceDeclaration", TSInterfaceDeclaration);
+evaluators.set("TSEnumDeclaration", TSEnumDeclaration);
 
 export default evaluators;
