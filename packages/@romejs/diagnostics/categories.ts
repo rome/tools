@@ -153,6 +153,7 @@ type LintDiagnosticCategory =
 	| "lint/jsx-a11y/noAccessKey"
 	| "lint/jsx-a11y/noAutofocus"
 	| "lint/jsx-a11y/noDistractingElements"
+	| "lint/jsx-a11y/noOnChange"
 	| "lint/jsx-a11y/noTargetBlank"
 	| "lint/jsx-a11y/scope"
 	| "lint/jsx-a11y/tabindexNoPositive"

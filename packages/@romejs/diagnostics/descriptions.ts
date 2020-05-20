@@ -370,6 +370,10 @@ export const descriptions = createMessages({
 			category: "lint/jsx-a11y/noDistractingElements",
 			message: `Do not use ${element} elements as they can create visual accessibility issues and are deprecated.`,
 		}),
+		JSX_A11Y_NO_ON_CHANGE: {
+			category: "lint/jsx-a11y/noOnChange",
+			message: "<emphasis>onBlur</emphasis> should be used in favor of <emphasis>onChange</emphasis>. Only use <emphasis>onChange</emphasis> if absolutely necessary without negatively affecting keyboard only or screen reader users.",
+		},
 		JSX_A11Y_NO_TARGET_BLANK: {
 			category: "lint/jsx-a11y/noTargetBlank",
 			message: `Using <emphasis>target="_blank"</emphasis> without <emphasis>rel="noreferrer"</emphasis> is a security risk.`,
