@@ -5,7 +5,7 @@
 ## `es2015 > meta-properties > new-target-invalid`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

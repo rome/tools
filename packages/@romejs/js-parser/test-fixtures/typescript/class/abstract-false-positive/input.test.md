@@ -5,7 +5,7 @@
 ## `typescript > class > abstract-false-positive`
 
 ```javascript
-JSProgram {
+JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []

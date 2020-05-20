@@ -5,7 +5,7 @@
 ## `typescript > class > parameter-properties`
 
 ```javascript
-JSProgram {
+JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []

@@ -5,7 +5,7 @@
 ## `esprima > es2015-meta-property > assign-new-target`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

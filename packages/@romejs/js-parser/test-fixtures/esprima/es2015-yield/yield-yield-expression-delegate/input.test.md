@@ -5,7 +5,7 @@
 ## `esprima > es2015-yield > yield-yield-expression-delegate`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

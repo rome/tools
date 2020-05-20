@@ -5,7 +5,7 @@
 ## `esprima > es2015-arrow-function > object-binding-pattern-invalid-pattern-without-parenthesis`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []

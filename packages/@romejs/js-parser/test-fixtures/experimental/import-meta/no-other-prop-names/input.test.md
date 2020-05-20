@@ -5,7 +5,7 @@
 ## `experimental > import-meta > no-other-prop-names`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

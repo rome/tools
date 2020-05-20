@@ -5,7 +5,7 @@
 ## `experimental > do-expressions > conditional-statement`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

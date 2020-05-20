@@ -5,7 +5,7 @@
 ## `esprima > es2015-identifier > escaped_start`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

@@ -5,7 +5,7 @@
 ## `esprima > es2015-export-declaration > export-var-anonymous-function`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

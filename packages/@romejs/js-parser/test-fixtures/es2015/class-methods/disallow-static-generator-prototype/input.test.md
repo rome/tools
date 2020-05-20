@@ -5,7 +5,7 @@
 ## `es2015 > class-methods > disallow-static-generator-prototype`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

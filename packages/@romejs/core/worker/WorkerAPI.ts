@@ -6,7 +6,7 @@
  */
 
 import {FileReference, Worker} from "@romejs/core";
-import {AnyNode, JSProgram} from "@romejs/ast";
+import {AnyNode, JSRoot} from "@romejs/ast";
 import {Diagnostics, catchDiagnostics, descriptions} from "@romejs/diagnostics";
 import {
 	CompileResult,
@@ -15,7 +15,7 @@ import {
 	Path,
 	TransformStageName,
 	compile,
-} from "@romejs/js-compiler";
+} from "@romejs/compiler";
 import {
 	WorkerCompilerOptions,
 	WorkerFormatResult,
@@ -35,7 +35,7 @@ import {
 	InlineSnapshotUpdate,
 	InlineSnapshotUpdates,
 } from "../test-worker/SnapshotManager";
-import {formatJS} from "@romejs/formatter";
+import {formatAST} from "@romejs/formatter";
 import {getNodeReferenceParts, valueToNode} from "@romejs/js-ast-utils";
 
 // Some Windows git repos will automatically convert Unix line endings to Windows
@@ -88,7 +88,7 @@ export default class WorkerAPI {
 	}
 
 	async moduleSignatureJS(ref: FileReference, parseOptions: WorkerParseOptions) {
-		const {ast, project} = await this.worker.parseJS(ref, parseOptions);
+		const {ast, project} = await this.worker.parse(ref, parseOptions);
 
 		this.logger.info(`Generating export types:`, ref.real);
 
@@ -108,7 +108,7 @@ export default class WorkerAPI {
 		updates: InlineSnapshotUpdates,
 		parseOptions: WorkerParseOptions,
 	): Promise<Diagnostics> {
-		let {ast, sourceText} = await this.worker.parseJS(ref, parseOptions);
+		let {ast, sourceText} = await this.worker.parse(ref, parseOptions);
 
 		const appliedUpdatesToCallees: Set<AnyNode> = new Set();
 		const pendingUpdates: Set<InlineSnapshotUpdate> = new Set(updates);
@@ -193,7 +193,7 @@ export default class WorkerAPI {
 		}
 
 		if (diags.length === 0) {
-			const formatted = formatJS(ast, {sourceText}).code;
+			const formatted = formatAST(ast, {sourceText}).code;
 			await this.worker.writeFile(ref.real, formatted);
 		}
 
@@ -241,13 +241,13 @@ export default class WorkerAPI {
 		}
 	}
 
-	async compileJS(
+	async compile(
 		ref: FileReference,
 		stage: TransformStageName,
 		options: WorkerCompilerOptions,
 		parseOptions: WorkerParseOptions,
 	): Promise<CompileResult> {
-		const {ast, project, sourceText, generated} = await this.worker.parseJS(
+		const {ast, project, sourceText, generated} = await this.worker.parse(
 			ref,
 			parseOptions,
 		);
@@ -271,11 +271,8 @@ export default class WorkerAPI {
 		);
 	}
 
-	async parseJS(
-		ref: FileReference,
-		opts: WorkerParseOptions,
-	): Promise<JSProgram> {
-		let {ast, generated} = await this.worker.parseJS(
+	async parse(ref: FileReference, opts: WorkerParseOptions): Promise<JSRoot> {
+		let {ast, generated} = await this.worker.parse(
 			ref,
 			{
 				...opts,

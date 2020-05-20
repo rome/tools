@@ -5,7 +5,7 @@
 ## `core > categorized > 06-regex`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

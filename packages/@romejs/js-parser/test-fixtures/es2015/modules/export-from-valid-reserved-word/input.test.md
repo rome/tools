@@ -5,7 +5,7 @@
 ## `es2015 > modules > export-from-valid-reserved-word`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

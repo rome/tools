@@ -5,7 +5,7 @@
 ## `comments > basic > surrounding-return-comments`
 
 ```javascript
-JSProgram {
+JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []

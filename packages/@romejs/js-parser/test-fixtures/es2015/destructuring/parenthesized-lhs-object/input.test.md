@@ -5,7 +5,7 @@
 ## `es2015 > destructuring > parenthesized-lhs-object`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

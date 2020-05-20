@@ -5,7 +5,7 @@
 ## `es2015 > modules > duplicate-named-export-destructuring6`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

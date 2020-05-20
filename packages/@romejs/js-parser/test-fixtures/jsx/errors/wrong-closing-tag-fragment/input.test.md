@@ -5,7 +5,7 @@
 ## `jsx > errors > wrong-closing-tag-fragment`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

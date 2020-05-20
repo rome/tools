@@ -5,7 +5,7 @@
 ## `es2015 > yield > parameter-name-generator`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

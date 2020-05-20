@@ -5,7 +5,7 @@
 ## `esprima > es2015-template-literals > after-switch`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

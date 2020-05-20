@@ -5,7 +5,7 @@
 ## `jsx > basic > 10`
 
 ```javascript
-JSProgram {
+JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []

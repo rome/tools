@@ -162,7 +162,7 @@ function adjustCommentsAfterTrailingComma(
 }
 
 export function attachComments(parser: JSParser, node: AnyNode) {
-	if (node.type === "JSProgram" && node.body.length > 0) {
+	if (node.type === "JSRoot" && node.body.length > 0) {
 		return;
 	}
 

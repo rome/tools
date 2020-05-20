@@ -5,7 +5,7 @@
 ## `esprima > es2015-array-pattern > empty-pattern-lexical`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

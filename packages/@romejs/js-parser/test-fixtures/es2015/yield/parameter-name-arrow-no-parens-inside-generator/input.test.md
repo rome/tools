@@ -5,7 +5,7 @@
 ## `es2015 > yield > parameter-name-arrow-no-parens-inside-generator`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []

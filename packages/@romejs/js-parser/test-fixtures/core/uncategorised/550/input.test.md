@@ -5,7 +5,7 @@
 ## `core > uncategorised > 550`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	filename: "input.js"

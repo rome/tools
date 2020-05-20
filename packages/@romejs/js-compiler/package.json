@@ -1,6 +1,0 @@
-{
-  "name": "@romejs/js-compiler",
-  "private": true,
-  "type": "module",
-  "main": "index.ts"
-}

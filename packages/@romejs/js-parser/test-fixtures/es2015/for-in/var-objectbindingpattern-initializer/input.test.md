@@ -5,7 +5,7 @@
 ## `es2015 > for-in > var-objectbindingpattern-initializer`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

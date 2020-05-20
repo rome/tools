@@ -5,7 +5,7 @@
 ## `experimental > class-properties > no-static-prototype`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

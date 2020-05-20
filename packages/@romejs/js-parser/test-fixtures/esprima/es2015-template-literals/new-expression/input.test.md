@@ -5,7 +5,7 @@
 ## `esprima > es2015-template-literals > new-expression`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

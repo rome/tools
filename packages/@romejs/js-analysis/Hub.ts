@@ -6,8 +6,8 @@
  */
 
 import T from "./types/T";
-import {CompilerContext, TransformProjectDefinition} from "@romejs/js-compiler";
-import {JSProgram} from "@romejs/ast";
+import {CompilerContext, TransformProjectDefinition} from "@romejs/compiler";
+import {JSRoot} from "@romejs/ast";
 import Graph from "./Graph";
 import Evaluator from "./Evaluator";
 import Utils from "./Utils";
@@ -21,7 +21,7 @@ const statuses = {
 type HubStatus = number;
 
 export default class Hub {
-	constructor(ast: JSProgram, project: TransformProjectDefinition) {
+	constructor(ast: JSRoot, project: TransformProjectDefinition) {
 		this.context = new CompilerContext({
 			// TODO
 			sourceText: "",

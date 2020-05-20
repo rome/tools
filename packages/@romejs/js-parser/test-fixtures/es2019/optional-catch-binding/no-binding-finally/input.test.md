@@ -5,7 +5,7 @@
 ## `es2019 > optional-catch-binding > no-binding-finally`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

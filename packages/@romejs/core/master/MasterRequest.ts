@@ -55,8 +55,8 @@ import {
 	SerializeCLITarget,
 	serializeCLIFlags,
 } from "@romejs/cli-flags";
-import {JSProgram} from "@romejs/ast";
-import {TransformStageName} from "@romejs/js-compiler";
+import {JSRoot} from "@romejs/ast";
+import {TransformStageName} from "@romejs/compiler";
 import WorkerBridge, {
 	PrefetchedModuleSignatures,
 	WorkerAnalyzeDependencyResult,
@@ -889,13 +889,13 @@ export default class MasterRequest {
 	async requestWorkerParse(
 		path: AbsoluteFilePath,
 		opts: WorkerParseOptions,
-	): Promise<JSProgram> {
+	): Promise<JSRoot> {
 		this.checkCancelled();
 
 		return this.wrapRequestDiagnostic(
 			"parse",
 			path,
-			(bridge, file) => bridge.parseJS.call({file, options: opts}),
+			(bridge, file) => bridge.parse.call({file, options: opts}),
 		);
 	}
 
@@ -1001,7 +1001,7 @@ export default class MasterRequest {
 					options = {};
 				}
 
-				return bridge.compileJS.call({file, stage, options, parseOptions});
+				return bridge.compile.call({file, stage, options, parseOptions});
 			},
 		);
 

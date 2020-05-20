@@ -5,7 +5,7 @@
 ## `es2015 > let > let-with-linebreak-arr-dstrk`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

@@ -5,7 +5,7 @@
 ## `typescript > interface > reserved-method-name`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

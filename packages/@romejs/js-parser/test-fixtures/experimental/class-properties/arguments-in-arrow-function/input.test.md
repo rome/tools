@@ -5,7 +5,7 @@
 ## `experimental > class-properties > arguments-in-arrow-function`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

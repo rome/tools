@@ -5,7 +5,7 @@
 ## `typescript > cast > type-assertion-after-operator`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

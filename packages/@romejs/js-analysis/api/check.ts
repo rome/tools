@@ -7,17 +7,17 @@
 
 import {CheckProvider} from "../types";
 import {DiagnosticAdvice, Diagnostics, descriptions} from "@romejs/diagnostics";
-import {JSProgram} from "@romejs/ast";
+import {JSRoot} from "@romejs/ast";
 import Hub from "../Hub";
 import E from "../types/errors/E";
 import T from "../types/T";
 import OpenT from "../types/OpenT";
 import buildGraph from "./buildGraph";
-import {TransformProjectDefinition} from "@romejs/js-compiler";
+import {TransformProjectDefinition} from "@romejs/compiler";
 
 export default async function check(
 	opts: {
-		ast: JSProgram;
+		ast: JSRoot;
 		project: TransformProjectDefinition;
 		provider: CheckProvider;
 	},

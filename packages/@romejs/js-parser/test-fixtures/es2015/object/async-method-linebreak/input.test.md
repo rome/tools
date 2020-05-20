@@ -5,7 +5,7 @@
 ## `es2015 > object > async-method-linebreak`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

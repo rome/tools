@@ -5,7 +5,7 @@
 ## `esprima > es2015-arrow-function > object-binding-pattern-invalid-rest-in-object-pattern`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

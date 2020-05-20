@@ -5,7 +5,7 @@
 ## `typescript > arrow-function > destructuring`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []

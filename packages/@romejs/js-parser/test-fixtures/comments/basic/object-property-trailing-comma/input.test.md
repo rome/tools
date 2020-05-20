@@ -5,7 +5,7 @@
 ## `comments > basic > object-property-trailing-comma`
 
 ```javascript
-JSProgram {
+JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []

@@ -5,7 +5,7 @@
 ## `es2015 > array-rest-spread > comma-after-rest`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

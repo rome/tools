@@ -13,9 +13,8 @@ import WorkerBridge, {
 	WorkerPartialManifests,
 	WorkerProjects,
 } from "../common/bridges/WorkerBridge";
-import {ConstProgramSyntax, ConstSourceType, JSProgram} from "@romejs/ast";
+import {AnyRoot, ConstSourceType, JSRoot} from "@romejs/ast";
 import Logger from "../common/utils/Logger";
-import {parseJS} from "@romejs/js-parser";
 import {Profiler} from "@romejs/v8";
 import WorkerAPI from "./WorkerAPI";
 import {Reporter} from "@romejs/cli-reporter";
@@ -36,10 +35,10 @@ import {
 	convertTransportFileReference,
 } from "../common/types/files";
 import {getFileHandlerAssert} from "../common/file-handlers/index";
-import {TransformProjectDefinition} from "@romejs/js-compiler";
+import {TransformProjectDefinition} from "@romejs/compiler";
 
-export type ParseJSResult = {
-	ast: JSProgram;
+export type ParseResult = {
+	ast: AnyRoot;
 	project: TransformProjectDefinition;
 	path: AbsoluteFilePath;
 	lastAccessed: number;
@@ -100,7 +99,7 @@ export default class Worker {
 
 	partialManifests: Map<number, WorkerPartialManifest>;
 	projects: Map<number, TransformProjectDefinition>;
-	astCache: AbsoluteFilePathMap<ParseJSResult>;
+	astCache: AbsoluteFilePathMap<ParseResult>;
 	moduleSignatureCache: UnknownFilePathMap<ModuleSignature>;
 	buffers: AbsoluteFilePathMap<string>;
 
@@ -145,8 +144,8 @@ export default class Worker {
 			return workerProfile;
 		});
 
-		bridge.compileJS.subscribe((payload) => {
-			return this.api.compileJS(
+		bridge.compile.subscribe((payload) => {
+			return this.api.compile(
 				convertTransportFileReference(payload.file),
 				payload.stage,
 				payload.options,
@@ -154,8 +153,8 @@ export default class Worker {
 			);
 		});
 
-		bridge.parseJS.subscribe((payload) => {
-			return this.api.parseJS(
+		bridge.parse.subscribe((payload) => {
+			return this.api.parse(
 				convertTransportFileReference(payload.file),
 				payload.options,
 			);
@@ -242,7 +241,7 @@ export default class Worker {
 		prefetchedModuleSignatures: PrefetchedModuleSignatures = {},
 		parseOptions: WorkerParseOptions,
 	): Promise<TypeCheckProvider> {
-		const libs: Array<JSProgram> = [];
+		const libs: Array<JSRoot> = [];
 
 		// TODO Figure out how to get the uids for the libraries, probably adding some additional stuff to ProjectConfig?
 
@@ -322,10 +321,10 @@ export default class Worker {
 		}
 	}
 
-	async parseJS(
+	async parse(
 		ref: FileReference,
 		options: WorkerParseOptions,
-	): Promise<ParseJSResult> {
+	): Promise<ParseResult> {
 		const path = createAbsoluteFilePath(ref.real);
 
 		const {project: projectId, uid} = ref;
@@ -333,16 +332,8 @@ export default class Worker {
 
 		// Fetch and validate extension handler
 		const {handler} = getFileHandlerAssert(ref.real, project.config);
-		if (handler.toJavaScript === undefined) {
-			throw new Error(`We don't know how to convert the file ${path} to js`);
-		}
-
-		// Get syntax
-		let syntax: Array<ConstProgramSyntax> = [];
-		if (options.syntax !== undefined) {
-			syntax = options.syntax;
-		} else if (handler.syntax !== undefined) {
-			syntax = handler.syntax;
+		if (handler.parse === undefined) {
+			throw new Error(`We don't know how to parse ${path}`);
 		}
 
 		// Get source type
@@ -371,7 +362,7 @@ export default class Worker {
 		if (cacheEnabled) {
 			// Update the lastAccessed of the ast cache and return it, it will be evicted on
 			// any file change
-			const cachedResult: undefined | ParseJSResult = this.astCache.get(path);
+			const cachedResult: undefined | ParseResult = this.astCache.get(path);
 			if (cachedResult !== undefined) {
 				let useCached = true;
 
@@ -395,27 +386,20 @@ export default class Worker {
 		this.logger.info(`Parsing:`, path);
 
 		const stat = await lstat(path);
-
-		const {sourceText, generated} = await handler.toJavaScript({
-			file: ref,
-			worker: this,
-			project,
-			parseOptions: options,
-		});
-
 		let manifestPath: undefined | string;
 		if (ref.manifest !== undefined) {
 			manifestPath = this.getPartialManifest(ref.manifest).path;
 		}
 
-		const ast = parseJS({
-			input: sourceText,
-			mtime: stat.mtimeMs,
-			manifestPath,
-			path: createUnknownFilePath(uid),
+		const {sourceText, generated, ast} = await handler.parse({
 			sourceType,
-			syntax,
-			allowReturnOutsideFunction: sourceType === "script",
+			path: createUnknownFilePath(uid),
+			manifestPath,
+			stat,
+			file: ref,
+			worker: this,
+			project,
+			parseOptions: options,
 		});
 
 		// If the AST is corrupt then we don't under any circumstance allow it
@@ -432,7 +416,7 @@ export default class Worker {
 			);
 		}
 
-		const res: ParseJSResult = {
+		const res: ParseResult = {
 			ast,
 			lastAccessed: Date.now(),
 			sourceText,

@@ -5,7 +5,7 @@
 ## `es2015 > for-in > nonstrict-initializer`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

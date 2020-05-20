@@ -5,7 +5,7 @@
 ## `esprima > es2015-identifier > math_zain_start`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

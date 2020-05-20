@@ -5,7 +5,7 @@
 ## `esprima > es2015-spread-element > new-spread-number`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

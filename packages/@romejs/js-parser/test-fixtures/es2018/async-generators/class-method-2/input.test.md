@@ -5,7 +5,7 @@
 ## `es2018 > async-generators > class-method-2`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

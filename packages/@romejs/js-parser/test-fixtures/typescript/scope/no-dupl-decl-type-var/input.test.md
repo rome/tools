@@ -5,7 +5,7 @@
 ## `typescript > scope > no-dupl-decl-type-var`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

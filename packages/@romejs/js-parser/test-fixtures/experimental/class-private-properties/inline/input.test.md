@@ -5,7 +5,7 @@
 ## `experimental > class-private-properties > inline`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

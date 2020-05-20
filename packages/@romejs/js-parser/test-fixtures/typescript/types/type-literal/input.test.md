@@ -5,7 +5,7 @@
 ## `typescript > types > type-literal`
 
 ```javascript
-JSProgram {
+JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []

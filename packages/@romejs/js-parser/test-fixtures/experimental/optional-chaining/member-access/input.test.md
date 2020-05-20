@@ -5,7 +5,7 @@
 ## `experimental > optional-chaining > member-access`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

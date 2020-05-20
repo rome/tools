@@ -18,7 +18,7 @@ import {
 	BundleCompileResolvedImports,
 	CompileResult,
 	getPrefixedBundleNamespace,
-} from "@romejs/js-compiler";
+} from "@romejs/compiler";
 
 import {DiagnosticsProcessor, descriptions} from "@romejs/diagnostics";
 import {AbsoluteFilePath} from "@romejs/path";

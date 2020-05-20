@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > params-invalid-rest-trailing-comma`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

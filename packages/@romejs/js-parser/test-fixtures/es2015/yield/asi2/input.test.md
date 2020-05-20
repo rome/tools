@@ -5,7 +5,7 @@
 ## `es2015 > yield > asi2`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

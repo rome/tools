@@ -5,7 +5,7 @@
 ## `esprima > expression-primary-literal-numeric > migrated_0021`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

@@ -5,7 +5,7 @@
 ## `typescript > types > tuple-optional-invalid`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

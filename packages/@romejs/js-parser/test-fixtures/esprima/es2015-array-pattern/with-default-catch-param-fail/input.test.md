@@ -5,7 +5,7 @@
 ## `esprima > es2015-array-pattern > with-default-catch-param-fail`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []

@@ -5,7 +5,7 @@
 ## `es2015 > let > invalid-escape`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

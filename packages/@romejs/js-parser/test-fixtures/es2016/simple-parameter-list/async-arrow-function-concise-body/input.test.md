@@ -5,7 +5,7 @@
 ## `es2016 > simple-parameter-list > async-arrow-function-concise-body`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

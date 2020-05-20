@@ -5,7 +5,7 @@
 ## `es2015 > yield > accessor-name-inst-computed-yield-expr`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

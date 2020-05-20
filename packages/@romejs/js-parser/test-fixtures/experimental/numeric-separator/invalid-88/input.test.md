@@ -5,7 +5,7 @@
 ## `experimental > numeric-separator > invalid-88`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

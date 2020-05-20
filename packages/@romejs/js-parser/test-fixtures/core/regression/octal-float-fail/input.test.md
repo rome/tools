@@ -5,7 +5,7 @@
 ## `core > regression > octal-float-fail`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

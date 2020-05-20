@@ -5,7 +5,7 @@
 ## `experimental > bigint > valid-large`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

@@ -5,7 +5,7 @@
 ## `es2015 > arrow-functions > invalid-rest-in-params`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []

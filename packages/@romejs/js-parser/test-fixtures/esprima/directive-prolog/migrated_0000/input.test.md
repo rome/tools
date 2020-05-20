@@ -5,7 +5,7 @@
 ## `esprima > directive-prolog > migrated_0000`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

@@ -260,9 +260,6 @@ builders.set("JSPatternMeta", JSPatternMeta);
 import JSPrivateName from "./js/classes/JSPrivateName";
 builders.set("JSPrivateName", JSPrivateName);
 
-import JSProgram from "./js/core/JSProgram";
-builders.set("JSProgram", JSProgram);
-
 import JSReferenceIdentifier from "./js/expressions/JSReferenceIdentifier";
 builders.set("JSReferenceIdentifier", JSReferenceIdentifier);
 
@@ -340,6 +337,9 @@ builders.set("JSRegExpWordCharacter", JSRegExpWordCharacter);
 
 import JSReturnStatement from "./js/statements/JSReturnStatement";
 builders.set("JSReturnStatement", JSReturnStatement);
+
+import JSRoot from "./js/core/JSRoot";
+builders.set("JSRoot", JSRoot);
 
 import JSSequenceExpression from "./js/expressions/JSSequenceExpression";
 builders.set("JSSequenceExpression", JSSequenceExpression);

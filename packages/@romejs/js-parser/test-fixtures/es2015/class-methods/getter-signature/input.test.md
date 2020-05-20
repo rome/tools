@@ -5,7 +5,7 @@
 ## `es2015 > class-methods > getter-signature`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

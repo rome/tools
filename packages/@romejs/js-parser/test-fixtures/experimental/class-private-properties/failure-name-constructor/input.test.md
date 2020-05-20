@@ -5,7 +5,7 @@
 ## `experimental > class-private-properties > failure-name-constructor`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

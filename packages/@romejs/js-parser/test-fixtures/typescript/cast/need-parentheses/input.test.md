@@ -5,7 +5,7 @@
 ## `typescript > cast > need-parentheses`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

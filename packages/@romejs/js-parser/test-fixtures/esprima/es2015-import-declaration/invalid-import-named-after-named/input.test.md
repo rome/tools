@@ -5,7 +5,7 @@
 ## `esprima > es2015-import-declaration > invalid-import-named-after-named`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []

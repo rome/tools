@@ -5,7 +5,7 @@
 ## `es2019 > json-strings > directive-line-separator`
 
 ```javascript
-JSProgram {
+JSRoot {
 	body: Array []
 	corrupt: false
 	diagnostics: Array []

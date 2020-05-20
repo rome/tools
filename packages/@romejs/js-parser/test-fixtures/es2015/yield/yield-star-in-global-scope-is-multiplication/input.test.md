@@ -5,7 +5,7 @@
 ## `es2015 > yield > yield-star-in-global-scope-is-multiplication`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

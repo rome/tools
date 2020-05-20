@@ -5,7 +5,7 @@
 ## `es2015 > arrow-functions > no-binary-left`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []

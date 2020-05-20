@@ -5,7 +5,7 @@
 ## `es2018 > async-generators > for-await`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

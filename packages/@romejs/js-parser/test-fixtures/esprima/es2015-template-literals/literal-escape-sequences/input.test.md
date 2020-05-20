@@ -5,7 +5,7 @@
 ## `esprima > es2015-template-literals > literal-escape-sequences`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

@@ -5,7 +5,7 @@
 ## `esprima > expression-primary-literal-regular-expression > u-flag-valid-range`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

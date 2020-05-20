@@ -5,7 +5,7 @@
 ## `typescript > arrow-function > async`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

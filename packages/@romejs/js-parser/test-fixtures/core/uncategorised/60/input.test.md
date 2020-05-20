@@ -5,7 +5,7 @@
 ## `core > uncategorised > 60`
 
 ```javascript
-JSProgram {
+JSRoot {
 	body: Array []
 	corrupt: false
 	diagnostics: Array []

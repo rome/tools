@@ -5,7 +5,7 @@
 ## `typescript > types > type-operator`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

@@ -5,7 +5,7 @@
 ## `experimental > dynamic-import > variable-arguments`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

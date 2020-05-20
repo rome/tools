@@ -10,7 +10,7 @@ import {
 	ConstProgramSyntax,
 	ConstSourceType,
 	JSIdentifier,
-	JSProgram,
+	JSRoot,
 	JSStringLiteral,
 } from "@romejs/ast";
 import {
@@ -746,7 +746,7 @@ export const createJSParser = createParser((ParserCore, ParserWithRequiredPath) 
 			};
 		}
 
-		parse(): JSProgram {
+		parse(): JSRoot {
 			if (this.inModule) {
 				this.pushScope("ASYNC", true);
 				this.pushScope("STRICT", true);

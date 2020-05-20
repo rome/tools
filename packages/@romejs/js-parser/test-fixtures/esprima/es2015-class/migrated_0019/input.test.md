@@ -5,7 +5,7 @@
 ## `esprima > es2015-class > migrated_0019`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

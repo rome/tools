@@ -5,7 +5,7 @@
 ## `typescript > class > method-no-body`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

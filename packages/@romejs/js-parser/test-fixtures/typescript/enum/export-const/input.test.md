@@ -5,7 +5,7 @@
 ## `typescript > enum > export-const`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

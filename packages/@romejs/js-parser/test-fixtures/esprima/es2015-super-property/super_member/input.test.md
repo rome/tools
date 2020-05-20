@@ -5,7 +5,7 @@
 ## `esprima > es2015-super-property > super_member`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

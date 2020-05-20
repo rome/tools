@@ -5,7 +5,7 @@
 ## `typescript > class > extends-implements`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

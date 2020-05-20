@@ -5,7 +5,7 @@
 ## `typescript > class > members-with-reserved-names`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

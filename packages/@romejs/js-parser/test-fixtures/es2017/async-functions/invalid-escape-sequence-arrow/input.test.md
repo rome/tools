@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > invalid-escape-sequence-arrow`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

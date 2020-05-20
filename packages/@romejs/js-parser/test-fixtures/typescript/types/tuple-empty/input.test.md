@@ -5,7 +5,7 @@
 ## `typescript > types > tuple-empty`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

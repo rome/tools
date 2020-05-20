@@ -5,7 +5,7 @@
 ## `core > categorized > label-kind-switch`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

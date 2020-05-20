@@ -5,7 +5,7 @@
 ## `jsx > basic > 22`
 
 ```javascript
-JSProgram {
+JSRoot {
 	corrupt: false
 	directives: Array []
 	filename: "input.mjs"

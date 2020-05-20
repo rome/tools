@@ -5,7 +5,7 @@
 ## `typescript > interface > property-computed`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

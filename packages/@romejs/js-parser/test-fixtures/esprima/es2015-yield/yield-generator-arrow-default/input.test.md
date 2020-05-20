@@ -5,7 +5,7 @@
 ## `esprima > es2015-yield > yield-generator-arrow-default`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

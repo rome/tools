@@ -5,7 +5,7 @@
 ## `experimental > class-properties > super`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

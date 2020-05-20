@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > invalid-parens-async-arrow`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []

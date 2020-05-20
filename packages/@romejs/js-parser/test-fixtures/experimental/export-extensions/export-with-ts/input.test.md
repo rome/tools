@@ -5,7 +5,7 @@
 ## `experimental > export-extensions > export-with-ts`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

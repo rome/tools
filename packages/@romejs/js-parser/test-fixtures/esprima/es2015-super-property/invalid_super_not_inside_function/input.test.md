@@ -5,7 +5,7 @@
 ## `esprima > es2015-super-property > invalid_super_not_inside_function`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

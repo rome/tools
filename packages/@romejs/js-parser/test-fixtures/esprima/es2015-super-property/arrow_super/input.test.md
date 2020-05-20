@@ -5,7 +5,7 @@
 ## `esprima > es2015-super-property > arrow_super`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

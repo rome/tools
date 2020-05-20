@@ -5,7 +5,7 @@
 ## `typescript > regression > issue-7742`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

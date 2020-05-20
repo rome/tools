@@ -5,7 +5,7 @@
 ## `typescript > function > pattern-parameters`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

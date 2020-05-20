@@ -5,7 +5,7 @@
 ## `esprima > es2015-array-pattern > dupe-param-1`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	filename: "input.js"

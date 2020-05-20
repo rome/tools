@@ -5,7 +5,7 @@
 ## `typescript > arrow-function > default-parameter-values`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

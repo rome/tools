@@ -5,7 +5,7 @@
 ## `typescript > type-arguments > new`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

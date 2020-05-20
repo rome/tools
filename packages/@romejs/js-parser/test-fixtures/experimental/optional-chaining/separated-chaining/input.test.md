@@ -5,7 +5,7 @@
 ## `experimental > optional-chaining > separated-chaining`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

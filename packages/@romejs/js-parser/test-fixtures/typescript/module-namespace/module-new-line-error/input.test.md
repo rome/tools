@@ -5,7 +5,7 @@
 ## `typescript > module-namespace > module-new-line-error`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

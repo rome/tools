@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > await-function-expression-name-inside-async-function`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

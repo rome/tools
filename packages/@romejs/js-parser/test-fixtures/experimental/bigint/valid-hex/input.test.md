@@ -5,7 +5,7 @@
 ## `experimental > bigint > valid-hex`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

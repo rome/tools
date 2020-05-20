@@ -5,7 +5,7 @@
 ## `es2015 > let > let-as-identifier-4`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

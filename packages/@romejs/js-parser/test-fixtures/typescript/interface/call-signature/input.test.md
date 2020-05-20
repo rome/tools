@@ -5,7 +5,7 @@
 ## `typescript > interface > call-signature`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

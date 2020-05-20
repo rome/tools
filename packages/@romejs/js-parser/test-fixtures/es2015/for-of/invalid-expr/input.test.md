@@ -5,7 +5,7 @@
 ## `es2015 > for-of > invalid-expr`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []

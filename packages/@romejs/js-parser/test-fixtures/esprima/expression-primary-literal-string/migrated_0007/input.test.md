@@ -5,7 +5,7 @@
 ## `esprima > expression-primary-literal-string > migrated_0007`
 
 ```javascript
-JSProgram {
+JSRoot {
 	body: Array []
 	comments: Array []
 	corrupt: false

@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > export-invalid`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []

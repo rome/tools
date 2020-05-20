@@ -5,7 +5,7 @@
 ## `typescript > interface > property-named-public`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

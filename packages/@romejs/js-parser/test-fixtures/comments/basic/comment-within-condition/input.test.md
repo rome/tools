@@ -5,7 +5,7 @@
 ## `comments > basic > comment-within-condition`
 
 ```javascript
-JSProgram {
+JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []

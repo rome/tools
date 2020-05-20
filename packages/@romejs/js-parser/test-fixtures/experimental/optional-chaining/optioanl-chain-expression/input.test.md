@@ -5,7 +5,7 @@
 ## `experimental > optional-chaining > optioanl-chain-expression`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

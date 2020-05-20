@@ -7,6 +7,7 @@
 
 import {UNKNOWN_ANALYZE_DEPENDENCIES_RESULT} from "../types/analyzeDependencies";
 import {PartialExtensionHandler} from "./types";
+import {parseJS} from "@romejs/js-parser";
 
 export const textHandler: PartialExtensionHandler = {
 	sourceType: "module",
@@ -31,11 +32,15 @@ export const textHandler: PartialExtensionHandler = {
 		};
 	},
 
-	async toJavaScript({file, worker}) {
+	async parse({path, file, worker}) {
 		const src = await worker.readFile(file.real);
 		const serial = JSON.stringify(src);
+		const sourceText = `export default ${serial};`;
+
 		return {
-			sourceText: `export default ${serial};`,
+			// Shouldn't error
+			ast: parseJS({input: sourceText, sourceType: "module", path}),
+			sourceText,
 			generated: true,
 		};
 	},

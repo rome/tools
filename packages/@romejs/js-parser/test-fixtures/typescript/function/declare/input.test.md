@@ -5,7 +5,7 @@
 ## `typescript > function > declare`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []

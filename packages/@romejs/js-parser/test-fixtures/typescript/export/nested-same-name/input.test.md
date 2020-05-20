@@ -5,7 +5,7 @@
 ## `typescript > export > nested-same-name`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

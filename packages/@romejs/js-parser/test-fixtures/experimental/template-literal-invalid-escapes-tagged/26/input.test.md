@@ -5,7 +5,7 @@
 ## `experimental > template-literal-invalid-escapes-tagged > 26`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

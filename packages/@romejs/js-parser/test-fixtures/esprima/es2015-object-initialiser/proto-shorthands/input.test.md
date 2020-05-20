@@ -5,7 +5,7 @@
 ## `esprima > es2015-object-initialiser > proto-shorthands`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

@@ -5,7 +5,7 @@
 ## `esprima > es2015-identifier > valid_await`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

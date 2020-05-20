@@ -5,7 +5,7 @@
 ## `core > uncategorised > 305`
 
 ```javascript
-JSProgram {
+JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []

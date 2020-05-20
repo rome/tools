@@ -5,7 +5,7 @@
 ## `experimental > function-sent > enabled-inside-function`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

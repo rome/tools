@@ -6,12 +6,12 @@
  */
 
 import {SourceLocation} from "@romejs/parser-core";
-import {JSProgram} from "@romejs/ast";
+import {JSRoot} from "@romejs/ast";
 import {HydrateData} from "./Evaluator";
 import {Dict} from "@romejs/typescript-helpers";
 
 export type CheckProvider = {
-	libs?: Array<JSProgram>;
+	libs?: Array<JSRoot>;
 	getExportTypes: (
 		origin: string,
 		relative: string,

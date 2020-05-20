@@ -5,7 +5,7 @@
 ## `comments > basic > call-expression-function-argument`
 
 ```javascript
-JSProgram {
+JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []

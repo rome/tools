@@ -5,7 +5,7 @@
 ## `typescript > types > typeof`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

@@ -5,7 +5,7 @@
 ## `es2015 > modules > export-default-variable-declaration2`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

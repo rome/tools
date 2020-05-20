@@ -5,7 +5,7 @@
 ## `es2017 > trailing-function-commas > 4`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

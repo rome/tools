@@ -5,7 +5,7 @@
 ## `esprima > es2015-generator > generator-parameter-binding-property`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

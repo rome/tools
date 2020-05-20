@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 333`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: true
 	filename: "input.js"

@@ -5,7 +5,7 @@
 ## `esprima > es2015-meta-property > unknown-property`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

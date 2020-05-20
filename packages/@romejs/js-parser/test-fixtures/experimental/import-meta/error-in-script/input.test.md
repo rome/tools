@@ -5,7 +5,7 @@
 ## `experimental > import-meta > error-in-script`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

@@ -5,7 +5,7 @@
 ## `es2015 > shorthand > 1`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

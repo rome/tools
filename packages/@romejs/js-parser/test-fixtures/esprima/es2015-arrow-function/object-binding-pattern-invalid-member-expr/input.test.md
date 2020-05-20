@@ -5,7 +5,7 @@
 ## `esprima > es2015-arrow-function > object-binding-pattern-invalid-member-expr`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

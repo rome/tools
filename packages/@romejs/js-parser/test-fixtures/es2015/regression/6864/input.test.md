@@ -5,7 +5,7 @@
 ## `es2015 > regression > 6864`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

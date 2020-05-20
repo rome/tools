@@ -45,9 +45,9 @@ import {
 	JSIfStatement,
 	JSInterpreterDirective,
 	JSLabeledStatement,
-	JSProgram,
 	JSReferenceIdentifier,
 	JSReturnStatement,
+	JSRoot,
 	JSSwitchCase,
 	JSSwitchStatement,
 	JSThrowStatement,
@@ -95,7 +95,7 @@ import {descriptions} from "@romejs/diagnostics";
 const loopLabel: Label = {kind: "loop"};
 const switchLabel: Label = {kind: "switch"};
 
-export function parseTopLevel(parser: JSParser): JSProgram {
+export function parseTopLevel(parser: JSParser): JSRoot {
 	const start = parser.getPosition();
 	const openContext: OpeningContext = {
 		name: "top-level",
@@ -116,7 +116,7 @@ export function parseTopLevel(parser: JSParser): JSProgram {
 	return parser.finishNode(
 		start,
 		{
-			type: "JSProgram",
+			type: "JSRoot",
 			corrupt: parser.state.corrupt,
 			body,
 			directives,

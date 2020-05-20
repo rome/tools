@@ -5,7 +5,7 @@
 ## `typescript > class > constructor-with-modifier-names`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

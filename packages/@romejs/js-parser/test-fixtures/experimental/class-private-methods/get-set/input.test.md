@@ -5,7 +5,7 @@
 ## `experimental > class-private-methods > get-set`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

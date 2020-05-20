@@ -7,13 +7,13 @@
 
 import {ModuleSignature} from "@romejs/js-analysis";
 import {Manifest} from "@romejs/codec-js-manifest";
-import {ConstProgramSyntax, ConstSourceType, JSProgram} from "@romejs/ast";
+import {ConstProgramSyntax, ConstSourceType, JSRoot} from "@romejs/ast";
 import {
 	BundleCompileOptions,
 	CompileResult,
 	LintCompilerOptions,
 	TransformStageName,
-} from "@romejs/js-compiler";
+} from "@romejs/compiler";
 import {Profile} from "@romejs/v8";
 import {ProfilingStartData} from "./MasterBridge";
 import {
@@ -219,7 +219,7 @@ export default class WorkerBridge extends Bridge {
 		Diagnostics
 	>({name: "updateInlineSnapshots", direction: "server->client"});
 
-	compileJS = this.createEvent<
+	compile = this.createEvent<
 		{
 			file: JSONFileReference;
 			stage: TransformStageName;
@@ -227,15 +227,15 @@ export default class WorkerBridge extends Bridge {
 			parseOptions: WorkerParseOptions;
 		},
 		CompileResult
-	>({name: "compileJS", direction: "server->client"});
+	>({name: "compile", direction: "server->client"});
 
-	parseJS = this.createEvent<
+	parse = this.createEvent<
 		{
 			file: JSONFileReference;
 			options: WorkerParseOptions;
 		},
-		JSProgram
-	>({name: "parseJS", direction: "server->client"});
+		JSRoot
+	>({name: "parse", direction: "server->client"});
 
 	updateBuffer = this.createEvent<
 		{

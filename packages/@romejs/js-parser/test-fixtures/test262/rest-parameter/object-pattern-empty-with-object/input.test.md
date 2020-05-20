@@ -5,7 +5,7 @@
 ## `test262 > rest-parameter > object-pattern-empty-with-object`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

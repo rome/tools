@@ -5,7 +5,7 @@
 ## `typescript > export > equals`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

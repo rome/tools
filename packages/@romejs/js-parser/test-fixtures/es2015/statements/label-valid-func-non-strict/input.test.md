@@ -5,7 +5,7 @@
 ## `es2015 > statements > label-valid-func-non-strict`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

@@ -5,7 +5,7 @@
 ## `experimental > optional-chaining > conditional-decimal`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

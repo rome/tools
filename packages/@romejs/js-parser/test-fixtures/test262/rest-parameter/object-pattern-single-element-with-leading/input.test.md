@@ -5,7 +5,7 @@
 ## `test262 > rest-parameter > object-pattern-single-element-with-leading`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

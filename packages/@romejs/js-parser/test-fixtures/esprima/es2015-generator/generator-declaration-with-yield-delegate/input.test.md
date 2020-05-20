@@ -5,7 +5,7 @@
 ## `esprima > es2015-generator > generator-declaration-with-yield-delegate`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

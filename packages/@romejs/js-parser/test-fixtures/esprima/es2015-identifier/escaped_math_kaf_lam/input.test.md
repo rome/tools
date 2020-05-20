@@ -5,7 +5,7 @@
 ## `esprima > es2015-identifier > escaped_math_kaf_lam`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

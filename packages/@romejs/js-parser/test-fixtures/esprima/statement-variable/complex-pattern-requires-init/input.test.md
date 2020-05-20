@@ -5,7 +5,7 @@
 ## `esprima > statement-variable > complex-pattern-requires-init`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

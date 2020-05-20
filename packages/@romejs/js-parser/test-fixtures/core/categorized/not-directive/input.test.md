@@ -5,7 +5,7 @@
 ## `core > categorized > not-directive`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

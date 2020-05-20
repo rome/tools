@@ -5,7 +5,7 @@
 ## `es2015 > identifiers > invalid-escape-seq-if`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

@@ -5,7 +5,7 @@
 ## `comments > call-expression-inner`
 
 ```javascript
-JSProgram {
+JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []

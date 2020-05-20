@@ -5,7 +5,7 @@
 ## `esprima > es2015-yield > invalid-yield-strict-arrow-parameter-default`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	filename: "input.js"

@@ -5,7 +5,7 @@
 ## `typescript > regression > is-default-export`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

@@ -5,7 +5,7 @@
 ## `core > uncategorised > 445`
 
 ```javascript
-JSProgram {
+JSRoot {
 	corrupt: true
 	directives: Array []
 	filename: "input.js"

@@ -5,7 +5,7 @@
 ## `es2015 > arrow-functions > inner-parens`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

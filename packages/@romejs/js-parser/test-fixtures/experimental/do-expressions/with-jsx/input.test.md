@@ -5,7 +5,7 @@
 ## `experimental > do-expressions > with-jsx`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

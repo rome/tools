@@ -5,7 +5,7 @@
 ## `esprima > es2015-destructuring-assignment-array-pattern > nested-cover-grammar`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []

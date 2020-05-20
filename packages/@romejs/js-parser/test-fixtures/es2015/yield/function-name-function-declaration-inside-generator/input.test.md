@@ -5,7 +5,7 @@
 ## `es2015 > yield > function-name-function-declaration-inside-generator`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

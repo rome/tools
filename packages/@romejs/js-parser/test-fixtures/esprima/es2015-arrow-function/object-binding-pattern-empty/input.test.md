@@ -5,7 +5,7 @@
 ## `esprima > es2015-arrow-function > object-binding-pattern-empty`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

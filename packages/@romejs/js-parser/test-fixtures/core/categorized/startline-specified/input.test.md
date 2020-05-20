@@ -5,7 +5,7 @@
 ## `core > categorized > startline-specified`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

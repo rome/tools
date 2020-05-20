@@ -36,7 +36,7 @@ const testLoc = path.join(
 
 write(
 	ruleLoc,
-	`import {Path, TransformExitResult} from "@romejs/js-compiler";
+	`import {Path, TransformExitResult} from "@romejs/compiler";
 import {descriptions} from "@romejs/diagnostics";
 
 export default {

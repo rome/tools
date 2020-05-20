@@ -1,0 +1,6 @@
+{
+  "name": "@romejs/ast-utils",
+  "private": true,
+  "type": "module",
+  "main": "index.ts"
+}

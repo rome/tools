@@ -5,7 +5,7 @@
 ## `esprima > es2015-generator > generator-declaration-with-params`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

@@ -5,7 +5,7 @@
 ## `es2015 > yield > input-not-followed-by-regex`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

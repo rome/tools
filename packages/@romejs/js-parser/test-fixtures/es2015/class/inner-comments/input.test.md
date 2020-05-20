@@ -5,7 +5,7 @@
 ## `es2015 > class > inner-comments`
 
 ```javascript
-JSProgram {
+JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []

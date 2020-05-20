@@ -15,7 +15,7 @@ import {createMasterCommand} from "../commands";
 import {
 	LintCompilerOptionsDecisions,
 	parseDecisionStrings,
-} from "@romejs/js-compiler";
+} from "@romejs/compiler";
 import {Consumer} from "@romejs/consume";
 import {commandCategories} from "@romejs/core/common/commands";
 import {createUnknownFilePath} from "@romejs/path";

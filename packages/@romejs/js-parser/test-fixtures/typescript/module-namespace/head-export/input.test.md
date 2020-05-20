@@ -5,7 +5,7 @@
 ## `typescript > module-namespace > head-export`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

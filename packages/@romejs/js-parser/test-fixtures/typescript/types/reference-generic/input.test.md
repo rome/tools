@@ -5,7 +5,7 @@
 ## `typescript > types > reference-generic`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

@@ -5,7 +5,7 @@
 ## `jsx > basic > empty-expression-container`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

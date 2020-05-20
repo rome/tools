@@ -5,7 +5,7 @@
 ## `jsx > basic > keyword-tag`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

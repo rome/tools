@@ -5,7 +5,7 @@
 ## `es2019 > json-strings > string-paragraph-separator`
 
 ```javascript
-JSProgram {
+JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []

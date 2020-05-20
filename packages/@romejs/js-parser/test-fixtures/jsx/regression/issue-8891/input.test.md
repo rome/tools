@@ -5,7 +5,7 @@
 ## `jsx > regression > issue-8891`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

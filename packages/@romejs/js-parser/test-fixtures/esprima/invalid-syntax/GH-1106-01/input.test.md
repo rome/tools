@@ -5,7 +5,7 @@
 ## `esprima > invalid-syntax > GH-1106-01`
 
 ```javascript
-JSProgram {
+JSRoot {
 	body: Array []
 	comments: Array []
 	corrupt: false

@@ -5,7 +5,7 @@
 ## `esprima > es2015-method-definition > migrated_0004`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

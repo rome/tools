@@ -5,7 +5,7 @@
 ## `experimental > class-properties > edge-cases`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

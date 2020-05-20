@@ -6,7 +6,7 @@
  */
 
 import {AnyNode} from "@romejs/ast";
-import {Scope} from "@romejs/js-compiler";
+import {Scope} from "@romejs/compiler";
 
 export default function hasPotentialSideEffects(
 	node: undefined | AnyNode,

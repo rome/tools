@@ -5,7 +5,7 @@
 ## `esprima > es2015-lexical-declaration > migrated_0000`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

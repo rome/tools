@@ -5,7 +5,7 @@
 ## `es2015 > yield > parameter-default-inside-arrow`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

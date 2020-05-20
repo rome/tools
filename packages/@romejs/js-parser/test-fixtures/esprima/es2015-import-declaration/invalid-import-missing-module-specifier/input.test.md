@@ -5,7 +5,7 @@
 ## `esprima > es2015-import-declaration > invalid-import-missing-module-specifier`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

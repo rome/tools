@@ -5,7 +5,7 @@
 ## `experimental > numeric-separator > invalid-134`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

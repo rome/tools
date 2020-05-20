@@ -5,7 +5,7 @@
 ## `core > categorized > filename-specified`
 
 ```javascript
-JSProgram {
+JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []

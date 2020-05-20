@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > 32`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []

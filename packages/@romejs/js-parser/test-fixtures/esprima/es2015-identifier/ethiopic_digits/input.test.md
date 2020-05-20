@@ -5,7 +5,7 @@
 ## `esprima > es2015-identifier > ethiopic_digits`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

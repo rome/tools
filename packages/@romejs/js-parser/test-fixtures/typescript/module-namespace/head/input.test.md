@@ -5,7 +5,7 @@
 ## `typescript > module-namespace > head`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

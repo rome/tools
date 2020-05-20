@@ -5,7 +5,7 @@
 ## `esprima > invalid-syntax > migrated_0159`
 
 ```javascript
-JSProgram {
+JSRoot {
 	corrupt: true
 	directives: Array []
 	filename: "input.js"

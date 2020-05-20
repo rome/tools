@@ -5,7 +5,7 @@
 ## `es2015 > yield > inside-arrow-inside-generator`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

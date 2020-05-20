@@ -5,7 +5,7 @@
 ## `esprima > expression-primary-literal-regular-expression > u-flag-surrogate-pair`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

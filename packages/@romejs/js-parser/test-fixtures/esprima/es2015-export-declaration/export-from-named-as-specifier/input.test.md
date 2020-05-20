@@ -5,7 +5,7 @@
 ## `esprima > es2015-export-declaration > export-from-named-as-specifier`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

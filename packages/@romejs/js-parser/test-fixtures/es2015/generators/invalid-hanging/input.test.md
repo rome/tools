@@ -5,7 +5,7 @@
 ## `es2015 > generators > invalid-hanging`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

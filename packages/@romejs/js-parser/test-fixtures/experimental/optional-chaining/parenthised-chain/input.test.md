@@ -5,7 +5,7 @@
 ## `experimental > optional-chaining > parenthised-chain`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

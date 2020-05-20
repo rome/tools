@@ -5,7 +5,7 @@
 ## `typescript > types > literal-number`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

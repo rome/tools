@@ -10,9 +10,9 @@ import {
 	AnyJSIdentifier,
 	AnyJSStatement,
 	AnyNode,
-	jsProgram,
+	jsRoot,
 } from "@romejs/ast";
-import {CompilerContext, Path} from "@romejs/js-compiler";
+import {CompilerContext, Path} from "@romejs/compiler";
 import removeLoc from "./removeLoc";
 import {parseJS} from "@romejs/js-parser";
 import {createUnknownFilePath} from "@romejs/path";
@@ -72,7 +72,7 @@ function getTemplate(strs: TemplateStringsArray): BuiltTemplate {
 	});
 
 	// remove `loc` properties
-	ast = jsProgram.assert(removeLoc(ast));
+	ast = jsRoot.assert(removeLoc(ast));
 
 	// traverse and find placeholders paths
 	function collectPlaceholderPaths(path: Path) {
@@ -190,9 +190,9 @@ template.statement = (
 	...substitutions: TemplateSubstitions
 ): AnyJSStatement => {
 	// Parse the template, with caching
-	const ast = jsProgram.assert(template(strs, ...substitutions));
+	const ast = jsRoot.assert(template(strs, ...substitutions));
 
-	// Ensure that there's only a single statement in the JSProgram body
+	// Ensure that there's only a single statement in the JSRoot body
 	const body = ast.body;
 	if (body.length !== 1) {
 		throw new Error("More than one statement isn't allowed for a template.");

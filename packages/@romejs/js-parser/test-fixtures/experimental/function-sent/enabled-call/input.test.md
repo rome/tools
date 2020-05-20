@@ -5,7 +5,7 @@
 ## `experimental > function-sent > enabled-call`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

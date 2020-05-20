@@ -5,7 +5,7 @@
 ## `experimental > do-expressions > scoping-variable`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

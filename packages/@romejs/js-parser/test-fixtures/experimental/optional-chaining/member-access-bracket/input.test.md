@@ -5,7 +5,7 @@
 ## `experimental > optional-chaining > member-access-bracket`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

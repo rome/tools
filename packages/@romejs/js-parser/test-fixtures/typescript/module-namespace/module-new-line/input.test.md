@@ -5,7 +5,7 @@
 ## `typescript > module-namespace > module-new-line`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

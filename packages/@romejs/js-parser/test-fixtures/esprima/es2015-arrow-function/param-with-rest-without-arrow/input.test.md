@@ -5,7 +5,7 @@
 ## `esprima > es2015-arrow-function > param-with-rest-without-arrow`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []

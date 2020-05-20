@@ -18,6 +18,7 @@ import {
 	ExtensionLintResult,
 } from "./types";
 import {textHandler} from "./text";
+import {parseJS} from "@romejs/js-parser";
 
 export const jsonHandler: ExtensionHandler = {
 	ext: "json",
@@ -62,7 +63,7 @@ export const jsonHandler: ExtensionHandler = {
 		};
 	},
 
-	async toJavaScript({file, worker}) {
+	async parse({path, file, worker}) {
 		const src = await worker.readFile(file.real);
 
 		// Parse the JSON to make sure it's valid
@@ -73,10 +74,12 @@ export const jsonHandler: ExtensionHandler = {
 
 		const rawJson = JSON.stringify(obj);
 		const json: string = rawJson === undefined ? "undefined" : rawJson;
+		const sourceText = `export default ${json};`;
 
-		// TODO handle unicode newlines here
 		return {
-			sourceText: `export default ${json};`,
+			// Shouldn't error
+			ast: parseJS({input: sourceText, sourceType: "module", path}),
+			sourceText,
 			generated: true,
 		};
 	},

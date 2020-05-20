@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 268`
 
 ```javascript
-JSProgram {
+JSRoot {
 	corrupt: false
 	directives: Array []
 	filename: "input.js"

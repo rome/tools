@@ -5,7 +5,7 @@
 ## `es2018 > async-generators > for-await-async-context`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []

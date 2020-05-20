@@ -5,7 +5,7 @@
 ## `typescript > import > not-top-level`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

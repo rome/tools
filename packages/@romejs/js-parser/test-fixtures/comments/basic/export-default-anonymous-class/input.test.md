@@ -5,7 +5,7 @@
 ## `comments > basic > export-default-anonymous-class`
 
 ```javascript
-JSProgram {
+JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []

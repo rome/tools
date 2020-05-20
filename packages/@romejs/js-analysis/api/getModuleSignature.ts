@@ -11,18 +11,18 @@ import {
 	ModuleSignatureExport,
 	ModuleSignatureType,
 } from "../types";
-import {JSProgram} from "@romejs/ast";
+import {JSRoot} from "@romejs/ast";
 import buildGraph from "./buildGraph";
 import T from "../types/T";
 import E from "../types/errors/E";
-import {TransformProjectDefinition} from "@romejs/js-compiler";
+import {TransformProjectDefinition} from "@romejs/compiler";
 import {Dict} from "@romejs/typescript-helpers";
 
-const exportsCache: WeakMap<JSProgram, ModuleSignature> = new WeakMap();
+const exportsCache: WeakMap<JSRoot, ModuleSignature> = new WeakMap();
 
 export default async function getModuleSignature(
 	opts: {
-		ast: JSProgram;
+		ast: JSRoot;
 		project: TransformProjectDefinition;
 		provider: CheckProvider;
 	},

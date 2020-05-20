@@ -5,7 +5,7 @@
 ## `es2015 > modules > duplicate-named-export-class-declaration`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

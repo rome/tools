@@ -5,7 +5,7 @@
 ## `jsx > basic > entity`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

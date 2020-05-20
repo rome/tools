@@ -5,7 +5,7 @@
 ## `experimental > class-private-methods > asi-failure-generator`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []

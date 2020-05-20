@@ -5,7 +5,7 @@
 ## `esprima > es2015-yield > yield-lexical-declaration`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

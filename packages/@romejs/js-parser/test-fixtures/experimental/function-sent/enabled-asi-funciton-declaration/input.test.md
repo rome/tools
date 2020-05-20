@@ -5,7 +5,7 @@
 ## `experimental > function-sent > enabled-asi-funciton-declaration`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

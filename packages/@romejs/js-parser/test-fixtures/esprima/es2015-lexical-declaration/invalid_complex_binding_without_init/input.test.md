@@ -5,7 +5,7 @@
 ## `esprima > es2015-lexical-declaration > invalid_complex_binding_without_init`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

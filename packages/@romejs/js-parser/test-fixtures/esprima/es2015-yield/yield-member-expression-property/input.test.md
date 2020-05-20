@@ -5,7 +5,7 @@
 ## `esprima > es2015-yield > yield-member-expression-property`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

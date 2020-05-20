@@ -5,7 +5,7 @@
 ## `esprima > invalid-syntax > migrated_0239`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	filename: "input.js"

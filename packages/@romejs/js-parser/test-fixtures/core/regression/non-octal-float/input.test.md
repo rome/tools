@@ -5,7 +5,7 @@
 ## `core > regression > non-octal-float`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

@@ -5,7 +5,7 @@
 ## `esprima > es2015-identifier > dakuten_handakuten`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

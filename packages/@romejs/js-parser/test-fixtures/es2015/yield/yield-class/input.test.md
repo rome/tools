@@ -5,7 +5,7 @@
 ## `es2015 > yield > yield-class`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

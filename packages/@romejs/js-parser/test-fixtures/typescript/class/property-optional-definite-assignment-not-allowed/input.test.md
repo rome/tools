@@ -5,7 +5,7 @@
 ## `typescript > class > property-optional-definite-assignment-not-allowed`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

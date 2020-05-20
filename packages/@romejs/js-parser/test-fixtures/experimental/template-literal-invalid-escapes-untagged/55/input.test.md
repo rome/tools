@@ -5,7 +5,7 @@
 ## `experimental > template-literal-invalid-escapes-untagged > 55`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

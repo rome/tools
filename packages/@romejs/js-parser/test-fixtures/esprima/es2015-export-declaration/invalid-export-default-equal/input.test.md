@@ -5,7 +5,7 @@
 ## `esprima > es2015-export-declaration > invalid-export-default-equal`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []

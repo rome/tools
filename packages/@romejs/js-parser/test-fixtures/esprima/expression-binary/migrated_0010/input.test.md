@@ -5,7 +5,7 @@
 ## `esprima > expression-binary > migrated_0010`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

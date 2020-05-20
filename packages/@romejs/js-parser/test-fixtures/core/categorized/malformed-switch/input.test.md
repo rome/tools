@@ -5,7 +5,7 @@
 ## `core > categorized > malformed-switch`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

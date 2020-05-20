@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > await-inside-arguments-of-async-call-inside-parameters-of-async-arrow-function`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []
