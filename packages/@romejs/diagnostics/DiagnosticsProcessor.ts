@@ -19,7 +19,7 @@ import {DiagnosticsError} from "./errors";
 import {ob1Get0} from "@romejs/ob1";
 import {DiagnosticCategoryPrefix} from "./categories";
 import {descriptions} from "./descriptions";
-import {matchesSuppression} from "@romejs/js-compiler";
+import {matchesSuppression} from "@romejs/compiler";
 import {SourceMapConsumerCollection} from "@romejs/codec-source-map";
 import DiagnosticsNormalizer from "./DiagnosticsNormalizer";
 import {MarkupFormatNormalizeOptions} from "@romejs/string-markup";

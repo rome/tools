@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Scope} from "@romejs/js-compiler";
+import {Scope} from "@romejs/compiler";
 import {AnyNode} from "@romejs/ast";
 import doesNodeMatchPattern from "./doesNodeMatchPattern";
 

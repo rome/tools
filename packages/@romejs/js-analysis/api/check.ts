@@ -13,7 +13,7 @@ import E from "../types/errors/E";
 import T from "../types/T";
 import OpenT from "../types/OpenT";
 import buildGraph from "./buildGraph";
-import {TransformProjectDefinition} from "@romejs/js-compiler";
+import {TransformProjectDefinition} from "@romejs/compiler";
 
 export default async function check(
 	opts: {

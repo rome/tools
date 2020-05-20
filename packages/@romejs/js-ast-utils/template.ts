@@ -12,7 +12,7 @@ import {
 	AnyNode,
 	JSRoot,
 } from "@romejs/ast";
-import {CompilerContext, Path} from "@romejs/js-compiler";
+import {CompilerContext, Path} from "@romejs/compiler";
 import removeLoc from "./removeLoc";
 import {parseJS} from "@romejs/js-parser";
 import {createUnknownFilePath} from "@romejs/path";

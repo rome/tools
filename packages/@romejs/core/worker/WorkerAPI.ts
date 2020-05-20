@@ -15,7 +15,7 @@ import {
 	Path,
 	TransformStageName,
 	compile,
-} from "@romejs/js-compiler";
+} from "@romejs/compiler";
 import {
 	WorkerCompilerOptions,
 	WorkerFormatResult,

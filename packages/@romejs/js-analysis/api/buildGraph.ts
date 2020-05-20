@@ -9,7 +9,7 @@ import {AnyJSStatement, JSRoot} from "@romejs/ast";
 import {CheckProvider} from "../types";
 import {ModuleSignatureManager} from "../Evaluator";
 import Hub from "../Hub";
-import {TransformProjectDefinition} from "@romejs/js-compiler";
+import {TransformProjectDefinition} from "@romejs/compiler";
 
 export default async function buildGraph(
 	opts: {

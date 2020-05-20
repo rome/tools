@@ -56,7 +56,7 @@ import {
 	serializeCLIFlags,
 } from "@romejs/cli-flags";
 import {JSRoot} from "@romejs/ast";
-import {TransformStageName} from "@romejs/js-compiler";
+import {TransformStageName} from "@romejs/compiler";
 import WorkerBridge, {
 	PrefetchedModuleSignatures,
 	WorkerAnalyzeDependencyResult,

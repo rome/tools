@@ -9,7 +9,7 @@ import {FileReference} from "@romejs/core";
 import {WorkerLintOptions, WorkerParseOptions} from "../bridges/WorkerBridge";
 import Worker from "../../worker/Worker";
 import {DiagnosticSuppressions, Diagnostics} from "@romejs/diagnostics";
-import * as compiler from "@romejs/js-compiler";
+import * as compiler from "@romejs/compiler";
 import {ConstProgramSyntax, ConstSourceType} from "@romejs/ast";
 import {AnalyzeDependencyResult} from "../types/analyzeDependencies";
 

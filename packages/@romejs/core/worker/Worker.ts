@@ -36,7 +36,7 @@ import {
 	convertTransportFileReference,
 } from "../common/types/files";
 import {getFileHandlerAssert} from "../common/file-handlers/index";
-import {TransformProjectDefinition} from "@romejs/js-compiler";
+import {TransformProjectDefinition} from "@romejs/compiler";
 
 export type ParseJSResult = {
 	ast: JSRoot;

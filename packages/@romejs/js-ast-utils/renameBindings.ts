@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {Binding, Path} from "@romejs/js-compiler";
+import {Binding, Path} from "@romejs/compiler";
 import inheritLoc from "./inheritLoc";
 import {
 	AnyJSVariableIdentifier,

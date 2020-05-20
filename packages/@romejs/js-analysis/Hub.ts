@@ -6,7 +6,7 @@
  */
 
 import T from "./types/T";
-import {CompilerContext, TransformProjectDefinition} from "@romejs/js-compiler";
+import {CompilerContext, TransformProjectDefinition} from "@romejs/compiler";
 import {JSRoot} from "@romejs/ast";
 import Graph from "./Graph";
 import Evaluator from "./Evaluator";

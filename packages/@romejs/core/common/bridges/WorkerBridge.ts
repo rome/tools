@@ -13,7 +13,7 @@ import {
 	CompileResult,
 	LintCompilerOptions,
 	TransformStageName,
-} from "@romejs/js-compiler";
+} from "@romejs/compiler";
 import {Profile} from "@romejs/v8";
 import {ProfilingStartData} from "./MasterBridge";
 import {

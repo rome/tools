@@ -290,7 +290,7 @@ export const descriptions = createMessages({
 			message: `Segment ${i} contains an invalid number of decision parts`,
 		}),
 	},
-	// @romejs/js-compiler
+	// @romejs/compiler
 	LINT: {
 		REACT_NO_REDUNDANT_SHOULD_COMPONENT_UPDATE: {
 			category: "lint/react/noRedundantShouldComponentUpdate",
@@ -846,7 +846,7 @@ export const descriptions = createMessages({
 			// TODO advice and better error message
 		},
 	},
-	// @romejs/js-compiler
+	// @romejs/compiler
 	COMPILER: {
 		CLASSES_UNSUPPORTED: {
 			category: "compile/classes",

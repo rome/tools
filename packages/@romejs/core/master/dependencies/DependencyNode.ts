@@ -6,7 +6,7 @@
  */
 
 import DependencyGraph from "./DependencyGraph";
-import {BundleCompileResolvedImports} from "@romejs/js-compiler";
+import {BundleCompileResolvedImports} from "@romejs/compiler";
 import {ConstImportModuleKind} from "@romejs/ast";
 import {SourceLocation} from "@romejs/parser-core";
 import {

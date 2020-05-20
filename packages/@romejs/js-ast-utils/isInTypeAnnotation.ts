@@ -6,7 +6,7 @@
  */
 
 import {AnyNode} from "@romejs/ast";
-import {Path} from "@romejs/js-compiler";
+import {Path} from "@romejs/compiler";
 import isTypeNode from "./isTypeNode";
 import isTypeExpressionWrapperNode from "./isTypeExpressionWrapperNode";
 

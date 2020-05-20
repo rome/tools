@@ -15,7 +15,7 @@ import {JSRoot} from "@romejs/ast";
 import buildGraph from "./buildGraph";
 import T from "../types/T";
 import E from "../types/errors/E";
-import {TransformProjectDefinition} from "@romejs/js-compiler";
+import {TransformProjectDefinition} from "@romejs/compiler";
 import {Dict} from "@romejs/typescript-helpers";
 
 const exportsCache: WeakMap<JSRoot, ModuleSignature> = new WeakMap();

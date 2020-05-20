@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import * as compiler from "@romejs/js-compiler";
+import * as compiler from "@romejs/compiler";
 import {check as typeCheck} from "@romejs/js-analysis";
 import {ConstProgramSyntax, ConstSourceType} from "@romejs/ast";
 import {formatJS} from "@romejs/formatter";

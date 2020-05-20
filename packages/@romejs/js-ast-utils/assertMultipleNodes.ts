@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {TransformExitResult} from "@romejs/js-compiler";
+import {TransformExitResult} from "@romejs/compiler";
 import {AnyNode} from "@romejs/ast";
 
 export default function assertMultipleNodes(

@@ -24,7 +24,7 @@ import {
 	LintCompilerOptions,
 	LintCompilerOptionsDecisions,
 	areAnalyzeDependencyResultsEqual,
-} from "@romejs/js-compiler";
+} from "@romejs/compiler";
 import {markup} from "@romejs/string-markup";
 import WorkerQueue from "../WorkerQueue";
 import {Dict} from "@romejs/typescript-helpers";
