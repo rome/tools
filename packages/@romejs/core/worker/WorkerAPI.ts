@@ -185,7 +185,11 @@ export default class WorkerAPI {
 		const diags = context.diagnostics.getDiagnostics();
 
 		if (pendingUpdates.size > 0 && diags.length === 0) {
-			throw new Error("Left over inline snapshots that were not updated");
+			throw new Error(
+				`${pendingUpdates.size} left over inline snapshots that were not updated ${JSON.stringify(
+					Array.from(pendingUpdates),
+				)}`,
+			);
 		}
 
 		if (diags.length === 0) {

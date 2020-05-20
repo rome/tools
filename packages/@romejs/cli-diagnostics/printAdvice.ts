@@ -24,12 +24,12 @@ import {Position} from "@romejs/parser-core";
 import {ToLines, showInvisibles, toLines} from "./utils";
 import buildPatchCodeFrame from "./buildPatchCodeFrame";
 import buildMessageCodeFrame from "./buildMessageCodeFrame";
-import {escapeMarkup, markupTag} from "@romejs/string-markup";
+import {escapeMarkup, markupTag, normalizeMarkup} from "@romejs/string-markup";
 import {DiagnosticsPrinterFlags} from "./types";
 import {ob1Number0Neg1} from "@romejs/ob1";
 import DiagnosticsPrinter, {DiagnosticsPrinterFileSources} from "./DiagnosticsPrinter";
 import {AbsoluteFilePathSet} from "@romejs/path";
-import {RAW_CODE_MAX_LENGTH} from "./constants";
+import {MAX_CODE_LENGTH, MAX_LOG_LENGTH} from "./constants";
 import {Diffs, diffConstants} from "@romejs/string-diff";
 import {removeCarriageReturn} from "@romejs/string-utils";
 import {serializeCLIFlags} from "@romejs/cli-flags";
@@ -240,6 +240,12 @@ function printList(
 	}
 }
 
+function printTruncated(reporter: Reporter, chars: number) {
+	reporter.logAll(
+		`<dim><number>${chars}</number> more characters truncated</dim>`,
+	);
+}
+
 function printCode(
 	item: DiagnosticAdviceCode,
 	opts: AdvicePrintOptions,
@@ -247,8 +253,8 @@ function printCode(
 	const {reporter} = opts;
 
 	const truncated =
-		!opts.flags.verboseDiagnostics && item.code.length > RAW_CODE_MAX_LENGTH;
-	let code = truncated ? item.code.slice(0, RAW_CODE_MAX_LENGTH) : item.code;
+		!opts.flags.verboseDiagnostics && item.code.length > MAX_CODE_LENGTH;
+	let code = truncated ? item.code.slice(0, MAX_CODE_LENGTH) : item.code;
 
 	reporter.indent(() => {
 		if (code === "") {
@@ -263,9 +269,7 @@ function printCode(
 		}
 
 		if (truncated) {
-			reporter.logAll(
-				`<dim><number>${item.code.length - RAW_CODE_MAX_LENGTH}</number> more characters truncated</dim>`,
-			);
+			printTruncated(reporter, item.code.length - MAX_CODE_LENGTH);
 		}
 	});
 
@@ -463,27 +467,38 @@ function printLog(
 	opts: AdvicePrintOptions,
 ): PrintAdviceResult {
 	const {reporter} = opts;
-	const {text: message, category} = item;
+	const {category} = item;
+	let {text} = item;
 
-	if (message !== undefined) {
+	let truncated = false;
+	let truncatedLength = 0;
+	if (text.length > MAX_LOG_LENGTH) {
+		({truncated, text, truncatedLength} = normalizeMarkup(
+			text,
+			{},
+			MAX_LOG_LENGTH,
+		));
+	}
+
+	if (text !== undefined) {
 		switch (category) {
 			case "none": {
-				reporter.logAll(message);
+				reporter.logAll(text);
 				break;
 			}
 
 			case "warn": {
-				reporter.warn(message);
+				reporter.warn(text);
 				break;
 			}
 
 			case "info": {
-				reporter.info(message);
+				reporter.info(text);
 				break;
 			}
 
 			case "error": {
-				reporter.error(message);
+				reporter.error(text);
 				break;
 			}
 
@@ -492,7 +507,14 @@ function printLog(
 		}
 	}
 
-	return item.compact ? DID_NOT_PRINT : DID_PRINT;
+	if (truncated) {
+		printTruncated(reporter, truncatedLength);
+	}
+
+	return {
+		printed: !item.compact,
+		truncated,
+	};
 }
 
 function cleanMessage(msg: string): string {

@@ -15,6 +15,7 @@ import {parseMarkup} from "./parse";
 import {escapeMarkup} from "./escape";
 import Grid from "./Grid";
 import {ob1Get1} from "@romejs/ob1";
+import {sliceEscaped} from "@romejs/string-utils";
 import {
 	formatGrammarNumber,
 	getFileLinkFilename,
@@ -78,24 +79,52 @@ function buildTag(
 function normalizeMarkupChildren(
 	children: Children,
 	opts: MarkupFormatNormalizeOptions,
-): string {
+	remainingChars: number,
+): {
+	textLength: number;
+	text: string;
+} {
 	// Sometimes we'll populate the inner text of a tag with no children
 	if (children.length === 0) {
-		return "";
+		return {text: "", textLength: 0};
 	}
+
+	let textLength = 0;
 
 	let buff = "";
 	for (const child of children) {
 		if (child.type === "Text") {
-			buff += escapeMarkup(child.value);
+			let text = escapeMarkup(child.value);
+			textLength += text.length;
+			const isVisible = remainingChars > 0;
+			if (text.length > remainingChars) {
+				text = sliceEscaped(text, remainingChars);
+			}
+			remainingChars -= text.length;
+			if (isVisible) {
+				buff += text;
+			}
 		} else if (child.type === "Tag") {
-			const inner = normalizeMarkupChildren(child.children, opts);
-			buff += buildTag(child, inner, opts);
+			const inner = normalizeMarkupChildren(
+				child.children,
+				opts,
+				remainingChars,
+			);
+
+			if (remainingChars > 0) {
+				buff += buildTag(child, inner.text, opts);
+			}
+			textLength += inner.textLength;
+			remainingChars -= inner.textLength;
 		} else {
 			throw new Error("Unknown child node type");
 		}
 	}
-	return buff;
+
+	return {
+		text: buff,
+		textLength,
+	};
 }
 
 export function markupToPlainTextString(
@@ -139,6 +168,27 @@ export function markupToAnsi(
 export function normalizeMarkup(
 	input: string,
 	opts: MarkupFormatNormalizeOptions = {},
-): string {
-	return normalizeMarkupChildren(parseMarkup(input), opts);
+	maxLength: number = Infinity,
+): {
+	visibleTextLength: number;
+	truncatedLength: number;
+	textLength: number;
+	text: string;
+	truncated: boolean;
+} {
+	const {textLength, text} = normalizeMarkupChildren(
+		parseMarkup(input),
+		opts,
+		maxLength,
+	);
+
+	const isTruncated = textLength > maxLength;
+
+	return {
+		textLength,
+		text,
+		truncated: isTruncated,
+		visibleTextLength: isTruncated ? maxLength : textLength,
+		truncatedLength: isTruncated ? textLength - maxLength : 0,
+	};
 }

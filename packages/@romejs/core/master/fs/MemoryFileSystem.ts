@@ -47,8 +47,8 @@ const GLOB_IGNORE: PathPatterns = [
 
 function concatGlobIgnore(patterns: PathPatterns): PathPatterns {
 	// If there are any negate patterns then it'll never include GLOB_IGNORE
-	for (const {negate} of patterns) {
-		if (negate) {
+	for (const pattern of patterns) {
+		if (pattern.type === "PathPattern" && pattern.negate) {
 			return patterns;
 		}
 	}
@@ -747,7 +747,6 @@ export default class MemoryFileSystem {
 			}
 
 			// Crawl if we're a folder
-
 			// NOTE: We still continue crawling on implicit matches
 			const listing = this.directoryListings.get(path);
 			if (listing !== undefined) {
