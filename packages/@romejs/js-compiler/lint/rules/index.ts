@@ -79,6 +79,7 @@ import noDangerWithChildren from "./react/noDangerWithChildren";
 import noDidMountSetState from "./react/noDidMountSetState";
 import noDidUpdateSetState from "./react/noDidUpdateSetState";
 import noFindDOMNode from "./react/noFindDOMNode";
+import noRedundantShouldComponentUpdate from "./react/noRedundantShouldComponentUpdate";
 import noUnsafe from "./react/noUnsafe";
 import noWillUpdateSetState from "./react/noWillUpdateSetState";
 import reactInJsxScope from "./react/reactInJsxScope";
@@ -160,6 +161,7 @@ export const lintTransforms = [
 	noDidMountSetState,
 	noDidUpdateSetState,
 	noFindDOMNode,
+	noRedundantShouldComponentUpdate,
 	noUnsafe,
 	noWillUpdateSetState,
 	reactInJsxScope,
