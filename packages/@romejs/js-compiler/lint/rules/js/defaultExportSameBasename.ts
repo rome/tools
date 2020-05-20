@@ -33,6 +33,10 @@ export function filenameToId(
 	let basename = path.getExtensionlessBasename();
 
 	if (basename === "index") {
+		if (!path.hasParent()) {
+			return undefined;
+		}
+
 		// If the filename is `index` then use the parent directory name
 		basename = path.getParent().getExtensionlessBasename();
 	}

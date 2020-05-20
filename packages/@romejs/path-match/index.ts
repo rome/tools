@@ -5,14 +5,12 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {PathPatternNode} from "./types";
+import {PathPattern, PathPatterns} from "./types";
 import {parsePattern, parsePatternsFile} from "./parse";
 import match from "./match";
 import {AbsoluteFilePath, PathSegments} from "@romejs/path";
 
-export type PathPatterns = Array<PathPatternNode>;
-
-export type PathPattern = PathPatternNode;
+export {PathPattern, PathPatterns};
 
 export {
 	parsePattern as parsePathPattern,
@@ -23,18 +21,26 @@ export {stringifyPathPattern} from "./stringify";
 
 export function flipPathPatterns(patterns: PathPatterns): PathPatterns {
 	return patterns.map((pattern) => {
-		return {
-			...pattern,
-			negate: !pattern.negate,
-		};
+		if (pattern.type === "Comment") {
+			return pattern;
+		} else {
+			return {
+				...pattern,
+				negate: !pattern.negate,
+			};
+		}
 	});
 }
 
 export function matchPath(
 	path: AbsoluteFilePath,
-	patternNode: PathPatternNode,
+	patternNode: PathPattern,
 	cwdSegs?: PathSegments,
 ): boolean {
+	if (patternNode.type === "Comment") {
+		return false;
+	}
+
 	const matches = match(path.getSegments(), patternNode, cwdSegs);
 
 	if (patternNode.negate) {
@@ -45,7 +51,7 @@ export function matchPath(
 }
 
 function getGreater(pattern: PathPattern, num: number): number {
-	if (pattern.segments.length > num) {
+	if (pattern.type === "PathPattern" && pattern.segments.length > num) {
 		return pattern.segments.length;
 	} else {
 		return num;
@@ -74,7 +80,7 @@ export function matchPathPatterns(
 
 	for (const pattern of patterns) {
 		// No point in matching an empty pattern, could just contain a comment
-		if (pattern.segments.length === 0) {
+		if (pattern.type === "Comment" || pattern.segments.length === 0) {
 			continue;
 		}
 

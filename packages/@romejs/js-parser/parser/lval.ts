@@ -642,12 +642,6 @@ export function normalizeReferencedItem(
 		return expression;
 	}
 
-	if (expression.type === "JSSpreadElement") {
-		throw new Error(
-			"I don't think a JSSpreadElement is ever allowed to hit this path?",
-		);
-	}
-
 	return expression;
 }
 
