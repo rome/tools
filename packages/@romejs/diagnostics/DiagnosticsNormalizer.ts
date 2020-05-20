@@ -101,7 +101,7 @@ export default class DiagnosticsNormalizer {
 	}
 
 	normalizeMarkup(markup: string): string {
-		return normalizeMarkup(markup, this.markupOptions);
+		return normalizeMarkup(markup, this.markupOptions).text;
 	}
 
 	maybeNormalizeMarkup(markup: undefined | string): undefined | string {

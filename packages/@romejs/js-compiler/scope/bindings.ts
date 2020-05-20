@@ -95,7 +95,8 @@ export type TypeBindingKind =
 	| "class"
 	| "interface"
 	| "typealias"
-	| "parameter";
+	| "parameter"
+	| "enum";
 
 export class TypeBinding extends ConstBinding {
 	constructor(

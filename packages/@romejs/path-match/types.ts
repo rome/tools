@@ -21,7 +21,8 @@ export type Tokens = BaseTokens & {
 	DoubleStar: SimpleToken<"DoubleStar">;
 	Word: ValueToken<"Word", string>;
 	Separator: SimpleToken<"Separator">;
-	Hash: SimpleToken<"Hash">;
+	Comment: ValueToken<"Comment", string>;
+	EOL: SimpleToken<"EOL">;
 };
 
 //# Nodes
@@ -51,9 +52,14 @@ export type PatternSegments = Array<PatternSegmentNode>;
 export type PathPatternNode = ComplexNode<
 	"PathPattern",
 	{
-		comment: string;
 		negate: boolean;
 		root: boolean;
 		segments: PatternSegments;
 	}
 >;
+
+export type CommentNode = ValueNode<"Comment", string>;
+
+export type PathPatterns = Array<PathPattern>;
+
+export type PathPattern = PathPatternNode | CommentNode;
