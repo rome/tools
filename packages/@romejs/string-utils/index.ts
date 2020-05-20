@@ -21,3 +21,4 @@ export {removePrefix} from "./removePrefix";
 export {removeSuffix} from "./removeSuffix";
 export {toCamelCase} from "./toCamelCase";
 export {toKebabCase} from "./toKebabCase";
+export {sliceEscaped} from "./sliceEscaped";
