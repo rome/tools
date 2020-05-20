@@ -5,7 +5,7 @@
 ## `experimental > class-private-properties > asi-failure-inline`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

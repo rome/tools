@@ -5,7 +5,7 @@
 ## `typescript > arrow-function > arrow-function-with-newline`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

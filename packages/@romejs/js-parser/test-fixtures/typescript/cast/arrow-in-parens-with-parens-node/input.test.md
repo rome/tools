@@ -5,7 +5,7 @@
 ## `typescript > cast > arrow-in-parens-with-parens-node`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

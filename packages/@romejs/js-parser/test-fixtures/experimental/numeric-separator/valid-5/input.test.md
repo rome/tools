@@ -5,7 +5,7 @@
 ## `experimental > numeric-separator > valid-5`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

@@ -5,7 +5,7 @@
 ## `comments > basic > switch-function-call-no-semicolon-no-default`
 
 ```javascript
-JSProgram {
+JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []

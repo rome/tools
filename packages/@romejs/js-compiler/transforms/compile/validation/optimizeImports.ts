@@ -51,7 +51,7 @@ export default {
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 
-		if (node.type !== "JSProgram") {
+		if (node.type !== "JSRoot") {
 			return node;
 		}
 

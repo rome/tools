@@ -5,7 +5,7 @@
 ## `experimental > optional-chaining > optional-super-property-class`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

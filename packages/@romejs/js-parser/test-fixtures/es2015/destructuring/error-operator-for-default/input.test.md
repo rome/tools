@@ -5,7 +5,7 @@
 ## `es2015 > destructuring > error-operator-for-default`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

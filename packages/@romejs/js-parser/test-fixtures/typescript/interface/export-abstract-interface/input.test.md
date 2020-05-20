@@ -5,7 +5,7 @@
 ## `typescript > interface > export-abstract-interface`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

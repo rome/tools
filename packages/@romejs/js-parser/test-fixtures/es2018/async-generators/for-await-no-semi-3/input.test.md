@@ -5,7 +5,7 @@
 ## `es2018 > async-generators > for-await-no-semi-3`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

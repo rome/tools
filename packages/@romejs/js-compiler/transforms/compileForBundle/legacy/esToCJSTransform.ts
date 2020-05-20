@@ -10,7 +10,7 @@ import {
 	AnyNode,
 	JSClassExpression,
 	JSFunctionExpression,
-	jsProgram,
+	JSRoot,
 	jsStringLiteral,
 } from "@romejs/ast";
 import {
@@ -25,7 +25,7 @@ export default {
 	name: "esToCJSTransform",
 	enter(path: Path): AnyNode {
 		const {node} = path;
-		if (!jsProgram.is(node)) {
+		if (!JSRoot.is(node)) {
 			return node;
 		}
 
@@ -168,7 +168,7 @@ export default {
 
 				// Hoist function declarations
 				if (declaration.type === "JSFunctionDeclaration") {
-					// If it has an id then there's no way that anything in the jsProgram can refer to it, so inline it as a function expression
+					// If it has an id then there's no way that anything in the JSRoot can refer to it, so inline it as a function expression
 					if (declaration.id === undefined) {
 						const expr: JSFunctionExpression = {
 							...declaration,

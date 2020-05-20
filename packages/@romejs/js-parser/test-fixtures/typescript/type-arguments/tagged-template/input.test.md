@@ -5,7 +5,7 @@
 ## `typescript > type-arguments > tagged-template`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

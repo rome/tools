@@ -5,7 +5,7 @@
 ## `experimental > optional-chaining > class-contructor-call`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

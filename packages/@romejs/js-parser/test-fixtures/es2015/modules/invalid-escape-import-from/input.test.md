@@ -5,7 +5,7 @@
 ## `es2015 > modules > invalid-escape-import-from`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

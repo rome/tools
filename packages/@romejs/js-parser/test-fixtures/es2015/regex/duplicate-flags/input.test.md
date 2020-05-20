@@ -5,7 +5,7 @@
 ## `es2015 > regex > duplicate-flags`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

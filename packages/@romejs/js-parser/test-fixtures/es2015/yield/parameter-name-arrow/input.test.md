@@ -5,7 +5,7 @@
 ## `es2015 > yield > parameter-name-arrow`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

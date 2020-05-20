@@ -5,7 +5,7 @@
 ## `esprima > es2015-arrow-function > arrow-rest-forgetting-comma`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []

@@ -5,7 +5,7 @@
 ## `es2015 > modules > import-invalid-keyword-typeof`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

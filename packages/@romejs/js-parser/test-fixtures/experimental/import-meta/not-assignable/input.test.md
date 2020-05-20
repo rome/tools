@@ -5,7 +5,7 @@
 ## `experimental > import-meta > not-assignable`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []

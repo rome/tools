@@ -5,7 +5,7 @@
 ## `es2015 > yield > basic-without-argument`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

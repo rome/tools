@@ -5,7 +5,7 @@
 ## `esprima > es2015-yield > invalid-yield-expression`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

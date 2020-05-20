@@ -5,7 +5,7 @@
 ## `core > object > invalid-escape-get`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

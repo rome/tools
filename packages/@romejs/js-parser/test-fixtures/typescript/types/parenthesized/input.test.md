@@ -5,7 +5,7 @@
 ## `typescript > types > parenthesized`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

@@ -5,7 +5,7 @@
 ## `experimental > class-private-properties > failure-numeric-start-identifier`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

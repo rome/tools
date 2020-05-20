@@ -5,7 +5,7 @@
 ## `comments > basic > function-trailing-comma-shorthand`
 
 ```javascript
-JSProgram {
+JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []

@@ -5,7 +5,7 @@
 ## `experimental > function-sent > enabled-inside-generator`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

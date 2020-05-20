@@ -5,7 +5,7 @@
 ## `esprima > es2015-arrow-function > migrated_0016`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

@@ -5,7 +5,7 @@
 ## `esprima > es2015-import-declaration > import-default-as`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

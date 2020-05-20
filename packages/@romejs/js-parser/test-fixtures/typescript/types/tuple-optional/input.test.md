@@ -5,7 +5,7 @@
 ## `typescript > types > tuple-optional`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

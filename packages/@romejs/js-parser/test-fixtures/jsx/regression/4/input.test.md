@@ -5,7 +5,7 @@
 ## `jsx > regression > 4`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

@@ -5,7 +5,7 @@
 ## `typescript > regression > destructuring-in-function-type`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

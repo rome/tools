@@ -5,7 +5,7 @@
 ## `typescript > function > annotated`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

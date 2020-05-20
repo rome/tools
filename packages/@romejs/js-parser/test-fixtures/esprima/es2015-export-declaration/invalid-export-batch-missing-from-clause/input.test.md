@@ -5,7 +5,7 @@
 ## `esprima > es2015-export-declaration > invalid-export-batch-missing-from-clause`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

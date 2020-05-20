@@ -5,7 +5,7 @@
 ## `typescript > tsx > type-parameters`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

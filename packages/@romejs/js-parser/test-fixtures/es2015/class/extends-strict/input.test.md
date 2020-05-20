@@ -5,7 +5,7 @@
 ## `es2015 > class > extends-strict`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

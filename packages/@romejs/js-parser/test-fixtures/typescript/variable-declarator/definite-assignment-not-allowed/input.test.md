@@ -5,7 +5,7 @@
 ## `typescript > variable-declarator > definite-assignment-not-allowed`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []

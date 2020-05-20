@@ -5,7 +5,7 @@
 ## `esprima > es2015-yield > yield-generator-method`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

@@ -5,7 +5,7 @@
 ## `jsx > errors > attributes-in-fragment`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

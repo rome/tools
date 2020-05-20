@@ -5,7 +5,7 @@
 ## `typescript > type-alias > export`
 
 ```javascript
-JSProgram {
+JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []

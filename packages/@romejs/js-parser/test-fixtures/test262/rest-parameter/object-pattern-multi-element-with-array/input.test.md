@@ -5,7 +5,7 @@
 ## `test262 > rest-parameter > object-pattern-multi-element-with-array`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

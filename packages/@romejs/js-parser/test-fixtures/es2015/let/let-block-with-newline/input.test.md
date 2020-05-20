@@ -5,7 +5,7 @@
 ## `es2015 > let > let-block-with-newline`
 
 ```javascript
-JSProgram {
+JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []

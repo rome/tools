@@ -6,7 +6,7 @@
  */
 
 import {FileReference, Worker} from "@romejs/core";
-import {AnyNode, JSProgram} from "@romejs/ast";
+import {AnyNode, JSRoot} from "@romejs/ast";
 import {Diagnostics, catchDiagnostics, descriptions} from "@romejs/diagnostics";
 import {
 	CompileResult,
@@ -274,7 +274,7 @@ export default class WorkerAPI {
 	async parseJS(
 		ref: FileReference,
 		opts: WorkerParseOptions,
-	): Promise<JSProgram> {
+	): Promise<JSRoot> {
 		let {ast, generated} = await this.worker.parseJS(
 			ref,
 			{

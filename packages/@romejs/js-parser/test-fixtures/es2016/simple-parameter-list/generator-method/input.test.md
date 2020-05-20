@@ -5,7 +5,7 @@
 ## `es2016 > simple-parameter-list > generator-method`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

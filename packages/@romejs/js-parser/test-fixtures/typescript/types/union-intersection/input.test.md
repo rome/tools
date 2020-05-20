@@ -5,7 +5,7 @@
 ## `typescript > types > union-intersection`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

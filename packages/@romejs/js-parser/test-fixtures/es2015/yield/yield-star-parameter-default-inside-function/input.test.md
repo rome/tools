@@ -5,7 +5,7 @@
 ## `es2015 > yield > yield-star-parameter-default-inside-function`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

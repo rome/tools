@@ -5,7 +5,7 @@
 ## `typescript > type-alias > generic-complex`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

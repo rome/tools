@@ -5,7 +5,7 @@
 ## `core > regression > use-strict-with-pre-semi`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

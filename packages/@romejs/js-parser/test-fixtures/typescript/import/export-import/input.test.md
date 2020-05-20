@@ -5,7 +5,7 @@
 ## `typescript > import > export-import`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

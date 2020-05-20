@@ -5,7 +5,7 @@
 ## `es2015 > arrow-functions > object-rest-spread`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

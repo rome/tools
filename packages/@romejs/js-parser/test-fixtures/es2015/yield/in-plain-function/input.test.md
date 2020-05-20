@@ -5,7 +5,7 @@
 ## `es2015 > yield > in-plain-function`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

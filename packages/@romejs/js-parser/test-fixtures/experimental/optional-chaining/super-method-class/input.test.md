@@ -5,7 +5,7 @@
 ## `experimental > optional-chaining > super-method-class`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

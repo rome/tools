@@ -5,7 +5,7 @@
 ## `typescript > enum > members-reserved-words`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

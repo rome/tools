@@ -5,7 +5,7 @@
 ## `esprima > es2015-spread-element > invalid-call-dots`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []

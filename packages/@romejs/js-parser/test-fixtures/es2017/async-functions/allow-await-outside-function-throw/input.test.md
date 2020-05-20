@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > allow-await-outside-function-throw`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

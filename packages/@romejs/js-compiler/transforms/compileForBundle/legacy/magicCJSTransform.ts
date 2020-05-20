@@ -68,7 +68,7 @@ export default {
 		const options = getOptions(context);
 
 		// Add module wrapper
-		if (node.type === "JSProgram") {
+		if (node.type === "JSRoot") {
 			const source = jsStringLiteral.create({
 				value: options.moduleId,
 			});

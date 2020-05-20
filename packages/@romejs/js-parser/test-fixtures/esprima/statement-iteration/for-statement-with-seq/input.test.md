@@ -5,7 +5,7 @@
 ## `esprima > statement-iteration > for-statement-with-seq`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

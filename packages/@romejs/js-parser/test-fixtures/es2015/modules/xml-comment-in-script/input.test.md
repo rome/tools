@@ -5,7 +5,7 @@
 ## `es2015 > modules > xml-comment-in-script`
 
 ```javascript
-JSProgram {
+JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []

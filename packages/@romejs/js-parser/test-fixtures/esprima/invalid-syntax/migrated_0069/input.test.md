@@ -5,7 +5,7 @@
 ## `esprima > invalid-syntax > migrated_0069`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

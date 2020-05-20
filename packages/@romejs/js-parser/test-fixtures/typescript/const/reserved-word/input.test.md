@@ -5,7 +5,7 @@
 ## `typescript > const > reserved-word`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []

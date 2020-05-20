@@ -5,7 +5,7 @@
 ## `experimental > bigint > invalid-decimal`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

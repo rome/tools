@@ -30,7 +30,7 @@ function shouldHoistExecute(node: undefined | AnyNode): boolean {
 }
 
 export default function JSBlockStatement(node: AnyNode, scope: Scope) {
-	node = node.type === "JSProgram" ? node : jsBlockStatement.assert(node);
+	node = node.type === "JSRoot" ? node : jsBlockStatement.assert(node);
 
 	// Declare variables
 	for (const child of node.body) {

@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > export`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

@@ -5,7 +5,7 @@
 ## `esprima > es2015-object-pattern > nested`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

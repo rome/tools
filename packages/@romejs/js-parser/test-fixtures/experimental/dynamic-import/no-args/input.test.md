@@ -5,7 +5,7 @@
 ## `experimental > dynamic-import > no-args`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []

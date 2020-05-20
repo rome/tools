@@ -5,7 +5,7 @@
 ## `typescript > class > modifiers-methods-async`
 
 ```javascript
-JSProgram {
+JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []

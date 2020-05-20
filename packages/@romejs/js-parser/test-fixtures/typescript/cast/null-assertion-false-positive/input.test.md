@@ -5,7 +5,7 @@
 ## `typescript > cast > null-assertion-false-positive`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

@@ -5,7 +5,7 @@
 ## `experimental > throw-expression > comma`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

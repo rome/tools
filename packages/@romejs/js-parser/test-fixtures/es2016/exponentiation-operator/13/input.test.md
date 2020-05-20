@@ -5,7 +5,7 @@
 ## `es2016 > exponentiation-operator > 13`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []

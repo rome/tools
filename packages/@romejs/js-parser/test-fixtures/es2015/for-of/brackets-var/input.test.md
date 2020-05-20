@@ -5,7 +5,7 @@
 ## `es2015 > for-of > brackets-var`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

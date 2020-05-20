@@ -5,7 +5,7 @@
 ## `es2015 > statements > label-invalid-let`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

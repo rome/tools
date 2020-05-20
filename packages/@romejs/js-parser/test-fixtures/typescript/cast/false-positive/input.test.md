@@ -5,7 +5,7 @@
 ## `typescript > cast > false-positive`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

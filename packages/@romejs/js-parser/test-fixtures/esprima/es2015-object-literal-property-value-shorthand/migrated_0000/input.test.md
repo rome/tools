@@ -5,7 +5,7 @@
 ## `esprima > es2015-object-literal-property-value-shorthand > migrated_0000`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

@@ -5,7 +5,7 @@
 ## `jsx > basic > 12`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

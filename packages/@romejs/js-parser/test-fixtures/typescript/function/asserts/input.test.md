@@ -5,7 +5,7 @@
 ## `typescript > function > asserts`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

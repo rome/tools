@@ -5,7 +5,7 @@
 ## `es2015 > yield > yield-star-parameter-default-inside-generator`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

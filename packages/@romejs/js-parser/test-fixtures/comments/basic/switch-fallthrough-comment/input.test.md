@@ -5,7 +5,7 @@
 ## `comments > basic > switch-fallthrough-comment`
 
 ```javascript
-JSProgram {
+JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []

@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 218`
 
 ```javascript
-JSProgram {
+JSRoot {
 	body: Array []
 	comments: Array []
 	corrupt: false

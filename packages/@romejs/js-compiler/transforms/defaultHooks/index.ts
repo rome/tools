@@ -61,7 +61,7 @@ export const bindingInjector = createHook<
 	exit(path: Path, state: VariableInjectorState): AnyNode {
 		const {node} = path;
 
-		if (node.type !== "JSBlockStatement" && node.type !== "JSProgram") {
+		if (node.type !== "JSBlockStatement" && node.type !== "JSRoot") {
 			throw new Error("Never should have been used as a provider");
 		}
 
@@ -95,7 +95,7 @@ export const variableInjectorVisitor = {
 	enter(path: Path) {
 		const {node} = path;
 
-		if (node.type === "JSBlockStatement" || node.type === "JSProgram") {
+		if (node.type === "JSBlockStatement" || node.type === "JSRoot") {
 			path.provideHook(bindingInjector);
 		}
 
@@ -147,7 +147,7 @@ export const commentInjector = createHook<
 	exit(path: Path, state: CommentInjectorState): AnyNode {
 		const {node} = path;
 
-		if (node.type !== "JSProgram") {
+		if (node.type !== "JSRoot") {
 			throw new Error("Never should have been used as a provider");
 		}
 
@@ -167,7 +167,7 @@ export const commentInjectorVisitor = {
 			context.comments.updateComment(node);
 		}
 
-		if (node.type === "JSProgram") {
+		if (node.type === "JSRoot") {
 			context.comments.setComments(node.comments);
 			return path.provideHook(commentInjector);
 		}

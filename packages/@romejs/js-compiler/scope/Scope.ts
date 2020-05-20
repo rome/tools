@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyNode, JSProgram, MOCK_PARENT} from "@romejs/ast";
+import {AnyNode, JSRoot, MOCK_PARENT} from "@romejs/ast";
 import {CompilerContext} from "@romejs/js-compiler";
 import {SCOPE_PRIVATE_PREFIX} from "../constants";
 import evaluators from "./evaluators/index";
@@ -238,7 +238,7 @@ const GLOBAL_COMMENT_START = /^([\s+]|)global /;
 const GLOBAL_COMMENT_COLON = /:(.*?)$/;
 
 export class RootScope extends Scope {
-	constructor(context: CompilerContext, ast: JSProgram) {
+	constructor(context: CompilerContext, ast: JSRoot) {
 		super({
 			kind: "root",
 			parentScope: undefined,
@@ -266,7 +266,7 @@ export class RootScope extends Scope {
 	context: CompilerContext;
 	uids: Set<string>;
 
-	parseGlobalComments(ast: JSProgram): Array<string> {
+	parseGlobalComments(ast: JSRoot): Array<string> {
 		const globals: Array<string> = [];
 
 		for (const {value} of ast.comments) {

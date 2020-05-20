@@ -5,7 +5,7 @@
 ## `esprima > es2015-spread-element > call-spread-default`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

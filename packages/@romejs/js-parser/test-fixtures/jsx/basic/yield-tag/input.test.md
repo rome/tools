@@ -5,7 +5,7 @@
 ## `jsx > basic > yield-tag`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

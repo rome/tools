@@ -5,7 +5,7 @@
 ## `es2015 > let > let-as-identifier-strict-fail`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	filename: "input.js"

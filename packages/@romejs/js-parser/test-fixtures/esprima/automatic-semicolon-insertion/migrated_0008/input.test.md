@@ -5,7 +5,7 @@
 ## `esprima > automatic-semicolon-insertion > migrated_0008`
 
 ```javascript
-JSProgram {
+JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []

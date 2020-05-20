@@ -5,7 +5,7 @@
 ## `typescript > function > asserts-with-predicate-types`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

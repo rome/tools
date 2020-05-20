@@ -5,7 +5,7 @@
 ## `esprima > es2015-identifier > invalid_escaped_surrogate_pairs`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

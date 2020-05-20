@@ -5,7 +5,7 @@
 ## `experimental > throw-expression > statement`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

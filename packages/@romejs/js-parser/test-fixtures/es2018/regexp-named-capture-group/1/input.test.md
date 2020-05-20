@@ -5,7 +5,7 @@
 ## `es2018 > regexp-named-capture-group > 1`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

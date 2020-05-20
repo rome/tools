@@ -5,7 +5,7 @@
 ## `typescript > arrow-function > async-await-null`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

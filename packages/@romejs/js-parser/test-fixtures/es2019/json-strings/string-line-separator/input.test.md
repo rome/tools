@@ -5,7 +5,7 @@
 ## `es2019 > json-strings > string-line-separator`
 
 ```javascript
-JSProgram {
+JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []

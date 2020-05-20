@@ -5,7 +5,7 @@
 ## `typescript > const > no-initializer`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

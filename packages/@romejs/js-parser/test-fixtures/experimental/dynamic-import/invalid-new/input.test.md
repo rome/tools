@@ -5,7 +5,7 @@
 ## `experimental > dynamic-import > invalid-new`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

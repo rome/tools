@@ -5,7 +5,7 @@
 ## `comments > while`
 
 ```javascript
-JSProgram {
+JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []

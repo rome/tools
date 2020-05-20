@@ -5,7 +5,7 @@
 ## `typescript > arrow-function > generic-tsx`
 
 ```javascript
-JSProgram {
+JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []

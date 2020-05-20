@@ -5,7 +5,7 @@
 ## `es2015 > yield > function-name-class-wrapped`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

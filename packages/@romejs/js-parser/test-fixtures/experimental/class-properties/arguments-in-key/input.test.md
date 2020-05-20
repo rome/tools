@@ -5,7 +5,7 @@
 ## `experimental > class-properties > arguments-in-key`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

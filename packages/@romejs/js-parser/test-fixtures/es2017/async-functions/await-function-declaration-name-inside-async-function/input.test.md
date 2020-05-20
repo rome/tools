@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > await-function-declaration-name-inside-async-function`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

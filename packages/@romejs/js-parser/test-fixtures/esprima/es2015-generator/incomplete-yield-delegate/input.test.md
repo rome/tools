@@ -5,7 +5,7 @@
 ## `esprima > es2015-generator > incomplete-yield-delegate`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []

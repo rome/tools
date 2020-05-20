@@ -13,7 +13,7 @@ import WorkerBridge, {
 	WorkerPartialManifests,
 	WorkerProjects,
 } from "../common/bridges/WorkerBridge";
-import {ConstProgramSyntax, ConstSourceType, JSProgram} from "@romejs/ast";
+import {ConstProgramSyntax, ConstSourceType, JSRoot} from "@romejs/ast";
 import Logger from "../common/utils/Logger";
 import {parseJS} from "@romejs/js-parser";
 import {Profiler} from "@romejs/v8";
@@ -39,7 +39,7 @@ import {getFileHandlerAssert} from "../common/file-handlers/index";
 import {TransformProjectDefinition} from "@romejs/js-compiler";
 
 export type ParseJSResult = {
-	ast: JSProgram;
+	ast: JSRoot;
 	project: TransformProjectDefinition;
 	path: AbsoluteFilePath;
 	lastAccessed: number;
@@ -242,7 +242,7 @@ export default class Worker {
 		prefetchedModuleSignatures: PrefetchedModuleSignatures = {},
 		parseOptions: WorkerParseOptions,
 	): Promise<TypeCheckProvider> {
-		const libs: Array<JSProgram> = [];
+		const libs: Array<JSRoot> = [];
 
 		// TODO Figure out how to get the uids for the libraries, probably adding some additional stuff to ProjectConfig?
 

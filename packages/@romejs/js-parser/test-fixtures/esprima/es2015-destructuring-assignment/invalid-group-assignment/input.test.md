@@ -5,7 +5,7 @@
 ## `esprima > es2015-destructuring-assignment > invalid-group-assignment`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []

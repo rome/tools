@@ -5,7 +5,7 @@
 ## `esprima > es2015-arrow-function > arrow-with-multiple-rest`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []

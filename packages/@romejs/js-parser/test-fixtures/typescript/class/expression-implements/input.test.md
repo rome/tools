@@ -5,7 +5,7 @@
 ## `typescript > class > expression-implements`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

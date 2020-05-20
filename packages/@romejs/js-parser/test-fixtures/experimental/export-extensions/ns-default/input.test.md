@@ -5,7 +5,7 @@
 ## `experimental > export-extensions > ns-default`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

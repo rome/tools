@@ -5,7 +5,7 @@
 ## `typescript > class > extends-empty`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

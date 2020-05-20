@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > await-inside-arrow-identifier-allowed`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

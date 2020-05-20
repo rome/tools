@@ -5,7 +5,7 @@
 ## `esprima > es2015-generator > static-generator-method-with-computed-name`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

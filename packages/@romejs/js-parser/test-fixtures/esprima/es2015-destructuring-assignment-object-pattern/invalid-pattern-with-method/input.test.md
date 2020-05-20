@@ -5,7 +5,7 @@
 ## `esprima > es2015-destructuring-assignment-object-pattern > invalid-pattern-with-method`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

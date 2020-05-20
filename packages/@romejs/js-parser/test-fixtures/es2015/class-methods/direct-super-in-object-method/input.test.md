@@ -5,7 +5,7 @@
 ## `es2015 > class-methods > direct-super-in-object-method`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

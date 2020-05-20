@@ -5,7 +5,7 @@
 ## `typescript > types > tuple-rest-after-optional`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

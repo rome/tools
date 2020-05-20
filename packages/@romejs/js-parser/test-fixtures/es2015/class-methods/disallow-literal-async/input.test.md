@@ -5,7 +5,7 @@
 ## `es2015 > class-methods > disallow-literal-async`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

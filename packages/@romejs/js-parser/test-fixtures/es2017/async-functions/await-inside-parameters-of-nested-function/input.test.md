@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > await-inside-parameters-of-nested-function`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []

@@ -5,7 +5,7 @@
 ## `es2015 > yield > parameter-name-arrow-inside-generator-2`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []

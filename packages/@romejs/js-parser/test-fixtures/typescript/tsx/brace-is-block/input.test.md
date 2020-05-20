@@ -5,7 +5,7 @@
 ## `typescript > tsx > brace-is-block`
 
 ```javascript
-JSProgram {
+JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []

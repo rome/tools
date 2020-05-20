@@ -5,7 +5,7 @@
 ## `comments > interpreter-directive > interpreter-directive-object`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

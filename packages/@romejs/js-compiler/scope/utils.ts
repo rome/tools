@@ -12,7 +12,7 @@ import {
 	REDUCE_SKIP_SUBTREE,
 } from "@romejs/js-compiler";
 import {getBindingIdentifiers, isFunctionNode} from "@romejs/js-ast-utils";
-import {AnyJSFunction, JSProgram} from "@romejs/ast";
+import {AnyJSFunction, JSRoot} from "@romejs/ast";
 
 export function addFunctionBindings(
 	scope: Scope,
@@ -58,7 +58,7 @@ export function addFunctionBindings(
 	}
 }
 
-export function addVarBindings(scope: Scope, topNode: AnyJSFunction | JSProgram) {
+export function addVarBindings(scope: Scope, topNode: AnyJSFunction | JSRoot) {
 	const {context} = scope.getRootScope();
 	scope.setHoistedVars();
 

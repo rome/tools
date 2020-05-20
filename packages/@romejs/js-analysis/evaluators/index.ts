@@ -264,8 +264,8 @@ evaluators.set("JSPatternMeta", JSPatternMeta);
 import JSPrivateName from "./classes/JSPrivateName";
 evaluators.set("JSPrivateName", JSPrivateName);
 
-import JSProgram from "./core/JSProgram";
-evaluators.set("JSProgram", JSProgram);
+import JSRoot from "./core/JSRoot";
+evaluators.set("JSRoot", JSRoot);
 
 import JSReferenceIdentifier from "./expressions/JSReferenceIdentifier";
 evaluators.set("JSReferenceIdentifier", JSReferenceIdentifier);

@@ -15,7 +15,7 @@ export default {
 	enter(path: Path): AnyNode {
 		const {node} = path;
 
-		if (node.type === "JSProgram") {
+		if (node.type === "JSRoot") {
 			const skipImports: Set<JSImportDeclaration> = new Set();
 			const seenSources: Map<string, undefined | SourceLocation> = new Map();
 			let shouldFix = false;

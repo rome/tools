@@ -5,7 +5,7 @@
 ## `typescript > regression > async-arrow-generic-9560`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

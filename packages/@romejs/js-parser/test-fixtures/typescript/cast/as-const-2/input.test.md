@@ -5,7 +5,7 @@
 ## `typescript > cast > as-const-2`
 
 ```javascript
-JSProgram {
+JSRoot {
 	corrupt: false
 	directives: Array []
 	filename: "input.ts"

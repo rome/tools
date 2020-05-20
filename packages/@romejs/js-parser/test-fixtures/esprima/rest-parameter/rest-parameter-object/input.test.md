@@ -5,7 +5,7 @@
 ## `esprima > rest-parameter > rest-parameter-object`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

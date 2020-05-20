@@ -5,7 +5,7 @@
 ## `experimental > dynamic-import > parses-module`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

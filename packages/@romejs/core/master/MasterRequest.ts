@@ -55,7 +55,7 @@ import {
 	SerializeCLITarget,
 	serializeCLIFlags,
 } from "@romejs/cli-flags";
-import {JSProgram} from "@romejs/ast";
+import {JSRoot} from "@romejs/ast";
 import {TransformStageName} from "@romejs/js-compiler";
 import WorkerBridge, {
 	PrefetchedModuleSignatures,
@@ -889,7 +889,7 @@ export default class MasterRequest {
 	async requestWorkerParse(
 		path: AbsoluteFilePath,
 		opts: WorkerParseOptions,
-	): Promise<JSProgram> {
+	): Promise<JSRoot> {
 		this.checkCancelled();
 
 		return this.wrapRequestDiagnostic(

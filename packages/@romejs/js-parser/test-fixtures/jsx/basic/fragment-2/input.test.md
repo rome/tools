@@ -5,7 +5,7 @@
 ## `jsx > basic > fragment-2`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

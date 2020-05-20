@@ -5,7 +5,7 @@
 ## `esprima > es2015-destructuring-assignment-array-pattern > member-expr-in-rest`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

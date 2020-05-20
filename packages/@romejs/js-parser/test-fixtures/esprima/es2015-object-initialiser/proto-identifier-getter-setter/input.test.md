@@ -5,7 +5,7 @@
 ## `esprima > es2015-object-initialiser > proto-identifier-getter-setter`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

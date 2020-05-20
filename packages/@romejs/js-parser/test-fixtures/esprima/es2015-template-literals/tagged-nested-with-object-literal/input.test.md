@@ -5,7 +5,7 @@
 ## `esprima > es2015-template-literals > tagged-nested-with-object-literal`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

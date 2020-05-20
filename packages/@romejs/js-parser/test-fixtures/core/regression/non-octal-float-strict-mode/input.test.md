@@ -5,7 +5,7 @@
 ## `core > regression > non-octal-float-strict-mode`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

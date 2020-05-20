@@ -5,7 +5,7 @@
 ## `typescript > types > object-shorthand`
 
 ```javascript
-JSProgram {
+JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []

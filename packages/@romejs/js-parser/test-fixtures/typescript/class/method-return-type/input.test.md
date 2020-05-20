@@ -5,7 +5,7 @@
 ## `typescript > class > method-return-type`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

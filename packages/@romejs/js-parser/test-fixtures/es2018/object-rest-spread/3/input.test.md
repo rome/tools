@@ -5,7 +5,7 @@
 ## `es2018 > object-rest-spread > 3`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

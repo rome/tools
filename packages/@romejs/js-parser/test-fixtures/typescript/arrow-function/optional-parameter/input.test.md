@@ -5,7 +5,7 @@
 ## `typescript > arrow-function > optional-parameter`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

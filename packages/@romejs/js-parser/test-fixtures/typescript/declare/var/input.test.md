@@ -5,7 +5,7 @@
 ## `typescript > declare > var`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

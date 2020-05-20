@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > no-constructor`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

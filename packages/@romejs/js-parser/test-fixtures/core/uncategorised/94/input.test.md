@@ -5,7 +5,7 @@
 ## `core > uncategorised > 94`
 
 ```javascript
-JSProgram {
+JSRoot {
 	body: Array []
 	comments: Array []
 	corrupt: false

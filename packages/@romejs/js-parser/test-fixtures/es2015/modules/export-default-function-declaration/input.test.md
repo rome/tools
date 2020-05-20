@@ -5,7 +5,7 @@
 ## `es2015 > modules > export-default-function-declaration`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

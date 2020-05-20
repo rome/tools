@@ -5,7 +5,7 @@
 ## `typescript > module-namespace > global-in-module`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

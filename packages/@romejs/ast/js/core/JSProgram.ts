@@ -17,8 +17,8 @@ import {
 import {Diagnostics} from "@romejs/diagnostics";
 import {createBuilder} from "../utils";
 
-export type JSProgram = JSNodeBase & {
-	type: "JSProgram";
+export type JSRoot = JSNodeBase & {
+	type: "JSRoot";
 	directives: Array<JSDirective>;
 	body: Array<AnyJSStatement>;
 	filename: string;
@@ -32,8 +32,8 @@ export type JSProgram = JSNodeBase & {
 	hasHoistedVars: boolean;
 };
 
-export const MOCK_PROGRAM: JSProgram = {
-	type: "JSProgram",
+export const MOCK_PROGRAM: JSRoot = {
+	type: "JSRoot",
 	directives: [],
 	body: [],
 	filename: "unknown",
@@ -47,8 +47,8 @@ export const MOCK_PROGRAM: JSProgram = {
 	hasHoistedVars: false,
 };
 
-export const jsProgram = createBuilder<JSProgram>(
-	"JSProgram",
+export const JSRoot = createBuilder<JSRoot>(
+	"JSRoot",
 	{
 		bindingKeys: {},
 		visitorKeys: {

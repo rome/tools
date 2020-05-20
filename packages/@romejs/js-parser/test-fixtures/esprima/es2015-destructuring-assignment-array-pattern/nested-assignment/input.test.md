@@ -5,7 +5,7 @@
 ## `esprima > es2015-destructuring-assignment-array-pattern > nested-assignment`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

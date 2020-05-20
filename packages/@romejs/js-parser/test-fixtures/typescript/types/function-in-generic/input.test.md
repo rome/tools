@@ -5,7 +5,7 @@
 ## `typescript > types > function-in-generic`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

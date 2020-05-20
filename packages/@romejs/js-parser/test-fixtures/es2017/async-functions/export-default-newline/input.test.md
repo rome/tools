@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > export-default-newline`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

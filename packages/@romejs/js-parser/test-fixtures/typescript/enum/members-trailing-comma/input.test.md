@@ -5,7 +5,7 @@
 ## `typescript > enum > members-trailing-comma`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

@@ -5,7 +5,7 @@
 ## `esprima > es2015-arrow-function > non-arrow-param-followed-by-rest`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

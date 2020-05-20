@@ -5,7 +5,7 @@
 ## `typescript > class > parameter-properties-binding-patterns`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

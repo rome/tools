@@ -5,7 +5,7 @@
 ## `typescript > types > read-only-4`
 
 ```javascript
-JSProgram {
+JSRoot {
 	corrupt: false
 	directives: Array []
 	filename: "input.ts"

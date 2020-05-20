@@ -5,7 +5,7 @@
 ## `es2016 > exponentiation-operator > 10`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

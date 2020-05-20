@@ -5,7 +5,7 @@
 ## `typescript > cast > null-assertion-then-property-access`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

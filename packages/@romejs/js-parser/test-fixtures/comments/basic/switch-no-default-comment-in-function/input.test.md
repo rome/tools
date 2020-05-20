@@ -5,7 +5,7 @@
 ## `comments > basic > switch-no-default-comment-in-function`
 
 ```javascript
-JSProgram {
+JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []

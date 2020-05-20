@@ -5,7 +5,7 @@
 ## `esprima > es2015-for-of > unexpected-number`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

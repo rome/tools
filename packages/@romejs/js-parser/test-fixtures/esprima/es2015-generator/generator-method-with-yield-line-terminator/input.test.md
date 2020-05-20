@@ -5,7 +5,7 @@
 ## `esprima > es2015-generator > generator-method-with-yield-line-terminator`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

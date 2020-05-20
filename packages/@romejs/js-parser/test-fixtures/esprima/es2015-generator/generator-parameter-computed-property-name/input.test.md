@@ -5,7 +5,7 @@
 ## `esprima > es2015-generator > generator-parameter-computed-property-name`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

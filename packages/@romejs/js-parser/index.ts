@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSProgram} from "@romejs/ast";
+import {JSRoot} from "@romejs/ast";
 import {
 	JSParserOptions,
 	JSParserUserOptions,
@@ -16,7 +16,7 @@ import {types as tokTypes} from "./tokenizer/types";
 import {createJSParser} from "./parser";
 import "./tokenizer/context";
 
-export function parseJS(userOptions: JSParserUserOptions): JSProgram {
+export function parseJS(userOptions: JSParserUserOptions): JSRoot {
 	const options: JSParserOptions = normalizeOptions(userOptions);
 	return createJSParser(options).parse();
 }

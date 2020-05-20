@@ -5,7 +5,7 @@
 ## `comments > basic > surrounding-debugger-comments`
 
 ```javascript
-JSProgram {
+JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []

@@ -5,7 +5,7 @@
 ## `experimental > class-private-properties > nested`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

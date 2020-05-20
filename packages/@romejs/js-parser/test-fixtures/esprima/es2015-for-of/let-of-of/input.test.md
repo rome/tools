@@ -5,7 +5,7 @@
 ## `esprima > es2015-for-of > let-of-of`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

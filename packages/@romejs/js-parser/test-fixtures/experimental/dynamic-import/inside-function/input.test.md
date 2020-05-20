@@ -5,7 +5,7 @@
 ## `experimental > dynamic-import > inside-function`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

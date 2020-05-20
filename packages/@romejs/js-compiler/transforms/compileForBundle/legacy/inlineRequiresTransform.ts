@@ -38,7 +38,7 @@ export default {
 	exit(path: Path): AnyNode {
 		const {node} = path;
 
-		if (node.type === "JSProgram" || node.type === "JSBlockStatement") {
+		if (node.type === "JSRoot" || node.type === "JSBlockStatement") {
 			const body: Array<AnyJSStatement> = [];
 			let hadRequires = false;
 

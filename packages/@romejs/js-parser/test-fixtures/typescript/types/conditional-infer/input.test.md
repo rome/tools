@@ -5,7 +5,7 @@
 ## `typescript > types > conditional-infer`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

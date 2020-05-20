@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {JSProgram} from "@romejs/ast";
+import {JSRoot} from "@romejs/ast";
 import {DiagnosticSuppressions, Diagnostics} from "@romejs/diagnostics";
 import {TransformRequest, TransformVisitors} from "../types";
 import {stageOrder, stageTransforms} from "../transforms/index";
@@ -13,7 +13,7 @@ import {Cache} from "@romejs/js-compiler";
 import CompilerContext from "../lib/CompilerContext";
 
 type TransformResult = {
-	ast: JSProgram;
+	ast: JSRoot;
 	suppressions: DiagnosticSuppressions;
 	diagnostics: Diagnostics;
 	cacheDependencies: Array<string>;
@@ -29,7 +29,7 @@ export default async function transform(
 	const stage = req.stage === undefined ? "compile" : req.stage;
 
 	const {options, project} = req;
-	let ast: JSProgram = req.ast;
+	let ast: JSRoot = req.ast;
 
 	const cacheQuery = Cache.buildQuery(req);
 

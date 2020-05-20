@@ -5,7 +5,7 @@
 ## `esprima > es2015-generator > generator-expression-with-yield`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

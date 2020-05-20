@@ -5,7 +5,7 @@
 ## `experimental > class-private-methods > async`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

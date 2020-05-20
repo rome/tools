@@ -5,7 +5,7 @@
 ## `test262 > rest-parameter > array-pattern-empty-with-leading`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

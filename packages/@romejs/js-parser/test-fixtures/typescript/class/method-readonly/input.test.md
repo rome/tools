@@ -5,7 +5,7 @@
 ## `typescript > class > method-readonly`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []

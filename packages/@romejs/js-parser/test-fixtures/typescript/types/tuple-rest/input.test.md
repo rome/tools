@@ -5,7 +5,7 @@
 ## `typescript > types > tuple-rest`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

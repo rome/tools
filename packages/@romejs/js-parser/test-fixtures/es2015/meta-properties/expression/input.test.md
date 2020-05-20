@@ -5,7 +5,7 @@
 ## `es2015 > meta-properties > expression`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

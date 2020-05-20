@@ -5,7 +5,7 @@
 ## `jsx > basic > nonentity-decimal`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

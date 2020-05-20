@@ -5,7 +5,7 @@
 ## `esprima > es2015-object-initialiser > proto-literal-getter`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

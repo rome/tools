@@ -5,7 +5,7 @@
 ## `esprima > es2015-arrow-function > object-binding-pattern-nested-cover-grammar`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []

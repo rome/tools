@@ -5,7 +5,7 @@
 ## `esprima > es2015-yield > invalid-yield-strict-array-pattern`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	filename: "input.js"

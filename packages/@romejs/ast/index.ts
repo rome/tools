@@ -84,7 +84,7 @@ export * from "./js/objects/JSObjectProperty";
 export * from "./js/expressions/JSOptionalCallExpression";
 export * from "./js/patterns/JSPatternMeta";
 export * from "./js/classes/JSPrivateName";
-export * from "./js/core/JSProgram";
+export * from "./js/core/JSRoot";
 export * from "./js/expressions/JSReferenceIdentifier";
 export * from "./js/regex/JSRegExpAlternation";
 export * from "./js/regex/JSRegExpAnyCharacter";
@@ -293,7 +293,7 @@ export type AnyNode =
 	| n.JSOptionalCallExpression
 	| n.JSPatternMeta
 	| n.JSPrivateName
-	| n.JSProgram
+	| n.JSRoot
 	| n.JSReferenceIdentifier
 	| n.JSRegExpAlternation
 	| n.JSRegExpAnyCharacter

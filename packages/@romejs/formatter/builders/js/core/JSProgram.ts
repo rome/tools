@@ -6,9 +6,9 @@
  */
 
 import {Builder, Token, concat, hardline} from "@romejs/formatter";
-import {JSProgram} from "@romejs/ast";
+import {JSRoot} from "@romejs/ast";
 
-export default function JSProgram(builder: Builder, node: JSProgram): Token {
+export default function JSRoot(builder: Builder, node: JSRoot): Token {
 	const tokens: Array<Token> = [
 		builder.tokenizeStatementList(node.directives, node),
 	];

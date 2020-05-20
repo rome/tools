@@ -5,7 +5,7 @@
 ## `typescript > interface > method-plain`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

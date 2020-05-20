@@ -5,7 +5,7 @@
 ## `typescript > types > function-with-this`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

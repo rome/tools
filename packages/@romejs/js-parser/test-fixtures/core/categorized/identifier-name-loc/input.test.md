@@ -5,7 +5,7 @@
 ## `core > categorized > identifier-name-loc`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

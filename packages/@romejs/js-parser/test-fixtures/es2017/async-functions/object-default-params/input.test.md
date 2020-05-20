@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > object-default-params`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []

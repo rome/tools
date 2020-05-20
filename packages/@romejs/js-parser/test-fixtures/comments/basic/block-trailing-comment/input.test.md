@@ -5,7 +5,7 @@
 ## `comments > basic > block-trailing-comment`
 
 ```javascript
-JSProgram {
+JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []

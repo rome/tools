@@ -5,7 +5,7 @@
 ## `es2015 > array-rest-spread > invalid-location`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []

@@ -5,7 +5,7 @@
 ## `esprima > es2015-rest-parameter > object-shorthand-method`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

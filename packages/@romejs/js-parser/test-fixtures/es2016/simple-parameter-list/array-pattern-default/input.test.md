@@ -5,7 +5,7 @@
 ## `es2016 > simple-parameter-list > array-pattern-default`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

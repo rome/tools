@@ -5,7 +5,7 @@
 ## `experimental > import-meta > without-dynamic-import`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

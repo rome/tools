@@ -7,11 +7,11 @@
 
 import Scope from "../Scope";
 import {addVarBindings} from "../utils";
-import {AnyNode, JSProgram} from "@romejs/ast";
+import {AnyNode, JSRoot} from "@romejs/ast";
 
 export default {
 	creator: true,
-	build(node: JSProgram, parent: AnyNode, scope: Scope) {
+	build(node: JSRoot, parent: AnyNode, scope: Scope) {
 		const newScope = scope.fork("program", node);
 		if (node.hasHoistedVars) {
 			addVarBindings(newScope, node);

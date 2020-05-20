@@ -5,7 +5,7 @@
 ## `esprima > es2015-export-declaration > invalid-export-named-default`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

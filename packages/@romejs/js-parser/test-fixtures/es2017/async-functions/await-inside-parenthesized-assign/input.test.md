@@ -5,7 +5,7 @@
 ## `es2017 > async-functions > await-inside-parenthesized-assign`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

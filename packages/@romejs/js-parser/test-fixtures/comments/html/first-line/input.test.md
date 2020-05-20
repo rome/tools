@@ -5,7 +5,7 @@
 ## `comments > html > first-line`
 
 ```javascript
-JSProgram {
+JSRoot {
 	body: Array []
 	corrupt: false
 	diagnostics: Array []

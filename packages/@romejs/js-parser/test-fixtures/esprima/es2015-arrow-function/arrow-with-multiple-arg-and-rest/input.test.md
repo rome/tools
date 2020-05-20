@@ -5,7 +5,7 @@
 ## `esprima > es2015-arrow-function > arrow-with-multiple-arg-and-rest`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

@@ -5,7 +5,7 @@
 ## `comments > export-external`
 
 ```javascript
-JSProgram {
+JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []

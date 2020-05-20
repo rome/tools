@@ -5,7 +5,7 @@
 ## `es2015 > yield > in-iterator-stmt`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []

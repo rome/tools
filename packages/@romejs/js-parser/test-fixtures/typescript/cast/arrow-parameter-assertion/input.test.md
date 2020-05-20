@@ -5,7 +5,7 @@
 ## `typescript > cast > arrow-parameter-assertion`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []

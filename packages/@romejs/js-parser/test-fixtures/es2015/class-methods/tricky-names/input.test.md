@@ -5,7 +5,7 @@
 ## `es2015 > class-methods > tricky-names`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

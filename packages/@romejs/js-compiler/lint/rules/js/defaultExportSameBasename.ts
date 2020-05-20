@@ -49,7 +49,7 @@ export default {
 	enter(path: Path): TransformExitResult {
 		const {context, node} = path;
 
-		if (node.type === "JSProgram") {
+		if (node.type === "JSRoot") {
 			let defaultExport: undefined | JSExportDefaultDeclaration;
 			for (const bodyNode of node.body) {
 				if (bodyNode.type === "JSExportDefaultDeclaration") {

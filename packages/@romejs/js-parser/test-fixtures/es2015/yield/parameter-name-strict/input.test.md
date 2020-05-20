@@ -5,7 +5,7 @@
 ## `es2015 > yield > parameter-name-strict`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	filename: "input.js"

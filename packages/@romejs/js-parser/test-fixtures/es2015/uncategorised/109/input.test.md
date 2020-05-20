@@ -5,7 +5,7 @@
 ## `es2015 > uncategorised > 109`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

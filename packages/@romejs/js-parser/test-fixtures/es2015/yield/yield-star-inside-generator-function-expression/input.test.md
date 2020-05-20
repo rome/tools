@@ -5,7 +5,7 @@
 ## `es2015 > yield > yield-star-inside-generator-function-expression`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

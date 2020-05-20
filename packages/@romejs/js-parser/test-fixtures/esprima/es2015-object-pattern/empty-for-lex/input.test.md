@@ -5,7 +5,7 @@
 ## `esprima > es2015-object-pattern > empty-for-lex`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

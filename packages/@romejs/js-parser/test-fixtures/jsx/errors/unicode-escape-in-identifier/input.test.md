@@ -5,7 +5,7 @@
 ## `jsx > errors > unicode-escape-in-identifier`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

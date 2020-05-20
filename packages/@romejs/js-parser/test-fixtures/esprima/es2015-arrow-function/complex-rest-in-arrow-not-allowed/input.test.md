@@ -5,7 +5,7 @@
 ## `esprima > es2015-arrow-function > complex-rest-in-arrow-not-allowed`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

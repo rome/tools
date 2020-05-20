@@ -5,7 +5,7 @@
 ## `experimental > numeric-separator > identifier-start-0`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

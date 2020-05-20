@@ -5,7 +5,7 @@
 ## `typescript > cast > as-const`
 
 ```javascript
-JSProgram {
+JSRoot {
 	corrupt: false
 	diagnostics: Array []
 	directives: Array []

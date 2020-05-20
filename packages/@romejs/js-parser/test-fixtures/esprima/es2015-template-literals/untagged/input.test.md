@@ -5,7 +5,7 @@
 ## `esprima > es2015-template-literals > untagged`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

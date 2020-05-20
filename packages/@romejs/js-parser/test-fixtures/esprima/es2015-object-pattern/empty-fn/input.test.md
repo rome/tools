@@ -5,7 +5,7 @@
 ## `esprima > es2015-object-pattern > empty-fn`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

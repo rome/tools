@@ -5,7 +5,7 @@
 ## `esprima > es2015-unicode-code-point-escape-sequence > migrated_0000`
 
 ```javascript
-JSProgram {
+JSRoot {
 	body: Array []
 	comments: Array []
 	corrupt: false

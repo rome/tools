@@ -5,7 +5,7 @@
 ## `esprima > es2015-destructuring-assignment-object-pattern > invalid-lhs-01`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []

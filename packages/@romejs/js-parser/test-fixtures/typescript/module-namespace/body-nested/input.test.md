@@ -5,7 +5,7 @@
 ## `typescript > module-namespace > body-nested`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

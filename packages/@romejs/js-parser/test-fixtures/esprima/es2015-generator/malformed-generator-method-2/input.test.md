@@ -5,7 +5,7 @@
 ## `esprima > es2015-generator > malformed-generator-method-2`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

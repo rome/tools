@@ -9,8 +9,8 @@ import {
 	AnyJSComment,
 	AnyNode,
 	ConstSourceType,
-	JSProgram,
-	jsProgram,
+	JSRoot,
+	JSRoot,
 } from "@romejs/ast";
 import {
 	SourceLocation,
@@ -61,7 +61,7 @@ import {
 } from "../lint/decisions";
 
 export type ContextArg = {
-	ast: JSProgram;
+	ast: JSRoot;
 	suppressions?: DiagnosticSuppressions;
 	ref?: FileReference;
 	sourceText?: string;
@@ -220,11 +220,11 @@ export default class CompilerContext {
 	}
 
 	reduceRoot(
-		ast: JSProgram,
+		ast: JSRoot,
 		visitors: TransformVisitor | TransformVisitors,
 		pathOpts?: PathOptions,
-	): JSProgram {
-		return jsProgram.assert(
+	): JSRoot {
+		return JSRoot.assert(
 			reduce(
 				ast,
 				[...hookVisitors, ...(Array.isArray(visitors) ? visitors : [visitors])],

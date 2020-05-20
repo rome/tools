@@ -5,7 +5,7 @@
 ## `esprima > es2015-arrow-function > invalid-duplicated-params`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

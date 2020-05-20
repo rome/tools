@@ -5,7 +5,7 @@
 ## `experimental > optional-chaining > function-call`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

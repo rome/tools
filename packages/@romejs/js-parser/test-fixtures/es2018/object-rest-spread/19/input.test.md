@@ -5,7 +5,7 @@
 ## `es2018 > object-rest-spread > 19`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: true
 	directives: Array []

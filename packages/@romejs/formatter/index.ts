@@ -41,7 +41,7 @@ export function formatJS(
 			typeAnnotations,
 			allowInterpreterDirective,
 		},
-		ast.type === "JSProgram" ? ast.comments : comments,
+		ast.type === "JSRoot" ? ast.comments : comments,
 	);
 	const token = builder.tokenize(ast, MOCK_PARENT);
 	const formatted = printTokenToString(

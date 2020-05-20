@@ -7,7 +7,7 @@
 
 import {ModuleSignature} from "@romejs/js-analysis";
 import {Manifest} from "@romejs/codec-js-manifest";
-import {ConstProgramSyntax, ConstSourceType, JSProgram} from "@romejs/ast";
+import {ConstProgramSyntax, ConstSourceType, JSRoot} from "@romejs/ast";
 import {
 	BundleCompileOptions,
 	CompileResult,
@@ -234,7 +234,7 @@ export default class WorkerBridge extends Bridge {
 			file: JSONFileReference;
 			options: WorkerParseOptions;
 		},
-		JSProgram
+		JSRoot
 	>({name: "parseJS", direction: "server->client"});
 
 	updateBuffer = this.createEvent<

@@ -5,7 +5,7 @@
 ## `esprima > es2015-object-initialiser > invalid-proto-getter-literal-identifier`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

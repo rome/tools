@@ -5,7 +5,7 @@
 ## `experimental > function-sent > enabled-function-keyword-declaration`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

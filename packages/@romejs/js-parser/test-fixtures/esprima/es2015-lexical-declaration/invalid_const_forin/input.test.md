@@ -5,7 +5,7 @@
 ## `esprima > es2015-lexical-declaration > invalid_const_forin`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

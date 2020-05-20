@@ -5,7 +5,7 @@
 ## `experimental > nullish-coalescing-operator > nullish-or`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

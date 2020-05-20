@@ -5,7 +5,7 @@
 ## `typescript > types > literal-string`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

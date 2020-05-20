@@ -5,7 +5,7 @@
 ## `es2015 > generators > invalid-escape-yield`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

@@ -5,7 +5,7 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-import {AnyJSComment, AnyNode, JSProgram} from "@romejs/ast";
+import {AnyJSComment, AnyNode, JSRoot} from "@romejs/ast";
 import {CompilerContext} from "@romejs/js-compiler";
 import {Number1, ob1Get1} from "@romejs/ob1";
 import Path from "../lib/Path";
@@ -28,8 +28,8 @@ function buildSuppressionCommentValue(categories: Set<string>): string {
 
 export function addSuppressions(
 	context: CompilerContext,
-	ast: JSProgram,
-): JSProgram {
+	ast: JSRoot,
+): JSRoot {
 	if (!context.hasLintDecisions()) {
 		return ast;
 	}
@@ -116,7 +116,7 @@ export function addSuppressions(
 				if (
 					node.type === "JSCommentBlock" ||
 					node.type === "JSCommentLine" ||
-					node.type === "JSProgram"
+					node.type === "JSRoot"
 				) {
 					return node;
 				}

@@ -5,7 +5,7 @@
 ## `core > categorized > invalid-fn-decl-labeled-inside-loop`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	directives: Array []

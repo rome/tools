@@ -6,10 +6,10 @@
  */
 
 import {Scope} from "../../scopes";
-import {AnyNode, JSProgram, jsProgram} from "@romejs/ast";
+import {AnyNode, JSRoot, JSRoot} from "@romejs/ast";
 import JSBlockStatement from "../statements/JSBlockStatement";
 
-export default function JSProgram(node: AnyNode, scope: Scope) {
-	node = jsProgram.assert(node);
+export default function JSRoot(node: AnyNode, scope: Scope) {
+	node = JSRoot.assert(node);
 	JSBlockStatement(node, scope);
 }

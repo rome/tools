@@ -5,7 +5,7 @@
 ## `typescript > cast > multiple-assert-and-assign`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

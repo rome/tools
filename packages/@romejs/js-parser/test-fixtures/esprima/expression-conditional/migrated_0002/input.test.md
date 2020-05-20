@@ -5,7 +5,7 @@
 ## `esprima > expression-conditional > migrated_0002`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

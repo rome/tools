@@ -5,7 +5,7 @@
 ## `experimental > nullish-coalescing-operator > associativity`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []

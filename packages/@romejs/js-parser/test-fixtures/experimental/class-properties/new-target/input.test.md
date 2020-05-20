@@ -5,7 +5,7 @@
 ## `experimental > class-properties > new-target`
 
 ```javascript
-JSProgram {
+JSRoot {
 	comments: Array []
 	corrupt: false
 	diagnostics: Array []
