@@ -292,6 +292,10 @@ export const descriptions = createMessages({
 	},
 	// @romejs/js-compiler
 	LINT: {
+		REACT_NO_UNSAFE: (oldMethod: string, newMethod: string, details: string) => ({
+			category: "lint/react/noUnsafe",
+			message: `<emphasis>${oldMethod}</emphasis> is unsafe for use in async rendering. Update the component to use ${newMethod} instead. ${details}`,
+		}),
 		JSX_A11Y_TABINDEX_NO_POSITIVE: {
 			category: "lint/jsx-a11y/tabindexNoPositive",
 			message: "Avoid positive integer values for <emphasis>tabIndex</emphasis>.",
