@@ -8,7 +8,7 @@
 import {Mappings, SourceMapConsumer} from "@romejs/codec-source-map";
 import {DiagnosticSuppressions, Diagnostics} from "@romejs/diagnostics";
 import {Cache} from "@romejs/compiler";
-import {formatJS} from "@romejs/formatter";
+import {formatAST} from "@romejs/formatter";
 import {CompileRequest} from "../types";
 import transform from "../methods/transform";
 
@@ -41,7 +41,7 @@ export default async function compile(
 		cacheDependencies,
 	} = await transform(req);
 
-	const formatted = formatJS(
+	const formatted = formatAST(
 		transformedAst,
 		{
 			typeAnnotations: false,

@@ -35,7 +35,7 @@ import {
 	InlineSnapshotUpdate,
 	InlineSnapshotUpdates,
 } from "../test-worker/SnapshotManager";
-import {formatJS} from "@romejs/formatter";
+import {formatAST} from "@romejs/formatter";
 import {getNodeReferenceParts, valueToNode} from "@romejs/js-ast-utils";
 
 // Some Windows git repos will automatically convert Unix line endings to Windows
@@ -193,7 +193,7 @@ export default class WorkerAPI {
 		}
 
 		if (diags.length === 0) {
-			const formatted = formatJS(ast, {sourceText}).code;
+			const formatted = formatAST(ast, {sourceText}).code;
 			await this.worker.writeFile(ref.real, formatted);
 		}
 

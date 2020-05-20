@@ -8,7 +8,7 @@
 import * as compiler from "@romejs/compiler";
 import {check as typeCheck} from "@romejs/js-analysis";
 import {ConstProgramSyntax, ConstSourceType} from "@romejs/ast";
-import {formatJS} from "@romejs/formatter";
+import {formatAST} from "@romejs/formatter";
 import {
 	ExtensionHandler,
 	ExtensionHandlerMethodInfo,
@@ -85,7 +85,7 @@ function buildJSHandler(
 				parseOptions,
 			);
 
-			const out = formatJS(
+			const out = formatAST(
 				ast,
 				{
 					sourceText,

@@ -2,7 +2,7 @@ import {createFixtureTests} from "@romejs/test-helpers";
 import {parseJS} from "@romejs/js-parser";
 import {ConstProgramSyntax} from "@romejs/ast";
 import {removeCarriageReturn} from "@romejs/string-utils";
-import {FormatterOptions, formatJS} from ".";
+import {FormatterOptions, formatAST} from ".";
 
 const promise = createFixtureTests(async (fixture, t) => {
 	const {options, files} = fixture;
@@ -67,7 +67,7 @@ const promise = createFixtureTests(async (fixture, t) => {
 		},
 	});
 
-	const printed = formatJS(ast, formatOptions);
+	const printed = formatAST(ast, formatOptions);
 
 	const snapshotFile = inputFile.absolute.getParent().append(
 		inputFile.absolute.getExtensionlessBasename(),

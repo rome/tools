@@ -23,7 +23,7 @@ export type FormatterOptions = {
 	allowInterpreterDirective?: boolean;
 };
 
-export function formatJS(
+export function formatAST(
 	ast: AnyNode,
 	{
 		format = "pretty",

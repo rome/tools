@@ -8,9 +8,9 @@
 import {
 	AnyJSComment,
 	AnyNode,
+	AnyRoot,
 	ConstSourceType,
 	JSRoot,
-	jsRoot,
 } from "@romejs/ast";
 import {
 	SourceLocation,
@@ -49,7 +49,7 @@ import CommentsConsumer from "@romejs/js-parser/CommentsConsumer";
 import {ob1Get0} from "@romejs/ob1";
 import {hookVisitors} from "../transforms";
 import stringDiff from "@romejs/string-diff";
-import {formatJS} from "@romejs/formatter";
+import {formatAST} from "@romejs/formatter";
 import {REDUCE_REMOVE} from "../constants";
 import {FileReference} from "@romejs/core";
 import {DEFAULT_PROJECT_CONFIG} from "@romejs/project";
@@ -59,6 +59,7 @@ import {
 	buildLintDecisionString,
 	deriveDecisionPositionKey,
 } from "../lint/decisions";
+import {isRoot} from "@romejs/ast-utils";
 
 export type ContextArg = {
 	ast: JSRoot;
@@ -98,7 +99,7 @@ function getFormattedCodeFromExitResult(result: TransformExitResult): string {
 	} else if (result === REDUCE_REMOVE) {
 		return "";
 	} else {
-		return formatJS(result).code;
+		return formatAST(result).code;
 	}
 }
 
@@ -220,18 +221,20 @@ export default class CompilerContext {
 	}
 
 	reduceRoot(
-		ast: JSRoot,
+		ast: AnyRoot,
 		visitors: TransformVisitor | TransformVisitors,
 		pathOpts?: PathOptions,
-	): JSRoot {
-		return jsRoot.assert(
-			reduce(
-				ast,
-				[...hookVisitors, ...(Array.isArray(visitors) ? visitors : [visitors])],
-				this,
-				pathOpts,
-			),
+	): AnyRoot {
+		const node = reduce(
+			ast,
+			[...hookVisitors, ...(Array.isArray(visitors) ? visitors : [visitors])],
+			this,
+			pathOpts,
 		);
+		if (!isRoot(node)) {
+			throw new Error("Expected root to be returned from reduce");
+		}
+		return node;
 	}
 
 	reduce(

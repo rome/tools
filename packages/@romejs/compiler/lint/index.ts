@@ -8,7 +8,7 @@
 import {DiagnosticSuppressions, Diagnostics} from "@romejs/diagnostics";
 import {LintRequest} from "../types";
 import {Cache, CompilerContext} from "@romejs/compiler";
-import {formatJS} from "@romejs/formatter";
+import {formatAST} from "@romejs/formatter";
 import {addSuppressions} from "./suppressions";
 import {lintTransforms} from "./rules/index";
 
@@ -47,7 +47,7 @@ export default async function lint(req: LintRequest): Promise<LintResult> {
 		formatAst = formatContext.reduceRoot(ast, lintTransforms);
 		formatAst = addSuppressions(formatContext, formatAst);
 	}
-	const formattedCode = formatJS(
+	const formattedCode = formatAST(
 		formatAst,
 		{
 			typeAnnotations: true,
