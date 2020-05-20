@@ -6,17 +6,17 @@ const UNSAFE_METHODS = [
 	{
 		oldMethod: "UNSAFE_componentWillMount",
 		newMethod: "componentDidMount",
-		details: "See https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html.",
+		details: 'See <hyperlink target="https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html" />.',
 	},
 	{
 		oldMethod: "UNSAFE_componentWillReceiveProps",
 		newMethod: "getDerivedStateFromProps",
-		details: "See https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html.",
+		details: 'See <hyperlink target="https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html" />.',
 	},
 	{
 		oldMethod: "UNSAFE_componentWillUpdate",
 		newMethod: "componentDidUpdate",
-		details: "See https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html.",
+		details: 'See <hyperlink target="https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html" />.',
 	},
 ];
 
