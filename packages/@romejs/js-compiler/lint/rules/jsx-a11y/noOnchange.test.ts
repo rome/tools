@@ -2,7 +2,7 @@ import {test} from "rome";
 import {testLintMultiple} from "../testHelpers";
 
 test(
-	"jsx a11y no onchange",
+	"jsx a11y no onChange",
 	async (t) => {
 		await testLintMultiple(
 			t,
@@ -24,7 +24,7 @@ test(
 				"<input onChange={() => {}} onChange={() => {}} />;",
 				"<input {...props} />",
 			],
-			{category: "lint/jsx-a11y/noOnchange"},
+			{category: "lint/jsx-a11y/noOnChange"},
 		);
 	},
 );

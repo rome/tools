@@ -3,7 +3,7 @@ import {hasJSXAttribute, isJSXElement} from "@romejs/js-ast-utils";
 import {Path, TransformExitResult} from "@romejs/js-compiler";
 
 export default {
-	name: "noOnchange",
+	name: "noOnChange",
 	enter(path: Path): TransformExitResult {
 		const {context, node} = path;
 
@@ -19,7 +19,7 @@ export default {
 			return node;
 		}
 
-		context.addNodeDiagnostic(node, descriptions.LINT.JSX_A11Y_NO_ONCHANGE);
+		context.addNodeDiagnostic(node, descriptions.LINT.JSX_A11Y_NO_ON_CHANGE);
 
 		return node;
 	},
