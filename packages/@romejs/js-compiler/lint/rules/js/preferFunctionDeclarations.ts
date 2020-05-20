@@ -51,6 +51,7 @@ const hook = createHook<State, Arg, JSThisExpression>({
 		state: State,
 	):
 		| JSVariableDeclarationStatement
+		| JSFunctionDeclaration
 		| Array<JSVariableDeclarationStatement | JSFunctionDeclaration> {
 		const node = jsVariableDeclarationStatement.assert(path.node);
 
@@ -78,6 +79,11 @@ const hook = createHook<State, Arg, JSThisExpression>({
 
 		// Convert functions
 		for (const decl of state.declarators) {
+			// Could have been changed under us. Ignore it, we'll get it in another pass
+			if (!node.declaration.declarations.includes(decl)) {
+				continue;
+			}
+
 			const id = jsBindingIdentifier.assert(decl.id);
 			const {init} = decl;
 
@@ -111,6 +117,10 @@ const hook = createHook<State, Arg, JSThisExpression>({
 					body,
 				}),
 			);
+		}
+
+		if (nodes.length === 1) {
+			return nodes[0];
 		}
 
 		return nodes;

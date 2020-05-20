@@ -126,15 +126,24 @@ class BaseFilePath<Super extends UnknownFilePath> {
 		}
 	}
 
+	hasParent() {
+		return this.getParentSegments().length > 0;
+	}
+
 	getParent(): Super {
 		if (this.memoizedParent !== undefined) {
 			return this.memoizedParent;
 		}
 
+		const segments = this.getParentSegments();
+		if (segments.length === 0) {
+			throw new Error("No parent segments");
+		}
+
 		const parent = this._fork(
 			{
 				...this.getParsed(),
-				segments: this.getParentSegments(),
+				segments,
 			},
 			{},
 		);
@@ -149,10 +158,12 @@ class BaseFilePath<Super extends UnknownFilePath> {
 		}
 
 		const segments = this.getSegments().slice(0, -1);
+
 		// Always make this an explicit folder
 		if (explicit && segments.length > 0 && segments[0] !== "") {
 			segments.push("");
 		}
+
 		return segments;
 	}
 

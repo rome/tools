@@ -14,5 +14,6 @@ export const HALF_MAX_CODE_FRAME_LINES = MAX_CODE_FRAME_LINES / 2;
 export const CODE_FRAME_CONTEXT_LINES = 2;
 
 // Constants that influence truncation
-export const RAW_CODE_MAX_LENGTH = 500;
+export const MAX_CODE_LENGTH = 500;
 export const MAX_PATCH_LINES = 50;
+export const MAX_LOG_LENGTH = 5_000;

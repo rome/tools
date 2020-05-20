@@ -70,11 +70,13 @@ import noDistractingElements from "./jsx-a11y/noDistractingElements";
 import noTargetBlank from "./jsx-a11y/noTargetBlank";
 import scope from "./jsx-a11y/scope";
 import tabindexNoPositive from "./jsx-a11y/tabindexNoPositive";
+import buttonHasType from "./react/buttonHasType";
 import jsxKey from "./react/jsxKey";
 import jsxNoCommentText from "./react/jsxNoCommentText";
 import noChildrenProp from "./react/noChildrenProp";
 import noDanger from "./react/noDanger";
 import noDangerWithChildren from "./react/noDangerWithChildren";
+import noDidMountSetState from "./react/noDidMountSetState";
 import noDidUpdateSetState from "./react/noDidUpdateSetState";
 import noFindDOMNode from "./react/noFindDOMNode";
 import noUnsafe from "./react/noUnsafe";
@@ -149,11 +151,13 @@ export const lintTransforms = [
 	noTargetBlank,
 	scope,
 	tabindexNoPositive,
+	buttonHasType,
 	jsxKey,
 	jsxNoCommentText,
 	noChildrenProp,
 	noDanger,
 	noDangerWithChildren,
+	noDidMountSetState,
 	noDidUpdateSetState,
 	noFindDOMNode,
 	noUnsafe,

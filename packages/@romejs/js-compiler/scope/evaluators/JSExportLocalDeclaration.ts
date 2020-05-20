@@ -14,7 +14,10 @@ export default {
 	build(node: JSExportLocalDeclaration, parent: AnyNode, scope: Scope) {
 		const newScope = scope.evaluate(node.declaration, node);
 		for (const id of getBindingIdentifiers(node)) {
-			newScope.getBindingAssert(id.name).setExported(true);
+			const binding = newScope.getBinding(id.name);
+			if (binding !== undefined) {
+				binding.setExported(true);
+			}
 		}
 		return newScope;
 	},

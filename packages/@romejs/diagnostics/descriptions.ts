@@ -296,6 +296,16 @@ export const descriptions = createMessages({
 			category: "lint/react/noUnsafe",
 			message: `<emphasis>${oldMethod}</emphasis> is unsafe for use in async rendering. Update the component to use ${newMethod} instead. ${details}`,
 		}),
+		REACT_NO_DID_MOUNT_SET_STATE: {
+			category: "lint/react/noDidMountSetState",
+			message: "Avoid <emphasis>this.setState</emphasis> in <emphasis>componentDidMount</emphasis>. This can cause an unexpected second render, which can cause visual layout thrashing.",
+    },
+		REACT_BUTTON_HAS_TYPE: {
+			category: "lint/react/buttonHasType",
+			message: `Use an explicit <emphasis>type</emphasis> prop on <emphasis>${escapeMarkup(
+				"<button>",
+			)}</emphasis> elements.`,
+		},
 		JSX_A11Y_TABINDEX_NO_POSITIVE: {
 			category: "lint/jsx-a11y/tabindexNoPositive",
 			message: "Avoid positive integer values for <emphasis>tabIndex</emphasis>.",

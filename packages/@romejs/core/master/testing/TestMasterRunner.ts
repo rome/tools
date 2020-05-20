@@ -150,7 +150,7 @@ export default class TestMasterRunner {
 		for (const [filename, {code, sourceMap}] of opts.sources) {
 			const consumer = sourceMap.toConsumer();
 			this.coverageCollector.addSourceMap(filename, code, consumer);
-			this.printer.processor.sourceMaps.add(filename, consumer);
+			this.sourceMaps.add(filename, consumer);
 		}
 	}
 
@@ -208,6 +208,12 @@ export default class TestMasterRunner {
 					update.line,
 					update.column,
 				);
+
+				if (!resolved.found) {
+					throw new Error(
+						"Could not find inline snapshot location in source map",
+					);
+				}
 
 				if (resolved.source !== filename && resolved.source !== ref.uid) {
 					throw new Error(

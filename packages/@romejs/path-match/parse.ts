@@ -6,7 +6,7 @@
  */
 
 import {
-	PathPatternNode,
+	PathPattern,
 	PatternPartNode,
 	PatternParts,
 	PatternSegmentNode,
@@ -14,25 +14,28 @@ import {
 	Tokens,
 } from "./types";
 import {ParserOptions, createParser} from "@romejs/parser-core";
-import {Number0, ob1Add, ob1Coerce0, ob1Get0, ob1Number0} from "@romejs/ob1";
+import {Number0, ob1Add, ob1Get0, ob1Number0} from "@romejs/ob1";
 import {descriptions} from "@romejs/diagnostics";
-
-type ParseMode = "path" | "pattern";
 
 export type PathMatchParserOptions = ParserOptions;
 
+function isntNewline(char: string): boolean {
+	return char !== "\n";
+}
+
 const createPathMatchParser = createParser((ParserCore) =>
 	class PathMatchParser extends ParserCore<Tokens, void> {
-		constructor(opts: PathMatchParserOptions, mode: ParseMode) {
+		constructor(opts: PathMatchParserOptions) {
 			super(opts, "parse/patchMatch");
-			this.mode = mode;
 		}
-
-		mode: ParseMode;
 
 		isWordCharacter(char: string, index: Number0, input: string): boolean {
 			const prevChar = input[ob1Get0(index) - 1];
 			const nextChar = input[ob1Get0(index) + 1];
+
+			if (char === "\n") {
+				return false;
+			}
 
 			// Windows separator
 			if (char === "\\" && nextChar === "\\") {
@@ -49,16 +52,9 @@ const createPathMatchParser = createParser((ParserCore) =>
 				return false;
 			}
 
-			if (this.mode === "pattern") {
-				// Wildcard
-				if (char === "*") {
-					return false;
-				}
-
-				// Comment
-				if (char === "#") {
-					return false;
-				}
+			// Wildcard
+			if (char === "*") {
+				return false;
 			}
 
 			return true;
@@ -68,18 +64,24 @@ const createPathMatchParser = createParser((ParserCore) =>
 			const char = input[ob1Get0(index)];
 			const nextChar = input[ob1Get0(index) + 1];
 
-			if (this.mode === "pattern") {
-				if (char === "*") {
-					if (nextChar === "*") {
-						return this.finishToken("DoubleStar", ob1Add(index, 2));
-					} else {
-						return this.finishToken("Star");
-					}
-				} else if (index === ob1Number0 && char === "!") {
-					return this.finishToken("Exclamation");
-				} else if (char === "#") {
-					return this.finishToken("Hash");
+			if (char === "*") {
+				if (nextChar === "*") {
+					return this.finishToken("DoubleStar", ob1Add(index, 2));
+				} else {
+					return this.finishToken("Star");
 				}
+			} else if (index === ob1Number0 && char === "!") {
+				return this.finishToken("Exclamation");
+			} else if (
+				char === "#" &&
+				this.getPositionFromIndex(index).column === ob1Number0
+			) {
+				const [value, end] = this.readInputFrom(index, isntNewline);
+				return this.finishValueToken("Comment", value, end);
+			}
+
+			if (char === "\n") {
+				return this.finishToken("EOL");
 			}
 
 			if (char === "/") {
@@ -138,7 +140,11 @@ const createPathMatchParser = createParser((ParserCore) =>
 			// A ** token is only allowed as the only part of a segment
 			if (this.matchToken("DoubleStar")) {
 				const lookahead = this.lookaheadToken();
-				if (lookahead.type === "Separator" || lookahead.type === "EOF") {
+				if (
+					lookahead.type === "Separator" ||
+					lookahead.type === "EOF" ||
+					lookahead.type === "EOL"
+				) {
 					this.eatToken("DoubleStar");
 					this.eatSeparators();
 					return {
@@ -150,9 +156,10 @@ const createPathMatchParser = createParser((ParserCore) =>
 
 			// Keep consuming tokens until we hit a separator or a comment
 			while (
-				!this.matchToken("Hash") &&
+				!this.matchToken("Comment") &&
 				!this.matchToken("EOF") &&
-				!this.eatSeparators()
+				!this.eatSeparators() &&
+				!this.matchToken("EOL")
 			) {
 				parts.push(this.parsePatternSegmentPart());
 			}
@@ -181,7 +188,6 @@ const createPathMatchParser = createParser((ParserCore) =>
 		}
 
 		// Normalize all path segments, removing empty segments and wildcards from the start and end
-
 		// These could also be parse errors but let's allow them
 		normalizePatternSegments(segments: PatternSegments): PatternSegments {
 			const normalized: PatternSegments = [];
@@ -216,31 +222,50 @@ const createPathMatchParser = createParser((ParserCore) =>
 			return normalized;
 		}
 
-		parsePatternsFile(): Array<PathPatternNode> {
-			const patterns: Array<PathPatternNode> = [];
-			while (!this.matchToken("EOF")) {
+		eatEOL() {
+			while (this.eatToken("EOL")) {
+				// empty
+			}
+		}
+
+		parsePatternsFile(): Array<PathPattern> {
+			const patterns: Array<PathPattern> = [];
+
+			while (true) {
+				this.eatEOL();
+				if (this.matchToken("EOF")) {
+					break;
+				}
+
 				patterns.push(this.parsePattern());
 			}
+
+			this.finalize();
 			return patterns;
 		}
 
-		parsePattern(): PathPatternNode {
+		parsePattern(): PathPattern {
 			const startPos = this.getPosition();
 			const segments: PatternSegments = [];
 			const negate = this.eatToken("Exclamation") !== undefined;
 
 			// Keep parsing segments until we hit the end of the input or a comment
-			while (!this.matchToken("Hash") && !this.matchToken("EOF")) {
+			while (
+				!this.matchToken("Comment") &&
+				!this.matchToken("EOF") &&
+				!this.matchToken("EOL")
+			) {
 				segments.push(this.parseSegment());
 			}
 
 			// Get a trailing comment
-			let comment = "";
-			if (this.eatToken("Hash")) {
-				comment = this.getRawInput(
-					this.getToken().start,
-					ob1Coerce0(this.input.length),
-				);
+			if (this.matchToken("Comment")) {
+				const {value} = this.expectToken("Comment");
+				return {
+					type: "Comment",
+					loc: this.finishLoc(startPos),
+					value,
+				};
 			}
 
 			let root = false;
@@ -253,10 +278,16 @@ const createPathMatchParser = createParser((ParserCore) =>
 				type: "PathPattern",
 				loc: this.finishLoc(startPos),
 				root,
-				comment,
 				negate,
 				segments: this.normalizePatternSegments(segments),
 			};
+		}
+
+		parseSinglePattern(): PathPattern {
+			const pattern = this.parsePattern();
+			this.eatEOL();
+			this.finalize();
+			return pattern;
 		}
 
 		//# Path parsing
@@ -297,14 +328,14 @@ const createPathMatchParser = createParser((ParserCore) =>
 	}
 );
 
-export function parsePattern(opts: PathMatchParserOptions): PathPatternNode {
-	const parser = createPathMatchParser(opts, "pattern");
-	return parser.parsePattern();
+export function parsePattern(opts: PathMatchParserOptions): PathPattern {
+	const parser = createPathMatchParser(opts);
+	return parser.parseSinglePattern();
 }
 
 export function parsePatternsFile(
 	opts: PathMatchParserOptions,
-): Array<PathPatternNode> {
-	const parser = createPathMatchParser(opts, "pattern");
+): Array<PathPattern> {
+	const parser = createPathMatchParser(opts);
 	return parser.parsePatternsFile();
 }
