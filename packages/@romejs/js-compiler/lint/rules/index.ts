@@ -76,6 +76,7 @@ import jsxNoCommentText from "./react/jsxNoCommentText";
 import noChildrenProp from "./react/noChildrenProp";
 import noDanger from "./react/noDanger";
 import noDangerWithChildren from "./react/noDangerWithChildren";
+import noDidMountSetState from "./react/noDidMountSetState";
 import noDidUpdateSetState from "./react/noDidUpdateSetState";
 import noFindDOMNode from "./react/noFindDOMNode";
 import noWillUpdateSetState from "./react/noWillUpdateSetState";
@@ -155,6 +156,7 @@ export const lintTransforms = [
 	noChildrenProp,
 	noDanger,
 	noDangerWithChildren,
+	noDidMountSetState,
 	noDidUpdateSetState,
 	noFindDOMNode,
 	noWillUpdateSetState,
