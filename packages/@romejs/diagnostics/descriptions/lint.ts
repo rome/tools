@@ -53,6 +53,10 @@ export const lint = createDiagnosticsCategory({
 		category: "lint/react/noWillUpdateSetState",
 		message: "Avoid <emphasis>this.setState</emphasis> in <emphasis>componentWillUpdate</emphasis>",
 	},
+	JSX_A11Y_ARIA_UNSUPPORTED_ELEMENTS: {
+		category: "lint/jsx-a11y/ariaUnsupportedElements",
+		message: "Avoid <emphasis>role</emphasis> and <emphasis>aria-* props</emphasis> on <emphasis>meta</emphasis>, <emphasis>html</emphasis>, <emphasis>script</emphasis>, and <emphasis>style</emphasis> elements.",
+	},
 	JSX_A11Y_ANCHOR_HAS_CONTENT: {
 		category: "lint/jsx-a11y/anchorHasContent",
 		message: "Anchor must have content and the content must be accessible by a screen reader.",
