@@ -292,6 +292,10 @@ export const descriptions = createMessages({
 	},
 	// @romejs/js-compiler
 	LINT: {
+		REACT_NO_REDUNDANT_SHOULD_COMPONENT_UPDATE: {
+			category: "lint/react/noRedundantShouldComponentUpdate",
+			message: "Do not implement <emphasis>shouldComponentUpdate</emphasis> when extending <emphasis>React.PureComponent</emphasis>.",
+		},
 		JSX_A11Y_TABINDEX_NO_POSITIVE: {
 			category: "lint/jsx-a11y/tabindexNoPositive",
 			message: "Avoid positive integer values for <emphasis>tabIndex</emphasis>.",
