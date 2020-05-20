@@ -292,6 +292,12 @@ export const descriptions = createMessages({
 	},
 	// @romejs/js-compiler
 	LINT: {
+		REACT_BUTTON_HAS_TYPE: {
+			category: "lint/react/buttonHasType",
+			message: `Use an explicit <emphasis>type</emphasis> prop on <emphasis>${escapeMarkup(
+				"<button>",
+			)}</emphasis> elements.`,
+		},
 		JSX_A11Y_TABINDEX_NO_POSITIVE: {
 			category: "lint/jsx-a11y/tabindexNoPositive",
 			message: "Avoid positive integer values for <emphasis>tabIndex</emphasis>.",
