@@ -28,10 +28,10 @@ exports.categoriesFile = path.join(
 	"diagnostics",
 	"categories.ts",
 );
-exports.descriptionsFile = path.join(
+exports.descriptionsFolder = path.join(
 	exports.packages,
 	"diagnostics",
-	"descriptions.ts",
+	"descriptions",
 );
 exports.astFolder = path.join(exports.packages, "ast");
 exports.argv = process.argv.slice(2);
