@@ -292,6 +292,10 @@ export const descriptions = createMessages({
 	},
 	// @romejs/js-compiler
 	LINT: {
+		REACT_NO_DID_MOUNT_SET_STATE: {
+			category: "lint/react/noDidMountSetState",
+			message: "Avoid <emphasis>this.setState</emphasis> in <emphasis>componentDidMount</emphasis>. This can cause an unexpected second render, which can cause visual layout thrashing.",
+		},
 		JSX_A11Y_TABINDEX_NO_POSITIVE: {
 			category: "lint/jsx-a11y/tabindexNoPositive",
 			message: "Avoid positive integer values for <emphasis>tabIndex</emphasis>.",
