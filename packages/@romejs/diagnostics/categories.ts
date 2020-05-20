@@ -165,6 +165,7 @@ type LintDiagnosticCategory =
 	| "lint/react/noDidMountSetState"
 	| "lint/react/noDidUpdateSetState"
 	| "lint/react/noFindDOMNode"
+	| "lint/react/noUnsafe"
 	| "lint/react/noWillUpdateSetState"
 	| "lint/react/reactInJsxScope"
 	| "lint/react/stylePropObject"

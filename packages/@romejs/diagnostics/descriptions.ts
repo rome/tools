@@ -292,6 +292,10 @@ export const descriptions = createMessages({
 	},
 	// @romejs/js-compiler
 	LINT: {
+		REACT_NO_UNSAFE: (oldMethod: string, newMethod: string, details: string) => ({
+			category: "lint/react/noUnsafe",
+			message: `<emphasis>${oldMethod}</emphasis> is unsafe for use in async rendering. Update the component to use ${newMethod} instead. ${details}`,
+		}),
 		REACT_NO_DID_MOUNT_SET_STATE: {
 			category: "lint/react/noDidMountSetState",
 			message: "Avoid <emphasis>this.setState</emphasis> in <emphasis>componentDidMount</emphasis>. This can cause an unexpected second render, which can cause visual layout thrashing.",
