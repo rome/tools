@@ -168,6 +168,7 @@ type LintDiagnosticCategory =
 	| "lint/react/noDidUpdateSetState"
 	| "lint/react/noFindDOMNode"
 	| "lint/react/noRedundantShouldComponentUpdate"
+	| "lint/react/noStringRefs"
 	| "lint/react/noUnsafe"
 	| "lint/react/noWillUpdateSetState"
 	| "lint/react/reactInJsxScope"

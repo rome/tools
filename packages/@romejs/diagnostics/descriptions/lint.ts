@@ -16,6 +16,17 @@ import {buildSuggestionAdvice} from "../helpers";
 import {createDiagnosticsCategory, orJoin} from "./index";
 
 export const lint = createDiagnosticsCategory({
+	REACT_NO_STRING_REFS: (details: string) => ({
+		category: "lint/react/noStringRefs",
+		message: `Using ${details} is a deprecated pattern.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs",
+			},
+		],
+	}),
 	REACT_NO_REDUNDANT_SHOULD_COMPONENT_UPDATE: {
 		category: "lint/react/noRedundantShouldComponentUpdate",
 		message: "Do not implement <emphasis>shouldComponentUpdate</emphasis> when extending <emphasis>React.PureComponent</emphasis>.",
