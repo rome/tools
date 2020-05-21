@@ -73,6 +73,7 @@ import noTargetBlank from "./jsx-a11y/noTargetBlank";
 import scope from "./jsx-a11y/scope";
 import tabindexNoPositive from "./jsx-a11y/tabindexNoPositive";
 import buttonHasType from "./react/buttonHasType";
+import jsxFragments from "./react/jsxFragments";
 import jsxKey from "./react/jsxKey";
 import jsxNoCommentText from "./react/jsxNoCommentText";
 import jsxNoDuplicateProps from "./react/jsxNoDuplicateProps";
@@ -159,6 +160,7 @@ export const lintTransforms = [
 	scope,
 	tabindexNoPositive,
 	buttonHasType,
+	jsxFragments,
 	jsxKey,
 	jsxNoCommentText,
 	jsxNoDuplicateProps,
