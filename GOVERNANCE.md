@@ -29,7 +29,7 @@ An manager has additional privileges over a core contributor. They serve to cont
 
 New managers will be decided based on a unanimous vote by the existing managers.
 
-### Owners
+### Owner
 
 Certain parts of the codebase can be owned by one or more people. This process is informal and inclusion could be a result of substantial contribution or delegation by other members. It's the responsibility of a core contributor to identify the relevant owners and ensure there's an understanding when it comes to code review.
 
