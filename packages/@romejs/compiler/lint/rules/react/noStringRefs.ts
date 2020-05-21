@@ -54,7 +54,7 @@ export default {
 
 			if (containsStringLiteral(ref) || containsStringContainer(ref)) {
 				context.addNodeDiagnostic(
-					node,
+					ref,
 					descriptions.LINT.REACT_NO_STRING_REFS(
 						"string literals in ref attributes",
 					),
