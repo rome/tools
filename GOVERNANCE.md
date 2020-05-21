@@ -4,7 +4,7 @@ This document outlines the governance model for Rome. This includes the contribu
 
 ## Member Roles
 
-All members must follow the [code of conduct](https://github.com/romejs/rome/blob/master/.github/CODE_OF_CONDUCT.md). Consequences for member violations are detailed in [Moderation](#moderation).
+All members must follow the [code of conduct](./CODE_OF_CONDUCT.md). Consequences for member violations are detailed in [Moderation](#moderation).
 
 ### Core Contributor
 
@@ -65,14 +65,14 @@ Members listed in alphabetical order.
 
 ## Moderation
 
-Users found to be in violation of the projects [code of conduct](https://github.com/romejs/rome/blob/master/.github/CODE_OF_CONDUCT.md) will be:
+Users found to be in violation of the projects [code of conduct](./CODE_OF_CONDUCT.md) will be:
 
 - Banned from the GitHub org and Discord server
 - Have their contributor status revoked (if applicable)
 - Have admin privileges revoked (if applicable)
-- Action listed in [`moderation.md`](https://github.com/romejs/rome/blob/master/docs/governance.md). There may be some scenarios where discretion is required and some details omitted to protect individuals.
+- Action listed in [`MODERATION.md`](./MODERATION.md). There may be some scenarios where discretion is required and some details omitted to protect individuals.
 
-Code of conduct violations can be reported to <conduct@romejs.dev> which is listed in the [code of conduct](https://github.com/romejs/rome/blob/master/.github/CODE_OF_CONDUCT.md). This email address is monitored by admins.
+Code of conduct violations can be reported to <conduct@romejs.dev> which is listed in the [code of conduct](./CODE_OF_CONDUCT.md). This email address is monitored by admins.
 
 Moderation decisions and code of conduct violations will be discussed amongst the core contributors in private. Exceptions are if a possible violation involves a core contributor or admin:
 

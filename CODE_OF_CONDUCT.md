@@ -4,7 +4,7 @@
 reported to the community leaders responsible for enforcement at
 <conduct@romejs.dev>.**
 
-The moderation process for violations is listed in [`moderation.md`](https://github.com/romejs/rome/blob/master/docs/governance.md).
+The moderation process for violations is listed in [`MODERATION.md`](./MODERATION.md).
 
 ## Our Pledge
 
