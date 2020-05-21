@@ -14,7 +14,7 @@ These rules are loose and intend to give core contributors autonomy and discreti
 
 - Follow the [code of conduct](https://github.com/romejs/rome/blob/master/.github/CODE_OF_CONDUCT.md). Violations will result in your contributor status being revoked.
 - Don't abuse your repo access to push malicious code, or to edit or delete other peoples comments outside of moderation.
-- There are no expectations around activity. There may be a time where contributor privileges are restricted for inactivity however you will not lose org membership. Once you are added to the org you will be able t.
+- There are no expectations around activity. There may be a time where contributor privileges are restricted for inactivity. However you will not lose org membership. Once you are added to the org you will be able t.
 
 ## Code review and merging
 
