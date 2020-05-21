@@ -16,7 +16,7 @@ New contributors will be decided based on a unanimous vote by the existing core 
 
 ### Manager
 
-An manager has additional privileges over a core contributor. They serve to control and maintain sensitive project assets, and to act as tiebreakers in the event of disagreements. These additional privileges include:
+A manager has additional privileges over a core contributor. They serve to control and maintain sensitive project assets, and to act as tiebreakers in the event of disagreements. These additional privileges include:
 
 - Access to the [@romejsdev Twitter account](https://twitter.com/romejsdev)
 - Administration privileges on the [Rome GitHub org](https://github.com/romejs)
@@ -57,7 +57,7 @@ Members listed in alphabetical order.
 - If a PR is against code that you have previously committed and is either small changes, bug fixes, or refactors, then you're free to merge it without any review. However if you don't feel confident in your changes then you can wait for approval from another core contributor.
 - If you are an owner of a particular area you are free to merge it without any review despite PR size.
 - If after a PR is merged and there are comments or suggestions after the fact, allow yourself time to address them in a follow up PR. If you don't think you will be able to respond in a reasonable timeframe then create an issue to track.
-- If necessary, identity potential owners for PR review and approval.
+- If necessary, identify potential owners for PR review and approval.
 - Ensure that PR summary is detailed listing steps you took to verify, the rationale, and relevant issues and people involved in any prior discussion.
 - Ensure that PRs contain adequate tests and code comments for a future contributor to derive intent and modify the code safely.
 - You are welcome to use the `rome` repo for your WIP branches. However you should prefix branches with your username. ie. `git branch sebmck/feature`. Branches not involved in an active PR will be regularly pruned.
@@ -74,9 +74,9 @@ Users found to be in violation of the projects [Code of Conduct](./CODE_OF_CONDU
 
 This is a one-strike policy.
 
-Code of Conduct violations can be reported to <conduct@romejs.dev> which is listed in the [Code of Conduct](./CODE_OF_CONDUCT.md). This email address is monitored by managers. Alternatively email addresses for each manager is included in the Code of Conduct for private disclosements in the event of a report involving an manager.
+Code of Conduct violations can be reported to <conduct@romejs.dev> which is listed in the [Code of Conduct](./CODE_OF_CONDUCT.md). This email address is monitored by managers. Alternatively email addresses for each manager is included in the Code of Conduct for private disclosements in the event of a report involving a manager.
 
-Moderation decisions and Code of Conduct violations will be reviewed by the managers in private. If a violation involves an manager then it will be decided amongst the remaining managers. Review can be delegated to core contributors.
+Moderation decisions and Code of Conduct violations will be reviewed by the managers in private. If a violation involves a manager then it will be decided amongst the remaining managers. Review can be delegated to core contributors.
 
 ## OpenCollective fund allocation
 

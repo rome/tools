@@ -9,7 +9,7 @@ The following people have access to the above email address:
  - Sebastian McKenzie <sebmck@gmail.com> [GitHub](https://github.com/sebmck) [Twitter](https://twitter.com/sebmck)
 
 In the event that your report includes one of the people mentioned above please
-feel free to each out to one of the other people listed instead.
+feel free to reach out to one of the other people listed instead.
 
 The moderation process for violations is listed in [`MODERATION.md`](./MODERATION.md).
 
