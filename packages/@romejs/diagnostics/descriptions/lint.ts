@@ -16,6 +16,10 @@ import {buildSuggestionAdvice} from "../helpers";
 import {createDiagnosticsCategory, orJoin} from "./index";
 
 export const lint = createDiagnosticsCategory({
+	REACT_JSX_NO_DUPLICATE_PROPS: (key: string) => ({
+		category: "lint/react/jsxNoDuplicateProps",
+		message: `React does not support duplicate props. The <emphasis>${key}</emphasis> prop is duplicated.`,
+	}),
 	REACT_NO_REDUNDANT_SHOULD_COMPONENT_UPDATE: {
 		category: "lint/react/noRedundantShouldComponentUpdate",
 		message: "Do not implement <emphasis>shouldComponentUpdate</emphasis> when extending <emphasis>React.PureComponent</emphasis>.",

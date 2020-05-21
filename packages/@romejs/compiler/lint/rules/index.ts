@@ -75,6 +75,7 @@ import tabindexNoPositive from "./jsx-a11y/tabindexNoPositive";
 import buttonHasType from "./react/buttonHasType";
 import jsxKey from "./react/jsxKey";
 import jsxNoCommentText from "./react/jsxNoCommentText";
+import jsxNoDuplicateProps from "./react/jsxNoDuplicateProps";
 import noChildrenProp from "./react/noChildrenProp";
 import noDanger from "./react/noDanger";
 import noDangerWithChildren from "./react/noDangerWithChildren";
@@ -159,6 +160,7 @@ export const lintTransforms = [
 	buttonHasType,
 	jsxKey,
 	jsxNoCommentText,
+	jsxNoDuplicateProps,
 	noChildrenProp,
 	noDanger,
 	noDangerWithChildren,
