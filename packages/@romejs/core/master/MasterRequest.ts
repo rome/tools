@@ -826,6 +826,8 @@ export default class MasterRequest {
 	): Promise<T> {
 		const {master} = this;
 		const owner = await master.fileAllocator.getOrAssignOwner(path);
+		const startMtime = master.memoryFs.maybeGetMtime(path);
+		const lock = await master.fileLocker.getLock(path.join());
 		const ref = master.projectManager.getTransportFileReference(path);
 
 		const marker = this.startMarker({
@@ -868,6 +870,13 @@ export default class MasterRequest {
 			} else {
 				// We don't want to tamper with these
 				throw err;
+			}
+		} finally {
+			lock.release();
+
+			const endMtime = this.master.memoryFs.maybeGetMtime(path);
+			if (endMtime !== startMtime) {
+				return this.wrapRequestDiagnostic(method, path, factory);
 			}
 		}
 	}

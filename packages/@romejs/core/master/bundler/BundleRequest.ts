@@ -182,8 +182,6 @@ export default class BundleRequest {
 			assetPath,
 		};
 
-		const lock = await this.bundler.compileLocker.getLock(source);
-
 		const res: WorkerCompileResult = await this.bundler.request.requestWorkerCompile(
 			path,
 			"compileForBundle",
@@ -192,8 +190,6 @@ export default class BundleRequest {
 			},
 			{},
 		);
-
-		lock.release();
 
 		if (!res.cached) {
 			this.cached = false;

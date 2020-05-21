@@ -27,7 +27,6 @@ import {Dict} from "@romejs/typescript-helpers";
 import {readFile} from "@romejs/fs";
 import {flipPathPatterns} from "@romejs/path-match";
 import {markup} from "@romejs/string-markup";
-import Locker from "@romejs/core/common/utils/Locker";
 import {stringifyJSON} from "@romejs/codec-json";
 
 export type BundlerEntryResoluton = {
@@ -43,12 +42,9 @@ export default class Bundler {
 		this.request = req;
 
 		this.entries = [];
-
-		this.compileLocker = new Locker();
 		this.graph = new DependencyGraph(req, config.resolver);
 	}
 
-	compileLocker: Locker<string>;
 	graph: DependencyGraph;
 	master: Master;
 	request: MasterRequest;
