@@ -18,7 +18,7 @@
       │                          ^^^^^^^^^
     5 │       }
 
-  ℹ https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs
+  ℹ See https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs for more information
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -56,7 +56,7 @@ class Hello extends React.Component {
     5 │       }
     6 │      }
 
-  ℹ https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs
+  ℹ See https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs for more information
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -90,7 +90,7 @@ class Hello extends React.Component {
     5 │       }
     6 │      }
 
-  ℹ https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs
+  ℹ See https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs for more information
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -124,7 +124,7 @@ class Hello extends React.Component {
     5 │       }
     6 │      }
 
-  ℹ https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs
+  ℹ See https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs for more information
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -158,7 +158,7 @@ class Hello extends React.Component {
     5 │        }
     6 │      }
 
-  ℹ https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs
+  ℹ See https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs for more information
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -191,7 +191,7 @@ class Hello extends React.Component {
       │                          ^^^^^^^^^
     5 │       }
 
-  ℹ https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs
+  ℹ See https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs for more information
 
  unknown:8:14 lint/react/noStringRefs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -203,7 +203,7 @@ class Hello extends React.Component {
      9 │       }
     10 │      }
 
-  ℹ https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs
+  ℹ See https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs for more information
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
