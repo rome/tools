@@ -66,6 +66,7 @@ import MasterReporter from "./MasterReporter";
 import VirtualModules from "./fs/VirtualModules";
 import {DiagnosticsProcessorOptions} from "@romejs/diagnostics/DiagnosticsProcessor";
 import {toKebabCase} from "@romejs/string-utils";
+import Locker from "../common/utils/Locker";
 
 const STDOUT_MAX_CHUNK_LENGTH = 100_000;
 
@@ -221,6 +222,8 @@ export default class Master {
 			},
 		);
 
+		this.fileLocker = new Locker();
+
 		this.connectedReporters = new MasterReporter(this);
 
 		this.connectedClientsListeningForLogs = new Set();
@@ -279,7 +282,7 @@ export default class Master {
 	cache: Cache;
 	connectedReporters: MasterReporter;
 	logger: Logger;
-
+	fileLocker: Locker<string>;
 	connectedClients: Set<MasterClient>;
 	connectedLSPServers: Set<LSPServer>;
 	connectedClientsListeningForLogs: Set<MasterClient>;
