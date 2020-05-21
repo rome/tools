@@ -45,14 +45,14 @@ class Hello extends React.Component {
 
 ```
 
- unknown:4:14 lint/react/noStringRefs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:4:19 lint/react/noStringRefs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Using string literals in ref attributes is a deprecated pattern.
 
     2 │      class Hello extends React.Component {
     3 │       render() {
   > 4 │        return <div ref="hello">Hello {this.props.name}</div>;
-      │               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      │                    ^^^^^^^^^^^
     5 │       }
     6 │      }
 
@@ -79,14 +79,14 @@ class Hello extends React.Component {
 
 ```
 
- unknown:4:14 lint/react/noStringRefs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:4:19 lint/react/noStringRefs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Using string literals in ref attributes is a deprecated pattern.
 
     2 │      class Hello extends React.Component {
     3 │       render() {
   > 4 │        return <div ref={`hello`}>Hello {this.props.name}</div>;
-      │               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      │                    ^^^^^^^^^^^^^
     5 │       }
     6 │      }
 
@@ -113,14 +113,14 @@ class Hello extends React.Component {
 
 ```
 
- unknown:4:14 lint/react/noStringRefs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:4:19 lint/react/noStringRefs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Using string literals in ref attributes is a deprecated pattern.
 
     2 │      class Hello extends React.Component {
     3 │       render() {
   > 4 │        return <div ref={'hello'}>Hello {this.props.name}</div>;
-      │               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      │                    ^^^^^^^^^^^^^
     5 │       }
     6 │      }
 
@@ -147,14 +147,14 @@ class Hello extends React.Component {
 
 ```
 
- unknown:4:16 lint/react/noStringRefs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:4:21 lint/react/noStringRefs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Using string literals in ref attributes is a deprecated pattern.
 
     2 │      class Hello extends React.Component {
     3 │        render() {
   > 4 │          return <div ref={`hello${index}`}>Hello {this.props.name}</div>;
-      │                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+      │                      ^^^^^^^^^^^^^^^^^^^^^
     5 │        }
     6 │      }
 
@@ -193,13 +193,13 @@ class Hello extends React.Component {
 
   ℹ See https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs for more information
 
- unknown:8:14 lint/react/noStringRefs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:8:19 lint/react/noStringRefs ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Using string literals in ref attributes is a deprecated pattern.
 
      7 │       render() {
    > 8 │        return <div ref="hello">Hello {this.props.name}</div>;
-       │               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+       │                    ^^^^^^^^^^^
      9 │       }
     10 │      }
 

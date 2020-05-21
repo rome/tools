@@ -1,5 +1,9 @@
 import {descriptions} from "@romejs/diagnostics";
-import {hasJSXAttribute, isJSXElement} from "@romejs/js-ast-utils";
+import {
+	getJSXAttribute,
+	hasJSXAttribute,
+	isJSXElement,
+} from "@romejs/js-ast-utils";
 import {Path, TransformExitResult} from "@romejs/compiler";
 
 export default {
@@ -19,7 +23,10 @@ export default {
 			return node;
 		}
 
-		context.addNodeDiagnostic(node, descriptions.LINT.JSX_A11Y_NO_ON_CHANGE);
+		context.addNodeDiagnostic(
+			getJSXAttribute(node, "onChange"),
+			descriptions.LINT.JSX_A11Y_NO_ON_CHANGE,
+		);
 
 		return node;
 	},
