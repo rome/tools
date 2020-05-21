@@ -33,11 +33,10 @@ function Home() {
                 styles.heroBannerTitle,
                 'margin-bottom--lg',
               )}>
-              Rome is an experimental <br />
-              JavaScript toolchain
+              Rome is a JavaScript toolchain
             </h1>
             <h2 className={styles.heroBannerSubtitle}>
-              A compiler, linter, formatter, bundler, testing framework and more
+              Linting, bundling, compiling, testing, and more
             </h2>
           </div>
           <div className={styles.buttons}>
@@ -50,38 +49,9 @@ function Home() {
               Get Started&nbsp;&nbsp;→
             </Link>
           </div>
-          <div className="margin-top--lg">
-            <iframe
-              src="https://ghbtns.com/github-btn.html?user=romejs&amp;repo=rome&amp;type=star&amp;count=true&amp;size=large"
-              frameBorder={0}
-              scrolling={0}
-              width={160}
-              height={30}
-              title="GitHub Stars"
-            />
-          </div>
         </div>
       </header>
       <main>
-        <div
-          className={classnames(
-            'margin-bottom--lg',
-            'padding-vert--lg',
-            styles.calloutPrimary,
-          )}>
-          <div className="container">
-            <div className="row">
-              <div className="col col--8 col--offset-2">
-                <div className="margin-vert--md text--center">
-                  <p className={styles.calloutTagline}>
-                    Rome is experimental and in active development. It is open
-                    for contributors and those interested in experimental tools.
-                  </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
         <div>
           <div className="container">
             <div className="row">
