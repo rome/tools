@@ -8,15 +8,15 @@ All members must follow the [Code of Conduct](CODE_OF_CONDUCT.md). Consequences 
 
 ### Core Contributor
 
-Core Contributors are those who have a history of consistent contributions, whether this pull requests, project management, or support.
+Core Contributors include anyone with a history of consistent contributions, including but not limited to pull requests, project management, or support.
 
 There are no expectations around activity. There may be a time where contributor privileges are restricted or removed for inactivity. Once core contributor status has been granted you will not lose org membership.
 
-New contributors will be decided based on a unanimous vote by the existing core contributors.
+New core contributors will be added based on a unanimous vote by the existing core contributors.
 
 ### Manager
 
-A manager has additional privileges over a core contributor. They serve to control and maintain sensitive project assets, and to act as tiebreakers in the event of disagreements. These additional privileges include:
+Managers have additional privileges over core contributors. Managers control and maintain sensitive project assets, and act as tiebreakers in the event of disagreements. These additional privileges include:
 
 - Access to the [@romejsdev Twitter account](https://twitter.com/romejsdev)
 - Administration privileges on the [Rome GitHub org](https://github.com/romejs)
@@ -27,7 +27,7 @@ A manager has additional privileges over a core contributor. They serve to contr
 - Ability to decide on moderation decisions involving core contributors
 - Access to the `*@romejs.dev` email address
 
-New managers will be decided based on a unanimous vote by the existing managers.
+New managers will be added based on a unanimous vote by the existing managers.
 
 ### Owner
 
