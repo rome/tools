@@ -1,15 +1,9 @@
 name: CI
 on:
   push:
-    paths-ignore:
-      - 'docs/**'
-      - '*.md'
     branches:
       - master
   pull_request:
-    paths-ignore:
-      - 'docs/**'
-      - '*.md'
     branches:
       - master
 
