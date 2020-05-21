@@ -161,6 +161,7 @@ type LintDiagnosticCategory =
 	| "lint/react/buttonHasType"
 	| "lint/react/jsxKey"
 	| "lint/react/jsxNoCommentText"
+	| "lint/react/jsxNoDuplicateProps"
 	| "lint/react/noChildrenProp"
 	| "lint/react/noDanger"
 	| "lint/react/noDangerWithChildren"
