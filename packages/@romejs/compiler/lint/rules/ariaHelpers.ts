@@ -68,39 +68,39 @@ export type ARIAPropertyDefinition = {
 		| "tokenlist"
 		| "tristate";
 	value?: Array<string | boolean>;
-	allowundefined?: boolean;
+	allowUndefined?: boolean;
 };
 
 export const ariaPropsMap: MapOfARIAPropertyDefinitions = new Map([
 	[
 		"aria-activedescendant",
 		{
-			"type": "id",
+			type: "id",
 		},
 	],
 	[
 		"aria-atomic",
 		{
-			"type": "boolean",
+			type: "boolean",
 		},
 	],
 	[
 		"aria-autocomplete",
 		{
-			"type": "token",
-			"values": ["inline", "list", "both", "none"],
+			type: "token",
+			values: ["inline", "list", "both", "none"],
 		},
 	],
 	[
 		"aria-busy",
 		{
-			"type": "boolean",
+			type: "boolean",
 		},
 	],
 	[
 		"aria-checked",
 		{
-			"type": "tristate",
+			type: "tristate",
 		},
 	],
 	[
@@ -124,7 +124,7 @@ export const ariaPropsMap: MapOfARIAPropertyDefinitions = new Map([
 	[
 		"aria-controls",
 		{
-			"type": "idlist",
+			type: "idlist",
 		},
 	],
 	[
@@ -137,73 +137,73 @@ export const ariaPropsMap: MapOfARIAPropertyDefinitions = new Map([
 	[
 		"aria-describedby",
 		{
-			"type": "idlist",
+			type: "idlist",
 		},
 	],
 	[
 		"aria-details",
 		{
-			"type": "id",
+			type: "id",
 		},
 	],
 	[
 		"aria-disabled",
 		{
-			"type": "boolean",
+			type: "boolean",
 		},
 	],
 	[
 		"aria-dropeffect",
 		{
-			"type": "tokenlist",
-			"values": ["copy", "execute", "link", "move", "none", "popup"],
+			type: "tokenlist",
+			values: ["copy", "execute", "link", "move", "none", "popup"],
 		},
 	],
 	[
 		"aria-errormessage",
 		{
-			"type": "id",
+			type: "id",
 		},
 	],
 	[
 		"aria-expanded",
 		{
-			"type": "boolean",
-			"allowundefined": true,
+			type: "boolean",
+			allowUndefined: true,
 		},
 	],
 	[
 		"aria-flowto",
 		{
-			"type": "idlist",
+			type: "idlist",
 		},
 	],
 	[
 		"aria-grabbed",
 		{
-			"type": "boolean",
-			"allowundefined": true,
+			type: "boolean",
+			allowUndefined: true,
 		},
 	],
 	[
 		"aria-haspopup",
 		{
-			"type": "token",
-			"values": [false, true, "menu", "listbox", "tree", "grid", "dialog"],
+			type: "token",
+			values: [false, true, "menu", "listbox", "tree", "grid", "dialog"],
 		},
 	],
 	[
 		"aria-hidden",
 		{
-			"type": "boolean",
-			"allowundefined": true,
+			type: "boolean",
+			allowUndefined: true,
 		},
 	],
 	[
 		"aria-invalid",
 		{
-			"type": "token",
-			"values": ["grammar", false, "spelling", true],
+			type: "token",
+			values: ["grammar", false, "spelling", true],
 		},
 	],
 	[
@@ -215,26 +215,26 @@ export const ariaPropsMap: MapOfARIAPropertyDefinitions = new Map([
 	[
 		"aria-label",
 		{
-			"type": "string",
+			type: "string",
 		},
 	],
 	[
 		"aria-labelledby",
 		{
-			"type": "idlist",
+			type: "idlist",
 		},
 	],
 	[
 		"aria-level",
 		{
-			"type": "integer",
+			type: "integer",
 		},
 	],
 	[
 		"aria-live",
 		{
-			"type": "token",
-			"values": ["assertive", "off", "polite"],
+			type: "token",
+			values: ["assertive", "off", "polite"],
 		},
 	],
 	[
@@ -246,26 +246,26 @@ export const ariaPropsMap: MapOfARIAPropertyDefinitions = new Map([
 	[
 		"aria-multiline",
 		{
-			"type": "boolean",
+			type: "boolean",
 		},
 	],
 	[
 		"aria-multiselectable",
 		{
-			"type": "boolean",
+			type: "boolean",
 		},
 	],
 	[
 		"aria-orientation",
 		{
-			"type": "token",
-			"values": ["vertical", "undefined", "horizontal"],
+			type: "token",
+			values: ["vertical", "undefined", "horizontal"],
 		},
 	],
 	[
 		"aria-owns",
 		{
-			"type": "idlist",
+			type: "idlist",
 		},
 	],
 	[
@@ -277,32 +277,32 @@ export const ariaPropsMap: MapOfARIAPropertyDefinitions = new Map([
 	[
 		"aria-posinset",
 		{
-			"type": "integer",
+			type: "integer",
 		},
 	],
 	[
 		"aria-pressed",
 		{
-			"type": "tristate",
+			type: "tristate",
 		},
 	],
 	[
 		"aria-readonly",
 		{
-			"type": "boolean",
+			type: "boolean",
 		},
 	],
 	[
 		"aria-relevant",
 		{
-			"type": "tokenlist",
-			"values": ["additions", "all", "removals", "text"],
+			type: "tokenlist",
+			values: ["additions", "all", "removals", "text"],
 		},
 	],
 	[
 		"aria-required",
 		{
-			"type": "boolean",
+			type: "boolean",
 		},
 	],
 	[
@@ -332,45 +332,45 @@ export const ariaPropsMap: MapOfARIAPropertyDefinitions = new Map([
 	[
 		"aria-selected",
 		{
-			"type": "boolean",
-			"allowundefined": true,
+			type: "boolean",
+			allowUndefined: true,
 		},
 	],
 	[
 		"aria-setsize",
 		{
-			"type": "integer",
+			type: "integer",
 		},
 	],
 	[
 		"aria-sort",
 		{
-			"type": "token",
-			"values": ["ascending", "descending", "none", "other"],
+			type: "token",
+			values: ["ascending", "descending", "none", "other"],
 		},
 	],
 	[
 		"aria-valuemax",
 		{
-			"type": "number",
+			type: "number",
 		},
 	],
 	[
 		"aria-valuemin",
 		{
-			"type": "number",
+			type: "number",
 		},
 	],
 	[
 		"aria-valuenow",
 		{
-			"type": "number",
+			type: "number",
 		},
 	],
 	[
 		"aria-valuetext",
 		{
-			"type": "string",
+			type: "string",
 		},
 	],
 ]);
