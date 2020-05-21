@@ -25,6 +25,7 @@ The amount of admins will be kept deliberately small. An admin has additional pr
 - Domain registrar and DNS access to all `romejs.*` domains
 - Administration access to the `romejs.dev` Netlify account
 - Ability to decide on moderation decisions involving core contributors
+- Access to the `*@romejs.dev` email address
 
 The separation of Core Contributor and Admin allows for a minimum access of privileges.
 
@@ -70,6 +71,8 @@ Users found to be in violation of the projects [code of conduct](https://github.
 - Have their contributor status revoked (if applicable)
 - Have admin privileges revoked (if applicable)
 - Action listed in [`moderation.md`](https://github.com/romejs/rome/blob/master/docs/governance.md). There may be some scenarios where discretion is required and some details omitted to protect individuals.
+
+Code of conduct violations can be reported to <conduct@romejs.dev> which is listed in the [code of conduct](https://github.com/romejs/rome/blob/master/.github/CODE_OF_CONDUCT.md). This email address is monitored by admins.
 
 Moderation decisions and code of conduct violations will be discussed amongst the core contributors in private. Exceptions are if a possible violation involves a core contributor or admin:
 
