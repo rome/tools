@@ -19,6 +19,17 @@ export const lint = createDiagnosticsCategory({
 	REACT_JSX_NO_DUPLICATE_PROPS: (key: string) => ({
 		category: "lint/react/jsxNoDuplicateProps",
 		message: `React does not support duplicate props. The <emphasis>${key}</emphasis> prop is duplicated.`,
+  },
+	REACT_NO_STRING_REFS: (details: string) => ({
+		category: "lint/react/noStringRefs",
+		message: `Using ${details} is a deprecated pattern.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: 'See <hyperlink target="https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs" /> for more information',
+			},
+		],
 	}),
 	REACT_NO_REDUNDANT_SHOULD_COMPONENT_UPDATE: {
 		category: "lint/react/noRedundantShouldComponentUpdate",

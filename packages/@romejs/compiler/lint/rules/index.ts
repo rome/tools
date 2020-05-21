@@ -83,6 +83,7 @@ import noDidMountSetState from "./react/noDidMountSetState";
 import noDidUpdateSetState from "./react/noDidUpdateSetState";
 import noFindDOMNode from "./react/noFindDOMNode";
 import noRedundantShouldComponentUpdate from "./react/noRedundantShouldComponentUpdate";
+import noStringRefs from "./react/noStringRefs";
 import noUnsafe from "./react/noUnsafe";
 import noWillUpdateSetState from "./react/noWillUpdateSetState";
 import reactInJsxScope from "./react/reactInJsxScope";
@@ -168,6 +169,7 @@ export const lintTransforms = [
 	noDidUpdateSetState,
 	noFindDOMNode,
 	noRedundantShouldComponentUpdate,
+	noStringRefs,
 	noUnsafe,
 	noWillUpdateSetState,
 	reactInJsxScope,
