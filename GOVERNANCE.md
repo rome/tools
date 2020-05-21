@@ -27,8 +27,6 @@ An manager has additional privileges over a core contributor. They serve to cont
 - Ability to decide on moderation decisions involving core contributors
 - Access to the `*@romejs.dev` email address
 
-The separation of Core Contributor and Manager allows for a minimum access of privileges.
-
 New managers will be decided based on a unanimous vote by the existing managers.
 
 ### Owners
