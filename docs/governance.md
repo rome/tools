@@ -8,7 +8,7 @@ These rules are loose and intend to give core contributors autonomy and discreti
 
 - Someone who has proved themselves as an active contributor by being involved in project management or by submitting high quality pull requests.
 - There is no hard constraints. As the project evolves the bar for inclusion may be raised.
-- New contributors will be decided based on a general conseus by the existing core contributors.
+- New contributors will be decided based on a general consensus by the existing core contributors.
 
 ## Expectations
 
