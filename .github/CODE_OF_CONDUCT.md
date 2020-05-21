@@ -1,5 +1,11 @@
 # Contributor Covenant Code of Conduct
 
+**Instances of abusive, harassing, or otherwise unacceptable behavior may be
+reported to the community leaders responsible for enforcement at
+<conduct@romejs.dev>.**
+
+The moderation process for violations is listed in [`moderation.md`](https://github.com/romejs/rome/blob/master/docs/governance.md).
+
 ## Our Pledge
 
 We as members, contributors, and leaders pledge to make participation in our
