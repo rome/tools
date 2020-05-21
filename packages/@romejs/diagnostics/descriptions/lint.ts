@@ -23,7 +23,7 @@ export const lint = createDiagnosticsCategory({
 			{
 				type: "log",
 				category: "info",
-				text: "https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs",
+				text: 'See <hyperlink target="https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs" /> for more information',
 			},
 		],
 	}),
