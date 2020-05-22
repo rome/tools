@@ -78,7 +78,7 @@ a {
 .content {
   max-width: 940px;
   margin: 0 auto;
-  padding: 0 16px;
+  padding: 0 16px 64px 16px;
 }
 
 .hero {
