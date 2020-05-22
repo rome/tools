@@ -15,6 +15,7 @@ test(
 				"<h1>heading</h1>",
 				"<h1><TextWrapper /></h1>",
 				"<h1 dangerouslySetInnerHTML={{ __html: 'heading' }} />",
+				"<h1><div aria-hidden />visible content</h1>",
 			],
 			{category: "lint/jsx-a11y/headingHasContent"},
 		);

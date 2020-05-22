@@ -4,17 +4,12 @@ import {descriptions} from "@romejs/diagnostics";
 import {hasJSXAttribute, isJSXElement} from "@romejs/js-ast-utils";
 
 function hasAnchorContent(node: JSXElement): boolean {
-	const dangerouslySetInnerHTML = hasJSXAttribute(
-		node,
-		"dangerouslySetInnerHTML",
-	);
-
 	return (
+		hasJSXAttribute(node, "dangerouslySetInnerHTML") ||
 		(node.children.length > 0 &&
-		!node.children.some((child) =>
-			child.type === "JSXElement" && hasJSXAttribute(child, "aria-hidden")
-		)) ||
-		dangerouslySetInnerHTML
+		node.children.some((child) =>
+			child.type !== "JSXElement" || !hasJSXAttribute(child, "aria-hidden")
+		))
 	);
 }
 
