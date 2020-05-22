@@ -1,0 +1,25 @@
+.content {
+  max-width: 940px;
+  margin: 0 auto;
+  padding: 0 16px 64px 16px;
+
+  .header-anchor {
+    display: none;
+    text-decoration: none;
+    color: rgb(255, 201, 5);
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  h1:hover .header-anchor,
+  h2:hover .header-anchor,
+  h3:hover .header-anchor {
+    display: inline-block;
+  }
+
+  pre {
+    border-radius: 4px;
+  }
+}

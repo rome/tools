@@ -1,34 +1,9 @@
-$mobile-breakpoint: 768px;
-
-*,
-html {
-  box-sizing: border-box;
-}
-
-html {
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, Ubuntu, Cantarell,
-    "Noto Sans", sans-serif, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial,
-    sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  text-rendering: optimizelegibility;
-  -webkit-font-smoothing: antialiased;
-  color: rgb(28, 30, 33);
-  line-height: 1.65;
-}
-
-body {
-  font-size: 16px;
-}
-
-h1,
-h2,
-h3,
-h4 {
-  font-family: Libre Baskerville, serif;
-}
-
-a {
-  color: inherit;
-}
+@import "_mixins";
+@import "_global";
+@import "_header";
+@import "_table-of-contents";
+@import "_content";
+@import "_hero";
 
 .sidebar {
   width: 320px;
@@ -36,161 +11,8 @@ a {
   overflow-y: auto;
   overflow-x: hidden;
   font-size: 0.9rem;
-}
 
-.header {
-  background-color: #ffffff;
-
-  .stretch {
-    flex-grow: 1;
-  }
-
-  .mobile-handle {
-    display: none;
-    height: 32px;
-  }
-}
-
-.logo {
-  display: inline-flex;
-  align-items: flex-end;
-  text-decoration: none;
-  font-size: 32px;
-
-  img {
-    width: 1em;
-    margin-right: 12px;
-  }
-
-  .logo-text {
-    line-height: 1em;
-    font-size: 1em;
-    font-family: Libre Baskerville, serif;
-    position: relative;
-    top: 4px;
-  }
-}
-
-.table-of-contents {
-  background-color: #ffffff;
-
-  a {
-    text-decoration: none;
-    height: auto;
-    padding: 3px 9px;
-    border-radius: 4px;
-    display: inline-block;
-  }
-
-  li {
-    list-style-type: none;
-  }
-
-  .is-active-link {
-    color: rgb(255, 201, 5);
-    background-color: rgba(0, 0, 0, 0.05);
-  }
-}
-
-.main {
-  margin-left: 320px;
-  overflow: hidden;
-}
-
-.content {
-  max-width: 940px;
-  margin: 0 auto;
-  padding: 0 16px 64px 16px;
-
-  .header-anchor {
-    display: none;
-    text-decoration: none;
-    color: rgb(255, 201, 5);
-
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-
-  h1:hover .header-anchor,
-  h2:hover .header-anchor,
-  h3:hover .header-anchor {
-    display: inline-block;
-  }
-
-  pre {
-    border-radius: 4px;
-  }
-}
-
-.hero {
-  position: relative;
-  padding: 32px;
-  color: rgb(68, 73, 80);
-
-  &::before {
-    content: "";
-    position: absolute;
-    left: -100%;
-    right: -100%;
-    top: 0;
-    bottom: 0;
-    background: #ffffff;
-    background-image: url(/static/img/pattern-white.png),
-      radial-gradient(circle, #fff 0, rgba(241, 241, 239, 0.7) 100%);
-    background-repeat: repeat;
-    background-position: 50%;
-    background-size: 125px;
-    z-index: -1;
-  }
-}
-
-@media only screen and (max-width: $mobile-breakpoint) {
-  .table-of-contents {
-    position: fixed;
-    z-index: 9;
-    left: 0;
-    top: 64px;
-    bottom: 0;
-    transform: translateX(-100%);
-    transition: transform ease-in 100ms;
-    padding-top: 16px;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-
-    &.mobile-visible {
-      transform: translateX(0%);
-    }
-  }
-
-  .logo {
-    font-size: 26px;
-  }
-
-  .main {
-    margin-top: 64px;
-    margin-left: 0px;
-  }
-
-  .header {
-    position: fixed;
-    z-index: 10;
-    left: 0;
-    right: 0;
-    top: 0;
-    height: 64px;
-    border-bottom: 1px solid #eaeaea;
-    display: flex;
-    align-items: center;
-    padding: 0 16px;
-
-    .mobile-handle {
-      display: block;
-    }
-  }
-}
-
-@media only screen and (min-width: $mobile-breakpoint + 1) {
-  .sidebar {
+  @include desktop-only() {
     position: fixed;
     padding: 12px;
     top: 0;
@@ -199,9 +21,14 @@ a {
     width: 320px;
     border-right: 1px solid #eaeaea;
   }
+}
 
-  .header {
-    margin-left: 16px;
-    margin-bottom: 16px;
+.main {
+  margin-left: 320px;
+  overflow: hidden;
+
+  @include mobile-only() {
+    margin-top: 64px;
+    margin-left: 0px;
   }
 }
