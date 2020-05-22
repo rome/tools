@@ -33,7 +33,7 @@ x description of what is not ok
  ℹ helpful message(s) of what you can do to fix the problem
  ```
 
-Let's look at example of what the linter might throw at you:
+Let's look at an example of what the linter might throw at you:
 
 ```javascript
 foobar.js:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
