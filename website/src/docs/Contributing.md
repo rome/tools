@@ -28,7 +28,7 @@ scripts/dev-rome test
 
 This will run all tests inside of any `__rtests__` directories.
 
-## Type Checking
+## Type checking
 
 Run TypeScript with code emitting disabled to perform a full typecheck outside the editor.
 
