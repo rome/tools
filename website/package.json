@@ -1,0 +1,11 @@
+{
+  "name": "rome-website",
+  "private": true,
+  "scripts": {
+    "build": "yarn eleventy",
+    "dev": "yarn eleventy --serve"
+  },
+  "dependencies": {
+    "@11ty/eleventy": "^0.11.0"
+  }
+}
