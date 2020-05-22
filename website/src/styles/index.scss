@@ -34,7 +34,7 @@ a {
   font-size: 0.9rem;
 }
 
-#mobileHandle {
+.mobile-handle {
   display: none;
   height: 32px;
 }
@@ -174,7 +174,7 @@ a {
     align-items: center;
     padding: 0 16px;
   }
-  #mobileHandle {
+  .mobile-handle {
     display: block;
   }
 }
