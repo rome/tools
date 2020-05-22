@@ -8,6 +8,7 @@ title: A JavaScript toolchain | Rome
     <title>{{ title }}</title>
   </head>
 
+  <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.20.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
 
   {% set css %}{% include 'styles.css' %}{% endset %}
@@ -18,7 +19,17 @@ title: A JavaScript toolchain | Rome
 
     <div class="container">
 
-      <div class="content">{{ content | safe }}<div>
+      <div class="pure-g">
+
+        <div class="pure-u-1-5">
+          <div class="table-of-contents"></div>
+        </div>
+
+        <div class="pure-u-4-5">
+          <main class="content">{{ content | safe }}<main>
+        </div>
+
+      </div>
 
     </div>
 
