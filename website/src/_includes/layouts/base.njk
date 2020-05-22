@@ -15,11 +15,19 @@ title: A JavaScript toolchain | Rome
   </head>
   <body>
     <div class="sidebar">
-      <a class="logo" href="{{ '/' | url }}">
-        <img src="{{ '/static/img/rome-logo-black.svg' | url }}" alt="Rome" />
-        Rome
-      </a>
-      <div class="table-of-contents"></div>
+      <header class="header">
+        <a class="logo" href="{{ '/' | url }}">
+          <img src="{{ '/static/img/rome-logo-black.svg' | url }}" alt="Rome" />
+          <span class="logo-text">Rome</span>
+        </a>
+        <div class="header-stretch"></div>
+        <a href="#" id="mobileHandle">
+          <img src="{{ '/static/img/mobile-handle.svg' | url }}" alt="Menu" />
+        </a>
+      </header>
+      <div class="table-of-contents">
+        <div class="toc-container"></div>
+      </div>
     </div>
     <main class="main">
       <div class="content">

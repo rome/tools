@@ -1,5 +1,5 @@
 tocbot.init({
-  tocSelector: '.table-of-contents',
+  tocSelector: '.toc-container',
   ignoreSelector: '[toc-exclude]',
   contentSelector: '.content',
   headingSelector: 'h1, h2, h3',
@@ -9,4 +9,10 @@ tocbot.init({
     def.textContent = domElement.innerText;
     return def;
   },
+});
+
+document.getElementById('mobileHandle').addEventListener('click', function (event) {
+  event.preventDefault();
+  const toc = document.getElementsByClassName('table-of-contents')[0];
+  toc.classList.toggle('mobile-visible');
 });

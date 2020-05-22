@@ -1,4 +1,5 @@
-*, html {
+*,
+html {
   box-sizing: border-box;
 }
 
@@ -26,31 +27,48 @@ a {
 }
 
 .sidebar {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
   width: 320px;
   list-style: none;
   overflow-y: auto;
   overflow-x: hidden;
-  padding: 16px;
   font-size: 0.9rem;
-  border-right: 1px solid #eaeaea;
+}
+
+#mobileHandle {
+  display: none;
+  height: 32px;
+}
+
+.header {
+  background-color: #ffffff;
+}
+
+.header-stretch {
+  flex-grow: 1;
 }
 
 .logo {
   display: inline-flex;
-  align-items: baseline;
-  margin: 12px;
+  align-items: flex-end;
   text-decoration: none;
   font-size: 32px;
+}
+
+.logo .logo-text {
+  line-height: 1em;
+  font-size: 1em;
   font-family: Libre Baskerville, serif;
+  position: relative;
+  top: 4px;
 }
 
 .logo img {
-  width: 42px;
+  width: 1em;
   margin-right: 12px;
+}
+
+.table-of-contents {
+  background-color: #ffffff;
 }
 
 .table-of-contents a {
@@ -115,9 +133,64 @@ a {
   top: 0;
   bottom: 0;
   background: #ffffff;
-  background-image: url(../img/pattern-white.png),radial-gradient(circle,#fff 0,rgba(241,241,239,.7) 100%);
+  background-image: url(../img/pattern-white.png), radial-gradient(circle, #fff 0, rgba(241, 241, 239, .7) 100%);
   background-repeat: repeat;
-    background-position: 50%;
-    background-size: 125px;
+  background-position: 50%;
+  background-size: 125px;
   z-index: -1;
+}
+
+@media only screen and (max-width: 768px) {
+  .table-of-contents {
+    position: fixed;
+    z-index: 9;
+    left: 0;
+    top: 64px;
+    bottom: 0;
+    transform: translateX(-100%);
+    transition: transform ease-in 100ms;
+    padding-top: 16px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  }
+  .table-of-contents.mobile-visible {
+    transform: translateX(0%);
+  }
+  .logo {
+    font-size: 26px;
+  }
+  .main {
+    margin-top: 64px;
+    margin-left: 0px;
+  }
+  .header {
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    right: 0;
+    top: 0;
+    height: 64px;
+    border-bottom: 1px solid #eaeaea;
+    display: flex;
+    align-items: center;
+    padding: 0 16px;
+  }
+  #mobileHandle {
+    display: block;
+  }
+}
+
+@media only screen and (min-width: 769px) {
+  .sidebar {
+    position: fixed;
+    padding: 12px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 320px;
+    border-right: 1px solid #eaeaea;
+  }
+  .header {
+    margin-left: 16px;
+    margin-bottom: 16px;
+  }
 }
