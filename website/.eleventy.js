@@ -11,6 +11,10 @@ const Options = {
 };
 
 module.exports = function (eleventyConfig) {
+  // Aything listed in .gitignore will be ignored by the watch process,
+  // workaround to let eleventry rebuild when the css stylesheet gets rebuild.
+  eleventyConfig.setUseGitIgnore(false);
+
   eleventyConfig.addPassthroughCopy(Options.staticPath);
 
   eleventyConfig.addPlugin(syntaxHighlight);
