@@ -2,7 +2,7 @@ import {test} from "rome";
 import {testLintMultiple} from "../testHelpers";
 
 test(
-	"audio and video element has caption",
+	"jsx a11y has caption",
 	async (t) => {
 		await testLintMultiple(
 			t,
@@ -10,6 +10,8 @@ test(
 				// INVALID
 				"<audio {...props} />",
 				"<video {...props} />",
+				"<audio>child</audio>",
+				"<video>child</audio>",
 				// VALID
 				"<audio><track kind='captions' {...props} /></audio>",
 				"<video><track kind='captions' {...props} /></video>",

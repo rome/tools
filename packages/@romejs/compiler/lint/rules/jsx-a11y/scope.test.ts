@@ -2,7 +2,7 @@ import {test} from "rome";
 import {testLintMultiple} from "../testHelpers";
 
 test(
-	"disallow the scope prop on elements other than th",
+	"jsx a11y scope",
 	async (t) => {
 		await testLintMultiple(
 			t,

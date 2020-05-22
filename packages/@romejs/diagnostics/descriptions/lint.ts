@@ -51,18 +51,39 @@ export const lint = createDiagnosticsCategory({
 	},
 	JSX_A11Y_TABINDEX_NO_POSITIVE: {
 		category: "lint/jsx-a11y/tabindexNoPositive",
-		message: "Avoid positive integer values for <emphasis>tabIndex</emphasis>.",
+		message: "Avoid positive integer values for the <emphasis>tabIndex</emphasis> attribute.",
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "Elements with a positive tab index override natural page content order. This causes elements without a positive tab index to come last when navigating using a keyboard.",
+			},
+		],
 	},
 	JSX_A11Y_MOUSE_EVENTS_HAVE_KEY_EVENTS: (
 		mouseEvent: string,
 		keyboardEvent: string,
 	) => ({
 		category: "lint/jsx-a11y/mouseEventsHaveKeyEvents",
-		message: `The mouse event <emphasis>${mouseEvent}</emphasis> should be paired with the event <emphasis>${keyboardEvent}</emphasis>`,
+		message: `Pair the <emphasis>${mouseEvent}</emphasis> mouse event with the <emphasis>${keyboardEvent}</emphasis> keyboard event.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "Actions triggered using mouse events should have corresponding keyboard events to account for keyboard-only navigation.",
+			},
+		],
 	}),
 	JSX_A11Y_MEDIA_HAS_CAPTION: {
 		category: "lint/jsx-a11y/mediaHasCaption",
-		message: "<emphasis>audio</emphasis> and <emphasis>video</emphasis> elements should have <emphasis>track</emphasis> for captions",
+		message: "Provide a <emphasis>track</emphasis> for captions when using <emphasis>audio</emphasis> or <emphasis>video</emphasis> elements.",
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "Captions support users with hearing-impairments. They should be a transcription or translation of the dialogue, sound effects, musical cues, and other relevant audio information.",
+			},
+		],
 	},
 	REACT_NO_WILL_UPDATE_SET_STATE: {
 		category: "lint/react/noWillUpdateSetState",
@@ -70,60 +91,151 @@ export const lint = createDiagnosticsCategory({
 	},
 	JSX_A11Y_ARIA_UNSUPPORTED_ELEMENTS: {
 		category: "lint/jsx-a11y/ariaUnsupportedElements",
-		message: "Avoid <emphasis>role</emphasis> and <emphasis>aria-* props</emphasis> on <emphasis>meta</emphasis>, <emphasis>html</emphasis>, <emphasis>script</emphasis>, and <emphasis>style</emphasis> elements.",
+		message: "Avoid the <emphasis>role</emphasis> attribute and <emphasis>aria-*</emphasis> attributes when using <emphasis>meta</emphasis>, <emphasis>html</emphasis>, <emphasis>script</emphasis>, and <emphasis>style</emphasis> elements.",
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "Using roles on elements that do not support them can cause issues with screen readers.",
+			},
+		],
 	},
 	JSX_A11Y_ANCHOR_HAS_CONTENT: {
 		category: "lint/jsx-a11y/anchorHasContent",
-		message: "Anchor must have content and the content must be accessible by a screen reader.",
+		message: "Provide screen reader accessible content when using <emphasis>anchor</emphasis> elements.",
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "All links on a page should have content that is accessible to screen readers.",
+			},
+		],
 	},
 	JSX_A11Y_LANG: (value: string, suggestions: Array<string>) => ({
 		category: "lint/jsx-a11y/lang",
-		message: `The <emphasis>lang</emphasis> attribute must have a valid value.`,
+		message: "Provide a valid value for the <emphasis>lang</emphasis> attribute.",
 		advice: buildSuggestionAdvice(value, suggestions),
 	}),
 	JSX_A11Y_ALT_TEXT: {
 		category: "lint/jsx-a11y/altText",
-		message: "<emphasis>img</emphasis>, <emphasis>area</emphasis>, <emphasis>input type='image'</emphasis>, <emphasis>object</emphasis> must have alt text",
+		message: "Provide <emphasis>alt</emphasis> text when using <emphasis>img</emphasis>, <emphasis>area</emphasis>, <emphasis>input type='image'</emphasis>, and <emphasis>object</emphasis> elements.",
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "Meaningful alternative text on elements that require it helps users relying on screen readers to understand content's purpose within a page.",
+			},
+		],
 	},
 	JSX_A11Y_HEADING_HAS_CONTENT: {
 		category: "lint/jsx-a11y/headingHasContent",
-		message: "Headings must have content and the content must be accessible by a screen reader.",
+		message: "Provide screen reader accessible content when using <emphasis>heading</emphasis> elements.",
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "All headings on a page should have content that is accessible to screen readers.",
+			},
+		],
 	},
 	JSX_A11Y_HTML_HAS_LANG: {
 		category: "lint/jsx-a11y/htmlHasLang",
-		message: `<emphasis>html</emphasis> elements must have a <emphasis>lang prop</emphasis>.`,
+		message: "Provide a <emphasis>lang</emphasis> attribute when using the <emphasis>html</emphasis> element.",
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "Setting a lang attribute on HTML elements configures the language used by screen readers when no user default is specified.",
+			},
+		],
 	},
 	JSX_A11Y_IFRAME_HAS_TITLE: {
 		category: "lint/jsx-a11y/iframeHasTitle",
-		message: `<emphasis>iframe</emphasis> elements should have a <emphasis>title prop</emphasis>.`,
+		message: "Provide a <emphasis>title</emphasis> attribute when using <emphasis>iframe</emphasis> elements.",
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "Screen readers rely on the title set on an iframe to describe the content being displayed.",
+			},
+		],
 	},
 	JSX_A11Y_IMG_REDUNDANT_ALT: {
 		category: "lint/jsx-a11y/imgRedundantAlt",
-		message: `<emphasis>img</emphasis> element alt descriptions must not contain "image", "picture", or "photo"`,
+		message: 'Avoid the words "image", "picture", or "photo" in <emphasis>img</emphasis> element alt text.',
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: 'Screen readers announce img elements as "images", so it is not necessary to redeclare this in alternative text.',
+			},
+		],
 	},
 	JSX_A11Y_NO_ACCESS_KEY: {
 		category: "lint/jsx-a11y/noAccessKey",
-		message: "The <emphasis>accessKey</emphasis> prop is not allowed. Inconsistencies between keyboard shortcuts and keyboard comments used by screenreader and keyboard only users create a11y complications.",
+		message: "Avoid the <emphasis>accessKey</emphasis> attribute to reduce inconsistencies between keyboard shortcuts and screen reader keyboard comments.",
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "Assigning keyboard shortcuts using the accessKey attribute leads to inconsistent keyboard actions across applications.",
+			},
+		],
 	},
 	JSX_A11Y_NO_AUTOFOCUS: {
 		category: "lint/jsx-a11y/noAutofocus",
-		message: "The <emphasis>autoFocus</emphasis> prop should not be used, as it can reduce usability and accessibility for users.",
+		message: "Avoid the <emphasis>autoFocus</emphasis> attribute.",
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "Automatically focusing elements overrides natural page content focus order, causing issues for keyboard-only navigation.",
+			},
+		],
 	},
 	JSX_A11Y_NO_DISTRACTING_ELEMENTS: (element: string) => ({
 		category: "lint/jsx-a11y/noDistractingElements",
-		message: `Do not use ${element} elements as they can create visual accessibility issues and are deprecated.`,
+		message: `Avoid using deprecated ${element} elements.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: `Deprecated ${element} are difficult to read and distract attention away from page content, especially for users with visual impairments.`,
+			},
+		],
 	}),
 	JSX_A11Y_NO_ON_CHANGE: {
 		category: "lint/jsx-a11y/noOnChange",
-		message: "<emphasis>onBlur</emphasis> should be used in favor of <emphasis>onChange</emphasis>. Only use <emphasis>onChange</emphasis> if absolutely necessary without negatively affecting keyboard only or screen reader users.",
+		message: "Provide an <emphasis>onBlur</emphasis> event instead of an <emphasis>onChange</emphasis> event unless absolutely necessary.",
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "The onBlur event is more declarative and reliable for indicating input changes when using keyboard navigation.",
+			},
+		],
 	},
 	JSX_A11Y_NO_TARGET_BLANK: {
 		category: "lint/jsx-a11y/noTargetBlank",
-		message: `Using <emphasis>target="_blank"</emphasis> without <emphasis>rel="noreferrer"</emphasis> is a security risk.`,
+		message: 'Avoid using <emphasis>target="_blank"</emphasis> without <emphasis>rel="noreferrer"</emphasis>.',
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: 'Opening external links in new tabs without rel="noreferrer" is a security risk. See <hyperlink target="https://html.spec.whatwg.org/multipage/links.html#link-type-noopener" /> for more details.',
+			},
+		],
 	},
 	JSX_A11Y_NO_SCOPE: {
 		category: "lint/jsx-a11y/scope",
-		message: "The <emphasis>scope</emphasis> prop can only be used on <emphasis>th</emphasis> elements.",
+		message: "Avoid using the <emphasis>scope</emphasis> attribute on elements other than <emphasis>th</emphasis> elements.",
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "Using the scope attribute incorrectly on tables makes them difficult to navigate using the keyboard.",
+			},
+		],
 	},
 	REACT_JSX_KEY: (origin: string) => ({
 		category: "lint/react/jsxKey",

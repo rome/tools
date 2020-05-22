@@ -2,7 +2,7 @@ import {test} from "rome";
 import {testLintMultiple} from "../testHelpers";
 
 test(
-	"disallow the accessKey prop",
+	"jsx a11y no accessKey",
 	async (t) => {
 		await testLintMultiple(
 			t,

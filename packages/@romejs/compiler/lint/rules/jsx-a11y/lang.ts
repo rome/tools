@@ -8,7 +8,7 @@ import {
 } from "@romejs/js-ast-utils";
 
 const ISO = {
-	"countries": [
+	countries: [
 		"AF",
 		"AL",
 		"DZ",
@@ -243,7 +243,7 @@ const ISO = {
 		"ZM",
 		"ZW",
 	],
-	"languages": [
+	languages: [
 		"ab",
 		"aa",
 		"af",
@@ -415,9 +415,6 @@ function getSuggestions() {
 	return suggestions;
 }
 
-const COUNTRY_AND_REGION_REGEX = new RegExp(/([a-z]{2})-([A-Z]{2})/);
-const COUNTRY_REGEX = new RegExp(/([a-z]{2})-([A-Z]{2})/);
-
 // Will return the attribute value if invalid
 function jsxSupportedLang(node: JSXElement): undefined | string {
 	const attr = getJSXAttribute(node, "lang");
@@ -437,17 +434,14 @@ function jsxSupportedLang(node: JSXElement): undefined | string {
 }
 
 function langSupported(lang: string): boolean {
-	const countryAndRegionMatches = COUNTRY_AND_REGION_REGEX.exec(lang);
-	if (countryAndRegionMatches && countryAndRegionMatches.length > 0) {
-		return (
-			ISO.languages.includes(countryAndRegionMatches[1]) &&
-			ISO.countries.includes(countryAndRegionMatches[2])
-		);
+	const [language, country] = lang.split("-");
+
+	if (language && country) {
+		return ISO.languages.includes(language) && ISO.countries.includes(country);
 	}
 
-	const countryMatches = COUNTRY_REGEX.exec(lang);
-	if (countryMatches && countryMatches.length > 0) {
-		return ISO.languages.includes(countryMatches[1]);
+	if (language) {
+		return ISO.languages.includes(language);
 	}
 
 	return false;
@@ -462,7 +456,7 @@ export default {
 			if (invalidValue !== undefined) {
 				// TODO add an autofix suggestion
 				path.context.addNodeDiagnostic(
-					node,
+					getJSXAttribute(node, "lang"),
 					descriptions.LINT.JSX_A11Y_LANG(invalidValue, getSuggestions()),
 				);
 			}

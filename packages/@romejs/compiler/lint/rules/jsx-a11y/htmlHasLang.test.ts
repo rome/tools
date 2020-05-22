@@ -10,7 +10,7 @@ import {test} from "rome";
 import {testLintMultiple} from "../testHelpers";
 
 test(
-	"require a lang attribute on <html> JSX elements",
+	"jsx a11y has lang",
 	async (t) => {
 		await testLintMultiple(
 			t,

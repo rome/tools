@@ -10,10 +10,13 @@
 
  unknown:1 lint/jsx-a11y/noDistractingElements ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Do not use blink elements as they can create visual accessibility issues and are deprecated.
+  ✖ Avoid using deprecated blink elements.
 
     <blink />
     ^^^^^^^^^
+
+  ℹ Deprecated blink are difficult to read and distract attention away from page content, especially
+    for users with visual impairments.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -34,10 +37,13 @@
 
  unknown:1 lint/jsx-a11y/noDistractingElements ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Do not use marquee elements as they can create visual accessibility issues and are deprecated.
+  ✖ Avoid using deprecated marquee elements.
 
     <marquee />
     ^^^^^^^^^^^
+
+  ℹ Deprecated marquee are difficult to read and distract attention away from page content,
+    especially for users with visual impairments.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
