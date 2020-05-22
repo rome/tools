@@ -1,0 +1,24 @@
+---
+title: A JavaScript toolchain | Rome
+---
+
+<!doctype html>
+<html>
+  <head>
+    <title>{{ title }}</title>
+  </head>
+
+  {% set css %}{% include 'styles.css' %}{% endset %}
+
+	<style>{{ css | safe }}</style>
+
+  <body>
+
+    <div class="container">
+
+      <div class="content">{{ content | safe }}<div>
+
+    </div>
+
+  </body>
+</html>

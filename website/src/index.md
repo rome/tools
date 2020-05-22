@@ -1,5 +1,5 @@
 ---
-title: Rome - A Javascript toolchain
+layout: layout.njk
 ---
 
 # Installation
