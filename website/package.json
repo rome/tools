@@ -2,14 +2,17 @@
   "name": "rome-website",
   "private": true,
   "scripts": {
-    "build": "yarn eleventy",
-    "dev": "yarn eleventy --serve"
+    "build": "eleventy",
+    "build:styles": "sass --style=compressed src/styles/index.scss static/styles.css",
+    "start": "npm-run-all build:styles --parallel watch:*",
+    "watch:eleventy": "eleventy --serve",
+    "watch:sass": "npm run build:styles -- --watch"
   },
-  "dependencies": {
+  "devDependencies": {
     "@11ty/eleventy": "^0.11.0",
     "@11ty/eleventy-plugin-syntaxhighlight": "^3.0.1",
-    "clean-css": "^4.2.3",
     "markdown-it-anchor": "^5.3.0",
-    "terser": "^4.7.0"
+    "npm-run-all": "^4.1.5",
+    "sass": "^1.26.5"
   }
 }

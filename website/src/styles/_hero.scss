@@ -1,0 +1,21 @@
+.hero {
+  position: relative;
+  padding: 32px;
+  color: rgb(68, 73, 80);
+
+  &::before {
+    content: "";
+    position: absolute;
+    left: -100%;
+    right: -100%;
+    top: 0;
+    bottom: 0;
+    background: #ffffff;
+    background-image: url(/static/img/pattern-white.png),
+      radial-gradient(circle, #fff 0, rgba(241, 241, 239, 0.7) 100%);
+    background-repeat: repeat;
+    background-position: 50%;
+    background-size: 125px;
+    z-index: -1;
+  }
+}

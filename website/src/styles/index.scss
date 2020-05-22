@@ -1,0 +1,34 @@
+@import "_mixins";
+@import "_global";
+@import "_header";
+@import "_table-of-contents";
+@import "_content";
+@import "_hero";
+
+.sidebar {
+  width: 320px;
+  list-style: none;
+  overflow-y: auto;
+  overflow-x: hidden;
+  font-size: 0.9rem;
+
+  @include desktop-only() {
+    position: fixed;
+    padding: 12px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 320px;
+    border-right: 1px solid #eaeaea;
+  }
+}
+
+.main {
+  margin-left: 320px;
+  overflow: hidden;
+
+  @include mobile-only() {
+    margin-top: 64px;
+    margin-left: 0px;
+  }
+}

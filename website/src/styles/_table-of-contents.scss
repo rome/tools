@@ -1,0 +1,36 @@
+.table-of-contents {
+  background-color: #ffffff;
+
+  a {
+    text-decoration: none;
+    height: auto;
+    padding: 3px 9px;
+    border-radius: 4px;
+    display: inline-block;
+  }
+
+  li {
+    list-style-type: none;
+  }
+
+  .is-active-link {
+    color: rgb(255, 201, 5);
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+
+  @include mobile-only() {
+    position: fixed;
+    z-index: 9;
+    left: 0;
+    top: 64px;
+    bottom: 0;
+    transform: translateX(-100%);
+    transition: transform ease-in 100ms;
+    padding-top: 16px;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+
+    &.mobile-visible {
+      transform: translateX(0%);
+    }
+  }
+}

@@ -1,3 +1,6 @@
 node_modules
 build
-yarn-error.log
+
+# Auto generated
+static/styles.css
+static/styles.css.map
