@@ -35,17 +35,10 @@ title: A JavaScript toolchain | Rome
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.11.1/tocbot.min.js"></script>
-    <script>
 
-    tocbot.init({
-      tocSelector: '.table-of-contents',
-      contentSelector: '.content',
-      headingSelector: 'h1, h2, h3',
-      hasInnerContainers: true,
-      collapseDepth: 3,
-    });
+    {% set js %}{% include "main.js" %}{% endset %}
 
-    </script>
+    <script>{{ js | jsmin | safe }}</script>
 
   </body>
 </html>
