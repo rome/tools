@@ -9,7 +9,8 @@ title: A JavaScript toolchain | Rome
   </head>
 
   <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css" />
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.20.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.20.0/themes/prism-tomorrow.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.11.1/tocbot.css">
 
   {% set css %}{% include 'styles.css' %}{% endset %}
 
@@ -32,6 +33,19 @@ title: A JavaScript toolchain | Rome
       </div>
 
     </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.11.1/tocbot.min.js"></script>
+    <script>
+
+    tocbot.init({
+      tocSelector: '.table-of-contents',
+      contentSelector: '.content',
+      headingSelector: 'h1, h2, h3',
+      hasInnerContainers: true,
+      collapseDepth: 3,
+    });
+
+    </script>
 
   </body>
 </html>
