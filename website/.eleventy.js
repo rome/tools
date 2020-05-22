@@ -19,7 +19,10 @@ module.exports = function (eleventyConfig) {
     html: true,
     linkify: true,
     typographer: true,
-  }).use(markdownItAnchor, {});
+  }).use(markdownItAnchor, {
+    permalink: true,
+    permalinkSymbol: '#',
+  });
 
   eleventyConfig.setLibrary("md", md);
   eleventyConfig.addShortcode("doc", function (file) {

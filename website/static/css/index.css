@@ -81,6 +81,22 @@ a {
   padding: 0 16px 64px 16px;
 }
 
+.header-anchor {
+  display: none;
+  text-decoration: none;
+  color: rgb(255, 201, 5);
+}
+
+.header-anchor:hover {
+  text-decoration: underline;
+}
+
+.content h1:hover .header-anchor,
+.content h2:hover .header-anchor,
+.content h3:hover .header-anchor {
+  display: inline-block;
+}
+
 .hero {
   position: relative;
   padding: 32px;
