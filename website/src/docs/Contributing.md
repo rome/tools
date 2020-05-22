@@ -12,11 +12,11 @@ cd rome
 scripts/dev-rome --help
 ```
 
-> Note: If you previously ran the user-facing [installation instructions](../introduction/installation), the `dist` directory must be deleted before running any development commands.
+> Note: If you previously ran the user-facing [installation](#installation), the `dist` directory must be deleted before running any development commands.
 
 No dependency installation step is required as we check in our `node_modules` folder that contains only a copy of TypeScript and some definitions.
 
-Refer to [Getting Started](../introduction/getting-started.md) for more usage documentation.
+Refer to [Getting started](#getting-started) for more usage documentation.
 
 ## Testing
 
