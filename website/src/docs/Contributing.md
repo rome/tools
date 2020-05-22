@@ -4,8 +4,6 @@ We can use help in a bunch of areas and any help is appreciated. Our [GitHub iss
 
 Our [Discord server](https://discord.gg/9WxHa5d) is open for help and more adhoc discussion. All activity on the Discord is still moderated and will be strictly enforced under the project's [Code of Conduct](https://github.com/romejs/rome/blob/master/.github/CODE_OF_CONDUCT.md).
 
-## Getting Started
-
 Getting started with developing Rome is as easy as three commands. You will need Node v12 or above.
 
 ```bash

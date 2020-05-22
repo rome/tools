@@ -1,33 +1,41 @@
-# Commands
+# Linting
 
-## `lint`
+Rome comes with a builtin linter that analyzes your JavaScript code to flag programming errors, bugs, stylistic errors and more.
 
-The `lint` command checks your project files for code problems, such as unused variables. If no arguments are given, the entire project will be included.
+```javascript
+// Lint your entire project.
+rome lint
 
-```bash
-rome lint [files]
+// Lint one or more specific files.
+rome lint index.js hello.js
 ```
 
-### Checking only certain files
+## Interpreting the result
 
-If you want to lint only certain files, you can add the files you want to check:
+If `rome` did not detect any problems, you'll get a result like this:
 
-```bash
-$ rome lint index.js hello.js
-```
-
-### Interpreting the result
-
-If `rome` did not detect any problems, you'll get the a result like this:
-
-```bash
+```javascript
 ℹ 1 file linted
 ✔ No known problems!
 ```
 
-However if there is something not ok, `rome` will give you error messages in the following format:
+However, if there is something not ok, `rome` will provide you with diagnostics warnings in the following format:
 
-```bash
+```javascript
+<the affected file>:<line>:<column> <the linter rule that was violated>
+-----------------------------------
+
+x description of what is not ok
+
+> 1 | the line of code that is problematic
+    |     ^^^ <the part of the line that is not ok>
+
+ ℹ helpful message(s) of what you can do to fix the problem
+ ```
+
+Let's look at example of what the linter might throw at you:
+
+```javascript
 foobar.js:1 parse/js ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ import and export can only appear in a module
@@ -40,27 +48,13 @@ foobar.js:1 parse/js ━━━━━━━━━━━━━━━━━━━�
   ℹ Add "type": "module" to your package.json
 ```
 
-These messages contain the following sections:
+Rome will point you to the mistake in your JavaScript source code, and will potentially list you with options on how you can fix these.  You'll be presented with 1 message for each problem.
 
-```
-<the affected file>:<line>:<column> <the linter rule that was violated>
------------------------------------
-
-x description of what is not ok
-
-> 1 | the line of code that is problematic
-    |     ^^^ <the part of the line that is not ok>
-
- ℹ helpful message(s) of what you can do to fix the problem
-```
-
-You'll get 1 message for each problem.
-
-### Example
+## Example
 
 The following code has 2 unused variables: `join` in line 1 and `unused` in line 3.
 
-```js
+```javascript
 const {join} = require('path');
 
 const unused = 'I am not used :)';
@@ -68,9 +62,9 @@ const unused = 'I am not used :)';
 console.log('hello world!');
 ```
 
-The result for this code would look like this:
+You'll notice that Rome provides you with the following detailed warnings:
 
-```bash
+```javascript
 index.js:1:8 lint/unusedVariables ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
   ✖ Unused variable join

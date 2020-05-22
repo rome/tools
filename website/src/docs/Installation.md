@@ -1,14 +1,8 @@
 # Installation
 
-## Before you continue
+Rome requires you to have `node` and `npm` installed on your system. Make sure you have these before you proceed.
 
-To install Rome, you must have `node` and `npm` installed on your system. If you do not have `node` and `npm`
-installed, install them before continuing.
-
-## Cloning and building
-
-Rome is not available via `npm` and must be installed from GitHub.
-In a folder of your choice, clone the `rome` repository:
+Rome is currently not available via `npm`, and must be installed from GitHub. In a folder of your choice, clone the `rome` repository.
 
 ```bash
 git clone https://github.com/romejs/rome
@@ -20,19 +14,18 @@ Then, navigate into it and build `rome`:
 cd rome; ./scripts/build-release dist
 ```
 
-On Windows 10 build `rome` using the following command using PowerShell 7:
+On Windows 10, build `rome` using the following command in PowerShell 7:
 
-```powershell
+```bash
 cd rome && node scripts/build-release dist
 ```
 
-Now, install `rome` globally:
+As a final step, install `rome` globally:
 
-```
+```bash
 npm install -g ./dist/
 ```
 
 Congratulations! Rome is installed.
 
-When it comes time to update Rome, repeat the above process. `npm` will
-automatically overwrite your existing Rome installation with the new version.
+When it comes time to update Rome, repeat the above process. `npm` will automatically overwrite your existing Rome installation with the new version.
