@@ -1,9 +1,127 @@
 ---
-id: commands
-title: Commands
-sidebar_label: Commands
-description: Detailed description of the available commands.
+title: Rome - A Javascript toolchain
 ---
+
+# Installation
+
+## Before you continue
+
+To install Rome, you must have `node` and `npm` installed on your system. If you do not have `node` and `npm`
+installed, install them before continuing.
+
+## Cloning and building
+
+Rome is not available via `npm` and must be installed from GitHub.
+In a folder of your choice, clone the `rome` repository:
+
+```bash
+git clone https://github.com/romejs/rome
+```
+
+Then, navigate into it and build `rome`:
+
+```bash
+cd rome; ./scripts/build-release dist
+```
+
+On Windows 10 build `rome` using the following command using PowerShell 7:
+
+```powershell
+cd rome && node scripts/build-release dist
+```
+
+Now, install `rome` globally:
+
+```
+npm install -g ./dist/
+```
+
+Congratulations! Rome is installed.
+
+When it comes time to update Rome, repeat the above process. `npm` will
+automatically overwrite your existing Rome installation with the new version.
+
+# Getting-started
+
+
+While Rome seeks to fill the role of many tools in the JavaScript
+ecosystem, it can be integrated into existing projects and used
+as much or as little as you like.
+
+## Integrating Rome
+
+First, navigate into your project folder:
+
+```bash
+cd my_existing_project
+```
+
+Now, create a Rome configuration for your project. When prompted,
+use the recommended settings:
+
+```bash
+rome init
+```
+
+## What did we do?
+
+Running `rome init` with the recommended settings creates a Rome
+configuration file, `rome.json`, which looks like this:
+
+```json
+{
+  "version": "^0.0.52",
+  "lint": {
+    "enabled": true
+  }
+}
+```
+
+This file tells `rome` that it should be at least version 0.0.52
+in order to work with your project, and that it should lint your code.
+If you want to disable linting or apply advanced settings, see
+the `rome init` documentation.
+
+## Running your code
+
+The `rome run` command will run whatever file is passed to
+it. Use this command with your project's main file, for example:
+
+```bash
+rome run index.js
+```
+
+Rome is still under active development and may not be able to properly
+process all source files. If you are able to run a file with `node` but
+not with `rome`, please [create an issue](https://github.com/romejs/rome/issues/new?labels=bug&template=01_bug.md&title=)
+
+## Other Commands
+
+### `lint`
+
+This command will lint a file with a set of default lints and display the produced diagnostics.
+When ran with no arguments, all JavaScript files in a project are linted. For example:
+
+```bash
+rome lint file.js
+```
+
+### `compile`
+
+This command will compile a file with a set of default transforms. There is currently no options for this command to specify a subset of transforms.
+
+```
+rome compile file.js
+```
+
+### `parse`
+
+This command will parse a file and output a pretty formatted AST.
+
+```
+rome parse file.js
+```
+
 
 ## `init`
 
@@ -87,6 +205,8 @@ If the project already contains a configuration file the `init` command will exi
 ```
 
 Instead of `init` use the `config` command to update your configuration.
+
+# Commands
 
 ## `lint`
 
@@ -182,4 +302,44 @@ index.js:1:8 lint/unusedVariables ━━━━━━━━━━━━━━━�
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 ℹ 1 file linted
 ✖ Found 2 problems
+```
+
+# Contributing
+
+We can use help in a bunch of areas and any help is appreciated. Our [GitHub issues](https://github.com/romejs/rome/issues) serve as a place for any discussion, whether it's bug reports, questions, project direction etc. As the project grows this policy may change.
+
+Our [Discord server](https://discord.gg/9WxHa5d) is open for help and more adhoc discussion. All activity on the Discord is still moderated and will be strictly enforced under the project's [Code of Conduct](https://github.com/romejs/rome/blob/master/.github/CODE_OF_CONDUCT.md).
+
+## Getting Started
+
+Getting started with developing Rome is as easy as three commands. You will need Node v12 or above.
+
+```
+git clone https://github.com/romejs/rome
+cd rome
+scripts/dev-rome --help
+```
+
+> Note: If you previously ran the user-facing [installation instructions](../introduction/installation), the `dist` directory must be deleted before running any development commands.
+
+No dependency installation step is required as we check in our `node_modules` folder that contains only a copy of TypeScript and some definitions.
+
+Refer to [Getting Started](../introduction/getting-started.md) for more usage documentation.
+
+## Testing
+
+You can run the test suite with the following command:
+
+```
+scripts/dev-rome test
+```
+
+This will run all tests inside of any `__rtests__` directories.
+
+## Type Checking
+
+Run TypeScript with code emitting disabled to perform a full typecheck outside the editor.
+
+```
+node_modules/.bin/tsc --noEmit
 ```
