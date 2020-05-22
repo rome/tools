@@ -81,6 +81,10 @@ a {
   padding: 0 16px 64px 16px;
 }
 
+.content pre {
+  border-radius: 4px;
+}
+
 .header-anchor {
   display: none;
   text-decoration: none;
