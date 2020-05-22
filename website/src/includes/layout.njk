@@ -10,7 +10,7 @@ title: A JavaScript toolchain | Rome
 
   {% set css %}{% include 'styles.css' %}{% endset %}
 
-	<style>{{ css | safe }}</style>
+	<style>{{ css | cssmin | safe }}</style>
 
   <body>
 

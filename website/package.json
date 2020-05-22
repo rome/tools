@@ -6,6 +6,7 @@
     "dev": "yarn eleventy --serve"
   },
   "dependencies": {
-    "@11ty/eleventy": "^0.11.0"
+    "@11ty/eleventy": "^0.11.0",
+    "clean-css": "^4.2.3"
   }
 }
