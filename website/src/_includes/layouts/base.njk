@@ -6,39 +6,25 @@ title: A JavaScript toolchain | Rome
 <html>
   <head>
     <title>{{ title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.20.0/themes/prism-tomorrow.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.11.1/tocbot.css">
+    <link rel="stylesheet" href="{{ '/static/css/index.css' | url }}" />
   </head>
-
-  <link rel="stylesheet" href="https://unpkg.com/purecss@2.0.3/build/pure-min.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.20.0/themes/prism-tomorrow.min.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.11.1/tocbot.css">
-
-  {% set css %}{% include 'styles.css' %}{% endset %}
-
-	<style>{{ css | cssmin | safe }}</style>
-
   <body>
-
     <div class="container">
-
       <div class="pure-g">
-
         <div class="pure-u-1-5">
           <div class="table-of-contents"></div>
         </div>
-
         <div class="pure-u-4-5">
           <main class="content">{{ content | safe }}<main>
         </div>
-
       </div>
-
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.11.1/tocbot.min.js"></script>
-
-    {% set js %}{% include "main.js" %}{% endset %}
-
-    <script>{{ js | jsmin | safe }}</script>
-
+    <script src="{{ '/static/js/index.js' | url }}"></script>
   </body>
 </html>
