@@ -314,7 +314,7 @@ Our [Discord server](https://discord.gg/9WxHa5d) is open for help and more adhoc
 
 Getting started with developing Rome is as easy as three commands. You will need Node v12 or above.
 
-```
+```bash
 git clone https://github.com/romejs/rome
 cd rome
 scripts/dev-rome --help
@@ -330,7 +330,7 @@ Refer to [Getting Started](../introduction/getting-started.md) for more usage do
 
 You can run the test suite with the following command:
 
-```
+```bash
 scripts/dev-rome test
 ```
 
@@ -340,6 +340,6 @@ This will run all tests inside of any `__rtests__` directories.
 
 Run TypeScript with code emitting disabled to perform a full typecheck outside the editor.
 
-```
+```bash
 node_modules/.bin/tsc --noEmit
 ```

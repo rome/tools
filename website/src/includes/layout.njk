@@ -8,6 +8,8 @@ title: A JavaScript toolchain | Rome
     <title>{{ title }}</title>
   </head>
 
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.20.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+
   {% set css %}{% include 'styles.css' %}{% endset %}
 
 	<style>{{ css | cssmin | safe }}</style>
