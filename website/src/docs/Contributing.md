@@ -4,8 +4,6 @@ We can use help in a bunch of areas and any help is appreciated. Our [GitHub iss
 
 Our [Discord server](https://discord.gg/9WxHa5d) is open for help and more adhoc discussion. All activity on the Discord is still moderated and will be strictly enforced under the project's [Code of Conduct](https://github.com/romejs/rome/blob/master/.github/CODE_OF_CONDUCT.md).
 
-## Getting Started
-
 Getting started with developing Rome is as easy as three commands. You will need Node v12 or above.
 
 ```bash
@@ -14,11 +12,11 @@ cd rome
 scripts/dev-rome --help
 ```
 
-> Note: If you previously ran the user-facing [installation instructions](../introduction/installation), the `dist` directory must be deleted before running any development commands.
+> Note: If you previously ran the user-facing [installation](#installation), the `dist` directory must be deleted before running any development commands.
 
 No dependency installation step is required as we check in our `node_modules` folder that contains only a copy of TypeScript and some definitions.
 
-Refer to [Getting Started](../introduction/getting-started.md) for more usage documentation.
+Refer to [Getting started](#getting-started) for more usage documentation.
 
 ## Testing
 
@@ -30,7 +28,7 @@ scripts/dev-rome test
 
 This will run all tests inside of any `__rtests__` directories.
 
-## Type Checking
+## Type checking
 
 Run TypeScript with code emitting disabled to perform a full typecheck outside the editor.
 
