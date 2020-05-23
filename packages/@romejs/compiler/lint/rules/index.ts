@@ -58,6 +58,7 @@ import unusedVariables from "./js/unusedVariables";
 import altText from "./jsx-a11y/altText";
 import anchorHasContent from "./jsx-a11y/anchorHasContent";
 import ariaUnsupportedElements from "./jsx-a11y/ariaUnsupportedElements";
+import clickEventsHaveKeyEvents from "./jsx-a11y/clickEventsHaveKeyEvents";
 import headingHasContent from "./jsx-a11y/headingHasContent";
 import htmlHasLang from "./jsx-a11y/htmlHasLang";
 import iframeHasTitle from "./jsx-a11y/iframeHasTitle";
@@ -144,6 +145,7 @@ export const lintTransforms = [
 	altText,
 	anchorHasContent,
 	ariaUnsupportedElements,
+	clickEventsHaveKeyEvents,
 	headingHasContent,
 	htmlHasLang,
 	iframeHasTitle,

@@ -144,6 +144,7 @@ type LintDiagnosticCategory =
 	| "lint/jsx-a11y/altText"
 	| "lint/jsx-a11y/anchorHasContent"
 	| "lint/jsx-a11y/ariaUnsupportedElements"
+	| "lint/jsx-a11y/clickEventsHaveKeyEvents"
 	| "lint/jsx-a11y/headingHasContent"
 	| "lint/jsx-a11y/htmlHasLang"
 	| "lint/jsx-a11y/iframeHasTitle"
