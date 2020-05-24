@@ -143,6 +143,7 @@ type LintDiagnosticCategory =
 	| "lint/js/unusedVariables"
 	| "lint/jsx-a11y/altText"
 	| "lint/jsx-a11y/anchorHasContent"
+	| "lint/jsx-a11y/ariaProps"
 	| "lint/jsx-a11y/ariaUnsupportedElements"
 	| "lint/jsx-a11y/headingHasContent"
 	| "lint/jsx-a11y/htmlHasLang"

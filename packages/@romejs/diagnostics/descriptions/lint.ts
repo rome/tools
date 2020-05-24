@@ -16,6 +16,10 @@ import {buildSuggestionAdvice} from "../helpers";
 import {createDiagnosticsCategory, orJoin} from "./index";
 
 export const lint = createDiagnosticsCategory({
+	JSX_A11Y_ARIA_PROPS: (attribute: string) => ({
+		category: "lint/jsx-a11y/ariaProps",
+		message: `<emphasis>${attribute}</emphasis> is an invalid ARIA attribute.`,
+	}),
 	REACT_NO_REDUNDANT_SHOULD_COMPONENT_UPDATE: {
 		category: "lint/react/noRedundantShouldComponentUpdate",
 		message: "Do not implement <emphasis>shouldComponentUpdate</emphasis> when extending <emphasis>React.PureComponent</emphasis>.",
