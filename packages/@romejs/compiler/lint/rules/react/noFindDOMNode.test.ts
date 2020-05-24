@@ -10,7 +10,7 @@ import {test} from "rome";
 import {testLintMultiple} from "../testHelpers";
 
 test(
-	"do not allow findDOMNode",
+	"react no find dom node",
 	async (t) => {
 		await testLintMultiple(
 			t,

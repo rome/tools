@@ -51,13 +51,13 @@ function jsxMissingType(node: AnyNode) {
 }
 
 export default {
-	name: "buttonHasType",
+	name: "reactButtonHasType",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 
 		if (createElementMissingType(node) || jsxMissingType(node)) {
 			path.context.addNodeDiagnostic(
-				node,
+				(isJSXElement(node, "button") && getJSXAttribute(node, "type")) || node,
 				descriptions.LINT.REACT_BUTTON_HAS_TYPE,
 			);
 		}

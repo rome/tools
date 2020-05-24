@@ -10,7 +10,7 @@ import {test} from "rome";
 import {testLintMultiple} from "../testHelpers";
 
 test(
-	"disallow children with dangerouslySetInnerHTML",
+	"react no danger with children",
 	async (t) => {
 		await testLintMultiple(
 			t,
@@ -29,6 +29,14 @@ test(
 				'React.createElement("Invalid", { dangerouslySetInnerHTML: { __html: "HTML" }, children: ["children"] })',
 				'React.createElement("Invalid", { dangerouslySetInnerHTML: { __html: "HTML" } }, "children")',
 				'React.createElement("Invalid", { dangerouslySetInnerHTML: { __html: "HTML" } }, ["children"])',
+				'createElement("div", { dangerouslySetInnerHTML: { __html: "HTML" } }, "children")',
+				'createElement("div", { dangerouslySetInnerHTML: { __html: "HTML" } }, ["children"])',
+				'createElement("div", { dangerouslySetInnerHTML: { __html: "HTML" }, children: "children" })',
+				'createElement("div", { dangerouslySetInnerHTML: { __html: "HTML" }, children: ["children"] })',
+				'createElement("Invalid", { dangerouslySetInnerHTML: { __html: "HTML" }, children: "children" })',
+				'createElement("Invalid", { dangerouslySetInnerHTML: { __html: "HTML" }, children: ["children"] })',
+				'createElement("Invalid", { dangerouslySetInnerHTML: { __html: "HTML" } }, "children")',
+				'createElement("Invalid", { dangerouslySetInnerHTML: { __html: "HTML" } }, ["children"])',
 				// VALID
 				'<div dangerouslySetInnerHTML={{ __html: "HTML" }} />',
 				"<div>children</div>",
@@ -48,6 +56,16 @@ test(
 				'React.createElement("Valid", {}, ["children"])',
 				'React.createElement("Valid", { children: "children" })',
 				'React.createElement("Valid", { children: ["children"] })',
+				'createElement("div", { dangerouslySetInnerHTML: { __html: "HTML" } })',
+				'createElement("div", {}, "children")',
+				'createElement("div", {}, ["children"])',
+				'createElement("div", { children: "children" })',
+				'createElement("div", { children: ["children"] })',
+				'createElement("Valid", { dangerouslySetInnerHTML: { __html: "HTML" } })',
+				'createElement("Valid", {}, "children")',
+				'createElement("Valid", {}, ["children"])',
+				'createElement("Valid", { children: "children" })',
+				'createElement("Valid", { children: ["children"] })',
 			],
 			{category: "lint/react/noDangerWithChildren"},
 		);

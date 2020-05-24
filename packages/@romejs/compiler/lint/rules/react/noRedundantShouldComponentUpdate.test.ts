@@ -2,7 +2,7 @@ import {test} from "rome";
 import {testLintMultiple} from "../testHelpers";
 
 test(
-	"no redundant should component update",
+	"react no redundant should component update",
 	async (t) => {
 		await testLintMultiple(
 			t,
@@ -10,12 +10,12 @@ test(
 				// INVALID
 				`
         class Hello extends React.PureComponent {
-          componentShouldUpdate() {}
+          shouldComponentUpdate() {}
         }
 				`,
 				`
         class Hello extends PureComponent {
-          componentShouldUpdate() {}
+          shouldComponentUpdate() {}
         }
         `,
 				// VALID

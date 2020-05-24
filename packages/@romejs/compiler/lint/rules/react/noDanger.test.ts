@@ -9,15 +9,19 @@ import {test} from "rome";
 import {testLintMultiple} from "../testHelpers";
 
 test(
-	"no danger",
+	"react no danger",
 	async (t) => {
 		await testLintMultiple(
 			t,
 			[
 				// INVALID
-				'<div dangerouslySetInnerHTML={{ __html: "Hello World" }}></div>;',
+				'<div dangerouslySetInnerHTML={{ __html: "child" }}></div>;',
+				`React.createElement('div', {dangerouslySetInnerHTML: { __html: "child" }})`,
+				`createElement('div', {dangerouslySetInnerHTML: { __html: "child" }})`,
 				// VALID
 				"<div>Hello World</div>;",
+				"React.createElement('div', 'child)",
+				"createElement('div', 'child)",
 			],
 			{category: "lint/react/noDanger"},
 		);

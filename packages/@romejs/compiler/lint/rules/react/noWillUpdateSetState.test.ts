@@ -2,7 +2,7 @@ import {test} from "rome";
 import {testLintMultiple} from "../testHelpers";
 
 test(
-	"no this.setState in componentWillUpdate",
+	"react no will update set state",
 	async (t) => {
 		await testLintMultiple(
 			t,
@@ -29,8 +29,35 @@ test(
         `,
 				`
         class Hello extends Component {
-          UNSAFE_componentWillUpdate() {
+          componentWillUpdate() {
+            this.setState({
+              name: 'John'
+            });
+          }
+        }
+        `,
+				`
+        class Hello extends Component {
+          componentWillUpdate() {
             foo();
+            this.setState({
+              name: 'John'
+            });
+          }
+        }
+        `,
+				`
+        class Hello extends React.Component {
+          UNSAFE_componentWillUpdate() {
+            this.setState({
+              name: 'John'
+            });
+          }
+        }
+        `,
+				`
+        class Hello extends Component {
+          UNSAFE_componentWillUpdate() {
             this.setState({
               name: 'John'
             });
@@ -41,14 +68,29 @@ test(
 				`
         class Hello extends React.Component {
           componentWillUpdate() {
-						foo()
+            if (condition) {
+              this.setState({
+                name: 'John'
+              });
+            }
           }
         }
 				`,
 				`
         class Hello extends React.Component {
-          UNSAFE_componentWillUpdate() {
-						foo()
+          componentWillUpdate() {
+            condition && this.setState({
+							name: 'John'
+						});
+          }
+        }
+        `,
+				`
+        class Hello extends React.Component {
+          componentWillUpdate() {
+            condition ? this.setState({
+							name: 'John'
+						}) : undefined;
           }
         }
         `,

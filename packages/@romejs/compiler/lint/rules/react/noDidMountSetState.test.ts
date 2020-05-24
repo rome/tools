@@ -2,7 +2,7 @@ import {test} from "rome";
 import {testLintMultiple} from "../testHelpers";
 
 test(
-	"no did mount set state",
+	"react no did mount set state",
 	async (t) => {
 		await testLintMultiple(
 			t,
@@ -55,6 +55,24 @@ test(
                 name: 'John'
               });
             }
+          }
+        }
+				`,
+				`
+        class Hello extends React.Component {
+          componentDidMount() {
+            condition && this.setState({
+							name: 'John'
+						});
+          }
+        }
+        `,
+				`
+        class Hello extends React.Component {
+          componentDidMount() {
+            condition ? this.setState({
+							name: 'John'
+						}) : undefined;
           }
         }
         `,

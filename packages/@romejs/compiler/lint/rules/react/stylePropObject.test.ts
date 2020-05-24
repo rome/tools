@@ -9,13 +9,15 @@ import {test} from "rome";
 import {testLintMultiple} from "../testHelpers";
 
 test(
-	"ensure style property is an object",
+	"react style prop object",
 	async (t) => {
 		await testLintMultiple(
 			t,
 			[
 				// INVALID
 				"<div style={true} />",
+				"<div style={1} />",
+				"<div style={undefined} />",
 				`<div style="color: 'red'" />`,
 				`<div style={"color: 'red'"} />`,
 				// VALID

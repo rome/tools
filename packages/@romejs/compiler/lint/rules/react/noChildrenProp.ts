@@ -6,44 +6,43 @@
  */
 
 import {Path} from "@romejs/compiler";
+import {AnyNode} from "@romejs/ast";
 import {
-	AnyNode,
-	JSObjectMethod,
-	JSObjectProperty,
-	JSSpreadProperty,
-	JSXAttribute,
-	JSXSpreadAttribute,
-} from "@romejs/ast";
-import {doesNodeMatchPattern} from "@romejs/js-ast-utils";
+	doesNodeMatchPattern,
+	getJSXAttribute,
+	isJSXElement,
+} from "@romejs/js-ast-utils";
 import {descriptions} from "@romejs/diagnostics";
-function isAttributePassingChildrenProp(
-	attribute: JSXAttribute | JSXSpreadAttribute,
-): boolean {
-	return attribute.type === "JSXAttribute" && attribute.name.name === "children";
+
+function getJSXChildrenProp(node: AnyNode) {
+	return isJSXElement(node) && getJSXAttribute(node, "children");
 }
-function isCreateElementPassingChildrenProp(
-	property: JSObjectProperty | JSObjectMethod | JSSpreadProperty,
-): boolean {
-	return (
-		property.type === "JSObjectProperty" &&
-		property.key.value.type === "JSIdentifier" &&
-		property.key.value.name === "children"
-	);
+
+function getCreateElementChildrenProp(node: AnyNode) {
+	if (
+		node.type === "JSCallExpression" &&
+		(doesNodeMatchPattern(node.callee, "React.createElement") ||
+		doesNodeMatchPattern(node.callee, "createElement")) &&
+		node.arguments[1].type === "JSObjectExpression"
+	) {
+		return node.arguments[1].properties.find((property) =>
+			property.type === "JSObjectProperty" &&
+			property.key.value.type === "JSIdentifier" &&
+			property.key.value.name === "children"
+		);
+	}
+	return undefined;
 }
+
 export default {
-	name: "noChildrenProp",
+	name: "reactNoChildrenProp",
 	enter(path: Path): AnyNode {
 		const {node} = path;
-		if (
-			(node.type === "JSXElement" &&
-			node.attributes.find(isAttributePassingChildrenProp)) ||
-			(node.type === "JSCallExpression" &&
-			doesNodeMatchPattern(node.callee, "React.createElement") &&
-			node.arguments[1].type === "JSObjectExpression" &&
-			node.arguments[1].properties.find(isCreateElementPassingChildrenProp))
-		) {
+		const childrenProp =
+			getJSXChildrenProp(node) || getCreateElementChildrenProp(node);
+		if (childrenProp) {
 			path.context.addNodeDiagnostic(
-				node,
+				childrenProp,
 				descriptions.LINT.REACT_NO_CHILDREN_PROP,
 			);
 		}

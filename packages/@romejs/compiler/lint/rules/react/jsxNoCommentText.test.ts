@@ -9,7 +9,7 @@ import {test} from "rome";
 import {testLintMultiple} from "../testHelpers";
 
 test(
-	"jsx no comment textnodes",
+	"react jsx no comment text",
 	async (t) => {
 		await testLintMultiple(
 			t,
@@ -17,8 +17,10 @@ test(
 				// INVALID
 				"const a = <div>// comment</div>",
 				"const a = <div>/* comment */</div>",
+				"const a = <div>/** comment */</div>",
 				// VALID
 				"const a = <div>{/* comment */}</div>",
+				"const a = <div>{/** comment */}</div>",
 				'const a = <div className={"cls" /* comment */}></div>',
 			],
 			{category: "lint/react/jsxNoCommentText"},

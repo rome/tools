@@ -2,7 +2,7 @@ import {test} from "rome";
 import {testLintMultiple} from "../testHelpers";
 
 test(
-	"button has type",
+	"react button has type",
 	async (t) => {
 		await testLintMultiple(
 			t,

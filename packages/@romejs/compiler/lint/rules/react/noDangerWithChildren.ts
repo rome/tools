@@ -48,7 +48,8 @@ function createElementDangerWithChildren(node: AnyNode): boolean {
 	const propsArgument = node.arguments[node.arguments.length - 2];
 
 	return (
-		doesNodeMatchPattern(node.callee, "React.createElement") &&
+		(doesNodeMatchPattern(node.callee, "React.createElement") ||
+		doesNodeMatchPattern(node.callee, "createElement")) &&
 		node.arguments.length === 3 &&
 		propsArgument.type === "JSObjectExpression" &&
 		propsArgument.properties.some((prop) =>
@@ -86,7 +87,8 @@ function createElementDangerWithPropChildren(node: AnyNode): boolean {
 	}
 
 	return (
-		doesNodeMatchPattern(node.callee, "React.createElement") &&
+		(doesNodeMatchPattern(node.callee, "React.createElement") ||
+		doesNodeMatchPattern(node.callee, "createElement")) &&
 		propsArgument.type === "JSObjectExpression" &&
 		hasDangerAttribute(propsArgument) &&
 		hasChildrenAttribute(propsArgument)
@@ -94,7 +96,7 @@ function createElementDangerWithPropChildren(node: AnyNode): boolean {
 }
 
 export default {
-	name: "noDangerWithChildren",
+	name: "reactNoDangerWithChildren",
 
 	enter(path: Path): AnyNode {
 		const {node} = path;

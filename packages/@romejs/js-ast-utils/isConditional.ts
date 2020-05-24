@@ -19,6 +19,9 @@ export default function isConditional(
 		case "JSIfStatement":
 			return true;
 
+		case "JSLogicalExpression":
+			return true;
+
 		default:
 			return false;
 	}
