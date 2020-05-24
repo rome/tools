@@ -1,3 +1,4 @@
+@import "_variables";
 @import "_mixins";
 @import "_grid";
 @import "_global";
@@ -9,18 +10,18 @@
 
 .sidebar {
   z-index: 1;
-  width: 320px;
+  width: $sidebar-width;
   list-style: none;
   overflow-y: auto;
   overflow-x: hidden;
   font-size: 0.9rem;
   position: fixed;
-  padding: 12px;
+  padding: $unit;
   top: 64px;
   bottom: 0;
   left: 0;
-  width: 320px;
-  border-right: 1px solid #eaeaea;
+  width: $sidebar-width;
+  border-right: 1px solid $gray-color;
   background-color: #ffffff;
   transition: transform 250ms ease-in;
 
@@ -34,11 +35,11 @@
 }
 
 .main {
-  margin-left: 320px;
+  margin-left: $sidebar-width;
   overflow: hidden;
 
   @include mobile-only() {
-    margin-top: 64px;
+    margin-top: $unit * 4;
     margin-left: 0;
   }
 }

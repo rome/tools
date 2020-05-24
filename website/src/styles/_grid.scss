@@ -1,9 +1,9 @@
 .row {
   display: flex;
-  padding: 0 8px;
+  padding: 0 $unit / 2;
 
   > div {
-    padding: 0 8px;
+    padding: 0 $unit / 2;
     flex: 1;
   }
 

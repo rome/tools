@@ -9,8 +9,9 @@ html {
     sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
   text-rendering: optimizelegibility;
   -webkit-font-smoothing: antialiased;
-  color: rgb(28, 30, 33);
+  color: $text-color;
   line-height: 1.65;
+  background-color: #ffffff;
 }
 
 body {

@@ -1,12 +1,11 @@
 .footer {
-  max-width: 940px;
+  max-width: $container-width;
   margin: 0 auto;
-  padding: 16px;
-  border-top: 1px solid #eaeaea;
+  padding: $unit;
+  border-top: 1px solid $gray-color;
   
   h4 {
-    margin-top: 0;
-    margin-bottom: 16px;
+    margin: $unit 0;
   }
 
   ul {
@@ -21,6 +20,7 @@
 }
 
 .copyright {
+  margin-top: $unit;
   display: block;
   text-align: center;
 }

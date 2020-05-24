@@ -4,7 +4,7 @@
   a {
     text-decoration: none;
     height: auto;
-    padding: 3px 9px;
+    padding: $unit / 4 $unit / 2;
     border-radius: 4px;
     display: inline-block;
   }
@@ -14,7 +14,11 @@
   }
 
   .is-active-link {
-    color: rgb(255, 201, 5);
-    background-color: rgba(0, 0, 0, 0.05);
+    color: $primary-color;
+    background-color: $gray-color;
+  }
+
+  .toc-container > .toc-list:first-child {
+    padding: 0;
   }
 }

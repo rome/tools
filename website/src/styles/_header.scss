@@ -5,23 +5,23 @@
   left: 0;
   right: 0;
   top: 0;
-  height: 64px;
+  height: $unit * 4;
   display: flex;
   align-items: center;
-  padding: 0 16px;
-  width: 320px;
+  padding: 0 $unit;
+  width: $sidebar-width;
 
   .stretch {
     flex-grow: 1;
   }
 
   @include desktop-only() {
-    border-right: 1px solid #eaeaea;
+    border-right: 1px solid $gray-color;
   }
 
   @include mobile-only() {
     width: 100%;
-    border-bottom: 1px solid #eaeaea;
+    border-bottom: 1px solid $gray-color;
   }
 }
 
@@ -33,7 +33,7 @@
 
   img {
     width: 1em;
-    margin-right: 12px;
+    margin-right: $unit / 2;
   }
 
   .logo-text {
