@@ -2,7 +2,7 @@ import {test} from "rome";
 import {testLintMultiple} from "../testHelpers";
 
 test(
-	'require anchors with target="_blank" to use rel="noreferrer"',
+	"jsx a11y no target blank",
 	async (t) => {
 		await testLintMultiple(
 			t,
@@ -16,6 +16,7 @@ test(
 				'<a href="http://external.link" rel="noopener noreferrer" target="_blank">child</a>',
 				'<a href="relative/link" rel="noreferrer" target="_blank">child</a>',
 				'<a href="/absolute/link" rel="noreferrer" target="_blank">child</a>',
+				'<a href={dynamicLink} rel="noreferrer" target="_blank">child</a>',
 			],
 			{category: "lint/jsx-a11y/noTargetBlank"},
 		);

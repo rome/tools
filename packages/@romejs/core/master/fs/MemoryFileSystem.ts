@@ -568,7 +568,16 @@ export default class MemoryFileSystem {
 		};
 	}
 
-	getMtime(path: AbsoluteFilePath) {
+	maybeGetMtime(path: AbsoluteFilePath): undefined | number {
+		const stats = this.getFileStats(path);
+		if (stats === undefined) {
+			return undefined;
+		} else {
+			return stats.mtime;
+		}
+	}
+
+	getMtime(path: AbsoluteFilePath): number {
 		const stats = this.getFileStats(path);
 		if (stats === undefined) {
 			throw new Error(`File ${path.join()} not in database, cannot get mtime`);

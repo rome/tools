@@ -2,7 +2,7 @@ import {test} from "rome";
 import {testLintMultiple} from "../testHelpers";
 
 test(
-	"should warn when an invalid lang is provided",
+	"jsx a11y lang test",
 	async (t) => {
 		await testLintMultiple(
 			t,

@@ -10,10 +10,12 @@
 
  unknown:1 lint/jsx-a11y/anchorHasContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Anchor must have content and the content must be accessible by a screen reader.
+  ✖ Provide screen reader accessible content when using anchor elements.
 
     <a />
     ^^^^^
+
+  ℹ All links on a page should have content that is accessible to screen readers.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -34,10 +36,12 @@
 
  unknown:1 lint/jsx-a11y/anchorHasContent ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Anchor must have content and the content must be accessible by a screen reader.
+  ✖ Provide screen reader accessible content when using anchor elements.
 
     <a><TextWrapper aria-hidden /></a>
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ All links on a page should have content that is accessible to screen readers.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -91,5 +95,19 @@
 
 ```
 <a dangerouslySetInnerHTML={{__html: "foo"}} />;
+
+```
+
+### `5`
+
+```
+✔ No known problems!
+
+```
+
+### `5: formatted`
+
+```
+<a><TextWrapper aria-hidden /> visible content</a>;
 
 ```

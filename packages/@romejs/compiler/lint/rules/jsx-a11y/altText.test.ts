@@ -9,7 +9,7 @@ import {test} from "rome";
 import {testLintMultiple} from "../testHelpers";
 
 test(
-	"require alt text in <img>, <area>, <input type='image'> and <object>",
+	"jsx a11y alt text",
 	async (t) => {
 		await testLintMultiple(
 			t,

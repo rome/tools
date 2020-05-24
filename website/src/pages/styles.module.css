@@ -72,10 +72,6 @@
 
 /* Callout */
 
-.calloutPrimary {
-  background-color: var(--ifm-color-primary-darker);
-}
-
 .calloutTagline {
   color: var(--ifm-color-white);
   font-size: 1.5rem;

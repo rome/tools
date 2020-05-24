@@ -8,13 +8,15 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/noOnChange ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:8 lint/jsx-a11y/noOnChange ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ onBlur should be used in favor of onChange. Only use onChange if absolutely necessary without
-    negatively affecting keyboard only or screen reader users.
+  ✖ Provide an onBlur event instead of an onChange event unless absolutely necessary.
 
     <select onChange={() => {}} />;
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            ^^^^^^^^^^^^^^^^^^^
+
+  ℹ The onBlur event is more declarative and reliable for indicating input changes when using
+    keyboard navigation.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -33,13 +35,15 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/noOnChange ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:8 lint/jsx-a11y/noOnChange ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ onBlur should be used in favor of onChange. Only use onChange if absolutely necessary without
-    negatively affecting keyboard only or screen reader users.
+  ✖ Provide an onBlur event instead of an onChange event unless absolutely necessary.
 
     <select onChange={handleOnChange} />;
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            ^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ The onBlur event is more declarative and reliable for indicating input changes when using
+    keyboard navigation.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -58,13 +62,15 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/noOnChange ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:8 lint/jsx-a11y/noOnChange ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ onBlur should be used in favor of onChange. Only use onChange if absolutely necessary without
-    negatively affecting keyboard only or screen reader users.
+  ✖ Provide an onBlur event instead of an onChange event unless absolutely necessary.
 
     <option onChange={() => {}} />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            ^^^^^^^^^^^^^^^^^^^
+
+  ℹ The onBlur event is more declarative and reliable for indicating input changes when using
+    keyboard navigation.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -83,13 +89,15 @@
 
 ```
 
- unknown:1 lint/jsx-a11y/noOnChange ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ unknown:1:8 lint/jsx-a11y/noOnChange ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ onBlur should be used in favor of onChange. Only use onChange if absolutely necessary without
-    negatively affecting keyboard only or screen reader users.
+  ✖ Provide an onBlur event instead of an onChange event unless absolutely necessary.
 
     <option onChange={() => {}} {...props} />
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            ^^^^^^^^^^^^^^^^^^^
+
+  ℹ The onBlur event is more declarative and reliable for indicating input changes when using
+    keyboard navigation.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

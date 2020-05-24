@@ -5,6 +5,23 @@ import {
 	hasJSXAttribute,
 	isJSXElement,
 } from "@romejs/js-ast-utils";
+import {JSXAttribute, JSXElement} from "@romejs/ast";
+
+function createDiagnostic(path: Path, node: JSXElement, attribute: JSXAttribute) {
+	return path.context.addFixableDiagnostic(
+		{
+			old: attribute,
+			fixed: {
+				...node,
+				attributes: node.attributes.filter((attribute) =>
+					attribute.type === "JSXAttribute" &&
+					attribute.name.name !== "tabIndex"
+				),
+			},
+		},
+		descriptions.LINT.JSX_A11Y_TABINDEX_NO_POSITIVE,
+	);
+}
 
 export default {
 	name: "tabindexNoPositive",
@@ -20,10 +37,7 @@ export default {
 			) {
 				const tabIndexValue = attribute.value.value;
 				if (Number(tabIndexValue) > 0) {
-					path.context.addNodeDiagnostic(
-						node,
-						descriptions.LINT.JSX_A11Y_TABINDEX_NO_POSITIVE,
-					);
+					createDiagnostic(path, node, attribute);
 				}
 			}
 
@@ -33,13 +47,13 @@ export default {
 				attribute.value.type === "JSXExpressionContainer"
 			) {
 				const expression = attribute.value.expression;
-				if (expression.type === "JSNumericLiteral") {
+				if (
+					expression.type === "JSNumericLiteral" ||
+					expression.type === "JSStringLiteral"
+				) {
 					const tabIndexValue = expression.value;
 					if (Number(tabIndexValue) > 0) {
-						path.context.addNodeDiagnostic(
-							node,
-							descriptions.LINT.JSX_A11Y_TABINDEX_NO_POSITIVE,
-						);
+						createDiagnostic(path, node, attribute);
 					}
 				}
 			}

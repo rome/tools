@@ -3,7 +3,7 @@ import {TransformExitResult} from "@romejs/compiler/types";
 import {descriptions} from "@romejs/diagnostics";
 import {JSXElement} from "@romejs/ast";
 import {hasJSXAttribute, isJSXElement} from "@romejs/js-ast-utils";
-import {ARIAProperty, ariaPropsMap} from "../aria-helpers";
+import {ARIAProperty, ariaPropsMap} from "../ariaHelpers";
 
 function hasAriaAttributes(node: JSXElement): boolean {
 	const hasRole = hasJSXAttribute(node, "role");
