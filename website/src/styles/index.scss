@@ -1,34 +1,45 @@
+@import "_variables";
 @import "_mixins";
+@import "_grid";
 @import "_global";
 @import "_header";
 @import "_table-of-contents";
 @import "_content";
 @import "_hero";
+@import "_footer";
 
 .sidebar {
-  width: 320px;
+  z-index: 1;
+  width: $sidebar-width;
   list-style: none;
   overflow-y: auto;
   overflow-x: hidden;
   font-size: 0.9rem;
+  position: fixed;
+  padding: $unit;
+  top: 64px;
+  bottom: 0;
+  left: 0;
+  width: $sidebar-width;
+  border-right: 1px solid $gray-color;
+  background-color: #ffffff;
+  transition: transform 250ms ease-in;
 
-  @include desktop-only() {
-    position: fixed;
-    padding: 12px;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 320px;
-    border-right: 1px solid #eaeaea;
+  @include mobile-only() {
+    transform: translateX(-100%);
+
+    &.visible {
+      transform: translateX(0);
+    }
   }
 }
 
 .main {
-  margin-left: 320px;
+  margin-left: $sidebar-width;
   overflow: hidden;
 
   @include mobile-only() {
-    margin-top: 64px;
-    margin-left: 0px;
+    margin-top: $unit * 4;
+    margin-left: 0;
   }
 }

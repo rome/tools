@@ -6,7 +6,7 @@ const fs = require("fs");
 const Options = {
   dirInput: "src",
   staticPath: "static",
-  docsPath: "docs",
+  docsPath: "_includes/docs",
   dirOutput: "build",
 };
 

@@ -1,12 +1,12 @@
 .content {
-  max-width: 940px;
+  max-width: $container-width;
   margin: 0 auto;
-  padding: 0 16px 64px 16px;
+  padding: 0 $unit * 2 $unit * 4 $unit * 2;
 
   .header-anchor {
     display: none;
     text-decoration: none;
-    color: rgb(255, 201, 5);
+    color: $primary-color;
 
     &:hover {
       text-decoration: underline;
@@ -20,6 +20,6 @@
   }
 
   pre {
-    border-radius: 4px;
+    border-radius: $unit-border-radius;
   }
 }

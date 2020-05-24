@@ -15,6 +15,6 @@ document
   .getElementsByClassName('mobile-handle')[0]
   .addEventListener('click', function (event) {
     event.preventDefault();
-    const toc = document.getElementsByClassName('table-of-contents')[0];
-    toc.classList.toggle('mobile-visible');
+    const toc = document.getElementsByClassName('sidebar')[0];
+    toc.classList.toggle('visible');
   });

@@ -1,6 +1,6 @@
 .hero {
   position: relative;
-  padding: 32px;
+  padding: $unit * 2 0;
   color: rgb(68, 73, 80);
 
   &::before {

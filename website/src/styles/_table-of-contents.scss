@@ -4,7 +4,7 @@
   a {
     text-decoration: none;
     height: auto;
-    padding: 3px 9px;
+    padding: $unit / 4 $unit / 2;
     border-radius: 4px;
     display: inline-block;
   }
@@ -14,23 +14,11 @@
   }
 
   .is-active-link {
-    color: rgb(255, 201, 5);
-    background-color: rgba(0, 0, 0, 0.05);
+    color: $primary-color;
+    background-color: $gray-color;
   }
 
-  @include mobile-only() {
-    position: fixed;
-    z-index: 9;
-    left: 0;
-    top: 64px;
-    bottom: 0;
-    transform: translateX(-100%);
-    transition: transform ease-in 100ms;
-    padding-top: 16px;
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
-
-    &.mobile-visible {
-      transform: translateX(0%);
-    }
+  .toc-container > .toc-list:first-child {
+    padding: 0;
   }
 }

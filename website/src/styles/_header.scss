@@ -1,35 +1,27 @@
 .header {
+  z-index: 2;
   background-color: #ffffff;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: $unit * 4;
+  display: flex;
+  align-items: center;
+  padding: 0 $unit;
+  width: $sidebar-width;
 
   .stretch {
     flex-grow: 1;
   }
 
-  .mobile-handle {
-    display: none;
-    height: 32px;
-  }
-
   @include desktop-only() {
-    margin-left: 16px;
-    margin-bottom: 16px;
+    border-right: 1px solid $gray-color;
   }
 
   @include mobile-only() {
-    position: fixed;
-    z-index: 10;
-    left: 0;
-    right: 0;
-    top: 0;
-    height: 64px;
-    border-bottom: 1px solid #eaeaea;
-    display: flex;
-    align-items: center;
-    padding: 0 16px;
-
-    .mobile-handle {
-      display: block;
-    }
+    width: 100%;
+    border-bottom: 1px solid $gray-color;
   }
 }
 
@@ -41,7 +33,7 @@
 
   img {
     width: 1em;
-    margin-right: 12px;
+    margin-right: $unit / 2;
   }
 
   .logo-text {
@@ -51,8 +43,13 @@
     position: relative;
     top: 4px;
   }
+}
+
+.mobile-handle {
+  height: 32px;
+  display: none;
 
   @include mobile-only() {
-    font-size: 26px;
+    display: inline-block;
   }
 }
