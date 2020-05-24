@@ -8,6 +8,10 @@
 @import "_hero";
 @import "_footer";
 
+.no-scroll {
+  overflow: hidden;
+}
+
 .sidebar {
   @include transition-timing;
   z-index: 1;

@@ -19,7 +19,9 @@ function mobileToggleEvent(event){
   event.preventDefault();
   toc.classList.toggle('visible');
   overlay.classList.toggle('visible');
+  document.body.classList.toggle('no-scroll');
 }
 
-mobileHandle.addEventListener('click', mobileToggleEvent);
-overlay.addEventListener('click', mobileToggleEvent);
+mobileHandle.addEventListener('click', mobileToggleEvent, false);
+overlay.addEventListener('click', mobileToggleEvent, false);
+overlay.addEventListener("touchstart", mobileToggleEvent, false);
