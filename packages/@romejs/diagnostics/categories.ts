@@ -161,6 +161,7 @@ type LintDiagnosticCategory =
 	| "lint/jsx-a11y/scope"
 	| "lint/jsx-a11y/tabindexNoPositive"
 	| "lint/react/buttonHasType"
+	| "lint/react/jsxFragments"
 	| "lint/react/jsxKey"
 	| "lint/react/jsxNoCommentText"
 	| "lint/react/jsxNoDuplicateProps"

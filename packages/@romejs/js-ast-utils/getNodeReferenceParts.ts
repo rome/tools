@@ -51,7 +51,10 @@ export default function getNodeReferenceParts(node: undefined | AnyNode): Result
 			parts.push({node, value: node.meta.name});
 			parts.push({node, value: node.property.name});
 			return false;
-		} else if (node.type === "JSMemberExpression") {
+		} else if (
+			node.type === "JSMemberExpression" ||
+			node.type === "JSXMemberExpression"
+		) {
 			const stop = add(node.object);
 			if (stop) {
 				return true;

@@ -46,6 +46,17 @@ export const lint = createDiagnosticsCategory({
 			},
 		],
 	}),
+	REACT_JSX_FRAGMENTS: {
+		category: "lint/react/jsxFragments",
+		message: "Use shorthand syntax for <emphasis>Fragment</emphasis> elements instead of standard syntax.",
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "Shorthand fragment syntax saves keystrokes and is only unapplicable when keys are required.",
+			},
+		],
+	},
 	REACT_NO_REDUNDANT_SHOULD_COMPONENT_UPDATE: {
 		category: "lint/react/noRedundantShouldComponentUpdate",
 		message: "Do not implement <emphasis>shouldComponentUpdate</emphasis> when extending <emphasis>React.PureComponent</emphasis>.",
