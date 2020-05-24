@@ -25,6 +25,7 @@
   border-right: 1px solid $gray-color;
   background-color: #ffffff;
   transition-property: transform;
+  z-index: 2;
 
   @include mobile-only() {
     transform: translateX(-100%);
@@ -45,7 +46,7 @@
     opacity: 0;
     transition-property: opacity;
     display: block;
-
+    z-index: 1;
     &.visible {
       top: 0;
       left: 0;
