@@ -9,7 +9,14 @@ tocbot.init({
   headingSelector: 'h1, h2, h3',
   hasInnerContainers: true,
   collapseDepth: 3,
-  onClick: mobileToggleEvent,
+  onClick: function(event){
+
+    //only call when on mobile
+    if(toc.classList.contains('visible')){
+      mobileToggleEvent(event);
+    }
+
+  },
   headingObjectCallback: function (def, domElement) {
     def.textContent = domElement.innerText;
     return def;
