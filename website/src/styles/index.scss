@@ -41,16 +41,16 @@
   @include mobile-only() {
     @include transition-timing;
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
     background: #181818;
     opacity: 0;
-    display: block;
     transition-property: opacity;
+    display: block;
 
     &.visible {
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       opacity: 0.5;
     }
   }
