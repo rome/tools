@@ -16,6 +16,17 @@ import {buildSuggestionAdvice} from "../helpers";
 import {createDiagnosticsCategory, orJoin} from "./index";
 
 export const lint = createDiagnosticsCategory({
+	JSX_A11Y_CLICK_EVENTS_HAVE_KEY_EVENTS: {
+		category: "lint/jsx-a11y/clickEventsHaveKeyEvents",
+		message: "Pair the <emphasis>onClick</emphasis> mouse event with the <emphasis>onKeyUp</emphasis>, the <emphasis>onKeyDown</emphasis>, or the <emphasis>onKeyPress</emphasis> keyboard event.",
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "Actions triggered using mouse events should have corresponding keyboard events to account for keyboard-only navigation.",
+			},
+		],
+	},
 	REACT_JSX_NO_DUPLICATE_PROPS: (key: string) => ({
 		category: "lint/react/jsxNoDuplicateProps",
 		message: `React does not support duplicate props. The <emphasis>${key}</emphasis> prop is duplicated.`,
