@@ -19,6 +19,7 @@ export const lint = createDiagnosticsCategory({
 	JSX_A11Y_ARIA_PROPS: (attribute: string) => ({
 		category: "lint/jsx-a11y/ariaProps",
 		message: `<emphasis>${attribute}</emphasis> is an invalid ARIA attribute.`,
+	}),
 	JSX_A11Y_CLICK_EVENTS_HAVE_KEY_EVENTS: {
 		category: "lint/jsx-a11y/clickEventsHaveKeyEvents",
 		message: "Pair the <emphasis>onClick</emphasis> mouse event with the <emphasis>onKeyUp</emphasis>, the <emphasis>onKeyDown</emphasis>, or the <emphasis>onKeyPress</emphasis> keyboard event.",

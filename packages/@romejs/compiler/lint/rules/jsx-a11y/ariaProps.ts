@@ -2,7 +2,7 @@ import {Path} from "@romejs/compiler";
 import {findClosestStringMatch, toKebabCase} from "@romejs/string-utils";
 import {descriptions} from "@romejs/diagnostics";
 import {TransformExitResult} from "@romejs/compiler/types";
-import {ARIAProperty, ariaPropsMap} from "../aria-helpers";
+import {ARIAProperty, ariaPropsMap} from "../ariaHelpers";
 
 export default {
 	name: "ariaProps",
