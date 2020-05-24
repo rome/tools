@@ -1,9 +1,11 @@
 import {Path, TransformExitResult} from "@romejs/compiler";
 import {descriptions} from "@romejs/diagnostics";
-import {doesNodeMatchPattern} from "@romejs/js-ast-utils";
+import {doesNodeMatchPattern, isConditional} from "@romejs/js-ast-utils";
 
 function inComponentWillUpdate(path: Path): boolean {
+	const func = path.findAncestry(({node}) => isConditional(node)) !== undefined;
 	return (
+		!func &&
 		path.findAncestry(({node}) =>
 			node.type === "JSClassMethod" &&
 			node.key.type === "JSStaticPropertyKey" &&
@@ -15,7 +17,7 @@ function inComponentWillUpdate(path: Path): boolean {
 }
 
 export default {
-	name: "noWillUpdateSetState",
+	name: "reactNoWillUpdateSetState",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 

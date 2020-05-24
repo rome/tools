@@ -1,15 +1,8 @@
-/**
- * Copyright (c) Facebook, Inc. and its affiliates.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
 import {test} from "rome";
 import {testLintMultiple} from "../testHelpers";
 
 test(
-	"no this.setState in componentDidUpdate",
+	"react no did update set state",
 	async (t) => {
 		await testLintMultiple(
 			t,
@@ -62,6 +55,24 @@ test(
                 name: 'John'
               });
             }
+          }
+        }
+				`,
+				`
+        class Hello extends React.Component {
+          componentDidUpdate() {
+            condition && this.setState({
+							name: 'John'
+						});
+          }
+        }
+        `,
+				`
+        class Hello extends React.Component {
+          componentDidUpdate() {
+            condition ? this.setState({
+							name: 'John'
+						}) : undefined;
           }
         }
         `,

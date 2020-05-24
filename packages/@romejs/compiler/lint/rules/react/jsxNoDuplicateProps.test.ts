@@ -2,7 +2,7 @@ import {test} from "rome";
 import {testLintMultiple} from "../testHelpers";
 
 test(
-	"jsx no duplicate props",
+	"react jsx no duplicate props",
 	async (t) => {
 		await testLintMultiple(
 			t,

@@ -33,7 +33,7 @@ export const lint = createDiagnosticsCategory({
 	},
 	REACT_JSX_NO_DUPLICATE_PROPS: (key: string) => ({
 		category: "lint/react/jsxNoDuplicateProps",
-		message: `React does not support duplicate props. The <emphasis>${key}</emphasis> prop is duplicated.`,
+		message: `Avoid duplicate component props. Check the <emphasis>${key}</emphasis> prop.`,
 	}),
 	REACT_NO_STRING_REFS: (details: string) => ({
 		category: "lint/react/noStringRefs",
@@ -42,27 +42,53 @@ export const lint = createDiagnosticsCategory({
 			{
 				type: "log",
 				category: "info",
-				text: 'See <hyperlink target="https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs" /> for more information',
+				text: 'See <hyperlink target="https://reactjs.org/docs/refs-and-the-dom.html#legacy-api-string-refs" /> for more information.',
 			},
 		],
 	}),
 	REACT_NO_REDUNDANT_SHOULD_COMPONENT_UPDATE: {
 		category: "lint/react/noRedundantShouldComponentUpdate",
 		message: "Do not implement <emphasis>shouldComponentUpdate</emphasis> when extending <emphasis>React.PureComponent</emphasis>.",
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "When the shouldComponentUpdate method is implemented, extending React.PureComponent provides no benefit.",
+			},
+		],
 	},
-	REACT_NO_UNSAFE: (oldMethod: string, newMethod: string, details: string) => ({
+	REACT_NO_UNSAFE: (oldMethod: string, newMethod: string) => ({
 		category: "lint/react/noUnsafe",
-		message: `<emphasis>${oldMethod}</emphasis> is unsafe for use in async rendering. Update the component to use ${newMethod} instead. ${details}`,
+		message: `The <emphasis>${oldMethod}</emphasis> method is unsafe for use in async rendering. Use the <emphasis>${newMethod}</emphasis> method instead.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: 'See <hyperlink target="https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html" /> for more information.',
+			},
+		],
 	}),
 	REACT_NO_DID_MOUNT_SET_STATE: {
 		category: "lint/react/noDidMountSetState",
-		message: "Avoid <emphasis>this.setState</emphasis> in <emphasis>componentDidMount</emphasis>. This can cause an unexpected second render, which can cause visual layout thrashing.",
+		message: "Avoid calling <emphasis>this.setState</emphasis> in the <emphasis>componentDidMount</emphasis> method.",
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "Updating state after mounting causes a second render that can cause visual layout thrashing.",
+			},
+		],
 	},
 	REACT_BUTTON_HAS_TYPE: {
 		category: "lint/react/buttonHasType",
-		message: `Use an explicit <emphasis>type</emphasis> prop on <emphasis>${escapeMarkup(
-			"<button>",
-		)}</emphasis> elements.`,
+		message: "Provide an explicit <emphasis>type</emphasis> prop on <emphasis>button</emphasis> elements.",
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: 'The default button type of "submit" causes page reloads and is not typical behavior in a React application.',
+			},
+		],
 	},
 	JSX_A11Y_TABINDEX_NO_POSITIVE: {
 		category: "lint/jsx-a11y/tabindexNoPositive",
@@ -102,7 +128,14 @@ export const lint = createDiagnosticsCategory({
 	},
 	REACT_NO_WILL_UPDATE_SET_STATE: {
 		category: "lint/react/noWillUpdateSetState",
-		message: "Avoid <emphasis>this.setState</emphasis> in <emphasis>componentWillUpdate</emphasis>",
+		message: "Avoid calling <emphasis>this.setState</emphasis> in the <emphasis>componentWillUpdate</emphasis> method.",
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "Updating state immediately before a scheduled render causes a second render that can cause visual layout thrashing.",
+			},
+		],
 	},
 	JSX_A11Y_ARIA_UNSUPPORTED_ELEMENTS: {
 		category: "lint/jsx-a11y/ariaUnsupportedElements",
@@ -254,46 +287,109 @@ export const lint = createDiagnosticsCategory({
 	},
 	REACT_JSX_KEY: (origin: string) => ({
 		category: "lint/react/jsxKey",
-		message: `Missing the "key" prop for element in ${origin}`,
+		message: `Provide a <emphasis>key</emphasis> prop with a unique value for each element in <emphasis>${origin}</emphasis>.`,
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "Keys help React identify which items have changed, are added, or are removed.",
+			},
+		],
 	}),
 	REACT_JSX_NO_COMMENT_TEXT: {
 		category: "lint/react/jsxNoCommentText",
-		message: "Comments inside children should be placed in braces",
+		message: "Wrap <emphasis>comments</emphasis> inside children within <emphasis>braces</emphasis>.",
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "JavaScript comment sequences are not supported by JSX and result in unwanted characters on-screen.",
+			},
+		],
 	},
 	REACT_NO_CHILDREN_PROP: {
 		category: "lint/react/noChildrenProp",
-		message: "children should not be passed as a prop",
+		message: "Avoid passing <emphasis>children</emphasis> using a prop.",
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "The canonical way to pass children in React is to use JSX elements or additional arguments to React.createElement.",
+			},
+		],
 	},
 	REACT_NO_DANGER: {
 		category: "lint/react/noDanger",
-		message: "dangerouslySetInnerHTML should be avoided",
+		message: "Avoid passing content using the <emphasis>dangerouslySetInnerHTML</emphasis> prop.",
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "Setting content using code can expose users to cross-site scripting (XSS) attacks.",
+			},
+		],
 	},
 	REACT_NO_DANGER_WITH_CHILDREN: {
 		category: "lint/react/noDangerWithChildren",
-		message: "Only set one of <emphasis>children</emphasis> or <emphasis>props.dangerouslySetInnerHTML</emphasis>.",
+		message: "Avoid passing both <emphasis>children</emphasis> and the <emphasis>dangerouslySetInnerHTML</emphasis> prop.",
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "Setting HTML content will inadvertently override any passed children in React.",
+			},
+		],
 	},
 	REACT_NO_DID_UPDATE_SET_STATE: {
 		category: "lint/react/noDidUpdateSetState",
-		message: "Avoid this.setState in componentDidUpdate",
+		message: "Avoid calling <emphasis>this.setState</emphasis> in the <emphasis>componentDidUpdate</emphasis> method.",
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "Updating state immediately after a previous update causes a second render that can cause visual layout thrashing.",
+			},
+		],
 	},
 	REACT_NO_FIND_DOM_NODE: {
 		category: "lint/react/noFindDOMNode",
-		message: "Do not use findDOMNode",
+		message: "Avoid using the <emphasis>findDOMNode</emphasis> function.",
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "React plans to deprecate the findDOMNode function entirely since it prevents internal optimizations. Use callback refs instead.",
+			},
+		],
 	},
 	REACT_REACT_IN_JSX_SCOPE: {
 		category: "lint/react/reactInJsxScope",
-		message: `<emphasis>React</emphasis> must be in scope when using JSX`,
+		message: "<emphasis>React</emphasis> must be in scope when using JSX.",
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "The React JSX parser must be available in modules that use JSX syntax.",
+			},
+		],
 	},
 	REACT_STYLE_PROP_OBJECT: {
 		category: "lint/react/stylePropObject",
-		message: "<emphasis>style</emphasis> property value must be an object.",
+		message: "The <emphasis>style</emphasis> prop value must be an object.",
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "React will ignore non-object style props, even valid JSON strings.",
+			},
+		],
 	},
 	REACT_VOID_DOM_ELEMENTS_NO_CHILDREN: (
 		element: string,
 		properties: Array<string>,
 	) => ({
 		category: "lint/react/voidDomElementsNoChildren",
-		message: markup`<emphasis>${element}</emphasis> is a void element tag and must not have <emphasis>${orJoin(
+		message: `<emphasis>${element}</emphasis> is a void element tag and must not have <emphasis>${orJoin(
 			properties,
 		)}</emphasis>.`,
 	}),

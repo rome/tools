@@ -2,7 +2,7 @@ import {test} from "rome";
 import {testLintMultiple} from "../testHelpers";
 
 test(
-	"no string refs",
+	"react no string refs",
 	async (t) => {
 		await testLintMultiple(
 			t,

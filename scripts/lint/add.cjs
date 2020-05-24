@@ -20,6 +20,7 @@ if (ruleName === undefined || category === undefined) {
 }
 
 const camelCasedName = toCamelCase(ruleName);
+const groupCamelCasedName = toCamelCase(`${category}-${ruleName}`);
 const spacedName = camelCasedName.replace(/([A-Z+])/g, " $1").trim().toLowerCase();
 const descriptionKey = `${category}_${spacedName}`.toUpperCase().replace(
 	/[\s\-]/g,
@@ -40,7 +41,7 @@ write(
 import {descriptions} from "@romejs/diagnostics";
 
 export default {
- name: "${camelCasedName}",
+ name: "${groupCamelCasedName}",
  enter(path: Path): TransformExitResult {
 	 const {node} = path;
 

@@ -2,7 +2,7 @@ import {test} from "rome";
 import {testLintMultiple} from "../testHelpers";
 
 test(
-	"no unsafe",
+	"react no unsafe",
 	async (t) => {
 		await testLintMultiple(
 			t,
