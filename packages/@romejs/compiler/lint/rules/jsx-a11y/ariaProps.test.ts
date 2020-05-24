@@ -2,7 +2,7 @@ import {test} from "rome";
 import {testLintMultiple} from "../testHelpers";
 
 test(
-	"aria props",
+	"jsx a11y aria props",
 	async (t) => {
 		await testLintMultiple(
 			t,
