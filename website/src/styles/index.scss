@@ -6,20 +6,28 @@
 @import "_hero";
 
 .sidebar {
+  z-index: 1;
   width: 320px;
   list-style: none;
   overflow-y: auto;
   overflow-x: hidden;
   font-size: 0.9rem;
+  position: fixed;
+  padding: 12px;
+  top: 64px;
+  bottom: 0;
+  left: 0;
+  width: 320px;
+  border-right: 1px solid #eaeaea;
+  background-color: #ffffff;
+  transition: transform 250ms ease-in;
 
-  @include desktop-only() {
-    position: fixed;
-    padding: 12px;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    width: 320px;
-    border-right: 1px solid #eaeaea;
+  @include mobile-only() {
+    transform: translateX(-100%);
+
+    &.visible {
+      transform: translateX(0);
+    }
   }
 }
 
@@ -29,6 +37,6 @@
 
   @include mobile-only() {
     margin-top: 64px;
-    margin-left: 0px;
+    margin-left: 0;
   }
 }

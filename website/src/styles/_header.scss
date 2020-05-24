@@ -1,35 +1,27 @@
 .header {
+  z-index: 2;
   background-color: #ffffff;
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  width: 320px;
 
   .stretch {
     flex-grow: 1;
   }
 
-  .mobile-handle {
-    display: none;
-    height: 32px;
-  }
-
   @include desktop-only() {
-    margin-left: 16px;
-    margin-bottom: 16px;
+    border-right: 1px solid #eaeaea;
   }
 
   @include mobile-only() {
-    position: fixed;
-    z-index: 10;
-    left: 0;
-    right: 0;
-    top: 0;
-    height: 64px;
+    width: 100%;
     border-bottom: 1px solid #eaeaea;
-    display: flex;
-    align-items: center;
-    padding: 0 16px;
-
-    .mobile-handle {
-      display: block;
-    }
   }
 }
 
@@ -51,8 +43,13 @@
     position: relative;
     top: 4px;
   }
+}
+
+.mobile-handle {
+  height: 32px;
+  display: none;
 
   @include mobile-only() {
-    font-size: 26px;
+    display: inline-block;
   }
 }
