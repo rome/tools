@@ -1,9 +1,11 @@
 @import "_mixins";
+@import "_grid";
 @import "_global";
 @import "_header";
 @import "_table-of-contents";
 @import "_content";
 @import "_hero";
+@import "_footer";
 
 .sidebar {
   z-index: 1;
