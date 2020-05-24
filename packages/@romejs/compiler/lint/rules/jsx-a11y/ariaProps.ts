@@ -5,7 +5,7 @@ import {TransformExitResult} from "@romejs/compiler/types";
 import {ARIAProperty, ariaPropsMap} from "../ariaHelpers";
 
 export default {
-	name: "ariaProps",
+	name: "jsxA11YAriaProps",
 	enter(path: Path): TransformExitResult {
 		const {node, context} = path;
 
