@@ -175,12 +175,15 @@ export function parseTSModifier<T extends ConstTSModifier>(
 		return undefined;
 	}
 
+	const start = parser.getPosition();
+
 	// @ts-ignore: We are lying here but we validate it in all the correct places
 	const modifier: T = String(parser.state.tokenValue);
 	if (
 		allowedModifiers.includes(modifier) &&
 		tryTSParse(parser, tsNextTokenCanFollowModifier)
 	) {
+		expectTSEnabled(parser, "access modifier", start);
 		return modifier;
 	} else {
 		return undefined;
@@ -217,7 +220,11 @@ function tsIsListTerminator(parser: JSParser, kind: ParsingContext): boolean {
 	throw new Error("Unreachable");
 }
 
-function addTSDiagnostic(parser: JSParser, label: string, start: Position) {
+function expectTSEnabled(
+	parser: JSParser,
+	label: string,
+	start: Position = parser.getPosition,
+) {
 	if (parser.isSyntaxEnabled("ts")) {
 		return;
 	}
@@ -480,6 +487,8 @@ export function maybeParseTSTypeArguments(
 
 function parseTSTypeParameter(parser: JSParser): TSTypeParameter {
 	const start = parser.getPosition();
+	expectTSEnabled(parser, "type parameters", start);
+
 	const name = parseIdentifierName(parser);
 	const constraint = tsEatThenParseType(parser, tt._extends);
 	const _default = tsEatThenParseType(parser, tt.eq);
@@ -1583,6 +1592,8 @@ export function parseTSTypeOrTypePredicateAnnotation(
 	returnToken: TokenType,
 ): AnyTSPrimary {
 	let start = parser.getPosition();
+	expectTSEnabled(parser, "type annotation", start);
+
 	parser.pushScope("TYPE", true);
 	parser.expect(returnToken);
 
@@ -1648,6 +1659,8 @@ export function parseTSTypeAnnotation(
 	eatColon: boolean = true,
 	start: Position = parser.getPosition(),
 ): AnyTSPrimary {
+	expectTSEnabled(parser, "type annotation", start);
+
 	parser.pushScope("TYPE", true);
 
 	if (eatColon) {
@@ -1710,6 +1723,8 @@ function parseTSNonConditionalType(parser: JSParser): AnyTSPrimary {
 
 export function parseTSTypeAssertion(parser: JSParser): TSTypeAssertion {
 	const start = parser.getPosition();
+	expectTSEnabled(parser, "type assertion", start);
+
 	const _const = tryTSNextParseConstantContext(parser);
 	const typeAnnotation = _const || tsNextThenParseType(parser);
 	parser.expectRelational(">");
@@ -1733,6 +1748,8 @@ export function parseTSHeritageClause(
 	parser: JSParser,
 	descriptor: string,
 ): Array<TSExpressionWithTypeArguments> {
+	expectTSEnabled(parser, "heritage clause");
+
 	const originalStart = parser.state.startPos;
 	const delimitedList = parseTSDelimitedList(
 		parser,
@@ -1779,6 +1796,8 @@ export function parseTSInterfaceDeclaration(
 	parser: JSParser,
 	start: Position,
 ): TSInterfaceDeclaration {
+	expectTSEnabled(parser, "interface declaration", start);
+
 	parser.pushScope("TYPE", true);
 	const id = parseBindingIdentifier(parser);
 	const typeParameters = tryParseTSTypeParameters(parser);
@@ -2010,6 +2029,8 @@ export function parseTSImportEqualsDeclaration(
 	start: Position,
 	isExport: boolean = false,
 ): TSImportEqualsDeclaration {
+	expectTSEnabled(parser, "import equals declaration", start);
+
 	const id = parseBindingIdentifier(parser);
 	parser.expect(tt.eq);
 
@@ -2270,13 +2291,15 @@ export function parseTSTypeExpressionStatement(
 			return parseTSInterfaceDeclaration(parser, start);
 		}
 
-		case "type":
+		case "type": {
+			expectTSEnabled(parser, "type alias", start);
 			// TODO perform some lookahead to make sure we want to do this
 			return parseTSTypeAlias(parser, start);
+		}
 
 		case "abstract":
 			if (parser.match(tt._class)) {
-				addTSDiagnostic(parser, "abstract class", start);
+				expectTSEnabled(parser, "abstract class", start);
 				return parseTSAbstractClass(parser, start);
 			} else {
 				break;
@@ -2284,7 +2307,7 @@ export function parseTSTypeExpressionStatement(
 
 		case "enum": {
 			if (parser.match(tt.name)) {
-				addTSDiagnostic(parser, "enum declaration", start);
+				expectTSEnabled(parser, "enum declaration", start);
 				return parseTSEnumDeclaration(parser, start, /* isConst */ false);
 			} else {
 				break;
@@ -2293,10 +2316,10 @@ export function parseTSTypeExpressionStatement(
 
 		case "module":
 			if (parser.match(tt.string)) {
-				addTSDiagnostic(parser, "ambient external module declaration", start);
+				expectTSEnabled(parser, "ambient external module declaration", start);
 				return parseTSAmbientExternalModuleDeclaration(parser, start);
 			} else if (parser.match(tt.name) && !parser.isLineTerminator()) {
-				addTSDiagnostic(parser, "module or namespace declaration", start);
+				expectTSEnabled(parser, "module or namespace declaration", start);
 				return parseTSModuleOrNamespaceDeclaration(parser, start);
 			} else {
 				break;
@@ -2307,7 +2330,7 @@ export function parseTSTypeExpressionStatement(
 				return undefined;
 			}
 
-			addTSDiagnostic(parser, "module or namespace declaration", start);
+			expectTSEnabled(parser, "module or namespace declaration", start);
 			return parseTSModuleOrNamespaceDeclaration(parser, start);
 		}
 
@@ -2316,7 +2339,7 @@ export function parseTSTypeExpressionStatement(
 			// `global { }` (with no `declare`) may appear inside an ambient module declaration.
 			// Would like to use parseTSAmbientExternalModuleDeclaration here, but already ran past 'global'.
 			if (parser.match(tt.braceL)) {
-				addTSDiagnostic(parser, "module declaration", start);
+				expectTSEnabled(parser, "module declaration", start);
 				const global = true;
 				const id = toBindingIdentifier(parser, expr);
 				const body = parseTSModuleBlock(parser);
@@ -2359,6 +2382,8 @@ export function parseTSTypeArguments(
 	parser: JSParser,
 ): TSTypeParameterInstantiation {
 	const start = parser.getPosition();
+	expectTSEnabled(parser, "type arguments", start);
+
 	parser.pushScope("TYPE", true);
 
 	const params = tsInNoContext(
