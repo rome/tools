@@ -9,6 +9,7 @@
 @import "_footer";
 
 .sidebar {
+  @include transition-timing;
   z-index: 1;
   width: $sidebar-width;
   list-style: none;
@@ -23,13 +24,34 @@
   width: $sidebar-width;
   border-right: 1px solid $gray-color;
   background-color: #ffffff;
-  transition: transform 250ms ease-in;
+  transition-property: transform;
 
   @include mobile-only() {
     transform: translateX(-100%);
 
     &.visible {
       transform: translateX(0);
+    }
+  }
+}
+
+.overlay{
+  display: none;
+
+  @include mobile-only() {
+    @include transition-timing;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: #181818;
+    opacity: 0;
+    display: block;
+    transition-property: opacity;
+
+    &.visible {
+      opacity: 0.5;
     }
   }
 }

@@ -1,3 +1,7 @@
+const mobileHandle = document.getElementsByClassName('mobile-handle')[0];
+const toc = document.getElementsByClassName('sidebar')[0];
+const overlay = document.getElementsByClassName('overlay')[0];
+
 tocbot.init({
   tocSelector: '.toc-container',
   ignoreSelector: '[toc-exclude]',
@@ -11,10 +15,11 @@ tocbot.init({
   },
 });
 
-document
-  .getElementsByClassName('mobile-handle')[0]
-  .addEventListener('click', function (event) {
-    event.preventDefault();
-    const toc = document.getElementsByClassName('sidebar')[0];
-    toc.classList.toggle('visible');
-  });
+function mobileToggleEvent(event){
+  event.preventDefault();
+  toc.classList.toggle('visible');
+  overlay.classList.toggle('visible');
+}
+
+mobileHandle.addEventListener('click', mobileToggleEvent);
+overlay.addEventListener('click', mobileToggleEvent);
