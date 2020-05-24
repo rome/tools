@@ -223,7 +223,7 @@ function tsIsListTerminator(parser: JSParser, kind: ParsingContext): boolean {
 function expectTSEnabled(
 	parser: JSParser,
 	label: string,
-	start: Position = parser.getPosition,
+	start: Position = parser.getPosition(),
 ) {
 	if (parser.isSyntaxEnabled("ts")) {
 		return;
