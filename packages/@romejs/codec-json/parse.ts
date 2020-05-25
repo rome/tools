@@ -25,7 +25,7 @@ import {
 	ConsumePath,
 	ConsumeSourceLocationRequestTarget,
 } from "@romejs/consume";
-import {unescapeString} from "@romejs/string-escape";
+import {unescapeJSONString} from "@romejs/string-escape";
 import {
 	Position,
 	SourceLocation,
@@ -235,7 +235,7 @@ export const createJSONParser = createParser((ParserCore) =>
 					}
 
 					// Unescape the string
-					const unescaped = unescapeString(
+					const unescaped = unescapeJSONString(
 						value,
 						(metadata, strIndex) => {
 							throw this.unexpected({

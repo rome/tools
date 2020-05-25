@@ -10,7 +10,7 @@ import {naturalCompare} from "@romejs/string-utils";
 import {isValidWord} from "./parse";
 import {Consumer} from "@romejs/consume";
 import {PRIORITIZE_KEYS, formatNumber} from "@romejs/pretty-format";
-import {escapeString} from "@romejs/string-escape";
+import {escapeJSString} from "@romejs/string-escape";
 
 function joinList(
 	open: string,
@@ -42,7 +42,7 @@ function stringifyKey(key: string): string {
 		// A property key doesn't need quotes if it's a valid word
 		return key;
 	} else {
-		return escapeString(
+		return escapeJSString(
 			key,
 			{
 				quote: '"',
@@ -92,7 +92,7 @@ function stringifyPrimitives(value: unknown): undefined | string {
 			return value ? "true" : "false";
 
 		case "string":
-			return escapeString(
+			return escapeJSString(
 				value,
 				{
 					quote: '"',

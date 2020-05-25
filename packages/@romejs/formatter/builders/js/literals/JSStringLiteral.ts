@@ -7,7 +7,7 @@
 
 import {Builder, Token} from "@romejs/formatter";
 
-import {escapeString} from "@romejs/string-escape";
+import {escapeJSString} from "@romejs/string-escape";
 import {
 	AnyNode,
 	JSDirective,
@@ -30,5 +30,5 @@ export default function JSStringLiteral(
 			? escapeXHTMLEntities(node.value)
 			: node.value;
 
-	return escapeString(value, {quote: quotes});
+	return escapeJSString(value, {quote: quotes});
 }
