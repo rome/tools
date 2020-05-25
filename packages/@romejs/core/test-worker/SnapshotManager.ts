@@ -37,6 +37,7 @@ type SnapshotEntry = {
 	entryName: string;
 	language: undefined | string;
 	value: string;
+	used: boolean;
 };
 
 type Snapshot = {
@@ -188,6 +189,7 @@ export default class SnapshotManager {
 								entryName,
 								language: codeBlock.language,
 								value: codeBlock.text,
+								used: false,
 							},
 						);
 
@@ -204,6 +206,7 @@ export default class SnapshotManager {
 								entryName: "0",
 								language: node.language,
 								value: node.text,
+								used: false,
 							},
 						);
 					}
@@ -238,6 +241,9 @@ export default class SnapshotManager {
 
 		const testNameToEntries: Map<string, Map<string, SnapshotEntry>> = new Map();
 		for (const entry of entries) {
+			if (!entry.used && !this.runner.hasFocusedTests) {
+				continue;
+			}
 			let entriesByTestName = testNameToEntries.get(entry.testName);
 			if (entriesByTestName === undefined) {
 				entriesByTestName = new Map();
@@ -395,6 +401,7 @@ export default class SnapshotManager {
 		if (entry === undefined) {
 			return undefined;
 		} else {
+			entry.used = true;
 			return entry.value;
 		}
 	}
@@ -433,6 +440,7 @@ export default class SnapshotManager {
 				entryName,
 				language,
 				value,
+				used: true,
 			},
 		);
 	}
