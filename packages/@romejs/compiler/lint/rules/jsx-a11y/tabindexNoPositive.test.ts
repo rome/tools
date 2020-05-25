@@ -2,7 +2,7 @@ import {test} from "rome";
 import {testLintMultiple} from "../testHelpers";
 
 test(
-	"jsx a11y tabIndex no positive",
+	"jsx-a11y tabIndex no positive",
 	async (t) => {
 		await testLintMultiple(
 			t,

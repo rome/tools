@@ -2,7 +2,7 @@ import {test} from "rome";
 import {testLintMultiple} from "../testHelpers";
 
 test(
-	"jsx a11y no accessKey",
+	"jsx-a11y no accessKey",
 	async (t) => {
 		await testLintMultiple(
 			t,
