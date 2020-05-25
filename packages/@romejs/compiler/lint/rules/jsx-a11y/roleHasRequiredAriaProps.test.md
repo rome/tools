@@ -33,13 +33,744 @@
 ### `1`
 
 ```
-✔ No known problems!
+
+ unknown:1 lint/jsx-a11y/roleHasRequiredAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The element with role switch doesn't have the mandatory aria-* attributes
+
+    <span role='switch'></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Missing aria attribute: aria-checked
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
 
 ```
 
 ### `1: formatted`
 
 ```
+<span role='switch'></span>;
+
+```
+
+### `2`
+
+```
+
+ unknown:1 lint/jsx-a11y/roleHasRequiredAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The element with role spinbutton doesn't have the mandatory aria-* attributes
+
+    <span role='spinbutton'></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Missing aria attribute: aria-valuemax
+
+  ℹ Missing aria attribute: aria-valuemin
+
+  ℹ Missing aria attribute: aria-valuenow
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `2: formatted`
+
+```
+<span role='spinbutton'></span>;
+
+```
+
+### `3`
+
+```
+
+ unknown:1 lint/jsx-a11y/roleHasRequiredAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The element with role spinbutton doesn't have the mandatory aria-* attributes
+
+    <span role='spinbutton' aria-valuemax='100'></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Missing aria attribute: aria-valuemin
+
+  ℹ Missing aria attribute: aria-valuenow
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `3: formatted`
+
+```
+<span role='spinbutton' aria-valuemax='100'></span>;
+
+```
+
+### `4`
+
+```
+
+ unknown:1 lint/jsx-a11y/roleHasRequiredAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The element with role spinbutton doesn't have the mandatory aria-* attributes
+
+    <span role='spinbutton' aria-valuemin='0'></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Missing aria attribute: aria-valuemax
+
+  ℹ Missing aria attribute: aria-valuenow
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `4: formatted`
+
+```
+<span role='spinbutton' aria-valuemin='0'></span>;
+
+```
+
+### `5`
+
+```
+
+ unknown:1 lint/jsx-a11y/roleHasRequiredAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The element with role spinbutton doesn't have the mandatory aria-* attributes
+
+    <span role='spinbutton' aria-valuemin='0' aria-valuemax='100'></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Missing aria attribute: aria-valuenow
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `5: formatted`
+
+```
+<span role='spinbutton' aria-valuemin='0' aria-valuemax='100'></span>;
+
+```
+
+### `6`
+
+```
+
+ unknown:1 lint/jsx-a11y/roleHasRequiredAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The element with role slider doesn't have the mandatory aria-* attributes
+
+    <span role='slider' aria-valuemin='0'></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Missing aria attribute: aria-valuemax
+
+  ℹ Missing aria attribute: aria-valuenow
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `6: formatted`
+
+```
+<span role='slider' aria-valuemin='0'></span>;
+
+```
+
+### `7`
+
+```
+
+ unknown:1 lint/jsx-a11y/roleHasRequiredAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The element with role slider doesn't have the mandatory aria-* attributes
+
+    <span role='slider' aria-valuemax='100'></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Missing aria attribute: aria-valuemin
+
+  ℹ Missing aria attribute: aria-valuenow
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `7: formatted`
+
+```
+<span role='slider' aria-valuemax='100'></span>;
+
+```
+
+### `8`
+
+```
+
+ unknown:1 lint/jsx-a11y/roleHasRequiredAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The element with role slider doesn't have the mandatory aria-* attributes
+
+    <span role='slider' aria-valuemin='0' aria-valuemax='100'></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Missing aria attribute: aria-valuenow
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `8: formatted`
+
+```
+<span role='slider' aria-valuemin='0' aria-valuemax='100'></span>;
+
+```
+
+### `9`
+
+```
+
+ unknown:1 lint/jsx-a11y/roleHasRequiredAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The element with role separator doesn't have the mandatory aria-* attributes
+
+    <span role='separator' aria-valuemin='0'></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Missing aria attribute: aria-valuemax
+
+  ℹ Missing aria attribute: aria-valuenow
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `9: formatted`
+
+```
+<span role='separator' aria-valuemin='0'></span>;
+
+```
+
+### `10`
+
+```
+
+ unknown:1 lint/jsx-a11y/roleHasRequiredAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The element with role separator doesn't have the mandatory aria-* attributes
+
+    <span role='separator' aria-valuemax='100'></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Missing aria attribute: aria-valuemin
+
+  ℹ Missing aria attribute: aria-valuenow
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `10: formatted`
+
+```
+<span role='separator' aria-valuemax='100'></span>;
+
+```
+
+### `11`
+
+```
+
+ unknown:1 lint/jsx-a11y/roleHasRequiredAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The element with role separator doesn't have the mandatory aria-* attributes
+
+    <span role='separator' aria-valuemin='0' aria-valuemax='100'></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Missing aria attribute: aria-valuenow
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `11: formatted`
+
+```
+<span role='separator' aria-valuemin='0' aria-valuemax='100'></span>;
+
+```
+
+### `12`
+
+```
+
+ unknown:1 lint/jsx-a11y/roleHasRequiredAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The element with role scrollbar doesn't have the mandatory aria-* attributes
+
+    <span role='scrollbar' aria-valuemin='0'></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Missing aria attribute: aria-valuemax
+
+  ℹ Missing aria attribute: aria-valuenow
+
+  ℹ Missing aria attribute: aria-orientation
+
+  ℹ Missing aria attribute: aria-controls
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `12: formatted`
+
+```
+<span role='scrollbar' aria-valuemin='0'></span>;
+
+```
+
+### `13`
+
+```
+
+ unknown:1 lint/jsx-a11y/roleHasRequiredAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The element with role scrollbar doesn't have the mandatory aria-* attributes
+
+    <span role='scrollbar' aria-valuemax='100'></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Missing aria attribute: aria-valuemin
+
+  ℹ Missing aria attribute: aria-valuenow
+
+  ℹ Missing aria attribute: aria-orientation
+
+  ℹ Missing aria attribute: aria-controls
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `13: formatted`
+
+```
+<span role='scrollbar' aria-valuemax='100'></span>;
+
+```
+
+### `14`
+
+```
+
+ unknown:1 lint/jsx-a11y/roleHasRequiredAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The element with role scrollbar doesn't have the mandatory aria-* attributes
+
+    <span role='scrollbar' aria-valuemin='0' aria-valuemax='100'></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Missing aria attribute: aria-valuenow
+
+  ℹ Missing aria attribute: aria-orientation
+
+  ℹ Missing aria attribute: aria-controls
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `14: formatted`
+
+```
+<span role='scrollbar' aria-valuemin='0' aria-valuemax='100'></span>;
+
+```
+
+### `15`
+
+```
+
+ unknown:1 lint/jsx-a11y/roleHasRequiredAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The element with role scrollbar doesn't have the mandatory aria-* attributes
+
+    <span role='scrollbar' aria-valuemin='0' aria-valuemax='100' aria-orientation='horizontal'></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Missing aria attribute: aria-valuenow
+
+  ℹ Missing aria attribute: aria-controls
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `15: formatted`
+
+```
+<span role='scrollbar'
+aria-valuemin='0'
+aria-valuemax='100'
+aria-orientation='horizontal'></span>;
+
+```
+
+### `16`
+
+```
+
+ unknown:1 lint/jsx-a11y/roleHasRequiredAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The element with role radio doesn't have the mandatory aria-* attributes
+
+    <span role='radio'></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Missing aria attribute: aria-checked
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `16: formatted`
+
+```
+<span role='radio'></span>;
+
+```
+
+### `17`
+
+```
+
+ unknown:1 lint/jsx-a11y/roleHasRequiredAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The element with role option doesn't have the mandatory aria-* attributes
+
+    <span role='option'></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Missing aria attribute: aria-selected
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `17: formatted`
+
+```
+<span role='option'></span>;
+
+```
+
+### `18`
+
+```
+
+ unknown:1 lint/jsx-a11y/roleHasRequiredAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The element with role heading doesn't have the mandatory aria-* attributes
+
+    <span role='heading'></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Missing aria attribute: aria-level
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `18: formatted`
+
+```
+<span role='heading'></span>;
+
+```
+
+### `19`
+
+```
+
+ unknown:1 lint/jsx-a11y/roleHasRequiredAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The element with role combobox doesn't have the mandatory aria-* attributes
+
+    <span role='combobox'></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Missing aria attribute: aria-controls
+
+  ℹ Missing aria attribute: aria-expanded
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `19: formatted`
+
+```
+<span role='combobox'></span>;
+
+```
+
+### `20`
+
+```
+
+ unknown:1 lint/jsx-a11y/roleHasRequiredAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The element with role combobox doesn't have the mandatory aria-* attributes
+
+    <span role='combobox' aria-expanded='true'></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Missing aria attribute: aria-controls
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `20: formatted`
+
+```
+<span role='combobox' aria-expanded='true'></span>;
+
+```
+
+### `21`
+
+```
+
+ unknown:1 lint/jsx-a11y/roleHasRequiredAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The element with role combobox doesn't have the mandatory aria-* attributes
+
+    <span role='combobox' aria-controls='true'></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Missing aria attribute: aria-expanded
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `21: formatted`
+
+```
+<span role='combobox' aria-controls='true'></span>;
+
+```
+
+### `22`
+
+```
+✔ No known problems!
+
+```
+
+### `22: formatted`
+
+```
 <span role='checkbox' aria-checked='true'></span>;
+
+```
+
+### `23`
+
+```
+✔ No known problems!
+
+```
+
+### `23: formatted`
+
+```
+<span role='switch' aria-checked='true'></span>;
+
+```
+
+### `24`
+
+```
+✔ No known problems!
+
+```
+
+### `24: formatted`
+
+```
+<span role='spinbutton'
+aria-valuemax='100'
+aria-valuemin='0'
+aria-valuenow='50'></span>;
+
+```
+
+### `25`
+
+```
+✔ No known problems!
+
+```
+
+### `25: formatted`
+
+```
+<span role='slider' aria-valuemax='100' aria-valuemin='0' aria-valuenow='50'></span>;
+
+```
+
+### `26`
+
+```
+✔ No known problems!
+
+```
+
+### `26: formatted`
+
+```
+<span role='separator' aria-valuemax='100' aria-valuemin='0' aria-valuenow='50'></span>;
+
+```
+
+### `27`
+
+```
+✔ No known problems!
+
+```
+
+### `27: formatted`
+
+```
+<span role='scrollbar'
+aria-valuemax='100'
+aria-valuemin='0'
+aria-valuenow='50'
+aria-orientation='horizontal'
+aria-controls='123'></span>;
+
+```
+
+### `28`
+
+```
+✔ No known problems!
+
+```
+
+### `28: formatted`
+
+```
+<span role='radio' aria-checked='true'></span>;
+
+```
+
+### `29`
+
+```
+✔ No known problems!
+
+```
+
+### `29: formatted`
+
+```
+<span role='option' aria-selected='true'></span>;
+
+```
+
+### `30`
+
+```
+✔ No known problems!
+
+```
+
+### `30: formatted`
+
+```
+<span role='heading' aria-level='1'></span>;
+
+```
+
+### `31`
+
+```
+
+ unknown:1 lint/jsx-a11y/roleHasRequiredAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+  ✖ The element with role combobox doesn't have the mandatory aria-* attributes
+
+    <span role='combobox' aria-controls='true' aria-expanded=''></span>
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+  ℹ Missing aria attribute: aria-expanded
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+✖ Found 1 problem
+
+```
+
+### `31: formatted`
+
+```
+<span role='combobox' aria-controls='true' aria-expanded=''></span>;
 
 ```

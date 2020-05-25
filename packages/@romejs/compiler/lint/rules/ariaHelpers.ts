@@ -375,24 +375,97 @@ export const ariaPropsMap: MapOfARIAPropertyDefinitions = new Map([
 	],
 ]);
 
-
 export type ARIARoleDefinition = {
 	/* aria-* properties and states allowed on this role. */
-	props: ARIAProperty[],
+	props: Array<ARIAProperty>;
 	/* aria-* properties and states required on this role. */
-	requiredProps: ARIAProperty[],
+	requiredProps: Array<ARIAProperty>;
 };
 
-export type MapOfAriaRoles = Map<
-	string,
-	ARIARoleDefinition
-	>;
+export type MapOfAriaRoles = Map<string, ARIARoleDefinition>;
 
 export const roles: MapOfAriaRoles = new Map([
-	['checkbox', {
-		props: ['aria-checked', 'aria-readonly'],
-		requiredProps: ['aria-checked']
-	}],
+	[
+		"checkbox",
+		{
+			props: ["aria-checked", "aria-readonly"],
+			requiredProps: ["aria-checked"],
+		},
+	],
+	[
+		"radio",
+		{
+			props: ["aria-checked", "aria-readonly"],
+			requiredProps: ["aria-checked"],
+		},
+	],
+	[
+		"switch",
+		{
+			props: ["aria-checked"],
+			requiredProps: ["aria-checked"],
+		},
+	],
+	[
+		"option",
+		{
+			props: ["aria-selected"],
+			requiredProps: ["aria-selected"],
+		},
+	],
+	[
+		"combobox",
+		{
+			props: ["aria-controls", "aria-expanded"],
+			requiredProps: ["aria-controls", "aria-expanded"],
+		},
+	],
+	[
+		"heading",
+		{
+			props: ["aria-level"],
+			requiredProps: ["aria-level"],
+		},
+	],
+	[
+		"spinbutton",
+		{
+			props: ["aria-valuemax", "aria-valuemin", "aria-valuenow"],
+			requiredProps: ["aria-valuemax", "aria-valuemin", "aria-valuenow"],
+		},
+	],
+	[
+		"slider",
+		{
+			props: ["aria-valuemax", "aria-valuemin", "aria-valuenow"],
+			requiredProps: ["aria-valuemax", "aria-valuemin", "aria-valuenow"],
+		},
+	],
+	[
+		"separator",
+		{
+			props: ["aria-valuemax", "aria-valuemin", "aria-valuenow"],
+			requiredProps: ["aria-valuemax", "aria-valuemin", "aria-valuenow"],
+		},
+	],
+
+	[
+		"scrollbar",
+		{
+			props: [
+				"aria-valuemax",
+				"aria-valuemin",
+				"aria-valuenow",
+				"aria-orientation",
+				"aria-controls",
+			],
+			requiredProps: [
+				"aria-valuemax",
+				"aria-valuemin",
+				"aria-valuenow",
+				"aria-orientation",
+				"aria-controls",
+			],
+		},
+	],
 ]);
-
-
