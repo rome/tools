@@ -16,6 +16,17 @@ import {buildSuggestionAdvice} from "../helpers";
 import {createDiagnosticsCategory, orJoin} from "./index";
 
 export const lint = createDiagnosticsCategory({
+	REACT_NO_USELESS_FRAGMENT: {
+		category: "lint/react/noUselessFragment",
+		message: "Avoid using unnecessary <emphasis>Fragment</emphasis>.",
+		advice: [
+			{
+				type: "log",
+				category: "info",
+				text: "A <emphasis>Fragment</emphasis> is redundant if it contains only one child, or if it is the child of a html element, and is not a keyed fragment.",
+			},
+		],
+	},
 	JSX_A11Y_ANCHOR_IS_VALID: (message: string) => ({
 		category: "lint/jsx-a11y/anchorIsValid",
 		message,
