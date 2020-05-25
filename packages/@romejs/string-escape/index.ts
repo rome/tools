@@ -5,6 +5,6 @@
  * LICENSE file in the root directory of this source tree.
  */
 
-export {default as escapeJSString} from "./escapeString";
-export {default as unescapeJSONString} from "./unescapeString";
+export {default as escapeJSString} from "./escapeJSString";
+export {default as unescapeJSONString} from "./unescapeJSONString";
 export * from "./constants";
