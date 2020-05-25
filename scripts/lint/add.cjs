@@ -64,7 +64,7 @@ write(
 import {testLintMultiple} from "../testHelpers";
 
 test(
-	"${spacedName}",
+	"${category} ${spacedName}",
 	async (t) => {
 		await testLintMultiple(
 			t,
