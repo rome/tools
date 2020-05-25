@@ -6,7 +6,7 @@
  */
 
 import {UnknownObject, isIterable} from "@romejs/typescript-helpers";
-import {escapeString} from "@romejs/string-escape";
+import {escapeJSString} from "@romejs/string-escape";
 import {humanizeNumber, naturalCompare} from "@romejs/string-utils";
 import {escapeMarkup, markupTag} from "@romejs/string-markup";
 
@@ -124,7 +124,7 @@ function formatSymbol(val: Symbol): string {
 }
 
 function formatString(val: string): string {
-	return escapeString(
+	return escapeJSString(
 		val,
 		{
 			quote: '"',
