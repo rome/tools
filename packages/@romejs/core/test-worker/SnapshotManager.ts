@@ -132,6 +132,13 @@ export default class SnapshotManager {
 		}
 
 		const content = await readFileText(path);
+
+		// Check if snapshot was loaded while this was awaiting readFileText
+		const loadedSnapshot = this.snapshots.get(path);
+		if (loadedSnapshot !== undefined) {
+			return loadedSnapshot;
+		}
+
 		const parser = createSnapshotParser({
 			path,
 			input: content,
