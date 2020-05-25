@@ -752,25 +752,13 @@ aria-controls='123'></span>;
 ### `31`
 
 ```
-
- unknown:1 lint/jsx-a11y/roleHasRequiredAriaProps ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-  ✖ The element with role combobox doesn't have the mandatory aria-* attributes
-
-    <span role='combobox' aria-controls='true' aria-expanded=''></span>
-    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-  ℹ Missing aria attribute: aria-expanded
-
-━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-
-✖ Found 1 problem
+✔ No known problems!
 
 ```
 
 ### `31: formatted`
 
 ```
-<span role='combobox' aria-controls='true' aria-expanded=''></span>;
+<span role='combobox' aria-controls='true' aria-expanded='true'></span>;
 
 ```

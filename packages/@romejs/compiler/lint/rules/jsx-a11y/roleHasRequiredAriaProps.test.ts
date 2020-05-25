@@ -40,7 +40,7 @@ test(
 				"<span role='radio' aria-checked='true'></span>",
 				"<span role='option' aria-selected='true'></span>",
 				"<span role='heading' aria-level='1'></span>",
-				"<span role='combobox' aria-controls='true' aria-expanded=''></span>",
+				"<span role='combobox' aria-controls='true' aria-expanded='true'></span>",
 			],
 			{category: "lint/jsx-a11y/roleHasRequiredAriaProps"},
 		);
