@@ -19,6 +19,7 @@ import {ErrorFrame} from "@romejs/v8";
 import {Number0, Number1} from "@romejs/ob1";
 import prettyFormat from "@romejs/pretty-format";
 import {naturalCompare} from "@romejs/string-utils";
+import Locker from "../common/utils/Locker";
 
 function cleanHeading(key: string): string {
 	if (key[0] === "`") {
@@ -84,6 +85,7 @@ export default class SnapshotManager {
 		this.runner = runner;
 		this.options = runner.options;
 		this.snapshots = new AbsoluteFilePathMap();
+		this.fileLocker = new Locker();
 		this.inlineSnapshotsUpdates = [];
 		this.snapshotCounts = {
 			deleted: 0,
@@ -96,6 +98,7 @@ export default class SnapshotManager {
 	testPath: AbsoluteFilePath;
 	defaultSnapshotPath: AbsoluteFilePath;
 	snapshots: AbsoluteFilePathMap<Snapshot>;
+	fileLocker: Locker<string>;
 	runner: TestWorkerRunner;
 	options: TestMasterRunnerOptions;
 	snapshotCounts: SnapshotCounts;
@@ -132,14 +135,15 @@ export default class SnapshotManager {
 			return;
 		}
 
-		const content = await readFileText(path);
+		const lock = await this.fileLocker.getLock(path.join());
 
-		// Check if snapshot was loaded while this was awaiting readFileText
 		const loadedSnapshot = this.snapshots.get(path);
 		if (loadedSnapshot !== undefined) {
+			lock.release();
 			return loadedSnapshot;
 		}
 
+		const content = await readFileText(path);
 		const parser = createSnapshotParser({
 			path,
 			input: content,
@@ -218,6 +222,7 @@ export default class SnapshotManager {
 			}
 		}
 
+		lock.release();
 		return snapshot;
 	}
 
