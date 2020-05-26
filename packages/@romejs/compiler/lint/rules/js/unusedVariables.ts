@@ -59,6 +59,8 @@ const provider = createHook<State, undefined, AnyNode>({
 	},
 
 	exit(path, state) {
+		console.log(state.usedBindings)
+		throw new Error()
 		for (const name in state.usedBindings) {
 			const used = state.usedBindings[name];
 			const binding = path.scope.getBinding(name);
@@ -85,6 +87,7 @@ export default {
 			const usedBindings: Dict<boolean> = {};
 
 			// Get all the non-exported bindings in this file and mark them as unused
+			console.log('bindings',  scope.getOwnBindings())
 			for (const [name, binding] of scope.getOwnBindings()) {
 				if (binding instanceof ArgumentsBinding) {
 					continue;
