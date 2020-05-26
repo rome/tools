@@ -376,9 +376,7 @@ export const ariaPropsMap: MapOfARIAPropertyDefinitions = new Map([
 ]);
 
 export type ARIARoleDefinition = {
-	/* aria-* properties and states allowed on this role. */
 	props: Array<ARIAProperty>;
-	/* aria-* properties and states required on this role. */
 	requiredProps: Array<ARIAProperty>;
 };
 
