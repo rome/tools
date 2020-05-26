@@ -27,12 +27,3 @@
 }
 
 ```
-
-### `logs`
-
-```
-[master] ℹ [MemoryFileSystem] Adding new project folder .
-[master] ℹ [MemoryFileSystem] Watching .
-[master] ℹ [MemoryFileSystem] Finished initial crawl for . - added 3 files
-
-```

@@ -50,76 +50,6 @@ unknownVariable
 
 ```
 
-### `logs`
-
-```
-[master] ℹ [Master] Handling CLI request: Object {
-             args: Array []
-             cancelToken: undefined
-             commandFlags: Object {}
-             commandName: "lint"
-             noData: false
-             silent: false
-             terminateWhenIdle: false
-             requestFlags: Object {
-               benchmark: false
-               benchmarkIterations: 10
-               collectMarkers: false
-               fieri: false
-               grep: ""
-               inverseGrep: false
-               maxDiagnostics: 100
-               resolverMocks: false
-               resolverPlatform: undefined
-               resolverScale: undefined
-               review: false
-               showAllDiagnostics: false
-               timing: false
-               verboseDiagnostics: false
-               watch: false
-             }
-           }
-[master] ℹ [MemoryFileSystem] Adding new project folder .
-[master] ℹ [MemoryFileSystem] Watching .
-[master] ℹ [MemoryFileSystem] Finished initial crawl for . - added 2 files
-[master] ℹ [FileAllocator] File index.js assigned to worker 0
-[master] ℹ [MasterRequest] Started marker lint: index.js
-[worker] ℹ Linting: index.js
-[worker] ℹ Parsing: index.js
-[master] ℹ [MasterRequest] Finished marker lint: index.js
-[master] ℹ [MasterRequest] Started marker analyzeDependencies: index.js
-[worker] ℹ Analyze dependencies: index.js
-[worker] ℹ Analyzing: index.js
-[master] ℹ [MasterRequest] Finished marker analyzeDependencies: index.js
-[master] ℹ [Master] Replying to CLI request: Object {
-             args: Array []
-             cancelToken: undefined
-             commandFlags: Object {}
-             commandName: "lint"
-             noData: false
-             silent: false
-             terminateWhenIdle: false
-             requestFlags: Object {
-               benchmark: false
-               benchmarkIterations: 10
-               collectMarkers: false
-               fieri: false
-               grep: ""
-               inverseGrep: false
-               maxDiagnostics: 100
-               resolverMocks: false
-               resolverPlatform: undefined
-               resolverScale: undefined
-               review: false
-               showAllDiagnostics: false
-               timing: false
-               verboseDiagnostics: false
-               watch: false
-             }
-           }
-
-```
-
 ## `smoke save`
 
 ### `console`
@@ -146,7 +76,6 @@ unknownVariable
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-✔ 1 file updated
 ✖ Found 2 problems
 
 ```
@@ -165,81 +94,5 @@ if (unformatted) {
 		"vendorPath": "../remote"
 	}
 }
-
-```
-
-### `logs`
-
-```
-[master] ℹ [Master] Handling CLI request: Object {
-             args: Array []
-             cancelToken: undefined
-             commandName: "lint"
-             noData: false
-             silent: false
-             terminateWhenIdle: false
-             commandFlags: Object {save: true}
-             requestFlags: Object {
-               benchmark: false
-               benchmarkIterations: 10
-               collectMarkers: false
-               fieri: false
-               grep: ""
-               inverseGrep: false
-               maxDiagnostics: 100
-               resolverMocks: false
-               resolverPlatform: undefined
-               resolverScale: undefined
-               review: false
-               showAllDiagnostics: false
-               timing: false
-               verboseDiagnostics: false
-               watch: false
-             }
-           }
-[master] ℹ [MemoryFileSystem] Adding new project folder .
-[master] ℹ [MemoryFileSystem] Watching .
-[master] ℹ [MemoryFileSystem] Finished initial crawl for . - added 2 files
-[master] ℹ [FileAllocator] File index.js assigned to worker 0
-[master] ℹ [MasterRequest] Started marker lint: index.js
-[worker] ℹ Linting: index.js
-[worker] ℹ Parsing: index.js
-[worker] ℹ Linting: index.js
-[worker] ℹ Parsing: index.js
-[master] ℹ [MasterRequest] Finished marker lint: index.js
-[master] ℹ [MasterRequest] Started marker analyzeDependencies: index.js
-[worker] ℹ Analyze dependencies: index.js
-[worker] ℹ Analyzing: index.js
-[master] ℹ [MasterRequest] Finished marker analyzeDependencies: index.js
-[master] ℹ [Master] File change: index.js
-[master] ℹ [FileAllocator] Evicted index.js
-[master] ℹ [Master] File change: ../cache/project-project/index.js
-[master] ℹ [FileAllocator] No owner for eviction ../cache/project-project/index.js
-[master] ℹ [Master] Replying to CLI request: Object {
-             args: Array []
-             cancelToken: undefined
-             commandName: "lint"
-             noData: false
-             silent: false
-             terminateWhenIdle: false
-             commandFlags: Object {save: true}
-             requestFlags: Object {
-               benchmark: false
-               benchmarkIterations: 10
-               collectMarkers: false
-               fieri: false
-               grep: ""
-               inverseGrep: false
-               maxDiagnostics: 100
-               resolverMocks: false
-               resolverPlatform: undefined
-               resolverScale: undefined
-               review: false
-               showAllDiagnostics: false
-               timing: false
-               verboseDiagnostics: false
-               watch: false
-             }
-           }
 
 ```
