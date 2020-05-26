@@ -301,7 +301,7 @@ export const lint = createDiagnosticsCategory({
 		missingAttributes: Array<string>,
 	) => ({
 		category: "lint/jsx-a11y/roleHasRequiredAriaProps",
-		message: `The element with the <emphasis>${roleName}</emphasis> ARIA role does not have the required ARIA attributes.`
+		message: `The element with the <emphasis>${roleName}</emphasis> ARIA role does not have the required ARIA attributes.`,
 		advice: missingAttributes.map((missingAttribute) => {
 			return {
 				type: "log",
