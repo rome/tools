@@ -8,7 +8,7 @@ import {
 import {roles} from "@romejs/compiler/lint/rules/ariaHelpers";
 
 export default {
-	name: "roleHasRequiredAriaProps",
+	name: "jsxA11YRoleHasRequiredAriaProps",
 	enter(path: Path): TransformExitResult {
 		const {node} = path;
 
