@@ -10,7 +10,7 @@
 
  unknown:7:4 lint/js/noUnsafeFinally ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unsafe usage of JSReturnStatement.
+  ✖ Using JSReturnStatement inside a finally clause is unsafe.
 
     5 │     throw err;
     6 │   } finally {
@@ -18,6 +18,8 @@
       │     ^^^^^^^^^
     8 │   }
     9 │ }
+
+  ℹ Do not use control flow statements inside finally clauses.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -46,7 +48,7 @@ function greet1() {
 
  unknown:7:4 lint/js/noUnsafeFinally ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unsafe usage of JSBreakStatement.
+  ✖ Using JSBreakStatement inside a finally clause is unsafe.
 
     5 │     throw err;
     6 │   } finally {
@@ -54,6 +56,8 @@ function greet1() {
       │     ^^^^^^
     8 │   }
     9 │ }
+
+  ℹ Do not use control flow statements inside finally clauses.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -82,7 +86,7 @@ function greet2() {
 
  unknown:7:4 lint/js/noUnsafeFinally ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unsafe usage of JSContinueStatement.
+  ✖ Using JSContinueStatement inside a finally clause is unsafe.
 
     5 │     throw err;
     6 │   } finally {
@@ -90,6 +94,8 @@ function greet2() {
       │     ^^^^^^^^^
     8 │   }
     9 │ }
+
+  ℹ Do not use control flow statements inside finally clauses.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -118,7 +124,7 @@ function greet3() {
 
  unknown:7:4 lint/js/noUnsafeFinally ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Unsafe usage of JSThrowStatement.
+  ✖ Using JSThrowStatement inside a finally clause is unsafe.
 
     5 │     throw err;
     6 │   } finally {
@@ -126,6 +132,8 @@ function greet3() {
       │     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
     8 │   }
     9 │ }
+
+  ℹ Do not use control flow statements inside finally clauses.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

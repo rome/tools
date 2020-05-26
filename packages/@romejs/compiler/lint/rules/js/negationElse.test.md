@@ -10,7 +10,7 @@
 
  unknown:1 lint/js/negationElse FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Invert the blocks when you have a negation test
+  ✖ Invert blocks when performing a negation test.
 
     if (!true) {consequent;} else {alternate;}
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -48,7 +48,7 @@ if (true) {
 
  unknown:1 lint/js/negationElse FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Invert the blocks when you have a negation test
+  ✖ Invert blocks when performing a negation test.
 
     !true ? consequent : alternate
     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

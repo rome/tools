@@ -10,7 +10,7 @@ import {Path} from "@romejs/compiler";
 import {descriptions} from "@romejs/diagnostics";
 
 export default {
-	name: "noExplicitAny",
+	name: "tsNoExplicitAny",
 	enter(path: Path): AnyNode {
 		const {context, node} = path;
 

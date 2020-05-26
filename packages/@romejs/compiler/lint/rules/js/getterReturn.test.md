@@ -10,7 +10,7 @@
 
  unknown:2:13 lint/js/getterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Expected a 'return' at end of a getter method but got empty block
+  ✖ Return a value at the end of a getter method instead of empty block.
 
     1 │ class p {
   > 2 │   get name() {
@@ -18,6 +18,8 @@
   > 4 │   }
       │ ^^^
     5 │ }
+
+  ℹ Getters that do not return values are either typos or should not be getters.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -42,7 +44,7 @@ class p {
 
  unknown:2:13 lint/js/getterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Expected a 'return' at end of a getter method but got empty block
+  ✖ Return a value at the end of a getter method instead of empty block.
 
     1 │ let p = {
   > 2 │   get name() {
@@ -50,6 +52,8 @@ class p {
   > 4 │   },
       │ ^^^
     5 │ };
+
+  ℹ Getters that do not return values are either typos or should not be getters.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

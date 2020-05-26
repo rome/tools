@@ -66,12 +66,12 @@ null != foo;
 
  unknown:1 lint/js/doubleEquals FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Use === instead of ==
+  ✖ Use === instead of ==.
 
     foo == bar
     ^^^^^^^^^^
 
-  ℹ == is only allowed when comparing against null
+  ℹ == is only allowed when comparing against null.
 
   Suggested fix: Use ===
 

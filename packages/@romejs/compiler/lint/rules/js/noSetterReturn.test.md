@@ -10,7 +10,7 @@
 
  unknown:4:6 lint/js/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Setter cannot return a value
+  ✖ Do not return a value at the end of a setter method.
 
     2 │   set name(value) {
     3 │     if (!value) {
@@ -18,6 +18,8 @@
       │       ^^^^^^^^^^^^^^^
     5 │     }
     6 │   }
+
+  ℹ Setters that return values are either typos or should not be setters.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -44,7 +46,7 @@ class p {
 
  unknown:4:6 lint/js/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Setter cannot return a value
+  ✖ Do not return a value at the end of a setter method.
 
     2 │   static set name(value) {
     3 │     if (!value) {
@@ -52,6 +54,8 @@ class p {
       │       ^^^^^^^^^^^^^^^
     5 │     }
     6 │   }
+
+  ℹ Setters that return values are either typos or should not be setters.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -78,7 +82,7 @@ class p {
 
  unknown:4:6 lint/js/noSetterReturn ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Setter cannot return a value
+  ✖ Do not return a value at the end of a setter method.
 
     2 │   set name(value) {
     3 │     if (!value) {
@@ -86,6 +90,8 @@ class p {
       │       ^^^^^^^^^^^^^^^
     5 │     }
     6 │   }
+
+  ℹ Setters that return values are either typos or should not be setters.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

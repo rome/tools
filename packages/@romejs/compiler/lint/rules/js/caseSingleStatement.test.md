@@ -62,7 +62,7 @@ switch (foo) {
 
  unknown:3:12 lint/js/caseSingleStatement FIXABLE ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ A switch case should only have a single statement. If you want more then wrap it in a block.
+  ✖ A switch case should only have a single statement. If you want more, then wrap it in a block.
 
     1 │ switch (foo) {
     2 │   case true:

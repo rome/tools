@@ -190,10 +190,12 @@ foo;
 
  unknown:1:15 lint/js/noEmptyCharacterClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Empty character classes in regular expressions are not allowed
+  ✖ Do not use empty character classes in regular expressions.
 
     let foo = /^abc[]/;foo;
                    ^
+
+  ℹ Empty character classes are usually typos.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -215,10 +217,12 @@ foo;
 
  unknown:1:14 lint/js/noEmptyCharacterClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Empty character classes in regular expressions are not allowed
+  ✖ Do not use empty character classes in regular expressions.
 
     let foo = /foo[]bar/;foo;
                   ^^
+
+  ℹ Empty character classes are usually typos.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -240,10 +244,12 @@ foo;
 
  unknown:1:32 lint/js/noEmptyCharacterClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Empty character classes in regular expressions are not allowed
+  ✖ Do not use empty character classes in regular expressions.
 
     let foo = "";if (foo.match(/^abc[]/)) { foo; }
                                     ^
+
+  ℹ Empty character classes are usually typos.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -267,10 +273,12 @@ if (foo.match(/^abc/)) {
 
  unknown:1:11 lint/js/noEmptyCharacterClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Empty character classes in regular expressions are not allowed
+  ✖ Do not use empty character classes in regular expressions.
 
     let foo = /[]]/;foo;
                ^^
+
+  ℹ Empty character classes are usually typos.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -292,10 +300,12 @@ foo;
 
  unknown:1:13 lint/js/noEmptyCharacterClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Empty character classes in regular expressions are not allowed
+  ✖ Do not use empty character classes in regular expressions.
 
     let foo = /\[[]/;foo;
                  ^
+
+  ℹ Empty character classes are usually typos.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -317,10 +327,12 @@ foo;
 
  unknown:1:20 lint/js/noEmptyCharacterClass ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Empty character classes in regular expressions are not allowed
+  ✖ Do not use empty character classes in regular expressions.
 
     let foo = /\[\[\]a-z[]/;foo;
                         ^
+
+  ℹ Empty character classes are usually typos.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

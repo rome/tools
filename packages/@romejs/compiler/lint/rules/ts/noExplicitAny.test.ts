@@ -9,7 +9,7 @@ import {test} from "rome";
 import {testLintMultiple} from "../testHelpers";
 
 test(
-	"no explicit any",
+	"ts no explicit any",
 	async (t) => {
 		await testLintMultiple(
 			t,

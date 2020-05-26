@@ -10,12 +10,14 @@
 
  unknown:1:4 lint/js/noExtraBooleanCast ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Redundant double negation.
+  ✖ Avoid redundant double-negation.
 
   > 1 │ if (Boolean(foo)) {
       │     ^^^^^^^^^^^^
     2 │   return foo;
     3 │ }
+
+  ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -38,12 +40,14 @@ if (Boolean(foo)) {
 
  unknown:1:7 lint/js/noExtraBooleanCast ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Redundant double negation.
+  ✖ Avoid redundant double-negation.
 
   > 1 │ while (!!foo) {
       │        ^^^^^
     2 │   return foo;
     3 │ }
+
+  ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -66,12 +70,14 @@ while (!!foo) {
 
  unknown:4:9 lint/js/noExtraBooleanCast ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Redundant double negation.
+  ✖ Avoid redundant double-negation.
 
     2 │ do {
     3 │   1 + 1;
   > 4 │ } while (Boolean(x));
       │          ^^^^^^^^^^
+
+  ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -95,12 +101,14 @@ do {
 
  unknown:1:7 lint/js/noExtraBooleanCast ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ Redundant double negation.
+  ✖ Avoid redundant double-negation.
 
   > 1 │ for (; !!foo; ) {
       │        ^^^^^
     2 │   return 1 + 1;
     3 │ }
+
+  ℹ It is not necessary to use double-negation when a value will already be coerced to a boolean.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 

@@ -10,10 +10,12 @@
 
  unknown:1:8 lint/js/emptyMatches ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ The expression can return empty matches, and may match infinitely in some use cases
+  ✖ This expression can return empty matches, and may match infinitely in some use cases.
 
     let a = /a*/
             ^^^^
+
+  ℹ Strengthen the regular expression so that empty matches are not possible.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
@@ -34,10 +36,12 @@ let a = /a*/;
 
  unknown:1:8 lint/js/emptyMatches ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-  ✖ The expression can return empty matches, and may match infinitely in some use cases
+  ✖ This expression can return empty matches, and may match infinitely in some use cases.
 
     let b = /a*(abc)?[1,2,3]*/
             ^^^^^^^^^^^^^^^^^^
+
+  ℹ Strengthen the regular expression so that empty matches are not possible.
 
 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
